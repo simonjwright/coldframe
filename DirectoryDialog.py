@@ -6,7 +6,7 @@ Classes:
 
 History: created from the standard FileDialog class.
 
-$Id: DirectoryDialog.py,v b107bf195a03 2005/03/25 14:34:06 simon $
+$Id: DirectoryDialog.py,v 80fe4c62544d 2005/03/25 14:37:35 simon $
 
 """
 
@@ -79,7 +79,7 @@ class DirectoryDialog:
 #        self.filesbar.config(command=(self.files, 'yview'))
 
         self.dirsbar = Scrollbar(self.midframe)
-        self.dirsbar.pack(side=LEFT, fill=Y)
+        self.dirsbar.pack(side=RIGHT, fill=Y)
         self.dirs = Listbox(self.midframe, exportselection=0,
                             yscrollcommand=(self.dirsbar, 'set'))
         self.dirs.pack(side=LEFT, expand=YES, fill=BOTH)
