@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
+<!-- $Id: ada-class.xsl,v ffd0c8c44a44 2002/03/23 06:30:25 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -365,12 +365,26 @@
         </xsl:if>
         
         <!-- If this class has any events at all, include event support.
-             If it has a state machine, that's it; otherwise, need support
-             for standard Instances as well. -->
+             If it has a state machine, that would normally be it; otherwise,
+             or if there are attributes/operations involving _other_
+             classes, or the special Counterpart, need support for standard
+             Instances as well. -->
         <xsl:if test="event">
           <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>          
         </xsl:if>
-        <xsl:if test="not(statemachine)">
+        <xsl:variable name="counterpart">
+          <!-- Need an element to make a nodeset next. -->
+          <xsl:element name="name">Counterpart</xsl:element>
+        </xsl:variable>
+        <xsl:variable
+          name="other-classes"
+          select="$counterpart/name
+                  | /domain/class[name != current()/name]/name"/>
+        <xsl:if test="not(statemachine)
+                      or attribute[type=$other-classes]
+                      or attribute[@refers=$other-classes]
+                      or operation/parameter[type=$other-classes]
+                      or operation[@return=$other-classes]">
           <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
         </xsl:if>
 
