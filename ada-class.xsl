@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e5c4b2c50cdb 2001/05/30 18:32:33 simon $ -->
+<!-- $Id: ada-class.xsl,v b581749e081d 2001/06/09 04:34:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -42,28 +42,46 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
 
-    <xsl:if test="not(@singleton)">
+    <xsl:choose>
 
-      <!-- .. the Identifier record .. -->
-      <xsl:call-template name="identifier-record"/>
+      <xsl:when test="not(@singleton)">
 
-      <!-- .. the Instance record (indefinite, so it can't be
-           allocated; limited, so people can't assign it) .. -->
-      <xsl:text>  type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        <!-- .. the Identifier record .. -->
+        <xsl:call-template name="identifier-record"/>
+        
+        <!-- .. the Instance record (indefinite, so it can't be
+             allocated; limited, so people can't assign it) .. -->
+        <xsl:text>  type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        
+        <!-- .. the Handle .. -->
+        <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
+        
+        <!-- .. the creation, simple find, and deletion operations .. -->
+        <xsl:call-template name="create-function-spec"/>
+        <xsl:text>  function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+        <xsl:text>  procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
+        <xsl:text>  procedure Delete (This : in out Handle);&#10;</xsl:text>
+        
+        <!-- .. subtype enumeration support, if required .. -->
+        <xsl:call-template name="supertype-specs"/>
+        
+      </xsl:when>
 
-      <!-- .. the Handle .. -->
-      <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
+      <xsl:when test="not(singleton)">
 
-      <!-- .. the creation, simple find, and deletion operations .. -->
-      <xsl:call-template name="create-function-spec"/>
-      <xsl:text>  function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
-      <xsl:text>  procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
-      <xsl:text>  procedure Delete (This : in out Handle);&#10;</xsl:text>
+        <!-- .. the Instance record (indefinite, so it can't be
+             allocated; limited, so people can't assign it) .. -->
+        <xsl:text>  type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        
+        <!-- .. the Handle .. -->
+        <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
+        
+        <!-- .. the find operation .. -->
+        <xsl:text>  function Find return Handle;&#10;</xsl:text>
 
-      <!-- .. subtype enumeration support, if required .. -->
-      <xsl:call-template name="supertype-specs"/>
+      </xsl:when>
 
-    </xsl:if>
+    </xsl:choose>
 
     <!-- .. the attribute access operations .. -->
     <xsl:apply-templates mode="attribute-set-spec"/>
@@ -72,17 +90,24 @@
     <!-- .. any access-to-subprogram types .. -->
     <xsl:apply-templates mode="access-to-operation"/>
 
+    <!-- .. operations .. -->
+    <xsl:apply-templates mode="operation-spec"/>
+
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
     
-    <xsl:choose>    
- 
+    <xsl:if test="@active">
+      <xsl:call-template name="task-spec"/>
+    </xsl:if>
+    
+    <!-- .. the Instance record .. -->
+    <xsl:call-template name="instance-record"/>
+
+    <xsl:choose>
+
       <!-- There can be multiple instances, unless this is a singleton -->
       <xsl:when test="not(@singleton)">
-
-        <!-- .. the Instance record .. -->
-        <xsl:call-template name="instance-record"/>
-
+        
         <!-- Use a fixed (effectively, static) storage pool if this is
              a bounded class.
              We have to use the GNAT 'Object_Size because 'Size is the
@@ -93,18 +118,18 @@
           <xsl:value-of select="@max"/>
           <xsl:text>;&#10;</xsl:text>
         </xsl:if>
-
+        
         <!-- .. basic Container instantiation for Maps -->
         <xsl:text>  package Abstract_Map_Containers is new BC.Containers (Handle);&#10;</xsl:text>
-
+        
         <!-- .. the Hash function spec .. -->
         <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
         
         <!-- .. Container instantiations .. -->
         <xsl:text>  package Abstract_Maps is new Abstract_Map_Containers.Maps (Identifier);&#10;</xsl:text>
-
+        
         <xsl:choose>
-
+          
           <xsl:when test="@max">
             <!-- Wnen there's a maximum size, use the Bounded version -->
             <xsl:text>  package Maps is new Abstract_Maps.Bounded&#10;</xsl:text>
@@ -116,7 +141,7 @@
             <xsl:value-of select="./@max"/>
             <xsl:text>);&#10;</xsl:text>
           </xsl:when>
-
+          
           <xsl:otherwise>
             <!-- Use the Unbounded version -->
             <xsl:text>  package Maps is new Abstract_Maps.Unbounded&#10;</xsl:text>
@@ -127,20 +152,18 @@
             <xsl:text>      Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
             <xsl:text>      Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
           </xsl:otherwise>
-
+          
         </xsl:choose>
-
+        
         <!-- .. the instance container .. -->
         <xsl:text>  The_Container : Maps.Map;&#10;</xsl:text>
         
       </xsl:when>
-
-      <!-- if there is no identifier, there can only be one instance -->
-      <xsl:when test="attribute">
-        <xsl:call-template name="instance-record"/>
-        <xsl:text>  This : Instance;&#10;</xsl:text>
+      
+      <xsl:when test="@singleton">
+        <xsl:text>  This : aliased Instance;&#10;</xsl:text>
       </xsl:when>
-
+      
     </xsl:choose>
 
     <!-- .. and close. -->
@@ -162,28 +185,26 @@
       <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Check for Unbounded_Strings. -->
     <xsl:if test="attribute/type='Unbounded_String'
                   or operation/parameter/type='Unbounded_String'
                   or attribute/type='Text'
                   or operation/parameter/type='Text'">
-      <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Check for Ada.Calendar. -->
     <xsl:if test="attribute/type='Date'
                   or operation/parameter/type='Date'
                   or attribute/type='Time'
                   or operation/parameter/type='Time'">
-      <!-- The above imply use of Ada.Calendar. -->
       <xsl:text>with Ada.Calendar;</xsl:text>
       <xsl:text> use Ada.Calendar;&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Choose the appropriate Map (unless this is a singleton). -->
     <xsl:if test="not(@singleton)">
-
-
-      <!-- Choose the appropriate Map -->
 
       <xsl:choose>
 
@@ -203,13 +224,12 @@
 
     </xsl:if>
 
+    <!-- Include "with type" for referential attributes. -->
     <!--XXX why doesn't this work always?<xsl:for-each
       select="attribute[@refers
               and not(@refers=preceding::attribute/@refers)]">-->
     <xsl:for-each
       select="attribute[@refers]">
-      <!-- We need the GNAT 'with type' extension to include the
-           handles (for non-singleton classes) -->
       <xsl:sort select="@refers"/>
       <xsl:text>with type </xsl:text>
       <xsl:value-of select="../../name"/>
@@ -217,6 +237,9 @@
       <xsl:value-of select="@refers"/>
       <xsl:text>.Handle is access;&#10;</xsl:text>
     </xsl:for-each>
+
+    <!-- Handle subprograms. -->
+    <xsl:apply-templates mode="operation-context" select="operation"/>
 
   </xsl:template>
 
@@ -311,10 +334,11 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
-    <!-- If it's a singleton with no attributes, there's no body. -->
-    <!-- XXX If it's not a singleton and has no attributes, it doesn't
-         matter very much if it won't compile. -->
-    <xsl:if test="not(@singleton) or attribute">
+    <!-- If it's an inactive singleton with no attributes and no operations,
+         there's no body. -->
+    <!-- XXX If it's not a singleton and has no attributes or operations,
+         it doesn't matter very much if it won't compile. -->
+    <xsl:if test="not(@singleton) or @active or attribute or operation">
 
       <!-- Any context clauses needed for the class body .. -->
       <xsl:call-template name="class-body-context"/>
@@ -324,55 +348,73 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
       
-      <xsl:if test="not(@singleton)">
-        
-        <!-- .. the creation, simple find, and deletion operations .. -->
-        <xsl:call-template name="create-function-body"/>
-        
-        <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-        <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:text>    else&#10;</xsl:text>
-        <xsl:text>      return null;&#10;</xsl:text>
-        <xsl:text>    end if;&#10;</xsl:text>
-        <xsl:text>  end Find;&#10;</xsl:text>
-
-        <xsl:text>  procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
-        <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
-        <xsl:text>    H : Handle;&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:text>    Free (H);&#10;</xsl:text>
-        <xsl:text>  end Delete;&#10;</xsl:text>
-        
-        <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <!-- This check is because of what seems to be a GNAT error for
-             fixed-size storage pools. -->
-        <xsl:text>    if This = null then&#10;</xsl:text>
-        <xsl:text>      raise Constraint_Error;&#10;</xsl:text>
-        <xsl:text>    end if;&#10;</xsl:text>
-        <xsl:text>    Maps.Unbind&#10;</xsl:text>
-        <xsl:text>      (The_Container,&#10;</xsl:text>
-        <xsl:text>       (</xsl:text>
-        <xsl:for-each select="attribute[@identifier='yes']">
-          <xsl:call-template name="attribute-name"/>
-          <xsl:text> =&gt; This.</xsl:text>
-          <xsl:call-template name="attribute-name"/>
-          <xsl:if test="position() &lt; last()">
-            <xsl:text>,&#10;      </xsl:text>
-          </xsl:if>
-        </xsl:for-each>
-        <xsl:text>));&#10;</xsl:text>
-        <xsl:text>    Free (This);&#10;</xsl:text>
-        <xsl:text>  end Delete;&#10;</xsl:text>
-        
-        <!-- .. subtype enumeration support, if required .. -->
-        <xsl:call-template name="supertype-bodies"/>
-        
+      <xsl:if test="@active">
+        <xsl:text>  task body T is separate;&#10;</xsl:text>
       </xsl:if>
+
+      <xsl:choose>
+
+        <xsl:when test="not(@singleton)">
+          
+          <!-- .. the creation, simple find, and deletion operations .. -->
+          <xsl:call-template name="create-function-body"/>
+          
+          <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+          <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+          <xsl:text>    else&#10;</xsl:text>
+          <xsl:text>      return null;&#10;</xsl:text>
+          <xsl:text>    end if;&#10;</xsl:text>
+          <xsl:text>  end Find;&#10;</xsl:text>
+          
+          <xsl:text>  procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
+          <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
+          <xsl:text>    H : Handle;&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <xsl:text>    H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+          <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+          <xsl:text>    Free (H);&#10;</xsl:text>
+          <xsl:text>  end Delete;&#10;</xsl:text>
+          
+          <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <!-- This check is because of what seems to be a GNAT error for
+               fixed-size storage pools. -->
+          <xsl:text>    if This = null then&#10;</xsl:text>
+          <xsl:text>      raise Constraint_Error;&#10;</xsl:text>
+          <xsl:text>    end if;&#10;</xsl:text>
+          <xsl:text>    Maps.Unbind&#10;</xsl:text>
+          <xsl:text>      (The_Container,&#10;</xsl:text>
+          <xsl:text>       (</xsl:text>
+          <xsl:for-each select="attribute[@identifier='yes']">
+            <xsl:call-template name="attribute-name"/>
+            <xsl:text> =&gt; This.</xsl:text>
+            <xsl:call-template name="attribute-name"/>
+            <xsl:if test="position() &lt; last()">
+              <xsl:text>,&#10;      </xsl:text>
+            </xsl:if>
+          </xsl:for-each>
+          <xsl:text>));&#10;</xsl:text>
+          <xsl:text>    Free (This);&#10;</xsl:text>
+          <xsl:text>  end Delete;&#10;</xsl:text>
+          
+          <!-- .. subtype enumeration support, if required .. -->
+          <xsl:call-template name="supertype-bodies"/>
+          
+        </xsl:when>
+
+        <xsl:when test="@singleton">
+
+          <!-- XXX Uses a GNAT-specific attribute. -->
+          <xsl:text>  function Find return Handle is&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <xsl:text>    return This'Unrestricted_Access;&#10;</xsl:text>
+          <xsl:text>  end Find;&#10;</xsl:text>
+
+        </xsl:when>
+
+      </xsl:choose>
       
       <!-- .. attribute accessors .. -->
       <xsl:apply-templates mode="attribute-set-body"/>
@@ -384,6 +426,9 @@
         <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
         
       </xsl:if>
+
+      <!-- .. operation stubs .. -->
+      <xsl:apply-templates mode="operation-body-stub"/>
       
       <!-- and close. -->
       <xsl:text>end </xsl:text>
@@ -398,6 +443,19 @@
       </xsl:if>
       
     </xsl:if>
+
+    <xsl:if test="@active">
+      <xsl:text>separate (</xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text>)&#10;</xsl:text>
+      <xsl:text>task body T is&#10;</xsl:text>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:text>  raise Program_Error;&#10;</xsl:text>
+      <xsl:text>end T;&#10;</xsl:text>
+    </xsl:if>
+
+    <!-- Child subprogram bodies for individual operations. -->
+    <xsl:apply-templates select="operation" mode="operation-body"/>
 
   </xsl:template>
 
@@ -573,6 +631,54 @@
       </xsl:otherwise>
 
     </xsl:choose>
+
+  </xsl:template>
+
+
+  <!-- Called from domain/class to generate a task spec. -->
+  <xsl:template name="task-spec">
+    <!--
+         task type t (this : access instance) is
+           entry e (parameters);
+         end t;
+         -->
+    <xsl:text>  task type T (This : access Instance) is&#10;</xsl:text>
+    <xsl:apply-templates mode="task-entry" select="operation"/>
+    <xsl:text>  end T;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Generate task entry specs. -->
+  <xsl:template mode="task-entry" match="operation[not(@return)]">
+    <xsl:text>    entry </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:call-template name="entry-parameter-list">
+      <xsl:with-param name="indent" select="'      '"/>
+    </xsl:call-template>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template mode="task-entry" match="*"/>
+
+
+  <!-- Called from class/operation to generate an entry parameter list -->
+  <xsl:template name="entry-parameter-list">
+    <xsl:param name="indent" select="''"/>
+
+    <!-- In Ada, an empty parameter list is void (not "()" as in C).
+         If the operation has parameters, we clearly need a parameter
+         list here! -->
+    <xsl:if test="parameter">
+
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$indent"/>
+      <xsl:text>(</xsl:text>
+      <xsl:apply-templates mode="parameter">
+        <xsl:with-param name="indent" select="$indent"/>
+      </xsl:apply-templates>
+      <xsl:text>)</xsl:text>
+
+    </xsl:if>
 
   </xsl:template>
 
