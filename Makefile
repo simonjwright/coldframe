@@ -75,6 +75,7 @@ pdf:: $(PDFS)
 DATE = $(shell date +%Y%m%d)
 
 DOCS = architecture.html \
+bugs.html \
 directions.html \
 index.html \
 principles.html \
