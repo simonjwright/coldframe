@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 1b5cbea3fc57 $} 
+|{revision = $Revision: fba6f911e175 $} 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1460,20 +1460,73 @@
 				client     	@36
 				supplier   	@41
 				line_style 	0
-				x_offset   	FALSE)))))))
+				x_offset   	FALSE))))))
+	(object Class "Timer Task Teardown"
+	    quid       	"40E4E8A00210"
+	    stereotype 	"active, singleton"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"40E4E9D500D4"
+		    stereotype 	"class event"
+		    label      	"E1"
+		    supplier   	"Logical View::Event Test::Dummy"
+		    quidu      	"40E4E98E00F0")
+		(object Uses_Relationship
+		    quid       	"40E4EA3D0246"
+		    stereotype 	"class event"
+		    label      	"E2"
+		    supplier   	"Logical View::Event Test::Dummy"
+		    quidu      	"40E4E98E00F0"))
+	    operations 	(list Operations
+		(object Operation "e1 handler"
+		    quid       	"40E4EA5700D1"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"40E4EA730031"
+			    type       	"E1"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "e2 handler"
+		    quid       	"40E4EA730013"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "e"
+			    quid       	"40E4EA890051"
+			    type       	"E2"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "start"
+		    quid       	"40E4EA89003D"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "start"
+		    quid       	"40E4EA9800B7"
+		    stereotype 	"entry"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    concurrency 	"Active")
+	(object Class "Dummy"
+	    quid       	"40E4E98E00F0"
+	    documentation 	"{null}"
+	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3CEA588102B7"
 	    title      	"Main"
 	    documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 1b5cbea3fc57 $} 
+|{revision = $Revision: fba6f911e175 $} 
 	    
-	    zoom       	100
+	    zoom       	87
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	720
+	    origin_y   	2012
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Event Test::Recipient" @44
 		    ShowCompartmentStereotypes 	TRUE
@@ -1492,19 +1545,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@44
-			location   	(997, 734)
+			location   	(957, 712)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	856
+			max_width  	936
 			justify    	0
 			label      	"Recipient")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@44
-			location   	(997, 689)
+			location   	(957, 663)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	856
+			max_width  	936
 			justify    	0
 			label      	"<<singleton>>")
 		    icon_style 	"Label"
@@ -1513,7 +1566,7 @@
 		    quidu      	"3CEA5887005D"
 		    compartment 	(object Compartment
 			Parent_View 	@44
-			location   	(997, 790)
+			location   	(957, 772)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1527,9 +1580,9 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	11
-			max_width  	859)
-		    width      	874
-		    height     	624
+			max_width  	934)
+		    width      	954
+		    height     	678
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Event Test::Content" @45
@@ -1549,19 +1602,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@45
-			location   	(2640, 900)
+			location   	(2638, 908)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	390
+			max_width  	394
 			justify    	0
 			label      	"Content")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@45
-			location   	(2640, 855)
+			location   	(2638, 859)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	390
+			max_width  	394
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
@@ -1570,7 +1623,7 @@
 		    quidu      	"3CEA58A00152"
 		    compartment 	(object Compartment
 			Parent_View 	@45
-			location   	(2640, 956)
+			location   	(2638, 968)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1584,9 +1637,9 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	367)
-		    width      	408
-		    height     	292
+			max_width  	391)
+		    width      	412
+		    height     	286
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Event Test::Waiting" @46
@@ -1606,19 +1659,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@46
-			location   	(54, 937)
+			location   	(38, 933)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	342
+			max_width  	374
 			justify    	0
 			label      	"Waiting")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@46
-			location   	(54, 892)
+			location   	(38, 884)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	342
+			max_width  	374
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
@@ -1627,7 +1680,7 @@
 		    quidu      	"3D2ED7E302C6"
 		    compartment 	(object Compartment
 			Parent_View 	@46
-			location   	(54, 993)
+			location   	(38, 993)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1641,9 +1694,9 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	347)
-		    width      	360
-		    height     	218
+			max_width  	371)
+		    width      	392
+		    height     	236
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Event Test::Machine" @47
@@ -1663,10 +1716,10 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@47
-			location   	(1356, 1660)
+			location   	(1334, 1636)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	468
+			max_width  	512
 			justify    	0
 			label      	"Machine")
 		    icon_style 	"Label"
@@ -1675,7 +1728,7 @@
 		    quidu      	"3D2EE2D100E8"
 		    compartment 	(object Compartment
 			Parent_View 	@47
-			location   	(1356, 1716)
+			location   	(1334, 1696)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1689,9 +1742,9 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	11
-			max_width  	465)
-		    width      	486
-		    height     	572
+			max_width  	509)
+		    width      	530
+		    height     	622
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object UsesView "Self" @48
@@ -1706,7 +1759,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@48
-			location   	(2186, 1320)
+			location   	(2198, 1314)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1714,7 +1767,7 @@
 			label      	"Self")
 		    stereotype 	(object SegLabel @49
 			Parent_View 	@48
-			location   	(2080, 1254)
+			location   	(2092, 1242)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1738,9 +1791,9 @@
 		    client     	@47
 		    supplier   	@45
 		    vertices   	(list Points
-			(1833, 1670)
+			(1855, 1646)
 			(2130, 1349)
-			(2630, 1092))
+			(2628, 1092))
 		    line_style 	0)
 		(object UsesView "Mark" @50
 		    font       	(object Font
@@ -1754,7 +1807,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@50
-			location   	(2461, 1715)
+			location   	(2467, 1703)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1762,7 +1815,7 @@
 			label      	"Mark")
 		    stereotype 	(object SegLabel @51
 			Parent_View 	@50
-			location   	(2505, 1683)
+			location   	(2361, 1631)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1786,9 +1839,9 @@
 		    client     	@47
 		    supplier   	@45
 		    vertices   	(list Points
-			(1833, 1874)
+			(1855, 1867)
 			(2458, 1721)
-			(2757, 1136))
+			(2758, 1133))
 		    line_style 	0)
 		(object UsesView "Information" @52
 		    font       	(object Font
@@ -1802,7 +1855,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@52
-			location   	(2289, 485)
+			location   	(2309, 504)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1810,7 +1863,7 @@
 			label      	"Information")
 		    stereotype 	(object SegLabel @53
 			Parent_View 	@52
-			location   	(2284, 426)
+			location   	(2203, 432)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1834,9 +1887,9 @@
 		    client     	@44
 		    supplier   	@45
 		    vertices   	(list Points
-			(1862, 688)
+			(1902, 660)
 			(2235, 435)
-			(2676, 843))
+			(2680, 846))
 		    line_style 	0)
 		(object UsesView "Wait" @54
 		    font       	(object Font
@@ -1850,7 +1903,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@54
-			location   	(696, 990)
+			location   	(684, 990)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1858,7 +1911,7 @@
 			label      	"Wait")
 		    stereotype 	(object SegLabel @55
 			Parent_View 	@54
-			location   	(696, 931)
+			location   	(578, 918)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1894,7 +1947,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@56
-			location   	(2250, 761)
+			location   	(2269, 768)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1902,7 +1955,7 @@
 			label      	"Self")
 		    stereotype 	(object SegLabel @57
 			Parent_View 	@56
-			location   	(2264, 710)
+			location   	(2163, 696)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1926,9 +1979,9 @@
 		    client     	@44
 		    supplier   	@45
 		    vertices   	(list Points
-			(1862, 852)
+			(1902, 839)
 			(2210, 745)
-			(2630, 908))
+			(2628, 907))
 		    line_style 	0)
 		(object UsesView "Mark" @58
 		    font       	(object Font
@@ -1942,7 +1995,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@58
-			location   	(2247, 1116)
+			location   	(2267, 1111)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1950,7 +2003,7 @@
 			label      	"Mark")
 		    stereotype 	(object SegLabel @59
 			Parent_View 	@58
-			location   	(2239, 1060)
+			location   	(2161, 1039)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1974,12 +2027,12 @@
 		    client     	@44
 		    supplier   	@45
 		    vertices   	(list Points
-			(1862, 1063)
+			(1902, 1069)
 			(2213, 1123)
-			(2630, 1033))
+			(2628, 1033))
 		    line_style 	0)
 		(object CategoryView "Logical View::Event Test" @60
-		    location   	(265, 2230)
+		    location   	(2946, 205)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1991,17 +2044,17 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@60
-			location   	(95, 2146)
+			location   	(2766, 121)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	340
+			max_width  	360
 			justify    	0
 			label      	"Event Test")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA58590211"
-		    width      	352
+		    width      	372
 		    height     	180)
 		(object NoteView @61
 		    location   	(1425, 298)
@@ -2074,13 +2127,13 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v 1b5cbea3fc57 2004/03/16 17:43:56 simon $")
+		    label      	"$Id: Event_Test.cat,v fba6f911e175 2004/07/02 05:13:13 simon $")
 		(object ClassView "Class" "Logical View::Event Test::Completion Transitions" @66
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1578, 2891)
+		    location   	(1581, 2673)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2092,19 +2145,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@66
-			location   	(1257, 2748)
+			location   	(1225, 2518)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	642
+			max_width  	712
 			justify    	0
 			label      	"Completion Transitions")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@66
-			location   	(1257, 2703)
+			location   	(1225, 2469)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	642
+			max_width  	712
 			justify    	0
 			label      	"<<singleton>>")
 		    icon_style 	"Icon"
@@ -2113,7 +2166,7 @@
 		    quidu      	"4056C8C901DD"
 		    compartment 	(object Compartment
 			Parent_View 	@66
-			location   	(1257, 2804)
+			location   	(1225, 2578)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2127,13 +2180,13 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	6
-			max_width  	640)
-		    width      	660
-		    height     	398
+			max_width  	710)
+		    width      	730
+		    height     	432
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object NoteView @67
-		    location   	(655, 2890)
+		    location   	(658, 2672)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2145,7 +2198,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@67
-			location   	(245, 2829)
+			location   	(248, 2611)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	785
@@ -2160,4 +2213,197 @@
 		    line_color 	3342489
 		    client     	@67
 		    supplier   	@66
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Event Test::Timer Task Teardown" @69
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1574, 3315)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@69
+			location   	(1257, 3184)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	634
+			justify    	0
+			label      	"Timer Task Teardown")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@69
+			location   	(1257, 3135)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	634
+			justify    	0
+			label      	"<<active, singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40E4E8A00210"
+		    compartment 	(object Compartment
+			Parent_View 	@69
+			location   	(1257, 3244)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	632)
+		    width      	652
+		    height     	384
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Event Test::Dummy" @70
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(525, 3326)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@70
+			location   	(433, 3298)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	184
+			justify    	0
+			label      	"Dummy")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@70
+			location   	(433, 3249)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	181
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40E4E98E00F0"
+		    width      	202
+		    height     	178
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "E1" @71
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@71
+			location   	(932, 3178)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"E1")
+		    stereotype 	(object SegLabel @72
+			Parent_View 	@71
+			location   	(826, 3106)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	1.066751
+			height     	55
+			orientation 	1)
+		    line_color 	3342489
+		    quidu      	"40E4E9D500D4"
+		    client     	@69
+		    supplier   	@70
+		    vertices   	(list Points
+			(1247, 3234)
+			(965, 3166)
+			(626, 3288))
+		    line_style 	0)
+		(object UsesView "E2" @73
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@73
+			location   	(936, 3410)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"E2")
+		    stereotype 	(object SegLabel @74
+			Parent_View 	@73
+			location   	(830, 3338)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.493173
+			height     	63
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"40E4EA3D0246"
+		    client     	@69
+		    supplier   	@70
+		    vertices   	(list Points
+			(1247, 3371)
+			(980, 3419)
+			(626, 3346))
 		    line_style 	0)))))
