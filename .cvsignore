@@ -4,7 +4,9 @@ cf-*.tgz cf-*.zip
 *.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 b~*.ad[bs]
 *.norm
-use-cases.html coldframe-architecture.html
+coldframe-architecture.html
+releases.html
+use-cases.html
 *.pdf
 dist
 *.gen
