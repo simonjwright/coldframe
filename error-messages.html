@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: error-messages.html,v 53d98851fe1c 2005/02/06 18:50:46 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -81,6 +81,10 @@ variable-length (<tt>max</tt>)).
 <dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>{source}</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
 <dt>Error: no index type for array type <i>type</i> <dd>You must specify the type of the index of an array.
+
+<dt>Error: operation <i>class.name</i> can't be class and teardown <dd>Teardown operations are per-instance.
+
+<dt>Error: operation <i>class.name</i> can't be abstract and an accessor <dd>Accessor operations have to be concrete.
 
 <dt>Error: protected type <i>type</i> has no attributes <dd>A protected type must have attributes.
 
