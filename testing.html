@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 0da767e379a3 2005/03/04 06:44:22 simon $ -->
+<!-- $Id: testing.html,v a92a1ad00cfe 2005/03/05 22:00:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -193,7 +193,57 @@ as specified.
                                Overhead_Bytes : Natural := Storage_Overhead);
 </pre>
 
+<p>If the stubbed code has input parameters of type <i><tt>T</tt></i>
+and you want to check that your code has supplied the right values,
+instantiate <tt>ColdFrame.Stubs.Get_Input_Value</tt> with
+<i><tt>T</tt></i>.
+
+<pre>
+   --  Retrieve values passed to stubbed operations for the type T.
+   --
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
+   --  Domain.Class.Operation, "Domain.Class.Operation").
+   --
+   --  The named parameter will be an "in" (perhaps "in out")
+   --  parameter. To retrieve the result of the second call, you'd say
+   --
+   --     Result := Get_Integer_Operation_Input_Value
+   --       ("Domain.Class.Operation", "Input", 2);
+   generic
+      type T (<>) is private;
+   function Get_Input_Value (For_Subprogram_Named : String;
+                             For_Parameter_Named : String;
+                             For_Call : Positive := 1) return T;
+</pre>
+
 <h4>Test Procedure support</h4>
+
+<p>Call your instantiations of <tt>Set_Output_Value</tt> to set up
+the results of calls to stubbed subprograms.
+
+<p>Call <tt>ColdFrame.Stubs.Set_Exception</tt> if you want the stubbed
+code to raise an exception in a stubbed subprogram.
+
+<pre>
+   --  Specify that a call to a stubbed operation is to raise an
+   --  exception.
+   --
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
+   --  Domain.Class.Operation, "Domain.Class.Operation").
+   --
+   --  Normally the exception will be raised for the specified call
+   --  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
+   procedure Set_Exception (For_Subprogram_Named : String;
+                            E : Ada.Exceptions.Exception_Id;
+                            For_Call : Positive := 1);
+</pre>
+
+<p>Call your code as required.
+
+<p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
+any parameters input to stubbed subprograms..
 
 <p><hr>
 <i>
