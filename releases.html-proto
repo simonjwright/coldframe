@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6e016c9fc7d2 2003/11/02 19:38:43 simon $ -->
+<!-- $Id: releases.html-proto,v 8d9e6285ba28 2003/11/11 20:10:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,16 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>There was a memory leak if an exception should occur in a callback
+routine.
+
+
+<p>The generated separate bodies of operations of types didn't include
+any documentation comments.
+
+
+<p><dt>20031102
 
 <dd>Improved the default error logging (stop concurrent access
 mangling the output; flush the output after each message).
