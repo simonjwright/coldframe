@@ -67,7 +67,6 @@ else
   CHOP_VERBOSE = -q
 endif
 
-ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
@@ -75,13 +74,12 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
 	@echo generating $@ ...
-	@$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	  TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
 	    --version cf-DATE \
-	    >$@ || (rm -f $@; exit 1)
+	    <$< >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm
 	@echo generating $@ ...
