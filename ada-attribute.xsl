@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-attribute.xsl,v c4049088a74e 2005/02/02 05:49:04 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -380,6 +380,9 @@
       <xsl:value-of select="initial"/>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="ut:commentary">
+      <xsl:with-param name="indent" select="$indent"/>
+    </xsl:call-template>
   </xsl:template>
 
 
