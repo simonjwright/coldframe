@@ -1,5 +1,6 @@
 comp_opt=-gnatqQafy -gnatwaL -O2
-gnatmake_opt=-g -k -m
+bind_opt=-E
+gnatmake_opt=-g -j2 -k -m
 main=hierarchies-harness
 main_unit=hierarchies-harness
 build_dir=/home/simon/cf/.build/
@@ -13,8 +14,7 @@ run_cmd=${main}
 src_dir=../Hierarchies.impl/
 src_dir=../Hierarchies.test/
 src_dir=../Hierarchies.gen/
-src_dir=/usr/local/lib/cf-20020513a/lib/
-src_dir=/usr/local/lib/cf-20020513a/project/
+src_dir=../
 src_dir=${HOME}/bc/
 src_dir=/home/simon/aunit-1.01/aunit/framework/
 src_dir=/home/simon/aunit-1.01/aunit/text_reporter/
