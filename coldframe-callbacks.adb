@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 1e4488bbaa25 $
---  $Date: 2001/11/17 06:05:09 $
+--  $Revision: 8e43dd8e8891 $
+--  $Date: 2002/10/11 05:35:35 $
 --  $Author: simon $
 
 package body ColdFrame.Callbacks is
@@ -51,8 +51,6 @@ package body ColdFrame.Callbacks is
       begin
          OK := True;
          The_Callback.all (With_Param);
-      exception
-         when others => null;  --  should actually log this!
       end Process;
    begin
       Process_All (It);
