@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 1ddabb03bdc5 2004/09/04 14:12:28 simon $ -->
+<!-- $Id: serialization.html,v 73d22ff87970 2004/10/23 16:36:17 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -87,8 +87,8 @@ the value as a (set of) XML elements.
 </dl>
 
 <p><tt>{field-image}</tt> would be best used for types with structure
-(for example, an array, either specified in ColdFrfame using
-<i>{array}</i> or <i>{imported}</i>).
+which ColdFrame isn't aware of (for example, an <i>{imported}</i>
+array).
 
 <p>For compatibility with ColdFrame releases up to and including
 20030906, the tag <tt>{image}</tt> is a shorthand for
@@ -122,7 +122,7 @@ generated:
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
       type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
-	 Payload : <i>Domain</i>.<i>T</i>;
+         Payload : <i>Domain</i>.<i>T</i>;
       end record;
       function Image (S : <i>T</i>) return String;
    end <i>Domain</i>.Serializable;
@@ -167,7 +167,7 @@ should be implemented.
 <h3>User-defined <i>image</i> functions</h3>
 
 <p>For most types, ColdFrame can work out how to convert to a textual
-representation for itself. This includes 
+representation for itself. This includes
 
 <ul>
 
@@ -199,11 +199,11 @@ case, you can specify an image function for the type.
 </pre>
 
 <p>You can manage more complex imported types if required (for
-example, arrays). <a href="#serialization.png">In the diagram</a>,
-<i>Foreign</i> is a renaming of type
+example, <i>{imported</i> arrays). <a href="#serialization.png">In the
+diagram</a>, <i>Foreign</i> is a renaming of type
 <tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
-function to use via the tag <i><tt>{field-image}</tt></i>, in
-this case
+function to use via the tag <i><tt>{field-image}</tt></i>, in this
+case
 <tt>{field-image&nbsp;=&nbsp;<i>Other_Domain</i>.Image_Of_Exported}</tt>.
 ColdFrame then expects to be able to call
 <pre>
@@ -336,12 +336,12 @@ is
       use type Ada.Real_Time.Time;
       use type Ada.Real_Time.Time_Span;
       Img : constant String :=
-	Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
+        Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
    begin
       if N'Length &gt; 0 then
-	 return "&lt;field name=""" & N & """&gt;" & Img & "&lt;/field&gt;";
+         return "&lt;field name=""" & N & """&gt;" & Img & "&lt;/field&gt;";
       else
-	 return "&lt;field name=""Payload""&gt;" & Img & "&lt;/field&gt;";
+         return "&lt;field name=""Payload""&gt;" & Img & "&lt;/field&gt;";
       end if;
    end Real_Time_Image;
 </pre>
@@ -409,16 +409,16 @@ the field name parameter set to <tt>"T"</tt>.
 <pre>
    Serialization.Interface.Output
      (Serialization_Demo.Serializable.Sample_A'
-	(Serialization.Serializable_Base with
-	   Payload =>
-	   (I => 42,
-	    F => 0.12345,
-	    B => False,
-	    D => 1.2345,
-	    T => ColdFrame.Project.Calendar.Clock,
-	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-	    N => Serialization_Demo.Name_String_Package.To_Bounded_String
-	      ("bounded"))));
+        (Serialization.Serializable_Base with
+           Payload =>
+           (I => 42,
+            F => 0.12345,
+            B => False,
+            D => 1.2345,
+            T => ColdFrame.Project.Calendar.Clock,
+            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+            N => Serialization_Demo.Name_String_Package.To_Bounded_String
+              ("bounded"))));
 </pre>
 
 <p>This is rather more complex than, in general, it would need to
@@ -428,15 +428,15 @@ out the qualification:
 <pre>
    Serialization.Interface.Output
      (Serializable.Sample_A'
-	(Serialization.Serializable_Base with
-	   Payload =>
-	   (I => 42,
-	    F => 0.12345,
-	    B => False,
-	    D => 1.2345,
-	    T => ColdFrame.Project.Calendar.Clock,
-	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-	    N => Name_String_Package.To_Bounded_String ("bounded"))));
+        (Serialization.Serializable_Base with
+           Payload =>
+           (I => 42,
+            F => 0.12345,
+            B => False,
+            D => 1.2345,
+            T => ColdFrame.Project.Calendar.Clock,
+            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+            N => Name_String_Package.To_Bounded_String ("bounded"))));
 </pre>
 
 <p>Additionally, the demonstration is a tad confusing because of the
@@ -445,16 +445,16 @@ facility had been called <i>Recording</i>, it would look like
 <pre>
    Recording.Interface.Output
      (Serializable.Sample_A'
-	(Recording.Serializable_Base with
-	   Payload =>
-	   (I => 42,
-	    F => 0.12345,
-	    B => False,
-	    D => 1.2345,
-	    T => ColdFrame.Project.Calendar.Clock,
-	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
-	    N => Name_String_Package.To_Bounded_String
-	      ("bounded"))));
+        (Recording.Serializable_Base with
+           Payload =>
+           (I => 42,
+            F => 0.12345,
+            B => False,
+            D => 1.2345,
+            T => ColdFrame.Project.Calendar.Clock,
+            U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+            N => Name_String_Package.To_Bounded_String
+              ("bounded"))));
 </pre>
 
 <p>As a final thought, if we already had a <i>Sample A</i> value (in
@@ -462,7 +462,7 @@ say <tt>Value</tt>), it would be more like
 <pre>
    Recording.Interface.Output
      (Serializable.Sample_A'
-	(Recording.Serializable_Base with Payload => Value));
+        (Recording.Serializable_Base with Payload => Value));
 </pre>
 
 <h3>Outputting the data</h3>
@@ -472,10 +472,10 @@ say <tt>Value</tt>), it would be more like
 <pre>
    declare
       Rec : constant ColdFrame.Project.Serialization.Base'Class :=
-	ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+        ColdFrame.Project.Serialization.Base'Class'Input (Channel);
    begin
       Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
-			    ColdFrame.Project.Serialization.Image (Rec));
+                            ColdFrame.Project.Serialization.Image (Rec));
       Ada.Text_IO.Flush;
    end;
 </pre>
