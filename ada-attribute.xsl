@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 32baa5acc4b9 2001/10/08 18:53:24 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -120,6 +120,7 @@
       <!-- Get function -->
       <xsl:call-template name="attribute-get-header"/>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
 
@@ -164,6 +165,7 @@
       <!-- Set procedure -->
       <xsl:call-template name="attribute-set-header"/>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
 
@@ -218,6 +220,7 @@
       <xsl:text>end Get_</xsl:text>
       <xsl:call-template name="attribute-name"/>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
 
@@ -247,6 +250,7 @@
       <xsl:text>end Set_</xsl:text>
       <xsl:call-template name="attribute-name"/>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v b6cbb8f3fe5d 2001/09/22 05:54:16 simon $ -->
+<!-- $Id: ada-operation.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -85,6 +85,7 @@
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
   </xsl:template>
@@ -248,6 +249,7 @@
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:text> is separate;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
   </xsl:template>

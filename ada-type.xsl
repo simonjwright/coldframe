@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 948b63e967a1 2001/09/28 18:43:09 simon $ -->
+<!-- $Id: ada-type.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -104,6 +104,7 @@
     <xsl:for-each select="$nodes">
       <xsl:sort select="name"/>
       <xsl:call-template name="domain-type"/>
+      <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
     <!-- The set of types output so far -->
