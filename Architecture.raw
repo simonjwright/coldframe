@@ -492,11 +492,8 @@ Often this is necessary to implement a many-to-many association, though it is al
 
 A convenient notation for associative associations is <i>desc_c-(desc_a:desc_b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
 
-At present (12 May 2001) the following are <b>not</b> supported:<br/>
+At present (6 June 2001) the following are <b>not</b> supported:<br/>
 
-1-(1:1)<br/>
-1-(1:1c)<br/>
-1-(1c:1c)<br/>
 m-(anything)</documentation>
 <cardinality>n</cardinality>
 <attributes>
