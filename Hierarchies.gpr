@@ -1,0 +1,31 @@
+--  Project file (GCC-3.1, GNAT-3.15) for ColdFrame
+--  $Id: Hierarchies.gpr,v d04764b99e52 2002/06/08 07:12:41 simon $
+
+with "coldframe";
+with "../bc/bc";
+
+project Hierarchies is
+  
+  for Main use ("hierarchies-harness");
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("Hierarchies.impl",
+		       "Hierarchies.test",
+		       "Hierarchies.gen",
+		       "../aunit-1.01/aunit/**");
+
+  for Object_Dir use ".build";
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-m", "-g", "-j2");
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("Ada") use ("-gnatqQafy", "-gnatwaL", "-O2");
+  end Compiler;
+
+  package Binder is
+     for Default_Switches ("Ada") use ("-E");
+  end Binder;
+
+end Hierarchies;
