@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 3120000f13a1 2003/05/13 20:09:57 simon $ -->
+<!-- $Id: ada-operation.xsl,v 02a752d241f7 2003/05/15 21:18:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -97,6 +97,13 @@
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
+
+      <xsl:if test="@accessor">
+        <xsl:value-of select="$I"/>
+        <xsl:text>pragma Inline_Always (</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>);&#10;</xsl:text>
+      </xsl:if>
 
       <!-- Specify the Convention, if needed. -->
       <xsl:if test="@convention">
