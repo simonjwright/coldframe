@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f98e63e20a9c 2003/08/30 20:10:18 simon $ -->
+<!-- $Id: ada-state.xsl,v bf02ff5afe0e 2003/08/30 20:30:56 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -309,8 +309,8 @@
   <xsl:template name="state-body-context">
 
     <!-- The initial state automatically enters the next state if there's an
-         unguarded transtion. If so, and if there are actions in that state,
-         we need a Creation event. -->
+         unguarded transtion. If so, and if there are actions with parameters
+         in that state, we need a Creation event. -->
     
     <!-- the initial state .. -->
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
@@ -318,8 +318,12 @@
     <xsl:variable
       name="next"
       select="statemachine/transition[source=$init and not(event)]/target"/>
+    <!-- .. the actions of that state (none on the transition, I hope) .. -->
+    <xsl:variable
+      name="action"
+      select="statemachine/state[name=$next]/action"/>
 
-    <xsl:if test="statemachine/state[name=$next]/action">
+    <xsl:if test="operation[name=$action]/parameter">
       <xsl:text>with ColdFrame.Project.Events.Creation;&#10;</xsl:text>
     </xsl:if>
     
@@ -609,7 +613,12 @@
       <xsl:value-of select="$III"/>
       <xsl:text>This : Handle renames Result;&#10;</xsl:text>
 
-      <xsl:if test="statemachine/state[name=$tr/target]/action">
+      <!-- the entry actions of the target state .. -->
+      <xsl:variable
+        name="action"
+        select="statemachine/state[name=$tr/target]/action"/>
+
+      <xsl:if test="operation[name=$action]/parameter">
         <xsl:value-of select="$III"/>
         <xsl:text>Ev : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
       </xsl:if>
