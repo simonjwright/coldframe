@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v d38142966355 2003/05/25 17:23:56 simon $ -->
+<!-- $Id: support.html,v 24f948ddfd32 2003/07/24 20:57:16 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -22,6 +22,19 @@
 package <tt>ColdFrame</tt>. The more user-interesting ones are
 
 <dl>
+
+<dt><tt>ColdFrame.Bounded_Storage_Pools</tt>
+
+<dd>Used in place of the <tt>'Storage_Size</tt> attribute for access
+types; it provides the mutual exclusion omitted from GNAT up to
+3.16a1, and fills allocated memory with improbable data
+(<tt>16#deadbeef#</tt>).
+
+<dt><tt>ColdFrame.Unbounded_Storage_Pools</tt>
+
+<dd>Provides a storage pool which uses the standard system memory
+allocator but fills allocated memory with improbable data
+(<tt>16#deadbeef#</tt>).
 
 <dt><tt>ColdFrame.Callbacks</tt>
 
@@ -185,7 +198,7 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 <dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with time
 support from <tt>ColdFrame.Project.Times</tt>, logging from
 <tt>ColdFrame.Project.Logging_Support</tt>, and storage from
-<tt>ColdFrame.Project.Global_Storage_Pool</tt>.
+<tt>ColdFrame.Project.Storage_Pools</tt>.
 
 <br>Three concrete instantiations are provided:
 <dl>
@@ -222,11 +235,16 @@ which prints what's going on)..
 <dd>A standard instantiation of
 <tt>ColdFrame.Events_G.Creation_G</tt>.
 
-<dt><tt>ColdFrame.Project.Global_Storage_Pool</tt>
+<dt><tt>ColdFrame.Project.Storage_Pools</tt>
 
-<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
-the standard system <tt>malloc</tt> pool, suitable for instantiating
-<a href="use-of-bcs.html">Booch Containers</a>.
+<dd>Provides a Bounded_Pool type and an Unbounded_Pool type and
+instance. The Bounded type is used for allocating instances of classes
+whose maximum extent is known, while the Unbounded type is used for
+all other allocations.
+
+<br>The supplied version accesses
+<tt>ColdFrame.Bounded_Storage_Pools</tt>,
+<tt>ColdFrame.Unbounded_Storage_Pools</tt>.
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
