@@ -40,15 +40,15 @@ procedure Problem_Reporting.Interface.Report_Problems is
     function Select_Defect (D : Defect.Handle) return Boolean is
     begin
       -- yes, if its Component is the one we're presently processing.
-      return Component."=" (Defect.Get_C_Handle_R100 (D), C);
+      return Component."=" (Defect.Get_R100_Affects_C (D), C);
     end Select_Defect;
 
     -- Process a single Defect
     procedure Process_Defect (D : Defect.Handle; OK : out Boolean) is
       Diag : constant Diagnosed_Problem_Report.Handle
-         := Defect.Get_DPR_Handle_R100 (D);
+         := Defect.Get_R100_Is_Affected_By_DPR (D);
       Pr : constant Problem_Report.Handle
-         := Diagnosed_Problem_Report.Get_PR_Handle_R1 (Diag);
+         := Diagnosed_Problem_Report.Get_R1_Child_Of_PR (Diag);
     begin
 
       -- OK to continue with iteration

@@ -16,14 +16,14 @@ begin
   -- Subtype migration to Rejected Problem Report.
 
   -- Delete the existing Unallocated Problem Report.
-  Unallocated_Problem_Report.Delete ((PR_Handle_R1 => H));
+  Unallocated_Problem_Report.Delete ((R1_Child_Of_PR => H));
 
   -- Indicate that the new subtype is Rejected.
   Problem_Report.Set_Child_Class
      (H, Problem_Report.Rejected_Problem_Report_T);
 
   -- Create the new Rejected Problem Report.
-  R := Rejected_Problem_Report.Create ((PR_Handle_R1 => H));
+  R := Rejected_Problem_Report.Create ((R1_Child_Of_PR => H));
 
   -- Store the additional details.
   Rejected_Problem_Report.Set_Rejection_Reason

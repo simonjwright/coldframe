@@ -26,6 +26,6 @@ begin
      (H, Problem_Report.Unallocated_Problem_Report_T);
 
   -- Create the corresponding Unallocated Problem Report
-  U := Unallocated_Problem_Report.Create ((PR_Handle_R1 => H));
+  U := Unallocated_Problem_Report.Create ((R1_Child_Of_PR => H));
 
 end Problem_Reporting.Interface.Add_Problem;

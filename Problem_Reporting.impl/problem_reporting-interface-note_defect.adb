@@ -31,14 +31,14 @@ begin
       -- Subtype migration: the Problem Report becomes Diagnosed.
 
       -- Delete the old Unallocated Problem Report.
-      Unallocated_Problem_Report.Delete ((PR_Handle_R1 => H));
+      Unallocated_Problem_Report.Delete ((R1_Child_Of_PR => H));
 
       -- Indicate that this Problem Report's subtype is Diagnosed.
       Problem_Report.Set_Child_Class
          (H, Problem_Report.Diagnosed_Problem_Report_T);
 
       -- Create the new Diagnosed Problem Report.
-      D := Diagnosed_Problem_Report.Create ((PR_Handle_R1 => H));
+      D := Diagnosed_Problem_Report.Create ((R1_Child_Of_PR => H));
 
     when Problem_Report.Rejected_Problem_Report_T =>
 
@@ -52,7 +52,7 @@ begin
     when Problem_Report.Diagnosed_Problem_Report_T =>
 
       -- Find the existing Diagnosed Problem Report.
-      D := Diagnosed_Problem_Report.Find ((PR_Handle_R1 => H));
+      D := Diagnosed_Problem_Report.Find ((R1_Child_Of_PR => H));
 
   end case;
 
@@ -60,8 +60,8 @@ begin
   C := Problem_Reporting.Component.Find ((Id => +Component_Name));
 
   -- Create a new Defect.
-  Def := Defect.Create ((C_Handle_R100 => C,
-                         DPR_Handle_R100 => D));
+  Def := Defect.Create ((R100_Affects_C => C,
+                         R100_Is_Affected_By_DPR => D));
 
   -- Store the diagnosed Problem in the new Defect.
   Defect.Set_Problem (Def, +Description);
