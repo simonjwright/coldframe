@@ -28,9 +28,10 @@ procedure Performance.Harness is
 begin
 
    T := Clock;
-   D := Clock - T;
-   Put_Line ("no-op:"
-               & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+   for I in 1 .. 25 loop
+      D := Clock - T;
+   end loop;
+   Put_Line ("no-op:" & Duration'Image (D / 25));
 
    declare
       Pr : Person.Handle;
