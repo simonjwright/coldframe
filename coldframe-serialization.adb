@@ -20,14 +20,15 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.adb,v $
---  $Revision: f8620372b3d6 $
---  $Date: 2003/01/19 17:12:55 $
+--  $Revision: dddec39b07b5 $
+--  $Date: 2003/01/22 19:56:38 $
 --  $Author: simon $
 
 package body ColdFrame.Serialization is
 
 
    function Image (S : Base) return String is
+      pragma Warnings (Off, S);
    begin
       return "<" & Base'External_Tag & "/>";
    end Image;
