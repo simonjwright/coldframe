@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v ffbdb9c5fe8b 2002/02/01 20:45:46 simon $ -->
+<!-- $Id: ada-state.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,7 +33,7 @@
 
     <!--
          type {name} (For_The_Instance : access Instance)
-         is new ColdFrame.States.Event_Base (For_The_Instance) with record
+         is new ColdFrame.Events.Event_Base (For_The_Instance) with record
            {argument-name} : {argument-type};
          end record;
          -->
@@ -47,7 +47,7 @@
       <xsl:value-of select="name"/>
       <xsl:text> (For_The_Instance : access Instance)&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>is new ColdFrame.States.Event_Base (For_The_Instance) with </xsl:text>
+      <xsl:text>is new ColdFrame.Events.Event_Base (For_The_Instance) with </xsl:text>
       
       <xsl:choose>
         
@@ -155,7 +155,7 @@
                when {source-state} =>
                   Enter_{target-state} (That, This);
                when {source-state} =>
-                  raise ColdFrame.States.Cant_Happen;
+                  raise ColdFrame.Events.Cant_Happen;
             end case;
          end Handler;
          -->
@@ -168,7 +168,7 @@
                when {source-state} =>
                   Enter_{target-state} (This);
                when {source-state} =>
-                  raise ColdFrame.States.Cant_Happen;
+                  raise ColdFrame.Events.Cant_Happen;
             end case;
          end Handler;
          -->
@@ -216,7 +216,7 @@
         
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>raise ColdFrame.States.Cant_Happen;&#10;</xsl:text>
+          <xsl:text>raise ColdFrame.Events.Cant_Happen;&#10;</xsl:text>
         </xsl:otherwise>
         
       </xsl:choose>
@@ -246,7 +246,7 @@
 
     <xsl:if test="not(@singleton)
       and statemachine/transition[source=$init and not (event)]">
-      <xsl:text>with ColdFrame.States.Creation;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Events.Creation;&#10;</xsl:text>
     </xsl:if>
     
   </xsl:template>
@@ -257,12 +257,12 @@
 
     <!-- non-singleton
          procedure Enter_{state}
-           (This : Handle; What : ColdFrame.States.Event_Base'Class);
+           (This : Handle; What : ColdFrame.Events.Event_Base'Class);
          -->
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.States.Event_Base'Class);
+           (What : ColdFrame.Events.Event_Base'Class);
          -->
 
      <xsl:variable name="s" select="name"/>
@@ -276,10 +276,10 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.States.Event_Base'Class)</xsl:text>
+         <xsl:text>(What : ColdFrame.Events.Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
-         <xsl:text>(This : Handle; What : ColdFrame.States.Event_Base'Class)</xsl:text>
+         <xsl:text>(This : Handle; What : ColdFrame.Events.Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text>;&#10;</xsl:text>
@@ -296,7 +296,7 @@
 
     <!-- non-singleton
          procedure Enter_{state}
-           (This : Handle; What : ColdFrame.States.Event_Base'Class) is
+           (This : Handle; What : ColdFrame.Events.Event_Base'Class) is
          begin
             {entry-action} (This, {event} (What));  -  if has parameter
             {entry-action} (This);                  -  if has no parameter
@@ -307,7 +307,7 @@
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.States.Event_Base'Class) is
+           (What : ColdFrame.Events.Event_Base'Class) is
          begin
             {entry-action} ({event} (What));        -  if has parameter
             {entry-action};                         -  if has no parameter
@@ -329,10 +329,10 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.States.Event_Base'Class)</xsl:text>
+         <xsl:text>(What : ColdFrame.Events.Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
-         <xsl:text>(This : Handle; What : ColdFrame.States.Event_Base'Class)</xsl:text>
+         <xsl:text>(This : Handle; What : ColdFrame.Events.Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text> is&#10;</xsl:text>
@@ -427,7 +427,7 @@
     
     <!-- standard: if there is an unguarded transition from the initial state
          declare
-            Creation : aliased ColdFrame.States.Creation.Event (Result);
+            Creation : aliased ColdFrame.Events.Creation.Event (Result);
          begin
             Enter_{next-state} (Result, Creation);
          end;
@@ -437,7 +437,7 @@
          later. -->
     <!-- singleton: if there is an unguarded transition from the initial state
          declare
-            Creation : aliased ColdFrame.States.Creation.Event (Result);
+            Creation : aliased ColdFrame.Events.Creation.Event (Result);
          begin
             Enter_{next-state} (Creation);
          end;
@@ -453,7 +453,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>declare&#10;</xsl:text>
       <xsl:value-of select="$III"/>
-      <xsl:text>Creation : aliased ColdFrame.States.Creation.Event (Result);&#10;</xsl:text>
+      <xsl:text>Creation : aliased ColdFrame.Events.Creation.Event (Result);&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>begin&#10;</xsl:text>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v fa845e092ffb 2002/02/01 20:44:13 simon $ -->
+<!-- $Id: ada-class.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -63,7 +63,7 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.States.Instance_Base with private;&#10;</xsl:text>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Events.Instance_Base with private;&#10;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
@@ -103,7 +103,7 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.States.Instance_Base with private;&#10;</xsl:text>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Events.Instance_Base with private;&#10;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
@@ -354,7 +354,7 @@
              otherwise, just support for standard Instances. -->
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>with ColdFrame.States;&#10;</xsl:text>          
+            <xsl:text>with ColdFrame.Events;&#10;</xsl:text>          
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
