@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 3dcee0f18eab 2001/05/09 18:57:32 simon $ -->
+<!-- $Id: ada-type.xsl,v fe00ae03610e 2001/05/16 05:35:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -38,16 +38,14 @@
       <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for record domain types; cf class-spec-context. -->
-
-    <xsl:if test="attribute/type='Unbounded_String'
-                  or operation/parameter/type='Unbounded_String'
-                  or attribute/type='Text'
-                  or operation/parameter/type='Text'">
-      <!-- All the above imply use of Unbounded_Strings. -->
-      <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
-      <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
+    <!-- Context for imported types. -->
+    <xsl:if test="imported">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="imported"/>
+      <xsl:text>;&#10;</xsl:text>
     </xsl:if>
+
+    <!-- Context for record domain types; cf class-spec-context. -->
 
     <xsl:if test="attribute/type='Date'
                   or operation/parameter/type='Date'
@@ -56,6 +54,15 @@
       <!-- The above imply use of Ada.Calendar. -->
       <xsl:text>with Ada.Calendar;</xsl:text>
       <xsl:text> use Ada.Calendar;&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:if test="attribute/type='Unbounded_String'
+                  or operation/parameter/type='Unbounded_String'
+                  or attribute/type='Text'
+                  or operation/parameter/type='Text'">
+      <!-- All the above imply use of Unbounded_Strings. -->
+      <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
+      <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>
@@ -88,6 +95,16 @@
             </xsl:if>
           </xsl:for-each>
           <xsl:text>);&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="imported">
+          <xsl:text>  subtype </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text> is </xsl:text>
+          <xsl:value-of select="imported"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>;&#10;</xsl:text>
         </xsl:when>
 
         <xsl:when test="integer">
@@ -155,6 +172,8 @@
         
         <xsl:when test="enumeration"/>
         
+        <xsl:when test="imported"/>
+
         <xsl:when test="integer"/>
 
         <xsl:when test="real"/>

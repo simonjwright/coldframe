@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fd889d50c871 2001/05/11 19:14:22 simon $
+# $Id: normalize-rose.tcl,v fe00ae03610e 2001/05/16 05:35:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -42,12 +42,20 @@ proc normalize {s} {
     set tmp [string tolower $tmp]
     regsub -all {_} "$tmp" " " tmp
     set tmp [split $tmp]
+    set und ""
+    foreach w $tmp {
+	set und \
+	    "$und [string toupper [string index $w 0]][string range $w 1 end]"
+    }
+    regsub -all {[ \t]+} "[string trim $und]" "_" und
+    regsub -all {\.} "$und" " " tmp
+    set tmp [split $tmp]
     set res ""
     foreach w $tmp {
 	set res \
 	    "$res [string toupper [string index $w 0]][string range $w 1 end]"
     }
-    regsub -all {[ \t]+} "[string trim $res]" "_" res
+    regsub -all {[ \t]+} "[string trim $res]" "." res
     return $res
 }
 
@@ -492,8 +500,6 @@ itcl::class Domain {
 
     variable transitiontables
 
-    variable terminators
-
     proc currentDomain {} {return $currentDomain}
 
     constructor {} {
@@ -515,11 +521,7 @@ itcl::class Domain {
 
     method -getDatatypes {} {return $datatypes}
 
-    method -typesfiles {l} {set typesfiles $l}
-
     method -transitiontables {l} {set transitiontables $l}
-
-    method -terminators {l} {set terminators $l}
 
     method -complete {} {
 	$this -generate
@@ -1155,6 +1157,12 @@ itcl::class Datatype {
 	set dataDetail $vs
     }
 
+    # called when the type is imported from some other domain.
+    method -imported {domain} {
+	set dataType "imported"
+	set dataDetail [normalize $domain]
+    }
+
     # called when the type is an integer. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful keys are lower, upper, size
@@ -1177,7 +1185,6 @@ itcl::class Datatype {
 	set dataType "set"
 	set dataDetail [normalize $cls]
     }
-
 
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
@@ -1215,6 +1222,9 @@ itcl::class Datatype {
 		}
 		puts "</$dataType>"
 	    }
+	    imported {
+		putElement imported $dataDetail
+	    }
 	    set {
 		putElement set $dataDetail
 	    }
@@ -1233,15 +1243,7 @@ itcl::class Documentation {
     inherit String
 }
 
-itcl::class Typesfile {
-    inherit Element
-}
-
 itcl::class Transitiontable {
-    inherit Element
-}
-
-itcl::class Terminator {
     inherit Element
 }
 
@@ -1423,14 +1425,6 @@ itcl::class Relationships {
     method -className {} {return "relationships"}
 }
 
-itcl::class Tags {
-    inherit List
-}
-
-itcl::class Terminators {
-    inherit List
-}
-
 itcl::class Transitiontables {
     inherit List
 }
@@ -1469,8 +1463,6 @@ proc elementFactory {tag} {
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
 	role              {return [Role #auto]}
-	terminator        {return [Terminator #auto]}
-	terminators       {return [Terminators #auto]}
 	transitiontable   {return [Transitiontable #auto]}
 	transitiontables  {return [Transitiontables #auto]}
 	type              {return [Type #auto]}
@@ -1517,8 +1509,8 @@ $parser configure \
 	-elementstartcommand startTag \
 	-elementendcommand endTag \
 	-characterdatacommand textInTag
-#$parser parse [read stdin]
-#exit 0
+$parser parse [read stdin]
+exit 0
 if [catch {$parser parse [read stdin]} msg] {
     puts stderr "error: $msg"
     exit 1
