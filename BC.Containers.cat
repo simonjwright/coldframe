@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "BC.Containers"
@@ -19,7 +19,8 @@
 		    result     	"Container"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0)
+		    uid        	0
+		    quidu      	"3B54A50D022E")
 		(object Operation "New_Iterator"
 		    quid       	"3B54A7B7002A"
 		    stereotype 	"abstract"
@@ -30,8 +31,10 @@
 	    abstract   	TRUE
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED803B6"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED803B7"
 		    type       	"function"
 		    initv      	"<>")))
 	(object Parameterized_Class "Iterator"
@@ -67,8 +70,10 @@
 	    abstract   	TRUE
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED803C0"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED803C1"
 		    type       	"function"
 		    initv      	"<>")))
 	(object Parameterized_Class_Utility "generic Visit"
@@ -83,17 +88,21 @@
 		    quid       	"3B54AA99019F"
 		    parameters 	(list Parameters
 			(object Parameter "Using"
+			    quid       	"3E453ED803D1"
 			    type       	"Iterator'Class"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED803D2"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED803D3"
 		    type       	"function"
 		    initv      	"<>")
 		(object Parameter "Apply"
+		    quid       	"3E453ED803D4"
 		    type       	"procedure")))
 	(object Parameterized_Class_Utility "generic Access_Current_Item"
 	    quid       	"3B54AB7C0392"
@@ -114,17 +123,21 @@
 		    quid       	"3B54AC1102A0"
 		    parameters 	(list Parameters
 			(object Parameter "In_The_Iterator"
+			    quid       	"3E453ED803DA"
 			    type       	"Iterator'Class"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED803DB"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED803DC"
 		    type       	"function"
 		    initv      	"<>")
 		(object Parameter "Apply"
+		    quid       	"3E453ED803DD"
 		    type       	"procedure")))
 	(object Parameterized_Class_Utility "generic Visit_With_In_Param"
 	    quid       	"3B54ACB602B4"
@@ -150,21 +163,27 @@
 		    quid       	"3B54ACDB03B6"
 		    parameters 	(list Parameters
 			(object Parameter "Using"
+			    quid       	"3E453ED803E2"
 			    type       	"Iterator'Class")
 			(object Parameter "Param"
+			    quid       	"3E453ED803E3"
 			    type       	"Param_Type"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED803E4"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED803E5"
 		    type       	"function"
 		    initv      	"<>")
 		(object Parameter "Param_Type"
+		    quid       	"3E453ED803E6"
 		    type       	"private")
 		(object Parameter "Apply"
+		    quid       	"3E453ED803E7"
 		    type       	"procedure")))
 	(object Parameterized_Class_Utility "generic Visit_With_In_Out_Param"
 	    quid       	"3B54AE3B028D"
@@ -190,21 +209,27 @@
 		    quid       	"3B54AE8502CE"
 		    parameters 	(list Parameters
 			(object Parameter "Using"
+			    quid       	"3E453ED90006"
 			    type       	"Iterator'Class")
 			(object Parameter "Param"
+			    quid       	"3E453ED90007"
 			    type       	"Param_Type"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    parameters 	(list Parameters
 		(object Parameter "Item"
+		    quid       	"3E453ED90008"
 		    type       	"limited private")
 		(object Parameter "="
+		    quid       	"3E453ED90009"
 		    type       	"function"
 		    initv      	"<>")
 		(object Parameter "Param_Type"
+		    quid       	"3E453ED9000A"
 		    type       	"private")
 		(object Parameter "Apply"
+		    quid       	"3E453ED9000B"
 		    type       	"procedure")))
 	(object Association "$UNNAMED$0"
 	    quid       	"3B54A67702DA"
@@ -238,7 +263,14 @@
 		    ShowOperationSignature 	TRUE
 		    location   	(1936, 640)
 		    font       	(object Font
-			italics    	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(1519, 560)
@@ -253,7 +285,16 @@
 		    quidu      	"3B54A50D022E"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(1519, 621)
+			location   	(1519, 619)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -270,7 +311,14 @@
 		    ShowOperationSignature 	TRUE
 		    location   	(1936, 1328)
 		    font       	(object Font
-			italics    	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(1724, 1173)
@@ -285,7 +333,16 @@
 		    quidu      	"3B54A58C0042"
 		    compartment 	(object Compartment
 			Parent_View 	@2
-			location   	(1724, 1234)
+			location   	(1724, 1232)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -304,9 +361,27 @@
 			(object RoleView "iterates over" @4
 			    Parent_View 	@3
 			    location   	(832, -398)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @5
 				Parent_View 	@4
 				location   	(1799, 810)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -325,6 +400,15 @@
 			    label      	(object SegLabel @6
 				Parent_View 	@4
 				location   	(1971, 810)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -349,6 +433,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(384, 560)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
 			location   	(117, 504)
@@ -363,7 +456,16 @@
 		    quidu      	"3B54A93601E6"
 		    compartment 	(object Compartment
 			Parent_View 	@8
-			location   	(117, 565)
+			location   	(117, 560)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -386,6 +488,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(640, 224)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
 			location   	(137, 168)
@@ -400,7 +511,16 @@
 		    quidu      	"3B54AB7C0392"
 		    compartment 	(object Compartment
 			Parent_View 	@10
-			location   	(137, 229)
+			location   	(137, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -423,6 +543,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(768, 1296)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@12
 			location   	(146, 1240)
@@ -437,7 +566,16 @@
 		    quidu      	"3B54ACB602B4"
 		    compartment 	(object Compartment
 			Parent_View 	@12
-			location   	(146, 1301)
+			location   	(146, 1296)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -460,6 +598,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(768, 1712)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
 			location   	(103, 1656)
@@ -474,7 +621,16 @@
 		    quidu      	"3B54AE3B028D"
 		    compartment 	(object Compartment
 			Parent_View 	@14
-			location   	(103, 1717)
+			location   	(103, 1712)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
