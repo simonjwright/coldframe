@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6db0bf7addef 2001/11/30 20:18:34 simon $ -->
+<!-- $Id: bugs.html,v 09caf94e00cb 2001/12/09 10:37:14 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -6,20 +6,19 @@
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Bugs</h1>
 
-<h2>Outstanding</h2>
+<ul>
+
+<li><a href="#outstanding">Outstanding</a>
+
+<li><a href="#fixed">Fixed</a>
+
+<li><a href="#rejected">Rejected</a>
+
+</ul>
+
+<h2><a name="outstanding">Outstanding</a></h2>
 
 <dl>
-
-<dt>0005 (raised 25.vi.01)
-
-<dd>The translation for active classes fails when the <tt>[[max]]</tt>
-number of instances is specified.
-
-<dt>0006 (raised 25.vi.01)
-
-<dd>The translation for active classes requires users to jump through
-hoops involving <tt>.all'Unrestricted_Access</tt> to get a
-<tt>Handle.</tt>
 
 <dt>0009 (raised 27.vi.01)
 
@@ -72,11 +71,6 @@ dependency.
 <dd>For attributes and operation parameters, it would be good to
 detect missing types (or names).
 
-<dt>0028 (raised 12.x.01)
-
-<dd>The WITH TYPE extension seems to trigger a lot of instability in
-GNAT. An alternative would be better.
-
 <dt>0031 (raised 13.x.01)
 
 <dd>&#171;finalize&#187; operations which are functions or have
@@ -105,7 +99,27 @@ non-singleton party is marked <tt>[[source]]</tt>.
 <dt>0043 (raised 28.xi.01)
 
 <dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
-targetted to specific instances of a particular class.
+targeted to specific instances of a particular class.
+
+<dt>0046 (raised 28.xi.01)
+
+<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
+clear.
+
+<dt>0047 (raised 6.xii.01)
+
+<dd>It might be useful to be able to describe <i>array</i>
+&#171;type&#187;s.
+
+<!-- next: 0048 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.xii.01</h3>
+
+<dl>
 
 <dt>0044 (raised 28.xi.01)
 
@@ -113,19 +127,9 @@ targetted to specific instances of a particular class.
 <tt>Integer</tt>s. This might cause integer overflow under heavy
 long-term use.
 
-<dt>0046 (raised 28.xi.01)
-
-<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
-clear.
-
-<!-- next: 0047 -->
-
 </dl>
 
-<h2>Fixed</h2>
-
 <h3>29.xi.01</h3>
-
 <dl>
 
 <dt>0020 (raised 4.ix.01)
@@ -157,7 +161,8 @@ supported too.
 <dt>0041 (raised 19.xi.01)
 
 <dd><tt>[[callback]]</tt> doesn't work on plain types, you need to use
-a record.
+a record.<br>
+<i>An error is reported.</i>
 
 </dl>
 
@@ -198,6 +203,11 @@ mapped to task entries.
 
 <h3>29.x.01</h3>
 <dl>
+
+<dt>0028 (raised 12.x.01)
+
+<dd>The WITH TYPE extension seems to trigger a lot of instability in
+GNAT. An alternative would be better.
 
 <dt>0032 (raised 28.x.01)
 
@@ -328,6 +338,28 @@ class (resulting in a circular dependency).
 
 </dl>
 
+<h2><a name="rejected">Rejected</a></h2>
+
+<h3>4.xii.01</h3>
+<dl>
+
+<dt>0005 (raised 25.vi.01)
+
+<dd>The translation for active classes fails when the <tt>[[max]]</tt>
+number of instances is specified.<br>
+<i>Can't reproduce this.</i>
+
+<dt>0006 (raised 25.vi.01)
+
+<dd>The translation for active classes requires users to jump through
+hoops involving <tt>.all'Unrestricted_Access</tt> to get a
+<tt>Handle.</tt><br>
+<i>A simple <tt>Handle&nbsp;(This)</tt> type conversion will do the
+trick, not so bad I think.</i>
+
+</dl>
+
+<p>
 <hr>
 <i>
 <address>
