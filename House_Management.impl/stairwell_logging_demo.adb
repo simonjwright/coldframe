@@ -12,13 +12,13 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_logging_demo.adb,v a398ed08aee5 2003/11/15 14:00:05 simon $
+--  $Id: stairwell_logging_demo.adb,v f686a3c11526 2003/11/16 08:23:56 simon $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
 with CArgv;
 with ColdFrame.Exceptions.Symbolic_Traceback;
-with ColdFrame.Logging_Event_Basis.EWS_Page;
+with ColdFrame.Logging_Event_Basis.EWS_Support;
 with ColdFrame.Project.Events.Standard;
 with Digital_IO.HCI;
 with Digital_IO.Initialize;
@@ -173,8 +173,9 @@ procedure Stairwell_Logging_Demo is
 
 begin
 
-   EWS.Dynamic.Register (ColdFrame.Logging_Event_Basis.EWS_Page'Access,
-                         "/events");
+   EWS.Dynamic.Register
+     (ColdFrame.Logging_Event_Basis.EWS_Support.Whole_Page'Access,
+      "/events");
    EWS.Server.Serve (Using_Port => 8080);
 
    Digital_IO.Initialize (Dispatcher);
