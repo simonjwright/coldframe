@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 8d2de5ca6a52 $
---  $Date: 2003/03/16 12:19:08 $
+--  $Revision: 04b082f74c05 $
+--  $Date: 2003/03/22 17:10:30 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -330,17 +330,17 @@ private
    --  Operations to support Wait_Until_Idle. The implementations here
    --  are null.
 
-   procedure Add_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Add_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base);
 
-   procedure Add_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base);
 
    --  Operations to support debug/logging. The implementations here
    --  are null.

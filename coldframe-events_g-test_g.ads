@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 850b06ce0448 $
---  $Date: 2002/09/13 19:59:49 $
+--  $Revision: 04b082f74c05 $
+--  $Date: 2003/03/22 17:10:30 $
 --  $Author: simon $
 
 generic
@@ -95,17 +95,17 @@ private
    end record;
 
 
-   procedure Add_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Posted_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Add_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Held_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base);
 
-   procedure Add_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Timer_Event (On : access Event_Queue_Base);
+   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base);
 
 
 end ColdFrame.Events_G.Test_G;

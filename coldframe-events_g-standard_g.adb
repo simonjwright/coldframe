@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 620f4cb2f23b $
---  $Date: 2003/03/16 16:16:56 $
+--  $Revision: 04b082f74c05 $
+--  $Date: 2003/03/22 17:10:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -83,7 +83,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  We need a dispatching call, in case the queue is actually a
       --  derived type.
-      Add_Posted_Event (Event_Queue_P (On));
+      Note_Addition_Of_Posted_Event (Event_Queue_P (On));
 
       On.The_Excluder.Post (The_Event);
 
@@ -99,7 +99,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  We need a dispatching call, in case the queue is actually a
       --  derived type.
-      Add_Posted_Event (Event_Queue_P (On));
+      Note_Addition_Of_Posted_Event (Event_Queue_P (On));
 
       On.The_Excluder.Post_To_Self (The_Event);
 
@@ -119,7 +119,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  We need a dispatching call, in case the queue is actually a
       --  derived type.
-      Add_Held_Event (Event_Queue_P (On));
+      Note_Addition_Of_Held_Event (Event_Queue_P (On));
 
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
@@ -142,7 +142,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  We need a dispatching call, in case the queue is actually a
       --  derived type.
-      Add_Held_Event (Event_Queue_P (On));
+      Note_Addition_Of_Held_Event (Event_Queue_P (On));
 
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := Time.From_Now (To_Fire_After);
@@ -203,7 +203,7 @@ package body ColdFrame.Events_G.Standard_G is
          end if;
 
          Delete (E);
-         Remove_Posted_Event (The_Queue);
+         Note_Removal_Of_Posted_Event (The_Queue);
          The_Queue.The_Excluder.Done;
 
       end loop;
@@ -224,7 +224,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          --  We need a dispatching call, in case the queue is actually
          --  a derived type.
-         Add_Timer_Event (Event_Queue_P (On));
+         Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
          The_Timer.The_Entry := new Timer_Event (Kind => At_Time.Kind,
                                                  On_Timer => True);
@@ -263,7 +263,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          --  We need a dispatching call, in case the queue is actually
          --  a derived type.
-         Add_Timer_Event (Event_Queue_P (On));
+         Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
          The_Timer.The_Entry := new Timer_Event (Kind => Time.Real_Time,
                                                  On_Timer => True);
@@ -341,9 +341,9 @@ package body ColdFrame.Events_G.Standard_G is
          Held := not Timer_Event (E.all).On_Timer;
          Post (E, The_Queue);
          if Held then
-            Remove_Held_Event (The_Queue);
+            Note_Removal_Of_Held_Event (The_Queue);
          else
-            Remove_Timer_Event (The_Queue);
+            Note_Removal_Of_Timer_Event (The_Queue);
          end if;
       end Process_First_Event;
 

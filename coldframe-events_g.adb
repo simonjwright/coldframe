@@ -20,35 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: b7357f963756 $
---  $Date: 2003/03/09 19:41:10 $
+--  $Revision: 04b082f74c05 $
+--  $Date: 2003/03/22 17:10:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G is
-
-
-   procedure Add_Held_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Held_Event;
-
-
-   procedure Add_Posted_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Posted_Event;
-
-
-   procedure Add_Timer_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Timer_Event;
 
 
    procedure Finalize (The_Lock : in out Lock) is
@@ -201,25 +180,46 @@ package body ColdFrame.Events_G is
    end Log_Retraction;
 
 
-   procedure Remove_Held_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       null;
-   end Remove_Held_Event;
+   end Note_Addition_Of_Held_Event;
 
 
-   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       null;
-   end Remove_Posted_Event;
+   end Note_Addition_Of_Posted_Event;
 
 
-   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       null;
-   end Remove_Timer_Event;
+   end Note_Addition_Of_Timer_Event;
+
+
+   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Note_Removal_Of_Held_Event;
+
+
+   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Note_Removal_Of_Posted_Event;
+
+
+   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Note_Removal_Of_Timer_Event;
 
 
    procedure Start (The_Queue : access Event_Queue_Base) is

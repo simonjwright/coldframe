@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 54196f174754 $
---  $Date: 2003/03/09 15:59:19 $
+--  $Revision: 04b082f74c05 $
+--  $Date: 2003/03/22 17:10:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -68,40 +68,40 @@ package body ColdFrame.Events_G.Test_G is
    end Wait_Until_Idle;
 
 
-   procedure Add_Posted_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Posted_Event;
-   end Add_Posted_Event;
+   end Note_Addition_Of_Posted_Event;
 
 
-   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Posted_Event;
-   end Remove_Posted_Event;
+   end Note_Removal_Of_Posted_Event;
 
 
-   procedure Add_Held_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Held_Event;
-   end Add_Held_Event;
+   end Note_Addition_Of_Held_Event;
 
 
-   procedure Remove_Held_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Held_Event;
-   end Remove_Held_Event;
+   end Note_Removal_Of_Held_Event;
 
 
-   procedure Add_Timer_Event (On : access Event_Queue_Base) is
+   procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Timer_Event;
-   end Add_Timer_Event;
+   end Note_Addition_Of_Timer_Event;
 
 
-   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
+   procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Timer_Event;
-   end Remove_Timer_Event;
+   end Note_Removal_Of_Timer_Event;
 
 
    protected body Event_Count is
