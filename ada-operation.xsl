@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
+<!-- $Id: ada-operation.xsl,v 708737c24742 2001/09/04 05:05:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -613,11 +613,13 @@
     <xsl:param name="current"/>
 
     <!-- 
-         case Get_{relation}_Child_Class (This) is
+         case This.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {return} {child-1}.{operation}
-               (This => {child-1}.Find (({relation}_Child_Of_{parent-abbreviation} => This)){,
+               (This => This.{relation}_Current_Child.The_{child-1}{,
                 other-parameter-assignments});
+           when Null_T =>
+             raise Constraint_Error;
          end case;
          -->
     
@@ -648,9 +650,9 @@
     
     <!-- XXX won't work for partitioned inheritance -->
     <xsl:value-of select="$I"/>
-    <xsl:text>case Get_</xsl:text>
+    <xsl:text>case This.</xsl:text>
     <xsl:value-of select="$rel/name"/>
-    <xsl:text>_Child_Class (This) is&#10;</xsl:text>
+    <xsl:text>_Current_Child.Current is&#10;</xsl:text>
     
     <xsl:for-each select="$rel/child">
       
@@ -667,13 +669,10 @@
       <xsl:text>&#10;</xsl:text>
       
       <xsl:value-of select="$IIIC"/>
-      <xsl:text>(This =&gt; </xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>.Find ((</xsl:text>
+      <xsl:text>(This =&gt; This.</xsl:text>
       <xsl:value-of select="$rel/name"/>
-      <xsl:text>_Child_Of_</xsl:text>
-      <xsl:value-of select="$current/abbreviation"/>
-      <xsl:text> =&gt; This))</xsl:text>
+      <xsl:text>_Current_Child.The_</xsl:text>
+      <xsl:value-of select="."/>
       
       <xsl:for-each select="$op/parameter">
         <xsl:text>,&#10;</xsl:text>
@@ -687,6 +686,11 @@
       <xsl:text>);&#10;</xsl:text>
       
     </xsl:for-each>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>when Null_T =&gt;&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>raise Constraint_Error;&#10;</xsl:text>
     
     <xsl:value-of select="$I"/>
     <xsl:text>end case;&#10;</xsl:text>
