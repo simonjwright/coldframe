@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: generate-html.xsl,v 5d55ff08b235 2002/09/13 19:27:48 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -46,6 +46,9 @@
 
   <!-- Control verbosity: no or yes. -->
   <xsl:param name="verbose" select="'no'"/>
+
+  <!-- Control comment paragraph fill width. -->
+  <xsl:param name="fill-column" select="70"/>
 
 
   <!-- Global shorthands for indentation. -->
