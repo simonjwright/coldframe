@@ -226,7 +226,7 @@ event-use.html \
 extending.html \
 extraction.html \
 faq.html \
-generalizations.html \
+generalizations.html generalizations-extended.html \
 generation.html \
 index.html \
 installation.html \
