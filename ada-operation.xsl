@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-operation.xsl,v 23e0db45bc28 2002/02/23 14:37:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -778,17 +778,17 @@
     <xsl:variable name="att-to-get"
       select="$current/attribute[concat('Get_',name)=$n]"/>
 
+    <!-- The "edit/don't" comments depend on the circumstances, so calculate
+         the heading here for reuse. -->
     <xsl:variable name="heading">
-
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="$current/name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-      
+      <xsl:text>separate (</xsl:text>
+      <xsl:value-of select="../../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$current/name"/>
+      <xsl:text>)&#10;</xsl:text>
+      <xsl:call-template name="subprogram-specification"/>
+      <xsl:text> is&#10;</xsl:text>
+      <xsl:text>begin&#10;</xsl:text>
     </xsl:variable>
 
     <xsl:choose>
