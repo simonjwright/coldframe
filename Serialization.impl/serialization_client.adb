@@ -13,10 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_client.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
+--  $Revision: b5ed8d10bf31 $
+--  $Date: 2005/01/29 06:18:07 $
 --  $Author: simon $
-
 
 with GNAT.IO; use GNAT.IO;
 
@@ -49,7 +48,7 @@ begin
         (Serialization_Demo.Serializable.Unsigned_16'
            (Serialization.Serializable_Base with
               Payload => 16#fffe#));
-     Put_Line ("outputting a Sample_A record");
+      Put_Line ("outputting a Sample_A record");
       Serialization.Interface.Output
         (Serialization_Demo.Serializable.Sample_A'
            (Serialization.Serializable_Base with
