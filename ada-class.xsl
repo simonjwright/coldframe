@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 801e33fc4c61 2001/10/13 13:31:49 simon $ -->
+<!-- $Id: ada-class.xsl,v 98327f0c6c37 2001/10/13 16:41:25 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,11 +40,8 @@
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
 
-    <!-- Include the basis for all instance types if this isn't a
-         singleton, or if it has referential attributes. -->
-    <xsl:if test="not(@singleton) or attribute/@refers">
-      <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
-    </xsl:if>
+    <!-- Include the basis for all instance types. -->
+    <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
 
     <!-- .. the class package .. -->
     <xsl:if test="not(@public)">
@@ -474,9 +471,7 @@
       <xsl:text>_T =&gt;&#10;</xsl:text>
       <xsl:value-of select="$IIII"/>
       <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
-      <xsl:text> : </xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>.Handle;&#10;</xsl:text>
+      <xsl:text> : ColdFrame.Instances.Handle;&#10;</xsl:text>
     </xsl:for-each>
     <xsl:value-of select="$III"/>
     <xsl:text>when Null_T =&gt; null;&#10;</xsl:text>
@@ -674,14 +669,47 @@
   <xsl:template
     match="attribute[@identifier]"
     mode="identifier-element-assignment">
-    <xsl:value-of select="$II"/>
-    <xsl:text>Result.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= With_Identifier.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
+
+    <xsl:choose>
+
+      <xsl:when test="@refers">
+        
+        <!--
+             Result.{attr} := ColdFrame.Instances.Handle
+                (With_Identifier.{attr});
+             -->
+        
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text> := ColdFrame.Instances.Handle&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>(With_Identifier.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>);&#10;</xsl:text>
+    
+      </xsl:when>
+
+      <xsl:otherwise>
+
+        <!--
+             Result.{attr}
+               := With_Identifier.{attr};
+             -->
+        
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>:= With_Identifier.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>;&#10;</xsl:text>
+    
+      </xsl:otherwise>
+
+    </xsl:choose>
+
   </xsl:template>
 
   <xsl:template mode="identifier-element-assignment" match="*"/>
@@ -761,6 +789,18 @@
         <xsl:text>Next_Identifier : Integer := 0;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
 
+        <!--
+             function Create return Handle is
+                Result : Handle;
+                Id : Identifier;
+             begin
+                Result := new Instance;
+                Result.{id} := Next_Identifier;
+                Id.{id} := Next_Identifier;
+                Next_Identifier := Next_Identifier + 1;
+                Maps.Bind (The_Container, Id, Result);
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -783,9 +823,16 @@
         <xsl:text>Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
+
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!--
+                return Result;
+             end Create;
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -793,6 +840,14 @@
       </xsl:when>
 
       <xsl:otherwise>
+
+        <!--
+             function Create (With_Identifier : Identifier) return Handle is
+                Result : Handle;
+             begin
+                Result := new Instance;
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -801,18 +856,32 @@
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
+
         <xsl:apply-templates
           select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
+
+        <!--
+             Maps.Bind (The_Container, With_Identifier, Result);
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
+
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!--
+                return Result;
+             end Create;
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end Create;&#10;</xsl:text>
+
       </xsl:otherwise>
 
     </xsl:choose>
@@ -822,13 +891,13 @@
   <!-- Called from domain/class, within the Create function, to
        set the parents' Current Child record. -->
   <xsl:template name="set-parent-child-info">
-    <xsl:param name="handle" select="'This'"/>
+    <xsl:param name="handle" select="'set-parent-child-info-handle'"/>
 
     <!--
          {parent}.Set_{relation}_Child
-           ({handle}.{relation}_Parent,
-            (Current => {parent}.{child}_T),
-             {abbrev} => {handle});
+           ({parent}.Handle ({handle}.{relation}_Parent),
+            (Current => {parent}.{child}_T,
+             {abbrev} => ColdFrame.Instances.Handle ({handle})));
          -->
     
     <!-- Save the current class -->
@@ -844,10 +913,12 @@
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>(</xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:text>_Parent),&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text> (Current =&gt; </xsl:text>
       <xsl:value-of select="parent"/>
@@ -857,9 +928,9 @@
       <xsl:value-of select="$IIC"/>
       <xsl:text>  </xsl:text>
       <xsl:value-of select="$current/abbreviation"/>
-      <xsl:text> =&gt; </xsl:text>
+      <xsl:text> =&gt; ColdFrame.Instances.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
-      <xsl:text>));&#10;</xsl:text>
+      <xsl:text>)));&#10;</xsl:text>
     </xsl:for-each>
 
   </xsl:template>
@@ -971,7 +1042,7 @@
          case {handle}.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {child-1}.Delete
-               ({handle}.{relation}_Current_Child.{child-1-abbrev};
+               ({child-1}.Handle ({handle}.{relation}_Current_Child.{child-1-abbrev}));
            when Null_T => null;
          end case;
          -->
@@ -1008,12 +1079,14 @@
         <xsl:text>.Delete&#10;</xsl:text>
         <xsl:value-of select="$IIIIC"/>
         <xsl:text>(</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>.Handle (</xsl:text>
         <xsl:value-of select="$handle"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$rel/name"/>
         <xsl:text>_Current_Child.</xsl:text>
         <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
-        <xsl:text>);&#10;</xsl:text>
+        <xsl:text>));&#10;</xsl:text>
 
       </xsl:for-each>
       
@@ -1035,7 +1108,7 @@
 
     <!--
          {parent}.Set_{relation}_Child
-           ({handle}.{relation}_Parent,
+           ({parent}.Handle ({handle}.{relation}_Parent),
             (Current => {parent}.Null_T));
          -->
     
@@ -1052,10 +1125,12 @@
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>(</xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:text>_Parent),&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text> (Current =&gt; </xsl:text>
       <xsl:value-of select="parent"/>
@@ -1106,7 +1181,7 @@
     </xsl:for-each>
 
     <xsl:if test="$identifiers/@refers">
-      <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Hash.Instance_Access_Hash;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:if test="$identifiers/type='Unbounded_String'
@@ -1199,37 +1274,21 @@
         <xsl:when test="@refers">
 
           <!--
-               declare
-                  function H is new ColdFrame.Hash.Access_Hash
-                    ({class}.Instance,
-                     {class}.Handle);
-               begin
-                  Result := Result xor M (H (Id.{name}));
-               end;
+               Result := Result xor M
+                 (ColdFrame.Hash.Instance_Access_Hash
+                  (Id.{name}));
                -->
 
           <xsl:value-of select="$I"/>
-          <xsl:text>declare&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>function H is new ColdFrame.Hash.Access_Hash&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>(</xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>.Instance,&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>.Handle);&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>begin&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>Result := Result xor M (H (Id.</xsl:text>
+          <xsl:text>Result := Result xor M&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Hash.Instance_Access_Hash&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> (Id.</xsl:text>
           <xsl:call-template name="attribute-name">
             <xsl:with-param name="a" select="."/>
           </xsl:call-template>
           <xsl:text>));&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>end;&#10;</xsl:text>
 
         </xsl:when>
 
