@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 98669c250f89 2004/06/12 19:45:39 simon $ -->
+<!-- $Id: generate-ada.xsl,v 08cefee75af3 2004/07/03 11:55:25 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -708,8 +708,6 @@
       <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>
     </xsl:call-template>
     <xsl:call-template name="domain-teardown"/>
-    <xsl:call-template name="event-teardown-spec"/>
-    <xsl:call-template name="event-teardown-body"/>
 
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. done.'"/>
