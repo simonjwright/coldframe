@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 99df852bd66e 2002/04/12 19:00:41 simon $ -->
+<!-- $Id: event-modelling.html,v 0338df9043e8 2002/06/06 22:15:24 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -56,13 +56,13 @@ you can extend the period by pushing again while it's still on.
 <ol type="alpha">
 
 <li>The state model starts at the <i>initial</i> state (the black
-spot). Since the transition from the initial state is unguarded, the
-model immediately transitions to the <i>off</i> state.
+spot). Since the transition from the <i>initial</i> state is
+unguarded, the model immediately transitions to the <i>off</i> state.
 
 <li>On entry to the <i>off</i> state, the entry action <i>turn off</i>
 is executed.
 
-<li>The state model remains in the <t>off</t> state until a <i>push</i>
+<li>The state model remains in the <i>off</i> state until a <i>push</i>
 event occurs. It then transitions to the <i>on</i> state.
 
 <li>On entry to the <i>on</i> state, the entry actions <i>turn on</i>
@@ -139,6 +139,12 @@ needs supporting in the class model.
 timeout</i> and <i>clear timeout</i> correspond to the entry actions
 on the statechart.
 
+<p>Instance entry actions can have a single parameter (aside from the
+implicit <tt>This</tt>): if you specify it, it must be of the event
+type that causes entry to the state concerned, and the actual event
+will be passed at run time. This means you can't use this feature if
+more than one event type can cause entry to the state.
+
 <p>The instance attribute <i>timeout</i>, of the ColdFrame-special
 type <i>Timer</i>, is used to hold timeouts. The concept of operation
 for timeouts is:
@@ -155,8 +161,9 @@ for timeouts is:
 
 </ol>
 
-<p>The timer can be <i>unset</i> at stages b or c; if you do this, the
-event won't be delivered.
+<p>The timer can be <i>unset</i> between the time when it's set and
+the time when the event is handled; if you do this, the event won't be
+delivered.
 
 <h4>Class events</h4>
 
@@ -177,6 +184,9 @@ knows this because
 type.
 
 </ol>
+
+<p>Class events can be <i>set</i> on Timers; you'll probably want to
+make the Timer a <em>&#171;class&#187;</em> attribute.
 
 
 <p><hr>
