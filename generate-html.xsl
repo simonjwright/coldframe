@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v d7ebfff2c6ac 2001/09/17 18:34:11 simon $ -->
+<!-- $Id: generate-html.xsl,v f9b58c84b0c5 2001/09/22 05:55:32 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -232,7 +232,7 @@
 
 
   <!-- Output Operation info. -->
-  <xsl:template match="operation">
+  <xsl:template match="operation[not(generated)]">
      <h5><xsl:value-of select="name"/></h5>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
