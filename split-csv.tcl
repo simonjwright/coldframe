@@ -2,7 +2,24 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: split-csv.tcl,v 630afaac6cae 2004/02/10 06:14:54 simon $
+# Copyright (C) Simon Wright <simon@pushface.org>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+# USA.
+
+# $Id: split-csv.tcl,v 873ac776fc89 2004/02/10 09:44:27 simon $
 
 # Splits a CSV file containing a header line and data lines into
 # multiple CSV files, depending on the value in a particular column.
@@ -32,25 +49,21 @@ exec tclsh "$0" "$@"
 # foo.RIGHT.csv
 #  side,length
 #  RIGHT,0.4
-
-# Copyright (C) Simon Wright <simon@pushface.org>
-
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-# USA.
+# You can name columns 1-n or a-z (anything over z, use the number).
 
 proc process {from baseName col} {
+
+    # convert lettered columns (a-z only) to numbers
+    set col [string tolower $col]
+    if {[regexp {^[a-z]$} $col]} {
+        scan $col %c c
+        scan "a" %c a
+        set col [expr $c - $a + 1]
+    } elseif {![regexp {[0-9]+} $col]} {
+        puts stderr "column $col not recognised"
+        exit 1
+    }
 
     # make a regex which extracts the required column
     set rgx "^"
@@ -76,6 +89,18 @@ proc process {from baseName col} {
                 puts stderr "failed to find column $col in line $l"
 
             } else {
+
+                # remove white space
+                set field [string trim $field]
+
+                # check for sensible content (we don't want hundreds
+                # of files to be created if the user names a numeric
+                # field by mistake!)
+                if {![regexp {^[a-z]} [string tolower $field]]} {
+                    puts stderr "split column contains \"$field\", \
+                                 not splitting"
+                    exit 1
+                }
 
                 # make the file name
                 set file "$baseName.$field.csv"
