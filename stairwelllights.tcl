@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: stairwelllights.tcl,v 7f7e1dcd5c73 2002/12/30 16:57:12 simon $
+# $Id: stairwelllights.tcl,v 6e2c982cb688 2002/12/30 17:59:22 simon $
 # HCI for ColdFrame stairwell lights demo
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"
@@ -8,6 +8,8 @@ set title "Stairwell demo"
 
 wm title . $title
 
+# The image used is Lansing's Castle
+# (http://www.sos.state.mi.us/history/archive/exhibits/barnes.html).
 image create photo pic -file house-2.gif
 
 canvas .c -width 772 -height 691
@@ -20,7 +22,8 @@ pack .c -side top -fill x
 .c create rect 316 487 324 495 -width 1 -outline black -fill gray -tags c
 .c create rect 330 588 338 596 -width 1 -outline black -fill gray -tags d
 
-# buttons; top floor downwards
+# buttons; top floor downwards.
+# pushButton is exported from Ada, the argument is the button number.
 .c bind \
     [.c create rectangle 339 322 347 330 -width 1 -outline black -fill green] \
     <Button-1> {pushButton 0}
@@ -38,6 +41,7 @@ after 100 checkLampProc
 
 proc checkLampProc {} {
     foreach l {a b c d} {
+	# getLampState is excprted from Ada, the argument is the lamp letter.
 	set s [getLampState $l]
 	if {$s} {
 	    .c itemconfigure $l -fill yellow
