@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 27223cbed5e6 2004/10/27 05:28:31 simon $ -->
+<!-- $Id: event-modelling.html,v dd5fd6bb47e4 2004/11/24 20:20:53 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -150,6 +150,10 @@ in fact <i>Set</i> before you can <i>Unset</i> it. To make up for
 this, it guarantees that you can <i>Unset</i> a timer which has in
 fact fired at any point before the corresponding event has actually
 been handled, and the event won't be delivered.
+
+<p>Because you need to be quite sure about whether a timer needs to be
+<i>Unset</i> before being <i>Set</i> again, it's a very good idea
+never to manipulate a timer except in a state machine action.
 
 <h3>Event kinds and payloads</h3>
 
