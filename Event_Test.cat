@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|[[revision : $Revision: 3e71f6536e4b $]] 
+|{revision = $Revision: 014b87e33ada $} 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1065,11 +1065,15 @@
 	(object ClassDiagram "Main"
 	    quid       	"3CEA588102B7"
 	    title      	"Main"
+	    documentation 	
+|This domain contains material for testing ColdFrame's event handling.
+|{revision = $Revision: 014b87e33ada $} 
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	400
+	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Event Test::Recipient" @29
 		    ShowCompartmentStereotypes 	TRUE
@@ -1107,23 +1111,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA5887005D"
-		    compartment 	(object Compartment
-			Parent_View 	@29
-			location   	(997, 790)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	11
-			max_width  	860)
 		    width      	874
 		    height     	624
 		    annotation 	8
@@ -1164,23 +1151,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA58A00152"
-		    compartment 	(object Compartment
-			Parent_View 	@30
-			location   	(2640, 956)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	387)
 		    width      	408
 		    height     	292
 		    annotation 	8
@@ -1221,23 +1191,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2ED7E302C6"
-		    compartment 	(object Compartment
-			Parent_View 	@31
-			location   	(54, 993)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	347)
 		    width      	360
 		    height     	218
 		    annotation 	8
@@ -1269,23 +1222,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2EE2D100E8"
-		    compartment 	(object Compartment
-			Parent_View 	@32
-			location   	(1356, 1716)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	11
-			max_width  	472)
 		    width      	486
 		    height     	572
 		    annotation 	8
@@ -1670,4 +1606,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v 3e71f6536e4b 2003/10/22 19:14:28 simon $")))))
+		    label      	"$Id: Event_Test.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))

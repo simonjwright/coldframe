@@ -8,11 +8,16 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3DA72C880050"
+    documentation 	
+|Demonstration of Interrupt Handling using Ada facilities.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Device"
 	    quid       	"3DA72C9A01AA"
-	    documentation 	"[[ priority :  +1  ; stack : 40000 ]]"
+	    documentation 	"{ priority =  +1, stack = 40000 }"
 	    stereotype 	"singleton"
 	    operations 	(list Operations
 		(object Operation "start"
@@ -340,13 +345,18 @@
 	(object ClassDiagram "Main"
 	    quid       	"3DA72C93031D"
 	    title      	"Main"
+	    documentation 	
+|Demonstration of Interrupt Handling using Ada facilities.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Interrupt Handling::Device" @10
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Interrupt Handling::Device" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -398,12 +408,12 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	7
-			max_width  	362)
+			max_width  	355)
 		    width      	376
 		    height     	444
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object CategoryView "Logical View::Interrupt Handling" @11
+		(object CategoryView "Logical View::ColdFrame Examples::Interrupt Handling" @11
 		    location   	(1630, 395)
 		    font       	(object Font
 			size       	10
@@ -416,15 +426,29 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@11
-			location   	(1460, 311)
+			location   	(1383, 311)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	340
+			max_width  	494
 			justify    	0
 			label      	"Interrupt Handling")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DA72C880050"
-		    width      	352
-		    height     	180)))))
+		    width      	506
+		    height     	180)
+		(object Label @12
+		    location   	(188, 103)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1615
+		    label      	"$Id: Interrupt_Handling.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))

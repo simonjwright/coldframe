@@ -8,6 +8,11 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3F6738F4023A"
+    documentation 	
+|Regression tests that involve detecting errors.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Child With Function"
@@ -58,6 +63,7 @@
 			type       	"StartState")
 		    (object State "A"
 			quid       	"3F75302601F7"
+			documentation 	"There is more than one transition triggered by E from here."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3F7530410390"
@@ -80,6 +86,7 @@
 			type       	"Normal")
 		    (object State "B"
 			quid       	"3F75302E02AC"
+			documentation 	"There is a Delete entry action followed by drop-throughs."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3F7530600313"
@@ -101,6 +108,7 @@
 			type       	"Normal")
 		    (object State "C"
 			quid       	"3F7530380275"
+			documentation 	"There is a triggered tranition as well as a drop-through."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3F75308A00D8"
@@ -542,23 +550,42 @@
 				client     	@13
 				supplier   	@17
 				line_style 	0
-				x_offset   	FALSE)))))))
+				x_offset   	FALSE)
+			    (object Label @20
+				location   	(375, 115)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				nlines     	1
+				max_width  	1275
+				label      	"$Id: Bad_Code_Regressions.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F67398900D6"
 	    title      	"Main"
+	    documentation 	
+|Regression tests that involve detecting errors.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Parent With Procedure" @20
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Parent With Procedure" @21
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(680, 276)
+		    location   	(390, 849)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -569,8 +596,8 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@20
-			location   	(447, 181)
+			Parent_View 	@21
+			location   	(157, 754)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	466
@@ -580,76 +607,16 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3F6738750314"
-		    compartment 	(object Compartment
-			Parent_View 	@20
-			location   	(447, 237)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	452)
 		    width      	484
 		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Child With Function" @21
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Child With Function" @22
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(688, 695)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@21
-			location   	(544, 600)
-			fill_color 	13434879
-			nlines     	2
-			max_width  	288
-			justify    	0
-			label      	"Child With Function")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3F6738A20083"
-		    compartment 	(object Compartment
-			Parent_View 	@21
-			location   	(544, 701)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	292)
-		    width      	306
-		    height     	212
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object InheritView "g1" @22
+		    location   	(398, 1268)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -661,20 +628,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@22
-			location   	(684, 485)
-			anchor_loc 	1
-			nlines     	1
-			max_width  	450
+			location   	(254, 1173)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
 			justify    	0
-			label      	"g1")
-		    stereotype 	TRUE
+			label      	"Child With Function")
+		    icon_style 	"Icon"
 		    line_color 	3342489
-		    quidu      	"3F6738A901A6"
-		    client     	@21
-		    supplier   	@20
-		    line_style 	0)
-		(object CategoryView "Logical View::Bad Code Regressions" @23
-		    location   	(2083, 285)
+		    fill_color 	13434879
+		    quidu      	"3F6738A20083"
+		    width      	306
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @23
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -686,24 +654,20 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@23
-			location   	(1913, 201)
-			fill_color 	13434879
-			nlines     	2
-			max_width  	340
+			location   	(394, 1058)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
 			justify    	0
-			label      	"Bad Code Regressions")
-		    icon_style 	"Icon"
+			label      	"g1")
+		    stereotype 	TRUE
 		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3F6738F4023A"
-		    width      	352
-		    height     	180)
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Multiple Transitions" @24
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1568, 835)
+		    quidu      	"3F6738A901A6"
+		    client     	@22
+		    supplier   	@21
+		    line_style 	0)
+		(object CategoryView "Logical View::Bad Code Regressions" @24
+		    location   	(2721, 228)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -715,15 +679,44 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@24
-			location   	(1378, 809)
+			location   	(2551, 144)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Bad Code Regressions")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F6738F4023A"
+		    width      	352
+		    height     	180)
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Multiple Transitions" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1205, 855)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(1015, 829)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	380
 			justify    	0
 			label      	"Multiple Transitions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@24
-			location   	(1378, 764)
+			Parent_View 	@25
+			location   	(1015, 784)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -737,4 +730,91 @@
 		    width      	398
 		    height     	164
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object NoteView @26
+		    location   	(1214, 1265)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(1026, 1186)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	340
+			label      	"Statechart Diagram: Multiple Transitions / Lifecycle")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	400
+		    height     	170
+		    quidu      	"3F753009010F")
+		(object AttachView "" @27
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@26
+		    supplier   	@25
+		    line_style 	0)
+		(object Label @28
+		    location   	(162, 93)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	600
+		    label      	"$Id: Bad_Code_Regressions.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
+		(object NoteView @29
+		    location   	(383, 470)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@29
+			location   	(160, 319)
+			fill_color 	13434879
+			nlines     	6
+			max_width  	410
+			label      	"The parent and the child have specified an operation with different profiles.")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	470
+		    height     	315)
+		(object NoteView @30
+		    location   	(1193, 465)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(983, 316)
+			fill_color 	13434879
+			nlines     	6
+			max_width  	384
+			label      	"Various illegalities in a state machine.")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	444
+		    height     	310)))))

@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: f60721a93296 $]]
+|{ revision = $Revision: 014b87e33ada $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -39,7 +39,7 @@
 		    quidu      	"3F67E8AE00D8")))
 	(object Class "Expression In Bound"
 	    quid       	"3F67ED0D011E"
-	    documentation 	"[[ real : digits 15, lower - 2.0 * pi, upper 2.0 * pi ]]"
+	    documentation 	"{ real = digits 15 | lower - 2.0 * pi | upper 2.0 * pi }"
 	    stereotype 	"type")
 	(object Class "S Record"
 	    quid       	"3FA1EEFD01B5"
@@ -65,7 +65,7 @@
 		    type       	"Duration")))
 	(object Class "Enum"
 	    quid       	"3FA1EFE202CC"
-	    documentation 	"[[ enumeration : a, b, c ]]"
+	    documentation 	"{ enumeration = a | b | c }"
 	    stereotype 	"type, serializable")
 	(object Class "CB"
 	    quid       	"3FB1433B03CA"
@@ -81,7 +81,7 @@
 	    logical_models 	(list unit_reference_list
 		(object Class "T"
 		    quid       	"3FA962050323"
-		    documentation 	"[[ renames : Boolean ]]"
+		    documentation 	"{ renames = Boolean }"
 		    stereotype 	"type"
 		    operations 	(list Operations
 			(object Operation "T P"
@@ -198,7 +198,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: f60721a93296 $]]
+|{ revision = $Revision: 014b87e33ada $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -258,7 +258,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	387)
+			max_width  	380)
 		    width      	402
 		    height     	218
 		    annotation 	8
@@ -415,7 +415,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	782)
+			max_width  	775)
 		    width      	796
 		    height     	214
 		    annotation 	8
@@ -495,7 +495,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v f60721a93296 2003/11/11 21:00:03 simon $")
+		    label      	"$Id: Regressions.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
 		(object NoteView @12
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -570,7 +570,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	267)
+			max_width  	260)
 		    width      	400
 		    height     	310
 		    annotation 	8
@@ -592,19 +592,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(229, 1543)
+			location   	(225, 1543)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	242
+			max_width  	250
 			justify    	0
 			label      	"D Record")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@14
-			location   	(229, 1498)
+			location   	(225, 1498)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	242
+			max_width  	250
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Icon"
@@ -613,7 +613,7 @@
 		    quidu      	"3FA1EFA3029A"
 		    compartment 	(object Compartment
 			Parent_View 	@14
-			location   	(229, 1599)
+			location   	(225, 1599)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -627,8 +627,8 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	247)
-		    width      	260
+			max_width  	240)
+		    width      	268
 		    height     	218
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -746,7 +746,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	437)
+			max_width  	430)
 		    width      	452
 		    height     	264
 		    annotation 	8
@@ -803,7 +803,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	272)
+			max_width  	265)
 		    width      	418
 		    height     	264
 		    annotation 	8

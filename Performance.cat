@@ -8,6 +8,11 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3D36D9DB00D2"
+    documentation 	
+|Classes for ColdFrame performance tests.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Owner"
@@ -16,7 +21,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D5B9B180302"
 		    label      	"g1"
-		    supplier   	"Logical View::Performance::Person"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Person"
 		    quidu      	"3D5B9B0400F1")))
 	(object Class "Pet"
 	    quid       	"3D36DB1500E8"
@@ -63,13 +68,13 @@
 	(object Class "Owners"
 	    quid       	"3D36DB8B0079"
 	    documentation 	
-|[[ enumeration : Alice, Bob, Carol, Dave, Edward, Freddie, George, Henrietta, Ian, Joan, Kenneth, Liam, Mary, Norma, Oscar, Peter, Quentin, Richard, Simon, Tania, Ursula, Victor, Willa, Xena, Yorick, Zuleika ]]
+|{ enumeration = Alice | Bob | Carol | Dave | Edward | Freddie | George | Henrietta | Ian | Joan | Kenneth | Liam | Mary | Norma | Oscar | Peter | Quentin | Richard | Simon | Tania | Ursula | Victor | Willa | Xena | Yorick | Zuleika }
 |
 	    
 	    stereotype 	"type")
 	(object Class "Pets"
 	    quid       	"3D36DB980154"
-	    documentation 	"[[ enumeration : Archie, Bast, Charlie, Denny, Egbert, Fido, Geronimo, Herhert, Ishbel, Jimmy, Karl, Lolly, Muppet, Nancy, Osric, Patsy, Queenie, Rover, Spot, Tigger, Uncle, Vanya, Whisky, Xerxes, Yankee, Zara]]"
+	    documentation 	"{ enumeration = Archie | Bast | Charlie | Denny | Egbert | Fido | Geronimo | Herbert | Ishbel | Jimmy | Karl | Lolly | Muppet | Nancy | Osric | Patsy | Queenie | Rover | Spot | Tigger | Uncle | Vanya | Whisky | Xerxes | Yankee | Zara }"
 	    stereotype 	"type")
 	(object Class "Cat"
 	    quid       	"3D36DC7E03C2"
@@ -77,7 +82,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9100A8"
 		    label      	"g2"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
 		(object Operation "speak"
@@ -91,7 +96,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9500EA"
 		    label      	"g2"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
 		(object Operation "speak"
@@ -116,14 +121,14 @@
 		(object Role "owns"
 		    quid       	"3D36DB1F011E"
 		    label      	"owns"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"
 		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE)
 		(object Role "is owned by"
 		    quid       	"3D36DB1F011F"
 		    label      	"is owned by"
-		    supplier   	"Logical View::Performance::Owner"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Owner"
 		    quidu      	"3D36DB0E00FC"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)))
@@ -134,34 +139,39 @@
 		(object Role "feeds"
 		    quid       	"3D5B9B4301F6"
 		    label      	"feeds"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"
 		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE)
 		(object Role "lives with"
 		    quid       	"3D5B9B430228"
 		    label      	"lives with"
-		    supplier   	"Logical View::Performance::Person"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Person"
 		    quidu      	"3D5B9B0400F1"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
-	    AssociationClass 	"Logical View::Performance::House"))
+	    AssociationClass 	"Logical View::ColdFrame Examples::Performance::House"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3D36DA000338"
 	    title      	"Main"
+	    documentation 	
+|Classes for ColdFrame performance tests.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Performance::Owners" @1
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Owners" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(900, 1785)
+		    location   	(912, 1695)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -173,7 +183,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(817, 1759)
+			location   	(829, 1668)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -181,11 +191,11 @@
 			label      	"Owners")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(817, 1714)
+			location   	(829, 1623)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	166
+			max_width  	163
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
@@ -193,15 +203,15 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB8B0079"
 		    width      	184
-		    height     	164
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Pets" @2
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Pets" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(900, 1995)
+		    location   	(920, 2006)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -213,7 +223,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(817, 1969)
+			location   	(837, 1979)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -221,11 +231,11 @@
 			label      	"Pets")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(817, 1924)
+			location   	(837, 1934)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	166
+			max_width  	163
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
@@ -233,15 +243,15 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB980154"
 		    width      	184
-		    height     	164
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Cat" @3
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Cat" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(2355, 1650)
+		    location   	(2355, 1649)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -253,7 +263,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(2267, 1577)
+			location   	(2267, 1576)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	176
@@ -265,7 +275,7 @@
 		    quidu      	"3D36DC7E03C2"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(2267, 1633)
+			location   	(2267, 1632)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -279,12 +289,12 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	180)
+			max_width  	173)
 		    width      	194
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Dog" @4
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Dog" @4
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -327,12 +337,12 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	180)
+			max_width  	173)
 		    width      	194
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::House" @5
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::House" @5
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -362,7 +372,7 @@
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Owner" @6
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Owner" @6
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -392,7 +402,7 @@
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Pet" @7
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Pet" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -608,7 +618,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(2437, 1422)
+			location   	(2438, 1420)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -644,7 +654,7 @@
 		    client     	@4
 		    supplier   	@7
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Performance::Person" @18
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Person" @18
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -687,7 +697,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	440)
+			max_width  	433)
 		    width      	454
 		    height     	168
 		    annotation 	8
@@ -881,4 +891,18 @@
 		    line_color 	3342489
 		    client     	@5
 		    supplier   	@20
-		    line_style 	0)))))
+		    line_style 	0)
+		(object Label @29
+		    location   	(270, 143)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1545
+		    label      	"$Id: Performance.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
