@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6d2a5deed502 2002/09/20 10:41:44 simon $ -->
+<!-- $Id: bugs.html,v 0145194f7db2 2002/09/21 12:25:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -187,10 +187,14 @@ could be generated as non-<tt>private</tt> Ada packages.
 <dd>Extraction from Rose doesn't notice if a Domain package isn't
 actually loaded. The result is a very sparsely-populated domain.
 
+<br><i>Extraction now loads packages that aren't already loaded.</i>
+
 <dt>0121 (raised 19.ix.02)
 
 <dd>Using the Windows environment variable <tt>ColdFrameOut</tt>
 causes trouble under Cygwin; it comes out as <tt>COLDFRAMEOUT</tt>.
+
+<br><i>Rolled over; now in upper case.</i>
 
 <dt>0122 (raised 19.ix.02)
 
