@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 66920bde96a1 2004/07/03 15:09:27 simon $ -->
+<!-- $Id: releases.html-proto,v 8fbdafbc6e02 2004/07/07 21:06:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -55,6 +55,36 @@ is now <a href="ColdFrame-norm.xsd">supplied</a> for ColdFrame's
 <p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
 the new <tt>Trace</tt> versions instead (for example,
 <tt>ColdFrame.Project.Events.Standard.Trace</tt>).
+
+
+<p>The error of creating a Timer on the stack now results in a log
+message rather than an exception.
+
+
+<p>The Event Queue task responsible for delayed Events is has been
+renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
+(since it doesn't just deal with Timers).
+
+
+<p>There are added checks on state machine legality.
+
+
+<p>Tear Down has been reworked to remove some race conditions that
+could lead to <tt>Tasking_Error</tt>.
+
+
+<p>ColdFrame now recognises <i>class utilities</i> ("classes" with no
+instances, only operations).
+
+
+<p>If a &#171;public&#187; class has no attributes, no instance record
+will be generated.
+
+
+<p>Visibility is partially implemented for operations of classes and
+&#171;protected&#187; types; <i>public</i> and <i>protected</i>
+operations are public, <i>private</i> and <i>implementation</i>
+operations are private.
 
 
 <p><dt>20040319

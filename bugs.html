@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 66920bde96a1 2004/07/03 15:09:27 simon $ -->
+<!-- $Id: bugs.html,v 8fbdafbc6e02 2004/07/07 21:06:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -116,11 +116,6 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
-<dt>0195 (raised 5.ix.03)
-
-<dd>For &#171;public&#187; classes without attributes, it seems
-wasteful to allocate an <tt>Instance</tt>.
-
 <dt>0197 (raised 5.ix.03)
 
 <dd>If you need an event action, you have to specify the matching
@@ -142,14 +137,6 @@ compilation errors in generated code.
 
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
-
-<dt>0227 (raised 23.i.04)
-
-<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
-returning a composite value, the generated code won't compile.") is
-still present (for both &#171;type&#187;s and &#171;class&#187;es)
-when the composite value is imported or inherited from a parent
-domain (and therefore isn't otherwise mentioned in the model).
 
 <dt>0240 (raised 2.iii.04)
 
@@ -207,6 +194,20 @@ maintained.
 
 <h2><a name="fixed">Fixed</a></h2>
 
+<h3>7.vii.04</h3>
+
+<dl>
+
+<dt>0227 (raised 23.i.04)
+
+<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
+returning a composite value, the generated code won't compile.") is
+still present (for both &#171;type&#187;s and &#171;class&#187;es)
+when the composite value is imported or inherited from a parent
+domain (and therefore isn't otherwise mentioned in the model).
+
+</dl>
+
 <h3>3.vii.04</h3>
 
 <dl>
@@ -221,6 +222,11 @@ implemented as <tt>private</tt> subprograms.</i>
 
 <dd>It would be helpful for ColdFrame to recognize "class utilities"
 (classes which have no instances).
+
+<dt>0195 (raised 5.ix.03)
+
+<dd>For &#171;public&#187; classes without attributes, it seems
+wasteful to allocate an <tt>Instance</tt>.
 
 <dt>0222 (raised 3.xii.03)
 
