@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 3a9badf1a508 2003/03/29 16:12:02 simon $ -->
+<!-- $Id: types.html,v 6a20de9439b0 2003/05/01 05:15:47 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -40,7 +40,7 @@ you can have many different identical values of the same type.
 identifiers
 
 <li><i>Counterpart</i> - used for references to instances in other
-domains (but see the <i>[[counterpart]]</i> annotation below).
+domains (but see the <i>counterpart</i> stereotype/annotation below).
 
 <li><i>Timer</i> - used (mainly) for timeouts in state machines
 
@@ -51,7 +51,13 @@ domains (but see the <i>[[counterpart]]</i> annotation below).
 </ul>
 
 <p>Other types are modelled in classes stereotyped
-<em>&#171;type&#187;</em>.
+<em>&#171;type&#187;</em>. Shorthand stereotypes
+<ul>
+<li><em>&#171;callback&#187;</em>,
+<li><em>&#171;counterpart&#187;</em>,
+<li><em>&#171;discriminated&#187;</em>
+</ul>
+are provided.
 
 <h3>Type details</h3>
 
@@ -68,19 +74,25 @@ tagged values.
 
 <ul>
 
-<li><tt>callback : <i>max</i></tt> specifies that callback support
-code is to be generated. The idea here is that a (lower-level) Domain
-may need to support up to <tt><i>max</i></tt> Observers from
-higher-level Domains, and the higher-level Domains can register to be
-notified when something has changed in the lower-level Domain.
+<li><tt>callback</tt> specifies that callback support code is to be
+generated. The idea here is that a (lower-level) Domain may need to
+support Observers from higher-level Domains, and the higher-level
+Domains can register to be notified when something has changed in the
+lower-level Domain.
+<br>As a shorthand, you can use the stereotype
+<em>&#171;callback&#187;</em>.
 
 <li><tt>counterpart</tt> is used for references to instances in other
 domains.
+<br>As a shorthand, you can use the stereotype
+<em>&#171;counterpart&#187;</em>.
 
 <li><tt>discriminated</tt> (only relevant if the type is a record
 type, ie has attributes) causes the generation of discriminated
 records; the discriminant is an enumeration type with literals formed
 from the attribute names with <tt>_T</tt> appended.
+<br>As a shorthand, you can use the stereotype
+<em>&#171;discriminated&#187;</em>.
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
@@ -115,9 +127,10 @@ the type to an external medium. See
 </ul>
 
 <p>Syntactically, you can specify multiple annotations using semicolon
-separators. This probably only makes sense for adding callbacks:
+separators. This would be useful for, for example, marking a type
+serializable:
 <pre>
-   [[ real : lower -100.0, upper 100.0; callback : 1 ]]
+   [[ real : lower -100.0, upper 100.0; serializable ]]
 </pre>
 
 <h3>Operations</h3>
