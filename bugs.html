@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6bddce27a21c 2003/10/31 06:39:47 simon $ -->
+<!-- $Id: bugs.html,v 8a02c1af744c 2003/11/04 06:16:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -197,11 +197,22 @@ compilation errors in generated code.
 <dd>The error of having multiple transitions from a state triggered by
 the same event isn't detected.
 
-<!-- next: 0209 -->
+<!-- next: 0210 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>4.xi.03</h3>
+
+<dl>
+
+<dt>0209 (raised 3.xi.03)
+
+<dd>Taking the hash of a null access type resulted in a
+<tt>Constraint_Error</tt>.
+
+</dl>
 
 <h3>31.x.03</h3>
 
