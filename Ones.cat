@@ -23,9 +23,6 @@
 		    stereotype 	"class"
 		    type       	"Handle"
 		    initv      	"null")
-		(object ClassAttribute "c"
-		    quid       	"3D46890302E5"
-		    type       	"Handle")
 		(object ClassAttribute "d"
 		    quid       	"3D468919020A"
 		    stereotype 	"class"
@@ -48,9 +45,6 @@
 		    stereotype 	"class"
 		    type       	"Handle"
 		    initv      	"null")
-		(object ClassAttribute "c"
-		    quid       	"3D46893E0091"
-		    type       	"Handle")
 		(object ClassAttribute "d"
 		    quid       	"3D46894301B1"
 		    stereotype 	"class"
@@ -138,7 +132,7 @@
 		    location   	(630, 900)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(377, 779)
+			location   	(377, 801)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	506
@@ -146,7 +140,7 @@
 			label      	"S")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(377, 734)
+			location   	(377, 756)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -159,14 +153,14 @@
 		    quidu      	"3D4416940320"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(377, 835)
+			location   	(377, 857)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	5
-			max_width  	510)
+			nlines     	4
+			max_width  	503)
 		    width      	524
-		    height     	354
+		    height     	310
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Ones::O" @4
@@ -177,7 +171,7 @@
 		    location   	(2130, 900)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(1877, 737)
+			location   	(1877, 759)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	506
@@ -189,14 +183,14 @@
 		    quidu      	"3D44170A01F3"
 		    compartment 	(object Compartment
 			Parent_View 	@4
-			location   	(1877, 793)
+			location   	(1877, 815)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	6
-			max_width  	510)
+			nlines     	5
+			max_width  	503)
 		    width      	524
-		    height     	348
+		    height     	304
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @5

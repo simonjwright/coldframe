@@ -5,7 +5,7 @@
 <year>2002</year>
 <month>7</month>
 <day>30</day>
-<time>21:09</time>
+<time>21:16</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -26,12 +26,6 @@
 <documentation></documentation>
 <type>Handle</type>
 <initial>null</initial>
-</attribute>
-<attribute>
-<name>c</name>
-<documentation></documentation>
-<type>Handle</type>
-<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>d</name>
@@ -68,12 +62,6 @@
 <documentation></documentation>
 <type>Handle</type>
 <initial>null</initial>
-</attribute>
-<attribute>
-<name>c</name>
-<documentation></documentation>
-<type>Handle</type>
-<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>d</name>
