@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v b8cd02abbffd 2003/03/06 20:53:26 simon $ -->
+<!-- $Id: serialization.html,v 8b1f4adb2077 2003/03/06 21:31:58 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -297,8 +297,94 @@ is
 <p>Note that this time the <tt>Real_Time_Image</tt> was called with
 the field name parameter set to <tt>"T"</tt>.
 
+<h3>Creating data to be recorded</h3>
 
-<p><hr>
+<p>Sample code for taking a <tt>Sample_A</tt> record (from the
+<tt>Client</tt> program in the Serialization demonstration) is
+<pre>
+   Serialization.Interface.Output
+     (Serialization_Demo.Serializable.Sample_A'
+	(Serialization.Serializable_Base with
+	   Payload =>
+	   (I => 42,
+	    F => 0.12345,
+	    B => False,
+	    D => 1.2345,
+	    T => ColdFrame.Project.Calendar.Clock,
+	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+	    N => Serialization_Demo.Name_String_Package.To_Bounded_String
+	      ("bounded"))));
+</pre>
+
+<p>This is rather more complex than, in general, it would need to
+be. For a start, it would be normal to take this record from within
+the domain concerned (<tt>Serialization_Demo</tt>), so we could leave
+out the qualification:
+<pre>
+   Serialization.Interface.Output
+     (Serializable.Sample_A'
+	(Serialization.Serializable_Base with
+	   Payload =>
+	   (I => 42,
+	    F => 0.12345,
+	    B => False,
+	    D => 1.2345,
+	    T => ColdFrame.Project.Calendar.Clock,
+	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+	    N => Name_String_Package.To_Bounded_String ("bounded"))));
+</pre>
+
+<p>Additionally, the demonstration is a tad confusing because of the
+similarity of the names. If instead of <i>Serialization</i> the
+facility had been called <i>Recording</i>, it would look like
+<pre>
+   Recording.Interface.Output
+     (Serializable.Sample_A'
+	(Recording.Serializable_Base with
+	   Payload =>
+	   (I => 42,
+	    F => 0.12345,
+	    B => False,
+	    D => 1.2345,
+	    T => ColdFrame.Project.Calendar.Clock,
+	    U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
+	    N => Name_String_Package.To_Bounded_String
+	      ("bounded"))));
+</pre>
+
+<p>As a final thought, if we already had a <i>Sample A</i> value (in
+say <tt>Value</tt>), it would be more like
+<pre>
+   Recording.Interface.Output
+     (Serializable.Sample_A'
+	(Recording.Serializable_Base with Payload => Value));
+</pre>
+
+<h3>Outputting the data</h3>
+
+<p>Sample code for outputting received data (from the
+<tt>Server</tt> program in the Serialization demonstration) is
+<pre>
+   declare
+      Rec : constant ColdFrame.Serialization.Base'Class :=
+	ColdFrame.Serialization.Base'Class'Input (Channel);
+   begin
+      Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
+			    ColdFrame.Serialization.Image (Rec));
+      Ada.Text_IO.Flush;
+   end;
+</pre>
+
+<p>(this uses <tt>Ada.Text_IO</tt> rather than <tt>GNAT.IO</tt>
+because of the need to flush the data, in case the output is
+redirected).
+
+<p>Note that this doesn't use the <tt>Serialization</tt> (or
+<tt>Recording</tt>) package; instead, it uses the real base class,
+which is ColdFrame's default. This ensures you don't run the risk of
+pulling in lots more of the application code than you need.
+
+
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>
