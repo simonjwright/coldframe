@@ -1,0 +1,372 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>States</name>
+<date>
+<year>2002</year>
+<month>1</month>
+<day>27</day>
+<time>10:51</time>
+</date>
+<documentation></documentation>
+<classes>
+<class>
+<name>Std</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<statemachine>
+<states>
+<state initial="yes">
+<name>init for std</name>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>next for std</name>
+<entryactions>
+</entryactions>
+</state>
+</states>
+<transitions>
+<transition>
+<source>init for std</source>
+<target>next for std</target>
+<event>
+<name></name>
+</event>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class>
+<name>Auto</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<statemachine>
+<states>
+<state initial="yes">
+<name>init for auto</name>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>next for auto</name>
+<entryactions>
+</entryactions>
+</state>
+</states>
+<transitions>
+<transition>
+<source>init for auto</source>
+<target>next for auto</target>
+<event>
+<name></name>
+</event>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="singleton">
+<name>Monitor</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>heartbeat timer</name>
+<documentation></documentation>
+<type>Timer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>warmup timer</name>
+<documentation></documentation>
+<type>Timer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>set heartbeat timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>set 2 second warmup timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>set 6 second warmup timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>clear heartbeat timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>clear warmup timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>warmup</name>
+<entryactions>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>warming</name>
+<entryactions>
+<action>
+<name>clear heartbeat timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>failed</name>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>working</name>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>received heartbeat</name>
+<entryactions>
+<action>
+<name>clear heartbeat timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>recovery</name>
+<entryactions>
+<action>
+<name>set 6 second warmup timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>recovering</name>
+<entryactions>
+<action>
+<name>clear heartbeat timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>failed recovery</name>
+<entryactions>
+<action>
+<name>clear warmup timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+<state>
+<name>first heartbeat</name>
+<entryactions>
+<action>
+<name>clear heartbeat timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set heartbeat timeout</name>
+<arguments></arguments>
+</action>
+<action>
+<name>set 2 second warmup timeout</name>
+<arguments></arguments>
+</action>
+</entryactions>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>warmup</target>
+<event>
+<name>start</name>
+</event>
+</transition>
+<transition>
+<source>warmup</source>
+<target>first heartbeat</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>warmup</source>
+<target>failed</target>
+<event>
+<name>heartbeat timeout</name>
+</event>
+</transition>
+<transition>
+<source>warming</source>
+<target>working</target>
+<event>
+<name>warmup timeout</name>
+</event>
+</transition>
+<transition>
+<source>warming</source>
+<target>warming</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>failed</source>
+<target>recovery</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>working</source>
+<target>failed</target>
+<event>
+<name>heartbeat timeout</name>
+</event>
+</transition>
+<transition>
+<source>working</source>
+<target>received heartbeat</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>received heartbeat</source>
+<target>working</target>
+<event>
+<name></name>
+</event>
+</transition>
+<transition>
+<source>recovery</source>
+<target>failed recovery</target>
+<event>
+<name>heartbeat timeout</name>
+</event>
+</transition>
+<transition>
+<source>recovery</source>
+<target>recovering</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>recovering</source>
+<target>recovering</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>recovering</source>
+<target>working</target>
+<event>
+<name>warmup timeout</name>
+</event>
+</transition>
+<transition>
+<source>recovering</source>
+<target>failed recovery</target>
+<event>
+<name>heartbeat timeout</name>
+</event>
+</transition>
+<transition>
+<source>failed recovery</source>
+<target>failed</target>
+<event>
+<name></name>
+</event>
+</transition>
+<transition>
+<source>first heartbeat</source>
+<target>warming</target>
+<event>
+<name>heartbeat</name>
+</event>
+</transition>
+<transition>
+<source>first heartbeat</source>
+<target>working</target>
+<event>
+<name>warmup timeout</name>
+</event>
+</transition>
+</transitions>
+</statemachine>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
