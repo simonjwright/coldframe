@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 1f8ec9bbb9d3 2004/05/27 04:39:57 simon $
+'$Id: ddf.ebs,v ab734e2451c7 2004/06/04 14:23:36 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -347,7 +347,7 @@ End Sub
 
 Sub DumpDomainData (domain As Category, dirName As String)
 	Dim rawName As String
-	rawName = domain.Name
+	rawName = Trim(domain.Name)
 	For i = 1 To Len(rawName)
 		If Mid(rawName, i, 1) = " " Then
 			Mid(rawName, i, 1) = "_"
