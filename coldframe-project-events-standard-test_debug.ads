@@ -5,17 +5,18 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  This package supports unit testing of code involving events.
+--  This package supports unit testing of code involving events, with
+--  tracing of event processing.
 --
---  This is ColdFrame's default implementation.
+--  This is provided to retain the obsolete interface of Release
+--  20040319 and earlier.
 
 --  $RCSfile: coldframe-project-events-standard-test_debug.ads,v $
---  $Revision: d4ba7bb4c119 $
---  $Date: 2003/03/16 12:11:56 $
+--  $Revision: b72a3ecb25af $
+--  $Date: 2004/06/17 07:12:06 $
 --  $Author: simon $
 
-with ColdFrame.Events_G.Test_G;
-with ColdFrame.Project.Events.Standard.Debug;
+with ColdFrame.Project.Events.Standard.Test_Trace;
 
 package ColdFrame.Project.Events.Standard.Test_Debug
-is new Events.Test_G (Standard_Queue => Debug.Event_Queue_Base);
+renames ColdFrame.Project.Events.Standard.Test_Trace;

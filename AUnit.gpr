@@ -12,7 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: AUnit.gpr,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  $Id: AUnit.gpr,v 53dc6a53ed67 2004/06/24 04:52:04 simon $
+--
+--  This file controls compilation of AUnit (which generates lots of
+--  style warnings with -gnaty).
 
 with "Options";
 

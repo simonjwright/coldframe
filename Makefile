@@ -50,7 +50,6 @@ TCLXML = /usr/local/lib/tclxml-2.1theta
 
 SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
-ESCAPE_MARKUP_SCRIPT = escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
@@ -76,15 +75,14 @@ OTHER_SCRIPTS = create-build-directories \
   split-csv.tcl \
   make-build.tcl
 
-%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@echo generating $@ ...
-	@$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	  TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing $(CASE_EXCEPTIONS) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
 	    --version cf-DATE \
-	    >$@ || (rm -f $@; exit 1)
+	    <$< >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	@echo generating $@ ...
@@ -186,6 +184,7 @@ metamodel.png \
 operations-mapping.png \
 real_time.png \
 recordable_real_time.png \
+reflexive.png \
 relationships-mapping.png \
 sample_a.png \
 serialization-class-model-t.png \
@@ -195,6 +194,7 @@ serialization-sequence.png \
 serialization-state-t.png \
 serialization-state.png \
 serialization.png \
+simple-association.png \
 type-mapping.png
 
 
@@ -222,6 +222,7 @@ event-modelling.html \
 event-motivation.html \
 event-translation.html \
 event-use.html \
+extending.html \
 extraction.html \
 faq.html \
 generalizations.html \
@@ -245,10 +246,11 @@ types.html \
 use.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
+xml-schemas.html States-check.xsv States-check.html \
 coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
-ddf.dtd coldframe.dtd \
+ddf.dtd ColdFrame-norm.xsd \
 xslide-diff
 
 serialization-model.html: Serialization.html
@@ -280,7 +282,6 @@ TOOL_SRC = generated_lines.adb \
 
 PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
-  escape-markup.awk \
   normalize-rose.tcl \
   cf-banner.el \
   $(HTMLGEN_SCRIPT) \
@@ -308,6 +309,8 @@ coldframe-events_g-standard_g.adb \
 coldframe-events_g-standard_g.ads \
 coldframe-events_g-test_g.adb \
 coldframe-events_g-test_g.ads \
+coldframe-events_g-trace_g.adb \
+coldframe-events_g-trace_g.ads \
 coldframe-events_g.adb \
 coldframe-events_g.ads \
 coldframe-exceptions-message.adb \
@@ -357,7 +360,9 @@ coldframe-project-events-creation.ads \
 coldframe-project-events-standard.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
+coldframe-project-events-standard-trace.ads \
 coldframe-project-events-standard-test_debug.ads \
+coldframe-project-events-standard-test_trace.ads \
 coldframe-project-events.ads \
 coldframe-project-events.ads-standard \
 coldframe-project-events.ads-logging \
@@ -531,13 +536,19 @@ Hierarchies.test/hierarchies-test_finds.ads
 
 TEST += \
 Regressions.cat Regressions.raw Regressions.gpr \
+Regressions.impl/regressions-class_with_private_init_operation-private_init_operation.adb\
 Regressions.impl/regressions-event_holder-set_timer.adb \
+Regressions.impl/regressions-event_holder-t.adb \
 Regressions.impl/regressions-find_active_singleton-t.adb \
 Regressions.impl/regressions-find_active-t.adb \
 Regressions.impl/regressions-max_more-f.adb \
 Regressions.impl/regressions-max_more-t.adb \
 Regressions.impl/regressions-max_one-f.adb \
 Regressions.impl/regressions-max_one-t.adb \
+Regressions.impl/regressions-pt_holder.adb \
+Regressions.impl/regressions-pt_owner-get_h_access.adb \
+Regressions.impl/regressions-pt_user-get_state.adb \
+Regressions.impl/regressions-pt_user-set_state.adb \
 Regressions.impl/regressions-suite.adb \
 Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb

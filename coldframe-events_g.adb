@@ -20,11 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 73e19b026186 $
---  $Date: 2004/03/13 21:02:23 $
+--  $Revision: 6ea040caff18 $
+--  $Date: 2004/10/09 10:37:13 $
 --  $Author: simon $
 
 with Ada.Exceptions;
+with Ada.Tags;
 with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G is
@@ -81,10 +82,10 @@ package body ColdFrame.Events_G is
 
          --  The Timer is set. Tell the timer event that the timer has
          --  been deleted.
-         Timer_Event (The_Timer.The_Entry.all).The_Timer := null;
+         Held_Event (The_Timer.The_Entry.all).The_Timer := null;
 
          --  Invalidate the held event.
-         Timer_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
+         Held_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
 
          The_Timer.The_Entry := null;
 
@@ -97,23 +98,24 @@ package body ColdFrame.Events_G is
    begin
       if The_Timer.The_Entry /= null then
 
-         Finalize (The_Timer);
-
          --  Tell the user there's been an error (maybe the Timer was
          --  declared on the stack?)
          --
-         --  Because this will be raised during finalization, it'll
-         --  appear as Program_Error. Still, if it's caught in the
-         --  debugger this should be slightly more helpful.
-         Ada.Exceptions.Raise_Exception
-           (ColdFrame.Exceptions.Use_Error'Identity,
-            "timer still has held event");
+         --  Because this occurs during finalization, it's not really
+         --  sensible to raise an exception.
+         Logging.Log
+           (Severity => Logging.Error,
+            Message => "A Timer has been destroyed while holding a " &
+              Ada.Tags.Expanded_Name (The_Timer.The_Entry.all'Tag) &
+              ", may have been declared on the stack");
+
+         Finalize (The_Timer);
 
       end if;
    end Finalize;
 
 
-   procedure Handler (This : Timer_Event) is
+   procedure Handler (This : Held_Event) is
       The_Event : Event_P := This.The_Event;
    begin
 
@@ -129,7 +131,18 @@ package body ColdFrame.Events_G is
          Log (The_Event, Event_Basis.Dispatching);
          Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
          Start_Handling (The_Event);
-         Handler (The_Event.all);   --  XXX what about exceptions here?
+         begin
+            Handler (The_Event.all);
+         exception
+            when Ex : others =>
+               Logging.Log
+                 (Severity => Logging.Error,
+                  Message =>
+                    Ada.Exceptions.Exception_Information (Ex) &
+                    " in Held_Event handler (event " &
+                    Ada.Tags.Expanded_Name (The_Event.all'Tag) &
+                    ")");
+         end;
          Stop_Handling (The_Event);
          Log_Post_Dispatch (The_Event => The_Event, On => This.On);
          Log (The_Event, Event_Basis.Finishing);
@@ -173,7 +186,7 @@ package body ColdFrame.Events_G is
    end Invalidate;
 
 
-   procedure Invalidate (The_Event : access Timer_Event;
+   procedure Invalidate (The_Event : access Held_Event;
                          If_For_Instance : Instance_Base_P) is
    begin
       Invalidate (The_Event.The_Event, If_For_Instance);
@@ -318,6 +331,26 @@ package body ColdFrame.Events_G is
    end Start_Queue;
 
 
+   procedure Stop (The_Queue : in out Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Stop not implemented in concrete event queue");
+   end Stop;
+
+
+   procedure Stop (The_Queue : in out Event_Queue_P) is
+   begin
+      if The_Queue /= null then
+         if not The_Queue.Stopped then
+            The_Queue.Stopped := True;
+            Stop (The_Queue.all);  -- dispatches to actual Stop
+         end if;
+      end if;
+   end Stop;
+
+
    procedure Tear_Down (The_Event : access Event_Base) is
       pragma Warnings (Off, The_Event);
    begin
@@ -341,12 +374,9 @@ package body ColdFrame.Events_G is
                                          Event_Queue_P);
    begin
       if The_Queue /= null then
-         if not The_Queue.Torn_Down then
-            The_Queue.Torn_Down := True;
-            Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
-         end if;
          The_Queue.Access_Count := The_Queue.Access_Count - 1;
          if The_Queue.Access_Count = 0 then
+            Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
             Delete (The_Queue);
          else
             --  We have to clear this pointer (which is of course the
@@ -358,7 +388,7 @@ package body ColdFrame.Events_G is
    end Tear_Down;
 
 
-   procedure Tear_Down (The_Event : access Timer_Event) is
+   procedure Tear_Down (The_Event : access Held_Event) is
    begin
       if The_Event.The_Timer /= null then
          --  Clear the Timer's pointer to this event, so it doesn't

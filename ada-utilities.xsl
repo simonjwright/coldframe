@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v e0aa6308b3c9 2004/04/21 12:23:41 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,6 +28,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0"
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
@@ -39,7 +40,7 @@
   <xsl:param name="coldframe-version" select="''"/>
 
   <!-- Generate commentary. -->
-  <xsl:template name="commentary">
+  <xsl:template name="ut:commentary">
     <!-- The current indentation. -->
     <xsl:param name="indent" select="''"/>
     <!-- Either a newline or an empty string. -->
@@ -47,7 +48,7 @@
 
     <xsl:for-each select="documentation/par">
 
-      <xsl:call-template name="comment-line">
+      <xsl:call-template name="ut:comment-line">
         <xsl:with-param name="indent" select="$indent"/>
         <xsl:with-param name="line" select="normalize-space(.)"/>
       </xsl:call-template>
@@ -60,7 +61,7 @@
 
 
   <!-- Output a paragraph of comment. -->
-  <xsl:template name="comment-line">
+  <xsl:template name="ut:comment-line">
     <!-- The current indentation. -->
     <xsl:param name="indent"/>
     <!-- The rest of the line to be output. -->
@@ -92,7 +93,7 @@
 
         <xsl:value-of select="$start"/>
 
-        <xsl:call-template name="comment-line">
+        <xsl:call-template name="ut:comment-line">
           <xsl:with-param name="indent" select="$indent"/>
           <xsl:with-param name="line" select="$rest"/>
           <xsl:with-param name="length" select="string-length($start)"/>
@@ -110,7 +111,7 @@
 
         <xsl:text>&#10;</xsl:text>
 
-        <xsl:call-template name="comment-line">
+        <xsl:call-template name="ut:comment-line">
           <xsl:with-param name="indent" select="$indent"/>
           <xsl:with-param name="line" select="$line"/>
         </xsl:call-template>
@@ -122,7 +123,7 @@
         <xsl:text> </xsl:text>
         <xsl:value-of select="$word"/>
 
-        <xsl:call-template name="comment-line">
+        <xsl:call-template name="ut:comment-line">
           <xsl:with-param name="indent" select="$indent"/>
           <xsl:with-param name="line" select="$rest"/>
           <xsl:with-param name="length"
@@ -137,25 +138,25 @@
 
 
   <!-- "Could/Don't/Shouldn't/Should edit" banners. -->
-  <xsl:template name="could-edit">
+  <xsl:template name="ut:could-edit">
     <xsl:text>-------------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: may need editing  --&#10;</xsl:text>
     <xsl:text>-------------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template name="do-not-edit">
+  <xsl:template name="ut:do-not-edit">
     <xsl:text>--------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: do not edit  --&#10;</xsl:text>
     <xsl:text>--------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template name="should-not-edit">
+  <xsl:template name="ut:should-not-edit">
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: should not need editing  --&#10;</xsl:text>
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template name="should-edit">
+  <xsl:template name="ut:should-edit">
     <xsl:text>-------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: edit this!  --&#10;</xsl:text>
     <xsl:text>-------------------------------------------&#10;</xsl:text>
@@ -163,7 +164,7 @@
 
 
   <!-- Called to generate identification information. -->
-  <xsl:template name="identification-info">
+  <xsl:template name="ut:identification-info">
     <xsl:text>--  Domain revision: </xsl:text>
     <xsl:choose>
       <xsl:when test="/domain/revision">
@@ -197,22 +198,22 @@
 
   <!-- Error handling. -->
 
-  <xsl:variable name="detected-errors" saxon:assignable="yes" select="0"/>
+  <xsl:variable name="ut:detected-errors" saxon:assignable="yes" select="0"/>
 
-  <xsl:template name="log-error">
-    <saxon:assign name="detected-errors" select="$detected-errors + 1"/>
+  <xsl:template name="ut:log-error">
+    <saxon:assign name="ut:detected-errors" select="$ut:detected-errors + 1"/>
   </xsl:template>
 
-  <xsl:template name="check-for-errors">
+  <xsl:template name="ut:check-for-errors">
     <xsl:choose>
-      <xsl:when test="$detected-errors=1">
+      <xsl:when test="$ut:detected-errors=1">
         <xsl:message terminate="yes">
           <xsl:text>1 error detected.</xsl:text>
         </xsl:message>
       </xsl:when>
-      <xsl:when test="$detected-errors&gt;1">
+      <xsl:when test="$ut:detected-errors&gt;1">
         <xsl:message terminate="yes">
-          <xsl:value-of select="$detected-errors"/>
+          <xsl:value-of select="$ut:detected-errors"/>
           <xsl:text> errors detected.</xsl:text>
         </xsl:message>
       </xsl:when>
@@ -221,11 +222,11 @@
 
 
   <!-- Called at domain/class to compute number of instances.
-       (If not at domain/class, , set parameter "c" to the class
+       (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
        Outputs a number; 1000000000000 signals "unknown" (used to use
        +Inf but comparisons failed). -->
-  <xsl:template name="number-of-instances">
+  <xsl:template name="ut:number-of-instances">
     <xsl:param name="c" select="."/>
 
     <xsl:variable name="name" select="$c/name"/>
@@ -234,6 +235,22 @@
       select="/domain/association[associative=$name]"/>
 
     <xsl:choose>
+
+      <xsl:when test="$c/@singleton">
+        <xsl:value-of select="1"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@public and count($c/attribute[not(@class)])=0">
+        <xsl:value-of select="0"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@public">
+        <xsl:value-of select="1"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@utility">
+        <xsl:value-of select="0"/>
+      </xsl:when>
 
       <xsl:when test="$c/@max">
         <xsl:value-of select="$c/@max"/>
@@ -248,14 +265,14 @@
 
           <xsl:when test="$role-1/@multiple and $role-2/@multiple">
             <xsl:variable name="n-1">
-              <xsl:call-template name="number-of-instances">
+              <xsl:call-template name="ut:number-of-instances">
                 <xsl:with-param
                   name="c"
                   select="/domain/class[name=$role-1/classname]"/>
               </xsl:call-template>
             </xsl:variable>
             <xsl:variable name="n-2">
-              <xsl:call-template name="number-of-instances">
+              <xsl:call-template name="ut:number-of-instances">
                 <xsl:with-param
                   name="c"
                   select="/domain/class[name=$role-2/classname]"/>
@@ -274,7 +291,7 @@
           </xsl:when>
 
           <xsl:when test="$role-1/@multiple">
-            <xsl:call-template name="number-of-instances">
+            <xsl:call-template name="ut:number-of-instances">
               <xsl:with-param
                 name="c"
                 select="/domain/class[name=$role-1/classname]"/>
@@ -282,7 +299,7 @@
           </xsl:when>
 
           <xsl:when test="$role-2/@multiple">
-            <xsl:call-template name="number-of-instances">
+            <xsl:call-template name="ut:number-of-instances">
               <xsl:with-param
                 name="c"
                 select="/domain/class[name=$role-2/classname]"/>
@@ -291,14 +308,14 @@
 
           <xsl:otherwise>
             <xsl:variable name="n-1">
-              <xsl:call-template name="number-of-instances">
+              <xsl:call-template name="ut:number-of-instances">
                 <xsl:with-param
                   name="c"
                   select="/domain/class[name=$role-1/classname]"/>
               </xsl:call-template>
             </xsl:variable>
             <xsl:variable name="n-2">
-              <xsl:call-template name="number-of-instances">
+              <xsl:call-template name="ut:number-of-instances">
                 <xsl:with-param
                   name="c"
                   select="/domain/class[name=$role-2/classname]"/>
@@ -366,7 +383,7 @@
        for which the computation is required.)
        Returns 'yes' or 'no'.
        -->
-  <xsl:template name="can-use-array">
+  <xsl:template name="ut:can-use-array">
     <xsl:param name="c" select="."/>
 
     <xsl:choose>
@@ -411,7 +428,7 @@
 
 
   <!-- Progress messages. -->
-  <xsl:template name="progress-message">
+  <xsl:template name="ut:progress-message">
     <xsl:param name="m"/>
 
     <xsl:if test="not($verbose='no')">
@@ -424,7 +441,7 @@
 
 
   <!-- Handle special type name conversions. -->
-  <xsl:template name="type-name">
+  <xsl:template name="ut:type-name">
 
     <!-- The name of the type to be generated. -->
     <xsl:param name="type"/>

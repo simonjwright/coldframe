@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 3b010735e777 $
---  $Date: 2004/03/13 21:01:00 $
+--  $Revision: 6ea040caff18 $
+--  $Date: 2004/10/09 10:37:13 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -115,9 +115,9 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TEP : constant Event_P := new Timer_Event (Kind => To_Fire_At.Kind,
-                                                 On_Timer => False);
-      TE : Timer_Event renames Timer_Event (TEP.all);
+      TEP : constant Event_P := new Held_Event (Kind => To_Fire_At.Kind,
+                                                On_Timer => False);
+      TE : Held_Event renames Held_Event (TEP.all);
    begin
 
       if The_Event = null then
@@ -135,7 +135,7 @@ package body ColdFrame.Events_G.Standard_G is
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
       TE.The_Event := The_Event;
-      On.The_Timer_Manager.Add_At_Event (TEP, To_Fire_At);
+      On.The_Held_Event_Manager.Add_At_Event (TEP, To_Fire_At);
 
    end Post;
 
@@ -143,9 +143,9 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
-      TEP : constant Event_P := new Timer_Event (Kind => Time.Real_Time,
-                                                 On_Timer => False);
-      TE : Timer_Event renames Timer_Event (TEP.all);
+      TEP : constant Event_P := new Held_Event (Kind => Time.Real_Time,
+                                                On_Timer => False);
+      TE : Held_Event renames Held_Event (TEP.all);
    begin
 
       if The_Event = null then
@@ -164,7 +164,7 @@ package body ColdFrame.Events_G.Standard_G is
       TE.Time_To_Fire := Time.From_Now (To_Fire_After);
       --  NB, this will be wrong if the queue isn't yet started.
       TE.The_Event := The_Event;
-      On.The_Timer_Manager.Add_After_Event (TEP, To_Fire_After);
+      On.The_Held_Event_Manager.Add_After_Event (TEP, To_Fire_After);
 
    end Post;
 
@@ -184,7 +184,7 @@ package body ColdFrame.Events_G.Standard_G is
                --  Start processing events set or posted to run after a
                --  delay (rather than at a time) only after we have
                --  started ourselves; but don't return until we've done
-               --  so, so that our caller can tell the Timer_Manager to
+               --  so, so that our caller can tell the Held_Event_Manager to
                --  rethink *after* we're ready
                Held_Events.Start_Processing_After_Events
                  (The_Queue.The_Held_Events);
@@ -215,13 +215,11 @@ package body ColdFrame.Events_G.Standard_G is
             exit when Tearing_Down;
 
             if not E.Invalidated then
+               Log (E, Event_Basis.Dispatching);
+               Log_Pre_Dispatch (The_Event => E, On => The_Queue);
+               Start_Handling (E);
                begin
-                  Log (E, Event_Basis.Dispatching);
-                  Log_Pre_Dispatch (The_Event => E, On => The_Queue);
-                  Start_Handling (E);
                   Handler (E.all);
-                  Stop_Handling (E);
-                  Log_Post_Dispatch (The_Event => E, On => The_Queue);
                exception
                   when Ex : others =>
                      Logging.Log
@@ -232,8 +230,11 @@ package body ColdFrame.Events_G.Standard_G is
                           Ada.Tags.Expanded_Name (E.all'Tag) &
                           ")");
                end;
+               Stop_Handling (E);
+               Log_Post_Dispatch (The_Event => E, On => The_Queue);
             end if;
 
+            Stop_Handling (E);
             Log (E, Event_Basis.Finishing);
             Delete (E);
             Note_Removal_Of_Posted_Event (The_Queue);
@@ -266,17 +267,17 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (Kind => At_Time.Kind,
-                                                 On_Timer => True);
+         The_Timer.The_Entry := new Held_Event (Kind => At_Time.Kind,
+                                                On_Timer => True);
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
             TE.On := Event_Queue_P (On);
             TE.Time_To_Fire := At_Time;
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Timer_Manager.Add_At_Event (The_Timer.The_Entry, At_Time);
+         On.The_Held_Event_Manager.Add_At_Event (The_Timer.The_Entry, At_Time);
 
       else
 
@@ -310,10 +311,10 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (Kind => Time.Real_Time,
-                                                 On_Timer => True);
+         The_Timer.The_Entry := new Held_Event (Kind => Time.Real_Time,
+                                                On_Timer => True);
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
             TE.On := Event_Queue_P (On);
             TE.Time_To_Fire := Time.From_Now (After);
@@ -321,7 +322,8 @@ package body ColdFrame.Events_G.Standard_G is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Timer_Manager.Add_After_Event (The_Timer.The_Entry, After);
+         On.The_Held_Event_Manager.Add_After_Event (The_Timer.The_Entry,
+                                                    After);
 
       else
 
@@ -349,7 +351,7 @@ package body ColdFrame.Events_G.Standard_G is
       else
 
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
 
             --  Cancel the Event
@@ -372,7 +374,7 @@ package body ColdFrame.Events_G.Standard_G is
    --  Timed event management  --
    ------------------------------
 
-   task body Timer_Manager is
+   task body Held_Event_Manager is
 
       The_Events : Held_Events.Queue renames The_Queue.The_Held_Events;
 
@@ -383,7 +385,7 @@ package body ColdFrame.Events_G.Standard_G is
          Held : Boolean;
       begin
          Held_Events.Pop (The_Events, E);
-         Held := not Timer_Event (E.all).On_Timer;
+         Held := not Held_Event (E.all).On_Timer;
          Post (E, The_Queue);
          if Held then
             Note_Removal_Of_Held_Event (The_Queue);
@@ -396,102 +398,132 @@ package body ColdFrame.Events_G.Standard_G is
 
    begin
 
-      loop
+      Outer : loop
 
-         if Held_Events.Is_Empty (The_Events) then
+         --  This loop encloses an exception-catching block, so that
+         --  the whole event queue doesn't just die. Of course, the
+         --  system will be fragile after any uncaught exception here
+         --  (there is no user-written code here, but they might
+         --  corrupt timers).
 
-            select
-               accept Add_At_Event (The_Entry : Event_P;
-                                    To_Run_At : Time.Time) do
-                  Held_Events.Add_At_Event (The_Entry,
-                                            To_Run_At,
-                                            On => The_Events);
-               end Add_At_Event;
+         begin
 
-            or
-               accept Add_After_Event (The_Entry : Event_P;
-                                       To_Run_After : Duration) do
-                  Held_Events.Add_After_Event (The_Entry,
-                                               To_Run_After,
-                                               On => The_Events);
-               end Add_After_Event;
+            Inner : loop
 
-            or
-               accept Rethink;
+               --  This is the main loop.
 
-            or
-               accept Invalidate
-                 (For_The_Instance : Instance_Base_P);
-               --  Invalidate is called "just in case" (the Instance
-               --  being deleted can't tell whether there are any
-               --  outstanding held Events). But if we get here, the
-               --  queue was empty, so there can't be anything to do.
+               if Held_Events.Is_Empty (The_Events) then
 
-            or
-               accept Tear_Down;
-               exit;
+                  select
+                     accept Add_At_Event (The_Entry : Event_P;
+                                          To_Run_At : Time.Time) do
+                        Held_Events.Add_At_Event (The_Entry,
+                                                  To_Run_At,
+                                                  On => The_Events);
+                     end Add_At_Event;
 
-            end select;
+                  or
+                     accept Add_After_Event (The_Entry : Event_P;
+                                             To_Run_After : Duration) do
+                        Held_Events.Add_After_Event (The_Entry,
+                                                     To_Run_After,
+                                                     On => The_Events);
+                     end Add_After_Event;
 
-         elsif Held_Events.Next_Event_Time (The_Events)
-           <= Ada.Real_Time.Clock then
+                  or
+                     accept Rethink;
 
-            loop
-               Process_First_Event;
-               exit when Held_Events.Is_Empty (The_Events);
-               exit when Held_Events.Next_Event_Time (The_Events)
-                 > Ada.Real_Time.Clock;
-            end loop;
+                  or
+                     accept Invalidate
+                       (For_The_Instance : Instance_Base_P);
+                     --  Invalidate is called "just in case" (the Instance
+                     --  being deleted can't tell whether there are any
+                     --  outstanding held Events). But if we get here, the
+                     --  queue was empty, so there can't be anything to do.
 
-         else
+                  or
+                     accept Stop;
+                     exit Outer;
 
-            select
-               accept Add_At_Event (The_Entry : Event_P;
-                                    To_Run_At : Time.Time) do
-                  Held_Events.Add_At_Event (The_Entry,
-                                            To_Run_At,
-                                            On => The_Events);
-               end Add_At_Event;
+                  end select;
 
-            or
-               accept Add_After_Event (The_Entry : Event_P;
-                                       To_Run_After : Duration) do
-                  Held_Events.Add_After_Event (The_Entry,
-                                               To_Run_After,
-                                               On => The_Events);
-               end Add_After_Event;
+               elsif Held_Events.Next_Event_Time (The_Events)
+                 <= Ada.Real_Time.Clock then
 
-            or
-               accept Rethink;
+                  loop
+                     Process_First_Event;
+                     exit when Held_Events.Is_Empty (The_Events);
+                     exit when Held_Events.Next_Event_Time (The_Events)
+                       > Ada.Real_Time.Clock;
+                  end loop;
 
-            or
-               accept Invalidate
-                 (For_The_Instance : Instance_Base_P) do
-                  Held_Events.Invalidate_Events (The_Events, For_The_Instance);
-               end Invalidate;
+               else
 
-            or
-               accept Tear_Down;
-               exit;
+                  select
+                     accept Add_At_Event (The_Entry : Event_P;
+                                          To_Run_At : Time.Time) do
+                        Held_Events.Add_At_Event (The_Entry,
+                                                  To_Run_At,
+                                                  On => The_Events);
+                     end Add_At_Event;
 
-            or
-               delay until Held_Events.Next_Event_Time (The_Events);
-               Process_First_Event;
+                  or
+                     accept Add_After_Event (The_Entry : Event_P;
+                                             To_Run_After : Duration) do
+                        Held_Events.Add_After_Event (The_Entry,
+                                                     To_Run_After,
+                                                     On => The_Events);
+                     end Add_After_Event;
 
-            end select;
+                  or
+                     accept Rethink;
 
-         end if;
+                  or
+                     accept Invalidate
+                       (For_The_Instance : Instance_Base_P) do
+                        Held_Events.Invalidate_Events
+                          (The_Events, For_The_Instance);
+                     end Invalidate;
 
-      end loop;
+                  or
+                     accept Stop;
+                     exit Outer;
 
-   exception
-      when E : others =>
-         Logging.Log
-           (Severity => Logging.Error,
-            Message =>
-              Ada.Exceptions.Exception_Information (E) &
-              " in Timer_Manager");
-   end Timer_Manager;
+                  or
+                     delay until Held_Events.Next_Event_Time (The_Events);
+                     Process_First_Event;
+
+                  end select;
+
+               end if;
+
+            end loop Inner;
+
+         exception
+            when E : others =>
+               Logging.Log
+                 (Severity => Logging.Error,
+                  Message =>
+                    Ada.Exceptions.Exception_Information (E) &
+                    " in Held_Event_Manager");
+
+         end;
+
+         delay 0.1;
+         --  In case we end up in a tight, unstoppable loop. After
+         --  all, we should never get here at all!
+
+      end loop Outer;
+
+      accept Stopped;
+      --  This makes our readiness for being torn down visible without
+      --  actually terminating; if we terminate, user tasks may fail
+      --  when trying to post held events.
+
+      accept Finish;
+      --  Wait to be told to quit..
+
+   end Held_Event_Manager;
 
 
    protected body Excluder is
@@ -508,20 +540,20 @@ package body ColdFrame.Events_G.Standard_G is
       end Done;
 
 
-      entry Fetch (The_Event : out Event_P; Tearing_Down : out Boolean)
+      entry Fetch (The_Event : out Event_P; Stopping : out Boolean)
       --  If there are any events-to-self, we must have a lock already
       --  (the previous call to Done didn't release the lock, because
       --  we don't want external entities to see the intermediate
       --  states).
-      when Excluder.Tearing_Down
+      when Excluder.Stopping
         or else not Unbounded_Posted_Event_Queues.Is_Empty
                       (The_Queue.The_Self_Events)
         or else (Locks = 0
                    and then not Unbounded_Posted_Event_Queues.Is_Empty
                                   (The_Queue.The_Events)) is
       begin
-         Tearing_Down := Excluder.Tearing_Down;
-         if Tearing_Down then
+         Stopping := Excluder.Stopping;
+         if Stopping then
             return;
          end if;
          Locks := 1;
@@ -582,14 +614,14 @@ package body ColdFrame.Events_G.Standard_G is
       end Lock;
 
 
-      procedure Post (The_Event : Event_P) is
+      entry Post (The_Event : Event_P) when not Stopping is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
       end Post;
 
 
-      procedure Post_To_Self (The_Event : Event_P) is
+      entry Post_To_Self (The_Event : Event_P)  when not Stopping is
          use type Ada.Task_Identification.Task_Id;
       begin
          --  We need to be sure that only event handlers called by our
@@ -611,10 +643,10 @@ package body ColdFrame.Events_G.Standard_G is
       end Post_To_Self;
 
 
-      procedure Tear_Down is
+      procedure Stop is
       begin
-         Tearing_Down := True;
-      end Tear_Down;
+         Stopping := True;
+      end Stop;
 
 
       procedure Unlock is
@@ -643,7 +675,7 @@ package body ColdFrame.Events_G.Standard_G is
       --  The base implementation of Start checks first and doesn't
       --  make the call if it would be wrong to do so.
       The_Queue.The_Dispatcher.Start;
-      The_Queue.The_Timer_Manager.Rethink;
+      The_Queue.The_Held_Event_Manager.Rethink;
    end Start_Queue;
 
 
@@ -655,12 +687,13 @@ package body ColdFrame.Events_G.Standard_G is
       --  Called to mark all events for For_The_Instance as
       --  invalidated, so that they won't be dispatched.
 
-      --  First, tell the Timer_Manager to mark all its held events
+      --  First, tell the Held_Event_Manager to mark all its held events
       --  that reference the departing instance;
-      On.The_Timer_Manager.Invalidate (Instance_Base_P (For_The_Instance));
+      On.The_Held_Event_Manager.Invalidate
+        (Instance_Base_P (For_The_Instance));
       --  after which there can't be any more left (even one that was
       --  in the process of being posted must have gone, because it's
-      --  processed elsewhere in the Timer_Manager task).
+      --  processed elsewhere in the Held_Event_Manager task).
 
       --  Next, tell the Excluder the same.
       On.The_Excluder.Invalidate_Events (For_The_Instance);
@@ -668,7 +701,7 @@ package body ColdFrame.Events_G.Standard_G is
    end Invalidate_Events;
 
 
-   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+   procedure Stop (The_Queue : in out Event_Queue_Base) is
       use Abstract_Posted_Event_Containers;
    begin
 
@@ -677,15 +710,14 @@ package body ColdFrame.Events_G.Standard_G is
       --  events on a dead Dispatcher.
 
       --  Stop processing held events ..
-      The_Queue.The_Timer_Manager.Tear_Down;
-      --  .. waiting until the Timer_Manager has actually stopped.
-      while not The_Queue.The_Timer_Manager'Terminated loop
-         delay 0.1;
-      end loop;
+      The_Queue.The_Held_Event_Manager.Stop;
+      --  .. waiting until the Held_Event_Manager has actually stopped
+      --  (note, it's still alive).
+      The_Queue.The_Held_Event_Manager.Stopped;
 
       --  Tell the Excluder we're finishing. This makes the next Fetch
       --  report that tear-down is in progress.
-      The_Queue.The_Excluder.Tear_Down;
+      The_Queue.The_Excluder.Stop;
 
       --  If the queue wasn't started, tell the Dispatcher we're
       --  finishing.
@@ -734,6 +766,20 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  .. and all the held events.
       Held_Events.Tear_Down (The_Queue.The_Held_Events);
+
+   end Stop;
+
+
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+   begin
+
+      --  Tell the Held Event Manager to quit.
+      The_Queue.The_Held_Event_Manager.Finish;
+
+      --  Wait until the Held Event Manager has actually stopped.
+      while not The_Queue.The_Held_Event_Manager'Terminated loop
+         delay 0.1;
+      end loop;
 
    end Tear_Down;
 

@@ -2,7 +2,6 @@ with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
 with Event_Test.Events;
-with Event_Test.Events.Tear_Down;
 
 with ColdFrame.Project.Events;
 
@@ -288,20 +287,23 @@ package body Event_Test.Test_Engine is
 
 
    --  You can tear down an Event_Queue that hasn't started.
+   --  This would be better as a different test case!
    procedure Tear_Down_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Tear_Down_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
+      Dispatcher : ColdFrame.Project.Events.Event_Queue_P := Events.Dispatcher;
    begin
-      ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
+      ColdFrame.Project.Events.Add_Reference (Dispatcher);
       --  we need to add a use so that the Tear_Down in the fixture
       --  doesn't fail.
       select
          delay 1.0;
          Assert (False, "queue wasn't torn down");
       then abort
-         ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);
+         ColdFrame.Project.Events.Stop (Dispatcher);
+         ColdFrame.Project.Events.Tear_Down (Dispatcher);
       end select;
    end Tear_Down_Unstarted_Queue;
 
@@ -323,9 +325,6 @@ package body Event_Test.Test_Engine is
                                        After => 0.01);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-   exception
-      when Program_Error =>
-         Assert (False, "shouldn't have raised exception");
    end Delete_Timer_Without_Held_Event;
 
 
@@ -337,6 +336,7 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
       declare
          T : ColdFrame.Project.Events.Timer;
       begin
@@ -345,9 +345,6 @@ package body Event_Test.Test_Engine is
                                        To_Fire => new Empty,
                                        After => 1.0);
       end;
-      Assert (False, "should have raised exception");
-   exception
-      when Program_Error => null;
    end Delete_Timer_With_Held_Event;
 
 
@@ -393,6 +390,7 @@ package body Event_Test.Test_Engine is
       pragma Warnings (Off, T);
    begin
       Events.Initialize;
+      ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
       Waiting := False;
       Result := 0;
    end Set_Up;
@@ -400,7 +398,8 @@ package body Event_Test.Test_Engine is
    procedure Tear_Down (T :  in out Test_Case) is
       pragma Warnings (Off, T);
    begin
-      Events.Tear_Down;
+      ColdFrame.Project.Events.Stop (Events.Dispatcher);
+      ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);
    end Tear_Down;
 
 end Event_Test.Test_Engine;

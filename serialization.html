@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: serialization.html,v 1ddabb03bdc5 2004/09/04 14:12:28 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -37,7 +37,9 @@ to <a href="resources.html#xml">XML</a>.
 <p>To indicate that a <i>&#171;type&#187;</i> needs serialization
 support, tag it <tt>{serializable}</tt> (as usual, you can stereotype
 as
-<em>&#171;type,&nbsp;serializable&#187;</em>).
+<em>&#171;type,&nbsp;serializable&#187;</em> if you must; though
+serializability isn't really a problem-domain characteristic, and
+isn't important enough to justify its appearance on diagrams).
 
 <p>ColdFrame generates code which outputs <a
 href="resources.html#xml">XML</a> representations of the serialized
@@ -60,13 +62,16 @@ attribute is of
 
 <li>a <i>&#171;type&#187;</i> with a specified conversion function,
 
-<li>a simple record type, nested recursively if required.
+<li>a simple record type, nested recursively if required,
+
+<li>a (record) type which is imported or renamed from another domain
+and is serializable there.
 
 </ol>
 
 </ol>
 
-<p>There are two styles of conversion function:
+<p>There are two styles of specifiable conversion function:
 
 <dl>
 

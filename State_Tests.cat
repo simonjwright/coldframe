@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "State Tests"
@@ -17,7 +17,9 @@
 		    quid       	"3D60EEC9027C"
 		    parameters 	(list Parameters
 			(object Parameter "payload"
-			    type       	"Info"))
+			    quid       	"40A28356029E"
+			    type       	"Info"
+			    quidu      	"3CFFD70303C0"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -46,7 +48,9 @@
 		    quid       	"3D60EE150382"
 		    parameters 	(list Parameters
 			(object Parameter "payload"
-			    type       	"Info"))
+			    quid       	"40A2835602AB"
+			    type       	"Info"
+			    quidu      	"3CFFD70303C0"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -87,6 +91,7 @@
 				    when       	"Entry")))
 			type       	"Normal"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object ActivityDiagram "Statechart"
 			quid       	"3CFFD63202DA"
@@ -103,6 +108,15 @@
 			    (object StateView "StartState" "$UNNAMED$0" @2
 				Parent_View 	@1
 				location   	(570, 960)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
 				    location   	(612, 930)
@@ -111,12 +125,20 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3CFFD63701D2"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "S1" @3
 				Parent_View 	@1
 				location   	(1095, 975)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
 				    location   	(1095, 937)
@@ -133,6 +155,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@3
 				    location   	(1002, 975)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -145,9 +176,27 @@
 				autoResize 	TRUE)
 			    (object SelfTransView "" @4
 				location   	(1095, 736)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @5
 				    Parent_View 	@4
 				    location   	(1095, 721)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	60
@@ -161,7 +210,7 @@
 				quidu      	"3CFFD6440108"
 				client     	@3
 				supplier   	@3
-				line_style 	0)
+				line_style 	4)
 			    (object TransView "" @6
 				stereotype 	TRUE
 				line_color 	3342489
@@ -190,7 +239,9 @@
 		    quid       	"3D60EE1E038F"
 		    parameters 	(list Parameters
 			(object Parameter "payload"
-			    type       	"Info"))
+			    quid       	"40A2835602CE"
+			    type       	"Info"
+			    quidu      	"3CFFD70303C0"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -231,6 +282,7 @@
 				    when       	"Entry")))
 			type       	"Normal"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object ActivityDiagram "Statechart"
 			quid       	"3CFFD6630289"
@@ -247,6 +299,15 @@
 			    (object StateView "StartState" "$UNNAMED$1" @8
 				Parent_View 	@7
 				location   	(495, 885)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@8
 				    location   	(537, 855)
@@ -255,12 +316,20 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3CFFD668034F"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "S2" @9
 				Parent_View 	@7
 				location   	(1455, 900)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@9
 				    location   	(1455, 862)
@@ -277,6 +346,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@9
 				    location   	(1362, 900)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -297,9 +375,27 @@
 				x_offset   	FALSE)
 			    (object SelfTransView "" @11
 				location   	(1455, 661)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @12
 				    Parent_View 	@11
 				    location   	(1455, 631)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	60
@@ -313,7 +409,7 @@
 				quidu      	"3CFFD67E0007"
 				client     	@9
 				supplier   	@9
-				line_style 	0))))))
+				line_style 	4))))))
 	(object Class "Info"
 	    quid       	"3CFFD70303C0"
 	    stereotype 	"type"
@@ -337,6 +433,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1155, 510)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@13
 			location   	(931, 415)
@@ -352,11 +457,20 @@
 		    compartment 	(object Compartment
 			Parent_View 	@13
 			location   	(931, 471)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	445)
+			max_width  	452)
 		    width      	466
 		    height     	212
 		    annotation 	8
@@ -367,6 +481,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(750, 1185)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
 			location   	(568, 1112)
@@ -382,11 +505,20 @@
 		    compartment 	(object Compartment
 			Parent_View 	@14
 			location   	(568, 1168)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	360)
+			max_width  	367)
 		    width      	382
 		    height     	168
 		    annotation 	8
@@ -397,6 +529,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1620, 1185)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@15
 			location   	(1438, 1112)
@@ -412,16 +553,34 @@
 		    compartment 	(object Compartment
 			Parent_View 	@15
 			location   	(1438, 1168)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	360)
+			max_width  	367)
 		    width      	382
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "g" @16
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
 			location   	(945, 858)
@@ -437,6 +596,15 @@
 		    supplier   	@13
 		    line_style 	0)
 		(object InheritView "g" @17
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@17
 			location   	(1394, 858)
@@ -457,6 +625,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1185, 1785)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@18
 			location   	(1027, 1732)
@@ -481,6 +658,15 @@
 		    compartment 	(object Compartment
 			Parent_View 	@18
 			location   	(1027, 1788)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -491,6 +677,15 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object UsesView "Ev" @19
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@19
 			location   	(958, 1472)
@@ -502,6 +697,15 @@
 		    stereotype 	(object SegLabel @20
 			Parent_View 	@19
 			location   	(865, 1407)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	10
 			anchor_loc 	1
 			nlines     	1
@@ -517,6 +721,15 @@
 		    supplier   	@18
 		    line_style 	0)
 		(object UsesView "Ev" @21
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@21
 			location   	(1410, 1472)
@@ -528,6 +741,15 @@
 		    stereotype 	(object SegLabel @22
 			Parent_View 	@21
 			location   	(1430, 1412)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	10
 			anchor_loc 	1
 			nlines     	1

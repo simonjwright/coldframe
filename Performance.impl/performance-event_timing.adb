@@ -1,4 +1,4 @@
---  $Id: performance-event_timing.adb,v 284dd276058e 2003/11/11 22:23:17 simon $
+--  $Id: performance-event_timing.adb,v 00ade36dfdd0 2004/09/05 19:24:55 simon $
 
 with ColdFrame.Project.Events.Standard;
 
@@ -73,5 +73,7 @@ begin
 
    Dispatcher_A := new ColdFrame.Project.Events.Standard.Event_Queue;
    Dispatcher_B := new ColdFrame.Project.Events.Standard.Event_Queue;
+   ColdFrame.Project.Events.Add_Reference (To => Dispatcher_A);
+   ColdFrame.Project.Events.Add_Reference (To => Dispatcher_B);
 
 end Performance.Event_Timing;

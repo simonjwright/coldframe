@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: types.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -77,6 +77,13 @@ for example,
 
 <ul>
 
+<li><tt>access = <i>access-type-name</i></tt> specifies that you need
+a type which provides access to objects of the type (ie, a pointer
+type). It's probably a good idea to adopt a naming convention:
+ColdFrame's precedent would be to append <tt>_P</tt> to the type name,
+your project might prefer something more obvious like
+<tt>_Access</tt>.
+
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
 and optionally <tt>unconstrained</tt>.
 <br>Please <em>don't</em> use arrays to implement associations!
@@ -153,6 +160,11 @@ type is a renaming of the specified external reference.
 the type to an external medium. See
 <a href="serialization.html">separate information</a>.
 
+<li><tt>serializable-there</tt> (only applicable to <i>{imported}</i>
+or <i>{renames}</i> types) specifies that the type is
+<i>{serializable}</i> in the package in which it is actually declared.
+See <a href="serialization.html">separate information</a>.
+
 <li><tt>string = fixed <i>fixed-length</i></tt>
 
 <li><tt>string = max <i>max-length</i></tt>
@@ -160,6 +172,9 @@ the type to an external medium. See
 <li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been
 serialized. See <a href="serialization.html">separate information</a>.
+
+<li><tt>unsigned = mod <i>modulus</i></tt> specifies an unsigned
+(modular) type capable of storing 0 .. <i>modulus</i> - 1.
 
 </ul>
 
@@ -227,6 +242,18 @@ no implicit <tt>This</tt> parameter.
 <h3>Tags</h3>
 
 <ul>
+
+<li><tt>access = <i>access-type-name</i></tt>
+
+<p>for a type <tt>Typ</tt>, after the declaration of the type,
+generates
+<pre>
+   type <i>access-type-name</i> is access all <i>Typ</i>;
+   for <i>access-type-name</i>'Storage_Size use 0;
+</pre>
+
+<p>Any instances of <tt>Typ</tt> are declared <tt>aliased</tt>, to
+allow <tt>'Access</tt> to be used.
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i>[,
 unconstrained]</tt>
@@ -398,6 +425,18 @@ understands (it might want to add timestamp information, for example)
 
 <p>See <a href="serialization.html">separate information</a>.
 
+<li><tt>serializable-there</tt> has no effect on the type to which
+it's attached; the <tt><i>Domain</i>.Serializable.Image</tt> operation
+of any local <i>serializable</i> types with components of a
+<i>serializable-there</i> type will complete processing for the
+components whose type it does know about and then invoke the
+<tt><i>Other_Domain</i>.Serializable.Image</tt> operation on the
+"there" components, having copied the
+<tt>ColdFrame.Project.Serialization.Base</tt> part (project-defined;
+containing timestamp, serial number etc) from the original record.
+
+<p>
+
 <li><tt>string = fixed <i>fixed-length</i></tt> gives a subtype of the
 standard <tt>String</tt> of the specified length:
 <pre>
@@ -424,9 +463,20 @@ example (see <a href="#discriminated-record-pic">above</a>),
    is new ColdFrame.Hash.Strings.Bounded (Information_Package);
 </pre>
 
+<li><tt>unsigned = mod <i>modulus</i></tt> gives
+<pre>
+   type T is mod <i>modulus</i>;
+</pre>
+
 </ul>
 
 <h2>Use</h2>
+
+<h3>Access types</h3>
+
+<p>Normally you should only use these where you have to give access to
+an attribute to another class; perhaps the attribute is of a
+&#171;protected&#187; (and therefore <i>limited</i>) type.
 
 <h3>Type extension</h3>
 

@@ -2,41 +2,41 @@
 <extractor>cf-DATE</extractor>
 <name>Problem_Reporting</name>
 <date>
-<year>2003</year>
-<month>11</month>
-<day>15</day>
-<time>18:10</time>
+<year>2004</year>
+<month>5</month>
+<day>1</day>
+<time>15:42</time>
 </date>
-<documentation>Classes for Problem Reporting.
+<documentation><![CDATA[Classes for Problem Reporting.
 
-{ revision = $Revision: 3c33faafeb46 $ }</documentation>
+{ revision = $Revision: b291368dc4f8 $ }]]></documentation>
 <classes>
 <class>
 <name>Problem Report</name>
 <kind>NormalClass</kind>
 <cardinality>0 .. 10100</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
-</documentation>
+<documentation><![CDATA[A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
+]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation>An integer allocated uniquely to identify Problem Reports.</documentation>
+<documentation><![CDATA[An integer allocated uniquely to identify Problem Reports.]]></documentation>
 <type>integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>details</name>
 <visibility>PrivateAccess</visibility>
-<documentation>The text of the Problem Report.</documentation>
+<documentation><![CDATA[The text of the Problem Report.]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>reporter</name>
 <visibility>PrivateAccess</visibility>
-<documentation>The email address of the person who originally raised the Problem Report.</documentation>
+<documentation><![CDATA[The email address of the person who originally raised the Problem Report.]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -45,11 +45,11 @@
 <operation>
 <name>set details</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Text</type>
 <initial></initial>
 </parameter>
@@ -58,11 +58,11 @@
 <operation>
 <name>set reporter</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Text</type>
 <initial></initial>
 </parameter>
@@ -71,7 +71,7 @@
 <operation>
 <name>get id</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>Integer</return>
 <parameters>
 </parameters>
@@ -79,7 +79,7 @@
 <operation>
 <name>get details</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
@@ -93,12 +93,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
+<documentation><![CDATA[A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.]]></documentation>
 <attributes>
 <attribute>
 <name>rejection reason</name>
 <visibility>PrivateAccess</visibility>
-<documentation>The Rejection Reason is a summary of the reason that the Problem Report has been rejected.</documentation>
+<documentation><![CDATA[The Rejection Reason is a summary of the reason that the Problem Report has been rejected.]]></documentation>
 <type>Summary String</type>
 <initial></initial>
 </attribute>
@@ -107,11 +107,11 @@
 <operation>
 <name>set rejection reason</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Summary String</type>
 <initial></initial>
 </parameter>
@@ -120,7 +120,7 @@
 <operation>
 <name>get rejection reason</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>Summary String</return>
 <parameters>
 </parameters>
@@ -134,7 +134,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
+<documentation><![CDATA[A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -147,17 +147,17 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
+<documentation><![CDATA[A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
 
 Purely for demonstration purposes, the maximum number of Components is limited to 4.
 
 [[max: 4]]
-</documentation>
+]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation>Id is the name of the software Component. It uniquely identifies the Component.</documentation>
+<documentation><![CDATA[Id is the name of the software Component. It uniquely identifies the Component.]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -166,7 +166,7 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 <operation>
 <name>get id</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
@@ -174,23 +174,23 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 <operation>
 <name>report</name>
 <visibility>PublicAccess</visibility>
-<documentation>Generate a report on the Component and each associated Defect (if any).</documentation>
+<documentation><![CDATA[Generate a report on the Component and each associated Defect (if any).]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="class">
 <name>report all</name>
 <visibility>PublicAccess</visibility>
-<documentation>Generate a report on all the Components.</documentation>
+<documentation><![CDATA[Generate a report on all the Components.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="finalize">
 <name>clean</name>
 <visibility>PublicAccess</visibility>
-<documentation>Maintain referential integrity when the Component is deleted, by removing any associated Defects.
+<documentation><![CDATA[Maintain referential integrity when the Component is deleted, by removing any associated Defects.
 
-Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).</documentation>
+Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -203,14 +203,14 @@ Note that this will require deleting any of the associated Diagnosed Problem Rep
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>An Unallocated Problem Report is awaiting determination of appropriate handling.
+<documentation><![CDATA[An Unallocated Problem Report is awaiting determination of appropriate handling.
 
 If it's decided not in fact to be a problem, it will be rejected (see Rejected Problem Report).
 
 If it is really a problem, it will become a Diagnosed Problem Report.
 
 [[ abbreviation : UPR ]]
-</documentation>
+]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -223,16 +223,16 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Defect denotes something that is wrong with a Component.
+<documentation><![CDATA[A Defect denotes something that is wrong with a Component.
 
 It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
 
-It should address one logical error (which may correspond to several necessary changes in the affected Component).</documentation>
+It should address one logical error (which may correspond to several necessary changes in the affected Component).]]></documentation>
 <attributes>
 <attribute>
 <name>problem</name>
 <visibility>PrivateAccess</visibility>
-<documentation>Contains a description of the Defect.</documentation>
+<documentation><![CDATA[Contains a description of the Defect.]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -241,11 +241,11 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>set problem</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Text</type>
 <initial></initial>
 </parameter>
@@ -254,7 +254,7 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>get problem</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
@@ -262,7 +262,7 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>report</name>
 <visibility>PublicAccess</visibility>
-<documentation>Report details of this Defect.</documentation>
+<documentation><![CDATA[Report details of this Defect.]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -275,10 +275,10 @@ It should address one logical error (which may correspond to several necessary c
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Summary String is used to hold brief statements.
+<documentation><![CDATA[A Summary String is used to hold brief statements.
 
 {string = max 80}
-</documentation>
+]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -291,18 +291,18 @@ It should address one logical error (which may correspond to several necessary c
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Provides the public interface to the Problem Reporting domain.</documentation>
+<documentation><![CDATA[Provides the public interface to the Problem Reporting domain.]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>add component</name>
 <visibility>PublicAccess</visibility>
-<documentation>Add a Component to the set of Components known to the System.</documentation>
+<documentation><![CDATA[Add a Component to the set of Components known to the System.]]></documentation>
 <parameters>
 <parameter>
 <parametername>named</parametername>
-<documentation>The name of the Component to be added.</documentation>
+<documentation><![CDATA[The name of the Component to be added.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -311,23 +311,23 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>add problem</name>
 <visibility>PublicAccess</visibility>
-<documentation>Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated.</documentation>
+<documentation><![CDATA[Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated.]]></documentation>
 <parameters>
 <parameter>
 <parametername>number</parametername>
-<documentation>The identifying Number of the Problem_Report.</documentation>
+<documentation><![CDATA[The identifying Number of the Problem_Report.]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>reporter</parametername>
-<documentation>The e-mail address of the person reporting the problem.</documentation>
+<documentation><![CDATA[The e-mail address of the person reporting the problem.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>details</parametername>
-<documentation>A description of the problem.</documentation>
+<documentation><![CDATA[A description of the problem.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -336,11 +336,11 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>delete component</name>
 <visibility>PublicAccess</visibility>
-<documentation>Deletes the named Component.</documentation>
+<documentation><![CDATA[Deletes the named Component.]]></documentation>
 <parameters>
 <parameter>
 <parametername>component name</parametername>
-<documentation>The identifying name of the Component to be deleted.</documentation>
+<documentation><![CDATA[The identifying name of the Component to be deleted.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -349,23 +349,23 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>note defect</name>
 <visibility>PublicAccess</visibility>
-<documentation>A Defect has been discovered in the given Component, related to the given Problem Report.</documentation>
+<documentation><![CDATA[A Defect has been discovered in the given Component, related to the given Problem Report.]]></documentation>
 <parameters>
 <parameter>
 <parametername>problem number</parametername>
-<documentation>The identifying Number of the Problem Report.</documentation>
+<documentation><![CDATA[The identifying Number of the Problem Report.]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>component name</parametername>
-<documentation>Thw identifying Name of the Component.</documentation>
+<documentation><![CDATA[Thw identifying Name of the Component.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>description</parametername>
-<documentation>The particular defect in this Component that results in the given Problem Report.</documentation>
+<documentation><![CDATA[The particular defect in this Component that results in the given Problem Report.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -374,17 +374,17 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>reject problem</name>
 <visibility>PublicAccess</visibility>
-<documentation>The indicated Problem has been determined not to be valid: reject it.</documentation>
+<documentation><![CDATA[The indicated Problem has been determined not to be valid: reject it.]]></documentation>
 <parameters>
 <parameter>
 <parametername>number</parametername>
-<documentation>The identifying Number of the Problem Report.</documentation>
+<documentation><![CDATA[The identifying Number of the Problem Report.]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>reason</parametername>
-<documentation>The reason for rejecting the Problem Report.</documentation>
+<documentation><![CDATA[The reason for rejecting the Problem Report.]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -393,7 +393,7 @@ It should address one logical error (which may correspond to several necessary c
 <operation>
 <name>report problems</name>
 <visibility>PublicAccess</visibility>
-<documentation>Generate a report on each Component known to the system, detailing any related Problem Reports and the associated Defects.</documentation>
+<documentation><![CDATA[Generate a report on each Component known to the system, detailing any related Problem Reports and the associated Defects.]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -405,7 +405,7 @@ It should address one logical error (which may correspond to several necessary c
 <relationships>
 <association>
 <name>r100</name>
-<documentation>When a Problem Report has been determined to be related to one or more Components, it's said to have been Diagnosed.
+<documentation><![CDATA[When a Problem Report has been determined to be related to one or more Components, it's said to have been Diagnosed.
 
 Every Diagnosed Problem Report is associated with at least one Component.
 
@@ -413,36 +413,36 @@ A Component may be associated with one or more Diagnosed Problem Reports.
 
 The actual problem with the Component is held in the associated Defect.
 
-In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.</documentation>
+In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.]]></documentation>
 <role><end>1</end>
 <name>affects</name>
 <classname>Component</classname>
 <cardinality>1..n</cardinality>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 </role>
 <role><end>2</end>
 <name>is affected by</name>
 <classname>Diagnosed Problem Report</classname>
 <cardinality>0..n</cardinality>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 </role>
 <associative>Defect</associative>
 </association>
 <inheritance>
 <name>r1</name>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <child>Rejected Problem Report</child>
 <parent>Problem Report</parent>
 </inheritance>
 <inheritance>
 <name>r1</name>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <child>Diagnosed Problem Report</child>
 <parent>Problem Report</parent>
 </inheritance>
 <inheritance>
 <name>r1</name>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <child>Unallocated Problem Report</child>
 <parent>Problem Report</parent>
 </inheritance>

@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: support.html,v b72a3ecb25af 2004/06/17 07:12:06 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -65,11 +65,6 @@ event.
 <dd>Provides a "creation" event type, for use where there's no
 application event to cause transition from the initial state.
 
-<p><dt><tt>ColdFrame.Events_G.Debug_G</tt>
-
-<dd>Adds logging (to standard output) to a concrete
-<tt>ColdFrame.Events_G.Event_Queue</tt>.
-
 <p><dt><tt>ColdFrame.Events_G.Standard_G</tt>
 
 <dd>A straightforward event queueing and dispatching service.
@@ -87,6 +82,10 @@ application event to cause transition from the initial state.
 
 </ul>
 
+<p><dt><tt>ColdFrame.Events_G.Trace_G</tt>
+
+<dd>Adds logging (via <tt>ColdFrame.Project.Logging_Support</tt>) to a
+concrete <tt>ColdFrame.Events_G.Event_Queue</tt>.
 
 </dl>
 
@@ -236,23 +235,23 @@ from <tt>ColdFrame.Project.Times</tt>, logging from
 <tt>ColdFrame.Events_G.Standard_G</tt>, with held events from
 <tt>ColdFrame.Project.Held_Event_Support</tt>.
 
-<p><dt><tt>ColdFrame.Project.Events.Standard.Debug</tt>
-
-<dd>A standard instantiation of
-<tt>ColdFrame.Events_G.Debug_G</tt>, based on
-<tt>ColdFrame.Project.Events.Standard</tt>.
-
 <p><dt><tt>ColdFrame.Project.Events.Standard.Test</tt>
 
 <dd>A standard instantiation of
 <tt>ColdFrame.Events_G.Test_G</tt>, based on
 <tt>ColdFrame.Project.Events.Standard</tt>.
 
-<p><dt><tt>ColdFrame.Project.Events.Standard.Test_Debug</tt>
+<p><dt><tt>ColdFrame.Project.Events.Standard.Trace</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Trace_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Standard.Test_Trace</tt>
 
 <dd>A standard instantiation of
 <tt>ColdFrame.Events_G.Test_G</tt>, based on
-<tt>ColdFrame.Project.Events.Standard.Debug</tt> (ie, a Test queue,
+<tt>ColdFrame.Project.Events.Standard.Trace</tt> (ie, a Test queue,
 which prints what's going on)..
 
 </dl>
@@ -333,11 +332,11 @@ ColdFrame directory.
 
 <dl>
 
-<dt><tt>ColdFrame.Logging_Event_Basis.EWS_Page</tt>
+<dt><tt>ColdFrame.Logging_Event_Basis.EWS_Support</tt>
 
 <dd>Provides support for generating web pages to report on event
 processing statistics, in an embedded web server based on <a
-href="http://www.pushface.org/ews">EWS</a>.
+href="http://sourceforge.net/projects/embed-web-srvr/">EWS</a>.
 
 </dl>
 

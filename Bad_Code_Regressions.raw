@@ -3,25 +3,25 @@
 <name>Bad Code Regressions</name>
 <date>
 <year>2004</year>
-<month>4</month>
-<day>24</day>
-<time>21:27</time>
+<month>9</month>
+<day>11</day>
+<time>12:59</time>
 </date>
-<documentation>Regression tests that involve detecting errors.
+<documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: 34bfcc5a90d4 $ }</documentation>
+{ revision = $Revision: 6ea040caff18 $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -30,7 +30,7 @@
 <operation stereotype="abstract">
 <name>op</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -43,7 +43,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -56,38 +56,38 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>A</name>
 <entryactions>
 </entryactions>
-<documentation>There is more than one transition triggered by E from here.</documentation>
+<documentation><![CDATA[ There is more than one transition triggered by E from here. ]]></documentation>
 </state>
 <state>
 <name>B</name>
 <entryactions>
 <entryaction><name>Delete</name></entryaction>
 </entryactions>
-<documentation>There is a Delete entry action followed by drop-throughs.</documentation>
+<documentation><![CDATA[ There is a Delete entry action followed by drop-throughs. ]]></documentation>
 </state>
 <state>
 <name>C</name>
 <entryactions>
 </entryactions>
-<documentation>There is a triggered tranition as well as a drop-through.</documentation>
+<documentation><![CDATA[ There is a triggered tranition as well as a drop-through. ]]></documentation>
 </state>
 <state>
 <name>D</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state final="yes">
 <name>final</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -96,56 +96,56 @@
 <target>A</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>A</source>
 <target>B</target>
 <event><name>E</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>A</source>
 <target>B</target>
 <event><name>E</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>B</source>
 <target>C</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>B</source>
 <target>C</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>C</source>
 <target>D</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>C</source>
 <target>D</target>
 <event><name>F</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>D</source>
 <target>final</target>
 <event><name>F</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -155,12 +155,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -169,14 +169,14 @@
 <operation>
 <name>plain</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="final">
 <name>delete instance</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -189,13 +189,13 @@
 <name>s1</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state initial="yes">
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>s2</name>
@@ -203,7 +203,7 @@
 <entryaction><name>delete</name></entryaction>
 <entryaction><name>plain</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>s3</name>
@@ -211,7 +211,7 @@
 <entryaction><name>delete instance</name></entryaction>
 <entryaction><name>plain</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>s4</name>
@@ -220,21 +220,21 @@
 <entryaction><name>delete</name></entryaction>
 <entryaction><name>delete instance</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>s5</name>
 <entryactions>
 <entryaction><name>delete</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>s6</name>
 <entryactions>
 <entryaction><name>delete instance</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -243,42 +243,42 @@
 <target>s2</target>
 <event><name>a</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>s1</source>
 <target>s3</target>
 <event><name>b</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>s1</source>
 <target>s4</target>
 <event><name>c</name></event>
 <transitionaction><name>delete instance</name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>s1</source>
 <target>s5</target>
 <event><name>d</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>s1</source>
 <target>s6</target>
 <event><name>e</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>initial</source>
 <target>s1</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -288,18 +288,18 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>o1</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>p</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>T1</type>
 <initial></initial>
 </parameter>
@@ -308,11 +308,11 @@
 <operation>
 <name>o2</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>o</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>T2</type>
 <initial></initial>
 </parameter>
@@ -321,11 +321,11 @@
 <operation stereotype="handler">
 <name>h</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>p</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>E1</type>
 <initial></initial>
 </parameter>
@@ -352,21 +352,21 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>S1</name>
 <entryactions>
 <entryaction><name>o2</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>S2</name>
 <entryactions>
 <entryaction><name>o1</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -375,14 +375,14 @@
 <target>S1</target>
 <event><name>e1</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>S1</source>
 <target>S2</target>
 <event><name>e1</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -392,7 +392,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>{renames = Boolean}</documentation>
+<documentation><![CDATA[ {renames = Boolean} ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -405,7 +405,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>{renames = Integer}</documentation>
+<documentation><![CDATA[ {renames = Integer} ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -418,7 +418,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>{renames = Float}</documentation>
+<documentation><![CDATA[ {renames = Float} ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -431,12 +431,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -445,11 +445,11 @@
 <operation>
 <name>profile</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>x</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
@@ -464,7 +464,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -477,7 +477,7 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>init</name>
@@ -485,7 +485,7 @@
 <entryaction><name>profile</name></entryaction>
 <entryaction><name>missing</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -494,7 +494,45 @@
 <target>init</target>
 <event><name>go</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="singleton">
+<name>No Initial State</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state>
+<name>a</name>
+<entryactions>
+</entryactions>
+<documentation><![CDATA[  ]]></documentation>
+</state>
+<state>
+<name>b</name>
+<entryactions>
+</entryactions>
+<documentation><![CDATA[  ]]></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>a</source>
+<target>b</target>
+<event><name>ev</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -504,7 +542,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -517,7 +555,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -530,12 +568,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -544,7 +582,7 @@
 <operation stereotype="finalize">
 <name>a function</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>Integer</return>
 <parameters>
 </parameters>
@@ -552,11 +590,11 @@
 <operation stereotype="finalize">
 <name>has parameters</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>x</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
@@ -565,17 +603,57 @@
 <operation stereotype="finalize, class">
 <name>is class</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="finalize, abstract">
 <name>is abstract</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Bad Singleton Finalization</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>No Operations</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute>
+<name>s</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Boolean</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
 </operations>
 <events>
 </events>
@@ -584,24 +662,24 @@
 <relationships>
 <inheritance>
 <name>action</name>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <child>Child Action Mismatch</child>
 <parent>Super Action Mismatch</parent>
 </inheritance>
 <association>
 <name>a1</name>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <role><end>1</end>
 <name>uses</name>
 <classname>Internal</classname>
 <cardinality>1</cardinality>
-<documentation>{source}</documentation>
+<documentation><![CDATA[ {source} ]]></documentation>
 </role>
 <role><end>2</end>
 <name>is used by</name>
 <classname>External</classname>
 <cardinality>1</cardinality>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 </relationships>

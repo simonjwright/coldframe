@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 62f95d84c025 2004/04/26 12:03:54 simon $ -->
+<!-- $Id: releases.html-proto,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,7 +22,11 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>DATE
 
-<dd>Action routines can be inherited from the parent.
+<dd><font color="red">For this release, it's necessary to re-extract
+all Domains from the model.</font>
+
+
+<p>Action routines can be inherited from the parent.
 
 
 <p>ColdFrame checks that operations corresponding to actions actually
@@ -31,6 +35,66 @@ exist.
 
 <p>If an exception gets raised in a called-back routine, an error is
 logged (rather than re-raising the exception to the supplier).
+
+
+<p>A callback operation can deregister itself (though the
+register/deregister operations aren't task-safe).
+
+
+<p>The ColdFrame-supplied storage pools, as well as filling
+newly-allocated memory with an obviously bad pattern
+(<tt>16#deadbeef#</tt>), now refill just-freed memory with the same
+pattern.
+
+
+<p>An <a href="http://xml.coverpages.org/schemas.html">XML Schema</a>
+is now <a href="ColdFrame-norm.xsd">supplied</a> for ColdFrame's
+"normalized" XML.
+
+
+<p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
+the new <tt>Trace</tt> versions instead (for example,
+<tt>ColdFrame.Project.Events.Standard.Trace</tt>).
+
+
+<p>The error of creating a Timer on the stack now results in a log
+message rather than an exception.
+
+
+<p>The Event Queue task responsible for delayed Events is has been
+renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
+(since it doesn't just deal with Timers).
+
+
+<p>There are added checks on state machine legality.
+
+
+<p>Tear Down has been reworked to remove some race conditions that
+could lead to <tt>Tasking_Error</tt>.
+
+
+<p>ColdFrame now recognises <i>class utilities</i> ("classes" with no
+instances, only operations).
+
+
+<p>If a &#171;public&#187; class has no attributes, no instance record
+will be generated.
+
+
+<p>Visibility is partially implemented for operations of classes and
+&#171;protected&#187; types; <i>public</i> and <i>protected</i>
+operations are public, <i>private</i> and <i>implementation</i>
+operations are private (unless they are marked &#171;init&#187;).
+
+
+<p>It's been made a bit more straightforward to <a
+href="extending.html">add your own code generation extensions</a>.
+
+
+<p>You can declare unsigned (modular) types.
+
+
+<p>You can make ColdFrame generate access types for your own types.
 
 
 <p><dt>20040319
@@ -44,10 +108,6 @@ generation extensions.
 <p>Tagged values with names containing illegal characters are treated
 as errors. (Legal characters are alphanumerics, hyphen and
 underscore).
-
-
-<p>Using a bounded string (<tt>{string = max 15}</tt> say) in an
-identifier is allowed.
 
 
 <p>You can specify an empty type using the tag <i>{null}</i>.

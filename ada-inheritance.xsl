@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,20 +26,24 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.1">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:in="http://pushface.org/coldframe/inheritance"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.1">
 
 
   <!-- Generate specs for inheritance support. -->
   <xsl:template
     match="class"
-    mode="inheritance-spec">
-    
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    mode="in:inheritance-spec">
 
-    <xsl:call-template name="inheritance-spec-context"/>
-    
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
+    <xsl:call-template name="in:inheritance-spec-context"/>
+
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -47,16 +51,16 @@
     <xsl:text>.Inheritance is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="create-tree-heading"/>
+    <xsl:call-template name="in:create-tree-heading"/>
     <xsl:text>;&#10;</xsl:text>
 
     <xsl:if test="../inheritance[parent=current()/name]">
       <xsl:value-of select="$blank-line"/>
-      <xsl:call-template name="delete-child-heading"/>
+      <xsl:call-template name="in:delete-child-heading"/>
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:call-template name="inheritance-find-spec"/>
+    <xsl:call-template name="in:inheritance-find-spec"/>
 
     <xsl:value-of select="$blank-line"/>
     <xsl:text>end </xsl:text>
@@ -71,13 +75,14 @@
   <!-- Generate bodies for inheritance support. -->
   <xsl:template
     match="class"
-    mode="inheritance-body">
-    
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
-    
-    <xsl:call-template name="inheritance-body-context"/>
-    
+    mode="in:inheritance-body">
+
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
+    <xsl:call-template name="in:inheritance-body-context"/>
+
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -85,14 +90,14 @@
     <xsl:text>.Inheritance is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="create-tree-body"/>
+    <xsl:call-template name="in:create-tree-body"/>
 
     <xsl:if test="../inheritance[parent=current()/name]">
       <xsl:value-of select="$blank-line"/>
-      <xsl:call-template name="delete-child-body"/>
+      <xsl:call-template name="in:delete-child-body"/>
     </xsl:if>
 
-    <xsl:call-template name="inheritance-find-body"/>
+    <xsl:call-template name="in:inheritance-find-body"/>
 
     <xsl:value-of select="$blank-line"/>
     <xsl:text>end </xsl:text>
@@ -106,8 +111,8 @@
 
   <!-- Called at domain/class to generate the context for the inheritance
        support spec. -->
-  <xsl:template name="inheritance-spec-context">
-    
+  <xsl:template name="in:inheritance-spec-context">
+
     <!-- We need all the parental classes. -->
 
     <xsl:param name="starting-at" select="."/>
@@ -117,7 +122,7 @@
 
       <xsl:when test="../inheritance[child=$starting-at/name]">
 
-        <xsl:call-template name="inheritance-spec-context">
+        <xsl:call-template name="in:inheritance-spec-context">
           <xsl:with-param
             name="starting-at"
             select="/domain/class
@@ -127,11 +132,11 @@
             name="result"
             select="../inheritance[child=$starting-at/name]/parent | $result"/>
         </xsl:call-template>
-        
+
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:for-each select="$result">
           <xsl:sort/>
 
@@ -151,7 +156,7 @@
 
   <!-- Called at domain/class to generate the context for the inheritance
        support body. -->
-  <xsl:template name="inheritance-body-context">
+  <xsl:template name="in:inheritance-body-context">
 
     <!-- We need the immediate child classes. -->
 
@@ -178,7 +183,7 @@
     <!-- We need ColdFrame.Exceptions if we are a root class, or if
          we have more than one ultimate ancestor. -->
     <xsl:variable name="roots">
-      <xsl:call-template name="ultimate-ancestors">
+      <xsl:call-template name="in:ultimate-ancestors">
         <xsl:with-param
           name="starting-at"
           select="."/>
@@ -200,10 +205,10 @@
 
   <!-- Called at domain/class to generate the heading for the
        Create_Tree function. -->
-  <xsl:template name="create-tree-heading">
+  <xsl:template name="in:create-tree-heading">
 
     <xsl:variable name="roots">
-      <xsl:call-template name="ultimate-ancestors"/>
+      <xsl:call-template name="in:ultimate-ancestors"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -225,21 +230,21 @@
     </xsl:for-each>
 
     <xsl:text>) return Handle</xsl:text>
-    
+
   </xsl:template>
 
 
   <!-- Called at domain/class to generate the heading for the
        Delete_Child procedure. -->
-  <xsl:template name="delete-child-heading">
+  <xsl:template name="in:delete-child-heading">
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete_Child (This : Handle)</xsl:text>
   </xsl:template>
 
 
   <!-- Called at domain/class to generate Create_Tree functions. -->
-  <xsl:template name="create-tree-body">
-    
+  <xsl:template name="in:create-tree-body">
+
     <!--
          function Create_Tree
            ({rp1-abbrev} : ColdFrame.Instances.Handle;
@@ -275,7 +280,7 @@
               select="../class[name=current()/parent]/abbreviation"/>
           </xsl:element>
           <xsl:variable name="roots">
-            <xsl:call-template name="ultimate-ancestors">
+            <xsl:call-template name="in:ultimate-ancestors">
               <xsl:with-param
                 name="starting-at"
                 select="../class[name=current()/parent]"/>
@@ -292,7 +297,7 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:call-template name="create-tree-heading"/>
+    <xsl:call-template name="in:create-tree-heading"/>
     <xsl:text> is&#10;</xsl:text>
 
     <xsl:for-each select="$rels/relation">
@@ -303,7 +308,7 @@
       <xsl:text>_H : </xsl:text>
       <xsl:value-of select="parent-name"/>
       <xsl:text>.Handle;&#10;</xsl:text>
-      
+
     </xsl:for-each>
 
     <xsl:value-of select="$II"/>
@@ -330,7 +335,7 @@
                 return Handle ({abbrev});
              end if;
              -->
-        
+
         <xsl:value-of select="$II"/>
         <xsl:text>if </xsl:text>
         <xsl:value-of select="abbreviation"/>
@@ -385,7 +390,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <!--
              if {rp1-abbrev} = null
                or else not ({rp1-abbrev}.all in Instance'Class)
@@ -484,9 +489,9 @@
         <xsl:text>else&#10;</xsl:text>
 
         <xsl:if test="count($rels/relation/root-abbrev)&gt;1">
-          
+
           <!-- We need to check that all the "root" handles are the same. -->
-            
+
           <xsl:value-of select="$III"/>
           <xsl:text>if </xsl:text>
 
@@ -537,10 +542,10 @@
         <xsl:text>return Handle (</xsl:text>
         <xsl:value-of select="$rels/relation/root-abbrev"/>
         <xsl:text>);&#10;</xsl:text>
-        
+
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
-        
+
       </xsl:otherwise>
 
     </xsl:choose>
@@ -552,7 +557,7 @@
 
 
   <!-- Called at domain/class to generate deletions for child instances. -->
-  <xsl:template name="delete-child-body">
+  <xsl:template name="in:delete-child-body">
 
     <!--
          procedure Delete_Child (This : Handle) is
@@ -569,8 +574,8 @@
          -->
 
     <xsl:variable name="rel" select="../inheritance[parent=current()/name]"/>
-    
-    <xsl:call-template name="delete-child-heading"/>
+
+    <xsl:call-template name="in:delete-child-heading"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
@@ -617,17 +622,17 @@
 
 
   <!-- Called at domain/class to generate find-parent function specs. -->
-  <xsl:template name="inheritance-find-spec">
+  <xsl:template name="in:inheritance-find-spec">
 
     <xsl:variable name="parents">
-      <xsl:call-template name="inheritance-find-parents"/>
+      <xsl:call-template name="in:inheritance-find-parents"/>
     </xsl:variable>
 
     <xsl:for-each select="$parents/relation/ancestor">
       <xsl:sort/>
 
       <xsl:value-of select="$blank-line"/>
-      <xsl:call-template name="inheritance-find-function-heading">
+      <xsl:call-template name="in:inheritance-find-function-heading">
         <xsl:with-param
           name="class"
           select="."/>
@@ -635,22 +640,22 @@
       <xsl:text>;&#10;</xsl:text>
 
     </xsl:for-each>
- 
+
   </xsl:template>
 
 
   <!-- Called at domain/class to generate find-parent function bodies. -->
-  <xsl:template name="inheritance-find-body">
-    
+  <xsl:template name="in:inheritance-find-body">
+
     <xsl:variable name="parents">
-      <xsl:call-template name="inheritance-find-parents"/>
+      <xsl:call-template name="in:inheritance-find-parents"/>
     </xsl:variable>
- 
+
     <xsl:for-each select="$parents/relation/ancestor">
       <xsl:sort/>
 
       <xsl:value-of select="$blank-line"/>
-      <xsl:call-template name="inheritance-find-function-heading">
+      <xsl:call-template name="in:inheritance-find-function-heading">
         <xsl:with-param
           name="class"
           select="."/>
@@ -662,7 +667,7 @@
       <xsl:choose>
 
         <xsl:when test="@parent">
-          
+
           <!-- The immediate parent
                return {class}.Handle (This.{rel}_Parent);
                -->
@@ -677,7 +682,7 @@
         </xsl:when>
 
         <xsl:otherwise>
-          
+
           <!-- A more distant parent
                return {parent}.Inheritance.Find_{class}_Parent
                   (Find_{parent}_Parent (This));
@@ -706,18 +711,18 @@
       <xsl:text>_Parent;&#10;</xsl:text>
 
     </xsl:for-each>
- 
+
   </xsl:template>
 
 
   <!-- Called to output a find-parent function heading. -->
-  <xsl:template name="inheritance-find-function-heading">
+  <xsl:template name="in:inheritance-find-function-heading">
     <xsl:param name="class"/>
 
     <!--
          function Find_{class}_Parent (This : Handle) return {class}.Handle
          -->
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>function Find_</xsl:text>
     <xsl:value-of select="$class"/>
@@ -737,10 +742,10 @@
          <ancestor parent='yes'>class name of first parent</ancestor>
        </relation>
        -->
-  <xsl:template name="inheritance-find-parents">
-   
+  <xsl:template name="in:inheritance-find-parents">
+
     <xsl:for-each select="../inheritance[child=current()/name]">
-      
+
       <xsl:element name="relation">
         <xsl:element name="name">
           <xsl:value-of select="name"/>
@@ -749,23 +754,23 @@
           <xsl:attribute name="parent">yes</xsl:attribute>
           <xsl:value-of select="parent"/>
         </xsl:element>
-        <xsl:call-template name="inheritance-find-remote">
+        <xsl:call-template name="in:inheritance-find-remote">
           <xsl:with-param
             name="starting-at"
             select="/domain/class[name=current()/parent]"/>
         </xsl:call-template>
       </xsl:element>
-      
+
     </xsl:for-each>
-    
+
   </xsl:template>
-  
-  
+
+
   <!-- Called at domain/class to find all the ancestors of a given class.
        Returns a result tree fragment containing multiple
        <ancestor>name of class</ancestor>
        -->
-  <xsl:template name="inheritance-find-remote">
+  <xsl:template name="in:inheritance-find-remote">
     <xsl:param name="starting-at" select="/.."/>
     <xsl:param name="result" select="/.."/>
 
@@ -776,7 +781,7 @@
     <xsl:choose>
 
       <xsl:when test="$rels">
-        <xsl:call-template name="inheritance-find-remote">
+        <xsl:call-template name="in:inheritance-find-remote">
           <xsl:with-param
             name="starting-at"
             select="/domain/class[name=$rels/parent]"/>
@@ -793,7 +798,7 @@
             <xsl:value-of select="."/>
           </xsl:element>
         </xsl:for-each>
- 
+
       </xsl:otherwise>
 
     </xsl:choose>
@@ -803,8 +808,8 @@
 
   <!-- Called to collect all the ultimate ancestors of the class.
        Result is returned in a nodeset containing the names in result/root. -->
-  <xsl:template name="ultimate-ancestors">
-    
+  <xsl:template name="in:ultimate-ancestors">
+
     <xsl:param name="starting-at" select="."/>
     <xsl:param name="result" select="/.."/>
 
@@ -812,7 +817,7 @@
 
       <xsl:when test="$starting-at">
 
-        <!-- This variable collects the names of all the classes in 
+        <!-- This variable collects the names of all the classes in
              $starting-at which are not children (including the starting
              class).
              The reason is that when we do the recursive call below,
@@ -830,7 +835,7 @@
           </xsl:for-each>
         </xsl:variable>
 
-        <xsl:call-template name="ultimate-ancestors">
+        <xsl:call-template name="in:ultimate-ancestors">
           <xsl:with-param
             name="starting-at"
             select="../class[name=/domain/inheritance[child=$starting-at/name]
@@ -852,7 +857,7 @@
       </xsl:otherwise>
 
     </xsl:choose>
-    
+
   </xsl:template>
 
 </xsl:stylesheet>

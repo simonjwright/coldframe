@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 8ded9f1e809e 2004/04/29 05:24:17 simon $ -->
+<!-- $Id: error-messages.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -55,6 +55,11 @@ want anything to happen!
 
 <dt>Error: illegal tag name in {<i>tag</i>} <dd>There's some illegal character in a tagged value's tag name.
 
+<dt>Error: inconsistent constraints for <i>Type</i> <dd>The tagged
+value specifying <i>Type</i> is inconsistent (for example,
+<tt>string</tt> can't be both fixed-length (<tt>fixed</tt>) and
+variable-length (<tt>max</tt>)).
+
 <dt>Error: kind <i>kind</i> (class <i>name</i>) not handled <dd>A class kind that isn't handled has been specified.
 
 <dt>Error: missing attribute name in <i>Class</i> <dd>One of the attributes of the named class has no name.
@@ -77,9 +82,15 @@ want anything to happen!
 
 <dt>Error: no index type for array type <i>type</i> <dd>You must specify the type of the index of an array.
 
+<dt>Error: protected type <i>type</i> has no attributes <dd>A protected type must have attributes.
+
 <dt>Error: public <i>name</i> can't be active <dd>Public classes may not be active.
 
 <dt>Error: public <i>name</i> has a state machine <dd>Public classes may not have state machines.
+
+<dt>Error: required constraint not found for <i>Type</i> <dd>The
+tagged value specifying <i>Type</i> doesn't contain all the required
+information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
 
@@ -92,6 +103,8 @@ want anything to happen!
 <dt>Error: type <i>name</i> has a state machine <dd>Types may not have state machines.
 
 <dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
+
+<dt>Error: type <i>name</i> is marked {<i>tag</i>} but has attributes <dd>The tag {<i>tag</i>} (eg, {<i>renames</i>}) isn't consistent with having attributes.
 
 <dt>Error: unnamed association between "<i>Class</i>" and "<i>Class</i>" <dd>Missing association name.
 
@@ -122,6 +135,12 @@ want anything to happen!
 <dt>Warning: annotation not handled, "<i>entity</i> [[<i>annotation</i> : <i>value</i>]]" <dd>The given annotation wasn't understood.
 
 <dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
+
+<dt>Warning: &lt;&lt;init&gt;&gt; operation <i>Class.Name</i> was marked 'private' <dd>The operation needs to be visible for domain initialization to work, and has been made so.
+
+<dt>Warning: invalid constraint <i>constraint</i> in type <i>Type</i>
+<dd>A tagged value specifying <i>Type</i> is invalid (for example,
+<tt>lower</tt> in <tt>{unsigned = mod 8 | lower 2}</tt>
 
 <dt>Warning: no tags to indicate type of <i>Type</i>, treated as {null} <dd><i>Type</i> has been stereotyped as <i>type</i> but no detail is given.
 
@@ -171,7 +190,7 @@ want anything to happen!
 
 <dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
 
-<dt>Error: illegal finalize operation <i>Class.Operation</i> <dd>&#171;finalize&#187; operations must not be &#171;abstract&#187; or &#171;class&#187;, or return a value, or have parameters.
+<dt>Error: illegal finalize operation <i>Class.Operation</i> <dd>&#171;finalize&#187; operations must not be &#171;abstract&#187; or &#171;class&#187;, or return a value, or have parameters; and &#171;singleton&#187;s can't have &#171;finalize&#187; operations at all.
 
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 
@@ -186,6 +205,10 @@ want anything to happen!
 <dt>Error: no concrete operation for <i>Parent.Operation</i> in <i>Leaf</i> <dd><tt>Operation</tt> was specified &#171;abstract&#187; in <tt>Parent</tt>, but no implementation has been found in the branch leading to the leaf class <tt>Leaf</tt>.
 
 <dt>Error: no handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
+
+<dt>Error: no initial state in <i>Class</i> <dd>Each state machine must have an initial state.
+
+<dt>Error: protected type <i>type</i> has no operations <dd>A protected type must have operations.
 
 </dl>
 

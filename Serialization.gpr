@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: Serialization.gpr,v $
---  $Revision: 1db206087c11 $
---  $Date: 2004/05/01 16:36:28 $
+--  $Revision: 271167f53722 $
+--  $Date: 2004/07/26 05:28:55 $
 --  $Author: simon $
 
 with "Options";
@@ -27,7 +27,8 @@ project Serialization is
      "Serialization.impl",
      "Serialization.gen",
      "Serialization_Demo.impl",
-     "Serialization_Demo.gen"
+     "Serialization_Demo.gen",
+     "Serialization_Demo_Other.gen"
     );
 
   for Main use ("serialization_client", "serialization_server");

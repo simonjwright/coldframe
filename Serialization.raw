@@ -2,39 +2,39 @@
 <extractor>cf-DATE</extractor>
 <name>Serialization</name>
 <date>
-<year>2003</year>
-<month>11</month>
-<day>15</day>
-<time>18:10</time>
+<year>2004</year>
+<month>7</month>
+<day>24</day>
+<time>18:12</time>
 </date>
-<documentation>This domain is a demonstration of the "serialization" features of ColdFrame.
+<documentation><![CDATA[ This domain is a demonstration of the "serialization" features of ColdFrame.
 
-{ revision = $Revision: 3c33faafeb46 $ }
-</documentation>
+{ revision = $Revision: 6ea040caff18 $ }
+ ]]></documentation>
 <classes>
 <class stereotype="public">
 <name>Interface</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>open</name>
 <visibility>PublicAccess</visibility>
-<documentation>Opens a TCP/IP connection to the remote host "On Host", using port "Using Port"., for the purpose of transmitting serialized data records to it.</documentation>
+<documentation><![CDATA[ Opens a TCP/IP connection to the remote host "On Host", using port "Using Port"., for the purpose of transmitting serialized data records to it. ]]></documentation>
 <parameters>
 <parameter>
 <parametername>on host</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>using port</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Port</type>
 <initial></initial>
 </parameter>
@@ -43,11 +43,11 @@
 <operation>
 <name>output</name>
 <visibility>PublicAccess</visibility>
-<documentation>Creates a copy of the supplied value V, and posts it to the domain's event queue in a Posted Value event.</documentation>
+<documentation><![CDATA[ Creates a copy of the supplied value V, and posts it to the domain's event queue in a Posted Value event. ]]></documentation>
 <parameters>
 <parameter>
 <parametername>v</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Serializable</type>
 <initial></initial>
 </parameter>
@@ -62,9 +62,9 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>The class of all serializable records.
+<documentation><![CDATA[ The class of all serializable records.
 
-{ renames = Serialization_Support.Base_Class }</documentation>
+{ renames = Serialization_Support.Base_Class } ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -77,10 +77,10 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>An IP port number.
+<documentation><![CDATA[ An IP port number.
 
 { renames = GNAT.Sockets.Port_Type,
-hash = discrete }</documentation>
+hash = discrete } ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -93,26 +93,26 @@ hash = discrete }</documentation>
 <kind>NormalClass</kind>
 <cardinality>0..1</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Represents the remote Server, which we send serialized data to and which is responsible for recording it.</documentation>
+<documentation><![CDATA[ Represents the remote Server, which we send serialized data to and which is responsible for recording it. ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>sock</name>
 <visibility>PrivateAccess</visibility>
-<documentation>The IP Socket used to send data to the remote server.</documentation>
+<documentation><![CDATA[ The IP Socket used to send data to the remote server. ]]></documentation>
 <type>Socket</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>channel</name>
 <visibility>PrivateAccess</visibility>
-<documentation>The stream used as the actual transmission mechanism to the remore server.</documentation>
+<documentation><![CDATA[ The stream used as the actual transmission mechanism to the remore server. ]]></documentation>
 <type>Stream Access</type>
 <initial></initial>
 </attribute>
@@ -121,18 +121,18 @@ hash = discrete }</documentation>
 <operation stereotype="class">
 <name>create</name>
 <visibility>PublicAccess</visibility>
-<documentation>Create an instance of Server, transmitting data to the remote server on host "Connecting To Host" using port "Using Port".
-On successful return, the TCP/IP connection has been made.</documentation>
+<documentation><![CDATA[ Create an instance of Server, transmitting data to the remote server on host "Connecting To Host" using port "Using Port".
+On successful return, the TCP/IP connection has been made. ]]></documentation>
 <parameters>
 <parameter>
 <parametername>connecting to host</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>using port</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Port</type>
 <initial></initial>
 </parameter>
@@ -141,11 +141,11 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <operation>
 <name>post</name>
 <visibility>PublicAccess</visibility>
-<documentation>This entry action posts its parameter's payload to the output stream.</documentation>
+<documentation><![CDATA[ This entry action posts its parameter's payload to the output stream. ]]></documentation>
 <parameters>
 <parameter>
 <parametername>v</parametername>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Buffer</type>
 <initial></initial>
 </parameter>
@@ -164,20 +164,20 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>running</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>outputting</name>
 <entryactions>
 <entryaction><name>post</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -186,21 +186,21 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <target>running</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>running</source>
 <target>outputting</target>
 <event><name>posted value</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>outputting</source>
 <target>running</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -210,7 +210,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Raised if (for example) an attempt is made to open the domain when it's already open.</documentation>
+<documentation><![CDATA[ Raised if (for example) an attempt is made to open the domain when it's already open. ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -223,9 +223,9 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>An IP socket.
+<documentation><![CDATA[ An IP socket.
 
-{ renames = GNAT.Sockets.Socket_Type }</documentation>
+{ renames = GNAT.Sockets.Socket_Type } ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -238,9 +238,9 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Gives access to a Stream on a Socket.
+<documentation><![CDATA[ Gives access to a Stream on a Socket.
 
-{ imported = GNAT.Sockets }</documentation>
+{ imported = GNAT.Sockets } ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -253,9 +253,9 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>The base type from which all serializable records are derived.
+<documentation><![CDATA[ The base type from which all serializable records are derived.
 
-{ renames = Serialization_Support.Base }</documentation>
+{ renames = Serialization_Support.Base } ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -268,9 +268,9 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Contains a data record while it's in the event queue.
+<documentation><![CDATA[ Contains a data record while it's in the event queue.
 
-{ imported  = Serialization_Support  }</documentation>
+{ imported  = Serialization_Support  } ]]></documentation>
 <attributes>
 </attributes>
 <operations>

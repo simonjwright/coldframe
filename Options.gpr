@@ -1,4 +1,18 @@
---  $Id: Options.gpr,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  $Id: Options.gpr,v 6ea040caff18 2004/10/09 10:37:13 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -12,7 +26,7 @@ project Options is
   Build_Base := external ("BUILD_BASE", ".");
   for Object_Dir use Build_Base;
 
-  --  GLIDE configuration (these are the defaults). Available in
+  --  GLIDE/GPS configuration (these are the defaults). Available in
   --  gnat-3.13p and gcc-3.3+; comment out if using earlier gcc-3
   --  releases.
   package Ide is
@@ -40,9 +54,7 @@ project Options is
      for Default_Switches ("ada") use
        (
         "-gnatqQafoy",
-        "-fstack-check",
         "-gnatwaL",
-        "-gnatVa",
         "-O2"
        );
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 02ba89e8b0c5 2004/04/26 14:27:47 simon $ -->
+<!-- $Id: ada-class.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,36 +26,42 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.1">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:cl="http://pushface.org/coldframe/class"
+  xmlns:op="http://pushface.org/coldframe/operation"
+  xmlns:st="http://pushface.org/coldframe/state"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.1">
 
 
   <!-- Generate the class packages (specs). -->
-  <xsl:template match="domain/class" mode="class-spec">
+  <xsl:template match="domain/class" mode="cl:class-spec">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m">
         <xsl:text>  .. </xsl:text>
         <xsl:value-of select="name"/>
       </xsl:with-param>
     </xsl:call-template>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
 
@@ -63,7 +69,7 @@
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class package .. -->
-    <xsl:call-template name="class-spec-context"/>
+    <xsl:call-template name="cl:class-spec-context"/>
 
     <!-- .. the class package .. -->
     <xsl:if test="not(@public or @visible)">
@@ -77,12 +83,13 @@
     <xsl:value-of select="$blank-line"/>
 
     <!--  .. the Identifier record .. -->
-    <xsl:if test="not(@singleton)">
-        <xsl:call-template name="identifier-record"/>
+    <xsl:if test="$max &gt; 1 or not(@public or @singleton or @utility)">
+      <!-- the complication is to cope with 0..1 classes. -->
+        <xsl:call-template name="at:identifier-record"/>
         <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <xsl:if test="not(@public)">
+    <xsl:if test="not(@public or @utility)">
 
       <!-- .. the Instance record (indefinite, so it can't be
            allocated; limited, so people can't assign it) .. -->
@@ -107,9 +114,9 @@
    </xsl:if>
 
    <!-- .. the public creation and deletion operations .. -->
-   <xsl:if test="not(@singleton)">
+   <xsl:if test="not(@singleton or @public or @utility)">
 
-     <xsl:call-template name="create-function-spec"/>
+     <xsl:call-template name="cl:create-function-spec"/>
      <xsl:value-of select="$blank-line"/>
 
      <xsl:value-of select="$I"/>
@@ -122,46 +129,70 @@
 
    </xsl:if>
 
-   <!-- .. the non-public singleton find operation .. -->
-   <xsl:if test="@max=1 and not(@public)">
-     <xsl:value-of select="$I"/>
-     <xsl:text>function Find return Handle;&#10;</xsl:text>
-     <xsl:value-of select="$blank-line"/>
+   <xsl:if test="not(@public or @utility)">
+
+     <!-- .. the non-public, not-utility singleton find operation .. -->
+     <xsl:if test="$max=1">
+       <xsl:value-of select="$I"/>
+       <xsl:text>function Find return Handle;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+     </xsl:if>
+
+     <!-- .. the standard find operation .. -->
+     <xsl:if test="not(@singleton)">
+       <xsl:value-of select="$I"/>
+       <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+     </xsl:if>
+
    </xsl:if>
 
-   <!-- .. the non-singleton find operation .. -->
-   <xsl:if test="not(@singleton)">
-     <xsl:value-of select="$I"/>
-     <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
-     <xsl:value-of select="$blank-line"/>
-   </xsl:if>
-
-   <!-- .. subtype enumeration support, if required .. -->
-   <xsl:if test="not(@singleton)">
-     <xsl:call-template name="supertype-specs"/>
-   </xsl:if>
+   <!-- .. subtype enumeration support .. -->
+   <xsl:call-template name="cl:supertype-specs"/>
 
    <!-- .. any access-to-subprogram types (before possible accessors) .. -->
-   <xsl:apply-templates mode="access-to-operation"/>
+   <xsl:apply-templates mode="op:access-to-operation"/>
 
    <!-- .. the attribute access operations .. -->
-   <xsl:apply-templates mode="attribute-set-spec"/>
-   <xsl:apply-templates mode="attribute-get-spec"/>
+   <xsl:apply-templates mode="at:attribute-set-spec"/>
+   <xsl:apply-templates mode="at:attribute-get-spec"/>
 
    <!-- .. state machine: event types .. -->
-   <xsl:call-template name="event-type-specs"/>
+   <xsl:call-template name="st:event-type-specs"/>
 
-   <!-- .. operations .. -->
-   <xsl:call-template name="operation-specs"/>
+   <!-- .. visible operations .. -->
+   <xsl:call-template name="op:visible-operation-specs"/>
 
-   <!-- .. renaming operations .. -->
-   <xsl:call-template name="renaming-operation-specs"/>
+   <!-- .. visible renaming operations .. -->
+   <xsl:apply-templates
+     mode="op:renaming-operation-spec"
+     select="operation[@renames and not(@visibility='private')]">
+     <xsl:sort select="name"/>
+   </xsl:apply-templates>
 
    <!-- .. the private part .. -->
    <xsl:text>private&#10;</xsl:text>
    <xsl:value-of select="$blank-line"/>
 
-   <xsl:if test="@public">
+   <!-- .. private operations .. -->
+   <xsl:apply-templates
+     select="operation[@visibility='private'
+                       and not(@suppressed)
+                       and not(@entry)
+                       and not(@renames)]"
+     mode="op:operation-spec">
+     <xsl:sort select="name"/>
+     <xsl:with-param name="current" select="."/>
+   </xsl:apply-templates>
+
+   <!-- .. private renaming operations .. -->
+   <xsl:apply-templates
+     mode="op:renaming-operation-spec"
+     select="operation[@renames and @visibility='private']">
+     <xsl:sort select="name"/>
+   </xsl:apply-templates>
+
+   <xsl:if test="@public and $max &gt; 0">
      <xsl:value-of select="$I"/>
      <xsl:text>type Instance;&#10;</xsl:text>
      <xsl:value-of select="$I"/>
@@ -170,24 +201,30 @@
    </xsl:if>
 
    <xsl:if test="@active">
-     <xsl:call-template name="task-spec"/>
+     <xsl:call-template name="cl:task-spec"/>
    </xsl:if>
 
    <xsl:if test="statemachine">
-     <xsl:call-template name="state-machine-states"/>
+     <xsl:call-template name="st:state-machine-states"/>
    </xsl:if>
 
    <!-- .. the Instance record .. -->
-   <xsl:call-template name="instance-record"/>
-   <xsl:value-of select="$blank-line"/>
+   <xsl:if test="$max &gt; 0">
+     <xsl:call-template name="at:instance-record"/>
+     <xsl:value-of select="$blank-line"/>
+   </xsl:if>
 
    <!-- .. the State_Image function spec .. -->
    <xsl:if test="statemachine">
-     <xsl:call-template name="state-image-spec"/>
+     <xsl:call-template name="st:state-image-spec"/>
    </xsl:if>
 
    <!-- .. the actual container .. -->
    <xsl:choose>
+
+     <xsl:when test="$max = 0">
+       <!-- There is no actual container. -->
+     </xsl:when>
 
      <xsl:when test="$max = 1">
        <!-- Only one possible instance .. -->
@@ -341,7 +378,7 @@
            <xsl:text>The_Container : Maps.Unconstrained_Map&#10;</xsl:text>
            <xsl:value-of select="$IC"/>
            <xsl:text>(Number_Of_Buckets =&gt; </xsl:text>
-           <xsl:call-template name="hash-buckets"/>
+           <xsl:call-template name="cl:hash-buckets"/>
            <xsl:text>,&#10;</xsl:text>
            <xsl:value-of select="$IC"/>
            <xsl:text> Maximum_Size =&gt; </xsl:text>
@@ -360,7 +397,7 @@
 
            <xsl:value-of select="$IC"/>
            <xsl:text>(Number_Of_Buckets =&gt; </xsl:text>
-           <xsl:call-template name="hash-buckets"/>
+           <xsl:call-template name="cl:hash-buckets"/>
            <xsl:text>);&#10;</xsl:text>
            <xsl:value-of select="$blank-line"/>
          </xsl:otherwise>
@@ -372,9 +409,9 @@
    </xsl:choose>
 
    <!-- .. private Create, Delete operations for singletons ..-->
-   <xsl:if test="@singleton">
+   <xsl:if test="@singleton or (@public and $max &gt; 0)">
 
-     <xsl:call-template name="create-function-spec"/>
+     <xsl:call-template name="cl:create-function-spec"/>
      <xsl:value-of select="$blank-line"/>
 
      <xsl:value-of select="$I"/>
@@ -384,7 +421,7 @@
     </xsl:if>
 
     <!-- .. event handlers .. -->
-    <xsl:apply-templates mode="event-handler-specs" select="event">
+    <xsl:apply-templates mode="st:event-handler-specs" select="event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -399,7 +436,7 @@
     <!-- .. any <<class>> attributes .. -->
     <xsl:if test="attribute/@class">
       <xsl:for-each select="attribute[@class]">
-        <xsl:call-template name="single-record-component">
+        <xsl:call-template name="at:single-record-component">
           <xsl:with-param name="indent" select="$I"/>
         </xsl:call-template>
       </xsl:for-each>
@@ -413,14 +450,14 @@
 
   </xsl:template>
 
-  <xsl:template mode="class-spec" match="*"/>
+  <xsl:template mode="cl:class-spec" match="*"/>
 
 
   <!-- Called from domain/class to generate context clauses for package
        spec.
        Since this may be a child type, we handle all the operations
        in the ancestor tree as well as the present attributes. -->
-  <xsl:template name="class-spec-context">
+  <xsl:template name="cl:class-spec-context">
 
     <!-- The classes to be processed this time. The default is the
          current class. -->
@@ -435,7 +472,7 @@
 
         <!-- Still something to collect; call self recursively with the
              parent node(s). -->
-        <xsl:call-template name="class-spec-context">
+        <xsl:call-template name="cl:class-spec-context">
           <xsl:with-param
             name="parents"
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
@@ -450,19 +487,24 @@
 
         <!-- Calculate the maximum number of instances. -->
         <xsl:variable name="max">
-          <xsl:call-template name="number-of-instances"/>
+          <xsl:call-template name="ut:number-of-instances"/>
         </xsl:variable>
 
         <!-- Determine whether an array can be used. -->
         <xsl:variable name="array">
-          <xsl:call-template name="can-use-array"/>
+          <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
-        <!-- Always need storage management. -->
-        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
-        <!-- Need storage offset arithmetic for bounded classes. -->
-        <xsl:if test="$max &lt;= $max-bounded-container">
-          <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+        <!-- Need storage management if there are any instances. -->
+        <xsl:if test="$max &gt; 0">
+
+          <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
+
+          <!-- Need storage offset arithmetic for bounded classes. -->
+          <xsl:if test="$max &lt;= $max-bounded-container">
+            <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+          </xsl:if>
+
         </xsl:if>
 
         <!-- Check for Unbounded_Strings. -->
@@ -508,7 +550,7 @@
           select="$counterpart/name
                   | /domain/class[name != current()/name]/name"/>
         <xsl:if test="($max &gt; 1 and $array = 'no')
-                      or not(statemachine)
+                      or ($max &gt; 0 and not(statemachine))
                       or attribute[type=$other-classes]
                       or attribute[@refers=$other-classes]
                       or operation/parameter[type=$other-classes]
@@ -538,17 +580,17 @@
 
   <!-- Called at domain/class to generate any required supertype spec
        information -->
-  <xsl:template name="supertype-specs">
+  <xsl:template name="cl:supertype-specs">
 
     <xsl:variable name="parent-name" select="name"/>
 
     <xsl:for-each select="../inheritance[parent=$parent-name]">
       <xsl:sort select="name"/>
 
-      <xsl:call-template name="subtype-enumeration"/>
+      <xsl:call-template name="cl:subtype-enumeration"/>
       <xsl:value-of select="$blank-line"/>
 
-      <xsl:call-template name="subtype-selection"/>
+      <xsl:call-template name="cl:subtype-selection"/>
       <xsl:value-of select="$blank-line"/>
 
       <xsl:value-of select="$I"/>
@@ -594,7 +636,7 @@
 
   <!-- Called at domain/class to generate any required supertype body
        information -->
-  <xsl:template name="supertype-bodies">
+  <xsl:template name="cl:supertype-bodies">
 
     <xsl:variable name="parent-name" select="name"/>
 
@@ -684,7 +726,7 @@
 
   <!-- Called from domain/inheritance to output the subtype enumeration
        type (sorted), with a "null" value. -->
-  <xsl:template name="subtype-enumeration">
+  <xsl:template name="cl:subtype-enumeration">
     <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
@@ -704,7 +746,7 @@
 
   <!-- Called from domain/inheritance to output the subtype selection
        record. -->
-  <xsl:template name="subtype-selection">
+  <xsl:template name="cl:subtype-selection">
     <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
@@ -738,9 +780,9 @@
 
 
   <!-- Generate the class packages (bodies). -->
-  <xsl:template match="domain/class" mode="class-body">
+  <xsl:template match="domain/class" mode="cl:class-body">
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m">
         <xsl:text>  .. </xsl:text>
         <xsl:value-of select="name"/>
@@ -749,22 +791,22 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class body .. -->
-    <xsl:call-template name="class-body-context"/>
+    <xsl:call-template name="cl:class-body-context"/>
 
     <!-- .. start the body .. -->
     <xsl:text>package body </xsl:text>
@@ -783,56 +825,60 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <!-- .. the set-the-identifier operation .. -->
-    <!-- XXX what's the logic here? -->
-    <xsl:if test="not(@singleton) and
-                  ($max &gt; 1 or
-                   count(attribute[@identifier]) &gt; 1 or
-                   not (attribute[@identifier]/type = 'Autonumber'))">
-      <xsl:call-template name="set-identifier-procedure"/>
+    <xsl:if test="$max &gt; 0">
+
+      <!-- .. the set-the-identifier operation .. -->
+      <!-- XXX what's the logic here? -->
+      <xsl:if test="not(@singleton or @public) and
+                    ($max &gt; 1 or
+                     count(attribute[@identifier]) &gt; 1 or
+                     not (attribute[@identifier]/type = 'Autonumber'))">
+        <xsl:call-template name="cl:set-identifier-procedure"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
+      <!-- .. the creation and deletion operations .. -->
+      <xsl:call-template name="cl:create-function-body"/>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-    <!-- .. the creation and deletion operations .. -->
-    <xsl:call-template name="create-function-body"/>
-    <xsl:value-of select="$blank-line"/>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-
-    <xsl:if test="not(@singleton)">
-      <xsl:call-template name="class-delete-procedure-body"/>
+      <xsl:value-of select="$I"/>
+      <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-    <xsl:call-template name="delete-procedure-body"/>
-    <xsl:value-of select="$blank-line"/>
+      <xsl:if test="not(@singleton or @public)">
+        <xsl:call-template name="cl:class-delete-procedure-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
 
-    <!-- .. the find operations .. -->
-    <xsl:if test="@max=1 and not(@public)">
-      <xsl:call-template name="find-single-instance-function-body"/>
+      <xsl:call-template name="cl:delete-procedure-body"/>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-   <xsl:if test="not(@singleton)">
-      <xsl:call-template name="find-function-body"/>
-      <xsl:value-of select="$blank-line"/>
+      <!-- .. the find operations .. -->
+      <xsl:if test="$max=1 and not(@public)">
+        <xsl:call-template name="cl:find-single-instance-function-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
+      <xsl:if test="not(@singleton or @public)">
+        <xsl:call-template name="cl:find-function-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
     </xsl:if>
 
     <!-- .. subtype enumeration support, if required .. -->
-    <xsl:call-template name="supertype-bodies"/>
+    <xsl:call-template name="cl:supertype-bodies"/>
 
     <!-- .. attribute accessors .. -->
-    <xsl:apply-templates mode="attribute-set-body"/>
-    <xsl:apply-templates mode="attribute-get-body"/>
+    <xsl:apply-templates mode="at:attribute-set-body"/>
+    <xsl:apply-templates mode="at:attribute-get-body"/>
 
     <xsl:if test="not(@singleton)">
 
       <xsl:if test="$max &gt; 1 and $array = 'no'">
 
         <!-- .. the Instance_Identifier_Equality function body .. -->
-        <xsl:call-template name="instance-identifier-equality-body"/>
+        <xsl:call-template name="cl:instance-identifier-equality-body"/>
 
         <!-- .. the hash function stub .. -->
         <xsl:value-of select="$I"/>
@@ -848,21 +894,21 @@
     </xsl:if>
 
     <!-- .. operation stubs .. -->
-    <xsl:call-template name="operation-body-stubs"/>
+    <xsl:call-template name="op:operation-body-stubs"/>
 
     <!-- .. state image body .. -->
     <xsl:if test="statemachine">
-      <xsl:call-template name="state-image-body"/>
+      <xsl:call-template name="st:state-image-body"/>
     </xsl:if>
 
     <!-- .. <<message>> event handler bodies .. -->
-    <xsl:apply-templates mode="event-handler-bodies" select="event[@class]">
+    <xsl:apply-templates mode="st:event-handler-bodies" select="event[@class]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
     <!-- .. <<event>> event handler bodies .. -->
     <xsl:apply-templates
-      mode="event-handler-bodies"
+      mode="st:event-handler-bodies"
       select="statemachine/event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
@@ -875,7 +921,7 @@
     <xsl:if test="$max &gt; 1 and $array = 'no'">
 
       <!-- Output the separate hash function body. -->
-      <xsl:call-template name="hash-function-body"/>
+      <xsl:call-template name="cl:hash-function-body"/>
 
     </xsl:if>
 
@@ -883,8 +929,8 @@
 
       <!-- Output the separate task body. -->
 
-      <xsl:call-template name="should-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:should-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:value-of select="$blank-line"/>
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -897,16 +943,16 @@
     </xsl:if>
 
     <!-- Separate subprogram bodies for individual operations. -->
-    <xsl:call-template name="operation-separate-bodies"/>
+    <xsl:call-template name="op:operation-separate-bodies"/>
 
   </xsl:template>
 
-  <xsl:template mode="class-body" match="*"/>
+  <xsl:template mode="cl:class-body" match="*"/>
 
 
   <!-- Called from domain/class to generate context clauses for package
        body. -->
-  <xsl:template name="class-body-context">
+  <xsl:template name="cl:class-body-context">
 
     <!-- The classes to be processed this time. The default is the
          current class. -->
@@ -921,7 +967,7 @@
 
         <!-- Still something to collect; call self recursively with the
              parent node(s). -->
-        <xsl:call-template name="class-body-context">
+        <xsl:call-template name="cl:class-body-context">
           <xsl:with-param
             name="parents"
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
@@ -936,26 +982,31 @@
 
         <!-- Calculate the maximum number of instances. -->
         <xsl:variable name="max">
-          <xsl:call-template name="number-of-instances"/>
+          <xsl:call-template name="ut:number-of-instances"/>
         </xsl:variable>
 
         <!-- Determine whether an array can be used. -->
         <xsl:variable name="array">
-          <xsl:call-template name="can-use-array"/>
+          <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
-        <!-- We'll need to free memory. -->
-        <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        <!-- We'll need to free memory, unless we have no instances. -->
+        <xsl:if test="$max &gt; 0">
+          <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        </xsl:if>
 
-        <!-- We always need Coldframe exceptions.
-             We need BC exceptions if we're using a Map. -->
+        <!-- We need BC exceptions if we're using a Map. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
           <xsl:text>with BC;&#10;</xsl:text>
         </xsl:if>
-        <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+
+        <!-- We need Coldframe exceptions if we have any instances. -->
+        <xsl:if test="$max &gt; 0">
+          <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+        </xsl:if>
 
         <!-- Any additions to the context for state machines. -->
-        <xsl:call-template name="state-body-context"/>
+        <xsl:call-template name="st:state-body-context"/>
 
         <xsl:variable name="current" select="."/>
         <xsl:variable name="name" select="name"/>
@@ -1021,7 +1072,7 @@
 
 
   <!-- Called to generate the Set_Identifier procedure . -->
-  <xsl:template name="set-identifier-procedure">
+  <xsl:template name="cl:set-identifier-procedure">
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Set_Identifier (H : Handle; With_Identifier : Identifier);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -1034,11 +1085,11 @@
     <xsl:for-each select="attribute[@identifier]">
       <xsl:value-of select="$II"/>
       <xsl:text>H.</xsl:text>
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>:= With_Identifier.</xsl:text>
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
 
@@ -1047,32 +1098,8 @@
   </xsl:template>
 
 
-  <!-- Called to assign values to attributes on creation (identifier
-       attributes only) -->
-  <xsl:template
-    match="attribute[@identifier]"
-    mode="identifier-element-assignment">
-    <!--
-         Result.{attr}
-         := With_Identifier.{attr};
-         -->
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>Result.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= With_Identifier.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
-
-  </xsl:template>
-
-  <xsl:template mode="identifier-element-assignment" match="*"/>
-
-
   <!-- Called from domain/class to generate the Create function spec. -->
-  <xsl:template name="create-function-spec">
+  <xsl:template name="cl:create-function-spec">
 
     <xsl:if test="../association/associative=current()/name">
       <xsl:value-of select="$I"/>
@@ -1081,7 +1108,7 @@
 
     <xsl:choose>
 
-      <xsl:when test="@singleton">
+      <xsl:when test="@singleton or @public">
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle;&#10;</xsl:text>
       </xsl:when>
@@ -1094,7 +1121,7 @@
 
       <xsl:otherwise>
         <xsl:if test="attribute/type='Autonumber'">
-          <xsl:call-template name="log-error"/>
+          <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: invalid use of Autonumber in </xsl:text>
             <xsl:value-of select="name"/>
@@ -1109,22 +1136,22 @@
 
 
   <!-- Called from domain/class to generate the Create function body. -->
-  <xsl:template name="create-function-body">
+  <xsl:template name="cl:create-function-body">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <!-- The heading .. -->
     <xsl:choose>
 
-      <xsl:when test="@singleton">
+      <xsl:when test="@singleton or @public">
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
       </xsl:when>
@@ -1142,8 +1169,9 @@
 
     </xsl:choose>
 
-    <!-- .. check for domain initialization, for non-singletons .. -->
-    <xsl:if test="not(@singleton)">
+    <!-- .. check for domain initialization, unless the class's only
+         instance is created during initialization .. -->
+    <xsl:if test="not(@singleton or @public)">
       <xsl:value-of select="$II"/>
       <xsl:text>pragma Assert&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
@@ -1178,14 +1206,14 @@
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text>(With_Identifier.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
+        <xsl:call-template name="at:attribute-name"/>
         <xsl:text> /= null);&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text>(With_Identifier.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
+        <xsl:call-template name="at:attribute-name"/>
         <xsl:text>.all&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text> in </xsl:text>
@@ -1205,7 +1233,7 @@
     <!-- .. set up identifying attributes .. -->
     <xsl:choose>
 
-      <xsl:when test="@singleton"/>
+      <xsl:when test="@singleton or @public"/>
 
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
@@ -1226,7 +1254,7 @@
     </xsl:choose>
 
     <!-- .. initialize inheritance .. -->
-    <xsl:call-template name="set-parent-child-info">
+    <xsl:call-template name="cl:set-parent-child-info">
       <xsl:with-param name="handle" select="'Result'"/>
     </xsl:call-template>
 
@@ -1279,7 +1307,7 @@
     <!-- .. initialize state machine .. -->
     <!-- (after we've stored the new instance, in case it's a singleton,
          which means that Enter_{next-state} requires This to be set up) -->
-    <xsl:call-template name="initialize-state-machine"/>
+    <xsl:call-template name="st:initialize-state-machine"/>
 
     <!-- .. return it .. -->
     <xsl:value-of select="$II"/>
@@ -1305,7 +1333,7 @@
 
   <!-- Called from domain/class, within the Create function, to
        set the parents' Current Child record. -->
-  <xsl:template name="set-parent-child-info">
+  <xsl:template name="cl:set-parent-child-info">
     <xsl:param name="handle" select="'set-parent-child-info-handle'"/>
 
     <!--
@@ -1353,17 +1381,17 @@
 
   <!-- Called from domain/class to create the class delete
        procedure body.
-       Will never be called for singletons. -->
-  <xsl:template name="class-delete-procedure-body">
+       Will never be called for singletons or publics. -->
+  <xsl:template name="cl:class-delete-procedure-body">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1399,9 +1427,9 @@
         <xsl:value-of select="$II"/>
         <xsl:text>if (</xsl:text>
         <xsl:for-each select="attribute[@identifier]">
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
           <xsl:text> =&gt; This.</xsl:text>
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
           <xsl:if test="position() &lt; last()">
             <xsl:text>,&#10;    </xsl:text>
             <xsl:value-of select="$II"/>
@@ -1458,13 +1486,13 @@
 
     </xsl:choose>
 
-    <xsl:call-template name="subtype-deletion">
+    <xsl:call-template name="cl:subtype-deletion">
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
-    <xsl:call-template name="perform-finalization">
+    <xsl:call-template name="cl:perform-finalization">
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
-    <xsl:call-template name="clear-parent-child-info">
+    <xsl:call-template name="cl:clear-parent-child-info">
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
 
@@ -1475,8 +1503,8 @@
       <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Finalize any Timers. -->
-    <xsl:for-each select="attribute[type='Timer']">
+    <!-- Finalize any instance Timers. -->
+    <xsl:for-each select="attribute[type='Timer' and not(@class)]">
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
       <xsl:value-of select="name"/>
@@ -1524,16 +1552,16 @@
 
   <!-- Called from domain/class to create the instance delete
        procedure body. -->
-  <xsl:template name="delete-procedure-body">
+  <xsl:template name="cl:delete-procedure-body">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1550,14 +1578,14 @@
     <xsl:value-of select="$II"/>
     <xsl:text>end if;&#10;</xsl:text>
 
-    <xsl:call-template name="subtype-deletion">
+    <xsl:call-template name="cl:subtype-deletion">
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
-    <xsl:call-template name="perform-finalization">
+    <xsl:call-template name="cl:perform-finalization">
       <xsl:with-param name="handle" select="'This'"/>
       <xsl:with-param name="report" select="1"/>
     </xsl:call-template>
-    <xsl:call-template name="clear-parent-child-info">
+    <xsl:call-template name="cl:clear-parent-child-info">
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
 
@@ -1568,8 +1596,8 @@
       <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Finalize any Timers. -->
-    <xsl:for-each select="attribute[type='Timer']">
+    <!-- Finalize any instance Timers. -->
+    <xsl:for-each select="attribute[type='Timer' and not(@class)]">
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
       <xsl:value-of select="name"/>
@@ -1691,7 +1719,7 @@
 
   <!-- Called from domain/class, within one of the Delete procedures,
        to delete any current children in inheritance relationships. -->
-  <xsl:template name="subtype-deletion">
+  <xsl:template name="cl:subtype-deletion">
     <xsl:param name="handle" select="'This'"/>
 
     <!--
@@ -1762,7 +1790,7 @@
 
   <!-- Called from domain/class, within the Delete procedure, to
        null the parents' Current Child record. -->
-  <xsl:template name="clear-parent-child-info">
+  <xsl:template name="cl:clear-parent-child-info">
     <xsl:param name="handle" select="'This'"/>
 
     <!--
@@ -1801,7 +1829,7 @@
 
   <!-- Called from domain/class, within the Delete procedures, to
        call any finalization procedures. -->
-  <xsl:template name="perform-finalization">
+  <xsl:template name="cl:perform-finalization">
     <xsl:param name="handle" select="'This'"/>
     <xsl:param name="report" select="/.."/>
     <!-- non-null for error message output. -->
@@ -1812,8 +1840,9 @@
       <xsl:choose>
 
         <xsl:when test="$report
-                        and (@abstract or @return or @class or parameter)">
-          <xsl:call-template name="log-error"/>
+                        and (../@singleton
+                             or @abstract or @return or @class or parameter)">
+          <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: illegal finalize operation </xsl:text>
             <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -1837,7 +1866,7 @@
 
   <!-- Called from domain/class to create the Find function body for
        non-singletons. -->
-  <xsl:template name="find-function-body">
+  <xsl:template name="cl:find-function-body">
 
     <!--
          function Find (With_Identifier : Identifier) return Handle is
@@ -1846,12 +1875,12 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1882,9 +1911,9 @@
         <xsl:value-of select="$II"/>
         <xsl:text>elsif (</xsl:text>
         <xsl:for-each select="attribute[@identifier]">
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
           <xsl:text> =&gt; This.</xsl:text>
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
           <xsl:if test="position() &lt; last()">
             <xsl:text>,&#10;       </xsl:text>
             <xsl:value-of select="$II"/>
@@ -1966,7 +1995,7 @@
 
   <!-- Called from domain/class to create the Find function body for
        singletons. -->
-  <xsl:template name="find-single-instance-function-body">
+  <xsl:template name="cl:find-single-instance-function-body">
 
     <!--
          function Find return Handle is
@@ -1989,26 +2018,30 @@
 
   <!-- Generates class initializations. -->
   <xsl:template
-    mode="class-initialization"
-    match="class[attribute[@class and initial] or @singleton]">
+    mode="cl:class-initialization"
+    match="class[attribute[@class and initial]
+           or @singleton
+           or (@public and attribute)]">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Class_Initialize;&#10;</xsl:text>
+    <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Class_Initialize is&#10;</xsl:text>
+    <xsl:text>.CF_Class_Initialize is&#10;</xsl:text>
 
-    <xsl:if test="@singleton">
+    <xsl:if test="@singleton or @public">
       <xsl:value-of select="$I"/>
       <xsl:text>H : Handle;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -2027,7 +2060,7 @@
 
     </xsl:for-each>
 
-     <xsl:if test="@singleton">
+     <xsl:if test="@singleton or @public">
       <xsl:value-of select="$I"/>
       <xsl:text>H := Create;&#10;</xsl:text>
     </xsl:if>
@@ -2036,16 +2069,16 @@
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Class_Initialize;&#10;</xsl:text>
+    <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
 
   </xsl:template>
 
-  <xsl:template mode="class-initialization" match="*"/>
+  <xsl:template mode="cl:class-initialization" match="*"/>
 
 
   <!-- Called from domain/class to generate the instance identifier
        equality function. -->
-  <xsl:template name="instance-identifier-equality-body">
+  <xsl:template name="cl:instance-identifier-equality-body">
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>
@@ -2063,7 +2096,7 @@
 
     <xsl:for-each select="$identifiers">
       <xsl:variable name="name">
-        <xsl:call-template name="attribute-name"/>
+        <xsl:call-template name="at:attribute-name"/>
       </xsl:variable>
       <xsl:value-of select="$II"/>
       <xsl:text>if L.</xsl:text>
@@ -2088,10 +2121,10 @@
 
 
   <!-- Called from domain/class to generate the separate hash function. -->
-  <xsl:template name="hash-function-body">
+  <xsl:template name="cl:hash-function-body">
 
-    <xsl:call-template name="should-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:should-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>
@@ -2240,7 +2273,7 @@
           <xsl:text>(ColdFrame.Hash.Instance_Access_Hash&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text> (I.</xsl:text>
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param name="a" select="."/>
           </xsl:call-template>
           <xsl:text>));&#10;</xsl:text>
@@ -2269,10 +2302,10 @@
 
 
   <!-- Called from domain/class to compute the number of hash buckets. -->
-  <xsl:template name="hash-buckets">
+  <xsl:template name="cl:hash-buckets">
 
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <xsl:choose>
@@ -2290,7 +2323,7 @@
 
 
   <!-- Called from domain/class to generate a task spec. -->
-  <xsl:template name="task-spec">
+  <xsl:template name="cl:task-spec">
     <!--
          use type System.Priority;
          task type T (This : access Instance) is
@@ -2326,7 +2359,7 @@
       <xsl:value-of select="@stack"/>
       <xsl:text>);&#10;</xsl:text>
     </xsl:if>
-    <xsl:apply-templates mode="task-entry" select="operation">
+    <xsl:apply-templates mode="cl:task-entry" select="operation">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
     <xsl:value-of select="$I"/>
@@ -2340,23 +2373,23 @@
 
 
   <!-- Generate task entry specs. -->
-  <xsl:template mode="task-entry" match="operation[@entry]">
+  <xsl:template mode="cl:task-entry" match="operation[@entry]">
 
     <xsl:value-of select="$II"/>
     <xsl:text>entry </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:call-template name="entry-parameter-list">
+    <xsl:call-template name="cl:entry-parameter-list">
       <xsl:with-param name="indent" select="$IIC"/>
     </xsl:call-template>
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
-  <xsl:template mode="task-entry" match="*"/>
+  <xsl:template mode="cl:task-entry" match="*"/>
 
 
   <!-- Called from class/operation to generate an entry parameter list -->
-  <xsl:template name="entry-parameter-list">
+  <xsl:template name="cl:entry-parameter-list">
     <xsl:param name="indent" select="''"/>
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
@@ -2367,7 +2400,7 @@
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
-      <xsl:apply-templates mode="parameter">
+      <xsl:apply-templates mode="op:parameter">
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:apply-templates>
       <xsl:text>)</xsl:text>

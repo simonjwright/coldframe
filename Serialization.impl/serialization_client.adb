@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_client.adb,v $
---  $Revision: f1cefa2023dc $
---  $Date: 2004/05/01 15:23:53 $
+--  $Revision: 6ea040caff18 $
+--  $Date: 2004/10/09 10:37:13 $
 --  $Author: simon $
 
 
@@ -43,7 +43,13 @@ begin
 
    loop
 
-      Put_Line ("outputting a Sample_A record");
+      delay 0.5;
+      Put_Line ("outputting an Unsigned_16 value");
+      Serialization.Interface.Output
+        (Serialization_Demo.Serializable.Unsigned_16'
+           (Serialization.Serializable_Base with
+              Payload => 16#fffe#));
+     Put_Line ("outputting a Sample_A record");
       Serialization.Interface.Output
         (Serialization_Demo.Serializable.Sample_A'
            (Serialization.Serializable_Base with
@@ -56,7 +62,9 @@ begin
                U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
                N => Serialization_Demo.Name_String_Package.To_Bounded_String
                  ("bounded"),
-               R => (T => Ada.Real_Time.Clock))));
+               R => (T => Ada.Real_Time.Clock),
+               R1 => (X => 8),
+               Ra => (Y => 9))));
       delay 0.5;
       Put_Line ("outputting a Recordable_Real_Time record");
       Serialization.Interface.Output

@@ -1,4 +1,4 @@
-<!-- $Id: ada-callback.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-callback.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacks. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,10 +27,13 @@
      -->
 
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:cb="http://pushface.org/coldframe/callback"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.0">
 
-  <xsl:template match="type[@callback]" mode="callback-spec">
+  <xsl:template match="type[@callback]" mode="cb:callback-spec">
     <!--
          with ColdFrame.Callbacks;
          package {domain}.{type}_Callback
@@ -38,8 +41,9 @@
             (T => {type});
          -->
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with ColdFrame.Callbacks;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
@@ -53,7 +57,7 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="callback-spec"/>
+  <xsl:template match="*" mode="cb:callback-spec"/>
 
 
 </xsl:stylesheet>

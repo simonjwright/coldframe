@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d5677990a0ce 2004/05/01 13:23:54 simon $
+# $Id: normalize-rose.tcl,v 6ea040caff18 2004/10/09 10:37:13 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -158,6 +158,7 @@ proc normalize {s} {
 proc normalizeValue {s} {
     if [catch {set res [normalizeValueInner $s]}] {
         Error "unable to normalize the value \"$s\""
+        return 0
     }
     return $res
 }
@@ -442,6 +443,13 @@ itcl::class String {
             }
             # strip out any property lists
             regsub -all "\{\[^}\]*\}" $text "" text
+            # for some strange reason, txlxml-2.1theta puts a
+            # backslash at the front of CDATA elements that begin with
+            # a brace. I can't run tclxml-2.5 here because it requires
+            # package uri (looks from the web as though it should be
+            # in Tcl 8.2 and later; I'm running 8.3 but no luck).
+            set text [string trim $text]
+            regsub {^\\} $text "" text
         }
     }
 
@@ -1087,7 +1095,6 @@ itcl::class Class {
                         switch -exact $upper {
                             "1"     {
                                 $this -singleton dummy
-                                $this -max 1
                             }
                             default {
                                 Error "illegal lower bound 1 in cardinality \
@@ -1116,12 +1123,12 @@ itcl::class Class {
     }
 
     # Specifies kind of class
-    variable kind NormalClass
+    variable utility 0
     method -kind {k} {
         set kind $k
         switch $k {
             NormalClass {}
-            Utility     {$this -singleton 1}
+            Utility     {set utility 1}
             default     {Error "kind $k (class $name) not handled"}
         }
     }
@@ -1154,7 +1161,6 @@ itcl::class Class {
     variable public 0
     method -public {dummy} {
         set public 1
-        $this -singleton 1
     }
 
     method -interface {dummy} {
@@ -1169,8 +1175,8 @@ itcl::class Class {
     variable singleton 0
     method -singleton {dummy} {
         set singleton 1
-        set max 1
     }
+    method -isSingleton {} {return $singleton}
 
     # an abbreviation of the name may be useful (eg, when making names
     # for referential attributes)
@@ -1222,6 +1228,13 @@ itcl::class Class {
     # called (via stereotype mechanism) to indicate that this is a
     # <<type>> class
     method -type {dummy} {set isType 1}
+
+    variable access
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # needs an access type
+    method -access {a} {
+        set access [normalize $a]
+    }
 
     variable callback
     # called (via annotation or stereotype mechanism) to indicate that this
@@ -1369,6 +1382,25 @@ itcl::class Class {
             if $isType {
                 # must be a record type
                 $this -handleAnnotation
+                if [info exists tags] {
+                    foreach t [array names tags] {
+                        switch $t {
+                            array -
+                            counterpart -
+                            enumeration -
+                            hash -
+                            imported -
+                            integer -
+                            null -
+                            real -
+                            renames -
+                            string {
+                                Error "type $name is marked {$t}\
+                                      but has attributes"
+                            }
+                        }
+                    }
+                }
                 set dts [[Domain::currentDomain] -getDatatypes]
                 if [$dts -isPresent $name] {
                     set dt [$dts -atName $name]
@@ -1395,10 +1427,11 @@ itcl::class Class {
             Error "type [$this -getName] has identifier"
         } elseif [expr $singleton && [$this -hasIdentifier]] {
             Error "singleton [$this -getName] has identifier"
-        } elseif [expr !($singleton || $isType) && ![$this -hasIdentifier]] {
+        } elseif [expr !($public || $utility || $singleton || $isType) \
+                      && ![$this -hasIdentifier]] {
             Error "[$this -getName] has no identifier"
         }
-        if {$kind == "Utility"} {
+        if {$utility} {
             if $isType {Error "utility [$this -getName] is a type"}
             if $active {Error "utility [$this -getName] is active"}
             if [info exists attributes] {
@@ -1424,20 +1457,23 @@ itcl::class Class {
                 Error "type [$this -getName] has a state machine"
             }
             $this -putElementStart "type"
+            if [info exists access] {
+                puts -nonewline " access=\"$access\""
+            }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
             }
             if $discriminated {
-                puts -nonewline " discriminated=\"yes\""
+                puts -nonewline " discriminated=\"true\""
             }
             if $protected {
-                puts -nonewline " protected=\"yes\""
+                puts -nonewline " protected=\"true\""
             }
             if [info exists extends] {
                 puts -nonewline " extends=\"$extends\""
             }
             if $serializable {
-                puts -nonewline " serializable=\"yes\""
+                puts -nonewline " serializable=\"true\""
             }
             puts ">"
             putElement name "$name"
@@ -1453,17 +1489,17 @@ itcl::class Class {
                 }
             }
             $this -putElementStart "class"
-            if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
-            if $abstr {puts -nonewline " abstract=\"yes\""}
-            if $active {puts -nonewline " active=\"yes\""}
+            if {$utility} {puts -nonewline " utility=\"true\""}
+            if $abstr {puts -nonewline " abstract=\"true\""}
+            if $active {puts -nonewline " active=\"true\""}
             if [info exists stack] {puts -nonewline " stack=\"$stack\""}
             if [info exists priority] {
                 puts -nonewline " priority=\"$priority\""
             }
             if [info exists max] {puts -nonewline " max=\"$max\""}
-            if $singleton {puts -nonewline " singleton=\"yes\""}
-            if $public {puts -nonewline " public=\"yes\""}
-            if $visible {puts -nonewline " visible=\"yes\""}
+            if $singleton {puts -nonewline " singleton=\"true\""}
+            if $public {puts -nonewline " public=\"true\""}
+            if $visible {puts -nonewline " visible=\"true\""}
             puts ">"
             putElement name "$name"
             putElement abbreviation [$this -getAbbreviation]
@@ -1487,8 +1523,9 @@ itcl::class Operation {
     # used in Rose to indicate visibility
     method -visibility {a} {
         switch $a {
-            PublicAccess  {set visibility public}
-            default       {set visibility private}
+            PublicAccess     {set visibility public}
+            ProtectedAccess  {set visibility protected}
+            default          {set visibility private}
         }
     }
 
@@ -1607,24 +1644,35 @@ itcl::class Operation {
             set c [[[$this -getOwner] -getOwner] -getName]
             Error "operation $c.$name can't be abstract and an accessor"
         }
+        switch $visibility {
+            "private" {
+                if {$init} {
+                    Warning "<<init>> operation\
+                      [[[$this -getOwner] -getOwner] -getName].$name \
+                      was marked 'private'"
+                    set visibility "public"
+                }
+            }
+            default {}
+        }
         $parameters -evaluate {domain}
     }
 
     method -generate {domain}  {
         $this -putElementStart "operation"
-        if $abstr {puts -nonewline " abstract=\"yes\""}
-        if $acc {puts -nonewline " access=\"yes\""}
-        if $accessor {puts -nonewline " accessor=\"yes\""}
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $abstr {puts -nonewline " abstract=\"true\""}
+        if $acc {puts -nonewline " access=\"true\""}
+        if $accessor {puts -nonewline " accessor=\"true\""}
+        if $cls {puts -nonewline " class=\"true\""}
         if [info exists convention] {
             puts -nonewline " convention=\"$convention\""
         }
-        if $entry {puts -nonewline " entry=\"yes\""}
-        if $final {puts -nonewline " final=\"yes\""}
-        if $finalize {puts -nonewline " finalize=\"yes\""}
-        if $teardown {puts -nonewline " teardown=\"yes\""}
-        if $handler {puts -nonewline " handler=\"yes\""}
-        if $init {puts -nonewline " initialize=\"yes\""}
+        if $entry {puts -nonewline " entry=\"true\""}
+        if $final {puts -nonewline " final=\"true\""}
+        if $finalize {puts -nonewline " finalize=\"true\""}
+        if $teardown {puts -nonewline " teardown=\"true\""}
+        if $handler {puts -nonewline " handler=\"true\""}
+        if $init {puts -nonewline " initialize=\"true\""}
         if [info exists suppressed] {
             puts -nonewline " suppressed=\"$suppressed\""
         }
@@ -1698,7 +1746,6 @@ itcl::class Parameter {
         putElement name $name
         putElement type $type
         if {[string length $initial] > 0} {putElement initial $initial}
-        if {[string length $modeInfo] > 0} {putElement mode $modeInfo}
         $this -generateDocumentation
         puts "</parameter>"
     }
@@ -1821,8 +1868,14 @@ itcl::class Association {
                     if [$role1 -getSourceEnd] {
                         Error "both ends of $name are marked as source"
                     }
+                    if [$cl1 -isSingleton] {
+                        Warning "[$cl2 -getName] can't be source in $name"
+                    }
                     $cl2 -addFormalizingAttributesTo $cl1 $this $role2 0
                 } elseif [$role1 -getSourceEnd] {
+                    if [$cl2 -isSingleton] {
+                        Warning "[$cl1 -getName] can't be source in $name"
+                    }
                     $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
                 } elseif [$role1 -getConditionality] {
                     if [$role2 -getConditionality] {
@@ -2034,9 +2087,9 @@ itcl::class Role {
 
     method -generate {domain} {
         $this -putElementStart "role"
-        if $conditional {puts -nonewline " conditional=\"yes\""}
-        if {$cardinality == "M"} {puts -nonewline " multiple=\"yes\""}
-        if $sourceEnd {puts -nonewline " source=\"yes\""}
+        if $conditional {puts -nonewline " conditional=\"true\""}
+        if {$cardinality == "M"} {puts -nonewline " multiple=\"true\""}
+        if $sourceEnd {puts -nonewline " source=\"true\""}
         puts ">"
         set os [$domain -getClasses]
         set cl [$os -atName $classname]
@@ -2185,7 +2238,7 @@ itcl::class Event {
 
     method -generate {domain} {
         $this -putElementStart "event"
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $cls {puts -nonewline " class=\"true\""}
         puts ">"
         putElement name $name
         if [info exists type] {
@@ -2216,8 +2269,8 @@ itcl::class State {
 
     method -generate {domain} {
         $this -putElementStart "state"
-        if $initial {puts -nonewline " initial=\"yes\""}
-        if $final {puts -nonewline " final=\"yes\""}
+        if $initial {puts -nonewline " initial=\"true\""}
+        if $final {puts -nonewline " final=\"true\""}
         puts ">"
         putElement name $name
         if [info exists entryactions] {
@@ -2310,8 +2363,8 @@ itcl::class Transition {
 
     method -generate {domain} {
         $this -putElementStart "transition"
-        if $ignore then {puts -nonewline " ignore=\"yes\""}
-        if $self then {puts -nonewline " self=\"yes\""}
+        if $ignore then {puts -nonewline " ignore=\"true\""}
+        if $self then {puts -nonewline " self=\"true\""}
         puts ">"
         if {[string length [$event -getName]] > 0} {
             putElement event [$event -getName]
@@ -2520,7 +2573,15 @@ itcl::class Datatype {
     # Useful keys are max (max length) & fixed (fixed length).
     method -string {constraint} {
         set dataType "string"
-        regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
+        $this -setConstraint $constraint
+    }
+
+    # called when the type is an unsigned. constraint is a set of key/value
+    # pairs, which may be newline- or comma-separated.
+    # Useful keys are mod, lower, upper
+    method -unsigned {constraint} {
+        set dataType "unsigned"
+        $this -setConstraint $constraint
     }
 
     # called to specify the hash mechanism (probably only relevant
@@ -2536,9 +2597,57 @@ itcl::class Datatype {
         }
     }
 
+    # utility to check the constraints (held in dataDetail).
+    # 'required' contains constraints of which only one must be present.
+    # 'legal' contains optional constraints.
+    # If there are no required constraints, then 'true' is added as
+    # a possibility (eg, if the user said just {integer}).
+    method -checkConstraints {required legal} {
+        set r 0
+        if {[llength $required] == 0} {
+            set legal [concat $legal true]
+            # klugey way of forcing the "required" check to succeed
+            set r 1
+        } else {
+            set legal [concat $legal $required]
+        }
+        foreach {c val} $dataDetail {
+            set n [string tolower [lindex $c 0]]
+            if {[lsearch -exact $required $n] >= 0} {
+                incr r
+            }
+            if {[lsearch -exact $legal $n] < 0} {
+                Warning "invalid constraint $n in type $type"
+            }
+            if {$r == 0} {
+                Error "required constraint not found for $type"
+            } elseif {$r > 1} {
+                Error "inconsistent constraints for $type"
+            }
+        }
+    }
+
     method -complete {} {
         if [expr ![[stack -top] -isPresent $type]] {
             [stack -top] -add $this $type
+        }
+    }
+
+    method -evaluate {domain} {
+        switch $dataType {
+            integer  {
+                $this -checkConstraints {} {lower upper}
+            }
+            real     {
+                $this -checkConstraints {} {digits lower upper}
+            }
+            string   {
+                $this -checkConstraints {fixed max} {}
+            }
+            unsigned {
+                $this -checkConstraints {mod} {}
+            }
+            default {}
         }
     }
 
@@ -2548,7 +2657,7 @@ itcl::class Datatype {
         }
         $this -putElementStart "type"
         if [info exists callback] {
-            puts -nonewline " callback=\"yes\""
+            puts -nonewline " callback=\"true\""
         }
         if [info exists hash] {
             puts -nonewline " hash=\"$hash\""
@@ -2560,27 +2669,27 @@ itcl::class Datatype {
             puts -nonewline " type-image=\"$typeImage\""
         }
         if $serializable {
-            puts -nonewline " serializable=\"yes\""
+            puts -nonewline " serializable=\"true\""
         }
         if {$dataType == "defined"} {
             Warning "no tags to indicate type of $type, treated as {null}"
-            puts -nonewline " null=\"yes\""
+            puts -nonewline " null=\"true\""
         }
         if $null {
             # do this as an attribute so it's easier to check for mistaken
             # usage (OK, could do it here ..)
-            puts -nonewline " null=\"yes\""
+            puts -nonewline " null=\"true\""
         }
         if [info exists unconstrained] {
             # actually only used in <array> element below.
-            puts -nonewline " unconstrained=\"yes\""
+            puts -nonewline " unconstrained=\"true\""
         }
         switch $dataType {
             implicit {
                 puts -nonewline " standard=\"no\""
             }
             standard {
-                puts -nonewline " standard=\"yes\""
+                puts -nonewline " standard=\"true\""
             }
             default {}
         }
@@ -2591,7 +2700,7 @@ itcl::class Datatype {
             array {
                 puts -nonewline "<array"
                 if [info exists unconstrained] {
-                    puts -nonewline " unconstrained=\"yes\""
+                    puts -nonewline " unconstrained=\"true\""
                 }
                 puts ">"
                 putElement type $arrayOf
@@ -2612,7 +2721,8 @@ itcl::class Datatype {
             }
             integer -
             real -
-            string {
+            string -
+            unsigned {
                 puts "<$dataType>"
                 foreach {key value} $dataDetail {
                     if {$key != "true"} {
@@ -2789,8 +2899,8 @@ itcl::class Attribute {
 
     method -generate {domain} {
         $this -putElementStart "attribute"
-        if $identifier {puts -nonewline " identifier=\"yes\""}
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $identifier {puts -nonewline " identifier=\"true\""}
+        if $cls {puts -nonewline " class=\"true\""}
         if [info exists formalizedAssociation] {
             puts -nonewline " refers=\"$type\""
             puts -nonewline " relation=\"$formalizedAssociation\""
@@ -2839,7 +2949,7 @@ itcl::class ReferentialAttribute {
         puts -nonewline " refers=\"[$source -getName]\""
         puts -nonewline " relation=\"[$relation -getName]\""
         puts -nonewline " role=\"[$role -getName]\""
-        if $identifier {puts -nonewline " identifier=\"yes\""}
+        if $identifier {puts -nonewline " identifier=\"true\""}
         puts "/>"
     }
 }

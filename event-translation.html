@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v fcad02c06357 2003/10/04 07:03:49 simon $ -->
+<!-- $Id: event-translation.html,v 64914bbfad36 2004/07/22 19:47:44 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -48,9 +48,8 @@ the type would be
 <pre>
    type State_Machine_State_T is
      (Initial,
-      Off,
-      On,
-      Resetting);
+      Idle,
+      Lit);
 </pre>
 
 <p>The instance state is represented by a created instance variable
@@ -64,7 +63,7 @@ and return an appropriate result:
 <pre>
    function <a name="is_on">Is_On</a> (This : Handle) return Boolean is
    begin
-      return This.State_Machine_State = On;
+      return This.State_Machine_State = Lit;
    end Is_On;
 </pre>
 

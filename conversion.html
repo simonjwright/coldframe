@@ -1,4 +1,4 @@
-<!-- $Id: conversion.html,v 5e7aec4f8e70 2003/02/15 16:25:58 simon $ -->
+<!-- $Id: conversion.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Conversion to standard form</title>
@@ -7,12 +7,15 @@
 <h1>ColdFrame: Conversion to standard form</h1>
 
 <p>ColdFrame's "standard form" uses a home-grown <a
-href="coldframe.dtd">DTD</a> rather than the standard XMI Metadata
-Interchange (XMI) one. This is, I'm afraid, because I didn't think to
-check what standardisation activities were under way; however, I think
-it would have taken a lot longer if I'd used XMI. Perhaps an
-appropriate approach would be to use an XSL transform to convert
-documents from XMI to ColdFrame.
+href="ColdFrame-norm.xsd">schema</a> rather than the standard XMI
+Metadata Interchange (XMI) one. This is, I'm afraid, because I didn't
+think to check what standardisation activities were under way;
+however, I think it would have taken a lot longer if I'd used
+XMI. Perhaps an appropriate approach would be to use an XSL transform
+to convert documents from XMI to ColdFrame.
+
+<p>See <a href="xml-schemas.html">here</a> for schema validation (both
+of the schema itself and of files that are supposed to conform to it).
 
 <p>The processing is done using the <em><a
 href="resources.html#tcl">itcl</a></em> script

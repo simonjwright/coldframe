@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 148a24720159 2004/03/19 14:59:35 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -27,26 +27,33 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:td="http://pushface.org/coldframe/teardown"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.0">
 
   <!-- Generate tear-down of the whole Domain, intended to be used
        with AUnit. Called at domain. -->
-  <xsl:template name="domain-teardown">
+  <xsl:template name="td:domain-teardown">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
+    <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+    <xsl:text>.Events;&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
@@ -55,7 +62,7 @@
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
     </xsl:for-each>
 
@@ -75,14 +82,14 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
+    <xsl:text>ColdFrame.Project.Events.Stop (Events.Dispatcher);&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
 
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
-      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
     </xsl:for-each>
 
@@ -95,50 +102,91 @@
     </xsl:for-each>
 
     <xsl:value-of select="$I"/>
+    <xsl:text>ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
-    <xsl:apply-templates mode="class-teardown-spec"/>
-    <xsl:apply-templates mode="class-teardown-body"/>
+    <xsl:apply-templates mode="td:class-teardown-spec"/>
+    <xsl:apply-templates mode="td:class-teardown-body"/>
 
   </xsl:template>
 
 
-  <xsl:template mode="class-teardown-spec" match="domain/class">
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+  <xsl:template mode="td:class-teardown-spec" match="domain/class">
+
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Tear_Down;&#10;</xsl:text>
+    <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template mode="class-teardown-spec" match="*"/>
+  <xsl:template mode="td:class-teardown-spec" match="*"/>
 
 
-  <xsl:template mode="class-teardown-body" match="domain/class">
+  <xsl:template mode="td:class-teardown-body" match="domain/class">
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:choose>
+
+      <xsl:when test="$max=0">
+
+        <!--
+             procedure {Domain}.{Class}.CF_Tear_Down is
+             begin
+                null;
+                ColdFrame.Project.Events.Finalize ({timer}); - class timers
+             end {Domain}.{Class}.CF_Tear_Down;
+             -->
+
+        <xsl:call-template name="ut:do-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
+        <xsl:text>procedure </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
+
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>null;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="td:class-timer"/>
+
+        <xsl:text>end </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max=1">
 
         <!--
              with Ada.Unchecked_Deallocation;
-             procedure {Domain}.{Class}.Tear_Down is
+             procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
              begin
                 if This /= null then
@@ -152,11 +200,13 @@
                    Free (This.The_T);
                    Free (This);
                 end if;
-             end {Domain}.{Class}.Tear_Down;
+                ColdFrame.Project.Events.Finalize ({timer}); - class timers
+             end {Domain}.{Class}.CF_Tear_Down;
              -->
 
-        <xsl:call-template name="do-not-edit"/>
-        <xsl:call-template name="identification-info"/>
+        <xsl:call-template name="ut:do-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -164,7 +214,7 @@
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down is&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
@@ -176,7 +226,7 @@
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
-          <xsl:call-template name="instance-teardown-call">
+          <xsl:call-template name="td:instance-teardown-call">
             <xsl:with-param name="indent" select="$II"/>
             <xsl:with-param name="param-name" select="'This'"/>
           </xsl:call-template>
@@ -202,15 +252,16 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
-
         <xsl:value-of select="$I"/>
         <xsl:text>end if;&#10;</xsl:text>
+
+        <xsl:apply-templates mode="td:class-timer"/>
 
         <xsl:text>end </xsl:text>
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down;&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
       </xsl:when>
 
@@ -218,7 +269,7 @@
 
         <!--
              with Ada.Unchecked_Deallocation;
-             procedure {Domain}.{Class}.Tear_Down is
+             procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
              begin
                 for I in The_Container'Range loop
@@ -233,12 +284,14 @@
                       Free (The_Container (I).The_T);                - active
                       Free (The_Container (I));
                    end if;
-                end loop
-             end {Domain}.{Class}.Tear_Down;
+                end loop;
+                ColdFrame.Project.Events.Finalize ({timer}); - class timers
+             end {Domain}.{Class}.CF_Tear_Down;
              -->
 
-        <xsl:call-template name="do-not-edit"/>
-        <xsl:call-template name="identification-info"/>
+        <xsl:call-template name="ut:do-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -246,7 +299,7 @@
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down is&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
@@ -261,7 +314,7 @@
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
-          <xsl:call-template name="instance-teardown-call">
+          <xsl:call-template name="td:instance-teardown-call">
             <xsl:with-param name="indent" select="$III"/>
             <xsl:with-param name="param-name" select="'The_Container (I)'"/>
           </xsl:call-template>
@@ -293,11 +346,13 @@
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
+        <xsl:apply-templates mode="td:class-timer"/>
+
         <xsl:text>end </xsl:text>
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down;&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
       </xsl:when>
 
@@ -305,7 +360,7 @@
 
         <!--
              with Ada.Unchecked_Deallocation;
-             procedure {Domain}.{Class}.Tear_Down is
+             procedure {Domain}.{Class}.CF_Tear_Down is
                 use ColdFrame.Instances.Abstract_Containers;
                 It : Iterator'Class := Maps.New_Iterator (The_Container);
                 H : Handle;
@@ -326,11 +381,13 @@
                 end loop;
                 Maps.Clear (The_Container);
                 Next_Identifier := 0;                  -  for Autonumbering
-             end {Domain}.{Class}.Tear_Down;
+                ColdFrame.Project.Events.Finalize ({timer}); - class timers
+             end {Domain}.{Class}.CF_Tear_Down;
              -->
 
-        <xsl:call-template name="do-not-edit"/>
-        <xsl:call-template name="identification-info"/>
+        <xsl:call-template name="ut:do-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -338,7 +395,7 @@
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down is&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
@@ -358,7 +415,7 @@
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
-          <xsl:call-template name="instance-teardown-call">
+          <xsl:call-template name="td:instance-teardown-call">
             <xsl:with-param name="indent" select="$II"/>
             <xsl:with-param name="param-name" select="'H'"/>
           </xsl:call-template>
@@ -398,11 +455,13 @@
           <xsl:text>Next_Identifier := 0;&#10;</xsl:text>
         </xsl:if>
 
+        <xsl:apply-templates mode="td:class-timer"/>
+
         <xsl:text>end </xsl:text>
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text>.Tear_Down;&#10;</xsl:text>
+        <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
       </xsl:otherwise>
 
@@ -410,44 +469,12 @@
 
   </xsl:template>
 
-  <xsl:template mode="class-teardown-body" match="*"/>
-
-
-  <!-- Called at domain to generate the spec of the Events teardown
-       procedure. -->
-  <xsl:template name="event-teardown-spec">
-
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
-
-  </xsl:template>
-
-
-  <!-- Called at domain to generate the body of the Events teardown
-       procedure. -->
-  <xsl:template name="event-teardown-body">
-
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>ColdFrame.Project.Events.Tear_Down (Dispatcher);&#10;</xsl:text>
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
-
-  </xsl:template>
+  <xsl:template mode="td:class-teardown-body" match="*"/>
 
 
   <!-- Called at class/operation to generate an instance teardown
        call. -->
-  <xsl:template name="instance-teardown-call">
+  <xsl:template name="td:instance-teardown-call">
 
     <!-- The indentation to apply. -->
     <xsl:param name="indent"/>
@@ -464,6 +491,21 @@
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
+
+
+  <!-- Tear down class timers. -->
+  <xsl:template
+    mode="td:class-timer"
+    match="attribute[type='Timer' and @class]">
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>ColdFrame.Project.Events.Finalize (</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>);&#10;</xsl:text>
+
+  </xsl:template>
+
+  <xsl:template mode="td:class-timer" match="*"/>
 
 
 </xsl:stylesheet>

@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 2f10d942e470 2004/04/26 12:02:32 simon $
+--  $Id: regressions-suite.adb,v 6ea040caff18 2004/10/09 10:37:13 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -8,6 +8,7 @@ with AUnit.Test_Cases; use AUnit.Test_Cases;
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
+with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Project.Serialization;
 with ColdFrame.Project.Times;
@@ -17,16 +18,25 @@ with Regressions.Callback_Type_Callback;
 with Regressions.CB_Callback;
 with Regressions.Events;
 with Regressions.Event_Holder;
+with Regressions.Exception_In_Event_Handler;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
+with Regressions.PT_User;
 with Regressions.Serializable;
 with Regressions.Tear_Down;
 
 --  The following units only have to compile
 
 with Regressions.Bounded_String_ID;
+with Regressions.CT_Class;
 with Regressions.Child_Uses_Action;
+with Regressions.Class_Operation_Access_Modes;
+with Regressions.Class_Timer_In_Array;
+with Regressions.Class_Timer_In_Class;
+with Regressions.Class_Timer_In_Max_One;
+with Regressions.Class_Timer_In_Public;
+with Regressions.Class_Timer_In_Singleton;
 with Regressions.Fixed_String_Class;
 with Regressions.Identified_Class;
 with Regressions.Max_More;
@@ -35,10 +45,27 @@ with Regressions.Max_One;
 with Regressions.Max_One_C;
 with Regressions.One_Enum_ID;
 with Regressions.One_Int_ID;
+with Regressions.Ordinary_Class.All_Instances;
+with Regressions.Ordinary_Class.Selection_Function;
 with Regressions.Parent_With_Action;
+with Regressions.Public_With_Attributes;
+with Regressions.Public_Without_Attributes;
+with Regressions.Renaming_Operations_Child;
+with Regressions.Renaming_Operations_Parent;
+with Regressions.Singleton_With_Attributes;
+with Regressions.Singleton_With_Referential_Attribute;
+with Regressions.Singleton_Without_Attributes;
+with Regressions.Utility;
 
 pragma Warnings (Off, Regressions.Bounded_String_ID);
+pragma Warnings (Off, Regressions.CT_Class);
 pragma Warnings (Off, Regressions.Child_Uses_Action);
+pragma Warnings (Off, Regressions.Class_Operation_Access_Modes);
+pragma Warnings (Off, Regressions.Class_Timer_In_Array);
+pragma Warnings (Off, Regressions.Class_Timer_In_Class);
+pragma Warnings (Off, Regressions.Class_Timer_In_Max_One);
+pragma Warnings (Off, Regressions.Class_Timer_In_Public);
+pragma Warnings (Off, Regressions.Class_Timer_In_Singleton);
 pragma Warnings (Off, Regressions.Fixed_String_Class);
 pragma Warnings (Off, Regressions.Identified_Class);
 pragma Warnings (Off, Regressions.Max_More);
@@ -47,12 +74,27 @@ pragma Warnings (Off, Regressions.Max_One);
 pragma Warnings (Off, Regressions.Max_One_C);
 pragma Warnings (Off, Regressions.One_Enum_ID);
 pragma Warnings (Off, Regressions.One_Int_ID);
+pragma Warnings (Off, Regressions.Ordinary_Class.All_Instances);
+pragma Warnings (Off, Regressions.Ordinary_Class.Selection_Function);
 pragma Warnings (Off, Regressions.Parent_With_Action);
+pragma Warnings (Off, Regressions.Public_With_Attributes);
+pragma Warnings (Off, Regressions.Public_Without_Attributes);
+pragma Warnings (Off, Regressions.Renaming_Operations_Child);
+pragma Warnings (Off, Regressions.Renaming_Operations_Parent);
+pragma Warnings (Off, Regressions.Singleton_With_Attributes);
+pragma Warnings (Off, Regressions.Singleton_With_Referential_Attribute);
+pragma Warnings (Off, Regressions.Singleton_Without_Attributes);
+pragma Warnings (Off, Regressions.Utility);
 
 --  May not be referenced for released versions
 pragma Warnings (Off, Ada.Text_IO);
 
 package body Regressions.Suite is
+
+
+   --  Check that protected type operations can be <<access>
+   OOPT : Access_Operation_Of_Protected_Type;
+   pragma Warnings (Off, OOPT);
 
 
    package Find_Active_Tests is
@@ -283,6 +325,7 @@ package body Regressions.Suite is
       procedure C1 (V : CB);
       procedure C2 (V : CB);
       procedure C3 (V : CB);
+      procedure C4 (V : CB);
 
       C1_Called : Boolean;
       C2_Called : Boolean;
@@ -316,6 +359,12 @@ package body Regressions.Suite is
          end if;
       end C3;
 
+      procedure C4 (V : CB) is
+         pragma Warnings (Off, V);
+      begin
+         Regressions.CB_Callback.Deregister (C4'Access);
+      end C4;
+
       procedure Call_Callbacks_1 (C : in out Test_Case'Class);
       procedure Call_Callbacks_1 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
@@ -329,23 +378,29 @@ package body Regressions.Suite is
       procedure Call_Callbacks_2 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
       begin
-         begin
-            Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
-            Assert (C1_Called and C2_Called and C3_Called,
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
+         Assert (C1_Called and C2_Called and C3_Called,
                     "not all got called");
-         end;
       end Call_Callbacks_2;
 
       procedure Call_Callbacks_3 (C : in out Test_Case'Class);
       procedure Call_Callbacks_3 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
       begin
-         begin
-            Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
-            Assert (C1_Called and C2_Called and C3_Called,
-                    "not all got called");
-         end;
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
+         Assert (C1_Called and C2_Called and C3_Called,
+                 "not all got called");
       end Call_Callbacks_3;
+
+      procedure Call_Callbacks_4 (C : in out Test_Case'Class);
+      procedure Call_Callbacks_4 (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.CB_Callback.Register (C4'Access);
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 4));
+         Assert (C1_Called and C2_Called and C3_Called,
+                 "not all got called");
+      end Call_Callbacks_4;
 
       function Name (C : Case_1) return String_Access is
          pragma Warnings (Off, C);
@@ -358,15 +413,19 @@ package body Regressions.Suite is
          Register_Routine
            (C,
             Call_Callbacks_1'Access,
-            "call callbacks (1)");
+            "call 3 callbacks (no exceptions)");
          Register_Routine
            (C,
             Call_Callbacks_2'Access,
-            "call callbacks (2)");
+            "call 3 callbacks (exception in first)");
          Register_Routine
            (C,
             Call_Callbacks_3'Access,
-            "call callbacks (3)");
+            "call 3 callbacks (excrption in first two)");
+         Register_Routine
+           (C,
+            Call_Callbacks_4'Access,
+            "call 4 callbacks (excrption in first three, deregister fourth)");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
@@ -729,6 +788,147 @@ package body Regressions.Suite is
    end Tearing_Down_Active_Timers_Tests;
 
 
+   package Event_Handler_Exceptions is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Event_Handler_Exceptions;
+
+   package body Event_Handler_Exceptions is
+
+      procedure Standard_Event (C : in out Test_Case'Class);
+      procedure Standard_Event (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         H : Exception_In_Event_Handler.Handle
+           := Exception_In_Event_Handler.Create;
+      begin
+         ColdFrame.Project.Events.Post
+           (On => Events.Dispatcher,
+            The_Event => new Exception_In_Event_Handler.Ev (H));
+         ColdFrame.Project.Events.Start (Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle
+           (Events.Dispatcher,
+            Ignoring_Timers => True);
+         Exception_In_Event_Handler.Delete (H);
+      exception
+         when ColdFrame.Exceptions.Use_Error =>
+            Assert (False, "failed to delete instance");
+      end Standard_Event;
+
+      procedure Timed_Event (C : in out Test_Case'Class);
+      procedure Timed_Event (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         H : Exception_In_Event_Handler.Handle
+           := Exception_In_Event_Handler.Create;
+      begin
+         ColdFrame.Project.Events.Post
+           (On => Events.Dispatcher,
+            The_Event => new Exception_In_Event_Handler.Ev (H),
+            To_Fire_After => 0.1);
+         ColdFrame.Project.Events.Start (Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle
+           (Events.Dispatcher,
+            Ignoring_Timers => False);
+         Exception_In_Event_Handler.Delete (H);
+      exception
+         when ColdFrame.Exceptions.Use_Error =>
+            Assert (False, "failed to delete instance");
+      end Timed_Event;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Event_Handler_Exceptions.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Standard_Event'Access,
+            "exception in handler for standard event");
+         Register_Routine
+           (C,
+            Timed_Event'Access,
+            "exception in handler for delayed event");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Event_Handler_Exceptions;
+
+
+   package Protected_Types_And_Access is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Protected_Types_And_Access;
+
+   package body Protected_Types_And_Access is
+
+      procedure Check_Values (C : in out Test_Case'Class);
+      procedure Check_Values (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         Assert (not PT_User.Get_State,
+                 "value not false");
+         PT_User.Set_State (False);
+         Assert (not PT_User.Get_State,
+                 "value not false");
+         PT_User.Set_State (True);
+         Assert (PT_User.Get_State,
+                 "value not true");
+      end Check_Values;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Protected_Types_And_Access.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Check_Values'Access,
+            "check values in protected object");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Protected_Types_And_Access;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -742,6 +942,10 @@ package body Regressions.Suite is
                                   new Callback_Registration_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Tearing_Down_Active_Timers_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Event_Handler_Exceptions.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Protected_Types_And_Access.Case_1);
       return Result;
    end Suite;
 

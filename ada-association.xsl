@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 55a565209c55 2004/03/03 15:37:00 simon $ -->
+<!-- $Id: ada-association.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,25 +26,32 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.0">
 
   <!-- Generate specs for Association packages. -->
-  <xsl:template match="domain/association" mode="association-spec">
+  <xsl:template match="domain/association" mode="as:association-spec">
 
-    <xsl:call-template name="check-association-validity"/>
+    <xsl:call-template name="as:check-association-validity"/>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
 
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <!-- Context clauses. -->
-    <xsl:call-template name="association-spec-context"/>
+    <xsl:call-template name="as:association-spec-context"/>
 
     <xsl:text>private package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -52,16 +59,16 @@
     <xsl:value-of select="$blank-line"/>
 
     <!-- Linking subprogram .. -->
-    <xsl:call-template name="link-spec"/>
+    <xsl:call-template name="as:link-spec"/>
 
     <!-- Finding function for associative classes .. -->
-    <xsl:call-template name="find-spec"/>
+    <xsl:call-template name="as:find-spec"/>
 
     <!-- .. unlinking procedure .. -->
-    <xsl:call-template name="unlink-spec"/>
+    <xsl:call-template name="as:unlink-spec"/>
 
     <!-- .. navigations .. -->
-    <xsl:call-template name="navigation-specs"/>
+    <xsl:call-template name="as:navigation-specs"/>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -70,11 +77,11 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="association-spec"/>
+  <xsl:template match="*" mode="as:association-spec"/>
 
 
   <!-- Called at domain/association to check for invalid associations. -->
-  <xsl:template name="check-association-validity">
+  <xsl:template name="as:check-association-validity">
 
     <xsl:variable
       name="class-a"
@@ -112,7 +119,7 @@
 
   <!-- Called at domain/association to generate context clauses for the
        spec. -->
-  <xsl:template name="association-spec-context">
+  <xsl:template name="as:association-spec-context">
 
     <!-- XXX will duplicate withs for reflexive associations -->
 
@@ -154,16 +161,16 @@
 
 
   <!-- Called at domain/association to generate the linking subprogram spec -->
-  <xsl:template name="link-spec">
+  <xsl:template name="as:link-spec">
 
     <xsl:choose>
 
       <xsl:when test="associative">
-        <xsl:call-template name="link-function-specification"/>
+        <xsl:call-template name="as:link-function-specification"/>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:call-template name="link-procedure-specification"/>
+        <xsl:call-template name="as:link-procedure-specification"/>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -176,9 +183,9 @@
 
   <!-- Called at domain/association to generate the find function spec
        if any. -->
-  <xsl:template name="find-spec">
+  <xsl:template name="as:find-spec">
     <xsl:if test="associative">
-      <xsl:call-template name="association-find-specification"/>
+      <xsl:call-template name="as:association-find-specification"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
@@ -187,16 +194,16 @@
 
   <!-- Called at domain/association to generate the unlinking procedure
        spec -->
-  <xsl:template name="unlink-spec">
+  <xsl:template name="as:unlink-spec">
 
     <xsl:choose>
 
       <xsl:when test="associative">
-        <xsl:call-template name="unlink-associative-specification"/>
+        <xsl:call-template name="as:unlink-associative-specification"/>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:call-template name="unlink-specification"/>
+        <xsl:call-template name="as:unlink-specification"/>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -208,13 +215,14 @@
 
 
   <!-- Generate bodies for Association packages. -->
-  <xsl:template match="domain/association" mode="association-body">
+  <xsl:template match="domain/association" mode="as:association-body">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Context clauses. -->
-    <xsl:call-template name="association-body-context"/>
+    <xsl:call-template name="as:association-body-context"/>
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -228,16 +236,16 @@
     <xsl:value-of select="$blank-line"/>
 
     <!-- Linking subprogram .. -->
-    <xsl:call-template name="link-body"/>
+    <xsl:call-template name="as:link-body"/>
 
     <!-- Finding function for associative classes .. -->
-    <xsl:call-template name="find-body"/>
+    <xsl:call-template name="as:find-body"/>
 
     <!-- .. unlinking procedure .. -->
-    <xsl:call-template name="unlink-body"/>
+    <xsl:call-template name="as:unlink-body"/>
 
     <!-- .. navigations .. -->
-    <xsl:call-template name="navigation-bodies"/>
+    <xsl:call-template name="as:navigation-bodies"/>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -246,12 +254,12 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="association-body"/>
+  <xsl:template match="*" mode="as:association-body"/>
 
 
   <!-- Called at domain/association to generate context clauses for the
        body. -->
-  <xsl:template name="association-body-context">
+  <xsl:template name="as:association-body-context">
 
     <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
 
@@ -327,7 +335,7 @@
 
 
   <!-- Called at domain/association to generate the linking subprogram body -->
-  <xsl:template name="link-body">
+  <xsl:template name="as:link-body">
 
     <xsl:variable name="n" select="name"/>
 
@@ -348,7 +356,7 @@
                   ((
              -->
 
-        <xsl:call-template name="link-function-specification"/>
+        <xsl:call-template name="as:link-function-specification"/>
         <xsl:text> is&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
@@ -391,7 +399,7 @@
             <xsl:variable name="r1" select="role[1]"/>
             <xsl:variable name="r2" select="role[2]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -403,7 +411,7 @@
 
             <xsl:value-of select="$IIC"/>
             <xsl:text>  </xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -430,7 +438,7 @@
             <xsl:variable name="multiple-role" select="role[@multiple]"/>
             <xsl:variable name="single-role" select="role[not(@multiple)]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -448,7 +456,7 @@
             <xsl:text></xsl:text>
             <xsl:value-of select="associative"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -474,7 +482,7 @@
             <xsl:variable name="source-role" select="role[@source]"/>
             <xsl:variable name="non-source-role" select="role[not(@source)]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -488,7 +496,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="associative"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -529,7 +537,7 @@
              begin
              -->
 
-        <xsl:call-template name="link-procedure-specification"/>
+        <xsl:call-template name="as:link-procedure-specification"/>
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
@@ -583,7 +591,7 @@
             <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Get_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -601,7 +609,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -635,7 +643,7 @@
 
   <!-- Called at domain/association to generate the find function body,
        if any. -->
-  <xsl:template name="find-body">
+  <xsl:template name="as:find-body">
     <xsl:if test="associative">
 
       <xsl:variable name="n" select="name"/>
@@ -650,7 +658,7 @@
                 ((
            -->
 
-      <xsl:call-template name="association-find-specification"/>
+      <xsl:call-template name="as:association-find-specification"/>
       <xsl:text> is&#10;</xsl:text>
 
       <xsl:value-of select="$II"/>
@@ -680,7 +688,7 @@
           <xsl:variable name="r1" select="role[1]"/>
           <xsl:variable name="r2" select="role[2]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -692,7 +700,7 @@
 
           <xsl:value-of select="$IIC"/>
           <xsl:text>  </xsl:text>
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -717,7 +725,7 @@
           <xsl:variable name="multiple-role" select="role[@multiple]"/>
           <xsl:variable name="single-role" select="role[not(@multiple)]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -743,7 +751,7 @@
           <xsl:variable name="source-role" select="role[@source]"/>
           <xsl:variable name="non-source-role" select="role[not(@source)]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -772,7 +780,7 @@
 
   <!-- Called at domain/association to generate the unlinking procedure
        body -->
-  <xsl:template name="unlink-body">
+  <xsl:template name="as:unlink-body">
 
     <xsl:variable name="n" select="name"/>
 
@@ -783,7 +791,7 @@
         <!-- There's no point in trying to null out the referential
              attributes, since (presumably) the user's about to delete
              the associative class instance anyway. -->
-        <xsl:call-template name="unlink-associative-specification"/>
+        <xsl:call-template name="as:unlink-associative-specification"/>
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
@@ -813,7 +821,7 @@
                 pragma Assert (Handle ({role-b}) /= null);
              -->
 
-        <xsl:call-template name="unlink-specification"/>
+        <xsl:call-template name="as:unlink-specification"/>
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
@@ -865,7 +873,7 @@
             <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Get_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -883,7 +891,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -911,7 +919,7 @@
 
   <!-- Called at domain/association to generate the navigation function
        specs. -->
-  <xsl:template name="navigation-specs">
+  <xsl:template name="as:navigation-specs">
 
     <xsl:variable name="role-1" select="role[1]"/>
     <xsl:variable
@@ -924,7 +932,7 @@
 
     <!-- First direction: from one -->
 
-    <xsl:call-template name="navigation-specification">
+    <xsl:call-template name="as:navigation-specification">
       <xsl:with-param name="role-a" select="role[1]"/>
       <xsl:with-param name="role-b" select="role[2]"/>
     </xsl:call-template>
@@ -933,7 +941,7 @@
 
     <xsl:if test="associative">
 
-      <xsl:call-template name="navigation-to-associative-specification">
+      <xsl:call-template name="as:navigation-to-associative-specification">
         <xsl:with-param name="role-a" select="role[1]"/>
         <xsl:with-param name="role-b" select="role[2]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -941,7 +949,7 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
-      <xsl:call-template name="navigation-from-associative-specification">
+      <xsl:call-template name="as:navigation-from-associative-specification">
         <xsl:with-param name="role-a" select="role[1]"/>
         <xsl:with-param name="role-b" select="role[2]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -953,7 +961,7 @@
 
     <!-- Second direction: from one -->
 
-    <xsl:call-template name="navigation-specification">
+    <xsl:call-template name="as:navigation-specification">
       <xsl:with-param name="role-a" select="role[2]"/>
       <xsl:with-param name="role-b" select="role[1]"/>
     </xsl:call-template>
@@ -962,7 +970,7 @@
 
     <xsl:if test="associative">
 
-      <xsl:call-template name="navigation-to-associative-specification">
+      <xsl:call-template name="as:navigation-to-associative-specification">
         <xsl:with-param name="role-a" select="role[2]"/>
         <xsl:with-param name="role-b" select="role[1]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -970,7 +978,7 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
-      <xsl:call-template name="navigation-from-associative-specification">
+      <xsl:call-template name="as:navigation-from-associative-specification">
         <xsl:with-param name="role-a" select="role[2]"/>
         <xsl:with-param name="role-b" select="role[1]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -985,7 +993,7 @@
 
   <!-- Called at domain/association to generate the navigation function
        bodies. -->
-  <xsl:template name="navigation-bodies">
+  <xsl:template name="as:navigation-bodies">
 
     <xsl:variable name="role-1" select="role[1]"/>
     <xsl:variable
@@ -998,20 +1006,20 @@
 
     <!-- First direction: from one -->
 
-    <xsl:call-template name="navigation-body">
+    <xsl:call-template name="as:navigation-body">
       <xsl:with-param name="role-a" select="role[1]"/>
       <xsl:with-param name="role-b" select="role[2]"/>
     </xsl:call-template>
 
     <xsl:if test="associative">
 
-      <xsl:call-template name="navigation-to-associative-body">
+      <xsl:call-template name="as:navigation-to-associative-body">
         <xsl:with-param name="role-a" select="role[1]"/>
         <xsl:with-param name="role-b" select="role[2]"/>
         <xsl:with-param name="assoc" select="associative"/>
       </xsl:call-template>
 
-      <xsl:call-template name="navigation-from-associative-body">
+      <xsl:call-template name="as:navigation-from-associative-body">
         <xsl:with-param name="role-a" select="role[1]"/>
         <xsl:with-param name="role-b" select="role[2]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -1021,20 +1029,20 @@
 
     <!-- Second direction: from one -->
 
-    <xsl:call-template name="navigation-body">
+    <xsl:call-template name="as:navigation-body">
       <xsl:with-param name="role-a" select="role[2]"/>
       <xsl:with-param name="role-b" select="role[1]"/>
     </xsl:call-template>
 
     <xsl:if test="associative">
 
-      <xsl:call-template name="navigation-to-associative-body">
+      <xsl:call-template name="as:navigation-to-associative-body">
         <xsl:with-param name="role-a" select="role[2]"/>
         <xsl:with-param name="role-b" select="role[1]"/>
         <xsl:with-param name="assoc" select="associative"/>
       </xsl:call-template>
 
-      <xsl:call-template name="navigation-from-associative-body">
+      <xsl:call-template name="as:navigation-from-associative-body">
         <xsl:with-param name="role-a" select="role[2]"/>
         <xsl:with-param name="role-b" select="role[1]"/>
         <xsl:with-param name="assoc" select="associative"/>
@@ -1047,19 +1055,19 @@
 
   <!-- Called at domain/association to generate a navigation function
        body. -->
-  <xsl:template name="navigation-body">
+  <xsl:template name="as:navigation-body">
     <xsl:param name="role-a"/>   <!-- from this .. -->
     <xsl:param name="role-b"/>   <!-- .. to this -->
 
     <xsl:choose>
       <xsl:when test="associative">
-        <xsl:call-template name="navigation-with-associative-body">
+        <xsl:call-template name="as:navigation-with-associative-body">
           <xsl:with-param name="role-a" select="$role-a"/>
           <xsl:with-param name="role-b" select="$role-b"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="navigation-without-associative-body">
+        <xsl:call-template name="as:navigation-without-associative-body">
           <xsl:with-param name="role-a" select="$role-a"/>
           <xsl:with-param name="role-b" select="$role-b"/>
         </xsl:call-template>
@@ -1071,7 +1079,7 @@
 
   <!-- Called at domain/association to generate a navigation function
        body for an associative association. -->
-  <xsl:template name="navigation-with-associative-body">
+  <xsl:template name="as:navigation-with-associative-body">
     <xsl:param name="role-a"/>   <!-- from this .. -->
     <xsl:param name="role-b"/>   <!-- .. to this -->
 
@@ -1084,7 +1092,7 @@
     </xsl:variable>
     <xsl:variable name="associative" select="associative"/>
 
-    <xsl:call-template name="navigation-specification">
+    <xsl:call-template name="as:navigation-specification">
       <xsl:with-param name="role-a" select="$role-a"/>
       <xsl:with-param name="role-b" select="$role-b"/>
     </xsl:call-template>
@@ -1256,7 +1264,7 @@
 
   <!-- Called at domain/association to generate a navigation function
        body for a non-associative association. -->
-  <xsl:template name="navigation-without-associative-body">
+  <xsl:template name="as:navigation-without-associative-body">
     <xsl:param name="role-a"/>   <!-- from this .. -->
     <xsl:param name="role-b"/>   <!-- .. to this -->
 
@@ -1268,7 +1276,7 @@
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
 
-    <xsl:call-template name="navigation-specification">
+    <xsl:call-template name="as:navigation-specification">
       <xsl:with-param name="role-a" select="$role-a"/>
       <xsl:with-param name="role-b" select="$role-b"/>
     </xsl:call-template>
@@ -1304,7 +1312,7 @@
       <xsl:text>:= </xsl:text>
       <xsl:value-of select="$b"/>
       <xsl:text>.Get_</xsl:text>
-      <xsl:call-template name="attribute-name">
+      <xsl:call-template name="at:attribute-name">
         <xsl:with-param
           name="a"
           select="/domain/class/attribute
@@ -1398,7 +1406,7 @@
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$a"/>
         <xsl:text>.Get_</xsl:text>
-        <xsl:call-template name="attribute-name">
+        <xsl:call-template name="at:attribute-name">
           <xsl:with-param
             name="a"
             select="/domain/class/attribute
@@ -1424,7 +1432,7 @@
 
   <!-- Called at domain/association to generate an associative navigation
        function body. -->
-  <xsl:template name="navigation-from-associative-body">
+  <xsl:template name="as:navigation-from-associative-body">
     <xsl:param name="role-a"/>
     <xsl:param name="role-b"/>   <!-- .. to this -->
     <xsl:param name="assoc"/>    <!-- from this .. -->
@@ -1437,7 +1445,7 @@
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
 
-    <xsl:call-template name="navigation-from-associative-specification">
+    <xsl:call-template name="as:navigation-from-associative-specification">
       <xsl:with-param name="role-a" select="$role-a"/>
       <xsl:with-param name="role-b" select="$role-b"/>
       <xsl:with-param name="assoc" select="$assoc"/>
@@ -1455,7 +1463,7 @@
     <xsl:text>:= </xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Get_</xsl:text>
-    <xsl:call-template name="attribute-name">
+    <xsl:call-template name="at:attribute-name">
       <xsl:with-param
         name="a"
         select="/domain/class/attribute
@@ -1489,7 +1497,7 @@
 
   <!-- Called at domain/association to generate an associative navigation
        function body. -->
-  <xsl:template name="navigation-to-associative-body">
+  <xsl:template name="as:navigation-to-associative-body">
     <xsl:param name="role-a"/>   <!-- from this .. -->
     <xsl:param name="role-b"/>
     <xsl:param name="assoc"/>    <!-- .. to this -->
@@ -1505,7 +1513,7 @@
       <xsl:value-of select="$assoc"/>
     </xsl:variable>
 
-    <xsl:call-template name="navigation-to-associative-specification">
+    <xsl:call-template name="as:navigation-to-associative-specification">
       <xsl:with-param name="role-a" select="$role-a"/>
       <xsl:with-param name="role-b" select="$role-b"/>
       <xsl:with-param name="assoc" select="$assoc"/>
@@ -1540,7 +1548,7 @@
     <xsl:text>:= </xsl:text>
     <xsl:value-of select="$c"/>
     <xsl:text>.Get_</xsl:text>
-    <xsl:call-template name="attribute-name">
+    <xsl:call-template name="at:attribute-name">
       <xsl:with-param
         name="a"
         select="/domain/class/attribute
@@ -1635,7 +1643,7 @@
   <!-- Called at domain/association to generate the specification (no closing
        ";" or "is") for the linking function spec for associative
        associations. -->
-  <xsl:template name="link-function-specification">
+  <xsl:template name="as:link-function-specification">
 
     <!--
          function Link
@@ -1669,7 +1677,7 @@
   <!-- Called at domain/association to generate the specification (no closing
        ";" or "is") for the linking procedure spec for non-associative
        associations. -->
-  <xsl:template name="link-procedure-specification">
+  <xsl:template name="as:link-procedure-specification">
 
     <!--
          procedure Link
@@ -1700,7 +1708,7 @@
   <!-- Called at domain/association[associative] to generate the
        specification (no closing ";" or "is") for the find function
        spec for associative associations. -->
-  <xsl:template name="association-find-specification">
+  <xsl:template name="as:association-find-specification">
 
     <!--
          function Find
@@ -1734,7 +1742,7 @@
   <!-- Called at domain/association to generate the unlinking procedure
        specification (no closing ";" or "is") for associative
        associations. -->
-  <xsl:template name="unlink-associative-specification">
+  <xsl:template name="as:unlink-associative-specification">
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Unlink&#10;</xsl:text>
@@ -1751,7 +1759,7 @@
   <!-- Called at domain/association to generate the unlinking procedure
        specification (no closing ";" or "is") for non-associative
        associations. -->
-  <xsl:template name="unlink-specification">
+  <xsl:template name="as:unlink-specification">
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Unlink&#10;</xsl:text>
@@ -1775,7 +1783,7 @@
 
   <!-- Called at domain/association to generate a navigation function
        spec (no closing ";" or "is"). -->
-  <xsl:template name="navigation-specification">
+  <xsl:template name="as:navigation-specification">
 
     <xsl:param name="role-a"/>
     <xsl:param name="role-b"/>
@@ -1807,7 +1815,7 @@
 
   <!-- Called at domain/association to generate an associative navigation
        function spec (no closing ";" or "is"). -->
-  <xsl:template name="navigation-from-associative-specification">
+  <xsl:template name="as:navigation-from-associative-specification">
 
     <xsl:param name="role-a"/>
     <xsl:param name="role-b"/>   <!-- .. to this -->
@@ -1833,7 +1841,7 @@
 
   <!-- Called at domain/association to generate an associative navigation
        function spec (no closing ";" or "is"). -->
-  <xsl:template name="navigation-to-associative-specification">
+  <xsl:template name="as:navigation-to-associative-specification">
 
     <xsl:param name="role-a"/>   <!-- from this .. -->
     <xsl:param name="role-b"/>

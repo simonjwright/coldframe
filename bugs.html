@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e5fae410c6e2 2004/04/30 11:59:26 simon $ -->
+<!-- $Id: bugs.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -27,10 +27,6 @@
 <dd>It would be helpful if an association class could be automatically
 generated for many-to-many associations where the analyst hasn't
 provided one already.
-
-<dt>0019 (raised 4.ix.01)
-
-<dd>It would be good to support private operations.
 
 <dt>0035 (raised 1.xi.01)
 
@@ -92,11 +88,6 @@ by marking the attribute concerned? (perhaps by a stereotype).
 <dd>The error of making an Association with a &#171;type&#187; should
 be detected (instead of generating bad code).
 
-<dt>0177 (raised 26.vi.03)
-
-<dd>It would be helpful for ColdFrame to recognize "class utilities"
-(classes which have no instances).
-
 <dt>0178 (raised 1.vii.03)
 
 <dd>There's no way for ColdFrame to inform the application that an
@@ -109,7 +100,7 @@ an unhelpful error message.
 
 <dt>0183 (raised 9.vii.03)
 
-<dd>Using <tt><i>{imported}</i></tt> (and possibly others) on a
+<dd>Using <tt><i>[[imported]]</i></tt> (and possibly others) on a
 &#171;type&#187; with attributes gives an unhelpful error message.
 
 <dt>0184 (raised 9.vii.03)
@@ -124,11 +115,6 @@ handwritten code. Perhaps it should be renamed.
 (mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
-
-<dt>0195 (raised 5.ix.03)
-
-<dd>For &#171;public&#187; classes without attributes, it seems
-wasteful to allocate an <tt>Instance</tt>.
 
 <dt>0197 (raised 5.ix.03)
 
@@ -147,39 +133,10 @@ ColdFrame doesn't check that the operation profiles match (for
 example, that both are procedures or both functions). This can lead to
 compilation errors in generated code.
 
-<dt>0206 (raised 27.ix.03)
-
-<dd>The error of having multiple transitions from a state triggered by
-the same event isn't detected.
-
 <dt>0210 (raised Guy Fawkes' Day 2003)
 
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
-
-<dt>0222 (raised 3.xii.03)
-
-<dd>Active class instances are torn down after the domain event queue,
-which may cause <tt>Tasking_Error</tt> if the active instance tries
-(for example) to post an event.
-
-<dt>0227 (raised 23.i.04)
-
-<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
-returning a composite value, the generated code won't compile.") is
-still present (for both &#171;type&#187;s and &#171;class&#187;es)
-when the composite value is imported or inherited from a parent
-domain (and therefore isn't otherwise mentioned in the model).
-
-<dt>0232 (raised 10.ii.04)
-
-<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
-available event is immediately processed after a delay.
-
-<dt>0233 (raised 10.ii.04)
-
-<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
-are fatal.
 
 <dt>0240 (raised 2.iii.04)
 
@@ -193,25 +150,12 @@ confusing. Perhaps it should be <em>&#171;include&#187;</em>?
 <br><i>Of course, &#171;generate&#187; must be retained for
 compatibility.</i>
 
-<dt>0250 (raised 4.iv.04)
-
-<dd>Unsigned types should be supported.
-
 <dt>0253 (raised 19.iv.04)
 
 <dd>In a state chart, the error of having more than one state with the
-same name is not detected as such (this can be particularly confusing
-if you name one of your states <i>initial</i> or <i>final</i>, which
-are the default names used for initial and final states).
-
-<dt>0254 (raised 21.iv.04)
-
-<dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
-results in bad code. It should be a code generation error.
-
-<dt>0256 (raised 22.iv.04)
-
-<dd>Naming an event <i>Ev</i> results in bad code.
+same name is not detected as such (this really only happens if you
+name one of your states <i>initial</i> or <i>final</i>, which are the
+default names used for initial and final states).
 
 <dt>0259 (raised 29.iv.04)
 
@@ -219,13 +163,292 @@ results in bad code. It should be a code generation error.
 through into the normalized file, it would be a Good Idea to use XML
 namespaces to distinguish ColdFrame's elements and attributes from
 others.
-<br>Providing a DTD (schema?) would be good too.
+<br><i>Made a start by prefixing templates with a 2-character
+namespace abbreviation to indicate the file it's declared in.</i>
 
-<!-- next: 0260  -->
+<dt>0261 (raised 29.iv.04)
+
+<dd>The DTDs should be brought up-to-date (or replaced by schemas).
+<br><i>Working on a schema for normalized data: see <a
+href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a>.</i>
+
+<dt>0262 (raised 14.v.04)
+
+<dd>Extraction can fail silently.
+
+<dt>0265 (raised 26.v.04)
+
+<dd>There is no check that associations' multiplicities have been
+maintained.
+
+<dt>0271 (raised 30.vi.04)
+
+<dd>It would be helpful to have an <tt>Epoch</tt> value in
+<tt>ColdFrame.Project.Calendar</tt>.
+
+<dt>0273 (raised 22.vii.04)
+
+<dd>It could be helpful to have a <i>{stub}</i> tag to ask ColdFrame
+to generate a default, non-separate, body.
+
+<dt>0277 (raised 26.vii.04)
+
+<dd>The error messages that are given if there's a relationship
+involving a class not in the current package (either from a
+non-&#171;generate&#187; child or from another domain altogether)
+aren't as helpful as they could be.
+
+<dt>0283 (raised 11.ix.04)
+
+<dd>The generated code won't compile if all the attributes of a
+&#171;public&#187; class are &#171;class&#187; attributes.
+<br><i>If you feel you absolutely must have &#171;class&#187;
+attributes, add a dummy instance attribute as well. But it's not
+obvious why you'd want to.</i>
+
+<!-- next: 0283  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>11.ix.04</h3>
+
+<dl>
+
+<dt>0281 (raised 9.ix.04)
+
+<dd>A Timer can't be a &#171;class&#187; attribute.
+<br><i>It's not obvious why you'd want to do that.</i>
+
+<dt>0282 (raised 9.ix.04)
+
+<dd>A &#171;protect&#187;ed type without operations (which is a
+problem in its own right!) won't compile.
+
+</dl>
+
+<h3>8.ix.04</h3>
+
+<dl>
+
+<dt>0280 (raised 8.ix.04)
+
+<dd><tt>All_Instances</tt> and <tt>Selection_Function</tt> won't
+compile for a class which can have at most one instance.
+
+</dl>
+
+<h3>3.ix.04</h3>
+
+<dl>
+
+<dt>0250 (raised 4.iv.04)
+
+<dd>Unsigned types should be supported.
+
+</dl>
+
+<h3>31.viii.04</h3>
+
+<dl>
+
+<dt>0274 (raised 26.vii.04)
+
+<dd>If a <i>private</i> operation is marked &#171;init&#187; the
+resulting code won't compile.
+<br><i>Temporarily, &#171;init&#187; operations are put in the visible
+part of the package spec.</i>
+
+<dt>0278 (raised 26.vii.04)
+
+<dd>If a &#171;protect&#187;ed type has an operation with parameters,
+the types of the parameters may not be declared before the protected
+type itself.
+
+<dt>0279 (raised 26.vii.04)
+
+<dd>&#171;access&#187; operations of <em>&#171;protect&#187;</em>ed
+types aren't generated.
+
+</dl>
+
+<h3>28.vii.04</h3>
+
+<dl>
+
+<dt>0276 (raised 28.vii.04)
+
+<dd>Integer &#171;type&#187;s are generated as <tt>new Integer
+range</tt>, should be just <tt>range</tt>.
+
+<dt>0275 (raised 27.vii.04)
+
+<dd>Integer &#171;type&#187;s used to be generated as
+<tt>type</tt>s, now they are <tt>subtype</tt>s.
+
+</dl>
+
+<h3>14.vii.04</h3>
+
+<dl>
+
+<dt>0272 (raised 9.vii.04)
+
+<dd>Using <tt><i>{imported}</i></tt> etc on a &#171;type&#187; with
+attributes is silently ignored.
+
+</dl>
+
+<h3>7.vii.04</h3>
+
+<dl>
+
+<dt>0227 (raised 23.i.04)
+
+<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
+returning a composite value, the generated code won't compile.") is
+still present (for both &#171;type&#187;s and &#171;class&#187;es)
+when the composite value is imported or inherited from a parent
+domain (and therefore isn't otherwise mentioned in the model).
+
+</dl>
+
+<h3>3.vii.04</h3>
+
+<dl>
+
+<dt>0019 (raised 4.ix.01)
+
+<dd>It would be good to support private operations.
+<br><i>Private operations of classes and protected types are
+implemented as <tt>private</tt> subprograms.</i>
+
+<dt>0177 (raised 26.vi.03)
+
+<dd>It would be helpful for ColdFrame to recognize "class utilities"
+(classes which have no instances).
+
+<dt>0195 (raised 5.ix.03)
+
+<dd>For &#171;public&#187; classes without attributes, it seems
+wasteful to allocate an <tt>Instance</tt>.
+
+<dt>0222 (raised 3.xii.03)
+
+<dd>Active class instances are torn down after the domain event queue,
+which may cause <tt>Tasking_Error</tt> if the active instance tries
+(for example) to post an event.
+
+<dt>0269 (raised 17.vi.04)
+
+<dd>Some of the <i>Event Test</i> tests have slightly too tight time
+limits, so that tests can fail the first time they're run.
+
+</dl>
+
+<h3>30.vi.04</h3>
+
+<dl>
+
+<dt>0270 (raised 23.vi.04)
+
+<dd>The error of omitting the initial state of a state machine isn't
+detected (instead, you get bad code).
+
+</dl>
+
+<h3>18.vi.04</h3>
+
+<dl>
+
+<dt>0267 (raised 14.vi.04)
+
+<dd>If an event handler throws an exception, the instance can't be
+deleted (probably until an event is successfully handled).
+
+<dt>0268 (raised 17.vi.04)
+
+<dd>The test procedure names (reported by the <tt>-v</tt> AUnit
+option) aren't all as clear as they could be.
+
+</dl>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0233 (raised 10.ii.04)
+
+<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
+are fatal.
+<br><i>Of course, the system will be unstable after such an exception.</i>
+
+</dl>
+
+<h3>4.vi.04</h3>
+
+<dl>
+
+<dt>0264 (raised 20.v.04)
+
+<dd>A race condition where tear-down involving a Timer can result in
+<tt>Program_Error</tt> exceptions makes unit test difficult. This is a
+result of the cure for bug <a href="#bug-0236">0236</a>.
+<br><i>Instead of raising an exception, ColdFrame now logs an
+error. Some sort of traceback would clearly be helpful, though.</i>
+
+<dt>0266 (raised 4.vi.04)
+
+<dd>Leading and trailing spaces in Domain package names get translated
+into underscores; they should be stripped.
+
+</dl>
+
+<h3>20.v.04</h3>
+
+<dl>
+
+<dt>0263 (raised 20.v.04)
+
+<dd>If a callback operation deregisters itself it leads to a jump out
+of program (Program_Error, if you're lucky!)
+<br>Messing about with registering/deregistering callbacks is still
+not task-safe. However, so long as you don't try deregistering
+<i>another</i> callback from a callback operation you should be OK!
+
+</dl>
+
+<h3>12.v.04</h3>
+
+<dl>
+
+<dt>0206 (raised 27.ix.03)
+
+<dd>The error of having multiple transitions from a state triggered by
+the same event isn't detected.
+
+<dt>0256 (raised 22.iv.04)
+
+<dd>Naming an event <i>Ev</i> results in bad code.
+
+</dl>
+
+<h3>5.v.04</h3>
+
+<dl>
+
+<dt>0254 (raised 21.iv.04)
+
+<dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
+results in bad code. It should be a code generation error.
+
+<dt>0260 (raised 29.iv.04)
+
+<dd>Extracted documentation should be in CDATA sections (to ensure
+that the <tt>.raw</tt> file is valid XML).
+
+</dl>
 
 <h3>29.iv.04</h3>
 
@@ -333,7 +556,8 @@ operations of &#171;public&#187; classes include an assertion.</i>
 
 <dd>Expressions in, for example, the lower bound of an
 <i>{integer}</i> specification don't handle <tt>**</tt>.
-<br><i><tt>^</tt> and <tt>**</tt> are both handled (<tt>^</tt> translates to <tt>**</tt>, of course).</i>
+<br><i><tt>^</tt> and <tt>**</tt> are both handled (<tt>^</tt>
+translates to <tt>**</tt>, of course).</i>
 
 </dl>
 
@@ -445,7 +669,7 @@ within any other operation will result in a
 
 <dl>
 
-<dt>0236 (raised 17.ii.04)
+<dt><a name="bug-0236">0236</a> (raised 17.ii.04)
 
 <dd>It would be helpful to detect the error of creating (and using) a
 Timer on the stack.
@@ -2181,6 +2405,17 @@ compiler option.</i>
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0232 (raised 10.ii.04)
+
+<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
+available event is immediately processed after a delay.
+
+</dl>
 
 <h3>1.ii.04</h3>
 

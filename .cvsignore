@@ -1,23 +1,26 @@
 *.ada *.ali
 *.bb *.bbg *.da *.gcov
-cf-*.tgz cf-*.zip
-*.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
-b~*.ad[bs]
-*.norm
-coldframe-architecture.html
-releases.html
-use-cases.html
-Serialization.html
-*.pdf
-dist
-.build
-*.gen
-Makefile-cf Makefile-winnt Makefile-unix
-cf-[0-9]*
-coldframe-combine_hash-test
-extractor.ebs
 *.domains
-project lib
-stairwell_demo stairwell_logging_demo
+*.gen
+*.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
+*.norm
+*.pdf
+.build
+Makefile-cf Makefile-winnt Makefile-unix
+Serialization.html
+b~*.ad[bs]
+cf-[0-9]*
+coldframe-architecture.html
+coldframe-combine_hash-test
 coldframe-project-events.ads-standard
-
+dist
+event_test-harness
+extractor.ebs
+performance-harness
+project lib
+regression_tests
+releases.html
+stairwell_demo stairwell_logging_demo
+test_bounded_storage_pools
+test_storage_pools
+use-cases.html

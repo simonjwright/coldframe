@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 66f57df04705 $
---  $Date: 2004/03/13 21:02:39 $
+--  $Revision: 6ea040caff18 $
+--  $Date: 2004/10/09 10:37:13 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -171,7 +171,7 @@ package ColdFrame.Events_G is
    --  Private use only
    procedure Add_Reference (To : Event_Queue_P);
    --  Increments the usage count for an event queue so that teardown
-   --  of queues shared by multiple domains could be properly managed.
+   --  of queues shared by multiple domains can be properly managed.
 
    function Copy
      (The_Queue : Event_Queue_P) return Event_Queue_P;
@@ -200,6 +200,10 @@ package ColdFrame.Events_G is
    --  action procedure.
 
    --  Private use only
+   procedure Stop (The_Queue : in out Event_Queue_P);
+   --  Stops processing on The_Queue, pending Tear_Down (the queue
+   --  can't be restarted)..
+
    procedure Tear_Down (The_Queue : in out Event_Queue_P);
    --  Terminates any tasks and deallocates The_Queue.
 
@@ -353,9 +357,9 @@ private
       --  shared by multiple domains.
 
       --  when this reaches 0, the queue can be deleted
-      Access_Count : Natural := 1;
+      Access_Count : Natural := 0;
       --  if this is true, the queue has been stopped
-      Torn_Down : Boolean := False;
+      Stopped : Boolean := False;
 
       --  the queue is running
       Started : Boolean := Start_Started;
@@ -369,6 +373,10 @@ private
    procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
+
+   --  Default private interface to stop an event queue.  The
+   --  implementation here raises Exceptions.Use_Error if called.
+   procedure Stop (The_Queue : in out Event_Queue_Base);
 
    --  Default private interface to tear down an event queue.  The
    --  implementation here raises Exceptions.Use_Error if called.
@@ -419,14 +427,14 @@ private
    type Timer_P is access all Timer;
    for Timer_P'Storage_Size use 0;
 
-   --  A Timer_Event is dispatched like an ordinary event, but it has
+   --  A Held_Event is dispatched like an ordinary event, but it has
    --  a special Handler which (after some checks) dispatches the held
    --  event.
    --
    --  This is so that we can tell when the event is actually dispatched,
    --  in case the user Unsets the Timer.
-   type Timer_Event (Kind : Time.Time_Kind;
-                     On_Timer : Boolean)
+   type Held_Event (Kind : Time.Time_Kind;
+                    On_Timer : Boolean)
    is new Event_Base with record
       On : Event_Queue_P;
       Time_To_Fire : Time.Time (Kind => Kind);
@@ -434,12 +442,12 @@ private
       The_Timer : Timer_P;  -- null if the Timer has been deleted, or no Timer
    end record;
 
-   procedure Handler (This : Timer_Event);
+   procedure Handler (This : Held_Event);
 
-   procedure Invalidate (The_Event : access Timer_Event;
+   procedure Invalidate (The_Event : access Held_Event;
                          If_For_Instance : Instance_Base_P);
 
-   procedure Tear_Down (The_Event : access Timer_Event);
+   procedure Tear_Down (The_Event : access Held_Event);
    --  This ensures that the Timer_Checker test isn't falsely
    --  triggered by timer events left behind during teardown.
 
@@ -461,7 +469,7 @@ private
 
    type Timer is limited record
       The_Checker : Timer_Checker (Timer'Access);
-      The_Entry : Event_P;   -- needs to be a Timer_Event
+      The_Entry : Event_P;   -- needs to be a Held_Event
    end record;
 
 

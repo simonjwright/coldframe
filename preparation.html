@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v 5ec020da6847 2004/04/29 21:59:39 simon $ -->
+<!-- $Id: preparation.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -256,7 +256,8 @@ left pane); for example, for your local type <i>Socket</i>,
 
 <p>Any unrecognised tagged values are included in the normalized XML
 as attributes, so that you can add your own post-processing (for
-example, special code generation methods).
+example, <a href="extending.html">special code generation
+methods</a>).
 
 <p>ColdFrame originally used <a
 href="annotations.html">annotations</a>, only available in the
@@ -373,6 +374,9 @@ length string
 
 <li><tt>string = max <i>max-length</i></tt> specifies a variable
 length string, up to the length sepcified.
+
+<li><tt>unsigned = mod <i>modulus</i></tt> specifies an unsigned
+(modular) type capable of storing 0 .. <i>modulus</i> - 1
 
 </ul>
 

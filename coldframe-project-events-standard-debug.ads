@@ -5,17 +5,17 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  This package supports debugging of code involving events.
+--  This package supports tracing of code involving events.
 --
---  This is ColdFrame's default implementation.
+--  This is provided to retain the obsolete interface of Release
+--  20040319 and earlier.
 
 --  $RCSfile: coldframe-project-events-standard-debug.ads,v $
---  $Revision: b720f64f3037 $
---  $Date: 2002/09/28 17:13:37 $
+--  $Revision: 6ea040caff18 $
+--  $Date: 2004/10/09 10:37:13 $
 --  $Author: simon $
 
-with ColdFrame.Events_G.Debug_G;
-with ColdFrame.Project.Events.Standard;
+with ColdFrame.Project.Events.Standard.Trace;
 
 package ColdFrame.Project.Events.Standard.Debug
-is new Events.Debug_G (Standard_Queue => Standard.Event_Queue_Base);
+renames ColdFrame.Project.Events.Standard.Trace;
