@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: d42456779d35 $
---  $Date: 2003/09/02 18:57:03 $
+--  $Revision: f029c5d83b80 $
+--  $Date: 2003/11/08 08:15:37 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -81,9 +81,12 @@ package body ColdFrame.Events_G is
 
       --  Handle the held event, unless it's been invalidated.
       if not The_Event.Invalidated then
+         Log (The_Event, Event_Basis.Posting);
+         Log (The_Event, Event_Basis.Dispatching);
          Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
          Handler (The_Event.all);   --  XXX what about exceptions here?
          Log_Post_Dispatch (The_Event => The_Event, On => This.On);
+         Log (The_Event, Event_Basis.Finishing);
       end if;
 
       --  Free the referenced memory (the outer dispatcher will free

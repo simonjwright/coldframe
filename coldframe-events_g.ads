@@ -20,18 +20,22 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 3e385e7f5028 $
---  $Date: 2003/07/10 20:23:40 $
+--  $Revision: f029c5d83b80 $
+--  $Date: 2003/11/08 08:15:37 $
 --  $Author: simon $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
+with ColdFrame.Event_Basis;
 with ColdFrame.Instances;
 with ColdFrame.Logging_Signature;
 with ColdFrame.Time_Signature;
 with System.Storage_Pools;
 
 generic
+
+   type Base_Event
+      is abstract new ColdFrame.Event_Basis.Event_Base with private;
 
    with package Logging is new Logging_Signature (<>);
 
@@ -62,7 +66,7 @@ package ColdFrame.Events_G is
    --  Events  --
    --------------
 
-   type Event_Base is abstract tagged limited private;
+   type Event_Base is abstract new Base_Event with private;
    --  All Events are derived from this type.
 
    type Event_P is access all Event_Base'Class;
@@ -288,7 +292,7 @@ private
    --  retract events for this instance from.
 
 
-   type Event_Base is abstract tagged limited record
+   type Event_Base is abstract new Base_Event with record
       Invalidated : Boolean := False;  --  set if the event is retracted
    end record;
 

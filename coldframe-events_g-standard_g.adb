@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: afff70e1b5c1 $
---  $Date: 2003/11/01 08:26:56 $
+--  $Revision: f029c5d83b80 $
+--  $Date: 2003/11/08 08:15:37 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -78,6 +78,8 @@ package body ColdFrame.Events_G.Standard_G is
                    On : access Event_Queue_Base) is
    begin
 
+      Log (The_Event, Event_Basis.Posting);
+
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
@@ -93,6 +95,8 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is
    begin
+
+      Log (The_Event, Event_Basis.Posting);
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -200,6 +204,7 @@ package body ColdFrame.Events_G.Standard_G is
 
             if not E.Invalidated then
                begin
+                  Log (E, Event_Basis.Dispatching);
                   Log_Pre_Dispatch (The_Event => E, On => The_Queue);
                   Handler (E.all);
                   Log_Post_Dispatch (The_Event => E, On => The_Queue);
@@ -215,6 +220,7 @@ package body ColdFrame.Events_G.Standard_G is
                end;
             end if;
 
+            Log (E, Event_Basis.Finishing);
             Delete (E);
             Note_Removal_Of_Posted_Event (The_Queue);
             The_Queue.The_Excluder.Done;
