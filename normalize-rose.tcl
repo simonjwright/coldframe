@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 71fedaa178b3 2003/11/14 06:12:33 simon $
+# $Id: normalize-rose.tcl,v 742c23fa2699 2003/11/14 16:28:38 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2406,7 +2406,7 @@ itcl::class Datatype {
     # utility to deal with constraints (where the values may be expressions
     # involving spaces).
     method -setConstraint {d} {
-        set constraints [split $d ",\n"]
+        set constraints [split $d ",|\n"]
         set result {}
         foreach c $constraints {
             set constraint [split [string trim $c]]
@@ -2424,7 +2424,7 @@ itcl::class Datatype {
     }
 
     # called when the type is a real. constraint is a set of key/value
-    # pairs, which may be newline- or comma-separated.
+    # pairs, which may be newline-, pipe- or comma-separated.
     # Useful keys are delta, digits, lower, upper, size, small
     method -real {constraint} {
         set dataType "real"
