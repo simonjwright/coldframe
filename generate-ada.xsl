@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 45d629840042 2001/05/11 19:13:35 simon $ -->
+<!-- $Id: generate-ada.xsl,v 0bae809a6a3c 2001/05/17 04:40:00 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -90,9 +90,6 @@
 
     <!-- Package specs for callbacks. -->
     <xsl:apply-templates select="type[@callback]" mode="callback-spec"/>
-
-    <!-- Package bodies for callbacks. -->
-    <xsl:apply-templates select="type[@callback]" mode="callback-body"/>
 
   </xsl:template>
 
