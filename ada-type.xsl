@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v efed10c80a00 2004/07/07 20:46:05 simon $ -->
+<!-- $Id: ada-type.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,10 +28,13 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:op="http://pushface.org/coldframe/operation"
+  xmlns:ty="http://pushface.org/coldframe/type"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.1">
 
   <!-- Called at /domain to generate domain context clauses. -->
-  <xsl:template name="domain-context">
+  <xsl:template name="ty:domain-context">
 
     <!-- Context for special references (eg pi). -->
     <xsl:if test="references='pi'">
@@ -91,7 +94,7 @@
       </xsl:for-each>
       <xsl:for-each select="type/renames | type/@extends | exception/@renames">
         <xsl:variable name="package">
-          <xsl:call-template name="find-source-package">
+          <xsl:call-template name="ty:find-source-package">
             <xsl:with-param name="input" select="."/>
           </xsl:call-template>
         </xsl:variable>
@@ -122,8 +125,8 @@
 
   <!-- Called at domain to generate domain Types entries (not for
        standard types). -->
-  <xsl:template name="domain-types">
-    <xsl:call-template name="sorted-domain-types">
+  <xsl:template name="ty:domain-types">
+    <xsl:call-template name="ty:sorted-domain-types">
       <xsl:with-param name="nodes" select="/.."/>
       <xsl:with-param name="finished" select="type[@standard]"/>
     </xsl:call-template>
@@ -132,7 +135,7 @@
 
   <!-- Called at domain to output the type declarations sorted
        in dependency order. -->
-  <xsl:template name="sorted-domain-types">
+  <xsl:template name="ty:sorted-domain-types">
 
     <!-- The types which are to be output in this pass -->
     <xsl:param name="nodes"/>
@@ -155,8 +158,8 @@
     <!-- Output the types for this pass -->
     <xsl:for-each select="$nodes">
       <xsl:sort select="name"/>
-      <xsl:call-template name="domain-type"/>
-      <xsl:call-template name="commentary">
+      <xsl:call-template name="ty:domain-type"/>
+      <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
@@ -181,7 +184,7 @@
       <xsl:when test="$next">
 
         <!-- More types to be output, so make the recursive call -->
-        <xsl:call-template name="sorted-domain-types">
+        <xsl:call-template name="ty:sorted-domain-types">
           <xsl:with-param name="nodes" select="$next"/>
           <xsl:with-param name="finished" select="$processed"/>
         </xsl:call-template>
@@ -201,7 +204,7 @@
 
           <xsl:message>
             <xsl:for-each select="$missing">
-              <xsl:call-template name="log-error"/>
+              <xsl:call-template name="ut:log-error"/>
               <xsl:sort select="name"/>
               <xsl:text>Error: couldn't generate type </xsl:text>
               <xsl:value-of select="name"/>
@@ -229,7 +232,7 @@
 
   <!-- Called at domain/type to generate a single domain Type entry
        (not for standard types). -->
-  <xsl:template name="domain-type">
+  <xsl:template name="ty:domain-type">
     <xsl:choose>
 
       <xsl:when test="attribute">
@@ -317,7 +320,7 @@
 
           <xsl:when test="@protected">
 
-            <xsl:call-template name="protected-type-spec"/>
+            <xsl:call-template name="ty:protected-type-spec"/>
 
           </xsl:when>
 
@@ -581,8 +584,8 @@
         <xsl:when test="string/fixed"/>
 
         <xsl:when test="string/max">
-          <xsl:call-template name="do-not-edit"/>
-          <xsl:call-template name="identification-info"/>
+          <xsl:call-template name="ut:do-not-edit"/>
+          <xsl:call-template name="ut:identification-info"/>
           <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>
           <xsl:text>function </xsl:text>
@@ -611,7 +614,7 @@
   <!-- Called to generate operation specifications for types. -->
   <xsl:template matc`="type/operation" mode="domain-type-operation-spec">
 
-    <xsl:call-template name="subprogram-specification">
+    <xsl:call-template name="op:subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
@@ -635,7 +638,7 @@
       <xsl:text>);&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="indent" select="$I"/>
     </xsl:call-template>
     <xsl:value-of select="$blank-line"/>
@@ -647,10 +650,10 @@
   <!-- Called to generate operation body stubs for types. -->
   <xsl:template
     match="type/operation[not(@renames)]"
-    mode="domain-type-operation-body-stub">
+    mode="ty:domain-type-operation-body-stub">
     <xsl:value-of select="$I"/>
     <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification">
+    <xsl:call-template name="op:subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
@@ -660,18 +663,18 @@
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
-  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+  <xsl:template mode="ty:domain-type-operation-body-stub" match="*"/>
 
 
   <!-- Called to generate operation bodies for types. -->
   <xsl:template
     match="type/operation[not(@renames)]"
-    mode="domain-type-operation-body">
-    <xsl:call-template name="should-edit"/>
-    <xsl:call-template name="identification-info"/>
+    mode="ty:domain-type-operation-body">
+    <xsl:call-template name="ut:should-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="indent" select="''"/>
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
@@ -679,7 +682,7 @@
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
     <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification">
+    <xsl:call-template name="op:subprogram-specification">
       <xsl:with-param name="indent" select="''"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
@@ -719,7 +722,7 @@
         </xsl:when>
 
         <xsl:otherwise>
-          <xsl:call-template name="default-value">
+          <xsl:call-template name="op:default-value">
             <xsl:with-param name="type" select="@return"/>
           </xsl:call-template>
         </xsl:otherwise>
@@ -735,11 +738,11 @@
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template mode="domain-type-operation-body" match="*"/>
+  <xsl:template mode="ty:domain-type-operation-body" match="*"/>
 
 
   <!-- Called at domain/type[@protected] to generate protected type specs. -->
-  <xsl:template name="protected-type-spec">
+  <xsl:template name="ty:protected-type-spec">
 
     <!--
          protected type {name} is
@@ -760,12 +763,12 @@
                                     and not(@suppressed)
                                     and not(@visibility='private')]">
       <xsl:sort select="name"/>
-      <xsl:call-template name="subprogram-specification">
+      <xsl:call-template name="op:subprogram-specification">
         <xsl:with-param name="indent" select="$II"/>
         <xsl:with-param name="is-class" select="'no'"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
-      <xsl:call-template name="commentary">
+      <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$II"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
@@ -781,12 +784,12 @@
       <xsl:if test="position()=1">
         <xsl:text>&#10;</xsl:text>
       </xsl:if>
-      <xsl:call-template name="subprogram-specification">
+      <xsl:call-template name="op:subprogram-specification">
         <xsl:with-param name="indent" select="$II"/>
         <xsl:with-param name="is-class" select="'no'"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
-      <xsl:call-template name="commentary">
+      <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$II"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
@@ -807,11 +810,11 @@
   <!-- Called to generate protected type bodies. -->
   <xsl:template match="type[@protected]" mode="protected-type-body">
 
-    <xsl:call-template name="should-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:should-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="indent" select="''"/>
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
@@ -828,11 +831,11 @@
     <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
       <xsl:sort select="name"/>
 
-      <xsl:call-template name="commentary">
+      <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
 
-      <xsl:call-template name="subprogram-specification">
+      <xsl:call-template name="op:subprogram-specification">
         <xsl:with-param name="indent" select="$I"/>
         <xsl:with-param name="is-class" select="'no'"/>
       </xsl:call-template>
@@ -852,7 +855,7 @@
           <xsl:text>raise Program_Error;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>return </xsl:text>
-          <xsl:call-template name="default-value">
+          <xsl:call-template name="op:default-value">
             <xsl:with-param name="type" select="@return"/>
           </xsl:call-template>
           <xsl:text>;&#10;</xsl:text>
@@ -902,7 +905,7 @@
 
   <!-- Called to extract the package name from a (possibly) qualified
        type name. -->
-  <xsl:template name="find-source-package">
+  <xsl:template name="ty:find-source-package">
     <!-- The input name -->
     <xsl:param name="input"/>
     <!-- The package name so far -->
@@ -932,7 +935,7 @@
           </xsl:choose>
         </xsl:variable>
 
-        <xsl:call-template name="find-source-package">
+        <xsl:call-template name="ty:find-source-package">
           <xsl:with-param name="input" select="$after"/>
           <xsl:with-param name="package" select="$new-package"/>
         </xsl:call-template>

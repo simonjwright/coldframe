@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 4422478aaf89 2004/07/01 21:05:47 simon $ -->
+<!-- $Id: ada-class.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,8 +26,13 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.1">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:cl="http://pushface.org/coldframe/class"
+  xmlns:op="http://pushface.org/coldframe/operation"
+  xmlns:st="http://pushface.org/coldframe/state"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.1">
 
 
   <!-- Generate the class packages (specs). -->
@@ -35,27 +40,27 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m">
         <xsl:text>  .. </xsl:text>
         <xsl:value-of select="name"/>
       </xsl:with-param>
     </xsl:call-template>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
 
@@ -145,21 +150,21 @@
    <xsl:call-template name="supertype-specs"/>
 
    <!-- .. any access-to-subprogram types (before possible accessors) .. -->
-   <xsl:apply-templates mode="access-to-operation"/>
+   <xsl:apply-templates mode="op:access-to-operation"/>
 
    <!-- .. the attribute access operations .. -->
    <xsl:apply-templates mode="attribute-set-spec"/>
    <xsl:apply-templates mode="attribute-get-spec"/>
 
    <!-- .. state machine: event types .. -->
-   <xsl:call-template name="event-type-specs"/>
+   <xsl:call-template name="st:event-type-specs"/>
 
    <!-- .. visible operations .. -->
-   <xsl:call-template name="visible-operation-specs"/>
+   <xsl:call-template name="op:visible-operation-specs"/>
 
    <!-- .. visible renaming operations .. -->
    <xsl:apply-templates
-     mode="renaming-operation-spec"
+     mode="op:renaming-operation-spec"
      select="operation[@renames and not(@visibility='private')]">
      <xsl:sort select="name"/>
    </xsl:apply-templates>
@@ -174,14 +179,14 @@
                        and not(@suppressed)
                        and not(@entry)
                        and not(@renames)]"
-     mode="operation-spec">
+     mode="op:operation-spec">
      <xsl:sort select="name"/>
      <xsl:with-param name="current" select="."/>
    </xsl:apply-templates>
 
    <!-- .. private renaming operations .. -->
    <xsl:apply-templates
-     mode="renaming-operation-spec"
+     mode="op:renaming-operation-spec"
      select="operation[@renames and @visibility='private']">
      <xsl:sort select="name"/>
    </xsl:apply-templates>
@@ -415,7 +420,7 @@
     </xsl:if>
 
     <!-- .. event handlers .. -->
-    <xsl:apply-templates mode="event-handler-specs" select="event">
+    <xsl:apply-templates mode="st:event-handler-specs" select="event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -481,12 +486,12 @@
 
         <!-- Calculate the maximum number of instances. -->
         <xsl:variable name="max">
-          <xsl:call-template name="number-of-instances"/>
+          <xsl:call-template name="ut:number-of-instances"/>
         </xsl:variable>
 
         <!-- Determine whether an array can be used. -->
         <xsl:variable name="array">
-          <xsl:call-template name="can-use-array"/>
+          <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
         <!-- Need storage management if there are any instances. -->
@@ -776,7 +781,7 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m">
         <xsl:text>  .. </xsl:text>
         <xsl:value-of select="name"/>
@@ -785,16 +790,16 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
@@ -888,7 +893,7 @@
     </xsl:if>
 
     <!-- .. operation stubs .. -->
-    <xsl:call-template name="operation-body-stubs"/>
+    <xsl:call-template name="op:operation-body-stubs"/>
 
     <!-- .. state image body .. -->
     <xsl:if test="statemachine">
@@ -896,13 +901,13 @@
     </xsl:if>
 
     <!-- .. <<message>> event handler bodies .. -->
-    <xsl:apply-templates mode="event-handler-bodies" select="event[@class]">
+    <xsl:apply-templates mode="st:event-handler-bodies" select="event[@class]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
     <!-- .. <<event>> event handler bodies .. -->
     <xsl:apply-templates
-      mode="event-handler-bodies"
+      mode="st:event-handler-bodies"
       select="statemachine/event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
@@ -923,8 +928,8 @@
 
       <!-- Output the separate task body. -->
 
-      <xsl:call-template name="should-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:should-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:value-of select="$blank-line"/>
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -937,7 +942,7 @@
     </xsl:if>
 
     <!-- Separate subprogram bodies for individual operations. -->
-    <xsl:call-template name="operation-separate-bodies"/>
+    <xsl:call-template name="op:operation-separate-bodies"/>
 
   </xsl:template>
 
@@ -976,12 +981,12 @@
 
         <!-- Calculate the maximum number of instances. -->
         <xsl:variable name="max">
-          <xsl:call-template name="number-of-instances"/>
+          <xsl:call-template name="ut:number-of-instances"/>
         </xsl:variable>
 
         <!-- Determine whether an array can be used. -->
         <xsl:variable name="array">
-          <xsl:call-template name="can-use-array"/>
+          <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
         <!-- We'll need to free memory, unless we have no instances. -->
@@ -1139,7 +1144,7 @@
 
       <xsl:otherwise>
         <xsl:if test="attribute/type='Autonumber'">
-          <xsl:call-template name="log-error"/>
+          <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: invalid use of Autonumber in </xsl:text>
             <xsl:value-of select="name"/>
@@ -1158,12 +1163,12 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <!-- The heading .. -->
@@ -1325,7 +1330,7 @@
     <!-- .. initialize state machine .. -->
     <!-- (after we've stored the new instance, in case it's a singleton,
          which means that Enter_{next-state} requires This to be set up) -->
-    <xsl:call-template name="initialize-state-machine"/>
+    <xsl:call-template name="st:initialize-state-machine"/>
 
     <!-- .. return it .. -->
     <xsl:value-of select="$II"/>
@@ -1404,12 +1409,12 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1574,12 +1579,12 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1860,7 +1865,7 @@
         <xsl:when test="$report
                         and (../@singleton
                              or @abstract or @return or @class or parameter)">
-          <xsl:call-template name="log-error"/>
+          <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: illegal finalize operation </xsl:text>
             <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -1893,12 +1898,12 @@
 
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <!-- Determine whether an array can be used. -->
     <xsl:variable name="array">
-      <xsl:call-template name="can-use-array"/>
+      <xsl:call-template name="ut:can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -2041,8 +2046,8 @@
            or @singleton
            or (@public and attribute)]">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -2050,8 +2055,8 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Class_Initialize;&#10;</xsl:text>
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -2141,8 +2146,8 @@
   <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="hash-function-body">
 
-    <xsl:call-template name="should-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:should-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>
@@ -2323,7 +2328,7 @@
   <xsl:template name="hash-buckets">
 
     <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
+      <xsl:call-template name="ut:number-of-instances"/>
     </xsl:variable>
 
     <xsl:choose>
@@ -2418,7 +2423,7 @@
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
-      <xsl:apply-templates mode="parameter">
+      <xsl:apply-templates mode="op:parameter">
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:apply-templates>
       <xsl:text>)</xsl:text>

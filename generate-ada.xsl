@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 28ef9ba672ff 2004/07/17 17:06:02 simon $ -->
+<!-- $Id: generate-ada.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,6 +28,19 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:ac="http://pushface.org/coldframe/association-collection"
+  xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:cb="http://pushface.org/coldframe/callback"
+  xmlns:cl="http://pushface.org/coldframe/class"
+  xmlns:co="http://pushface.org/coldframe/collection"
+  xmlns:in="http://pushface.org/coldframe/inheritance"
+  xmlns:op="http://pushface.org/coldframe/operation"
+  xmlns:se="http://pushface.org/coldframe/serialization"
+  xmlns:st="http://pushface.org/coldframe/state"
+  xmlns:td="http://pushface.org/coldframe/teardown"
+  xmlns:ty="http://pushface.org/coldframe/type"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
 
   <xsl:include href="ada-association.xsl"/>
@@ -113,16 +126,16 @@
        others. -->
   <xsl:template match="domain" mode="coldframe">
 
-    <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="ut:do-not-edit"/>
 
     <!-- Identification info -->
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:identification-info"/>
     <!-- Marker for result of SLOC calculations. -->
     <xsl:text>--  Lines: LINES-OF-CODE&#10;</xsl:text>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="commentary">
+    <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
 
@@ -130,13 +143,13 @@
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for top-level package .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. domain context ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="domain-context"/>
+    <xsl:call-template name="ty:domain-context"/>
 
     <!-- .. the top-level package spec .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. top-level package spec ..'"/>
     </xsl:call-template>
     <xsl:text>package </xsl:text>
@@ -145,7 +158,7 @@
     <xsl:value-of select="$blank-line"/>
 
     <!-- .. any exceptions .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. any exceptions ..'"/>
     </xsl:call-template>
     <xsl:for-each select="exception">
@@ -171,7 +184,7 @@
       </xsl:choose>
 
       <xsl:text>;&#10;</xsl:text>
-      <xsl:call-template name="commentary">
+      <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
@@ -179,7 +192,7 @@
     </xsl:for-each>
 
     <!-- .. any constants .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. any constants ..'"/>
     </xsl:call-template>
     <xsl:if test="references='pi'">
@@ -189,27 +202,28 @@
     </xsl:if>
 
     <!-- .. any specially-declared types .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. any specially-declared types ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="domain-types"/>
+    <xsl:call-template name="ty:domain-types"/>
 
     <!-- .. any type operations .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. any operations of types ..'"/>
     </xsl:call-template>
 
     <!-- .. access-to-operation .. -->
     <xsl:apply-templates
       select="type[not(@protected)]/operation[@access and not(@suppressed)]"
-      mode="access-to-operation">
+      mode="op:access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:apply-templates>
 
     <!--  .. others .. -->
     <xsl:apply-templates
-      select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
+      select="type[not(@protected)]
+              /operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
@@ -232,8 +246,8 @@
                   and not(@imported)
                   and not(@renames)]">
 
-      <xsl:call-template name="do-not-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:do-not-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
       <xsl:text>package body </xsl:text>
@@ -258,7 +272,7 @@
       <!-- Operations that were analyst-specified need stubs. -->
       <xsl:apply-templates
         select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
-        mode="domain-type-operation-body-stub">
+        mode="ty:domain-type-operation-body-stub">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
 
@@ -270,19 +284,19 @@
     </xsl:if>
 
     <!-- .. domain type operations .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
       select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
-      mode="domain-type-operation-body">
+      mode="ty:domain-type-operation-body">
     </xsl:apply-templates>
 
 
     <!-- .. protected type bodies .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. protected bodies ..'"/>
@@ -294,16 +308,16 @@
 
 
     <!-- .. the domain event manager .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain event manager ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="event-manager-spec"/>
-    <xsl:call-template name="event-manager-body"/>
+    <xsl:call-template name="st:event-manager-spec"/>
+    <xsl:call-template name="st:event-manager-body"/>
 
     <!-- .. the domain Initialize procedure .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Initialize procedure ..'"/>
@@ -315,8 +329,8 @@
            (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);
          -->
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
@@ -327,7 +341,7 @@
     <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);&#10;</xsl:text>
 
     <!-- The domain Initialize procedure body. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Initialize procedure body ..'"/>
@@ -361,8 +375,8 @@
                raise ColdFrame.Exceptions.Initialization_Error;
          end {domain}.Initialize;
          -->
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:variable
@@ -478,7 +492,7 @@
     <xsl:text>.Initialize;&#10;</xsl:text>
 
     <!-- The domain Cascade_Initialize procedure .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Cascade_Initialize procedure ..'"/>
@@ -490,8 +504,8 @@
            (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);
          -->
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
@@ -502,7 +516,7 @@
     <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);&#10;</xsl:text>
 
     <!-- .. the domain Cascade_Initialize procedure body .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Cascade_Initialize procedure body ..'"/>
@@ -517,8 +531,8 @@
          end {domain}.Cascade_Initialize;
          -->
 
-    <xsl:call-template name="could-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:could-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -536,7 +550,7 @@
     <xsl:text>.Cascade_Initialize;&#10;</xsl:text>
 
     <!-- The domain Cascade_Tear_Down procedure .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Cascade_Tear_Down procedure ..'"/>
@@ -546,15 +560,15 @@
          procedure {domain}.Cascade_Tear_Down;
          -->
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
 
     <!-- .. the domain Cascade_Tear_Down procedure body .. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the domain Cascade_Tear_Down procedure body ..'"/>
@@ -568,8 +582,8 @@
          end {domain}.Cascade_Tear_Down;
          -->
 
-    <xsl:call-template name="could-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:could-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -585,7 +599,7 @@
     <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. any support packages for specially-declared types ..'"/>
@@ -594,16 +608,16 @@
 
     <!-- Serializable support. -->
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. the support package for serializable types ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="serializable-type-spec"/>
-    <xsl:call-template name="serializable-type-body"/>
+    <xsl:call-template name="se:serializable-type-spec"/>
+    <xsl:call-template name="se:serializable-type-body"/>
 
     <!-- Package specs for individual classes. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. package specs for individual classes ..'"/>
@@ -613,7 +627,7 @@
     </xsl:apply-templates>
 
     <!-- Package bodies for individual classes. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. package bodies for individual classes ..'"/>
@@ -623,7 +637,7 @@
     </xsl:apply-templates>
 
     <!-- Class initialization procedures. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. class initializations ..'"/>
@@ -637,7 +651,7 @@
     </xsl:apply-templates>
 
     <!-- Collection support packages. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. Collection support packages ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="class" mode="collection-support">
@@ -645,7 +659,7 @@
     </xsl:apply-templates>
 
     <!-- Package specs for Associations -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package specs for Associations ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="association" mode="association-spec">
@@ -653,7 +667,7 @@
     </xsl:apply-templates>
 
     <!-- Package bodies for Associations -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. package bodies for Associations ..'"/>
@@ -663,7 +677,7 @@
     </xsl:apply-templates>
 
     <!-- Package specs for Associations (navigation from collections) -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. package specs for Associations (collection navigation) ..'"/>
@@ -673,7 +687,7 @@
     </xsl:apply-templates>
 
     <!-- Package bodies for Associations (navigation from collections) -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param
         name="m"
         select="'.. package bodies for Associations (collection navigation) ..'"/>
@@ -683,7 +697,7 @@
     </xsl:apply-templates>
 
     <!-- Package specs for Inheritances -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package specs for Inheritances ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
@@ -693,7 +707,7 @@
     </xsl:apply-templates>
 
     <!-- Package bodies for Inheritances -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package bodies for Inheritances ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
@@ -703,7 +717,7 @@
     </xsl:apply-templates>
 
     <!-- Package specs for callbacks. -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package specs for Callbacks ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="type[@callback]" mode="callback-spec">
@@ -711,16 +725,16 @@
     </xsl:apply-templates>
 
     <!-- Teardown -->
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="domain-teardown"/>
+    <xsl:call-template name="td:domain-teardown"/>
 
-    <xsl:call-template name="progress-message">
+    <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. done.'"/>
     </xsl:call-template>
 
-    <xsl:call-template name="check-for-errors"/>
+    <xsl:call-template name="ut:check-for-errors"/>
 
   </xsl:template>
 

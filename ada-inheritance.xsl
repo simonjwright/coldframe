@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,8 +26,11 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.1">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:in="http://pushface.org/coldframe/inheritance"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.1">
 
 
   <!-- Generate specs for inheritance support. -->
@@ -35,8 +38,8 @@
     match="class"
     mode="inheritance-spec">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:call-template name="inheritance-spec-context"/>
@@ -74,8 +77,8 @@
     match="class"
     mode="inheritance-body">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:call-template name="inheritance-body-context"/>

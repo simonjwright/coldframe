@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,16 +29,19 @@
 <!-- Generates support for navigation from collections (navigation from
      single handles is in ada-association.xsl). -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:ac="http://pushface.org/coldframe/association-collection"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.0">
 
   <!-- Generate specs for Association packages. -->
   <xsl:template match="domain/association" mode="association-collection-spec">
 
     <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
 
-      <xsl:call-template name="do-not-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:do-not-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
       <!-- Context clauses. -->
@@ -96,8 +99,8 @@
 
     <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
 
-      <xsl:call-template name="do-not-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:do-not-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
       <!-- Context clauses. -->

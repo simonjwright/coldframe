@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-serialization.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,14 +28,16 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:se="http://pushface.org/coldframe/serialization"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
 
 
   <!-- Called at domain to output the Serializable child package spec. -->
-  <xsl:template name="serializable-type-spec">
+  <xsl:template name="se:serializable-type-spec">
 
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:if test="type/@serializable">
@@ -94,12 +96,12 @@
 
   <!-- called at domain to output a child package body if there
        are any serializable types. -->
-  <xsl:template name="serializable-type-body">
+  <xsl:template name="se:serializable-type-body">
 
     <xsl:if test="type/@serializable">
 
-      <xsl:call-template name="do-not-edit"/>
-      <xsl:call-template name="identification-info"/>
+      <xsl:call-template name="ut:do-not-edit"/>
+      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
@@ -109,7 +111,7 @@
 
       <xsl:apply-templates
         select="type[@serializable]"
-        mode="serializable-type-image-body">
+        mode="se:serializable-type-image-body">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
 
@@ -126,7 +128,7 @@
        type. -->
   <xsl:template
     match="domain/type[@serializable]"
-    mode="serializable-type-image-body">
+    mode="se:serializable-type-image-body">
 
     <!--
          function Image (S : Info) return String is
@@ -179,7 +181,7 @@
 
       <xsl:when test="attribute">
 
-        <xsl:call-template name="image-of-type">
+        <xsl:call-template name="se:image-of-type">
           <xsl:with-param name="type" select="."/>
         </xsl:call-template>
 
@@ -187,7 +189,7 @@
 
       <xsl:otherwise>
 
-        <xsl:call-template name="image-of-type">
+        <xsl:call-template name="se:image-of-type">
           <xsl:with-param name="type" select="."/>
           <xsl:with-param name="name" select="name"/>
         </xsl:call-template>
@@ -205,12 +207,12 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="serializable-type-image-body"/>
+  <xsl:template match="*" mode="se:serializable-type-image-body"/>
 
 
   <!-- Called (at domain/type) to generate code to print a value of the
        type. -->
-  <xsl:template name="image-of-type">
+  <xsl:template name="se:image-of-type">
 
     <!-- The type to be processed. -->
     <xsl:param name="type"/>
@@ -239,7 +241,7 @@
             </xsl:choose>
           </xsl:variable>
 
-          <xsl:call-template name="image-of-type">
+          <xsl:call-template name="se:image-of-type">
             <xsl:with-param
               name="type"
               select="/domain/type[name=current()/type]"/>
@@ -342,7 +344,7 @@
 
           <xsl:when test="$type/array">
             <!-- This is an array type without a field-image; not supported. -->
-            <xsl:call-template name="log-error"/>
+            <xsl:call-template name="ut:log-error"/>
             <xsl:message>
               <xsl:text>Error: can't create image for array </xsl:text>
               <xsl:value-of select="$type/name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v e7ebc1824dcd 2003/09/30 05:06:42 simon $ -->
+<!-- $Id: ada-attribute.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,8 +26,11 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
+  version="1.0">
 
 
   <!-- Called from domain/class to generate the actual identifier
@@ -393,7 +396,7 @@
         <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="type-name">
+        <xsl:call-template name="ut:type-name">
           <xsl:with-param name="type" select="type"/>
           <xsl:with-param name="class" select=".."/>
         </xsl:call-template>
