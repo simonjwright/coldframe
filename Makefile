@@ -31,6 +31,12 @@ ifeq ($(COLDFRAMEOUT), )
   COLDFRAMEOUT = .
 endif
 
+ifeq ($(DOMAIN_NAME), )
+  NORM_DOMAIN_NAME = 
+else
+  NORM_DOMAIN_NAME = --domain-name "$(DOMAIN_NAME)"
+endif
+
 ifeq ($(STACK_DUMP), yes)
   NORM_STACK_DUMP = --stack-dump
 else
@@ -80,6 +86,7 @@ OTHER_SCRIPTS = create-build-directories \
 	@echo generating $@ ...
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing $(CASE_EXCEPTIONS) \
+	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
 	    --version cf-DATE \
