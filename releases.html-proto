@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 241781ab4dfa 2003/10/04 06:49:42 simon $ -->
+<!-- $Id: releases.html-proto,v 6bddce27a21c 2003/10/31 06:39:47 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -24,6 +24,9 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dd>Improved the default error logging (stop concurrent access
 mangling the output; flush the output after each message).
+
+
+<p>Serializable output used the wrong field names.
 
 
 <p><dt>20030930
