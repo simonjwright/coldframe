@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 7e22d0d955db 2003/06/14 12:53:56 simon $ -->
+<!-- $Id: ada-type.xsl,v 21e6a455fc82 2003/06/26 05:04:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -78,18 +78,18 @@
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for imported, renamed and extending types, ensuring
-         uniqueness. -->
+    <!-- Context for imported, renamed and extending types and imported or
+         renamed exceptions, ensuring uniqueness. -->
 
     <!-- First, make a nodeset containing "with" elements containing
          the package names. -->
     <xsl:variable name="imported-renamed-withs">
-      <xsl:for-each select="type/imported">
+      <xsl:for-each select="type/imported | exception/@imported">
         <xsl:element name="with">
           <xsl:value-of select="."/>
         </xsl:element>
       </xsl:for-each>
-      <xsl:for-each select="type/renames | type/@extends">
+      <xsl:for-each select="type/renames | type/@extends | exception/@renames">
         <xsl:variable name="package">
           <xsl:call-template name="find-source-package">
             <xsl:with-param name="input" select="."/>

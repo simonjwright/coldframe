@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v e7c7746af93f 2003/06/14 12:54:54 simon $ -->
+<!-- $Id: generate-ada.xsl,v 21e6a455fc82 2003/06/26 05:04:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -147,7 +147,24 @@
       
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
-      <xsl:text> : exception;&#10;</xsl:text>
+      <xsl:text> : exception</xsl:text>
+
+      <xsl:choose>
+        <xsl:when test="@imported">
+          <xsl:text>&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>renames </xsl:text>
+          <xsl:value-of select="@imported"/>.<xsl:value-of select="."/>
+        </xsl:when>
+        <xsl:when test="@renames">
+          <xsl:text>&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>renames </xsl:text>
+          <xsl:value-of select="@renames"/>
+        </xsl:when>
+      </xsl:choose>
+
+      <xsl:text>;&#10;</xsl:text>
       <xsl:call-template name="commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
