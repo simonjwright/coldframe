@@ -1,0 +1,37 @@
+--  This package is public-domain software; you can redistribute it
+--  and/or modify it as you wish. This package is distributed in the
+--  hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE.
+
+--  ColdFrame expects this package to exist to provide the storage
+--  pool used to support
+--
+--   o  classes whose multiplicity isn't specified
+--   o  event queues.
+--
+--  This is an alternative implementation which uses GNAT Debug Pools,
+--  and may help in finding memory problems. Note however that it has
+--  proved unstable under Windows; this may be because, in order to
+--  check bad uses, deallocated memory is not actually freed.
+
+--  $RCSfile: coldframe-project-global_storage_pool.ads-debug,v $
+--  $Revision: 6ccca95b4150 $
+--  $Date: 2002/09/21 10:30:54 $
+--  $Author: simon $
+
+with GNAT.Debug_Pools;
+with System.Storage_Pools;
+
+package ColdFrame.Project.Global_Storage_Pool is
+
+   The_Pool : GNAT.Debug_Pools.Debug_Pool;
+   Pool : System.Storage_Pools.Root_Storage_Pool'Class
+     renames System.Storage_Pools.Root_Storage_Pool'Class (The_Pool);
+
+end ColdFrame.Project.Global_Storage_Pool;
+
+--  for emacs:
+--  Local Variables:
+--  mode: ada
+--  End:
