@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 8fbb2712e9bf 2002/01/28 06:15:13 simon $ -->
+<!-- $Id: ada-class.xsl,v fa845e092ffb 2002/02/01 20:44:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -160,6 +160,11 @@
     <!-- .. the Instance record .. -->
     <xsl:call-template name="instance-record"/>
     <xsl:value-of select="$blank-line"/>
+
+    <!-- .. the State_Image function spec .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-spec"/>
+    </xsl:if>
 
     <xsl:choose>
 
@@ -348,9 +353,6 @@
         <!-- If this class has a state machine, include support for that;
              otherwise, just support for standard Instances. -->
         <xsl:choose>
-          <xsl:when test="attribute[type='Timer']">
-            <xsl:text>with ColdFrame.States.Timers;&#10;</xsl:text>            
-          </xsl:when>
           <xsl:when test="statemachine">
             <xsl:text>with ColdFrame.States;&#10;</xsl:text>          
           </xsl:when>
@@ -592,6 +594,11 @@
     
     <!-- .. operation stubs .. -->
     <xsl:call-template name="operation-body-stubs"/>
+
+    <!-- .. state image body .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-body"/>
+    </xsl:if>
     
     <!-- .. state entry procedure bodies .. -->
     <xsl:apply-templates mode="state-entry-bodies" select="statemachine/state">
