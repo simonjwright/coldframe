@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v f1e5c86c9e26 2002/07/30 20:30:31 simon $ -->
+<!-- $Id: ada-collection.xsl,v 45d6f8c7b329 2002/09/15 18:20:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -370,9 +370,13 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:value-of select="$I"/>
+        <xsl:text>if This /= null then&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
         <xsl:text>Collections.Append (Result, This);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end if;&#10;</xsl:text>
 
       </xsl:otherwise>
 
