@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 081bd0744b4b 2003/01/11 17:32:10 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -205,11 +205,11 @@
     <!-- The name of the type to be generated. -->
     <xsl:param name="type"/>
 
-    <!-- The current class. -->
+    <!-- The current object (class or type). -->
     <xsl:param name="class" select="/.."/>
 
-    <!-- Does the current class map to Handle? -->
-    <xsl:param name="use-handle" select="'yes'"/>
+    <!-- Does the current object map to Handle? -->
+    <xsl:param name="is-class" select="'yes'"/>
 
     <xsl:choose>
 
@@ -218,8 +218,9 @@
         <xsl:text>Long_Long_Integer</xsl:text>
       </xsl:when>
 
-      <!-- The current Class maps to just Handle. -->
-      <xsl:when test="$type=$class/name and $use-handle='yes'">
+      <!-- If we're coding a class and this is The current class, it  maps to
+           just Handle. -->
+      <xsl:when test="$type=$class/name and $is-class='yes'">
         <xsl:text>Handle</xsl:text>
       </xsl:when>
 
