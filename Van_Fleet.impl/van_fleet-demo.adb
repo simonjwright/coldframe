@@ -12,10 +12,100 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-demo.adb,v a88ba45be8ba 2004/05/08 13:54:26 simon $
+--  $Id: van_fleet-demo.adb,v a120898249c0 2004/05/08 19:18:58 simon $
+
+with Ada.Calendar;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Text_IO; use Ada.Text_IO;
+with ColdFrame.Instances;
+with Van_Fleet.Customer;
+with Van_Fleet.Initialize;
+with Van_Fleet.Pool_Van.Inheritance;
+with Van_Fleet.Van;
 
 procedure Van_Fleet.Demo is
 begin
-   null;
+
+   Initialize;
+
+   declare
+      CH : Customer.Handle;
+      pragma Warnings (Off, CH);
+   begin
+      CH := Customer.Create
+        ((Name => To_Unbounded_String ("Alice")));
+      CH := Customer.Create
+        ((Name => To_Unbounded_String ("Bob")));
+      CH := Customer.Create
+        ((Name => To_Unbounded_String ("Carol")));
+      CH := Customer.Create
+        ((Name => To_Unbounded_String ("Dave")));
+   end;
+
+   declare
+      VH : Van.Handle;
+      PVH : Pool_Van.Handle;
+      pragma Warnings (Off, PVH);
+   begin
+      VH := Van.Create
+        ((Index => To_Unbounded_String ("APR81")));
+      PVH := Pool_Van.Inheritance.Create_Tree
+        (ColdFrame.Instances.Handle (VH));
+      VH := Van.Create
+        ((Index => To_Unbounded_String ("8493KC")));
+      PVH := Pool_Van.Inheritance.Create_Tree
+        (ColdFrame.Instances.Handle (VH));
+      VH := Van.Create
+        ((Index => To_Unbounded_String ("NHO864F")));
+      PVH := Pool_Van.Inheritance.Create_Tree
+        (ColdFrame.Instances.Handle (VH));
+      VH := Van.Create
+        ((Index => To_Unbounded_String ("PBL196R")));
+      PVH := Pool_Van.Inheritance.Create_Tree
+        (ColdFrame.Instances.Handle (VH));
+   end;
+
+   declare
+      VH : Van.Handle;
+      pragma Warnings (Off, VH);
+      use type Ada.Calendar.Time;
+   begin
+      VH := Van.Lend
+        (To => ColdFrame.Instances.Handle
+           (Customer.Find
+              ((Name => To_Unbounded_String ("Alice")))),
+         Terminating_At => Ada.Calendar.Clock + 86400.0);
+      VH := Van.Lend
+        (To => ColdFrame.Instances.Handle
+           (Customer.Find
+              ((Name => To_Unbounded_String ("Alice")))),
+         Terminating_At => Ada.Calendar.Clock + 86400.0);
+      VH := Van.Lend
+        (To => ColdFrame.Instances.Handle
+           (Customer.Find
+              ((Name => To_Unbounded_String ("Carol")))),
+         Terminating_At => Ada.Calendar.Clock + 86400.0);
+      VH := Van.Lend
+        (To => ColdFrame.Instances.Handle
+           (Customer.Find
+              ((Name => To_Unbounded_String ("Dave")))),
+         Terminating_At => Ada.Calendar.Clock + 86400.0);
+   end;
+
+   declare
+      VH : Van.Handle;
+      pragma Warnings (Off, VH);
+      use type Ada.Calendar.Time;
+   begin
+      VH := Van.Lend
+        (To => ColdFrame.Instances.Handle
+           (Customer.Find
+              ((Name => To_Unbounded_String ("Bob")))),
+         Terminating_At => Ada.Calendar.Clock + 86400.0);
+      Put_Line ("shouldn't have managed to lend a van to Bob.");
+   exception
+      when Not_Found => null;
+   end;
+
 end Van_Fleet.Demo;
 
