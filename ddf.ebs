@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v c1242fdc8174 2000/04/03 12:22:01 simon $
+'$Id: ddf.ebs,v f3ba81af5d37 2000/04/08 07:35:59 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -121,14 +121,18 @@ Sub DumpRelationships (domain As Category)
 	Print #1, "<relationships>"
 	Dim assocs As AssociationCollection
 	Set assocs = domain.Associations
+'	Print #1, "<associations>"
 	For associd = 1 To assocs.Count
 		DumpAssociation (assocs.getAt (associd))
 	Next associd
+'	Print #1, "</associations>"
 	Dim classes As ClassCollection
 	Set classes = domain.Classes
+'	Print #1, "<inheritances>"
 	For clid = 1 To classes.Count
 		DumpInheritance (classes.GetAt(clid))
 	Next clid
+'	Print #1, "</inheritances>"
 	Print #1, "</relationships>"
 End Sub
 
