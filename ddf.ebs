@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 73f83b044ea3 2000/03/19 17:39:28 simon $
+'$Id: ddf.ebs,v cc58508ab120 2000/03/26 09:09:38 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -12,6 +12,16 @@ Sub DumpObjectRelationInfo (o As Class)
 	'number of relations for this class
 	Print "    relations"
 	Print #1, "<relations>"
+	Dim assocs As AssociationCollection
+	Set assocs = o.GetAssociations()
+	For a = 1 To assocs.Count
+		Print #1, "<relation>" & assocs.GetAt(a).Name & "</relation>"
+	Next a
+	Dim irels As InheritRelationCollection
+	Set irels = o.GetInheritRelations()
+	For r = 1 To irels.Count
+		Print #1, "<relation>" & irels.GetAt(r).Name & "</relation>"
+	Next r
 	Print #1, "</relations>"
 	End Sub	
 
@@ -74,9 +84,27 @@ Sub DumpClasses (domain As Category)
 	Print #1, "</objects>"
 End Sub
 
+Sub DumpRelationship (assoc As Association)
+	Print "    relationship"
+'	Print #1, "<relationship>"
+	Print "relationship name " & assoc.Name & " derived " & assoc.Derived
+	If Not assoc.LinkClass Is Nothing Then
+		Print "associative object " & assoc.LinkClass.Name
+	End If
+	Print "role1 " & assoc.Role1.Name & " role2 " & assoc.Role2.Name
+	Print "role1 " & assoc.Role1.Class.Name & " role2 " & assoc.Role2.Class.Name
+	Print "role1 " & assoc.Role1.Cardinality & " role2 " & assoc.Role2.Cardinality
+'	Print #1, "</relationship>"
+End Sub
+
 Sub DumpRelationships (domain As Category)
 	Print "  relationships"
 	Print #1, "<relationships>"
+		Dim assocs As AssociationCollection
+		Set assocs = domain.Associations
+		For associd = 1 To assocs.Count
+			DumpRelationship (assocs.getAt (associd))
+		Next associd
 	Print #1, "</relationships>"
 End Sub
 
