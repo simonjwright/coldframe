@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 8f2eadfc3a0b 2004/07/01 05:22:38 simon $ -->
+<!-- $Id: ada-operation.xsl,v c2d6fc8ae2d2 2004/07/01 05:34:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,10 +56,11 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@suppressed)
+                      [not(name=$operations/name)
+                       and not(@suppressed)
                        and not(@entry)
                        and not(@renames)
-                       and not(name=$operations/name)]
+                       and (true() or not(@visibility='private'))]
                     | $operations"/>
         </xsl:call-template>
 
