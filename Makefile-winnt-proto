@@ -68,6 +68,7 @@ ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
+CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
@@ -112,7 +113,14 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	@echo "checking for unimplemented bodies .."
 	@grep -rl 'edit this' $@ || echo ".. none."
 
-.PHONY: force
+# Split serialized XML files into CSV format, one per serialized type found.
+# NB, the recording file needs to end cleanly (with </record>).
+%.csv: %.xml
+	echo "<recording>" >$<-t
+	cat $< >>$<-t
+	echo "</recording>" >>$<-t
+	$(SAXON) $<-t $(CSV_SCRIPT)
+	rm -f $<-t
 
 #;; for emacs:
 #;; Local Variables:
