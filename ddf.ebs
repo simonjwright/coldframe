@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v a637235ec7a9 2000/04/21 08:25:59 simon $
+'$Id: ddf.ebs,v 7d7b8b63d212 2000/06/08 08:30:04 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -123,25 +123,41 @@ Sub DumpRelationships (domain As Category)
 	Print #1, "<relationships>"
 	Dim assocs As AssociationCollection
 	Set assocs = domain.Associations
-'	Print #1, "<associations>"
 	For associd = 1 To assocs.Count
 		DumpAssociation (assocs.getAt (associd))
 	Next associd
-'	Print #1, "</associations>"
 	Dim classes As ClassCollection
 	Set classes = domain.Classes
-'	Print #1, "<inheritances>"
 	For clid = 1 To classes.Count
 		DumpInheritance (classes.GetAt(clid))
 	Next clid
-'	Print #1, "</inheritances>"
 	Print #1, "</relationships>"
 End Sub
 
+Sub DumpDataType (cls As Class)
+	Print #1, "<userdatatype>"
+	Print #1, "<name>" & cls.Name & "</name>"
+	Print #1, "<documentation>" & cls.Documentation & "</documentation>"
+	Print #1, "</userdatatype>"
+End Sub
+
 Sub DumpDataTypes (domain As Category)
-'	Print "  datatypes"
-'	Print #1, "<datatypes>"
-'	Print #1, "</datatypes>"
+'	We look for a Category named Types, whose Classes correspond to
+'	type specifications.
+	Dim cats As CategoryCollection
+	Set cats = domain.Categories
+	For catid = 1 To cats.Count
+		If cats.GetAt (catid).Name = "Types" Then
+			Print "  datatypes"
+			Print #1, "<datatypes>"
+			Dim cls As ClassCollection
+			Set cls = cats.GetAt (catid).Classes
+			For clsid = 1 To cls.Count
+				DumpDataType (cls.GetAt (clsid))
+			Next clsid
+			Print #1, "</datatypes>"
+		End If
+	Next catid
 End Sub
 
 Sub DumpTypesFiles (domain As Category)
