@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6a7bc5a07c1d 2002/05/02 20:31:30 simon $ -->
+<!-- $Id: bugs.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -55,10 +55,6 @@ Forward/Aft or 1..10) should be implemented with array-like behaviour.
 
 <dd>It would be good to support private operations (particularly for
 active classes, where procedure operations turn into task entries).
-
-<dt>0025 (raised 26.ix.01)
-
-<dd>It would be a good thing if illegal characters in names were detected.
 
 <dt>0027 (raised 5.x.01)
 
@@ -182,11 +178,30 @@ non-unique abbreviations.
 inherited from one parent to act as the concrete version of an
 abstract operation declared in the other parent?
 
-<!-- next: 0081 -->
+<dt>0081 (raised 9.v.02)
+
+<dd>Tear_Down doesn't clean up singletons (especially active ones).
+
+<!-- next: 0083 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>9.v.02</h3>
+
+<dt>0025 (raised 26.ix.01)
+
+<dd>It would be a good thing if illegal characters in names were detected.
+
+<dt>0082 (raised 9.v.02)
+
+<dd>Tear_Down of an active non-singleton doesn't clean up the
+associated task.
+
+<dl>
+
+</dl>
 
 <h3>18.iv.02</h3>
 

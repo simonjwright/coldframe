@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v 3a77d1a412c6 2002/04/22 05:00:26 simon $ -->
+<!-- $Id: associations.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -8,6 +8,59 @@
 <h2>Motivation</h2>
 
 <h2>Modelling</h2>
+
+<h3>Associations and role names</h3>
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing.
+
+<h3>Associations and multiplicity</h3>
+
+<p>You need to think carefully about the multiplicity of associations;
+they capture application rules and policies, which it's important to
+get right.
+
+<p>Clearly each <em>Screen</em> <em>"displays"</em> a number
+of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
+more than one <em>Screen</em>? (perhaps, if you have multi-headed
+display capability). Can you have a <em>Window</em> which <em>"appears
+on"</em> no <em>Screen</em>s? (well, no, not if your display
+technology is X--in which case <em>"appears on"</em> may not be quite
+right either, since the application could be iconised).
+
+<p>Unconditional multiplicity is good; if each end of an association
+is conditional (0..1, 0..n), maybe you should think more carefully
+about it. Perhaps there's some super/subtype (<a
+href="generalizations.html">inheritance</a>) relationship lurking in
+there.
+
+<h3>Formalising associations</h3>
+
+<p>In the original Shlaer-Mellor method, associations and inheritance
+relationships needed to be "formalised" by the use of "referential
+attributes". Considering the <em>Window "appears on" Screen</em>,
+where clearly there are many <em>Window</em>s but only one
+<em>Screen</em>, you'd need a referential attribute
+<em>screen&nbsp;id</em> in the <em>Window</em> instance.
+
+<p>ColdFrame, however, follows <a
+href="resources.html#build-object-models">Executable UML</a>; you
+usually don't need to provide referential attributes (it would be
+quite cumbersome to do so, since Rose (taking it as a typical UML
+tool) is unaware of the concept). Instead, ColdFrame automatically
+implements the relationships. Sometimes it needs a little help, for
+example for <a href="#formalizes">complex formalization</a> or <a
+href="#source">in a symmetric association</a>.
 
 <h2>Translation</h2>
 

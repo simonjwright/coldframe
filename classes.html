@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v dece449b3636 2002/05/07 19:58:59 simon $ -->
+<!-- $Id: classes.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -32,7 +32,7 @@ discussing here:
 <ul>
 
 <li>you use the stereotype <em>&#171;type&#187;</em> when the class
-symbol in fact represents a type.
+symbol in fact represents a <a href="types.html">type</a>.
 
 <li>you use the stereotype <em>&#171;public&#187;</em> when the class
 symbol in fact represents a callable interface between the domain and
@@ -47,7 +47,7 @@ has precisely one instance; you don't need to create it, and you can't
 delete it.
 
 <p>Normal classes start off with no instances; the instances have to
-be created, and may be deleted/
+be created, and may be deleted.
 
 <p>Instances of a normal class must be uniquely identifiable by some
 <a href="attributes.html">attribute</a> or combination of
@@ -76,9 +76,49 @@ href="resources.html#build-object-models">Executable UML</a>; it seems
 risky to apply too many defaults.
 
 <p>For the case where there's no suitable naming attribute, ColdFrame
-provides the attribute type <tt><i>Autonumber</i></tt> (rather like
-the Microsoft Access feature it's named after): each newly-created
-instance gets a new value.
+provides the attribute <a href="types.html">type</a>
+<tt><i>Autonumber</i></tt> (rather like the Microsoft Access feature
+it's named after): each newly-created instance gets a new value.
+
+<h3>Use of Stereotypes</h3>
+
+<p>Classes which represent user-defined <a href="types.html">types</a>
+are marked with the stereotype <em>&#171;type&#187;</em>.
+
+<p>Classes of which there is always precisely one instance are marked
+with the stereotype <em>&#171;singleton&#187;</em>.
+
+<p>Public classes, which are the only classes visible from outside the
+Domain, are marked with the stereotype
+<em>&#171;public&#187;</em>. This implies the stereotype
+<em>&#171;singleton&#187;</em>. Public classes can't take part in
+<a href="associations.html">associations</a>.
+
+<p>Abstract classes (which must be parents in <a
+href="generalizations.html">inheritance relationships</a>) may be
+marked with the stereotype <em>&#171;abstract&#187;</em>. This has no
+effect on code generation at present (3.i.02).
+<em>&#171;abstract&#187;</em> is an alternative to the use of the
+<i>Abstract</i> checkbox in the Rose <i>Class Specification</i> dialog
+(<i>Detail</i> tab).
+
+<h3>Annotations</h3>
+
+<p><tt>[[ abbreviation : <i>abbrev</i> ]]</tt> specifies the class's
+abbreviation. By default, the abbreviation is composed of the initial
+letters of the full class name or, if the name is a single word, the
+name prefixed with <tt>A_</tt> or <tt>An_</tt> as appropriate. This
+rule wouldn't work for, for example, <i>New Threat</i> and <i>Non
+Threat</i>.
+
+<p><tt>[[ max : <i>max-size</i> ]]</tt> specifies the maximum number
+of instances that will coexist. This may provoke a different code
+generation strategy.
+
+<br>You can get the same effect by specifying a cardinality (or
+multiplicity, depending on the version of Rose) of
+<tt>0..<i>max-size</i></tt> under the Rose Class Specification
+<i>Detail</i> tab.
 
 <h2>Translation</h2>
 
@@ -263,9 +303,10 @@ single parameter of type <tt>Identifier</tt>.
 
 <p>Normal classes have a <tt>Find</tt> operation, taking a single
 parameter of type <tt>Identifier</tt> and returning a <tt>Handle</tt>
-(<tt>null</tt> is a possible return). <em>&#171;singleton&#187;</em>
-classes have a parameterless <tt>Find</tt> operation returning a
-<tt>Handle</tt>, which can't be <tt>null</tt>.
+(you may get <tt>null</tt> if there aren't presently any instances
+with that identifier). <em>&#171;singleton&#187;</em> classes have a
+parameterless <tt>Find</tt> operation returning a
+<tt>Handle</tt> (which can't be <tt>null</tt>).
 
 <h3><a name="internals">Package internals</a></h3>
 
@@ -275,7 +316,7 @@ classes have a parameterless <tt>Find</tt> operation returning a
 <em>&#171;singleton&#187;</em> class, use <tt>This</tt> instead of
 <tt>Find</tt>; it'll be quicker.
 
-<p><i>more to follow</i>
+<p><i>[more to follow?]</i>
 
 <p><hr>
 <i>
