@@ -1,3 +1,5 @@
+--  $Id: house_management-button-changed.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
 --  Acts as receiver of state changes from Digital IO.
 
 separate (House_Management.Button)

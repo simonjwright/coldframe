@@ -1,3 +1,7 @@
+--  $Id: house_management-lamp-clear_timeout.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  This state entry action unsets the instance Timeout.
+
 with ColdFrame.Project.Events;
 with House_Management.Events;
 

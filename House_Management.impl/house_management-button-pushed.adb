@@ -1,8 +1,10 @@
+--  $Id: house_management-button-pushed.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  The button has been pushed; tell the associated Lamp(s).
+
 with House_Management.Lamp.Collections;
 with House_Management.Lamp.Iterate;
 with House_Management.A1;
-
---  The button has been pushed; tell the associated Lamp(s).
 
 separate (House_Management.Button)
 procedure Pushed

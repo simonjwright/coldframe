@@ -1,3 +1,8 @@
+--  $Id: house_management-lamp-set_timeout.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  This state entry action sets the instance Timeout to the required
+--  activation period.
+
 with ColdFrame.Project.Events;
 with House_Management.Events;
 

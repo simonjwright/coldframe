@@ -1,3 +1,8 @@
+--  $Id: house_management-lamp-initialize.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  This operation initializes the Lamps and Buttons, and connects to
+--  the Digital IO domaion.
+
 with House_Management.Button;
 with House_Management.Button_To_Lamp;
 with House_Management.A1;

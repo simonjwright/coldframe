@@ -1,3 +1,8 @@
+--  $Id: house_management-lamp-turn_on.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  This state entry action turns on the associated signal via Digital
+--  IO.
+
 with Digital_IO.Application;
 
 separate (House_Management.Lamp)

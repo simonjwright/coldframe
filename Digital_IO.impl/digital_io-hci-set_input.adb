@@ -1,3 +1,7 @@
+--  $Id: digital_io-hci-set_input.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+
+--  Sets the specified input signal to the given value.
+
 with Digital_IO.Signal;
 
 separate (Digital_IO.HCI)
