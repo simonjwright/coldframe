@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 2221991cf7e7 2004/07/01 21:06:38 simon $ -->
+<!-- $Id: ada-operation.xsl,v efed10c80a00 2004/07/07 20:46:05 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -996,33 +996,9 @@
       </xsl:when>
 
       <!-- If it's a function, we have to supply a return statement
-           after raising the exception for it to compile.
-           There are two styles: this is for non-composite types .. -->
-      <xsl:when test="@return
-                      and not(/domain/type[name=current()/@return]/attribute)">
-        <xsl:call-template name="should-edit"/>
-        <xsl:call-template name="identification-info"/>
-
-        <xsl:value-of select="$blank-line"/>
-        <xsl:call-template name="commentary">
-          <xsl:with-param name="indent" select="''"/>
-          <xsl:with-param name="separate-pars" select="$blank-line"/>
-        </xsl:call-template>
-
-        <xsl:value-of select="$heading"/>
-        <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>raise Program_Error;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>return </xsl:text>
-        <xsl:call-template name="default-value">
-          <xsl:with-param name="type" select="@return"/>
-        </xsl:call-template>
-        <xsl:text>;&#10;</xsl:text>
-      </xsl:when>
-
-      <!-- .. and this is for composite types (records) .. -->
+           after raising the exception for it to compile. -->
       <xsl:when test="@return">
+
         <xsl:call-template name="should-edit"/>
         <xsl:call-template name="identification-info"/>
 
@@ -1033,15 +1009,58 @@
         </xsl:call-template>
 
         <xsl:value-of select="$heading"/>
-        <xsl:value-of select="$I"/>
-        <xsl:text>Dummy : </xsl:text>
-        <xsl:value-of select="@return"/>
-        <xsl:text>;&#10;</xsl:text>
-        <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>raise Program_Error;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>return Dummy;&#10;</xsl:text>
+
+        <!-- Work out whether we can calculate a return value or
+             need a dummy variable. -->
+        <xsl:variable
+          name="return-type"
+          select="/domain/type[name=current()/@return]"/>
+        <xsl:variable
+          name="simple-return"
+          select="$return-type
+                  and not($return-type/imported)
+                  and not($return-type/renames)
+                  and not($return-type/attribute)"/>
+
+        <xsl:choose>
+
+          <!-- There are two styles: -->
+          <xsl:when test="$simple-return">
+
+            <!-- .. this is for non-composite, non-imported,
+                 non-renaming, known types .. -->
+
+            <xsl:text>begin&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>raise Program_Error;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>return </xsl:text>
+            <xsl:call-template name="default-value">
+              <xsl:with-param name="type" select="@return"/>
+            </xsl:call-template>
+            <xsl:text>;&#10;</xsl:text>
+
+          </xsl:when>
+
+          <xsl:otherwise>
+
+            <!-- .. this is for composite, imported, renaming, or
+                 unknown types .. -->
+
+            <xsl:value-of select="$I"/>
+            <xsl:text>Dummy : </xsl:text>
+            <xsl:value-of select="@return"/>
+            <xsl:text>;&#10;</xsl:text>
+            <xsl:text>begin&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>raise Program_Error;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>return Dummy;&#10;</xsl:text>
+
+          </xsl:otherwise>
+
+        </xsl:choose>
+
       </xsl:when>
 
       <!-- .. and this is for procedures. -->

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 66845dd7d2a4 2004/07/03 15:10:02 simon $ -->
+<!-- $Id: ada-type.xsl,v efed10c80a00 2004/07/07 20:46:05 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -686,9 +686,17 @@
     <xsl:text> is&#10;</xsl:text>
 
     <!-- If it's a function, we may have to organize a return value. -->
-    <xsl:if test="@return
-                  and /domain/type[name=current()/@return]/attribute">
+    <xsl:variable
+      name="return-type"
+      select="/domain/type[name=current()/@return]"/>
+    <xsl:variable
+      name="simple-return"
+      select="$return-type
+              and not($return-type/imported)
+              and not($return-type/renames)
+              and not($return-type/attribute)"/>
 
+    <xsl:if test="@return and not($simple-return)">
       <xsl:value-of select="$I"/>
       <xsl:text>Dummy : </xsl:text>
       <xsl:value-of select="@return"/>
@@ -706,7 +714,7 @@
 
       <xsl:choose>
 
-        <xsl:when test="/domain/type[name=current()/@return]/attribute">
+        <xsl:when test="not($simple-return)">
           <xsl:text>Dummy</xsl:text>
         </xsl:when>
 
