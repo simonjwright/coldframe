@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_one_collection.adb,v c98aee53a2b4 2001/04/27 19:05:02 simon $
+-- $Id: coldframe-navigate_from_one_collection.adb,v 2de0813a6b57 2001/04/29 10:42:34 simon $
 
 with BC.Copy;
 
@@ -28,24 +28,19 @@ function Architecture.Navigate_From_One_Collection (Input : From) return To is
 
   -- Used instead of a real Clear in an instantiation of BC.Copy to
   -- give incremental addition.
-  procedure Null_Clear (S : in out Set);
+  procedure Null_Clear (T : in out To);
   pragma Inline (Null_Clear);
 
-  -- Used in an instantiation of BC.Copy to add results to the
-  -- intermediate result set.
-  procedure Add_Many (S : in out Set; I : Many_Handle);
-  pragma Inline (Add_Many);
-
-  -- Adds the result of a single one-to-many navigation to the
-  -- intermediate result set.
-  procedure Add_To_Result_Set is new BC.Copy
+  -- Adds the result of a single one-to-many navigation to the result
+  -- collection.
+  procedure Add_To_Result_Collection is new BC.Copy
      (Item => Many_Handle,
       Source => Many,
       From => To,
-      Target => Intermediate,
-      To => Set,
+      Target => Many,
+      To => To,
       Clear => Null_Clear,
-      Add => Add_Many);
+      Add => Add_To_Result);
 
 
   -- Adds the result of navigating from a single instance at the 'one'
@@ -55,46 +50,27 @@ function Architecture.Navigate_From_One_Collection (Input : From) return To is
 
   -- Iterates over the input, navigating from each 'one' instance to
   -- the corresponding set of 'many' instances, and adding them to the
-  -- intermediate result set.
-  procedure Generate_Result_Set is new One.Visit (Add_Single_Navigation);
-
-
-  -- Converts the intermediate result Set to the required Collection
-  -- form.
-  procedure Convert is new BC.Copy
-     (Item => Many_Handle,
-      Source => Intermediate,
-      From => Set,
-      Target => Many,
-      To => To,
-      Add => Add_To_Result);
+  -- result.
+  procedure Generate_Result is new One.Visit (Add_Single_Navigation);
 
 
   It : One.Iterator'Class := New_Iterator (Input);
-  Result_Set : Set;
   Result : To;
 
-
-  procedure Add_Many (S : in out Set; I : Many_Handle) is
-    Dummy : Boolean;
-  begin
-    Add_To_Set (S, I, Dummy);
-  end Add_Many;
 
   procedure Add_Single_Navigation (This : One_Handle; OK: out Boolean) is
   begin
     OK := True;
-    Add_To_Result_Set (Navigate_From_One (This), Result_Set);
+    Add_To_Result_Collection (Navigate_From_One (This), Result);
   end Add_Single_Navigation;
 
-  procedure Null_Clear (S : in out Set) is
-    pragma Warnings (Off, S);
+  procedure Null_Clear (T : in out To) is
+    pragma Warnings (Off, T);
   begin
     null;
   end Null_Clear;
 
 begin
-  Generate_Result_Set (It);
-  Convert (Result_Set, Result);
+  Generate_Result (It);
   return Result;
 end Architecture.Navigate_From_One_Collection;
