@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 133bbd382db2 2000/04/10 05:31:09 simon $
+# $Id: ddf.tcl,v 46588af85227 2000/04/12 09:15:54 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -100,7 +100,7 @@ itcl::class Element {
     inherit Base
     variable name "unnamed"
     variable stereotype
-    method -name {n} {set name [normalize $n]}
+    method -name {n} {set name $n}
     method -getName {} {return $name}
     method -stereotype {s} {
 	set stereotype $s
@@ -203,7 +203,7 @@ itcl::class Container {
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
 	error "[$this -className] item $name not found\
-		([$this -size] entries)"
+		([$this -size] entries, [array names byName])"
     }
 
     # Return the indexed element from the Container.
@@ -423,15 +423,16 @@ itcl::class Object {
     }
     method -evaluate {domain} {
 #	$tags -evaluate $domain
-	$attributes -evaluate $domain
+	$attributes -evaluate $domain $this
     }
     method -generate {domain} {
 	puts "$name"
 	puts "$key"
 	puts "$number"
 	puts "[llength $relations]"
-	foreach r [lsort -integer $relations] {
-	    puts "$r"
+	set rels [$domain -getRelationships]
+	foreach r $relations {
+	    puts "[$rels -indexOf $r]"
 	}
 	# withs (-1 means all kinds of relationships)
 	puts -1
@@ -708,18 +709,29 @@ itcl::class Attribute {
     inherit Element
     variable type
     variable identifier 0
+    variable relations {}
+    variable object
+    method -stereotypePattern {} {
+	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
+    }
     method -type {t} {set type $t}
     method -identifier {} {set identifier 1}
+    method -relation {r} {
+	# $r is a comma-separated list of relation names
+	set relations [split [string toupper $r] ","]
+    }
     method -report {} {
 	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
 	puts "$tag $name : $type [$this -formatxmlattributes]"
     }
-    method -evaluate {domain} {
+    method -evaluate {domain obj} {
+	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
 	    set datatype [Datatype ::#auto $type]
 	    $datatypes -add $datatype $type
 	}
+	set object $obj
     }
     method -generate {domain} {
 	puts "$name"
@@ -730,6 +742,16 @@ itcl::class Attribute {
 	puts "$index"
 	# referential users
 	puts 0
+	if [info exists relations] {
+	    # handle referential attributes
+	    # $relations is a list of the names of relationships for which this
+	    # is a referential attribute in this object.
+	    set rels [$domain -getRelationships]
+	    foreach r $relations {
+		set rel [$rels -atName $r]
+		puts stderr "[$object -getName].$name, rel $r"
+	    }
+	}
 	# defined-referentially flag
 	puts 0
     }
@@ -757,6 +779,9 @@ itcl::class OuterList {
 
 itcl::class Attributes {
     inherit CountedList
+    method -evaluate {domain object} {
+	foreach el $members {$el -evaluate $domain $object}
+    }
 }
 
 itcl::class Associations {
@@ -800,20 +825,37 @@ itcl::class Objects {
 
 itcl::class Relationships {
     inherit Container
+    # sorted holds a list of relationship numbers in-order, as an optimisation
+    # while outputting objects (which need the index of the relation in this
+    # list, starting from 0, rather than the relationship number).
+    variable sorted
+    variable sortedNumbers
     method -className {} {return "relationships"}
+    method -indexOf {rn} {
+	set res [lsearch $sortedNumbers $rn]
+	if [expr $res < 0] {error "relation r$rn not found in $sorted"}
+	return $res
+    }
+    method -evaluate {domain} {
+	set size [$this -size]
+	set sorted {}
+	for {set i 0} {$i < $size} {incr i 1} {
+	    lappend sorted [$this -atIndex $i]
+	}
+	proc cmp {r1 r2} {return [expr [$r1 -getNumber] - [$r2 -getNumber]]}
+	set sorted [lsort -command cmp $sorted]
+	set sortedNumbers {}
+	foreach r $sorted {
+	    lappend sortedNumbers [$r -getNumber]
+	}
+	$this Container::-evaluate $domain
+    }
     method -generate {domain} {
 	puts "relationships"
 	puts "[$this -size]"
 	# for reasons that ain't obvious, we need to dump the relations in
 	# relation number order so a bsearch can be done later
-	set size [$this -size]
-	set rs {}
-	for {set i 0} {$i < $size} {incr i 1} {
-	    lappend rs [$this -atIndex $i]
-	}
-	proc cmp {r1 r2} {return [expr [$r1 -getNumber] - [$r2 -getNumber]]}
-	set rs [lsort -command cmp $rs]
-	foreach r $rs {$r -generate $domain}
+	foreach r $sorted {$r -generate $domain}
     }
 }
 
