@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 9cad6d28ccc2 2004/11/12 09:34:28 simon $
+# $Id: normalize-rose.tcl,v bed2f25a1eeb 2005/01/18 17:25:00 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1439,7 +1439,12 @@ itcl::class Class {
                     $dts -add $dt $name
                 }
                 $dt -record
-            }
+            } else {
+		if {$public || $utility} {
+		    # in case someone has set the multiplicity to 1..1
+		    set singleton 0
+		}
+	    }
             [stack -top] -add $this $name
         }
     }
