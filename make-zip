@@ -2,4 +2,4 @@
 # Make zip of CF
 
 rm -f cf.zip
-cd ~/ooa/rose/dist && zip -r ../cf.zip .
+cd ./dist && zip -r ../cf.zip .
