@@ -153,7 +153,8 @@ JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
  serialization.png serialization-class-model.png serialization-sequence-t.png \
  serialization-class-model-t.png serialization-state.png \
- serialization-state-t.png serialization-sequence.png
+ serialization-state-t.png serialization-sequence.png \
+ real_time.png recordable_real_time.png sample_a.png
 
 ############################
 # Distribution construction
@@ -338,6 +339,7 @@ House_Management.impl/stairwell_demo.adb
 
 DEMO += \
 Serialization.cat Serialization.raw Serialization_Demo.raw \
+Serialization.html \
 Serialization.impl/Serialization.gpr \
 Serialization.impl/client.adb \
 Serialization.impl/serialization-events-initialize.adb \
@@ -444,7 +446,7 @@ DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
-dist: $(DISTRIBUTION_FILES) cf-$(DATE)
+dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	-@rm -rf dist
 	mkdir -p dist/download
 	cp -p $(DOCS) dist/
