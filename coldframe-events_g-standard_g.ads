@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 5de600c66408 $
---  $Date: 2002/09/04 18:50:26 $
+--  $Revision: a6a99d306657 $
+--  $Date: 2002/09/12 20:56:54 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -103,6 +103,8 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
+      entry Start;
+
    end Dispatcher;
 
 
@@ -174,6 +176,8 @@ private
       The_Dispatcher : Dispatcher (Event_Queue'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);
    end record;
+
+   procedure Start_Queue (The_Queue : access Event_Queue);
 
    procedure Invalidate_Events
      (On : access Event_Queue;
