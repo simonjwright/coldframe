@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 7c1b343b011b 2002/05/19 06:58:19 simon $ -->
+<!-- $Id: ada-class.xsl,v 25c69ec43898 2002/05/19 18:29:35 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -447,6 +447,17 @@
     <xsl:for-each select="../inheritance[parent=$parent-name]">
       <xsl:sort select="name"/>
 
+      <!--
+           procedure Set_{rel}_Child (This : Handle; To_Be : {rel}_Child) is
+           begin
+           if To_Be.Current /= Null_T
+             and then This.{rel}_Current_Child.Current /= Null_T then
+                 raise ColdFrame.Exceptions.Existing_Child;
+              end if;
+              This.{rel}_Current_Child := To_Be;
+           end Set_{rel}_Child;
+           -->
+
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
@@ -456,6 +467,16 @@
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
+      <xsl:text>if To_Be.Current /= Null_T&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>and then This.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Current_Child.Current /= Null_T then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>raise ColdFrame.Exceptions.Existing_Child;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
       <xsl:text>This.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Current_Child := To_Be;&#10;</xsl:text>
@@ -464,6 +485,13 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
+
+      <!--
+           function Get_{rel}_Child (This : Handle) return {rel}_Child is
+           begin
+              return This.{rel}_Current_Child;
+           end Get_{rel}_Child;
+           -->
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
