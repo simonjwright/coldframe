@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 49f28e3875bb 2005/03/04 06:47:07 simon $
+# $Id: normalize-rose.tcl,v 6889452b5d86 2005/04/03 10:34:43 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3293,8 +3293,9 @@ proc elementFactory {xmlTag} {
 # XML parse interface #
 #######################
 
-proc startTag {tag attrs} {
+proc startTag {tag attrs args} {
     # I tried doing these as one operation -- itcl got v confused
+    # The optional args contain namespace information.
     set t [string tolower $tag]
     set el [elementFactory $t]
     array set attr $attrs
