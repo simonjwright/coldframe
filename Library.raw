@@ -1,11 +1,20 @@
 <domain>
+<extractor>cf-DATE</extractor>
 <name>Library</name>
+<date>
+<year>2001</year>
+<month>8</month>
+<day>16</day>
+<time>07:23</time>
+</date>
 <documentation></documentation>
 <classes>
 <class>
 <name>Book</name>
 <documentation>[[ abbreviation : bk ]]
 </documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <attributes>
 <attribute stereotype="id">
 <name>title</name>
@@ -20,6 +29,8 @@
 <class>
 <name>Borrower</name>
 <documentation></documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
@@ -34,6 +45,8 @@
 <class>
 <name>Current Loan</name>
 <documentation></documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <attributes>
 </attributes>
 <operations>
@@ -42,6 +55,8 @@
 <class>
 <name>Loan History</name>
 <documentation></documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <attributes>
 </attributes>
 <operations>
@@ -79,7 +94,7 @@
 <name>is on loan to</name>
 <classname>Borrower</classname>
 <cardinality>0..1</cardinality>
-<documentation></documentation>
+<documentation>[[ source ]]</documentation>
 </role>
 <associative>Current Loan</associative>
 </association>
