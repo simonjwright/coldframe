@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 697d581db7f5 2002/04/22 05:01:25 simon $ -->
+<!-- $Id: domains.html,v 6a7bc5a07c1d 2002/05/02 20:31:30 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -58,7 +58,40 @@ derived from the package name using the usual name conversion rules.
 <em>not</em> reflected in the generated code (for example, all classes
 end up as direct Ada child packages of the domain package).
 
+<p>Domain types are implemented in the domain package. For string
+types, a string hash function is generated as a child subprogram of
+the domain package.
+
+<p>Domain <a href="classes.html">classes</a> are implemented as
+children of the domain package.
+
+<p>Three further children are generated as standard:
+
+<dl>
+
+<dt><tt><i>Domain</i>.Events</tt>
+<dd>Provides <a href="events.html">Event</a> queueing and dispatching.
+
+<dt><tt><i>Domain</i>.Initialize</tt>
+<dd>Initializes the domain by calling
+<tt><i>Domain</i>.Events.Initialize</tt> and then all the
+<em>&#171;init&#187;</em> operations of all the classes. The calls are
+in alphabetical order by class and then by operation.
+
+<!-- XXX need to check about singletons and tasks. -->
+
+<dt><tt><i>Domain</i>.Tear_Down</tt>
+<dd>For <a href="resources.html#testing">testing</a> purposes, returns
+the domain to its initial state by deleting all the class instances
+and associations.
+
+</dl>
+
 <h2>Use</h2>
+
+<p>Each domain must be initialized by calling the procedure
+<tt><i>Domain</i>.Initialize</tt>, probably from your main
+program. Because it's a child, it must be <tt>with</tt>ed explicitly.
 
 <p>Because all the packages in a domain are implemented as children,
 you don't need to mention the domain package when referencing other
@@ -66,11 +99,11 @@ packages (you do need to mention the domain in the context clauses,
 though):
 
 <pre>
-   with <i>Domain.Other_Class</i>;
+   <b>with <i>Domain.Other_Class</i>;</b>
    separate (<i>Domain.Class</i>)
    procedure Foo is
    begin
-      <i>Other_Class</i>.Bar;
+      <b><i>Other_Class</i></b>.Bar;
       ...
 </pre>
 
