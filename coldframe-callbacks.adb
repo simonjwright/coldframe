@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: d6af56a88662 $
---  $Date: 2003/11/11 21:02:57 $
+--  $Revision: f6b1bb773045 $
+--  $Date: 2004/01/27 06:42:50 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -41,34 +41,10 @@ package body ColdFrame.Callbacks is
 
    procedure Delete is new Ada.Unchecked_Deallocation (Cell, Cell_P);
 
+   --  Local assertion support.
+   function Is_Present (CB : Callback) return Boolean;
 
    The_Registered_Procedures : aliased Cell;
-
-
-   procedure Register (Proc : Callback) is
-      Current_Next : constant Cell_P := The_Registered_Procedures.Next;
-   begin
-      The_Registered_Procedures.Next := new Cell'(Current_Next, Proc);
-   end Register;
-
-
-   procedure Deregister (Proc : Callback) is
-      Current : Cell_P := The_Registered_Procedures'Access;
-   begin
-      loop
-         exit when Current.Next = null;
-         if Current.Next.CB = Proc then
-            declare
-               To_Be_Removed : Cell_P := Current.Next;
-            begin
-               Current.Next := Current.Next.Next;
-               Delete (To_Be_Removed);
-            end;
-         else
-            Current := Current.Next;
-         end if;
-      end loop;
-   end Deregister;
 
 
    procedure Call_Callbacks (With_Param : T) is
@@ -108,6 +84,51 @@ package body ColdFrame.Callbacks is
          end;
       end loop;
    end Clear;
+
+
+   procedure Deregister (Proc : Callback) is
+      pragma Assert (Is_Present (Proc),
+                     "callback procedure not registered");
+      Current : Cell_P := The_Registered_Procedures'Access;
+   begin
+      loop
+         exit when Current.Next = null;
+         if Current.Next.CB = Proc then
+            declare
+               To_Be_Removed : Cell_P := Current.Next;
+            begin
+               Current.Next := Current.Next.Next;
+               Delete (To_Be_Removed);
+            end;
+         else
+            Current := Current.Next;
+         end if;
+      end loop;
+   end Deregister;
+
+
+   function Is_Present (CB : Callback) return Boolean is
+      Current : Cell_P := The_Registered_Procedures.Next;
+   begin
+      loop
+         if Current = null then
+            return False;
+         end if;
+         if Current.CB = CB then
+            return True;
+         end if;
+         Current := Current.Next;
+      end loop;
+   end Is_Present;
+
+
+   procedure Register (Proc : Callback) is
+      pragma Assert (not Is_Present (Proc),
+                     "callback procedure already registered");
+      Current_Next : constant Cell_P := The_Registered_Procedures.Next;
+   begin
+      The_Registered_Procedures.Next := new Cell'(Current_Next, Proc);
+   end Register;
 
 
 end ColdFrame.Callbacks;
