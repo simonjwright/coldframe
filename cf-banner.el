@@ -1,4 +1,4 @@
-;;; $Id: cf-banner.el,v 3948e77bc3d5 2003/07/04 19:43:47 simon $
+;;; $Id: cf-banner.el,v 5b90f7900eef 2003/07/06 16:52:28 simon $
 ;;; This GNU Emacs lisp file is part of ColdFrame.
 ;;;
 ;;; It removes banner comment at the top of Ada source files,
@@ -18,7 +18,7 @@ This version is for use with PVCS."
 	(if (not (looking-at "^--\\(-\\)+$"))
 	    (error "Not a ColdFrame-generated banner"))
 	(forward-line)
-	(if (not (looking-at "^--  Automatically generated: \\(\\(edit this!\\)\\|\\(should not need editing\\)\\)  --$"))
+	(if (not (looking-at "^--  Automatically generated: \\(\\(edit this!\\)\\|\\(may need editing\\)\\|\\(should not need editing\\)\\)  --$"))
 	    (error "Not a ColdFrame-generated banner"))
 	(forward-line)
 	(if (not (looking-at "^--\\(-\\)+$"))
