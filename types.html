@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 1baa89ad78ee 2003/01/13 20:37:43 simon $ -->
+<!-- $Id: types.html,v e7079b9e8b7d 2003/02/02 19:08:51 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -102,6 +102,9 @@ type is a renaming of the specified external reference.
 
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
 upper <i>upper-bound</i></tt>
+
+<li><tt>serializable</tt> specifies support for outputting values of
+the type (which must have attributes) to an external medium.
 
 <li><tt>string : max <i>max-length</i></tt>
 
@@ -264,6 +267,34 @@ the lower and upper bounds are given, they translate to a constraint.
 <pre>
    subtype T is Long_Float range 0.0 .. 1_000_000.0;
 </pre>
+
+<li><tt>serializable</tt> has no effect on the type to which is is
+attached, but causes a corresponding declaration in the domain's
+<tt>Serialization</tt> child package: for a type T,
+<pre>
+   with ColdFrame.Project.Serialization;
+   package <i>Domain</i>.Serializable is
+      type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
+	 Payload : <i>Domain</i>.<i>T</i>;
+      end record;
+      function Image (S : <i>T</i>) return String;
+   end <i>Domain</i>.Serializable;
+</pre>
+
+<p><tt>Image</tt> produces an XML rendition of the recorded value.
+
+<p><tt>ColdFrame.Project.Serialization</tt> is expected to be an
+instantiation of <tt>ColdFrame.Serialization_Signature</tt>, where
+
+<ul>
+
+<li><tt>Base</tt> is a tagged type, which the Project output package
+understands (it might want to add timestamp information, for example)
+
+<li><tt>Class_Image</tt> dispatches to the generated <tt>Image</tt>
+function.
+
+</ul>
 
 <li><tt>string : max <i>max-length</i></tt> gives an instantiation of
 <tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
