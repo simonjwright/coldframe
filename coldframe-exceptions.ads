@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 7e08e6052562 $
---  $Date: 2002/05/22 04:34:06 $
+--  $Revision: 3bb76df2b5fa $
+--  $Date: 2002/07/05 05:53:03 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
@@ -43,5 +43,17 @@ package ColdFrame.Exceptions is
    --  Misuse of facilities (eg, attempting to post Events for the
    --  same Instance to more than one Queue; attempting to set a Timer
    --  that's already set).
+
+   No_Default_Create : exception;
+   --  Raised in Inheritance.Create_Tree if a root instance needs to
+   --  be created but the Create operation requires an identifier (ie,
+   --  the identifier isn't Autonumber).
+
+   Mismatched_Handles : exception;
+   --  Raised in Inheritance.Create_Tree if a non-root class with
+   --  multiple parents finds that all of the supplied handles match
+   --  it (ie, the programmer is trying to designate an instance of
+   --  this class as the required parent) and the handles are not all
+   --  the same.
 
 end ColdFrame.Exceptions;
