@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 469e99332e97 2003/03/05 21:25:43 simon $ -->
+<!-- $Id: generate-html.xsl,v 635f59658623 2003/08/22 19:29:48 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -600,9 +600,7 @@
     <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
     <xsl:if test="@callback">
       <p>
-        <xsl:text>Callback support is provided, for up to </xsl:text>
-        <xsl:value-of select="@callback"/>
-        <xsl:text> observers.</xsl:text>
+        <xsl:text>Callback support is provided.</xsl:text>
       </p>
     </xsl:if>
     <xsl:choose>
