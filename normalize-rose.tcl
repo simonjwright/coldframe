@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v da92b04afe95 2003/06/06 10:37:55 simon $
+# $Id: normalize-rose.tcl,v 39a93be1f108 2003/06/14 14:28:38 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -831,6 +831,10 @@ itcl::class Revision {
     inherit String
 }
 
+itcl::class Static {
+    inherit String
+}
+
 itcl::class Source {
     inherit IdentifierString
 }
@@ -845,6 +849,10 @@ itcl::class Time {
 
 itcl::class Type {
     inherit IdentifierString
+}
+
+itcl::class Visibility {
+    inherit String
 }
 
 itcl::class Year {
@@ -1384,6 +1392,16 @@ itcl::class Class {
 itcl::class Operation {
     inherit Element
 
+    # access control
+    variable visibility "public"
+    # used in Rose to indicate visibility
+    method -visibility {a} {
+	switch $a {
+	    PublicAccess  {set visibility public}
+	    default       {set visibility private}
+	}
+    }
+
     # is this abstract?
     variable abstr 0
     # called via stereotype mechanism to indicate that this is an
@@ -1502,6 +1520,7 @@ itcl::class Operation {
 	    puts -nonewline " suppressed=\"$suppressed\""
 	}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
+	puts -nonewline " visibility=\"$visibility\""
 	puts ">"
 	putElement name $name
 	$this -generateDocumentation
@@ -2393,6 +2412,9 @@ itcl::class XmlTag {
 itcl::class Attribute {
     inherit Element
 
+    # access control
+    variable visibility "private"
+
     # the type name
     variable type
 
@@ -2404,6 +2426,10 @@ itcl::class Attribute {
 
     # indicates whether this is a class attribute
     variable cls 0
+
+    # indicates whether this attribute formalizes an association,
+    # where the analyst needs the attribute to help form the identifier
+    variable formalizedAssociation
 
     method -type {t} {set type $t}
 
@@ -2419,10 +2445,16 @@ itcl::class Attribute {
 
     # used via stereotype processing to indicate this is a class attribute
     method -class {dummy} {set cls 1}
+    # used in Rose to indicate this is a class attribute
+    method -static {dummy} {set cls 1}
 
-    # indicates whether this attribute formalizes an association,
-    # where the analyst needs the attribute to help form the identifier
-    variable formalizedAssociation
+    # used in Rose to indicate visibility
+    method -visibility {a} {
+	switch $a {
+	    PublicAccess  {set visibility public}
+	    default       {set visibility private}
+	}
+    }
 
     # used via stereotype processing to indicate that this analyst-defined
     # attribute formalizes an association. It's implicit that the class
@@ -2480,6 +2512,7 @@ itcl::class Attribute {
 	    puts -nonewline " refers=\"$type\""
 	    puts -nonewline " relation=\"$formalizedAssociation\""
 	}
+	puts -nonewline " visibility=\"$visibility\""
 	puts ">"
 	putElement name "$name"
 	putElement type "$type"
@@ -2676,11 +2709,13 @@ proc elementFactory {xmlTag} {
 	state             {return [State #auto]}
 	statemachine      {return [StateMachine #auto]}
 	states            {return [States #auto]}
+	static            {return [Static #auto]}
 	target            {return [Target #auto]}
 	time              {return [Time #auto]}
 	transition        {return [Transition #auto]}
 	transitions       {return [Transitions #auto]}
-	type              {return [Type #auto]}
+	type              {return [Type #auto]}	
+	visibility        {return [Visibility #auto]}
 	year              {return [Year #auto]}
 	default           {return [Element #auto]}
     }
