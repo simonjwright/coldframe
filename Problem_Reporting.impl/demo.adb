@@ -44,4 +44,11 @@ begin
 
    Report_Problems;
 
+   Ada.Text_IO.New_Line;
+   Ada.Text_IO.Put_Line
+     ("deleting a Component with defects (should delete DPR):");
+   Delete_Component ("bar");
+
+   Report_Problems;
+
 end Demo;
