@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v 6ea040caff18 2004/10/09 10:37:13 simon $
+--  $Id: Options.gpr,v ebc62eb1a4e8 2005/01/20 05:14:12 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -29,12 +29,12 @@ project Options is
   --  GLIDE/GPS configuration (these are the defaults). Available in
   --  gnat-3.13p and gcc-3.3+; comment out if using earlier gcc-3
   --  releases.
-  package Ide is
+  package IDE is
 
      for Compiler_Command ("ada") use "gnatmake";
      for Gnatlist use "gnatls";
 
-  end Ide;
+  end IDE;
 
   --  GNATMAKE configuration options.
   package Builder is
