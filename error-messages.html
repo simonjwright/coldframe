@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 830c08492f98 2003/06/29 16:11:11 simon $ -->
+<!-- $Id: error-messages.html,v 20f1f34020db 2003/07/26 15:41:51 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -29,7 +29,11 @@ want anything to happen!
 
 <dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>[[source]]</tt> annotation has been specified on both ends of the named association.
 
-<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>[[source]]</tt> in a disallowed way (on the <i>many</i> end of an association).
+<dt>Error: can't specify priority for non-active class <i>Class</i> <dd>Priority can only be specified for &#171;active&#187; classes.
+
+<dt>Error: can't specify stack for non-active class <i>Class</i> <dd>Stack size can only be specified for &#171;active&#187; classes.
+
+<<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>[[source]]</tt> in a disallowed way (on the <i>many</i> end of an association).
 
 <dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>[[source]]</tt> on both ends of the named association.
 
