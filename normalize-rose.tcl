@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ebc9db166b01 2003/11/13 17:38:56 simon $
+# $Id: normalize-rose.tcl,v 71fedaa178b3 2003/11/14 06:12:33 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1325,9 +1325,9 @@ itcl::class Class {
             $dt -documentation $documentation
             $dt -annotation $annotation
             if [info exists tags] {
-                foreach t [array names tags] {
-                    $dt -tag $t $tags($t)
-                }
+		foreach t [array names tags] {
+		    $dt -tag $t $tags($t)
+		}
             }
             if [info exists callback] {
                 $dt -callback $callback
@@ -2328,20 +2328,19 @@ itcl::class Datatype {
             set a [string range $a \
                     [expr [lindex $wh 1] + 1] end]
         }
-         # handle tags
-        if [info exists tags] {
-            foreach t [array names tags] {
-                puts stderr "type $type, handling tag $t"
-                set tag [string tolower $t]
-                if [catch {$this -$tag $tags($t)}] {
-                    Warning \
-                        "{$tag=$tags($t)} not handled in $type"
-                } else {
-                    unset tags($t)
-                }
-            }
-        }
-   }
+    }
+
+    # called when there were tags in the datatype
+    method -tag {t v} {
+	set tags($t) $v
+	set tag [string tolower $t]
+	if [catch {$this -$tag $v}] {
+	    Warning \
+		"{$tag=$v} not handled in $type"
+	} else {
+	    unset tags($t)
+	}
+    }
 
     method -className {} {return "datatype"}
 
