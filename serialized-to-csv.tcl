@@ -2,11 +2,13 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: serialized-to-csv.tcl,v e3e67fd5841e 2004/01/12 17:00:32 simon $
+# $Id: serialized-to-csv.tcl,v 86afb04d1113 2004/02/10 06:09:25 simon $
 
-# Converts a document containing mixed serialization output from
+# Converts an XML document containing mixed serialization output from
 # ColdFrame to comma-separated-variable files, one file per record
 # name.
+#
+# The input document is read from standard input.
 
 # Copyright (C) Simon Wright <simon@pushface.org>
 
