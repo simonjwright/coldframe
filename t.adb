@@ -80,7 +80,7 @@ begin
       new Problem_Reporting.Problem_Report.Abstract_Containers.Visit (Report);
     C : Problem_Reporting.Problem_Report.Collections.Collection;
     It : Problem_Reporting.Problem_Report.Abstract_Containers.Iterator'Class
-       := Problem_Reporting.Problem_Report.Collections.Concrete_Collections.New_Iterator (C);
+       := Problem_Reporting.Problem_Report.Collections.New_Iterator (C);
   begin
     C := Problem_Reporting.Problem_Report.All_Instances;
     Visit_All (It);
@@ -128,7 +128,7 @@ begin
     Put_Line ("getting all instances ->" & Interval'Img & " uS");
     Put_Line
        ("result size"
-        & Problem_Reporting.Problem_Report.Collections.Concrete_Collections.Length (All_Instances)'Img);
+        & Problem_Reporting.Problem_Report.Collections.Length (All_Instances)'Img);
   end;
 
   declare
@@ -153,7 +153,7 @@ begin
        ("getting all instances, rejecting ->" & Interval'Img & " uS");
     Put_Line
        ("result size"
-        & Problem_Reporting.Problem_Report.Collections.Concrete_Collections.Length (Result)'Img);
+        & Problem_Reporting.Problem_Report.Collections.Length (Result)'Img);
   end;
 
   declare
@@ -176,7 +176,7 @@ begin
     Put_Line ("getting all instances, accepting ->" & Interval'Img & " uS");
     Put_Line
        ("result size"
-        & Problem_Reporting.Problem_Report.Collections.Concrete_Collections.Length (Result)'Img);
+        & Problem_Reporting.Problem_Report.Collections.Length (Result)'Img);
   end;
 
   declare
