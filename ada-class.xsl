@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a4f06cd180fb 2001/11/25 10:17:23 simon $ -->
+<!-- $Id: ada-class.xsl,v e3a37ff0c1b5 2001/11/30 20:19:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1146,11 +1146,12 @@
     <xsl:param name="handle" select="'This'"/>
 
     <xsl:for-each select="operation[@finalize
+                          and not(@abstract)
                           and not(@return)
                           and not(@class)
                           and not(parameter)]">
       <xsl:sort select="name"/>
-
+      
       <xsl:value-of select="$II"/>
       <xsl:value-of select="name"/>
       <xsl:text> (</xsl:text>
@@ -1368,7 +1369,8 @@
   <!-- Generate task entry specs. -->
   <xsl:template
     mode="task-entry"
-    match="operation[not(@return or @class or @finalize or @generated)]">
+    match="operation
+           [not(@abstract or @return or @class or @finalize or @generated)]">
 
     <!-- Checking for operations whose profile matches an accessor. -->
     <xsl:variable name="n" select="name"/>
