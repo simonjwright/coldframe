@@ -121,12 +121,15 @@ JPEGS = navigation.jpg window-screen.jpg
 # Distribution construction
 
 # Create the current date, in the form yyyymmdd. This certainly works in Linux.
-DATE = $(shell date +%Y%m%d)
+DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
 DOCS = architecture.html \
 bugs.html \
 conversion.html \
 directions.html \
+events.html \
+event-modelling.html \
+event-motivation.html \
 extraction.html \
 faq.html \
 generation.html \
