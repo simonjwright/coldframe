@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 2722862a38f8 2002/02/28 20:05:41 simon $
+'$Id: ddf.ebs,v 20df2ff928e3 2002/03/23 06:32:05 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -201,7 +201,7 @@ Sub DumpTypedEvents (o As Class)
 		Dim d As ClassDependency
 		Set d = deps.GetAt(i)
 		Dim s As String
-		s = d.Stereotype
+		s = LCase(d.Stereotype)
 		Dim sup As Class
 		Set sup = d.GetSupplierClass
 		If Instr (s, "event") <> 0 Then
