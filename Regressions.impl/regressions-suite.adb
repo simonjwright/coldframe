@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 5945c982c2f9 2004/04/22 22:04:05 simon $
+--  $Id: regressions-suite.adb,v 2f10d942e470 2004/04/26 12:02:32 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -331,11 +331,8 @@ package body Regressions.Suite is
       begin
          begin
             Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
-            Assert (False, "no exception raised");
-         exception
-            when Exception_1 =>
-               Assert (C1_Called and C2_Called and C3_Called,
-                       "not all got called");
+            Assert (C1_Called and C2_Called and C3_Called,
+                    "not all got called");
          end;
       end Call_Callbacks_2;
 
@@ -345,11 +342,8 @@ package body Regressions.Suite is
       begin
          begin
             Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
-            Assert (False, "no exception raised");
-         exception
-            when Exception_1 | Exception_2 =>
-               Assert (C1_Called and C2_Called and C3_Called,
-                       "not all got called");
+            Assert (C1_Called and C2_Called and C3_Called,
+                    "not all got called");
          end;
       end Call_Callbacks_3;
 

@@ -20,12 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: 2f10d942e470 $
+--  $Date: 2004/04/26 12:02:32 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Unchecked_Deallocation;
+with ColdFrame.Project.Log_Error;
 
 package body ColdFrame.Callbacks is
 
@@ -49,8 +50,6 @@ package body ColdFrame.Callbacks is
 
    procedure Call_Callbacks (With_Param : T) is
       Current : Cell_P := The_Registered_Procedures.Next;
-      Error : Ada.Exceptions.Exception_Occurrence;
-      Error_Occurred : Boolean := False;
    begin
       loop
          exit when Current = null;
@@ -58,17 +57,11 @@ package body ColdFrame.Callbacks is
             Current.CB (With_Param);
          exception
             when E : others =>
-               if not Error_Occurred then
-                  Error_Occurred := True;
-                  Ada.Exceptions.Save_Occurrence (Source => E,
-                                                  Target => Error);
-               end if;
+               ColdFrame.Project.Log_Error
+                 (Ada.Exceptions.Exception_Information (E));
          end;
          Current := Current.Next;
       end loop;
-      if Error_Occurred then
-         Ada.Exceptions.Reraise_Occurrence (Error);
-      end if;
    end Call_Callbacks;
 
 
