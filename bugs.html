@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f6cec9080964 2004/05/14 07:47:25 simon $ -->
+<!-- $Id: bugs.html,v 002a2863c730 2004/05/20 15:04:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -214,11 +214,25 @@ others.
 
 <dd>Extraction can fail silently.
 
-<!-- next: 0263  -->
+<!-- next: 0264  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>20.v.04</h3>
+
+<dl>
+
+<dt>0263 (raised 20.v.04)
+
+<dd>If a callback operation deregisters itself it leads to a jump out
+of program (Program_Error, if you're lucky!)
+<br>Messing about with registering/deregistering callbacks is still
+not task-safe. However, so long as you don't try deregistering
+<i>another</i> callback from a callback operation you should be OK!
+
+</dl>
 
 <h3>12.v.04</h3>
 
@@ -357,7 +371,8 @@ operations of &#171;public&#187; classes include an assertion.</i>
 
 <dd>Expressions in, for example, the lower bound of an
 <i>{integer}</i> specification don't handle <tt>**</tt>.
-<br><i><tt>^</tt> and <tt>**</tt> are both handled (<tt>^</tt> translates to <tt>**</tt>, of course).</i>
+<br><i><tt>^</tt> and <tt>**</tt> are both handled (<tt>^</tt>
+translates to <tt>**</tt>, of course).</i>
 
 </dl>
 
