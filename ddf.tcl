@@ -3,11 +3,13 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 27d78ac79c48 2000/10/07 16:03:08 simon $
+# $Id: ddf.tcl,v f9d86875324d 2000/12/10 12:38:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
 # Compiler.
+
+# Copyright (C) Simon Wright <simon@pushface.org>
 
 lappend auto_path ~/TclXML-1.2
 package require xml
