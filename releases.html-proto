@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3728a23b5038 2004/02/09 09:50:02 simon $ -->
+<!-- $Id: releases.html-proto,v 28032c020b74 2004/02/10 06:31:09 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,6 +75,10 @@ href="resources.html#booch-components">Booch Components</a>
 <li>on registering, the procedure hasn't already been registered
 <li>on deregistering, the procedure has been registered
 </ul>
+
+
+<p>Making an association with a &#171;public&#187; class isn't
+supported; doing so results in an error during code generation.
 
 
 <p><dt>20031126
