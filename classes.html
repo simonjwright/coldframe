@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: classes.html,v 3d107f627db2 2002/10/20 16:23:38 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -304,12 +304,24 @@ takes a single parameter of type <tt>Identifier</tt>.
 parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
 single parameter of type <tt>Identifier</tt>.
 
-<p>Normal classes have a <tt>Find</tt> operation, taking a single
+<p>Non-<em>&#171;public&#187;</em> classes have a <tt>Find</tt>
+operation:
+<ul>
+
+<li><em>&#171;singleton&#187;</em> classes have a parameterless
+<tt>Find</tt> operation returning a <tt>Handle</tt> (which can't be
+<tt>null</tt>),
+
+<li>classes with multiplicity <i>0..1</i> have a parameterless
+<tt>Find</tt> operation returning a <tt>Handle</tt> (which may be
+<tt>null</tt>),
+
+<li>other classes have a <tt>Find</tt> operation taking a single
 parameter of type <tt>Identifier</tt> and returning a <tt>Handle</tt>
 (you may get <tt>null</tt> if there aren't presently any instances
-with that identifier). <em>&#171;singleton&#187;</em> classes have a
-parameterless <tt>Find</tt> operation returning a
-<tt>Handle</tt> (which can't be <tt>null</tt>).
+with that identifier).
+
+</ul>
 
 <h3><a name="internals">Package internals</a></h3>
 
