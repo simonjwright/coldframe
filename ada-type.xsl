@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-type.xsl,v c92ca6655d81 2004/10/25 05:46:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -124,10 +124,16 @@
   </xsl:template>
 
 
-  <!-- Called at domain to generate domain Types entries (not for
+  <!-- Called at domain to generate public domain Types entries (not for
        standard types). -->
   <xsl:template name="ty:domain-types">
+    <xsl:param name="types" select="/domain/type"/>
+    <xsl:message>
+      <xsl:value-of select="count($types)"/>
+      <xsl:text> domain types.</xsl:text>
+    </xsl:message>
     <xsl:call-template name="ty:sorted-domain-types">
+      <xsl:with-param name="types" select="$types"/>
       <xsl:with-param name="nodes" select="/.."/>
       <xsl:with-param name="finished" select="type[@standard]"/>
     </xsl:call-template>
@@ -137,6 +143,9 @@
   <!-- Called at domain to output the type declarations sorted
        in dependency order. -->
   <xsl:template name="ty:sorted-domain-types">
+
+    <!-- The types to be output -->
+    <xsl:param name="types"/>
 
     <!-- The types which are to be output in this pass -->
     <xsl:param name="nodes"/>
@@ -173,17 +182,17 @@
          that have been output already -->
     <xsl:variable
       name="next"
-      select="type[not($processed/name=name)
-                   and not(
-                    attribute[not($processed/name=type)]
-                    or array[not($processed/name=type)]
-                    or array[not($processed/name=index)]
-                    or (@protected and (
-                         operation
-                          [not(@access)]/parameter[not($processed/name=type)]
-                         or operation
-                          [not(@access)]/result[not($processed/name=.)]))
-                   )]"/>
+      select="$types[not($processed/name=name)
+                     and not(
+                      attribute[not($processed/name=type)]
+                      or array[not($processed/name=type)]
+                      or array[not($processed/name=index)]
+                      or (@protected and (
+                           operation
+                            [not(@access)]/parameter[not($processed/name=type)]
+                           or operation
+                            [not(@access)]/result[not($processed/name=.)]))
+                     )]"/>
 
     <xsl:choose>
 
@@ -191,6 +200,7 @@
 
         <!-- More types to be output, so make the recursive call -->
         <xsl:call-template name="ty:sorted-domain-types">
+          <xsl:with-param name="types" select="$types"/>
           <xsl:with-param name="nodes" select="$next"/>
           <xsl:with-param name="finished" select="$processed"/>
         </xsl:call-template>
@@ -204,7 +214,9 @@
              type. -->
         <!-- XXX I don't think this can happen. -->
 
-        <xsl:variable name="missing" select="type[not($processed/name=name)]"/>
+        <xsl:variable
+          name="missing"
+          select="$types[not($processed/name=name)]"/>
 
         <xsl:if test="$missing">
 

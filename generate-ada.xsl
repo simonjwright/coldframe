@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: generate-ada.xsl,v c92ca6655d81 2004/10/25 05:46:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -199,20 +199,27 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <!-- .. any specially-declared types .. -->
+    <!-- .. any specially-declared public types .. -->
     <xsl:call-template name="ut:progress-message">
-      <xsl:with-param name="m" select="'.. any specially-declared types ..'"/>
+      <xsl:with-param
+        name="m"
+        select="'.. any specially-declared public types ..'"/>
     </xsl:call-template>
-    <xsl:call-template name="ty:domain-types"/>
+
+    <xsl:call-template name="ty:domain-types">
+      <xsl:with-param name="types" select="/domain/type[not(@private)]"/>
+    </xsl:call-template>
 
     <!-- .. any type operations .. -->
     <xsl:call-template name="ut:progress-message">
-      <xsl:with-param name="m" select="'.. any operations of types ..'"/>
+      <xsl:with-param
+        name="m"
+        select="'.. any operations of public types ..'"/>
     </xsl:call-template>
 
     <!-- .. access-to-operation .. -->
     <xsl:apply-templates
-      select="type/operation[@access]"
+      select="type[not(@private)]/operation[@access]"
       mode="op:access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
@@ -220,15 +227,51 @@
 
     <!--  .. others .. -->
     <xsl:apply-templates
-      select="type[not(@protected)]
+      select="type[not(@private) and not(@protected)]
               /operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
-    <!-- .. initialization detection .. -->
+    <!-- The private part. -->
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
+
+     <!-- .. any specially-declared private types .. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. any specially-declared private types ..'"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="ty:domain-types">
+      <xsl:with-param name="types" select="/domain/type[@private]"/>
+    </xsl:call-template>
+
+    <!-- .. any type operations .. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. any operations of private types ..'"/>
+    </xsl:call-template>
+
+    <!-- .. access-to-operation .. -->
+    <xsl:apply-templates
+      select="type[@private]/operation[@access]"
+      mode="op:access-to-operation">
+      <xsl:sort select="name"/>
+      <xsl:with-param name="is-class" select="'no'"/>
+    </xsl:apply-templates>
+
+    <!--  .. others .. -->
+    <xsl:apply-templates
+      select="type[@private and not(@protected)]
+              /operation[not(@access) and not(@suppressed)]"
+      mode="domain-type-operation-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+   <!-- .. initialization detection .. -->
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized : Boolean := False;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
