@@ -146,7 +146,8 @@ pdf:: $(PDFS)
 
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
-PNGS = hierarchies.png hierarchies-full.png discriminated-record.png
+PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
+  serialization.png
 
 ############################
 # Distribution construction
@@ -183,6 +184,7 @@ principles.html \
 releases.html \
 reserved-names.html \
 resources.html \
+serialization.html \
 strategy.html \
 support.html \
 target.html \
@@ -334,7 +336,8 @@ Serialization.impl/serialization-interface-output.adb \
 Serialization.impl/serialization-server-create.adb \
 Serialization.impl/serialization-server-post.adb \
 Serialization.impl/serialization_support.ads \
-Serialization.impl/server.adb
+Serialization.impl/server.adb \
+Serialization_Demo.impl/serialization_demo-real_time_image.adb
 
 DEMO += \
 Interrupt_Handling.cat Interrupt_Handling.raw \
