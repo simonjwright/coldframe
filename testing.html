@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 484a77a915cb 2005/03/02 22:19:17 simon $ -->
+<!-- $Id: testing.html,v 0da767e379a3 2005/03/04 06:44:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -88,6 +88,27 @@ generated as if it were the package <i>Digital IO</i> (though the code
 will still be placed in the directory derived from the actual package
 name, <tt>Digital_IO_Interface.gen/</tt>).
 
+<i><p>If this domain is not a new development, there may be existing
+stub implementations that expect the "Digital IO Interface" name. If
+so, you may not be able to use the {name} tag; as an alternative, you
+can specify the <tt>DOMAIN_NAME</tt> variable to <tt>make</tt>:</i>
+
+<i><pre>
+   $ make Digital_IO_Interface.gen DOMAIN_NAME=Digital_IO
+</pre></i>
+
+<i><p>or</i>
+
+<i><pre>
+   $ make Digital_IO_Interface.gen DOMAIN_NAME='Digital IO'
+</pre></i>
+
+<i><p>The command line method overrides the {name} tag if both are
+given.</i>
+
+<i><p><b>Don't</b> set <tt>DOMAIN_NAME</tt> as an environment
+variable!</i>
+
 <h3>Implementing stub functionality</h3>
 
 <p>If you want, you can provide implementations in the parallel
@@ -98,7 +119,81 @@ to provide queries to find out what values were passed in. Remember
 that you can write package specs in the <tt>.impl</tt> directory, if
 needed.
 
+<p>You should generate <tt>Digital_IO_Interface.gen/</tt> in
+<i>your</i> test directory. The stubs you want probably won't be the
+same as other developers also testing code that uses <i>Digital
+IO</i>.
+
 <h3>Generating stub functionality</h3>
+
+<p>Normally, ColdFrame generates the separate bodies of operations to
+raise <tt>Program_Error</tt>, and you get to fill in the real code.
+
+<p>If you generate with <tt>GENERATE_STUBS</tt> set to <tt>yes</tt>
+
+<pre>
+   $ make Digital_IO_Interface.gen GENERATE_STUBS=yes
+</pre>
+
+<p>the separate bodies will contain stub code which
+
+<ol>
+
+<li>stores <tt>in</tt> or <tt>in out</tt> parameters' values for
+retrieval
+
+<li>raises an exception, if specified
+
+<li>sets <tt>out</tt> parameters or a function's <tt>return</tt> value
+as specified.
+
+</ol>
+
+<p>The stub code uses <tt>ColdFrame.Stubs</tt>.
+
+<h4>Test Case support</h4>
+
+<p>Your test case <tt>Set_Up</tt> must call
+<tt>ColdFrame.Stubs.Set_Up</tt>, and your <tt>Tear_Down</tt> must call
+<tt>ColdFrame.Stubs.Tear_Down</tt>.
+
+<p>If the stubbed code has output parameters or returns values of type
+<i><tt>T</tt></i>, instantiate
+<tt>ColdFrame.Stubs.Set_Output_Value</tt> with <i><tt>T</tt></i>.
+
+<pre>
+   --  Specify an output from a call to a stubbed operation for the
+   --  type T.
+   --
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
+   --  Domain.Class.Operation, "Domain.Class.Operation").
+   --
+   --  Normally the named parameter will be an "out" (perhaps "in
+   --  out") parameter. The specified "To" value will be returned on
+   --  the "For_Call"th call, and all subsequent calls until another
+   --  "Set_Output_Value" call for the same parameter; if you want to
+   --  have the first 4 calls to Domain.Class.Operation to set Output
+   --  to 4, and any later ones to set it to 42, you'd say
+   --
+   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
+   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
+   --
+   --  A special parameter name is "return". For "return", the To
+   --  value will be the function result.
+   --
+   --  Overhead_Bytes is the additional space reserved for the
+   --  streamed representation.
+   generic
+      type T (<>) is private;
+   procedure Set_Output_Value (For_Subprogram_Named : String;
+                               For_Parameter_Named : String;
+                               To : T;
+                               For_Call : Positive := 1;
+                               Overhead_Bytes : Natural := Storage_Overhead);
+</pre>
+
+<h4>Test Procedure support</h4>
 
 <p><hr>
 <i>
