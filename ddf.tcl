@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v fcee2ca06b02 2000/06/09 06:06:11 simon $
+# $Id: ddf.tcl,v 8bfbc56b2236 2000/06/30 16:25:27 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -67,10 +67,10 @@ itcl::class Base {
     # above it will be "bar"
 
     method -addText {str} {
-	if {$str != "\n"} {set text "$text$str"}
+	set text "$text$str"
     }
     # the textual content of the XML element may be received in chunks;
-    # add another chunk, ignoring newlines (XXX)
+    # add another chunk
 
     method -text {t} {set text $t}
     # set the textual content
@@ -150,11 +150,14 @@ itcl::class IdentifierString {
     # the object has already been popped off the stack; call the stack top's
     # method with the same name as this tag to store the value after
     # conversion to identifier form (so, given the example above, the
-    #containing object needs to offer a -name method)
+    # containing object needs to offer a -name method)
 
 }
 
 
+# The base class for all non-trivial XML elements. They will certainly have
+# an element name (eg, <foo> -> name "foo") and may contain a particular
+# attribute, the stereotype (eg, <foo stereotype="key=a, number=5">).
 itcl::class Element {
     inherit Base
 
@@ -183,6 +186,10 @@ itcl::class Element {
 	    }
 	}
     }
+    # if a stereotype attribute has been seen, process it.
+    # Given the example above, this results in the calls
+    #   $this -key a
+    #   $this -number 5
 
     method -complete {} {
 	$this -handleStereotype
@@ -231,7 +238,7 @@ itcl::class Container {
 
     # Containers are for singleton (per-Domain, per-Object) containment,
     # particularly where members need to be revisited.
-    # byName is indexed by name and holds the index number in byNumber
+    # byName is indexed by name and holds the index number in byNumber.
     # byNumber is indexed by number and holds the content.
 
     private variable byName
@@ -245,23 +252,23 @@ itcl::class Container {
     }
 
     # Derived classes should override -className to return their own
-    # name (in lower case).
+    # name (in lower case)
     method -className {} {return "container"}
 
-    # Return the number of contained elements.
+    # Return the number of contained elements
     method -size {} {return [array size byName]}
 
-    # Indicate whether the name doesn't denote an object in the Container.
+    # Indicate whether the name doesn't denote an object in the Container
     method -isMissing {name} {
 	return [expr ![info exists byName($name)]]
     }
 
-    # Indicate whether the name denotes an object in the Container.
+    # Indicate whether the name denotes an object in the Container
     method -isPresent {name} {
 	return [info exists byName($name)]
     }
 
-    # Add the given object to the container at entry "name".
+    # Add the given object to the container at entry "name"
     method -add {object name} {
 	if [info exists byName($name)] {
 	    error "[$this -className] already holds an element named $name"
@@ -271,7 +278,7 @@ itcl::class Container {
 	set byNumber($newIndex) $object
     }
 
-    # Find the index of a named element in the Container.
+    # Find the index of a named element in the Container
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
 	error "[$this -className] item $name not found\
@@ -287,12 +294,13 @@ itcl::class Container {
 		([$this -size] entries)"
     }
  
-    # Return the named element from the Container.
+    # Return the named element from the Container
     method -atName {name} {
 	set index [$this -index $name]
 	return [$this -atIndex $index]
     }
- 
+
+    # 
     method -complete {} {
 	[stack -top] -[$this -className] $this
     }
@@ -663,7 +671,7 @@ itcl::class Relationship {
 
     method -formalized {} {set formalized 1}
 
-    method -needsFormalizing {} {return [expr ! $formalized]}
+    method -needsFormalizing {} {return [expr !$formalized]}
 
     method -getNumber {} {
 	set name [$this -getName]
@@ -733,7 +741,7 @@ itcl::class Association {
     }
 
     method -evaluate {domain} {
-	if [expr ! [$this -needsFormalizing]] {
+	if [expr ![$this -needsFormalizing]] {
 	    puts stderr "$name already formalized"
 	    return
 	}
@@ -741,12 +749,12 @@ itcl::class Association {
 	set os [$domain -getObjects]
 	set type [$this -relationshipType]
 	set cl1 [$os -atName [$role1 -getClassname]]
-	if [expr ! [$cl1 -hasIdentifier]] {
+	if [expr ![$cl1 -hasIdentifier]] {
 	    puts stderr "[$cl1 -getName] has no identifier(s)"
 	    return
 	}
 	set cl2 [$os -atName [$role2 -getClassname]]
-	if [expr ! [$cl2 -hasIdentifier]] {
+	if [expr ![$cl2 -hasIdentifier]] {
 	    puts stderr "[$cl2 -getName] has no identifier(s)"
 	    return
 	}
@@ -978,13 +986,13 @@ itcl::class Inheritance {
     }
 
     method -evaluate {domain} {
-	if [expr ! [$this -needsFormalizing]] {
+	if [expr ![$this -needsFormalizing]] {
 	    puts stderr "$name already formalized"
 	    return
 	}
 	set os [$domain -getObjects]
 	set p [$os -atName $parent]
-	if [expr ! [$p -hasIdentifier]] {
+	if [expr ![$p -hasIdentifier]] {
 	    puts stderr "[$p -getName] has no identifier(s)"
 	    return
 	}
@@ -1295,6 +1303,13 @@ itcl::class Associations {
 
 itcl::class Datatypes {
     inherit Container
+
+    constructor {} {
+	# insert standard (provided) types.
+	$this -add [Datatype ::#auto Real] Real
+	$this -add [Datatype ::#auto Integer] Integer
+	$this -add [Datatype ::#auto Text] Text
+    }
 
     method -className {} {return "datatypes"}
 
