@@ -1,2 +1,2 @@
-library-test.adb library-test
+library_test_harness
 *.gcov
