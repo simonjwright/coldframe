@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 63ce5bac33ea 2003/02/07 05:56:33 simon $ -->
+<!-- $Id: releases.html,v 76f1030adc1f 2003/02/07 06:08:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -57,6 +57,12 @@ number of observers", but it will not be used).
 <p>The <tt>[[serializable]]</tt> annotation allows you to specify
 support for transmitting values of a (record) type via some external
 medium -- perhaps to record binary data for future analysis.
+
+
+<p>Your main program can coordinate the Event Queues (Dispatchers)
+used by the Domains.
+<br>If you pass a Dispatrcher to <tt><i>Domain</i>.Initialize</tt>, it
+will use it instead of calling <tt><i>Domain</i>.Events.Initialize</tt>.
 
 
 <p><dt>20030107a
