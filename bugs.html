@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 53fec6fe31ed 2003/08/28 21:20:10 simon $ -->
+<!-- $Id: bugs.html,v 80c72631d5e3 2003/08/31 08:25:18 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -66,6 +66,8 @@ document from the domain model.
 <dt>0062 (raised 23.i.02)
 
 <dd>It would be useful to be able to specify constants.
+<br><i>Pi is specially handled, in "expression" contexts
+(initial values, <tt>[[real]]</tt> ranges).</i>
 
 <dt>0067 (raised 5.iii.02)
 
@@ -85,8 +87,8 @@ abbreviations.
 
 <dt>0088 (raised 7.vi.02)
 
-<dd>Extraction hangs if the output directory (<tt>ColdFrameOut</tt> in
-the Path Map) doesn't exist.
+<dd>Extraction hangs if the output directory (the environment variable
+<tt>COLDFRAMEOUT</tt>) doesn't exist.
 
 <dt>0090 (raised 7.vi.02)
 
@@ -163,18 +165,23 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
+<!-- next: 0192 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>31.viii.03</h3>
+
+<dl>
+
 <dt>0190 (raised 22.viii.03)
 
 <dd>It could be useful to allow actions on event transitions.
 <br><i>You could try colouring the states which have the actions that
 you'd have preferred to put on transitions in a pale colour
 (white?)</i>
-
-<!-- next: 0192 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>28.viii.03</h3>
 
