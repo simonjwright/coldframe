@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 0033d3c9b4cc $} 
+|{revision = $Revision: 1b5cbea3fc57 $} 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -658,7 +658,7 @@
 				quidu      	"3D2EC71603A7"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "handling self" @13
-				location   	(887, 1062)
+				location   	(1162, 1155)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -670,7 +670,7 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@13
-				    location   	(887, 1011)
+				    location   	(1162, 1104)
 				    fill_color 	13434879
 				    anchor_loc 	1
 				    nlines     	2
@@ -683,7 +683,7 @@
 				quidu      	"3D2EC7270153"
 				compartment 	(object Compartment
 				    Parent_View 	@13
-				    location   	(732, 1049)
+				    location   	(1007, 1142)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -705,6 +705,36 @@
 				height     	205
 				autoResize 	TRUE)
 			    (object TransView "" @14
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @15
+				    Parent_View 	@14
+				    location   	(885, 451)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    hidden     	TRUE
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	252
+				    justify    	0
+				    label      	""
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3D2EE11403AF"
@@ -712,7 +742,7 @@
 				supplier   	@12
 				line_style 	0
 				x_offset   	FALSE)
-			    (object StateView "EndState" "deleting final" @15
+			    (object StateView "EndState" "deleting final" @16
 				location   	(2230, 210)
 				font       	(object Font
 				    size       	10
@@ -724,7 +754,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@15
+				    Parent_View 	@16
 				    location   	(2284, 168)
 				    nlines     	2
 				    max_width  	600
@@ -733,7 +763,7 @@
 				line_color 	3342489
 				quidu      	"3D834B8300DD"
 				compartment 	(object Compartment
-				    Parent_View 	@15
+				    Parent_View 	@16
 				    location   	(2245, 230)
 				    font       	(object Font
 					size       	10
@@ -751,7 +781,7 @@
 				    compartmentItems 	(list Compartment
 					"entry/ delete"))
 				autoResize 	TRUE)
-			    (object StateView "EndState" "plain final" @16
+			    (object StateView "EndState" "plain final" @17
 				location   	(2237, 830)
 				font       	(object Font
 				    size       	10
@@ -763,7 +793,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@16
+				    Parent_View 	@17
 				    location   	(2291, 788)
 				    nlines     	2
 				    max_width  	600
@@ -772,7 +802,7 @@
 				line_color 	3342489
 				quidu      	"3F50715E018D"
 				autoResize 	TRUE)
-			    (object SelfTransView "" @17
+			    (object SelfTransView "" @18
 				location   	(1350, 278)
 				font       	(object Font
 				    size       	10
@@ -783,8 +813,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @18
-				    Parent_View 	@17
+				label      	(object SegLabel @19
+				    Parent_View 	@18
 				    location   	(1349, 219)
 				    font       	(object Font
 					size       	10
@@ -809,7 +839,7 @@
 				client     	@12
 				supplier   	@12
 				line_style 	4)
-			    (object TransView "" @19
+			    (object TransView "" @20
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -819,9 +849,9 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @20
-				    Parent_View 	@19
-				    location   	(1162, 716)
+				label      	(object SegLabel @21
+				    Parent_View 	@20
+				    location   	(1290, 763)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -846,7 +876,7 @@
 				supplier   	@13
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @21
+			    (object TransView "" @22
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -856,8 +886,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @22
-				    Parent_View 	@21
+				label      	(object SegLabel @23
+				    Parent_View 	@22
 				    location   	(1874, 290)
 				    font       	(object Font
 					size       	10
@@ -880,10 +910,10 @@
 				line_color 	3342489
 				quidu      	"3D834B8A00AA"
 				client     	@12
-				supplier   	@15
+				supplier   	@16
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @23
+			    (object TransView "" @24
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -893,8 +923,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @24
-				    Parent_View 	@23
+				label      	(object SegLabel @25
+				    Parent_View 	@24
 				    location   	(1863, 641)
 				    font       	(object Font
 					size       	10
@@ -917,7 +947,79 @@
 				line_color 	3342489
 				quidu      	"3F50716401E6"
 				client     	@12
-				supplier   	@16
+				supplier   	@17
+				line_style 	0
+				x_offset   	FALSE)
+			    (object StateView "Normal" "Intermediate" @26
+				location   	(618, 792)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@26
+				    location   	(618, 771)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	264
+				    justify    	0
+				    label      	"Intermediate")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3F50A6F103E7"
+				width      	360
+				height     	145
+				autoResize 	TRUE)
+			    (object TransView "" @27
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @28
+				    Parent_View 	@27
+				    location   	(897, 913)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	450
+				    justify    	0
+				    label      	"done"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F50A70701C2"
+				client     	@13
+				supplier   	@26
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @29
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F50A7130223"
+				client     	@26
+				supplier   	@12
 				line_style 	0
 				x_offset   	FALSE))))))
 	(object Class "Terminal"
@@ -964,7 +1066,7 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object StateView "StartState" "$UNNAMED$2" @25
+			    (object StateView "StartState" "$UNNAMED$2" @30
 				location   	(645, 373)
 				font       	(object Font
 				    size       	10
@@ -976,7 +1078,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@25
+				    Parent_View 	@30
 				    location   	(687, 343)
 				    nlines     	2
 				    max_width  	600
@@ -985,7 +1087,7 @@
 				line_color 	3342489
 				quidu      	"3E914F3E0098"
 				autoResize 	TRUE)
-			    (object StateView "EndState" "$UNNAMED$3" @26
+			    (object StateView "EndState" "$UNNAMED$3" @31
 				location   	(1348, 373)
 				font       	(object Font
 				    size       	10
@@ -997,7 +1099,7 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@26
+				    Parent_View 	@31
 				    location   	(1402, 331)
 				    nlines     	2
 				    max_width  	600
@@ -1006,7 +1108,7 @@
 				line_color 	3342489
 				quidu      	"3E914F4E0041"
 				compartment 	(object Compartment
-				    Parent_View 	@26
+				    Parent_View 	@31
 				    location   	(1363, 393)
 				    font       	(object Font
 					size       	10
@@ -1024,7 +1126,7 @@
 				    compartmentItems 	(list Compartment
 					"entry/ Delete"))
 				autoResize 	TRUE)
-			    (object TransView "" @27
+			    (object TransView "" @32
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1034,8 +1136,8 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @28
-				    Parent_View 	@27
+				label      	(object SegLabel @33
+				    Parent_View 	@32
 				    location   	(990, 329)
 				    font       	(object Font
 					size       	10
@@ -1057,8 +1159,306 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3E914F6A00CD"
-				client     	@25
-				supplier   	@26
+				client     	@30
+				supplier   	@31
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Completion Transitions"
+	    quid       	"4056C8C901DD"
+	    stereotype 	"singleton"
+	    operations 	(list Operations
+		(object Operation "a1"
+		    quid       	"4056C9E50018"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "a2"
+		    quid       	"4056C9E701C0"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "a3"
+		    quid       	"4056C9E802E4"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get status"
+		    quid       	"4056CC500087"
+		    stereotype 	"accessor"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "status"
+		    quid       	"4056C9D401EB"
+		    type       	"Integer"
+		    initv      	"0"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"4056C94C02B7"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$4"
+			quid       	"4056C9660369"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"4056C97F022F"
+				label      	""
+				supplier   	"s1"
+				quidu      	"4056C96C0000"
+				action     	(object action "a1"
+				    quid       	"4056C97F0231")
+				sendEvent  	(object sendEvent
+				    quid       	"4056C97F0232")))
+			type       	"StartState")
+		    (object State "s1"
+			quid       	"4056C96C0000"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"4056C9830054"
+				label      	""
+				supplier   	"s2"
+				quidu      	"4056C96F00D7"
+				Event      	(object Event "e2"
+				    quid       	"4056C9830055")
+				action     	(object action "a2"
+				    quid       	"4056C9830056")
+				sendEvent  	(object sendEvent
+				    quid       	"4056C9830057")))
+			type       	"Normal")
+		    (object State "s2"
+			quid       	"4056C96F00D7"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"4056C9BE018F"
+				label      	""
+				supplier   	"s3"
+				quidu      	"4056C9B90001"
+				action     	(object action "a3"
+				    quid       	"4056C9BE0191")
+				sendEvent  	(object sendEvent
+				    quid       	"4056C9BE0192")))
+			type       	"Normal")
+		    (object State "s3"
+			quid       	"4056C9B90001"
+			type       	"Normal"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "Lifecycle"
+			quid       	"4056C94C02EA"
+			title      	"Lifecycle"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$4" @34
+				location   	(413, 325)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@34
+				    location   	(455, 295)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"4056C9660369"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "s1" @35
+				location   	(1043, 633)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@35
+				    location   	(1043, 617)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"s1")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4056C96C0000"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "s2" @36
+				location   	(1630, 1105)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@36
+				    location   	(1630, 1089)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"s2")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4056C96F00D7"
+				autoResize 	TRUE)
+			    (object TransView "" @37
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @38
+				    Parent_View 	@37
+				    location   	(694, 413)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	91
+				    justify    	0
+				    label      	" / a1"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4056C97F022F"
+				client     	@34
+				supplier   	@35
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @39
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @40
+				    Parent_View 	@39
+				    location   	(1364, 834)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	130
+				    justify    	0
+				    label      	"e2 / a2"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4056C9830054"
+				client     	@35
+				supplier   	@36
+				line_style 	0
+				x_offset   	FALSE)
+			    (object StateView "Normal" "s3" @41
+				location   	(1998, 1638)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@41
+				    location   	(1998, 1622)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"s3")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4056C9B90001"
+				autoResize 	TRUE)
+			    (object TransView "" @42
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @43
+				    Parent_View 	@42
+				    location   	(1850, 1345)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	91
+				    justify    	0
+				    label      	" / a3"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4056C9BE018F"
+				client     	@36
+				supplier   	@41
 				line_style 	0
 				x_offset   	FALSE)))))))
     logical_presentations 	(list unit_reference_list
@@ -1067,15 +1467,15 @@
 	    title      	"Main"
 	    documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 0033d3c9b4cc $} 
+|{revision = $Revision: 1b5cbea3fc57 $} 
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	0
+	    origin_y   	720
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Event Test::Recipient" @29
+		(object ClassView "Class" "Logical View::Event Test::Recipient" @44
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1091,7 +1491,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@29
+			Parent_View 	@44
 			location   	(997, 734)
 			fill_color 	13434879
 			nlines     	1
@@ -1099,7 +1499,7 @@
 			justify    	0
 			label      	"Recipient")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@29
+			Parent_View 	@44
 			location   	(997, 689)
 			fill_color 	13434879
 			anchor     	10
@@ -1111,11 +1511,28 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA5887005D"
+		    compartment 	(object Compartment
+			Parent_View 	@44
+			location   	(997, 790)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	859)
 		    width      	874
 		    height     	624
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Event Test::Content" @30
+		(object ClassView "Class" "Logical View::Event Test::Content" @45
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1131,7 +1548,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@30
+			Parent_View 	@45
 			location   	(2640, 900)
 			fill_color 	13434879
 			nlines     	1
@@ -1139,7 +1556,7 @@
 			justify    	0
 			label      	"Content")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@30
+			Parent_View 	@45
 			location   	(2640, 855)
 			fill_color 	13434879
 			anchor     	10
@@ -1151,11 +1568,28 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA58A00152"
+		    compartment 	(object Compartment
+			Parent_View 	@45
+			location   	(2640, 956)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	367)
 		    width      	408
 		    height     	292
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Event Test::Waiting" @31
+		(object ClassView "Class" "Logical View::Event Test::Waiting" @46
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1171,7 +1605,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@31
+			Parent_View 	@46
 			location   	(54, 937)
 			fill_color 	13434879
 			nlines     	1
@@ -1179,7 +1613,7 @@
 			justify    	0
 			label      	"Waiting")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@31
+			Parent_View 	@46
 			location   	(54, 892)
 			fill_color 	13434879
 			anchor     	10
@@ -1191,11 +1625,28 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2ED7E302C6"
+		    compartment 	(object Compartment
+			Parent_View 	@46
+			location   	(54, 993)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	347)
 		    width      	360
 		    height     	218
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Event Test::Machine" @32
+		(object ClassView "Class" "Logical View::Event Test::Machine" @47
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1211,7 +1662,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@32
+			Parent_View 	@47
 			location   	(1356, 1660)
 			fill_color 	13434879
 			nlines     	1
@@ -1222,11 +1673,28 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2EE2D100E8"
+		    compartment 	(object Compartment
+			Parent_View 	@47
+			location   	(1356, 1716)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	465)
 		    width      	486
 		    height     	572
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object UsesView "Self" @33
+		(object UsesView "Self" @48
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1237,15 +1705,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@33
+			Parent_View 	@48
 			location   	(2186, 1320)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Self")
-		    stereotype 	(object SegLabel @34
-			Parent_View 	@33
+		    stereotype 	(object SegLabel @49
+			Parent_View 	@48
 			location   	(2080, 1254)
 			font       	(object Font
 			    size       	10
@@ -1267,14 +1735,14 @@
 			orientation 	0)
 		    line_color 	3342489
 		    quidu      	"3D2EE3580345"
-		    client     	@32
-		    supplier   	@30
+		    client     	@47
+		    supplier   	@45
 		    vertices   	(list Points
 			(1833, 1670)
 			(2130, 1349)
 			(2630, 1092))
 		    line_style 	0)
-		(object UsesView "Mark" @35
+		(object UsesView "Mark" @50
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1285,15 +1753,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@35
+			Parent_View 	@50
 			location   	(2461, 1715)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Mark")
-		    stereotype 	(object SegLabel @36
-			Parent_View 	@35
+		    stereotype 	(object SegLabel @51
+			Parent_View 	@50
 			location   	(2505, 1683)
 			font       	(object Font
 			    size       	10
@@ -1315,14 +1783,14 @@
 			orientation 	1)
 		    line_color 	3342489
 		    quidu      	"3D2EE36C01B3"
-		    client     	@32
-		    supplier   	@30
+		    client     	@47
+		    supplier   	@45
 		    vertices   	(list Points
 			(1833, 1874)
 			(2458, 1721)
 			(2757, 1136))
 		    line_style 	0)
-		(object UsesView "Information" @37
+		(object UsesView "Information" @52
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1333,15 +1801,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@37
+			Parent_View 	@52
 			location   	(2289, 485)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Information")
-		    stereotype 	(object SegLabel @38
-			Parent_View 	@37
+		    stereotype 	(object SegLabel @53
+			Parent_View 	@52
 			location   	(2284, 426)
 			font       	(object Font
 			    size       	10
@@ -1363,14 +1831,14 @@
 			orientation 	0)
 		    line_color 	3342489
 		    quidu      	"3CEA58F3007C"
-		    client     	@29
-		    supplier   	@30
+		    client     	@44
+		    supplier   	@45
 		    vertices   	(list Points
 			(1862, 688)
 			(2235, 435)
 			(2676, 843))
 		    line_style 	0)
-		(object UsesView "Wait" @39
+		(object UsesView "Wait" @54
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1381,15 +1849,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@39
+			Parent_View 	@54
 			location   	(696, 990)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Wait")
-		    stereotype 	(object SegLabel @40
-			Parent_View 	@39
+		    stereotype 	(object SegLabel @55
+			Parent_View 	@54
 			location   	(696, 931)
 			font       	(object Font
 			    size       	10
@@ -1411,10 +1879,10 @@
 			orientation 	1)
 		    line_color 	3342489
 		    quidu      	"3D2ED82A01E1"
-		    client     	@29
-		    supplier   	@31
+		    client     	@44
+		    supplier   	@46
 		    line_style 	0)
-		(object UsesView "Self" @41
+		(object UsesView "Self" @56
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1425,15 +1893,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@41
+			Parent_View 	@56
 			location   	(2250, 761)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Self")
-		    stereotype 	(object SegLabel @42
-			Parent_View 	@41
+		    stereotype 	(object SegLabel @57
+			Parent_View 	@56
 			location   	(2264, 710)
 			font       	(object Font
 			    size       	10
@@ -1455,14 +1923,14 @@
 			orientation 	0)
 		    line_color 	3342489
 		    quidu      	"3D7E10EE0085"
-		    client     	@29
-		    supplier   	@30
+		    client     	@44
+		    supplier   	@45
 		    vertices   	(list Points
 			(1862, 852)
 			(2210, 745)
 			(2630, 908))
 		    line_style 	0)
-		(object UsesView "Mark" @43
+		(object UsesView "Mark" @58
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1473,15 +1941,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@43
+			Parent_View 	@58
 			location   	(2247, 1116)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"Mark")
-		    stereotype 	(object SegLabel @44
-			Parent_View 	@43
+		    stereotype 	(object SegLabel @59
+			Parent_View 	@58
 			location   	(2239, 1060)
 			font       	(object Font
 			    size       	10
@@ -1503,14 +1971,14 @@
 			orientation 	0)
 		    line_color 	3342489
 		    quidu      	"3D7E11000185"
-		    client     	@29
-		    supplier   	@30
+		    client     	@44
+		    supplier   	@45
 		    vertices   	(list Points
 			(1862, 1063)
 			(2213, 1123)
 			(2630, 1033))
 		    line_style 	0)
-		(object CategoryView "Logical View::Event Test" @45
+		(object CategoryView "Logical View::Event Test" @60
 		    location   	(265, 2230)
 		    font       	(object Font
 			size       	10
@@ -1522,7 +1990,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@45
+			Parent_View 	@60
 			location   	(95, 2146)
 			fill_color 	13434879
 			nlines     	2
@@ -1535,7 +2003,7 @@
 		    quidu      	"3CEA58590211"
 		    width      	352
 		    height     	180)
-		(object NoteView @46
+		(object NoteView @61
 		    location   	(1425, 298)
 		    font       	(object Font
 			size       	10
@@ -1547,7 +2015,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@46
+			Parent_View 	@61
 			location   	(942, 234)
 			fill_color 	13434879
 			nlines     	2
@@ -1558,14 +2026,14 @@
 		    width      	990
 		    height     	140
 		    quidu      	"3D7E1127022B")
-		(object AttachView "" @47
+		(object AttachView "" @62
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@46
-		    supplier   	@29
+		    client     	@61
+		    supplier   	@44
 		    line_style 	0)
-		(object NoteView @48
-		    location   	(1600, 2465)
+		(object NoteView @63
+		    location   	(760, 1923)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1576,8 +2044,8 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@48
-			location   	(1197, 2399)
+			Parent_View 	@63
+			location   	(357, 1857)
 			fill_color 	13434879
 			nlines     	3
 			max_width  	770
@@ -1587,13 +2055,13 @@
 		    width      	830
 		    height     	145
 		    quidu      	"3D2EC70C00FA")
-		(object AttachView "" @49
+		(object AttachView "" @64
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@32
-		    supplier   	@48
+		    client     	@47
+		    supplier   	@63
 		    line_style 	0)
-		(object Label @50
+		(object Label @65
 		    location   	(110, 93)
 		    font       	(object Font
 			size       	10
@@ -1606,4 +2074,90 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v 0033d3c9b4cc 2004/03/01 17:49:07 simon $")))))
+		    label      	"$Id: Event_Test.cat,v 1b5cbea3fc57 2004/03/16 17:43:56 simon $")
+		(object ClassView "Class" "Logical View::Event Test::Completion Transitions" @66
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1578, 2891)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@66
+			location   	(1257, 2748)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	642
+			justify    	0
+			label      	"Completion Transitions")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@66
+			location   	(1257, 2703)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	642
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4056C8C901DD"
+		    compartment 	(object Compartment
+			Parent_View 	@66
+			location   	(1257, 2804)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	6
+			max_width  	640)
+		    width      	660
+		    height     	398
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @67
+		    location   	(655, 2890)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@67
+			location   	(245, 2829)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	785
+			label      	"Statechart Diagram: Completion Transitions / Lifecycle")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	845
+		    height     	135
+		    quidu      	"4056C94C02EA")
+		(object AttachView "" @68
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@67
+		    supplier   	@66
+		    line_style 	0)))))
