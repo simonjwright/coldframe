@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 54eafef57e1e 2002/09/20 10:22:10 simon $ -->
+<!-- $Id: installation.html,v 58734fc32d27 2002/11/07 05:44:31 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -10,7 +10,15 @@
 
 <ul>
 <li><a href="#linux">under Linux</a>
-<li><a href="#windows">under Windows</a> 
+<ul>
+<li><a href="#linux-environment">environment</a>
+<li><a href="#linux-makefile"><tt>Makefile</tt></a>
+</ul>
+<li><a href="#windows">under Windows</a>
+<ul>
+<li><a href="#windows-environment">environment</a>
+<li><a href="#windows-makefile"><tt>Makefile</tt></a>
+</ul>
 </ul>
 
 <hr>
@@ -43,7 +51,7 @@ Components</a>; release 20020117 or later
 
 <p>The following installation notes match what's provided in the
 supplied <tt>Makefile-unix</tt>. If you install software elsewhere,
-<a href="#unix-alternate-location">you'll need to adjust the
+<a href="#linux-environment">you'll need to adjust the
 Makefile</a> (it has hooks for you to use environment or command line
 variables).
 
@@ -107,7 +115,46 @@ so that the compiler is <tt><b>gnat</b>gcc</tt>.
 (Ada source is in the <tt>lib</tt> and <tt>project</tt>
 subdirectories).
 
-<h3>Your Makefile</h3>
+<h3><a name="linux-environment">Environment variables</a></h3>
+
+<p>Setting these environment variables will simplify matters. Later
+sections assume these settings.
+
+<table border="1">
+
+<tr>
+<th>Variable
+<th>Use
+<th>Typical
+
+<tr>
+<td><tt>AUNIT</tt>
+<td>Location and version of AUnit
+<td><tt>aunit-<i>1.01</i></tt>
+
+<tr>
+<td><tt>BC</tt>
+<td>Location and version of the Booch Components
+<td><tt>bc-<i>20020602</i></tt>
+
+<tr>
+<td><tt>COLDFRAME</tt>
+<td>Location and version of ColdFrame
+<td><tt>cf-<i>20020921</i></tt>
+
+<tr>
+<td><tt>COLDFRAMEOUT</tt>
+<td>Where the extractor script places output from Rose
+<td>&nbsp;
+
+<tr>
+<td><tt>TOP</tt>
+<td>The place where the software is installed
+<td><tt>/usr/local/lib</tt>
+
+</table>
+
+<h3><a name="linux-makefile">Your Makefile</a></h3>
 
 <h4>Standard</h4>
 
@@ -118,7 +165,7 @@ up the Makefile that ColdFrame provides.
 <p>It should contain at least
 
 <pre>
-  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+  include $(TOP)/$(COLDFRAME)/Makefile-unix
 </pre>
 
 which means you need to type
@@ -130,7 +177,7 @@ which means you need to type
 If you want to make life even easier, you can change your Makefile to
 
 <pre>
-  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+  include $(TOP)/$(COLDFRAME)/Makefile-unix
 
   <b>all:: <i>Domain_1</i>.gen</b>
   <b>all:: <i>Domain_2</i>.gen</b>
@@ -143,18 +190,6 @@ etc, after which you only need to say
 </pre>
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
-
-
-<h4><a name="unix-alternate-location">Altering the default
-installation location</a></h4>
-
-<p>If you've decided to install other than in <tt>/usr/local/lib</tt>,
-you can alter where the Makefile looks for components: for example,
-
-<pre>
-  <b>TOP = /opt/local</b>
-  include <b>$(TOP)</b>/cf-<i>yyymmdd</i>/Makefile-unix
-</pre>
 
 
 <h4>Extracting to a different location</h4>
@@ -179,7 +214,7 @@ as an environment variable, or specify it in the Makefile:
 
 <pre>
   <b>COLDFRAMEOUT = $(HOME)/extracted</b>
-  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+  include $(TOP)/$(COLDFRAME)/Makefile-unix
 </pre>
 
 after which when you say
@@ -224,7 +259,7 @@ Components</a>; release 20020117 or later
 
 <p>This note is written assuming that everything is installed on the
 <tt>C:</tt> drive at the top level. <a
-href="#win-alternate-location">Alternate locations</a> are possible.
+href="#windows-environment">Alternate locations</a> are possible.
 
 <h3>Cygwin</h3>
 
@@ -270,7 +305,47 @@ href="http://libre.act-europe.fr/adamode/">ada-mode</a> (3.6).
 <p>This needs unpacking into <tt>C:\cf-<i>yyyymmdd</i></tt> (Ada
 source is in the <tt>lib</tt> and <tt>project</tt> subdirectories).
 
-<h3>Your Makefile</h3>
+<h3><a name="windows-environment">Environment variables</a></h3>
+
+<p>Setting these environment variables (in <i>My Computer / Properties
+/ Envronment</i>) will simplify matters. Later sections assume these
+settings.
+
+<table border="1">
+
+<tr>
+<th>Variable
+<th>Use
+<th>Typical
+
+<tr>
+<td><tt>AUNIT</tt>
+<td>Location and version of AUnit
+<td><tt>aunit-<i>1.01</i></tt>
+
+<tr>
+<td><tt>BC</tt>
+<td>Location and version of the Booch Components
+<td><tt>bc-<i>20020602</i></tt>
+
+<tr>
+<td><tt>COLDFRAME</tt>
+<td>Location and version of ColdFrame
+<td><tt>cf-<i>20020921</i></tt>
+
+<tr>
+<td><tt>COLDFRAMEOUT</tt>
+<td>Where the extractor script places output from Rose
+<td>&nbsp;
+
+<tr>
+<td><tt>TOP</tt>
+<td>The disk drive on which the software is installed
+<td><tt>c:</tt>
+
+</table>
+
+<h3><a name="windows-makefile">Your Makefile</a></h3>
 
 <h4>Standard</h4>
 
@@ -281,10 +356,10 @@ up the Makefile that ColdFrame provides.
 <p>It should contain at least
 
 <pre>
-  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+  include $(TOP)/$(COLDFRAME)/Makefile-winnt
 </pre>
 
-(you really do need a forward slash here) which means you need to type
+(you really do need forward slashes here) which means you need to type
 
 <pre>
   <i>$</i> make <i>Domain</i>.gen
@@ -293,7 +368,7 @@ up the Makefile that ColdFrame provides.
 If you want to make life even easier, you can change your Makefile to
 
 <pre>
-  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+  include $(TOP)/$(COLDFRAME)/Makefile-winnt
 
   <b>all:: <i>Domain_1</i>.gen</b>
   <b>all:: <i>Domain_2</i>.gen</b>
@@ -306,31 +381,6 @@ etc, after which you only need to say
 </pre>
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
-
-<h4><a name="win-alternate-location"></a>Altering the default
-installation location</h4>
-
-<p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
-ColdFrame are installed on the same drive, at the same level; for
-example, <tt>L:\Software\Tools</tt>.
-
-<p>Assuming this location, you'd change your Makefile to
-
-<pre>
-  <b>TOP = L:/Software/Tools</b>
-  include <b>$(TOP)</b>/cf-<i>yyymmdd</i>/Makefile-winnt
-
-
-  all:: <i>Domain_1</i>.gen
-  all:: <i>Domain_2</i>.gen
-</pre>
-
-(and I <em>do</em> mean <tt>/</tt>, not <tt>\</tt>!)
-
-<p>It's possible to set <tt>TOP</tt> as an environment variable; using
-<i>My Computer / Properties / Envronment</i>, the equivalent to the
-above example would be <tt>L:\Software\Tools</tt> (with the slashes in
-the Microsoft direction, this time!)
 
 <h4>Extracting to a different location</h4>
 
@@ -354,7 +404,7 @@ as an environment variable, or specify it in the Makefile:
 
 <pre>
   <b>COLDFRAMEOUT = $(HOME)/extracted</b>
-  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-winnt
+  include $(TOP)/$(COLDFRAME)/Makefile-winnt
 </pre>
 
 after which when you say
@@ -365,8 +415,6 @@ after which when you say
 
 ColdFrame will look for <tt>$HOME\extracted\Foo.raw</tt> but will create
 <tt>Foo.gen</tt> "here".
-
-
 
 <p><hr>
 <i>
