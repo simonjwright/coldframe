@@ -5,11 +5,11 @@
 <year>2004</year>
 <month>5</month>
 <day>8</day>
-<time>14:24</time>
+<time>21:44</time>
 </date>
 <documentation><![CDATA[Demonstrates "subtype migration".
 
-{ revision = $Id: Van_Fleet.raw,v a88ba45be8ba 2004/05/08 13:54:26 simon $ }]]></documentation>
+{ revision = $Revision: 7acae2ca41fe $ }]]></documentation>
 <classes>
 <class>
 <name>Van</name>
@@ -27,6 +27,22 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="abstract">
+<name>image</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<return>String</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get index</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 <operation stereotype="class">
 <name>lend</name>
 <visibility>PublicAccess</visibility>
@@ -81,6 +97,14 @@
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>image</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<return>String</return>
+<parameters>
+</parameters>
+</operation>
 <operation stereotype="accessor">
 <name>set expected termination</name>
 <visibility>PublicAccess</visibility>
@@ -114,6 +138,14 @@
 <attributes>
 </attributes>
 <operations>
+<operation>
+<name>image</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<return>String</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
@@ -161,6 +193,14 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="accessor">
+<name>get name</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>

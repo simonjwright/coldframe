@@ -11,13 +11,27 @@
     documentation 	
 |Demonstrates "subtype migration".
 |
-|{ revision = $Id: Van_Fleet.cat,v a88ba45be8ba 2004/05/08 13:54:26 simon $ }
+|{ revision = $Revision: 7acae2ca41fe $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Van"
 	    quid       	"409CC9B90195"
 	    operations 	(list Operations
+		(object Operation "image"
+		    quid       	"409D40FD0394"
+		    stereotype 	"abstract"
+		    result     	"String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get index"
+		    quid       	"409D41510150"
+		    stereotype 	"accessor"
+		    result     	"Text"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "lend"
 		    quid       	"409CCBC50148"
 		    stereotype 	"class"
@@ -53,6 +67,12 @@
 		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Van"
 		    quidu      	"409CC9B90195"))
 	    operations 	(list Operations
+		(object Operation "image"
+		    quid       	"409D4120006A"
+		    result     	"String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "set expected termination"
 		    quid       	"409CDB33038D"
 		    stereotype 	"accessor"
@@ -83,7 +103,14 @@
 		    quid       	"409CC9DF02C6"
 		    label      	"g1"
 		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Van"
-		    quidu      	"409CC9B90195")))
+		    quidu      	"409CC9B90195"))
+	    operations 	(list Operations
+		(object Operation "image"
+		    quid       	"409D413A0021"
+		    result     	"String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
 	(object Class "Service"
 	    quid       	"409CC9CF001A"
 	    class_attributes 	(list class_attribute_list
@@ -99,6 +126,14 @@
 		    quidu      	"409CC9B90195")))
 	(object Class "Customer"
 	    quid       	"409CC9D6024B"
+	    operations 	(list Operations
+		(object Operation "get name"
+		    quid       	"409D4226034B"
+		    stereotype 	"accessor"
+		    result     	"Text"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "name"
 		    quid       	"409CCB150221"
@@ -166,8 +201,8 @@
 			color      	0
 			default_color 	TRUE)
 		    nlines     	1
-		    max_width  	600
-		    label      	"$Id: Van_Fleet.cat,v a88ba45be8ba 2004/05/08 13:54:26 simon $")
+		    max_width  	1025
+		    label      	"$Id: Van_Fleet.cat,v 7acae2ca41fe 2004/05/08 20:44:08 simon $")
 		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Pool Van" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -185,50 +220,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1308, 726)
+			location   	(1252, 699)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	198
+			max_width  	310
 			justify    	0
 			label      	"Pool Van")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9C50029"
-		    width      	216
-		    height     	114
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Van" @3
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(633, 333)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@3
-			location   	(116, 215)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	1034
-			justify    	0
-			label      	"Van")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"409CC9B90195"
 		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(116, 271)
+			Parent_View 	@2
+			location   	(1252, 755)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -239,39 +243,15 @@
 			    color      	0
 			    default_color 	TRUE)
 			icon_style 	"Icon"
-			fill_color 	13434879
+			fill_color 	16777215
 			anchor     	2
-			nlines     	4
-			max_width  	1030)
-		    width      	1052
-		    height     	258
+			nlines     	2
+			max_width  	308)
+		    width      	328
+		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "g1" @4
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@4
-			location   	(1083, 588)
-			anchor_loc 	1
-			nlines     	1
-			max_width  	450
-			justify    	0
-			label      	"g1")
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    quidu      	"409CC9DF02C6"
-		    client     	@2
-		    supplier   	@3
-		    line_style 	0)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Service" @5
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Service" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -287,7 +267,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@5
+			Parent_View 	@3
 			location   	(1866, 234)
 			fill_color 	13434879
 			nlines     	1
@@ -299,7 +279,7 @@
 		    fill_color 	13434879
 		    quidu      	"409CC9CF001A"
 		    compartment 	(object Compartment
-			Parent_View 	@5
+			Parent_View 	@3
 			location   	(1866, 290)
 			font       	(object Font
 			    size       	10
@@ -314,11 +294,83 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	455)
+			max_width  	462)
 		    width      	476
 		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Van" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(633, 333)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(116, 170)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1034
+			justify    	0
+			label      	"Van")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9B90195"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(116, 226)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	6
+			max_width  	1030)
+		    width      	1052
+		    height     	348
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @5
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1100, 597)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9DF02C6"
+		    client     	@2
+		    supplier   	@4
+		    line_style 	0)
 		(object AssociationViewNew "a1" @6
 		    location   	(1507, 330)
 		    font       	(object Font
@@ -392,7 +444,7 @@
 			    line_color 	3342489
 			    quidu      	"409CC9EC026A"
 			    client     	@6
-			    supplier   	@5
+			    supplier   	@3
 			    line_style 	0
 			    label      	(object SegLabel @10
 				Parent_View 	@8
@@ -452,7 +504,7 @@
 			    line_color 	3342489
 			    quidu      	"409CC9EC026C"
 			    client     	@6
-			    supplier   	@3
+			    supplier   	@4
 			    line_style 	0
 			    label      	(object SegLabel @13
 				Parent_View 	@11
@@ -475,12 +527,12 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Customer" @14
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Hired Van" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(462, 1304)
+		    location   	(469, 854)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -492,55 +544,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(274, 1231)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	376
-			justify    	0
-			label      	"Customer")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"409CC9D6024B"
-		    compartment 	(object Compartment
-			Parent_View 	@14
-			location   	(274, 1287)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	373)
-		    width      	394
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Hired Van" @15
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(459, 785)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@15
-			location   	(9, 645)
+			location   	(19, 691)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	900
@@ -551,8 +555,8 @@
 		    fill_color 	13434879
 		    quidu      	"409CC9BF007B"
 		    compartment 	(object Compartment
-			Parent_View 	@15
-			location   	(9, 701)
+			Parent_View 	@14
+			location   	(19, 747)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -565,13 +569,42 @@
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	5
+			nlines     	6
 			max_width  	898)
 		    width      	918
-		    height     	302
+		    height     	348
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "g1" @16
+		(object InheritView "g1" @15
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(550, 592)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9DC028F"
+		    client     	@14
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Customer" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(468, 1394)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -583,20 +616,39 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(548, 548)
-			anchor_loc 	1
+			location   	(172, 1299)
+			fill_color 	13434879
 			nlines     	1
-			max_width  	450
+			max_width  	592
 			justify    	0
-			label      	"g1")
-		    stereotype 	TRUE
+			label      	"Customer")
+		    icon_style 	"Icon"
 		    line_color 	3342489
-		    quidu      	"409CC9DC028F"
-		    client     	@15
-		    supplier   	@3
-		    line_style 	0)
+		    fill_color 	13434879
+		    quidu      	"409CC9D6024B"
+		    compartment 	(object Compartment
+			Parent_View 	@16
+			location   	(172, 1355)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	590)
+		    width      	610
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
 		(object AssociationViewNew "a2" @17
-		    location   	(460, 1077)
+		    location   	(468, 1157)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -608,7 +660,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @18
 			Parent_View 	@17
-			location   	(460, 1018)
+			location   	(468, 1169)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -625,15 +677,15 @@
 			justify    	0
 			label      	"a2"
 			pctDist    	0.500000
-			height     	60
-			orientation 	0)
+			height     	12
+			orientation 	1)
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"409CC9F20287"
 		    roleview_list 	(list RoleViews
 			(object RoleView "is borrowing" @19
 			    Parent_View 	@17
-			    location   	(142, -208)
+			    location   	(150, -128)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -645,7 +697,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @20
 				Parent_View 	@19
-				location   	(325, 969)
+				location   	(334, 1057)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -668,11 +720,11 @@
 			    line_color 	3342489
 			    quidu      	"409CC9F3001C"
 			    client     	@17
-			    supplier   	@15
+			    supplier   	@14
 			    line_style 	0
 			    label      	(object SegLabel @21
 				Parent_View 	@19
-				location   	(519, 962)
+				location   	(528, 1053)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -693,7 +745,7 @@
 				orientation 	1))
 			(object RoleView "is on loan to" @22
 			    Parent_View 	@17
-			    location   	(142, -208)
+			    location   	(150, -128)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -705,7 +757,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @23
 				Parent_View 	@22
-				location   	(319, 1195)
+				location   	(326, 1263)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -728,11 +780,11 @@
 			    line_color 	3342489
 			    quidu      	"409CC9F3001E"
 			    client     	@17
-			    supplier   	@14
+			    supplier   	@16
 			    line_style 	0
 			    label      	(object SegLabel @24
 				Parent_View 	@22
-				location   	(504, 1196)
+				location   	(511, 1265)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"

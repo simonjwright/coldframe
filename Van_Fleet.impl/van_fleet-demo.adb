@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-demo.adb,v a120898249c0 2004/05/08 19:18:58 simon $
+--  $Id: van_fleet-demo.adb,v 7acae2ca41fe 2004/05/08 20:44:08 simon $
 
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
@@ -21,9 +21,19 @@ with ColdFrame.Instances;
 with Van_Fleet.Customer;
 with Van_Fleet.Initialize;
 with Van_Fleet.Pool_Van.Inheritance;
-with Van_Fleet.Van;
+with Van_Fleet.Van.All_Instances;
+with Van_Fleet.Van.Iterate;
 
 procedure Van_Fleet.Demo is
+
+   procedure Print (V : Van.Handle);
+   pragma Inline_Always (Print);
+   procedure Print is new Van.Iterate (Print);
+   procedure Print (V : Van.Handle) is
+   begin
+      Put_Line (Van.Image (V));
+   end Print;
+
 begin
 
    Initialize;
@@ -106,6 +116,11 @@ begin
    exception
       when Not_Found => null;
    end;
+
+   Print (Van.All_Instances);
+
+   Van.Returned (Van.Find ((Index => To_Unbounded_String ("PBL196R"))));
+   Print (Van.All_Instances);
 
 end Van_Fleet.Demo;
 
