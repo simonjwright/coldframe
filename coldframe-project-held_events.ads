@@ -10,20 +10,20 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.ads,v $
---  $Revision: 557c6c64e6a6 $
---  $Date: 2003/07/24 21:04:15 $
+--  $Revision: 2e5a61225d18 $
+--  $Date: 2004/01/16 06:51:43 $
 --  $Author: simon $
 
-with BC.Containers.Collections.Unbounded;
-with BC.Containers.Collections.Ordered.Unbounded;
 with Ada.Real_Time;
+with BC.Containers.Collections.Ordered.Unbounded;
+with BC.Containers.Collections.Unbounded;
 with ColdFrame.Project.Events;
 with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Times;
 
 package ColdFrame.Project.Held_Events is
 
-   --  Types and Operations to support Held_Event_Queue_Signature
+   --  Types and Operations to support Held_Event_Queue_Signature.
 
    type Queue is limited private;
 
@@ -51,6 +51,9 @@ package ColdFrame.Project.Held_Events is
                                 For_The_Instance : Events.Instance_Base_P);
 
    procedure Tear_Down (Q : in out Queue);
+
+   --  We can't actually instantiate the signature here, which would
+   --  save a unit, because that would be a premature use of Queue.
 
 private
 
