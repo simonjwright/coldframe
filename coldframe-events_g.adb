@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: f10531072c11 $
---  $Date: 2003/04/07 18:11:53 $
+--  $Revision: d42456779d35 $
+--  $Date: 2003/09/02 18:57:03 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -259,6 +259,11 @@ package body ColdFrame.Events_G is
          The_Queue.Access_Count := The_Queue.Access_Count - 1;
          if The_Queue.Access_Count = 0 then
             Delete (The_Queue);
+         else
+            --  We have to clear this pointer (which is of course the
+            --  user's) in case there's a cascade teardown and she
+            --  calls us again.
+            The_Queue := null;
          end if;
       end if;
    end Tear_Down;
