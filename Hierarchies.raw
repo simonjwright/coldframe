@@ -1,0 +1,243 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Hierarchies</name>
+<date>
+<year>2002</year>
+<month>5</month>
+<day>11</day>
+<time>15:34</time>
+</date>
+<documentation>Support for subtype migration in deeply layered multiple inheritance hierarchies.</documentation>
+<classes>
+<class>
+<name>R 1</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>R 2</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>R 3</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>S 1</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>S 2</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>S 3</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>S 4</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>T 1</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>T 2</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>F 1</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>F 2</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>T 3</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+<inheritance>
+<name>a</name>
+<documentation></documentation>
+<child>S 1</child>
+<parent>R 1</parent>
+</inheritance>
+<inheritance>
+<name>a</name>
+<documentation></documentation>
+<child>S 2</child>
+<parent>R 1</parent>
+</inheritance>
+<inheritance>
+<name>c</name>
+<documentation></documentation>
+<child>S 3</child>
+<parent>R 3</parent>
+</inheritance>
+<inheritance>
+<name>b</name>
+<documentation></documentation>
+<child>S 3</child>
+<parent>R 2</parent>
+</inheritance>
+<inheritance>
+<name>c</name>
+<documentation></documentation>
+<child>S 4</child>
+<parent>R 3</parent>
+</inheritance>
+<inheritance>
+<name>d</name>
+<documentation></documentation>
+<child>T 1</child>
+<parent>S 2</parent>
+</inheritance>
+<inheritance>
+<name>d</name>
+<documentation></documentation>
+<child>T 2</child>
+<parent>S 2</parent>
+</inheritance>
+<inheritance>
+<name>f</name>
+<documentation></documentation>
+<child>F 1</child>
+<parent>T 2</parent>
+</inheritance>
+<inheritance>
+<name>f</name>
+<documentation></documentation>
+<child>F 2</child>
+<parent>T 2</parent>
+</inheritance>
+<inheritance>
+<name>e</name>
+<documentation></documentation>
+<child>F 2</child>
+<parent>S 3</parent>
+</inheritance>
+<inheritance>
+<name>e</name>
+<documentation></documentation>
+<child>T 3</child>
+<parent>S 3</parent>
+</inheritance>
+</relationships>
+</domain>

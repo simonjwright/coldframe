@@ -1,0 +1,1111 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Hierarchies"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CDD01290395"
+    documentation 	"Support for subtype migration in deeply layered multiple inheritance hierarchies."
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "R_1"
+	    quid       	"3CDD01A70240"
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF79B101A1"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r1"
+			    type       	"CIH"))
+		    result     	"R_1"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF79D9037F"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3CDD11980154"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "R_2"
+	    quid       	"3CDD01D90002"
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF7BD80129"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r2"
+			    type       	"CIH"))
+		    result     	"R_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF7BEA0325"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3CDD11A603D0"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "R_3"
+	    quid       	"3CDD01E0011D"
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF7BFF02FD"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r3"
+			    type       	"CIH"))
+		    result     	"R_3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF7C1A032F"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3CDD11F9018B"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "S_1"
+	    quid       	"3CDD01EC017B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD027902F4"
+		    label      	"a"
+		    supplier   	"Logical View::Hierarchies::R_1"
+		    quidu      	"3CDD01A70240")))
+	(object Class "S_2"
+	    quid       	"3CDD01F202A9"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD027600ED"
+		    label      	"a"
+		    supplier   	"Logical View::Hierarchies::R_1"
+		    quidu      	"3CDD01A70240"))
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF795E02D5"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r1"
+			    type       	"CIH"))
+		    result     	"S_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r1_parent"
+		    quid       	"3CDF79810393"
+		    stereotype 	"generated"
+		    result     	"R_1"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF79990163"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "S_3"
+	    quid       	"3CDD01F703C5"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD026B0271"
+		    label      	"c"
+		    supplier   	"Logical View::Hierarchies::R_3"
+		    quidu      	"3CDD01E0011D")
+		(object Inheritance_Relationship
+		    quid       	"3CDD0272013C"
+		    label      	"b"
+		    supplier   	"Logical View::Hierarchies::R_2"
+		    quidu      	"3CDD01D90002"))
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF7ACB0159"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r2"
+			    type       	"CIH")
+			(object Parameter "r3"
+			    type       	"CIH"))
+		    result     	"S_3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r2_parent"
+		    quid       	"3CDF7AED02B7"
+		    stereotype 	"generated"
+		    result     	"R_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r3_parent"
+		    quid       	"3CDF7B090131"
+		    stereotype 	"generated"
+		    result     	"R_3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF7B1A018B"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "S_4"
+	    quid       	"3CDD0201011B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD026E018C"
+		    label      	"c"
+		    supplier   	"Logical View::Hierarchies::R_3"
+		    quidu      	"3CDD01E0011D")))
+	(object Class "T_1"
+	    quid       	"3CDD021000C2"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD115F03CC"
+		    label      	"d"
+		    supplier   	"Logical View::Hierarchies::S_2"
+		    quidu      	"3CDD01F202A9")))
+	(object Class "T_2"
+	    quid       	"3CDD021503D9"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD11640096"
+		    label      	"d"
+		    supplier   	"Logical View::Hierarchies::S_2"
+		    quidu      	"3CDD01F202A9"))
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF78D00285"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r1"
+			    type       	"CIH"))
+		    result     	"T_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r1_parent"
+		    quid       	"3CDF7918013B"
+		    stereotype 	"generated"
+		    result     	"R_1"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_s2_parent"
+		    quid       	"3CDF792E0254"
+		    stereotype 	"generated"
+		    result     	"S_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF79400113"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "F_1"
+	    quid       	"3CDD021D005D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD116902AE"
+		    label      	"f"
+		    supplier   	"Logical View::Hierarchies::T_2"
+		    quidu      	"3CDD021503D9")))
+	(object Class "F_2"
+	    quid       	"3CDD022701A7"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD116E02EB"
+		    label      	"f"
+		    supplier   	"Logical View::Hierarchies::T_2"
+		    quidu      	"3CDD021503D9")
+		(object Inheritance_Relationship
+		    quid       	"3CDD117300A5"
+		    label      	"e"
+		    supplier   	"Logical View::Hierarchies::S_3"
+		    quidu      	"3CDD01F703C5"))
+	    operations 	(list Operations
+		(object Operation "create_tree"
+		    quid       	"3CDF77E70010"
+		    stereotype 	"generated"
+		    parameters 	(list Parameters
+			(object Parameter "r1"
+			    type       	"CIH"))
+		    result     	"F_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r1_parent"
+		    quid       	"3CDF781901F0"
+		    stereotype 	"generated"
+		    result     	"R_1"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r2_parent"
+		    quid       	"3CDF783C027B"
+		    stereotype 	"generated"
+		    result     	"R_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_r3_parent"
+		    quid       	"3CDF785A00FF"
+		    stereotype 	"generated"
+		    result     	"R_3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_s2_parent"
+		    quid       	"3CDF788C01E5"
+		    stereotype 	"generated"
+		    result     	"S_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_s3_parent"
+		    quid       	"3CDF789B03A7"
+		    stereotype 	"generated"
+		    result     	"S_3"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "find_t2_parent"
+		    quid       	"3CDF78AD005F"
+		    stereotype 	"generated"
+		    result     	"T_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "T_3"
+	    quid       	"3CDD023102C2"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDD11780163"
+		    label      	"e"
+		    supplier   	"Logical View::Hierarchies::S_3"
+		    quidu      	"3CDD01F703C5")))
+	(object Class "CIH"
+	    quid       	"3CDF7C350052"
+	    documentation 	
+|[[ renames : ColdFrame.Instances.Handle ]]
+|
+	    
+	    stereotype 	"type"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CDF76710057"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object NoteView @1
+		    location   	(496, 224)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(211, 164)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	534
+			label      	"Class Diagram: Hierarchies / Tree view")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	594
+		    height     	132
+		    quidu      	"3CDD017D02DB")
+		(object NoteView @2
+		    location   	(496, 384)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(211, 318)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	534
+			label      	"Class Diagram: Hierarchies / F 2 view")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	594
+		    height     	144
+		    quidu      	"3CDF767D024E")))
+	(object ClassDiagram "F 2 view"
+	    quid       	"3CDF767D024E"
+	    title      	"F 2 view"
+	    zoom       	85
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	1
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Hierarchies::R_1" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(656, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(263, 50)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	786
+			justify    	0
+			label      	"R_1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01A70240"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(263, 109)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	783)
+		    width      	804
+		    height     	276
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::R_2" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1616, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(1223, 51)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	786
+			justify    	0
+			label      	"R_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01D90002"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(1223, 110)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	783)
+		    width      	804
+		    height     	274
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::R_3" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2480, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(2087, 51)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	786
+			justify    	0
+			label      	"R_3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01E0011D"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(2087, 110)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	783)
+		    width      	804
+		    height     	274
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_2" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(656, 752)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(263, 626)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	786
+			justify    	0
+			label      	"S_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01F202A9"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(263, 685)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	783)
+		    width      	804
+		    height     	276
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "a" @7
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(656, 463)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD027600ED"
+		    client     	@6
+		    supplier   	@3
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Hierarchies::T_2" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(656, 1280)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(263, 1130)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	786
+			justify    	0
+			label      	"T_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD021503D9"
+		    compartment 	(object Compartment
+			Parent_View 	@8
+			location   	(263, 1189)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	783)
+		    width      	804
+		    height     	324
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "d" @9
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(656, 1004)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"d")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD11640096"
+		    client     	@8
+		    supplier   	@6
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Hierarchies::F_2" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(656, 1904)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(265, 1682)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	782
+			justify    	0
+			label      	"F_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD022701A7"
+		    compartment 	(object Compartment
+			Parent_View 	@10
+			location   	(265, 1741)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	8
+			max_width  	779)
+		    width      	800
+		    height     	468
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_3" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1984, 752)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1515, 602)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	938
+			justify    	0
+			label      	"S_3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01F703C5"
+		    compartment 	(object Compartment
+			Parent_View 	@11
+			location   	(1515, 661)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	934)
+		    width      	956
+		    height     	324
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "c" @12
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(2242, 451)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"c")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD026B0271"
+		    client     	@11
+		    supplier   	@5
+		    line_style 	0)
+		(object InheritView "b" @13
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1791, 452)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"b")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD0272013C"
+		    client     	@11
+		    suppdier   	@4
+		    line_style 	0)
+		(object InheritView "f" @14
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(656, 1556)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"f")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD116E02EB"
+		    client     	@10
+		    supplier   	@8
+		    line_style 	0)
+		(object InheritView "e" @15
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(1561, 1385)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"e")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD117300A5"
+		    client     	@10
+		    supplier   	@11
+		    vertices   	(list Points
+			(1056, 1672)
+			(1631, 1345)
+			(1885, 914))
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Hierarchies::CIH" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1792, 1936)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(1709, 1908)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"CIH")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@16
+			location   	(1709, 1860)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDF7C350052"
+		    width      	184
+		    height     	176
+		    annotation 	8
+		    autoResize 	TRUE)))
+	(object ClassDiagram "Tree view"
+	    quid       	"3CDD017D02DB"
+	    title      	"Tree view"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Hierarchies::R_1" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(480, 192)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(399, 151)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"R_1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01A70240"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::R_2" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1104, 192)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(1023, 147)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"R_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01D90002"
+		    height     	115
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::R_3" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1632, 192)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1551, 147)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"R_3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01E0011D"
+		    height     	115
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_1" @20
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(256, 512)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(175, 471)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"S_1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01EC017B"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_2" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(704, 512)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(623, 471)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"S_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01F202A9"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_3" @22
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1392, 512)
+		    label      	(object ItemLabel
+			Parent_View 	@22
+			location   	(1311, 471)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"S_3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD01F703C5"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::S_4" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1840, 512)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(1759, 471)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"S_4")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD0201011B"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::T_1" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(480, 896)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(399, 855)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"T_1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD021000C2"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::T_2" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(912, 896)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(831, 855)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"T_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD021503D9"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::F_1" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(736, 1312)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(655, 1271)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"F_1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD021D005D"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::F_2" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1152, 1312)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(1071, 1271)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"F_2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD022701A7"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Hierarchies::T_3" @28
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1536, 896)
+		    label      	(object ItemLabel
+			Parent_View 	@28
+			location   	(1455, 855)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"T_3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDD023102C2"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "c" @29
+		    label      	(object ItemLabel
+			Parent_View 	@29
+			location   	(1510, 354)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"c")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD026B0271"
+		    client     	@22
+		    supplier   	@19
+		    line_style 	0)
+		(object InheritView "c" @30
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1737, 354)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"c")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD026E018C"
+		    client     	@23
+		    supplier   	@19
+		    line_style 	0)
+		(object InheritView "b" @31
+		    label      	(object ItemLabel
+			Parent_View 	@31
+			location   	(1249, 353)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"b")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD0272013C"
+		    client     	@22
+		    supplier   	@18
+		    line_style 	0)
+		(object InheritView "a" @32
+		    label      	(object ItemLabel
+			Parent_View 	@32
+			location   	(591, 351)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"a")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD027600ED"
+		    client     	@21
+		    supplier   	@17
+		    line_style 	0)
+		(object InheritView "a" @33
+		    label      	(object ItemLabel
+			Parent_View 	@33
+			location   	(368, 351)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"a")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD027902F4"
+		    client     	@20
+		    supplier   	@17
+		    line_style 	0)
+		(object InheritView "d" @34
+		    label      	(object ItemLabel
+			Parent_View 	@34
+			location   	(591, 704)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"d")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD115F03CC"
+		    client     	@24
+		    supplier   	@21
+		    line_style 	0)
+		(object InheritView "d" @35
+		    label      	(object ItemLabel
+			Parent_View 	@35
+			location   	(807, 703)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"d")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD11640096"
+		    client     	@25
+		    supplier   	@21
+		    line_style 	0)
+		(object InheritView "f" @36
+		    label      	(object ItemLabel
+			Parent_View 	@36
+			location   	(824, 1103)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"f")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD116902AE"
+		    client     	@26
+		    supplier   	@25
+		    line_style 	0)
+		(object InheritView "e" @37
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(1463, 703)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"e")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD11780163"
+		    client     	@28
+		    supplier   	@22
+		    line_style 	0)
+		(object InheritView "f" @38
+		    label      	(object ItemLabel
+			Parent_View 	@38
+			location   	(1031, 1103)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"f")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD116E02EB"
+		    client     	@27
+		    supplier   	@25
+		    line_style 	0)
+		(object InheritView "e" @39
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(1272, 911)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"e")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDD117300A5"
+		    client     	@27
+		    supplier   	@22
+		    line_style 	0)))))
