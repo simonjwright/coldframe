@@ -3,14 +3,14 @@
 <name>House Management</name>
 <date>
 <year>2003</year>
-<month>8</month>
-<day>30</day>
-<time>21:42</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
 <documentation>This domain represents an electronic houlsehold control system.
 The first release only manages the stairwell lighting system.
 
-[[ revision : $Id: House_Management.raw,v 05d65f92e4d8 2003/08/30 20:47:19 simon $ ]]</documentation>
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class>
 <name>Lamp</name>
@@ -200,12 +200,12 @@ A possible future enhancement such as having the "on" time of the lamp depend on
 <concurrency>Sequential</concurrency>
 <documentation>There is a lamp beween each pair of landings. This type names the lamps.
 
-[[  enumeration :
-basement,
-ground floor,
-first floor,
+{ enumeration =
+basement |
+ground floor |
+first floor |
 second floor
-]]</documentation>
+}</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -220,12 +220,12 @@ second floor
 <concurrency>Sequential</concurrency>
 <documentation>There is a pushbutton on each landing. This type names the pushbuttons.
 
-[[ enumeration:
-basement,
-ground floor,
-first floor,
+{ enumeration =
+basement |
+ground floor |
+first floor |
 second floor
-]]</documentation>
+}</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -240,7 +240,7 @@ second floor
 <concurrency>Sequential</concurrency>
 <documentation>This type is used by the supporting Digital IO domain to report switch state changes.
 
-[[ imported : Digital IO ]]</documentation>
+{ imported = Digital IO }</documentation>
 <attributes>
 </attributes>
 <operations>

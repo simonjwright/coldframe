@@ -1,14 +1,15 @@
 <domain>
-<extractor>cf-20030629t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Serialization</name>
 <date>
 <year>2003</year>
-<month>7</month>
-<day>3</day>
-<time>19:59</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
 <documentation>This domain is a demonstration of the "serialization" features of ColdFrame.
-[[ revision : $Revision: cc1adc23db91 $ ]]
+
+{ revision = $Revision: 3c33faafeb46 $ }
 </documentation>
 <classes>
 <class stereotype="public">
@@ -63,7 +64,7 @@
 <concurrency>Sequential</concurrency>
 <documentation>The class of all serializable records.
 
-[[ renames : Serialization_Support.Base_Class ]]</documentation>
+{ renames = Serialization_Support.Base_Class }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -78,7 +79,8 @@
 <concurrency>Sequential</concurrency>
 <documentation>An IP port number.
 
-[[ renames : GNAT.Sockets.Port_Type ]]</documentation>
+{ renames = GNAT.Sockets.Port_Type,
+hash = discrete }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -173,9 +175,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <state>
 <name>outputting</name>
 <entryactions>
-<action>
-<name>post</name>
-</action>
+<entryaction><name>post</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
@@ -184,25 +184,22 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <transition>
 <source>initial</source>
 <target>running</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>running</source>
 <target>outputting</target>
-<event>
-<name>posted value</name>
-</event>
+<event><name>posted value</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>outputting</source>
 <target>running</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 </transitions>
@@ -228,7 +225,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <concurrency>Sequential</concurrency>
 <documentation>An IP socket.
 
-[[ renames : GNAT.Sockets.Socket_Type ]]</documentation>
+{ renames = GNAT.Sockets.Socket_Type }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -243,7 +240,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <concurrency>Sequential</concurrency>
 <documentation>Gives access to a Stream on a Socket.
 
-[[ imported : GNAT.Sockets ]]</documentation>
+{ imported = GNAT.Sockets }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -258,7 +255,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <concurrency>Sequential</concurrency>
 <documentation>The base type from which all serializable records are derived.
 
-[[ renames : Serialization_Support.Base ]]</documentation>
+{ renames = Serialization_Support.Base }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -273,7 +270,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <concurrency>Sequential</concurrency>
 <documentation>Contains a data record while it's in the event queue.
 
-[[ imported : Serialization_Support  ]]</documentation>
+{ imported  = Serialization_Support  }</documentation>
 <attributes>
 </attributes>
 <operations>

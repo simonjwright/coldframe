@@ -1,16 +1,19 @@
 <domain>
-<extractor>cf-20030614t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Performance</name>
 <date>
 <year>2003</year>
-<month>6</month>
-<day>22</day>
-<time>18:44</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
-<documentation></documentation>
+<documentation>Classes for ColdFrame performance tests.
+
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class>
 <name>Owner</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -23,6 +26,7 @@
 </class>
 <class>
 <name>Pet</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -84,9 +88,10 @@
 </class>
 <class stereotype="type">
 <name>Owners</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration : Alice, Bob, Carol, Dave, Edward, Freddie, George, Henrietta, Ian, Joan, Kenneth, Liam, Mary, Norma, Oscar, Peter, Quentin, Richard, Simon, Tania, Ursula, Victor, Willa, Xena, Yorick, Zuleika ]]
+<documentation>{ enumeration = Alice | Bob | Carol | Dave | Edward | Freddie | George | Henrietta | Ian | Joan | Kenneth | Liam | Mary | Norma | Oscar | Peter | Quentin | Richard | Simon | Tania | Ursula | Victor | Willa | Xena | Yorick | Zuleika }
 </documentation>
 <attributes>
 </attributes>
@@ -97,9 +102,10 @@
 </class>
 <class stereotype="type">
 <name>Pets</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration : Archie, Bast, Charlie, Denny, Egbert, Fido, Geronimo, Herhert, Ishbel, Jimmy, Karl, Lolly, Muppet, Nancy, Osric, Patsy, Queenie, Rover, Spot, Tigger, Uncle, Vanya, Whisky, Xerxes, Yankee, Zara]]</documentation>
+<documentation>{ enumeration = Archie | Bast | Charlie | Denny | Egbert | Fido | Geronimo | Herbert | Ishbel | Jimmy | Karl | Lolly | Muppet | Nancy | Osric | Patsy | Queenie | Rover | Spot | Tigger | Uncle | Vanya | Whisky | Xerxes | Yankee | Zara }</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -109,6 +115,7 @@
 </class>
 <class>
 <name>Cat</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -128,6 +135,7 @@
 </class>
 <class>
 <name>Dog</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -147,6 +155,7 @@
 </class>
 <class>
 <name>House</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -159,6 +168,7 @@
 </class>
 <class>
 <name>Person</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>

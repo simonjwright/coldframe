@@ -1,13 +1,15 @@
 <domain>
-<extractor>cf-20031031t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Bad Code Regressions</name>
 <date>
 <year>2003</year>
-<month>10</month>
-<day>31</day>
-<time>07:08</time>
+<month>11</month>
+<day>15</day>
+<time>18:11</time>
 </date>
-<documentation></documentation>
+<documentation>Regression tests that involve detecting errors.
+
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class>
 <name>Child With Function</name>
@@ -81,20 +83,20 @@
 <name>A</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation>There is more than one transition triggered by E from here.</documentation>
 </state>
 <state>
 <name>B</name>
 <entryactions>
 <entryaction><name>Delete</name></entryaction>
 </entryactions>
-<documentation></documentation>
+<documentation>There is a Delete entry action followed by drop-throughs.</documentation>
 </state>
 <state>
 <name>C</name>
 <entryactions>
 </entryactions>
-<documentation></documentation>
+<documentation>There is a triggered tranition as well as a drop-through.</documentation>
 </state>
 <state>
 <name>D</name>
