@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ebd5fa9a92cf 2004/01/25 07:40:52 simon $ -->
+<!-- $Id: bugs.html,v d4ac944171f6 2004/01/27 06:45:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -215,19 +215,29 @@ href="installation.html#windows-override">Windows</a>.
 which may cause <tt>Tasking_Error</tt> if the active instance tries
 (for example) to post an event.
 
-<dt>0226 (raised 22.i.04)
-
-<dd>If a class is an &#171;active&#187; &#171;singleton&#187; and has
-&#171;class&#187; attributes with initial values, the task starts
-before the initial values are assigned.
-
 <dt>0227 (raised 23.i.04)
 
 <dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
 returning a composite value, the generated code won't compile.") is
 still present (for both &#171;type&#187;s and &#171;class&#187;es)
 when the composite value is imported or inherited from a parent
-package.
+package (and therefore isn't otherwise mentioned in the model)..
+
+<!-- next: 0230 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>27.i.04</h3>
+
+<dl>
+
+<dt>0226 (raised 22.i.04)
+
+<dd>If a class is an &#171;active&#187; &#171;singleton&#187; and has
+&#171;class&#187; attributes with initial values, the task starts
+before the initial values are assigned.
 
 <dt>0228 (raised 23.i.04)
 
@@ -242,13 +252,9 @@ package.
 <dd>The documentation on an operation that matches an accessor profile
 isn't copied to the separate body.
 
-<!-- next: 0230 -->
-
 </dl>
 
-<h2><a name="fixed">Fixed</a></h2>
-
-<h3>13.i.03</h3>
+<h3>13.i.04</h3>
 
 <dl>
 

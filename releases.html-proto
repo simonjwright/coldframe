@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3bbfe3ac0f00 2004/01/21 20:46:38 simon $ -->
+<!-- $Id: releases.html-proto,v d4ac944171f6 2004/01/27 06:45:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -61,11 +61,17 @@ markedt <tt>{hash=enumeration}</tt>
 <li>an <tt>{integer}</tt> or <tt>{enumerated}</tt> &#171;type&#187; of
 small enough range (currently 49)
 </ul>
-
 <p>the container for the extent of the class (all the current instances)
 is implemented as an array rather than a <a
 href="resources.html#booch-components">Booch Components</a>
 <tt>Map</tt>.
+
+
+<p>Callback support asserts that:
+<ul>
+<li>on registering, the procedure hasn't already been registered
+<li>on deregistering, the procedure has been registered
+</ul>
 
 
 <p><dt>20031126
