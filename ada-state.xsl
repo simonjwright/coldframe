@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-state.xsl,v 2450a8a45207 2004/06/30 21:19:31 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -109,15 +109,26 @@
        machine. -->
   <xsl:template name= "state-machine-states">
 
+    <!-- Check for an initial state. -->
+    <xsl:if test="not(statemachine/state/@initial)">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
+        <xsl:text>Error: no initial state in </xsl:text>
+        <xsl:value-of select="name"/>
+      </xsl:message>
+    </xsl:if>
+
     <xsl:value-of select="$I"/>
     <xsl:text>type State_Machine_State_T is&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
+
     <xsl:for-each select="statemachine/state/name">
 
       <!-- initial state first -->
       <!-- XXX final state last? -->
       <xsl:sort select="concat(not (../@initial),.)"/>
+
       <xsl:value-of select="."/>
       <xsl:if test="position() &lt; last()">
         <xsl:text>,&#10; </xsl:text>
@@ -166,9 +177,9 @@
       </xsl:for-each>
 
     </xsl:for-each>
+
     <xsl:text>);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
-
 
   </xsl:template>
 
