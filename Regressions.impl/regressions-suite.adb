@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 9b3fd38f35fc 2003/11/25 21:31:55 simon $
+--  $Id: regressions-suite.adb,v 2eaea72d9b8f 2003/12/13 06:15:37 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -17,13 +17,24 @@ with Regressions.Events;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
+with Regressions.Serializable;
+with Regressions.Tear_Down;
+
+--  The following units only have to compile
+
+with Regressions.Bounded_String_ID;
 with Regressions.Max_More;
 with Regressions.Max_One;
 with Regressions.Max_More_C;
 with Regressions.Max_One_C;
-with Regressions.Serializable;
-with Regressions.Tear_Down;
 
+pragma Warnings (Off, Regressions.Bounded_String_ID);
+pragma Warnings (Off, Regressions.Max_More);
+pragma Warnings (Off, Regressions.Max_One);
+pragma Warnings (Off, Regressions.Max_More_C);
+pragma Warnings (Off, Regressions.Max_One_C);
+
+--  May not be referenced for released versions
 pragma Warnings (Off, Ada.Text_IO);
 
 package body Regressions.Suite is
@@ -571,5 +582,6 @@ package body Regressions.Suite is
       AUnit.Test_Suites.Add_Test (Result, new Max_One_Tests.Case_1);
       return Result;
    end Suite;
+
 
 end Regressions.Suite;
