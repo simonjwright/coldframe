@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Event_Test.gpr,v a09ba5d0dab4 2003/02/07 06:24:03 simon $
+--  $Id: Event_Test.gpr,v be6c028dfe76 2003/02/16 19:40:50 simon $
 
 with "Options";
 with "AUnit";
@@ -20,10 +20,6 @@ with "BC";
 with "ColdFrame_Defaults";
 
 project Event_Test is
-
-  for Main use ("event_test-harness");
-
-  for Exec_Dir use ".";
 
   for Source_Dirs use ("Event_Test.impl", "Event_Test.gen");
 
