@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v d1275971d4b8 2003/09/11 19:52:41 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 55e266eb9022 2003/09/13 17:22:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -283,6 +283,22 @@
             <xsl:text>&amp; </xsl:text>
             <xsl:value-of select="$type/name"/>
             <xsl:text>_Package.To_String (S.</xsl:text>
+            <xsl:value-of select="$field"/>
+            <xsl:text>)&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:when test="$type/@type-image">
+            <!-- The type has a user-defined type image operation. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:value-of select="$type/@type-image"/>
+            <xsl:text> (S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>)&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
