@@ -214,9 +214,6 @@ coldframe-events_g-test_g.adb \
 coldframe-events_g-test_g.ads \
 coldframe-events_g.adb \
 coldframe-events_g.ads \
-coldframe-events_test.adb \
-coldframe-events_test_support.adb \
-coldframe-events_test_support.ads \
 coldframe-exceptions-message.adb \
 coldframe-exceptions-message.ads \
 coldframe-exceptions-traceback.adb \
@@ -281,6 +278,9 @@ States.impl/states-t.adb \
 States.impl/states-t.ads
 
 TEST = \
+coldframe-events_test.adb \
+coldframe-events_test_support.adb \
+coldframe-events_test_support.ads \
 Event_Test.cat Event_Test.raw \
 Event_Test.impl/debugging.ads \
 Event_Test.impl/event_test-events-initialize.adb \
