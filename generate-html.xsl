@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: generate-html.xsl,v cd67a609e0af 2004/03/18 12:42:51 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -315,13 +315,16 @@
   <xsl:template name="state-machine">
     <table border="1">
       <tr>
-        <th>State</th>
-        <th>Entry Action(s)</th>
+        <th rowspan="2">State</th>
+        <th rowspan="2">Entry Action(s)</th>
+        <th colspan="{count(statemachine/event)}">Event</th>
+        <th rowspan="2">Drop-through</th>
+      </tr>
+      <tr>
         <xsl:for-each select="statemachine/event">
           <xsl:sort select="name"/>
           <th><xsl:value-of select="name"/></th>
         </xsl:for-each>
-        <th>Drop-through</th>
       </tr>
       <xsl:for-each select="statemachine/state">
         <xsl:sort select="not(@initial)"/>
@@ -420,6 +423,14 @@
           <xsl:call-template name="type-name-linked">
             <xsl:with-param name="type" select="type"/>
           </xsl:call-template>
+          <xsl:if test="class">
+            <xsl:text> (class)</xsl:text>
+          </xsl:if>
+          <xsl:if test="initial">
+            <xsl:text> (initial value </xsl:text>
+            <xsl:value-of select="initial"/>
+            <xsl:text>)</xsl:text>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
     </dt>
@@ -449,17 +460,23 @@
       <xsl:if test="@class">
         <xsl:text> (class)</xsl:text>
       </xsl:if>
+      <xsl:if test="@accessor">
+        <xsl:text> (accessor)</xsl:text>
+      </xsl:if>
       <xsl:if test="@initialize">
         <xsl:text> (initialization)</xsl:text>
       </xsl:if>
       <xsl:if test="@finalize">
         <xsl:text> (finalization)</xsl:text>
       </xsl:if>
+      <xsl:if test="@final">
+        <xsl:text> (action deletes instance)</xsl:text>
+      </xsl:if>
       <xsl:if test="@suppressed='instantiation'">
         <xsl:text> (instantiated)</xsl:text>
       </xsl:if>
       <xsl:if test="@handler">
-        <xsl:text> (message handler)</xsl:text>
+        <xsl:text> (class event handler)</xsl:text>
       </xsl:if>
       <xsl:if test="@suppressed='navigation'">
         <xsl:text> (navigation)</xsl:text>
@@ -486,7 +503,6 @@
         </dl>
       </xsl:if>
     </dd>
-    <p/>
   </xsl:template>
 
 
@@ -498,10 +514,16 @@
       <xsl:call-template name="type-name-linked">
         <xsl:with-param name="type" select="type"/>
       </xsl:call-template>
+      <xsl:if test="initial">
+        <xsl:text>(default </xsl:text>
+        <xsl:value-of select="initial"/>
+        <xsl:text>)</xsl:text>
+      </xsl:if>
     </dt>
     <dd>
       <xsl:apply-templates select="documentation"/>
     </dd>
+    <p/>
   </xsl:template>
 
 
@@ -614,6 +636,7 @@
 
   <xsl:template match="domain/type">
     <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
+    <xsl:apply-templates select="documentation"/>
     <xsl:if test="@callback">
       <p><xsl:text>Callback support is provided.</xsl:text></p>
     </xsl:if>
@@ -724,11 +747,15 @@
           <xsl:text> characters.</xsl:text>
         </p>
       </xsl:when>
+      <xsl:when test="null">
+        <p>
+          <xsl:text>Empty record.</xsl:text>
+        </p>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:text>Hmm!</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="documentation"/>
   </xsl:template>
 
 
