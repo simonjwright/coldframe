@@ -1,0 +1,69 @@
+<!-- $Id: active-classes.html,v 6e24d17131ca 2004/01/06 17:49:45 simon $ -->
+<head>
+<title>ColdFrame: Active Classes</title>
+</head>
+<body bgcolor="white">
+<h1>ColdFrame: Active Classes</h1>
+
+<h2>Background</h2>
+
+<p>A <i>task</i> is an independent thread of execution within a
+program. Tasks are supported by the operating system in use, which may
+well have a different name for the concept (VxWorks uses <i>task</i>,
+Linux uses <i>thread</i>, Solaris uses <i>light-weight process</i>).
+
+<p>Desktop operating systems like Windows and Linux have an additional
+concept <i>process</i>. Typically, processes don't share memory but
+can contain multiple threads/tasks, which do share process memory (and
+other resources, such as file handles).
+
+<p>VxWorks only has tasks.
+
+<p>Some programming languages provide tasking (concurrency) constructs
+as part of the language - for example, Ada, Java, C#. If your language
+doesn't have inbuilt support, you can call operating system primitives
+(for example, the VxWorks task creation operation is
+<tt>taskSpawn</tt>) or rely on support libraries such as
+<i>pthreads</i>.
+
+<p>With multiple CPUs, under an operating system which can use them
+(for example, an SMP-aware Linux) the program's tasks can be truly
+independent, so that more than one is running at any instant. Of
+course, there are still likely to be many fewer CPUs than tasks! The
+normal situation is for the CPU to be shared between the tasks.
+
+<p>This might seem to be adding complexity, and indeed it does bring
+its own difficulties for programmers (especially in getting tasks to
+share data safely).
+
+<p>A key benefit is that it's much easier to deal with a multiply
+concurrent problem if the separate aspects can be designed
+independently. If the computer has to receive LAN updates from a radar
+system at the same time as initializing a different comms device using
+a complex multi-step protocol, it's as well if the two concerns can be
+kept separate (including, if possible, implementation by different
+teams).
+
+<h2>Motivation</h2>
+
+
+<h2>Modelling</h2>
+
+
+<h2>Translation</h2>
+
+
+<h2>Use</h2>
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
