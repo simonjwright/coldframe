@@ -272,6 +272,8 @@ coldframe-bounded_storage_pools.adb \
 coldframe-bounded_storage_pools.ads \
 coldframe-callbacks.adb \
 coldframe-callbacks.ads \
+coldframe-event_basis.adb \
+coldframe-event_basis.ads \
 coldframe-events_g-creation_g.adb \
 coldframe-events_g-creation_g.ads \
 coldframe-events_g-debug_g.adb \
@@ -310,6 +312,8 @@ coldframe-instances.adb \
 coldframe-instances.ads \
 coldframe-interrupts.adb \
 coldframe-interrupts.ads \
+coldframe-logging_event_basis.adb \
+coldframe-logging_event_basis.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
