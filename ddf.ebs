@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 71c77e2753d5 2004/10/29 12:45:26 simon $
+'$Id: ddf.ebs,v 040156014b89 2004/12/06 10:06:55 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -278,7 +278,7 @@ Sub DumpClasses (domain As Category)
 	For chid = 1 To children.Count
 		Dim child As Category
 		Set child = children.getAt (chid)
-		If child.Stereotype = "generate" Then
+		If child.Stereotype = "generate" Or child.Stereotype = "include" Then
 			DumpClasses (child)
 		End If
 	Next chid
@@ -340,7 +340,7 @@ Sub DumpRelationships (domain As Category)
 	For chid = 1 To children.Count
 		Dim child As Category
 		Set child = children.getAt (chid)
-		If child.Stereotype = "generate" Then
+		If child.Stereotype = "generate" Or child.Stereotype = "include" Then
 			DumpRelationships (child)
 		End If
 	Next chid
