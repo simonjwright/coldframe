@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 90e1d4cc4b4d 2004/03/19 15:39:48 simon $ -->
+<!-- $Id: bugs.html,v 51a8433999dc 2004/03/24 08:54:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -234,11 +234,29 @@ final state in Rose (a black blob in a circle).
 <dd>There seems to be a problem tearing down instances of
 &#171;active&#187; classes.
 
-<!-- next: 0246 -->
+<dt>0246 (raised 23.iii.04)
+
+<dd>Can't generate code for a &#171;type&#187; containing an attribute
+of an <i>{array}</i> type.
+
+<!-- next: 0247 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>24.iii.04</h3>
+
+<dl>
+
+<dt>0246 (raised 23.iii.04)
+
+<dd>Can't generate code for a &#171;type&#187; containing an attribute
+of an <i>{array}</i> type.
+<br><i>The problem was that the array element type hadn't been
+declared. Now reports the undeclared type.</i>
+
+</dl>
 
 <h3>19.iii.04</h3>
 
