@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ff048cefc296 2003/02/02 18:37:26 simon $ -->
+<!-- $Id: bugs.html,v 63ce5bac33ea 2003/02/07 05:56:33 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -146,11 +146,39 @@ be specified in a model.
 parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
 of the correct actual type.
 
-<!-- next: 0149 -->
+<dt>0149 (raised 6.ii.03)
+
+<dd>There should be an option for an individual domain's
+<tt>Events.Initialize</tt> to be overridden when constructing a whole
+system.
+
+<dt>0150 (raised 6.ii.03)
+
+<dd>There needs to be a way to have the "held" Event Queue's entries
+be re-sorted when the basis of ordering changes (eg, between a local
+time frame and a standard time one).
+
+<!-- next: 0151 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>6.ii.03</h3>
+
+<dl>
+
+<dt>0149 (raised 6.ii.03)
+
+<dd>There should be an option for an individual domain's
+<tt>Events.Initialize</tt> to be overridden when constructing a whole
+system.
+<br><tt><i>Domain</i>.Initialize</tt> now takes a <tt>Dispatcher</tt>
+parameter, defaulted to <tt>null</tt>. If not <tt>null</tt>, it is
+used as the domain's dispatcher, and <tt>Events.Initialize</tt> isn't
+called.
+
+</dl>
 
 <h3>2.ii.03</h3>
 
@@ -160,6 +188,7 @@ of the correct actual type.
 
 <dd>It seems unnecessary that the <tt>[[callback]]</tt> facility
 requires you to specify the maximum number of instances.
+
 
 </dl>
 
