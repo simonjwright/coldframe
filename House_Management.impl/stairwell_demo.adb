@@ -1,4 +1,18 @@
---  $Id: stairwell_demo.adb,v a3d067f20749 2003/01/07 20:58:36 simon $
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  $Id: stairwell_demo.adb,v 3ad75b4eada0 2003/02/07 05:52:53 simon $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -11,6 +25,7 @@ with Digital_IO.Initialize;
 with Digital_IO.HCI;
 with House_Management.Initialize;
 
+with ColdFrame.Project.Events.Standard.Debug;
 with ColdFrame.Exceptions.Symbolic_Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
 
@@ -101,6 +116,7 @@ procedure Stairwell_Demo is
       Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
       Signal : Digital_IO.Signal_Name;
       State : Boolean;
+      pragma Warnings (Off, ClientData);
    begin
       pragma Assert
         (Argc = 2, "getLampState requires one argument (lamp letter)");
@@ -127,6 +143,7 @@ procedure Stairwell_Demo is
       Argc : in C.int;
       Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
       Signal : Digital_IO.Signal_Name;
+      pragma Warnings (Off, ClientData);
    begin
       pragma Assert (Argc = 2, "pushButton requires one argument (button #)");
       Signal := Digital_IO.Signal_Name'Value
@@ -148,10 +165,13 @@ procedure Stairwell_Demo is
    Argc : C.int;
    Argv : CArgv.Chars_Ptr_Ptr;
 
+   Dispatcher : ColdFrame.Project.Events.Event_Queue_P
+     := new ColdFrame.Project.Events.Standard.Debug.Event_Queue;
+
 begin
 
-   Digital_IO.Initialize;
-   House_Management.Initialize;
+   Digital_IO.Initialize (Dispatcher);
+   House_Management.Initialize (Dispatcher);
 
    --  Get command-line arguments and put them into C-style "argv",
    --  as required by Tk_Main.
