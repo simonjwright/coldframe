@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 562198c7b675 2002/11/21 05:56:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -123,7 +123,10 @@
             procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
          begin
             if This /= null then
-               abort This.The_T;                 - if active
+               {teardown} {(This)};                - if any
+               if not This.The_T'Terminated then   - if active
+                  abort This.The_T;
+               end if;
                Free (This);
             end if;
          end {Domain}.{Class}.Tear_Down;
@@ -147,9 +150,21 @@
     <xsl:value-of select="$I"/>
     <xsl:text>if This /= null then&#10;</xsl:text>
 
+    <xsl:for-each select="operation[@teardown]">
+      <xsl:sort select="name"/>
+      <xsl:call-template name="instance-teardown-call">
+        <xsl:with-param name="indent" select="$II"/>
+        <xsl:with-param name="param-name" select="'This'"/>
+      </xsl:call-template>
+    </xsl:for-each>
+
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
+      <xsl:text>if not This.The_T'Terminated then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
       <xsl:text>abort This.The_T;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$II"/>
@@ -182,12 +197,15 @@
          begin
             while not Abstract_Map_Containers.Is_Done (It) loop
                H := Abstract_Map_Containers.Current_Item (It);
-               abort (H.The_T);                  -  if active
+               {teardown} (H);                     - if any
+               if not H.The_T'Terminated then      - if active
+                  abort H.The_T;
+               end if;
                Free (H);
                Abstract_Map_Containers.Next (It);
             end loop;
             Maps.Clear (The_Container);
-            Next_Identifier := 0;                -  for Autonumbering
+            Next_Identifier := 0;                  -  for Autonumbering
          end {Domain}.{Class}.Tear_Down;
          -->
 
@@ -217,9 +235,21 @@
     <xsl:value-of select="$II"/>
     <xsl:text>H := Abstract_Map_Containers.Current_Item (It);&#10;</xsl:text>
 
+    <xsl:for-each select="operation[@teardown]">
+      <xsl:sort select="name"/>
+      <xsl:call-template name="instance-teardown-call">
+        <xsl:with-param name="indent" select="$II"/>
+        <xsl:with-param name="param-name" select="'H'"/>
+      </xsl:call-template>
+    </xsl:for-each>
+
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
+      <xsl:text>if not H.The_T'Terminated then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
       <xsl:text>abort H.The_T;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$II"/>
@@ -276,6 +306,27 @@
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Called at class/operation to generate an instance teardown
+       call. -->
+  <xsl:template name="instance-teardown-call">
+
+    <!-- The indentation to apply. -->
+    <xsl:param name="indent"/>
+    <!-- The name of the instance handle. -->
+    <xsl:param name="param-name"/>
+
+    <xsl:value-of select="$indent"/>
+    <xsl:value-of select="name"/>
+    <xsl:if test="not(../@singleton)">
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="$param-name"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 

@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c840d16e9ed0 2002/11/14 20:10:23 simon $
+# $Id: normalize-rose.tcl,v 562198c7b675 2002/11/21 05:56:18 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1279,6 +1279,14 @@ itcl::class Operation {
 	set final 1
     }
 
+    # is this a teardown operation?
+    variable teardown 0
+    # called via stereotype mechanism to indicate that this is an
+    # instance teardown operation.
+    method -teardown {dummy} {
+	set teardown 1
+    }
+
     # is this a <<class event>> event handler:
     variable handler 0
     # called via stereotype mechanism to indicate that this is a
@@ -1330,6 +1338,7 @@ itcl::class Operation {
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $entry {puts -nonewline " entry=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
+	if $teardown {puts -nonewline " teardown=\"yes\""}
 	if $handler {puts -nonewline " handler=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if [info exists suppressed] {
