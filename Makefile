@@ -452,6 +452,7 @@ Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads
 
 TEST += \
+Test.mdl \
 Hierarchies.cat Hierarchies.raw \
 Hierarchies.gpr Hierarchies_Test.gpr \
 Hierarchies.impl/hierarchies-f_2-create_new.adb \
