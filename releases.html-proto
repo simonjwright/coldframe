@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 48d43d58c8bd 2003/09/27 07:21:59 simon $ -->
+<!-- $Id: releases.html-proto,v d95e5fb76c7f 2003/09/27 16:39:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,17 +22,15 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>DATE
 
-<dd>Improved detection and reporting of problems with state machines.
-
-
-<p><dt>20030923
-
 <dd>A class variable of the class's type wouldn't compile
 ("representation item appears too late").
 
 
-<dd>Classes with state machines wouldn't compile ("primitive operation
+<p>Classes with state machines wouldn't compile ("primitive operation
 declared too late").
+
+
+<p>Improved detection and reporting of problems with state machines.
 
 
 <p><dt>20030914
