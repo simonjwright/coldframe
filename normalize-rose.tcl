@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cc5757bdf55f 2005/02/18 06:36:55 simon $
+# $Id: normalize-rose.tcl,v 8d22a5180db9 2005/02/24 06:30:50 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -985,11 +985,15 @@ itcl::class Domain {
     variable date
     variable revision
 
+    # contains {init=} if found
+    variable initialize
+
     variable classes
 
     variable datatypes
 
     variable exceptions
+
 
     variable relationships
 
@@ -1010,6 +1014,8 @@ itcl::class Domain {
 
     method -date {d} {set date $d}
     method -revision {r} {set revision [string trim $r]}
+
+    method -init {i} {set initialize [normalize $i]}
 
     method -name {n} {set name [normalize $n]}
 
@@ -1059,6 +1065,10 @@ itcl::class Domain {
         }
 
         $this -generateDocumentation
+
+	if [info exists initialize] {
+            putElement initialize $initialize
+	}
 
         $classes -generate $this
         $datatypes -generate $this
