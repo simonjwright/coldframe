@@ -144,7 +144,6 @@ OTHER_SCRIPTS = serialized-to-csv.xsl \
 	rm -f $<-t
 
 # Creates the build directory (Ada Library) tree, under $BUILD_BASE
-BUILD_BASE=~/cf
 build-dirs::
 	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
 	@for d in aunit bc coldframe; do \
