@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: 1d6b72facc1b $
---  $Date: 2002/09/18 20:22:57 $
+--  $Revision: 2909f12edbf5 $
+--  $Date: 2002/09/18 20:32:07 $
 --  $Author: simon $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -28,10 +28,12 @@ procedure Generated_Lines is
 
    procedure Scan_Directory (Named : Dir_Name_Str;
                              Verbosely : Boolean;
-                             Recursively : Boolean);
+                             Recursively : Boolean;
+                             Logging : Boolean);
    procedure Scan_Directory (Named : Dir_Name_Str;
                              Verbosely : Boolean;
-                             Recursively : Boolean) is
+                             Recursively : Boolean;
+                             Logging : Boolean) is
       Wd : Dir_Type;
    begin
       Open (Dir => Wd,
@@ -50,11 +52,13 @@ procedure Generated_Lines is
                  and then Recursively then
                   Scan_Directory
                     (Named & Str (1 .. Last) & Directory_Separator,
-                     Verbosely,
-                     Recursively);
+                     Verbosely => Verbosely,
+                     Recursively => Recursively,
+                     Logging => Logging);
                else
                   Generated_Lines_Support.Count (Named & Str (1 .. Last),
-                                                 Verbosely);
+                                                 Verbosely => Verbosely,
+                                                 Logging => Logging);
                end if;
             end if;
          end loop;
@@ -63,14 +67,16 @@ procedure Generated_Lines is
    end Scan_Directory;
 
    --  Option flags
-   Verbose : Boolean := False;
+   Logging : Boolean := False;
    Recursive : Boolean := False;
+   Verbose : Boolean := False;
 
 begin
 
    loop
-      case GNAT.Command_Line.Getopt ("r v") is
+      case GNAT.Command_Line.Getopt ("l r v") is
          when ASCII.NUL => exit;
+         when 'l' => Logging := True;
          when 'r' => Recursive := True;
          when 'v' => Verbose := True;
             when others => raise Program_Error;
@@ -85,7 +91,8 @@ begin
 
          Scan_Directory (Get_Current_Dir,
                          Verbosely => Verbose,
-                         Recursively => Recursive);
+                         Recursively => Recursive,
+                         Logging => Logging);
          Generated_Lines_Support.Report;
 
       else
@@ -93,7 +100,8 @@ begin
          Scan_Directory
            (GNAT.OS_Lib.Normalize_Pathname (Dir & Dir_Separator),
             Verbosely => Verbose,
-            Recursively => Recursive);
+            Recursively => Recursive,
+            Logging => Logging);
          Generated_Lines_Support.Report;
 
       end if;
