@@ -406,14 +406,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB54F0248"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(2436, 855)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	350)
 		    width      	362
 		    height     	184
 		    annotation 	8
@@ -551,14 +543,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380F322C003E"
-		    compartment 	(object Compartment
-			Parent_View 	@19
-			location   	(1936, 1270)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	318)
 		    width      	338
 		    height     	186
 		    annotation 	8
@@ -573,10 +557,10 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(192, 304)
+		    location   	(240, 304)
 		    label      	(object ItemLabel
 			Parent_View 	@21
-			location   	(12, 138)
+			location   	(60, 138)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	360
@@ -584,7 +568,7 @@
 			label      	"Interface")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@21
-			location   	(12, 93)
+			location   	(60, 93)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -598,7 +582,7 @@
 		    quidu      	"3AB725190275"
 		    compartment 	(object Compartment
 			Parent_View 	@21
-			location   	(12, 194)
+			location   	(60, 194)
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2

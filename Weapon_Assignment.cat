@@ -307,7 +307,7 @@
 		    quidu      	"390B04C503B5"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(1213, 1123)
+			location   	(1213, 1121)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -334,14 +334,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"390F0E8C039C"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(110, 1756)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	393)
 		    width      	406
 		    height     	186
 		    annotation 	8
@@ -365,7 +357,7 @@
 		    quidu      	"38FE9311026B"
 		    compartment 	(object Compartment
 			Parent_View 	@5
-			location   	(13, 1123)
+			location   	(13, 1121)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -404,7 +396,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	224
+				max_width  	307
 				justify    	0
 				label      	"+is aimed at"
 				pctDist    	0.528169
@@ -437,7 +429,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	245
+				max_width  	314
 				justify    	0
 				label      	"+is target for"
 				pctDist    	0.515901
@@ -496,7 +488,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	158
+				max_width  	218
 				justify    	0
 				label      	"+can fire"
 				pctDist    	0.786544
@@ -529,7 +521,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	240
+				max_width  	321
 				justify    	0
 				label      	"+is loaded in"
 				pctDist    	0.694843
@@ -573,7 +565,7 @@
 		    quidu      	"397ECF99000E"
 		    compartment 	(object Compartment
 			Parent_View 	@23
-			location   	(1297, 1503)
+			location   	(1297, 1501)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -604,7 +596,7 @@
 		    quidu      	"3903EC150373"
 		    compartment 	(object Compartment
 			Parent_View 	@24
-			location   	(894, 572)
+			location   	(894, 570)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -651,7 +643,7 @@
 		    location   	(144, 592)
 		    label      	(object ItemLabel
 			Parent_View 	@27
-			location   	(12, 563)
+			location   	(12, 561)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	264
@@ -703,7 +695,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	184
+				max_width  	244
 				justify    	0
 				label      	"+contains"
 				pctDist    	0.542320
@@ -732,15 +724,15 @@
 			    location   	(168, 144)
 			    label      	(object SegLabel @34
 				Parent_View 	@33
-				location   	(387, 551)
+				location   	(420, 533)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	250
+				max_width  	340
 				justify    	0
 				label      	"+is a threat in"
-				pctDist    	0.657233
-				height     	42
+				pctDist    	0.548495
+				height     	59
 				orientation 	1)
 			    stereotype 	TRUE
 			    line_color 	3342489
@@ -767,7 +759,7 @@
 		    location   	(1808, 2192)
 		    label      	(object ItemLabel
 			Parent_View 	@36
-			location   	(1720, 2164)
+			location   	(1720, 2166)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	176
