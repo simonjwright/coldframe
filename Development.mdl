@@ -196,7 +196,7 @@
 	    (object Class_Category "States"
 		is_unit    	TRUE
 		is_loaded  	FALSE
-		file_name  	"$ColdFrame\\States.cat"
+		file_name  	"$CURDIR\\States.cat"
 		quid       	"3C4EDCDC028A")
 	    (object Class_Category "B(P)"
 		is_unit    	TRUE
@@ -925,7 +925,7 @@
 		zoom       	95
 		max_height 	28350
 		max_width  	21600
-		origin_x   	660
+		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::Deletion" @16
@@ -1479,7 +1479,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::States" @38
-			location   	(1185, 165)
+			location   	(1184, 165)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1491,7 +1491,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@38
-			    location   	(1041, 81)
+			    location   	(1040, 81)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1822,7 +1822,7 @@
 			    max_width  	288
 			    justify    	0
 			    label      	"State Tests")
-			icon_style 	"Label"
+			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"3CF379B3018D"
