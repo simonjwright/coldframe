@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 7d6dbbe66a49 2003/01/12 15:27:11 simon $ -->
+<!-- $Id: releases.html,v 16ed70e81f7c 2003/01/18 16:03:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -28,12 +28,19 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 <dd>The HTML documentation is distributed in a zip file alongside the
 source code.
 
+
 <p>The <tt>[[extends]]</tt> annotation allows you to specify that a
-type is derived from an external type. <i>(It might have been possible
-to use inheritance relationships, but that would have opened a raft of
-problems with supporting polymorphic operations of types, and in any
-case you should probably be looking at classes rather than types for
-your own work.)</i>
+type is derived from an external type.
+<br><i>(It might have been possible to use inheritance relationships,
+but that would have opened a raft of problems with supporting
+polymorphic operations of types, and in any case you should probably
+be looking at classes rather than types for your own work.)</i>
+
+
+<p>The <tt>[[convention]]</tt> annotation allows you to specify the
+programming language calling convention that an operation is to use.
+<br><i>For Ada, this translates to
+<tt>pragma&nbsp;Convention</tt>.</i>
 
 
 <p><dt>20030107a
