@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 514574389823 2004/10/23 16:42:07 simon $ -->
+<!-- $Id: releases.html-proto,v 5a6ce168efe0 2004/10/25 05:55:52 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -98,6 +98,11 @@ href="extending.html">add your own code generation extensions</a>.
 
 
 <p><i>{array}</i> types can be (de)serialized automatically.
+
+
+<p>You can declare types <tt>private</tt>, either by saying
+&#171;type, private&#187; or (more tidily, perhaps) by tagging
+<i>{private}</i>.
 
 
 <p><dt>20040319
