@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 74a961401ce7 2001/03/25 09:39:33 simon $ -->
+<!-- $Id: generate-ada.xsl,v b0f2e9c45e67 2001/04/01 10:04:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -261,9 +261,12 @@
         </xsl:call-template>
 
         <!-- Use a fixed (effectively, static) storage pool if this is
-             a bounded class -->
+             a bounded class.
+             We have to use the GNAT 'Object_Size because 'Size is the
+             minimal number of bits, not necessarily a whole number of
+             bytes. -->
         <xsl:if test="@max">
-          <xsl:text>  for Handle'Storage_Size use Instance'Size / 8 * </xsl:text>
+          <xsl:text>  for Handle'Storage_Size use Instance'Object_Size / 8 * </xsl:text>
           <xsl:value-of select="@max"/>
           <xsl:text>;&#10;</xsl:text>
         </xsl:if>
@@ -984,8 +987,8 @@
     <xsl:text>.Collections;&#10;</xsl:text>
     <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
     <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
-    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
@@ -1208,10 +1211,14 @@
   </xsl:template>
 
 
-  <!-- Generate attribute name. Called at class/attribute -->
+  <!-- Generate attribute name. Called at class/attribute.
+       If this is an anonymous referential attribute, we make up its
+       name from the abbreviation of the supplier, the word _Handle_,
+       and the relationship name.
+       If not, just use the <name> element. -->
   <xsl:template name="attribute-name">
     <xsl:choose>
-      <xsl:when test="@refers">
+      <xsl:when test="@refers and not(name)">
         <xsl:variable name="target-class" select="@refers"/>
         <xsl:value-of select="/domain/class[name=$target-class]/abbreviation"/>
         <xsl:text>_Handle_</xsl:text>
