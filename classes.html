@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v c7f0e15a51a8 2004/10/30 17:11:32 simon $ -->
+<!-- $Id: classes.html,v 6513ba93956f 2005/01/20 05:50:41 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -77,7 +77,7 @@ href="resources.html#build-object-models">Leon Starr</a> says
 <blockquote>
 [A naming attribute exists] not so much to describe, but to identify,
 instances. [...] A naming attribute may or may not be sufficient to
-uniquely identify instiances of a class. For example, the attribute
+uniquely identify instances of a class. For example, the attribute
 <i>Employee Name</i> is a naming attribute, but it is possible to have
 two employees with the same name.
 </blockquote>
@@ -97,8 +97,9 @@ Of Issue and Period Of Validity are just common-or-garden attributes.
 relationships</a>,
 <li>associative classes,
 <li>public classes,
-<li>singletons, or
-<li>types.
+<li>singletons,
+<li>types or
+<li>utility classes.
 </ul>
 
 All other classes <em>must</em> have identifiers. In this,
@@ -123,11 +124,12 @@ with the stereotype <em>&#171;singleton&#187;</em>.
 
 <p>Public classes, which are normally the only classes visible from
 outside the Domain, are marked with the stereotype
-<em>&#171;public&#187;</em>. This implies the stereotype
-<em>&#171;singleton&#187;</em>. Public classes can't take part in
+<em>&#171;public&#187;</em>. They can have at most one instance (you
+don't need to say <em>&#171;singleton&#187;</em>). Public classes
+can't take part in
 <a href="associations.html">associations</a>.
 
-<p>For test support, it's possible to stereotype a class
+<p>For test support, it's possible to stereotype or tag a class
 <em>&#171;visible-for-test&#187;</em>, which makes it visible from
 outside the domain.
 
@@ -194,15 +196,6 @@ translated as first-level children of the domain package:
 (<tt>private</tt> applies to all the classes bar those marked
 <em>&#171;visible-for-test&#187;</em> and
 <em>&#171;public&#187;</em>).
-
-<p>For test purposes, each class has a child <tt>Tear_Down</tt>
-procedure <tt><i>Domain.Class</i>.Tear_Down</tt>, which is called by
-the domain <tt>Tear_Down</tt> procedure. This procedure returns the
-class to its initial state, deleting all the instances for normal
-classes and resetting <em>&#171;singleton&#187;</em>s. It should not
-need editing.
-
-<!-- XXX is that true about singletons? what about tasks? -->
 
 <p>If the class is <em>&#171;public&#187;</em> or a
 <em>&#171;singleton&#187;</em>, that's it. For normal classes, the
@@ -358,8 +351,8 @@ takes a single parameter of type <tt>Identifier</tt>.
 parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
 single parameter of type <tt>Identifier</tt>.
 
-<p>Non-<em>&#171;public&#187;</em> classes have a <tt>Find</tt>
-operation:
+<p>Non-<em>&#171;public&#187;</em>, non-utility classes have a
+<tt>Find</tt> operation:
 <ul>
 
 <li><em>&#171;singleton&#187;</em> classes have a parameterless
@@ -392,7 +385,16 @@ with that identifier).
 <em>&#171;singleton&#187;</em> class, use <tt>This</tt> instead of
 <tt>Find</tt>; it'll be quicker.
 
-<p><i>[more to follow?]</i>
+<p>The identifier is always a record type, even if there's only
+one attribute in it, so you'll need an aggregate; if there <em>is</em>
+only one attribute, you'll need to qualify the aggregate or use named
+association, so that Ada can tell it's actually an aggregate and not
+an expression: for <tt>Fruit</tt>, for instance,
+<pre>
+   Create ((ID => Apple));
+</pre>
+
+<p><i>more to come</i>
 
 <p><hr>
 <i>
