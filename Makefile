@@ -264,6 +264,8 @@ ColdFrame.gpr \
 Options.gpr
 
 SUPPORT = \
+coldframe-bounded_storage_pools.adb \
+coldframe-bounded_storage_pools.ads \
 coldframe-callbacks.adb \
 coldframe-callbacks.ads \
 coldframe-events_g-creation_g.adb \
@@ -309,9 +311,12 @@ coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
 coldframe-time_signature.ads \
+coldframe-unbounded_storage_pools.adb \
+coldframe-unbounded_storage_pools.ads \
 coldframe.ads
 
 PROJECT = \
+coldframe-project-storage_pools.ads \
 coldframe-project-calendar.adb \
 coldframe-project-calendar.ads \
 coldframe-project-event_support.ads \
