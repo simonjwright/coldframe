@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 76bb92682ad8 2001/06/26 18:46:59 simon $ -->
+<!-- $Id: ada-operation.xsl,v 81372a48a7d7 2001/07/01 10:56:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -334,10 +334,10 @@
 
           </xsl:when>
 
-          <xsl:when test="../@active and not(@return)">
+          <xsl:when test="../@active and not (@class) and not(@return)">
 
-            <!-- Concrete task entry in current class; we provide an
-                 implementation that calls the entry. -->
+            <!-- Concrete non-class task entry in current class; we provide
+                 an implementation that calls the entry. -->
 
             <xsl:call-template name="generate-entry-call">
               <xsl:with-param name="current" select="$current"/>
@@ -361,6 +361,8 @@
       </xsl:when>
 
       <xsl:otherwise>
+
+        <!-- The operation is declared in an ancestor class. -->
 
         <xsl:choose>
 
@@ -453,12 +455,12 @@
          the Class is a singleton, all operations are class operations,
          otherwise it depends on the @class attribute. -->
     <xsl:if
-      test="parameter or (not(../@singleton) and not(@class='yes'))">
+      test="parameter or (not(../@singleton) and not(@class))">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
-      <xsl:if test="not(../@singleton) and not(@class='yes')">
+      <xsl:if test="not(../@singleton) and not(@class)">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10; </xsl:text>
