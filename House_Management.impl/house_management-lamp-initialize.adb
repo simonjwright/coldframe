@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-lamp-initialize.adb,v $
---  $Revision: e52e2300d52d $
---  $Date: 2003/08/30 20:32:01 $
+--  $Revision: 6fc82166d664 $
+--  $Date: 2004/04/25 16:47:50 $
 --  $Author: simon $
 
 --  This operation initializes the Lamps and Buttons, and connects to
@@ -28,12 +28,38 @@ with Digital_IO.Signal_State_Callback;
 separate (House_Management.Lamp)
 procedure Initialize is
 
-   LBH, LGH, L1H, L2H : Lamp.Handle;
-   BBH, BGH, B1H, B2H : Button.Handle;
-   BTLH : Button_To_Lamp.Handle;
-   pragma Warnings (Off, BTLH);
+   procedure Connect (The_Button : Button_Name; To : Lamp_Name);
+   procedure Connect (The_Button : Button_Name; To : Lamp_Name) is
+      BH : constant Button.Handle := Button.Find ((Name => The_Button));
+      LH : constant Lamp.Handle := Lamp.Find ((Name => To));
+      CH : constant Button_To_Lamp.Handle
+        := A1.Link (Controls => LH, Is_Controlled_By => BH);
+      pragma Warnings (Off, CH);
+   begin
+      null;
+   end Connect;
 
 begin
+
+   --  Create the lamps ..
+   for L in Lamp_Name loop
+      declare
+         LH : constant Lamp.Handle := Lamp.Create ((Name => L));
+         pragma Warnings (Off, LH);
+      begin
+         null;
+      end;
+   end loop;
+
+   --  .. and the buttons ..
+   for B in Button_Name loop
+      declare
+         BH : constant Button.Handle := Button.Create ((Name => B));
+         pragma Warnings (Off, BH);
+      begin
+         null;
+      end;
+   end loop;
 
    --  The second floor lamp is controlled by the buttons on the first
    --  and second floors.
@@ -46,28 +72,18 @@ begin
 
    --  The basement lamp is controlled by the basement button only.
 
-   L2H := Lamp.Create ((Name => Second_Floor));
-   L1H := Lamp.Create ((Name => First_Floor));
-   LGH := Lamp.Create ((Name => Ground_Floor));
-   LBH := Lamp.Create ((Name => Basement));
+   Connect (The_Button => Second_Floor, To => Second_Floor);
+   Connect (The_Button => First_Floor, To => Second_Floor);
 
-   B2H := Button.Create ((Name => Second_Floor));
-   B1H := Button.Create ((Name => First_Floor));
-   BGH := Button.Create ((Name => Ground_Floor));
-   BBH := Button.Create ((Name => Basement));
+   Connect (The_Button => Second_Floor, To => First_Floor);
+   Connect (The_Button => First_Floor, To => First_Floor);
+   Connect (The_Button => Ground_Floor, To => First_Floor);
 
-   BTLH := A1.Link (Controls => L2H, Is_Controlled_By => B2H);
-   BTLH := A1.Link (Controls => L2H, Is_Controlled_By => B1H);
+   Connect (The_Button => First_Floor, To => Ground_Floor);
+   Connect (The_Button => Ground_Floor, To => Ground_Floor);
+   Connect (The_Button => Basement, To => Ground_Floor);
 
-   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => B2H);
-   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => B1H);
-   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => BGH);
-
-   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => B1H);
-   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => BGH);
-   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => BBH);
-
-   BTLH := A1.Link (Controls => LBH, Is_Controlled_By => BBH);
+   Connect (The_Button => Basement, To => Basement);
 
    --  Register for button state changes.
    Digital_IO.Signal_State_Callback.Register (Button.Changed'Access);
