@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 65af79906813 2001/07/13 18:40:46 simon $ -->
+<!-- $Id: architecture.html,v df8a7abab176 2001/08/08 17:59:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -122,9 +122,10 @@ concrete parental instance operations.
 <p>In spite of the above, with ColdFrame you usually don't need to
 provide referential attributes (it would be quite cumbersome to do so,
 since Rose is unaware of the concept). Instead, ColdFrame
-automatically inserts them using an appropriate naming convention. <a
-href="#annotation">Sometimes it needs a little help</a>, for example in
-a 1c:1c association (Shlaer-Mellor notation; "1c" means "0..1".).
+automatically inserts them using an appropriate naming
+convention. Sometimes it needs a little help, for example <a
+href="#formalizes">complex formalization</a> or <a href="#source">in a
+symmetric association</a>.
 
 <h3>Use of Stereotypes</h3>
 
@@ -171,6 +172,25 @@ in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
 <p>Annotations supported are:
 
 <dl>
+
+<dt>on domains<dd><ul>
+
+<li><tt>revision : <i>revision-id-string</i></tt> specifies the
+domain's version control ID.
+
+<p>In Rose with CVS, you'd select the domain Package in the browser
+and add the line
+
+<pre>
+  [[ revision : $Id: architecture.html,v df8a7abab176 2001/08/08 17:59:23 simon $ ]]
+</pre>
+
+to the documentation pane. Modify as required by your version control
+system.
+
+</ul>
+
+<p>
 
 <dt>on classes<dd><ul>
 
@@ -231,8 +251,9 @@ the outstanding Problem Reports on this Component").
 attribute. This is an alternative to the <em>&#171;id&#187;</em>
 stereotype.
 
-<li><tt>formalizes : <i>association-name</i></tt> indicates that the
-attribute is a referential attribute.
+<li><a name="formalizes"><tt>formalizes :
+<i>association-name</i></tt></a> indicates that the attribute is a
+referential attribute.
 
 <p>This is needed when the attribute has to be specified by the
 analyst (normally, ColdFrame can create referential attributes as
@@ -284,10 +305,10 @@ alternative to the <em>&#171;class&#187;</em> stereotype.
 
 <dt>on roles<dd><ul>
 
-<li><tt>source</tt> indicates that the class at this end is the source
-of formalising (referential) attributes for the association: only
-useful for symmetrical associations <i>1:1</i>, <i>1c:1c</i>,
-<i>1-(1:1)</i> or <i>1-(1c:1c)</i>.
+<li><a name="source"><tt>source</tt></a> indicates that the class at
+this end is the source of formalising (referential) attributes for the
+association: only useful for symmetrical associations <i>1:1</i>,
+<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>.
 
 </ul>
 
@@ -301,8 +322,8 @@ semantically).
 <h2><a name="extraction">Extraction of models from Rose</a></h2>
 
 <p>The Rose model is extracted to a raw "domain definition file" using
-a RoseScript script <tt>ddf.ebs</tt>. If you're using a version of
-Rose that loses a selection in the Browser as soon as you try to
+a RoseScript script <tt>extractor.ebs</tt>. If you're using a version
+of Rose that loses a selection in the Browser as soon as you try to
 select anything in the menu bar:
 
 <ul>
@@ -316,8 +337,8 @@ browser
 
 </ul>
 
-Otherwise, it makes sense to install <tt>ddf.ebs</tt> in the Rose
-<i>Add-ins</i> menu (or whichever other one you want to use). In
+Otherwise, it makes sense to install <tt>extractor.ebs</tt> in the
+Rose <i>Add-ins</i> menu (or whichever other one you want to use). In
 <tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
 <tt>rose.mnu</tt>:
 <blockquote>
@@ -328,7 +349,7 @@ Menu Add-Ins
 
   option "Generate &XML..."	
    {
-	RoseScript $ColdFrame\ddf.ebs
+	RoseScript $ColdFrame\extractor.ebs
    }
 
 }
@@ -338,10 +359,11 @@ Menu Add-Ins
 <p>The output is in a <tt>.raw</tt> file.
 
 <p>The default output file location is the directory that
-<tt>ddf.ebs</tt> was loaded from (sorry about that). You might want to
-consider copying <tt>ddf.ebs</tt> to the directory where your model
-files are. Alternatively, using the "recent documents" facility of
-Windows seems to open Rose with the correct default directory.
+<tt>extractor.ebs</tt> was loaded from (sorry about that). You might
+want to consider copying <tt>extractor.ebs</tt> to the directory where
+your model files are. Alternatively, using the "recent documents"
+facility of Windows seems to open Rose with the correct default
+directory.
 
 <p>The output format is XML, using a Document Type Description (<a
 href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
