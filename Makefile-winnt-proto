@@ -1,0 +1,33 @@
+# Copyright (c) 2001 Simon Wright <simon@pushface.org>
+# $Id$
+
+# Makefile for use with Cygwin under Windows.
+
+TOP = d:
+
+CF = $(TOP)/cf-20010419
+
+ITCLSH = $(TOP)/Tcl/bin/itclsh31
+TCLXML = $(TOP)/TclXML-1.2
+
+SAXON = $(TOP)/Saxon/saxon
+
+NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
+HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
+CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
+
+%.norm: %.raw
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+
+%.html: %.norm
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
+
+%.ada: %.norm
+	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
+
+%.gen: %.ada
+	-mkdir $@
+	rm -f $@/*.ad[bs]
+	gnatchop $< $@
+
+.PHONY: force

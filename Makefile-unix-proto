@@ -1,0 +1,33 @@
+# Copyright (c) 2001 Simon Wright <simon@pushface.org>
+# $Id$
+
+# Makefile for use under Linux (or other Unixes, of course).
+
+TOP = /usr/local
+
+CF = $(TOP)/cf-20010419
+
+ITCLSH = /usr/bin/itclsh3.1
+TCLXML = ~/TclXML-1.2
+
+SAXON = java com.icl.saxon.StyleSheet
+
+NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
+HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
+CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
+
+%.norm: %.raw
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+
+%.html: %.norm
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
+
+%.ada: %.norm
+	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
+
+%.gen: %.ada
+	-mkdir $@
+	rm -f $@/*.ad[bs]
+	gnatchop $< $@
+
+.PHONY: force
