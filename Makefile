@@ -17,6 +17,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-class.xsl \
   ada-collection.xsl \
   ada-operation.xsl \
+  ada-type.xsl \
   ada-utilities.xsl
 
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
