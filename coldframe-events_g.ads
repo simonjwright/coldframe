@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: ca6a63915eeb $
---  $Date: 2002/09/13 19:53:51 $
+--  $Revision: 7f8de3dc1e88 $
+--  $Date: 2002/09/15 10:31:13 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -78,7 +78,8 @@ package ColdFrame.Events_G is
    --  All Instance Events are derived from this type. For_The_Instance
    --  is the instance to which the event is directed.
 
-   procedure Instance_Is_Deleted (For_The_Event : access Instance_Event_Base);
+   procedure Instance_Is_Deleted
+     (For_The_Event : access Instance_Event_Base'Class);
    --  Note that the Instance has been deleted (so as to avoid
    --  querying it in logging Queue variants).
 
@@ -329,6 +330,9 @@ private
    --  A Timer_Event is dispatched like an ordinary event, but it has
    --  a special Handler which (after some checks) dispatches the held
    --  event.
+   --
+   --  This is so that we can tell when the event is actually dispatched,
+   --  in case the user Unsets it.
    type Timer_Event is new Event_Base with record
       On : Event_Queue_P;
       Time_To_Fire : Time.Time;

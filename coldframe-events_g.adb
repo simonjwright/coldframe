@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: ca6a63915eeb $
---  $Date: 2002/09/13 19:53:51 $
+--  $Revision: 7f8de3dc1e88 $
+--  $Date: 2002/09/15 10:31:13 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -31,7 +31,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Instance_Is_Deleted
-     (For_The_Event : access Instance_Event_Base) is
+     (For_The_Event : access Instance_Event_Base'Class) is
    begin
       if For_The_Event.Instance_Deleted then
          Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
