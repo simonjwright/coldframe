@@ -3,14 +3,14 @@
 <name>Serialization Demo</name>
 <date>
 <year>2003</year>
-<month>2</month>
-<day>20</day>
-<time>20:30</time>
+<month>3</month>
+<day>1</day>
+<time>11:28</time>
 </date>
-<documentation>This domain is a demonstration of Serialization's faclilities.
+<documentation>This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-[[ revision : $Id: Serialization_Demo.raw,v 7542140b35a6 2003/02/20 21:01:40 simon $ ]]</documentation>
+[[ revision : $Id: Serialization_Demo.raw,v f0fc1f2f3822 2003/03/01 11:39:43 simon $ ]]</documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
@@ -79,7 +79,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <events>
 </events>
 </class>
-<class stereotype="type">
+<class stereotype="type, serializable">
 <name>Real Time</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -93,6 +93,12 @@ It is to be extracted separately from the main Serialization package (that's why
 <documentation></documentation>
 <return>String</return>
 <parameters>
+<parameter>
+<name>n</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
 <parameter>
 <name>v</name>
 <documentation></documentation>
