@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 98b82f12d5a1 2003/03/13 20:41:24 simon $
+# $Id: normalize-rose.tcl,v 2b45e4b4b97e 2003/03/30 18:58:16 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -750,6 +750,29 @@ itcl::class Name {
     inherit IdentifierString
 }
 
+itcl::class ParameterName {
+    inherit String
+
+    # the object has already been popped off the stack; call the stack top's
+    # method with the same name as this xmlTag to store the value after
+    # handling any initial parameter mode and conversion to identifier form.
+    method -complete {} {
+	$this -processTags
+	set words [split $text]
+	set first [lindex $words 0]
+	switch -exact $first {
+	    in -
+	    out -
+	    inout   {
+		[stack -top] -mode $first
+		set text [lrange $words 1 end]
+	    }
+	    default {}
+	}
+	[stack -top] -$xmlTag [normalize $text]
+    }
+}
+
 itcl::class Parent {
     inherit IdentifierString
 }
@@ -1408,6 +1431,11 @@ itcl::class Parameter {
     variable initial ""
 
     variable modeInfo ""
+
+    # special name handling for mode
+    method -parametername {n} {
+	$this -name $n
+    }
 
     method -type {t} {set type $t}
 
@@ -2549,6 +2577,7 @@ proc elementFactory {xmlTag} {
 	operation         {return [Operation #auto]}
 	operations        {return [Operations #auto]}
 	parameter         {return [Parameter #auto]}
+	parametername     {return [ParameterName #auto]}
 	parameters        {return [Parameters #auto]}
 	parent            {return [Parent #auto]}
 	relationship      {return [Relationship #auto]}
