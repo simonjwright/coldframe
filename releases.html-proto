@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 644a62576219 2003/09/30 05:03:43 simon $ -->
+<!-- $Id: releases.html-proto,v 241781ab4dfa 2003/10/04 06:49:42 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,12 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Improved the default error logging (stop concurrent access
+mangling the output; flush the output after each message).
+
+
+<p><dt>20030930
 
 <dd>A class variable of the class's type wouldn't compile
 ("representation item appears too late").
@@ -223,7 +229,7 @@ they call the domain's <tt>Initialize</tt> procedure.
 needed.
 
 
-<p>Corrected errors in miscalculating multiplicity and dealing with
+<p>Corrected errors in calculating multiplicity and dealing with
 <tt>[[hash]]</tt> annotations.
 
 
@@ -318,7 +324,7 @@ medium -- perhaps to record binary data for future analysis.
 
 <p>Your main program can coordinate the Event Queues (Dispatchers)
 used by the Domains.
-<br>If you pass a Dispatrcher to <tt><i>Domain</i>.Initialize</tt>, it
+<br>If you pass a Dispatcher to <tt><i>Domain</i>.Initialize</tt>, it
 will use it instead of calling <tt><i>Domain</i>.Events.Initialize</tt>.
 
 
