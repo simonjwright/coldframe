@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 5a6ce168efe0 2004/10/25 05:55:52 simon $ -->
+<!-- $Id: releases.html-proto,v 5f121cb90e42 2004/10/27 05:32:44 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -35,6 +35,8 @@ exist.
 
 <p>If an exception gets raised in a called-back routine, an error is
 logged (rather than re-raising the exception to the supplier).
+<br><i>You need to be careful with this, because it can lead to
+elaboration circularity.</i>
 
 
 <p>A callback operation can deregister itself (though the
@@ -87,6 +89,11 @@ operations are public, <i>private</i> and <i>implementation</i>
 operations are private (unless they are marked &#171;init&#187;).
 
 
+<p>You can declare types <tt>private</tt>, either by saying
+&#171;type, private&#187; or (more tidily, perhaps) by tagging
+<i>{private}</i>.
+
+
 <p>It's been made a bit more straightforward to <a
 href="extending.html">add your own code generation extensions</a>.
 
@@ -98,11 +105,6 @@ href="extending.html">add your own code generation extensions</a>.
 
 
 <p><i>{array}</i> types can be (de)serialized automatically.
-
-
-<p>You can declare types <tt>private</tt>, either by saying
-&#171;type, private&#187; or (more tidily, perhaps) by tagging
-<i>{private}</i>.
 
 
 <p><dt>20040319
