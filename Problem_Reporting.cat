@@ -396,25 +396,33 @@
 		    location   	(2608, 880)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(2436, 799)
+			location   	(2450, 794)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	344
+			max_width  	316
 			justify    	0
 			label      	"Component")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB54F0248"
-		    width      	362
-		    height     	184
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(2450, 850)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	312)
+		    width      	334
+		    height     	206
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r100" @10
-		    location   	(2103, 880)
+		    location   	(2110, 880)
 		    label      	(object SegLabel @11
 			Parent_View 	@10
-			location   	(2054, 842)
+			location   	(2061, 842)
 			font       	(object Font
 			    italics    	TRUE)
 			anchor     	1
@@ -432,10 +440,10 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "is affected by" @12
 			    Parent_View 	@10
-			    location   	(7, 112)
+			    location   	(14, 112)
 			    label      	(object SegLabel @13
 				Parent_View 	@12
-				location   	(1919, 919)
+				location   	(1922, 919)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -453,7 +461,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @14
 				Parent_View 	@12
-				location   	(1847, 838)
+				location   	(1849, 838)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -465,10 +473,10 @@
 				orientation 	1))
 			(object RoleView "affects" @15
 			    Parent_View 	@10
-			    location   	(7, 112)
+			    location   	(14, 112)
 			    label      	(object SegLabel @16
 				Parent_View 	@15
-				location   	(2338, 919)
+				location   	(2350, 919)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -486,7 +494,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @17
 				Parent_View 	@15
-				location   	(2339, 838)
+				location   	(2353, 838)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -533,18 +541,26 @@
 		    location   	(2096, 1296)
 		    label      	(object ItemLabel
 			Parent_View 	@19
-			location   	(1936, 1214)
+			location   	(1954, 1210)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	320
+			max_width  	284
 			justify    	0
 			label      	"Defect")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380F322C003E"
-		    width      	338
-		    height     	186
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(1954, 1266)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	281)
+		    width      	302
+		    height     	206
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssocAttachView "" @20
