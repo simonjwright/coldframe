@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.ads,v $
---  $Revision: 2d6ee591f85a $
---  $Date: 2003/03/13 21:08:00 $
+--  $Revision: ea727343999c $
+--  $Date: 2003/03/27 20:49:36 $
 --  $Author: simon $
 
 package ColdFrame.Serialization is
@@ -48,6 +48,25 @@ package ColdFrame.Serialization is
    --
    --  The default implementation generates a contentless XML element
    --  containing the external tag of the actual type.
+
+   function Base_Attribute_Image (S : Base) return String;
+   --  Provides a string representation of any attributes of the base
+   --  type that need to be included in the overall Image (for
+   --  example, a timestamp).
+   --
+   --  The implementation here returns the empty string (there are no
+   --  base type attributes).
+   --
+   --  The output should be of the form
+   --
+   --     "<field name=""{name}"">{value}</field>" & ASCII.LF
+   --
+   --  (if you have more than one field it's best to include a
+   --  newline, ASCII.LF, between them).
+   --
+   --  If possible, the {name} should be distinct from any name that
+   --  might be used in the application: you could include spaces, or
+   --  use '-' instead of '_', or perhaps (eg) *timestamp*.
 
 private
 
