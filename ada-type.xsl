@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
+<!-- $Id: ada-type.xsl,v 7e22d0d955db 2003/06/14 12:53:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -307,34 +307,8 @@
 
           <xsl:when test="@protected">
 
-            <!--
-                 protected type {name} is
-                    {operations}
-                 private
-                    {attributes}
-                 end {name};
-                 -->
-            
-            <xsl:value-of select="$I"/>
-            <xsl:text>protected type </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> is&#10;</xsl:text>
-            <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
-              <xsl:sort select="name"/>
-              <xsl:call-template name="subprogram-specification">
-                <xsl:with-param name="indent" select="$II"/>
-                <xsl:with-param name="is-class" select="'no'"/>
-              </xsl:call-template>
-              <xsl:text>;&#10;</xsl:text>
-            </xsl:for-each>
-            <xsl:value-of select="$I"/>
-            <xsl:text>private&#10;</xsl:text>
-            <xsl:apply-templates mode="instance-record-component"/>
-            <xsl:value-of select="$I"/>
-            <xsl:text>end </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>;&#10;</xsl:text>
-            
+            <xsl:call-template name="protected-type-spec"/>
+
           </xsl:when>
 
           <xsl:when test="@extends">
@@ -617,6 +591,148 @@
   </xsl:template>
 
   <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+
+
+  <!-- Called at domain/type[@protected] to generate protected type specs. -->
+  <xsl:template name="protected-type-spec">
+    
+    <!--
+         protected type {name} is
+         {operations}
+         private
+         {attributes}
+         end {name};
+         -->
+    
+    <xsl:value-of select="$I"/>
+    <xsl:text>protected type </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text> is&#10;</xsl:text>
+
+    <xsl:value-of select="$blank-line"/>
+
+    <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
+      <xsl:sort select="name"/>
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="$II"/>
+        <xsl:with-param name="is-class" select="'no'"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$II"/>
+      </xsl:call-template>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:for-each>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>private&#10;</xsl:text>
+
+    <xsl:apply-templates mode="instance-record-component"/>
+    <xsl:value-of select="$I"/>
+
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+    <!-- Commentary output by caller. -->
+            
+  </xsl:template>
+    
+
+  <!-- Called to generate protected type bodies. -->
+  <xsl:template match="type[@protected]" mode="protected-type-body">
+
+    <xsl:call-template name="should-edit"/>
+
+    <xsl:value-of select="$blank-line"/>
+    <xsl:call-template name="commentary">
+      <xsl:with-param name="indent" select="''"/>
+      <xsl:with-param name="separate-pars" select="$blank-line"/>
+    </xsl:call-template>
+    
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:text>protected body </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+    <xsl:text>&#10;</xsl:text>
+    
+    <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
+      <xsl:sort select="name"/>
+
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$I"/>
+        <xsl:with-param name="separate-pars" select="$blank-line"/>
+      </xsl:call-template>
+    
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="$I"/>
+        <xsl:with-param name="is-class" select="'no'"/>
+      </xsl:call-template>
+      <xsl:if test="@entry">
+        <xsl:text> when False</xsl:text>
+      </xsl:if>
+      <xsl:text> is&#10;</xsl:text>
+
+      <xsl:choose>
+
+        <xsl:when test="@return
+                        and not(/domain/type[name=current()/@return]/attribute)">
+          <!-- It returns a non-composite type. -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>begin&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>raise Program_Error;&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>return </xsl:text>
+          <xsl:call-template name="default-value">
+            <xsl:with-param name="type" select="@return"/>
+          </xsl:call-template>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="@return">
+          <!-- It returns a composite type. -->
+          <xsl:value-of select="$II"/>
+          <xsl:text>Dummy : </xsl:text>
+          <xsl:value-of select="@return"/>
+          <xsl:text>;&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>begin&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>raise Program_Error;&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>return Dummy;&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <!-- No return; procedure or entry. -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>begin&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>raise Program_Error;&#10;</xsl:text>
+        </xsl:otherwise>
+
+      </xsl:choose>
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>end </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+      <xsl:text>&#10;</xsl:text>
+
+    </xsl:for-each>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+  </xsl:template>
+
+  <xsl:template match="*" mode="protected-type-body"/>
+    
 
 
   <!-- Called to extract the package name from a (possibly) qualified
