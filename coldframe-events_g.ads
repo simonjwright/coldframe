@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 47cf2876ac75 $
---  $Date: 2003/04/08 17:51:19 $
+--  $Revision: 3e385e7f5028 $
+--  $Date: 2003/07/10 20:23:40 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -88,7 +88,9 @@ package ColdFrame.Events_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
    is abstract tagged limited private;
    --  An Event Queue is intended to decouple the occurrence of an
    --  event from handling it. Normally, each Domain would have one
@@ -105,6 +107,12 @@ package ColdFrame.Events_G is
    --
    --  if Start_Started is False, call Start to begin processing
    --  Events (which can be Posted or Set on the Queue beforehand).
+   --
+   --  Priority defines (if appropriate) the task priority at which
+   --  events are handled.
+   --
+   --  Storage_Size defines (if appropriate) the storage (stack) size
+   --  for the task in whose context events are handled..
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
@@ -293,7 +301,9 @@ private
       Instance_Deleted : Boolean := False;
    end record;
 
-   type Event_Queue_Base (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
    is abstract tagged limited record
       --  Attributes to manage teardown, particularly for queues
       --  shared by multiple domains.

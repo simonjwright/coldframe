@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 04b082f74c05 $
---  $Date: 2003/03/22 17:10:30 $
+--  $Revision: 3e385e7f5028 $
+--  $Date: 2003/07/10 20:23:40 $
 --  $Author: simon $
 
 generic
@@ -36,10 +36,15 @@ package ColdFrame.Events_G.Test_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
    is new Standard_Queue with private;
 
-   subtype Event_Queue is Event_Queue_Base (Start_Started => False);
+   subtype Event_Queue is Event_Queue_Base
+     (Start_Started => False,
+      Priority => System.Default_Priority,
+      Storage_Size => 20_000);
 
 
    --------------
@@ -89,8 +94,12 @@ private
    end Event_Count;
 
 
-   type Event_Queue_Base (Start_Started : Boolean)
-   is new Standard_Queue (Start_Started => Start_Started) with record
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
+   is new Standard_Queue (Start_Started => Start_Started,
+                          Priority => Priority,
+                          Storage_Size => Storage_Size) with record
       The_Event_Count : Event_Count;
    end record;
 

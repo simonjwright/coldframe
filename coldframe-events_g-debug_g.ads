@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.ads,v $
---  $Revision: 0d9e9f2fbd8b $
---  $Date: 2002/09/21 11:35:59 $
+--  $Revision: 3e385e7f5028 $
+--  $Date: 2003/07/10 20:23:40 $
 --  $Author: simon $
 
 generic
@@ -36,10 +36,15 @@ package ColdFrame.Events_G.Debug_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
    is new Standard_Queue with private;
 
-   subtype Event_Queue is Event_Queue_Base (Start_Started => True);
+   subtype Event_Queue is Event_Queue_Base
+     (Start_Started => True,
+      Priority => System.Default_Priority,
+      Storage_Size => 20_000);
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base);
@@ -78,8 +83,12 @@ package ColdFrame.Events_G.Debug_G is
 
 private
 
-   type Event_Queue_Base (Start_Started : Boolean)
-   is new Standard_Queue (Start_Started => Start_Started) with null record;
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
+   is new Standard_Queue (Start_Started => Start_Started,
+                          Priority => Priority,
+                          Storage_Size => Storage_Size) with null record;
 
    procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue_Base);

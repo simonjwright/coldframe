@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 594912a94743 $
---  $Date: 2003/05/04 10:05:57 $
+--  $Revision: 3e385e7f5028 $
+--  $Date: 2003/07/10 20:23:40 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -40,10 +40,15 @@ package ColdFrame.Events_G.Standard_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
    is new Events_G.Event_Queue_Base with private;
 
-   subtype Event_Queue is Event_Queue_Base (Start_Started => True);
+   subtype Event_Queue is Event_Queue_Base
+     (Start_Started => True,
+      Priority => System.Default_Priority,
+      Storage_Size => 20_000);
 
    function Copy
      (The_Queue : access Event_Queue_Base) return Event_Queue_P;
@@ -95,6 +100,9 @@ private
 
 
    task type Dispatcher (The_Queue : access Event_Queue_Base'Class) is
+
+      pragma Priority (The_Queue.Priority);
+      pragma Storage_Size (The_Queue.Storage_Size);
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
@@ -197,8 +205,12 @@ private
    end Excluder;
 
 
-   type Event_Queue_Base (Start_Started : Boolean)
-   is new Events_G.Event_Queue_Base (Start_Started => Start_Started)
+   type Event_Queue_Base (Start_Started : Boolean;
+                          Priority : System.Priority;
+                          Storage_Size : Positive)
+   is new Events_G.Event_Queue_Base (Start_Started => Start_Started,
+                                     Priority => Priority,
+                                     Storage_Size => Storage_Size)
    with record
       The_Excluder : Excluder (Event_Queue_Base'Access);
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
