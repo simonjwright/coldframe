@@ -19,40 +19,40 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $Id: coldframe-callbacks.adb,v 13badf447884 2001/08/16 19:31:36 simon $
+--  $Id: coldframe-callbacks.adb,v d34c9dbd812d 2001/09/11 05:16:37 simon $
 
 package body ColdFrame.Callbacks is
 
-  The_Registered_Procedures : Collections.Collection;
+   The_Registered_Procedures : Collections.Collection;
 
-  procedure Register (Proc : Callback) is
-  begin
-    Collections.Append (C => The_Registered_Procedures,
-                        Elem => Proc);
-  end Register;
+   procedure Register (Proc : Callback) is
+   begin
+      Collections.Append (C => The_Registered_Procedures,
+                          Elem => Proc);
+   end Register;
 
-  procedure Deregister (Proc : Callback) is
-    Loc : Natural;
-  begin
-    Loc := Collections.Location (The_Registered_Procedures, Proc);
-    Collections.Remove (The_Registered_Procedures, Loc);
-  end Deregister;
+   procedure Deregister (Proc : Callback) is
+      Loc : Natural;
+   begin
+      Loc := Collections.Location (The_Registered_Procedures, Proc);
+      Collections.Remove (The_Registered_Procedures, Loc);
+   end Deregister;
 
-  procedure Call_Callbacks (With_Param : T) is
-    procedure Process (The_Callback : Callback; OK : out Boolean);
-    pragma Inline (Process);
-    procedure Process_All is new Abstract_Containers.Visit (Process);
-    It : Abstract_Containers.Iterator'Class
-       := Collections.New_Iterator (The_Registered_Procedures);
-    procedure Process (The_Callback : Callback; OK : out Boolean) is
-    begin
-      OK := True;
-      The_Callback.all (With_Param);
-    exception
-      when others => null;  --  should actually log this!
-    end Process;
-  begin
-    Process_All (It);
-  end Call_Callbacks;
+   procedure Call_Callbacks (With_Param : T) is
+      procedure Process (The_Callback : Callback; OK : out Boolean);
+      pragma Inline (Process);
+      procedure Process_All is new Abstract_Containers.Visit (Process);
+      It : Abstract_Containers.Iterator'Class
+        := Collections.New_Iterator (The_Registered_Procedures);
+      procedure Process (The_Callback : Callback; OK : out Boolean) is
+      begin
+         OK := True;
+         The_Callback.all (With_Param);
+      exception
+         when others => null;  --  should actually log this!
+      end Process;
+   begin
+      Process_All (It);
+   end Call_Callbacks;
 
 end ColdFrame.Callbacks;
