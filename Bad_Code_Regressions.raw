@@ -4,12 +4,12 @@
 <date>
 <year>2004</year>
 <month>4</month>
-<day>4</day>
-<time>14:52</time>
+<day>24</day>
+<time>21:27</time>
 </date>
 <documentation>Regression tests that involve detecting errors.
 
-{ revision = $Revision: 5f827317e8ca $ }</documentation>
+{ revision = $Revision: 34bfcc5a90d4 $ }</documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -426,6 +426,79 @@
 <events>
 </events>
 </class>
+<class stereotype="abstract">
+<name>Super Action Mismatch</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>profile</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>x</parametername>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Child Action Mismatch</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>init</name>
+<entryactions>
+<entryaction><name>profile</name></entryaction>
+<entryaction><name>missing</name></entryaction>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>init</target>
+<event><name>go</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
 <class stereotype="public">
 <name>External</name>
 <kind>NormalClass</kind>
@@ -509,6 +582,12 @@
 </class>
 </classes>
 <relationships>
+<inheritance>
+<name>action</name>
+<documentation></documentation>
+<child>Child Action Mismatch</child>
+<parent>Super Action Mismatch</parent>
+</inheritance>
 <association>
 <name>a1</name>
 <documentation></documentation>
