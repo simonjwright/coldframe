@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v b48d7a3452c0 2003/01/26 19:08:19 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 1e2f23e7e5f0 2003/02/02 17:23:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -124,7 +124,13 @@
               & "<field name=""{time-attr-name}"">"
               & ColdFrame.Project.Calendar.Image (S.{time-attr-name})
               & "</field>" & ASCII.LF
-              & "</record>" & ASCII.LF;
+              & "<field name=""{time-attr-name}"">"
+              & Ada.Strings.Unbounded.To_String (S.{time-attr-name})
+              & "</field>" & ASCII.LF
+              & "<field name=""{time-attr-name}"">"
+              & {type}_Package.To_String (S.{time-attr-name})
+              & "</field>" & ASCII.LF
+              & "</record>";
          end Image;
          -->
     
@@ -161,6 +167,37 @@
           <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
         </xsl:when>
 
+        <xsl:when test="type='Text' or type='Unbounded_String'">
+          <!-- Unbounded Strings have to be split over several lines. -->
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;field name=""</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>""&gt;"&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; </xsl:text>
+          <xsl:text>Ada.Strings.Unbounded.To_String (S.Payload.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>)&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="/domain/type[name=current()/type]/string">
+          <!-- Bounded Strings have to be split over several lines. -->
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;field name=""</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>""&gt;"&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; </xsl:text>
+          <xsl:value-of select="type"/>
+          <xsl:text>_Package.To_String (S.Payload.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>)&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+        </xsl:when>
+
         <xsl:otherwise>
           <xsl:value-of select="$IIC"/>
           <xsl:text>&amp; "&lt;field name=""</xsl:text>
@@ -176,7 +213,7 @@
     </xsl:for-each>
 
     <xsl:value-of select="$IIC"/>
-    <xsl:text>&amp; "&lt;/record&gt;" &amp; ASCII.LF;&#10;</xsl:text>
+    <xsl:text>&amp; "&lt;/record&gt;";&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Image;&#10;</xsl:text>
