@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: bugs.html,v 5be5922c246e 2002/08/17 17:00:12 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -82,15 +82,6 @@ document from the domain model.
 class was calculated automatically (where the multiplicity of each
 associated class is specified).
 
-<dt>0055 (raised 8.i.02)
-
-<dd>To create an instance of a child class (or any class that has a
-reference to another class in its identifier), you have to type
-convert the <tt>Handle</tt> to <tt>ColdFrame.Instances.Handle</tt>.
-
-<br>This could be avoided by making (all?) <tt>Create</tt> operations
-children of the class package.
-
 <dt>0056 (raised 8.i.02)
 
 <dd>The generated HTML doesn't report default parameter values.
@@ -131,12 +122,6 @@ in type range specifications.
 <dd>It seems unnecessary that the <tt>[[callback]]</tt> facility
 requires you to specify the maximum number of instances.
 
-<dt>0073 (raised 11.iv.02)
-
-<dd>If a class has a multiplicity of 0..1, it should be possible to
-<tt>Find</tt> the only instance (or of course <tt>null</tt>) without
-supplying an Identifier.
-
 <dt>0078 (raised 18.iv.02)
 
 <dd>It would be helpful if ColdFrame could detect the error of having
@@ -148,18 +133,10 @@ non-unique abbreviations.
 inherited from one parent to act as the concrete version of an
 abstract operation declared in the other parent?
 
-<dt>0081 (raised 9.v.02)
-
-<dd>Tear_Down doesn't clean up singletons (especially active ones).
-
 <dt>0086 (raised 14.v.02)
 
 <dd>It would be helpful if the build process could report
 unimplemented bodies.
-
-<dt>0087 (raised 21.v.02)
-
-<dd><tt>Tear_Down</tt> doesn't reset &#171;class&#187; variables.
 
 <dt>0088 (raised 7.vi.02)
 
@@ -187,31 +164,70 @@ changed to "must carry the same payload".
 <dd>Multiple delayed events which are required to fire at the same
 time will result in a <tt>delay&nbsp;0.0</tt> between each.
 
-<dt>0103 (raised 16.vii.02)
-
-<dd>Automatic formation of abbreviations can result in generating
-reserved words.
-
 <dt>0105 (raised 23.vii.02)
 
 <dd>If an enumeration type is imported or renamed, the enumeration
 literals aren't.
+
+</dl>
+
+<!-- next: 0109 -->
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>17.viii.02</h3>
+
+<dl>
+
+<dt>0073 (raised 11.iv.02)
+
+<dd>If a class has a multiplicity of 0..1, it should be possible to
+<tt>Find</tt> the only instance (or of course <tt>null</tt>) without
+supplying an Identifier.
+
+<br><i>Both <tt>Find</tt>s are generated; the one which requires an
+Identifier is "deprecated".</i>
+
+<dt>0081 (raised 9.v.02)
+
+<dd>Tear_Down doesn't clean up singletons (especially active ones).
+
+<dt>0087 (raised 21.v.02)
+
+<dd><tt>Tear_Down</tt> doesn't reset &#171;class&#187; variables.
+
+<br><i>It's actually the <tt>Class_Initialize</tt> operation that does
+this.</i>
+
+<<dt>0103 (raised 16.vii.02)
+
+<dd>Automatic formation of abbreviations can result in generating
+reserved words.
+
+<br><i>If this condition occurs, an error is reported.</i>
+
+<br><i>Other uses of reserved words are also reported as errors.</i>
 
 <dt>0106 (raised 25.vii.02)
 
 <dd>The generated lines-of-code count is wrong, and less useful than
 it could be.
 
+<br><i>It's now correct (though still not so useful).</i>
+
 <dt>0107 (raised 25.vii.02)
 
 <dd>It would be a good thing if documentation in the model could be
 carried through into the generated code.
 
+<dt>0108 (raised 16.viii.02)
+
+<dd>The style of programming implied by the present version of
+<tt>ColdFrame.Project.Calendar</tt> (a renaming of
+<tt>Ada.Calendar</tt>) falls foul of a GNAT feature which fails when
+you <tt>with</tt> two renamings of the same package.
+
 </dl>
-
-<!-- next: 0108 -->
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>16.vii.02</h3>
 
@@ -823,6 +839,20 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>17.viii.02</h3>
+<dl>
+
+<dt>0055 (raised 8.i.02)
+
+<dd>To create an instance of a child class (or any class that has a
+reference to another class in its identifier), you have to type
+convert the <tt>Handle</tt> to <tt>ColdFrame.Instances.Handle</tt>.
+
+<br><i>This problem was most tedious with inheritance hierarchies. The
+new inheritance support removes most of the problem.</i>
+
+</dl>
 
 <h3>10.vii.02</h3>
 <dl>
