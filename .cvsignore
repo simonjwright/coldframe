@@ -9,6 +9,7 @@ releases.html
 use-cases.html
 *.pdf
 dist
+.build
 *.gen
 Makefile-cf Makefile-winnt Makefile-unix
 cf-[0-9]*
