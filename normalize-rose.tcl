@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 80db7242a5c8 2002/05/09 20:39:48 simon $
+# $Id: normalize-rose.tcl,v a636e30b8bd7 2002/05/14 20:09:10 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -89,13 +89,12 @@ proc normalize {s} {
 	}
     }
     # handle white space/underscore
-    set tmp [string tolower $tmp]
     regsub -all {_} "$tmp" " " tmp
     set tmp [split $tmp]
     set und ""
     foreach w $tmp {
-	if [info exists caseExceptions($w)] {
-	    set und "$und $caseExceptions($w)"
+	if [info exists caseExceptions([string tolower $w])] {
+	    set und "$und $caseExceptions([string tolower $w])"
 	} else {
 	    set und \
 	      "$und [string toupper [string index $w 0]][string range $w 1 end]"
