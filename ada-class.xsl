@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v eb5a481b7fe4 2003/09/23 20:07:12 simon $ -->
+<!-- $Id: ada-class.xsl,v 179511b890a6 2003/09/30 05:06:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -492,10 +492,12 @@
       <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child);&#10;</xsl:text>
+      <!--
       <xsl:value-of select="$I"/>
       <xsl:text>pragma Inline_Always (Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child);&#10;</xsl:text>
+      -->
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
@@ -670,7 +672,7 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
-    <!-- .. the task spec for active classes .. -->    
+    <!-- .. the task stub for active classes .. -->    
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
