@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 801e33fc4c61 2001/10/13 13:31:49 simon $ -->
+<!-- $Id: ada-operation.xsl,v cdac8979a291 2001/10/13 16:42:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -595,7 +595,7 @@
          case This.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {return} {child-1}.{operation}
-               (This => This.{relation}_Current_Child.{child-1-abbrev}{,
+               (This => {child-1}.Handle (This.{relation}_Current_Child.{child-1-abbrev}){,
                 other-parameter-assignments});
            when Null_T =>
              raise Constraint_Error;
@@ -652,10 +652,13 @@
       <xsl:text>&#10;</xsl:text>
       
       <xsl:value-of select="$IIIC"/>
-      <xsl:text>(This =&gt; This.</xsl:text>
+      <xsl:text>(This =&gt; </xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>.Handle (This.</xsl:text>
       <xsl:value-of select="$rel/name"/>
       <xsl:text>_Current_Child.</xsl:text>
       <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
+      <xsl:text>)</xsl:text>
       
       <xsl:for-each select="$op/parameter">
         <xsl:text>,&#10;</xsl:text>
@@ -694,7 +697,7 @@
 
     <!--          
          {return} {parent}.{operation-name}
-           (This => Get_{relation}_Parent (This){,
+           (This => {parent}.Handle (Get_{relation}_Parent (This)){,
          other-parameter-assignments});
          -->
 
@@ -732,9 +735,11 @@
     <xsl:text>&#10;</xsl:text>
     
     <xsl:value-of select="$IC"/>
-    <xsl:text>(This =&gt; Get_</xsl:text>
+    <xsl:text>(This =&gt; </xsl:text>
+    <xsl:value-of select="$rel/parent"/>
+    <xsl:text>.Handle (Get_</xsl:text>
     <xsl:value-of select="$rel/name"/>
-    <xsl:text>_Parent (This)</xsl:text>
+    <xsl:text>_Parent (This))</xsl:text>
     
     <xsl:for-each select="$op/parameter">
       <xsl:text>,&#10; </xsl:text>
