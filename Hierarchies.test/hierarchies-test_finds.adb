@@ -6,7 +6,7 @@ with ColdFrame.Instances;
 with Hierarchies.Initialize;
 with Hierarchies.Tear_Down;
 
-with Hierarchies.R_1.Inheritance;
+with Hierarchies.R_1;
 with Hierarchies.R_2;
 with Hierarchies.R_3;
 with Hierarchies.S_2.Inheritance;

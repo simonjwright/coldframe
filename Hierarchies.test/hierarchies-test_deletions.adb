@@ -24,7 +24,7 @@ with Hierarchies.S_3.Collections;
 with Hierarchies.T_2.Inheritance;
 with Hierarchies.T_2.All_Instances;
 with Hierarchies.T_2.Collections;
-with Hierarchies.F_2.Inheritance;
+with Hierarchies.F_2;
 with Hierarchies.F_2.All_Instances;
 with Hierarchies.F_2.Collections;
 
