@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cba9f9c66d45 2002/10/13 17:16:44 simon $
+# $Id: normalize-rose.tcl,v c4b42ce6473f 2002/10/13 18:06:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -994,6 +994,11 @@ itcl::class Class {
 	$this -public $dummy
     }
 
+    # specifies if this is a visible class
+    variable visible 0
+
+    method -visible-for-test {dummy} {set visible 1}
+
     # true if there's one and only one instance of the class
     variable singleton 0
 
@@ -1202,6 +1207,7 @@ itcl::class Class {
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
 	    if $public {puts -nonewline " public=\"yes\""}
+	    if $visible {puts -nonewline " visible=\"yes\""}
 	    puts ">"
 	    putElement name "$name"
 	    putElement abbreviation [$this -getAbbreviation]
