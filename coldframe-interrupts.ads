@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-interrupts.ads,v $
---  $Revision: ef9a354d4800 $
---  $Date: 2002/10/17 20:39:08 $
+--  $Revision: 81706b6a141c $
+--  $Date: 2002/10/20 16:24:11 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -34,6 +34,7 @@ package ColdFrame.Interrupts is
    procedure Attach (H : in out Handler; To : Ada.Interrupts.Interrupt_ID);
 
    procedure Wait (On : Handler);
+   --  Blocks until the attached interrupt occurs.
 
 private
 
