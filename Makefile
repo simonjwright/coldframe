@@ -195,8 +195,8 @@ coldframe-callbacks.adb \
 coldframe-callbacks.ads \
 coldframe-events_g-creation_g.adb \
 coldframe-events_g-creation_g.ads \
-coldframe-events_g-standard_g-debug_g.adb \
-coldframe-events_g-standard_g-debug_g.ads \
+coldframe-events_g-debug_g.adb \
+coldframe-events_g-debug_g.ads \
 coldframe-events_g-standard_g.adb \
 coldframe-events_g-standard_g.ads \
 coldframe-events_g.adb \
