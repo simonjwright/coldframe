@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 36d87aa411b7 2001/03/25 09:37:41 simon $ -->
+<!-- $Id: architecture.html,v 46d2b71f6124 2001/04/25 19:08:03 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -140,6 +140,17 @@ in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
 
 <dl>
 
+<dt>on classes<dd><ul>
+
+<li><tt>abbreviation : <i>abbrev</i></tt> specifies the class'
+abbreviation. By default, the abbreviation is composed of the initial
+letters of the full class name; this wouldn't work for, for example,
+<i>Pet</i> and <i>Person</i>.
+
+</ul>
+
+<p>
+
 <dt>on <em>&#171;type&#187;</em> classes<dd><ul>
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
@@ -155,11 +166,33 @@ the outstanding Problem Reports on this Component").
 
 </ul>
 
+<p>
+
 <dt>on attributes<dd><ul>
 
 <li><tt>id</tt> indicates that the attribute is an identifying
 attribute. This is an alternative to the <em>&#171;id&#187;</em>
 stereotype.
+
+<li><tt>formalizes : <i>class-name</i></tt> indicates that the
+attribute is a referential attribute.
+
+<p>This is needed when the attribute has to be specified by the
+analyst (normally, ColdFrame can create referential attributes as
+required).
+
+<p>Consider R8, Licence is-issued-by Licensing Office. The identifier
+of Licence consists of the licence number and also the issuing
+Licensing Office, since the various offices don't use disjoint licence
+number ranges. In this case, we'd specify the attribute as
+<pre>
+  &#171;id&#187; issuing office : Licensing Office
+</pre>
+
+and include the annotation
+<pre>
+  [[ formalizes : r8 ]]
+</pre>
 
 </ul>
 
@@ -171,6 +204,8 @@ alternative to the <em>&#171;class&#187;</em> stereotype.
 
 </ul>
 
+<p>
+
 <dt>on parameters<dd><ul>
 
 <li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
@@ -181,6 +216,8 @@ alternative to the <em>&#171;class&#187;</em> stereotype.
 </ul>
 
 </ul>
+
+<p>
 
 <dt>on roles<dd><ul>
 
@@ -219,6 +256,9 @@ browser
 it would be as well if <tt><i>package-name</i></tt> is a legal base
 file name! spaces may be a bad idea).
 
+<p>The output file is in the directory that <tt>ddf.ebs</tt> was
+loaded from (sorry about that).
+
 <p>The output format is XML, using a Document Type Description (<a
 href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
 and to handle in the next stage using a SAX-compliant parser.
@@ -233,10 +273,12 @@ it would have taken a lot longer if I'd used XMI. Perhaps an
 appropriate approach would be to use an XSL transform to convert
 documents from XMI to ColdFrame.
 
-<p>The processing is done using the <em>itcl</em> script
-<tt>normalize-rose.tcl</tt>, which uses the TclXML package to handle
-the parse of the <tt><i>package-name</i>.raw</tt> file. The Makefile
-places the output in <tt><i>package-name</i>.norm</tt>.
+<p>The processing is done using the <em><a
+href="resources.html#tcl">itcl</a></em> script
+<tt>normalize-rose.tcl</tt>, which uses the <a
+href="resources.html#xml">TclXML</a> package to handle the parse of
+the <tt><i>package-name</i>.raw</tt> file. The Makefile places the
+output in <tt><i>package-name</i>.norm</tt>.
 
 <h2><a name="generation">Generation of code</a></h2>
 
