@@ -1,4 +1,4 @@
-<!-- $Id: extraction.html,v ffebed4f10fe 2002/09/20 10:21:08 simon $ -->
+<!-- $Id: extraction.html,v e193f417fb88 2002/11/07 05:54:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Extraction of models from Rose</title>
@@ -9,8 +9,19 @@
 <p>The Rose model is extracted to a raw "domain definition file" (type
 <tt>.raw</tt>) using a RoseScript script <tt>extractor.ebs</tt>.
 
-<p>Install <tt>extractor.ebs</tt> in the Rose <i>Add-ins</i> menu (or
-whichever other one you want to use). In
+<p>Because <tt>extractor.ebs</tt> may change in future releases of
+ColdFrame, an intermediate script <tt>extractor-trampoline.ebs</tt> is
+provided, which uses environment variables <tt>TOP</tt> and
+<tt>COLDFRAME</tt> (typically set to <tt>C:</tt> and
+<tt>cf-<i>yyyymmdd</i></tt> respectively, see the <a
+href="installation.html">installation notes</a>) to locate
+<tt>extractor.ebs</tt>.
+
+<p>Copy <tt>extractor-trampoline.ebs</tt> to the Rose script
+directory (typically <tt>C:\Program&nbsp;Files\Rational\Rose\</tt>).
+
+<p>Call <tt>extractor-trampoline.ebs</tt> from the Rose <i>Add-ins</i>
+menu (or whichever other one you want to use). In
 <tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
 <tt>rose.mnu</tt>:
 
@@ -22,16 +33,12 @@ Menu Add-Ins
 
   option "Generate &XML..."	
    {
-	RoseScript $ColdFrame\extractor.ebs
+	RoseScript extractor-trampoline.ebs
    }
 
 }
 </pre>
 </blockquote>
-
-<p>This means, of course, that you must set the Rose Path Map variable
-<tt>ColdFrame</tt> to the directory where ColdFrame is installed (eg,
-<tt>d:\cf-20010707</tt>).
 
 <p>The Extractor extracts data for the selected Domain packages or, if
 none are selected, for all the packages on the current active class
