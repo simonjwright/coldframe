@@ -14,8 +14,8 @@ with Performance.Event_Timing;
 
 with ColdFrame.Instances;
 with ColdFrame.Project.Events;
-with ColdFrame.Exceptions.Symbolic_Traceback;
-pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
+with ColdFrame.Exceptions.Traceback;
+pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
 with High_Resolution_Time; use High_Resolution_Time;
 
@@ -357,7 +357,8 @@ begin
       T := Clock;
 
       declare
-         Ev : ColdFrame.Project.Events.Event_P := new Event_Timing.Timing;
+         Ev : constant ColdFrame.Project.Events.Event_P
+           := new Event_Timing.Timing;
          P : Event_Timing.Timing renames Event_Timing.Timing (Ev.all);
       begin
          P.Count := 0;
@@ -374,5 +375,6 @@ begin
 
    end;
 
+   Performance.Tear_Down;
 
 end Performance.Harness;
