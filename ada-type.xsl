@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 57552ab0afc7 2004/10/29 14:38:49 simon $ -->
+<!-- $Id: ada-type.xsl,v 9a07ec640caa 2004/11/12 06:37:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -69,14 +69,16 @@
       <xsl:text>with Ada.Strings.Bounded; use Ada.Strings.Bounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for unbounded strings (in record components). -->
+    <!-- Context for unbounded strings. -->
 
     <xsl:if test="type/attribute/type='Unbounded_String'
                   or type/operation/parameter/type='Unbounded_String'
                   or type/operation/@result='Unbounded_String'
-                  or type/attribute/type='Text'
+                  or type/array/type='Unbounded_String'
+                  or type/array/type='Text'
                   or type/operation/parameter/type='Text'
-                  or type/operation/@result='Text'">
+                  or type/operation/@result='Text'
+                  or type/attribute/type='Text'" >
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
@@ -394,7 +396,11 @@
         <xsl:text>)&#10;</xsl:text>
         <xsl:value-of select="$IC"/>
         <xsl:text>of </xsl:text>
-        <xsl:value-of select="array/type"/>
+        <xsl:call-template name="ut:type-name">
+          <xsl:with-param name="type" select="array/type"/>
+          <xsl:with-param name="class" select="."/>
+          <xsl:with-param name="is-class" select="'no'"/>
+        </xsl:call-template>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
 
