@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 49984d1efe79 $
---  $Date: 2002/09/04 18:51:35 $
+--  $Revision: 41c0b368c6a1 $
+--  $Date: 2002/09/12 20:59:02 $
 --  $Author: simon $
 
 generic
@@ -55,7 +55,10 @@ package ColdFrame.Events_G.Test_G is
    --  Unit test support  --
    -------------------------
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue);
+   procedure Start (The_Queue : access Event_Queue);
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue;
+                              Ignoring_Timers : Boolean := False);
 
 private
 
@@ -64,25 +67,34 @@ private
    protected type Event_Count is
 
       entry Wait_Until_Idle;
+      --  Blocks until there are no events pending or held or on timers.
+
+      entry Wait_Until_No_Timed_Events;
       --  Blocks until there are no events pending or held.
 
       procedure Add_Posted_Event;
       procedure Remove_Posted_Event;
       procedure Add_Held_Event;
       procedure Remove_Held_Event;
+      procedure Add_Timer_Event;
+      procedure Remove_Timer_Event;
 
    private
 
       Posted_Events : Natural := 0;
       Held_Events : Natural := 0;
+      Timed_Events : Natural := 0;
 
    end Event_Count;
 
 
    type Event_Queue is new Standard_Queue with record
+      Started : Boolean := False;
       The_Event_Count : Event_Count;
    end record;
 
+
+   function Start_Started (The_Queue : access Event_Queue) return Boolean;
 
    procedure Add_Posted_Event (On : access Event_Queue);
 
@@ -91,6 +103,10 @@ private
    procedure Add_Held_Event (On : access Event_Queue);
 
    procedure Remove_Held_Event (On : access Event_Queue);
+
+   procedure Add_Timer_Event (On : access Event_Queue);
+
+   procedure Remove_Timer_Event (On : access Event_Queue);
 
 
 end ColdFrame.Events_G.Test_G;
