@@ -1,8 +1,8 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 81cb0edf656f 2003/01/26 18:15:27 simon $
+--  $Id: stairwell_demo.gpr,v 6277b8085f46 2003/06/18 19:54:43 simon $
 
 with "Options";
-with "ColdFrame_Defaults";
+with "ColdFrame";
 with "tash";
 
 project Stairwell_Demo is

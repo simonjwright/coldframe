@@ -246,7 +246,7 @@ PROGS = COPYING \
 
 GPRS = AUnit.gpr \
 BC.gpr \
-ColdFrame_Defaults.gpr \
+ColdFrame.gpr \
 Options.gpr
 
 SUPPORT = \
@@ -326,7 +326,7 @@ coldframe-project-global_storage_pool.ads-standard: \
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
-ColdFrame.gpr Examples.mdl
+Examples.mdl
 
 DEMO += \
 stairwell_demo.adp stairwell_demo.gpr tash.gpr \
