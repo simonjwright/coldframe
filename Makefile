@@ -73,12 +73,12 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	@echo generating $@ ...
 	@$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	  --casing $(CASE_EXCEPTIONS) \
-	  $(NORM_STACK_DUMP) \
-	  $(NORM_VERBOSE) \
-	  --version cf-DATE \
-	  >$@ || (rm -f $@; exit 1)
+	  TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	    --casing $(CASE_EXCEPTIONS) \
+	    $(NORM_STACK_DUMP) \
+	    $(NORM_VERBOSE) \
+	    --version cf-DATE \
+	    >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	@echo generating $@ ...
