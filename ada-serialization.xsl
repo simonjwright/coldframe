@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 7d57c0eb1fbb 2003/02/12 22:13:52 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 2004325cb9c1 2003/02/20 20:54:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -49,7 +49,8 @@
         <xsl:sort select="name"/>
 
             <!--
-                 type {name} is new ColdFrame.Project.Serialization.Base with record
+                 type {name}
+                 is new ColdFrame.Project.Serialization.Base with record
                    Payload : {domain}.{name};
                  end record;
                  function Image (S : {name}) return String;
@@ -58,7 +59,9 @@
             <xsl:value-of select="$I"/>
             <xsl:text>type </xsl:text>
             <xsl:value-of select="name"/>
-            <xsl:text> is new ColdFrame.Project.Serialization.Base with record&#10;</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is new ColdFrame.Project.Serialization.Base with record&#10;</xsl:text>
             <xsl:value-of select="$II"/>
             <xsl:text>Payload : </xsl:text>
             <xsl:value-of select="../name"/>
@@ -124,8 +127,10 @@
 
     <!--
          function Image (S : Info) return String is
+           Name : constant String
+             := "{domain}.{type}";
          begin
-            return "<record name=""{domain}.{type}"">" & ASCII.LF
+            return "<record name=""" & Name & """>" & ASCII.LF
               & "<field name=""{attr-name}"">"
               & S.{attr-name}'Img
               & "</field>" & ASCII.LF
@@ -146,15 +151,19 @@
     <xsl:text>function Image (S : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>) return String is&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Name : constant String :=&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>"</xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>";&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>return "&lt;record name=""</xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>""&gt;" &amp; ASCII.LF&#10;</xsl:text>
+    <xsl:text>return "&lt;record name=""" &amp; Name &amp; """&gt;" &amp; ASCII.LF&#10;</xsl:text>
 
     <xsl:for-each select="attribute">
 
@@ -200,6 +209,22 @@
           <xsl:text>&amp; </xsl:text>
           <xsl:value-of select="type"/>
           <xsl:text>_Package.To_String (S.Payload.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>)&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="/domain/type[name=current()/type]/@image">
+          <!-- The type ha a user-defined image operation. -->
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; "&lt;field name=""</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>""&gt;"&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>&amp; </xsl:text>
+          <xsl:value-of select="/domain/type[name=current()/type]/@image"/>
+          <xsl:text> (S.Payload.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>)&#10;</xsl:text>
           <xsl:value-of select="$IIC"/>
