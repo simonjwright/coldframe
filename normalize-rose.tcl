@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e8416ee1e3bf 2003/07/10 20:19:59 simon $
+# $Id: normalize-rose.tcl,v 6df8619783c1 2003/09/09 04:14:58 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -50,7 +50,7 @@ proc setCaseExceptions {files} {
 	    Warning "can't open case exception file $file: $f"
 	} else {
 	    while {[gets $f line] >= 0} {
-		regsub -all {[\*\t ]} $line "" res
+		regsub -all {[\t ].*$} $line "" res
 		if {[string range $res 0 0] == "*"} {
 		    set res [string range $res 1 end]
 		    set subCaseExceptions([string tolower $res]) $res
@@ -150,7 +150,6 @@ proc normalize {s} {
 # Given a string,
 # - trims leading and trailing white space
 # - handles "strings" and 'c'haracters directly
-# - handles signed entities by recursion
 # - handles based literals directly (Ada syntax, eg 2#010101#)
 # - handles null directly
 # otherwise,
@@ -161,11 +160,6 @@ proc normalizeValue {s} {
     if [regexp {^\".*\"$} $tmp] {return $tmp}
     # handle characters
     if [regexp {^\'.\'$} $tmp] {return $tmp}
-    # allow signed entities
-#    if [regexp {[-+]} $tmp] {
-#	set sign [string index $tmp 0]
-#	return "$sign[normalizeValue [string range $tmp 1 end]]"
-#    }
     # allow based literals
     if [regexp -nocase {[0-9_]+\#[0-9a-f_.]*\#} $tmp] {return $tmp}
     switch -- [string tolower $tmp] {
@@ -201,17 +195,21 @@ proc normalizeValue {s} {
 				    }
 				    lappend minl $term
 				}
-				lappend plusl [join $minl "-"]
+				set minl [join $minl " - "]
+				regsub {^ - ([^(])} $minl {-\1} minl
+				lappend plusl $minl
 			    }
-			    lappend divl [join $plusl "+"]
+			    set plusl [join $plusl " + "]
+				regsub {^ \+ ([^(])} $plusl {+\1} plusl
+			    lappend divl $plusl
 			}
-			lappend starl [join $divl "/"]
+			lappend starl [join $divl " / "]
 		    }
-		    lappend rpl [join $starl "*"]
+		    lappend rpl [join $starl " * "]
 		}
-		lappend lpl [join $rpl ")"] 
+		lappend lpl [join $rpl ")"]
 	    }
-	    set tmp [join $lpl "("] 
+	    set tmp [join $lpl "("]
 	    return $tmp
 	}
     }
@@ -454,7 +452,7 @@ itcl::class IdentifierString {
 
 # The base class for all XML elements which represent values; stores
 # eg " hello   world " as "Hello_World", and "+ (2.0 * name)" as
-# "+(2.0*Name)".
+# "+(2.0 * Name)".
 itcl::class ValueString {
     inherit String
 
@@ -1093,7 +1091,7 @@ itcl::class Class {
 
     # specifies if this is an active class
     variable active 0
-    method -active {dummy} { set active 1}
+    method -active {dummy} {set active 1}
 
     method -concurrency {conc} {
 	set c [string trim $conc]
@@ -1102,6 +1100,14 @@ itcl::class Class {
 	    default {}
 	}
     }
+
+    # specifies stack size (for active classes)
+    variable stack
+    method -stack {s} {set stack [normalizeValue $s]}
+
+    # specifies priority (for active classes)
+    variable priority
+    method -priority {p} {set priority [normalizeValue $p]}
 
     # specifies if this is a public class
     variable public 0
@@ -1352,6 +1358,14 @@ itcl::class Class {
 		}
 	    }
 	}
+	if {!$active} {
+	    if [info exists stack] {
+		Error "can't specify stack for non-active class $name"
+	    }
+	    if [info exists priority] {
+		Error "can't specify priority for non-active class $name"
+	    }
+	}
 	if $isType {
 	    puts -nonewline "<type"
 	    if [info exists callback] {
@@ -1380,6 +1394,10 @@ itcl::class Class {
 	    if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
 	    if $abstr {puts -nonewline " abstract=\"yes\""}
 	    if $active {puts -nonewline " active=\"yes\""}
+	    if [info exists stack] {puts -nonewline " stack=\"$stack\""}
+	    if [info exists priority] {
+		puts -nonewline " priority=\"$priority\""
+	    }
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
 	    if $public {puts -nonewline " public=\"yes\""}
@@ -2052,13 +2070,26 @@ itcl::class Inheritance {
     }
 }
 
-itcl::class Action {
+itcl::class EntryAction {
     inherit Element
 
     method -generate {domain} {
-	puts "<action>"
-	putElement name $name
-	puts "</action>"
+	putElement action $name
+    }
+
+}
+
+itcl::class TransitionAction {
+    inherit Element
+
+    method -complete {} {
+	[stack -top] -action $this
+    }
+
+    method -generate {domain} {
+	if {[string length $name] > 0} {
+	    putElement action $name
+	}
     }
 
 }
@@ -2177,6 +2208,9 @@ itcl::class Transition {
     variable event
     method -event {e} {set event $e}
 
+    variable action
+    method -action {a} {set action $a}
+
     variable ignore 0
     method -ignore {dummy} {set ignore 1}
 
@@ -2207,6 +2241,9 @@ itcl::class Transition {
 	puts ">"
 	if {[string length [$event -getName]] > 0} {
 	    putElement event [$event -getName]
+	}
+	if [info exists action] {
+	    $action -generate $domain
 	}
 	putElement source $source
 	putElement target $target
@@ -2709,7 +2746,7 @@ proc elementFactory {xmlTag} {
     # XXX should this perhaps be an operation of Domain?
     switch $xmlTag {
 	abstract          {return [Abstract #auto]}
-	action            {return [Action #auto]}
+	action            {return [EntryAction #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
@@ -2728,6 +2765,7 @@ proc elementFactory {xmlTag} {
 	documentation     {return [Documentation #auto]}
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
+	entryaction       {return [EntryAction #auto]}
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
 	events            {return [Events #auto]}
@@ -2760,6 +2798,7 @@ proc elementFactory {xmlTag} {
 	target            {return [Target #auto]}
 	time              {return [Time #auto]}
 	transition        {return [Transition #auto]}
+	transitionaction  {return [TransitionAction #auto]}
 	transitions       {return [Transitions #auto]}
 	type              {return [Type #auto]}	
 	visibility        {return [Visibility #auto]}

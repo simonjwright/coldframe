@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 3e385e7f5028 $
---  $Date: 2003/07/10 20:23:40 $
+--  $Revision: 0f2f89a7a8a8 $
+--  $Date: 2003/07/29 20:10:48 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -101,6 +101,7 @@ private
 
    task type Dispatcher (The_Queue : access Event_Queue_Base'Class) is
 
+      pragma Task_Name ("aDispatcher");
       pragma Priority (The_Queue.Priority);
       pragma Storage_Size (The_Queue.Storage_Size);
 
@@ -117,6 +118,11 @@ private
 
 
    task type Timer_Manager (The_Queue : access Event_Queue_Base'Class) is
+
+      pragma Task_Name ("aTimerManager");
+      --  No need to specify priority (because we only deal with timed
+      --  events anyway) or stack size (if anything, we could reduce
+      --  it, since there's no user code to call).
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as

@@ -20,9 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 6df8619783c1 $
+--  $Date: 2003/09/09 04:14:58 $
 --  $Author: simon $
+
+with BC.Containers.Maps.Bounded;
+with BC.Containers.Maps.Unbounded;
+with ColdFrame.Project.Storage_Pools;
 
 package ColdFrame.Instances is
 
@@ -33,8 +37,43 @@ package ColdFrame.Instances is
    --  associations and inheritance relationships) without using
    --  non-standard extensions such as WITH TYPE.
 
+   function Instance_Identifier_Equality (L, R : Instance_Base) return Boolean;
+   --  Returns True if the Identifiers of L, R are equal.
+   --  The default raises Program_Error (it should only be called in
+   --  the context of a Map, and that should only happen for classes
+   --  with identifiers).
+
+   function Instance_Hash (Of_The_Instance : Instance_Base) return Natural;
+   --  Generates a hash from the Identifier of Of_The_Instance.
+   --  The default returns 0.
+   --
+   --  It's called Instance_Hash (probably temporarily) to avoid
+   --  confusion with the old Hash, which had a different profile.
+
    type Handle is access all Instance_Base'Class;
    for Handle'Storage_Size use 0;
+
+   function Classwide_Identifier_Equality (L, R : Handle) return Boolean;
+   --  Dispatches to the appropriate Instance_Identifier_Equality.
+
+   function Classwide_Hash (Of_The_Handle : Handle) return Natural;
+   --  Dispatches to the appropriate Instance_Hash.
+
+   --  Map instantiations.
+   package Abstract_Containers is new BC.Containers (Handle);
+   package Abstract_Maps is new Abstract_Containers.Maps
+     (Key => Handle,
+      "=" => Classwide_Identifier_Equality);
+
+   package Bounded_Maps is new Abstract_Maps.Bounded
+     (Hash => Classwide_Hash,
+      Buckets => 19,               --  the default
+      Maximum_Size => 19);         --  the default
+
+   package Unbounded_Maps is new Abstract_Maps.Unbounded
+     (Hash => Classwide_Hash,
+      Buckets => 19,               --  the default
+      Storage => ColdFrame.Project.Storage_Pools.Pool);
 
 private
 

@@ -13,9 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization-server-create.adb,v $
---  $Revision: 4189c9bd3f91 $
---  $Date: 2003/03/27 20:51:25 $
+--  $Revision: 887e64024585 $
+--  $Date: 2003/08/13 19:41:54 $
 --  $Author: simon $
+
+--  Create an instance of Server, transmitting data to the remote
+--  server on host "Connecting To Host" using port "Using Port". On
+--  successful return, the TCP/IP connection has been made.
 
 separate (Serialization.Server)
 procedure Create
@@ -23,7 +27,6 @@ procedure Create
    Using_Port : Port) is
 
    H : Handle;
-   pragma Warnings (Off, H);
    Address : GNAT.Sockets.Sock_Addr_Type;
 
 begin
@@ -32,16 +35,16 @@ begin
 
    H := Create;
 
-   GNAT.Sockets.Create_Socket (This.Sock,
+   GNAT.Sockets.Create_Socket (H.Sock,
                                GNAT.Sockets.Family_Inet,
                                GNAT.Sockets.Socket_Stream);
-   GNAT.Sockets.Set_Socket_Option (This.Sock,
+   GNAT.Sockets.Set_Socket_Option (H.Sock,
                                    GNAT.Sockets.Socket_Level,
                                    (GNAT.Sockets.Reuse_Address, True));
    Address.Addr := GNAT.Sockets.Addresses
      (GNAT.Sockets.Get_Host_By_Name (Connecting_To_Host), 1);
    Address.Port := Using_Port;
-   GNAT.Sockets.Connect_Socket (This.Sock, Address);
-   This.Channel := GNAT.Sockets.Stream (This.Sock, Address);
+   GNAT.Sockets.Connect_Socket (H.Sock, Address);
+   H.Channel := GNAT.Sockets.Stream (H.Sock, Address);
 
 end Create;

@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 9b7e9ee5c7f3 2003/07/04 19:34:38 simon $ -->
+<!-- $Id: ada-state.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -159,10 +159,10 @@
   <xsl:template match="event" mode="event-handler-specs">
 
     <!--
-         procedure Handler (This : {event});
+         procedure Handler (Ev : {event});
          -->
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -175,29 +175,14 @@
   <!-- Generate event handler bodies for <<event>>s. -->
   <xsl:template match="statemachine/event" mode="event-handler-bodies">
 
-    <!-- non-singleton
-         procedure Handler (This : {event}) is
-            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
+    <!--
+         procedure Handler (Ev : {event}) is
+            This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
-               when {source-state} =>
-                  Enter_{target-state} (That, This);
-               when {source-state} =>
-                  null;
-               when {source-state} =>
-                  raise ColdFrame.Exceptions.Cant_Happen;
-            end case;
-         end Handler;
-         -->
-
-    <!-- singleton
-         procedure Handler (This : {event}) is
-            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
-         begin
-            case That.State_Machine_State is
-               when {source-state} =>
-                  Enter_{target-state} (This);
-               when {source-state} =>
+               when {source-state (normal transition)} =>
+                  {perform-transition}
+               when {source-state (ignored transition)} =>
                   null;
                when {source-state} =>
                   raise ColdFrame.Exceptions.Cant_Happen;
@@ -208,17 +193,17 @@
     <xsl:variable name="e" select="name"/>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>That : constant Handle := This.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
+    <xsl:text>This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>case That.State_Machine_State is&#10;</xsl:text>
+    <xsl:text>case This.State_Machine_State is&#10;</xsl:text>
 
     <xsl:for-each select="../state">
       <xsl:sort select="name"/>
@@ -238,17 +223,14 @@
         </xsl:when>
         
         <xsl:when test="../transition[event=$e and source=$s]">
-          <xsl:value-of select="$IIII"/>
-          <xsl:text>Enter_</xsl:text>
-          <xsl:value-of select="../transition[event=$e and source=$s]/target"/>
-          <xsl:choose>
-            <xsl:when test="../../@singleton">
-              <xsl:text> (This);&#10;</xsl:text>              
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text> (That, This);&#10;</xsl:text>              
-            </xsl:otherwise>
-          </xsl:choose>
+
+          <xsl:call-template name="perform-transition">
+            <xsl:with-param
+              name="tr"
+              select="../transition[event=$e and source=$s]"/>
+            <xsl:with-param name="indent" select="$IIII"/>
+          </xsl:call-template>
+
         </xsl:when>
         
         <xsl:otherwise>
@@ -274,9 +256,9 @@
   <xsl:template match="event[@class]" mode="event-handler-bodies">
 
     <!-- 
-         procedure Handler (This : {event}) is
+         procedure Handler (Ev : {event}) is
          begin
-            {receiver} (This);
+            {receiver} (Ev);
          end Handler;
          -->
 
@@ -288,20 +270,22 @@
               and parameter/type=$e]"/>
 
     <xsl:if test="not($op)">
-      <xsl:message terminate="yes">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
         <xsl:text>Error: no handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
       </xsl:message>
     </xsl:if>
     <xsl:if test="count($op) &gt; 1">
-      <xsl:message terminate="yes">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
         <xsl:text>Error: more than one handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
       </xsl:message>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -309,7 +293,7 @@
 
     <xsl:value-of select="$II"/>
     <xsl:value-of select="$op/name"/>
-    <xsl:text> (This);&#10;</xsl:text>              
+    <xsl:text> (Ev);&#10;</xsl:text>              
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Handler;&#10;</xsl:text>
@@ -325,341 +309,333 @@
   <xsl:template name="state-body-context">
 
     <!-- The initial state automatically enters the next state if there's an
-         unguarded transtion. -->
+         unguarded transtion. If so, and if there are actions with parameters
+         in that state, we need a Creation event. -->
     
+    <!-- the initial state .. -->
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
+    <!-- .. the target state .. -->
+    <xsl:variable
+      name="next"
+      select="statemachine/transition[source=$init and not(event)]/target"/>
+    <!-- .. the actions of that state (none on the transition, I hope) .. -->
+    <xsl:variable
+      name="action"
+      select="statemachine/state[name=$next]/action"/>
 
-    <xsl:if test="statemachine/transition[source=$init and not (event)]">
+    <xsl:if test="operation[name=$action]/parameter">
       <xsl:text>with ColdFrame.Project.Events.Creation;&#10;</xsl:text>
     </xsl:if>
     
   </xsl:template>
 
 
-  <!-- Generate state entry procedure specs. -->
-  <xsl:template match="statemachine/state" mode="state-entry-specs">
+  <!-- Called at statemachine/state to generate code to perform
+       transitions. -->
+  <xsl:template name="perform-transition">
 
-    <!-- non-singleton
-         procedure Enter_{state}
-           (This : Handle;
-            What : ColdFrame.Project.Events.Instance_Event_Base'Class);
-         pragma Warnings (Off, Enter_{initial-state});
-         -->
+    <!-- The (not ignored) transition we have to generate code for. -->
+    <xsl:param name="tr"/>
 
-    <!-- singleton
-         procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Instance_Event_Base'Class);
-         -->
+    <!-- Indentation. -->
+    <xsl:param name="indent"/>
 
-     <xsl:variable name="s" select="name"/>
-     <!-- <xsl:variable name="e" select="../transition[target=$s]/event"/> -->
-     <xsl:variable name="singleton" select="../../@singleton"/>
+    <xsl:value-of select="$indent"/>
+    <xsl:text>This.State_Machine_State := </xsl:text>
+    <xsl:value-of select="$tr/target"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+    <xsl:if test="$tr/action">
+      <xsl:call-template name="call-action">
+        <xsl:with-param name="class" select="../.."/>
+        <xsl:with-param name="event" select="$tr/event"/>
+        <xsl:with-param name="operation" select="$tr/action"/>
+        <xsl:with-param name="indent" select="$indent"/>
+      </xsl:call-template>
+    </xsl:if>
 
-     <xsl:value-of select="$I"/>
-     <xsl:text>procedure Enter_</xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>&#10;</xsl:text>
-     <xsl:value-of select="$IC"/>
-     <xsl:choose>
-       <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
-       </xsl:when>
-       <xsl:otherwise>
-         <xsl:text>(This : Handle;&#10;</xsl:text>
-         <xsl:value-of select="$IC"/>
-         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
-       </xsl:otherwise>
-     </xsl:choose>
-     <xsl:text>;&#10;</xsl:text>
+    <xsl:for-each select="../state[name=$tr/target]/action">
+      <xsl:call-template name="call-action">
+        <xsl:with-param name="class" select="../../.."/>
+        <xsl:with-param name="event" select="$tr/event"/>
+        <xsl:with-param name="operation" select="."/>
+        <xsl:with-param name="indent" select="$indent"/>
+      </xsl:call-template>
+    </xsl:for-each>
+    
+    <xsl:variable
+      name="deleting"
+      select="$tr/action='Delete'
+              or ../state[name=$tr/target]/action='Delete'"/>
 
-     <xsl:value-of select="$blank-line"/>
+    <xsl:if test="not($deleting)">
+      <xsl:value-of select="$indent"/>
+      <xsl:text>This.Old_State_Machine_State := </xsl:text>
+      <xsl:value-of select="$tr/target"/>
+      <xsl:text>;&#10;</xsl:text>      
+    </xsl:if>
+    
+    <!-- Now do drop-throughs (recursively). -->
+
+    <xsl:variable
+      name="drop-through"
+      select="../transition[source=$tr/target and not(event)]"/>
+
+    <xsl:if test="$drop-through">
+      
+      <xsl:choose>
+
+        <xsl:when test="count($drop-through)&gt;1">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
+            <xsl:text>Error: more than one drop-through transition from state </xsl:text>
+            <xsl:value-of select="../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="name"/>
+          </xsl:message>
+        </xsl:when>
+        
+        <xsl:when test="$deleting">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
+            <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
+            <xsl:value-of select="../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$tr/target"/>
+          </xsl:message>
+        </xsl:when>
+        
+        <xsl:otherwise>
+          
+          <!-- Need to change context to call perform-transition from the
+               current target state. -->
+
+          <xsl:for-each select="../state[name=$drop-through/source]">
+            <xsl:call-template name="perform-transition">
+              <xsl:with-param name="tr" select="$drop-through"/>
+              <xsl:with-param name="indent" select="$indent"/>
+            </xsl:call-template>
+          </xsl:for-each>
+
+        </xsl:otherwise>
+      
+      </xsl:choose>
+
+    </xsl:if>
 
   </xsl:template>
 
-  <xsl:template match="*" mode="state-entry-specs"/>
 
+  <!-- Called (at statemachine/state or statemachine/state/action) to
+       generate an action call. -->
+  <xsl:template name="call-action">
 
-  <!-- Generate state entry procedure bodies. -->
-  <xsl:template match="statemachine/state" mode="state-entry-bodies">
+    <!-- The class. -->
+    <xsl:param name="class"/>
 
-    <!-- non-singleton
-         procedure Enter_{state}
-           (This : Handle;
-            What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
-           pragma Warnings (Off, What);
-         begin
-            This.State_Machine_State := {state};
-            {entry-action} (This, {event} (What).Payload);  -  if has parameter
-            {entry-action} (This);                          -  if no parameter
-            This.Old_State_Machine_State := {state};
-            Enter_{next-state} (This, What);                -  if unguarded exit
-         end Enter_{state};
-         -->
+    <!-- The triggering event's name. -->
+    <xsl:param name="event"/>
 
-    <!-- singleton
-         procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
-           pragma Warnings (Off, What);
-         begin
-            This.State_Machine_State := {state};
-            {entry-action} ({event} (What).Payload);        -  if has parameter
-            {entry-action};                                 -  if no parameter
-            This.Old_State_Machine_State := {state};
-            Enter_{next-state} (Wnat);                      -  if unguarded exit
-         end Enter_{state};
-         -->
+    <!-- The operation name. -->
+    <xsl:param name="operation"/>
 
-     <xsl:variable name="s" select="name"/>
-     <xsl:variable name="e" select="../transition[target=$s]/event"/>
-     <xsl:variable name="singleton" select="../../@singleton"/>
+    <!-- The indentation. -->
+    <xsl:param name="indent"/>
 
-     <xsl:value-of select="$I"/>
-     <xsl:text>procedure Enter_</xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>&#10;</xsl:text>
-     <xsl:value-of select="$IC"/>
-     <xsl:choose>
-       <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
-       </xsl:when>
-       <xsl:otherwise>
-         <xsl:text>(This : Handle;&#10;</xsl:text>
-         <xsl:value-of select="$IC"/>
-         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
-       </xsl:otherwise>
-     </xsl:choose>
-     <xsl:text> is&#10;</xsl:text>
+    <xsl:variable name="single" select="$class/@singleton"/>
+    <xsl:variable name="op" select="$class/operation[name=$operation]"/>
+    <xsl:variable name="params" select="$op/parameter"/>
 
-     <xsl:value-of select="$II"/>
-     <xsl:text>pragma Warnings (Off, What);&#10;</xsl:text>
-
-     <xsl:value-of select="$I"/>
-     <xsl:text>begin&#10;</xsl:text>
-
-     <xsl:value-of select="$II"/>
-     <xsl:text>This.State_Machine_State := </xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>;&#10;</xsl:text>       
-
-     <xsl:for-each select="action">
-
-       <xsl:variable name="n" select="."/>
-       <xsl:variable
-         name="params"
-         select="../../../operation[name=$n]/parameter"/>
-
-       <xsl:choose>
-
-         <xsl:when test="../../../operation[name=$n]/@return">
-           <xsl:message terminate="yes">
-             <xsl:text>Error: </xsl:text>
-             <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text> is a function, can't be an entry action.</xsl:text>
-           </xsl:message>           
-         </xsl:when>
-
-         <xsl:when test="$n='Delete' and $singleton">
-           <xsl:message terminate="yes">
-             <xsl:text>Error: </xsl:text>
-             <xsl:value-of select="../../../name"/>
-             <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
-           </xsl:message>           
-         </xsl:when>
-         
-         <xsl:when test="count($params)&gt;1">
-           <xsl:message terminate="yes">
-             <xsl:text>Error: </xsl:text>
-             <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text> has too many parameters to be an entry action.</xsl:text>
-           </xsl:message>
-         </xsl:when>
-
-         <xsl:when test="count($params)=1">
-           <!-- The full spec of the event is in the class, not the
-                state machine. -->
-           <xsl:if test="not(../../../event[name=$e]/type=$params/type)">
-             <xsl:message terminate="yes">
-               <xsl:value-of select="../../../name"/>
-               <xsl:text>.</xsl:text>
-               <xsl:value-of select="$n"/>
-               <xsl:text>'s parameter is of the wrong type.</xsl:text>
-             </xsl:message>
-           </xsl:if>
-         </xsl:when>
-
-         <!-- XXX what if there is an operation with a parameter for a state
-              with more than one event type leading to it?
-              Find the number of events leading to this state with type /=
-              the operations's parameter type? -->
-
-       </xsl:choose>
-
-       <xsl:choose>
-
-         <xsl:when test="$singleton">
-
-           <xsl:choose>
-             
-             <xsl:when test="$params">
-
-               <xsl:value-of select="$II"/>
-               <xsl:value-of select="$n"/>
-               <xsl:text> (</xsl:text>
-               <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload);&#10;</xsl:text>
-               
-             </xsl:when>
-
-             <xsl:otherwise>
-               <xsl:value-of select="$II"/>
-               <xsl:value-of select="$n"/>
-               <xsl:text>;&#10;</xsl:text>               
-             </xsl:otherwise>
-
-           </xsl:choose>
-           
-         </xsl:when>
-
-         <xsl:otherwise>
-           
-           <xsl:choose>
-
-             <xsl:when test="$n='Delete' and not($params)">
-
-               <!--
-                    declare
-                       H : Handle := This;
-                    
-                    begin
-                       Delete (H);
-                       ColdFrame.Project.Events.Instance_Is_Deleted
-                         (What'Unrestricted_Access);
-                    end;
-                    -->
-               <xsl:value-of select="$II"/>
-               <xsl:text>declare&#10;</xsl:text>
-               <xsl:value-of select="$III"/>
-               <xsl:text>H : Handle := This;&#10;</xsl:text>
-               <xsl:value-of select="$II"/>
-               <xsl:text>begin&#10;</xsl:text>
-               <xsl:value-of select="$III"/>
-               <xsl:text>Delete (H);&#10;</xsl:text>
-               <xsl:value-of select="$III"/>
-               <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
-               <xsl:value-of select="$IIIC"/>
-               <xsl:text>(What'Unrestricted_Access);&#10;</xsl:text>
-               <xsl:value-of select="$II"/>
-               <xsl:text>end;&#10;</xsl:text>
-
-             </xsl:when>
-             
-             <xsl:when test="$params">
-               <xsl:value-of select="$II"/>
-               <xsl:value-of select="$n"/>
-               <xsl:text> (This, </xsl:text>
-               <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload);&#10;</xsl:text>
-             </xsl:when>
-
-             <xsl:otherwise>
-               <xsl:value-of select="$II"/>
-               <xsl:value-of select="$n"/>
-               <xsl:text> (This);&#10;</xsl:text>
-             </xsl:otherwise>
-
-           </xsl:choose>
-
-         </xsl:otherwise>
-
-       </xsl:choose>
-
-     </xsl:for-each>
-
-     <xsl:if test="not(action/name='Delete')">
-       <!-- Set the old state variable. -->
-       <xsl:value-of select="$II"/>
-       <xsl:text>This.Old_State_Machine_State := </xsl:text>
-       <xsl:value-of select="$s"/>
-       <xsl:text>;&#10;</xsl:text>       
-     </xsl:if>
-     
-     <xsl:if test="../transition[source=$s and not(event)]">
-       <xsl:value-of select="$II"/>
-       <xsl:text>Enter_</xsl:text>
-       <xsl:value-of select="../transition[source=$s and not(event)]/target"/>
-       <xsl:choose>
-         <xsl:when test="$singleton">
-           <xsl:text> (What);&#10;</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-           <xsl:text> (This, What);&#10;</xsl:text>
-         </xsl:otherwise>
-       </xsl:choose>
-     </xsl:if>
-
-     <xsl:value-of select="$I"/>
-     <xsl:text>end Enter_</xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>;&#10;</xsl:text>
-
-     <xsl:value-of select="$blank-line"/>
+    <!-- Check for errors. -->
+    <xsl:choose>
+      
+      <xsl:when test="$op/@return">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: </xsl:text>
+          <xsl:value-of select="$class/name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$operation"/>
+          <xsl:text> is a function, can't be an entry action.</xsl:text>
+        </xsl:message>           
+      </xsl:when>
+      
+      <xsl:when test="$operation='Delete' and $single">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: </xsl:text>
+          <xsl:value-of select="$class/name"/>
+          <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
+        </xsl:message>           
+      </xsl:when>
+      
+      <xsl:when test="count($params)&gt;1">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: </xsl:text>
+          <xsl:value-of select="$class/name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$operation"/>
+          <xsl:text> has too many parameters to be an entry action.</xsl:text>
+        </xsl:message>
+      </xsl:when>
+      
+      <xsl:when test="count($params)=1">
+        <!-- The full spec of the event is in the class, not the
+             state machine. -->
+        <xsl:if test="not($class/event[name=$event]/type=$params/type)">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
+            <xsl:value-of select="$class/name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$operation"/>
+            <xsl:text>'s parameter is of the wrong type (</xsl:text>
+            <xsl:value-of select="$class/event[name=$event]/type"/>
+            <xsl:text>, expecting </xsl:text>
+            <xsl:value-of select="$params/type"/>
+            <xsl:text>)</xsl:text>
+          </xsl:message>
+        </xsl:if>
+      </xsl:when>
+      
+      <!-- XXX what if there is an operation with a parameter for a state
+           with more than one event type leading to it?
+           Find the number of events leading to this state with type /=
+           the operations's parameter type? -->
+      
+    </xsl:choose>
+    
+    <!-- Generate code. -->
+    <xsl:choose>
+      
+      <xsl:when test="$single">
+        
+        <xsl:choose>
+          
+          <xsl:when test="$params">
+            
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$operation"/>
+            <xsl:text> (Ev.Payload);&#10;</xsl:text>
+            
+          </xsl:when>
+          
+          <xsl:otherwise>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$operation"/>
+            <xsl:text>;&#10;</xsl:text>               
+          </xsl:otherwise>
+          
+        </xsl:choose>
+        
+      </xsl:when>
+      
+      <xsl:otherwise>
+        
+        <xsl:choose>
+          
+          <xsl:when test="$operation='Delete'">
+            
+            <!--
+                 declare
+                    H : Handle := This;
+                 begin
+                    Delete (H);
+                    ColdFrame.Project.Events.Instance_Is_Deleted
+                      (Ev'Unrestricted_Access);
+                 end;
+                 -->
+            <xsl:value-of select="$indent"/>
+            <xsl:text>declare&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>H : Handle := This;&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:text>begin&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>Delete (H);&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$IC"/>
+            <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
+            <xsl:value-of select="$indent"/>
+            <xsl:text>end;&#10;</xsl:text>
+            
+          </xsl:when>
+          
+          <xsl:when test="$params">
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$operation"/>
+            <xsl:text> (This, Ev.Payload);&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:otherwise>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$operation"/>
+            <xsl:text> (This);&#10;</xsl:text>
+          </xsl:otherwise>
+          
+        </xsl:choose>
+        
+      </xsl:otherwise>
+      
+    </xsl:choose>
     
   </xsl:template>
-
-  <xsl:template match="*" mode="state-entry-bodies"/>
 
 
   <!-- Called from domain/class, within the Create function, to
        apply an unguarded transition (if any) from the initial state. -->
   <xsl:template name="initialize-state-machine">
     
-    <!-- standard: if there is an unguarded transition from the initial state
+    <!-- if there is an unguarded transition from the initial state
          declare
-            Creation : ColdFrame.Project.Events.Creation.Event (Result);
+            This : constant Handle renames Result;
+            Ev : ColdFrame.Project.Events.Creation.Event (Result);
          begin
-            Enter_{next-state} (Result, Creation);
-         end;
-         -->
-
-    <!-- singleton: if there is an unguarded transition from the initial state
-         declare
-            Creation : ColdFrame.Project.Events.Creation.Event (Result);
-         begin
-            Enter_{next-state} (Creation);
+            {perform-transition}
          end;
          -->
 
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
     <xsl:variable
-      name="next"
-      select="statemachine/transition[source=$init and not (event)]/target"/>
+      name="tr"
+      select="statemachine/transition[source=$init and not (event)]"/>
 
-    <xsl:if test="$next">
+    <xsl:if test="$tr">
 
       <xsl:value-of select="$II"/>
       <xsl:text>declare&#10;</xsl:text>
+      <!-- fudge with This to avoid extra parameters! -->
       <xsl:value-of select="$III"/>
-      <xsl:text>Creation : ColdFrame.Project.Events.Creation.Event (Result);&#10;</xsl:text>
+      <xsl:text>This : Handle renames Result;&#10;</xsl:text>
+
+      <!-- the entry actions of the target state .. -->
+      <xsl:variable
+        name="action"
+        select="statemachine/state[name=$tr/target]/action"/>
+
+      <xsl:if test="operation[name=$action]/parameter">
+        <xsl:value-of select="$III"/>
+        <xsl:text>Ev : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
+      </xsl:if>
+
+
       <xsl:value-of select="$II"/>
       <xsl:text>begin&#10;</xsl:text>
 
-      <xsl:value-of select="$III"/>
-      <xsl:text>Enter_</xsl:text>
-
-      <xsl:value-of select="$next"/>
-
-      <xsl:choose>
-        <xsl:when test="@singleton">
-          <xsl:text> (Creation);&#10;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text> (Result, Creation);&#10;</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
+      <!-- Need to change context to call perform-transition from the
+           target state. -->
+      
+      <xsl:for-each select="statemachine/state[name=$tr/source]">
+        <xsl:call-template name="perform-transition">
+          <xsl:with-param name="tr" select="$tr"/>
+          <xsl:with-param name="indent" select="$III"/>
+        </xsl:call-template>
+      </xsl:for-each>
 
       <xsl:value-of select="$II"/>
       <xsl:text>end;&#10;</xsl:text>
@@ -681,6 +657,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
@@ -712,6 +689,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
@@ -723,6 +701,7 @@
     <xsl:text>.Events;&#10;</xsl:text>
 
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 9ffc2302f587 2003/05/10 19:16:36 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -35,6 +35,7 @@
   <xsl:template name="serializable-type-spec">
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:if test="type/@serializable">
       <xsl:text>with ColdFrame.Project.Serialization;&#10;</xsl:text>
@@ -97,6 +98,7 @@
     <xsl:if test="type/@serializable">
       
       <xsl:call-template name="do-not-edit"/>
+      <xsl:call-template name="identification-info"/>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 1f4c4f81be2f 2003/06/14 11:08:07 simon $ -->
+<!-- $Id: ada-attribute.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -77,7 +77,7 @@
 
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
-          <xsl:text>The_T : T (Instance'Access);&#10;</xsl:text>
+          <xsl:text>The_T : T_P;&#10;</xsl:text>
         </xsl:if>
 
         <!-- The non-supertype attributes -->

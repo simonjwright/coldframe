@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Interrupt Handling"
@@ -12,6 +12,7 @@
     logical_models 	(list unit_reference_list
 	(object Class "Device"
 	    quid       	"3DA72C9A01AA"
+	    documentation 	"[[ priority :  +1  ; stack : 40000 ]]"
 	    stereotype 	"singleton"
 	    operations 	(list Operations
 		(object Operation "start"
@@ -110,6 +111,7 @@
 				    when       	"Entry")))
 			type       	"Normal"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object State_Diagram "Lifecycle"
 			quid       	"3DA72CFC01C9"
@@ -122,6 +124,15 @@
 			items      	(list diagram_item_list
 			    (object StateView "StartState" "$UNNAMED$0" @1
 				location   	(315, 225)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@1
 				    location   	(357, 195)
@@ -130,11 +141,19 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3DA72D2701FD"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "idle" @2
 				location   	(720, 480)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
 				    location   	(720, 442)
@@ -151,6 +170,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@2
 				    location   	(576, 480)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -164,6 +192,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "interrupted" @3
 				location   	(1500, 480)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
 				    location   	(1500, 442)
@@ -180,6 +217,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@3
 				    location   	(1342, 480)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -212,9 +258,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @6
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @7
 				    Parent_View 	@6
 				    location   	(1134, 262)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	152
@@ -236,9 +300,27 @@
 				x_offset   	FALSE)
 			    (object SelfTransView "" @8
 				location   	(720, 241)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @9
 				    Parent_View 	@8
 				    location   	(720, 182)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	130
@@ -252,7 +334,7 @@
 				quidu      	"3DA739AD01CB"
 				client     	@2
 				supplier   	@2
-				line_style 	0)))))
+				line_style 	4)))))
 	    concurrency 	"Active"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -270,6 +352,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(645, 495)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
 			location   	(466, 329)
@@ -294,12 +385,46 @@
 		    compartment 	(object Compartment
 			Parent_View 	@10
 			location   	(466, 385)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	7
-			max_width  	355)
+			max_width  	362)
 		    width      	376
 		    height     	444
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Interrupt Handling" @11
+		    location   	(1630, 395)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1460, 311)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Interrupt Handling")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DA72C880050"
+		    width      	352
+		    height     	180)))))

@@ -20,10 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: cc4d41d0f896 $
---  $Date: 2003/05/10 17:16:23 $
+--  $Revision: fe5de807621d $
+--  $Date: 2003/08/28 21:12:05 $
 --  $Author: simon $
 
+with Ada.Exceptions;
 with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Callbacks is
@@ -72,12 +73,27 @@ package body ColdFrame.Callbacks is
 
    procedure Call_Callbacks (With_Param : T) is
       Current : Cell_P := The_Registered_Procedures.Next;
+      Error : Ada.Exceptions.Exception_Occurrence_Access;
+      use type Ada.Exceptions.Exception_Occurrence_Access;
    begin
       loop
          exit when Current = null;
-         Current.CB (With_Param);
+         begin
+            Current.CB (With_Param);
+         exception
+            when E : others =>
+               if Error = null then
+                  Error := Ada.Exceptions.Save_Occurrence (E);
+               end if;
+         end;
          Current := Current.Next;
       end loop;
+      if Error /= null then
+         Ada.Exceptions.Reraise_Occurrence (Error.all);
+         --  This will probably leak the allocated
+         --  Exception_Occurrence_Access; let's hope it doesn't happen
+         --  too often.
+      end if;
    end Call_Callbacks;
 
 

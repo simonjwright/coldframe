@@ -30,7 +30,8 @@ begin
          Put_Line ("Interrupt_Handling.Device.T released");
 
          declare
-            Ev : ColdFrame.Project.Events.Event_P := new Interrupt (This);
+            Ev : constant ColdFrame.Project.Events.Event_P
+              := new Interrupt (This);
          begin
             ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
          end;

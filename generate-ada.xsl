@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 21e6a455fc82 2003/06/26 05:04:28 simon $ -->
+<!-- $Id: generate-ada.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -50,9 +50,6 @@
 
 
   <!-- +++++ Command line parameters. +++++ -->
-
-  <!-- For identification info. -->
-  <xsl:param name="coldframe-version"/>
 
   <!-- Controls when attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors" select="defined"/>
@@ -112,10 +109,9 @@
     <xsl:call-template name="do-not-edit"/>
 
     <!-- Identification info -->
-    <xsl:call-template name="progress-message">
-      <xsl:with-param name="m" select="'Generating identification info ..'"/>
-    </xsl:call-template>
     <xsl:call-template name="identification-info"/>
+    <!-- Marker for result of SLOC calculations. -->
+    <xsl:text>--  Lines: LINES-OF-CODE&#10;</xsl:text>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
@@ -220,6 +216,7 @@
     <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
       
       <xsl:call-template name="do-not-edit"/>
+      <xsl:call-template name="identification-info"/>
       
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
@@ -297,6 +294,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
@@ -339,6 +337,7 @@
          end {domain}.Initialize;
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:variable
       name="class-initializations"
@@ -459,6 +458,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
@@ -483,6 +483,7 @@
          -->
 
     <xsl:call-template name="could-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
@@ -510,6 +511,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
@@ -530,6 +532,7 @@
          -->
 
     <xsl:call-template name="could-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
@@ -679,40 +682,8 @@
       <xsl:with-param name="m" select="'.. done.'"/>
     </xsl:call-template>
 
-  </xsl:template>
+    <xsl:call-template name="check-for-errors"/>
 
-
-  <!-- Called at domain to generate identification information. -->
-  <xsl:template name="identification-info">
-    <xsl:text>--  Domain revision: </xsl:text>
-    <xsl:choose>
-      <xsl:when test="revision">
-        <xsl:value-of select="revision"/>        
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>unspecified</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Extraction date: </xsl:text>
-    <xsl:value-of select="date/day"/>
-    <xsl:text> </xsl:text>
-    <xsl:value-of select="date/month"/>
-    <xsl:text> </xsl:text>
-    <xsl:value-of select="date/year"/>
-    <xsl:text>, </xsl:text>
-    <xsl:value-of select="date/time"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Extractor: </xsl:text>
-    <xsl:value-of select="extractor"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Normalizer: </xsl:text>
-    <xsl:value-of select="normalizer"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Generator: </xsl:text>
-    <xsl:value-of select="$coldframe-version"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Lines: LINES-OF-CODE&#10;</xsl:text>
   </xsl:template>
 
 

@@ -163,15 +163,16 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 # coldframe-architecture.ps is made by printing the Rose Architecture package
 # diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
 
-GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
+GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
- serialization.png serialization-class-model.png serialization-sequence-t.png \
- serialization-class-model-t.png serialization-state.png \
- serialization-state-t.png serialization-sequence.png \
- real_time.png recordable_real_time.png sample_a.png \
- type-mapping.png relationships-mapping.png operations-mapping.png \
- metamodel.png event-mapping.png collections-mapping.png class-mappings.png
+serialization.png serialization-class-model.png serialization-sequence-t.png \
+serialization-class-model-t.png serialization-state.png \
+serialization-state-t.png serialization-sequence.png \
+real_time.png recordable_real_time.png sample_a.png \
+type-mapping.png relationships-mapping.png operations-mapping.png \
+metamodel.png event-mapping.png collections-mapping.png class-mappings.png \
+lamp-state.png
 
 ############################
 # Distribution construction
@@ -233,14 +234,16 @@ serialization-model.html: Serialization.html
 
 MAKEFILES = Makefile-cf Makefile-unix Makefile-winnt
 
+# Files that need editing for release
 Makefile-cf: Makefile force
 	cp -p $< $@
 Makefile-unix: Makefile-unix-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 Makefile-winnt: Makefile-winnt-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
-
 extractor.ebs: ddf.ebs force
+	sed -e "s;DATE;$(DATE);g" <$< >$@
+releases.html: releases.html-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 TOOLS = generated_lines
@@ -264,6 +267,8 @@ ColdFrame.gpr \
 Options.gpr
 
 SUPPORT = \
+coldframe-bounded_storage_pools.adb \
+coldframe-bounded_storage_pools.ads \
 coldframe-callbacks.adb \
 coldframe-callbacks.ads \
 coldframe-events_g-creation_g.adb \
@@ -300,6 +305,7 @@ coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-events_g-held_event_queue_signature.ads \
+coldframe-instances.adb \
 coldframe-instances.ads \
 coldframe-interrupts.adb \
 coldframe-interrupts.ads \
@@ -308,6 +314,8 @@ coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
 coldframe-time_signature.ads \
+coldframe-unbounded_storage_pools.adb \
+coldframe-unbounded_storage_pools.ads \
 coldframe.ads
 
 PROJECT = \
@@ -320,23 +328,18 @@ coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events-standard-test_debug.ads \
 coldframe-project-events.ads \
+coldframe-project-global_storage_pool.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
 coldframe-project-held_event_support.ads \
-coldframe-project-global_storage_pool.ads \
-coldframe-project-global_storage_pool.ads-debug \
-coldframe-project-global_storage_pool.ads-standard \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
 coldframe-project-log_error.ads \
 coldframe-project-log_error.adb \
 coldframe-project-serialization.ads \
+coldframe-project-storage_pools.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
-
-coldframe-project-global_storage_pool.ads-standard: \
-  coldframe-project-global_storage_pool.ads
-	cp -p $< $@
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
@@ -435,7 +438,9 @@ States.impl/states-monitor-setup.adb \
 States.impl/states-t.adb \
 States.impl/states-t.ads
 
-TEST = \
+TEST = Test.mdl
+
+TEST += \
 coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
@@ -448,6 +453,7 @@ Event_Test.test/event_test-harness.ads \
 Event_Test.impl/event_test-machine-handle_mark.adb \
 Event_Test.impl/event_test-machine-handle_self.adb \
 Event_Test.impl/event_test-machine-send_done.adb \
+Event_Test.impl/event_test-machine-set_timer.adb \
 Event_Test.impl/event_test-recipient-handle_mark.adb \
 Event_Test.impl/event_test-recipient-handle_self.adb \
 Event_Test.impl/event_test-recipient-information_handler.adb \
@@ -466,7 +472,6 @@ Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads
 
 TEST += \
-Test.mdl \
 Hierarchies.cat Hierarchies.raw \
 Hierarchies.gpr Hierarchies_Test.gpr \
 Hierarchies.impl/hierarchies-f_2-create_new.adb \
@@ -480,6 +485,14 @@ Hierarchies.test/hierarchies-test_deletions.adb \
 Hierarchies.test/hierarchies-test_deletions.ads \
 Hierarchies.test/hierarchies-test_finds.adb \
 Hierarchies.test/hierarchies-test_finds.ads
+
+TEST += \
+Regressions.cat Regressions.raw Regressions.gpr \
+Regressions.impl/regressions-find_active_singleton-t.adb \
+Regressions.impl/regressions-find_active-t.adb \
+Regressions.impl/regressions-suite.adb \
+Regressions.impl/regressions-suite.ads \
+Regressions.impl/regression_tests.adb
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \

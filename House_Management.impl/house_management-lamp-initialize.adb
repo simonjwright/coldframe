@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-lamp-initialize.adb,v $
---  $Revision: 0f7eda971a8e $
---  $Date: 2003/02/07 05:55:57 $
+--  $Revision: e52e2300d52d $
+--  $Date: 2003/08/30 20:32:01 $
 --  $Author: simon $
 
 --  This operation initializes the Lamps and Buttons, and connects to
@@ -31,6 +31,7 @@ procedure Initialize is
    LBH, LGH, L1H, L2H : Lamp.Handle;
    BBH, BGH, B1H, B2H : Button.Handle;
    BTLH : Button_To_Lamp.Handle;
+   pragma Warnings (Off, BTLH);
 
 begin
 

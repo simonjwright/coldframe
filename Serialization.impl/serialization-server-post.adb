@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization-server-post.adb,v $
---  $Revision: 141dc30870c4 $
---  $Date: 2003/02/20 20:58:51 $
+--  $Revision: 5fa63567e054 $
+--  $Date: 2003/08/13 19:42:20 $
 --  $Author: simon $
 
---  This instance event handler posts its parameter's value to the
---  output stream. It then frees the value.
+--  This entry action posts its parameter's payload to the output
+--  stream.
 
 with BC.Support.Memory_Streams;
 

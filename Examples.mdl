@@ -82,7 +82,17 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\States.cat"
-		quid       	"3C4EDCDC028A"))
+		quid       	"3C4EDCDC028A")
+	    (object Class_Category "House Management"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\House_Management.cat"
+		quid       	"3DFCF75D00CF")
+	    (object Class_Category "Digital IO"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Digital_IO.cat"
+		quid       	"3DFCF76B0011"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3EEED5F40234"
@@ -256,7 +266,7 @@
 			    default_color 	TRUE)
 			nlines     	1
 			max_width  	1790
-			label      	"$Id: Examples.mdl,v 607c29288b83 2003/06/18 19:36:24 simon $")
+			label      	"$Id: Examples.mdl,v 962a3097c08e 2003/09/01 19:00:36 simon $")
 		    (object Label @8
 			location   	(479, 60)
 			font       	(object Font
@@ -270,7 +280,64 @@
 			    default_color 	TRUE)
 			nlines     	1
 			max_width  	1510
-			label      	"These packages are examples and demonstrations of various ColdFrame facilities.")))))
+			label      	"These packages are examples and demonstrations of various ColdFrame facilities.")
+		    (object CategoryView "Logical View::House Management" @9
+			location   	(958, 430)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@9
+			    location   	(814, 346)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"House Management")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3DFCF75D00CF"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Digital IO" @10
+			location   	(1415, 428)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@10
+			    location   	(1271, 344)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Digital IO")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3DFCF76B0011"
+			width      	300
+			height     	180)
+		    (object ImportView "" @11
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3E1B0DF501D9"
+			client     	@9
+			supplier   	@10
+			line_style 	0)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"3EEED5EE013C"
 	physical_models 	(list unit_reference_list)

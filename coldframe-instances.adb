@@ -1,7 +1,7 @@
 --  Copyright (C) Simon Wright <simon@pushface.org>
 
 --  This package is free software; you can redistribute it and/or
---  modify it under terms of the GNU General Public License as
+--  modify it under the terms of the GNU General Public License as
 --  published by the Free Software Foundation; either version 2, or
 --  (at your option) any later version. This package is distributed in
 --  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -19,34 +19,41 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-callbacks.ads,v $
---  $Revision: fbc3205e6500 $
---  $Date: 2003/08/28 21:16:25 $
+--  $RCSfile: coldframe-instances.adb,v $
+--  $Revision: 6df8619783c1 $
+--  $Date: 2003/09/09 04:14:58 $
 --  $Author: simon $
 
-generic
-   type T (<>) is limited private;
-package ColdFrame.Callbacks is
+package body ColdFrame.Instances is
 
-   pragma Elaborate_Body;
 
-   --  The Callback Procedure type
-   type Callback is access procedure (The_T : T);
+   function Instance_Identifier_Equality
+     (L, R : Instance_Base) return Boolean is
+      pragma Warnings (Off, L);
+      pragma Warnings (Off, R);
+   begin
+      raise Program_Error;
+      return False;
+   end Instance_Identifier_Equality;
 
-   --  Called to register Proc to receive callbacks
-   procedure Register (Proc : Callback);
 
-   --  Called to stop Proc receiving callbacks
-   procedure Deregister (Proc : Callback);
+   function Instance_Hash (Of_The_Instance : Instance_Base) return Natural is
+      pragma Warnings (Off, Of_The_Instance);
+   begin
+      return 0;
+   end Instance_Hash;
 
-   --  Call all the registered callback procedures with With_Param. If
-   --  an exception occurs in a callback procedure, it will be
-   --  re-raised after all the registered callback procedures have
-   --  been called. If multiple exceptions occur, the first is
-   --  re-raised.
-   procedure Call_Callbacks (With_Param : T);
 
-   --  Clear all registered callbacks
-   procedure Clear;
+   function Classwide_Identifier_Equality (L, R : Handle) return Boolean is
+   begin
+      return Instance_Identifier_Equality (L.all, R.all);
+   end Classwide_Identifier_Equality;
 
-end ColdFrame.Callbacks;
+
+   function Classwide_Hash (Of_The_Handle : Handle) return Natural is
+   begin
+      return Instance_Hash (Of_The_Handle.all);
+   end Classwide_Hash;
+
+
+end ColdFrame.Instances;

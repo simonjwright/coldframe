@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 21e6a455fc82 2003/06/26 05:04:28 simon $ -->
+<!-- $Id: ada-type.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -193,7 +193,8 @@
 
         <xsl:if test="$missing">
 
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:for-each select="$missing">
               <xsl:sort select="name"/>
               <xsl:text>Error: couldn't generate type </xsl:text>
@@ -529,6 +530,14 @@
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
+
+    <xsl:if test="@renames">
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>renames </xsl:text>
+      <xsl:value-of select="@renames"/>
+    </xsl:if>
+
     <xsl:text>;&#10;</xsl:text>
 
     <!-- Specify the Convention, if needed. -->
@@ -551,7 +560,9 @@
 
 
   <!-- Called to generate operation body stubs for types. -->
-  <xsl:template match="type/operation" mode="domain-type-operation-body-stub">
+  <xsl:template
+    match="type/operation[not(@renames)]"
+    mode="domain-type-operation-body-stub">
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
@@ -564,8 +575,11 @@
 
 
   <!-- Called to generate operation bodies for types. -->
-  <xsl:template match="type/operation" mode="domain-type-operation-body">
+  <xsl:template
+    match="type/operation[not(@renames)]"
+    mode="domain-type-operation-body">
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
     <xsl:text>)&#10;</xsl:text>
@@ -574,23 +588,50 @@
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
+
+    <!-- If it's a function, we may have to organize a return value. --> 
+    <xsl:if test="@return
+                  and /domain/type[name=current()/@return]/attribute">
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>Dummy : </xsl:text>
+      <xsl:value-of select="@return"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>raise Program_Error;&#10;</xsl:text>
+
     <xsl:if test="@return">
+
       <xsl:value-of select="$I"/>
       <xsl:text>return </xsl:text>
-      <xsl:call-template name="default-value">
-        <xsl:with-param name="type" select="@return"/>
-      </xsl:call-template>
+
+      <xsl:choose>
+
+        <xsl:when test="/domain/type[name=current()/@return]/attribute">
+          <xsl:text>Dummy</xsl:text>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:call-template name="default-value">
+            <xsl:with-param name="type" select="@return"/>
+          </xsl:call-template>
+        </xsl:otherwise>
+
+      </xsl:choose>
+
       <xsl:text>;&#10;</xsl:text>
+
     </xsl:if>
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
-  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+  <xsl:template mode="domain-type-operation-body" match="*"/>
 
 
   <!-- Called at domain/type[@protected] to generate protected type specs. -->
@@ -643,6 +684,7 @@
   <xsl:template match="type[@protected]" mode="protected-type-body">
 
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:value-of select="$blank-line"/>
     <xsl:call-template name="commentary">

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 6fbf7a868481 2003/06/26 05:01:54 simon $ -->
+<!-- $Id: ada-operation.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -298,7 +298,8 @@
                  downward (if there's anywhere to go). -->
 
             <xsl:if test="not(/domain/inheritance[parent=$current/name])">
-              <xsl:message terminate="yes">
+              <xsl:call-template name="log-error"/>
+              <xsl:message>
                 <xsl:text>Error: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
                 <xsl:text> in </xsl:text>
@@ -428,7 +429,8 @@
       <xsl:when test="@return">
         <!-- Check for entry (illegal for functions) -->
         <xsl:if test="@entry">
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:text>Error: function </xsl:text>
             <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
             <xsl:text> can't be an entry</xsl:text>
@@ -903,7 +905,8 @@
       
       <!-- If neither, it's an error. -->
       <xsl:otherwise>
-        <xsl:message terminate="yes">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
           <xsl:text>Error: invalid &lt;&lt;accessor&gt;&gt; on </xsl:text>
           <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
         </xsl:message>
@@ -953,6 +956,7 @@
                       and (($att-to-set/@class and @class)
                       or (not($att-to-set/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -972,6 +976,7 @@
                       and (($att-to-get/@class and @class)
                       or (not($att-to-get/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -989,6 +994,7 @@
       <xsl:when test="@return
                       and not(/domain/type[name=current()/@return]/attribute)">
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
@@ -1011,6 +1017,7 @@
       <!-- .. and this is for composite types (records) .. -->
       <xsl:when test="@return">
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
@@ -1033,6 +1040,7 @@
       <!-- .. and this is for procedures. -->
       <xsl:otherwise>
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">

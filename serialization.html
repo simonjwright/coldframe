@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v a7d61b7a4af3 2003/06/07 16:35:36 simon $ -->
+<!-- $Id: serialization.html,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -16,11 +16,11 @@ href="http://adaic.org/standards/95lrm/html/RM-13-13.html">ARM95
 Chapter 13</a>), Java using <tt>implements&nbsp;Serializable</tt>. So
 why provide extra support?
 
-<p>The main motivation is twofold:
+<p>There are two main drivers:
 <ul>
 
-<li>a requirement to impose structure on the output data stream
-(perhaps each item needs a defined header), and
+<li>a typical requirement to impose structure on the output data
+stream (perhaps each item needs a defined header), and
 
 <li>the need to present the transferred information ready for further
 processing.
@@ -29,23 +29,39 @@ processing.
 
 <h2>Modelling</h2>
 
-<p>To indicate that a &#171;type&#187; needs serialization support,
-annotate it <tt>[[serializable]]</tt> (as usual, you can stereotype as
+<p>To indicate that a <i>&#171;type&#187;</i> needs serialization
+support, annotate it <tt>[[serializable]]</tt> (as usual, you can
+stereotype as
 <em>&#171;type,&nbsp;serializable&#187;</em>).
 
-<p>ColdFrame can output <a href="resources.html#xml">XML</a>
-represntations of the serialized information, but it needs to be able
-to convert the data values to text. This is provided for basic types
-(scalars, strings, and time); for other types, you can specify a
-conversion function for a &#171;type&#187; using
+<p>ColdFrame generates code which outputs <a
+href="resources.html#xml">XML</a> representations of the serialized
+information, but it needs to be able to convert the data values to
+text.
+
+<p>It can do this for
+
+<ol>
+
+<li>basic types (scalars, strings, and time) and for &#171;type&#187;s
+for which you specify a conversion function using
 <tt>[[image&nbsp;:&nbsp;<i>conversion-function</i>]]</tt> in the
 documentation section for the type.
+
+<li>simple (non-<i>&#171;discriminated&#187;</i>) records where each
+attribute is either of a basic type or one with a specified conversion
+function.
+
+</ol>
+
+<p>Note, <b>this rules out nested records</b> (unless you supply a
+conversion function for the nested types).
 
 <h2>Translation</h2>
 
 <p>In the diagram,
 
-<p><img src="serialization.png">
+<p><a name="serialization.png"><img src="serialization.png"></a>
 
 <p>the buff classes are what are included in the UML model, the grey
 classes are what gets generated, and the yellow classes are supporting
@@ -109,20 +125,35 @@ should be implemented.
 <h3>User-defined <i>image</i> functions</h3>
 
 <p>For most types, ColdFrame can work out how to convert to a textual
-representation for itself. This includes fundamental types such as
-<tt>Boolean</tt>, user-defined scalars, strings and <tt>Time</tt>.
+representation for itself. This includes 
+
+<ul>
+
+<li>any standard type for which the <tt>'Image</tt> attribute is
+available (<tt>Boolean</tt>, <tt>Integer</tt>, <tt>Duration</tt>,
+<tt>Float</tt> ...)
+
+<li>user-defined scalars (<tt><i>[[enumeration]]</i></tt>,
+<tt><i>[[integer]]</i></tt>, <tt><i>[[real]]</i></tt>)
+
+<li>strings (<tt>Text</tt> and user-defined <i><tt>[[string]]</tt></i>s)
+
+<li><tt>Time</tt>
+
+</ul>
 
 <p>However, this may not be possible for types imported from other
 domains (it's OK for types which are visibly scalar, such as
 <tt>GNAT.Sockets.Port_Type</tt>). In this case, you can specify an
 image function for the type.
 
-<p>In the diagram, <i>Foreign</i> is a renaming of type
+<p><a href="#serialization.png">In the diagram</a>, <i>Foreign</i> is
+a renaming of type
 <tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
 function to use via the annotation <i><tt>[[image]]</tt></i>, in this
 case
-<tt>[[image:<i>Other_Domain</i>.Image_Of_Exported]]</tt>. ColdFrame
-then expects to be able to call
+<tt>[[image&nbsp;:&nbsp;<i>Other_Domain</i>.Image_Of_Exported]]</tt>.
+ColdFrame then expects to be able to call
 <pre>
    function <i>[Other_Domain.]</i>Image_Of_Exported
      (Value : Exported;
@@ -380,11 +411,11 @@ say <tt>Value</tt>), it would be more like
 <tt>Server</tt> program in the Serialization demonstration) is
 <pre>
    declare
-      Rec : constant ColdFrame.Serialization.Base'Class :=
-	ColdFrame.Serialization.Base'Class'Input (Channel);
+      Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+	ColdFrame.Project.Serialization.Base'Class'Input (Channel);
    begin
       Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
-			    ColdFrame.Serialization.Image (Rec));
+			    ColdFrame.Project.Serialization.Image (Rec));
       Ada.Text_IO.Flush;
    end;
 </pre>
@@ -394,15 +425,17 @@ because of the need to flush the data, in case the output is
 redirected).
 
 <p>Note that this doesn't use the <tt>Serialization</tt> (or
-<tt>Recording</tt>) package; instead, it uses the real base class,
-which is ColdFrame's default. This ensures you don't run the risk of
-pulling in lots more of the application code than you need.
+<tt>Recording</tt>) package; instead, it uses the (renamed) real base
+class, which in this case is ColdFrame's default. This ensures you
+don't run the risk of pulling in lots more of the application code
+than you need.
 
 <p>However, what you <em>do</em> have to do is to <tt>with</tt> all
 the <tt><i>Domain</i>.Serializable</tt> packages (if not, you'll get
 an exception in <tt>'Class'Input</tt>).
 
 
+<p><hr>
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: server.adb,v $
---  $Revision: 5247b65fcf3c $
---  $Date: 2003/03/01 17:05:38 $
+--  $Revision: c5c844affd39 $
+--  $Date: 2003/08/13 19:43:08 $
 --  $Author: simon $
 
 --  This program receives and decodes TCP packets of type
@@ -22,7 +22,7 @@
 
 with Ada.Exceptions;
 with Ada.Text_IO;             --  need Flush
-with ColdFrame.Serialization;
+with ColdFrame.Project.Serialization;
 with GNAT.IO; use GNAT.IO;
 with GNAT.Sockets;
 
@@ -70,11 +70,11 @@ begin
 
          Put_Line ("about to read ..");
          declare
-            Rec : constant ColdFrame.Serialization.Base'Class :=
-              ColdFrame.Serialization.Base'Class'Input (Channel);
+            Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+              ColdFrame.Project.Serialization.Base'Class'Input (Channel);
          begin
             Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
-                                  ColdFrame.Serialization.Image (Rec));
+                                  ColdFrame.Project.Serialization.Image (Rec));
             Ada.Text_IO.Flush;
          end;
 

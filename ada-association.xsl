@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v d0fb99ee5723 2003/01/19 19:30:48 simon $ -->
+<!-- $Id: ada-association.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,6 +33,7 @@
   <xsl:template match="domain/association" mode="association-spec">
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
@@ -171,6 +172,7 @@
   <xsl:template match="domain/association" mode="association-body">
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <!-- Context clauses. -->
     <xsl:call-template name="association-body-context"/>

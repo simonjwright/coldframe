@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v e21819b3d8de 2003/05/01 05:25:49 simon $ -->
+<!-- $Id: ada-collection.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -54,6 +54,7 @@
 
     <!-- Abstract Containers package -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with BC.Containers;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
@@ -62,6 +63,7 @@
 
     <!-- Abstract Collections package -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -74,6 +76,7 @@
 
     <!-- Abstract Sets package -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -90,6 +93,7 @@
       <xsl:when test="$max &lt;= $max-bounded-container">
         <!-- Wnen the size isn't too large, use the Bounded version -->
         <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -105,7 +109,9 @@
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
         <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Collections;&#10;</xsl:text>
@@ -114,13 +120,14 @@
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>is new Abstract_Collections.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text>(Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>(Storage =&gt; ColdFrame.Project.Storage_Pools.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
 
     <!-- Hash function for Handles -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -133,6 +140,7 @@
 
     <!-- Concrete Sets package -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash;&#10;</xsl:text>
@@ -166,6 +174,7 @@
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
         <xsl:text>with BC.Containers.Sets.Unbounded;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Sets;&#10;</xsl:text>
@@ -182,7 +191,7 @@
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text> Storage =&gt; ColdFrame.Project.Storage_Pools.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -192,8 +201,11 @@
          with {domain}.{class}.Collections;
          function {domain}.{class}.All_Instances
          return {domain}.{class}.Collections.Collection;
+         pragma Elaborate_Body
+            ({domain}.{class}.All_Instances);
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -204,6 +216,11 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
+    <xsl:text>pragma Elaborate_Body&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.All_Instances);&#10;</xsl:text>
 
     <!-- Generic filter function to return a Collection of selected
          Instances -->
@@ -217,6 +234,7 @@
             ({domain}.{class}.Selection_Function);
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -248,6 +266,7 @@
             ({domain}.{class}.Filter_Function);
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -282,6 +301,7 @@
             ({domain}.{class}.Iterate);
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -323,32 +343,21 @@
 
     <!-- Function to return a Collection of all the Instances -->
     <!-- full version ..
-         with BC.Copy;
-         with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Collections.Collection is
-            procedure Copy_Instances is new BC.Copy
-              (Item => Handle,
-               Source => Abstract_Map_Containers,
-               From => Maps.Map,
-               Target => Abstract_Containers,
-               To => Collections.Collection,
-               Clear => Collections.Clear,
-               Add => Collections.Append);
+            use ColdFrame.Instances.Abstract_Containers;
+            It : Iterator'Class := Maps.New_Iterator (The_Container);
             Result : Collections.Collection;
          begin
-            Copy_Instances (The_Container, Result);
+            while not Is_Done (It) loop
+               Collections.Append (Result, Handle (Current_Item (It)));
+               Next (It);
+            end loop;
             return Result;
          end {dom}.{class}.All_Instances;
          -->
     <xsl:call-template name="do-not-edit"/>
-
-    <xsl:if test="$max &gt; 1">
-      <xsl:text>with BC.Copy;&#10;</xsl:text>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="$class"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>      
-    </xsl:if>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -360,22 +369,9 @@
 
     <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> From =&gt; Maps.Map,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
-
+      <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
@@ -387,7 +383,13 @@
       <xsl:when test="$max &gt; 1">
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Copy_Instances (The_Container, Result);&#10;</xsl:text>
+        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Collections.Append (Result, Handle (Current_Item (It)));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
 
       </xsl:when>
 
@@ -413,33 +415,23 @@
     <!-- Generic filter function to return a Collection of selected
          Instances -->
     <!-- full version ..
-         with BC.Filter;
-         with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.Selection_Function
            return {dom}.{class}.Collections.Collection is
-            procedure Filter is new BC.Filter
-              (Item => Handle,
-               Source => Abstract_Map_Containers,
-               From => Maps.Map,
-               Target => Abstract_Containers,
-               To => Collection,
-               Pass => Pass,
-               Clear => Collections.Clear,
-               Add => Collections.Append);
-            Result : Collection;
+            use ColdFrame.Instances.Abstract_Containers;
+            It : Iterator'Class := Maps.New_Iterator (The_Container);
+            Result : Collections.Collection;
          begin
-            Filter (The_Container, Result);
+            while not Is_Done (It) loop
+               if Pass (Handle (Current_Item (It))) then
+                  Collections.Append (Result, Handle (Current_Item (It)));
+               end if;
+               Next (It);
+            end loop;
             return Result;
          end {dom}.{class}.Selection_Function;
          -->
     <xsl:call-template name="do-not-edit"/>
-
-    <xsl:if  test="$max &gt; 1">
-      <xsl:text>with BC.Filter;&#10;</xsl:text>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="$class"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    </xsl:if>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -451,23 +443,9 @@
 
     <xsl:if  test="$max &gt; 1">
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> From =&gt; Maps.Map,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
+      <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
@@ -479,7 +457,17 @@
       <xsl:when test="$max &gt; 1">
         
         <xsl:value-of select="$I"/>
-        <xsl:text>Filter (The_Container, Result);&#10;</xsl:text>
+        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if Pass (Handle (Current_Item (It))) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Collections.Append (Result, Handle (Current_Item (It)));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
         
       </xsl:when>
       
@@ -504,29 +492,26 @@
 
     <!-- Generic filter function for collections of Instances -->
     <!-- 
-         with BC.Filter;
          with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.Filter_Function
            (The_Collection : {dom}.{class}.Collections.Collection)
            return {dom}.{class}.Collections.Collection is
-            procedure Filter is new BC.Filter
-              (Item => Handle,
-               Source => Abstract_Containers,
-               From => Collections.Collection,
-               Target => Abstract_Containers,
-               To => Collections.Collection,
-               Pass => Pass,
-               Clear => Collections.Clear,
-               Add => Collections.Append);
+            use Abstract_Containers;
+            It : Iterator'Class := Collections.New_Iterator (The_Collection);
             Result : Collections.Collection;
          begin
-            Filter (The_Collection, Result);
+            while not Is_Done (It) loop
+               if Pass (Current_Item (It)) then
+                  Collections.Append (Result, Current_Item (It));
+               end if;
+               Next (It);
+            end loop;
             return Result;
          end {dom}.{class}.Filter_Function;
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
-    <xsl:text>with BC.Filter;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
@@ -544,30 +529,26 @@
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> Source =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> From =&gt; Collections.Collection,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
-    <xsl:value-of select="$IC"/>
-    <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:text>use Abstract_Containers;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>It : Iterator'Class := Collections.New_Iterator (The_Collection);&#10;</xsl:text>
     
     <xsl:value-of select="$I"/>
     <xsl:text>Result : Collections.Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     
     <xsl:value-of select="$I"/>
-    <xsl:text>Filter (The_Collection, Result);&#10;</xsl:text>
+    <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>if Pass (Current_Item (It)) then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>Collections.Append (Result, Current_Item (It));&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Next (It);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end loop;&#10;</xsl:text>
     
     <xsl:value-of select="$I"/>
     <xsl:text>return Result;&#10;</xsl:text>
@@ -590,6 +571,7 @@
          end {domain}.{class}.Iterate;
          -->
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>

@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 8b29399b36e0 2003/07/03 21:47:38 simon $ -->
+<!-- $Id: releases.html-proto,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -17,7 +17,40 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dl>
 
-<p><dt>2003mmdd
+<!-- The D A T E gets substituted by the Makefile with the current release.
+     Don't use D A T E elsewhere! -->
+
+<p><dt>DATE
+
+<dd>The old <tt>Hash</tt> function has been replaced by
+<tt>Instance_Hash</tt> (because the arguments are different).
+
+
+<p>Code generation doesn't stop on the first error.
+
+
+<p>State machines support actions on transitions.
+
+
+<p>It was possible, especially with <tt>Cascade_Teardown</tt>s, for a
+shared event queue to be torn down more than once, leading to
+<tt>Constraint_Error</tt>s.
+
+
+<p>With the new container implementation, calling <tt>Find</tt> for
+an &#171;active&#187; (multiple-instance) class would hang.
+
+
+<p>Started a set of regression tests, in the <tt>test/</tt>
+subdirectory of the distribution.
+
+
+<p>ColdFrame identification commentary (revision of the model, date of
+extraction, revision of ColdFrame components) is added to each
+generated file.
+
+
+<p><dt>20030815
 
 <dd>Added <tt>ColdFrame.Project.Log_Error</tt>, and used it to report
 exceptions in domain initialization.
@@ -54,6 +87,25 @@ are seen as such.
 <p>Included <tt>cf-banner.el</tt>, an Emacs add-in to aid replacing
 ColdFrame's generated banner file heading with something appropriate
 to your version control system (in this case, PVCS).
+
+
+<p>Improved code generation efficiency (by eliminating many
+instantiations of Booch Components).
+<br>Note, to allow further improvements without impacting your code,
+it would be a <em>good idea</em> to use the generated
+<tt><i>Domain.Class</i>.Iterate</tt> generic for iterations rather
+than open iterations using
+<tt><i>Domain.Class</i>.Abstract_Containers</tt>.
+
+
+<p>Memory allocation (for instance, when creating an instance of a
+class) now fills the allocated memory with an improbable pattern. This
+should help to catch use of uninitialized attributes.
+
+
+<p>You can specify an active class's stack size and priority (as an
+offset from the system's default priority, the larger the number the
+higher the priority).
 
 
 <p><dt>20030519
@@ -998,3 +1050,8 @@ document.write(document.lastModified);
 </script>
 </i></body>
 </html>
+
+#;; for emacs:
+#;; Local Variables:
+#;; mode: html
+#;; End:
