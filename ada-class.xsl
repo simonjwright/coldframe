@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 1582fa1fdb7f 2001/06/16 16:35:46 simon $ -->
+<!-- $Id: ada-class.xsl,v f9366a02e078 2001/06/19 18:47:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,8 +27,39 @@
                 version="1.0">
 
 
+  <!-- XXX temporary : explore collecting the ancestors -->
+  <xsl:template name="get-ancestors">
+    <xsl:param name="parents" select="."/>
+    <xsl:param name="ancestors" select="/.."/>
+    <xsl:choose>
+      <xsl:when test="$parents">
+        <xsl:call-template name="get-ancestors">
+          <xsl:with-param
+            name="parents"
+            select="../class[name=../inheritance[child=$parents/name]/parent]"/>
+          <xsl:with-param name="ancestors" select="$parents | $ancestors"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="$ancestors">
+          <xsl:message>
+            <xsl:text>  Family: </xsl:text>
+            <xsl:value-of select="name"/>
+          </xsl:message>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
+
+    <xsl:message>
+      <xsl:text>Class: </xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:message>
+    <xsl:call-template name="get-ancestors"/>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
