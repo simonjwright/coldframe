@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: library-tests.adb,v 8b38f435c38b 2002/10/17 20:30:08 simon $
+--  $Id: library-tests.adb,v 5ad1a83f12c7 2005/04/03 10:35:00 simon $
 
 with AUnit.Test_Cases.Registration;
 use AUnit.Test_Cases.Registration;
@@ -29,12 +29,12 @@ with Library.Book.All_Instances;
 with Library.Book.Collections;
 with Library.Borrower.All_Instances;
 with Library.Borrower.Collections;
-with Library.Current_Loan.Collections;
-with Library.Loan_History.Collections;
+with Library.Current;
+with Library.Current_Loan;
+with Library.History;
+with Library.Loan_History;
 
 with Library.Authorship.From_Collections;
-with Library.Current.From_Collections;
-with Library.History.From_Collections;
 
 package body Library.Tests is
 
@@ -54,8 +54,12 @@ package body Library.Tests is
 
    procedure Set_Up (T : in out Test_Case) is
 
+      pragma Warnings (Off, T);
+
       Cl : Current_Loan.Handle;
+      pragma Warnings (Off, cl);
       Lh : Loan_History.Handle;
+      pragma Warnings (Off, Lh);
 
    begin
 
@@ -109,6 +113,7 @@ package body Library.Tests is
    ---------------
 
    procedure Tear_Down (T : in out Test_Case) is
+      pragma Warnings (Off, T);
    begin
 
       Library.Tear_Down;
@@ -124,6 +129,7 @@ package body Library.Tests is
    procedure T1 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
       B : Borrower.Handle;
+      pragma Warnings (Off, B);
       use type Borrower.Handle;
    begin
       B := Authorship.Wrote (null);
@@ -227,6 +233,7 @@ package body Library.Tests is
    procedure T10 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
       Cl : Current_Loan.Handle;
+      pragma Warnings (Off, Cl);
    begin
       Cl := Current.Link (Is_On_Loan_To => Alice,
                           Is_Borrowing => Mysterious_Happenings);
@@ -294,6 +301,7 @@ package body Library.Tests is
 
    --  Identifier of test case:
    function Name (T : Test_Case) return String_Access is
+      pragma Warnings (Off, T);
    begin
       return new String'("Association tests");
    end Name;
