@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v d492d06f383a 2005/02/28 20:25:18 simon $ -->
+<!-- $Id: ada-type.xsl,v 9363fdaaf716 2005/03/05 18:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -811,8 +811,10 @@
         
         <xsl:variable name="subprogram-name">
           <xsl:value-of select="../../name"/>
+          <!--
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
+          -->
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>          
         </xsl:variable>
