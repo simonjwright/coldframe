@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 5aa07f59a41e 2003/12/17 14:15:26 simon $
+# $Id: normalize-rose.tcl,v 0daddb37391d 2004/01/09 15:03:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2452,7 +2452,16 @@ itcl::class Datatype {
 
     # called to specify the hash mechanism (probably only relevant
     # for imported/renamed types)
-    method -hash {as} {set hash [string tolower $as]}
+    method -hash {as} {
+	set hash [string tolower $as]
+	switch $hash {
+	    discrete -
+	    enumeration {}
+	    default {
+		Warning "unrecognised hash mechanism \"$hash\" for $type"
+	    }
+	}
+    }
 
     method -complete {} {
         if [expr ![[stack -top] -isPresent $type]] {
@@ -2468,6 +2477,9 @@ itcl::class Datatype {
         if [info exists callback] {
             puts -nonewline " callback=\"$callback\""
         }
+	if [info exists hash] {
+            puts -nonewline " hash=\"$hash\""
+	}
         if [info exists fieldImage] {
             puts -nonewline " field-image=\"$fieldImage\""
         }
@@ -2518,9 +2530,6 @@ itcl::class Datatype {
             default {
                 Error "CF: unhandled dataType \"$dataType\""
             }
-        }
-        if [info exists hash] {
-            putElement hash $hash
         }
         if [info exists operations] {
             $operations -generate $domain
