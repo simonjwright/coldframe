@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v eb78bd74faa3 2003/05/26 14:07:52 simon $ -->
+<!-- $Id: event-translation.html,v fcad02c06357 2003/10/04 07:03:49 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -86,19 +86,22 @@ event is thrown away.
 
 <ol>
 
-<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
-current state,
-
 <li>the instance variable <tt>State_Machine_State</tt> is set to the
-target state, and
+target state;
 
 <li>the entry actions are executed in order;
 
+<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
+current state.
+
 </ol>
 
-so you can write your action operation to behave differently
-according to what state you're now in (or have come from, or
-both). Please <b>don't</b> alter these variables yourself.
+so you can write your action operation to behave differently according
+to what state you're now in (or have come from, or both). Please
+<b>don't</b> alter these variables yourself.
+
+<br>In general, it's better to show behaviour in the state machine
+rather than embedded in code.
 
 </ul>
 
