@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e5ffd8f85449 2002/01/27 11:14:19 simon $
+# $Id: normalize-rose.tcl,v afda4b57a777 2002/02/01 20:41:41 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -739,6 +739,7 @@ itcl::class Class {
 		switch -exact $upper {
 		    "n"     -
 		    "*"     {}
+		    "1"     {$this -singleton dummy}
 		    default {
 			Error "must specify cardinality for $name as 0..$upper"
 		    }
