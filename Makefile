@@ -284,7 +284,7 @@ Digital_IO.impl/digital_io-input-changed.adb \
 Digital_IO.impl/digital_io-output-changed.adb \
 Digital_IO.impl/digital_io-signal-initialize.adb \
 Digital_IO.impl/digital_io-signal-set_state.adb \
-stairwell_demo.gpr tash.gpr \
+stairwell_demo.adp stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 House_Management.cat House_Management.raw \
 House_Management.impl/house_management-button-changed.adb \
