@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
+<!-- $Id: generate-ada.xsl,v 39483b477b88 2001/08/26 14:40:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,6 +33,7 @@
   <xsl:import href="ada-class.xsl"/>
   <xsl:import href="ada-collection.xsl"/>
   <xsl:import href="ada-operation.xsl"/>
+  <xsl:import href="ada-teardown.xsl"/>
   <xsl:import href="ada-type.xsl"/>
   <xsl:import href="ada-utilities.xsl"/>
 
@@ -192,10 +193,14 @@
     </xsl:apply-templates>
 
     <!-- Package specs for callbacks. -->
-    <xsl:message>.. package bodies for Callbacks ..</xsl:message>
+    <xsl:message>.. package specs for Callbacks ..</xsl:message>
     <xsl:apply-templates select="type[@callback]" mode="callback-spec">
-       <xsl:sort select="name"/>
-   </xsl:apply-templates>
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+    
+    <!-- Teardown -->
+    <xsl:message>.. Teardown procedures ..</xsl:message>
+    <xsl:call-template name="domain-teardown"/>
 
     <xsl:message>.. done.</xsl:message>
 
