@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 0507e6778854 2001/04/13 12:42:15 simon $ -->
+<!-- $Id: ada-attribute.xsl,v e5efdbbc9c19 2001/04/22 10:41:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -204,16 +204,15 @@
 
   <!-- Generate attribute name. Called at class/attribute.
        If this is an anonymous referential attribute, we make up its
-       name from the abbreviation of the supplier, the word _Handle_,
-       and the relationship name.
+       name from the abbreviation of the supplier and the relationship name.
        If not, just use the <name> element. -->
   <xsl:template name="attribute-name">
     <xsl:choose>
       <xsl:when test="@refers and not(name)">
-        <xsl:variable name="target-class" select="@refers"/>
-        <xsl:value-of select="/domain/class[name=$target-class]/abbreviation"/>
-        <xsl:text>_Handle_</xsl:text>
-        <xsl:value-of select="@relation"/>
+        <xsl:call-template name="referential-attribute-name">
+          <xsl:with-param name="supplier" select="@refers"/>
+          <xsl:with-param name="relation" select="@relation"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="name"/>
