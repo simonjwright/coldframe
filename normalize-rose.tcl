@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ed8b21cf573e 2004/04/17 17:35:28 simon $
+# $Id: normalize-rose.tcl,v e3727fe75be1 2004/04/29 05:25:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1325,8 +1325,10 @@ itcl::class Class {
                 set dt [Datatype ::\#auto $name]
                 $dts -add $dt $name
             }
+            # note that we've defined the dataType.
+            $dt -defined
             # transfer the operations, the documentation and the
-            # already-extracted annotation and tags to the new Datatype.
+            # already-extracted annotation and tags to the new dataType.
             if [info exists operations] {
                 $dt -operations $operations
             }
@@ -2330,7 +2332,7 @@ itcl::class Datatype {
 
     variable dataDetail
 
-    variable dataType "nonstandard"
+    variable dataType "implicit"
 
     variable hash
 
@@ -2351,6 +2353,9 @@ itcl::class Datatype {
     # called in initialization of class Datatypes to indicate that the
     # standard types created there are in fact standard.
     method -standard {} {set dataType "standard"}
+
+    # called when derived from <<type>> class.
+    method -defined {} {set dataType "defined"}
 
     # process annotation.
     method -annotation {a} {
@@ -2549,6 +2554,10 @@ itcl::class Datatype {
         if $serializable {
             puts -nonewline " serializable=\"yes\""
         }
+        if {$dataType == "defined"} {
+            Warning "no tags to indicate type of $type, treated as {null}"
+            puts -nonewline " null=\"yes\""
+        }
         if $null {
             # do this as an attribute so it's easier to check for mistaken
             # usage (OK, could do it here ..)
@@ -2559,7 +2568,7 @@ itcl::class Datatype {
             puts -nonewline " unconstrained=\"yes\""
         }
         switch $dataType {
-            nonstandard {
+            implicit {
                 puts -nonewline " standard=\"no\""
             }
             standard {
@@ -2598,7 +2607,9 @@ itcl::class Datatype {
             string {
                 puts "<$dataType>"
                 foreach {key value} $dataDetail {
-                    putElement $key [normalizeValue $value]
+                    if {$key != "true"} {
+                        putElement $key [normalizeValue $value]
+                    }
                 }
                 puts "</$dataType>"
             }
@@ -2611,10 +2622,9 @@ itcl::class Datatype {
             renames {
                 putElement renames $dataDetail
             }
-            standard -
-            nonstandard {
-                # already handled, as attribute.
-            }
+            implicit {}
+            standard {}
+            defined {}
             default {
                 Error "CF: unhandled dataType \"$dataType\""
             }
