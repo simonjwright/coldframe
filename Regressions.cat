@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: db9dbab8a3b6 $}
+|{ revision = $Revision: d9ea6ad38cad $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -7126,7 +7126,8 @@
 		(object Class "Private Enum"
 		    quid       	"417C8D4D01F7"
 		    documentation 	"{ enumeration = A | B }"
-		    stereotype 	"type, private"
+		    stereotype 	"type"
+		    exportControl 	"Implementation"
 		    operations 	(list Operations
 			(object Operation "op"
 			    quid       	"417C8D6802F0"
@@ -7147,8 +7148,8 @@
 			    quidu      	"417C8D4D01F7")))
 		(object Class "Private Protected"
 		    quid       	"417C8DAA0150"
-		    documentation 	"{ private }"
 		    stereotype 	"protected"
+		    exportControl 	"Private"
 		    operations 	(list Operations
 			(object Operation "E"
 			    quid       	"417C8DEB01EA"
@@ -7191,8 +7192,8 @@
 			    quidu      	"417C8D4D01F7")))
 		(object Class "Private Rec"
 		    quid       	"417C8E23005A"
-		    documentation 	"{ private }"
 		    stereotype 	"type"
+		    exportControl 	"Private"
 		    operations 	(list Operations
 			(object Operation "private rec fun"
 			    quid       	"417C8EA60153"
@@ -7211,7 +7212,6 @@
 		(object ClassDiagram "Main"
 		    quid       	"417C8D44028A"
 		    title      	"Main"
-		    documentation 	"{ private }"
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
@@ -7249,7 +7249,7 @@
 				nlines     	1
 				max_width  	432
 				justify    	0
-				label      	"<<type, private>>")
+				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
@@ -7395,7 +7395,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: db9dbab8a3b6 $}
+|{ revision = $Revision: d9ea6ad38cad $}
 	    
 	    zoom       	88
 	    max_height 	28350
@@ -7441,7 +7441,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v db9dbab8a3b6 2004/10/25 05:46:52 simon $")
+		    label      	"$Id: Regressions.cat,v d9ea6ad38cad 2004/10/29 12:44:56 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @193
 		    location   	(301, 318)
 		    font       	(object Font
@@ -8679,7 +8679,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@229
-			location   	(625, 2850)
+			location   	(625, 2847)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
