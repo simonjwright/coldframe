@@ -15,7 +15,7 @@ project Regressions is
      "Regressions.gen"
     );
 
-  for Object_Dir use Options'Object_Dir;
+  for Object_Dir use Options'Object_Dir & "/main";
   package Ide renames Options.Ide;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
