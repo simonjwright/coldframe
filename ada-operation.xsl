@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 2a96db10cfbd 2001/09/14 19:40:21 simon $ -->
+<!-- $Id: ada-operation.xsl,v b6cbb8f3fe5d 2001/09/22 05:54:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -51,7 +51,8 @@
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
           <xsl:with-param
             name="operations"
-            select="$parents/operation[not(name=$operations/name)]
+            select="$parents/operation
+                      [not(@generated) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -209,7 +210,8 @@
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
           <xsl:with-param
             name="operations"
-            select="$parents/operation[not(name=$operations/name)]
+            select="$parents/operation
+                      [not(@generated) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -277,7 +279,8 @@
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
           <xsl:with-param
             name="operations"
-            select="$parents/operation[not(name=$operations/name)]
+            select="$parents/operation
+                      [not(@generated) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
