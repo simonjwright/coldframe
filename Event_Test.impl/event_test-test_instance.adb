@@ -5,6 +5,8 @@ with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
 with Event_Test.Machine;
+with Event_Test.Machine.All_Instances;
+with Event_Test.Machine.Collections;
 with Event_Test.Events;
 
 with ColdFrame.Exceptions;
@@ -14,6 +16,42 @@ with ColdFrame.Project.Event_Support;
 package body Event_Test.Test_Instance is
 
    H : Machine.Handle;
+
+   --  You can't post to self from outside the Queue
+   procedure Post_To_Self
+      (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Post_To_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Mark (H);
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Post_To_Self (Ev, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (False, "no exception");
+   exception
+      when ColdFrame.Exceptions.Use_Error => null;
+   end Post_To_Self;
+
+
+   --  Delete as an action
+   procedure Delete_As_Action
+      (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delete_As_Action
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Kill (H);
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+              Machine.Collections.Length (Machine.All_Instances)'Img &
+              " instance(s) remaining");
+   end Delete_As_Action;
+
 
    --  An event will be delivered to its instance.
    procedure Simple_Event
@@ -28,13 +66,12 @@ package body Event_Test.Test_Instance is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       Inf.Payload := (Ordinal => 2000,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
-
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-
       Assert (Machine.Get_Ordinal (H) = 2000,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Simple_Event;
+
 
    --  An event to self will be processed before other events.
    procedure Event_To_Self
@@ -50,15 +87,18 @@ package body Event_Test.Test_Instance is
       Inf.Payload := (Ordinal => 2001,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
-
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-
       Assert (Machine.Get_Ordinal (H) = 2002,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Event_To_Self;
 
+
    procedure Register_Tests (T : in out Test_Case) is
    begin
+      Register_Routine
+        (T, Post_To_Self'Access, "Illegal posting to self");
+      Register_Routine
+        (T, Delete_As_Action'Access, "Delete as an action");
       Register_Routine
         (T, Simple_Event'Access, "Simple event");
       Register_Routine

@@ -4,8 +4,8 @@
 <date>
 <year>2002</year>
 <month>9</month>
-<day>10</day>
-<time>16:47</time>
+<day>14</day>
+<time>15:53</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -360,6 +360,15 @@
 </entryactions>
 <documentation></documentation>
 </state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+<action>
+<name>delete</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
 </states>
 <transitions>
 <transition>
@@ -383,6 +392,14 @@
 <target>handling self</target>
 <event>
 <name>self</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>final</target>
+<event>
+<name>kill</name>
 </event>
 <documentation></documentation>
 </transition>
