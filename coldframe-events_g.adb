@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 5da579479986 $
---  $Date: 2002/09/04 18:53:16 $
+--  $Revision: 2a4992703a01 $
+--  $Date: 2002/09/10 18:39:49 $
 --  $Author: simon $
 
 with ColdFrame.Exceptions;
@@ -77,24 +77,28 @@ package body ColdFrame.Events_G is
 
 
    procedure Add_Posted_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
    begin
       null;
    end Add_Posted_Event;
 
 
    procedure Remove_Posted_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
    begin
       null;
    end Remove_Posted_Event;
 
 
    procedure Add_Held_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
    begin
       null;
    end Add_Held_Event;
 
 
    procedure Remove_Held_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
    begin
       null;
    end Remove_Held_Event;
