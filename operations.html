@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v e2fdb319e012 2003/01/04 11:41:12 simon $ -->
+<!-- $Id: operations.html,v 8f96aa077284 2003/01/04 16:51:38 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -139,7 +139,35 @@ sequence diagrams.
 
 <h2>Translation</h2>
 
+<p>Aside from operations which are present <a href="#seq">to support
+sequence diagrams</a>, <a href="#entry">task entries</a>, and <a
+href="#type">access-to-subprogram types</a>, all operations are
+generated as
+
+<ul>
+
+<li>declarations in the appropriate package specification,
+
+<li>body stubs in the corresponding package body, and
+
+<li><tt>separate</tt> proper bodies <i>(this is the reason why all the
+operations of types, and all the operations of a class, must have
+distinct names)</i>.
+
+</ul>
+
+<p>In the case of operations of types, the declaration is made in the
+<tt><i>Domain</i></tt> package; otherwise, in the
+<tt><i>Domain.Class</i></tt> package.
+
+<p>If the operation is <a href="#accessor">recognised as an
+accessor</a>, the proper body contains an appropriate implementation;
+otherwise, it contains an implementation which will compile but which
+will raise <tt>Program_Error</tt> if called.
+
+<!--
 <h2>Use</h2>
+-->
 
 <p><hr>
 <i>
