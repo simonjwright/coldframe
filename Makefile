@@ -183,6 +183,7 @@ hierarchies-full.png \
 hierarchies.png \
 house-digital-io.png \
 house-management.png \
+house-management-operation.png \
 lamp.png \
 lamp-state.png\
 lamp-state-resetting.png\

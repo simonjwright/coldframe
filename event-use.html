@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 1805c4572361 2004/12/24 08:55:46 simon $ -->
+<!-- $Id: event-use.html,v a24965851d47 2004/12/27 19:03:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -20,6 +20,62 @@ three relevant kinds of task:
 <li>the <i>dispatcher</i> task associated with an event queue.
 
 </ul>
+
+<p>A common pattern is shown in the sequence diagram:
+
+<p><img src="house-management-operation.png">
+
+<p>All code in the discussion below is from the House Management
+domain in the <tt>example/</tt> subdirectory of the distribution.
+
+<p><em>Operation 1</em> occurs in the Digital IO domain, in the
+context of Digital IO's event queue.
+
+<p><em>Operation 1.1</em> is the callback of the registered operation
+<tt>Button.Changed</tt>, still in Digital IO's context. This creates a
+new <tt>Button Event</tt>, whose payload is the pushed button's name
+(<em>Operation 1.1.1</em>) and posts it onto House Management's event
+queue (<em>Operation 1.1.2</em>):
+<pre>
+   declare
+      E : constant ColdFrame.Project.Events.Event_P
+	:= new Button_Event;
+      P : Button_Name renames Button_Event (E.all).Payload;
+   begin
+      P := Buttons (S.S);
+      ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
+   end;
+</pre>
+
+<p><em>Operation 2</em> represents the firing of the <tt>Button
+Event</tt> when it reaches the head of the House Management event
+queue, in the House Management context. The generated <tt>Handler</tt>
+calls the &#171;handler&#187; operation <tt>Button.Pushed</tt>
+(<em>Operation 2.1</em>), which, instead of posting another event,
+creates a <tt>Button Push</tt> event for the Lamp concerned
+(<em>Operation 2.1.1</em>) on the stack and then invokes its generated
+<tt>Handler</tt> (<em>Operation 2.1.2</em>):
+<pre>
+   procedure Button_Pushed (L : Lamp.Handle) is
+      Ev : Lamp.Button_Push (For_The_Instance => L);
+   begin
+      Lamp.Handler (Ev);
+   end Button_Pushed;
+</pre>
+
+<p>The generated body of <tt>Lamp.Handler</tt> includes the code
+<pre>
+   case This.State_Machine_State is
+      when Idle =>
+	 This.Old_State_Machine_State := Idle;
+	 This.State_Machine_State := Lit;
+	 Turn_On (This);
+	 Set_Timeout (This);
+</pre>
+
+<p>which corresponds to <em>Operation 2.1.2.1</em> and <em>Operation
+2.1.2.2</em> and completes the processing.
+
 
 <h2>Posting an event</h2>
 
@@ -74,20 +130,23 @@ it would be
    end;
 </pre>
 
-<h2>Locking</h2>
+<h2><a name="locking">Locking</a></h2>
+
+<p>An earlier version of the <a
+href="event-modelling.html#example-model">example state model</a> was
+
+<p><img src="lamp-state-resetting.png">
 
 <p>If the task executing <a
 href="event-translation.html#is_on"><tt>Is_On</tt></a> isn't the same
-one as that executing the <a
-href="event-modelling.html#example-model">state machine</a>, there is
-a possibility that <tt>Is_On</tt> may catch the instance in an
-intermediate state (in this case, the state <tt>Resetting</tt>). There
-are two approaches to this problem.
+one as that executing the state machine, there is a possibility that
+<tt>Is_On</tt> may catch the instance in an intermediate state (in
+this case, the state <tt>Resetting</tt>). There are two approaches to
+this problem.
 
 <p>In the simpler, it's clear that <tt>Resetting</tt> is an
-intermediate state; the <a
-href="event-modelling.html#example-model">state machine</a> bounces
-immediately back to <tt>On</tt> via an unguarded transition, so
+intermediate state; the state machine bounces immediately back to
+<tt>On</tt> via an unguarded transition, so
 <tt>Is_On</tt> could be coded
 <pre>
    function Is_On (This : Handle) return Boolean is
