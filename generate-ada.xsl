@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 985debbeef48 2001/01/13 18:30:33 simon $ -->
+<!-- $Id: generate-ada.xsl,v ff693960a624 2001/01/15 05:54:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,11 +61,14 @@
     <!-- Package bodies for individual classes. -->
     <xsl:apply-templates select="object" mode="object-body"/>
 
-    <!-- Separate bodies for individual subprograms. -->
-    <xsl:apply-templates select="object/operation" mode="operation-separate"/>
-
     <!-- Collection support packages. -->
     <xsl:apply-templates select="object" mode="collection-support"/>
+
+    <!-- Child subprogram specs for individual operations. -->
+    <xsl:apply-templates select="object/operation" mode="operation-spec"/>
+
+    <!-- Child subprogram bodies for individual operations. -->
+    <xsl:apply-templates select="object/operation" mode="operation-body"/>
 
   </xsl:template>
 
@@ -248,9 +251,6 @@
 
     </xsl:if>
 
-    <!-- .. the subprogram specs .. -->
-    <xsl:apply-templates mode="operation-spec"/>
-
     <xsl:if test="attribute">
 
       <!-- .. the private part .. -->
@@ -271,10 +271,9 @@
       <xsl:text>      Buckets => 43,&#10;</xsl:text>
       <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
       <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-      <xsl:text>  subtype Map is Maps.Dynamic_Map;&#10;</xsl:text>
 
       <!-- .. the instance container .. -->
-      <xsl:text>  The_Container : Map;&#10;</xsl:text>
+      <xsl:text>  The_Container : Maps.Map;&#10;</xsl:text>
 
     </xsl:if>
 
@@ -364,18 +363,6 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate subprogram specs -->
-  <xsl:template match="object/operation" mode="operation-spec">
-
-    <xsl:call-template name="subprogram-specification">
-       <xsl:with-param name="indent" select="'  '"/>
-    </xsl:call-template>
-
-    <xsl:text>;&#10;</xsl:text>
-
-  </xsl:template>
-
-
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/object" mode="object-body">
 
@@ -456,9 +443,6 @@
       <xsl:apply-templates mode="attribute-get-body"/>
 
     </xsl:if>
-
-    <!-- .. any subprogram stubs .. -->
-    <xsl:apply-templates mode="operation-body"/>
 
     <xsl:if test="attribute">
 
@@ -550,19 +534,6 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate separate subprogram stubs. -->
-  <xsl:template match="object/operation" mode="operation-body">
-
-    <xsl:call-template name="subprogram-specification">
-       <xsl:with-param name="indent" select="'  '"/>
-    </xsl:call-template>
-
-    <!-- .. close. -->
-    <xsl:text> is separate;&#10;</xsl:text>
-
-   </xsl:template>
-
-
   <!-- Called from domain/object to generate the separate hash function. -->
   <xsl:template name="hash-function">
     <!-- XXX This needs to recognise Bounded String usage, too -->
@@ -580,17 +551,18 @@
   </xsl:template>
 
 
-  <!-- Generate the separate bodies of operations. The bodies are
+  <!-- Generate child subprogram specs -->
+  <xsl:template match="object/operation" mode="operation-spec">
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Generate the bodies of child operations. The bodies are
        compilable but generate Program_Error if called. -->
-  <xsl:template match="domain/object/operation" mode="operation-separate">
+  <xsl:template match="object/operation" mode="operation-body">
 
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>.<xsl:value-of select="../name"/>
-    <xsl:text>)&#10;</xsl:text>
-
-    <xsl:call-template name="subprogram-specification">
-       <xsl:with-param name="indent" select="''"/>
-    </xsl:call-template>
+    <xsl:call-template name="subprogram-specification"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
@@ -614,6 +586,10 @@
     </xsl:choose>
 
     <xsl:text>end </xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
 
@@ -638,19 +614,22 @@
       <xsl:value-of select="name"/>
     </xsl:variable>
 
-    <!-- Collections package -->
-    <xsl:text>with BC.Containers.Collections.Dynamic;&#10;</xsl:text>
+    <!-- Abstract Collections package -->
+    <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
-    <xsl:text>.Collections is&#10;</xsl:text>
-    <xsl:text>  package Abstract_Collections is new Abstract_Containers.Collections;&#10;</xsl:text>
-    <xsl:text>  package Concrete_Collections is new Abstract_Collections.Dynamic&#10;</xsl:text>
-    <xsl:text>     (Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-    <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-    <xsl:text>  subtype Collection is Concrete_Collections.Dynamic_Collection;&#10;</xsl:text>
-    <xsl:text>end </xsl:text>
+    <xsl:text>.Abstract_Collections is new Abstract_Containers.Collections;&#10;</xsl:text>
+
+    <!-- Collections package -->
+    <xsl:text>with BC.Containers.Collections.Dynamic;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>.Abstract_Collections;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections is new Abstract_Collections.Dynamic&#10;</xsl:text>
+    <xsl:text>   (Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+    <xsl:text>    Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
 
     <!-- Function to return a Collection of all the Instances -->
     <xsl:text>with </xsl:text>
@@ -703,10 +682,10 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
     <xsl:text>  procedure Copy_Instances is new Abstract_Containers.Copy&#10;</xsl:text>
-    <xsl:text>     (From =&gt; Map,&#10;</xsl:text>
+    <xsl:text>     (From =&gt; Maps.Map,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
-    <xsl:text>      Clear =&gt; Concrete_Collections.Clear,&#10;</xsl:text>
-    <xsl:text>      Add =&gt; Concrete_Collections.Append);&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
     <xsl:text>  Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:text>  Copy_Instances (The_Container, Result);&#10;</xsl:text>
@@ -729,11 +708,11 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
     <xsl:text>  procedure Filter is new Abstract_Containers.Filter&#10;</xsl:text>
-    <xsl:text>     (From =&gt; Map,&#10;</xsl:text>
+    <xsl:text>     (From =&gt; Maps.Map,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
-    <xsl:text>      Clear =&gt; Concrete_Collections.Clear,&#10;</xsl:text>
-    <xsl:text>      Add =&gt; Concrete_Collections.Append);&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
     <xsl:text>  Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:text>  Filter (The_Container, Result);&#10;</xsl:text>
@@ -748,17 +727,17 @@
   <!-- Called from object/operation to generate a subprogram specification.
        Ends without the closing ";" or " is". -->
   <xsl:template name="subprogram-specification">
-    <xsl:param name="indent" select="'  '"/>
     <xsl:choose>
 
       <!-- If there's a return attribute, it's a function. -->
       <xsl:when test="@return">
-        <xsl:value-of select="$indent"/>
         <xsl:text>function </xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$indent"/>
-        </xsl:call-template>
+        <xsl:call-template name="parameter-list"/>
         <xsl:text> return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
@@ -767,12 +746,13 @@
 
       <!-- If there's no return attribute, it's a procedure. -->
       <xsl:otherwise>
-        <xsl:value-of select="$indent"/>
         <xsl:text>procedure </xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$indent"/>
-        </xsl:call-template>
+        <xsl:call-template name="parameter-list"/>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -781,7 +761,6 @@
 
   <!-- Called from object/operation to generate a subprogram parameter list -->
   <xsl:template name="parameter-list">
-    <xsl:param name="indent" select="'  '"/>
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
@@ -791,18 +770,14 @@
     <xsl:if test="parameter or (../attributes and not(@class='yes'))">
 
       <xsl:text>&#10;</xsl:text>
-      <xsl:value-of select="$indent"/>
       <xsl:text>  (</xsl:text>
       <xsl:if test="../attribute and not(@class='yes')">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10;   </xsl:text>
-          <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:if>
-      <xsl:apply-templates mode="parameter">
-        <xsl:with-param name="indent" select="$indent"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates mode="parameter"/>
       <xsl:text>)</xsl:text>
 
     </xsl:if>
@@ -812,7 +787,6 @@
 
   <!-- Called from object/operation to generate a subprogram parameter -->
   <xsl:template match="operation/parameter" mode="parameter">
-    <xsl:param name="indent" select="'  '"/>
     <xsl:value-of select="name"/>
     <xsl:text> : </xsl:text>
     <xsl:choose>
@@ -832,7 +806,6 @@
     </xsl:if>
     <xsl:if test="position() &lt; last()">
       <xsl:text>;&#10;</xsl:text>
-      <xsl:value-of select="$indent"/>
       <xsl:text>   </xsl:text>
     </xsl:if>
   </xsl:template>
@@ -992,7 +965,6 @@
   <xsl:template mode="object-spec" match="*"/>
   <xsl:template mode="object-body" match="*"/>
   <xsl:template mode="operation-body" match="*"/>
-  <xsl:template mode="operation-separate" match="*"/>
   <xsl:template mode="operation-spec" match="*"/>
   <xsl:template mode="parameter" match="*"/>
 
