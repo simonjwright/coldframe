@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d70676a469d0 2002/05/14 20:07:50 simon $ -->
+<!-- $Id: ada-class.xsl,v 7c1b343b011b 2002/05/19 06:58:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -84,7 +84,14 @@
         <xsl:value-of select="$blank-line"/>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="@maxXXX = 1">
+            <xsl:text>function Find return Handle;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:value-of select="$blank-line"/>
 
         <xsl:value-of select="$I"/>
@@ -595,7 +602,6 @@
       
       <xsl:when test="@singleton and not(@public)">
         
-        <!-- XXX Uses a GNAT-specific attribute. -->
         <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -719,6 +725,8 @@
         <xsl:if test="not(@singleton)">
           <!-- We'll need to free memory. -->
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+          <!-- We'll need exception support. -->
+          <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>
 
         <!-- Any additions to the context for state machines. -->
@@ -954,13 +962,19 @@
 
         <!--
                 return Result;
+             exception
+                when BC.Duplicate => raise ColdFrame.Exceptions.Duplicate;
              end Create;
              -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>end Create;&#10;</xsl:text>
+        <xsl:text>exception&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>when BC.Duplicate =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+       <xsl:text>end Create;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
@@ -1003,11 +1017,17 @@
 
         <!--
                 return Result;
+             exception
+                when BC.Duplicate => raise ColdFrame.Exceptions.Duplicate;
              end Create;
              -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>exception&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>when BC.Duplicate =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end Create;&#10;</xsl:text>
 
@@ -1065,24 +1085,49 @@
   </xsl:template>
 
 
-  <!-- Called from domain/class to create the Find function body. -->
+  <!-- Called from domain/class to create the Find function body for
+       non-singletons. -->
   <xsl:template name="find-function-body">
-    <xsl:value-of select="$I"/>
-    <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>else&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>return null;&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>end if;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>end Find;&#10;</xsl:text>
+
+    <xsl:choose>
+      
+      <xsl:when test="@maxXXX = 1">
+        <!-- no parameter needed. -->
+      
+        <xsl:value-of select="$I"/>
+        <xsl:text>function Find return Handle is&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end Find;&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>else&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end Find;&#10;</xsl:text>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+      
   </xsl:template>
 
 
@@ -1095,6 +1140,12 @@
     <xsl:text>H : Handle;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>if not Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
     <xsl:call-template name="subtype-deletion">
@@ -1114,6 +1165,10 @@
     </xsl:if>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>exception&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>when BC.Not_Found =&gt; raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
   </xsl:template>
