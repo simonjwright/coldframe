@@ -13,21 +13,23 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_demo-real_time_image.adb,v $
---  $Revision: 0df4f00f0dcf $
---  $Date: 2003/03/06 20:53:03 $
+--  $Revision: 5a266b1efef2 $
+--  $Date: 2003/03/27 20:50:51 $
 --  $Author: simon $
 
 --  Generates an XML image (for serialization output) for the Real_Time type.
+
+with Ada.Unchecked_Conversion;
 
 separate (Serialization_Demo)
 function Real_Time_Image
   (V : Real_Time;
    N : String)
   return String is
-   use type Ada.Real_Time.Time;
-   use type Ada.Real_Time.Time_Span;
-   Img : constant String :=
-     Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
+   function To_Duration is new Ada.Unchecked_Conversion (Ada.Real_Time.Time,
+                                                         Duration);
+   --  OK for GNAT
+   Img : constant String := Duration'Image (To_Duration (V));
 begin
    if N'Length > 0 then
       return "<field name=""" & N & """>" & Img & "</field>";
