@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v f6f2b02a3db4 2002/04/12 18:55:39 simon $ -->
+<!-- $Id: ada-operation.xsl,v 75cf66479544 2002/04/17 18:30:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -621,7 +621,7 @@
       
       <xsl:value-of select="$IIIC"/>
       <xsl:text>(This =&gt; </xsl:text>
-      <xsl:value-of select="."/>
+      <xsl:value-of select="$child"/>
       <xsl:text>.Handle (This.</xsl:text>
       <xsl:value-of select="$rel/name"/>
       <xsl:text>_Current_Child.</xsl:text>
@@ -634,7 +634,31 @@
         <xsl:text> </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> =&gt; </xsl:text>
-        <xsl:value-of select="name"/>
+
+        <xsl:choose>
+
+          <!-- Test for covariance.
+               If the parameter is of the type of the class in which the
+               operation is defined, convert to the child's type.
+               XXX this may not always be the right thing. -->
+
+          <xsl:when test="type=$op/../name">
+            <xsl:value-of select="$child"/>
+            <xsl:text>.Handle (</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$rel/name"/>
+            <xsl:text>_Current_Child.</xsl:text>
+            <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
+            <xsl:text>)</xsl:text>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:value-of select="name"/>            
+          </xsl:otherwise>
+
+        </xsl:choose>
+
       </xsl:for-each>
       
       <xsl:text>);&#10;</xsl:text>
@@ -720,7 +744,29 @@
       <xsl:value-of select="$IC"/>
       <xsl:value-of select="name"/>
       <xsl:text> =&gt; </xsl:text>
-      <xsl:value-of select="name"/>
+
+        <xsl:choose>
+
+          <!-- Test for covariance.
+               If the parameter is of the type of the class in which the
+               operation is defined, convert to the parent's type.
+               XXX this may not always be the right thing. -->
+
+          <xsl:when test="type=$op/../name">
+            <xsl:value-of select="$rel/parent"/>
+            <xsl:text>.Handle (Get_</xsl:text>
+            <xsl:value-of select="$rel/name"/>
+            <xsl:text>_Parent (</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>))</xsl:text>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:value-of select="name"/>            
+          </xsl:otherwise>
+
+        </xsl:choose>
+
     </xsl:for-each>
     
     <xsl:text>);&#10;</xsl:text>
