@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 56844fb8f5c6 2003/08/13 19:45:37 simon $ -->
+<!-- $Id: bugs.html,v 49d703b61d3d 2003/08/15 20:12:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -163,13 +163,13 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
-<!-- next: 0188 -->
+<!-- next: 0189 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>13.viii.03</h3>
+<h3>15.viii.03</h3>
 
 <dl>
 
@@ -178,6 +178,10 @@ used instead of <tt>Natural_Duration</tt>?
 <dd>If a class with an <i>Autonumber</i> identifier has a maximum
 number of instances of 1, an unused procedure <tt>Set_Identifier</tt>
 is generated.
+
+<dt>0188 (raised 15.viii.03)
+
+<dd>Doesn't know how to hash Positive (or Natural?).
 
 </dl>
 
