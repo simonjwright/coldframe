@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-type.xsl,v d501bed0217e 2004/09/09 13:31:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -168,11 +168,16 @@
     <xsl:variable
       name="next"
       select="type[not($processed/name=name)
-              and not(
-              attribute/type[not($processed/name=.)]
-              or array/type[not($processed/name=.)]
-              or array/index[not($processed/name=.)]
-              )]"/>
+                   and not(
+                    attribute[not($processed/name=type)]
+                    or array[not($processed/name=type)]
+                    or array[not($processed/name=index)]
+                    or (@protected and (
+                         operation
+                          [not(@access)]/parameter[not($processed/name=type)]
+                         or operation
+                          [not(@access)]/result[not($processed/name=.)]))
+                   )]"/>
 
     <xsl:choose>
 

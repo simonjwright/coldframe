@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 2c83a88355ed 2004/05/21 09:09:45 simon $ -->
+<!-- $Id: releases.html-proto,v d501bed0217e 2004/09/09 13:31:33 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -35,6 +35,10 @@ pattern.
 <p>Occasionally, as part of detecting the error of creating a Timer on
 the stack, tearing down a Timer would falsely raise a
 <tt>Program_Error</tt>. Now, an error is logged.
+
+
+<p>Operation parameters and result types weren't accounted for while
+working out the order in which to declare types.
 
 
 <p><dt>20040319
