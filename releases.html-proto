@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6bddce27a21c 2003/10/31 06:39:47 simon $ -->
+<!-- $Id: releases.html-proto,v 6e016c9fc7d2 2003/11/02 19:38:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -27,6 +27,10 @@ mangling the output; flush the output after each message).
 
 
 <p>Serializable output used the wrong field names.
+
+
+<p>Performance improvements in class <tt>Filter_Function</tt>,
+<tt>Selection_Function</tt>.
 
 
 <p><dt>20030930
