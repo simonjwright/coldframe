@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 7e186a1c4ec2 2002/01/24 20:16:33 simon $ -->
+<!-- $Id: generate-ada.xsl,v a41d8eaf800b 2002/01/27 11:12:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,6 +33,7 @@
   <xsl:import href="ada-class.xsl"/>
   <xsl:import href="ada-collection.xsl"/>
   <xsl:import href="ada-operation.xsl"/>
+  <xsl:import href="ada-state.xsl"/>
   <xsl:import href="ada-teardown.xsl"/>
   <xsl:import href="ada-type.xsl"/>
   <xsl:import href="ada-utilities.xsl"/>
