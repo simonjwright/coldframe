@@ -53,6 +53,7 @@ pdf:: coldframe-architecture.pdf
 
 # preserve intermediate files
 .PRECIOUS:: Problem_Reporting.norm Problem_Reporting.ada
+.PRECIOUS:: Tewa.norm  Tewa.ada
 .PRECIOUS:: Weapon_Assignment.norm  Weapon_Assignment.ada
 
 ############################
