@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v 3a77d1a412c6 2002/04/22 05:00:26 simon $ -->
+<!-- $Id: generalizations.html,v cfa778febf51 2002/06/08 05:43:50 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -7,11 +7,91 @@
 
 <h2>Motivation</h2>
 
+<p><i>Stuff about static & dynamic classification</i>
+
 <h2>Modelling</h2>
 
 <h2>Translation</h2>
 
+<h3>Basic</h3>
+
+<h4>Single inheritance</h4>
+
+<p>In the parent class, an inheritance relationship <i>G</i> is mapped onto
+
+<ul>
+
+<li>an enumeration <tt><i>G</i>_Child_Class</tt>, whose literals are
+the names of the child classes with <tt>_T</tt> appended plus a final
+<tt>Null_T</tt>,
+
+<li>a discriminated record <tt><i>G</i>_Child</tt>, with discriminant
+of type <tt><i>G</i>_Child_Class</tt> defaulted to <tt>Null_T</tt>,
+each branch selecting a <tt>ColdFrame.Instances.Handle</tt> of the
+appropriate type,
+
+<li>Get and Set accessor operations (<tt>Get_<i>G</i>_Child</tt>,
+<tt>Set_<i>G</i>_Child</tt>).
+
+</ul>
+
+<p>In a child class, an inheritance relationship <i>G</i> is mapped onto
+
+<ul>
+
+<li>an identifying attribute named <tt><i>G</i>_Parent</tt> of type
+<tt>ColdFrame.Instances.Handle</tt>,
+
+<li>a Get accessor <tt>Get_<i>G</i>_Parent</tt> (there's no Set,
+because this is an identifying attribute).
+
+</ul>
+
+<h4>Multiple inheritance</h4>
+
+<p>There's no difference between multiple and single inheritance from
+the point of view of a parent (ColdFrame disallows partitioned
+inheritance trees, which in any case aren't really related to
+<em>multiple</em> inheritance).
+
+<p>For children, the implementation for single inheritance is repeated
+for each parent. Note particularly that this means you get an
+identifier with one identifying attribute for each parent.
+
+<h3>Extended</h3>
+
+<p>There's additional support, particularly for dynamic classification
+(subtype migration). It's in child packages
+<tt><i>Domain.Class</i>.Inheritance</tt>, one for each class involved
+in inheritance relationships.
+
+<p>There are two motivations for the use of a child package:
+
+<ul>
+
+<li>you don't need to add to your executable's size unless you use the
+feature,
+
+<li>it's possible to use <tt><i>Class</i>.Handle</tt> rather than
+<tt>ColdFrame.Instances.Handle</tt> - at any rate for "finds".
+
+</ul>
+
 <h2>Use</h2>
+
+<p>The fact that the relationships are managed using
+<tt>ColdFrame.Instances.Handle</tt> means that you need to do view
+conversions rather more often than is quite friendly.
+
+<pre>
+   Child_H := Child.Create ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
+</pre>
+
+<p>If you're doing this a lot you may find a type renaming convenient:
+
+<pre>
+   subtype CIH is ColdFrame.Instances.Handle;
+</pre>
 
 <p><hr>
 <i>
