@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 02ba89e8b0c5 2004/04/26 14:27:47 simon $ -->
+<!-- $Id: ada-class.xsl,v 53bb78281f4f 2004/05/05 20:37:44 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1812,7 +1812,8 @@
       <xsl:choose>
 
         <xsl:when test="$report
-                        and (@abstract or @return or @class or parameter)">
+                        and (../@singleton 
+                             or @abstract or @return or @class or parameter)">
           <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:text>Error: illegal finalize operation </xsl:text>
