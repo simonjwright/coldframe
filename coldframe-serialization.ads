@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.ads,v $
---  $Revision: a99727fe9421 $
---  $Date: 2003/02/16 19:32:01 $
+--  $Revision: 4ef2e51b1e89 $
+--  $Date: 2003/03/04 22:05:08 $
 --  $Author: simon $
 
 package ColdFrame.Serialization is
@@ -29,12 +29,17 @@ package ColdFrame.Serialization is
    --  This package provides off-the-shelf support for {serializable}
    --  <<type>> classes.
    --
-   --  The Ada translation of <<type, serializable>> Foo (which must
-   --  be a record type, ie have attributes) is
+   --  The Ada translation of <<type, serializable>> Foo is, firstly,
+   --  a normal declaration of the type in the Domain package. Then in
+   --  the Domain.Serializable package, there is
    --
    --     type Foo is new ColdFrame.Project.Serialization.Base with record
-   --        ..
+   --        Payload : Domain.Foo;
    --     end record;
+   --
+   --     function Image (S : Foo) return String;
+   --
+   --  where Image generates an XML representation of Foo.
 
    type Base is abstract tagged private;
 
