@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-collection.xsl,v 24c31bb81f5e 2002/04/16 18:42:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -108,7 +108,7 @@
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>is new Abstract_Collections.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text>(Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>(Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -176,7 +176,7 @@
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text> Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
