@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: generate-html.xsl,v 3283535a01a5 2003/09/28 16:15:13 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -331,8 +331,8 @@
             <xsl:choose>
               <xsl:when test="action">
                 <xsl:for-each select="action">
-                  <a href="#{../../../name}.{name}">
-                    <xsl:value-of select="name"/>
+                  <a href="#{../../../name}.{.}">
+                    <xsl:value-of select="."/>
                   </a>
                   <xsl:if test="position() &lt; last()">
                     <br/>
@@ -359,6 +359,16 @@
                   <xsl:value-of
                     select="../transition[source=$st and event=current()]
                             /target"/>
+                  <xsl:variable
+                    name="action"
+                    select="../transition[source=$st and event=current()]
+                            /action"/>
+                  <xsl:if test="$action">
+                    <xsl:text>/</xsl:text>
+                    <a href="#{../../name}.{$action}">
+                      <xsl:value-of select="$action"/>
+                    </a>
+                  </xsl:if>
                 </xsl:when>
                 <xsl:otherwise>
                   <i>can't happen</i>
@@ -739,13 +749,13 @@
         <!-- a standard type -->
         <xsl:value-of select="$type"/>
       </xsl:when>
-      
+
       <xsl:when test="/domain/type[name=$type]
                       or /domain/class[name=$type]">
         <!-- a class or a type -->
-        <a href="#{$type}"><xsl:value-of select="$type"/></a>            
+        <a href="#{$type}"><xsl:value-of select="$type"/></a>
       </xsl:when>
-      
+
       <xsl:otherwise>
         <xsl:value-of select="$type"/>
       </xsl:otherwise>
