@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 916ed44d6e81 2003/06/14 14:27:23 simon $
+'$Id: ddf.ebs,v b3078a76a3c3 2003/06/29 16:52:48 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -257,8 +257,9 @@ Sub DumpClass (o As Class)
 	  	Print #1, "<class stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
 	Else
 		Print #1, "<class>"
-	End If	
+	End If
 	Print #1, "<name>" & o.Name & "</name>"
+	Print #1, "<kind>" & o.ClassKind & "</kind>"
 	If o.Abstract then
 		Print #1, "<abstract/>"
 	End If
@@ -266,7 +267,7 @@ Sub DumpClass (o As Class)
 	Print #1, "<concurrency>" & o.Concurrency & "</concurrency>"
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	'fiddling with generics
-	DumpClassParameters (o)
+'	DumpClassParameters (o)
 	DumpAttributes (o)
 	DumpOperations (o)
 	DumpTypedEvents (o)
