@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v af1f91f97d0f 2001/10/10 04:49:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v 8b631934b739 2001/11/25 10:19:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -113,20 +113,23 @@
     </xsl:call-template>
     <xsl:call-template name="domain-types"/>
 
-    <!-- .. the Initialize procedure .. -->
-    <xsl:call-template name="progress-message">
-      <xsl:with-param name="m" select="'.. the Initialize procedure ..'"/>
-    </xsl:call-template>
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Initialize;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
 
+    <!-- .. the Initialize procedure .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Initialize procedure ..'"/>
+    </xsl:call-template>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Initialize;&#10;</xsl:text>
+
     <!-- The top-level package body. -->
+    <!--
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. the top-level package body ..'"/>
     </xsl:call-template>
@@ -139,13 +142,13 @@
     <xsl:value-of select="$blank-line"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
+    <xsl:text>;&#10;</xsl:text> -->
 
-    <!-- The separate Initialize procedure body. -->
+    <!-- The domain Initialize procedure body. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
         name="m"
-        select="'.. the separate Initialize procedure body ..'"/>
+        select="'.. the domain Initialize procedure body ..'"/>
     </xsl:call-template>
 
     <xsl:variable
@@ -169,10 +172,9 @@
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:text>separate (</xsl:text>
+    <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:text>procedure Initialize is&#10;</xsl:text>
+    <xsl:text>.Initialize is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
@@ -196,7 +198,9 @@
 
     </xsl:choose>
 
-    <xsl:text>end Initialize;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Initialize;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
     <xsl:call-template name="progress-message">
