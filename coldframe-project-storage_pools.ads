@@ -15,12 +15,12 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-storage_pools.ads,v $
---  $Revision: 0ae21939a080 $
---  $Date: 2003/07/24 19:43:49 $
+--  $Revision: 204f7648b0fb $
+--  $Date: 2003/07/24 21:03:43 $
 --  $Author: simon $
 
-with ColdFrame.Project.Bounded_Storage_Pools;
-with ColdFrame.Project.Unbounded_Storage_Pools;
+with ColdFrame.Bounded_Storage_Pools;
+with ColdFrame.Unbounded_Storage_Pools;
 with System.Storage_Pools;
 
 package ColdFrame.Project.Storage_Pools is
@@ -28,10 +28,10 @@ package ColdFrame.Project.Storage_Pools is
    subtype Bounded_Pool
       is Bounded_Storage_Pools.Bounded_Pool;
 
-   Unbounded_Pool_Object : Unbounded_Storage_Pools.Unbounded_Pool;
+   Unbounded_Pool : Unbounded_Storage_Pools.Unbounded_Pool;
 
    Pool : System.Storage_Pools.Root_Storage_Pool'Class
      renames System.Storage_Pools.Root_Storage_Pool'Class
-                (Unbounded_Pool_Object);
+                (Unbounded_Pool);
 
 end ColdFrame.Project.Storage_Pools;
