@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 27e067a835e9 2001/07/13 18:44:32 simon $ -->
+<!-- $Id: generate-ada.xsl,v d60257408a94 2001/08/08 18:01:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,14 +40,20 @@
 
   <xsl:output method="text"/>
 
+  <xsl:param name="coldframe-version"/>
+
   <xsl:param name="generate-accessors"/>
 
   <!-- Generate the top-level package for the domain, then all the
        others. -->
   <xsl:template match="domain">
 
+    <!-- Identification info -->
+    <xsl:message>Generating identification info ..</xsl:message>
+    <xsl:call-template name="identification-info"/>
+    
     <!-- Any context clause needed for top-level package .. -->
-    <xsl:message>Generating domain context ..</xsl:message>
+    <xsl:message>.. domain context ..</xsl:message>
     <xsl:apply-templates mode="domain-context"/>
 
     <!-- .. the top-level package spec .. -->
@@ -173,6 +179,39 @@
 
     <xsl:message>.. done.</xsl:message>
 
+  </xsl:template>
+
+
+  <!-- Called at domain to generate identification information. -->
+  <xsl:template name="identification-info">
+    <xsl:text>-- Domain revision: </xsl:text>
+    <xsl:choose>
+      <xsl:when test="revision">
+        <xsl:value-of select="revision"/>        
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>unspecified</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:text>-- Extraction date: </xsl:text>
+    <xsl:value-of select="date/day"/>
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="date/month"/>
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="date/year"/>
+    <xsl:text>, </xsl:text>
+    <xsl:value-of select="date/time"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:text>-- Extractor: </xsl:text>
+    <xsl:value-of select="extractor"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:text>-- Normalizer: </xsl:text>
+    <xsl:value-of select="normalizer"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:text>-- Generator: </xsl:text>
+    <xsl:value-of select="$coldframe-version"/>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
 
