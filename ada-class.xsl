@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 24c31bb81f5e 2002/04/16 18:42:26 simon $ -->
+<!-- $Id: ada-class.xsl,v d70676a469d0 2002/05/14 20:07:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -848,7 +848,7 @@
     <xsl:value-of select="name"/>
     <xsl:text> is access </xsl:text>
     <xsl:choose>
-      <xsl:when test="@result">
+      <xsl:when test="@return">
         <xsl:text>function</xsl:text>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$I"/>
