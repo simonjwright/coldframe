@@ -1,4 +1,4 @@
---  $Id: Options.gpr,v 88ea099206aa 2003/01/22 20:07:22 simon $
+--  $Id: Options.gpr,v ef6760f91933 2003/03/16 16:35:45 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -32,7 +32,7 @@ project Options is
   --  GCC configuration options
   package Compiler is
 
-     for Default_Switches ("ada") use ("-gnatqQafy",
+     for Default_Switches ("ada") use ("-gnatqQafoy",
                                        "-gnatwaL",
                                        "-O2");
 
