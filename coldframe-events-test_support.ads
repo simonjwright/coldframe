@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test_support.ads,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: adb4147b26e2 $
+--  $Date: 2002/02/06 20:47:58 $
 --  $Author: simon $
 
 with ColdFrame.States.Wall_Timer.Debug;
-with ColdFrame.States.Real_Timer;
+with ColdFrame.States.Real_Timer.Debug;
 
 package ColdFrame.States.Test_Support is
 
@@ -40,7 +40,7 @@ package ColdFrame.States.Test_Support is
    Quiet_Wall_Dispatcher : ColdFrame.States.Event_Queue_P
      := new ColdFrame.States.Wall_Timer.Event_Queue;
    Noisy_Dispatcher : ColdFrame.States.Event_Queue_P
-     := new ColdFrame.States.Wall_Timer.Debug.Event_Queue;
+     := new ColdFrame.States.Real_Timer.Debug.Event_Queue;
 
    T1, T2 : States.Timer;
 
