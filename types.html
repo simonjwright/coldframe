@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 993021b49d21 2003/06/15 11:25:54 simon $ -->
+<!-- $Id: types.html,v c3c232c1cb80 2003/09/13 16:29:57 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -100,15 +100,21 @@ from the attribute names with <tt>_T</tt> appended.
 <li><tt>extends : <i>external-type</i></tt> specifies that the
 given type extends (inherits) the specified  external reference.
 
+<li><tt><a name="field-image">field-image</a> :
+<i>image-operation</i></tt> specifies the operation to be used to
+print a record field containing a value of the type when it has been
+serialized as one or more XML elements. See
+<a href="serialization.html">separate information</a>.
+
 <li><tt>hash : <i>style</i></tt> specifies how a type (presumably
 <tt><i>imported</i></tt> or <tt><i>renames</i></tt>) is to be
 hashed. Currently the only supported <i>style</i> is
 <tt>discrete</tt>, which will work for imported enumerations or
 integer ranges but not for private or access types.
 
-<li><tt>image : <i>image-operation</i></tt> specifies the operation to
-be used to print values of the type when it has been serialized. See
-<a href="serialization.html">separate information</a>.
+<li><tt>image : <i>image-operation</i></tt> is an alternate for
+<a href="#field-image"><tt>field-image</tt></a>, retained for
+compatibility..
 
 <li><tt>imported : <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
@@ -127,6 +133,10 @@ the type to an external medium. See
 <a href="serialization.html">separate information</a>.
 
 <li><tt>string : max <i>max-length</i></tt>
+
+<li><tt>type-image : <i>image-operation</i></tt> specifies the
+operation to be used to print values of the type when it has been
+serialized. See <a href="serialization.html">separate information</a>.
 
 </ul>
 
