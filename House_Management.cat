@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "House Management"
@@ -12,12 +12,12 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|[[ revision : $Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $ ]]
+|[[ revision : $Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $ ]]
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
 	    quid       	"3E1B0DF501D9"
-	    supplier   	"Logical View::Digital IO"
+	    supplier   	"Logical View::ColdFrame Examples::Digital IO"
 	    quidu      	"3DFCF76B0011"))
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -71,7 +71,8 @@
 		    quid       	"3DFCFDA40030"
 		    documentation 	"Each Lamp is uniquely identified by its name. The name corresponds to the geographical location of the lamp."
 		    stereotype 	"id"
-		    type       	"Lamp Name")
+		    type       	"Lamp Name"
+		    quidu      	"3DFCFD180255")
 		(object ClassAttribute "timeout"
 		    quid       	"3DFCFF9F00A7"
 		    documentation 	"This ColdFrame Timer is used to turn off the Lamp at the end of its activation period."
@@ -117,15 +118,6 @@
 			documentation 	"In this state, the Lamp is lit and the Timer is set."
 			transitions 	(list transition_list
 			    (object State_Transition
-				quid       	"3DFCFEEC0009"
-				label      	""
-				supplier   	"restarted"
-				quidu      	"3DFCFEC30213"
-				Event      	(object Event "button push"
-				    quid       	"3DFCFEEC000A")
-				sendEvent  	(object sendEvent
-				    quid       	"3DFCFEEC000C"))
-			    (object State_Transition
 				quid       	"3DFCFEF900E4"
 				label      	""
 				supplier   	"idle"
@@ -133,7 +125,18 @@
 				Event      	(object Event "timeout"
 				    quid       	"3DFCFEF900E5")
 				sendEvent  	(object sendEvent
-				    quid       	"3DFCFEF900E7")))
+				    quid       	"3DFCFEF900E7"))
+			    (object State_Transition
+				quid       	"3F510B800355"
+				label      	""
+				supplier   	"lit"
+				quidu      	"3DFCFEBB001D"
+				Event      	(object Event "button push"
+				    quid       	"3F510B800356")
+				action     	(object action "clear timeout"
+				    quid       	"3F510B800357")
+				sendEvent  	(object sendEvent
+				    quid       	"3F510B800358")))
 			actions    	(list action_list
 			    (object action "turn on"
 				quid       	"3DFCFF3D036D"
@@ -143,27 +146,9 @@
 				quid       	"3DFCFF5203D1"
 				ActionTime 	(object ActionTime
 				    when       	"Entry")))
-			type       	"Normal")
-		    (object State "restarted"
-			quid       	"3DFCFEC30213"
-			documentation 	
-|This is an ephemeral state, which clears the instance Timeout and drops through to the Lit state, which will turn the Lamp on and reset the Timeout.
-|It's assumed that  it's acceptable to turn the Lamp on even if it is on already.
-			
-			transitions 	(list transition_list
-			    (object State_Transition
-				quid       	"3DFCFF03023D"
-				supplier   	"lit"
-				quidu      	"3DFCFEBB001D"
-				sendEvent  	(object sendEvent
-				    quid       	"3DFCFF030240")))
-			actions    	(list action_list
-			    (object action "clear timeout"
-				quid       	"3DFCFF680030"
-				ActionTime 	(object ActionTime
-				    when       	"Entry")))
 			type       	"Normal"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object State_Diagram "Lifecycle"
 			quid       	"3DFCFEA5006B"
@@ -176,6 +161,15 @@
 			items      	(list diagram_item_list
 			    (object StateView "StartState" "$UNNAMED$0" @1
 				location   	(384, 384)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@1
 				    location   	(426, 354)
@@ -184,11 +178,19 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3DFCFEAC01F2"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "idle" @2
 				location   	(752, 688)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
 				    location   	(752, 672)
@@ -205,6 +207,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@2
 				    location   	(648, 710)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -217,6 +228,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "lit" @3
 				location   	(1376, 688)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
 				    location   	(1376, 650)
@@ -233,6 +253,15 @@
 				compartment 	(object Compartment
 				    Parent_View 	@3
 				    location   	(1234, 688)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -244,35 +273,7 @@
 				width      	398
 				height     	179
 				autoResize 	TRUE)
-			    (object StateView "Normal" "restarted" @4
-				location   	(1968, 672)
-				label      	(object ItemLabel
-				    Parent_View 	@4
-				    location   	(1968, 656)
-				    fill_color 	13434879
-				    anchor_loc 	1
-				    nlines     	2
-				    max_width  	334
-				    justify    	0
-				    label      	"restarted")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3DFCFEC30213"
-				compartment 	(object Compartment
-				    Parent_View 	@4
-				    location   	(1810, 694)
-				    icon_style 	"Label"
-				    fill_color 	13434879
-				    anchor     	2
-				    nlines     	1
-				    max_width  	332
-				    compartmentItems 	(list Compartment
-					"entry/ clear timeout"))
-				width      	430
-				height     	134
-				autoResize 	TRUE)
-			    (object TransView "" @5
+			    (object TransView "" @4
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3DFCFED10028"
@@ -280,10 +281,28 @@
 				supplier   	@2
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @6
-				label      	(object SegLabel @7
-				    Parent_View 	@6
+			    (object TransView "" @5
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @6
+				    Parent_View 	@5
 				    location   	(1003, 370)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	224
@@ -303,33 +322,28 @@
 				    (1270, 598))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @8
-				label      	(object SegLabel @9
-				    Parent_View 	@8
-				    location   	(1684, 385)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	224
-				    justify    	0
-				    label      	"button push"
-				    pctDist    	0.500000
-				    height     	45
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3DFCFEEC0009"
-				client     	@3
-				supplier   	@4
-				vertices   	(list Points
-				    (1455, 598)
-				    (1633, 400)
-				    (1885, 605))
-				line_style 	0
-				x_offset   	FALSE)
-			    (object TransView "" @10
-				label      	(object SegLabel @11
-				    Parent_View 	@10
+			    (object TransView "" @7
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @8
+				    Parent_View 	@7
 				    location   	(1017, 957)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	130
@@ -349,23 +363,57 @@
 				    (835, 755))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @12
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3DFCFF03023D"
-				client     	@4
-				supplier   	@3
-				vertices   	(list Points
-				    (1891, 738)
-				    (1650, 950)
-				    (1469, 776))
-				line_style 	0
-				x_offset   	FALSE)
-			    (object Label @13
+			    (object Label @9
 				location   	(150, 1380)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $"))))))
+				label      	"$Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $")
+			    (object SelfTransView "" @10
+				location   	(1376, 449)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @11
+				    Parent_View 	@10
+				    location   	(1520, 425)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	460
+				    justify    	0
+				    label      	"button push / clear timeout"
+				    pctDist    	1.776410
+				    height     	172
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F510B800355"
+				client     	@3
+				supplier   	@3
+				line_style 	4))))))
 	(object Class "Button"
 	    quid       	"3DFCFC250129"
 	    documentation 	"There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated."
@@ -376,7 +424,9 @@
 		    stereotype 	"class"
 		    parameters 	(list Parameters
 			(object Parameter "s"
-			    type       	"Signal State"))
+			    quid       	"3F510B6400FD"
+			    type       	"Signal State"
+			    quidu      	"3DFCFE60018E"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
@@ -391,7 +441,8 @@
 		    quid       	"3DFCFD8A026D"
 		    documentation 	"Each Button is uniquely identified by its name. The name corresponds to the geographical location of the button."
 		    stereotype 	"id"
-		    type       	"Button Name")))
+		    type       	"Button Name"
+		    quidu      	"3DFCFD3C0008")))
 	(object Class "Button to Lamp"
 	    quid       	"3DFCFC830160"
 	    documentation 	
@@ -441,18 +492,18 @@
 		(object Role "controls"
 		    quid       	"3DFCFC370338"
 		    label      	"controls"
-		    supplier   	"Logical View::House Management::Lamp"
+		    supplier   	"Logical View::ColdFrame Examples::House Management::Lamp"
 		    quidu      	"3DFCFC1401ED"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE)
 		(object Role "is controlled by"
 		    quid       	"3DFCFC370342"
 		    label      	"is controlled by"
-		    supplier   	"Logical View::House Management::Button"
+		    supplier   	"Logical View::ColdFrame Examples::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
-	    AssociationClass 	"Logical View::House Management::Button to Lamp"))
+	    AssociationClass 	"Logical View::ColdFrame Examples::House Management::Button to Lamp"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCFC0C0232"
@@ -463,14 +514,23 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::House Management::Lamp" @14
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(768, 1136)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@14
+			Parent_View 	@12
 			location   	(509, 905)
 			fill_color 	13434879
 			nlines     	1
@@ -482,25 +542,43 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCFC1401ED"
 		    compartment 	(object Compartment
-			Parent_View 	@14
+			Parent_View 	@12
 			location   	(509, 961)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	522)
+			max_width  	515)
 		    width      	536
 		    height     	484
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Button" @15
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(765, 390)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@15
+			Parent_View 	@13
 			location   	(430, 272)
 			fill_color 	13434879
 			nlines     	1
@@ -512,24 +590,49 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCFC250129"
 		    compartment 	(object Compartment
-			Parent_View 	@15
+			Parent_View 	@13
 			location   	(430, 328)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	675)
+			max_width  	668)
 		    width      	688
 		    height     	258
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "a1" @16
+		(object AssociationViewNew "a1" @14
 		    location   	(765, 706)
-		    label      	(object SegLabel @17
-			Parent_View 	@16
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @15
+			Parent_View 	@14
 			location   	(765, 647)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -543,12 +646,30 @@
 		    line_color 	3342489
 		    quidu      	"3DFCFC3603D7"
 		    roleview_list 	(list RoleViews
-			(object RoleView "controls" @18
-			    Parent_View 	@16
+			(object RoleView "controls" @16
+			    Parent_View 	@14
 			    location   	(-3, 322)
-			    label      	(object SegLabel @19
-				Parent_View 	@18
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @17
+				Parent_View 	@16
 				location   	(885, 867)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -561,27 +682,54 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3DFCFC370338"
-			    client     	@16
-			    supplier   	@14
+			    client     	@14
+			    supplier   	@12
 			    line_style 	0
-			    label      	(object SegLabel @20
-				Parent_View 	@18
+			    label      	(object SegLabel @18
+				Parent_View 	@16
 				location   	(709, 861)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
-				label      	"1..*"
+				label      	"1..n"
 				pctDist    	0.827451
 				height     	58
 				orientation 	1))
-			(object RoleView "is controlled by" @21
-			    Parent_View 	@16
+			(object RoleView "is controlled by" @19
+			    Parent_View 	@14
 			    location   	(-3, 322)
-			    label      	(object SegLabel @22
-				Parent_View 	@21
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @20
+				Parent_View 	@19
 				location   	(931, 544)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -594,29 +742,47 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3DFCFC370342"
-			    client     	@16
-			    supplier   	@15
+			    client     	@14
+			    supplier   	@13
 			    line_style 	0
-			    label      	(object SegLabel @23
-				Parent_View 	@21
+			    label      	(object SegLabel @21
+				Parent_View 	@19
 				location   	(708, 539)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
-				label      	"1..*"
+				label      	"1..n"
 				pctDist    	0.897638
 				height     	58
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @24
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button to Lamp" @22
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(352, 704)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@24
+			Parent_View 	@22
 			location   	(198, 658)
 			fill_color 	13434879
 			nlines     	1
@@ -631,29 +797,32 @@
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssocAttachView "" @25
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    client     	@24
-		    supplier   	@16
-		    line_style 	0)
-		(object ClassView "Class" "Logical View::House Management::Lamp Name" @26
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp Name" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 592)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@26
-			location   	(2034, 566)
+			Parent_View 	@23
+			location   	(2034, 565)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	252
 			justify    	0
 			label      	"Lamp Name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@26
-			location   	(2034, 521)
+			Parent_View 	@23
+			location   	(2034, 520)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -665,26 +834,35 @@
 		    fill_color 	16777088
 		    quidu      	"3DFCFD180255"
 		    width      	270
-		    height     	164
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Button Name" @27
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button Name" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 416)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@27
-			location   	(2029, 390)
+			Parent_View 	@24
+			location   	(2029, 389)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	262
 			justify    	0
 			label      	"Button Name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@27
-			location   	(2029, 345)
+			Parent_View 	@24
+			location   	(2029, 344)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -696,49 +874,76 @@
 		    fill_color 	16777088
 		    quidu      	"3DFCFD3C0008"
 		    width      	280
-		    height     	164
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Signal State" @28
+		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Signal State" @25
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 768)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@28
-			location   	(2033, 742)
+			Parent_View 	@25
+			location   	(2036, 741)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	254
+			max_width  	248
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@28
-			location   	(2033, 697)
+			Parent_View 	@25
+			location   	(2036, 696)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	254
+			max_width  	248
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFE60018E"
-		    width      	272
-		    height     	164
+		    width      	266
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object Label @29
+		(object Label @26
 		    location   	(144, 1856)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $")
-		(object NoteView @30
+		    label      	"$Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $")
+		(object NoteView @27
 		    location   	(1635, 1140)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@30
+			Parent_View 	@27
 			location   	(1385, 1076)
 			fill_color 	13434879
 			nlines     	2
@@ -749,9 +954,15 @@
 		    width      	525
 		    height     	140
 		    quidu      	"3DFCFEA5006B")
-		(object AttachView "" @31
+		(object AttachView "" @28
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@30
+		    client     	@27
+		    supplier   	@12
+		    line_style 	0)
+		(object AssocAttachView "" @29
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@22
 		    supplier   	@14
 		    line_style 	0)))))
