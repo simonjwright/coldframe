@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 355ad804a5db 2003/08/12 20:29:47 simon $
+# $Id: normalize-rose.tcl,v 8c5375a1a65d 2003/08/28 20:11:56 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2070,13 +2070,28 @@ itcl::class Inheritance {
     }
 }
 
-itcl::class Action {
+itcl::class EntryAction {
     inherit Element
 
     method -generate {domain} {
 	puts "<action>"
 	putElement name $name
 	puts "</action>"
+    }
+
+}
+
+itcl::class TransitionAction {
+    inherit Element
+
+    method -complete {} {
+	[stack -top] -action $this
+    }
+
+    method -generate {domain} {
+	if {[string length $name] > 0} {
+	    putElement action $name
+	}
     }
 
 }
@@ -2195,6 +2210,9 @@ itcl::class Transition {
     variable event
     method -event {e} {set event $e}
 
+    variable action
+    method -action {a} {set action $a}
+
     variable ignore 0
     method -ignore {dummy} {set ignore 1}
 
@@ -2226,6 +2244,7 @@ itcl::class Transition {
 	if {[string length [$event -getName]] > 0} {
 	    putElement event [$event -getName]
 	}
+	$action -generate $domain
 	putElement source $source
 	putElement target $target
 	$this -generateDocumentation
@@ -2727,7 +2746,6 @@ proc elementFactory {xmlTag} {
     # XXX should this perhaps be an operation of Domain?
     switch $xmlTag {
 	abstract          {return [Abstract #auto]}
-	action            {return [Action #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
@@ -2746,6 +2764,7 @@ proc elementFactory {xmlTag} {
 	documentation     {return [Documentation #auto]}
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
+	entryaction       {return [EntryAction #auto]}
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
 	events            {return [Events #auto]}
@@ -2778,6 +2797,7 @@ proc elementFactory {xmlTag} {
 	target            {return [Target #auto]}
 	time              {return [Time #auto]}
 	transition        {return [Transition #auto]}
+	transitionaction  {return [TransitionAction #auto]}
 	transitions       {return [Transitions #auto]}
 	type              {return [Type #auto]}	
 	visibility        {return [Visibility #auto]}
