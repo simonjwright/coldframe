@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
+<!-- $Id: ada-state.xsl,v 4ce235178c30 2002/02/21 05:52:51 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -475,6 +475,66 @@
       <xsl:text>end;&#10;</xsl:text>
 
     </xsl:if>
+
+  </xsl:template>
+
+
+  <!-- Called from domain to generate the domain's event manager spec. -->
+  <xsl:template name="event-manager-spec">
+    
+    <!--
+         with ColdFrame.Events;
+         package {domain}.Events is
+           Manager : ColdFrame.Events.Event_Queue_P;
+           procedure Initialize;
+         end {domain}.Events;
+         -->
+
+    <xsl:text>with ColdFrame.Events;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>Dispatcher : ColdFrame.Events.Event_Queue_P;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Initialize;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Called from domain to generate the domain's event manager body. -->
+  <xsl:template name="event-manager-body">
+    
+    <!--
+         package body {domain}.Events is
+           procedure Initialize is separate;
+         end {domain}.Events;
+         separate ({domain}.Events)
+         procedure Initialize is
+         begin
+           null;
+         end Initialize;
+         -->
+
+    <xsl:text>package body </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events;&#10;</xsl:text>
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events)&#10;</xsl:text>
+    <xsl:text>procedure Initialize is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>null;&#10;</xsl:text>
+    <xsl:text>end Initialize;&#10;</xsl:text>
 
   </xsl:template>
 
