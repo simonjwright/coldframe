@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ce382c0f90da 2001/12/27 10:00:08 simon $ -->
+<!-- $Id: bugs.html,v 5633a5782e52 2002/01/03 06:13:06 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -123,11 +123,22 @@ document from the domain model.
 class was calculated automatically (where the multiplicity of each
 associated class is specified).
 
-<!-- next: 0051 -->
+<!-- next: 0052 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.i.02</h3>
+
+<dl>
+
+<dt>0051 (raised 2.i.02)
+
+<dd>In inheritance trees, the parents may not have been processed when
+the grandchildren are processed, resulting in failed normalization.
+
+</dl>
 
 <h3>11.xii.01</h3>
 
