@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-event_basis.ads,v $
---  $Revision: 34985551f126 $
---  $Date: 2003/11/08 08:14:22 $
+--  $Revision: bd6823dc9272 $
+--  $Date: 2003/11/08 16:50:41 $
 --  $Author: simon $
 
 package ColdFrame.Event_Basis is
@@ -29,7 +29,8 @@ package ColdFrame.Event_Basis is
    type Event_Base is abstract tagged limited private;
 
    type Event_Processing_Phase is
-     (Posting,
+     (Initial,
+      Posting,
       Dispatching,
       Finishing);
 
