@@ -35,6 +35,12 @@ ifeq ($(COLDFRAMEOUT), )
   COLDFRAMEOUT = .
 endif
 
+ifeq ($(DOMAIN_NAME), )
+  NORM_DOMAIN_NAME = 
+else
+  NORM_DOMAIN_NAME = --domain-name "$(DOMAIN_NAME)"
+endif
+
 ifeq ($(TOP), )
   TOP = /usr/local/lib
 endif
@@ -76,7 +82,8 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 %.norm: $(COLDFRAMEOUT)/%.raw
 	@echo generating $@ ...
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	    --casing $(CASE_EXCEPTIONS) \
+	    --casing '$(CASE_EXCEPTIONS)' \
+	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
 	    --version cf-DATE \
@@ -113,13 +120,16 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@-rm -rf $@
 	@-mkdir $@
 	@gnatchop $(CHOP_VERBOSE) $< $@
-	@[ ! -d $*.impl ] || \
-	  for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
-	   if [ -f $@/$$f ]; then \
-	      echo "    removing $@/$$f"; rm $@/$$f; \
-	   else \
-	      echo "  extra source file $$f in .impl"; \
-	   fi \
+	@for s in impl test; do \
+	  echo "checking $*.$$s ..."; \
+	  [ ! -d $*.$$s ] || \
+	    for f in `(cd $*.$$s; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	      if [ -f $@/$$f ]; then \
+		echo "    removing $@/$$f"; rm $@/$$f; \
+	      else \
+		echo "  extra source file $$f in .$$s"; \
+	      fi \
+	    done \
 	done
 	@chmod -R a-w $@
 	@chmod u+w $@
