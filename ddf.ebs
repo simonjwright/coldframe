@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 20df2ff928e3 2002/03/23 06:32:05 simon $
+'$Id: ddf.ebs,v d9de9ba44109 2002/06/27 18:30:10 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -146,7 +146,9 @@ Sub DumpStates (c As Class)
 		If sm.Stereotype = "generate" Then
 			Print "  state machine"
 	   		Print #1, "<statemachine>"
-			Print #1, "<name>" & sm.Name & "</name>"
+			If Not (sm.Name = "State/Activity Model") Then
+				Print #1, "<name>" & sm.Name & "</name>"
+			End If
 			Dim ss As StateCollection
 			Set ss = sm.GetAllStates()
    			Print #1, "<states>"
