@@ -1,0 +1,22 @@
+--  Project file (GCC-3.1, GNAT-3.15) for ColdFrame - Hierarchies test
+--  $Id: Hierarchies_Test.gpr,v f096aae108d2 2003/02/01 13:52:22 simon $
+
+with "Options";
+with "Hierarchies";
+with "AUnit";
+
+project Hierarchies_Test is
+
+  for Main use ("hierarchies-harness");
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("Hierarchies.test");
+
+  for Object_Dir use Options'Object_Dir;
+  package Ide renames Options.Ide;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
+
+end Hierarchies_Test;
