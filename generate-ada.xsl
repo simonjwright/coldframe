@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 174f0bb1d1c3 2004/11/12 06:50:09 simon $ -->
+<!-- $Id: generate-ada.xsl,v d7196b167977 2005/02/24 06:31:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -396,6 +396,7 @@
          with Ada.Exceptions;
          with ColdFrame.Exceptions;
          with ColdFrame.Project.Log_Error;
+         with {domain-init-proc-package};
          with {domain}.Events;
          with {domain}.{class};
          procedure {domain}.Initialize
@@ -404,6 +405,7 @@
          begin
             if not Domain_Initialized then
                Domain_Initialized := True;
+               {domain-init-proc};
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -452,6 +454,19 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
 
+    <xsl:if test="initialize">
+      <xsl:variable name="context">
+        <xsl:call-template name="ty:find-source-package">
+          <xsl:with-param name="input" select="initialize"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:if test="$context != ''">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$context"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+    </xsl:if>
+
     <xsl:for-each select="$class-initializations">
       <xsl:sort select="name"/>
       <xsl:text>with </xsl:text>
@@ -485,6 +500,13 @@
          initialization procedures). -->
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
+
+    <!-- .. any domain initialization .. -->
+    <xsl:if test="initialize">
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="initialize"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
