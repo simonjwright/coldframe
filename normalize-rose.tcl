@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0e5790fdd78b 2003/03/01 11:32:11 simon $
+# $Id: normalize-rose.tcl,v a7f8d774610f 2003/03/08 19:40:08 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2059,7 +2059,7 @@ itcl::class Transition {
 itcl::class Datatype {
     inherit Element
 
-    variable callback 0
+    variable callback
 
     variable dataDetail
 
@@ -2194,7 +2194,7 @@ itcl::class Datatype {
     method -generate {domain} {
 	if {$dataType == "record"} {return}
 	puts -nonewline "<type"
-	if $callback {
+	if [info exists callback] {
 	    puts -nonewline " callback=\"$callback\""
 	}
 	if [info exists image] {
