@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v eda9e41e7a8a 2003/03/13 20:32:00 simon $ -->
+<!-- $Id: ada-class.xsl,v 256b8fc38a8c 2003/03/15 19:51:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1620,6 +1620,8 @@
     <xsl:if test="@singleton">
       <xsl:value-of select="$I"/>
       <xsl:text>H : Handle;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Warnings (Off, H);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:text>begin&#10;</xsl:text>

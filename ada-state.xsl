@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
+<!-- $Id: ada-state.xsl,v 256b8fc38a8c 2003/03/15 19:51:52 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -177,7 +177,7 @@
 
     <!-- non-singleton
          procedure Handler (This : {event}) is
-            That : Handle := This.For_The_Instance.all'Unchecked_Access;
+            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
                when {source-state} =>
@@ -192,7 +192,7 @@
 
     <!-- singleton
          procedure Handler (This : {event}) is
-            That : Handle := This.For_The_Instance.all'Unchecked_Access;
+            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
                when {source-state} =>
@@ -213,7 +213,7 @@
     <xsl:text>) is&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>That : Handle := This.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
+    <xsl:text>That : constant Handle := This.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
