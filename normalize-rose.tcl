@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 337883501ed3 2002/06/06 21:45:00 simon $
+# $Id: normalize-rose.tcl,v 48225873c24f 2002/06/15 15:16:37 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -230,20 +230,40 @@ itcl::class Base {
 
 # The base class for all XML elements whose interesting aspect is their
 # textual content - eg, <name>foo</name>
+# Also handles tagged values; if there are any, the stack top needs to
+# offer a "-tag tag value" method.
 itcl::class String {
     inherit Base
 
-    # the object has already been popped off the stack; call the stack top's
+    method -processTags {} {
+	if [regexp "\[\{\}\]" $text] {
+	    regsub -all "\}\[^{\]*\{" $text "," stripInner
+	    regsub -all "(^.*\{)|(\}.*$)" $stripInner "" stripOuter
+	    set taglist [split $stripOuter ","]
+	    foreach t $taglist {
+		regexp {([^=]*)(=(.*))?} $t wh tag eq val
+		if {[string length $val] == 0} {
+		    set val true
+		}
+		[stack -top] -tag [string trim $tag] [string trim $val]
+	    }
+	    # strip out any property lists
+	    regsub -all "\{\[^}\]*\}" $text "" text
+	}
+    }
+
+    # The object has already been popped off the stack; call the stack top's
     # method with the same name as this tag to store the value (so, given
-    # the example above, the containing object needs to offer a -name method)
+    # the example above, the containing object needs to offer a -name method).
     method -complete {} {
+	$this -processTags
 	[stack -top] -$xmlTag $text
     }
 }
 
 
 # The base class for all XML elements which represent identifiers; stores
-# eg " hELLO   world " as "Hello_World"
+# eg " hELLO   world " as "Hello_World".
 itcl::class IdentifierString {
     inherit String
 
@@ -252,6 +272,7 @@ itcl::class IdentifierString {
     # conversion to identifier form (so, given the example above, the
     # containing object needs to offer a -name method)
     method -complete {} {
+	$this -processTags
 	[stack -top] -$xmlTag [normalize $text]
     }
 }
@@ -272,6 +293,8 @@ itcl::class Element {
     variable name "unnamed"
 
     variable stereotype
+
+    variable tags
 
     # called to process annotation information. The annotation info is
     # of the form
@@ -383,7 +406,17 @@ itcl::class Element {
 	}
     }
 
+    # Handle property lists of tagged values.
+    method -tag {tag value} {
+	set tags($tag) $value 
+    }
+
     method -complete {} {
+	if [info exists tags] {
+	    foreach w [array names tags] {
+		puts stderr "$xmlTag $name: $w=$tags(w)"
+	    }
+	}
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
 	    Error "CF: error \"$msg\" adding a [$this -getXmlTag] \
