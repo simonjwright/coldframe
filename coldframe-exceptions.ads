@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: f36e796ef151 $
---  $Date: 2002/05/19 18:29:57 $
+--  $Revision: 7e08e6052562 $
+--  $Date: 2002/05/22 04:34:06 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
@@ -35,5 +35,13 @@ package ColdFrame.Exceptions is
 
    Existing_Child : exception;
    --  Attempt to replace a non-null child in an inheritance relationship
+
+   Cant_Happen : exception;
+   --  An unexpected Event has occured.
+
+   Use_Error : exception;
+   --  Misuse of facilities (eg, attempting to post Events for the
+   --  same Instance to more than one Queue; attempting to set a Timer
+   --  that's already set).
 
 end ColdFrame.Exceptions;
