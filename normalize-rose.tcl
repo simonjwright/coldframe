@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6891e7432040 2003/09/10 05:47:11 simon $
+# $Id: normalize-rose.tcl,v 90801c084e81 2003/09/17 05:45:05 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2328,7 +2328,7 @@ itcl::class Datatype {
     }
 
     # called when the type is an enumeration. values is a list of the
-    # comma-separated enumerals, which have not been normalized.
+    # comma- or pipe-separated enumerals, which have not been normalized.
     method -enumeration {values} {
 	set dataType "enumeration"
 	set raw [split $values ",|"]
