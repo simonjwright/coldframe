@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 90e1d4cc4b4d 2004/03/19 15:39:48 simon $ -->
+<!-- $Id: bugs.html,v 34ef99084c90 2004/05/20 15:04:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -239,6 +239,20 @@ final state in Rose (a black blob in a circle).
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>20.v.04</h3>
+
+<dl>
+
+<dt>0263 (raised 20.v.04)
+
+<dd>If a callback operation deregisters itself it leads to a jump out
+of program (Program_Error, if you're lucky!)
+<br>Messing about with registering/deregistering callbacks is still
+not task-safe. However, so long as you don't try deregistering
+<i>another</i> callback from a callback operation you should be OK!
+
+</dl>
 
 <h3>19.iii.04</h3>
 
