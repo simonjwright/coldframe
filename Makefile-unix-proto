@@ -146,6 +146,14 @@ install::
 	  [ -f project/`basename $$f` ] || cp -p $$f inherited/; \
 	done
 
+# Creates your build directory (Ada Library) tree, under $BUILD_BASE
+build-dirs::
+	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
+	@for d in aunit bc coldframe; do \
+	  [ -d $(BUILD_BASE)/$$d ] || \
+	    (echo mkdir -p $(BUILD_BASE)/$$d; mkdir -p $(BUILD_BASE)/$$d);\
+	done
+
 #;; for emacs:
 #;; Local Variables:
 #;; mode: makefile

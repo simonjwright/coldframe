@@ -143,6 +143,15 @@ OTHER_SCRIPTS = serialized-to-csv.xsl \
 	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl || rm -f $<-t
 	rm -f $<-t
 
+# Creates the build directory (Ada Library) tree, under $BUILD_BASE
+BUILD_BASE=~/cf
+build-dirs::
+	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
+	@for d in aunit bc coldframe; do \
+	  [ -d $(BUILD_BASE)/$$d ] || \
+	    (echo mkdir -p $(BUILD_BASE)/$$d; mkdir -p $(BUILD_BASE)/$$d);\
+	done
+
 TEXI2HTML = texi2html
 %.html: %.texi
 	$(TEXI2HTML) -monolithic $<
