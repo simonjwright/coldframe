@@ -86,17 +86,22 @@ coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
-# This is the published makefile for development of ColdFrame itself.
+# Makefile-cf is the published makefile for development of ColdFrame itself.
 # Other makefiles are
 # * Makefile-winnt for inclusion in a user makefile under Windows
 # * Makefile-unix for inclusion in a user makefile under Unix.
 
 Makefile-cf: Makefile
 	cp -p $< $@
+Makefile-unix: Makefile-unix-proto force
+	sed -e "s;DATE;$(DATE);g" <$< >$@
+Makefile-winnt: Makefile-winnt-proto force
+	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 PROGS = COPYING \
   Makefile-cf Makefile-unix Makefile-winnt \
   ddf.ebs \
+  escape-markup.awk \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS)
