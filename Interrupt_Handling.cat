@@ -11,7 +11,7 @@
     documentation 	
 |Demonstration of Interrupt Handling using Ada facilities.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 06014bfea356 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -348,7 +348,7 @@
 	    documentation 	
 |Demonstration of Interrupt Handling using Ada facilities.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -356,7 +356,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Interrupt Handling::Device" @10
+		(object ClassView "Class" "Logical View::Interrupt Handling::Device" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -373,47 +373,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
-			location   	(466, 329)
+			location   	(512, 304)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	358
+			max_width  	266
 			justify    	0
 			label      	"Device")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@10
-			location   	(466, 284)
+			location   	(512, 259)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	358
+			max_width  	263
 			justify    	0
 			label      	"<<singleton>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DA72C9A01AA"
-		    compartment 	(object Compartment
-			Parent_View 	@10
-			location   	(466, 385)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	7
-			max_width  	355)
-		    width      	376
-		    height     	444
+		    width      	284
+		    height     	494
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object CategoryView "Logical View::ColdFrame Examples::Interrupt Handling" @11
+		(object CategoryView "Logical View::Interrupt Handling" @11
 		    location   	(1630, 395)
 		    font       	(object Font
 			size       	10
@@ -426,17 +409,17 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@11
-			location   	(1383, 311)
+			location   	(1486, 311)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	494
+			max_width  	288
 			justify    	0
 			label      	"Interrupt Handling")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DA72C880050"
-		    width      	506
+		    width      	300
 		    height     	180)
 		(object Label @12
 		    location   	(188, 103)
@@ -451,4 +434,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1615
-		    label      	"$Id: Interrupt_Handling.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
+		    label      	"$Id: Interrupt_Handling.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")))))

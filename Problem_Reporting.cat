@@ -11,7 +11,7 @@
     documentation 	
 |Classes for Problem Reporting.
 |
-|{ revision = $Revision: 2a8329ac8558 $ }
+|{ revision = $Revision: 06014bfea356 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -74,7 +74,7 @@
 		(object Inheritance_Relationship
 		    quid       	"38EB4E8B0163"
 		    label      	"r1"
-		    supplier   	"Logical View::ColdFrame Examples::Problem_Reporting::Problem Report"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
 		    quidu      	"380DB51C010E"))
 	    operations 	(list Operations
 		(object Operation "set rejection reason"
@@ -107,7 +107,7 @@
 		(object Inheritance_Relationship
 		    quid       	"38EB4E94007F"
 		    label      	"r1"
-		    supplier   	"Logical View::ColdFrame Examples::Problem_Reporting::Problem Report"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
 		    quidu      	"380DB51C010E")))
 	(object Class "Component"
 	    quid       	"380DB54F0248"
@@ -172,7 +172,7 @@
 		(object Inheritance_Relationship
 		    quid       	"38EB4E2603DE"
 		    label      	"r1"
-		    supplier   	"Logical View::ColdFrame Examples::Problem_Reporting::Problem Report"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
 		    quidu      	"380DB51C010E")))
 	(object Class "Defect"
 	    quid       	"380F322C003E"
@@ -322,14 +322,14 @@
 		(object Role "affects"
 		    quid       	"380DB95E0025"
 		    label      	"affects"
-		    supplier   	"Logical View::ColdFrame Examples::Problem_Reporting::Component"
+		    supplier   	"Logical View::Problem_Reporting::Component"
 		    quidu      	"380DB54F0248"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE)
 		(object Role "is affected by"
 		    quid       	"380DB95E0039"
 		    label      	"is affected by"
-		    supplier   	"Logical View::ColdFrame Examples::Problem_Reporting::Diagnosed Problem Report"
+		    supplier   	"Logical View::Problem_Reporting::Diagnosed Problem Report"
 		    quidu      	"380DB54900AF"
 		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE))
@@ -341,7 +341,7 @@
 	    documentation 	
 |Classes for Problem Reporting.
 |
-|{ revision = $Revision: 2a8329ac8558 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    zoom       	82
 	    max_height 	28350
@@ -349,7 +349,7 @@
 	    origin_x   	52
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Rejected Problem Report" @1
+		(object ClassView "Class" "Logical View::Problem_Reporting::Rejected Problem Report" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -366,38 +366,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(602, 1744)
+			location   	(810, 1739)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	780
+			nlines     	2
+			max_width  	364
 			justify    	0
 			label      	"Rejected Problem Report")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB5330003"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(602, 1804)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	4
-			max_width  	778)
-		    width      	798
-		    height     	280
+		    width      	382
+		    height     	288
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Unallocated Problem Report" @2
+		(object ClassView "Class" "Logical View::Problem_Reporting::Unallocated Problem Report" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -413,21 +396,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(86, 1504)
+			location   	(159, 1485)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	532
+			nlines     	2
+			max_width  	386
 			justify    	0
 			label      	"Unallocated Problem Report")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB65C015E"
-		    width      	550
-		    height     	118
+		    width      	404
+		    height     	156
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Problem Report" @3
+		(object ClassView "Class" "Logical View::Problem_Reporting::Problem Report" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -454,23 +437,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB51C010E"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(812, 634)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	421)
 		    width      	442
 		    height     	476
 		    annotation 	8
@@ -495,7 +461,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
-			location   	(527, 1312)
+			location   	(527, 1303)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -507,7 +473,7 @@
 		    client     	@2
 		    supplier   	@3
 		    line_style 	3
-		    origin_attachment 	(527, 1492)
+		    origin_attachment 	(527, 1473)
 		    terminal_attachment 	(527, 1133)
 		    drawSupplier 	@4)
 		(object InheritView "r1" @6
@@ -522,7 +488,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
-			location   	(990, 1433)
+			location   	(990, 1430)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -534,10 +500,10 @@
 		    client     	@1
 		    supplier   	@3
 		    line_style 	3
-		    origin_attachment 	(990, 1732)
+		    origin_attachment 	(990, 1728)
 		    terminal_attachment 	(990, 1133)
 		    drawSupplier 	@4)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Diagnosed Problem Report" @7
+		(object ClassView "Class" "Logical View::Problem_Reporting::Diagnosed Problem Report" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -553,18 +519,18 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(1204, 1360)
+			location   	(1283, 1341)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	536
+			nlines     	2
+			max_width  	378
 			justify    	0
 			label      	"Diagnosed Problem Report")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB54900AF"
-		    width      	554
-		    height     	118
+		    width      	396
+		    height     	156
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "r1" @8
@@ -579,7 +545,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(1468, 1241)
+			location   	(1468, 1231)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -591,10 +557,10 @@
 		    client     	@7
 		    supplier   	@3
 		    line_style 	3
-		    origin_attachment 	(1468, 1349)
+		    origin_attachment 	(1468, 1330)
 		    terminal_attachment 	(1468, 1133)
 		    drawSupplier 	@4)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Component" @9
+		(object ClassView "Class" "Logical View::Problem_Reporting::Component" @9
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -621,29 +587,12 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380DB54F0248"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(2359, 1291)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	6
-			max_width  	430)
 		    width      	452
 		    height     	378
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r100" @10
-		    location   	(2049, 1408)
+		    location   	(2009, 1408)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -655,7 +604,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @11
 			Parent_View 	@10
-			location   	(2000, 1370)
+			location   	(1960, 1370)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -680,7 +629,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "is affected by" @12
 			    Parent_View 	@10
-			    location   	(-47, 640)
+			    location   	(-87, 640)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -692,7 +641,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @13
 				Parent_View 	@12
-				location   	(1879, 1447)
+				location   	(1815, 1447)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -719,7 +668,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @14
 				Parent_View 	@12
-				location   	(1811, 1366)
+				location   	(1741, 1366)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -740,7 +689,7 @@
 				orientation 	1))
 			(object RoleView "affects" @15
 			    Parent_View 	@10
-			    location   	(-47, 640)
+			    location   	(-87, 640)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -752,7 +701,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @16
 				Parent_View 	@15
-				location   	(2267, 1447)
+				location   	(2256, 1447)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -779,7 +728,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @17
 				Parent_View 	@15
-				location   	(2270, 1366)
+				location   	(2258, 1366)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -798,7 +747,7 @@
 				pctDist    	0.735294
 				height     	43
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Summary String" @18
+		(object ClassView "Class" "Logical View::Problem_Reporting::Summary String" @18
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -814,30 +763,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@18
-			location   	(2371, 83)
+			location   	(2406, 65)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	346
+			max_width  	276
 			justify    	0
 			label      	"Summary String")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@18
-			location   	(2371, 34)
+			location   	(2406, 20)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	346
+			max_width  	276
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	8454143
 		    quidu      	"3A58D120010F"
-		    width      	364
-		    height     	180
+		    width      	294
+		    height     	206
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Defect" @19
+		(object ClassView "Class" "Logical View::Problem_Reporting::Defect" @19
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -864,28 +813,11 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"380F322C003E"
-		    compartment 	(object Compartment
-			Parent_View 	@19
-			location   	(1849, 1731)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	5
-			max_width  	427)
 		    width      	448
 		    height     	330
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Problem_Reporting::Interface" @20
+		(object ClassView "Class" "Logical View::Problem_Reporting::Interface" @20
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -902,19 +834,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@20
-			location   	(96, 76)
+			location   	(723, 76)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	1536
+			nlines     	2
+			max_width  	282
 			justify    	0
 			label      	"Interface")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@20
-			location   	(96, 27)
+			location   	(723, 32)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	1536
+			max_width  	282
 			justify    	0
 			label      	"<<Interface>>")
 		    icon       	"Interface"
@@ -922,25 +854,8 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3AB725190275"
-		    compartment 	(object Compartment
-			Parent_View 	@20
-			location   	(96, 136)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	7
-			max_width  	1534)
-		    width      	1554
-		    height     	482
+		    width      	300
+		    height     	470
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object Label @21
@@ -956,7 +871,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1732
-		    label      	"$Id: Problem_Reporting.cat,v 2a8329ac8558 2004/11/11 15:02:08 simon $")
+		    label      	"$Id: Problem_Reporting.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 		(object AssocAttachView "" @22
 		    stereotype 	TRUE
 		    line_color 	3342489

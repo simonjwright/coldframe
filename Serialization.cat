@@ -11,7 +11,7 @@
     documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 |
     
     exportControl 	"Public"
@@ -342,7 +342,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1145
-				label      	"$Id: Serialization.cat,v 18cff6ec23b8 2005/01/29 07:11:30 simon $")))))
+				label      	"$Id: Serialization.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")))))
 	    cardinality 	(value Cardinality "0..1"))
 	(object Class "Use Error"
 	    quid       	"3E2F09250015"
@@ -386,7 +386,7 @@
 |This domain is a demonstration of Serialization's facilities.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -529,7 +529,7 @@
 |This domain is a demonstration of Serialization's facilities.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 		    
 		    zoom       	100
 		    max_height 	28350
@@ -573,23 +573,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E2F8FA00319"
-			    compartment 	(object Compartment
-				Parent_View 	@9
-				location   	(153, 236)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	13
-				max_width  	473)
 			    width      	494
 			    height     	714
 			    annotation 	8
@@ -670,23 +653,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E5533DD01B1"
-			    compartment 	(object Compartment
-				Parent_View 	@11
-				location   	(902, 806)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	866)
 			    width      	886
 			    height     	264
 			    annotation 	8
@@ -727,23 +693,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E553AC9035D"
-			    compartment 	(object Compartment
-				Parent_View 	@12
-				location   	(1087, 259)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	453)
 			    width      	472
 			    height     	264
 			    annotation 	8
@@ -814,7 +763,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1905
-			    label      	"$Id: Serialization.cat,v 18cff6ec23b8 2005/01/29 07:11:30 simon $")
+			    label      	"$Id: Serialization.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 			(object ClassView "Class" "Logical View::Serialization::Serialization Demo::Record Type 1" @17
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
@@ -981,7 +930,7 @@
 |This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -1009,7 +958,7 @@
 |This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 		    
 		    zoom       	100
 		    max_height 	28350
@@ -1030,7 +979,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1905
-			    label      	"$Id: Serialization.cat,v 18cff6ec23b8 2005/01/29 07:11:30 simon $")
+			    label      	"$Id: Serialization.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 			(object ClassView "Class" "Logical View::Serialization::Serialization Demo Other::Record Type 1" @22
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
@@ -1067,23 +1016,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"41029171000A"
-			    compartment 	(object Compartment
-				Parent_View 	@22
-				location   	(383, 731)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	215)
 			    width      	300
 			    height     	220
 			    annotation 	8
@@ -1124,23 +1056,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"41029183020F"
-			    compartment 	(object Compartment
-				Parent_View 	@23
-				location   	(1079, 735)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	210)
 			    width      	302
 			    height     	220
 			    annotation 	8
@@ -1451,7 +1366,7 @@
 	    documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
 |
-|{ revision = $Revision: 18cff6ec23b8 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 |
 	    
 	    zoom       	100
@@ -1496,23 +1411,6 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3E2F068B0072"
-		    compartment 	(object Compartment
-			Parent_View 	@28
-			location   	(540, 385)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	702)
 		    width      	722
 		    height     	264
 		    annotation 	8
@@ -1624,23 +1522,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E2F091700DE"
-		    compartment 	(object Compartment
-			Parent_View 	@31
-			location   	(384, 1086)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	6
-			max_width  	1102)
 		    width      	1122
 		    height     	348
 		    annotation 	8
@@ -1801,7 +1682,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1145
-		    label      	"$Id: Serialization.cat,v 18cff6ec23b8 2005/01/29 07:11:30 simon $")
+		    label      	"$Id: Serialization.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 		(object AttachView "" @37
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -2112,7 +1993,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3EA03A2"
 		    width      	300
-		    height     	2824
+		    height     	2854
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2156,7 +2037,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3FE0379"
 		    width      	300
-		    height     	2824
+		    height     	2854
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2200,7 +2081,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F411039E"
 		    width      	300
-		    height     	2824
+		    height     	2854
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2251,7 +2132,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F41A033D"
 		    width      	300
-		    height     	2824
+		    height     	2854
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2295,7 +2176,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F44E02BF"
 		    width      	300
-		    height     	746
+		    height     	776
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2338,7 +2219,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F4E70233"
 		    width      	330
-		    height     	1143
+		    height     	1173
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2388,7 +2269,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F45D0004"
 		    width      	300
-		    height     	2824
+		    height     	2854
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2453,7 +2334,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F850015C"
 		    width      	330
-		    height     	559
+		    height     	589
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -2880,7 +2761,7 @@
 		    ordinal    	10)
 		(object Destruction_Marker @101
 		    Parent_View 	@67
-		    location   	(2767, 2502)
+		    location   	(2767, 2532)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object InterMessView "" @102
@@ -2925,7 +2806,7 @@
 		    ordinal    	4)
 		(object Destruction_Marker @104
 		    Parent_View 	@64
-		    location   	(2445, 1887)
+		    location   	(2445, 1917)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object InterMessView "" @105
@@ -3010,7 +2891,7 @@
 		    ordinal    	13)
 		(object Destruction_Marker @109
 		    Parent_View 	@77
-		    location   	(3578, 3049)
+		    location   	(3578, 3079)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Label @110
@@ -3026,7 +2907,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1903
-		    label      	"$Id: Serialization.cat,v 18cff6ec23b8 2005/01/29 07:11:30 simon $")
+		    label      	"$Id: Serialization.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 		(object InterMessView "" @111
 		    location   	(0, 2128)
 		    font       	(object Font

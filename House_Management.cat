@@ -16,7 +16,7 @@
 |This domain represents an electronic household control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: a24965851d47 $ }
+|{ revision = $Revision: 06014bfea356 $ }
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
@@ -333,7 +333,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v a24965851d47 2004/12/27 19:03:54 simon $")
+				label      	"$Id: House_Management.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 			    (object SelfTransView "" @8
 				location   	(1398, 450)
 				font       	(object Font
@@ -559,7 +559,7 @@
 				    ordinal    	1
 				    quidu      	"3DFCFDE40258"
 				    creation   	FALSE))))
-		    class      	"Logical View::Digital IO::Signal State"
+		    class      	"Logical View::Digital IO::Digital IO Interface::Signal State"
 		    quidu      	"3DFCF80601AE"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -719,7 +719,7 @@
 |This domain represents an electronic household control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: a24965851d47 $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -754,23 +754,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC1401ED"
-		    compartment 	(object Compartment
-			Parent_View 	@13
-			location   	(509, 984)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	522)
 		    width      	536
 		    height     	438
 		    annotation 	8
@@ -802,23 +785,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC250129"
-		    compartment 	(object Compartment
-			Parent_View 	@14
-			location   	(419, 328)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	4
-			max_width  	697)
 		    width      	710
 		    height     	258
 		    annotation 	8
@@ -1143,7 +1109,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v a24965851d47 2004/12/27 19:03:54 simon $")
+		    label      	"$Id: House_Management.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 		(object NoteView @28
 		    location   	(1635, 1140)
 		    font       	(object Font
@@ -1280,7 +1246,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E45033A"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1317,7 +1283,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E4B00E9"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1354,7 +1320,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E520392"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1391,7 +1357,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E7F00A8"
 		    width      	330
-		    height     	1269
+		    height     	1305
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1404,7 +1370,7 @@
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @42
-			location   	(1575, 584)
+			location   	(1575, 581)
 			InterObjView 	@40
 			height     	60
 			y_coord    	0
@@ -1441,7 +1407,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E5F014C"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1485,7 +1451,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F0D0251"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1522,7 +1488,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F5601B6"
 		    width      	330
-		    height     	529
+		    height     	565
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1535,7 +1501,7 @@
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @51
-			location   	(2785, 1072)
+			location   	(2785, 1069)
 			InterObjView 	@49
 			height     	60
 			y_coord    	0
@@ -1572,7 +1538,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F880230"
 		    width      	300
-		    height     	1666
+		    height     	1696
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1953,12 +1919,12 @@
 		    ordinal    	8)
 		(object Destruction_Marker @74
 		    Parent_View 	@49
-		    location   	(2785, 1639)
+		    location   	(2785, 1669)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Destruction_Marker @75
 		    Parent_View 	@40
-		    location   	(1575, 1891)
+		    location   	(1575, 1921)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Label @76
@@ -2028,4 +1994,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1366
-		    label      	"$Id: House_Management.cat,v a24965851d47 2004/12/27 19:03:54 simon $")))))
+		    label      	"$Id: House_Management.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")))))

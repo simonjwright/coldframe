@@ -16,7 +16,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: a4da467e594c $ }
+|{ revision = $Revision: 06014bfea356 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -116,7 +116,7 @@
 |manages digital (discrete) input/output.
 |
 |{ name = Digital IO }
-|{ revision = $Revision: a4da467e594c $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    stereotype 	"include"
 	    exportControl 	"Public"
@@ -263,23 +263,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3DFCFA6E0024"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(212, 359)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	830)
 			    width      	850
 			    height     	218
 			    annotation 	8
@@ -360,23 +343,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3DFCFA83024B"
-			    compartment 	(object Compartment
-				Parent_View 	@3
-				location   	(1246, 337)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	838)
 			    width      	858
 			    height     	264
 			    annotation 	8
@@ -417,23 +383,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3DFCF80601AE"
-			    compartment 	(object Compartment
-				Parent_View 	@4
-				location   	(496, 712)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	315)
 			    width      	336
 			    height     	264
 			    annotation 	8
@@ -451,7 +400,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1585
-			    label      	"$Id: Digital_IO.cat,v a4da467e594c 2005/03/02 21:22:41 simon $"))))))
+			    label      	"$Id: Digital_IO.cat,v 06014bfea356 2005/03/05 22:03:12 simon $"))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCF77A0261"
@@ -466,7 +415,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: a4da467e594c $ }
+|{ revision = $Revision: 06014bfea356 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -501,23 +450,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF783026E"
-		    compartment 	(object Compartment
-			Parent_View 	@6
-			location   	(386, 1108)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	672)
 		    width      	686
 		    height     	438
 		    annotation 	8
@@ -549,23 +481,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF7950224"
-		    compartment 	(object Compartment
-			Parent_View 	@7
-			location   	(1346, 1033)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	222)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -630,23 +545,6 @@
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCF80601AE"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(2355, 331)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	315)
 		    width      	378
 		    height     	310
 		    annotation 	8
@@ -678,23 +576,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF78D0241"
-		    compartment 	(object Compartment
-			Parent_View 	@10
-			location   	(1346, 1528)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	222)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -759,23 +640,6 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA6E0024"
-		    compartment 	(object Compartment
-			Parent_View 	@12
-			location   	(176, 360)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	830)
 		    width      	850
 		    height     	264
 		    annotation 	8
@@ -816,23 +680,6 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA83024B"
-		    compartment 	(object Compartment
-			Parent_View 	@13
-			location   	(1180, 337)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	838)
 		    width      	858
 		    height     	310
 		    annotation 	8
@@ -890,7 +737,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v a4da467e594c 2005/03/02 21:22:41 simon $")
+		    label      	"$Id: Digital_IO.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
 		(object CategoryView "Logical View::Digital IO::Digital IO Interface" @16
 		    location   	(2566, 1561)
 		    font       	(object Font

@@ -11,7 +11,7 @@
     documentation 	
 |This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 |
-|[[ revision : $Id: States.cat,v 2010f7872423 2004/05/12 21:53:39 simon $ ]]
+|[[ revision : $Id: States.cat,v 06014bfea356 2005/03/05 22:03:12 simon $ ]]
 |
     
     exportControl 	"Public"
@@ -1462,7 +1462,7 @@
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	11
+			nlines     	8
 			max_width  	618
 			compartmentItems 	(list Compartment
 			    "- heartbeat timer : Timer"
