@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3e9356156228 2004/07/09 12:03:55 simon $ -->
+<!-- $Id: bugs.html,v 31e78da6f87e 2004/07/14 04:55:37 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -157,9 +157,9 @@ compatibility.</i>
 <dt>0253 (raised 19.iv.04)
 
 <dd>In a state chart, the error of having more than one state with the
-same name is not detected as such (this can be particularly confusing
-if you name one of your states <i>initial</i> or <i>final</i>, which
-are the default names used for initial and final states).
+same name is not detected as such (this really only happens if you
+name one of your states <i>initial</i> or <i>final</i>, which are the
+default names used for initial and final states).
 
 <dt>0259 (raised 29.iv.04)
 
@@ -188,16 +188,22 @@ maintained.
 <dd>It would be helpful to have an <tt>Epoch</tt> value in
 <tt>ColdFrame.Project.Calendar</tt>.
 
-<dt>0272 (raised 9.vii.04)
-
-<dd>Using <tt><i>{imported}</i></tt> etc on a &#171;type&#187; with
-attributes is silently ignored.
-
 <!-- next: 0273  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>14.vii.04</h3>
+
+<dl>
+
+<dt>0272 (raised 9.vii.04)
+
+<dd>Using <tt><i>{imported}</i></tt> etc on a &#171;type&#187; with
+attributes is silently ignored.
+
+</dl>
 
 <h3>7.vii.04</h3>
 
