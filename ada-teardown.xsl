@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 1992d02e6921 2004/01/17 23:00:06 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 148a24720159 2004/03/19 14:59:35 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -145,6 +145,9 @@
                    {teardown} {(This)};                - if any
                    if not This.The_T'Terminated then   - if active
                       abort This.The_T.all;
+                      while not This.The_T'Terminated loop
+                         delay 0.1;
+                      end loop;
                    end if;
                    Free (This.The_T);
                    Free (This);
@@ -184,6 +187,12 @@
           <xsl:text>if not This.The_T'Terminated then&#10;</xsl:text>
           <xsl:value-of select="$III"/>
           <xsl:text>abort This.The_T.all;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>while not This.The_T'Terminated loop&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>delay 0.1;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>end loop;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>end if;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
@@ -217,6 +226,9 @@
                       {teardown} {(The_Container (I))};              - teardown
                       if not The_Container (I).The_T'Terminated then - active
                          abort The_Container (I).The_T.all;
+                         while not The_Container (I).The_T'Terminated loop
+                            delay 0.1;
+                         end loop;
                       end if;
                       Free (The_Container (I).The_T);                - active
                       Free (The_Container (I));
@@ -260,6 +272,12 @@
           <xsl:text>if not The_Container (I).The_T'Terminated then&#10;</xsl:text>
           <xsl:value-of select="$IIII"/>
           <xsl:text>abort The_Container (I).The_T.all;&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>while not The_Container (I).The_T'Terminated loop&#10;</xsl:text>
+          <xsl:value-of select="$IIIII"/>
+          <xsl:text>delay 0.1;&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>end loop;&#10;</xsl:text>
           <xsl:value-of select="$III"/>
           <xsl:text>end if;&#10;</xsl:text>
           <xsl:value-of select="$III"/>
@@ -298,6 +316,9 @@
                    {teardown} (H);                     - if any
                    if not H.The_T'Terminated then      - if active
                       abort H.The_T.all;
+                      while not H.The_T'Terminated loop
+                         delay 0.1;
+                      end loop;
                    end if;
                    Free (H.The_T);
                    Free (H);
@@ -348,6 +369,12 @@
           <xsl:text>if not H.The_T'Terminated then&#10;</xsl:text>
           <xsl:value-of select="$III"/>
           <xsl:text>abort H.The_T.all;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>while not H.The_T'Terminated loop&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>delay 0.1;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>end loop;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>end if;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
