@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_client.adb,v $
---  $Revision: f1cefa2023dc $
---  $Date: 2004/05/01 15:23:53 $
+--  $Revision: 271167f53722 $
+--  $Date: 2004/07/26 05:28:55 $
 --  $Author: simon $
 
 
@@ -56,7 +56,9 @@ begin
                U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
                N => Serialization_Demo.Name_String_Package.To_Bounded_String
                  ("bounded"),
-               R => (T => Ada.Real_Time.Clock))));
+               R => (T => Ada.Real_Time.Clock),
+               R1 => (X => 8),
+               Ra => (Y => 9))));
       delay 0.5;
       Put_Line ("outputting a Recordable_Real_Time record");
       Serialization.Interface.Output
