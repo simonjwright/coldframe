@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-class.xsl,v cb2d4731ba52 2005/02/06 18:42:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -138,6 +138,10 @@
 
      <!-- .. the standard find operation .. -->
      <xsl:if test="not(@singleton)">
+       <xsl:if test="../association/associative=current()/name">
+         <xsl:value-of select="$I"/>
+         <xsl:text>--  Private use only, use navigation operations&#10;</xsl:text>
+       </xsl:if>
        <xsl:value-of select="$I"/>
        <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
        <xsl:value-of select="$blank-line"/>
