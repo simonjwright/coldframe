@@ -46,7 +46,7 @@
 		(object ClassAttribute "warmup timer"
 		    quid       	"3C53D8FA016F"
 		    type       	"Timer"))
-	    statemachine 	(object State_Machine "State/Activity Model"
+	    statemachine 	(object State_Machine "Lifecycle"
 		quid       	"3C51670A02DB"
 		stereotype 	"generate"
 		states     	(list States
@@ -474,7 +474,7 @@
 				quidu      	"3C517765023F"
 				compartment 	(object Compartment
 				    Parent_View 	@9
-				    location   	(3120, 700)
+				    location   	(3120, 704)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -503,7 +503,7 @@
 				quidu      	"3C5177F80138"
 				compartment 	(object Compartment
 				    Parent_View 	@10
-				    location   	(3257, 1676)
+				    location   	(3257, 1680)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
