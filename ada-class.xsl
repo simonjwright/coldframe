@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 3a64376f8125 2001/07/01 10:55:42 simon $ -->
+<!-- $Id: ada-class.xsl,v 4fef64e05835 2001/07/05 18:41:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -778,12 +778,25 @@
   <xsl:template
     mode="task-entry"
     match="operation[not(@return) and not(@class)]">
-    <xsl:text>    entry </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:call-template name="entry-parameter-list">
-      <xsl:with-param name="indent" select="'      '"/>
-    </xsl:call-template>
-    <xsl:text>;&#10;</xsl:text>
+
+    <!-- Checking for operations whose profile matches an accessor. -->
+    <xsl:variable name="n" select="name"/>
+    <xsl:variable name="att-to-set"
+      select="../attribute[concat('Set_',name)=$n]"/>
+
+    <xsl:if test="not($generate-accessors='defined')
+                  or not(count(parameter)=1)
+                  or not($att-to-set/type=parameter/type)">
+      
+      <xsl:text>    entry </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:call-template name="entry-parameter-list">
+        <xsl:with-param name="indent" select="'      '"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+      
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template mode="task-entry" match="*"/>
