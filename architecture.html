@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 3f2d296b5554 2001/09/22 05:57:04 simon $ -->
+<!-- $Id: architecture.html,v 077f9f0c3669 2001/09/27 18:30:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -265,6 +265,11 @@ generated. The idea here is that a (lower-level) Domain may need to
 support up to <tt><i>max</i></tt> Observers from higher-level Domains,
 and the higher-level Domains can register to be notified when
 something has changed in the lower-level Domain.
+
+<li><tt>discriminated</tt> (only relevant if the type is a record
+type, ie has attributes) causes the generation of discriminated
+records; the discriminant is an enumeration type with literals formed
+from the attribute names with <tt>_T</tt> appended.
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
