@@ -122,7 +122,7 @@ pdf:: $(PDFS)
 
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
-PNGS = hierarchies.png hierarchies-full.png
+PNGS = hierarchies.png hierarchies-full.png discriminated-record.png
 
 ############################
 # Distribution construction
@@ -216,6 +216,8 @@ coldframe-events_g.adb \
 coldframe-events_g.ads \
 coldframe-exceptions-message.adb \
 coldframe-exceptions-message.ads \
+coldframe-exceptions-symbolic_traceback.adb \
+coldframe-exceptions-symbolic_traceback.ads \
 coldframe-exceptions-traceback.adb \
 coldframe-exceptions-traceback.ads \
 coldframe-exceptions.ads \
@@ -236,6 +238,7 @@ coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-instances.ads \
+coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-time_signature.ads \
 coldframe.ads
@@ -251,7 +254,10 @@ coldframe-project-events.ads \
 coldframe-project-global_storage_pool.ads \
 coldframe-project-global_storage_pool.ads-debug \
 coldframe-project-global_storage_pool.ads-standard \
-coldframe-project-times.ad[bs]
+coldframe-project-logging_support.adb \
+coldframe-project-logging_support.ads \
+coldframe-project-times.adb \
+coldframe-project-times.ads
 
 coldframe-project-global_storage_pool.ads-standard: \
   coldframe-project-global_storage_pool.ads
