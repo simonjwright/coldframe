@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 0bae809a6a3c 2001/05/17 04:40:00 simon $ -->
+<!-- $Id: generate-ada.xsl,v 0e485d25f56f 2001/06/02 16:46:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -54,10 +54,7 @@
     <xsl:text> is&#10;</xsl:text>
 
     <!-- .. any specially-declared types .. -->
-    <xsl:apply-templates select="type" mode="domain-type">
-      <xsl:sort select="number(boolean(@record))"/>
-      <xsl:sort select="name"/>
-    </xsl:apply-templates>
+    <xsl:call-template name="domain-types"/>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
