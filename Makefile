@@ -437,7 +437,8 @@ House_Management.impl/house_management-lamp-turn_on.adb \
 House_Management.impl/stairwell_demo.adb
 
 DEMO += \
-Serialization.cat Serialization.raw Serialization_Demo.raw \
+Serialization.cat \
+Serialization.raw Serialization_Demo.raw Serialization_Demo_Other.raw \
 Serialization.html Serialization.gpr \
 Serialization.impl/serialization_client.adb \
 Serialization.impl/serialization-events-initialize.adb \
