@@ -1,41 +1,225 @@
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
+--  with Event_Test.Initialize;
+--  with Event_Test.Tear_Down;
+with Event_Test.Events;
 with Event_Test.Events.Tear_Down;
+--  with Event_Test.Recipient;
 
-with ColdFrame.Exceptions;
-with ColdFrame.Instances;
+--  with ColdFrame.Exceptions;
+--  with ColdFrame.Instances;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Event_Support;
+--  with ColdFrame.Project.Event_Support;
 
 package body Event_Test.Test_Engine is
 
-   --  A class event can be created and queued to its class, to arrive
-   --  immediately.
---     procedure Immediate_Event
---       (R : in out AUnit.Test_Cases.Test_Case'Class);
---     procedure Immediate_Event
---       (R : in out AUnit.Test_Cases.Test_Case'Class) is
---        pragma Warnings (Off, R);
---        Ev : constant ColdFrame.Project.Events.Event_P
---          := new Recipient.Information;
---        Inf : Recipient.Information renames Recipient.Information (Ev.all);
---     begin
---        Inf.Payload := (Ordinal => 1000,
---                        Expected_At => ColdFrame.Project.Calendar.Clock);
---        ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
---        ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
---        Assert (Recipient.Get_Ordinal = 1000,
---                "wrong ordinal" & Recipient.Get_Ordinal'Img);
---        Assert (abs Recipient.Get_Offset < 0.02,
---                "wrong time" & Recipient.Get_Offset'Img);
---     end Immediate_Event;
+   --------------------
+   --  Test globals  --
+   --------------------
+
+   Waiting : Boolean := False;
+   Result : Integer := 0;
+
+
+   -------------------
+   --  Test events  --
+   -------------------
+
+   --  This event delays for the duration requested in its Payload.
+   type Wait is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Duration;
+   end record;
+
+   procedure Handler (For_The_Event : Wait);
+
+   procedure Handler (For_The_Event : Wait) is
+   begin
+      Waiting := True;
+      delay For_The_Event.Payload;
+      Waiting := False;
+   end Handler;
+
+
+   --  This event stores its Payload in Result.
+   type Store is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Integer;
+   end record;
+
+   procedure Handler (For_The_Event : Store);
+
+   procedure Handler (For_The_Event : Store) is
+   begin
+      Result := For_The_Event.Payload;
+   end Handler;
+
+
+   --  This event waits for Interval, then posts a Store with Payload
+   --  equal to its own, as a normal event or as an event-to-self
+   --  depending on To_Self.
+   type Post is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Integer;
+      To_Self : Boolean;
+      Interval : Duration;
+   end record;
+
+   procedure Handler (For_The_Event : Post);
+
+   procedure Handler (For_The_Event : Post) is
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Store;
+      S : Store renames Store (Ev.all);
+   begin
+      delay For_The_Event.Interval;
+      S.Payload := For_The_Event.Payload;
+      if For_The_Event.To_Self then
+         ColdFrame.Project.Events.Post_To_Self
+           (Ev,
+            On => Events.Dispatcher);
+      else
+         ColdFrame.Project.Events.Post
+           (Ev,
+            On => Events.Dispatcher);
+      end if;
+   end Handler;
+
+
+   -----------------------
+   --  Test procedures  --
+   -----------------------
+
+   --  Locks respect other locks.
+   procedure Lock_Vs_Lock
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Lock_Vs_Lock
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      task T;
+      Sentinel : Boolean := False;
+      task body T is
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         delay 0.1;
+         Sentinel := True;
+      end T;
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      delay 0.01;
+      declare
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         null;
+      end;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Sentinel,
+              "lock wasn't respected");
+   end Lock_Vs_Lock;
+
+
+   --  Locks respect events.
+   procedure Lock_Vs_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Lock_Vs_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Wait;
+      W : Wait renames Wait (Ev.all);
+   begin
+      --  Ev will fire immediately. Its handler waits for 0.1 seonds, as
+      --  instructed.
+      W.Payload := 0.1;
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      delay 0.01;
+      Assert (Waiting,
+              "event is not being handled");
+      declare
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         Assert (not Waiting,
+                 "event is still being handled");
+      end;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+   end Lock_Vs_Event;
+
+
+   --  Normal events have equal priority with Locks.
+   procedure Lock_Vs_Normal_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Lock_Vs_Normal_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Post;
+      P : Post renames Post (Ev.all);
+   begin
+      P.Payload := 17;
+      P.To_Self := False;
+      P.Interval := 0.1;
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      delay 0.01;
+      declare
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         Assert (Result = 0,
+                 "event has fired");
+      end;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Result = 17,
+              "event hasn't fired");
+   end Lock_Vs_Normal_Event;
+
+
+   --  Self events have higher priority than Locks.
+   procedure Lock_Vs_Self_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Lock_Vs_Self_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Post;
+      P : Post renames Post (Ev.all);
+   begin
+      P.Payload := 17;
+      P.To_Self := True;
+      P.Interval := 0.1;
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      delay 0.01;
+      declare
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         Assert (Result = 17,
+                 "event has fired");
+      end;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+   end Lock_Vs_Self_Event;
+
+
+   ---------------
+   --  Harness  --
+   ---------------
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
---        Register_Routine
---          (T, Immediate_Event'Access, "Simple event");
-      null;
+      Register_Routine
+        (T, Lock_Vs_Lock'Access, "Lock against lock");
+      Register_Routine
+        (T, Lock_Vs_Event'Access, "Lock against event");
+      Register_Routine
+        (T, Lock_Vs_Normal_Event'Access, "Lock against normal event");
+      Register_Routine
+        (T, Lock_Vs_Self_Event'Access, "Lock against self event");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
@@ -47,13 +231,15 @@ package body Event_Test.Test_Engine is
    procedure Set_Up (T : in out Test_Case) is
       pragma Warnings (Off, T);
    begin
-      Event_Test.Events.Initialize;
+      Events.Initialize;
+      Waiting := False;
+      Result := 0;
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
       pragma Warnings (Off, T);
    begin
-      Event_Test.Events.Tear_Down;
+      Events.Tear_Down;
    end Tear_Down;
 
 end Event_Test.Test_Engine;
