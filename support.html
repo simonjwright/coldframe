@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v dc5aab23ad48 2002/11/14 20:10:03 simon $ -->
+<!-- $Id: support.html,v 7766afdf50a8 2003/02/16 19:39:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -176,7 +176,8 @@ is under <tt>cf-<i>yyyymmdd</i>/project</tt>.
 translation for <i>Date</i>, <i>Time</i> attributes.
 
 <br>The provided default contains renamings of
-<tt>Ada.Calendar.Time</tt>, <tt>Ada.Calendar.Clock</tt>
+<tt>Ada.Calendar.Time</tt> and <tt>Ada.Calendar.Clock</tt>, and an
+<tt>Image</tt> cunction used in serialization support.
 
 <dt><tt>ColdFrame.Project.Events</tt>
 
@@ -184,10 +185,8 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 support from <tt>ColdFrame.Project.Times</tt> and logging from
 <tt>ColdFrame.Project.Logging_Support</tt>.
 
-<dt><tt>ColdFrame.Project.Events.Creation</tt>
-
-<dd>A standard instantiation of
-<tt>ColdFrame.Events_G.Creation_G</tt>.
+<br>Three concrete instantiations are provided:
+<dl>
 
 <dt><tt>ColdFrame.Project.Events.Standard</tt>
 
@@ -206,6 +205,13 @@ support from <tt>ColdFrame.Project.Times</tt> and logging from
 <tt>ColdFrame.Events_G.Test_G</tt>, based on
 <tt>ColdFrame.Project.Events.Standard</tt>.
 
+</dl>
+
+<dt><tt>ColdFrame.Project.Events.Creation</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Creation_G</tt>.
+
 <dt><tt>ColdFrame.Project.Global_Storage_Pool</tt>
 
 <dd>Provides a (GNAT-specific) Storage Pool type and instance, using
@@ -213,6 +219,11 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 <a href="use-of-bcs.html">Booch Containers</a>.
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
+
+<dt><tt>ColdFrame.Project.Serialization</tt>
+
+<dd>Provides support for <i>serializable</i> types using
+<tt>ColdFrame.Serialization</tt>,
 
 </dl>
 
@@ -228,6 +239,11 @@ packages</a>:
 <dt><tt>ColdFrame.Logging_Signature</tt>
 
 <dd>Specifies how error reports are logged.
+
+<dt><tt>ColdFrame.Serialization_Signature</tt>
+
+<dd>Specifies requirements for serialization (this isn't a generic
+signature package, it just indicates requirements).
 
 <dt><tt>ColdFrame.Time_Signature</tt>
 
