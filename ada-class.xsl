@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 0dc9ab6e626c 2002/08/17 16:29:57 simon $ -->
+<!-- $Id: ada-class.xsl,v 243f394280dd 2002/09/10 18:43:08 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -988,16 +988,10 @@
 
     </xsl:choose>
 
-    <!-- .. XXX other attribute initializations .. -->
-
     <!-- .. initialize inheritance .. -->
     <xsl:call-template name="set-parent-child-info">
       <xsl:with-param name="handle" select="'Result'"/>
     </xsl:call-template>
-
-    <!-- .. initialize state machine .. -->
-    <xsl:call-template name="initialize-state-machine"/>  
-
 
     <!-- .. store the new instance .. -->
     <xsl:choose>
@@ -1019,6 +1013,11 @@
       </xsl:otherwise>
 
     </xsl:choose>
+
+    <!-- .. initialize state machine .. -->
+    <!-- (after we've stored the new instance, in case it's a singleton,
+         which means that Enter_{next-state} requires This to be set up) -->
+    <xsl:call-template name="initialize-state-machine"/>  
 
     <!-- .. return it .. -->
     <xsl:value-of select="$II"/>
@@ -1108,6 +1107,14 @@
       
       <xsl:when test="@max=1">
 
+        <!-- Check there is an instance. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>if This = null then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if&#10;</xsl:text>
+
         <!-- XXX check the ID is correct -->
         
         <xsl:value-of select="$II"/>
@@ -1153,13 +1160,6 @@
 
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
-
-    <!-- XXX why was this here?
-    <xsl:value-of select="$I"/>
-    <xsl:text>exception&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>when BC.Not_Found =&gt; raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
-    -->
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
