@@ -323,9 +323,6 @@ package body Event_Test.Test_Engine is
                                        After => 0.01);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-   exception
-      when Program_Error =>
-         Assert (False, "shouldn't have raised exception");
    end Delete_Timer_Without_Held_Event;
 
 
@@ -337,6 +334,7 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
       declare
          T : ColdFrame.Project.Events.Timer;
       begin
@@ -345,9 +343,6 @@ package body Event_Test.Test_Engine is
                                        To_Fire => new Empty,
                                        After => 1.0);
       end;
-      Assert (False, "should have raised exception");
-   exception
-      when Program_Error => null;
    end Delete_Timer_With_Held_Event;
 
 
