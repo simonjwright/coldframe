@@ -1,0 +1,336 @@
+<!-- $Id: preparation.html,v 529557ee2dba 2001/11/25 10:25:37 simon $ -->
+<head>
+<title>ColdFrame: Preparation</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Preparation of models in Rational Rose</h1>
+
+<h2>Shlaer-Mellor aspects</h2>
+
+<p>It's not possible here to give a detailed tutorial on the
+Shlaer-Mellor approach. <a
+href="resources.html#build-object-models">Leon Starr's book</a> is an
+excellent reference.. Note also that the full Shlaer-Mellor approach
+involves full translation of the code of operations and actions as
+well as the generation of the framework which is all that ColdFrame
+attempts (this year).
+
+<h3>Identifiers</h3>
+
+<p>Instances of a Class must be uniquely identifiable by some
+attribute or combination of attributes. For example, a Vehicle Excise
+Disk might be identified by the combination of Vehicle Index Mark and
+Validity Start Date. Vehicle Index Mark and Validity Start Date then
+become "identifying attributes", whereas Date Of Issue and Period Of
+Validity are just common-or-garden attributes.
+
+<p>In ColdFrame, you <em>must not</em> specify identifiers for
+
+<ul>
+<li>child classes in inheritance relationships,
+<li>associative classes,
+<li>singletons, or
+<li>types.
+</ul>
+
+All other classes <em>must</em> have identifiers.
+
+<h3>Associations and role names</h3>
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>. Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing. <em>[By the way, the references are far from clear whether
+this choice of end convention is in fact correct. I think it is,
+judging by the way Rose and Rhapsody show associations in the Browser
+and generate code.]</em>
+
+<h3>Associations and multiplicity</h3>
+
+<p>Careful consideration of the multiplicity of associations is very
+important. Clearly each <em>Screen</em> <em>"displays"</em> a number
+of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
+more than one <em>Screen</em>? (perhaps, if you have multi-headed
+display capability). Can you have a <em>Window</em> which <em>"appears
+on"</em> no <em>Screen</em>s? (well, no, not if your display
+technology is X--in which case <em>"appears on"</em> may not be quite
+right either, since the application could be iconised).
+
+<p>Unconditional multiplicity is good; if each end of an association
+is conditional (0..1, 0..n), maybe you should think more carefully
+about it. Perhaps there's some super/subtype (inheritance)
+relationship lurking in there.
+
+<h3>Containers</h3>
+
+<p>Resist the temptation to put containers in the model. In <em>Window
+"appears on" Screen</em>, the association itself models the user
+concept of "each screen displays a list of windows" (actually,
+thinking about it, I'm not at all sure that the actual user ever had
+the concept "list" in mind at all. She's much more likely to have said
+"each screen displays a <em>number</em> of windows". I think this
+"list" was implanted there by some ex-programmer with a solution in
+mind, rather than by someone listening to the customer!)
+
+<h3>Formalising associations</h3>
+
+<p>In Shlaer-Mellor analysis, associations need to be "formalised" by
+the use of "referential attributes". Considering the <em>Window
+"appears on" Screen</em>, where clearly there are many
+<em>Window</em>s but only one <em>Screen</em>, you'd need a
+referential attribute <em>screen&nbsp;id</em> in the <em>Window</em>
+instance.
+
+<p>All parent classes in inheritance relationships are, in a sense,
+abstract: whenever an instance of the parent class exists, there
+exists precisely one related instance of one of the child
+classes. Inheritance relationships are also formalised; typically the
+child class has the same identifying attributes as the parent.
+
+<p>In spite of the above, with ColdFrame you usually don't need to
+provide referential attributes (it would be quite cumbersome to do so,
+since Rose is unaware of the concept). Instead, ColdFrame
+automatically implements the relationships. Sometimes it needs a
+little help, for example for <a href="#formalizes">complex
+formalization</a> or <a href="#source">in a symmetric association</a>.
+
+<h3>Polymorphism and dispatching</h3>
+
+<p>ColdFrame supports polymorphism. Instance operations marked
+<em>&#171;abstract&#187;</em> are dispatched to the current child
+(skipping down the inheritance tree until a concrete implementation is
+found), while a child class receives upward-dispatching
+implementations of all normal concrete parental instance operations.
+
+<h2>Use of Stereotypes</h2>
+
+<h3>Attributes</h3>
+
+<p>Identifying attributes are marked with the stereotype
+<em>&#171;id&#187;</em>.
+
+<h3>Classes</h3>
+
+<p>Classes which represent user-defined types are marked with the
+stereotype <em>&#171;type&#187;</em>.
+
+<p>Classes of which there is only ever one instance are marked with
+the stereotype <em>&#171;singleton&#187;</em>.
+
+<p>Public classes, which are the only classes visible from outside the
+Domain, are marked with the stereotype
+<em>&#171;public&#187;</em>. This implies the stereotype
+<em>&#171;singleton&#187;</em>. Public classes can't take part in
+relationships.
+
+<h3>Operations</h3>
+
+<p>Dispatching operations are marked with the stereotype
+<em>&#171;abstract&#187;</em>.
+
+<p>Class operations are marked with the stereotype
+<em>&#171;class&#187;</em>.
+
+<p>Operations to be called from the Domain <tt>Initialize</tt>
+procedure are marked with the stereotype
+<em>&#171;init&#187;</em>. This implies the stereotype
+<em>&#171;class&#187;</em>. These operations must be parameterless
+procedures.
+
+<p>Operations to be called to clean up as an instance is deleted (for
+example, to tidy up associations) are marked with the stereotype
+<em>&#171;finalize&#187;</em>. (It would be possible in theory to use
+Ada's controlled types, but (a) that depends on your target language
+being Ada, and (b) GNAT (3.14) has a problem in the interaction of the
+<tt>with type</tt> facility and controlled types). Also, it's possible
+to have more than one &#171;finalize&#187; operation.
+
+<p>Operations which are automatically generated by ColdFrame but which
+are required to be present so that they can be used on sequence
+diagrams (eg, <tt>Find</tt>, <tt>Delete</tt>, <tt>All_Instances</tt>)
+are marked with the stereotype <em>&#171;generated&#187;</em>. This
+effectively means "ignore this".
+
+<p><em>&#171;navigation&#187;</em> is similar to &#171;generated&#187;;
+the intention is that it be used for navigating associations.
+
+<h2><a name="annotation">Other annotations</a></h2>
+
+<p>It's not at all convenient to put all the extra information you
+need for code generation into stereotypes. Instead, "annotations" can
+be put into the documentation section (in Rose the bottom left pane),
+in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
+<tt>[[&nbsp;mode&nbsp;:&nbsp;in&nbsp;out&nbsp;]]</tt>.
+
+<p>Annotations supported are:
+
+<dl>
+
+<dt>on domains<dd><ul>
+
+<li><tt>revision : <i>revision-id-string</i></tt> specifies the
+domain's version control ID.
+
+<p>In Rose with CVS, you'd select the domain Package in the browser
+and add the line
+
+<!-- couldn't actually use the $ here! -->
+<pre>
+  [[ revision : &#36;Id&#36; ]]
+</pre>
+
+to the documentation pane. Modify as required by your version control
+system.
+
+</ul>
+
+<p>
+
+<dt>on classes<dd><ul>
+
+<li><tt>abbreviation : <i>abbrev</i></tt> specifies the class'
+abbreviation. By default, the abbreviation is composed of the initial
+letters of the full class name; this wouldn't work for, for example,
+<i>Pet</i> and <i>Person</i>.
+
+<li><tt>max : <i>max-size</i></tt> specifies the maximum number of
+instances that will coexist. This may provoke a different code
+generation strategy.
+
+</ul>
+
+<p>
+
+<dt>on <em>&#171;type&#187;</em> classes<dd><ul>
+
+<li><tt>callback : <i>max</i></tt> specifies that <a
+href="coldframe-callback.pdf">callback support code</a> is to be
+generated. The idea here is that a (lower-level) Domain may need to
+support up to <tt><i>max</i></tt> Observers from higher-level Domains,
+and the higher-level Domains can register to be notified when
+something has changed in the lower-level Domain.
+
+<li><tt>discriminated</tt> (only relevant if the type is a record
+type, ie has attributes) causes the generation of discriminated
+records; the discriminant is an enumeration type with literals formed
+from the attribute names with <tt>_T</tt> appended.
+
+<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+
+<li><tt>imported : <i>external-reference</i></tt> specifies that the
+given type is to be found at the specified external reference. For
+Ada, this results (for a type named <tt>T</tt>) in
+<pre>
+  with <i>external-reference</i>;
+  ..
+  subtype T is <i>external-reference</i>.T;
+</pre>
+(clearly <tt><i>external-reference</i></tt> needs to correspond to a
+with-able package name).
+
+<li><tt>integer : lower <i>low-bound</i>, upper
+<i>upper-bound</i></tt>
+
+<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
+upper <i>upper-bound</i></tt>
+
+<li><tt>set : <i>class-name</i></tt> (for parameters or return values
+of operations involving more than one instance at once, eg "find all
+the outstanding Problem Reports on this Component").
+
+<li><tt>string : max <i>max-length</i></tt>
+
+</ul>
+
+<p>
+
+<dt>on attributes<dd><ul>
+
+<li><tt>id</tt> indicates that the attribute is an identifying
+attribute. This is an alternative to the <em>&#171;id&#187;</em>
+stereotype.
+
+<li><a name="formalizes"><tt>formalizes :
+<i>association-name</i></tt></a> indicates that the attribute is a
+referential attribute.
+
+<p>This is needed when the attribute has to be specified by the
+analyst (normally, ColdFrame can manage references as required).
+
+<p>Consider R8, Licence is-issued-by Licensing Office. The identifier
+of Licence consists of the licence number and also the issuing
+Licensing Office, since the various offices don't use disjoint licence
+number ranges. In this case, we'd specify the attribute as
+<pre>
+  &#171;id&#187; issuing office : Licensing Office
+</pre>
+
+and include the annotation
+<pre>
+  [[ formalizes : r8 ]]
+</pre>
+
+</ul>
+
+<dt>on operations<dd><ul>
+
+<li><tt>abstract</tt> indicates that the operation will be implemented
+in a child class.
+
+<li><tt>access</tt> indicates that the operation is in fact an access
+type (pointer-to-subprogram with the indicated profile).
+
+<li><tt>class</tt> indicates that the operation is a class operation
+(no <tt>This</tt> parameter will be generated). This is an
+alternative to the <em>&#171;class&#187;</em> stereotype.
+
+</ul>
+
+<p>
+
+<dt>on parameters<dd><ul>
+
+<li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
+<ul>
+<li><tt>in</tt>
+<li><tt>inout</tt> or <tt>in out</tt>
+<li><tt>out</tt>
+</ul>
+
+</ul>
+
+<p>
+
+<dt>on roles<dd><ul>
+
+<li><a name="source"><tt>source</tt></a> indicates that the class at
+this end is the source of the formalisation for the association: only
+useful for symmetrical associations <i>1:1</i>, <i>1c:1c</i>,
+<i>1-(1:1)</i> or <i>1-(1c:1c)</i>, for which it is required.
+
+</ul>
+
+</dl>
+
+<p>You can only have one annotation section per documentation section,
+but multiple semicolon-separated annotations are allowed
+(syntactically; ColdFrame may not check whether they make sense
+semantically).
+
+<p>
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

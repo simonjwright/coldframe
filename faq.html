@@ -1,0 +1,129 @@
+<!-- $Id: faq.html,v 529557ee2dba 2001/11/25 10:25:37 simon $ -->
+<head>
+<title>ColdFrame: Frequently Asked Questions</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Frequently Asked Questions</h1>
+
+<ol>
+
+<li><a href="#inheritance">What strange sort of inheritance is this?</a>
+
+<li><a href="#composition">Why doesn't ColdFrame support composition?</a>
+
+<li><a href="#aggregation">Why doesn't ColdFrame support aggregation?</a>
+
+<li><a href="#role-names">I don't understand about role names.</a>
+
+</ol>
+
+<h2><a name="inheritance">What strange sort of inheritance is this?</a></h2>
+
+<p>The thinking behind ColdFrame is that you should be making analysis
+models rather than code models. <a
+href="resources.html#analysis-patterns">Martin Fowler</a> discusses
+this in his Appendix A.
+
+<p>One way of looking at it is that modelling ought to be, as far as
+reasonable, independent of the software architecture (both the
+implementation language and the support infrastructure). What we are
+modelling is generalization. We may be able to implement
+generalization using inheritance in our implementation language, but
+this may well fall foul of practicalities; perhaps we have to
+implement in C; maybe we're using an SQL database to implement
+persistence; our implementation language may not support
+<em>multiple</em> inheritance.
+
+<p>Another aspect is dynamic versus static classification.
+
+<p>The major use of generalization (well, specialization) is to
+classify aspects of the subject matter. Inheritance, as implemented in
+C++ or other object-oriented programming languages, is fine for static
+classification (subtyping Animal as Pig, Goat, Cow for example).
+
+<p>However, a very useful analysis technique is dynamic
+classification. Rent-a-Wreck has a fleet of vans, which are sometimes
+on hire. We might want to model this as <i>Hirer hires Van</i>, which
+is biconditional (a known Hirer may not have any Van on hire at the
+moment; a Van may not be hired to anyone at the moment). The model can
+be made less vague by subtyping Van into Hired Van and Available Van;
+now all Hired Vans have a Hirer, so the code doesn't need to check
+whether there's a Hirer or not.
+
+<p>The problem with implementing this model using programming language
+inheritance arises when the Van changes from being Available to being
+Hired. There's only one code object, so you have to create a new
+<i>HiredVan</i>, copy the relevant attributes from the old
+<i>AvailableVan</i> to it, break any associations with other objects
+(for instance, the <i>ServiceHistory</i>), delete the old
+<i>AvailableVan</i> and remake the associations.
+
+<p>ColdFrame adopts a halfway-house approach to this, combining the <a
+href="resources.html#build-object-models">Shlaer-Mellor view of
+generalization</a> with dispatching and inherited operations.
+
+<p>Of course, there is a cost to dynamic classification; you have to
+decide whether increased precision in the model is worth the extra run
+time costs of maintaining the model.
+
+<p>
+
+<h2><a name="composition">Why doesn't ColdFrame support composition?</a></h2>
+
+<p>ColdFrame does support composition, in that the &#171;type&#187;
+stereotype allows you to build types of arbitrary complexity and
+include attributes of these types in your classes.
+
+<p>If you have a <i>Circle</i> which is at a <i>Point</i>, create a
+&#171;type&#187; <i>Point</i> (presumably with attributes <i>x</i> and
+<i>y</i>, themselves of some appropriate type) and give the
+<i>Circle</i> an attribute <i>centre&nbsp;:&nbsp;Point</i>.
+
+<p>The thing to remember is that (almost by definition) these things
+are values not objects (that is, one <i>Point(3,&nbsp;4)</i> is
+indistinguishable from another), and you don't need to navigate from
+the <i>Point</i> to the <i>Circle</i>.
+
+<p>If you feel the need to contain all Rent-a-Wreck's <i>Van</i>s in a
+<i>Fleet</i> (singleton) class, so as to keep track of them all,
+resist it!  ColdFrame's implementation of <i>Van</i> includes a
+container which holds all the current <i>Van</i> instances, so you can
+get at them at any time.
+
+<p>
+
+<h2><a name="aggregation">Why doesn't ColdFrame support aggregation?</a></h2>
+
+<p>It's not at all obvious what aggregation is for; it seems to add
+very little over a normal association.
+
+<p>If your intent is to classify in some way (perhaps you have a
+singleton <i>HiredVans</i> class, which aggregates all the <i>Van</i>s
+which are on hire), you'll almost certainly find that an existing
+association (between <i>Van</i> and <i>Hirer</i>) or specialization
+(of <i>HiredVan</i> from <i>Van</i>) will do the trick.
+
+<p>One clue here is the difficulty of providing strong role names for
+an aggregate association: <i>"contains"</i>, <i>"is in"</i> are fairly
+feeble.
+
+<p>Another indicator that this is happening is the need to name a
+class "List" (<i>Threat List</i>, for instance).
+
+<p>
+
+<h2><a name="role-names">I don't understand about role names.</a></h2>
+
+<p>
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
