@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-real_timer-debug.adb,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 29450fc20619 $
+--  $Date: 2002/02/23 13:41:49 $
 --  $Author: simon $
 
 with Ada.Tags;
@@ -83,18 +83,30 @@ package body ColdFrame.Events.Real_Timer.Debug is
    procedure Log_Pre_Dispatch (The : Event_P;
                                On : access Event_Queue) is
    begin
-      Put_Line ("dispatching a "
-                & Ada.Tags.Expanded_Name (The'Tag)
-                & ": state "
-                & State_Image (The.For_The_Instance.all));
+      if The.all in Instance_Event_Base'Class then
+         Put_Line
+           ("dispatching a "
+            & Ada.Tags.Expanded_Name (The'Tag)
+            & ": state "
+            & State_Image
+                 (Instance_Event_Base (The.all).For_The_Instance.all));
+      else
+         Put_Line
+           ("dispatching a "
+            & Ada.Tags.Expanded_Name (The'Tag));
+      end if;
    end Log_Pre_Dispatch;
 
 
    procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue) is
    begin
-      Put_Line (".. new state "
-                & State_Image (The.For_The_Instance.all));
+      if The.all in Instance_Event_Base'Class then
+         Put_Line
+           (".. new state "
+            & State_Image
+                 (Instance_Event_Base (The.all).For_The_Instance.all));
+      end if;
    end Log_Post_Dispatch;
 
 
