@@ -1,4 +1,3 @@
-comp_opt=-gnatq -gnatQ -gnatX -gnatwu -gnatf -gnaty -g -O2
 bind_opt=-E
 gnatmake_opt=-g -m -j3 -k
 main=library_test_harness
