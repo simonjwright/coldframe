@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 8b631934b739 2001/11/25 10:19:31 simon $ -->
+<!-- $Id: generate-ada.xsl,v a02a8a2a1a70 2002/01/13 10:27:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -307,6 +307,7 @@
     <xsl:text>--  Generator: </xsl:text>
     <xsl:value-of select="$coldframe-version"/>
     <xsl:text>&#10;</xsl:text>
+    <xsl:text>--  Lines: LINES-OF-CODE&#10;</xsl:text>
   </xsl:template>
 
 
