@@ -1,4 +1,4 @@
-comp_opt=-gnatq -gnatQ -gnatX -gnatwu -g -O
+comp_opt=-gnatq -gnatQ -gnatX -gnatwu -g -O2
 gnatmake_opt=-g -m -j2
 main=${current}
 main_unit=${current}
