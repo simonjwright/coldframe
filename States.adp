@@ -1,4 +1,4 @@
-comp_opt=-gnatqQfy -gnata -gnatwul -O2
+comp_opt=-gnatqQafy -gnatwaL -O2
 bind_opt=-E
 gnatmake_opt=-g -j2 -m -k
 main=${HOME}/cf/States.impl/states-t

@@ -1,5 +1,6 @@
-comp_opt=-gnatqQafy -O2
-gnatmake_opt=-g -m -j2 -k
+comp_opt=-gnatqQafy -gnatwaL -O2
+bind_opt=-E
+gnatmake_opt=-g -j2 -m -k
 main=${current}
 main_unit=${current}
 build_dir=/home/simon/cf/.build/
@@ -12,6 +13,6 @@ run_cmd=cd ${build_dir}
 run_cmd=${main}
 src_dir=../
 src_dir=${HOME}/bc/
-
+obj_dir=./
 debug_pre_cmd=cd ${build_dir}
 debug_post_cmd=

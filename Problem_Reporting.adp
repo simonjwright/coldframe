@@ -1,4 +1,4 @@
-comp_opt=-gnatqQfy -gnatwlu -O2
+comp_opt=-gnatqQfy -gnatwaL -O2
 bind_opt=-E
 gnatmake_opt=-g -j2 -m -k
 main=${HOME}/cf/Problem_Reporting.impl/demo
