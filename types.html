@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 2a276d716c85 2004/01/18 08:19:25 simon $ -->
+<!-- $Id: types.html,v 391bc312ba47 2004/01/21 20:51:35 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -78,6 +78,7 @@ for example,
 <ul>
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
+and optionally <tt>unconstrained</tt>
 
 <li><tt>callback</tt> specifies that callback support code is to be
 generated. The idea here is that a (lower-level) Domain may need to
@@ -220,12 +221,20 @@ no implicit <tt>This</tt> parameter.
 
 <ul>
 
-<li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i>[,
+unconstrained]</tt>
 
 <p>Generates
 <pre>
    type <i>Typ</i> is
      array (<i>index-type</i>)
+     of <i>element-type</i>;
+</pre>
+
+<p>or, if the <tt>{unconstrained}</tt> tag is specified as well,
+<pre>
+   type <i>Typ</i> is
+     array (<i>index-type</i> range &lt;&gt;)
      of <i>element-type</i>;
 </pre>
 
