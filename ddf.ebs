@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 2babb92cc6f5 2001/06/09 04:36:50 simon $
+'$Id: ddf.ebs,v 715c326b6745 2001/08/08 18:00:38 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -285,9 +285,17 @@ Sub DumpDomainData (domain As Category)
 	Else
 		Print #1, "<domain stereotype=" & chr(34) & s & chr(34) & ">"
 	End If
+	'the following line is edited by the Makefile
+	Print #1, "<extractor>cf-DATE</extractor>"
 	'domain name
 	Print #1, "<name>" + domain.Name + "</name>"
-	'get date in external processing (must be a way!)
+	'date, time
+	Print #1, "<date>"
+	Print #1, "<year>" & DatePart("yyyy", Date)	& "</year>"
+	Print #1, "<month>" & DatePart("m", Date)	& "</month>"
+	Print #1, "<day>" & DatePart("d", Date)	& "</day>"
+	Print #1, "<time>" & format (time, "Short Time") & "</time>"
+	Print #1, "</date>"
 	Print #1, "<documentation>" + domain.Documentation + "</documentation>"
 	DumpClasses (domain)
 	DumpRelationships (domain)
