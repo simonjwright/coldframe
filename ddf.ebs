@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 2536f2745a16 2004/03/01 17:43:41 simon $
+'$Id: ddf.ebs,v bda94d23f339 2004/04/04 16:21:06 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -460,7 +460,9 @@ Sub Main
 		End If
 	Next i
 
+	On Error GoTo OpenFileError
 	Open (directory & "\" & diagName & ".domains") For Output Access Write As #2
+	On Error GoTo 0
 
 	Dim packages As Integer
 	packages = 0
@@ -482,12 +484,16 @@ Sub Main
 	Close #2
 
 	If packages = 0 Then
-		MsgBox "There are no Packages on this diagram"
+		MsgBox "There are no packages on this diagram, or something is selected which isn't a package"
 		End
 	Else
 		MsgBox result
 	End If
 	
+	End
+
+OpenFileError:
+	MsgBox "Unable to open file in " & directory
 	End
 
 End Sub
