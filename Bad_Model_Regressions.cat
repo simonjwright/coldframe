@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 37dd0d861637 $ }
+|{ revision = $Revision: 6268f9a4ccdd $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -19,7 +19,7 @@
 	    quid       	"3FDAA7BB008F"
 	    documentation 	
 |{ bad tag, bad:tag, bad+tag, bad.tag }
-|{ good-tag, good-tag }
+|{ good-tag, good_tag }
 |
 	    
 	    class_attributes 	(list class_attribute_list
@@ -34,7 +34,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 37dd0d861637 $ }
+|{ revision = $Revision: 6268f9a4ccdd $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -85,7 +85,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	445)
+			max_width  	452)
 		    width      	466
 		    height     	168
 		    annotation 	8
@@ -125,7 +125,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 37dd0d861637 2003/12/13 05:54:20 simon $")
+		    label      	"$Id: Bad_Model_Regressions.cat,v 6268f9a4ccdd 2004/04/04 14:52:06 simon $")
 		(object CategoryView "Logical View::Bad Model Regressions" @4
 		    location   	(2734, 220)
 		    font       	(object Font
