@@ -2,12 +2,27 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a7593cf67403 2000/12/16 14:53:20 simon $
+# $Id: normalize-rose.tcl,v d36d970279e3 2001/01/12 20:39:05 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
 
 # Copyright (C) Simon Wright <simon@pushface.org>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+# USA.
 
 lappend auto_path ~/TclXML-1.2
 package require xml
@@ -633,8 +648,12 @@ itcl::class Object {
     method -addFormalizingAttributesTo {obj relation identifier} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
-		set relName [$relation -getName]
-		set attr [$a -makeReferentialClone $key $relName]
+		if [$relation isa Inheritance] {
+		    set attr [$a -makeInheritanceIdentifierClone]
+		} else {
+		    set relName [$relation -getName]
+		    set attr [$a -makeReferentialClone $key $relName]
+		}
 		if $identifier {
 		    $attr -identifier
 		}
@@ -713,9 +732,17 @@ itcl::class Object {
 itcl::class Operation {
     inherit Element
 
+    # is this a class operation?
+    variable cls 0
+
+    # the return type, if any
     variable ret ""
 
     variable parameters
+
+    # called via stereotype mechanism to indicate that this is a class
+    # operation
+    method -class {dummy} {set cls 1}
 
     method -return {r} {set ret $r}
 
@@ -723,6 +750,7 @@ itcl::class Operation {
 
     method -generate {domain}  {
 	puts -nonewline "<operation"
+	if $cls {puts -nonewline " class=\"yes\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
@@ -1276,6 +1304,10 @@ itcl::class Attribute {
 
     method -type {t} {set type $t}
 
+    # used via stereotype processing to indicate this is an identifying
+    # attribute
+    method -id {dummy} {$this -identifier}
+
     method -identifier {} {set identifier 1}
 
     method -getIdentifier {} {return $identifier}
@@ -1285,6 +1317,17 @@ itcl::class Attribute {
     }
 
     private method -referential {} {set referential 1}
+
+    # called from a child object which needs to formalize an inheritance
+    # relationship by use of a matching attribute
+    method -makeInheritanceIdentifierClone {} {
+	set res [Attribute ::#auto]
+	$res -name $name
+	$res -type $type
+	# XXX probably need to do something about datatype section
+	$res -referential
+	return $res
+    }
 
     # called from an object which needs to formalize a relationship by
     # use of a matching attribute
