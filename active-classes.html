@@ -1,4 +1,4 @@
-<!-- $Id: active-classes.html,v e753d33c6d4f 2004/04/22 04:47:15 simon $ -->
+<!-- $Id: active-classes.html,v f010d53c47a6 2004/04/29 21:03:14 simon $ -->
 <head>
 <title>ColdFrame: Active Classes</title>
 </head>
@@ -150,18 +150,36 @@ task's name, if supported by the operating system, is
 <p>You access the task using <tt>This.The_T</tt>; so if there is an
 <i>«entry» Start</i>, you would call it as <tt>This.The_T.Start</tt>.
 
-<p>The task is constrained by <tt>This : access Instance</tt>, so you
-can quite often treat <tt>This</tt> as if it were a
-<tt>Handle</tt>. However, it isn't quite, so if the compiler complains
-use a view conversion:
+
+<h2>Use</h2>
+
+<h3>Accessing instance attributes and calling operations</h3>
+
+<p>The task is constrained by <tt>This : access Instance</tt>, so
+within the task you can quite often treat <tt>This</tt> as if it were
+a <tt>Handle</tt>. However, it isn't quite, so if the compiler
+complains use a view conversion:
 <pre>
    Handle (This)
 </pre>
 
+<h3>Deleting the instance</h3>
 
-<!--
-<h2>Use</h2>
--->
+<p>The generated <tt>Delete</tt> operation of an «active» class aborts
+the task before freeing the task and instance memory. This means that
+if you call <tt>Delete</tt> from the task you are pulling the rug from
+under your feet!
+
+<p>What's needed is <i>another</i> task. The nearest candidate is the
+task in the <a href="events.html">event queue</a> for the domain; so
+the canonical solution is to post an event to the event queue which
+will <tt>Delete</tt> the instance when it fires.
+
+<p>Some examples of this idiom have posted the event to run after a
+delay. This should not be necessary.
+
+<p>To avoid the need for a special state machine, a <i>«class
+event»</i> should be used.
 
 
 <p><hr>
