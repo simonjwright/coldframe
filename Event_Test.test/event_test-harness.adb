@@ -1,13 +1,15 @@
 with AUnit.Test_Runner;
 with Event_Test.Suite;
-with ColdFrame.Exceptions.Symbolic_Traceback;
-pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
+with GNAT.Exception_Traces;
 
 procedure Event_Test.Harness is
 
    procedure Run is new AUnit.Test_Runner (Suite);
 
 begin
+
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
    Run;
 
