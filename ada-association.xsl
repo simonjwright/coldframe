@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 8103f0c1ab3f 2001/05/05 09:47:07 simon $ -->
+<!-- $Id: ada-association.xsl,v 1cc6841dd299 2001/05/06 09:11:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -286,6 +286,8 @@
             <xsl:variable name="src" select="role[@source]"/>
             <xsl:variable name="dst" select="role[not(@source)]"/>
             <xsl:text>    </xsl:text>
+            <xsl:value-of select="/domain/name"/>
+            <xsl:text>.</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
             <xsl:call-template name="attribute-name">
