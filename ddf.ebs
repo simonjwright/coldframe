@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 607b808a4fb8 2002/09/20 10:15:16 simon $
+'$Id: ddf.ebs,v 109ebb0e5e3a 2002/10/01 17:46:38 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -361,6 +361,35 @@ Sub DumpDomainData (domain As Category, dirName As String)
 	Close #1
 End Sub
 
+Sub LoadUnits (cat As Category)
+	'ensure cat, and all its child units, are loaded.
+
+	Dim u As ControllableUnit
+	Set u = cat.TypeCast(u)
+	Dim wasLoaded As Boolean
+	' need to check first, or Rose gets confused about
+	' whether already-loaded units have been modified
+	wasLoaded = u.IsLoaded()
+	If Not wasLoaded Then
+		Dim dummy As Boolean
+		dummy = u.Load()
+	End If
+	If wasLoaded Then
+		Print "Cat " & cat.Name
+	Else
+		Print "Cat " & cat.Name & " (loaded)"
+	End If
+
+	Dim items As CategoryCollection
+	Set items = cat.Categories
+ 	For i = 1 To items.Count
+		Dim c As Category
+		Set c = items.GetAt(i)
+		LoadUnits(c)
+	Next i
+
+End Sub
+
 Sub Main
 
 	'ordinary Print output goes to this window, if it's open.
@@ -398,32 +427,15 @@ Sub Main
 	packages = 0
 	Dim result As String
 	result = "Domains processed:"
-	For i = 1 To items.Count
+ 	For i = 1 To items.Count
 		Dim it As Element
 		Set it = items.GetAt(i)
 		If it.IsClass("Category") Then
 			packages = packages + 1
-			Dim u As ControllableUnit
-			Set u = it.TypeCast(u)
-			Dim wasLoaded As Boolean
-			' need to check first, or Rose gets confused about
-			' whether already-loaded units have been modified
-			wasLoaded = u.IsLoaded()
-			If Not wasLoaded Then
-				Dim dummy As Boolean
-				dummy = u.Load()
-			End If
 			Dim c As Category
 			Set c = it.TypeCast(c)
-			If wasLoaded Then
-				Print "Domain " & c.Name
-			Else
-				Print "Domain " & c.Name & " (loaded)"
-			End If
+			LoadUnits(c)
 			result = result & Chr(10) & "  " & c.Name
-			If Not wasLoaded Then
-				result = result & " (loaded)"
-			End If
 			Call DumpDomainData(c, directory)
 		End If
 	Next i
