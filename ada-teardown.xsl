@@ -257,7 +257,7 @@
     <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>null;&#10;</xsl:text>
+    <xsl:text>ColdFrame.Project.Events.Tear_Down (Dispatcher);&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
