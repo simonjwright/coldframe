@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: c9852f38f0c1 $
---  $Date: 2005/02/26 11:58:03 $
+--  $Revision: e905df7674ba $
+--  $Date: 2005/03/01 06:30:50 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -37,6 +37,10 @@ package ColdFrame.Stubs is
    --  object's constraints. This value should be enough for all but
    --  extreme cases.
    Storage_Overhead : constant := 128;
+
+
+   --  Raised if a required return or (in)out value is not found.
+   No_Value : exception;
 
 
    -------------------------------
