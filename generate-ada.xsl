@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d5fb5a649b82 2002/02/21 05:50:09 simon $ -->
+<!-- $Id: generate-ada.xsl,v d95a39027fce 2002/03/09 09:51:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,17 +27,17 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
 
-  <xsl:import href="ada-association.xsl"/>
-  <xsl:import href="ada-association-collection.xsl"/>
-  <xsl:import href="ada-attribute.xsl"/>
-  <xsl:import href="ada-callback.xsl"/>
-  <xsl:import href="ada-class.xsl"/>
-  <xsl:import href="ada-collection.xsl"/>
-  <xsl:import href="ada-operation.xsl"/>
-  <xsl:import href="ada-state.xsl"/>
-  <xsl:import href="ada-teardown.xsl"/>
-  <xsl:import href="ada-type.xsl"/>
-  <xsl:import href="ada-utilities.xsl"/>
+  <xsl:include href="ada-association.xsl"/>
+  <xsl:include href="ada-association-collection.xsl"/>
+  <xsl:include href="ada-attribute.xsl"/>
+  <xsl:include href="ada-callback.xsl"/>
+  <xsl:include href="ada-class.xsl"/>
+  <xsl:include href="ada-collection.xsl"/>
+  <xsl:include href="ada-operation.xsl"/>
+  <xsl:include href="ada-state.xsl"/>
+  <xsl:include href="ada-teardown.xsl"/>
+  <xsl:include href="ada-type.xsl"/>
+  <xsl:include href="ada-utilities.xsl"/>
 
   <xsl:strip-space elements="*"/>
 
