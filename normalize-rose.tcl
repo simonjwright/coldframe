@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 31378fa7581f 2001/04/01 10:06:17 simon $
+# $Id: normalize-rose.tcl,v 7a2c9dfdd340 2001/04/13 11:16:57 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -654,6 +654,9 @@ itcl::class Class {
 		set dt [Datatype ::#auto $name]
 		$dts -add $dt $name
 	    }
+	    # transfer the documentation and the (already-extracted) annotation
+	    # to the new Datatype.
+	    $dt -documentation $documentation
 	    $dt -annotation $annotation
 	} elseif $isControl {
 	    puts stderr "<<control>> not yet handled properly"
@@ -1060,6 +1063,7 @@ itcl::class Inheritance {
 }
 
 itcl::class Datatype {
+    inherit Element
 
     variable type
 
@@ -1141,6 +1145,7 @@ itcl::class Datatype {
     method -generate {domain} {
 	puts "<type>"
 	putElement name "$type"
+	$this -generateDocumentation
 	switch $dataType {
 	    enumeration {
 		puts "<enumeration>"
@@ -1324,6 +1329,7 @@ itcl::class Datatypes {
 
     constructor {} {
 	# insert standard (provided) types.
+	$this -add [Datatype ::#auto Boolean] Boolean
 	$this -add [Datatype ::#auto Real] Real
 	$this -add [Datatype ::#auto Integer] Integer
 	$this -add [Datatype ::#auto String] String
