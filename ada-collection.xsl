@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-collection.xsl,v 131f6566eee7 2003/02/15 18:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -47,6 +47,11 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     </xsl:variable>
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <!-- Abstract Containers package -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Containers;&#10;</xsl:text>
@@ -82,8 +87,8 @@
     <!-- Concrete Collections package -->
     <xsl:choose>
 
-      <xsl:when test="./@max">
-        <!-- Wnen there's a maximum size, use the Bounded version -->
+      <xsl:when test="$max &lt;= $max-bounded-container">
+        <!-- Wnen the size isn't too large, use the Bounded version -->
         <xsl:call-template name="do-not-edit"/>
         <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
@@ -93,7 +98,7 @@
         <xsl:value-of select="$class"/>
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>is new Abstract_Collections.Bounded (Maximum_Size =&gt; </xsl:text>
-        <xsl:value-of select="./@max"/>
+        <xsl:value-of select="$max"/>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
 
@@ -134,8 +139,8 @@
 
     <xsl:choose>
 
-      <xsl:when test="./@max">
-        <!-- Wnen there's a maximum size, use the Bounded version -->
+      <xsl:when test="$max &lt;= $max-bounded-container">
+        <!-- Wnen the size isn't too large, use the Bounded version -->
         <xsl:text>with BC.Containers.Sets.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -154,7 +159,7 @@
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
         <xsl:text> Maximum_Size =&gt; </xsl:text>
-        <xsl:value-of select="./@max"/>
+        <xsl:value-of select="$max"/>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
 
@@ -302,6 +307,11 @@
       <xsl:value-of select="name"/>
     </xsl:variable>
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <!-- Function to return a Collection of all the Instances -->
     <!-- full version ..
          with BC.Copy;
@@ -324,7 +334,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
 
-    <xsl:if test="not(@max) or @max&gt;1">
+    <xsl:if test="$max &gt; 1">
       <xsl:text>with BC.Copy;&#10;</xsl:text>
       <xsl:text>with </xsl:text>
       <xsl:value-of select="$class"/>
@@ -339,7 +349,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if test="not(@max) or @max&gt;1">
+    <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -365,7 +375,7 @@
 
     <xsl:choose>
       
-      <xsl:when test="not(@max) or @max&gt;1">
+      <xsl:when test="$max &gt; 1">
 
         <xsl:value-of select="$I"/>
         <xsl:text>Copy_Instances (The_Container, Result);&#10;</xsl:text>
@@ -415,7 +425,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
 
-    <xsl:if  test="not(@max) or @max&gt;1">
+    <xsl:if  test="$max &gt; 1">
       <xsl:text>with BC.Filter;&#10;</xsl:text>
       <xsl:text>with </xsl:text>
       <xsl:value-of select="$class"/>
@@ -430,7 +440,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if  test="not(@max) or @max&gt;1">
+    <xsl:if  test="$max &gt; 1">
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -457,7 +467,7 @@
 
     <xsl:choose>
       
-      <xsl:when test="not(@max) or @max&gt;1">
+      <xsl:when test="$max &gt; 1">
         
         <xsl:value-of select="$I"/>
         <xsl:text>Filter (The_Container, Result);&#10;</xsl:text>

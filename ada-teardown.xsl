@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 562198c7b675 2002/11/21 05:56:18 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 131f6566eee7 2003/02/15 18:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -185,7 +185,7 @@
 
   <xsl:template
     mode="class-teardown-body"
-    match="domain/class[not(@max) or @max&gt;1]">
+    match="domain/class[not(@max) or @max != 1]">
 
     <!--
          with Ada.Unchecked_Deallocation;

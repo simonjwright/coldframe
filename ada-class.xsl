@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 2f238dbf5f56 2003/02/15 16:31:40 simon $ -->
+<!-- $Id: ada-class.xsl,v 131f6566eee7 2003/02/15 18:47:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,6 +32,11 @@
 
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
+
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
 
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m">
@@ -169,20 +174,12 @@
       <xsl:call-template name="state-image-spec"/>
     </xsl:if>
 
-    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
-    <xsl:message>
-      <xsl:text>Number of instances for </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text> is </xsl:text>
-      <xsl:call-template name="number-of-instances"/>
-    </xsl:message>
-
-    <!-- .. if the maximum number of instances is fixed, fix the storage
-         pool for Handle .. -->
-    <xsl:if test="@max">
+    <!-- .. if the maximum number of instances isn't too large, fix the
+         storage pool for Handle .. -->
+    <xsl:if test="$max &lt;= $max-bounded-container">
       <xsl:value-of select="$I"/>
       <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
-      <xsl:value-of select="@max"/>
+      <xsl:value-of select="$max"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
@@ -200,7 +197,7 @@
     <!-- .. the actual container .. -->
     <xsl:choose>
 
-      <xsl:when test="not(@max) or @max&gt;1">
+      <xsl:when test="$max &gt; 1">
         <!-- Use a Map. -->
         
         <!-- .. basic Container instantiation for Maps -->
@@ -220,8 +217,8 @@
         
         <xsl:choose>
           
-          <xsl:when test="@max">
-            <!-- Wnen there's a maximum size, use the Bounded version -->
+          <xsl:when test="$max &lt;= $max-bounded-container">
+            <!-- Wnen the size isn't too big, use the Bounded version -->
             <xsl:value-of select="$I"/>
             <xsl:text>package Maps is new Abstract_Maps.Bounded&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
@@ -232,7 +229,7 @@
             <xsl:text>,&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
             <xsl:text> Maximum_Size =&gt; </xsl:text>
-            <xsl:value-of select="@max"/>
+            <xsl:value-of select="$max"/>
             <xsl:text>);&#10;</xsl:text>
             <xsl:value-of select="$blank-line"/>
           </xsl:when>
@@ -312,6 +309,11 @@
        in the ancestor tree as well as the present attributes. -->
   <xsl:template name="class-spec-context">
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <!-- The classes to be processed this time. The default is the
          current class. -->
     <xsl:param name="parents" select="."/>
@@ -361,25 +363,26 @@
         </xsl:if>
         
         <!-- Choose the appropriate Map (unless this is a singleton). -->
-        <xsl:if test="not(@max) or @max&gt;1">
+        <xsl:choose>
           
-          <xsl:choose>
-            
-            <xsl:when test="@max">
-              <!-- Wnen there's a maximum size, use the Bounded version -->
-              <xsl:text>with BC.Containers.Maps.Bounded;&#10;</xsl:text>
-            </xsl:when>
-            
-            <xsl:otherwise>
-              <!-- Use the Unbounded version -->
-              <!-- We need access to the standard heap storage pool. -->
-              <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
-              <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
-            </xsl:otherwise>
-            
-          </xsl:choose>
+          <xsl:when test="$max &gt; $max-bounded-container">
+            <!-- Wnen the size is too large, use the Unbounded version -->
+            <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
+            <!-- We need access to the standard heap storage pool. -->
+            <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
+          </xsl:when>
           
-        </xsl:if>
+          <xsl:when test="$max &gt; 1">
+            <!-- Wnen it's not too large and not a singleton, use the
+                 Bounded version -->
+            <xsl:text>with BC.Containers.Maps.Bounded;&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:otherwise>
+            <!-- It's a singleton, no Map -->
+          </xsl:otherwise>
+          
+        </xsl:choose>
         
         <!-- If this class has any events at all, include event support.
              If it has a state machine, that would normally be it; otherwise,
@@ -587,6 +590,11 @@
       </xsl:with-param>
     </xsl:call-template>
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <xsl:call-template name="do-not-edit"/>
 
     <!-- Any context clauses needed for the class body .. -->
@@ -649,7 +657,7 @@
     <xsl:if test="not(@singleton)">
       
       <!-- .. the hash function stub .. -->
-      <xsl:if test="not(@max) or @max&gt;1">
+      <xsl:if test="$max &gt; 1">
         <xsl:value-of select="$I"/>
         <xsl:text>function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
@@ -689,7 +697,7 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
     
-    <xsl:if test="not(@max) or @max&gt;1">
+    <xsl:if test="$max &gt; 1">
       
       <!-- Output the separate hash function body. -->
       <xsl:call-template name="hash-function"/>
@@ -753,7 +761,12 @@
         <!-- We'll need to free memory. -->
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
-        <xsl:if test="not(@max) or not(@singleton) or statemachine">
+        <!-- Exceptions may be raised on creating or deleting instances,
+             Set accessors for parental referential attributes, and state
+             machine operations. So we'll need exceptions unless this
+             is a singleton (which always exists, and can't be a parent)
+             without a state machine. -->
+        <xsl:if test="not(@singleton) or statemachine">
           <!-- We'll need exception support. -->
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>
@@ -915,6 +928,11 @@
   <!-- Called from domain/class to generate the Create function body. -->
   <xsl:template name="create-function-body">
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <!-- The heading .. -->
     <xsl:choose>
       
@@ -1035,7 +1053,7 @@
 
 
     <!-- .. handle exceptions .. -->
-    <xsl:if test="not(@max) or @max&gt;1">
+    <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$I"/>
       <xsl:text>exception&#10;</xsl:text>
       <xsl:value-of select="$II"/>
@@ -1103,6 +1121,11 @@
        procedure body.
        Will never be called for singletons. -->
   <xsl:template name="class-delete-procedure-body">
+
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
@@ -1193,7 +1216,7 @@
       <xsl:text>);&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:if test="not(@max) or @max&gt;1">
+    <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$II"/>
       <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
     </xsl:if>
@@ -1217,6 +1240,11 @@
   <!-- Called from domain/class to create the instance delete
        procedure body. -->
   <xsl:template name="delete-procedure-body">
+
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (This : in out Handle) is&#10;</xsl:text>
@@ -1257,7 +1285,7 @@
 
     <xsl:choose>
       
-      <xsl:when test="not(@max) or @max&gt;1">
+      <xsl:when test="$max &gt; 1">
 
         <!-- Remove from the container .. -->
         <xsl:value-of select="$II"/>
@@ -1772,20 +1800,17 @@
 
   <!-- Called from domain/class to compute the number of hash buckets. -->
   <xsl:template name="hash-buckets">
+
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <xsl:choose>
 
-      <xsl:when test="@max">
-        <xsl:variable name="max" select="@max"/>
-        <xsl:choose>
-          <xsl:when test="$max &lt; $max-hash-buckets">
-            <xsl:value-of select="$max"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$max-hash-buckets"/>
-          </xsl:otherwise>
-        </xsl:choose>
+      <xsl:when test="$max &lt; $max-hash-buckets">
+        <xsl:value-of select="$max"/>
       </xsl:when>
-
+      
       <xsl:otherwise>
         <xsl:value-of select="$max-hash-buckets"/>
       </xsl:otherwise>
