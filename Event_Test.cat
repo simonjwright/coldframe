@@ -72,7 +72,6 @@
 		    type       	"Duration")))
 	(object Class "Content"
 	    quid       	"3CEA58A00152"
-	    documentation 	"[[ callback : 2 ]]"
 	    stereotype 	"type"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "ordinal"
@@ -451,7 +450,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	8
-			max_width  	853)
+			max_width  	860)
 		    width      	874
 		    height     	488
 		    annotation 	8
@@ -529,7 +528,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	340)
+			max_width  	347)
 		    width      	360
 		    height     	218
 		    annotation 	8
@@ -559,7 +558,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	445)
+			max_width  	452)
 		    width      	466
 		    height     	482
 		    annotation 	8

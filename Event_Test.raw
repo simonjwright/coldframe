@@ -4,8 +4,8 @@
 <date>
 <year>2002</year>
 <month>7</month>
-<day>12</day>
-<time>15:33</time>
+<day>13</day>
+<time>19:29</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -89,7 +89,7 @@
 <name>Content</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ callback : 2 ]]</documentation>
+<documentation></documentation>
 <attributes>
 <attribute>
 <name>ordinal</name>
