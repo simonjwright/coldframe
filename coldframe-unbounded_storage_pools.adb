@@ -26,8 +26,8 @@
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
 --  $RCSfile: coldframe-unbounded_storage_pools.adb,v $
---  $Revision: 8df251b50607 $
---  $Date: 2003/07/24 21:01:44 $
+--  $Revision: 0dd8850f8c54 $
+--  $Date: 2003/07/25 20:47:26 $
 --  $Author: simon $
 
 with System.Memory;
@@ -63,10 +63,12 @@ package body ColdFrame.Unbounded_Storage_Pools is
          subtype Storage
          is System.Storage_Elements.Storage_Array
            (0 .. Size_In_Storage_Elements - 1);
+         Result_Address : constant System.Address := Storage_Address;
          Result : Storage;
-         for Result'Address use Storage_Address;
+         pragma Import (Ada, Result);
+         for Result'Address use Result_Address;
          Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
-           := (16#d#, 16#e#, 16#A#, 16#d#, 16#b#, 16#e#, 16#e#, 16#f#);
+           := (16#de#, 16#ad#, 16#be#, 16#ef#, 16#de#, 16#ad#, 16#be#, 16#ef#);
          Remnant : constant System.Storage_Elements.Storage_Offset
            := Size_In_Storage_Elements mod Filler'Length;
       begin

@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: 1b78a6578c9f $
---  $Date: 2003/07/24 21:01:00 $
+--  $Revision: 0dd8850f8c54 $
+--  $Date: 2003/07/25 20:47:26 $
 --  $Author: simon $
 
 package body ColdFrame.Bounded_Storage_Pools is
@@ -84,10 +84,12 @@ package body ColdFrame.Bounded_Storage_Pools is
          subtype Storage
          is System.Storage_Elements.Storage_Array
            (0 .. Storage_Size - 1);
+         Result_Address : constant System.Address := Address;
          Result : Storage;
-         for Result'Address use Address;
+         pragma Import (Ada, Result);
+         for Result'Address use Result_Address;
          Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
-           := (16#d#, 16#e#, 16#A#, 16#d#, 16#b#, 16#e#, 16#e#, 16#f#);
+           := (16#de#, 16#ad#, 16#be#, 16#ef#, 16#de#, 16#ad#, 16#be#, 16#ef#);
          Remnant : constant System.Storage_Elements.Storage_Offset
            := Storage_Size mod Filler'Length;
       begin
