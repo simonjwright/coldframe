@@ -5,16 +5,16 @@
 A note on names: Ada is case-insensitive, but the convention is that words in names are separated by an underscore, and the first letter of each word is capitalized. ColdFrame normalizes names to this convention.<br/>
 
 In the diagram, buff classes are part of the metamodel, grey classes show  how they are mapped to Ada 95 code.</documentation>
-<objects>
-<object stereotype="">
+<classes>
+<class>
 <name>Domain</name>
 <documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Class</name>
 <documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.<br/>
 
@@ -23,8 +23,8 @@ You can specify the maximum number of Instances using the documentation annotati
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Domain Package</name>
 <documentation>Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
 
@@ -33,8 +33,8 @@ The notation <tt><i>metaclass name</i></tt> means "the normalized name of the me
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Class Operation</name>
 <documentation>A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
 
@@ -43,8 +43,8 @@ All Operations of Singleton Classes are Class Operations; Class Operations of Id
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Operation</name>
 <documentation>An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).<br/>
 
@@ -55,24 +55,26 @@ Operations may have return values.
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Handle Parameter</name>
 <documentation>An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Identified Class</name>
-<documentation>An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier.</documentation>
+<documentation>An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier.<br/>
+
+Depending on the code generation strategy, Identified Classes may not be visible outside the Domain.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>User Type Declaration</name>
 <documentation>User Type Definitions are type definitions in the top-level Domain package.<br/>
 
@@ -81,40 +83,40 @@ Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.S
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Singleton Class</name>
 <documentation>A Singleton Class is one of which there is always precisely one instance.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Instance Operation</name>
 <documentation>An Instance Operation of a Class is an Operation that applies to a specific instance of the Class.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Hash Function</name>
 <documentation>A Hash Function is required for each Identifier Record. It is implemented as a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Class Package</name>
 <documentation>Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Type Specification</name>
 <documentation>The Domain can contain a number of domain-specific type definitions.<br/>
 
@@ -136,25 +138,24 @@ Supported annotations are:<br/>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Identified Class Package</name>
-<documentation>Each Identified Class is mapped to an Identified Class Package.
-</documentation>
+<documentation>An Identified Class is implemented as a private child of the Domain package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Singleton Class Package</name>
-<documentation>Each Singleton Class is mapped to a Singleton Class Package.</documentation>
+<documentation>An Internal Singleton Class is implemented as a private child of the Domain package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Operation Unit</name>
 <documentation>An Operation maps to an Operation Unit.<br/>
 
@@ -167,78 +168,80 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Instance Operation Unit</name>
 <documentation>An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Class Operation Unit</name>
 <documentation>A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Identifier</name>
 <documentation>The Identifier of a Class (an Identified Class) uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Identifier Record</name>
 <documentation>An Identified Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Attribute</name>
 <documentation>Attributes are described by a Name and a Type.<br/>
 
 Attributes may be Plain or Identifying.<br/>
 
-Referential attributes (those which formalise relationships) are automatically inserted by normalize-rose.tcl.</documentation>
+Referential attributes (those which formalise relationships) are automatically inserted by <tt>normalize-rose.tcl</tt> (the translation strategy for referential attributes is determined at code generation).</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Identifying Attribute</name>
 <documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.<br/>
 
-An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.</documentation>
+An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.<br/>
+
+An (automatically-generated) referential attribute may also be identifying (eg, in an inheritance relationship).</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Plain Attribute</name>
 <documentation>A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Get Accessor</name>
 <documentation>A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Set Accessor</name>
 <documentation>A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
 <tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.</documentation>
@@ -246,16 +249,16 @@ An Identifying Attribute is marked as such by the stereotype "id" or the documen
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Handle</name>
 <documentation>The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Parameter</name>
 <documentation>An Operation may have Parameters. Each Parameter
 has:<br/>
@@ -271,8 +274,8 @@ optionally, a <b>Default</b> value.</documentation>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Param</name>
 <documentation>A Parameter maps to a Param.<br/>
 
@@ -281,26 +284,29 @@ The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents.
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Collections Package</name>
 <documentation>Each Identified Class Package has a Collections Package (<tt><i>Domain.Class</i>.Collections</tt>) which can be used to hold references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
 
-A particular collection is only a snapshot; the validity of a <tt>Handle</tt> depends only on whether it is still current within the Identified Class Package.</documentation>
+A particular collection is only a snapshot; the validity of a <tt>Handle</tt> depends only on whether it is still current within the Identified Class Package.<br/>
+
+The Collections Package is an instantiation of the Abstract Containers Package.
+</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Contents Function</name>
 <documentation>Each Identified Class Package has a Contents Function (<tt><i>Domain.Class</i>.All_Instances</tt>) which returns a Collection of references (<tt>Handle</tt>s) to all of the current Instances.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Selection Function</name>
 <documentation>Each Identified Class Package has a generic Selection Function (<tt><i>Domain.Class</i>.Selection_Function</tt>) which returns a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances.<br/>
 
@@ -309,8 +315,8 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Filter Function</name>
 <documentation>Each Identified Class Package has a generic Filter Function (<tt><i>Domain.Class</i>.Filter_Function</tt>) which, given  a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances, returns a Collection of those that match some criterion.<br/>
 
@@ -319,24 +325,24 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Create Function</name>
 <documentation>Each Identified Class Package contains a <tt>Create</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the newly created  Instance record.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Find Function</name>
 <documentation>Each Identified Class Package contains a <tt>Find</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the corresponding Instance record or <tt>null</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</object>
-<object stereotype="">
+</class>
+<class>
 <name>Delete Procedure</name>
 <documentation>Each Identified Class Package contains two <tt>Delete</tt> procedures.<br/>
 
@@ -345,8 +351,43 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 </attributes>
 <operations>
 </operations>
-</object>
-</objects>
+</class>
+<class>
+<name>Interface Class</name>
+<documentation>An Interface Class is one that provides functionality to external users (other Domains).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Internal Singleton Class</name>
+<documentation>An Internal Singleton Class is a Singleton that (depending on the code generation strategy) isn't visible outside the Domain.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Interface Class Package</name>
+<documentation>An Interface Class is implemented as a publicly-visible child of the Domain package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Abstract Container Class</name>
+<documentation>Each Identified Class Package has an Abstract Containers Package (<tt><i>Domain.Class</i>.Abstract_Containers</tt>) which can be instantiated as Containers for references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
+
+The prime functionality supplied is iteration over Containers.
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+</classes>
 <relationships>
 <association>
 <name></name>
@@ -355,13 +396,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Domain</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Class</classname>
 <cardinality>1..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -371,13 +412,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Domain Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Class Package</classname>
 <cardinality>1..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -387,13 +428,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Operation</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identified Class</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -403,13 +444,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Singleton Class</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Class Operation</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -419,13 +460,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>User Type Declaration</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Domain Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -435,13 +476,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Instance Operation Unit</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Handle Parameter</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -451,13 +492,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identifier</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identified Class</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -467,13 +508,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Operation Unit</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -483,13 +524,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identifying Attribute</classname>
 <cardinality>1..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identifier</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -499,13 +540,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Class</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Plain Attribute</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -515,13 +556,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Get Accessor</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -531,13 +572,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Set Accessor</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -547,13 +588,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identifier Record</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -563,13 +604,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identifier Record</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Hash Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -579,13 +620,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Type Specification</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Domain</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -595,13 +636,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Handle</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>ImplementationAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -611,13 +652,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Operation</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Parameter</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -627,13 +668,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Operation Unit</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Parameter</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -643,13 +684,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Operation Unit</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Param</classname>
 <cardinality>0..n</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -659,13 +700,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Collections Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -675,13 +716,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Contents Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -691,13 +732,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Selection Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -707,13 +748,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Filter Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -723,13 +764,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Create Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -739,13 +780,13 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Find Function</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 </association>
 <association>
@@ -755,13 +796,29 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Delete Procedure</classname>
+<cardinality>2</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Abstract Container Class</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
 </role>
 </association>
 <inheritance>
@@ -823,6 +880,24 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <documentation></documentation>
 <child>Plain Attribute</child>
 <parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Interface Class</child>
+<parent>Singleton Class</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Internal Singleton Class</child>
+<parent>Singleton Class</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Interface Class Package</child>
+<parent>Class Package</parent>
 </inheritance>
 </relationships>
 </domain>

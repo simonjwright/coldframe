@@ -126,7 +126,7 @@ It should address one logical error (which may correspond to several necessary c
 <parameters>
 <parameter>
 <name>named</name>
-<documentation></documentation>
+<documentation>The name of the Component to be added.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -138,19 +138,19 @@ It should address one logical error (which may correspond to several necessary c
 <parameters>
 <parameter>
 <name>number</name>
-<documentation></documentation>
+<documentation>The identifying Number of the Problem_Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <name>reporter</name>
-<documentation></documentation>
+<documentation>The e-mail address of the person reporting the problem.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <name>details</name>
-<documentation></documentation>
+<documentation>A description of the problem.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -162,7 +162,7 @@ It should address one logical error (which may correspond to several necessary c
 <parameters>
 <parameter>
 <name>component name</name>
-<documentation></documentation>
+<documentation>The identifying name of the Component to be deleted.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -173,20 +173,20 @@ It should address one logical error (which may correspond to several necessary c
 <documentation>A Defect has been discovered in the given Component, related to the given Problem Report.</documentation>
 <parameters>
 <parameter>
-<name>problem</name>
-<documentation></documentation>
+<name>problem number</name>
+<documentation>The identifying Number of the Problem Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>component</name>
-<documentation></documentation>
+<name>component name</name>
+<documentation>Thw identifying Name of the Component.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
 <name>description</name>
-<documentation></documentation>
+<documentation>The particular defect in this Component that results in the given Problem Report.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -198,13 +198,13 @@ It should address one logical error (which may correspond to several necessary c
 <parameters>
 <parameter>
 <name>number</name>
-<documentation></documentation>
+<documentation>The identifying Number of the Problem Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <name>reason</name>
-<documentation></documentation>
+<documentation>The reason for rejecting the Problem Report.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>

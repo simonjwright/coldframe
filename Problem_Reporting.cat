@@ -120,6 +120,7 @@
 		    documentation 	"Add a Component to the set of Components known to the System."
 		    parameters 	(list Parameters
 			(object Parameter "named"
+			    documentation 	"The name of the Component to be added."
 			    type       	"String"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -129,10 +130,13 @@
 		    documentation 	"Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated."
 		    parameters 	(list Parameters
 			(object Parameter "number"
+			    documentation 	"The identifying Number of the Problem_Report."
 			    type       	"Integer")
 			(object Parameter "reporter"
+			    documentation 	"The e-mail address of the person reporting the problem."
 			    type       	"String")
 			(object Parameter "details"
+			    documentation 	"A description of the problem."
 			    type       	"String"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -142,6 +146,7 @@
 		    documentation 	"Deletes the named Component."
 		    parameters 	(list Parameters
 			(object Parameter "component name"
+			    documentation 	"The identifying name of the Component to be deleted."
 			    type       	"String"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -150,11 +155,14 @@
 		    quid       	"3AB51584026D"
 		    documentation 	"A Defect has been discovered in the given Component, related to the given Problem Report."
 		    parameters 	(list Parameters
-			(object Parameter "problem"
+			(object Parameter "problem number"
+			    documentation 	"The identifying Number of the Problem Report."
 			    type       	"Integer")
-			(object Parameter "component"
+			(object Parameter "component name"
+			    documentation 	"Thw identifying Name of the Component."
 			    type       	"String")
 			(object Parameter "description"
+			    documentation 	"The particular defect in this Component that results in the given Problem Report."
 			    type       	"String"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -164,8 +172,10 @@
 		    documentation 	"The indicated Problem has been determined not to be valid: reject it."
 		    parameters 	(list Parameters
 			(object Parameter "number"
+			    documentation 	"The identifying Number of the Problem Report."
 			    type       	"Integer")
 			(object Parameter "reason"
+			    documentation 	"The reason for rejecting the Problem Report."
 			    type       	"String"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -424,7 +434,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	266
+				max_width  	437
 				justify    	0
 				label      	"+is affected by"
 				pctDist    	0.628676
@@ -457,7 +467,7 @@
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
-				max_width  	142
+				max_width  	240
 				justify    	0
 				label      	"+affects"
 				pctDist    	0.687307
@@ -488,7 +498,7 @@
 		    location   	(2608, 240)
 		    label      	(object ItemLabel
 			Parent_View 	@18
-			location   	(2436, 205)
+			location   	(2436, 211)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	344
@@ -496,7 +506,7 @@
 			label      	"Summary String")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@18
-			location   	(2436, 160)
+			location   	(2436, 161)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
