@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v cc9f958c160e 2004/09/18 12:09:00 simon $ -->
+<!-- $Id: releases.html-proto,v 9d2d3d25c30d 2005/02/11 13:21:03 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -46,6 +46,10 @@ accounted for while working out the order in which to declare types.
 
 
 <p>You can make ColdFrame generate access types for your own types.
+
+
+<p>Code generation failed on Windows when there were a large number of
+files in the <tt>.impl</tt> directory.
 
 
 <p><dt>20040319
