@@ -1,0 +1,364 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Stub Test Interface"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"4229E16101EA"
+    documentation 	
+|Demonstration and test of test stub support.
+|
+|{ name = Stub Test }
+|{ revision = $Version }
+    
+    stereotype 	"include"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Record Type"
+	    quid       	"4229E1FA029E"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "i"
+		    quid       	"4229E2120267"
+		    type       	"Integer")
+		(object ClassAttribute "f"
+		    quid       	"4229E21C00B2"
+		    type       	"Float")))
+	(object Class "Discriminated Type"
+	    quid       	"4229E23A0323"
+	    stereotype 	"discriminated"
+	    operations 	(list Operations
+		(object Operation "create discriminated"
+		    quid       	"4229E2C90170"
+		    parameters 	(list Parameters
+			(object Parameter "b"
+			    quid       	"4229E40B0064"
+			    type       	"Boolean"))
+		    result     	"Discriminated Type"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4229E23A0323"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "i"
+		    quid       	"4229E25B0294"
+		    type       	"Integer")
+		(object ClassAttribute "r"
+		    quid       	"4229E260007E"
+		    type       	"Record Type"
+		    quidu      	"4229E1FA029E")))
+	(object Class "Public"
+	    quid       	"4229E27F00A1"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "Set Value"
+		    quid       	"4229E341005A"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    quid       	"4229E36701E5"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Get Value"
+		    quid       	"4229E36701D1"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Get Record Type"
+		    quid       	"4229E37101A3"
+		    parameters 	(list Parameters
+			(object Parameter "b"
+			    quid       	"4229E3AD01DC"
+			    type       	"Boolean"))
+		    result     	"Record Type"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"4229E1FA029E")
+		(object Operation "Retrieve Record Type"
+		    quid       	"4229F03E025A"
+		    parameters 	(list Parameters
+			(object Parameter "out r"
+			    quid       	"4229F058004E"
+			    type       	"Record Type"
+			    quidu      	"4229E1FA029E"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Exception Type"
+	    quid       	"4229E31B01E6"
+	    stereotype 	"exception"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"4229E1DE030C"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object Label @1
+		    location   	(178, 1248)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1895
+		    label      	"$Id: Stub_Test_Interface.cat,v 6d3460479f13 2005/03/05 18:19:33 simon $")
+		(object ClassView "Class" "Logical View::Stub Test Interface::Record Type" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1492, 717)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1356, 641)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	272
+			justify    	0
+			label      	"Record Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(1356, 596)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	272
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"4229E1FA029E"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1356, 697)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	205)
+		    width      	290
+		    height     	264
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Stub Test Interface::Discriminated Type" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(718, 709)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(224, 611)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	988
+			justify    	0
+			label      	"Discriminated Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(224, 566)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	988
+			justify    	0
+			label      	"<<discriminated>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"4229E23A0323"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(224, 667)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	985)
+		    width      	1006
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Stub Test Interface::Public" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(705, 239)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(299, 118)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	812
+			justify    	0
+			label      	"Public")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(299, 73)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	812
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"4229E27F00A1"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(299, 174)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	810)
+		    width      	830
+		    height     	354
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Stub Test Interface::Exception Type" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1480, 230)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1323, 204)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	314
+			justify    	0
+			label      	"Exception Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@5
+			location   	(1323, 159)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	314
+			justify    	0
+			label      	"<<exception>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"4229E31B01E6"
+		    width      	332
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Stub Test Interface" @6
+		    location   	(2427, 1025)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(2258, 980)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	338
+			justify    	0
+			label      	"Stub Test Interface")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@6
+			location   	(2258, 935)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	338
+			justify    	0
+			label      	"<<include>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"4229E16101EA"
+		    width      	350
+		    height     	193)))))

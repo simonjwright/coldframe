@@ -1,0 +1,164 @@
+<domain stereotype="include">
+<extractor>cf-DATE</extractor>
+<name>Stub Test Interface</name>
+<date>
+<year>2005</year>
+<month>3</month>
+<day>5</day>
+<time>18:18</time>
+</date>
+<documentation><![CDATA[ Demonstration and test of test stub support.
+
+{ name = Stub Test }
+{ revision = $Version } ]]></documentation>
+<classes>
+<class stereotype="type">
+<name>Record Type</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute>
+<name>i</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>f</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Float</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="discriminated">
+<name>Discriminated Type</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute>
+<name>i</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>r</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Record Type</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>create discriminated</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Discriminated Type</return>
+<parameters>
+<parameter>
+<parametername>b</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>Boolean</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Public</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>Set Value</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>Get Value</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>Get Record Type</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Record Type</return>
+<parameters>
+<parameter>
+<parametername>b</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>Boolean</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>Retrieve Record Type</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+<parameter>
+<parametername>out r</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>Record Type</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="exception">
+<name>Exception Type</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
