@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
+<!-- $Id: ada-type.xsl,v 05132ba458fc 2002/01/27 11:10:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -37,15 +37,13 @@
                   or type/attribute/type='Time'
                   or type/operation/parameter/type='Time'">
       <!-- The above imply use of Ada.Calendar. -->
-      <xsl:text>with Ada.Calendar;</xsl:text>
-      <xsl:text> use Ada.Calendar;&#10;</xsl:text>
+      <xsl:text>with Ada.Calendar; use Ada.Calendar;&#10;</xsl:text>
     </xsl:if>
 
     <!-- Context for bounded strings -->
     <xsl:if test="type/string/max">
       <!-- string/max implies an instantiation of Ada.Strings.Bounded -->
-      <xsl:text>with Ada.Strings.Bounded;</xsl:text>
-      <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
+      <xsl:text>with Ada.Strings.Bounded; use Ada.Strings.Bounded;&#10;</xsl:text>
     </xsl:if>
 
     <!-- Context for unbounded strings (in record components). -->
