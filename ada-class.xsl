@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 25c69ec43898 2002/05/19 18:29:35 simon $ -->
+<!-- $Id: ada-class.xsl,v 5fbc3956507f 2002/05/20 22:29:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -873,42 +873,6 @@
   </xsl:template>
 
   <xsl:template mode="identifier-element-assignment" match="*"/>
-
-
-  <!-- Called to generate access-to-subprogram types. -->
-  <xsl:template
-    match="operation[@access]"
-    mode="access-to-operation">
-    <xsl:value-of select="$I"/>
-    <xsl:text>type </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text> is access </xsl:text>
-    <xsl:choose>
-      <xsl:when test="@return">
-        <xsl:text>function</xsl:text>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$I"/>
-        </xsl:call-template>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>return </xsl:text>
-        <xsl:call-template name="type-name">
-          <xsl:with-param name="type" select="@return"/>
-          <xsl:with-param name="class" select=".."/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>procedure</xsl:text>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$IC"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-  </xsl:template>
-
-  <xsl:template match="*" mode="access-to-operation"/>
 
 
   <!-- Called from domain/class to generate the Create function spec. -->
