@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v ffcf12ac841c 2002/02/24 17:17:05 simon $
+'$Id: ddf.ebs,v 2722862a38f8 2002/02/28 20:05:41 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -174,7 +174,13 @@ Sub DumpStates (c As Class)
 			For t = 1 To trs.Count
 				Dim tr As Transition
 				Set tr = trs.GetAt(t)
-				Print #1, "<transition>"
+				Dim trst As String
+				trst = tr.Stereotype
+				If Len(trst) > 0 Then
+					Print #1, "<transition stereotype=" & chr(34) & trst & chr(34) & ">"
+				Else
+					Print #1, "<transition>"
+				End If
 				Print #1, "<source>" & StateName(tr.GetSourceState()) & "</source>"
 				Print #1, "<target>" & StateName(tr.GetTargetState()) & "</target>"
 				DumpEvent(tr.GetTriggerEvent())
@@ -198,18 +204,11 @@ Sub DumpTypedEvents (o As Class)
 		s = d.Stereotype
 		Dim sup As Class
 		Set sup = d.GetSupplierClass
-		If s = "event" Then
-			Print #1, "<event>"
+		If Instr (s, "event") <> 0 Then
+			Print #1, "<event stereotype=" & chr(34) & s & chr(34) & ">"
 			Print #1, "<name>" & d.Name & "</name>"
 			Print #1, "<type>" & sup.Name & "</type>"
 			Print #1, "</event>"
-		Else
-			If s = "message" Then
-				Print #1, "<event message=" & chr(34) & "yes" & chr(34) & ">"
-				Print #1, "<name>" & d.Name & "</name>"
-				Print #1, "<type>" & sup.Name & "</type>"
-				Print #1, "</event>"
-			End If
 		End If
 	Next I
 	Print #1, "</events>"
