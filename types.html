@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 044884fea06b 2003/03/01 12:57:23 simon $ -->
+<!-- $Id: types.html,v 756d80d173a3 2003/03/13 21:07:08 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -288,18 +288,9 @@ attached, but causes a corresponding declaration in the domain's
 
 <p><tt>Image</tt> produces an XML rendition of the recorded value.
 
-<p><tt>ColdFrame.Project.Serialization</tt> is expected to be an
-instantiation of <tt>ColdFrame.Serialization_Signature</tt>, where
-
-<ul>
-
-<li><tt>Base</tt> is a tagged type, which the Project output package
+<p><tt>ColdFrame.Project.Serialization</tt> is expected to contain a
+tagged type <tt>Base</tt>, which the Project output package
 understands (it might want to add timestamp information, for example)
-
-<li><tt>Class_Image</tt> dispatches to the generated <tt>Image</tt>
-function.
-
-</ul>
 
 <p>See <a href="serialization.html">separate information</a>.
 

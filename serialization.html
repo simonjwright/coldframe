@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 95dc3f146594 2003/03/13 20:43:26 simon $ -->
+<!-- $Id: serialization.html,v 756d80d173a3 2003/03/13 21:07:08 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -75,34 +75,22 @@ record type and is marked <em>&#171;serializable&#187;</em>.
 
 <p><tt>Image</tt> produces an XML rendition of the recorded value.
 
-<p><tt>ColdFrame.Project.Serialization</tt> is expected to be an
-instantiation of <tt>ColdFrame.Serialization_Signature</tt>, giving
+<p><tt>ColdFrame.Project.Serialization</tt> is expected to be (a
+renaming of) a package containing a tagged type <tt>Base</tt>, which
+the Project output package understands (it might want to add timestamp
+information, for example).
 
-<ul>
-
-<li><tt>Base</tt> is a tagged type, which the Project output package
-understands (it might want to add timestamp information, for example).
-
-<li><tt>Class_Image</tt> dispatches to the generated <tt>Image</tt>
-function (this is necessary to meet Ada requirements).
-
-</ul>
-
-<p>The provided <tt>ColdFrame.Project.Serialization</tt> is an
-instantiation of <tt>ColdFrame.Serialization_Signature</tt> with
-<tt>ColdFrame.Serialization</tt>, which provides the minimum needed
-(the <tt><i>Base</i></tt> type adds no functionality).
+<p>The provided <tt>ColdFrame.Project.Serialization</tt> is a renaming
+of <tt>ColdFrame.Serialization</tt>, which provides the minimum needed
+(the type <tt><i>Base</i></tt>).
 
 <h3>Providing project serialization suport</h3>
 
 <p>ColdFrame provides very simple support for serialization in the
 package <tt>ColdFrame.Serialization</tt>. To provide your own, you
 need to provide your own version of
-<tt>ColdFrame.Project.Serialization</tt> by instantiating
-<tt>ColdFrame.Serialization_Signature</tt> with your own support code.
-
-<!-- XXX example here, after checking whether Class_Image is really
-necessary! -->
+<tt>ColdFrame.Project.Serialization</tt>; all it has to do is provide
+a tagged type <tt>Base</tt> with a primitive <i>Image</i> operation.
 
 <h3>User-defined <i>image</i> functions</h3>
 
