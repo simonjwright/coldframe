@@ -1,4 +1,4 @@
---  $Id: stairwell_demo.adb,v 6ffd7145311b 2002/12/18 10:11:02 simon $
+--  $Id: stairwell_demo.adb,v d49293778f12 2002/12/30 18:00:30 simon $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -10,6 +10,9 @@ with Tcl.Tk;
 with Digital_IO.Initialize;
 with Digital_IO.HCI;
 with House_Management.Initialize;
+
+with ColdFrame.Exceptions.Symbolic_Traceback;
+pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
 
 procedure Stairwell_Demo is
 
@@ -108,6 +111,13 @@ procedure Stairwell_Demo is
                          C.Strings.New_String (State'Img),
                          Freeproc'Unrestricted_Access);
       return Tcl.TCL_OK;
+   exception
+      when E : others =>
+         Tcl.Tcl_SetResult
+           (Interp,
+            C.Strings.New_String (Ada.Exceptions.Exception_Name (E)),
+            Freeproc'Unrestricted_Access);
+         return Tcl.TCL_ERROR;
    end Get_Lamp_State_Command;
 
 
