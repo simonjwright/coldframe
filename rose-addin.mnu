@@ -1,0 +1,10 @@
+Menu Add-Ins
+{
+  Separator
+
+  option "Generate &XML..."	
+   {
+	RoseScript extractor-trampoline.ebs
+   }
+
+}
