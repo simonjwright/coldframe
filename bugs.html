@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a30bab8956ef 2003/03/13 20:38:56 simon $ -->
+<!-- $Id: bugs.html,v 5f18f150f81b 2003/03/16 16:34:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -159,11 +159,24 @@ default <i>in</i> if absent.
 <br>This doesn't easily map to the way ColdFrame handles names, but
 some attempt should be made.
 
-<!-- next: 0161 -->
+<!-- next: 0162 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>16.iii.03</h3>
+
+<dl>
+
+<dt>0161 (raised 15.iii.03)
+
+<dd>The new <i>Held Events</i> facility isn't general enough; dealing
+with additional kinds of Time will require a lot of recoding.
+<br><i>Added a <tt>Time_Kind</tt> enumeration and discriminant in
+<tt>Time_Signature</tt>.</i>
+
+</dl>
 
 <h3>13.iii.03</h3>
 
