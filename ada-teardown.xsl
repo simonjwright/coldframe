@@ -1,4 +1,5 @@
-<!-- XSL stylesheet to generate Ada code for Classes. -->
+<!-- XSL stylesheet to generate Ada code for tearing down the whole
+     domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -107,43 +108,48 @@
   <xsl:template mode="class-teardown-spec" match="*"/>
 
 
-  <xsl:template mode="class-teardown-body" match="domain/class[@singleton]">
+  <xsl:template mode="class-teardown-body" match="domain/class[@max=1]">
 
-    <!-- no state machine
+    <!-- 
+         with Ada.Unchecked_Deallocation;
          procedure {Domain}.{Class}.Tear_Down is
+            procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
          begin
-            null;
-         end {Domain}.{Class}.Tear_Down;
-         -->
-
-    <!-- state machine
-         procedure {Domain}.{Class}.Tear_Down is
-         begin
-            This.State_Machine_State := {initial-state}
+            if This /= null then
+               abort This.The_T;                 - if active
+               Free (This);
+            end if;
          end {Domain}.{Class}.Tear_Down;
          -->
 
     <xsl:call-template name="do-not-edit"/>
+
+    <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
     <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:choose>
-      <xsl:when test="statemachine">
-        <xsl:value-of select="$I"/>
-        <xsl:text>This.State_Machine_State := </xsl:text>
-        <xsl:value-of select="statemachine/state[@initial]/name"/>
-        <xsl:text>;&#10;</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="$I"/>
+    <xsl:text>if This /= null then&#10;</xsl:text>
+
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort This.The_T;&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>Free (This);&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
@@ -155,7 +161,9 @@
 
 
 
-  <xsl:template mode="class-teardown-body" match="domain/class[not(@singleton)]">
+  <xsl:template
+    mode="class-teardown-body"
+    match="domain/class[not(@max) or @max&gt;1]">
 
     <!--
          with Ada.Unchecked_Deallocation;
