@@ -27,6 +27,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	  --casing ~/.emacs_case_exceptions \
 	  --version cf-DATE \
 	  >$@ || rm -f $@
 
@@ -111,7 +112,7 @@ Makefile-unix: Makefile-unix-proto force
 Makefile-winnt: Makefile-winnt-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
-extractor.ebs: ddf.ebs
+extractor.ebs: ddf.ebs force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 PROGS = COPYING \
