@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 2be32c5b8301 2001/07/01 10:53:38 simon $ -->
+<!-- $Id: ada-attribute.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -262,14 +262,15 @@
   <xsl:template name="attribute-type">
     <xsl:choose>
       <xsl:when test="@refers">
-        <xsl:value-of select="../../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="@refers"/>
-        <xsl:text>.Handle</xsl:text>
+        <xsl:call-template name="type-name">
+          <xsl:with-param name="type" select="@refers"/>
+          <xsl:with-param name="class" select=".."/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="type"/>
+          <xsl:with-param name="class" select=".."/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>

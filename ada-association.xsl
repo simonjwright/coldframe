@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v ae4ec4f8e03f 2001/07/01 10:54:29 simon $ -->
+<!-- $Id: ada-association.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -208,16 +208,12 @@
         <xsl:text> is&#10;</xsl:text>
 
         <xsl:text>    Result : </xsl:text>
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
         <xsl:value-of select="associative"/>
         <xsl:text>.Handle;&#10;</xsl:text>
 
         <xsl:text>  begin&#10;</xsl:text>
 
         <xsl:text>    Result := </xsl:text>
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
         <xsl:value-of select="associative"/>
         <xsl:text>.Create&#10;</xsl:text>
         <xsl:text>       ((</xsl:text>
@@ -356,8 +352,6 @@
             <xsl:variable name="src" select="role[@source]"/>
             <xsl:variable name="dst" select="role[not(@source)]"/>
             <xsl:text>    </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
             <xsl:call-template name="attribute-name">
@@ -425,9 +419,7 @@
             <xsl:variable name="src" select="role[@source]"/>
             <xsl:variable name="dst" select="role[not(@source)]"/>
             <xsl:text>    </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$dst/classname"/>
+           <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
             <xsl:call-template name="attribute-name">
               <xsl:with-param
@@ -739,13 +731,9 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
     <xsl:variable name="associative" select="associative"/>
@@ -757,8 +745,6 @@
     <xsl:text> is&#10;</xsl:text>
 
     <xsl:variable name="assoc">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$associative"/>
     </xsl:variable>
 
@@ -849,13 +835,9 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
 
@@ -951,13 +933,9 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
 
@@ -971,8 +949,6 @@
     <xsl:text>  begin&#10;</xsl:text>
 
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Get_</xsl:text>
     <xsl:call-template name="attribute-name">
@@ -1002,18 +978,12 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
     <xsl:variable name="c">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$assoc"/>
     </xsl:variable>
 
@@ -1117,19 +1087,13 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
     <xsl:variable name="associative" select="associative"/>
     <xsl:variable name="c">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$associative"/>
     </xsl:variable>
 
@@ -1176,13 +1140,9 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
 
@@ -1375,18 +1335,12 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
     <xsl:variable name="c">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$assoc"/>
     </xsl:variable>
 
@@ -1531,18 +1485,12 @@
 
     <xsl:variable name="n" select="name"/>
     <xsl:variable name="a">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-a/classname"/>
     </xsl:variable>
     <xsl:variable name="b">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$role-b/classname"/>
     </xsl:variable>
     <xsl:variable name="c">
-      <xsl:value-of select="/domain/name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="$assoc"/>
     </xsl:variable>
 
@@ -1683,21 +1631,15 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="role[1]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:text>      </xsl:text>
     <xsl:value-of select="role[2]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>.Handle</xsl:text>
 
@@ -1712,16 +1654,12 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="role[1]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:text>      </xsl:text>
     <xsl:value-of select="role[2]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>)</xsl:text>
@@ -1736,8 +1674,6 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>_Handle : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="associative"/>
     <xsl:text>.Handle)</xsl:text>
   </xsl:template>
@@ -1751,16 +1687,12 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="role[1]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>;&#10;</xsl:text>
     <xsl:text>      </xsl:text>
     <xsl:value-of select="role[2]/name"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Handle</xsl:text>
     <xsl:text>)</xsl:text>
@@ -1778,13 +1710,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-a/classname"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-b/classname"/>
     <xsl:choose>
       <xsl:when test="$role-b/@multiple">
@@ -1808,13 +1736,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-a/classname"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-b/classname"/>
     <xsl:text>.Collections.Collection</xsl:text>
   </xsl:template>
@@ -1832,13 +1756,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$assoc]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-b/classname"/>
     <xsl:text>.Handle</xsl:text>
   </xsl:template>
@@ -1856,13 +1776,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$assoc]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-b/classname"/>
     <xsl:text>.Collections.Collection</xsl:text>
   </xsl:template>
@@ -1880,13 +1796,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-a/classname"/>
     <xsl:text>.Handle)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:choose>
       <xsl:when test="$role-b/@multiple">
@@ -1911,13 +1823,9 @@
     <xsl:text>     (</xsl:text>
     <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text> : </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$role-a/classname"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
     <xsl:text>    return </xsl:text>
-    <xsl:value-of select="/domain/name"/>
-    <xsl:text>.</xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Collections.Collection</xsl:text>
   </xsl:template>

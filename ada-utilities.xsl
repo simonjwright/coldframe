@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v aa0b60a04573 2001/06/02 16:45:24 simon $ -->
+<!-- $Id: ada-utilities.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,18 +29,27 @@
 
   <!-- Handle special type name conversions. -->
   <xsl:template name="type-name">
+
+    <!-- The name of the type to be generated. -->
     <xsl:param name="type"/>
+
+    <!-- The current class. -->
+    <xsl:param name="class" select="/.."/>
+
     <xsl:choose>
 
-      <!-- Autonumber mps to Integer. -->
+      <!-- Autonumber maps to Integer. -->
       <xsl:when test="$type='Autonumber'">
         <xsl:text>Integer</xsl:text>
       </xsl:when>
 
-      <!-- Class maps to a Handle. -->
+      <!-- The current Class maps to just Handle. -->
+      <xsl:when test="$type=$class/name">
+        <xsl:text>Handle</xsl:text>
+      </xsl:when>
+
+      <!-- A Class (not the current class) maps to {class}.Handle. -->
       <xsl:when test="/domain/class/name=$type">
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
         <xsl:value-of select="$type"/>
         <xsl:text>.Handle</xsl:text>
       </xsl:when>
@@ -64,8 +73,6 @@
       <xsl:when test="/domain/type[name=$type]/set">
         <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
         <xsl:if test="$type-name/set">
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
           <xsl:value-of select="$type-name/set"/>
           <xsl:text>.Collections.Collection</xsl:text>
         </xsl:if>

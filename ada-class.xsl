@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 4fef64e05835 2001/07/05 18:41:30 simon $ -->
+<!-- $Id: ada-class.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,6 +29,11 @@
 
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
+
+    <xsl:message>
+      <xsl:text>  .. </xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:message>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
@@ -406,6 +411,11 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
+    <xsl:message>
+      <xsl:text>  .. </xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:message>
+
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
     
@@ -631,6 +641,7 @@
         <xsl:text>&#10;     return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
+          <xsl:with-param name="class" select=".."/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v ea7fa7141068 2001/07/05 18:42:33 simon $ -->
+<!-- $Id: ada-operation.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -456,6 +456,7 @@
         <xsl:text>   return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
+          <xsl:with-param name="class" select=".."/>
         </xsl:call-template>
       </xsl:when>
 
@@ -523,6 +524,7 @@
 
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
+      <xsl:with-param name="class" select="../.."/>
     </xsl:call-template>
 
     <xsl:if test="initial">
@@ -580,8 +582,6 @@
 
           <!-- Set of classes -->
           <xsl:when test="$the-type/set">
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
             <xsl:value-of select="$the-type/set"/>
             <xsl:text>.Collections.Null_Container</xsl:text>
           </xsl:when>
