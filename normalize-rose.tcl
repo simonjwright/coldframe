@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0df5d6f19a7b 2003/05/17 16:54:33 simon $
+# $Id: normalize-rose.tcl,v 815f6db60586 2003/05/17 17:08:16 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -194,7 +194,6 @@ proc normalizeValue {s} {
 				    set term [normalize $min]
 				    switch -- [string tolower $term] {
 					pi      {
-					    puts stderr "$tmp contains pi"
 					    [Domain::currentDomain] \
 						-references pi
 					}
