@@ -5,6 +5,8 @@
 <class>
 <name>Problem Report</name>
 <documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
+
+[[ max : 10100 ]]
 </documentation>
 <attributes>
 <attribute stereotype="id">
@@ -222,14 +224,22 @@ It should address one logical error (which may correspond to several necessary c
 <relationships>
 <association>
 <name>r100</name>
-<documentation></documentation>
-<role><end>1</end>
+<documentation>When a Problem Report has been determined to be related to one or more Components, it's said to have been Diagnosed.
+
+Every Diagnosed Problem Report is associated with at least one Component.
+
+A Component may be associated with one or more Diagnosed Problem Reports.
+
+The actual problem with the Component is held in the associated Defect.
+
+In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.</documentation>
+<role><end>2</end>
 <name>affects</name>
 <classname>Component</classname>
 <cardinality>1..n</cardinality>
 <documentation></documentation>
 </role>
-<role><end>2</end>
+<role><end>1</end>
 <name>is affected by</name>
 <classname>Diagnosed Problem Report</classname>
 <cardinality>0..n</cardinality>
