@@ -1,4 +1,4 @@
-<!-- $Id: serialized-to-csv.xsl,v 88ea099206aa 2003/01/22 20:07:22 simon $ -->
+<!-- $Id: serialized-to-csv.xsl,v 691a8f36ad8f 2003/03/01 16:58:31 simon $ -->
 <!-- XSL stylesheet to convert a document containing mixed serialization
      output from ColdFrame to comma-separated-variable files, one file per
      record name. -->
@@ -55,6 +55,11 @@
 
         <!-- choose the output file name -->
         <xsl:document href="{current()}.csv">
+
+          <xsl:message>
+            <xsl:text>processing </xsl:text>
+            <xsl:value-of select="current()"/>
+          </xsl:message>
 
           <!-- process all the records in the original document for
                this name -->
