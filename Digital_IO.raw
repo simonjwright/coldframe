@@ -1,0 +1,254 @@
+<domain>
+<extractor>cf-20021204a</extractor>
+<name>Digital IO</name>
+<date>
+<year>2002</year>
+<month>12</month>
+<day>17</day>
+<time>20:51</time>
+</date>
+<documentation></documentation>
+<classes>
+<class>
+<name>Signal</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>s</name>
+<documentation></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>state</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial>False</initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="init">
+<name>initialize</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="abstract">
+<name>changed</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get s</name>
+<documentation></documentation>
+<return>Signal Name</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>set state</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get state</name>
+<documentation></documentation>
+<return>Boolean</return>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Input</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>changed</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Output</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>changed</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Signal State</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[callback : 5 ]]</documentation>
+<attributes>
+<attribute>
+<name>s</name>
+<documentation></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>state</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="access">
+<name>receiver</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>s</name>
+<documentation></documentation>
+<type>Signal State</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Application</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>set output</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>s</name>
+<documentation></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>to state</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>HCI</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>get state</name>
+<documentation></documentation>
+<return>Boolean</return>
+<parameters>
+<parameter>
+<name>of signal</name>
+<documentation></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>set input</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>of signal</name>
+<documentation></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Signal Name</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[ enumeration:
+floor 0,
+floor 1,
+floor 2,
+floor 3,
+lamp a,
+lamp b,
+lamp c
+]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+<inheritance>
+<name>g1</name>
+<documentation></documentation>
+<child>Input</child>
+<parent>Signal</parent>
+</inheritance>
+<inheritance>
+<name>g1</name>
+<documentation></documentation>
+<child>Output</child>
+<parent>Signal</parent>
+</inheritance>
+</relationships>
+</domain>

@@ -1,0 +1,39 @@
+with "tash";
+with "bc";
+with "coldframe";
+
+project Stairwell_Demo is
+
+  for Main use ("stairwell_demo");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("House_Management.impl",
+                       "House_Management.gen",
+                       "Digital_IO.impl",
+                       "Digital_IO.gen");
+
+  for Object_Dir use ".build";
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-g",
+                                       "-j2",
+                                       "-k",
+                                       "-m");
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("Ada") use ("-gnatqQaf",
+                                       "-gnatwaL",
+                                       "-O2");
+  end Compiler;
+
+  package Binder is
+     for Default_Switches ("Ada") use ("-E");
+  end Binder;
+
+  package Linker is
+     for Default_Switches ("Ada") use Tash.Objects & Tash.Options;
+  end Linker;
+
+end Stairwell_Demo;

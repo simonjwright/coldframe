@@ -1,0 +1,267 @@
+<domain>
+<extractor>cf-20021204a</extractor>
+<name>House Management</name>
+<date>
+<year>2002</year>
+<month>12</month>
+<day>17</day>
+<time>20:51</time>
+</date>
+<documentation></documentation>
+<classes>
+<class>
+<name>Lamp</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>name</name>
+<documentation></documentation>
+<type>Lamp Name</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>timeout</name>
+<documentation></documentation>
+<type>Timer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="init">
+<name>initialize</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>button_pushed</name>
+<documentation>An associated button has been pushed.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>turn off</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>turn on</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>set timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>clear timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>idle</name>
+<entryactions>
+<action>
+<name>turn off</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>lit</name>
+<entryactions>
+<action>
+<name>turn on</name>
+</action>
+<action>
+<name>set timeout</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>restarted</name>
+<entryactions>
+<action>
+<name>clear timeout</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>lit</target>
+<event>
+<name>button push</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>lit</source>
+<target>restarted</target>
+<event>
+<name>button push</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>lit</source>
+<target>idle</target>
+<event>
+<name>timeout</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>restarted</source>
+<target>lit</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class>
+<name>Button</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>name</name>
+<documentation></documentation>
+<type>Button Name</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>changed</name>
+<documentation>Acts as receiver of state changes from Digital IO.</documentation>
+<parameters>
+<parameter>
+<name>s</name>
+<documentation></documentation>
+<type>Signal State</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>pushed</name>
+<documentation>The button has been pushed; tell the associated Lamps.</documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Button to Lamp</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Lamp Name</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[  enumeration :
+lamp a,
+lamp b,
+lamp c
+]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Button Name</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[ enumeration:
+floor 0,
+floor 1,
+floor 2,
+floor 3
+]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Signal State</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[ imported : Digital IO ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+<association>
+<name>a1</name>
+<documentation></documentation>
+<role><end>1</end>
+<name>controls</name>
+<classname>Lamp</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name>is controlled by</name>
+<classname>Button</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<associative>Button to Lamp</associative>
+</association>
+</relationships>
+</domain>

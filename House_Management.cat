@@ -1,0 +1,677 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "House Management"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3DFCF75D00CF"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Lamp"
+	    quid       	"3DFCFC1401ED"
+	    operations 	(list Operations
+		(object Operation "initialize"
+		    quid       	"3DFEFDE3027F"
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "button_pushed"
+		    quid       	"3DFF62C10206"
+		    documentation 	"An associated button has been pushed."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "turn off"
+		    quid       	"3DFCFF8A0038"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "turn on"
+		    quid       	"3DFCFF8D02BE"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set timeout"
+		    quid       	"3DFCFF900218"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "clear timeout"
+		    quid       	"3DFCFF960036"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "name"
+		    quid       	"3DFCFDA40030"
+		    stereotype 	"id"
+		    type       	"Lamp Name")
+		(object ClassAttribute "timeout"
+		    quid       	"3DFCFF9F00A7"
+		    type       	"Timer"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"3DFCFEA50061"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$0"
+			quid       	"3DFCFEAC01F2"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3DFCFED10028"
+				supplier   	"idle"
+				quidu      	"3DFCFEB10376"
+				sendEvent  	(object sendEvent
+				    quid       	"3DFCFED1002B")))
+			type       	"StartState")
+		    (object State "idle"
+			quid       	"3DFCFEB10376"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3DFCFED6017A"
+				label      	""
+				supplier   	"lit"
+				quidu      	"3DFCFEBB001D"
+				Event      	(object Event "button push"
+				    quid       	"3DFCFED6017B")
+				sendEvent  	(object sendEvent
+				    quid       	"3DFCFED6017D")))
+			actions    	(list action_list
+			    (object action "turn off"
+				quid       	"3DFCFF19005E"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal")
+		    (object State "lit"
+			quid       	"3DFCFEBB001D"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3DFCFEEC0009"
+				label      	""
+				supplier   	"restarted"
+				quidu      	"3DFCFEC30213"
+				Event      	(object Event "button push"
+				    quid       	"3DFCFEEC000A")
+				sendEvent  	(object sendEvent
+				    quid       	"3DFCFEEC000C"))
+			    (object State_Transition
+				quid       	"3DFCFEF900E4"
+				label      	""
+				supplier   	"idle"
+				quidu      	"3DFCFEB10376"
+				Event      	(object Event "timeout"
+				    quid       	"3DFCFEF900E5")
+				sendEvent  	(object sendEvent
+				    quid       	"3DFCFEF900E7")))
+			actions    	(list action_list
+			    (object action "turn on"
+				quid       	"3DFCFF3D036D"
+				ActionTime 	(object ActionTime
+				    when       	"Entry"))
+			    (object action "set timeout"
+				quid       	"3DFCFF5203D1"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal")
+		    (object State "restarted"
+			quid       	"3DFCFEC30213"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3DFCFF03023D"
+				supplier   	"lit"
+				quidu      	"3DFCFEBB001D"
+				sendEvent  	(object sendEvent
+				    quid       	"3DFCFF030240")))
+			actions    	(list action_list
+			    (object action "clear timeout"
+				quid       	"3DFCFF680030"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal"))
+		partitions 	(list Partitions)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "Lifecycle"
+			quid       	"3DFCFEA5006B"
+			title      	"Lifecycle"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$0" @1
+				location   	(384, 384)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(426, 354)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3DFCFEAC01F2"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "idle" @2
+				location   	(752, 688)
+				label      	(object ItemLabel
+				    Parent_View 	@2
+				    location   	(752, 672)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	226
+				    justify    	0
+				    label      	"idle")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3DFCFEB10376"
+				compartment 	(object Compartment
+				    Parent_View 	@2
+				    location   	(648, 710)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	1
+				    max_width  	225
+				    compartmentItems 	(list Compartment
+					"entry/ turn off"))
+				width      	323
+				height     	134
+				autoResize 	TRUE)
+			    (object StateView "Normal" "lit" @3
+				location   	(1376, 688)
+				label      	(object ItemLabel
+				    Parent_View 	@3
+				    location   	(1376, 650)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	302
+				    justify    	0
+				    label      	"lit")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3DFCFEBB001D"
+				compartment 	(object Compartment
+				    Parent_View 	@3
+				    location   	(1234, 688)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	2
+				    max_width  	300
+				    compartmentItems 	(list Compartment
+					"entry/ turn on"
+					"entry/ set timeout"))
+				width      	398
+				height     	179
+				autoResize 	TRUE)
+			    (object StateView "Normal" "restarted" @4
+				location   	(1968, 672)
+				label      	(object ItemLabel
+				    Parent_View 	@4
+				    location   	(1968, 656)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	334
+				    justify    	0
+				    label      	"restarted")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3DFCFEC30213"
+				compartment 	(object Compartment
+				    Parent_View 	@4
+				    location   	(1810, 694)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	1
+				    max_width  	332
+				    compartmentItems 	(list Compartment
+					"entry/ clear timeout"))
+				width      	430
+				height     	134
+				autoResize 	TRUE)
+			    (object TransView "" @5
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3DFCFED10028"
+				client     	@1
+				supplier   	@2
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @6
+				label      	(object SegLabel @7
+				    Parent_View 	@6
+				    location   	(1003, 370)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	224
+				    justify    	0
+				    label      	"button push"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3DFCFED6017A"
+				client     	@2
+				supplier   	@3
+				vertices   	(list Points
+				    (817, 621)
+				    (1035, 400)
+				    (1270, 598))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @8
+				label      	(object SegLabel @9
+				    Parent_View 	@8
+				    location   	(1684, 385)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	224
+				    justify    	0
+				    label      	"button push"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3DFCFEEC0009"
+				client     	@3
+				supplier   	@4
+				vertices   	(list Points
+				    (1455, 598)
+				    (1633, 400)
+				    (1885, 605))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @10
+				label      	(object SegLabel @11
+				    Parent_View 	@10
+				    location   	(1017, 957)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	130
+				    justify    	0
+				    label      	"timeout"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3DFCFEF900E4"
+				client     	@3
+				supplier   	@2
+				vertices   	(list Points
+				    (1257, 776)
+				    (1053, 930)
+				    (835, 755))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @12
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3DFCFF03023D"
+				client     	@4
+				supplier   	@3
+				vertices   	(list Points
+				    (1891, 738)
+				    (1650, 950)
+				    (1469, 776))
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Button"
+	    quid       	"3DFCFC250129"
+	    operations 	(list Operations
+		(object Operation "changed"
+		    quid       	"3DFCFDE40258"
+		    documentation 	"Acts as receiver of state changes from Digital IO."
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    type       	"Signal State"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "pushed"
+		    quid       	"3DFF62A10052"
+		    documentation 	"The button has been pushed; tell the associated Lamps."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "name"
+		    quid       	"3DFCFD8A026D"
+		    stereotype 	"id"
+		    type       	"Button Name")))
+	(object Class "Button to Lamp"
+	    quid       	"3DFCFC830160")
+	(object Class "Lamp Name"
+	    quid       	"3DFCFD180255"
+	    documentation 	
+|[[  enumeration :
+|lamp a,
+|lamp b,
+|lamp c
+|]]
+	    
+	    stereotype 	"type")
+	(object Class "Button Name"
+	    quid       	"3DFCFD3C0008"
+	    documentation 	
+|[[ enumeration:
+|floor 0,
+|floor 1,
+|floor 2,
+|floor 3
+|]]
+	    
+	    stereotype 	"type")
+	(object Class "Signal State"
+	    quid       	"3DFCFE60018E"
+	    documentation 	"[[ imported : Digital IO ]]"
+	    stereotype 	"type")
+	(object Association "a1"
+	    quid       	"3DFCFC3603D7"
+	    roles      	(list role_list
+		(object Role "controls"
+		    quid       	"3DFCFC370338"
+		    label      	"controls"
+		    supplier   	"Logical View::House Management::Lamp"
+		    quidu      	"3DFCFC1401ED"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE)
+		(object Role "is controlled by"
+		    quid       	"3DFCFC370342"
+		    label      	"is controlled by"
+		    supplier   	"Logical View::House Management::Button"
+		    quidu      	"3DFCFC250129"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::House Management::Button to Lamp"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3DFCFC0C0232"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::House Management::Lamp" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(768, 1136)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(509, 905)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	518
+			justify    	0
+			label      	"Lamp")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCFC1401ED"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(509, 961)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	9
+			max_width  	515)
+		    width      	536
+		    height     	484
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::House Management::Button" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(768, 384)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(433, 266)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	670
+			justify    	0
+			label      	"Button")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCFC250129"
+		    compartment 	(object Compartment
+			Parent_View 	@14
+			location   	(433, 322)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	667)
+		    width      	688
+		    height     	258
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @15
+		    location   	(768, 703)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(768, 644)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3DFCFC3603D7"
+		    roleview_list 	(list RoleViews
+			(object RoleView "controls" @17
+			    Parent_View 	@15
+			    location   	(0, 319)
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(887, 866)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	161
+				justify    	0
+				label      	"+controls"
+				pctDist    	0.862745
+				height     	119
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3DFCFC370338"
+			    client     	@15
+			    supplier   	@13
+			    line_style 	0
+			    label      	(object SegLabel @19
+				Parent_View 	@17
+				location   	(711, 859)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.827451
+				height     	58
+				orientation 	1))
+			(object RoleView "is controlled by" @20
+			    Parent_View 	@15
+			    location   	(0, 319)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(934, 538)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	299
+				justify    	0
+				label      	"+is controlled by"
+				pctDist    	0.866142
+				height     	166
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3DFCFC370342"
+			    client     	@15
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(711, 533)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.897638
+				height     	58
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(352, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(198, 658)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	308
+			justify    	0
+			label      	"Button to Lamp")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCFC830160"
+		    width      	326
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @24
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@23
+		    supplier   	@15
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::House Management::Lamp Name" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2160, 592)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(2034, 566)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	252
+			justify    	0
+			label      	"Lamp Name")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@25
+			location   	(2034, 521)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	252
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"3DFCFD180255"
+		    width      	270
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::House Management::Button Name" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2160, 416)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(2029, 390)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"Button Name")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@26
+			location   	(2029, 345)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"3DFCFD3C0008"
+		    width      	280
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::House Management::Signal State" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2160, 752)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(2033, 726)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	254
+			justify    	0
+			label      	"Signal State")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@27
+			location   	(2033, 681)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	254
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"3DFCFE60018E"
+		    width      	272
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)))))

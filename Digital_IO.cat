@@ -1,0 +1,436 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Digital IO"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3DFCF76B0011"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Signal"
+	    quid       	"3DFCF783026E"
+	    operations 	(list Operations
+		(object Operation "initialize"
+		    quid       	"3DFEFE0B0222"
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "changed"
+		    quid       	"3DFCF9A60243"
+		    stereotype 	"abstract"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get s"
+		    quid       	"3DFF6A5B033B"
+		    stereotype 	"accessor"
+		    result     	"Signal Name"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set state"
+		    quid       	"3DFF69A503E3"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    type       	"Boolean"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get state"
+		    quid       	"3DFF69B600EF"
+		    stereotype 	"accessor"
+		    result     	"Boolean"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "s"
+		    quid       	"3DFCF7A9029B"
+		    stereotype 	"id"
+		    type       	"Signal Name")
+		(object ClassAttribute "state"
+		    quid       	"3DFCF7D70048"
+		    type       	"Boolean"
+		    initv      	"False")))
+	(object Class "Input"
+	    quid       	"3DFCF78D0241"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3DFCF7F000B2"
+		    label      	"g1"
+		    supplier   	"Logical View::Digital IO::Signal"
+		    quidu      	"3DFCF783026E"))
+	    operations 	(list Operations
+		(object Operation "changed"
+		    quid       	"3DFCF9BA03AA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Output"
+	    quid       	"3DFCF7950224"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3DFCF7F700B2"
+		    label      	"g1"
+		    supplier   	"Logical View::Digital IO::Signal"
+		    quidu      	"3DFCF783026E"))
+	    operations 	(list Operations
+		(object Operation "changed"
+		    quid       	"3DFCF9B40008"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Signal State"
+	    quid       	"3DFCF80601AE"
+	    documentation 	"[[callback : 5 ]]"
+	    stereotype 	"type"
+	    operations 	(list Operations
+		(object Operation "receiver"
+		    quid       	"3DFCF8DD0334"
+		    stereotype 	"access"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    type       	"Signal State"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "s"
+		    quid       	"3DFCF83602DA"
+		    type       	"Signal Name")
+		(object ClassAttribute "state"
+		    quid       	"3DFCF84002CA"
+		    type       	"Boolean")))
+	(object Class "Application"
+	    quid       	"3DFCFA6E0024"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "set output"
+		    quid       	"3DFCFAC002AC"
+		    parameters 	(list Parameters
+			(object Parameter "s"
+			    type       	"Signal Name")
+			(object Parameter "to state"
+			    type       	"Boolean"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "HCI"
+	    quid       	"3DFCFA83024B"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "get state"
+		    quid       	"3DFCFB0202B1"
+		    parameters 	(list Parameters
+			(object Parameter "of signal"
+			    type       	"Signal Name"))
+		    result     	"Boolean"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set input"
+		    quid       	"3DFCFB3701DB"
+		    parameters 	(list Parameters
+			(object Parameter "of signal"
+			    type       	"Signal Name")
+			(object Parameter "to"
+			    type       	"Boolean"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Signal Name"
+	    quid       	"3DFCFB77033C"
+	    documentation 	
+|[[ enumeration:
+|floor 0,
+|floor 1,
+|floor 2,
+|floor 3,
+|lamp a,
+|lamp b,
+|lamp c
+|]]
+	    
+	    stereotype 	"type"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3DFCF77A0261"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Digital IO::Signal" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(720, 1264)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(386, 1056)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	668
+			justify    	0
+			label      	"Signal")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCF783026E"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(386, 1112)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	8
+			max_width  	665)
+		    width      	686
+		    height     	438
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Digital IO::Output" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1456, 1056)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1347, 983)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	218
+			justify    	0
+			label      	"Output")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCF7950224"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1347, 1039)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	215)
+		    width      	236
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @3
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1199, 1127)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3DFCF7F700B2"
+		    client     	@2
+		    supplier   	@1
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Digital IO::Signal State" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2528, 336)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2180, 238)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	696
+			justify    	0
+			label      	"Signal State")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(2180, 193)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	696
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"3DFCF80601AE"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(2180, 294)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	700)
+		    width      	714
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Digital IO::Input" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1440, 1552)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1331, 1479)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	218
+			justify    	0
+			label      	"Input")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DFCF78D0241"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(1331, 1535)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	222)
+		    width      	236
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @6
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(1192, 1452)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3DFCF7F000B2"
+		    client     	@5
+		    supplier   	@1
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Digital IO::Application" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(592, 336)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(175, 282)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	834
+			justify    	0
+			label      	"Application")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@7
+			location   	(175, 237)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	834
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"3DFCFA6E0024"
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(175, 338)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	830)
+		    width      	852
+		    height     	220
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Digital IO::HCI" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1600, 336)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1180, 260)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	840
+			justify    	0
+			label      	"HCI")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(1180, 215)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	840
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"3DFCFA83024B"
+		    compartment 	(object Compartment
+			Parent_View 	@8
+			location   	(1180, 316)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	845)
+		    width      	858
+		    height     	264
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Digital IO::Signal Name" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2544, 784)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(2416, 758)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	256
+			justify    	0
+			label      	"Signal Name")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@9
+			location   	(2416, 713)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	256
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"3DFCFB77033C"
+		    width      	274
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)))))
