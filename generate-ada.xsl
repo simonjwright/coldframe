@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 7fa828a65845 2001/05/09 18:51:33 simon $ -->
+<!-- $Id: generate-ada.xsl,v 45d629840042 2001/05/11 19:13:35 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,6 +29,7 @@
 
   <xsl:import href="ada-association.xsl"/>
   <xsl:import href="ada-attribute.xsl"/>
+  <xsl:import href="ada-callback.xsl"/>
   <xsl:import href="ada-class.xsl"/>
   <xsl:import href="ada-collection.xsl"/>
   <xsl:import href="ada-operation.xsl"/>
@@ -86,6 +87,12 @@
 
     <!-- Package bodies for Associations -->
     <xsl:apply-templates select="association" mode="association-body"/>
+
+    <!-- Package specs for callbacks. -->
+    <xsl:apply-templates select="type[@callback]" mode="callback-spec"/>
+
+    <!-- Package bodies for callbacks. -->
+    <xsl:apply-templates select="type[@callback]" mode="callback-body"/>
 
   </xsl:template>
 
