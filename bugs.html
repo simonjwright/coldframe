@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f5fe5aa8b50b 2001/06/21 19:25:44 simon $ -->
+<!-- $Id: bugs.html,v fbac8d15cde7 2001/06/26 18:55:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -10,9 +10,40 @@
 
 <dl>
 
+<dt>0005 (raised 25.vi.01)
+
+<dd>The translation for active classes fails when the <tt>[[max]]</tt>
+number of instances is specified.
+
+<dt>0006 (raised 25.vi.01)
+
+<dd>The translation for active classes requires users to jump through
+hoops involving <tt>.all'Unrestricted_Access</tt> to get a
+<tt>Handle.</tt>
+
+<dt>0008 (raised 26.vi.01)
+
+<dd>Class operations of active classes generate an entry and a
+matching (bad) body stub.
+
 </dl>
 
 <h2>Fixed</h2>
+
+<h3>26.vi.01</h3>
+<dl>
+
+<dt>0004 (raised 25.vi.01)
+
+<dd>The <tt>Link</tt> function for a 1-(1:1) association is generated
+wrongly (uses the wrong end of the association).
+
+<dt>0007 (raised 26.vi.01)
+
+<dd>The error message generated when there's no concrete
+implementation of an abstract operation is garbled.
+
+</dl>
 
 <h3>21.vi.01</h3>
 <dl>
