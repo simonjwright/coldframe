@@ -86,6 +86,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 # remove any generated files which are also present in the implementation
 # directory (.impl)
 # write-protect the generated files (careful, in case there are a lot of them!)
+# report unimplemented bodies
 %.gen: %.ada
 	-rm -rf $@
 	-mkdir $@
@@ -95,6 +96,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	done
 	chmod -R a-w $@
 	chmod u+w $@
+	@echo "checking for unimplemented bodies .."
+	@grep -rl Program_Error $@ || echo ".. none."
 
 TG = $(HOME)/bin/tg
 %.adb: %.ts
