@@ -204,7 +204,9 @@ type-mapping.png
 # Create the current date, in the form yyyymmdd. This certainly works in Linux.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
-DOCS = annotations.html \
+DOCS = \
+active-classes.html \
+annotations.html \
 architecture.html \
 associations.html \
 attributes.html \
