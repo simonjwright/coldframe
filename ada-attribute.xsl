@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v bb81aa3d4d7f 2001/05/27 05:27:12 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 9423388320bf 2001/06/09 04:33:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -55,10 +55,14 @@
 
     <xsl:choose>
 
-      <!-- Output all attributes. -->
-      <xsl:when test="count(attribute) &gt; 0">
+      <xsl:when test="attribute or @active">
+        <!-- There are attributes; output them all. -->
 
-        <xsl:text>  type Instance is record&#10;</xsl:text>
+        <xsl:text>  type Instance is limited record&#10;</xsl:text>
+
+        <xsl:if test="@active">
+          <xsl:text>    The_T : T (Instance'Access);&#10;</xsl:text>
+        </xsl:if>
 
         <!-- The non-supertype attributes -->
         <xsl:apply-templates
@@ -81,7 +85,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:text>  type Instance is null record;&#10;</xsl:text>
+        <xsl:text>  type Instance is limited null record;&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
