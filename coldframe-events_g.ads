@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 04b082f74c05 $
---  $Date: 2003/03/22 17:10:30 $
+--  $Revision: 47cf2876ac75 $
+--  $Date: 2003/04/08 17:51:19 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -233,7 +233,7 @@ package ColdFrame.Events_G is
 
    procedure Finalize (The_Timer : in out Timer);
    --  Removes any outstanding events for the timer from the
-   --  associated queue when the (instance containing) the timer is
+   --  associated queue when the (instance containing the) timer is
    --  deleted.
 
    function State_Image (This : Instance_Base) return String is abstract;
