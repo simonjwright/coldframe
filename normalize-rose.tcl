@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 571a76238b99 2001/02/25 10:04:22 simon $
+# $Id: normalize-rose.tcl,v ae7e4ce970fc 2001/03/20 06:04:41 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -304,15 +304,11 @@ itcl::class Element {
 	    error $msg
 	}
     }
-
-    method -report {} {
-	puts "$tag $name [$this -formatxmlattributes]"
-    }
 }
 
 # Lists are for containers constructed during the parse of the XML,
 # where there may be many instances (eg, there are many instances
-# of domain/objects/object or object/attributes/attribute)
+# of domain/classes/class or class/attributes/attribute)
 itcl::class List {
     inherit Base
 
@@ -328,11 +324,6 @@ itcl::class List {
 	[stack -top] -$tag $this
     }
 
-    method -report {} {
-	puts "list $tag [$this -formatxmlattributes]"
-	foreach el $members {$el -report}
-    }
-
     method -evaluate {domain} {
 	foreach el $members {$el -evaluate $domain}
     }
@@ -342,7 +333,7 @@ itcl::class List {
     }
 }
 
-# Containers are for singleton (per-Domain, per-Object) containment,
+# Containers are for singleton (per-Domain, per-Class) containment,
 # particularly where members need to be revisited.
 # byName is indexed by name and holds the index number in byNumber.
 # byNumber is indexed by number and holds the content.
@@ -410,15 +401,6 @@ itcl::class Container {
 
     method -complete {} {
 	[stack -top] -[$this -className] $this
-    }
-
-    method -report {} {
-	puts "[$this -className]"
-	set size [$this -size]
-	puts "$size"
-	for {set i 0} {$i < $size} {incr i 1} {
-	    [$this -atIndex $i] -report
-	}
     }
 
     method -evaluate {domain} {
@@ -493,7 +475,7 @@ itcl::class Domain {
 
     private common currentDomain
 
-    variable objects
+    variable classes
 
     variable relationships
 
@@ -507,14 +489,14 @@ itcl::class Domain {
 
     constructor {} {
 	set currentDomain $this
-	set objects [Objects ::#auto]
+	set classes [Classes ::#auto]
 	set relationships [Relationships ::#auto]
 	set datatypes [Datatypes ::#auto]
     }
 
-    method -objects {l} {set objects $l}
+    method -classes {l} {set classes $l}
 
-    method -getObjects {} {return $objects}
+    method -getClasses {} {return $classes}
 
     method -relationships {l} {set relationships $l}
 
@@ -534,32 +516,22 @@ itcl::class Domain {
 	$this -generate
     }
 
-    method -report {} {
-	$this Element::-report
-	if [info exists objects] {$objects -report}
-	if [info exists relationships] {$relationships -report}
-	if [info exists datatypes] {$datatypes -report}
-	if [info exists typesfiles] {$typesfiles -report}
-	if [info exists transitiontables] {$transitiontables -report}
-	if [info exists terminators] {$terminators -report}
-    }
-
     method -generate {} {
 	puts "<domain>"
 	putElement name "$name"
 	putElement date "[exec /bin/date]"
 	$this -generateDocumentation
-	$objects -evaluate $this
+	$classes -evaluate $this
 	$relationships -evaluate $this
 	$datatypes -evaluate $this
-	$objects -generate $this
+	$classes -generate $this
 	$relationships -generate $this
 	$datatypes -generate $this
 	puts "</domain>"
     }
 }
 
-itcl::class Object {
+itcl::class Class {
     inherit Element
 
     # an abbreviation of the name may be useful (eg, when making names
@@ -574,6 +546,10 @@ itcl::class Object {
 
     # specifies the maximum number of instances (optional)
     variable max
+
+    # true if there's one and only one instance of the class
+    variable singleton 0
+    method -singleton {dummy} {set singleton 1}
 
     method -abbreviation {a} {
 	set abbreviation [string toupper [string trim $a]]
@@ -598,17 +574,17 @@ itcl::class Object {
     method -max {s} {set max [string trim $s]}
 
     #
-    # variables & methods related to <<control>> objects (XXX needed?)
+    # variables & methods related to <<control>> classes (XXX needed?)
     #
 
     variable isControl 0
 
     # called (via stereotype mechanism) to indicate that this is a
-    # <<control>> object
+    # <<control>> class
     method -control {dummy} {set isControl 1}
 
     #
-    # variables & methods related to <<type>> objects
+    # variables & methods related to <<type>> classes
     #
 
     variable isType 0
@@ -616,7 +592,7 @@ itcl::class Object {
     variable typeInfo
 
     # called (via stereotype mechanism) to indicate that this is a
-    # <<type>> object
+    # <<type>> class
     method -type {dummy} {set isType 1}
 
     method -attributes {l} {set attributes $l}
@@ -630,7 +606,16 @@ itcl::class Object {
 	return 0
     }
 
+    # called to formalize a relationship.
+    # this is the source of the formalization
+    # obj is the class which holds the formalizing attribute(s)
+    # relation is the relationship to be formalized
+    # identifier is true if the formalizing attribute(s) are to
+    #   be part of obj's identifier
     method -addFormalizingAttributesTo {obj relation identifier} {
+	set attr [ReferentialAttribute ::#auto $this $relation $identifier]
+	$obj -addReferentialAttribute $attr
+	return
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
 		if [$relation isa Inheritance] {
@@ -655,7 +640,7 @@ itcl::class Object {
     }
 
     # because different annotations (text in [[ ]] in documentation) are
-    # appropriate in ordinary objects vs <type> objects, don't process
+    # appropriate in ordinary classes vs <type> classes, don't process
     # annotations if this is a type.
     method -handleAnnotationWhenRead {} {
 	if {!$isType} {
@@ -682,26 +667,26 @@ itcl::class Object {
 	}
     }
 
-    method -report {} {
-	$this Element::-report
-	$tags -report
-	$attributes -report
-    }
-
     method -evaluate {domain} {
 	$attributes -evaluate $domain
     }
 
     method -generate {domain} {
-	puts -nonewline "<object"
+	if [expr $singleton && [$this -hasIdentifier]] {
+	    puts stderr "singleton [$this -getName] has identifier(s)"
+	} elseif [expr !$singleton && ![$this -hasIdentifier]] {
+	    puts stderr "[$this -getName] has no identifier(s)"
+	}
+	puts -nonewline "<class"
 	if [info exists max] {puts -nonewline " max=\"$max\""}
+	if $singleton {puts -nonewline " singleton=\"yes\""}
 	puts ">"
 	putElement name "$name"
 	putElement abbreviation [$this -getAbbreviation]
 	$this -generateDocumentation
 	$attributes -generate $domain
 	$operations -generate $domain
-	puts "</object>"
+	puts "</class>"
     }
 }
 
@@ -810,7 +795,7 @@ itcl::class Association {
 
     method -associative {a} {set associative $a}
 
-    method -getAssociativeObjectName {} {return $associative}
+    method -getAssociativeClassName {} {return $associative}
 
     method -isAssociative {} {return [info exists associative]}
 
@@ -850,28 +835,16 @@ itcl::class Association {
 	[stack -top] -add $this $name
     }
 
-    method -report {} {
-	$this Element::-report
-    }
-
     method -evaluate {domain} {
 	if [expr ![$this -needsFormalizing]] {
 	    puts stderr "$name already formalized"
 	    return
 	}
 	set n [$this -getNumber]
-	set os [$domain -getObjects]
+	set os [$domain -getClasses]
 	set type [$this -relationshipType]
 	set cl1 [$os -atName [$role1 -getClassname]]
-	if [expr ![$cl1 -hasIdentifier]] {
-	    puts stderr "[$cl1 -getName] has no identifier(s)"
-	    return
-	}
 	set cl2 [$os -atName [$role2 -getClassname]]
-	if [expr ![$cl2 -hasIdentifier]] {
-	    puts stderr "[$cl2 -getName] has no identifier(s)"
-	    return
-	}
 	$this -formalized
 	if [$this -isAssociative] {
 	    set assoc [$os -atName $associative]
@@ -908,16 +881,16 @@ itcl::class Association {
 	    "1-(1:1)" {error "oops! not yet implemented!"}
 	    "1-(1:M)" {
 		# The identifying attributes in both roles are used as
-		# referential attributes in the associative object.
+		# referential attributes in the associative class.
 		# Only the referential attributes from role 2 become
-		# identifiers in the associative object.
+		# identifiers in the associative class.
 		$cl1 -addFormalizingAttributesTo $assoc $this 0
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
 	    }
 	    "1-(M:M)" {
 		# The identifying attributes in both roles are used as
 		# referential and identifying attributes in the associative
-		# object.
+		# class.
 		$cl1 -addFormalizingAttributesTo $assoc $this 1
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
 	    }
@@ -933,7 +906,7 @@ itcl::class Association {
 	$role1 -generate $domain
 	$role2 -generate $domain
 	if [info exists associative] {
-	    set os [$domain -getObjects]
+	    set os [$domain -getClasses]
 	    putElement associative [[$os -atName $associative] -getName]
 	}
 	puts "</association>"
@@ -958,10 +931,10 @@ itcl::class Role {
     # May change if the relation is normalized (eg, M:1 -> 1:M)
     variable end
 
-    # True if the object at this end provides the referential attributes
+    # True if the class at this end provides the referential attributes
     # that formalize the relation. Normally we can work this out from the
     # multiplicity and conditionality, but for 1:1, 1c:1c, 1-(1:1) and
-    # 1-(1c:1c) the analyst has to specify.
+    # 1-(1c:1c) the analyst has to specify using the [[source]] annotation.
     variable sourceEnd 0
 
     method -cardinality {c} {
@@ -987,25 +960,12 @@ itcl::class Role {
 
     method -getEnd {} {return $end}
 
-    method -exportcontrol {e} {
-	switch $e {
-	    "PublicAccess"         -
-	    "PrivateAccess"        -
-	    "ImplementationAccess" {set sourceEnd 0}
-	    "ProtectedAccess"      {set sourceEnd 1}
-	    default                {error "unrecognised exportcontrol $e"}
-	}
-	set exportcontrol $e
-    }
+    method -source {dummy} {set sourceEnd 1}
 
     method -getSourceEnd {} {return $sourceEnd}
 
     method -complete {} {
 	[stack -top] -role $this
-    }
-
-    method -report {} {
-	$this Element::-report
     }
 
     method -evaluate {domain} {
@@ -1016,7 +976,7 @@ itcl::class Role {
 	if $conditional {puts -nonewline " conditional=\"yes\""}
 	if {$cardinality == "M"} {puts -nonewline " multiple=\"yes\""}
 	puts ">"
-	set os [$domain -getObjects]
+	set os [$domain -getClasses]
 	set cl [$os -atName $classname]
 	putElement classname [$cl -getName]
 	putElement name [$this -getName]
@@ -1027,13 +987,13 @@ itcl::class Role {
 itcl::class Inheritance {
     inherit Relationship
 
-    # parent is a string containing the name of the supertype object
+    # parent is a string containing the name of the supertype class
     variable parent
 
     # child is the lazy way of not handing the list head ..
     variable child
 
-    # children is a List of the names of the subtype objects
+    # children is a List of the names of the subtype classes
     variable children
 
     constructor {} {set children [List ::#auto]}
@@ -1051,10 +1011,6 @@ itcl::class Inheritance {
 
     method -relationshipType {} {return "Super/Sub"}
 
-    method -report {} {
-	$this Element::-report
-    }
-
     method -complete {} {
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
@@ -1070,7 +1026,7 @@ itcl::class Inheritance {
 	    puts stderr "$name already formalized"
 	    return
 	}
-	set os [$domain -getObjects]
+	set os [$domain -getClasses]
 	set p [$os -atName $parent]
 	if [expr ![$p -hasIdentifier]] {
 	    puts stderr "[$p -getName] has no identifier(s)"
@@ -1094,7 +1050,7 @@ itcl::class Inheritance {
 	}
 	puts "<inheritance>"
 	putElement name $name
-	set os [$domain -getObjects]
+	set os [$domain -getClasses]
 	set p [$os -atName $parent]
 	putElement parent [$p -getName]
 	foreach ch [$children -getMembers] {
@@ -1222,34 +1178,18 @@ itcl::class Documentation {
 
 itcl::class Typesfile {
     inherit Element
-
-    method -report {} {
-	$this Element::-report
-    }
 }
 
 itcl::class Transitiontable {
     inherit Element
-
-    method -report {} {
-	$this Element::-report
-    }
 }
 
 itcl::class Terminator {
     inherit Element
-
-    method -report {} {
-	$this Element::-report
-    }
 }
 
 itcl::class Tag {
     inherit Element
-
-    method -report {} {
-	$this Element::-report
-    }
 }
 
 itcl::class Attribute {
@@ -1283,15 +1223,19 @@ itcl::class Attribute {
 
     method -getIdentifier {} {return $identifier}
 
-    method -getOwningObject {} {
+    method -getOwningClass {} {
 	return [[$this -getOwner] -getOwner]
     }
 
-    private method -referential {} {set referential 1}
+    private method -referential {} {
+	puts stderr "$name -referential called!"
+	set referential 1
+    }
 
-    # called from a child object which needs to formalize an inheritance
+    # called from a child class which needs to formalize an inheritance
     # relationship by use of a matching attribute
     method -makeInheritanceIdentifierClone {} {
+	puts stderr "$name -makeInheritanceIdentifierClone called!"
 	set res [Attribute ::#auto]
 	$res -name $name
 	$res -type $type
@@ -1299,23 +1243,15 @@ itcl::class Attribute {
 	return $res
     }
 
-    # called from an object which needs to formalize a relationship by
+    # called from a class which needs to formalize a relationship by
     # use of a matching attribute
     method -makeReferentialClone {abbrev relName} {
+	puts stderr "$name -makeReferentialClone called!"
 	set res [Attribute ::#auto]
 	$res -name $abbrev\_$name\_$relName
 	$res -type $type
 	$res -referential
 	return $res
-    }
-
-#    method -usedInRole {r} {
-#	lappend roles $r
-#    }
-
-    method -report {} {
-	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
-	puts "$tag $name : $type [$this -formatxmlattributes]"
     }
 
     method -evaluate {domain} {
@@ -1342,6 +1278,40 @@ itcl::class Attribute {
     }
 }
 
+itcl::class ReferentialAttribute {
+    inherit Base
+
+    # holds the  relationship
+    variable relation
+
+    # holds the source class
+    variable source
+
+    # true if the attribute is to form part of the owning class'
+    # identifier
+    variable identifier
+
+    constructor {src rel id} {
+	set source $src
+	set relation $rel
+	set identifier $id
+    }
+
+    method -getName {} {
+	return "[$relation -getName].[$source -getName]"
+    }
+
+    method -getIdentifier {} {return $identifier}
+
+    method -generate {domain} {
+	puts -nonewline "<attribute"
+	puts -nonewline " refers=\"[$source -getName]\""
+	puts -nonewline " relation=\"[$relation -getName]\""
+	if $identifier {puts -nonewline " identifier=\"yes\""}
+	puts "/>"
+    }
+}
+
 # Aggregate classes
 
 itcl::class TaggedList {
@@ -1362,7 +1332,6 @@ itcl::class Attributes {
 
 itcl::class Associations {
     inherit Container
-
     method -className {} {return "associations"}
 }
 
@@ -1383,14 +1352,12 @@ itcl::class Datatypes {
 
 itcl::class Inheritances {
     inherit Container
-
     method -className {} {return "inheritances"}
 }
 
-itcl::class Objects {
+itcl::class Classes {
     inherit Container
-
-    method -className {} {return "objects"}
+    method -className {} {return "classes"}
 }
 
 itcl::class Operations {
@@ -1403,38 +1370,7 @@ itcl::class Parameters {
 
 itcl::class Relationships {
     inherit Container
-
-    # sorted holds a list of relationship numbers in-order, as an optimisation
-    # while outputting objects (which need the index of the relation in this
-    # list, starting from 0, rather than the relationship number).
-    variable sorted
-
-    variable sortedNumbers
-
     method -className {} {return "relationships"}
-
-    method -indexOf {rn} {
-	set res [lsearch $sortedNumbers $rn]
-	if [expr $res < 0] {error "relation r$rn not found in $sorted"}
-	return $res
-    }
-
-    method -evaluate {domain} {
-	set size [$this -size]
-	set sorted {}
-	for {set i 0} {$i < $size} {incr i 1} {
-	    lappend sorted [$this -atIndex $i]
-	}
-	proc cmp {r1 r2} {return [expr [$r1 -getNumber] - [$r2 -getNumber]]}
-	set sorted [lsort -command cmp $sorted]
-	set sortedNumbers {}
-	foreach r $sorted {
-	    lappend sortedNumbers [$r -getNumber]
-	}
-	$this Container::-evaluate $domain
-	$this Container::-evaluate $domain
-    }
-
 }
 
 itcl::class Tags {
@@ -1446,10 +1382,6 @@ itcl::class Terminators {
 }
 
 itcl::class Transitiontables {
-    inherit List
-}
-
-itcl::class Typesfiles {
     inherit List
 }
 
@@ -1465,6 +1397,8 @@ proc elementFactory {tag} {
 	associative       {return [Associative #auto]}
 	cardinality       {return [Cardinality #auto]}
 	child             {return [Child #auto]}
+	"class"           {return [Class #auto]}
+	classes           {return [[Domain::currentDomain] -getClasses]}
 	classname         {return [Classname #auto]}
 	datatype          {return [Datatype #auto]}
 	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
@@ -1476,8 +1410,6 @@ proc elementFactory {tag} {
 	inheritances      {return [Inheritances #auto]}
 	initial           {return [Initial #auto]}
 	name              {return [Name #auto]}
-	object            {return [Object #auto]}
-	objects           {return [[Domain::currentDomain] -getObjects]}
 	operation         {return [Operation #auto]}
 	operations        {return [Operations #auto]}
 	parameter         {return [Parameter #auto]}
@@ -1487,8 +1419,6 @@ proc elementFactory {tag} {
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
 	role              {return [Role #auto]}
-	tag               {return [Tag #auto]}
-	tags              {return [Tags #auto]}
 	terminator        {return [Terminator #auto]}
 	terminators       {return [Terminators #auto]}
 	transitiontable   {return [Transitiontable #auto]}
