@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v c431dbfe5484 2000/04/28 19:28:57 simon $
+# $Id: ddf.tcl,v cb246d39e310 2000/04/29 15:19:57 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -626,6 +626,8 @@ itcl::class Association {
 		set tmp $role1
 		set role1 $role2
 		set role2 $tmp
+		$role1 -end 1
+		$role2 -end 2
 	    }
 	}
 	if [$this -isAssociative] {
@@ -639,6 +641,9 @@ itcl::class Association {
     }
 
     method -complete {} {
+	# -relationshipType may swap the roles over! Must be called before
+	# anything else is done.
+	$this -relationshipType
 	[stack -top] -add $this $name
     }
 
@@ -649,6 +654,7 @@ itcl::class Association {
     method -evaluate {domain} {
 	set n [$this -getNumber]
 	set os [$domain -getObjects]
+	set type [$this -relationshipType]
 	set cl1 [$os -atName [$role1 -getClassname]]
 	$cl1 -addRelation $n
 	set cl2 [$os -atName [$role2 -getClassname]]
@@ -657,7 +663,6 @@ itcl::class Association {
 	    set assoc [$os -atName $associative]
 	    $assoc -addRelation $n
 	}
-	set type [$this -relationshipType]
 	switch $type {
 	    "1:1"     {
 		# ensure that one and only one of the roles is marked
@@ -698,23 +703,20 @@ itcl::class Association {
 		# referential attributes in the associative object.
 		# Only the referential attributes from role 2 become
 		# identifiers in the associative object.
-		set assocRole1 [$role1 -makeAssociativeClone]
-		set assocRole2 [$role2 -makeAssociativeClone]
-		$cl1 -addFormalizingAttributesTo $assoc $assocRole2 0
-		$cl1 -sourceOfRelation $assocRole2
-		$cl2 -addFormalizingAttributesTo $assoc $assocRole1 1
-		$cl2 -sourceOfRelation $assocRole1
+		# XXX role 2 ????????
+		$cl1 -addFormalizingAttributesTo $assoc $role1 0
+		$cl1 -sourceOfRelation $role2
+		$cl2 -addFormalizingAttributesTo $assoc $role2 1
+		$cl2 -sourceOfRelation $role1
 	    }
 	    "1-(M:M)" {
 		# The identifying attributes in both roles are used as
 		# referential and identifying attributes in the associative
 		# object.
-		set assocRole1 [$role1 -makeAssociativeClone]
-		set assocRole2 [$role2 -makeAssociativeClone]
-                $cl1 -addFormalizingAttributesTo $assoc $assocRole2 1
-		$cl1 -sourceOfRelation $assocRole2
-		$cl2 -addFormalizingAttributesTo $assoc $assocRole1 1
-		$cl2 -sourceOfRelation $assocRole1
+                $cl1 -addFormalizingAttributesTo $assoc $role1 1
+		$cl1 -sourceOfRelation $role2
+		$cl2 -addFormalizingAttributesTo $assoc $role2 1
+		$cl2 -sourceOfRelation $role1
 	    }
 	}
     }
@@ -748,24 +750,27 @@ itcl::class Association {
 
 itcl::class Role {
     inherit Element
+    # Element::name is the role verb phrase
 
-    variable associative 0
-
+    # 1 or M
     variable cardinality
 
+    # The name of the class which is the object of the role; if we have
+    # A "does something to" B, classname is B.
     variable classname
 
+    # 1 if conditional, 0 if unconditional
     variable conditional
 
-    # The end (A => 0, B => 1) at which the role is defined in the analysis.
+    # The end (A => 1, B => 2) at which the role is defined in the analysis.
     # May change if the relation is normalized (eg, M:1 -> 1:M)
     variable end
 
     # True if the object at this end provides the referential attributes
-    # that formalize the relation
+    # that formalize the relation. Normally we can work this out from the
+    # multiplicity and conditionality, but for 1:1, 1c:1c, 1-(1:1) and
+    # 1-(1c:1c) the analyst has to specify.
     variable sourceEnd 0
-
-    method -getAssociative {} {return $associative}
 
     method -cardinality {c} {
 	switch $c {
@@ -804,22 +809,6 @@ itcl::class Role {
 
     method -getSourceEnd {} {return $sourceEnd}
 
-    private method -setAssociative {a} {set associative $a}
-    private method -setCardinality {c} {set cardinality $c}
-    private method -setConditional {c} {set conditional $c}
-
-    method -makeAssociativeClone {} {
-	set res [Role ::#auto]
-	$res -name "<associative>"
-	$res -owner [$this -getOwner]
-	$res -classname [$this -getClassname]
-	$res -setAssociative 1
-	$res -setConditional 0
-	$res -setCardinality 1
-	$res -end $end
-	return $res
-    }
-
     method -complete {} {
 	[stack -top] -role $this
     }
@@ -843,9 +832,6 @@ itcl::class Role {
 	puts "$conditional"
 	set r [normalize [$this -getName]]
 	set l [string length $r]
-	# XXX not sure if what's wanted is a boolean flag, the length of the
-	# role name or what ...
-#	puts "$l"
 	if [expr $l > 0] {
 	    puts "1\n$r"
 	} else {
