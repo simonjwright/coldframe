@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 02ba89e8b0c5 2004/04/26 14:27:47 simon $ -->
+<!-- $Id: generate-ada.xsl,v 3a8e11ed15ce 2004/04/29 05:04:59 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -227,7 +227,9 @@
 
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
-
+      <xsl:value-of select="$blank-line"/>
+      
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
