@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 8b29399b36e0 2003/07/03 21:47:38 simon $ -->
+<!-- $Id: releases.html,v 183e1d2cd262 2003/07/24 21:12:07 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -54,6 +54,20 @@ are seen as such.
 <p>Included <tt>cf-banner.el</tt>, an Emacs add-in to aid replacing
 ColdFrame's generated banner file heading with something appropriate
 to your version control system (in this case, PVCS).
+
+
+<p>Improved code generation efficiency (by eliminating many
+instantiations of Booch Components).
+<br>Note, to allow further improvements without impacting your code,
+it would be a <em>good idea</em> to use the generated
+<tt><i>Domain.Class</i>.Iterate</tt> generic for iterations rather
+than open iterations using
+<tt><i>Domain.Class</i>.Abstract_Containers</tt>.
+
+
+<p>Memory allocation (for instance, when creating an instance of a
+class) now fills the allocated memory with an improbable pattern. This
+should help to catch use of unintialized attributes.
 
 
 <p><dt>20030519
