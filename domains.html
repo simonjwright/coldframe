@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 7d11c4c2121f 2002/11/14 21:26:18 simon $ -->
+<!-- $Id: domains.html,v 0e1f844df234 2003/02/07 06:20:57 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -72,11 +72,13 @@ children of the domain package.
 <dd>Provides <a href="events.html">Event</a> queueing and dispatching.
 
 <dt><tt><i>Domain</i>.Initialize</tt>
-<dd>Initializes the domain by
+<dd>Takes an Event Queue parameter, defaulting to <tt>null</tt>.
+<br>Initializes the domain by
 
 <ol>
 
-<li>initializing the domain's Event Queue by calling
+<li>initializing the domain's Event Queue with the supplied Event
+Queue, or (if it's <tt>null</tt>) by calling
 <tt>Events.Initialize</tt>,
 
 <li>initializing all class attributes and singletons via
@@ -103,6 +105,10 @@ and associations.
 <p>Each domain must be initialized by calling the procedure
 <tt><i>Domain</i>.Initialize</tt>, probably from your main
 program. Because it's a child, it must be <tt>with</tt>ed explicitly.
+
+<p>If you're building your application, rather than unit tests, you'll
+probably want to pass <tt><i>Domain</i>.Initialize</tt> the Event
+Queue that <tt><i>Domain</i></tt> is to use.
 
 <p>Because all the packages in a domain are implemented as children,
 you hardly ever need to mention the domain package when referencing
