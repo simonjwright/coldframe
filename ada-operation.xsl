@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
+<!-- $Id: ada-operation.xsl,v 0a93a1b742bf 2001/07/13 18:43:45 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -365,7 +365,9 @@
           <xsl:when test="../@active and not (@class) and not(@return)">
 
             <!-- Concrete non-class task entry in current class; we provide
-                 an implementation that calls the entry. -->
+                 an implementation that calls the entry.
+                 Note, <<init>> operations are marked <<class>>, which
+                 means they don't get here even in <<singleton>> classes. -->
 
             <xsl:call-template name="generate-entry-call">
               <xsl:with-param name="current" select="$current"/>
