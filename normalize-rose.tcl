@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8c85780ce9a2 2003/04/29 18:53:52 simon $
+# $Id: normalize-rose.tcl,v 25b1b7872449 2003/05/17 07:48:17 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -84,9 +84,10 @@ proc normalize {s} {
     if {[string length $illegal] > 0} {
 	set tag [[stack -top] -getXmlTag]
 	if {$tag == "parameter"} {
-	    # Special circuitry to report the most likely occurrence in
-	    # a more helpful manner.
-	    # XXX probably needs help from class Stack.
+	    # Special circuitry to report the most likely occurrence 
+	    # (using semicolon rather than comma to separate an
+	    # operation's parameters) in a more helpful manner.
+	    # XXX could do with help from class Stack.
 	    set p [stack -pop]
 	    set ps [stack -pop]
 	    set op [stack -pop]
@@ -149,7 +150,7 @@ proc normalize {s} {
 # - trims leading and trailing white space
 # - handles "strings" and 'c'haracters directly
 # - handles signed entities by recursion
-# - handles based literals directly
+# - handles based literals directly (Ada syntax, eg 2#010101#)
 # - handles null directly
 # otherwise,
 # - handles as identifier.
