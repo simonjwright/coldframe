@@ -280,9 +280,6 @@ coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-events_g-held_event_queue_signature.ads \
-coldframe-project-held_events.adb \
-coldframe-project-held_events.ads \
-coldframe-project-held_event_support.ads \
 coldframe-instances.ads \
 coldframe-interrupts.adb \
 coldframe-interrupts.ads \
@@ -303,6 +300,9 @@ coldframe-project-events-standard.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events.ads \
+coldframe-project-held_events.adb \
+coldframe-project-held_events.ads \
+coldframe-project-held_event_support.ads \
 coldframe-project-global_storage_pool.ads \
 coldframe-project-global_storage_pool.ads-debug \
 coldframe-project-global_storage_pool.ads-standard \
