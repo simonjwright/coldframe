@@ -25,13 +25,16 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@ || rm -f $@
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	  --version cf-DATE \
+	  >$@ || rm -f $@
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	$(SAXON) $< $(CODEGEN_SCRIPT) \
+	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) >$@ \
 	  || (echo "Generation problem." && rm -f $@)
 
@@ -84,6 +87,8 @@ index.html \
 principles.html \
 releases.html \
 resources.html \
+use-of-bcs.html \
+navigation.jpg \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
 $(PDFS) \
