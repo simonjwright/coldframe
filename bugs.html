@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3d42b2306953 2003/08/11 21:01:20 simon $ -->
+<!-- $Id: bugs.html,v a0f1444257d3 2003/08/12 20:13:16 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -163,11 +163,23 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
-<!-- next: 0186 -->
+<!-- next: 0187 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>12.viii.03</h3>
+
+<dl>
+
+<dt>0186 (raised 12.viii.03)
+
+<dd>Normalization doesn't correctly handle substring exceptions (eg,
+<i>*IO</i> doesn't make <tt>text&nbsp;io</tt> appear as
+<tt>Text_IO</tt> but as <tt>Text_Io</tt>).
+
+</dl>
 
 <h3>30.vii.03</h3>
 
