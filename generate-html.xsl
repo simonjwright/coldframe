@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 3e4a1e7b7775 2001/04/01 09:58:08 simon $ -->
+<!-- $Id: generate-html.xsl,v ae99ae4c60b7 2001/04/13 11:15:35 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -71,11 +71,21 @@
             </xsl:apply-templates>
           </ul>
         </xsl:if>
+        <xsl:if test="type[not(standard)]">
+          <h2>Types</h2>
+          <ul>
+            <xsl:apply-templates select="type[not(standard)]">
+              <xsl:sort select="name"/>
+            </xsl:apply-templates>
+          </ul>
+        </xsl:if>
       </body>
     </html>
   </xsl:template>
 
 
+  <!-- Output details of a Class; in the main file, as a pointer to the
+       full info in its own file. -->
   <xsl:template match="domain/class">
     <xsl:variable name="name" select="name"/>
     <xsl:variable name="output-file-name">
@@ -148,14 +158,13 @@
   </xsl:template>
     
 
+  <!-- Output details of a Class' Attribute. -->
   <xsl:template match="class/attribute">
     <xsl:variable name="name">
       <xsl:call-template name="attribute-name"/>
     </xsl:variable>
     <dt>
-      <a name="{../name}.at.{$name}">
-        <xsl:value-of select="$name"/>
-      </a>
+      <xsl:value-of select="$name"/>
       <xsl:if test="@identifier"> (identifier)</xsl:if>
       <xsl:text> : </xsl:text>
       <xsl:choose>
@@ -169,7 +178,9 @@
           <a href="{$referred-name}"><xsl:value-of select="@refers"/></a>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="attribute-type"/>
+          <xsl:call-template name="type-name">
+            <xsl:with-param name="type" select="type"/>
+          </xsl:call-template>
         </xsl:otherwise>
       </xsl:choose>
     </dt>
@@ -195,12 +206,9 @@
   </xsl:template>
 
 
+  <!-- Output Operation info. -->
   <xsl:template match="class/operation">
-     <h3>
-       <a name="{../name}.op.{name}">
-         <xsl:value-of select="name"/>
-       </a>
-    </h3>
+     <h3><xsl:value-of select="name"/></h3>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
       <xsl:apply-templates select="@result"/>
@@ -216,6 +224,7 @@
   </xsl:template>
 
 
+  <!-- Output details of an Operation's Result. -->
   <xsl:template match="operation/@result">
     <h4>Result</h4>
     <p>
@@ -225,6 +234,7 @@
   </xsl:template>
 
 
+  <!-- Output details of an Operation's Parameter. -->
   <xsl:template match="operation/parameter">
     <dt>
       <xsl:value-of select="name"/>
@@ -239,6 +249,8 @@
   </xsl:template>
 
 
+  <!-- Output details of an Association; in the main output file, as a
+       link to the full details in the Association's own file. -->
   <xsl:template match="domain/association">
     <xsl:variable name="name" select="name"/>
     <xsl:variable name="output-file-name">
@@ -271,6 +283,7 @@
   </xsl:template>
 
 
+  <!-- Output details of a Role in an Association. -->
   <xsl:template match="association/role">
     <p>
       <xsl:variable name="other-role-position" select="3 - position()"/>
@@ -307,6 +320,7 @@
   </xsl:template>
 
 
+  <!-- Output the multiplicity and conditionality of a Role. -->
   <xsl:template mode="multiplicity" match="association/role">
     <xsl:choose>
       <xsl:when test="@multiple and @conditional">
@@ -326,6 +340,7 @@
   <xsl:template mode="multiplicity" match="*"/>
 
 
+  <!-- Output an Association's associative class (if it has one). -->
   <xsl:template match="association/associative">
     <p>
       <xsl:variable name="class">
@@ -343,6 +358,8 @@
   </xsl:template>
 
 
+  <!-- Output details of an Inheritance relationship; in the main file, as
+       a link to the full info in its own file. -->
   <xsl:template match="domain/inheritance">
     <xsl:variable name="name" select="name"/>
     <xsl:variable name="output-file-name">
@@ -389,6 +406,7 @@
   </xsl:template>
 
 
+  <!-- Output the details of a child of an Inheritance relationship. -->
   <xsl:template match="inheritance/child">
     <xsl:variable name="file-name">
       <xsl:call-template name="element-file-name">
@@ -402,6 +420,92 @@
     </li>
   </xsl:template>
 
+
+  <!-- Output details of a Type; in the main file, as a link to the
+       full info in its own file. -->
+  <xsl:template match="domain/type">
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable name="output-file-name">
+      <xsl:call-template name="domain-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="file-name">
+      <xsl:call-template name="element-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <li>
+      <a href="{$file-name}"><xsl:value-of select="name"/></a>
+    </li>
+    <saxon:output file="{$output-file-name}">
+      <html>
+        <head>
+          <title><xsl:value-of select="name"/></title>
+        </head>
+        <body bgcolor="#FFFFFF">
+          <h1><xsl:value-of select="name"/></h1>
+          <xsl:choose>
+            <xsl:when test="enumeration">
+              <ul>
+                <xsl:for-each select="enumeration/literal">
+                  <li>
+                    <xsl:value-of select="."/>
+                  </li>
+                </xsl:for-each>
+              </ul>
+            </xsl:when>
+            <xsl:when test="real">
+              <p>
+                <xsl:text>A real number, with minimum value </xsl:text>
+                <xsl:value-of select="real/lower"/>
+                <xsl:text>, maximum value </xsl:text>
+                <xsl:value-of select="real/upper"/>
+                <xsl:text>, and </xsl:text>
+                <xsl:value-of select="real/digits"/>
+                <xsl:text> significant digits.</xsl:text>
+              </p>
+            </xsl:when>
+            <xsl:when test="integer">
+              <p>
+                <xsl:text>An integral number, with minimum value </xsl:text>
+                <xsl:value-of select="integer/lower"/>
+                <xsl:text> and maximum value </xsl:text>
+                <xsl:value-of select="integer/upper"/>
+                <xsl:text>.</xsl:text>
+              </p>
+            </xsl:when>
+            <xsl:when test="string">
+              <p>
+                <xsl:text>A string of maximum length </xsl:text>
+                <xsl:value-of select="string/max"/>
+                <xsl:text> characters.</xsl:text>
+              </p>
+            </xsl:when>
+            <xsl:when test="set">
+              <xsl:variable name="class-name">
+                <xsl:call-template name="element-file-name">
+                  <xsl:with-param name="element-name" select="set"/>
+                </xsl:call-template>
+              </xsl:variable>
+              <p>
+                <xsl:text>A set of references to </xsl:text>
+                <a href="{$class-name}"><xsl:value-of select="set"/></a>
+                <xsl:text>s.</xsl:text>
+              </p>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>Hmm!</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:apply-templates select="documentation"/>
+        </body>
+      </html>
+    </saxon:output>
+  </xsl:template>
+
+
+  <!-- Utilities -->
 
   <!-- Forms the file name for the given element: the name is <Class>.html -->
   <xsl:template name="element-file-name">
@@ -441,54 +545,39 @@
   </xsl:template>
 
 
-  <!-- Generate attribute type. Called at class/attribute -->
-  <xsl:template name="attribute-type">
-    <xsl:choose>
-      <xsl:when test="@refers">
-        <xsl:value-of select="../../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="@refers"/>
-        <xsl:text>.Handle</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="type-name">
-          <xsl:with-param name="type" select="type"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-
   <!-- Handle special type name conversions. -->
   <xsl:template name="type-name">
     <xsl:param name="type"/>
     <xsl:choose>
 
-      <!-- Text maps to Unbounded_String. -->
-      <xsl:when test="$type='Text'">
-        <xsl:text>Unbounded_String</xsl:text>
+      <!-- Output a 'standard' type as-is -->
+      <xsl:when test="/domain/type[name=$type]/standard">
+        <xsl:value-of select="$type"/>
+        <!-- xsl:text>Unbounded_String</xsl:text -->
       </xsl:when>
 
       <!-- Class -->
-      <xsl:when test="/domain/class/name=$type">
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="$type"/>
-        <xsl:text>.Handle</xsl:text>
+      <xsl:when test="/domain/class[name=$type]">
+        <xsl:variable name="class-name">
+          <xsl:call-template name="element-file-name">
+            <xsl:with-param name="element-name" select="$type"/>
+          </xsl:call-template>
+        </xsl:variable>
+        <a href="{$class-name}"><xsl:value-of select="$type"/></a>
       </xsl:when>
 
-      <!-- Set (only works for class instances) -->
-      <xsl:when test="/domain/type[name=$type]/set">
-        <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
-        <xsl:if test="$type-name/set">
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$type-name/set"/>
-          <xsl:text>.Collections.Collection</xsl:text>
-        </xsl:if>
+      <!-- Non-standard Types -->
+      <xsl:when test="/domain/type[name=$type]">
+        <xsl:variable name="type-name">
+          <xsl:call-template name="element-file-name">
+            <xsl:with-param name="element-name" select="$type"/>
+          </xsl:call-template>
+        </xsl:variable>
+        <a href="{$type-name}"><xsl:value-of select="$type"/></a>
       </xsl:when>
 
       <xsl:otherwise>
+        <xsl:text>Hmm! how did we get here?!</xsl:text>
         <xsl:value-of select="$type"/>
       </xsl:otherwise>
 
