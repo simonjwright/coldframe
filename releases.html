@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v c6eaa105a1c4 2001/09/14 19:33:55 simon $ -->
+<!-- $Id: releases.html,v ced5c4c6267f 2001/09/22 05:56:39 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -70,6 +70,20 @@ instance.
 
 <p>A parameterless instance procedure marked &#171;finalize&#187; is
 called by <tt>Delete</tt> just before the instance is freed.
+
+
+<p>Operations marked &#171;generated&#187; are treated as "already
+generated", that is, no new code is generated for them.
+
+<br>This is to allow the standard <tt>Create</tt>, <tt>Find</tt> and
+<tt>Delete</tt> operations to be used on sequence diagrams without
+Rose complaining.
+
+
+<p>The supplied Makefiles, when placing generated code in
+<tt><i>Domain</i>.gen</tt>, delete any <tt>.ad?</tt> files found in
+<tt><i>Domain</i>.impl</tt>. This should reduce confusion (and may
+make the use of GNAT Projects easier).
 
 
 <p>
