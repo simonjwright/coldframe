@@ -85,7 +85,7 @@ OTHER_SCRIPTS = create-build-directories \
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@echo generating $@ ...
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	    --casing $(CASE_EXCEPTIONS) \
+	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
