@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8c5375a1a65d 2003/08/28 20:11:56 simon $
+# $Id: normalize-rose.tcl,v 697b01c39b8c 2003/08/30 09:58:21 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2244,7 +2244,9 @@ itcl::class Transition {
 	if {[string length [$event -getName]] > 0} {
 	    putElement event [$event -getName]
 	}
-	$action -generate $domain
+	if [info exists action] {
+	    $action -generate $domain
+	}
 	putElement source $source
 	putElement target $target
 	$this -generateDocumentation
@@ -2746,6 +2748,7 @@ proc elementFactory {xmlTag} {
     # XXX should this perhaps be an operation of Domain?
     switch $xmlTag {
 	abstract          {return [Abstract #auto]}
+	action            {return [EntryAction #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
