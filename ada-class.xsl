@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 324fcbe3f93e 2002/09/15 18:19:46 simon $ -->
+<!-- $Id: ada-class.xsl,v 1a09ce2fd6b9 2002/09/15 18:52:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1166,9 +1166,13 @@
       <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Clean up any events. -->
+    <xsl:if test="statemachine">
+      <xsl:value-of select="$II"/>      
+      <xsl:text>ColdFrame.Project.Events.Finalize (H);&#10;</xsl:text>
+    </xsl:if>
+
     <!-- Finalize the instance. -->
-    <xsl:value-of select="$II"/>
-    <xsl:text>ColdFrame.Project.Events.Finalize (H);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
 
@@ -1256,9 +1260,13 @@
         <xsl:value-of select="name"/>
         <xsl:text>.This := null;&#10;</xsl:text>
 
+        <!-- Clean up any events. -->
+        <xsl:if test="statemachine">
+          <xsl:value-of select="$II"/>
+          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>          
+        </xsl:if>
+
         <!-- .. and free the instance. -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
