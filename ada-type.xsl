@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 3a159b452ca8 2003/11/11 20:12:10 simon $ -->
+<!-- $Id: ada-type.xsl,v 83fd12e1910d 2003/12/12 22:40:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -466,6 +466,10 @@
         <xsl:text> is </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>_Package.Bounded_String;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
       </xsl:when>
       
       <xsl:otherwise>
