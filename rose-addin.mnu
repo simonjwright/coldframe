@@ -4,7 +4,7 @@ Menu Add-Ins
 
   option "Generate &XML..."	
    {
-	RoseScript extractor-trampoline.ebs
+	RoseScript $SCRIPT_PATH\extractor-trampoline.ebs
    }
 
 }
