@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: Serialization.gpr,v $
---  $Revision: 29d936743597 $
---  $Date: 2004/05/01 15:28:11 $
+--  $Revision: 1db206087c11 $
+--  $Date: 2004/05/01 16:36:28 $
 --  $Author: simon $
 
 with "Options";
@@ -22,10 +22,13 @@ with "ColdFrame";
 
 project Serialization is
 
-  for Source_Dirs use (".",
-                       "../Serialization.gen",
-                       "../Serialization_Demo.impl",
-                       "../Serialization_Demo.gen");
+  for Source_Dirs use
+    (
+     "Serialization.impl",
+     "Serialization.gen",
+     "Serialization_Demo.impl",
+     "Serialization_Demo.gen"
+    );
 
   for Main use ("serialization_client", "serialization_server");
 
