@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8d22a5180db9 2005/02/24 06:30:50 simon $
+# $Id: normalize-rose.tcl,v 49f28e3875bb 2005/03/04 06:47:07 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1042,7 +1042,9 @@ itcl::class Domain {
     }
 
     method -generate {} {
-        global coldFrameVersion
+        global coldFrameVersion domainNameOverride
+
+	if [info exists domainNameOverride] {set name $domainNameOverride}
 
         $classes -evaluate $this
         $datatypes -evaluate $this
@@ -3352,6 +3354,7 @@ proc Error {str} {
 # process command line:
 # flags
 #   --casing filename
+#   --domain-name name
 #   --stack-dump
 #   --verbose
 #   --version cf-20010607
@@ -3362,21 +3365,30 @@ foreach arg $argv {
         expectingFlag {
             switch -- $arg {
                 --casing  {set argState expectingCaseExceptionFile}
+		--domain-name {set argState expectingDomainName}
                 --stack-dump {set stackDump 1}
                 --verbose {set verbose 1}
                 --version {set argState expectingVersion}
                 default   {error "unknown flag $arg"}
             }
         }
-        expectingVersion {
-            set coldFrameVersion $arg
-            set argState expectingFlag
-        }
         expectingCaseExceptionFile {
             setCaseExceptions $arg
             set argState expectingFlag
         }
+        expectingDomainName {
+            set domainNameOverride $arg
+            set argState expectingFlag
+        }
+        expectingVersion {
+            set coldFrameVersion $arg
+            set argState expectingFlag
+        }
     }
+}
+
+if [info exists domainNameOverride] {
+    set domainNameOverride [normalize $domainNameOverride]
 }
 
 set parser [xml::parser]
