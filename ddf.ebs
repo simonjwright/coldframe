@@ -1,42 +1,28 @@
-'--------------------------------------------------------------------------------
+'-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 3b2270a072d4 2001/01/12 20:44:59 simon $
+'$Id: ddf.ebs,v c57a40ecfe2b 2001/01/17 20:17:08 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
 '
 ' Copyright (C) Simon Wright <simon@pushface.org>
-'--------------------------------------------------------------------------------
-
-Sub DumpObjectRelationInfo (o As Class)
-	'doesn't handle the supertype end of super/sub relationships
-	'XXX I think this needs just to dump the _names_ of the relations ???
-	Print "    relations"
-	Print #1, "<relations>"
-	Dim assocs As AssociationCollection
-	Set assocs = o.GetAssociations()
-	For a = 1 To assocs.Count
-		Print #1, "<relation>" & assocs.GetAt(a).Name & "</relation>"
-	Next a
-	Dim irels As InheritRelationCollection
-	Set irels = o.GetInheritRelations()
-	For r = 1 To irels.Count
-		Print #1, "<relation>" & irels.GetAt(r).Name & "</relation>"
-		Print "relation " & irels.GetAt(r).Name & ", supplier "	& irels.GetAt(r).GetSupplierClass().name
-	Next r
-	Print #1, "</relations>"
-End Sub	
-
-Sub DumpTagInfo (o As Class)
-	Print "    tags"
-	Print #1, "<tags>"
-	Print #1, "</tags>"
-End Sub
-
-Sub DumpStatusAttribute (o As Class)
-	'the Status attribute is an extra attribute, needed if there's an STT.
-	'I expect it will be auto-generated when I get round to STTs.
-End Sub
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2, or (at your option)
+' any later version.
+' 
+' This program is distributed in the hope that it will be useful, but
+' WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+' General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+' USA.
+'
+'-------------------------------------------------------------------------------
 
 Sub DumpAttributes (o As Class)
 	Dim atts As AttributeCollection
@@ -55,11 +41,11 @@ Sub DumpAttributes (o As Class)
 		End If
 		Print "      " & a.Name	& " : " & a.Type
 		Print #1, "<name>" & a.Name & "</name>"
+		Print #1, "<documentation>" & a.Documentation & "</documentation>"
 		Print #1, "<type>" &  a.Type & "</type>"
 		Print #1, "<protection>" & a.ExportControl.Name & "</protection>"
 		Print #1, "</attribute>"
 	Next attid
-	DumpStatusAttribute (o)
 	Print #1, "</attributes>"
 End Sub
 
@@ -78,6 +64,7 @@ Sub DumpParameters(op As Operation)
 			Print #1, "<parameter>"
 		End If
 		Print #1, "<name>" & p.Name & "</name>"
+		Print #1, "<documentation>" & p.Documentation & "</documentation>"
 		Print #1, "<type>" & p.Type & "</type>"
 		Print #1, "<initial>" & p.InitValue & "</initial>"
 		Print #1, "<documentation>" & p.Documentation & "</documentation>"
@@ -102,6 +89,7 @@ Sub DumpOperations (o As Class)
 			Print #1, "<operation>"
 		End If
 		Print #1, "<name>" & op.Name & "</name>"
+		Print #1, "<documentation>" & op.Documentation & "</documentation>"
 		If Len(op.ReturnType) > 0 Then
  			Print #1, "<return>" &  op.ReturnType & "</return>"
 		End If
@@ -116,7 +104,6 @@ Sub DumpClass (o As Class)
 	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
 	Print #1, "<name>" & o.Name & "</name>"
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
-	DumpTagInfo (o)
 	DumpAttributes (o)
 	DumpOperations (o)
 	Print #1, "</object>"
@@ -186,51 +173,19 @@ Sub DumpRelationships (domain As Category)
 	Print #1, "</relationships>"
 End Sub
 
-Sub DumpDataType (cls As Class)
-	Print #1, "<userdatatype>"
-	Print #1, "<name>" & cls.Name & "</name>"
-	Print #1, "<documentation>" & cls.Documentation & "</documentation>"
-	Print #1, "</userdatatype>"
-End Sub
-
-Sub DumpDataTypes (domain As Category)
-'	We look for a Category named Types, whose Classes correspond to
-'	type specifications.
-	Dim cats As CategoryCollection
-	Set cats = domain.Categories
-	For catid = 1 To cats.Count
-		If cats.GetAt (catid).Name = "Types" Then
-			Print "  datatypes"
-			Print #1, "<datatypes>"
-			Dim cls As ClassCollection
-			Set cls = cats.GetAt (catid).Classes
-			For clsid = 1 To cls.Count
-				DumpDataType (cls.GetAt (clsid))
-			Next clsid
-			Print #1, "</datatypes>"
-		End If
-	Next catid
-End Sub
-
-Sub DumpTypesFiles (domain As Category)
-	Print "  typesfiles"
-	Print #1, "<typesfiles>"
-	Print #1, "</typesfiles>"
-End Sub
-
-Sub DumpTransitionTables (domain As Category)
-	Print "  transitiontables"
-	Print #1, "<transitiontables>"
-	Print #1, "</transitiontables>"
-End Sub
-
-Sub DumpTerminators (domain As Category)
-	Print "  terminators"
-	Print #1, "<terminators>"
-	Print #1, "</terminators>"
-End Sub
-
 Sub DumpDomainData (domain As Category)
+'    Begin Dialog UserDialog 113,40,159,60,"Browse for Folder"
+'    	Text 5,5,120,16,"Select the folder where you want to begin the search."
+'    	OKButton 4,48,37,11
+'    	CancelButton 120,48,37,11
+'    	TextBox 12,28,128,12,.TextBox1
+'    End Dialog
+'	Dim d As UserDialog
+'	d.TextBox1 = "e:\ooa\rose\"
+'	result = Dialog(d)
+'	If result = 0 Then Exit Sub
+'	Print d.TextBox1
+'	Open (d.TextBox1 + domain.Name + ".raw") For Output Access Write As #1
 	Open (domain.Name + ".raw") For Output Access Write As #1
 	Print "domain "	& domain.Name
 	Dim s As String
@@ -245,10 +200,6 @@ Sub DumpDomainData (domain As Category)
 	'get date in external processing (must be a way!)
 	DumpClasses (domain)
 	DumpRelationships (domain)
-	DumpDataTypes (domain)
-	DumpTypesFiles (domain)
-	DumpTransitionTables (domain)
-	DumpTerminators (domain)
 	Print #1, "</domain>"
 	Close #1
 End Sub
