@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v 07a9454620a7 2004/12/08 06:20:19 simon $ -->
+<!-- $Id: event-translation.html,v 0552b02b5ba7 2004/12/27 15:44:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -17,24 +17,17 @@ directed.
 
 <p>For a class event, this results in
 <pre>
-   type Wait
-   is new ColdFrame.Project.Events.Event_Base with null record;
+   type Button_Event
+   is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Button_Name;
+   end record;
 </pre>
 
-<p>and for an instance event, in
+<p>(all class events have payloads), and for an instance event, in
 <pre>
-   type Done (For_The_Instance : access Instance)
+   type Button_Push (For_The_Instance : access Instance)
    is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with null record;
-</pre>
-
-<p>If the event has a payload, it translates to an extension component
-of the type concerned, named <tt>Payload</tt>:
-<pre>
-   type Info
-   is new ColdFrame.Project.Events.Event_Base with record
-      Payload : Message;
-   end record;
 </pre>
 
 <h2>States</h2>
@@ -66,6 +59,11 @@ and return an appropriate result:
       return This.State_Machine_State = Lit;
    end Is_On;
 </pre>
+
+<p>Another instance variable <tt>Old_State_Machine_State</tt> is
+available if you really need an action to know which state the
+instance was in before the event. It's normally better to use
+different states.
 
 <h2>Transitions</h2>
 
@@ -107,20 +105,6 @@ rather than embedded in code.
 <p>It is legal to use the instance <tt>Delete</tt> operation as an
 entry action (ColdFrame doesn't check that it's in a <i>final</i>
 state). Of course, it needs to be the <em>last</em> action.
-
-<h2>Class event handlers</h2>
-
-<p>The <a href="event-modelling.html#lamp.gif">creation event
-handler in the example</a> is implemented as
-
-<pre>
-   separate (<i>Domain</i>.Lamp)
-   procedure Creation
-     (Ev : Creation_Event) is
-   begin
-      ...
-   end Creation;
-</pre>
 
 
 <hr>
