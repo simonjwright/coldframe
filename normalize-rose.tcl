@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 78594c91aa1f 2001/11/03 06:50:27 simon $
+# $Id: normalize-rose.tcl,v d3d1f9bb3c04 2001/11/25 10:22:13 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1637,6 +1637,11 @@ itcl::class Datatype {
 
     method -className {} {return "datatype"}
 
+    # called when the user has (mistakenly) requested a callback.
+    method -callback {max} {
+	Error  "CF: can't specify callback on type $type, must be a record"
+    }
+
     # called when the type is an enumeration. values is a list of the
     # comma-separated enumerals, which have not been normalized.
     method -enumeration {values} {
@@ -1652,6 +1657,12 @@ itcl::class Datatype {
     method -imported {domain} {
 	set dataType "imported"
 	set dataDetail [normalize $domain]
+    }
+
+    # called when the type renames some other type.
+    method -renames {other} {
+	set dataType "renames"
+	set dataDetail [normalize $other]
     }
 
     # called when the type is an integer. constraint is a set of key/value
@@ -1719,6 +1730,9 @@ itcl::class Datatype {
 	    }
 	    imported {
 		putElement imported $dataDetail
+	    }
+	    renames {
+		putElement renames $dataDetail
 	    }
 	    set {
 		putElement set $dataDetail
