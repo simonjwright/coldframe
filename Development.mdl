@@ -1035,7 +1035,12 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Collection_Timing.cat"
-		quid       	"4177336A037C"))
+		quid       	"4177336A037C")
+	    (object Class_Category "Sensor"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Sensor.cat"
+		quid       	"41B763D9011D"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3BDB208B0049"
@@ -3153,6 +3158,31 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4177336A037C"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Sensor" @103
+			location   	(3148, 918)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@103
+			    location   	(3004, 834)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Sensor")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"41B763D9011D"
 			width      	300
 			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"
