@@ -4,89 +4,11 @@
 <date>
 <year>2002</year>
 <month>1</month>
-<day>27</day>
-<time>10:51</time>
+<day>31</day>
+<time>12:29</time>
 </date>
 <documentation></documentation>
 <classes>
-<class>
-<name>Std</name>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation></documentation>
-<attributes>
-<attribute stereotype="id">
-<name>id</name>
-<documentation></documentation>
-<type>Integer</type>
-<initial></initial>
-</attribute>
-</attributes>
-<operations>
-</operations>
-<statemachine>
-<states>
-<state initial="yes">
-<name>init for std</name>
-<entryactions>
-</entryactions>
-</state>
-<state>
-<name>next for std</name>
-<entryactions>
-</entryactions>
-</state>
-</states>
-<transitions>
-<transition>
-<source>init for std</source>
-<target>next for std</target>
-<event>
-<name></name>
-</event>
-</transition>
-</transitions>
-</statemachine>
-</class>
-<class>
-<name>Auto</name>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation></documentation>
-<attributes>
-<attribute stereotype="id">
-<name>id</name>
-<documentation></documentation>
-<type>Autonumber</type>
-<initial></initial>
-</attribute>
-</attributes>
-<operations>
-</operations>
-<statemachine>
-<states>
-<state initial="yes">
-<name>init for auto</name>
-<entryactions>
-</entryactions>
-</state>
-<state>
-<name>next for auto</name>
-<entryactions>
-</entryactions>
-</state>
-</states>
-<transitions>
-<transition>
-<source>init for auto</source>
-<target>next for auto</target>
-<event>
-<name></name>
-</event>
-</transition>
-</transitions>
-</statemachine>
-</class>
 <class stereotype="singleton">
 <name>Monitor</name>
 <cardinality>n</cardinality>
@@ -365,6 +287,22 @@
 </transition>
 </transitions>
 </statemachine>
+</class>
+<class>
+<name>foo</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
 </class>
 </classes>
 <relationships>

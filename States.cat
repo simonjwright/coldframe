@@ -10,184 +10,6 @@
     quid       	"3C4EDCDC028A"
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
-	(object Class "Proxy"
-	    quid       	"3C5166EB028A"
-	    stereotype 	"singleton"
-	    operations 	(list Operations
-		(object Operation "set csm timeout"
-		    quid       	"3C52ECFA0025"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "set 2 second warmup timeout"
-		    quid       	"3C52ED00035A"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "set 6 second warmup timeout"
-		    quid       	"3C52ED1D00C2"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "clear csm timeout"
-		    quid       	"3C52ED2A02BE"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "clear warmup timeout"
-		    quid       	"3C52ED2E0306"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0))
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "csm timer"
-		    quid       	"3C526740037D"
-		    type       	"Timer")
-		(object ClassAttribute "warmup timer"
-		    quid       	"3C52ED5E01DB"
-		    type       	"Timer")))
-	(object Class "Std"
-	    quid       	"3C53956B0065"
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "id"
-		    quid       	"3C53958401DA"
-		    stereotype 	"id"
-		    type       	"Integer"))
-	    statemachine 	(object State_Machine "State/Activity Model"
-		quid       	"3C5395EF0390"
-		states     	(list States
-		    (object State "init for std"
-			quid       	"3C539600019E"
-			transitions 	(list transition_list
-			    (object State_Transition
-				quid       	"3C539E2B0133"
-				supplier   	"next for std"
-				quidu      	"3C539E2301BB"
-				sendEvent  	(object sendEvent
-				    quid       	"3C539E2B0136")))
-			type       	"StartState")
-		    (object State "next for std"
-			quid       	"3C539E2301BB"
-			type       	"Normal"))
-		partitions 	(list Partitions)
-		statediagrams 	(list StateDiagrams
-		    (object State_Diagram "Lifecycle"
-			quid       	"3C5395EF03D6"
-			title      	"Lifecycle"
-			zoom       	100
-			max_height 	28350
-			max_width  	21600
-			origin_x   	0
-			origin_y   	0
-			items      	(list diagram_item_list
-			    (object StateView "StartState" "init for std" @1
-				location   	(736, 320)
-				label      	(object ItemLabel
-				    Parent_View 	@1
-				    location   	(778, 290)
-				    nlines     	2
-				    max_width  	600
-				    label      	"init for std")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3C539600019E"
-				autoResize 	TRUE)
-			    (object StateView "Normal" "next for std" @2
-				location   	(736, 816)
-				label      	(object ItemLabel
-				    Parent_View 	@2
-				    location   	(736, 805)
-				    fill_color 	13434879
-				    anchor_loc 	1
-				    nlines     	2
-				    max_width  	204
-				    justify    	0
-				    label      	"next for std")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3C539E2301BB"
-				autoResize 	TRUE)
-			    (object TransView "" @3
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C539E2B0133"
-				client     	@1
-				supplier   	@2
-				line_style 	0
-				x_offset   	FALSE))))))
-	(object Class "Auto"
-	    quid       	"3C53957B00FF"
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "id"
-		    quid       	"3C5395950013"
-		    stereotype 	"id"
-		    type       	"Autonumber"))
-	    statemachine 	(object State_Machine "State/Activity Model"
-		quid       	"3C5395AB0212"
-		states     	(list States
-		    (object State "init for auto"
-			quid       	"3C5395CA0070"
-			transitions 	(list transition_list
-			    (object State_Transition
-				quid       	"3C539E0F027F"
-				supplier   	"next for auto"
-				quidu      	"3C539DFB0325"
-				sendEvent  	(object sendEvent
-				    quid       	"3C539E0F0282")))
-			type       	"StartState")
-		    (object State "next for auto"
-			quid       	"3C539DFB0325"
-			type       	"Normal"))
-		partitions 	(list Partitions)
-		statediagrams 	(list StateDiagrams
-		    (object State_Diagram "Lifecycle"
-			quid       	"3C5395AB0244"
-			title      	"Lifecycle"
-			zoom       	100
-			max_height 	28350
-			max_width  	21600
-			origin_x   	0
-			origin_y   	0
-			items      	(list diagram_item_list
-			    (object StateView "StartState" "init for auto" @4
-				location   	(880, 240)
-				label      	(object ItemLabel
-				    Parent_View 	@4
-				    location   	(922, 210)
-				    nlines     	2
-				    max_width  	600
-				    label      	"init for auto")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3C5395CA0070"
-				autoResize 	TRUE)
-			    (object StateView "Normal" "next for auto" @5
-				location   	(880, 624)
-				label      	(object ItemLabel
-				    Parent_View 	@5
-				    location   	(880, 613)
-				    fill_color 	13434879
-				    anchor_loc 	1
-				    nlines     	2
-				    max_width  	204
-				    justify    	0
-				    label      	"next for auto")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3C539DFB0325"
-				autoResize 	TRUE)
-			    (object TransView "" @6
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C539E0F027F"
-				client     	@4
-				supplier   	@5
-				line_style 	0
-				x_offset   	FALSE))))))
 	(object Class "Monitor"
 	    quid       	"3C53D8D401BD"
 	    stereotype 	"singleton"
@@ -479,16 +301,16 @@
 		    (object State_Diagram "Lifecycle"
 			quid       	"3C51670A02F9"
 			title      	"Lifecycle"
-			zoom       	80
+			zoom       	92
 			max_height 	28350
 			max_width  	21600
-			origin_x   	1098
+			origin_x   	510
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object StateView "StartState" "$UNNAMED$0" @7
+			    (object StateView "StartState" "$UNNAMED$0" @1
 				location   	(1504, 384)
 				label      	(object ItemLabel
-				    Parent_View 	@7
+				    Parent_View 	@1
 				    location   	(1546, 354)
 				    nlines     	2
 				    max_width  	600
@@ -498,10 +320,10 @@
 				fill_color 	13434879
 				quidu      	"3C51763B00DE"
 				autoResize 	TRUE)
-			    (object StateView "Normal" "warmup" @8
+			    (object StateView "Normal" "warmup" @2
 				location   	(1504, 704)
 				label      	(object ItemLabel
-				    Parent_View 	@8
+				    Parent_View 	@2
 				    location   	(1504, 636)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -514,7 +336,7 @@
 				fill_color 	13434879
 				quidu      	"3C5176450389"
 				compartment 	(object Compartment
-				    Parent_View 	@8
+				    Parent_View 	@2
 				    location   	(1185, 677)
 				    icon_style 	"Label"
 				    fill_color 	13434879
@@ -526,10 +348,10 @@
 				width      	753
 				height     	250
 				autoResize 	TRUE)
-			    (object StateView "Normal" "warming" @9
+			    (object StateView "Normal" "warming" @3
 				location   	(1520, 1680)
 				label      	(object ItemLabel
-				    Parent_View 	@9
+				    Parent_View 	@3
 				    location   	(1520, 1639)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -542,23 +364,23 @@
 				fill_color 	13434879
 				quidu      	"3C5176630342"
 				compartment 	(object Compartment
-				    Parent_View 	@9
+				    Parent_View 	@3
 				    location   	(1305, 1680)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	2
-				    max_width  	450
+				    max_width  	540
 				    compartmentItems 	(list Compartment
 					"entry/ clear heartbeat timeout"
 					"entry/ set heartbeat timeout"))
 				width      	545
 				height     	197
 				autoResize 	TRUE)
-			    (object StateView "Normal" "failed" @10
+			    (object StateView "Normal" "failed" @4
 				location   	(2512, 480)
 				label      	(object ItemLabel
-				    Parent_View 	@10
+				    Parent_View 	@4
 				    location   	(2512, 470)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -571,10 +393,10 @@
 				fill_color 	13434879
 				quidu      	"3C51767501F4"
 				autoResize 	TRUE)
-			    (object StateView "Normal" "working" @11
+			    (object StateView "Normal" "working" @5
 				location   	(2512, 1680)
 				label      	(object ItemLabel
-				    Parent_View 	@11
+				    Parent_View 	@5
 				    location   	(2512, 1670)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -587,10 +409,10 @@
 				fill_color 	13434879
 				quidu      	"3C51768603B6"
 				autoResize 	TRUE)
-			    (object SelfTransView "" @12
+			    (object SelfTransView "" @6
 				location   	(1520, 1432)
-				label      	(object SegLabel @13
-				    Parent_View 	@12
+				label      	(object SegLabel @7
+				    Parent_View 	@6
 				    location   	(1583, 1468)
 				    anchor_loc 	1
 				    nlines     	1
@@ -603,13 +425,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5176C30357"
-				client     	@9
-				supplier   	@9
+				client     	@3
+				supplier   	@3
 				line_style 	0)
-			    (object StateView "Normal" "received heartbeat" @14
+			    (object StateView "Normal" "received heartbeat" @8
 				location   	(2528, 2160)
 				label      	(object ItemLabel
-				    Parent_View 	@14
+				    Parent_View 	@8
 				    location   	(2528, 2117)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -622,23 +444,23 @@
 				fill_color 	13434879
 				quidu      	"3C5177380212"
 				compartment 	(object Compartment
-				    Parent_View 	@14
+				    Parent_View 	@8
 				    location   	(2313, 2158)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	2
-				    max_width  	450
+				    max_width  	540
 				    compartmentItems 	(list Compartment
 					"entry/ clear heartbeat timeout"
 					"entry/ set heartbeat timeout"))
 				width      	544
 				height     	200
 				autoResize 	TRUE)
-			    (object StateView "Normal" "recovery" @15
+			    (object StateView "Normal" "recovery" @9
 				location   	(3440, 704)
 				label      	(object ItemLabel
-				    Parent_View 	@15
+				    Parent_View 	@9
 				    location   	(3440, 663)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -651,8 +473,8 @@
 				fill_color 	13434879
 				quidu      	"3C517765023F"
 				compartment 	(object Compartment
-				    Parent_View 	@15
-				    location   	(3120, 704)
+				    Parent_View 	@9
+				    location   	(3120, 700)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -664,10 +486,10 @@
 				width      	755
 				height     	197
 				autoResize 	TRUE)
-			    (object StateView "Normal" "recovering" @16
+			    (object StateView "Normal" "recovering" @10
 				location   	(3472, 1680)
 				label      	(object ItemLabel
-				    Parent_View 	@16
+				    Parent_View 	@10
 				    location   	(3472, 1639)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -680,23 +502,23 @@
 				fill_color 	13434879
 				quidu      	"3C5177F80138"
 				compartment 	(object Compartment
-				    Parent_View 	@16
-				    location   	(3257, 1680)
+				    Parent_View 	@10
+				    location   	(3257, 1676)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	2
-				    max_width  	450
+				    max_width  	540
 				    compartmentItems 	(list Compartment
 					"entry/ clear heartbeat timeout"
 					"entry/ set heartbeat timeout"))
 				width      	545
 				height     	197
 				autoResize 	TRUE)
-			    (object StateView "Normal" "failed recovery" @17
+			    (object StateView "Normal" "failed recovery" @11
 				location   	(3056, 1152)
 				label      	(object ItemLabel
-				    Parent_View 	@17
+				    Parent_View 	@11
 				    location   	(3056, 1123)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -709,7 +531,7 @@
 				fill_color 	13434879
 				quidu      	"3C5178280399"
 				compartment 	(object Compartment
-				    Parent_View 	@17
+				    Parent_View 	@11
 				    location   	(2809, 1164)
 				    icon_style 	"Label"
 				    fill_color 	13434879
@@ -721,18 +543,18 @@
 				width      	608
 				height     	172
 				autoResize 	TRUE)
-			    (object TransView "" @18
+			    (object TransView "" @12
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51783E02FA"
-				client     	@17
-				supplier   	@10
+				client     	@11
+				supplier   	@4
 				line_style 	0
 				x_offset   	FALSE)
-			    (object SelfTransView "" @19
+			    (object SelfTransView "" @13
 				location   	(3472, 1432)
-				label      	(object SegLabel @20
-				    Parent_View 	@19
+				label      	(object SegLabel @14
+				    Parent_View 	@13
 				    location   	(3532, 1485)
 				    anchor_loc 	1
 				    nlines     	1
@@ -745,12 +567,12 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5178530293"
-				client     	@16
-				supplier   	@16
+				client     	@10
+				supplier   	@10
 				line_style 	0)
-			    (object TransView "" @21
-				label      	(object SegLabel @22
-				    Parent_View 	@21
+			    (object TransView "" @15
+				label      	(object SegLabel @16
+				    Parent_View 	@15
 				    location   	(2910, 1691)
 				    anchor_loc 	1
 				    nlines     	1
@@ -763,13 +585,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51785F00C6"
-				client     	@16
-				supplier   	@11
+				client     	@10
+				supplier   	@5
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @23
-				label      	(object SegLabel @24
-				    Parent_View 	@23
+			    (object TransView "" @17
+				label      	(object SegLabel @18
+				    Parent_View 	@17
 				    location   	(3246, 1393)
 				    anchor_loc 	1
 				    nlines     	1
@@ -782,13 +604,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51787D03B0"
-				client     	@16
-				supplier   	@17
+				client     	@10
+				supplier   	@11
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @25
-				label      	(object SegLabel @26
-				    Parent_View 	@25
+			    (object TransView "" @19
+				label      	(object SegLabel @20
+				    Parent_View 	@19
 				    location   	(1549, 496)
 				    anchor_loc 	1
 				    nlines     	1
@@ -801,13 +623,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5179650218"
-				client     	@7
-				supplier   	@8
+				client     	@1
+				supplier   	@2
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @27
-				label      	(object SegLabel @28
-				    Parent_View 	@27
+			    (object TransView "" @21
+				label      	(object SegLabel @22
+				    Parent_View 	@21
 				    location   	(2872, 521)
 				    anchor_loc 	1
 				    nlines     	1
@@ -820,25 +642,25 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51776D0209"
-				client     	@10
-				supplier   	@15
+				client     	@4
+				supplier   	@9
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @29
+			    (object TransView "" @23
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51775702B2"
-				client     	@14
-				supplier   	@11
+				client     	@8
+				supplier   	@5
 				vertices   	(list Points
 				    (2603, 2059)
 				    (2748, 1869)
 				    (2595, 1746))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @30
-				label      	(object SegLabel @31
-				    Parent_View 	@30
+			    (object TransView "" @24
+				label      	(object SegLabel @25
+				    Parent_View 	@24
 				    location   	(2531, 986)
 				    anchor_loc 	1
 				    nlines     	1
@@ -851,13 +673,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51771E00C6"
-				client     	@11
-				supplier   	@10
+				client     	@5
+				supplier   	@4
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @32
-				label      	(object SegLabel @33
-				    Parent_View 	@32
+			    (object TransView "" @26
+				label      	(object SegLabel @27
+				    Parent_View 	@26
 				    location   	(2330, 1866)
 				    anchor_loc 	1
 				    nlines     	1
@@ -870,17 +692,17 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5177500329"
-				client     	@11
-				supplier   	@14
+				client     	@5
+				supplier   	@8
 				vertices   	(list Points
 				    (2438, 1747)
 				    (2287, 1885)
 				    (2440, 2059))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @34
-				label      	(object SegLabel @35
-				    Parent_View 	@34
+			    (object TransView "" @28
+				label      	(object SegLabel @29
+				    Parent_View 	@28
 				    location   	(3275, 924)
 				    anchor_loc 	1
 				    nlines     	1
@@ -893,13 +715,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51783402D4"
-				client     	@15
-				supplier   	@17
+				client     	@9
+				supplier   	@11
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @36
-				label      	(object SegLabel @37
-				    Parent_View 	@36
+			    (object TransView "" @30
+				label      	(object SegLabel @31
+				    Parent_View 	@30
 				    location   	(3814, 1199)
 				    anchor_loc 	1
 				    nlines     	1
@@ -912,17 +734,17 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5178710302"
-				client     	@15
-				supplier   	@16
+				client     	@9
+				supplier   	@10
 				vertices   	(list Points
 				    (3517, 801)
 				    (3791, 1150)
 				    (3530, 1582))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @38
-				label      	(object SegLabel @39
-				    Parent_View 	@38
+			    (object TransView "" @32
+				label      	(object SegLabel @33
+				    Parent_View 	@32
 				    location   	(2077, 1636)
 				    anchor_loc 	1
 				    nlines     	1
@@ -935,14 +757,14 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C51768D0001"
-				client     	@9
-				supplier   	@11
+				client     	@3
+				supplier   	@5
 				line_style 	0
 				x_offset   	FALSE)
-			    (object NoteView @40
+			    (object NoteView @34
 				location   	(752, 1440)
 				label      	(object ItemLabel
-				    Parent_View 	@40
+				    Parent_View 	@34
 				    location   	(522, 1310)
 				    fill_color 	13434879
 				    nlines     	5
@@ -952,16 +774,16 @@
 				fill_color 	13434879
 				width      	485
 				height     	273)
-			    (object AttachView "" @41
+			    (object AttachView "" @35
 				stereotype 	TRUE
 				line_color 	3342489
-				client     	@40
-				supplier   	@9
+				client     	@34
+				supplier   	@3
 				line_style 	0)
-			    (object StateView "Normal" "first heartbeat" @42
+			    (object StateView "Normal" "first heartbeat" @36
 				location   	(1504, 1184)
 				label      	(object ItemLabel
-				    Parent_View 	@42
+				    Parent_View 	@36
 				    location   	(1504, 1116)
 				    fill_color 	13434879
 				    anchor_loc 	1
@@ -974,7 +796,7 @@
 				fill_color 	13434879
 				quidu      	"3C5182EE0220"
 				compartment 	(object Compartment
-				    Parent_View 	@42
+				    Parent_View 	@36
 				    location   	(1185, 1157)
 				    icon_style 	"Label"
 				    fill_color 	13434879
@@ -988,9 +810,9 @@
 				width      	753
 				height     	251
 				autoResize 	TRUE)
-			    (object TransView "" @43
-				label      	(object SegLabel @44
-				    Parent_View 	@43
+			    (object TransView "" @37
+				label      	(object SegLabel @38
+				    Parent_View 	@37
 				    location   	(1549, 944)
 				    anchor_loc 	1
 				    nlines     	1
@@ -1003,13 +825,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C5182FF0348"
-				client     	@8
-				supplier   	@42
+				client     	@2
+				supplier   	@36
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @45
-				label      	(object SegLabel @46
-				    Parent_View 	@45
+			    (object TransView "" @39
+				label      	(object SegLabel @40
+				    Parent_View 	@39
 				    location   	(2104, 557)
 				    anchor_loc 	1
 				    nlines     	1
@@ -1022,13 +844,13 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C518325012D"
-				client     	@8
-				supplier   	@10
+				client     	@2
+				supplier   	@4
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @47
-				label      	(object SegLabel @48
-				    Parent_View 	@47
+			    (object TransView "" @41
+				label      	(object SegLabel @42
+				    Parent_View 	@41
 				    location   	(1195, 1465)
 				    anchor_loc 	1
 				    nlines     	1
@@ -1041,17 +863,17 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C518376008D"
-				client     	@42
-				supplier   	@9
+				client     	@36
+				supplier   	@3
 				vertices   	(list Points
 				    (1359, 1308)
 				    (1212, 1437)
 				    (1395, 1582))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @49
-				label      	(object SegLabel @50
-				    Parent_View 	@49
+			    (object TransView "" @43
+				label      	(object SegLabel @44
+				    Parent_View 	@43
 				    location   	(2054, 1451)
 				    anchor_loc 	1
 				    nlines     	1
@@ -1064,20 +886,20 @@
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"3C518398017E"
-				client     	@42
-				supplier   	@11
+				client     	@36
+				supplier   	@5
 				line_style 	0
 				x_offset   	FALSE)
-			    (object AttachView "" @51
+			    (object AttachView "" @45
 				stereotype 	TRUE
 				line_color 	3342489
-				client     	@40
-				supplier   	@42
+				client     	@34
+				supplier   	@36
 				line_style 	0)
-			    (object NoteView @52
+			    (object NoteView @46
 				location   	(816, 352)
 				label      	(object ItemLabel
-				    Parent_View 	@52
+				    Parent_View 	@46
 				    location   	(656, 214)
 				    fill_color 	13434879
 				    nlines     	5
@@ -1087,11 +909,11 @@
 				fill_color 	13434879
 				width      	344
 				height     	289)
-			    (object AttachView "" @53
+			    (object AttachView "" @47
 				stereotype 	TRUE
 				line_color 	3342489
-				client     	@52
-				supplier   	@25
+				client     	@46
+				supplier   	@19
 				line_style 	0)))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -1103,126 +925,21 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::States::Proxy" @54
+		(object ClassView "Class" "Logical View::States::Monitor" @48
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(528, 384)
+		    location   	(528, 480)
 		    label      	(object ItemLabel
-			Parent_View 	@54
-			location   	(222, 175)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	612
-			justify    	0
-			label      	"Proxy")
-		    stereotype 	(object ItemLabel
-			Parent_View 	@54
-			location   	(222, 125)
-			fill_color 	13434879
-			anchor     	10
-			nlines     	1
-			max_width  	612
-			justify    	0
-			label      	"<<singleton>>")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3C5166EB028A"
-		    compartment 	(object Compartment
-			Parent_View 	@54
-			location   	(222, 236)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	8
-			max_width  	609
-			compartmentItems 	(list Compartment
-			    "- heartbeat timer : Timer"
-			    "- warmup timer : Timer"
-			    "+ set heartbeat timeout()"
-			    "+ set 2 second warmup timeout()"
-			    "+ set 6 second warmup timeout()"
-			    "+ clear heartbeat timeout()"
-			    "+ clear warmup timeout()"))
-		    width      	630
-		    height     	542
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::States::Std" @55
-		    ShowCompartmentStereotypes 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1440, 1360)
-		    label      	(object ItemLabel
-			Parent_View 	@55
-			location   	(1246, 1279)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	388
-			justify    	0
-			label      	"Std")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3C53956B0065"
-		    compartment 	(object Compartment
-			Parent_View 	@55
-			location   	(1246, 1340)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	384
-			compartmentItems 	(list Compartment
-			    "<<id>> - id : Integer"))
-		    width      	406
-		    height     	186
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::States::Auto" @56
-		    ShowCompartmentStereotypes 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1440, 864)
-		    label      	(object ItemLabel
-			Parent_View 	@56
-			location   	(1198, 783)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	484
-			justify    	0
-			label      	"Auto")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3C53957B00FF"
-		    compartment 	(object Compartment
-			Parent_View 	@56
-			location   	(1198, 844)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	481
-			compartmentItems 	(list Compartment
-			    "<<id>> - id : Autonumber"))
-		    width      	502
-		    height     	186
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::States::Monitor" @57
-		    ShowCompartmentStereotypes 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(512, 1200)
-		    label      	(object ItemLabel
-			Parent_View 	@57
-			location   	(206, 991)
+			Parent_View 	@48
+			location   	(222, 271)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	612
 			justify    	0
 			label      	"Monitor")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@57
-			location   	(206, 941)
+			Parent_View 	@48
+			location   	(222, 221)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1234,13 +951,13 @@
 		    fill_color 	13434879
 		    quidu      	"3C53D8D401BD"
 		    compartment 	(object Compartment
-			Parent_View 	@57
-			location   	(206, 1052)
+			Parent_View 	@48
+			location   	(222, 332)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	8
-			max_width  	609
+			max_width  	618
 			compartmentItems 	(list Compartment
 			    "- heartbeat timer : Timer"
 			    "- warmup timer : Timer"
@@ -1252,4 +969,24 @@
 		    width      	630
 		    height     	542
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object NoteView @49
+		    location   	(528, 1152)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(184, 1093)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	653
+			label      	"Statechart: Monitor / Lifecycle")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	713
+		    height     	131
+		    quidu      	"3C51670A02F9")
+		(object AttachView "" @50
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@49
+		    supplier   	@48
+		    line_style 	0)))))
