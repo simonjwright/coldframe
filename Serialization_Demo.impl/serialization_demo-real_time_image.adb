@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_demo-real_time_image.adb,v $
---  $Revision: 6aacb1863be8 $
---  $Date: 2003/03/01 11:35:20 $
+--  $Revision: 3d0234e45750 $
+--  $Date: 2003/03/01 17:03:41 $
 --  $Author: simon $
 
 --  Generates an XML image (for serialization output) for the Real_Time type.
@@ -27,7 +27,7 @@ function Real_Time_Image
    use type Ada.Real_Time.Time;
    use type Ada.Real_Time.Time_Span;
 begin
-   return "<field name=""" & N & "Value"">"
+   return "<field name=""" & N & """>"
      & Duration'Image
         (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First))
      & "</field>";
