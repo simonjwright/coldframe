@@ -13,11 +13,16 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test.adb,v $
---  $Revision: 3daa7f1e04bd $
---  $Date: 2002/02/03 10:26:21 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
+with Ada.Calendar;
+with Ada.Task_Identification;
+with ColdFrame.Exceptions.Traceback;
+pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 with ColdFrame.States.Test_Support;
+with GNAT.IO; use GNAT.IO;
 
 procedure ColdFrame.States.Test is
 
@@ -27,18 +32,56 @@ procedure ColdFrame.States.Test is
 
 begin
 
-   E := new Test_Support.Ev (Ins'Unchecked_Access);
+   E := new Test_Support.Noisy_Ev (Ins'Unchecked_Access);
    States.Set (The => Test_Support.T1,
-               On => Test_Support.Dispatcher,
+               On => Test_Support.Noisy_Dispatcher,
                To_Fire => E,
                After => 1.0);
 
-   E := new Test_Support.Ev (Ins'Unchecked_Access);
+   E := new Test_Support.Noisy_Ev (Ins'Unchecked_Access);
    States.Set (The => Test_Support.T2,
-               On => Test_Support.Dispatcher,
+               On => Test_Support.Noisy_Dispatcher,
                To_Fire => E,
                After => 2.0);
 
    delay 4.0;
+
+   declare
+      Start : Ada.Calendar.Time := Ada.Calendar.Clock;
+      Interval : Duration;
+      Ev : Event_P;
+      use type Ada.Calendar.Time;
+      Loops : constant := 10_000;
+   begin
+      for I in 1 .. Loops / 1000 loop
+         for J in 1 .. 1000 loop
+            Ev := new Test_Support.Quiet_Ev (Ins'Unchecked_Access);
+            States.Post (The => Ev, On => Test_Support.Quiet_Wall_Dispatcher);
+         end loop;
+         delay 0.00001;
+      end loop;
+      Interval := ((Ada.Calendar.Clock - Start) / Loops) * 1_000_000;
+      Put_Line ("wall dispatcher took" & Interval'Img);
+   end;
+
+   declare
+      Start : Ada.Calendar.Time := Ada.Calendar.Clock;
+      Interval : Duration;
+      Ev : Event_P;
+      use type Ada.Calendar.Time;
+      Loops : constant := 10_000;
+   begin
+      for I in 1 .. Loops / 1000 loop
+         for J in 1 .. 1000 loop
+            Ev := new Test_Support.Quiet_Ev (Ins'Unchecked_Access);
+            States.Post (The => Ev, On => Test_Support.Quiet_Real_Dispatcher);
+         end loop;
+         delay 0.00001;
+      end loop;
+      Interval := ((Ada.Calendar.Clock - Start) / Loops) * 1_000_000;
+      Put_Line ("real dispatcher took" & Interval'Img);
+   end;
+
+   Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
 
 end ColdFrame.States.Test;

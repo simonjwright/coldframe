@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.adb,v $
---  $Revision: f880bcb9ecd3 $
---  $Date: 2002/02/01 20:48:43 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -30,16 +30,16 @@ with BC.Containers.Queues.Ordered.Unbounded;
 package body ColdFrame.States.Wall_Timer is
 
 
-   procedure Post (It : Event_Base'Class;
+   procedure Post (The : Event_P;
                    On : access Event_Queue) is
    begin
-      Event_Queues.Append (On.The_Events, It'Unrestricted_Access);
+      Posted_Event_Queues.Append (On.The_Events, The);
    end Post;
 
 
-   procedure Retract (It : Event_Base'Class;
+   procedure Retract (The : Event_P;
                       On : access Event_Queue;
-                      Success : out Boolean)  is
+                      Success : out Boolean) is
 
       --  We make two distinct accesses to the synchronized event
       --  queue, so you might think that another task could get in and
@@ -55,7 +55,7 @@ package body ColdFrame.States.Wall_Timer is
       --  remove (the first occurrence of) an Item from a Queue.
 
       Loc : constant Natural
-        := Event_Queues.Location (On.The_Events, It'Unrestricted_Access);
+        := Posted_Event_Queues.Location (On.The_Events, The);
       Q : Event_Queue'Class renames Event_Queue'Class (On.all);
       --  we need a classwide object to force dispatching in the call
       --  to Log_Retraction
@@ -65,8 +65,8 @@ package body ColdFrame.States.Wall_Timer is
       if Loc = 0 then
          Success := False;
       else
-         Log_Retraction (It => It, On => Q'Access);
-         Event_Queues.Remove (On.The_Events, Loc);
+         Log_Retraction (The => The, On => Q'Access);
+         Posted_Event_Queues.Remove (On.The_Events, Loc);
          Success := True;
       end if;
 
@@ -83,13 +83,13 @@ package body ColdFrame.States.Wall_Timer is
 
       loop
 
-         Event_Queues.Pop_Value (The_Queue.The_Events, E);
+         Posted_Event_Queues.Pop_Value (The_Queue.The_Events, E);
 
          if not E.Invalidated then
 
-            Log_Pre_Dispatch (It => E.all, On => The_Queue);
+            Log_Pre_Dispatch (The => E, On => The_Queue);
             Handler (E.all);
-            Log_Post_Dispatch (It => E.all, On => The_Queue);
+            Log_Post_Dispatch (The => E, On => The_Queue);
 
          end if;
 
@@ -102,7 +102,7 @@ package body ColdFrame.States.Wall_Timer is
 
    procedure Set (The : in out Timer;
                   On : access Event_Queue;
-                  To_Fire : access Event_Base'Class;
+                  To_Fire : Event_P;
                   After : Natural_Duration) is
 
       use type Ada.Calendar.Time;
@@ -149,7 +149,7 @@ package body ColdFrame.States.Wall_Timer is
                declare
                   Success : Boolean;
                begin
-                  Retract (The.The_Event.all, On, Success);
+                  Retract (The.The_Event, On, Success);
                   if not Success then
                      raise Program_Error;
                   end if;
@@ -165,7 +165,7 @@ package body ColdFrame.States.Wall_Timer is
             declare
                Success : Boolean;
             begin
-               Retract (The.The_Event.all, On, Success);
+               Retract (The.The_Event, On, Success);
                if not Success then
                   raise Use_Error;
                end if;
@@ -176,31 +176,6 @@ package body ColdFrame.States.Wall_Timer is
       end case;
 
    end Unset;
-
-
-   ---------------
-   --  Logging  --
-   ---------------
-
-   procedure Log_Retraction (It : Event_Base'Class;
-                             On : access Event_Queue) is
-   begin
-      null;
-   end Log_Retraction;
-
-
-   procedure Log_Pre_Dispatch (It : Event_Base'Class;
-                               On : access Event_Queue) is
-   begin
-      null;
-   end Log_Pre_Dispatch;
-
-
-   procedure Log_Post_Dispatch (It : Event_Base'Class;
-                                On : access Event_Queue) is
-   begin
-      null;
-   end Log_Post_Dispatch;
 
 
    ------------------------------
@@ -258,7 +233,7 @@ package body ColdFrame.States.Wall_Timer is
                   T : constant Timer_P
                     := Timed_Event_Queues.Front (The_Events);
                begin
-                  Post (T.The_Event.all, The_Queue);
+                  Post (T.The_Event, The_Queue);
                   T.Status := Fired;
                   Timed_Event_Queues.Pop (The_Events);
                end;

@@ -20,43 +20,44 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 75b1b7979fd5 $
---  $Date: 2002/02/01 20:42:42 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
-with Ada.Calendar;
+--  with Ada.Calendar;
+with Ada.Exceptions;
 with GNAT.IO; use GNAT.IO;
-with GNAT.Calendar.Time_IO;
+--  with GNAT.Calendar.Time_IO;
 
 package body ColdFrame.States is
 
 
-   function Seconds (Date : Ada.Calendar.Time) return String;
-   function Seconds (Date : Ada.Calendar.Time) return String is
-      use type Ada.Calendar.Time;
-      S : Duration
-        := Duration (GNAT.Calendar.Second (Date))
-        + GNAT.Calendar.Sub_Second (Date);
-   begin
-      return GNAT.Calendar.Time_IO.Image (Date, "%H%M") & S'Img;
-   end Seconds;
+--     function Seconds (Date : Ada.Calendar.Time) return String;
+--     function Seconds (Date : Ada.Calendar.Time) return String is
+--        use type Ada.Calendar.Time;
+--        S : Duration
+--          := Duration (GNAT.Calendar.Second (Date))
+--          + GNAT.Calendar.Sub_Second (Date);
+--     begin
+--        return GNAT.Calendar.Time_IO.Image (Date, "%H%M") & S'Img;
+--     end Seconds;
 
 
-   procedure Log (Event : String; State : String) is
-   begin
-      Put_Line ("event "
-                & Event
-                & " occurred in state "
-                & State
-                & " at "
-                & Seconds (Ada.Calendar.Clock));
-   end Log;
+--     procedure Log (Event : String; State : String) is
+--     begin
+--        Put_Line ("event "
+--                  & Event
+--                  & " occurred in state "
+--                  & State
+--                  & " at "
+--                  & Seconds (Ada.Calendar.Clock));
+--     end Log;
 
 
-   procedure Log (Entering : String) is
-   begin
-      Put_Line ("entering state " & Entering);
-   end Log;
+--     procedure Log (Entering : String) is
+--     begin
+--        Put_Line ("entering state " & Entering);
+--     end Log;
 
 
    procedure Finalize (The_Terminator : in out Terminator) is
@@ -67,6 +68,39 @@ package body ColdFrame.States is
       --  dispatch me! I want to die", rather than deleting them from
       --  the queue now.
    end Finalize;
+
+
+   procedure Retract (The : Event_P;
+                      On : access Event_Queue_Base;
+                      Success : out Boolean) is
+      Should_Have_Been_Overridden : exception;
+   begin
+      Success := False;
+      Ada.Exceptions.Raise_Exception
+        (Program_Error'Identity,
+         "ColdFrame.States.Retract should have been overridden");
+   end Retract;
+
+
+   procedure Log_Retraction (The : Event_P;
+                             On : access Event_Queue_Base) is
+   begin
+      null;
+   end Log_Retraction;
+
+
+   procedure Log_Pre_Dispatch (The : Event_P;
+                               On : access Event_Queue_Base) is
+   begin
+      null;
+   end Log_Pre_Dispatch;
+
+
+   procedure Log_Post_Dispatch (The : Event_P;
+                                On : access Event_Queue_Base) is
+   begin
+      null;
+   end Log_Post_Dispatch;
 
 
 end ColdFrame.States;

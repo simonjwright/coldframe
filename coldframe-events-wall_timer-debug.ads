@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer-debug.ads,v $
---  $Revision: f880bcb9ecd3 $
---  $Date: 2002/02/01 20:48:43 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 package ColdFrame.States.Wall_Timer.Debug is
@@ -34,12 +34,12 @@ package ColdFrame.States.Wall_Timer.Debug is
 
    type Event_Queue is new Wall_Timer.Event_Queue with private;
 
-   procedure Post (It : Event_Base'Class;
+   procedure Post (The : Event_P;
                    On : access Event_Queue);
 
    procedure Set (The : in out Timer;
                   On : access Event_Queue;
-                  To_Fire : access Event_Base'Class;
+                  To_Fire : Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The : in out Timer;
@@ -49,13 +49,13 @@ private
 
    type Event_Queue is new Wall_Timer.Event_Queue with null record;
 
-   procedure Log_Retraction (It : Event_Base'Class;
+   procedure Log_Retraction (The : Event_P;
                              On : access Event_Queue);
 
-   procedure Log_Pre_Dispatch (It : Event_Base'Class;
+   procedure Log_Pre_Dispatch (The : Event_P;
                                On : access Event_Queue);
 
-   procedure Log_Post_Dispatch (It : Event_Base'Class;
+   procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue);
 
 end ColdFrame.States.Wall_Timer.Debug;

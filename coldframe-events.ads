@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: 75b1b7979fd5 $
---  $Date: 2002/02/01 20:42:42 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -80,7 +80,7 @@ package ColdFrame.States is
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
-   procedure Post (It : Event_Base'Class;
+   procedure Post (The : Event_P;
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
 
@@ -93,7 +93,7 @@ package ColdFrame.States is
 
    procedure Set (The : in out Timer;
                   On : access Event_Queue_Base;
-                  To_Fire : access Event_Base'Class;
+                  To_Fire : Event_P;
                   After : Natural_Duration) is abstract;
    --  May raise Use_Error (if the Timer is already set)
 
@@ -124,16 +124,46 @@ private
 
    procedure Finalize (The_Terminator : in out Terminator);
 
+
    type Instance_Base is abstract new Instances.Instance_Base with record
       The_Terminator : Terminator (Instance_Base'Access);
+      Events_Posted_On : Event_Queue_P;
    end record;
+   --  XXX Events_Posted_On is there for the Terminator to know which
+   --  queue to retract events for this instance from. I guess it
+   --  should be a constraint.
+
 
    type Event_Base (For_The_Instance : access Instance_Base'Class)
    is abstract tagged limited record
       Invalidated : Boolean := False;  --  set if the event is retracted
    end record;
 
+
    type Event_Queue_Base is abstract tagged limited null record;
+
+   procedure Retract (The : Event_P;
+                      On : access Event_Queue_Base;
+                      Success : out Boolean);
+   --  Removes an event from the event queue; intended for use when we
+   --  find out that a timed event has already fired when an action
+   --  attempts to unset it.
+   --  Doesn't deallocate the Event.
+   --  If the event isn't in the event queue, Success is set False
+   --  (this is probably a Use_Error).
+
+   --  Operations to support debug/logging. The implementation here
+   --  is null.
+
+   procedure Log_Retraction (The : Event_P;
+                             On : access Event_Queue_Base);
+
+   procedure Log_Pre_Dispatch (The : Event_P;
+                               On : access Event_Queue_Base);
+
+   procedure Log_Post_Dispatch (The : Event_P;
+                                On : access Event_Queue_Base);
+
 
    --  Timers: there is a complex race condition to be avoided.
    --
@@ -160,5 +190,6 @@ private
    --  The time at which the Timer is to fire may need to be
    --  Calendar.Time or Real_Time.Time, depending on the actual
    --  Timer_Queue; we supply both slots, Timer_Queue to choose.
+
 
 end ColdFrame.States;

@@ -13,23 +13,33 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test_support.ads,v $
---  $Revision: 3daa7f1e04bd $
---  $Date: 2002/02/03 10:26:21 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 with ColdFrame.States.Wall_Timer.Debug;
+with ColdFrame.States.Real_Timer;
 
 package ColdFrame.States.Test_Support is
 
    type Instance is new Instance_Base with null record;
    function State_Image (This : Instance) return String;
 
-   type Ev (For_The_Instance : access Instance_Base'Class)
+   type Quiet_Ev (For_The_Instance : access Instance_Base'Class)
    is new Event_Base (For_The_Instance) with null record;
 
-   procedure Handler (This : Ev);
+   procedure Handler (This : Quiet_Ev);
 
-   Dispatcher : ColdFrame.States.Event_Queue_P
+   type Noisy_Ev (For_The_Instance : access Instance_Base'Class)
+   is new Event_Base (For_The_Instance) with null record;
+
+   procedure Handler (This : Noisy_Ev);
+
+   Quiet_Real_Dispatcher : ColdFrame.States.Event_Queue_P
+     := new ColdFrame.States.Real_Timer.Event_Queue;
+   Quiet_Wall_Dispatcher : ColdFrame.States.Event_Queue_P
+     := new ColdFrame.States.Wall_Timer.Event_Queue;
+   Noisy_Dispatcher : ColdFrame.States.Event_Queue_P
      := new ColdFrame.States.Wall_Timer.Debug.Event_Queue;
 
    T1, T2 : States.Timer;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.ads,v $
---  $Revision: f880bcb9ecd3 $
---  $Date: 2002/02/01 20:48:43 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -39,12 +39,12 @@ package ColdFrame.States.Wall_Timer is
 
    type Event_Queue is new Event_Queue_Base with private;
 
-   procedure Post (It : Event_Base'Class;
+   procedure Post (The : Event_P;
                    On : access Event_Queue);
 
    procedure Set (The : in out Timer;
                   On : access Event_Queue;
-                  To_Fire : access Event_Base'Class;
+                  To_Fire : Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The : in out Timer;
@@ -56,19 +56,21 @@ private
    --  tasks interested in updating it: our Dispatcher, and the timer
    --  manager.
 
-   package Abstract_Event_Containers
+   package Abstract_Posted_Event_Containers
    is new BC.Containers (Event_P);
-   package Abstract_Event_Queues
-   is new Abstract_Event_Containers.Queues;
+   package Abstract_Posted_Event_Queues
+   is new Abstract_Posted_Event_Containers.Queues;
 
-   package Unbounded_Event_Queues
-   is new Abstract_Event_Queues.Unbounded
+   package Unbounded_Posted_Event_Queues
+   is new Abstract_Posted_Event_Queues.Unbounded
      (Storage => ColdFrame.Global_Storage_Pool.Pool);
-   package Event_Queues is new Abstract_Event_Queues.Synchronized
-     (Queue_Base => Unbounded_Event_Queues.Queue,
+   package Posted_Event_Queues is new Abstract_Posted_Event_Queues.Synchronized
+     (Queue_Base => Unbounded_Posted_Event_Queues.Queue,
       Monitor => BC.Support.Synchronization.Single_Monitor);
 
-   task type Dispatcher (The_Queue : access Event_Queue'Class);
+   task type Dispatcher (The_Queue : access Event_Queue'Class) is
+      pragma Priority (16);
+   end Dispatcher;
    --  We need to constrain by 'Class so that internal calls to
    --  potentially dispatching operations (such as
    --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
@@ -86,32 +88,14 @@ private
 
 
    type Event_Queue is new Event_Queue_Base with record
-      The_Events : Event_Queues.Queue;
+      The_Events : Posted_Event_Queues.Queue;
       The_Dispatcher : Dispatcher (Event_Queue'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);
    end record;
 
-   procedure Retract (It : Event_Base'Class;
+   procedure Retract (The : Event_P;
                       On : access Event_Queue;
                       Success : out Boolean);
-   --  Removes an event from the event queue; intended for use when we
-   --  find out that a timed event has already fired when an action
-   --  attempts to unset it.
-   --  Doesn't deallocate the Event.
-   --  If the event isn't in the event queue, Success is set False
-   --  (this is probably a Use_Error).
 
-
-   --  Operations to support debug/logging. The implementation here
-   --  is null.
-
-   procedure Log_Retraction (It : Event_Base'Class;
-                             On : access Event_Queue);
-
-   procedure Log_Pre_Dispatch (It : Event_Base'Class;
-                               On : access Event_Queue);
-
-   procedure Log_Post_Dispatch (It : Event_Base'Class;
-                                On : access Event_Queue);
 
 end ColdFrame.States.Wall_Timer;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer-debug.adb,v $
---  $Revision: f880bcb9ecd3 $
---  $Date: 2002/02/01 20:48:43 $
+--  $Revision: 79da22ff2fb8 $
+--  $Date: 2002/02/06 20:06:21 $
 --  $Author: simon $
 
 with Ada.Tags;
@@ -30,12 +30,12 @@ with GNAT.IO; use GNAT.IO;
 package body ColdFrame.States.Wall_Timer.Debug is
 
 
-   procedure Post (It : Event_Base'Class;
+   procedure Post (The : Event_P;
                    On : access Event_Queue) is
    begin
 
-      Put_Line ("posting a " & Ada.Tags.Expanded_Name (It'Tag));
-      Wall_Timer.Post (It => It,
+      Put_Line ("posting a " & Ada.Tags.Expanded_Name (The'Tag));
+      Wall_Timer.Post (The => The,
                        On => Wall_Timer.Event_Queue (On.all)'Access);
 
    end Post;
@@ -43,7 +43,7 @@ package body ColdFrame.States.Wall_Timer.Debug is
 
    procedure Set (The : in out Timer;
                   On : access Event_Queue;
-                  To_Fire : access Event_Base'Class;
+                  To_Fire : Event_P;
                   After : Natural_Duration) is
 
    begin
@@ -73,28 +73,28 @@ package body ColdFrame.States.Wall_Timer.Debug is
    end Unset;
 
 
-   procedure Log_Retraction (It : Event_Base'Class;
+   procedure Log_Retraction (The : Event_P;
                              On : access Event_Queue) is
    begin
-      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (It'Tag));
+      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The'Tag));
    end Log_Retraction;
 
 
-   procedure Log_Pre_Dispatch (It : Event_Base'Class;
+   procedure Log_Pre_Dispatch (The : Event_P;
                                On : access Event_Queue) is
    begin
       Put_Line ("dispatching a "
-                & Ada.Tags.Expanded_Name (It'Tag)
+                & Ada.Tags.Expanded_Name (The'Tag)
                 & ": state "
-                & State_Image (It.For_The_Instance.all));
+                & State_Image (The.For_The_Instance.all));
    end Log_Pre_Dispatch;
 
 
-   procedure Log_Post_Dispatch (It : Event_Base'Class;
+   procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue) is
    begin
       Put_Line (".. new state "
-                & State_Image (It.For_The_Instance.all));
+                & State_Image (The.For_The_Instance.all));
    end Log_Post_Dispatch;
 
 
