@@ -11,7 +11,6 @@ with Event_Test.Events;
 
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Event_Support;
 
 package body Event_Test.Test_Instance is
 
