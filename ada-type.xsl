@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 33856d3b6415 2004/01/20 14:04:46 simon $ -->
+<!-- $Id: ada-type.xsl,v 3ef8ce6b8941 2004/01/21 21:13:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -366,7 +366,7 @@
         <xsl:value-of select="$IC"/>
         <xsl:text>array (</xsl:text>
         <xsl:value-of select="array/index"/>
-        <xsl:if test="@unconstrained">
+        <xsl:if test="array/@unconstrained">
           <xsl:text> range &lt;&gt;</xsl:text>
         </xsl:if>
         <xsl:text>)&#10;</xsl:text>
