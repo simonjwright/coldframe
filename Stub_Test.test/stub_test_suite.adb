@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: 6d3460479f13 $
---  $Date: 2005/03/05 18:19:33 $
+--  $Revision: 25d83881d00e $
+--  $Date: 2005/03/05 18:32:59 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -164,6 +164,51 @@ package body Stub_Test_Suite is
    end Call_With_In_Parameter_And_Return;
 
 
+   procedure Call_With_In_Parameter_And_Variant_Return
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Call_With_In_Parameter_And_Variant_Return
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      D : Stub_Test.Discriminated_Type;
+      use type Stub_Test.Discriminated_Type;
+      use type Stub_Test.Record_Type;
+   begin
+      Set_Discriminated_Type ("Stub_Test.Create_Discriminated",
+                              "return",
+                              (Discriminant => Stub_Test.I_T,
+                               I => 42));
+      Set_Discriminated_Type ("Stub_Test.Create_Discriminated",
+                              "return",
+                              (Discriminant => Stub_Test.R_T,
+                               R => (I => 24, F => 0.42)),
+                              3);
+      D := Stub_Test.Create_Discriminated (False);
+      Assert (not Get_Boolean ("Stub_Test.Create_Discriminated", "B", 1),
+              "wrong input (a)");
+      Assert (D = (Discriminant => Stub_Test.I_T,
+                   I => 42),
+              "wrong result (a)");
+      D := Stub_Test.Create_Discriminated (True);
+      Assert (Get_Boolean ("Stub_Test.Create_Discriminated", "B", 2),
+              "wrong input (a)");
+      Assert (D = (Discriminant => Stub_Test.I_T,
+                   I => 42),
+              "wrong result (b)");
+      D := Stub_Test.Create_Discriminated (False);
+      Assert (not Get_Boolean ("Stub_Test.Create_Discriminated", "B", 3),
+              "wrong input (c)");
+      Assert (D = (Discriminant => Stub_Test.R_T,
+                   R => (I => 24, F => 0.42)),
+              "wrong result (c)");
+      D := Stub_Test.Create_Discriminated (True);
+      Assert (Get_Boolean ("Stub_Test.Create_Discriminated", "B", 4),
+              "wrong input (d)");
+      Assert (D = (Discriminant => Stub_Test.R_T,
+                   R => (I => 24, F => 0.42)),
+              "wrong value (d)");
+   end Call_With_In_Parameter_And_Variant_Return;
+
+
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
 
    procedure Register_Tests (C : in out Case_1);
@@ -192,6 +237,10 @@ package body Stub_Test_Suite is
         (C,
          Call_With_In_Parameter_And_Return'Access,
          "functions with in parameters");
+      Register_Routine
+        (C,
+         Call_With_In_Parameter_And_Variant_Return'Access,
+         "functions with in parameters and variant returns");
    end Register_Tests;
 
    function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
