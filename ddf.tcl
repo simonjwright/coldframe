@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 8bfbc56b2236 2000/06/30 16:25:27 simon $
+# $Id: ddf.tcl,v 3b7905efb8b8 2000/07/14 09:04:44 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -542,12 +542,17 @@ itcl::class Object {
     variable typeInfo
 
     method -type {dummy} {set isType 1}
+    # called (via stereotype mechanism) to indicate that this is a
+    # <<type>> object
 
     method -documentation {d} {
 	if [expr $isType && ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
 	     error "User data type $name has no type information"
 	}
     }
+    # called for a <documentation> element to extract the type information
+    # from the documnetation string. The type info is contained between
+    # double square brackets [[ ]]
 
     private method -enumeration {values} {
 	set raw [split $values ","]
@@ -556,6 +561,16 @@ itcl::class Object {
 	}
 	return $vs
     }
+    # called when the type is an enumeration. Returns a list of the
+    # comma-separated enumerals, which have been normalized (underscores,
+    # mixed case)
+
+    private method -real {constraint} {
+	return $constraint
+    }
+    # called when the type is a real. constraint is a set of key/value
+    # pairs, which may be newline- or comma-separated.
+
 
     method -attributes {l} {set attributes $l}
 
@@ -612,6 +627,7 @@ itcl::class Object {
 	    }
 	    switch [string tolower $kind] {
 		enumeration {$dt -enumeration [$this -enumeration $values]}
+		real        {$dt -real [$this -real $values]}
 		default     {error "unrecognised user type definition $kind"}
 	    }
 	} else {
@@ -1083,6 +1099,17 @@ itcl::class Datatype {
 	set dataType "enumeration"
 	set dataDetail $values
     }
+    # called when the type is an enumeration. values is a list of the
+    # comma-separated enumerals, which have been normalized (underscores,
+    # mixed case)
+
+    method -real {constraint} {
+	set dataType "real"
+	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
+    }
+    # called when the type is a real. constraint is a set of key/value
+    # pairs, which may be newline- or comma-separated.
+    # Recognised keys are delta, digits, lower, upper, size, small
 
     method -complete {} {
 	if [expr ![[stack -top] -isPresent $type]] {
@@ -1098,7 +1125,14 @@ itcl::class Datatype {
 	    puts "Types_d[$domain -getNumber]"
 	}
 	# constraint flag -- 0 -> no constraint
-	puts 0
+	switch $dataType {
+	    real {
+		puts 1
+		puts [string length $dataDetail]
+		puts $dataDetail
+	    }
+	    default {puts 0}
+	}
 	# number of using objects (dummy, object index 1 I think)
 	puts "1\n0"
 	# relationship users -- fossil, I think
@@ -1106,6 +1140,7 @@ itcl::class Datatype {
 	# data type switch
 	switch $dataType {
 	    provided    {puts 0}
+	    real        {puts 5}
 	    enumeration {
 		puts 9
 		puts [llength $dataDetail]
