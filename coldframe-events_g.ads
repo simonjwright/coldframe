@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 883d3893b654 $
---  $Date: 2002/09/17 18:12:20 $
+--  $Revision: 952c3ca908a9 $
+--  $Date: 2002/09/20 10:15:53 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -282,7 +282,7 @@ private
 
    type Event_Queue_Base (Start_Started : Boolean)
    is abstract tagged limited record
-         Started : Boolean := Start_Started;
+      Started : Boolean := Start_Started;
    end record;
 
 
