@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 82a19180d9d7 2004/06/18 19:11:04 simon $
+--  $Id: regressions-suite.adb,v 05532db53265 2004/06/18 19:49:52 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -369,7 +369,7 @@ package body Regressions.Suite is
          pragma Warnings (Off, C);
       begin
          Regressions.CB_Callback.Register (C4'Access);
-         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 4));
          Assert (C1_Called and C2_Called and C3_Called,
                  "not all got called");
       end Call_Callbacks_4;
@@ -385,19 +385,19 @@ package body Regressions.Suite is
          Register_Routine
            (C,
             Call_Callbacks_1'Access,
-            "call callbacks (1)");
+            "call 3 callbacks (no exceptions)");
          Register_Routine
            (C,
             Call_Callbacks_2'Access,
-            "call callbacks (2)");
+            "call 3 callbacks (exception in first)");
          Register_Routine
            (C,
             Call_Callbacks_3'Access,
-            "call callbacks (3)");
+            "call 3 callbacks (excrption in first two)");
          Register_Routine
            (C,
             Call_Callbacks_4'Access,
-            "call callbacks (4)");
+            "call 4 callbacks (excrption in first three, deregister fourth)");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
