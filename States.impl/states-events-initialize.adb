@@ -1,6 +1,6 @@
-with ColdFrame.Events.Wall_Timer.Debug;
+with ColdFrame.Events.Standard.Debug;
 separate (States.Events)
 procedure Initialize is
 begin
-   Dispatcher := new ColdFrame.Events.Wall_Timer.Debug.Event_Queue;
+   Dispatcher := new ColdFrame.Events.Standard.Debug.Event_Queue;
 end Initialize;
