@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: ef9bbe61447c $
---  $Date: 2003/08/22 19:08:44 $
+--  $Revision: 4a1a32a93b3a $
+--  $Date: 2003/08/24 18:40:59 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -570,7 +570,7 @@ package body ColdFrame.Events_G.Standard_G is
             Ada.Exceptions.Raise_Exception
               (Exceptions.Use_Error'Identity,
                "posting to self outside event handler");
-         elsif not The_Event.all in Instance_Event_Base'Class then
+         elsif not (The_Event.all in Instance_Event_Base'Class) then
             Ada.Exceptions.Raise_Exception
               (Exceptions.Use_Error'Identity,
                "posting class event to self");
