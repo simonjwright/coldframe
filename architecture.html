@@ -1,11 +1,186 @@
-<!-- $Id: architecture.html,v af2a44fca5c0 2001/01/18 20:25:39 simon $ -->
+<!-- $Id: architecture.html,v b422ddaa36d5 2001/01/21 06:01:06 simon $ -->
 <html>
 <head>
-<title>ColdFrame: Example</title>
+<title>ColdFrame: Current</title>
 </head>
 <body bgcolor="#ffffff">
-<h1>ColdFrame: Example</h1>
+<h1>ColdFrame: Current</h1>
 
+The first version of ColdFrame contains a single software
+architecture. This involves:
+
+<ul>
+
+<li><a href="#strategy">a strategy</a>,
+
+<li><a href="#preparation">preparation of models in Rational Rose</a>,
+
+<li><a href="#extraction">extraction of models from Rose</a>,
+
+<li><a href="#conversion">conversion to standard form</a>,
+
+<li><a href="#generation">generation of code</a>,
+
+<li>using <a href="#support">specially written support components</a>
+
+<li>and a set of <a href="#containers">generic container components</a>.
+
+</ul>
+
+<h2><a name="strategy">Strategy</h2>
+
+<p>It's fundamental to the idea of ColdFrame that you don't need to
+build a design model by decorating your clean, beautiful analysis
+model with all sorts of support clutter (lists, queues etc). The
+software architect decides how analysis models are to be translated
+into code, and a mechanical process (applied either by a programmer or
+by a program) applies the rules.
+
+<p>Examples of commercial products which take this approach are
+Software through Pictures from <a
+href="http://www.aonix.com/">Aonix</a> and ARTiSAN from ARTiSAN
+Software.
+
+<p>It's important that the tool lets the architect adopt different
+strategies depending on circumstances. For example, the first release
+of ColdFrame assumes that a class with no attributes is a singleton
+(rather like a Controller) and generates quite different
+code. <i>[Possibly it should only do this if there are no
+<em>identifying</em> attributes?]</i>
+
+<p>This need makes it very advantageous to have a complete programming
+environment available while scripting the output. Predetermined
+substitution variables aren't likely to fill the bill.
+
+<h2><a name="preparation">Preparation of models in Rational
+Rose</a></h2>
+
+<h3>Shlaer-Mellor aspects</h3>
+
+<p>It's not possible here to give a detailed tutorial on the
+Shaler-Mellor approach. An excellent book is "How to Build
+Shaler-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
+0-13-207663-2.
+
+<p>Instances of a Class must be uniquely identifiable by some
+attribute or combination of attributes. For example, a Vehicle Excise
+Disk might be identified by the combination of Vehicle Index Mark and
+Validity Start Date. Vehicle Index Mark and Validity Start Date then
+become "identifying attributes", whereas Date Of Issue and Period Of
+Validity are just common-or-garden attributes.
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the
+subject of the verb phrase is the class at the same end as the name,
+the object is the class at the other end. So, for example, you might
+have <em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>. Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing. <i>[By the way, the references are far from clear whether
+this choice of end convention is in fact correct.]</i>
+
+<p>Careful consideration of multiplicity is very important.
+Unconditional multiplicity is good; if each end of an association is
+conditional (0..1, 0..n), maybe you should think more carefully about
+it. Perhaps there's some super/subtype (inheritance) relationship
+lurking in there.
+
+<p>Associations need to be "formalised" by the use of "referential
+attributes". Considering the <em>Window "appears on" Screen</em>,
+where clearly there are many <em>Window</em>s but only one
+<em>Screen</em>, you'd need a referential attribute
+<em>screen&nbsp;id</em> in the <em>Window</em> instance.
+
+<p>All parent classes in inheritance relationships are, in a sense,
+abstract: whenever an instance of the parent class exists, there
+exists precisely one related instance of one of the child
+classes. Inheritance relationships are also formalised; typically (in
+ColdFrame, always) the child class has the same identifying attributes
+as the parent.
+
+<p>In spite of the above, with ColdFrame you don't need to provide
+referential attributes (it would be quite cumbersome to do so, since
+Rose is unaware of the concept). Instead, ColdFrame automatically
+inserts them using an appropriate naming convention.
+
+<h3>Use of Stereotypes</h3>
+
+<p>Identifying attributes are marked with the stereotype
+<em>&#171;id&#187;</em>.
+
+<p>Class operations are marked with the stereotype
+<em>&#171;class&#187</em>.
+
+<p>Classes which represent user-defined types are marked with the
+stereotype <em>&#171;type&#187</em>.
+
+<h3>Other annotations</h3>
+
+<p>It's not at all convenient to put all the extra information you
+need for code generation into stereotypes. Instead, "annotations" can
+be put into the documentation section (in Rose the bottom left pane),
+in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
+<tt>[[&nbsp;mode&nbsp;:&nbsp;in&nbsp;out&nbsp;]]</tt>.
+
+<p>Annotations supported are:
+
+<dl>
+
+<dt>on <em>&#171;type&#187;</em> classes<dd><ul>
+
+<li><tt>enumeration : <i>literal 1</i>, <i>literal 2</i>, ...</tt>
+
+<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
+upper <i>upper-bound</i></tt>
+
+<li><tt>string : <i>max-length</i></tt>
+
+</ul>
+
+<dt>on parameters<dd><ul>
+
+<li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
+<ul>
+<li><tt>in</tt>
+<li><tt>inout</tt> or <tt>in out</tt>
+<li><tt>out</tt>
+</ul>
+
+</ul>
+
+</dl>
+
+<p>You can only have one annotation section per documentation section,
+but multiple annotations are allowed (semicolon-separated).
+
+<h2><a name="extraction">Extraction of models from Rose</a></h2>
+
+<p>The Rose model is extracted to a raw "domain definition file" using
+a RoseScript script <tt>ddf.ebs</tt>. Eventually I'll work out how to
+run this script in a more friendly manner, but for the moment:
+
+<ul>
+
+<li>load the script into Rose, using <i>Tools/Open Script</i>
+
+<li>select the top-level logical package to be extracted in the model
+browser
+
+<li><i>run</i> the script.
+
+</ul>
+
+<p>The output is in a file named <tt><i>package-name</i>.raw</tt> (so
+it would be as well if <tt><i>package-name</i></tt> is a legal base
+file name! spaces may be a bad idea).
+
+<h2><a name="conversion">Conversion to standard form</a></h2>
+
+<h2><a name="generation">Generation of code</a></h2>
+
+<h2><a name="support">Specially written support components</a></h2>
+
+<h2><a name="containers">Generic container components</a></h2>
 
 <hr>
 <i>
