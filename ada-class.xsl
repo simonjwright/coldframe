@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e3ffd47bf6bb 2002/07/30 20:31:55 simon $ -->
+<!-- $Id: ada-class.xsl,v 0dc9ab6e626c 2002/08/17 16:29:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -348,7 +348,7 @@
                       or $ancestors/operation/parameter/type='Time'
                       or $ancestors/operation/@return='Time'">
           <xsl:text>with ColdFrame.Project.Calendar;</xsl:text>
-          <xsl:text> use ColdFrame.Project.Calendar;&#10;</xsl:text>
+          <xsl:text> use type ColdFrame.Project.Calendar.Time;&#10;</xsl:text>
         </xsl:if>
         
         <!-- Choose the appropriate Map (unless this is a singleton). -->
