@@ -337,10 +337,6 @@ coldframe-project-serialization.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
 
-coldframe-project-global_storage_pool.ads-standard: \
-  coldframe-project-global_storage_pool.ads
-	cp -p $< $@
-
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
 Examples.mdl
