@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ab239e4d0d94 2005/02/13 20:14:24 simon $
+# $Id: normalize-rose.tcl,v 6a24130faa1c 2005/02/18 06:21:26 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1521,7 +1521,7 @@ itcl::class Class {
                 puts -nonewline " access=\"$access\""
             }
 	    if $atomic {
-                puts -nonewline " atomic=\"true\""
+                Warning "type [$this -getName] can't be atomic"
 	    }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
@@ -1540,7 +1540,7 @@ itcl::class Class {
             }
             puts -nonewline " visibility=\"$visibility\""
 	    if $volatile {
-		puts -nonewline " volatile=\"true\""
+		Warning "type [$this -getName] can't be volatile"
 	    }
             puts ">"
             putElement name "$name"
@@ -2752,6 +2752,27 @@ itcl::class Datatype {
             }
             default {}
         }
+	switch $dataType {
+	    counterpart -
+	    real -
+	    string -
+	    imported -
+	    null -
+	    renames -
+	    implicit -
+	    standard -
+	    defined {
+		if $atomic {
+		    Warning "$datatype type [$this -getName] can't be atomic"
+		    set atomic 0
+		}
+		if $volatile {
+		    Warning "$datatype type [$this -getName] can't be volatile"
+		    set volatile 0
+		}
+	    }
+	    default {}
+	}
     }
 
     method -generate {domain} {
