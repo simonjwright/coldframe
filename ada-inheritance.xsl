@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v d75bb1801731 2003/05/17 17:42:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -481,7 +481,7 @@
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
 
-        <xsl:if test="count($rels/relation)&gt;1">
+        <xsl:if test="count($rels/relation/root-abbrev)&gt;1">
           
           <!-- We need to check that all the "root" handles are the same. -->
             
