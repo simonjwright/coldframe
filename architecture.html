@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 9e001e684358 2001/08/19 16:15:02 simon $ -->
+<!-- $Id: architecture.html,v 07c16f79b67f 2001/08/26 14:38:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -10,6 +10,8 @@ The first version of ColdFrame contains a single software
 architecture. This involves:
 
 <ul>
+
+<li><a href="#target">a target platform</a>,
 
 <li><a href="#strategy">a strategy</a>,
 
@@ -33,7 +35,13 @@ of the current architecture, together with <a
 href="coldframe-architecture.html">descriptions</a> of the classes
 involved.
 
-<h2><a name="strategy">Strategy</h2>
+<h2><a name="target">Target platform</a></h2>
+
+<p>The target is a memory-resident Ada software architecture (for
+example, a <a href="http://www.windriver.com/">VxWorks</a>-based
+controller).
+
+<h2><a name="strategy">Strategy</a></h2>
 
 <p>It's fundamental to the idea of ColdFrame that you don't need to
 build a design model by decorating your clean, beautiful analysis
@@ -65,7 +73,9 @@ Rose</a></h2>
 <p>It's not possible here to give a detailed tutorial on the
 Shlaer-Mellor approach. An excellent book is "How to Build
 Shlaer-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
-0-13-207663-2.
+0-13-207663-2. Note also that the full Shlaer-Mellor approach involves
+full translation of operation code as well as the generation of the
+framework which is all that ColdFrame attempts (this year).
 
 <p>Instances of a Class must be uniquely identifiable by some
 attribute or combination of attributes. For example, a Vehicle Excise
@@ -143,9 +153,9 @@ stereotype <em>&#171;type&#187;</em>.
 <p>Classes of which there is only ever one instance are marked with
 the stereotype <em>&#171;singleton&#187;</em>.
 
-<p>Interface classes, which are the only classes visible from outside
-the Domain, are marked with the stereotype
-<em>&#171;interface&#187;</em>. This implies the stereotype
+<p>Public classes, which are the only classes visible from outside the
+Domain, are marked with the stereotype
+<em>&#171;public&#187;</em>. This implies the stereotype
 <em>&#171;singleton&#187;</em>.
 
 <h4>Operations</h4>
@@ -182,8 +192,9 @@ domain's version control ID.
 <p>In Rose with CVS, you'd select the domain Package in the browser
 and add the line
 
+<!-- couldn't actually use the $ here! -->
 <pre>
-  [[ revision : $Id: architecture.html,v 9e001e684358 2001/08/19 16:15:02 simon $ ]]
+  [[ revision : &#36;Id&#36; ]]
 </pre>
 
 to the documentation pane. Modify as required by your version control
