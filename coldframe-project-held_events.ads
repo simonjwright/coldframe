@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.ads,v $
---  $Revision: 46be2c3cc0ff $
---  $Date: 2003/03/13 20:37:53 $
+--  $Revision: 853a89e85ecf $
+--  $Date: 2003/03/16 12:23:30 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -85,11 +85,12 @@ private
    is new Abstract_Ordered_Time_Collections.Unbounded
      (Storage => ColdFrame.Project.Global_Storage_Pool.Pool);
 
+   type Time_Queues is array (Times.Time_Kind) of Time_Collections.Collection;
+
    type Queue is limited record
       Started : Boolean := False;
       Duration_Queue : Duration_Collections.Collection;
-      Real_Time_Queue : Time_Collections.Collection;
-      Calendar_Queue : Time_Collections.Collection;
+      Queues : Time_Queues;
    end record;
 
 end ColdFrame.Project.Held_Events;

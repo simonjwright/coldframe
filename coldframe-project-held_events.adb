@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: 32c27bda109e $
---  $Date: 2003/03/15 19:58:31 $
+--  $Revision: 853a89e85ecf $
+--  $Date: 2003/03/16 12:23:30 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -21,69 +21,59 @@ package body ColdFrame.Project.Held_Events is
 
    function Is_Empty (Q : Queue) return Boolean is
    begin
-      return Time_Collections.Is_Empty (Q.Real_Time_Queue)
-        and then Time_Collections.Is_Empty (Q.Calendar_Queue);
+      for Kind in Q.Queues'Range loop
+         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+            return False;
+         end if;
+      end loop;
+      return True;
    end Is_Empty;
 
 
    function Next_Event_Time (Q : Queue) return Ada.Real_Time.Time is
+      Result : Ada.Real_Time.Time := Ada.Real_Time.Time_Last;
       use Time_Collections;
       use type Ada.Real_Time.Time;
    begin
-      pragma Assert
-        (not Is_Empty (Q.Real_Time_Queue)
-           or else not Is_Empty (Q.Calendar_Queue));
-      if Is_Empty (Q.Calendar_Queue) then
-         return Times.Equivalent (First (Q.Real_Time_Queue).Time_To_Fire);
-      elsif Is_Empty (Q.Real_Time_Queue) then
-         return Times.Equivalent (First (Q.Calendar_Queue).Time_To_Fire);
-      else
-         declare
-            A : constant Ada.Real_Time.Time :=
-              Times.Equivalent (First (Q.Calendar_Queue).Time_To_Fire);
-            R : constant Ada.Real_Time.Time :=
-              Times.Equivalent (First (Q.Real_Time_Queue).Time_To_Fire);
-         begin
-            if A < R then
-               return A;
-            else
-               return R;
-            end if;
-         end;
-      end if;
+      pragma Assert (not Is_Empty (Q));
+      for Kind in Q.Queues'Range loop
+         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+            declare
+               T : constant Ada.Real_Time.Time
+                 := Times.Equivalent (First (Q.Queues (Kind)).Time_To_Fire);
+            begin
+               if T < Result then
+                  Result := T;
+               end if;
+            end;
+         end if;
+      end loop;
+      return Result;
    end Next_Event_Time;
 
 
    procedure Pop (Q : in out Queue; The_Head_Event : out Events.Event_P) is
+      Earliest_Time : Ada.Real_Time.Time := Ada.Real_Time.Time_Last;
+      Earliest_Kind : Times.Time_Kind;
       use Time_Collections;
       use type Ada.Real_Time.Time;
    begin
-      pragma Assert (not Is_Empty (Q.Real_Time_Queue)
-           or else not Is_Empty (Q.Calendar_Queue));
-      if Is_Empty (Q.Calendar_Queue) then
-         The_Head_Event := First (Q.Real_Time_Queue).Event;
-         Remove (Q.Real_Time_Queue, 1);
-      elsif Is_Empty (Q.Real_Time_Queue) then
-         The_Head_Event := First (Q.Calendar_Queue).Event;
-         Remove (Q.Calendar_Queue, 1);
-      else
-         declare
-            AC : constant Time_Cell := First (Q.Calendar_Queue);
-            A : constant Ada.Real_Time.Time :=
-              Times.Equivalent (AC.Time_To_Fire);
-            RC : constant Time_Cell := First (Q.Real_Time_Queue);
-            R : constant Ada.Real_Time.Time :=
-              Times.Equivalent (RC.Time_To_Fire);
-         begin
-            if A < R then
-               The_Head_Event := AC.Event;
-               Remove (Q.Calendar_Queue, 1);
-            else
-               The_Head_Event := RC.Event;
-               Remove (Q.Real_Time_Queue, 1);
-            end if;
-         end;
-      end if;
+      pragma Assert (not Is_Empty (Q));
+      for Kind in Q.Queues'Range loop
+         if not Time_Collections.Is_Empty (Q.Queues (Kind)) then
+            declare
+               T : constant Ada.Real_Time.Time
+                 := Times.Equivalent (First (Q.Queues (Kind)).Time_To_Fire);
+            begin
+               if T < Earliest_Time then
+                  Earliest_Time := T;
+                  Earliest_Kind := Kind;
+               end if;
+            end;
+         end if;
+      end loop;
+      The_Head_Event := First (Q.Queues (Earliest_Kind)).Event;
+      Remove (Q.Queues (Earliest_Kind), 1);
    end Pop;
 
 
@@ -92,14 +82,8 @@ package body ColdFrame.Project.Held_Events is
                            On : in out Queue) is
       use Time_Collections;
    begin
-      case To_Run_At.Kind is
-         when Times.Calendar =>
-            Append (On.Calendar_Queue, Time_Cell'(Time_To_Fire => To_Run_At,
-                                                  Event => E));
-         when Times.Real_Time =>
-            Append (On.Real_Time_Queue, Time_Cell'(Time_To_Fire => To_Run_At,
-                                                   Event => E));
-      end case;
+      Append (On.Queues (To_Run_At.Kind), Time_Cell'(Time_To_Fire => To_Run_At,
+                                                     Event => E));
    end Add_At_Event;
 
 
@@ -150,10 +134,6 @@ package body ColdFrame.Project.Held_Events is
                                 For_The_Instance : Events.Instance_Base_P) is
       DI : Abstract_Duration_Containers.Iterator'Class
         := Duration_Collections.New_Iterator (On.Duration_Queue);
-      RI : Abstract_Time_Containers.Iterator'Class
-        := Time_Collections.New_Iterator (On.Real_Time_Queue);
-      AI : Abstract_Time_Containers.Iterator'Class
-        := Time_Collections.New_Iterator (On.Calendar_Queue);
       use Abstract_Duration_Containers;
       use Abstract_Time_Containers;
    begin
@@ -162,15 +142,15 @@ package body ColdFrame.Project.Held_Events is
                             If_For_Instance => For_The_Instance);
          Next (DI);
       end loop;
-      while not Is_Done (RI) loop
-         Events.Invalidate (Current_Item (RI).Event,
-                            If_For_Instance => For_The_Instance);
-         Next (RI);
-      end loop;
-      while not Is_Done (AI) loop
-         Events.Invalidate (Current_Item (AI).Event,
-                            If_For_Instance => For_The_Instance);
-         Next (AI);
+      for K in Times.Time_Kind loop
+         declare
+            KI : Abstract_Time_Containers.Iterator'Class
+              := Time_Collections.New_Iterator (On.Queues (K));
+         begin
+            Events.Invalidate (Current_Item (KI).Event,
+                               If_For_Instance => For_The_Instance);
+            Next (KI);
+         end;
       end loop;
    end Invalidate_Events;
 
@@ -178,15 +158,11 @@ package body ColdFrame.Project.Held_Events is
    procedure Tear_Down (Q : in out Queue) is
       DI : Abstract_Duration_Containers.Iterator'Class
         := Duration_Collections.New_Iterator (Q.Duration_Queue);
-      RI : Abstract_Time_Containers.Iterator'Class
-        := Time_Collections.New_Iterator (Q.Real_Time_Queue);
-      AI : Abstract_Time_Containers.Iterator'Class
-        := Time_Collections.New_Iterator (Q.Calendar_Queue);
-      use Abstract_Duration_Containers;
-      use Abstract_Time_Containers;
       procedure Delete
       is new Ada.Unchecked_Deallocation (Events.Event_Base'Class,
                                          Events.Event_P);
+      use Abstract_Duration_Containers;
+      use Abstract_Time_Containers;
    begin
       Q.Started := False;
       while not Is_Done (DI) loop
@@ -198,24 +174,22 @@ package body ColdFrame.Project.Held_Events is
          Next (DI);
       end loop;
       Duration_Collections.Clear (Q.Duration_Queue);
-      while not Is_Done (RI) loop
+      for K in Times.Time_Kind loop
          declare
-            E : Events.Event_P := Current_Item (RI).Event;
+            KI : Abstract_Time_Containers.Iterator'Class
+              := Time_Collections.New_Iterator (Q.Queues (K));
          begin
-            Delete (E);
+            while not Is_Done (KI) loop
+               declare
+                  E : Events.Event_P := Current_Item (KI).Event;
+               begin
+                  Delete (E);
+               end;
+               Next (KI);
+            end loop;
          end;
-         Next (RI);
+         Time_Collections.Clear (Q.Queues (K));
       end loop;
-      Time_Collections.Clear (Q.Real_Time_Queue);
-      while not Is_Done (AI) loop
-         declare
-            E : Events.Event_P := Current_Item (AI).Event;
-         begin
-            Delete (E);
-         end;
-         Next (AI);
-      end loop;
-      Time_Collections.Clear (Q.Calendar_Queue);
    end Tear_Down;
 
 
