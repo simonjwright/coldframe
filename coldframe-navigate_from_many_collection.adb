@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.adb,v d8c01c68ecb4 2001/04/27 19:06:14 simon $
+-- $Id: coldframe-navigate_from_many_collection.adb,v 492d29c34da0 2001/04/29 10:41:27 simon $
 
 with BC.Copy;
 
@@ -41,7 +41,7 @@ function Architecture.Navigate_From_Many_Collection (Input : From) return To is
   -- form.
   procedure Convert is new BC.Copy
      (Item => One_Handle,
-      Source => Intermediate,
+      Source => One,
       From => Set,
       Target => One,
       To => To,

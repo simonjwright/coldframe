@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.ads,v d8c01c68ecb4 2001/04/27 19:06:14 simon $
+-- $Id: coldframe-navigate_from_many_collection.ads,v 492d29c34da0 2001/04/29 10:41:27 simon $
 
 -- This package supports navigation of a many-to-one association from
 -- a set of instances of the 'many' end to the set of instances at the
@@ -36,7 +36,7 @@ generic
   -- The handle for the 'many' end of the association
 
   with package Many is new BC.Containers (Many_Handle);
-  -- The Collections package for the 'many' end of the association
+  -- The abstract Container package for the 'many' end of the association
 
   type From is new Many.Container with private;
   -- The Collection type for the 'many' end of the association
@@ -44,19 +44,16 @@ generic
   type One_Handle is private;
   -- The handle for the 'many' end of the association
 
-  with package Intermediate is new BC.Containers (One_Handle);
-  -- A package with 'set' functionality, to support intermediate
-  -- results
+  with package One is new BC.Containers (One_Handle);
+  -- The abstract Container package for the 'one' end of the
+  -- association
 
-  type Set is new Intermediate.Container with private;
+  type Set is new One.Container with private;
   -- To hold the set of results, ensuring uniqueness
 
   with procedure Add_To_Set
     (S : in out Set; I : One_Handle; Added : out Boolean);
   -- Operation to add a result to the intermediate result
-
-  with package One is new BC.Containers (One_Handle);
-  -- The Collections package for the 'one' end of the association
 
   type To is new One.Container with private;
   -- The Collection type for the 'one' end of the association
