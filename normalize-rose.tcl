@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e5c4b2c50cdb 2001/05/30 18:32:33 simon $
+# $Id: normalize-rose.tcl,v a0fd59569c0c 2001/06/02 16:49:58 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -721,6 +721,14 @@ itcl::class Class {
 	    if $isType {
 		# must be a record type
 		$this -handleAnnotation
+		set dts [[Domain::currentDomain] -getDatatypes]
+		if [$dts -isPresent $name] {
+		    set dt [$dts -atName $name]
+		} else {
+		    set dt [Datatype ::#auto $name]
+		    $dts -add $dt $name
+		}
+		$dt -record
 	    }
 	    [stack -top] -add $this $name
 	}
@@ -742,7 +750,7 @@ itcl::class Class {
 	    puts stderr "[$this -getName] has no identifier"
 	}
 	if $isType {
-	    puts -nonewline "<type record=\"yes\""
+	    puts -nonewline "<type"
 	    if [info exists callback] {
 		puts -nonewline " callback=\"$callback\""
 	    }
@@ -1429,6 +1437,9 @@ itcl::class Datatype {
 	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
     }
 
+    # called when the type is actually a record (a Class with isType set)
+    method -record {} {set dataType "record"}
+
     # called when the type is a set of instances of a class. cls
     # is the name of the class, which has not been normalized.
     method -set {cls} {
@@ -1454,6 +1465,7 @@ itcl::class Datatype {
     }
 
     method -generate {domain} {
+	if {$dataType == "record"} {return}
 	puts "<type>"
 	putElement name "$type"
 	$this -generateDocumentation
@@ -1648,9 +1660,11 @@ itcl::class Datatypes {
 	$this -add [Datatype ::#auto Autonumber] Autonumber
 	$this -add [Datatype ::#auto Boolean] Boolean
 	$this -add [Datatype ::#auto Date] Date
+	$this -add [Datatype ::#auto Float] Float
 	$this -add [Datatype ::#auto Integer] Integer
 	$this -add [Datatype ::#auto Real] Real
 	$this -add [Datatype ::#auto String] String
+	$this -add [Datatype ::#auto Time] Time
 	$this -add [Datatype ::#auto Unbounded_String] Unbounded_String
     }
 
