@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 8f13dbf59a4c 2000/03/26 09:08:00 simon $
+# $Id: ddf.tcl,v 253fdaa94914 2000/03/26 18:25:32 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -28,8 +28,6 @@ itcl::class Stack {
 	return $el
     }
 }
-
-Stack stack
 
 #######################
 # XML utility classes #
@@ -113,6 +111,8 @@ itcl::class Element {
 }
 
 itcl::class List {
+    # Lists are for containers constructed during the parse of the XML,
+    # where there may be many instances [OK, Simon, give an example!]
     inherit Base
     variable members {}
     method -add {elem} {lappend members $elem}
@@ -132,6 +132,8 @@ itcl::class List {
 }
 
 itcl::class Container {
+    # Containers are for singleton (per-Domain, per-Object) containment,
+    # particularly where members need to be revisited.
     # byName is indexed by name and holds the index number in byNumber
     # byNumber is indexed by number and holds the Content
     private variable byName
@@ -146,6 +148,7 @@ itcl::class Container {
 	error "[$this -className] -contentClass not overriden"
     }
     method -size {} {return [array size byName]}
+    method -add {name} {$this -index $name}
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
 	set newIndex [$this -size]
@@ -157,8 +160,21 @@ itcl::class Container {
 	if {$index < [$this -size]} {
 	    return $byNumber($index)
 	}
-	error "[$this -className] index $index out of range ([$this -size] entries)"
+	error "[$this -className] index $index out of range\
+		([$this -size] entries)"
     } 
+    method -complete {} {
+	stack -pop
+	[stack -top] -[$this -className] $this
+    }
+    method -report {} {
+	puts "[$this -className]"
+	set size [$this -size]
+	puts "$size"
+	for {set i 0} {$i < $size} {incr i 1} {
+	    [$this -atIndex $i] -report
+	}
+    }
     method -generate {domain} {
 	puts "[$this -className]"
 	set size [$this -size]
@@ -176,7 +192,6 @@ itcl::class Content {
 	error "[$this -className] -generate not overridden"
     }
 }
-
 
 ########################################
 # DDF classes for storing the XML info #
@@ -219,6 +234,7 @@ itcl::class Version {
 
 itcl::class Domain {
     inherit Element
+    private common currentDomain
     variable key
     variable number
     variable version
@@ -228,6 +244,13 @@ itcl::class Domain {
     variable typesfiles
     variable transitiontables
     variable terminators
+    proc currentDomain {} {return $currentDomain}
+    constructor {} {
+	set currentDomain $this
+	set objects [Objects ::#auto]
+	set relationships [Relationships ::#auto]
+	set datatypes [Datatypes ::#auto]
+    }
     method -stereotypePattern {} {
 	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
     }
@@ -237,22 +260,9 @@ itcl::class Domain {
     method -objects {l} {set objects $l}
     method -relationships {l} {set relationships $l}
     method -datatypes {l} {set datatypes $l}
-    method -getDatatypes {} {
-	if [expr ! [info exists datatypes]] {
-	    # XXX I don't understand _when_ it's necessary to put the name
-	    # in the global scope. ?? these aren't Elements
-	    set datatypes [Datatypes ::#auto]
-	}
-	return $datatypes
-    }
-    method -getRelationships {} {
-	if [expr ! [info exists relationships]] {
-	    # XXX I don't understand _when_ it's necessary to put the name
-	    # in the global scope. ?? these aren't Elements
-	    set relationships [Relationships ::#auto]
-	}
-	return $relationships
-    }
+    method -getObjects {} {return $objects}
+    method -getRelationships {} {return $relationships}
+    method -getDatatypes {} {return $datatypes}
     method -typesfiles {l} {set typesfiles $l}
     method -transitiontables {l} {set transitiontables $l}
     method -terminators {l} {set terminators $l}
@@ -310,7 +320,8 @@ itcl::class Object {
 	puts "$key"
 	puts "$number"
 	# objectrelations
-	$objectrelations -generate $domain
+	#$objectrelations -generate $domain
+	puts 0
 	# withs
 	puts 0
 	# stt index
@@ -502,6 +513,7 @@ itcl::class Attributes {
 # Convert XML tag name to element of appropriate type
 
 proc elementFactory {tag} {
+    # XXX should this perhaps be an operation of Domain?
     switch $tag {
 	name              {return [Name #auto]}
 	type              {return [Type #auto]}
@@ -510,11 +522,11 @@ proc elementFactory {tag} {
 	number            {return [Number #auto]}
 	version           {return [Version #auto]}
 	domain            {return [Domain #auto]}
-	objects           {return [Objects #auto]}
+	objects           {return [[Domain::currentDomain] -getObjects]}
 	object            {return [Object #auto]}
-	relationships     {return [Relationships #auto]}
+	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	relationship      {return [Relationship #auto]}
-	datatypes         {return [Datatypes #auto]}
+	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
 	datatype          {return [Datatype #auto]}
 	typesfiles        {return [Typesfiles #auto]}
 	typesfile         {return [Typesfile #auto]}
@@ -558,7 +570,15 @@ proc endTag {tag} {
     [stack -top] -complete
 }
 
-# Main program
+###########
+# Globals #
+###########
+
+Stack stack
+
+################
+# Main program #
+################
 
 set parser [xml::parser]
 $parser configure \
