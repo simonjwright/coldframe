@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d50183a491fb 2001/04/27 19:00:12 simon $
+# $Id: normalize-rose.tcl,v c66b7313371a 2001/04/29 10:37:07 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -629,10 +629,11 @@ itcl::class Class {
     # this is the source of the formalization
     # obj is the class which holds the formalizing attribute(s)
     # relation is the relationship to be formalized
+    # role is the role that this (XXX???) plays
     # identifier is true if the formalizing attribute(s) are to
     #   be part of obj's identifier
-    method -addFormalizingAttributesTo {obj relation identifier} {
-	set attr [ReferentialAttribute ::#auto $this $relation $identifier]
+    method -addFormalizingAttributesTo {obj relation role identifier} {
+	set attr [ReferentialAttribute ::#auto $this $relation $role $identifier]
 	$obj -addReferentialAttribute $attr
     }
 
@@ -853,19 +854,19 @@ itcl::class Association {
 		    if [$role1 -getSourceEnd] {
 			error "both ends of $name are marked as source"
 		    }
-		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
+		    $cl2 -addFormalizingAttributesTo $cl1 $this $role2 0
 		} elseif [$role1 -getSourceEnd] {
-		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
+		    $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
 			error "neither end of biconditional $name\
 				is marked as source"
 		    }
 		    $role2 -setSourceEnd 1
-		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
+		    $cl2 -addFormalizingAttributesTo $cl1 $this $role2 0
 		} elseif [$role2 -getConditionality] {
 		    $role1 -setSourceEnd 1
-		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
+		    $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 		} else {
 		    error "neither end of unconditional $name\
 			    is marked as source"
@@ -876,7 +877,7 @@ itcl::class Association {
 		# referential attributes in role 2
 		$role1 -setSourceEnd 1
 		$role2 -setSourceEnd 0
-		$cl1 -addFormalizingAttributesTo $cl2 $this 0
+		$cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 	    }
 	    "1-(1:1)" {error "CF: oops! 1-(1:1) not yet implemented!"}
 	    "1-(1:M)" {
@@ -886,8 +887,8 @@ itcl::class Association {
 		# identifiers in the associative class.
 		$role1 -setSourceEnd 1
 		$role2 -setSourceEnd 1
-		$cl1 -addFormalizingAttributesTo $assoc $this 0
-		$cl2 -addFormalizingAttributesTo $assoc $this 1
+		$cl1 -addFormalizingAttributesTo $assoc $this $role1 0
+		$cl2 -addFormalizingAttributesTo $assoc $this $role2 1
 	    }
 	    "1-(M:M)" {
 		# The identifying attributes in both roles are used as
@@ -895,8 +896,8 @@ itcl::class Association {
 		# class.
 		$role1 -setSourceEnd 1
 		$role2 -setSourceEnd 1
-		$cl1 -addFormalizingAttributesTo $assoc $this 1
-		$cl2 -addFormalizingAttributesTo $assoc $this 1
+		$cl1 -addFormalizingAttributesTo $assoc $this $role1 1
+		$cl2 -addFormalizingAttributesTo $assoc $this $role2 1
 	    }
 	}
     }
@@ -1051,12 +1052,12 @@ itcl::class Inheritance {
 	$this -formalized
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
-	    $p -addFormalizingAttributesTo $c $this 1
 	    set role [Role ::#auto]
 	    $role -owner $this
 	    $role -end 4
-	    $role -name "is supertype of"
+	    $role -name "Child_Of"
 	    $role -classname $ch
+	    $p -addFormalizingAttributesTo $c $this $role 1
 	}
     }
 
@@ -1244,8 +1245,8 @@ itcl::class Attribute {
     # non-identifying referential attribute
     variable formalizedAssociation
 
-    # used via stereotype processing to indicate that this attribute
-    # formalizes an association
+    # used via stereotype processing to indicate that this analyst-defined
+    # attribute formalizes an association
     method -formalizes {assoc} {
 	set formalizedAssociation [normalize $assoc]
     }
@@ -1292,18 +1293,22 @@ itcl::class ReferentialAttribute {
     # holds the source class
     variable source
 
+    # holds the role
+    variable role
+
     # true if the attribute is to form part of the owning class'
     # identifier
     variable identifier
 
-    constructor {src rel id} {
+    constructor {src rel rol id} {
 	set source $src
 	set relation $rel
+	set role $rol
 	set identifier $id
     }
 
     method -getName {} {
-	return "[$relation -getName].[$source -getName]"
+	return "[$relation -getName].[$role -getName].[$source -getName]"
     }
 
     method -getIdentifier {} {return $identifier}
@@ -1312,6 +1317,7 @@ itcl::class ReferentialAttribute {
 	puts -nonewline "<attribute"
 	puts -nonewline " refers=\"[$source -getName]\""
 	puts -nonewline " relation=\"[$relation -getName]\""
+	puts -nonewline " role=\"[$role -getName]\""
 	if $identifier {puts -nonewline " identifier=\"yes\""}
 	puts "/>"
     }
@@ -1346,8 +1352,9 @@ itcl::class Datatypes {
     constructor {} {
 	# insert standard (provided) types.
 	$this -add [Datatype ::#auto Boolean] Boolean
-	$this -add [Datatype ::#auto Real] Real
+	$this -add [Datatype ::#auto Date] Date
 	$this -add [Datatype ::#auto Integer] Integer
+	$this -add [Datatype ::#auto Real] Real
 	$this -add [Datatype ::#auto String] String
 	$this -add [Datatype ::#auto Unbounded_String] Unbounded_String
     }
