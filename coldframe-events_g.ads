@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: bd96cd3c1539 $
---  $Date: 2003/01/19 18:27:17 $
+--  $Revision: e28fe27f4166 $
+--  $Date: 2003/03/09 16:00:36 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -72,10 +72,16 @@ package ColdFrame.Events_G is
    --  Concrete Events implement this to perform the required
    --  processing.
 
+   procedure Invalidate (The_Event : access Event_Base;
+                         If_For_Instance : Instance_Base_P);
+
    type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
    is abstract new Event_Base with private;
    --  All Instance Events are derived from this type. For_The_Instance
    --  is the instance to which the event is directed.
+
+   procedure Invalidate (The_Event : access Instance_Event_Base;
+                         If_For_Instance : Instance_Base_P);
 
 
    ---------------------
@@ -287,7 +293,6 @@ private
       Instance_Deleted : Boolean := False;
    end record;
 
-
    type Event_Queue_Base (Start_Started : Boolean)
    is abstract tagged limited record
       --  Attributes to manage teardown, particularly for queues
@@ -376,12 +381,8 @@ private
    procedure Handler (This : Timer_Event);
 
 
-   type Timer_Queue_Entry_P is access Timer_Event;
-   for Timer_Queue_Entry_P'Storage_Pool use Event_Storage;
-
-
    type Timer is limited record
-      The_Entry : Timer_Queue_Entry_P;
+      The_Entry : Event_P;   -- needs to be a Timer_Event
    end record;
 
 

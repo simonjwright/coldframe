@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: bd96cd3c1539 $
---  $Date: 2003/01/19 18:27:17 $
+--  $Revision: e28fe27f4166 $
+--  $Date: 2003/03/09 16:00:36 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -81,10 +81,10 @@ package body ColdFrame.Events_G is
 
          --  The Timer is set. Tell the timer event that the timer has
          --  been deleted.
-         The_Timer.The_Entry.The_Timer := null;
+         Timer_Event (The_Timer.The_Entry.all).The_Timer := null;
 
          --  Invalidate the held event.
-         The_Timer.The_Entry.The_Event.Invalidated := True;
+         Timer_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
 
       end if;
    end Finalize;
@@ -130,6 +130,24 @@ package body ColdFrame.Events_G is
          For_The_Event.Instance_Deleted := True;
       end if;
    end Instance_Is_Deleted;
+
+
+   procedure Invalidate (The_Event : access Event_Base;
+                         If_For_Instance : Instance_Base_P) is
+      pragma Warnings (Off, The_Event);
+      pragma Warnings (Off, If_For_Instance);
+   begin
+      null;
+   end Invalidate;
+
+
+   procedure Invalidate (The_Event : access Instance_Event_Base;
+                         If_For_Instance : Instance_Base_P) is
+   begin
+      if Instance_Base_P (The_Event.For_The_Instance) = If_For_Instance then
+         The_Event.Invalidated := True;
+      end if;
+   end Invalidate;
 
 
    procedure Invalidate_Events
