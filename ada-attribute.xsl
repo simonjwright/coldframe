@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 567f241cd13b 2002/11/11 06:04:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -138,24 +138,36 @@
     match="class/attribute[not(@class)]"
     mode="attribute-get-spec">
 
-    <xsl:if test="@refers or $generate-accessors='yes'">
+    <xsl:choose>
+      
+      <xsl:when test="@refers">
 
-      <!-- Get function, with comment for generated associative referential
-           attributes -->
+        <!-- We need to avoid generating an accessor that the user has
+             specified (only likely to occur for [[formalizes]]
+             attributes). -->
 
-      <xsl:if test="@refers">
-        <xsl:variable name="rel" select="@relation"/>
-        <xsl:if test="/domain/association/name=$rel and not(name)">
+        <xsl:variable name="operation-name">
+          <xsl:text>Get_</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+        </xsl:variable>
+
+        <xsl:if test="not(../operation[name=$operation-name])">
           <xsl:value-of select="$I"/>
           <xsl:text>--  Private use only&#10;</xsl:text>
+          <xsl:call-template name="attribute-get-header"/>
+          <xsl:text>;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>         
         </xsl:if>
-      </xsl:if>
+        
+      </xsl:when>
+      
+      <xsl:when test="$generate-accessors='yes'">
+        <xsl:call-template name="attribute-get-header"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>        
+      </xsl:when>
 
-      <xsl:call-template name="attribute-get-header"/>
-      <xsl:text>;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
-
-    </xsl:if>
+    </xsl:choose>
 
   </xsl:template>
 
@@ -249,27 +261,50 @@
     match="class/attribute[not(@class)]"
     mode="attribute-get-body">
 
-    <xsl:if test="@refers or $generate-accessors='yes'">
+    <xsl:choose>
+      
+      <xsl:when test="@refers">
 
-      <xsl:call-template name="attribute-get-header"/>
-      <xsl:text> is&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>begin&#10;</xsl:text>
-      <xsl:value-of select="$II"/>
-      <xsl:text>return This.</xsl:text>
-      <xsl:call-template name="attribute-name"/>
-      <xsl:text>;&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>end Get_</xsl:text>
-      <xsl:call-template name="attribute-name"/>
-      <xsl:text>;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
+        <!-- We need to avoid generating an accessor that the user has
+             specified (only likely to occur for [[formalizes]]
+             attributes). -->
 
-    </xsl:if>
+        <xsl:variable name="operation-name">
+          <xsl:text>Get_</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+        </xsl:variable>
+
+        <xsl:if test="not(../operation[name=$operation-name])">
+          <xsl:call-template name="attribute-get-body"/>
+        </xsl:if>
+        
+      </xsl:when>
+      
+      <xsl:when test="$generate-accessors='yes'">
+        <xsl:call-template name="attribute-get-body"/>
+      </xsl:when>
+
+    </xsl:choose>
 
   </xsl:template>
 
   <xsl:template mode="attribute-get-body" match="*"/>
+
+  <xsl:template name="attribute-get-body">
+    <xsl:call-template name="attribute-get-header"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>return This.</xsl:text>
+    <xsl:call-template name="attribute-name"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end Get_</xsl:text>
+    <xsl:call-template name="attribute-name"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
 
 
   <!-- Called from domain/class to generate set bodies (non-
