@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
+<!-- $Id: ada-class.xsl,v 5be8fb9e0f2d 2004/09/11 11:34:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1503,8 +1503,8 @@
       <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Finalize any Timers. -->
-    <xsl:for-each select="attribute[type='Timer']">
+    <!-- Finalize any instance Timers. -->
+    <xsl:for-each select="attribute[type='Timer' and not(@class)]">
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
       <xsl:value-of select="name"/>
@@ -1596,8 +1596,8 @@
       <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Finalize any Timers. -->
-    <xsl:for-each select="attribute[type='Timer']">
+    <!-- Finalize any instance Timers. -->
+    <xsl:for-each select="attribute[type='Timer' and not(@class)]">
       <xsl:value-of select="$II"/>
       <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
       <xsl:value-of select="name"/>
