@@ -11,7 +11,7 @@
     documentation 	
 |Classes for ColdFrame performance tests.
 |
-|{ revision = $Revision: 38960f8e0d9a $ }
+|{ revision = $Revision: ce0d17cf9d12 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -158,7 +158,7 @@
 	    documentation 	
 |Classes for ColdFrame performance tests.
 |
-|{ revision = $Revision: 38960f8e0d9a $ }
+|{ revision = $Revision: ce0d17cf9d12 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -203,7 +203,7 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB8B0079"
 		    width      	184
-		    height     166
+		    height     166
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Pets" @2
@@ -905,4 +905,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1545
-		    label      	"$Id: Performance.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")))))
+		    label      	"$Id: Performance.cat,v ce0d17cf9d12 2004/11/11 15:00:54 simon $")))))
