@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.ads,v $
---  $Revision: ee76e810d3cc $
---  $Date: 2003/07/24 19:28:43 $
+--  $Revision: a4e3f0019f4b $
+--  $Date: 2003/07/24 19:33:42 $
 --  $Author: simon $
 
 with System.Pool_Size;
@@ -48,7 +48,7 @@ package ColdFrame.Project.Bounded_Storage_Pools is
       Seized : Boolean := False;
    end Mutex;
 
-   type Fixed_Pool
+   type Bounded_Pool
      (Pool_Size : System.Storage_Elements.Storage_Count;
       Elmt_Size : System.Storage_Elements.Storage_Count;
       Alignment : System.Storage_Elements.Storage_Count)
@@ -61,19 +61,19 @@ package ColdFrame.Project.Bounded_Storage_Pools is
    end record;
 
    procedure Allocate
-     (Pool         : in out Fixed_Pool;
+     (Pool         : in out Bounded_Pool;
       Address      : out System.Address;
       Storage_Size : System.Storage_Elements.Storage_Count;
       Alignment    : System.Storage_Elements.Storage_Count);
 
    procedure Deallocate
-     (Pool         : in out Fixed_Pool;
+     (Pool         : in out Bounded_Pool;
       Address      : System.Address;
       Storage_Size : System.Storage_Elements.Storage_Count;
       Alignment    : System.Storage_Elements.Storage_Count);
 
    function Storage_Size
-     (Pool : Fixed_Pool)
+     (Pool : Bounded_Pool)
      return System.Storage_Elements.Storage_Count;
 
 end ColdFrame.Project.Bounded_Storage_Pools;

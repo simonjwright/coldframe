@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: ee76e810d3cc $
---  $Date: 2003/07/24 19:28:43 $
+--  $Revision: a4e3f0019f4b $
+--  $Date: 2003/07/24 19:33:42 $
 --  $Author: simon $
 
 package body ColdFrame.Project.Bounded_Storage_Pools is
@@ -52,7 +52,7 @@ package body ColdFrame.Project.Bounded_Storage_Pools is
 
 
    procedure Allocate
-     (Pool         : in out Fixed_Pool;
+     (Pool         : in out Bounded_Pool;
       Address      : out System.Address;
       Storage_Size : System.Storage_Elements.Storage_Count;
       Alignment    : System.Storage_Elements.Storage_Count) is
@@ -108,7 +108,7 @@ package body ColdFrame.Project.Bounded_Storage_Pools is
 
 
    procedure Deallocate
-     (Pool         : in out Fixed_Pool;
+     (Pool         : in out Bounded_Pool;
       Address      : System.Address;
       Storage_Size : System.Storage_Elements.Storage_Count;
       Alignment    : System.Storage_Elements.Storage_Count) is
@@ -136,7 +136,7 @@ package body ColdFrame.Project.Bounded_Storage_Pools is
 
 
    function Storage_Size
-     (Pool : Fixed_Pool)
+     (Pool : Bounded_Pool)
      return System.Storage_Elements.Storage_Count is
    begin
       return System.Pool_Size.Storage_Size
