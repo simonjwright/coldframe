@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 0f2606b3eb2b 2003/09/11 19:56:02 simon $ -->
+<!-- $Id: bugs.html,v 147958c8fe0b 2003/09/13 16:47:14 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -185,17 +185,25 @@ existence of the action to imply the operation?
 
 <dd>Would it be possible to specify that operations should be inlined?
 
-
-<dt>0199 (raised 11.ix.03)
-
-<dd>Documentation on &#171;protected&#187; types isn't carried through
-into comments on the generated code.
-
-<!-- next: 0200 -->
+<!-- next: 0201 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.ix.03</h3>
+
+<dl>
+
+<dt>0200 (raised 12.ix.03)
+
+<dd>If you don't need an event queue, you don't need to edit
+<tt><i>Domain</i>.Events.Initialize</tt>.
+<br><i>Normally you'd supply <tt><i>Domain</i>.Initialize</tt> or
+<tt>.Cascade_Initialize</tt> with an event queue; you only need to
+implement <tt>Events.Initialize</tt> for unit test.</i>
+
+</dl>
 
 <h3>6.ix.03</h3>
 
@@ -1626,6 +1634,19 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>13.ix.03</h3>
+
+<dl>
+
+<dt>0199 (raised 11.ix.03)
+
+<dd>Documentation on &#171;protected&#187; types isn't carried through
+into comments on the generated code.
+
+<br><i>Already done.</i>
+
+</dl>
 
 <h3>30.vii.03</h3>
 
