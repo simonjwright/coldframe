@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 29b642712ce1 2003/01/19 19:40:28 simon $ -->
+<!-- $Id: releases.html,v 2b638811081f 2003/02/02 19:09:01 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -38,9 +38,9 @@ be looking at classes rather than types for your own work.)</i>
 
 
 <p>The <tt>[[convention]]</tt> annotation allows you to specify the
-programming language calling convention that an operation is to use.
-<br><i>For Ada, this translates to
-<tt>pragma&nbsp;Convention</tt>.</i>
+programming language calling convention that an operation will be
+called with.
+<br><i>For Ada, this translates to <tt>pragma&nbsp;Convention</tt>.</i>
 
 
 <p>If an association has an associative class, a <tt>Find</tt>
@@ -48,6 +48,15 @@ operation is generated in <tt><i>Domain.Association</i></tt> which,
 given the handles of two potentially associated instances, returns the
 corresponding associative instance's handle (or <tt>null</tt>, of
 course).
+
+
+<p>Callbacks are now unbounded (you can continue to specify a "maximum
+number of obervers", but it will not be used).
+
+
+<p>The <tt>[[serializable]]</tt> annotation allows you to specify
+support for transmitting values of a (record) type via some external
+medium -- perhaps to record binary data for future analysis.
 
 
 <p><dt>20030107a
@@ -72,8 +81,7 @@ should) delete the instance - unless of course it's a defunct
 <p>If you want to make a class visible for unit test support, mark it
 &#171;visible-for-test&#187;.
 
-<br>This should be reserved for unusual cases (typically, unit test
-variants of device support domains).
+<br>This should be reserved for unusual cases (typically, unit testvariants of device support domains).
 
 
 <p>Added <tt>ColdFrame.Interrupts</tt> for interrupt support.
@@ -87,7 +95,7 @@ more case exception files. If there's more than one, the separator is
 ; on Windows, : on Unix.
 
 
-<p><tt>[[ counterpart ]]</tt> &#171;type&#187;s are implemented as
+<p><tt>[[counterpart]]</tt> &#171;type&#187;s are implemented as
 renamings (subtypings) of <tt>ColdFrame.Instances.Handle</tt>.
 
 
