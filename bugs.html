@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ba1977d71a7b 2002/12/01 12:11:27 simon $ -->
+<!-- $Id: bugs.html,v 6167e65171d2 2002/12/03 21:21:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -132,11 +132,6 @@ the Path Map) doesn't exist.
 <dd>It should be possible to declare &#171;type&#187;s "private" (this
 would only make sense if they have operations, I suppose).
 
-<dt>0094 (raised 24.vi.02)
-
-<dd>It's not possible to have automatically-generated accessors for
-class variables.
-
 <dt>0105 (raised 23.vii.02)
 
 <dd>If an enumeration type is imported or renamed, the enumeration
@@ -172,16 +167,34 @@ transitions" (UML 1.3, section 2.12).
 &#171;class&nbsp;event&#187; without a payload, which can't actually
 be specified in a model.
 
+<dt>0139 (raised 2.xii.02)
 
-<!-- next: 0139 -->
+<dd>If an event queue is designated by more than one domain, the
+tear-down unit test support won't work properly.
+
+<dt>0140 (raised 3.xii.02)
+
+<dd>If a &#171;type&#187; has an attribute of type
+<tt>Counterpart</tt>, the necessary
+<tt>with&nbsp;Coldframe.Instances;</tt> isn't generated.
+
+<!-- next: 0141 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>1.xii.02</h3>
+<h3>3.xii.02</h3>
 
 <dl>
+
+<dt>0094 (raised 24.vi.02)
+
+<dd>It's not possible to have automatically-generated accessors for
+class variables.
+<br>Bodies of &#171;class&#187; operations which match an accessor
+profile will be automatically generated for a &#171;class&#187;
+variable.
 
 <dt>0137 (raised 26.xi.02)
 
@@ -189,7 +202,7 @@ be specified in a model.
 
 <dt>0138 (raised 28.xi.02)
 
-<dd>Callback packages aren't marked "do not eidt".
+<dd>Callback packages aren't marked "do not edit".
 
 </dl>
 
