@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 2cb912401013 2004/07/01 21:23:55 simon $ -->
+<!-- $Id: bugs.html,v 66920bde96a1 2004/07/03 15:09:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -27,12 +27,6 @@
 <dd>It would be helpful if an association class could be automatically
 generated for many-to-many associations where the analyst hasn't
 provided one already.
-
-<dt>0019 (raised 4.ix.01)
-
-<dd>It would be good to support private operations.
-<br><i>Private operations of classes are implemented as
-<tt>private</tt> subprograms.</i>
 
 <dt>0035 (raised 1.xi.01)
 
@@ -94,11 +88,6 @@ by marking the attribute concerned? (perhaps by a stereotype).
 <dd>The error of making an Association with a &#171;type&#187; should
 be detected (instead of generating bad code).
 
-<dt>0177 (raised 26.vi.03)
-
-<dd>It would be helpful for ColdFrame to recognize "class utilities"
-(classes which have no instances).
-
 <dt>0178 (raised 1.vii.03)
 
 <dd>There's no way for ColdFrame to inform the application that an
@@ -154,12 +143,6 @@ compilation errors in generated code.
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
 
-<dt>0222 (raised 3.xii.03)
-
-<dd>Active class instances are torn down after the domain event queue,
-which may cause <tt>Tasking_Error</tt> if the active instance tries
-(for example) to post an event.
-
 <dt>0227 (raised 23.i.04)
 
 <dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
@@ -213,12 +196,6 @@ href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a>.</i>
 <dd>There is no check that associations' multiplicities have been
 maintained.
 
-<dt>0269 (raised 17.vi.04)
-
-<dd>Some of the <i>Event Test</i> tests have slightly too tight time
-limits, so that tests can fail the first time they're run.
-<br><i>This may be because the tests use a tracing Event Queue.</i>
-
 <dt>0271 (raised 30.vi.04)
 
 <dd>It would be helpful to have an <tt>Epoch</tt> value in
@@ -229,6 +206,34 @@ limits, so that tests can fail the first time they're run.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.vii.04</h3>
+
+<dl>
+
+<dt>0019 (raised 4.ix.01)
+
+<dd>It would be good to support private operations.
+<br><i>Private operations of classes and protected types are
+implemented as <tt>private</tt> subprograms.</i>
+
+<dt>0177 (raised 26.vi.03)
+
+<dd>It would be helpful for ColdFrame to recognize "class utilities"
+(classes which have no instances).
+
+<dt>0222 (raised 3.xii.03)
+
+<dd>Active class instances are torn down after the domain event queue,
+which may cause <tt>Tasking_Error</tt> if the active instance tries
+(for example) to post an event.
+
+<dt>0269 (raised 17.vi.04)
+
+<dd>Some of the <i>Event Test</i> tests have slightly too tight time
+limits, so that tests can fail the first time they're run.
+
+</dl>
 
 <h3>30.vi.04</h3>
 

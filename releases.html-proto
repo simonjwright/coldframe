@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0c11f2b2a90a 2004/07/03 10:29:38 simon $ -->
+<!-- $Id: releases.html-proto,v 66920bde96a1 2004/07/03 15:09:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -25,7 +25,8 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 <dd>For this release, it's necessary to re-extract all Domains from
 the model.
 
-<dd>Action routines can be inherited from the parent.
+
+<p>Action routines can be inherited from the parent.
 
 
 <p>ColdFrame checks that operations corresponding to actions actually
