@@ -23,13 +23,13 @@ else
   CHOP_VERBOSE = -q
 endif
 
-TOP = /usr/local
+TOP = /usr/local/lib
 
 CF = $(TOP)/cf-DATE
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
-TCLXML = ~/tclxml-2.1theta
+TCLXML = $(TOP)/tclxml-2.1theta
 
 SAXON = java com.icl.saxon.StyleSheet
 
