@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 050d102e11a1 2004/06/24 04:56:11 simon $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 307c94aceb44 2004/07/23 03:11:44 simon $ -->
 
 <!-- 
 
@@ -14,9 +14,9 @@
 
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http:/www.pushface.org/coldframe/ColdFrame"
-  xmlns:cf="http:/www.pushface.org/coldframe/ColdFrame"
-  xmlns="http:/www.pushface.org/coldframe/ColdFrame">
+  targetNamespace="http://pushface.org/coldframe/ColdFrame"
+  xmlns:cf="http://pushface.org/coldframe/ColdFrame"
+  xmlns="http://pushface.org/coldframe/ColdFrame">
 
   <!--
        I don't know why we have to have a default namespace here!
