@@ -3,9 +3,9 @@
 <name>Event Test</name>
 <date>
 <year>2002</year>
-<month>8</month>
-<day>19</day>
-<time>14:54</time>
+<month>9</month>
+<day>10</day>
+<time>16:47</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -73,6 +73,36 @@
 </parameter>
 </parameters>
 </operation>
+<operation>
+<name>handle self</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>p</name>
+<documentation></documentation>
+<type>Content</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>handle mark</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>p</name>
+<documentation></documentation>
+<type>Content</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>send done</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 <event stereotype="class event">
@@ -83,7 +113,94 @@
 <name>Wait</name>
 <type>Waiting</type>
 </event>
+<event stereotype="instance event">
+<name>Self</name>
+<type>Content</type>
+</event>
+<event stereotype="instance event">
+<name>Mark</name>
+<type>Content</type>
+</event>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>idle</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>handling self</name>
+<entryactions>
+<action>
+<name>handle self</name>
+</action>
+<action>
+<name>send done</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>handling mark</name>
+<entryactions>
+<action>
+<name>handle mark</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>handling self</target>
+<event>
+<name>self</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>handling mark</target>
+<event>
+<name>mark</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>handling self</source>
+<target>idle</target>
+<event>
+<name>done</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>handling mark</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
 <class stereotype="type">
 <name>Content</name>
