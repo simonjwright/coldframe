@@ -1,6 +1,8 @@
 # Copyright (c) 2001 Simon Wright <simon@pushface.org>
 # $Id$
 
+GENERATE_ACCESSORS = yes
+
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
 TCLXML = $(HOME)/TclXML-1.2
@@ -29,7 +31,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
-	$(SAXON) $< $(CODEGEN_SCRIPT) generate-accessors=yes >$@ \
+	$(SAXON) $< $(CODEGEN_SCRIPT) \
+	  generate-accessors=$(GENERATE_ACCESSORS) >$@ \
 	  || (echo "Generation problem." && rm -f $@)
 
 %.gen: %.ada
