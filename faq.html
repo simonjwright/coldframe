@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v 33e4b4114965 2002/01/20 10:41:42 simon $ -->
+<!-- $Id: faq.html,v 7bb8abbaad39 2002/07/11 05:15:38 simon $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 </head>
@@ -120,7 +120,20 @@ class "List" (<i>Threat List</i>, for instance).
 
 <h2><a name="role-names">I don't understand about role names.</a></h2>
 
-<p><i>Watch this space ...</i>
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing.
+
+<p>There are <a href="associations.html#use">notes on usage</a>.
 
 <h2><a name="unlink">Why do some <tt><i>Association</i>.Unlink</tt>
 operations do nothing?</a></h2>
