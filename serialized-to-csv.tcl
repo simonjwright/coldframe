@@ -2,7 +2,7 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: serialized-to-csv.tcl,v f4deb6c95ab6 2004/01/12 12:34:19 simon $
+# $Id: serialized-to-csv.tcl,v 243967d6b136 2004/01/12 12:52:11 simon $
 
 # Converts a document containing mixed serialization output from
 # ColdFrame to comma-separated-variable files, one file per record
@@ -32,17 +32,23 @@ package require xml
 #######################
 
 proc startTag {tag attrs} {
-    global files currentFile item
+    global files currentFile firstLine itemNo item names
     switch $tag {
         record  {
             array set attr $attrs
             set file $attr(name).csv
             if [expr ![info exists files($file)]] {
+                set firstLine 1
                 set files($file) [open $file w]
+            } else {
+                set firstLine 0
             }
             set currentFile $files($file)
+            set itemNo 1
         }
         field {
+            array set attr $attrs
+            set names($itemNo) $attr(name)
             set item ""
         }
         default {}
@@ -55,12 +61,22 @@ proc textInTag {str} {
 }
 
 proc endTag {tag} {
-    global currentFile item
+    global currentFile firstLine item itemNo items names
     switch $tag {
         field {
-            puts -nonewline $currentFile "$item,"
+            set items($itemNo) $item
+            incr itemNo
         }
         record {
+            if $firstLine {
+                for {set i 1} {$i < $itemNo} {incr i} {
+                    puts -nonewline $currentFile "$names($i),"
+                }
+                puts $currentFile ""
+            }
+            for {set i 1} {$i < $itemNo} {incr i} {
+               puts -nonewline $currentFile "$items($i),"
+            }
             puts $currentFile ""
         }
         default {}
@@ -71,6 +87,7 @@ proc endTag {tag} {
 # Globals #
 ###########
 
+set firstLine 0
 set item ""
 set stackDump 1
 
