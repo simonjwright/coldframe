@@ -7,5 +7,6 @@ b~*.ad[bs]
 use-cases.html coldframe-architecture.html coldframe-architecture.pdf
 Problem_Reporting.gen Problem_Reporting.doc
 Weapon_Assignment.gen Weapon_Assignment.doc
+dist
 Makefile-cf
 
