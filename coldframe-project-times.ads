@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.ads,v $
---  $Revision: b720f64f3037 $
---  $Date: 2002/09/28 17:13:37 $
+--  $Revision: 1e73dc739464 $
+--  $Date: 2003/03/09 16:03:09 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -19,21 +19,29 @@ with Ada.Real_Time;
 
 package ColdFrame.Project.Times is
 
-   type Time is private;
+   type Time_Kind is (Calendar, Real_Time);
+
+   type Time (Kind : Time_Kind := Calendar) is private;
+
+   --  Creation operations
 
    function Create (From_Time : Ada.Calendar.Time) return Time;
 
    function Create (From_Time : Ada.Real_Time.Time) return Time;
 
-   function Equivalent (Of_Time : Time) return Ada.Real_Time.Time;
+   --  Operations to support Time_Signature
 
    function From_Now (Period : Duration) return Time;
 
    function Image (Of_Time : Time) return String;
 
-private
+   --  Additional operations
 
-   type Time_Kind is (Calendar, Real_Time);
+   function Equivalent (Of_Time : Time) return Ada.Real_Time.Time;
+
+   function "<" (L, R : Time) return Boolean;
+
+private
 
    type Time (Kind : Time_Kind := Calendar) is record
       case Kind is
