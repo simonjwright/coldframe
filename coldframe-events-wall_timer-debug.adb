@@ -1,0 +1,101 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under the terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  As a special exception, if other files instantiate generics from
+--  this unit, or you link this unit with other files to produce an
+--  executable, this unit does not by itself cause the resulting
+--  executable to be covered by the GNU General Public License.  This
+--  exception does not however invalidate any other reasons why the
+--  executable file might be covered by the GNU Public License.
+
+--  $RCSfile: coldframe-events-wall_timer-debug.adb,v $
+--  $Revision: f880bcb9ecd3 $
+--  $Date: 2002/02/01 20:48:43 $
+--  $Author: simon $
+
+with Ada.Tags;
+with GNAT.IO; use GNAT.IO;
+
+package body ColdFrame.States.Wall_Timer.Debug is
+
+
+   procedure Post (It : Event_Base'Class;
+                   On : access Event_Queue) is
+   begin
+
+      Put_Line ("posting a " & Ada.Tags.Expanded_Name (It'Tag));
+      Wall_Timer.Post (It => It,
+                       On => Wall_Timer.Event_Queue (On.all)'Access);
+
+   end Post;
+
+
+   procedure Set (The : in out Timer;
+                  On : access Event_Queue;
+                  To_Fire : access Event_Base'Class;
+                  After : Natural_Duration) is
+
+   begin
+
+      Put_Line ("setting a Timer for a "
+                & Ada.Tags.Expanded_Name (To_Fire.all'Tag)
+                & ", delay"
+                & After'Img);
+      Wall_Timer.Set (The => The,
+                      On => Wall_Timer.Event_Queue (On.all)'Access,
+                      To_Fire => To_Fire,
+                      After => After);
+
+   end Set;
+
+
+   procedure Unset (The : in out Timer;
+                    On : access Event_Queue) is
+
+   begin
+
+      Put_Line ("unsetting a Timer for a "
+                & Ada.Tags.Expanded_Name (The.The_Event.all'Tag));
+      Wall_Timer .Unset (The => The,
+                         On => Wall_Timer.Event_Queue (On.all)'Access);
+
+   end Unset;
+
+
+   procedure Log_Retraction (It : Event_Base'Class;
+                             On : access Event_Queue) is
+   begin
+      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (It'Tag));
+   end Log_Retraction;
+
+
+   procedure Log_Pre_Dispatch (It : Event_Base'Class;
+                               On : access Event_Queue) is
+   begin
+      Put_Line ("dispatching a "
+                & Ada.Tags.Expanded_Name (It'Tag)
+                & ": state "
+                & State_Image (It.For_The_Instance.all));
+   end Log_Pre_Dispatch;
+
+
+   procedure Log_Post_Dispatch (It : Event_Base'Class;
+                                On : access Event_Queue) is
+   begin
+      Put_Line (".. new state "
+                & State_Image (It.For_The_Instance.all));
+   end Log_Post_Dispatch;
+
+
+end ColdFrame.States.Wall_Timer.Debug;
