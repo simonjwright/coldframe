@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-class.xsl,v 82e9db62e387 2004/03/09 14:59:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -186,6 +186,38 @@
    <!-- .. the actual container .. -->
    <xsl:choose>
 
+     <xsl:when test="$max = 1">
+       <!-- Only one possible instance .. -->
+
+       <!-- .. fix the storage pool for Handle .. -->
+       <!--
+            use type System.Storage_Elements.Storage_Offset;
+            Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+              (Pool_Size => Instance'Max_Size_In_Storage_Elements,
+               Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+               Alignment => Instance'Alignment);
+            for Handle'Storage_Pool use Storage_Pool;
+            -->
+       <xsl:value-of select="$I"/>
+       <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+       <xsl:value-of select="$I"/>
+       <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+       <xsl:value-of select="$IC"/>
+       <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+       <xsl:value-of select="$I"/>
+       <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+
+       <!-- .. use a simple pointer .. -->
+       <xsl:value-of select="$I"/>
+       <xsl:text>This : Handle;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+     </xsl:when>
+
      <xsl:when test="$array='yes'">
        <!-- Use an array. -->
 
@@ -241,7 +273,7 @@
 
      </xsl:when>
 
-     <xsl:when test="$max &gt; 1">
+     <xsl:otherwise>
        <!-- Use a Map. -->
 
        <!-- .. the Instance_Identifier_Equality function spec .. -->
@@ -332,40 +364,6 @@
 
        </xsl:choose>
 
-     </xsl:when>
-
-     <!-- Only one possible instance .. -->
-     <xsl:otherwise>
-
-       <!-- .. fix the storage pool for Handle .. -->
-       <!--
-            use type System.Storage_Elements.Storage_Offset;
-            Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-              (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
-               Elmt_Size => Instance'Max_Size_In_Storage_Elements,
-               Alignment => Instance'Alignment);
-            for Handle'Storage_Pool use Storage_Pool;
-            -->
-       <xsl:value-of select="$I"/>
-       <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
-       <xsl:value-of select="$I"/>
-       <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
-       <xsl:value-of select="$max"/>
-       <xsl:text>,&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
-       <xsl:value-of select="$IC"/>
-       <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
-       <xsl:value-of select="$I"/>
-       <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
-       <xsl:value-of select="$blank-line"/>
-
-       <!-- .. use a simple pointer .. -->
-       <xsl:value-of select="$I"/>
-       <xsl:text>This : Handle;&#10;</xsl:text>
-       <xsl:value-of select="$blank-line"/>
      </xsl:otherwise>
 
    </xsl:choose>
@@ -1209,6 +1207,13 @@
     <!-- .. store the new instance .. -->
     <xsl:choose>
 
+      <xsl:when test="$max=1">
+        <!-- No need to check for This not being null, we'd have already
+             had Storage_Error. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>This := Result;&#10;</xsl:text>
+      </xsl:when>
+
       <xsl:when test="$array='yes'">
         <!-- This test could be done earlier, but it's in the same place
              as the equivalent in the Map case. -->
@@ -1224,13 +1229,6 @@
         <xsl:text>The_Container (With_Identifier.</xsl:text>
         <xsl:value-of select="attribute[@identifier]/name"/>
         <xsl:text>) := Result;&#10;</xsl:text>
-      </xsl:when>
-
-      <xsl:when test="$max=1">
-        <!-- No need to check for This not being null, we'd have already
-             had Storage_Error. -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>This := Result;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
@@ -1352,25 +1350,7 @@
 
     <xsl:choose>
 
-      <xsl:when test="$array='yes'">
-
-        <xsl:value-of select="$I"/>
-        <xsl:text>begin&#10;</xsl:text>
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>This := The_Container (With_Identifier.</xsl:text>
-        <xsl:value-of select="attribute[@identifier]/name"/>
-        <xsl:text>);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>if This = null then&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>end if;&#10;</xsl:text>
-
-      </xsl:when>
-
-      <xsl:when test="$max=1">
+      <xsl:when test="$max = 1">
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -1402,6 +1382,24 @@
           </xsl:if>
         </xsl:for-each>
         <xsl:text>) /= With_Identifier then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:when test="$array='yes'">
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>This := The_Container (With_Identifier.</xsl:text>
+        <xsl:value-of select="attribute[@identifier]/name"/>
+        <xsl:text>);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if This = null then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -1461,6 +1459,8 @@
 
     <xsl:choose>
 
+      <xsl:when test="$max = 1"/>
+
       <xsl:when test="$array = 'yes'">
         <xsl:value-of select="$II"/>
         <xsl:text>The_Container (With_Identifier.</xsl:text>
@@ -1468,10 +1468,10 @@
         <xsl:text>) := null;&#10;</xsl:text>
       </xsl:when>
 
-      <xsl:when test="$max &gt; 1">
+      <xsl:otherwise>
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Unbind (The_Container, Key'Unchecked_Access);&#10;</xsl:text>
-      </xsl:when>
+      </xsl:otherwise>
 
     </xsl:choose>
 
@@ -1551,6 +1551,46 @@
 
     <xsl:choose>
 
+      <xsl:when test="$max = 1">
+
+        <!-- Check the "container" .. -->
+        <!--
+             if {class}.This /= This then
+                raise ColdFrame.Exceptions.Not_Found;
+             end if;
+             -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>if </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.This /= This then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+
+        <!-- Remove from the "container" .. -->
+        <xsl:value-of select="$II"/>
+        <xsl:value-of select="name"/>
+        <xsl:text>.This := null;&#10;</xsl:text>
+
+        <xsl:if test="statemachine">
+          <!-- Clean up any events. -->
+          <xsl:value-of select="$II"/>
+          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
+          <!-- Check it's OK to delete the instance (ie, not in event
+               handler).
+               This will leak memory, but we were in a fatal situation anyway.
+               -->
+          <xsl:value-of select="$II"/>
+          <xsl:text>Check_Deletable (This);&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- .. and free the instance. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>Free (This);&#10;</xsl:text>
+
+      </xsl:when>
+
       <xsl:when test="$array='yes'">
 
         <!-- Check the "container" .. -->
@@ -1586,7 +1626,7 @@
 
       </xsl:when>
 
-      <xsl:when test="$max &gt; 1">
+      <xsl:otherwise>
 
         <!-- Remove from the container .. -->
         <xsl:value-of select="$II"/>
@@ -1595,46 +1635,6 @@
         <xsl:text>(The_Container,&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text> ColdFrame.Instances.Handle (This));&#10;</xsl:text>
-
-        <xsl:if test="statemachine">
-          <!-- Clean up any events. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
-          <!-- Check it's OK to delete the instance (ie, not in event
-               handler).
-               This will leak memory, but we were in a fatal situation anyway.
-               -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Check_Deletable (This);&#10;</xsl:text>
-        </xsl:if>
-
-        <!-- .. and free the instance. -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>Free (This);&#10;</xsl:text>
-
-      </xsl:when>
-
-      <xsl:otherwise>
-
-        <!-- Check the "container" .. -->
-        <!--
-             if {class}.This /= This then
-                raise ColdFrame.Exceptions.Not_Found;
-             end if;
-             -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>if </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>.This /= This then&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>end if;&#10;</xsl:text>
-
-        <!-- Remove from the "container" .. -->
-        <xsl:value-of select="$II"/>
-        <xsl:value-of select="name"/>
-        <xsl:text>.This := null;&#10;</xsl:text>
 
         <xsl:if test="statemachine">
           <!-- Clean up any events. -->
@@ -1818,22 +1818,6 @@
 
     <xsl:choose>
 
-      <xsl:when test="$array='yes'">
-
-        <xsl:value-of select="$I"/>
-        <xsl:text>begin&#10;</xsl:text>
-
-        <!--
-             return The_Container (With_Identifier.{id-attr});
-             -->
-
-        <xsl:value-of select="$II"/>
-        <xsl:text>return The_Container (With_Identifier.</xsl:text>
-        <xsl:value-of select="attribute[@identifier]/name"/>
-        <xsl:text>);&#10;</xsl:text>
-
-      </xsl:when>
-
       <xsl:when test="$max=1">
 
         <xsl:value-of select="$I"/>
@@ -1874,6 +1858,22 @@
         <xsl:text>return This;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:when test="$array='yes'">
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+
+        <!--
+             return The_Container (With_Identifier.{id-attr});
+             -->
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>return The_Container (With_Identifier.</xsl:text>
+        <xsl:value-of select="attribute[@identifier]/name"/>
+        <xsl:text>);&#10;</xsl:text>
 
       </xsl:when>
 
