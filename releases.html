@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 3899b23872dd 2002/07/06 10:28:01 simon $ -->
+<!-- $Id: releases.html,v 42c0c28cd6b6 2002/07/07 18:58:59 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,6 +22,16 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 2001.
 
 <dl>
+
+<p><dt>2002mmdd
+
+<dd>Event Queues now have a <tt>Wait_Until_Idle</tt> operation, for
+unit tests to use after posting test Events; the operation blocks the
+test thread of control until all event activity has terminated.
+
+<p>Event Queues now have a <tt>Tear_Down</tt> operation; this is
+automatically called from the domain <tt>Tear_Down</tt>. Note, this is
+also intended for unit test!
 
 <p><dt>20020706
 
