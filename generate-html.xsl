@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 5d55ff08b235 2002/09/13 19:27:48 simon $ -->
+<!-- $Id: generate-html.xsl,v 81491ddfa406 2002/10/13 17:16:03 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -427,26 +427,29 @@
       <xsl:if test="@abstract">
         <xsl:text> (abstract)</xsl:text>
       </xsl:if>
-      <xsl:if test="@class">
-        <xsl:text> (class)</xsl:text>
-      </xsl:if>
-      <xsl:if test="@finalize">
-        <xsl:text> (finalization)</xsl:text>
-      </xsl:if>
       <xsl:if test="@suppressed='framework'">
         <xsl:text> (automatically-generated)</xsl:text>
       </xsl:if>
-      <xsl:if test="@suppressed='navigation'">
-        <xsl:text> (navigation)</xsl:text>
-      </xsl:if>
-      <xsl:if test="@suppressed='instantiation'">
-        <xsl:text> (instantiated)</xsl:text>
+      <xsl:if test="@class">
+        <xsl:text> (class)</xsl:text>
       </xsl:if>
       <xsl:if test="@initialize">
         <xsl:text> (initialization)</xsl:text>
       </xsl:if>
+      <xsl:if test="@finalize">
+        <xsl:text> (finalization)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@suppressed='instantiation'">
+        <xsl:text> (instantiated)</xsl:text>
+      </xsl:if>
       <xsl:if test="@handler">
         <xsl:text> (message handler)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@suppressed='navigation'">
+        <xsl:text> (navigation)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@entry">
+        <xsl:text> (task entry)</xsl:text>
       </xsl:if>
       <xsl:if test="@return">
         <xsl:text> returns </xsl:text>
