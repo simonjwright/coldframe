@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e3a37ff0c1b5 2001/11/30 20:19:23 simon $ -->
+<!-- $Id: ada-class.xsl,v 0b51fe406424 2001/12/09 10:36:38 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -786,7 +786,7 @@
         <xsl:variable name="id" select="attribute[@identifier]/name"/>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Next_Identifier : Integer := 0;&#10;</xsl:text>
+        <xsl:text>Next_Identifier : Long_Long_Integer := 0;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
 
         <!--
@@ -1213,6 +1213,14 @@
 
       <xsl:choose>
         
+        <xsl:when test="type='Autonumber'">
+          <!-- Must be the only identifying attribute. -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor M (Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text> mod 2**31);&#10;</xsl:text>
+        </xsl:when>
+
         <xsl:when test="$type/enumeration or type='Boolean'">
 
           <!--
@@ -1228,7 +1236,7 @@
 
         </xsl:when>
 
-        <xsl:when test="$type/integer or type='Integer' or type='Autonumber'">
+        <xsl:when test="$type/integer or type='Integer'">
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor M (Id.</xsl:text>
           <xsl:value-of select="name"/>

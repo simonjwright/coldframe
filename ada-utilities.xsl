@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 97b56c2a6f11 2001/10/13 13:15:40 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 0b51fe406424 2001/12/09 10:36:38 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -187,9 +187,9 @@
 
     <xsl:choose>
 
-      <!-- Autonumber maps to Integer. -->
+      <!-- Autonumber maps to Long Integer. -->
       <xsl:when test="$type='Autonumber'">
-        <xsl:text>Integer</xsl:text>
+        <xsl:text>Long_Long_Integer</xsl:text>
       </xsl:when>
 
       <!-- The current Class maps to just Handle. -->
