@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d855378b8188 2002/09/15 18:56:49 simon $ -->
+<!-- $Id: ada-class.xsl,v 12ffb723ab7c 2002/09/20 13:49:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1107,6 +1107,10 @@
       
       <xsl:when test="@max=1">
 
+        <!--  XXX temporary -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Warnings (Off, With_Identifier);&#10;</xsl:text>
+
         <!-- Check there is an instance. -->
         <xsl:value-of select="$II"/>
         <xsl:text>if This = null then&#10;</xsl:text>
@@ -1432,6 +1436,9 @@
       <xsl:when test="@max=1">
 
         <!-- XXX need to check the ID is right! -->
+        <!--  XXX temporary -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Warnings (Off, With_Identifier);&#10;</xsl:text>
 
         <!--
              return This;
