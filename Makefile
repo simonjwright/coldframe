@@ -318,7 +318,6 @@ coldframe-unbounded_storage_pools.ads \
 coldframe.ads
 
 PROJECT = \
-coldframe-project-storage_pools.ads \
 coldframe-project-calendar.adb \
 coldframe-project-calendar.ads \
 coldframe-project-event_support.ads \
@@ -328,6 +327,7 @@ coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events-standard-test_debug.ads \
 coldframe-project-events.ads \
+coldframe-project-global_storage_pool.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
 coldframe-project-held_event_support.ads \
@@ -336,6 +336,7 @@ coldframe-project-logging_support.ads \
 coldframe-project-log_error.ads \
 coldframe-project-log_error.adb \
 coldframe-project-serialization.ads \
+coldframe-project-storage_pools.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
 
