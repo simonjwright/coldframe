@@ -16,3 +16,5 @@ cf-[0-9]*
 coldframe-combine_hash-test
 extractor.ebs
 *.domains
+project lib
+stairwell-*demo
