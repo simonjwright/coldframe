@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 89080936581b 2002/02/28 20:02:30 simon $ -->
+<!-- $Id: ada-state.xsl,v ce8d2e1df8de 2002/03/09 09:49:27 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,7 +33,7 @@
 
     <!-- class:
          type {name} is new ColdFrame.Events.Event_Base with record
-           The : {type};
+           Payload : {type};
          end record;
          -->
 
@@ -41,7 +41,7 @@
          type {name} (For_The_Instance : access Instance)
          is new ColdFrame.Events.Instance_Event_Base (For_The_Instance)
          with record
-           The : {type};
+           Payload : {type};
          end record;
          -->
 
@@ -80,7 +80,7 @@
         <xsl:when test="type">
           <xsl:text>record&#10;</xsl:text>
           <xsl:value-of select="$II"/>
-          <xsl:text>The : </xsl:text>
+          <xsl:text>Payload : </xsl:text>
           <xsl:value-of select="type"/>
           <xsl:text>;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
@@ -324,6 +324,7 @@
     <!-- non-singleton
          procedure Enter_{state}
            (This : Handle; What : ColdFrame.Events.Event_Base'Class);
+         pragma Warnings (Off, Enter_{initial-state});
          -->
 
     <!-- singleton
@@ -363,22 +364,24 @@
     <!-- non-singleton
          procedure Enter_{state}
            (This : Handle; What : ColdFrame.Events.Event_Base'Class) is
+           pragma Warnings (Off, What);
          begin
             {entry-action} (This, {event} (What));  -  if has parameter
             {entry-action} (This);                  -  if has no parameter
             This.State_Machine_State := {state};
-            Enter_{next-state} (This, What);       -  if unguarded exit
+            Enter_{next-state} (This, What);        -  if unguarded exit
          end Enter_{state};
          -->
 
     <!-- singleton
          procedure Enter_{state}
            (What : ColdFrame.Events.Event_Base'Class) is
+           pragma Warnings (Off, What);
          begin
             {entry-action} ({event} (What));        -  if has parameter
             {entry-action};                         -  if has no parameter
             This.State_Machine_State := {state};
-            Enter_{next-state} (Wnat);             -  if unguarded exit
+            Enter_{next-state} (Wnat);              -  if unguarded exit
          end Enter_{state};
          -->
 
@@ -402,6 +405,9 @@
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text> is&#10;</xsl:text>
+
+     <xsl:value-of select="$II"/>
+     <xsl:text>pragma Warnings (Off, What);&#10;</xsl:text>
 
      <xsl:value-of select="$I"/>
      <xsl:text>begin&#10;</xsl:text>
@@ -638,7 +644,8 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
 
-    <!-- They are meant to edit this one! -->
+    <xsl:call-template name="should-edit"/>
+
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events)&#10;</xsl:text>
