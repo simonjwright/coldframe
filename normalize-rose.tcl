@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ae7e4ce970fc 2001/03/20 06:04:41 simon $
+# $Id: normalize-rose.tcl,v d712d284004a 2001/03/22 20:23:00 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -547,6 +547,13 @@ itcl::class Class {
     # specifies the maximum number of instances (optional)
     variable max
 
+    # specifies if this is an interface class
+    variable interface 0
+    method -interface {dummy} {
+	set interface 1
+	set singleton 1
+    }
+
     # true if there's one and only one instance of the class
     variable singleton 0
     method -singleton {dummy} {set singleton 1}
@@ -680,6 +687,7 @@ itcl::class Class {
 	puts -nonewline "<class"
 	if [info exists max] {puts -nonewline " max=\"$max\""}
 	if $singleton {puts -nonewline " singleton=\"yes\""}
+	if $interface {puts -nonewline " interface=\"yes\""}
 	puts ">"
 	putElement name "$name"
 	putElement abbreviation [$this -getAbbreviation]
