@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 97ef9f20448a 2004/01/21 20:24:25 simon $
+# $Id: normalize-rose.tcl,v 2159d70e1290 2004/02/08 11:17:51 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -513,7 +513,7 @@ itcl::class Element {
             if {[string length $value] == 0} {set value "true"}
             if [catch {$this -$attr $value}] {
                 Warning \
-                    "annotation not handled, \
+                    "element annotation not handled, \
                     \"$name \[\[$attr : [string trim $value]]]\""
             }
             regexp -nocase -indices $pattern $a wh
@@ -2301,7 +2301,7 @@ itcl::class Datatype {
 
     variable dataDetail
 
-    variable dataType "standard"
+    variable dataType "nonstandard"
 
     variable hash
 
@@ -2319,6 +2319,10 @@ itcl::class Datatype {
 
     constructor {name} {set type $name}
 
+    # called in initialization of class Datatypes to indicate that the
+    # standard types created there are in fact standard.
+    method -standard {} {set dataType "standard"}
+
     # process annotation.
     method -annotation {a} {
         set annotation $a
@@ -2329,9 +2333,9 @@ itcl::class Datatype {
                 $a wh attr dummy value]} {} {
             set attr [string tolower $attr]
             if {[string length $value] == 0} {set value "true"}
-            if [catch {$this -$attr [string trim $value]}] {
+            if [catch {$this -$attr [string trim $value]} msg] {
                 Warning \
-                    "annotation not handled, \
+                    "type annotation not handled, \
                     \"$type \[\[$attr : [string trim $value]]]\""
             }
             regexp -nocase -indices $pattern $a wh
@@ -2468,7 +2472,7 @@ itcl::class Datatype {
 
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
-    # Useful key is max (max length).
+    # Useful keys are max (max length) & fixed (fixed length).
     method -string {constraint} {
         set dataType "string"
         regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
@@ -2499,7 +2503,7 @@ itcl::class Datatype {
         }
         $this -putElementStart "type"
         if [info exists callback] {
-            puts -nonewline " callback=\"$callback\""
+            puts -nonewline " callback=\"yes\""
         }
         if [info exists hash] {
             puts -nonewline " hash=\"$hash\""
@@ -2519,7 +2523,17 @@ itcl::class Datatype {
             puts -nonewline " null=\"yes\""
         }
         if [info exists unconstrained] {
+            # actually only used in <array> element below.
             puts -nonewline " unconstrained=\"yes\""
+        }
+        switch $dataType {
+            nonstandard {
+                puts -nonewline " standard=\"no\""
+            }
+            standard {
+                puts -nonewline " standard=\"yes\""
+            }
+            default {}
         }
         puts ">"
         putElement name "$type"
@@ -2565,8 +2579,9 @@ itcl::class Datatype {
             renames {
                 putElement renames $dataDetail
             }
-            standard {
-                putElement standard $type
+            standard -
+            nonstandard {
+                # already handled, as attribute.
             }
             default {
                 Error "CF: unhandled dataType \"$dataType\""
@@ -2811,17 +2826,26 @@ itcl::class Datatypes {
     inherit Container
 
     constructor {} {
-        # insert standard (provided) types.
-        $this -add [Datatype ::\#auto Autonumber] Autonumber
-        $this -add [Datatype ::\#auto Boolean] Boolean
-        $this -add [Datatype ::\#auto Date] Date
-        $this -add [Datatype ::\#auto Float] Float
-        $this -add [Datatype ::\#auto Integer] Integer
-        $this -add [Datatype ::\#auto Real] Real
-        $this -add [Datatype ::\#auto String] String
-        $this -add [Datatype ::\#auto Time] Time
-        $this -add [Datatype ::\#auto Timer] Timer
-        $this -add [Datatype ::\#auto Unbounded_String] Unbounded_String
+        $this -addStandard Autonumber
+        $this -addStandard Boolean
+        $this -addStandard Counterpart
+        $this -addStandard Handle
+        $this -addStandard Date
+        $this -addStandard Float
+        $this -addStandard Integer
+        $this -addStandard Real
+        $this -addStandard String
+        $this -addStandard Text
+        $this -addStandard Time
+        $this -addStandard Timer
+        $this -addStandard Unbounded_String
+    }
+
+    # insert a standard (provided) type.
+    method -addStandard {t} {
+        set dt [Datatype ::\#auto $t]
+        $dt -standard
+        $this -add $dt $t
     }
 
     method -className {} {return "datatypes"}
