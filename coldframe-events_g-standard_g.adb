@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 5de600c66408 $
---  $Date: 2002/09/04 18:50:26 $
+--  $Revision: b74ec27faba8 $
+--  $Date: 2002/09/12 20:58:10 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -74,6 +74,10 @@ package body ColdFrame.Events_G.Standard_G is
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
+      --  We need a dispatching call, in case the queue is actually a
+      --  derived type.
+      Add_Posted_Event (Event_Queue_P (On));
+
       On.The_Excluder.Post (The_Event);
 
    end Post;
@@ -85,6 +89,10 @@ package body ColdFrame.Events_G.Standard_G is
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
+
+      --  We need a dispatching call, in case the queue is actually a
+      --  derived type.
+      Add_Posted_Event (Event_Queue_P (On));
 
       On.The_Excluder.Post_To_Self (The_Event);
 
@@ -99,6 +107,10 @@ package body ColdFrame.Events_G.Standard_G is
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
+
+      --  We need a dispatching call, in case the queue is actually a
+      --  derived type.
+      Add_Held_Event (Event_Queue_P (On));
 
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
@@ -129,6 +141,11 @@ package body ColdFrame.Events_G.Standard_G is
 
    begin
 
+      --  Wait to be told when to start, if not immediately
+      if not Start_Started (The_Queue) then
+         accept Start;
+      end if;
+
       loop
 
          The_Queue.The_Excluder.Fetch (E); -- blocks until there's an event
@@ -142,9 +159,8 @@ package body ColdFrame.Events_G.Standard_G is
             exception
                when Ex : others =>
                   GNAT.IO.Put_Line
-                    ("exception " &
-                       Ada.Exceptions.Exception_Information (Ex) &
-                       " in Dispatcher (event " &
+                    (Ada.Exceptions.Exception_Information (Ex) &
+                       "in Dispatcher (event " &
                        Ada.Tags.Expanded_Name (E.all'Tag) &
                        ")");
             end;
@@ -172,6 +188,10 @@ package body ColdFrame.Events_G.Standard_G is
             Used_By_The_Instance_Of => To_Fire);
 
       if The_Timer.The_Entry = null then
+
+         --  We need a dispatching call, in case the queue is actually
+         --  a derived type.
+         Add_Timer_Event (Event_Queue_P (On));
 
          The_Timer.The_Entry := new Timer_Event;
          The_Timer.The_Entry.On := Event_Queue_P (On);
@@ -228,6 +248,8 @@ package body ColdFrame.Events_G.Standard_G is
          --  Unset the Timer
          The_Timer.The_Entry := null;
 
+         Remove_Timer_Event (On);
+
       end if;
 
    end Unset;
@@ -249,7 +271,6 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  Add_Held_Event (The_Queue);
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -267,7 +288,6 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  Add_Held_Event (The_Queue);
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -308,11 +328,15 @@ package body ColdFrame.Events_G.Standard_G is
                   Timed_Event_Queues.Pop (The_Events);
                   if not T.The_Event.Invalidated then
                      Post (Event_P (T), The_Queue);
+                     if T.The_Timer /= null then
+                        Remove_Timer_Event (The_Queue);
+                     else
+                        Remove_Held_Event (The_Queue);
+                     end if;
                   else
                      Delete (T.The_Event);
                   end if;
                end;
-               Remove_Held_Event (The_Queue);
 
             end select;
 
@@ -338,7 +362,6 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
-         Add_Posted_Event (The_Queue);
       end Post;
 
 
@@ -346,7 +369,6 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
                                                The_Event);
-         Add_Posted_Event (The_Queue);
       end Post_To_Self;
 
 
@@ -441,6 +463,15 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    end Excluder;
+
+
+   procedure Start_Queue (The_Queue : access Event_Queue) is
+   begin
+      --  This will block indefinitely if called for a standard Queue.
+      --  But, the only way it's supposed to be called is via Start,
+      --  which (at this level) doesn't in fact do so.
+      The_Queue.The_Dispatcher.Start;
+   end Start_Queue;
 
 
    procedure Invalidate_Events
