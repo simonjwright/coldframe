@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: 1b8a362bcae5 $
---  $Date: 2004/04/21 14:53:46 $
+--  $Revision: 07a1886533b9 $
+--  $Date: 2004/04/21 15:16:01 $
 --  $Author: simon $
 
 with GNAT.Command_Line;
@@ -100,12 +100,17 @@ begin
 
       else
 
-         Scan_Directory
-           (GNAT.OS_Lib.Normalize_Pathname (Dir & Dir_Separator),
-            Verbosely => Verbose,
-            Recursively => Recursive,
-            Logging => Logging);
-         Generated_Lines_Support.Report (Dir, With_Header => Verbose);
+         declare
+            D : constant String :=
+              GNAT.OS_Lib.Normalize_Pathname (Dir & Dir_Separator);
+         begin
+            Scan_Directory
+              (D,
+               Verbosely => Verbose,
+               Recursively => Recursive,
+               Logging => Logging);
+            Generated_Lines_Support.Report (D, With_Header => Verbose);
+         end;
 
       end if;
 
