@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 3a1ab8244023 2002/05/29 18:56:33 simon $ -->
+<!-- $Id: ada-class.xsl,v a4ea432ad1b7 2002/06/04 10:01:59 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -877,6 +877,12 @@
 
   <!-- Called from domain/class to generate the Create function spec. -->
   <xsl:template name="create-function-spec">
+
+    <xsl:if test="../association/associative=current()/name">
+      <xsl:value-of select="$I"/>
+      <xsl:text>--  Private use only&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:choose>
 
       <xsl:when test="count(attribute[@identifier])=1
@@ -989,18 +995,20 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Result : Handle;&#10;</xsl:text>
 
-        <xsl:value-of select="$II"/>
-        <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
-        <xsl:for-each select="attribute[@identifier and @refers]/name">
+        <xsl:if test="attribute[@identifier and @refers]">
           <xsl:value-of select="$II"/>
-          <xsl:text>pragma Assert&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>(ColdFrame.Instances.Handle&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text> (With_Identifier.</xsl:text>
-          <xsl:value-of select="."/>
-          <xsl:text>) /= null);&#10;</xsl:text>
-        </xsl:for-each>
+          <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
+          <xsl:for-each select="attribute[@identifier and @refers]">
+            <xsl:value-of select="$II"/>
+            <xsl:text>pragma Assert&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>(ColdFrame.Instances.Handle&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text> (With_Identifier.</xsl:text>
+            <xsl:call-template name="attribute-name"/>
+            <xsl:text>) /= null);&#10;</xsl:text>
+          </xsl:for-each>
+        </xsl:if>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
