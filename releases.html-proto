@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: releases.html-proto,v 514574389823 2004/10/23 16:42:07 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -95,6 +95,9 @@ href="extending.html">add your own code generation extensions</a>.
 
 
 <p>You can make ColdFrame generate access types for your own types.
+
+
+<p><i>{array}</i> types can be (de)serialized automatically.
 
 
 <p><dt>20040319
