@@ -185,6 +185,64 @@ package body Hierarchies.Test_Creations is
               "S_3 has wrong E child");
    end Create_Third_Child;
 
+   procedure Create_Third_Child_With_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Create_Third_Child_With_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      F2_H2 : F_2.Handle;
+   begin
+      F2_H := F_2.Inheritance.Create_Tree (null, null, null);
+      F2_H2 := F_2.Inheritance.Create_Tree
+        (CIH (F2_H), CIH (F2_H), CIH (F2_H));
+      Assert (F2_H = F2_H2,
+              "different F_2 created");
+      Assert (R_1.Collections.Length (R_1.All_Instances) = 1,
+              "R_1 missing");
+      Assert (R_2.Collections.Length (R_2.All_Instances) = 1,
+              "R_2 missing");
+      Assert (R_3.Collections.Length (R_3.All_Instances) = 1,
+              "R_3 missing");
+      Assert (S_2.Collections.Length (S_2.All_Instances) = 1,
+              "S_2 missing");
+      Assert (S_3.Collections.Length (S_3.All_Instances) = 1,
+              "S_3 missing");
+      Assert (T_2.Collections.Length (T_2.All_Instances) = 1,
+              "T_2 missing");
+      Assert (F_2.Collections.Length (F_2.All_Instances) = 1,
+              "F_2 missing");
+      R1_H := R_1.Collections.First (R_1.All_Instances);
+      R2_H := R_2.Collections.First (R_2.All_Instances);
+      R3_H := R_3.Collections.First (R_3.All_Instances);
+      S2_H := S_2.Collections.First (S_2.All_Instances);
+      S3_H := S_3.Collections.First (S_3.All_Instances);
+      T2_H := T_2.Collections.First (T_2.All_Instances);
+      Assert (CIH (R1_H) = S_2.Get_A_Parent (S2_H),
+              "S_2 has wrong parent");
+      Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
+              "R_1 has wrong child");
+      Assert (CIH (R2_H) = S_3.Get_B_Parent (S3_H),
+              "S_3 has wrong B parent");
+      Assert (S_3.Handle (R_2.Get_B_Child (R2_H).S3) = S3_H,
+              "R_2 has wrong child");
+      Assert (CIH (R3_H) = S_3.Get_C_Parent (S3_H),
+              "S_3 has wrong C parent");
+      Assert (S_3.Handle (R_3.Get_C_Child (R3_H).S3) = S3_H,
+              "R_3 has wrong child");
+      Assert (CIH (S2_H) = T_2.Get_D_Parent (T2_H),
+              "T_2 has wrong parent");
+      Assert (T_2.Handle (S_2.Get_D_Child (S2_H).T2) = T2_H,
+              "S_2 has wrong child");
+      Assert (CIH (T2_H) = F_2.Get_F_Parent (F2_H),
+              "F_2 has wrong F parent");
+      Assert (F_2.Handle (T_2.Get_F_Child (T2_H).F2) = F2_H,
+              "T_2 has wrong child");
+      Assert (CIH (S3_H) = F_2.Get_E_Parent (F2_H),
+              "F_2 has wrong E parent");
+      Assert (F_2.Handle (S_3.Get_E_Child (S3_H).F2) = F2_H,
+              "S_3 has wrong E child");
+   end Create_Third_Child_With_Self;
+
    procedure Create_First_Child_With_Root
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Create_First_Child_With_Root
@@ -434,6 +492,24 @@ package body Hierarchies.Test_Creations is
       when Constraint_Error => null;
    end Create_Third_Child_With_Bad_S3_S3;
 
+   procedure Create_Third_Child_With_Deleted
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Create_Third_Child_With_Deleted
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      F2_H2 : F_2.Handle;
+      F2_H3 : F_2.Handle;
+   begin
+      F2_H := F_2.Inheritance.Create_Tree (null, null, null);
+      F2_H2 := F2_H;
+      Tear_Down;
+      F2_H3 := F_2.Inheritance.Create_Tree
+        (CIH (F2_H2), CIH (F2_H2), CIH (F2_H2));
+      Assert (False, "creation succeeded");
+   exception
+      when Storage_Error => null;
+   end Create_Third_Child_With_Deleted;
+
    procedure Register_Tests (T : in out Test_Case) is
    begin
       Register_Routine
@@ -444,6 +520,10 @@ package body Hierarchies.Test_Creations is
         (T, Create_Second_Child'Access, "Create second child");
       Register_Routine
         (T, Create_Third_Child'Access, "Create third child");
+      Register_Routine
+        (T,
+         Create_Third_Child_With_Self'Access,
+         "Create copy of third child");
       Register_Routine
         (T,
          Create_First_Child_With_Root'Access,
@@ -472,6 +552,10 @@ package body Hierarchies.Test_Creations is
         (T,
          Create_Third_Child_With_Bad_S3_S3'Access,
          "Create third child with mismatched R2 & R3");
+      Register_Routine
+        (T,
+         Create_Third_Child_With_Deleted'Access,
+         "Create third child with deleted handle");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
