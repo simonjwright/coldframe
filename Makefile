@@ -103,7 +103,7 @@ html:: use-cases.html coldframe-architecture.html
 # Architecture.raw is extracted from the Rose Architecture package
 # (coldframe-architecture.cat) using ddf.ebs
 coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
-	java com.icl.saxon.StyleSheet \
+	$(SAXON) \
 	    Architecture.raw generate-architecture-html.xsl >$@
 
 # coldframe-architecture.ps is made by printing the Rose Architecture package
