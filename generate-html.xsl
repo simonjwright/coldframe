@@ -1,5 +1,5 @@
-<!-- $Id: generate-html.xsl,v 75920f50be06 2001/03/22 20:33:53 simon $ -->
-<!-- $Id: generate-html.xsl,v 75920f50be06 2001/03/22 20:33:53 simon $ -->
+<!-- $Id: generate-html.xsl,v 5bb7bd09a990 2001/03/22 20:33:54 simon $ -->
+
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
