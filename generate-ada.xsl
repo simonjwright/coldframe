@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: generate-ada.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -119,6 +119,11 @@
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
 
+    <!-- Suppress style checks. -->
+    <xsl:value-of select="$blank-line"/>
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <!-- Any context clauses needed for top-level package .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. domain context ..'"/>
@@ -234,9 +239,13 @@
       <xsl:for-each select="type[@protected]">
         <xsl:sort select="name"/>
         <xsl:value-of select="$I"/>
+        <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
         <xsl:text>protected body </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is separate;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:for-each>
 

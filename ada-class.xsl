@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 91355f2ca1ee 2004/04/04 19:12:55 simon $ -->
+<!-- $Id: ada-class.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -58,6 +58,10 @@
     <xsl:call-template name="commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
+
+    <!-- Suppress style checks. -->
+    <xsl:value-of select="$blank-line"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
@@ -757,6 +761,10 @@
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
 
+    <!-- Suppress style checks. -->
+    <xsl:value-of select="$blank-line"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
 
@@ -769,7 +777,11 @@
     <!-- .. the task stub for active classes .. -->
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
+      <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
@@ -826,7 +838,11 @@
 
         <!-- .. the hash function stub .. -->
         <xsl:value-of select="$I"/>
+        <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Instance_Hash (I : Instance) return Natural is separate;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
 
       </xsl:if>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-operation.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -276,10 +276,14 @@
           <xsl:otherwise>
 
             <!-- Concrete in current class; we provide a stub. -->
+            <xsl:value-of select="$I"/>
+            <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
             <xsl:call-template name="subprogram-specification">
               <xsl:with-param name="indent" select="$I"/>
             </xsl:call-template>
             <xsl:text> is separate;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
             <xsl:value-of select="$blank-line"/>
 
           </xsl:otherwise>

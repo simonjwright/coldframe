@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 8a7547284b6b 2004/03/24 08:52:16 simon $ -->
+<!-- $Id: ada-type.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -618,11 +618,15 @@
   <xsl:template
     match="type/operation[not(@renames)]"
     mode="domain-type-operation-body-stub">
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text> is separate;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
