@@ -14,15 +14,7 @@ package body Hierarchies.S_2.Inheritance is
          return Create
            ((A_Parent => ColdFrame.Instances.Handle (R1_H)));
       elsif (R1.all in Instance'Class) then
-         if not Maps.Is_Bound
-           (The_Container,
-            (A_Parent => Handle (R1).A_Parent)) then
-            Ada.Exceptions.Raise_Exception
-              (Constraint_Error'Identity,
-               "unbound handle in Create_Tree");
-         else
-            return Handle (R1);
-         end if;
+         return Handle (R1);
       else
          R1_H := R_1.Inheritance.Create_Tree (R1);
          return Create

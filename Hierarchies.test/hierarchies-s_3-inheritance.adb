@@ -15,29 +15,21 @@ package body Hierarchies.S_3.Inheritance is
       R3_H : R_3.Handle;
       use type ColdFrame.Instances.Handle;
    begin
-      if R2 = null and R3 = null then
-         R2_H := R_2.Inheritance.Create_Tree (null);
-         R3_H := R_3.Inheritance.Create_Tree (null);
-         return Create
-           ((B_Parent => ColdFrame.Instances.Handle (R2_H),
-             C_Parent => ColdFrame.Instances.Handle (R3_H)));
-      elsif R2 = null or R3 = null then
+      if R2 = null
+        or else R3 = null then
          R2_H := R_2.Inheritance.Create_Tree (R2);
          R3_H := R_3.Inheritance.Create_Tree (R3);
          return Create
            ((B_Parent => ColdFrame.Instances.Handle (R2_H),
              C_Parent => ColdFrame.Instances.Handle (R3_H)));
       elsif (R2.all in Instance'Class)
-        and (R3.all in Instance'Class) then
-         if not Maps.Is_Bound
-           (The_Container,
-            (B_Parent => Handle (R2).B_Parent,
-             C_Parent => Handle (R3).C_Parent)) then
+        and then (R3.all in Instance'Class) then
+         if R2 = R3 then
+            return Handle (R2);
+         else
             Ada.Exceptions.Raise_Exception
               (Constraint_Error'Identity,
-               "unbound handle in Create_Tree");
-         else
-            return Handle (R2);
+               "mismatched handles in Create_Tree");
          end if;
       else
          R2_H := R_2.Inheritance.Create_Tree (R2);
