@@ -13,11 +13,11 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-events-initialize.adb,v $
---  $Revision: cd6fd803b821 $
---  $Date: 2003/11/15 13:57:33 $
+--  $Revision: d93484ffb8ec $
+--  $Date: 2003/11/15 13:57:49 $
 --  $Author: simon $
 
---  Set up a standard Event Queue.
+--  Set up a debug Event Queue.
 
 with ColdFrame.Project.Events.Standard.Debug;
 
