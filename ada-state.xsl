@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-state.xsl,v 7cfc480a87cb 2004/03/15 17:57:54 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -528,7 +528,6 @@
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
-          <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>, </xsl:text>
           <xsl:value-of select="$operation"/>
@@ -566,12 +565,15 @@
         <xsl:if test="not($class/event[name=$event]/type=$params/type)">
           <xsl:call-template name="log-error"/>
           <xsl:message>
+            <xsl:text>Error: </xsl:text>
             <xsl:value-of select="$class/name"/>
             <xsl:text>.</xsl:text>
-            <xsl:value-of select="$operation"/>
-            <xsl:text>'s parameter is of the wrong type (</xsl:text>
+            <xsl:value-of select="$event"/>
+            <xsl:text>'s is of the wrong type (</xsl:text>
             <xsl:value-of select="$class/event[name=$event]/type"/>
-            <xsl:text>, expecting </xsl:text>
+            <xsl:text>): </xsl:text>
+            <xsl:value-of select="$operation"/>
+            <xsl:text> expects </xsl:text>
             <xsl:value-of select="$params/type"/>
             <xsl:text>)</xsl:text>
           </xsl:message>
