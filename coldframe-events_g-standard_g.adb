@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 0020c8074f22 $
---  $Date: 2002/10/01 17:46:06 $
+--  $Revision: 5ab1b6c2adde $
+--  $Date: 2002/10/17 20:31:33 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -281,9 +281,9 @@ package body ColdFrame.Events_G.Standard_G is
                --  outstanding held Events). But if we get here, the
                --  queue was empty, so there can't be anything to do.
 
-               or
-                  accept Tear_Down;
-                  exit;
+            or
+               accept Tear_Down;
+               exit;
 
             end select;
 
