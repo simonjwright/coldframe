@@ -1,15 +1,15 @@
 <domain>
-<extractor>cf-20031126</extractor>
+<extractor>cf-DATE</extractor>
 <name>Bad Model Regressions</name>
 <date>
-<year>2003</year>
-<month>12</month>
-<day>13</day>
-<time>05:54</time>
+<year>2004</year>
+<month>4</month>
+<day>17</day>
+<time>17:32</time>
 </date>
 <documentation>Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 37dd0d861637 $ }</documentation>
+{ revision = $Revision: b89370ac0bb2 $ }</documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
@@ -17,7 +17,7 @@
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>{ bad tag, bad:tag, bad+tag, bad.tag }
-{ good-tag, good-tag }
+{ good-tag, good_tag }
 </documentation>
 <attributes>
 <attribute stereotype="id">
@@ -27,6 +27,57 @@
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Has State Machine</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="public">
+<name>Is Active</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Active</concurrency>
+<documentation></documentation>
+<attributes>
 </attributes>
 <operations>
 </operations>

@@ -11,22 +11,209 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 6268f9a4ccdd $ }
+|{ revision = $Revision: b89370ac0bb2 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
-	(object Class "Bad Tag Name"
-	    quid       	"3FDAA7BB008F"
-	    documentation 	
+	(object Class_Category "Detect illegal characters in tag name rather than letting Saxon find them"
+	    quid       	"408168AE0217"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Bad Tag Name"
+		    quid       	"3FDAA7BB008F"
+		    documentation 	
 |{ bad tag, bad:tag, bad+tag, bad.tag }
 |{ good-tag, good_tag }
 |
-	    
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "id"
-		    quid       	"3FDAA7FC0039"
-		    stereotype 	"id"
-		    type       	"Autonumber"))))
+		    
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "id"
+			    quid       	"3FDAA7FC0039"
+			    stereotype 	"id"
+			    type       	"Autonumber"))))
+	    logical_presentations 	(list unit_reference_list))
+	(object Class_Category "Public classes can't be active or have state machines"
+	    quid       	"408168F600C6"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Has State Machine"
+		    quid       	"4081694503A5"
+		    stereotype 	"public"
+		    statemachine 	(object State_Machine "State/Activity Model"
+			quid       	"4081697B02D0"
+			stereotype 	"generate"
+			states     	(list States
+			    (object State "$UNNAMED$0"
+				quid       	"4081697F0019"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"40816985002C"
+					supplier   	"$UNNAMED$1"
+					quidu      	"408169810211"
+					sendEvent  	(object sendEvent
+					    quid       	"40816985002F")))
+				type       	"StartState")
+			    (object State "$UNNAMED$1"
+				quid       	"408169810211"
+				type       	"EndState"))
+			partitions 	(list Partitions)
+			objects    	(list Objects)
+			statediagrams 	(list StateDiagrams
+			    (object State_Diagram "Lifecycle"
+				quid       	"4081697B02E4"
+				title      	"Lifecycle"
+				zoom       	100
+				max_height 	28350
+				max_width  	21600
+				origin_x   	0
+				origin_y   	0
+				items      	(list diagram_item_list
+				    (object StateView "StartState" "$UNNAMED$0" @1
+					location   	(663, 315)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@1
+					    location   	(705, 285)
+					    nlines     	2
+					    max_width  	600
+					    label      	"")
+					icon_style 	"Icon"
+					line_color 	3342489
+					quidu      	"4081697F0019"
+					autoResize 	TRUE)
+				    (object StateView "EndState" "$UNNAMED$1" @2
+					location   	(1358, 450)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@2
+					    location   	(1412, 408)
+					    nlines     	2
+					    max_width  	600
+					    label      	"")
+					icon_style 	"Icon"
+					line_color 	3342489
+					quidu      	"408169810211"
+					autoResize 	TRUE)
+				    (object TransView "" @3
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"40816985002C"
+					client     	@1
+					supplier   	@2
+					line_style 	0
+					x_offset   	FALSE))))))
+		(object Class "Is Active"
+		    quid       	"408169580398"
+		    stereotype 	"public"
+		    concurrency 	"Active"))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"408169410179"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Public classes can't be active or have state machines::Has State Machine" @4
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(755, 415)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@4
+				location   	(551, 389)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	408
+				justify    	0
+				label      	"Has State Machine")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@4
+				location   	(551, 344)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	408
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"4081694503A5"
+			    width      	426
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Public classes can't be active or have state machines::Is Active" @5
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1695, 413)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@5
+				location   	(1587, 387)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	216
+				justify    	0
+				label      	"Is Active")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@5
+				location   	(1587, 342)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	216
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"408169580398"
+			    width      	234
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3FDAA7B50163"
@@ -34,7 +221,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 6268f9a4ccdd $ }
+|{ revision = $Revision: b89370ac0bb2 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -42,77 +229,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Bad Model Regressions::Bad Tag Name" @1
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(467, 720)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@1
-			location   	(243, 647)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	448
-			justify    	0
-			label      	"Bad Tag Name")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3FDAA7BB008F"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(243, 703)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	452)
-		    width      	466
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object NoteView @2
-		    location   	(465, 435)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@2
-			location   	(242, 336)
-			fill_color 	13434879
-			nlines     	4
-			max_width  	410
-			label      	"Detect illegal characters in tag name rather than letting Saxon find them.")
-		    line_color 	3342489
-		    fill_color 	13434879
-		    width      	470
-		    height     	210)
-		(object Label @3
+		(object Label @6
 		    location   	(215, 133)
 		    font       	(object Font
 			size       	10
@@ -125,8 +242,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 6268f9a4ccdd 2004/04/04 14:52:06 simon $")
-		(object CategoryView "Logical View::Bad Model Regressions" @4
+		    label      	"$Id: Bad_Model_Regressions.cat,v b89370ac0bb2 2004/04/17 17:33:15 simon $")
+		(object CategoryView "Logical View::Bad Model Regressions" @7
 		    location   	(2734, 220)
 		    font       	(object Font
 			size       	10
@@ -138,7 +255,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@4
+			Parent_View 	@7
 			location   	(2564, 136)
 			fill_color 	13434879
 			nlines     	2
@@ -150,4 +267,72 @@
 		    fill_color 	13434879
 		    quidu      	"3FDAA7500168"
 		    width      	352
+		    height     	180)
+		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @8
+		    location   	(495, 435)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(165, 396)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	660
+			justify    	0
+			label      	"Detect illegal characters in tag name rather than letting Saxon find them")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(165, 351)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	660
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408168AE0217"
+		    width      	672
+		    height     	180)
+		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @9
+		    location   	(1355, 438)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(1087, 399)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	536
+			justify    	0
+			label      	"Public classes can't be active or have state machines")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@9
+			location   	(1087, 354)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	536
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408168F600C6"
+		    width      	548
 		    height     	180)))))
