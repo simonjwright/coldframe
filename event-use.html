@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: event-use.html,v bbbeb7d333c4 2003/08/22 19:29:07 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -8,8 +8,18 @@
 
 <h2>Event queues</h2>
 
-<p>All code is executed in the context of some Ada task.
+<p>All code is executed in the context of some Ada task. There are
+three relevant kinds of task:
 
+<ul>
+
+<li>the environment task (the main program),
+
+<li>the task associated with an instance of an &#171;active&#187; class,
+
+<li>the <i>dispatcher</i> task associated with an event queue.
+
+</ul>
 
 <h2>Posting an event</h2>
 
