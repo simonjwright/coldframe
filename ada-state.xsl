@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-state.xsl,v f351f56fc5a1 2003/09/13 16:44:22 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -700,7 +700,7 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
 
-    <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="could-edit"/>
     <xsl:call-template name="identification-info"/>
 
     <xsl:text>separate (</xsl:text>
