@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
+<!-- $Id: ada-association.xsl,v d93fca753e5c 2001/08/19 16:17:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -881,6 +881,10 @@
       <xsl:value-of select="$II"/>
       <xsl:text>function Sel (This : </xsl:text>
       <xsl:value-of select="$b"/>
+      <xsl:text>.Handle) return Boolean;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>function Sel (This : </xsl:text>
+      <xsl:value-of select="$b"/>
       <xsl:text>.Handle) return Boolean is&#10;</xsl:text>
       <xsl:value-of select="$III"/>
       <xsl:text>use type </xsl:text>
@@ -1044,6 +1048,10 @@
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
 
+    <xsl:value-of select="$II"/>
+    <xsl:text>function Sel (This : </xsl:text>
+    <xsl:value-of select="$c"/>
+    <xsl:text>.Handle) return Boolean;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>function Sel (This : </xsl:text>
     <xsl:value-of select="$c"/>
@@ -2046,8 +2054,7 @@
     <xsl:text> : </xsl:text>
     <xsl:value-of select="$role-a/classname"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$continuation-indent"/>
+    <xsl:value-of select="$IC"/>
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Collections.Collection</xsl:text>
