@@ -1,4 +1,4 @@
-<!-- $Id: directions.html,v 48f090930359 2002/01/20 10:40:50 simon $ -->
+<!-- $Id: directions.html,v 83f86c77799a 2002/07/05 05:12:25 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Directions</title>
@@ -10,15 +10,28 @@
 
 <ul>
 
-<li>provide support for state models.
+<li>Improve unit test support:
 
-<li>provide model validation support.
+<ul>
+
+<li>Change &#171;singleton&#187; code generation so that
+<tt>Tear_Down</tt> and re-<tt>Initialize</tt> can reset the instance.
+
+<li>Provide an event queue that test procedures can block on until
+there are no more events.
+
+<li><tt>Tear_Down</tt> the event queue (otherwise you have to take
+drastic measures to end the test harness).
+
+</ul>
 
 </ul>
 
 <h2>Longer-term</h2>
 
 <ul>
+
+<li>provide model validation support.
 
 <li>provide at least one alternate architecture.
 
@@ -27,6 +40,8 @@
 <ul>
 
 <li>thorn
+
+<li>dia
 
 <li>...?
 
