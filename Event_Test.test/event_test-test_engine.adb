@@ -96,6 +96,33 @@ package body Event_Test.Test_Engine is
    --  Test procedures  --
    -----------------------
 
+   --  Events can be posted to run "now".
+   procedure Post_Now
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Post_Now
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Store_1 : constant ColdFrame.Project.Events.Event_P
+        := new Store;
+      Store_2 : constant ColdFrame.Project.Events.Event_P
+        := new Store;
+      S1 : Store renames Store (Store_1.all);
+      S2 : Store renames Store (Store_2.all);
+   begin
+      S1.Payload := 1;
+      S2.Payload := 2;
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Post (Store_1,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.0);
+      ColdFrame.Project.Events.Post (Store_2,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.0);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Result = 2, "wrong result" & Result'Img);
+   end Post_Now;
+
+
    --  One task can take out nested locks.
    procedure Lock_Vs_Self
      (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -238,6 +265,8 @@ package body Event_Test.Test_Engine is
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
+      Register_Routine
+        (T, Post_Now'Access, "Events to run immediately");
       Register_Routine
         (T, Lock_Vs_Self'Access, "Nested lock");
       Register_Routine
