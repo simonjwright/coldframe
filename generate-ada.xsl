@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 081bd0744b4b 2003/01/11 17:32:10 simon $ -->
+<!-- $Id: generate-ada.xsl,v 556e3e2ed4fd 2003/01/22 20:06:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -180,7 +180,8 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
+    <xsl:if test="type/@serializable
+                  or type/operation[not(@access) and not(@suppressed)]">
 
       <xsl:call-template name="do-not-edit"/>
       
@@ -189,9 +190,18 @@
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
+      <!-- Operations that were analyst-specified need stubs. -->
       <xsl:apply-templates
         select="type/operation[not(@access) and not(@suppressed)]"
         mode="domain-type-operation-body-stub">
+        <xsl:sort select="name"/>
+      </xsl:apply-templates>
+
+      <!-- Serializable types need an Image implementation (can't be
+           made separate). -->
+      <xsl:apply-templates
+        select="type[@serializable]"
+        mode="serializable-type-image-body">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
 
