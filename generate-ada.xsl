@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: generate-ada.xsl,v 99ecb47e4623 2002/07/30 19:23:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -234,6 +234,10 @@
     <xsl:call-template name="do-not-edit"/>
 
     <xsl:variable
+      name="class-initializations"
+      select="class[attribute[@class and initial] or @singleton]"/>
+
+    <xsl:variable
       name="initialize-procedures"
       select="class/operation[@initialize]"/>
 
@@ -250,6 +254,15 @@
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
+
+    <xsl:for-each select="$class-initializations">
+      <xsl:sort select="name"/>
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Class_Initialize;&#10;</xsl:text>
+    </xsl:for-each>
 
     <xsl:for-each select="$initialize-procedures">
       <xsl:sort select="../name"/>
@@ -268,6 +281,14 @@
     <xsl:value-of select="$I"/>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Initialize;&#10;</xsl:text>
+
+    <!-- .. class initializations .. -->
+    <xsl:for-each select="$class-initializations">
+      <xsl:sort select="name"/>
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Class_Initialize;&#10;</xsl:text>
+    </xsl:for-each>
 
     <!-- .. <<init>> operations .. -->
     <xsl:for-each select="$initialize-procedures">
@@ -309,6 +330,18 @@
         select="'.. package bodies for individual classes ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="class" mode="class-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Class initialization procedures. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. class initializations ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[attribute[@class and initial] or @singleton]"
+      mode="class-initialization">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
