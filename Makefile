@@ -258,7 +258,7 @@ xml-schemas.html States-check.xsv States-check.html \
 coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
-ddf.dtd ColdFrame-norm.xsd \
+ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff
 
 serialization-model.html: Serialization.html
