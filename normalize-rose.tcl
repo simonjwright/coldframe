@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v eceba6426551 2003/01/18 16:03:52 simon $
+# $Id: normalize-rose.tcl,v d2973826d463 2003/01/22 19:55:43 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1073,6 +1073,8 @@ itcl::class Class {
 
     variable extends
 
+    variable serializable 0
+
     # called (via stereotype mechanism) to indicate that this is a
     # <<type>> class
     method -type {dummy} {set isType 1}
@@ -1090,6 +1092,10 @@ itcl::class Class {
     # called (via annotation mechanism) to indicate that this type
     # extends an (imported) base type
     method -extends {base} {set extends [normalize $base]}
+
+    # called (via annotation mechanism) to indicate that this type
+    # is serializable
+    method -serializable {dummy} {set serializable 1}
 
     #
     # variables and methods related to <<exception>> classes
@@ -1148,6 +1154,10 @@ itcl::class Class {
 	    if [info exists extends] {
 		Error "tried to extend [$this -getName],\
                     which has no attributes"
+	    }
+	    if $serializable {
+		Error "tried to make type [$this -getName],\
+                    which has no attributes, serializable"
 	    }
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
@@ -1217,6 +1227,9 @@ itcl::class Class {
 	    }
 	    if [info exists extends] {
 		puts -nonewline " extends=\"$extends\""
+	    }
+	    if $serializable {
+		puts -nonewline " serializable=\"yes\""
 	    }
 	    puts ">"
 	    putElement name "$name"
@@ -2092,6 +2105,12 @@ itcl::class Datatype {
     # called when the user has tried to extend a non-record type.
     method -extends {dummy} {
 	Error "tried to extend $type, which has no attributes"
+    }
+
+    # called when the user has tried to mark a non-record type as
+    # serializable.
+    method -serialized {dummy} {
+	Error "tried to make $type, which has no attributes, serializable"
     }
 
     # Called when the type is a counterpart.
