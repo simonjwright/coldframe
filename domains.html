@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v a14ab37067b7 2004/04/20 21:04:28 simon $ -->
+<!-- $Id: domains.html,v c4a341ea5958 2004/11/06 14:20:04 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -46,6 +46,23 @@ the way of code generation.
 careful about associations; they too are held in packages, and you
 need to make sure that the associations you do want are in packages
 visible to code generation, and vice versa.
+
+<h3><a name="tags">Tagged values</a></h3>
+
+<p><tt>revision = <i>revision-id-string</i></tt> specifies the
+domain's version control ID.
+
+<p>In Rose with CVS, you'd select the domain Package in the browser
+and add the line
+
+<!-- couldn't actually use the $ here! -->
+<pre>
+  { revision = &#36;Revision&#36; }
+</pre>
+
+to the documentation pane. Modify as required by your version control
+system, being careful to avoid commas (so, with CVS or RCS, avoid
+<tt>&#36;Id&#36;</tt> and <tt>&#36;RCSfile&#36;</tt>).
 
 <h2>Translation</h2>
 
