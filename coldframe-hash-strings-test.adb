@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-hash-strings-test.adb,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 3f8478ad4759 $
+--  $Date: 2001/09/28 04:50:58 $
 --  $Author: simon $
 
 with Ada.Strings.Bounded;
@@ -38,14 +38,14 @@ procedure ColdFrame.Hash.Strings.Test is
       Ada.Text_IO.Put_Line ("hashing |" & S & "|:");
       Ada.Text_IO.Put_Line
         ("  plain     ->"
-         & Integer'Image (ColdFrame.Hash.Strings.Standard (S)));
+         & Natural'Image (ColdFrame.Hash.Strings.Standard (S)));
       Ada.Text_IO.Put_Line
         ("  bounded   ->"
-         & Integer'Image (S128_Hash (To_Bounded_String (S))));
+         & Natural'Image (S128_Hash (To_Bounded_String (S))));
       Ada.Text_IO.Put_Line
         ("  unbounded ->"
-         & Integer'Image (ColdFrame.Hash.Strings.Unbounded
-			  (To_Unbounded_String (S))));
+         & Natural'Image (ColdFrame.Hash.Strings.Unbounded
+                          (To_Unbounded_String (S))));
    end T;
 
 begin
