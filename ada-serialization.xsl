@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v c1228a59b080 2003/03/01 17:08:49 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 0df4f00f0dcf 2003/03/06 20:53:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -229,11 +229,11 @@
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; </xsl:text>
               <xsl:value-of select="/domain/type[name=current()/type]/@image"/>
-              <xsl:text> ("</xsl:text>
+              <xsl:text> (S.Payload.</xsl:text>
               <xsl:value-of select="name"/>
-              <xsl:text>", S.Payload.</xsl:text>
+              <xsl:text>, "</xsl:text>
               <xsl:value-of select="name"/>
-              <xsl:text>) &amp; ASCII.LF&#10;</xsl:text>
+              <xsl:text>") &amp; ASCII.LF&#10;</xsl:text>
             </xsl:when>
             
             <xsl:otherwise>
@@ -301,7 +301,7 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:value-of select="@image"/>
-            <xsl:text> ("", S.Payload) &amp; ASCII.LF&#10;</xsl:text>
+            <xsl:text> (S.Payload, "") &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
           
           <xsl:otherwise>
