@@ -13,11 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-pushed.adb,v $
---  $Revision: 0f7eda971a8e $
---  $Date: 2003/02/07 05:55:57 $
+--  $Revision: cb5941a5d080 $
+--  $Date: 2004/12/24 08:53:12 $
 --  $Author: simon $
 
---  The button has been pushed; tell the associated Lamp(s).
+--  Handles Button Events, which occur when a button has been pushed.
+
+--  Tell the associated Lamps.
 
 with House_Management.Lamp.Collections;
 with House_Management.Lamp.Iterate;
@@ -25,15 +27,21 @@ with House_Management.A1;
 
 separate (House_Management.Button)
 procedure Pushed
-  (This : Handle) is
+  (E : Button_Event) is
 
-   procedure Process is new Lamp.Iterate (Lamp.Button_Pushed);
+   procedure Button_Pushed (L : Lamp.Handle);
+   pragma Inline (Button_Pushed);
+   procedure Process is new Lamp.Iterate (Button_Pushed);
+   procedure Button_Pushed (L : Lamp.Handle) is
+      Ev : Lamp.Button_Push (For_The_Instance => L);
+   begin
+      Lamp.Handler (Ev);
+   end Button_Pushed;
 
-   LHs : constant Lamp.Collections.Collection
-     := A1.Is_Controlled_By (This);
+   BH : constant Handle := Find ((Name => E.Payload));
+   LHS : constant Lamp.Collections.Collection
+     := A1.Is_Controlled_By (BH);
 
 begin
-
-   Process (LHs);
-
+   Process (LHS);
 end Pushed;
