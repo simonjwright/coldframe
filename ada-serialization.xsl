@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 55e266eb9022 2003/09/13 17:22:48 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 2588d6e5cdbc 2003/10/31 06:43:44 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -44,12 +44,12 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Serializable is&#10;</xsl:text>
-    
+
     <xsl:value-of select="$blank-line"/>
-    
+
     <xsl:for-each select="type[@serializable]">
       <xsl:sort select="name"/>
-      
+
       <!--
            type {name}
            is new ColdFrame.Project.Serialization.Base with record
@@ -57,7 +57,7 @@
            end record;
            function Image (S : {name}) return String;
            -->
-      
+
       <xsl:value-of select="$I"/>
       <xsl:text>type </xsl:text>
       <xsl:value-of select="name"/>
@@ -72,37 +72,37 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>end record;&#10;</xsl:text>
-      
+
       <xsl:value-of select="$blank-line"/>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:text>function Image (S : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>) return String;&#10;</xsl:text>
-      
+
       <xsl:value-of select="$blank-line"/>
-      
+
     </xsl:for-each>
-    
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Serializable;&#10;</xsl:text>
-    
+
   </xsl:template>
 
 
   <!-- called at domain to output a child package body if there
        are any serializable types. -->
   <xsl:template name="serializable-type-body">
-    
+
     <xsl:if test="type/@serializable">
-      
+
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>
-      
+
       <xsl:value-of select="$blank-line"/>
 
       <xsl:apply-templates
@@ -110,15 +110,15 @@
         mode="serializable-type-image-body">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
-      
+
       <xsl:text>end </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable;&#10;</xsl:text>
-      
+
     </xsl:if>
-    
+
   </xsl:template>
-  
+
 
   <!-- Called to generate the implementation of Image for a serializable
        type. -->
@@ -149,7 +149,7 @@
               & "</record>";
          end Image;
          -->
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>function Image (S : </xsl:text>
     <xsl:value-of select="name"/>
@@ -171,21 +171,20 @@
     <xsl:text>&amp; Base_Attribute_Image (S)&#10;</xsl:text>
 
     <xsl:choose>
-      
+
       <xsl:when test="attribute">
-        
+
+        <xsl:call-template name="image-of-type">
+          <xsl:with-param name="type" select="."/>
+        </xsl:call-template>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+
         <xsl:call-template name="image-of-type">
           <xsl:with-param name="type" select="."/>
           <xsl:with-param name="name" select="name"/>
-        </xsl:call-template>
-        
-      </xsl:when>
-      
-      <xsl:otherwise>
-        
-        <xsl:call-template name="image-of-type">
-          <xsl:with-param name="type" select="."/>
-          <xsl:with-param name="name" select="name"/>         
         </xsl:call-template>
 
       </xsl:otherwise>
@@ -204,7 +203,7 @@
   <xsl:template match="*" mode="serializable-type-image-body"/>
 
 
-  <!-- Called (at domain/type) to generate code to print a value of the 
+  <!-- Called (at domain/type) to generate code to print a value of the
        type. -->
   <xsl:template name="image-of-type">
 
@@ -215,25 +214,36 @@
     <xsl:param name="field" select="'Payload'"/>
 
     <!-- The text name to be used (eg, "X.Y" for the above). -->
-    <xsl:param name="name"/>
+    <xsl:param name="name" select="''"/>
 
     <xsl:choose>
-      
+
       <xsl:when test="$type/attribute">
         <!-- This is a composite type. -->
-        
+
         <xsl:for-each select="$type/attribute">
-          
+
+          <xsl:variable name="print-name">
+            <xsl:choose>
+              <xsl:when test="$name">
+                <xsl:value-of select="concat($name,'.',current()/name)"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="name"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+
           <xsl:call-template name="image-of-type">
             <xsl:with-param
               name="type"
               select="/domain/type[name=current()/type]"/>
-            <xsl:with-param 
+            <xsl:with-param
               name="field"
               select="concat($field,'.',current()/name)"/>
             <xsl:with-param
               name="name"
-              select="concat($name,'.',current()/name)"/>
+              select="$print-name"/>
           </xsl:call-template>
 
         </xsl:for-each>
@@ -244,7 +254,7 @@
         <!-- This is a simple type. -->
 
         <xsl:choose>
-          
+
           <xsl:when test="$type/name='Date' or $type/name='Time'">
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
@@ -258,7 +268,7 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:when test="$type/name='Text' or $type/name='Unbounded_String'">
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
@@ -272,7 +282,7 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:when test="$type/string">
             <!-- Bounded string. -->
             <xsl:value-of select="$IIC"/>
@@ -288,7 +298,7 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:when test="$type/@type-image">
             <!-- The type has a user-defined type image operation. -->
             <xsl:value-of select="$IIC"/>
@@ -304,7 +314,7 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:when test="$type/@field-image">
             <!-- The type has a user-defined field image operation. -->
             <xsl:value-of select="$IIC"/>
@@ -316,7 +326,7 @@
             <xsl:value-of select="$name"/>
             <xsl:text>") &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:otherwise>
             <!-- Assume it's a scalar. -->
             <xsl:value-of select="$IIC"/>
@@ -331,13 +341,13 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:otherwise>
-          
+
         </xsl:choose>
-          
+
       </xsl:otherwise>
 
     </xsl:choose>
-    
+
   </xsl:template>
 
 
