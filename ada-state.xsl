@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: ada-state.xsl,v 864c2790de74 2002/08/17 15:17:13 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,7 +56,9 @@
           <xsl:value-of select="$I"/>
           <xsl:text>type </xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text> is new ColdFrame.Project.Events.Event_Base with </xsl:text>
+          <xsl:text>&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>is new ColdFrame.Project.Events.Event_Base with </xsl:text>
 
         </xsl:when>
 
