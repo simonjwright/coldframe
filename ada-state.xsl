@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v b97e9b023f1d 2003/09/27 16:38:55 simon $ -->
+<!-- $Id: ada-state.xsl,v 45d32fd61f90 2003/09/27 16:52:02 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -483,7 +483,7 @@
           <xsl:value-of select="../name"/>
           <xsl:text>, </xsl:text>
           <xsl:value-of select="$operation"/>
-          <xsl:text> is a function, can't be an entry action.</xsl:text>
+          <xsl:text> is a function, can't be an entry action</xsl:text>
         </xsl:message>
       </xsl:when>
 
@@ -494,7 +494,7 @@
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
-          <xsl:text>, Delete not allowed as a singleton entry action.</xsl:text>
+          <xsl:text>, Delete not allowed as a singleton entry action</xsl:text>
         </xsl:message>
       </xsl:when>
 
@@ -507,7 +507,7 @@
           <xsl:value-of select="../name"/>
           <xsl:text>, </xsl:text>
           <xsl:value-of select="$operation"/>
-          <xsl:text> has too many parameters to be an entry action.</xsl:text>
+          <xsl:text> has too many parameters to be an entry action</xsl:text>
         </xsl:message>
       </xsl:when>
 
