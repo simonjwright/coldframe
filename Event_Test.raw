@@ -1,11 +1,11 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20030330t</extractor>
 <name>Event Test</name>
 <date>
-<year>2002</year>
-<month>9</month>
-<day>14</day>
-<time>15:53</time>
+<year>2003</year>
+<month>4</month>
+<day>7</day>
+<time>11:16</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -40,7 +40,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>i</name>
+<parametername>i</parametername>
 <documentation></documentation>
 <type>Information</type>
 <initial></initial>
@@ -66,7 +66,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>w</name>
+<parametername>w</parametername>
 <documentation></documentation>
 <type>Wait</type>
 <initial></initial>
@@ -78,7 +78,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>p</name>
+<parametername>p</parametername>
 <documentation></documentation>
 <type>Content</type>
 <initial></initial>
@@ -90,7 +90,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>p</name>
+<parametername>p</parametername>
 <documentation></documentation>
 <type>Content</type>
 <initial></initial>
@@ -289,7 +289,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>p</name>
+<parametername>p</parametername>
 <documentation></documentation>
 <type>Content</type>
 <initial></initial>
@@ -301,7 +301,7 @@
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>p</name>
+<parametername>p</parametername>
 <documentation></documentation>
 <type>Content</type>
 <initial></initial>
@@ -416,6 +416,53 @@
 <target>idle</target>
 <event>
 <name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class>
+<name>Terminal</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+<action>
+<name>Delete</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event>
+<name>e</name>
 </event>
 <documentation></documentation>
 </transition>
