@@ -6,15 +6,15 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: db99902d0f74 $
---  $Date: 2005/02/26 08:49:34 $
+--  $Revision: d47f3f64c562 $
+--  $Date: 2005/02/26 11:33:34 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;
-with ColdFrame.Test_Stub_Support;
+with ColdFrame.Stubs;
 
-procedure ColdFrame.Test_Stub_Support_Test is
+procedure ColdFrame.Stubs_Test is
 
    procedure Generated_Stub_Procedure
      (Message : String;
@@ -26,36 +26,36 @@ procedure ColdFrame.Test_Stub_Support_Test is
       Input : Integer;
       Result : out Integer) is
       Occurrence : constant Positive
-        := ColdFrame.Test_Stub_Support.Note_Entry ("foo.bar.quux");
+        := ColdFrame.Stubs.Note_Entry ("foo.bar.quux");
    begin
       String'Output
-        (ColdFrame.Test_Stub_Support.Get_Input_Value_Stream
+        (ColdFrame.Stubs.Get_Input_Value_Stream
            ("foo.bar.quux", "message", Occurrence, Message'Size),
          Message);
       Integer'Output
-        (ColdFrame.Test_Stub_Support.Get_Input_Value_Stream
+        (ColdFrame.Stubs.Get_Input_Value_Stream
            ("foo.bar.quux", "input", Occurrence, Input'Size),
          Input);
-      ColdFrame.Test_Stub_Support.Check_For_Exception
+      ColdFrame.Stubs.Check_For_Exception
         ("foo.bar.quux", Occurrence);
       Result := Integer'Input
-        (ColdFrame.Test_Stub_Support.Get_Output_Value_Stream
+        (ColdFrame.Stubs.Get_Output_Value_Stream
            ("foo.bar.quux", "result", Occurrence));
    end Generated_Stub_Procedure;
 
 
    procedure Set_Output_Integer
-   is new ColdFrame.Test_Stub_Support.Set_Output_Value (Integer);
+   is new ColdFrame.Stubs.Set_Output_Value (Integer);
    function Get_Input_Integer
-   is new ColdFrame.Test_Stub_Support.Get_Input_Value (Integer);
+   is new ColdFrame.Stubs.Get_Input_Value (Integer);
    function Get_Input_String
-   is new ColdFrame.Test_Stub_Support.Get_Input_Value (String);
+   is new ColdFrame.Stubs.Get_Input_Value (String);
 
    Foo_Exception : exception;
 
 begin
 
-   ColdFrame.Test_Stub_Support.Set_Up;
+   ColdFrame.Stubs.Set_Up;
 
    declare
       Result : Integer;
@@ -63,24 +63,24 @@ begin
 
       --  Setup
       Set_Output_Integer ("foo.bar.quux", "result", 42, 1);
-      ColdFrame.Test_Stub_Support.Set_Exception
+      ColdFrame.Stubs.Set_Exception
         ("foo.bar.quux", Foo_Exception'Identity, 2);
-      ColdFrame.Test_Stub_Support.Set_Exception
+      ColdFrame.Stubs.Set_Exception
         ("foo.bar.quux", Ada.Exceptions.Null_Id, 3);
       Set_Output_Integer ("foo.bar.quux", "result", 44, 3);
       Set_Output_Integer ("foo.bar.quux", "result", 45, 4);
 
       --  First call
-      Generated_Stub_Procedure ("first", 24, Result);
+      Generated_Stub_Procedure ("first: input 24, result 42", 24, Result);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 1));
       Put_Line ("input => " & Get_Input_Integer
-                  ("foo.bar.quux", "input", 1)'Img);  --  should be 24
-      Put_Line ("result => " & Result'Img);           --  should be 42
+                  ("foo.bar.quux", "input", 1)'Img);
+      Put_Line ("result => " & Result'Img);
 
       --  Second call
       begin
-         Generated_Stub_Procedure ("second", 25, Result);
+         Generated_Stub_Procedure ("second: input 25, exception", 25, Result);
       exception
          when E : Foo_Exception =>
             Put_Line ("exception => " &
@@ -89,27 +89,29 @@ begin
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 2));
       Put_Line ("input => " & Get_Input_Integer
-                  ("foo.bar.quux", "input", 2)'Img);  --  should be 25
+                  ("foo.bar.quux", "input", 2)'Img);
 
       --  Third call
-      Generated_Stub_Procedure ("third", 26, Result);
+      Generated_Stub_Procedure ("third: input 26, result 44", 26, Result);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 3));
       Put_Line ("input => " & Get_Input_Integer
-                  ("foo.bar.quux", "input", 3)'Img);  --  should be 26
-      Put_Line ("result => " & Result'Img);           --  should be 44
+                  ("foo.bar.quux", "input", 3)'Img);
+      Put_Line ("result => " & Result'Img);
 
       --  Fourth call
-      Generated_Stub_Procedure ("fourth and last", 27, Result);
+      Generated_Stub_Procedure ("fourth and last: input 27, result 45",
+                                27,
+                                Result);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 4));
       Put_Line ("input => " & Get_Input_Integer
-                  ("foo.bar.quux", "input", 4)'Img);  --  should be 27
-      Put_Line ("result => " & Result'Img);           --  should be 45
+                  ("foo.bar.quux", "input", 4)'Img);
+      Put_Line ("result => " & Result'Img);
 
    end;
 
-   ColdFrame.Test_Stub_Support.Tear_Down;
+   ColdFrame.Stubs.Tear_Down;
 
-end ColdFrame.Test_Stub_Support_Test;
+end ColdFrame.Stubs_Test;
 
