@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fcfbe6aecdf7 2002/06/27 18:31:50 simon $
+# $Id: normalize-rose.tcl,v b45b061cc8b1 2002/07/05 05:01:01 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -50,6 +50,10 @@ proc setCaseExceptions {file} {
 
 # Given a string,
 # - trims leading and trailing white space
+# - handles "strings" and 'c'haracters directly
+# - handles signed entities by recursion
+# - handles based literals directly
+# otherwise,
 # - capitalizes the first letter of each word, unless it matches a case
 #   exception in which case the exception is taken
 # - replaces each run of white space by a single underscore
@@ -63,9 +67,16 @@ proc normalize {s} {
 
     set tmp [string trim $s]
     # handle strings
-    if [regexp {\".*\"} $tmp] {return $tmp}
+    if [regexp {^\".*\"$} $tmp] {return $tmp}
+    # handle characters
+    if [regexp {^\'.\'$} $tmp] {return $tmp}
+    # allow signed entities
+    if [regexp {[-+]} $tmp] {
+	set sign [string index $tmp 0]
+	return "$sign[normalize [string range $tmp 1 end]]"
+    }
     # allow based literals
-    if [regexp -nocase {[0-9]+\#[0-9a-f.]*\#} $tmp] {return $tmp}
+    if [regexp -nocase {[0-9_]+\#[0-9a-f_.]*\#} $tmp] {return $tmp}
     # check for illegal characters
     regsub -all {[A-Za-z0-9_ \t.]} $tmp "" illegal
     if {[string length $illegal] > 0} {
