@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v f3b5455761d7 2001/09/04 04:59:42 simon $ -->
+<!-- $Id: ada-association.xsl,v 904bbc374ec9 2001/09/08 05:00:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -370,7 +370,9 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$src/classname]"/>
             </xsl:call-template>
-            <xsl:text> (</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/name"/>
             <xsl:text>, </xsl:text>
             <xsl:value-of select="$src/name"/>
@@ -445,7 +447,9 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$src/classname]"/>
             </xsl:call-template>
-            <xsl:text> (</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/name"/>
             <xsl:text>, null);&#10;</xsl:text>
           </xsl:otherwise>
