@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 7b7c981e3b8d $}
+|{ revision = $Revision: 49ed454da746 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -590,7 +590,11 @@
 	    stereotype 	"type, serializable")
 	(object Class "Array Type"
 	    quid       	"400195C601EA"
-	    documentation 	"{array = record type, index = enum type}"
+	    documentation 	
+|{array = record type,
+| index = enum type,
+| unconstrained}
+	    
 	    stereotype 	"type")
 	(object Class "Record Type"
 	    quid       	"4001965A037E"
@@ -730,13 +734,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 7b7c981e3b8d $}
+|{ revision = $Revision: 49ed454da746 $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	0
+	    origin_y   	1770
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Regressions::Find Active" @19
 		    ShowCompartmentStereotypes 	TRUE
@@ -1027,7 +1031,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 7b7c981e3b8d 2004/01/13 12:40:27 simon $")
+		    label      	"$Id: Regressions.cat,v 49ed454da746 2004/01/20 14:05:31 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
