@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 7a2c9dfdd340 2001/04/13 11:16:57 simon $
+# $Id: normalize-rose.tcl,v 3b62ea715cae 2001/04/22 10:46:07 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -24,7 +24,6 @@ exec itclsh "$0" "$@"
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
-lappend auto_path ~/TclXML-1.2
 package require xml
 package require Itcl
 
@@ -524,7 +523,7 @@ itcl::class Domain {
     method -generate {} {
 	puts "<domain>"
 	putElement name "$name"
-	putElement date "[exec /bin/date]"
+	putElement date "[exec date]"
 	$this -generateDocumentation
 	$classes -evaluate $this
 	$relationships -evaluate $this
@@ -777,8 +776,6 @@ itcl::class Relationship {
 itcl::class Association {
     inherit Relationship
 
-    # XXX I'm not at all sure I understand role1, role2 vs KC_A_End etc.
-
     variable role1
 
     variable role2
@@ -856,8 +853,10 @@ itcl::class Association {
 			error "neither end of biconditional $name\
 				is marked as source"
 		    }
+		    $role2 -setSourceEnd 1
 		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
 		} elseif [$role2 -getConditionality] {
+		    $role1 -setSourceEnd 1
 		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
 		} else {
 		    error "neither end of unconditional $name\
@@ -867,6 +866,8 @@ itcl::class Association {
 	    "1:M"     {
 		# the identifying attributes in role 1 are used as 
 		# referential attributes in role 2
+		$role1 -setSourceEnd 1
+		$role2 -setSourceEnd 0
 		$cl1 -addFormalizingAttributesTo $cl2 $this 0
 	    }
 	    "1-(1:1)" {error "oops! not yet implemented!"}
@@ -875,6 +876,8 @@ itcl::class Association {
 		# referential attributes in the associative class.
 		# Only the referential attributes from role 2 become
 		# identifiers in the associative class.
+		$role1 -setSourceEnd 1
+		$role2 -setSourceEnd 1
 		$cl1 -addFormalizingAttributesTo $assoc $this 0
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
 	    }
@@ -882,6 +885,8 @@ itcl::class Association {
 		# The identifying attributes in both roles are used as
 		# referential and identifying attributes in the associative
 		# class.
+		$role1 -setSourceEnd 1
+		$role2 -setSourceEnd 1
 		$cl1 -addFormalizingAttributesTo $assoc $this 1
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
 	    }
@@ -931,7 +936,8 @@ itcl::class Role {
 
     method -cardinality {c} {
 	switch $c {
-	    "1"     {set conditional 0; set cardinality "1"}
+	    "1"     -
+	    "1..1"  {set conditional 0; set cardinality "1"}
 	    "1..n"  -
 	    "n"     {set conditional 0; set cardinality "M"}
 	    "0..1"  {set conditional 1; set cardinality "1"}
@@ -954,6 +960,7 @@ itcl::class Role {
 
     method -source {dummy} {set sourceEnd 1}
 
+    method -setSourceEnd {s} {set sourceEnd $s}
     method -getSourceEnd {} {return $sourceEnd}
 
     method -complete {} {
@@ -967,6 +974,7 @@ itcl::class Role {
 	puts -nonewline "<role"
 	if $conditional {puts -nonewline " conditional=\"yes\""}
 	if {$cardinality == "M"} {puts -nonewline " multiple=\"yes\""}
+	if $sourceEnd {puts -nonewline " source=\"yes\""}
 	puts ">"
 	set os [$domain -getClasses]
 	set cl [$os -atName $classname]
