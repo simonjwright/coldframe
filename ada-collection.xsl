@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v f0d38f4904e9 2003/12/18 15:24:27 simon $ -->
+<!-- $Id: ada-collection.xsl,v 79d50da9d66e 2004/01/17 23:01:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -339,6 +339,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
     </xsl:variable>
 
     <!-- Function to return a Collection of all the Instances -->

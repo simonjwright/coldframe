@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 1d4e21a55deb 2004/01/09 15:04:24 simon $ -->
+<!-- $Id: ada-class.xsl,v 79d50da9d66e 2004/01/17 23:01:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,6 +36,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
+    <!-- Determine whether an array caf be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
     </xsl:variable>
 
     <xsl:call-template name="progress-message">
@@ -394,6 +399,11 @@
           <xsl:call-template name="number-of-instances"/>
         </xsl:variable>
 
+        <!-- Determine whether an array can be used. -->
+        <xsl:variable name="array">
+          <xsl:call-template name="can-use-array"/>
+        </xsl:variable>
+
         <!-- Always need storage management. -->
         <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <!-- Need storage offset arithmetic for bounded classes. -->
@@ -687,6 +697,11 @@
       <xsl:call-template name="number-of-instances"/>
     </xsl:variable>
 
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
+    </xsl:variable>
+
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
 
@@ -855,6 +870,11 @@
         <!-- Calculate the maximum number of instances. -->
         <xsl:variable name="max">
           <xsl:call-template name="number-of-instances"/>
+        </xsl:variable>
+
+        <!-- Determine whether an array can be used. -->
+        <xsl:variable name="array">
+          <xsl:call-template name="can-use-array"/>
         </xsl:variable>
 
         <!-- We'll need to free memory. -->
@@ -1033,6 +1053,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
     </xsl:variable>
 
     <!-- The heading .. -->
@@ -1243,6 +1268,11 @@
       <xsl:call-template name="number-of-instances"/>
     </xsl:variable>
 
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
+    </xsl:variable>
+
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
 
@@ -1370,6 +1400,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
@@ -1606,6 +1641,11 @@
     <!-- Calculate the maximum number of instances. -->
     <xsl:variable name="max">
       <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
     </xsl:variable>
 
     <xsl:value-of select="$I"/>
