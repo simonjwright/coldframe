@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: d2cf17389759 $
---  $Date: 2002/06/25 18:35:42 $
+--  $Revision: 264533d476de $
+--  $Date: 2002/07/07 17:49:07 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -108,6 +108,7 @@ package body ColdFrame.Events_G.Standard_G is
          end if;
 
          Delete (E);
+         The_Queue.The_Event_Count.Remove_Posted_Event;
 
       end loop;
 
@@ -182,6 +183,16 @@ package body ColdFrame.Events_G.Standard_G is
    end Unset;
 
 
+   -------------------------
+   --  Unit test support  --
+   -------------------------
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue) is
+   begin
+      The_Queue.The_Event_Count.Wait_Until_Idle;
+   end Wait_Until_Idle;
+
+
    ------------------------------
    --  Timed event management  --
    ------------------------------
@@ -198,6 +209,7 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
+                  The_Queue.The_Event_Count.Add_Held_Event;
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -215,6 +227,7 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
+                  The_Queue.The_Event_Count.Add_Held_Event;
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -259,6 +272,7 @@ package body ColdFrame.Events_G.Standard_G is
                      Delete (T.The_Event);
                   end if;
                end;
+               The_Queue.The_Event_Count.Remove_Held_Event;
 
             end select;
 
@@ -283,6 +297,7 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
+         The_Queue.The_Event_Count.Add_Posted_Event;
       end Post;
 
       entry Fetch (The_Event : out Event_P)
@@ -317,6 +332,36 @@ package body ColdFrame.Events_G.Standard_G is
       end Invalidate_Events;
 
    end Excluder;
+
+
+   protected body Event_Count is
+
+      entry Wait_Until_Idle when Posted_Events = 0 and then Held_Events = 0 is
+      begin
+         null;
+      end Wait_Until_Idle;
+
+      procedure Add_Posted_Event is
+      begin
+         Posted_Events := Posted_Events + 1;
+      end Add_Posted_Event;
+
+      procedure Remove_Posted_Event is
+      begin
+         Posted_Events := Posted_Events - 1;
+      end Remove_Posted_Event;
+
+      procedure Add_Held_Event is
+      begin
+         Held_Events := Held_Events + 1;
+      end Add_Held_Event;
+
+      procedure Remove_Held_Event is
+      begin
+         Held_Events := Held_Events - 1;
+      end Remove_Held_Event;
+
+   end Event_Count;
 
 
    procedure Invalidate_Events
