@@ -38,6 +38,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-class.xsl \
   ada-collection.xsl \
   ada-operation.xsl \
+  ada-state.xsl \
   ada-type.xsl \
   ada-teardown.xsl \
   ada-utilities.xsl
