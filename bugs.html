@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e63a7ff4f8be 2004/06/04 14:47:01 simon $ -->
+<!-- $Id: bugs.html,v 2f819d89e1da 2004/06/12 19:23:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -166,16 +166,6 @@ still present (for both &#171;type&#187;s and &#171;class&#187;es)
 when the composite value is imported or inherited from a parent
 domain (and therefore isn't otherwise mentioned in the model).
 
-<dt>0232 (raised 10.ii.04)
-
-<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
-available event is immediately processed after a delay.
-
-<dt>0233 (raised 10.ii.04)
-
-<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
-are fatal.
-
 <dt>0240 (raised 2.iii.04)
 
 <dd>The Event Queue operation <tt>Unset</tt> assumes it's called in an
@@ -226,6 +216,18 @@ maintained.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0233 (raised 10.ii.04)
+
+<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
+are fatal.
+<br><i>Of course, the system will be unstable after such an exception.</i>
+
+</dl>
 
 <h3>4.vi.04</h3>
 
@@ -2246,6 +2248,17 @@ compiler option.</i>
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vi.04</h3>
+
+<dl>
+
+<dt>0232 (raised 10.ii.04)
+
+<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
+available event is immediately processed after a delay.
+
+</dl>
 
 <h3>1.ii.04</h3>
 
