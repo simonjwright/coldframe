@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 48225873c24f 2002/06/15 15:16:37 simon $
+# $Id: normalize-rose.tcl,v fcfbe6aecdf7 2002/06/27 18:31:50 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -684,18 +684,21 @@ itcl::class Domain {
     variable revision
 
     variable classes
-
-    variable relationships
-
+    
     variable datatypes
-
+    
+    variable exceptions
+    
+    variable relationships
+    
     proc currentDomain {} {return $currentDomain}
-
+    
     constructor {} {
 	set currentDomain $this
-	set classes [Classes ::#auto]
-	set relationships [Relationships ::#auto]
-	set datatypes [Datatypes ::#auto]
+	set classes [Classes ::\#auto]
+	set datatypes [Datatypes ::\#auto]
+	set exceptions [Exceptions ::\#auto]
+	set relationships [Relationships ::\#auto]
     }
 
     method -extractor {e} {set extractor $e}
@@ -707,13 +710,17 @@ itcl::class Domain {
 
     method -getClasses {} {return $classes}
 
-    method -relationships {l} {set relationships $l}
-
-    method -getRelationships {} {return $relationships}
-
     method -datatypes {l} {set datatypes $l}
 
     method -getDatatypes {} {return $datatypes}
+
+    method -exceptions {l} {set exceptions $l}
+
+    method -getExceptions {} {return $exceptions}
+
+    method -relationships {l} {set relationships $l}
+
+    method -getRelationships {} {return $relationships}
 
     method -complete {} {
 	$this -generate
@@ -723,8 +730,9 @@ itcl::class Domain {
 	global coldFrameVersion
 
 	$classes -evaluate $this
-	$relationships -evaluate $this
 	$datatypes -evaluate $this
+	$exceptions -evaluate $this
+	$relationships -evaluate $this
 
 	puts "<domain>"
 	putElement name "$name"
@@ -743,8 +751,9 @@ itcl::class Domain {
 	$this -generateDocumentation
 
 	$classes -generate $this
-	$relationships -generate $this
 	$datatypes -generate $this
+	$exceptions -generate $this
+	$relationships -generate $this
 
 	puts "</domain>"
     }
@@ -753,7 +762,7 @@ itcl::class Domain {
 itcl::class Class {
     inherit Element
 
-    constructor {} {set events [EventSet ::#auto]}
+    constructor {} {set events [EventSet ::\#auto]}
 
     # contains the attributes
     variable attributes
@@ -925,6 +934,14 @@ itcl::class Class {
     # discriminated (record) type
     method -discriminated {dummy} {set discriminated 1}
 
+    #
+    # variables and methods related to <<exception>> classes
+    #
+
+    variable isException 0
+
+    method -exception {dummy} {set isException 1}
+
     # state machine, if specified
     variable statemachine
     method -statemachine {s} {set statemachine $s}
@@ -946,7 +963,7 @@ itcl::class Class {
     # identifier is true if the formalizing attribute(s) are to
     #   be part of obj's identifier
     method -addFormalizingAttributesTo {obj relation role identifier} {
-	set attr [ReferentialAttribute ::#auto $this $relation $role $identifier]
+	set attr [ReferentialAttribute ::\#auto $this $relation $role $identifier]
 	$obj -addReferentialAttribute $attr
     }
 
@@ -972,7 +989,7 @@ itcl::class Class {
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
 	    } else {
-		set dt [Datatype ::#auto $name]
+		set dt [Datatype ::\#auto $name]
 		$dts -add $dt $name
 	    }
 	    # transfer the operations, the documentation and the
@@ -985,6 +1002,11 @@ itcl::class Class {
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
+	} elseif $isException {
+	    set exs [[Domain::currentDomain] -getExceptions]
+	    set ex [Exception ::\#auto $name] 
+	    $exs -add $ex $name
+	    $ex -documentation $documentation
 	} else {
 	    if $isType {
 		# must be a record type
@@ -993,7 +1015,7 @@ itcl::class Class {
 		if [$dts -isPresent $name] {
 		    set dt [$dts -atName $name]
 		} else {
-		    set dt [Datatype ::#auto $name]
+		    set dt [Datatype ::\#auto $name]
 		    $dts -add $dt $name
 		}
 #		if [info exists operations] {
@@ -1531,7 +1553,7 @@ itcl::class Inheritance {
     # children is a List of the names of the subtype classes
     variable children
 
-    constructor {} {set children [List ::#auto]}
+    constructor {} {set children [List ::\#auto]}
 
     method -parent {p} {set parent $p}
 
@@ -1577,7 +1599,7 @@ itcl::class Inheritance {
 	$this -formalized
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
-	    set role [Role ::#auto]
+	    set role [Role ::\#auto]
 	    $role -owner $this
 	    $role -end 4
 	    $role -name "Parent"
@@ -1680,7 +1702,7 @@ itcl::class State {
 itcl::class StateMachine {
     inherit Element
 
-    constructor {} {set events [EventSet ::#auto]}
+    constructor {} {set events [EventSet ::\#auto]}
 
     variable states
     method -states {s} {set states $s}
@@ -1913,6 +1935,19 @@ itcl::class Documentation {
     inherit String
 }
 
+itcl::class Exception {
+    inherit Element
+
+    constructor {n} {set name $n}
+
+    method -generate {domain} {
+	puts "<exception>"
+	putElement name "$name"
+	$this -generateDocumentation
+	puts "</exception>"
+    }
+}
+
 itcl::class Transitiontable {
     inherit Element
 }
@@ -1971,7 +2006,7 @@ itcl::class Attribute {
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
-	    set datatype [Datatype ::#auto $type]
+	    set datatype [Datatype ::\#auto $type]
 	    $datatypes -add $datatype $type
 	} else {
 #	    set datatype [$datatypes -atName $type]
@@ -2082,16 +2117,16 @@ itcl::class Datatypes {
 
     constructor {} {
 	# insert standard (provided) types.
-	$this -add [Datatype ::#auto Autonumber] Autonumber
-	$this -add [Datatype ::#auto Boolean] Boolean
-	$this -add [Datatype ::#auto Date] Date
-	$this -add [Datatype ::#auto Float] Float
-	$this -add [Datatype ::#auto Integer] Integer
-	$this -add [Datatype ::#auto Real] Real
-	$this -add [Datatype ::#auto String] String
-	$this -add [Datatype ::#auto Time] Time
-	$this -add [Datatype ::#auto Timer] Timer
-	$this -add [Datatype ::#auto Unbounded_String] Unbounded_String
+	$this -add [Datatype ::\#auto Autonumber] Autonumber
+	$this -add [Datatype ::\#auto Boolean] Boolean
+	$this -add [Datatype ::\#auto Date] Date
+	$this -add [Datatype ::\#auto Float] Float
+	$this -add [Datatype ::\#auto Integer] Integer
+	$this -add [Datatype ::\#auto Real] Real
+	$this -add [Datatype ::\#auto String] String
+	$this -add [Datatype ::\#auto Time] Time
+	$this -add [Datatype ::\#auto Timer] Timer
+	$this -add [Datatype ::\#auto Unbounded_String] Unbounded_String
     }
 
     method -className {} {return "datatypes"}
@@ -2112,6 +2147,11 @@ itcl::class EventSet {
 itcl::class Events {
     inherit List
     method -event {e} {$this -add $e}
+}
+
+itcl::class Exceptions {
+    inherit Container
+    method -className {} {return "exceptions"}
 }
 
 itcl::class Inheritances {
@@ -2168,6 +2208,8 @@ proc elementFactory {xmlTag} {
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
 	events            {return [Events #auto]}
+	exception         {return [Exception #auto]}
+	exceptions        {return [Exceptions #auto]}
 	exportcontrol     {return [ExportControl #auto]}
 	extractor         {return [Extractor #auto]}
 	inheritance       {return [Inheritance #auto]}
