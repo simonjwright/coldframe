@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c14ab35650bd 2004/04/01 19:18:16 simon $
+# $Id: normalize-rose.tcl,v ed8b21cf573e 2004/04/17 17:35:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1389,11 +1389,15 @@ itcl::class Class {
             Error "[$this -getName] has no identifier"
         }
         if {$kind == "Utility"} {
+            if $isType {Error "utility [$this -getName] is a type"}
             if $active {Error "utility [$this -getName] is active"}
             if [info exists attributes] {
                 if [$attributes -size] {
                     Error "utility [$this -getName] has attributes/associations"
                 }
+            }
+            if [info exists statemachine] {
+                Error "utility [$this -getName] has a state machine"
             }
         }
         if {!$active} {
@@ -1405,6 +1409,10 @@ itcl::class Class {
             }
         }
         if $isType {
+            if $active {Error "type [$this -getName] is active"}
+            if [info exists statemachine] {
+                Error "type [$this -getName] has a state machine"
+            }
             $this -putElementStart "type"
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
@@ -1428,6 +1436,12 @@ itcl::class Class {
             $operations -generate $domain
             puts "</type>"
         } else {
+            if {$public} {
+                if $active {Error "public [$this -getName] is active"}
+                if [info exists statemachine] {
+                    Error "public [$this -getName] has a state machine"
+                }
+            }
             $this -putElementStart "class"
             if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
             if $abstr {puts -nonewline " abstract=\"yes\""}

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v d520ec4d9a87 2004/04/04 06:52:54 simon $ -->
+<!-- $Id: error-messages.html,v ed8b21cf573e 2004/04/17 17:35:28 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -77,11 +77,19 @@ want anything to happen!
 
 <dt>Error: no index type for array type <i>type</i> <dd>You must specify the type of the index of an array.
 
+<dt>Error: public <i>name</i> can't be active <dd>Public classes may not be active.
+
+<dt>Error: public <i>name</i> has a state machine <dd>Public classes may not have state machines.
+
 <dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
 
 <dt>Error: singleton <i>name</i> has identifier <dd>Singleton's aren't allowed to have identifiers.
 
 <dt>Error: tried to extend <i>type</i>, which has no attributes <dd>If a type is to be extended, it must have attributes.
+
+<dt>Error: type <i>name</i> can't be active <dd>Types may not be active.
+
+<dt>Error: type <i>name</i> has a state machine <dd>Types may not have state machines.
 
 <dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
 
@@ -97,9 +105,13 @@ want anything to happen!
 
 <dt>Error: unrecognised parameter mode <i>mode</i> <dd>A parameter mode must be <tt>in</tt>, <tt>inout</tt> or <tt>out</tt>.
 
-<dt>Error: utility <i>name</i> is active <dd>Utility classes may not be active.
+<dt>Error: utility <i>name</i> can't be active <dd>Utility classes may not be active.
 
 <dt>Error: utility <i>name</i> has attributes/associations <dd>Utility classes may not have parameters or take part in associations.
+
+<dt>Error: utility <i>name</i> has a state machine <dd>Utility classes may not have state machines.
+
+<dt>Error: utility <i>name</i> is a type <dd>Utility classes may not be &#171;type&#187;s.
 
 </dl>
 
