@@ -1,5 +1,7 @@
 with ColdFrame.Project.Events.Standard.Debug;
 
+with Time_Logging;
+
 package body Performance.Event_Timing is
 
 
@@ -14,7 +16,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_A);
          end;
       else
-         Done_At := Seawolf_High_Resolution_Time.Clock;
+         Done_At := High_Resolution_Time.Clock;
       end if;
    end Handler;
 
@@ -30,7 +32,8 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_B);
          end;
       else
-         Done_At := Seawolf_High_Resolution_Time.Clock;
+         Time_Logging.Log (12);
+         Done_At := High_Resolution_Time.Clock;
       end if;
    end Handler;
 
@@ -46,7 +49,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_A);
          end;
       else
-         Done_At := Seawolf_High_Resolution_Time.Clock;
+         Done_At := High_Resolution_Time.Clock;
       end if;
    end Handler;
 
