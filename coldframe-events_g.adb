@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: e28fe27f4166 $
---  $Date: 2003/03/09 16:00:36 $
+--  $Revision: b7357f963756 $
+--  $Date: 2003/03/09 19:41:10 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -147,6 +147,13 @@ package body ColdFrame.Events_G is
       if Instance_Base_P (The_Event.For_The_Instance) = If_For_Instance then
          The_Event.Invalidated := True;
       end if;
+   end Invalidate;
+
+
+   procedure Invalidate (The_Event : access Timer_Event;
+                         If_For_Instance : Instance_Base_P) is
+   begin
+      Invalidate (The_Event.The_Event, If_For_Instance);
    end Invalidate;
 
 

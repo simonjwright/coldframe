@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: e28fe27f4166 $
---  $Date: 2003/03/09 16:00:36 $
+--  $Revision: b7357f963756 $
+--  $Date: 2003/03/09 19:41:10 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -379,6 +379,9 @@ private
    end record;
 
    procedure Handler (This : Timer_Event);
+
+   procedure Invalidate (The_Event : access Timer_Event;
+                         If_For_Instance : Instance_Base_P);
 
 
    type Timer is limited record
