@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 934f180d060f 2004/04/24 20:24:39 simon $ -->
+<!-- $Id: ada-state.xsl,v defd14cbabbe 2004/05/12 19:35:40 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -203,10 +203,10 @@
   <xsl:template match="event" mode="event-handler-specs">
 
     <!--
-         procedure Handler (Ev : {event});
+         procedure Handler (The_Event : {event});
          -->
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (Ev : </xsl:text>
+    <xsl:text>procedure Handler (The_Event : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -220,8 +220,8 @@
   <xsl:template match="statemachine/event" mode="event-handler-bodies">
 
     <!--
-         procedure Handler (Ev : {event}) is
-            This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;
+         procedure Handler (The_Event : {event}) is
+            This : constant Handle := The_Event.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
                when {source-state (normal transition)} =>
@@ -239,12 +239,12 @@
     <xsl:variable name="e" select="name"/>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (Ev : </xsl:text>
+    <xsl:text>procedure Handler (The_Event : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
+    <xsl:text>This : constant Handle := The_Event.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
@@ -314,9 +314,9 @@
   <xsl:template match="event[@class]" mode="event-handler-bodies">
 
     <!--
-         procedure Handler (Ev : {event}) is
+         procedure Handler (The_Event : {event}) is
          begin
-            {receiver} (Ev);
+            {receiver} (The_Event);
          end Handler;
          -->
 
@@ -343,7 +343,7 @@
     </xsl:if>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (Ev : </xsl:text>
+    <xsl:text>procedure Handler (The_Event : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -351,7 +351,7 @@
 
     <xsl:value-of select="$II"/>
     <xsl:value-of select="$op/name"/>
-    <xsl:text> (Ev);&#10;</xsl:text>
+    <xsl:text> (The_Event);&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Handler;&#10;</xsl:text>
@@ -628,7 +628,7 @@
 
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$action"/>
-            <xsl:text> (Ev.Payload);&#10;</xsl:text>
+            <xsl:text> (The_Event.Payload);&#10;</xsl:text>
 
           </xsl:when>
 
@@ -679,7 +679,7 @@
           <xsl:when test="$params">
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$action"/>
-            <xsl:text> (This, Ev.Payload);&#10;</xsl:text>
+            <xsl:text> (This, The_Event.Payload);&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>
@@ -693,13 +693,13 @@
         <xsl:if test="$action='Delete' or $op/@final">
           <!--
                ColdFrame.Project.Events.Instance_Is_Deleted
-                 (Ev'Unrestricted_Access);
+                 (The_Event'Unrestricted_Access);
                -->
           <xsl:value-of select="$indent"/>
           <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
           <xsl:value-of select="$indent"/>
           <xsl:value-of select="$C"/>
-          <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
+          <xsl:text>(The_Event'Unrestricted_Access);&#10;</xsl:text>
         </xsl:if>
 
       </xsl:otherwise>
@@ -749,7 +749,7 @@
     <!-- if there is an unguarded transition from the initial state
          declare
             This : constant Handle renames Result;
-            Ev : ColdFrame.Project.Events.Creation.Event (Result);
+            The_Event : ColdFrame.Project.Events.Creation.Event (Result);
          begin
             {perform-transition}
          end;
@@ -775,7 +775,7 @@
 
       <xsl:if test="operation[name=$action]/parameter">
         <xsl:value-of select="$III"/>
-        <xsl:text>Ev : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
+        <xsl:text>The_Event : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
       </xsl:if>
 
 
