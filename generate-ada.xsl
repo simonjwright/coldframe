@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 544d00ab9697 2001/01/16 05:40:34 simon $ -->
+<!-- $Id: generate-ada.xsl,v 7c1ec4080466 2001/01/25 06:11:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -128,6 +128,9 @@
           <xsl:text>;&#10;</xsl:text>
         </xsl:when>
 
+        <!-- sets are implemented as class Collections; no action here -->
+        <xsl:when test="set"/>
+
         <xsl:when test="string">
           <xsl:text>  package </xsl:text>
           <xsl:value-of select="name"/>
@@ -160,14 +163,13 @@
     <xsl:if test="not(standard)">
       <xsl:choose>
 
-        <xsl:when test="enumeration">
-        </xsl:when>
+        <xsl:when test="enumeration"/>
 
-        <xsl:when test="integer">
-        </xsl:when>
+        <xsl:when test="integer"/>
 
-        <xsl:when test="real">
-        </xsl:when>
+        <xsl:when test="real"/>
+
+        <xsl:when test="set"/>
 
         <xsl:when test="string">
           <xsl:text>with Architecture.String_Hash;&#10;</xsl:text>
@@ -366,101 +368,106 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/object" mode="object-body">
 
-    <!-- determine if this is a supertype (if there is an inheritance
-         relationship with this class as the parent) -->
-    <xsl:variable name="name" select="name"/>
-    <xsl:variable
-      name="is-supertype"
-      select="boolean(../inheritance[parent=$name])"/>
-
-    <!-- Any context clauses needed for the class body .. -->
-    <xsl:call-template name="object-body-context"/>
-
-    <!-- .. start the body .. -->
-    <xsl:text>package body </xsl:text>
-    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text> is&#10;</xsl:text>
-
+    <!-- If there are no attributes, there's no body -->
     <xsl:if test="attribute">
 
-      <!-- .. the creation, simple find, and deletion operations .. -->
-      <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-      <xsl:text>    Result : Handle;&#10;</xsl:text>
-      <xsl:text>  begin&#10;</xsl:text>
-      <xsl:text>    Result := new Instance;&#10;</xsl:text>
-      <xsl:apply-templates
-        select="attribute[@identifier='yes']"
-        mode="identifier-element-assignment"/>
-      <xsl:text>    -- need to initialize Result?&#10;</xsl:text>
-      <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
-      <xsl:text>    return Result;&#10;</xsl:text>
-      <xsl:text>  end Create;&#10;</xsl:text>
-
-      <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-      <xsl:text>  begin&#10;</xsl:text>
-      <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-      <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-      <xsl:text>    else&#10;</xsl:text>
-      <xsl:text>      return null;&#10;</xsl:text>
-      <xsl:text>    end if;&#10;</xsl:text>
-      <xsl:text>  end Find;&#10;</xsl:text>
-
-      <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
-      <xsl:text>  begin&#10;</xsl:text>
-      <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-      <xsl:text>  end Delete;&#10;</xsl:text>
-
-      <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
-      <xsl:text>  begin&#10;</xsl:text>
-      <xsl:text>    Delete&#10;</xsl:text>
-      <xsl:text>      ((</xsl:text>
-      <xsl:for-each select="attribute[@identifier='yes']">
-        <xsl:value-of select="name"/>
-        <xsl:text> =&gt; This.</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:if test="position() &lt; last()">
-          <xsl:text>,&#10;      </xsl:text>
+      <!-- determine if this is a supertype (if there is an inheritance
+           relationship with this class as the parent) -->
+      <xsl:variable name="name" select="name"/>
+      <xsl:variable
+        name="is-supertype"
+        select="boolean(../inheritance[parent=$name])"/>
+      
+      <!-- Any context clauses needed for the class body .. -->
+      <xsl:call-template name="object-body-context"/>
+      
+      <!-- .. start the body .. -->
+      <xsl:text>package body </xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text> is&#10;</xsl:text>
+      
+      <xsl:if test="attribute">
+        
+        <!-- .. the creation, simple find, and deletion operations .. -->
+        <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:text>    Result : Handle;&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    Result := new Instance;&#10;</xsl:text>
+        <xsl:apply-templates
+          select="attribute[@identifier='yes']"
+          mode="identifier-element-assignment"/>
+        <xsl:text>    -- need to initialize Result?&#10;</xsl:text>
+        <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
+        <xsl:text>    return Result;&#10;</xsl:text>
+        <xsl:text>  end Create;&#10;</xsl:text>
+        
+        <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+        <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>    else&#10;</xsl:text>
+        <xsl:text>      return null;&#10;</xsl:text>
+        <xsl:text>    end if;&#10;</xsl:text>
+        <xsl:text>  end Find;&#10;</xsl:text>
+        
+        <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>  end Delete;&#10;</xsl:text>
+        
+        <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    Delete&#10;</xsl:text>
+        <xsl:text>      ((</xsl:text>
+        <xsl:for-each select="attribute[@identifier='yes']">
+          <xsl:value-of select="name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;      </xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>));&#10;</xsl:text>
+        <xsl:text>    This := null;&#10;</xsl:text>
+        <xsl:text>  end Delete;&#10;</xsl:text>
+        
+        <!-- .. subtype enumeration support, if required .. -->
+        <xsl:if test="$is-supertype">
+          <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class) is&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <xsl:text>    This.Current_Child := To_Be;&#10;</xsl:text>
+          <xsl:text>  end Set_Child_Class;&#10;</xsl:text>
+          <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class is&#10;</xsl:text>
+          <xsl:text>  begin&#10;</xsl:text>
+          <xsl:text>    return This.Current_Child;&#10;</xsl:text>
+          <xsl:text>  end Get_Child_Class;&#10;</xsl:text>
         </xsl:if>
-      </xsl:for-each>
-      <xsl:text>));&#10;</xsl:text>
-      <xsl:text>    This := null;&#10;</xsl:text>
-      <xsl:text>  end Delete;&#10;</xsl:text>
-
-      <!-- .. subtype enumeration support, if required .. -->
-      <xsl:if test="$is-supertype">
-        <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class) is&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    This.Current_Child := To_Be;&#10;</xsl:text>
-        <xsl:text>  end Set_Child_Class;&#10;</xsl:text>
-        <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class is&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    return This.Current_Child;&#10;</xsl:text>
-        <xsl:text>  end Get_Child_Class;&#10;</xsl:text>
+        
+        <!-- .. attribute accessors .. -->
+        <xsl:apply-templates mode="attribute-set-body"/>
+        <xsl:apply-templates mode="attribute-get-body"/>
+        
       </xsl:if>
+      
+      <xsl:if test="attribute">
+        
+        <!-- .. the hash function stub .. -->
+        <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
+        
+      </xsl:if>
+      
+      <!-- and close. -->
+      <xsl:text>end </xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
 
-      <!-- .. attribute accessors .. -->
-      <xsl:apply-templates mode="attribute-set-body"/>
-      <xsl:apply-templates mode="attribute-get-body"/>
-
-    </xsl:if>
-
-    <xsl:if test="attribute">
-
-      <!-- .. the hash function stub .. -->
-      <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
-
-    </xsl:if>
-
-    <!-- and close. -->
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
-
-    <xsl:if test="attribute">
-
-      <!-- Output the separate hash function body. -->
-      <xsl:call-template name="hash-function"/>
-
+      <xsl:if test="attribute">
+        
+        <!-- Output the separate hash function body. -->
+        <xsl:call-template name="hash-function"/>
+        
+      </xsl:if>
+      
     </xsl:if>
 
   </xsl:template>
@@ -571,13 +578,24 @@
       <xsl:sort select="."/>
 
       <!-- .. only using those whose names are those of classes in
-           the domain. -->
+           the domain .. -->
       <xsl:if test="/domain/object/name=.">
         <xsl:text>with </xsl:text>
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="."/>
         <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+
+      <!-- .. or sets of classes in the domain .. -->
+      <xsl:variable name="type" select="."/>
+      <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
+      <xsl:if test="$type-name/set">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="$type-name/set"/>
+        <xsl:text>.Collections;&#10;</xsl:text>
       </xsl:if>
 
     </xsl:for-each>
@@ -764,7 +782,7 @@
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list"/>
-        <xsl:text> return </xsl:text>
+        <xsl:text>&#10;   return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
         </xsl:call-template>
@@ -867,6 +885,14 @@
           <!-- Class -->
           <xsl:when test="../../object/name=$type">
             <xsl:text>null</xsl:text>
+          </xsl:when>
+
+          <!-- Set of classes -->
+          <xsl:when test="$the-type/set">
+            <xsl:value-of select="/domain/name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$the-type/set"/>
+            <xsl:text>.Collections.Null_Container</xsl:text>
           </xsl:when>
 
           <!-- Default: assume scalar -->
@@ -974,6 +1000,17 @@
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$type"/>
         <xsl:text>.Handle</xsl:text>
+      </xsl:when>
+
+      <!-- Set (only works for class instances) -->
+      <xsl:when test="/domain/type[name=$type]/set">
+        <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
+        <xsl:if test="$type-name/set">
+          <xsl:value-of select="/domain/name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$type-name/set"/>
+          <xsl:text>.Collections.Collection</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <xsl:otherwise>
