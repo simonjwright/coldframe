@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 13cd56ea0097 2004/03/19 15:39:22 simon $ -->
+<!-- $Id: generate-html.xsl,v 485716994f86 2004/04/17 16:44:07 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -408,7 +408,7 @@
   </xsl:template>
 
 
-  <!-- Output details of a Class' Attribute. -->
+  <!-- Output details of a Class's Attribute. -->
   <xsl:template match="attribute">
     <xsl:variable name="name">
       <xsl:call-template name="attribute-name"/>
@@ -526,7 +526,7 @@
         <xsl:with-param name="type" select="type"/>
       </xsl:call-template>
       <xsl:if test="initial">
-        <xsl:text>(default </xsl:text>
+        <xsl:text> (default </xsl:text>
         <xsl:value-of select="initial"/>
         <xsl:text>)</xsl:text>
       </xsl:if>
@@ -755,20 +755,12 @@
             <p>A record type:</p>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="attribute">
-          <h4>Attributes</h4>
-          <dl>
-            <xsl:apply-templates select="attribute">
-              <xsl:sort select="."/>
-            </xsl:apply-templates>
-          </dl>
-        </xsl:if>
-        <xsl:if test="operation">
-          <h4>Operations</h4>
-          <xsl:apply-templates select="operation">
+        <h4>Attributes</h4>
+        <dl>
+          <xsl:apply-templates select="attribute">
             <xsl:sort select="."/>
           </xsl:apply-templates>
-        </xsl:if>
+        </dl>
       </xsl:when>
       <xsl:when test="string/fixed">
         <p>
@@ -793,6 +785,12 @@
         <xsl:text>(ColdFrame doesn't recognize this type)</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:if test="operation">
+      <h4>Operations</h4>
+      <xsl:apply-templates select="operation">
+        <xsl:sort select="."/>
+      </xsl:apply-templates>
+    </xsl:if>
   </xsl:template>
 
 
