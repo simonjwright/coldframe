@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 454bb4eafced 2003/05/17 21:12:26 simon $ -->
+<!-- $Id: ada-class.xsl,v 14e1c91e5dd0 2003/05/17 21:35:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -439,6 +439,10 @@
       <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child);&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Inline_Always (Set_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
@@ -449,6 +453,7 @@
       <xsl:text>_Child (This : Handle) return </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
+      <!-- Can't inline function returning unconstrained type. -->
       <xsl:value-of select="$blank-line"/>
 
     </xsl:for-each>
