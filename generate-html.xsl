@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 35c787eff563 2001/05/17 04:37:28 simon $ -->
+<!-- $Id: generate-html.xsl,v a2ffaf005455 2001/05/30 18:34:34 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -500,45 +500,6 @@
     </xsl:choose>
   </xsl:template>
 
-
-  <!-- Handle special type name conversions. -->
-  <xsl:template name="type-name-not">
-    <xsl:param name="type"/>
-    <xsl:choose>
-
-      <!-- Output a 'standard' type as-is -->
-      <xsl:when test="/domain/type[name=$type]/standard">
-        <xsl:value-of select="$type"/>
-        <!-- xsl:text>Unbounded_String</xsl:text -->
-      </xsl:when>
-
-      <!-- Class -->
-      <xsl:when test="/domain/class[name=$type]">
-        <xsl:variable name="class-name">
-          <xsl:call-template name="element-file-name">
-            <xsl:with-param name="element-name" select="$type"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <a href="{$class-name}"><xsl:value-of select="$type"/></a>
-      </xsl:when>
-
-      <!-- Non-standard Types -->
-      <xsl:when test="/domain/type[name=$type]">
-        <xsl:variable name="type-name">
-          <xsl:call-template name="element-file-name">
-            <xsl:with-param name="element-name" select="$type"/>
-          </xsl:call-template>
-        </xsl:variable>
-        <a href="{$type-name}"><xsl:value-of select="$type"/></a>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:text>Hmm! how did we get here?!</xsl:text>
-        <xsl:value-of select="$type"/>
-      </xsl:otherwise>
-
-    </xsl:choose>
-  </xsl:template>
 
   <!-- Templates to support HTML markup. -->
 
