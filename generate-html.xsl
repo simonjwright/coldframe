@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 81491ddfa406 2002/10/13 17:16:03 simon $ -->
+<!-- $Id: generate-html.xsl,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -80,7 +80,7 @@
       <head>
         <title><xsl:value-of select="name"/></title>
       </head>
-      <body bgcolor="#FFFFFF">
+      <body bgcolor="white">
         <h1><xsl:value-of select="name"/></h1>
         <xsl:apply-templates select="./documentation"/>
         <h2>Contents</h2>
