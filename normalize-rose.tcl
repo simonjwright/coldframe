@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 4ba4734cc2cd 2002/07/30 19:21:03 simon $
+# $Id: normalize-rose.tcl,v ce620f0125ed 2002/08/17 15:18:40 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1030,6 +1030,10 @@ itcl::class Class {
 		    set abbreviation "$abbreviation[string index $w 0]"
 		}
 	    }
+	}
+	# check for reserved words
+	if [isLanguageReservedWord $abbreviation] {
+	    Error "abbreviation of $name is reserved word"
 	}
 	return $abbreviation
     }
