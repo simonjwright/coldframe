@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 1ea423125066 2004/10/29 13:42:15 simon $
+# $Id: normalize-rose.tcl,v 02254531ef24 2004/11/11 15:09:09 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -233,7 +233,7 @@ proc normalizeValueInner {s} {
 
 # Convert Rose 'visibility' specifications to standard form.
 proc normalizeVisibility {v} {
-    switch {$v} {
+    switch $v {
         PublicAccess {
             return public
         }
