@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
+<!-- $Id: ada-class.xsl,v 02ba89e8b0c5 2004/04/26 14:27:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -60,7 +60,6 @@
     </xsl:call-template>
 
     <!-- Suppress style checks. -->
-    <xsl:value-of select="$blank-line"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class package .. -->
@@ -762,7 +761,6 @@
     <xsl:call-template name="identification-info"/>
 
     <!-- Suppress style checks. -->
-    <xsl:value-of select="$blank-line"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class body .. -->

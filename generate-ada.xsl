@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v cb3bf3698dd6 2004/04/25 16:46:32 simon $ -->
+<!-- $Id: generate-ada.xsl,v 02ba89e8b0c5 2004/04/26 14:27:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -120,8 +120,6 @@
     </xsl:call-template>
 
     <!-- Suppress style checks. -->
-    <xsl:value-of select="$blank-line"/>
-    <xsl:value-of select="$I"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for top-level package .. -->
@@ -411,7 +409,7 @@
     <xsl:value-of select="$I"/>
     <xsl:text>if not Domain_Initialized then&#10;</xsl:text>
 
-    <!-- Mark initialized (required for any Create calls in class 
+    <!-- Mark initialized (required for any Create calls in class
          initialization procedures). -->
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
