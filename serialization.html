@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 756d80d173a3 2003/03/13 21:07:08 simon $ -->
+<!-- $Id: serialization.html,v e921f8054245 2003/03/27 21:20:01 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -90,7 +90,21 @@ of <tt>ColdFrame.Serialization</tt>, which provides the minimum needed
 package <tt>ColdFrame.Serialization</tt>. To provide your own, you
 need to provide your own version of
 <tt>ColdFrame.Project.Serialization</tt>; all it has to do is provide
-a tagged type <tt>Base</tt> with a primitive <i>Image</i> operation.
+a tagged type <tt>Base</tt> with two primitive operations:
+
+<dl>
+
+<dt><tt>Image</tt>
+<dd>generates an XML image of the type;
+
+<dt><tt>Base_Attribute_Image</tt>
+<dd>contributes components to <tt>Image</tt> for any attributes of
+your <tt>Base</tt> type.
+
+</dl>
+
+<p>See <tt>ColdFrame.Signature</tt> for information on how these
+should be implemented.
 
 <h3>User-defined <i>image</i> functions</h3>
 
