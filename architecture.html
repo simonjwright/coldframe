@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 2f1124c83215 2001/01/21 07:11:40 simon $ -->
+<!-- $Id: architecture.html,v 61ac3dd39fbf 2001/01/21 19:50:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -175,13 +175,56 @@ browser
 it would be as well if <tt><i>package-name</i></tt> is a legal base
 file name! spaces may be a bad idea).
 
+<p>The output format is XML, using a Document Type Description (<a
+href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
+and to handle in the next stage using a SAX-compliant parser.
+
 <h2><a name="conversion">Conversion to standard form</a></h2>
+
+<p>ColdFrame's "standard form" used uses a home-grown
+<a href="coldframe.dtd">DTD</a> rather than the standard XMI
+Metadata Interchange (XMI) one. This is, I'm afraid, because I didn't
+think to check what standardisation activities were under way;
+however, I think it would have taken a lot longer if I'd used
+XMI. Perhaps an appropriate approach would be to use an XSL transform
+to convert documents from XMI to ColdFrame.
+
+<p>The processing is done using the <em>itcl</em> script
+<tt>normalize-rose.tcl</tt>, which uses the TclXML package to handle
+the parse of the <tt><i>package-name</i>.raw</tt> file. The Makefile
+places the output in <tt><i>package-name</i>.norm</tt>.
 
 <h2><a name="generation">Generation of code</a></h2>
 
+<p>Code is generated using the XSLT stylesheet
+<tt>generate-ada.xsl</tt>. The XSLT processor I've used is
+<em>Saxon</em>.
+
+<p>The output is placed by the <tt>Makefile</tt> into one Ada source
+file, <tt><i>package-name</i>.ada</tt>.
+
+<p>If you're using <a href="http://www.gnat.com/">GNAT</a>, you'll
+then need to use <tt>gnatchop</tt> to split the file into the required
+"one file per library unit" style. Other compilers will have their own
+way of importing the code.
+
+<p>The generated code is compilable, but all the operation bodies will
+raise the exception <tt>Program_Error</tt> if called. ColdFrame makes
+no attempt to allow you to modify generated bodies and preserve your
+changes on the next generation; instead, the idea is that you keep the
+generated code in one directory and your real code bodies in another
+directory that's earlier on the compiler's source search path. <i>[I'm
+not sure how the idea of placing real subprogram body files earlier in
+the compiler's source search path translates to compilers other than
+GNAT.]</i>
+
 <h2><a name="support">Specially written support components</a></h2>
 
+<p>
+
 <h2><a name="containers">Generic container components</a></h2>
+
+<p>
 
 <hr>
 <i>
