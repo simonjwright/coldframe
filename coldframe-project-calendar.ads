@@ -11,8 +11,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-calendar.ads,v $
---  $Revision: c02acd3df96c $
---  $Date: 2003/01/22 19:51:15 $
+--  $Revision: 5af952fa33e9 $
+--  $Date: 2004/12/06 10:04:05 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -22,6 +22,9 @@ package ColdFrame.Project.Calendar is
    subtype Time is Ada.Calendar.Time;
 
    function Clock return Time renames Ada.Calendar.Clock;
+
+   function Epoch return Time;
+   --  Returns a value suitable for use in aggregates.
 
    function Image (T : Time) return String;
    --  Returns a string version of Time for use in generated

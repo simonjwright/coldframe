@@ -11,22 +11,28 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-calendar.adb,v $
---  $Revision: efc523cc7629 $
---  $Date: 2003/01/22 19:53:27 $
+--  $Revision: 5af952fa33e9 $
+--  $Date: 2004/12/06 10:04:05 $
 --  $Author: simon $
 
 package body ColdFrame.Project.Calendar is
 
 
-   Epoch : constant Ada.Calendar.Time :=
+   The_Epoch : constant Ada.Calendar.Time :=
      Ada.Calendar.Time_Of (Year => 1970,
                            Month => 1,
                            Day => 1);
 
 
+   function Epoch return Time is
+   begin
+      return The_Epoch;
+   end Epoch;
+
+
    function Image (T : Time) return String is
       use type Ada.Calendar.Time;
-      Since : constant Duration := T - Epoch;
+      Since : constant Duration := T - The_Epoch;
       --  which works just fine on GNAT!
    begin
       return Since'Img;
