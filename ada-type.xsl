@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 99437877ac75 2001/06/06 19:24:44 simon $ -->
+<!-- $Id: ada-type.xsl,v 978d664697c1 2001/09/08 05:11:43 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -109,13 +109,6 @@
     <!-- The set of types output so far -->
     <xsl:variable name="processed" select="$finished | $nodes"/>
 
-    <!-- <xsl:for-each select="$processed">
-      <xsl:message>
-        <xsl:text>we have processed </xsl:text>
-        <xsl:value-of select="name"/>
-      </xsl:message>
-    </xsl:for-each> -->
-
     <!-- The set of types not yet output and dependent only on types
          that have been output already -->
     <xsl:variable
@@ -175,29 +168,37 @@
     <xsl:choose>
 
       <xsl:when test="attribute">
-        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is record&#10;</xsl:text>
         <xsl:apply-templates mode="instance-record-component"/>
-        <xsl:text>  end record;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end record;&#10;</xsl:text>
       </xsl:when>
       
       <xsl:when test="enumeration">
-        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is </xsl:text>
-        <xsl:text>&#10;    (</xsl:text>
+        <xsl:text> is</xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(</xsl:text>
         <xsl:for-each select="enumeration/literal">
           <xsl:value-of select="."/>
           <xsl:if test="position() &lt; last()">
-            <xsl:text>,&#10;     </xsl:text>
+            <xsl:text>,&#10;</xsl:text>
+            <xsl:value-of select="$IC"/>
+            <xsl:text> </xsl:text>
           </xsl:if>
         </xsl:for-each>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
       
       <xsl:when test="imported">
-        <xsl:text>  subtype </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is </xsl:text>
         <xsl:value-of select="imported"/>
@@ -207,7 +208,8 @@
       </xsl:when>
       
       <xsl:when test="integer">
-        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is range </xsl:text>
         <xsl:value-of select="integer/lower"/>
@@ -217,7 +219,8 @@
       </xsl:when>
       
       <xsl:when test="real">
-        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is digits </xsl:text>
         <xsl:value-of select="real/digits"/>
@@ -234,13 +237,16 @@
       <xsl:when test="set"/>
         
       <xsl:when test="string">
-        <xsl:text>  package </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>package </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>_Package is&#10;</xsl:text>
-        <xsl:text>     new Generic_Bounded_Length (Max =&gt; </xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>new Generic_Bounded_Length (Max =&gt; </xsl:text>
         <xsl:value-of select="string/max"/>
         <xsl:text>);&#10;</xsl:text>
-        <xsl:text>  subtype </xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> is </xsl:text>
         <xsl:value-of select="name"/>
@@ -255,8 +261,6 @@
       
     </xsl:choose>
   </xsl:template>
-
-  <xsl:template mode="domain-type" match="*"/>
 
 
   <!-- Generate domain Types support entries (not for standard types).
@@ -285,7 +289,8 @@
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Hash is&#10;</xsl:text>
-          <xsl:text>   new ColdFrame.String_Hash.Bounded_Hash (</xsl:text>
+          <xsl:value-of select="$C"/>
+          <xsl:text>new ColdFrame.String_Hash.Bounded_Hash (</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>
