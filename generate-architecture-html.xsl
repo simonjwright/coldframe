@@ -1,4 +1,4 @@
-<!-- $Id: generate-architecture-html.xsl,v 580628b0364f 2001/02/25 10:05:17 simon $ -->
+<!-- $Id: generate-architecture-html.xsl,v 3ea8d1ad069e 2001/03/25 09:40:06 simon $ -->
 <!-- XSL stylesheet to generate HTML for the Architecture. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -19,14 +19,14 @@
         <xsl:text>&#10;</xsl:text>
         <xsl:apply-templates select="./documentation"/>
         <h2>Classes</h2>
-        <xsl:apply-templates select="objects/object">
+        <xsl:apply-templates select="classes/class">
           <xsl:sort select="name"/>
         </xsl:apply-templates>
       </body>
     </html>
   </xsl:template>
 
-  <xsl:template match="domain/objects/object">
+  <xsl:template match="domain/classes/class">
     <xsl:variable name="name" select="name"/>
     <h3><i><a name="{translate($name, ' ', '_')}">
     <xsl:value-of select="$name"/></a></i></h3>
