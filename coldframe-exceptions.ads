@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: ec420ed9d047 $
---  $Date: 2002/05/19 07:07:34 $
+--  $Revision: f36e796ef151 $
+--  $Date: 2002/05/19 18:29:57 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
@@ -32,5 +32,8 @@ package ColdFrame.Exceptions is
 
    Not_Found : exception;
    --  Attempt to access an object by identifier when no such object exists
+
+   Existing_Child : exception;
+   --  Attempt to replace a non-null child in an inheritance relationship
 
 end ColdFrame.Exceptions;
