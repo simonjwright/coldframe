@@ -1,4 +1,4 @@
-comp_opt=-gnatq -O -g -gnatwu -gnatQ
+comp_opt=-gnatq -O -g -gnatwu -gnatX
 gnatmake_opt=-g -m
 main=${current}
 main_unit=${current}
@@ -10,7 +10,6 @@ comp_cmd=cd ${build_dir}
 comp_cmd=${cross_prefix}gnatgcc -c ${comp_opt}
 run_cmd=cd ${build_dir}
 run_cmd=${main}
-casing=~/.emacs_case_exceptions/
 src_dir=../Problem_Reporting.impl/
 src_dir=../Problem_Reporting/
 src_dir=../
