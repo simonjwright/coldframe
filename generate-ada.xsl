@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 3506d5592d5e 2001/01/07 09:57:23 simon $ -->
+<!-- $Id: generate-ada.xsl,v 3275c3fe0971 2001/01/07 10:36:57 simon $ -->
 <!-- Generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -119,11 +119,12 @@
     <xsl:call-template name="instance-record"/>
     <xsl:apply-templates mode="operation-spec"/>
     <xsl:text>private&#10;</xsl:text>
-    <xsl:text>  function Hash (Id : Identifier) return Positive;&#10;</xsl:text>
+    <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
     <xsl:text>  package Abstract_Containers is new BC.Containers (Identifier);&#10;</xsl:text>
     <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Instance);&#10;</xsl:text>
-    <xsl:text>  package Maps is new Abstract_Maps.Unbounded_Map&#10;</xsl:text>
-    <xsl:text>     (Buckets => 43,&#10;</xsl:text>
+    <xsl:text>  package Maps is new Abstract_Maps.Unbounded&#10;</xsl:text>
+    <xsl:text>     (Hash => Hash,&#10;</xsl:text>
+    <xsl:text>      Buckets => 43,&#10;</xsl:text>
     <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
     <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
     <xsl:text>end </xsl:text>
@@ -159,7 +160,7 @@
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
-    <xsl:text>  function Hash (Id : Identifier) return Positive is separate;&#10;</xsl:text>
+    <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
     <xsl:apply-templates mode="operation-body"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -182,7 +183,7 @@
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>)&#10;</xsl:text>
-    <xsl:text>function Hash (Id : Identifier) return Positive is&#10;</xsl:text>
+    <xsl:text>function Hash (Id : Identifier) return Natural is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:text>  return 0;&#10;</xsl:text>
     <xsl:text>end Hash;&#10;</xsl:text>
