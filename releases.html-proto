@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v f6089ff6f96a 2005/02/24 13:35:33 simon $ -->
+<!-- $Id: releases.html-proto,v 57d91e128858 2005/03/08 06:29:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -128,7 +128,8 @@ previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
 
 
 <p>You can change the generated top-level package name of a domain,
-using <i>{ name = New Name }</i> on the domain.
+using <i>{ name = New Name }</i> on the domain. See the new <a
+href="testing.html">discussion on testing</a>.
 
 
 <p>You can use Ada attributes in values (initial values, bounds).
@@ -144,6 +145,9 @@ attributes (translating to the corresponding pragmas). If the type is
 an <i>{array}</i> type, the components are marked as <i>atomic</i> or
 <i>volatile</i> (the array itself will almost certainly be too large
 to be marked as a whole).
+
+
+<p>ColdFrame can now generate <a href="testing.html">test stubs</a>.
 
 
 <p><dt>20040319
