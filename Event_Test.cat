@@ -545,6 +545,15 @@
 		    quid       	"3D2EE33003D4"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set timer"
+		    quid       	"3E931D5D035A"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"3E931D6A0308"
+			    type       	"Duration"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
@@ -556,7 +565,10 @@
 		    type       	"Integer")
 		(object ClassAttribute "offset"
 		    quid       	"3D2EE2F00075"
-		    type       	"Duration"))
+		    type       	"Duration")
+		(object ClassAttribute "t"
+		    quid       	"3E931D370124"
+		    type       	"Timer"))
 	    statemachine 	(object State_Machine "State/Activity Model"
 		quid       	"3D2EC70C00F0"
 		stereotype 	"generate"
@@ -1356,7 +1368,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@35
-			location   	(1356, 1705)
+			location   	(1356, 1660)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	468
@@ -1368,7 +1380,7 @@
 		    quidu      	"3D2EE2D100E8"
 		    compartment 	(object Compartment
 			Parent_View 	@35
-			location   	(1356, 1761)
+			location   	(1356, 1716)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1381,10 +1393,10 @@
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	9
-			max_width  	472)
+			nlines     	11
+			max_width  	465)
 		    width      	486
-		    height     	482
+		    height     	572
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object UsesView "Self" @36
@@ -1399,7 +1411,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@36
-			location   	(2171, 1328)
+			location   	(2186, 1320)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1407,7 +1419,7 @@
 			label      	"Self")
 		    stereotype 	(object SegLabel @37
 			Parent_View 	@36
-			location   	(2176, 1282)
+			location   	(2080, 1254)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1431,7 +1443,7 @@
 		    client     	@35
 		    supplier   	@33
 		    vertices   	(list Points
-			(1811, 1693)
+			(1833, 1670)
 			(2130, 1349)
 			(2630, 1092))
 		    line_style 	0)
@@ -1670,4 +1682,29 @@
 			(1862, 1063)
 			(2213, 1123)
 			(2630, 1033))
-		    line_style 	0)))))
+		    line_style 	0)
+		(object CategoryView "Logical View::Event Test" @48
+		    location   	(265, 2230)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@48
+			location   	(95, 2146)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Event Test")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CEA58590211"
+		    width      	352
+		    height     	180)))))

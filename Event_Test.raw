@@ -4,8 +4,8 @@
 <date>
 <year>2003</year>
 <month>4</month>
-<day>7</day>
-<time>20:09</time>
+<day>8</day>
+<time>20:05</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -268,6 +268,12 @@
 <type>Duration</type>
 <initial></initial>
 </attribute>
+<attribute>
+<name>t</name>
+<documentation></documentation>
+<type>Timer</type>
+<initial></initial>
+</attribute>
 </attributes>
 <operations>
 <operation>
@@ -312,6 +318,18 @@
 <name>send done</name>
 <documentation></documentation>
 <parameters>
+</parameters>
+</operation>
+<operation>
+<name>set timer</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>to</parametername>
+<documentation></documentation>
+<type>Duration</type>
+<initial></initial>
+</parameter>
 </parameters>
 </operation>
 </operations>
