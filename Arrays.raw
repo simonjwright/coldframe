@@ -4,8 +4,8 @@
 <date>
 <year>2004</year>
 <month>1</month>
-<day>17</day>
-<time>20:45</time>
+<day>18</day>
+<time>21:21</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -38,7 +38,7 @@
 </events>
 </class>
 <class stereotype="type">
-<name>Int</name>
+<name>My Int</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -51,7 +51,7 @@
 <events>
 </events>
 </class>
-<class>
+<class stereotype="active">
 <name>My Boolean Class</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -74,11 +74,43 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
+<class stereotype="active">
 <name>Enum Class</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -96,17 +128,49 @@
 <name>b</name>
 <visibility>PrivateAccess</visibility>
 <documentation></documentation>
-<type>Int</type>
+<type>My Int</type>
 <initial></initial>
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
-<name>Int Class</name>
+<class stereotype="active">
+<name>My Int Class</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -116,7 +180,7 @@
 <name>a</name>
 <visibility>PrivateAccess</visibility>
 <documentation></documentation>
-<type>Int</type>
+<type>My Int</type>
 <initial></initial>
 </attribute>
 <attribute>
@@ -128,9 +192,41 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
 <class stereotype="type">
 <name>Large Int</name>
@@ -146,7 +242,7 @@
 <events>
 </events>
 </class>
-<class>
+<class stereotype="active">
 <name>Large Int Class</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -169,11 +265,43 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
+<class stereotype="active">
 <name>Integer Class</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -196,11 +324,43 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
+<class stereotype="active">
 <name>My Boolean Class B</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -223,11 +383,43 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
+<class stereotype="active">
 <name>Enum Class B</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
@@ -245,17 +437,49 @@
 <name>b</name>
 <visibility>PrivateAccess</visibility>
 <documentation></documentation>
-<type>Int</type>
+<type>My Int</type>
 <initial></initial>
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
-<class>
-<name>Int Class B</name>
+<class stereotype="active">
+<name>My Int Class B</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -265,7 +489,7 @@
 <name>a</name>
 <visibility>PrivateAccess</visibility>
 <documentation></documentation>
-<type>Int</type>
+<type>My Int</type>
 <initial></initial>
 </attribute>
 <attribute stereotype="id">
@@ -277,11 +501,104 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="finalize">
+<name>f</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>final</target>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class>
+<name>Child</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
 </operations>
 <events>
 </events>
 </class>
 </classes>
 <relationships>
+<inheritance>
+<name>g1</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>My Boolean Class</parent>
+</inheritance>
+<inheritance>
+<name>g2</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>Enum Class</parent>
+</inheritance>
+<inheritance>
+<name>g3</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>My Int Class</parent>
+</inheritance>
+<inheritance>
+<name>g4</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>Large Int Class</parent>
+</inheritance>
+<inheritance>
+<name>g5</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>Integer Class</parent>
+</inheritance>
+<inheritance>
+<name>g6</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>My Boolean Class B</parent>
+</inheritance>
+<inheritance>
+<name>g7</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>Enum Class B</parent>
+</inheritance>
+<inheritance>
+<name>g8</name>
+<documentation></documentation>
+<child>Child</child>
+<parent>My Int Class B</parent>
+</inheritance>
 </relationships>
 </domain>
