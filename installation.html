@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 7feddde9e14f 2003/11/29 13:42:53 simon $ -->
+<!-- $Id: installation.html,v 78bdb0d7c570 2003/11/29 18:13:25 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -131,12 +131,12 @@ sections assume these settings.
 
 <tr>
 <td><tt>AUNIT</tt>
-<td>Location and version of AUnit
+<td>Directory name for AUnit
 <td><tt>aunit-<i>1.01</i></tt>
 
 <tr>
 <td><tt>BC</tt>
-<td>Location and version of the Booch Components
+<td>Directory name for the Booch Components
 <td><tt>bc-<i>20020602</i></tt>
 
 <tr>
@@ -146,7 +146,7 @@ sections assume these settings.
 
 <tr>
 <td><tt>COLDFRAME</tt>
-<td>Location and version of ColdFrame
+<td>Directory name for ColdFrame
 <td><tt>cf-<i>20020921</i></tt>
 
 <tr>
@@ -158,6 +158,13 @@ sections assume these settings.
 <td><tt>TOP</tt>
 <td>The place where the software is installed
 <td><tt>/usr/local/lib</tt>
+
+<tr>
+<td><tt>ADA_PROJECT_PATH</tt>
+<td>Where your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> <tt>.gpr</tt> files are.
+<td><tt>$TOP/$COLDFRAME</tt>
 
 </table>
 
@@ -342,12 +349,12 @@ settings.
 
 <tr>
 <td><tt>AUNIT</tt>
-<td>Location and version of AUnit
+<td>Directory name for AUnit
 <td><tt>aunit-<i>1.01</i></tt>
 
 <tr>
 <td><tt>BC</tt>
-<td>Location and version of the Booch Components
+<td>Directory name for the Booch Components
 <td><tt>bc-<i>20020602</i></tt>
 
 <tr>
@@ -357,7 +364,7 @@ settings.
 
 <tr>
 <td><tt>COLDFRAME</tt>
-<td>Location and version of ColdFrame
+<td>Directory name for ColdFrame
 <td><tt>cf-<i>20020921</i></tt>
 
 <tr>
@@ -367,8 +374,16 @@ settings.
 
 <tr>
 <td><tt>TOP</tt>
-<td>The disk drive on which the software is installed
+<td>The directory (or just disk drive) on which the software is
+installed
 <td><tt>c:</tt>
+
+<tr>
+<td><tt>ADA_PROJECT_PATH</tt>
+<td>Where your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> <tt>.gpr</tt> files are.
+<td><tt>%TOP%/%COLDFRAME%</tt>
 
 </table>
 

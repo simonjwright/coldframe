@@ -9,15 +9,19 @@
     is_loaded  	TRUE
     quid       	"3DFCF75D00CF"
     documentation 	
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 78bdb0d7c570 $ }
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
 	    quid       	"3E1B0DF501D9"
-	    supplier   	"Logical View::ColdFrame Examples::Digital IO"
+	    supplier   	"Logical View::Digital IO"
 	    quidu      	"3DFCF76B0011"))
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -335,7 +339,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
+				label      	"$Id: House_Management.cat,v 78bdb0d7c570 2003/11/29 18:13:25 simon $")
 			    (object SelfTransView "" @8
 				location   	(1398, 450)
 				font       	(object Font
@@ -492,14 +496,14 @@
 		(object Role "controls"
 		    quid       	"3DFCFC370338"
 		    label      	"controls"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Lamp"
+		    supplier   	"Logical View::House Management::Lamp"
 		    quidu      	"3DFCFC1401ED"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE)
 		(object Role "is controlled by"
 		    quid       	"3DFCFC370342"
 		    label      	"is controlled by"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Button"
+		    supplier   	"Logical View::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
@@ -509,10 +513,14 @@
 	    quid       	"3DFCFC0C0232"
 	    title      	"Main"
 	    documentation 	
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 78bdb0d7c570 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -520,7 +528,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp" @12
+		(object ClassView "Class" "Logical View::House Management::Lamp" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -568,7 +576,7 @@
 		    height     	484
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button" @13
+		(object ClassView "Class" "Logical View::House Management::Button" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -772,7 +780,7 @@
 				pctDist    	0.897638
 				height     	58
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button to Lamp" @22
+		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @22
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -789,21 +797,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@22
-			location   	(205, 658)
+			location   	(198, 658)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	294
+			max_width  	308
 			justify    	0
 			label      	"Button to Lamp")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC830160"
-		    width      	312
+		    width      	326
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp Name" @23
+		(object ClassView "Class" "Logical View::House Management::Lamp Name" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -843,7 +851,7 @@
 		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button Name" @24
+		(object ClassView "Class" "Logical View::House Management::Button Name" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -883,7 +891,7 @@
 		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Signal State" @25
+		(object ClassView "Class" "Logical View::House Management::Signal State" @25
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -936,7 +944,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
+		    label      	"$Id: House_Management.cat,v 78bdb0d7c570 2003/11/29 18:13:25 simon $")
 		(object NoteView @27
 		    location   	(1635, 1140)
 		    font       	(object Font

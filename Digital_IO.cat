@@ -9,10 +9,14 @@
     is_loaded  	TRUE
     quid       	"3DFCF76B0011"
     documentation 	
-|This domain manages digital (discrete) input/output.
-|It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
+|Copyright (C) Simon Wright <simon@pushface.org>
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This domain manages digital (discrete) input/output.
+|It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
+|
+|{ revision = $Revision: 78bdb0d7c570 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -76,7 +80,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F000B2"
 		    label      	"g1"
-		    supplier   	"Logical View::ColdFrame Examples::Digital IO::Signal"
+		    supplier   	"Logical View::Digital IO::Signal"
 		    quidu      	"3DFCF783026E"))
 	    operations 	(list Operations
 		(object Operation "changed"
@@ -92,7 +96,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F700B2"
 		    label      	"g1"
-		    supplier   	"Logical View::ColdFrame Examples::Digital IO::Signal"
+		    supplier   	"Logical View::Digital IO::Signal"
 		    quidu      	"3DFCF783026E"))
 	    operations 	(list Operations
 		(object Operation "changed"
@@ -194,10 +198,16 @@
 	    quid       	"3DFCF77A0261"
 	    title      	"Main"
 	    documentation 	
-|This domain manages digital (discrete) input/output.
-|It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
+|Copyright (C) Simon Wright <simon@pushface.org>
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This notice is placed in a UML model designed to be automatically converted into program source code units. As a special exception, if other files instantiate generics from those units, or you link those units with other files to produce an executable, those units do not by themselves cause the resulting executable to be covered by the GNU General Public License.  This exception does not however invalidate any other reasons why the executable file might be covered by the GNU Public License.
+|
+|This domain manages digital (discrete) input/output.
+|It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
+|
+|{ revision = $Revision: 78bdb0d7c570 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -205,7 +215,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Signal" @1
+		(object ClassView "Class" "Logical View::Digital IO::Signal" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -253,7 +263,7 @@
 		    height     	438
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Output" @2
+		(object ClassView "Class" "Logical View::Digital IO::Output" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -325,7 +335,7 @@
 		    client     	@2
 		    supplier   	@1
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Signal State" @4
+		(object ClassView "Class" "Logical View::Digital IO::Signal State" @4
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -382,7 +392,7 @@
 		    height     	264
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Input" @5
+		(object ClassView "Class" "Logical View::Digital IO::Input" @5
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -454,7 +464,7 @@
 		    client     	@5
 		    supplier   	@1
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Application" @7
+		(object ClassView "Class" "Logical View::Digital IO::Application" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -511,7 +521,7 @@
 		    height     	220
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::HCI" @8
+		(object ClassView "Class" "Logical View::Digital IO::HCI" @8
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -568,7 +578,7 @@
 		    height     	264
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Signal Name" @9
+		(object ClassView "Class" "Logical View::Digital IO::Signal Name" @9
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -621,4 +631,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
+		    label      	"$Id: Digital_IO.cat,v 78bdb0d7c570 2003/11/29 18:13:25 simon $")))))
