@@ -19,11 +19,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.adb,v 9edd793b410a 2001/04/25 19:18:32 simon $
+-- $Id: coldframe-navigate_from_many_collection.adb,v e5c80aed495d 2001/04/25 19:37:36 simon $
 
 with BC.Copy;
 
-function Architecture.Navigate_From_One_Collection (Input : From) return To is
+function Architecture.Navigate_From_Many_Collection (Input : From) return To is
 
   -- Used instead of a real Clear in an instantiation of BC.Copy to
   -- give incremental addition.
@@ -32,57 +32,57 @@ function Architecture.Navigate_From_One_Collection (Input : From) return To is
 
   -- Used in an instantiation of BC.Copy to add results to the
   -- intermediate result set.
-  procedure Add_Many (S : in out Set; I : Many_Handle);
-  pragma Inline (Add_Many);
+  procedure Add_One (S : in out Set; I : One_Handle);
+  pragma Inline (Add_One);
 
-  -- Adds the result of a single one-to-many navigation to the
+  -- Adds the result of a single many-to-one navigation to the
   -- intermediate result set.
   procedure Add_To_Result_Set is new BC.Copy
-     (Item => Many_Handle,
-      Source => Many,
+     (Item => One_Handle,
+      Source => One,
       From => To,
       Target => Intermediate,
       To => Set,
       Clear => Null_Clear,
-      Add => Add_Many);
+      Add => Add_One);
 
 
-  -- Adds the result of navigating from a single instance at the 'one'
+  -- Adds the result of navigating from a single instance at the 'many'
   -- end of the association to the intermediate result set.
-  procedure Add_Single_Navigation (This : One_Handle; OK: out Boolean);
+  procedure Add_Single_Navigation (This : Many_Handle; OK: out Boolean);
   pragma Inline (Add_Single_Navigation);
 
-  -- Iterates over the input, navigating from each 'one' instance to
-  -- the corresponding set of 'many' instances, and adding them to the
+  -- Iterates over the input, navigating from each 'many' instance to
+  -- the corresponding set of 'one' instances, and adding them to the
   -- intermediate result set.
-  procedure Generate_Result_Set is new One.Visit (Add_Single_Navigation);
+  procedure Generate_Result_Set is new Many.Visit (Add_Single_Navigation);
 
 
   -- Converts the intermediate result Set to the required Collection
   -- form.
   procedure Convert is new BC.Copy
-     (Item => Many_Handle,
+     (Item => One_Handle,
       Source => Intermediate,
       From => Set,
-      Target => Many,
+      Target => One,
       To => To,
       Add => Add_To_Result);
 
 
-  It : One.Iterator'Class := New_Iterator (Input);
+  It : Many.Iterator'Class := New_Iterator (Input);
   Result_Set : Set;
   Result : To;
 
-  procedure Add_Many (S : in out Set; I : Many_Handle) is
+  procedure Add_One (S : in out Set; I : One_Handle) is
     Dummy : Boolean;
   begin
     Add_To_Set (S, I, Dummy);
-  end Add_Many;
+  end Add_One;
 
-  procedure Add_Single_Navigation (This : One_Handle; OK: out Boolean) is
+  procedure Add_Single_Navigation (This : Many_Handle; OK: out Boolean) is
   begin
     OK := True;
-    Add_To_Result_Set (Navigate_From_One (This), Result_Set);
+    Add_To_Result_Set (Navigate_From_Many (This), Result_Set);
   end Add_Single_Navigation;
 
   procedure Null_Clear (S : in out Set) is
@@ -95,4 +95,4 @@ begin
   Generate_Result_Set (It);
   Convert (Result_Set, Result);
   return Result;
-end Architecture.Navigate_From_One_Collection;
+end Architecture.Navigate_From_Many_Collection;
