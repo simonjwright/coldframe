@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v b58d328b3f9f 2001/09/27 18:27:26 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 32baa5acc4b9 2001/10/08 18:53:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -275,8 +275,7 @@
   <!-- Generate attribute name. Normally called at {class,type}/attribute;
        if not, supply parameter "a" as the attribute concerned.
        If this is an anonymous referential attribute, we make up its
-       name from the abbreviation of the supplier, the role name, and
-       the relationship name.
+       name from the the relationship name and  the role name.
        If not, just use the <name> element. -->
   <xsl:template name="attribute-name">
     <xsl:param name="a" select="."/>
