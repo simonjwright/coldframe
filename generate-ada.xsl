@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: generate-ada.xsl,v 392ecafe87bc 2003/09/06 17:11:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -50,9 +50,6 @@
 
 
   <!-- +++++ Command line parameters. +++++ -->
-
-  <!-- For identification info. -->
-  <xsl:param name="coldframe-version"/>
 
   <!-- Controls when attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors" select="defined"/>
