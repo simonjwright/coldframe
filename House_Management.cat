@@ -12,7 +12,7 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|[[ revision : $Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $ ]]
+|[[ revision : $Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $ ]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -360,7 +360,7 @@
 				location   	(150, 1380)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $"))))))
+				label      	"$Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $"))))))
 	(object Class "Button"
 	    quid       	"3DFCFC250129"
 	    documentation 	"There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated."
@@ -399,9 +399,10 @@
 |There is a lamp beween each pair of landings. This type names the lamps.
 |
 |[[  enumeration :
-|lamp a,
-|lamp b,
-|lamp c
+|basement,
+|ground floor,
+|first floor,
+|second floor
 |]]
 	    
 	    stereotype 	"type")
@@ -411,10 +412,10 @@
 |There is a pushbutton on each landing. This type names the pushbuttons.
 |
 |[[ enumeration:
-|floor 0,
-|floor 1,
-|floor 2,
-|floor 3
+|basement,
+|ground floor,
+|first floor,
+|second floor
 |]]
 	    
 	    stereotype 	"type")
@@ -728,7 +729,7 @@
 		    location   	(144, 1856)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $")
+		    label      	"$Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $")
 		(object NoteView @30
 		    location   	(1635, 1140)
 		    label      	(object ItemLabel

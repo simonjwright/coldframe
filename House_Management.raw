@@ -4,26 +4,31 @@
 <date>
 <year>2002</year>
 <month>12</month>
-<day>17</day>
-<time>20:51</time>
+<day>30</day>
+<time>17:21</time>
 </date>
-<documentation></documentation>
+<documentation>This domain represents an electronic houlsehold control system.
+The first release only manages the stairwell lighting system.
+
+[[ revision : $Id: House_Management.raw,v cbee3bacbcf7 2002/12/30 18:01:21 simon $ ]]</documentation>
 <classes>
 <class>
 <name>Lamp</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>There is a lamp beween each pair of landings.
+When the lamp is activated, it comes on for a preset period.
+If it is activated again while it is still on, the activation period is extended by the preset period.</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
-<documentation></documentation>
+<documentation>Each Lamp is uniquely identified by its name. The name corresponds to the geographical location of the lamp.</documentation>
 <type>Lamp Name</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>timeout</name>
-<documentation></documentation>
+<documentation>This ColdFrame Timer is used to turn off the Lamp at the end of its activation period.</documentation>
 <type>Timer</type>
 <initial></initial>
 </attribute>
@@ -31,37 +36,37 @@
 <operations>
 <operation stereotype="init">
 <name>initialize</name>
-<documentation></documentation>
+<documentation>This operation initializes the Lamps and Buttons, and connects to the Digital IO domaion.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>button_pushed</name>
-<documentation>An associated button has been pushed.</documentation>
+<documentation>This operation is called when an associated button has been pushed. It posts the necessary events to the instance's state machine.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>turn off</name>
-<documentation></documentation>
+<documentation>This state entry action turns off the associated signal via Digital IO.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>turn on</name>
-<documentation></documentation>
+<documentation>This state entry action turns on the associated signal via Digital IO.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set timeout</name>
-<documentation></documentation>
+<documentation>This state entry action sets the instance Timeout to the required activation period.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear timeout</name>
-<documentation></documentation>
+<documentation>This state entry action unsets the instance Timeout.</documentation>
 <parameters>
 </parameters>
 </operation>
@@ -83,7 +88,8 @@
 <name>turn off</name>
 </action>
 </entryactions>
-<documentation></documentation>
+<documentation>In this state, the Lamp is off.
+It's assumed that it's acceptable to turn the Lamp off even if it is off already.</documentation>
 </state>
 <state>
 <name>lit</name>
@@ -95,7 +101,7 @@
 <name>set timeout</name>
 </action>
 </entryactions>
-<documentation></documentation>
+<documentation>In this state, the Lamp is lit and the Timer is set.</documentation>
 </state>
 <state>
 <name>restarted</name>
@@ -104,7 +110,8 @@
 <name>clear timeout</name>
 </action>
 </entryactions>
-<documentation></documentation>
+<documentation>This is an ephemeral state, which clears the instance Timeout and drops through to the Lit state, which will turn the Lamp on and reset the Timeout.
+It's assumed that  it's acceptable to turn the Lamp on even if it is on already.</documentation>
 </state>
 </states>
 <transitions>
@@ -155,11 +162,11 @@
 <name>Button</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated.</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
-<documentation></documentation>
+<documentation>Each Button is uniquely identified by its name. The name corresponds to the geographical location of the button.</documentation>
 <type>Button Name</type>
 <initial></initial>
 </attribute>
@@ -167,7 +174,7 @@
 <operations>
 <operation stereotype="class">
 <name>changed</name>
-<documentation>Acts as receiver of state changes from Digital IO.</documentation>
+<documentation>Acts as receiver of state changes from Digital IO, via Signal State Callback.</documentation>
 <parameters>
 <parameter>
 <name>s</name>
@@ -191,7 +198,8 @@
 <name>Button to Lamp</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>This association class is required by ColdFrame to support the many-to-many association A1 but has no functionality in the present understanding of the problem domain.
+A possible future enhancement such as having the "on" time of the lamp depend on which button was used to switch it on might lead to a role for this class.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -203,10 +211,13 @@
 <name>Lamp Name</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[  enumeration :
-lamp a,
-lamp b,
-lamp c
+<documentation>There is a lamp beween each pair of landings. This type names the lamps.
+
+[[  enumeration :
+basement,
+ground floor,
+first floor,
+second floor
 ]]</documentation>
 <attributes>
 </attributes>
@@ -219,11 +230,13 @@ lamp c
 <name>Button Name</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration:
-floor 0,
-floor 1,
-floor 2,
-floor 3
+<documentation>There is a pushbutton on each landing. This type names the pushbuttons.
+
+[[ enumeration:
+basement,
+ground floor,
+first floor,
+second floor
 ]]</documentation>
 <attributes>
 </attributes>
@@ -236,7 +249,9 @@ floor 3
 <name>Signal State</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ imported : Digital IO ]]</documentation>
+<documentation>This type is used by the supporting Digital IO domain to report switch state changes.
+
+[[ imported : Digital IO ]]</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -248,7 +263,7 @@ floor 3
 <relationships>
 <association>
 <name>a1</name>
-<documentation></documentation>
+<documentation>This association represents the assignment of Button to Lamp; when a Button is pushed, all the Lamps that it "controls" are activated (by calling the Button_Pushed operation).</documentation>
 <role><end>1</end>
 <name>controls</name>
 <classname>Lamp</classname>
