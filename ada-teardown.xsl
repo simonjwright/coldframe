@@ -79,7 +79,14 @@
   <xsl:template mode="class-teardown-spec" match="*"/>
 
 
-  <xsl:template mode="class-teardown-body" match="domain/class">
+  <xsl:template mode="class-teardown-body" match="domain/class[@singleton]">
+
+    <!--
+         procedure {Domain}.{Class}.Tear_Down is
+         begin
+            null;
+         end {Domain}.{Class}.Tear_Down;
+         -->
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -87,20 +94,70 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>null;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Tear_Down;&#10;</xsl:text>
 
-    <xsl:choose>
+  </xsl:template>
 
-      <xsl:when test="@singleton">
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:when>
 
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>        
-      </xsl:otherwise>
 
-    </xsl:choose>
+  <xsl:template mode="class-teardown-body" match="domain/class[not(@singleton)]">
+
+    <!--
+         with Ada.Unchecked_Deallocation;
+         with {each package we have a referential attribute for};
+         procedure {Domain}.{Class}.Tear_Down is
+            It : Abstract_Map_Containers.Iterator'Class
+              := Maps.New_Iterator (The_Container);
+            H : Handle;
+            procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+         begin
+            while not Abstract_Map_Containers.Is_Done (It) loop
+               H := Abstract_Map_Containers.Current_Item (It);
+               Free (H);
+               Abstract_Map_Containers.Next (It);
+            end loop;
+            Maps.Clear (The_Container);
+         end {Domain}.{Class}.Tear_Down;
+         -->
+
+    <xsl:call-template name="class-body-context"/>
+
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Tear_Down is&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>It : Abstract_Map_Containers.Iterator'Class&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>:= Maps.New_Iterator (The_Container);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>H : Handle;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>while not Abstract_Map_Containers.Is_Done (It) loop&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>H := Abstract_Map_Containers.Current_Item (It);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Free (H);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Abstract_Map_Containers.Next (It);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end loop;&#10;</xsl:text>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>        
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
