@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 3a77d1a412c6 2002/04/22 05:00:26 simon $ -->
+<!-- $Id: classes.html,v e63a93a90dce 2002/04/27 18:30:11 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -7,7 +7,49 @@
 
 <h2>Motivation</h2>
 
+<p>A class typically is an abstraction of something in the <a
+href="domains.html ">domain</a> of interest. It represents the common
+properties and behaviour shared by all instances of the class.
+
+<p>Not all classes represent concrete concepts (such as <em>Cat</em>
+or <em>Book</em>). It's common for classes to represent incidents
+(<em>Button Press</em>), relationships (<em>Book Borrowing</em>) or
+roles {<em>Hired Van</em>).
+
 <h2>Modelling</h2>
+
+<p>A class is modelled, of course, by a UML class.
+
+<p>Not all UML "class" symbols represent what we're discussing here;
+with ColdFrame, you use the stereotype <em>&#171;type&#187;</em> when
+the class symbol in fact represents a type.
+
+<p>Instances of a Class must be uniquely identifiable by some
+attribute or combination of <a
+href="attributes.html">attributes</a>. For example, a Vehicle Excise
+Disk might be identified by the combination of Vehicle Index Mark and
+Validity Start Date. Vehicle Index Mark and Validity Start Date then
+become "identifying attributes", whereas Date Of Issue and Period Of
+Validity are just common-or-garden attributes.
+
+<p>In ColdFrame, you <em>must not</em> specify identifiers for
+
+<ul>
+<li>child classes in <a href="generalizations.html">inheritance
+relationships</a>,
+<li>associative classes,
+<li>singletons, or
+<li>types.
+</ul>
+
+All other classes <em>must</em> have identifiers. In this, ColdFrame
+doesn't follow <a href="resources.html#build-object-models">Executable
+UML</a>; it seems risky to apply too many defaults.
+
+<p>For the case where there's no suitable naming attribute, ColdFrame
+provides the attribute type <tt><i>Autonumber</i></tt> (rather like
+the Microsoft Access feature it's named after): each newly-created
+instance gets a new value.
 
 <h2>Translation</h2>
 
