@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 2e2bc723c1a1 2002/04/16 18:40:34 simon $ -->
+<!-- $Id: releases.html,v 8e2682a66f2a 2002/04/17 18:33:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -43,7 +43,7 @@ TYPE</i> any more.
 <p>Initial support for state machines.
 
 
-<p>Added <tt>pragma Elaborate_All</tt> for generated instantiable
+<p>Added <tt>pragma Elaborate_Body</tt> for generated instantiable
 units.
 
 
@@ -70,6 +70,9 @@ the <a href="installation.html">installation notes</a>).
 <p>Support &#171;class&#187; attributes.
 
 
+<p>Added <i>Counterparts</i>.
+
+
 <p>Projects will want to provide their own versions of supporting Ada
 packages, for example to provide the default storage pool; but
 ColdFrame needs to know how to <tt>with</tt> them.
@@ -82,7 +85,11 @@ used to hold such packages.
 versions of required packages.
 
 
-<p>Added <i>Counterparts</i>.
+<p>Added special processing where an dispatching or inherited
+operation has a parmeter of the same type as its class; the parameter
+is converted to the same type as the implicit <tt>This</tt> parameter.
+
+<br>This may be what's called <i>covariance</i> in Eiffel.
 
 
 <p><dt>20020116
