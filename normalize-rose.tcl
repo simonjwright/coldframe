@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6fe54241b151 2001/01/21 06:16:42 simon $
+# $Id: normalize-rose.tcl,v c0e4f628cdde 2001/01/25 06:10:46 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1202,6 +1202,14 @@ itcl::class Datatype {
 	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
     }
 
+    # called when the type is a set of instances of a class. cls
+    # is the name of the class, which has not been normalized.
+    method -set {cls} {
+	set dataType "set"
+	set dataDetail [normalize $cls]
+    }
+
+
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful key is max (max length).
@@ -1236,6 +1244,9 @@ itcl::class Datatype {
 		    putElement $key $value
 		}
 		puts "</$dataType>"
+	    }
+	    set {
+		putElement set $dataDetail
 	    }
 	    standard {
 		putElement standard $type
