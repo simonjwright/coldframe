@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v cb246d39e310 2000/04/29 15:19:57 simon $
+# $Id: ddf.tcl,v a1c0319b3513 2000/04/30 06:32:06 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -499,13 +499,10 @@ itcl::class Object {
 
     method -attributes {l} {set attributes $l}
 
-    method -addFormalizingAttributesTo {obj role identifier} {
+    method -addFormalizingAttributesTo {obj relation identifier} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
-		set relName [[$role -getOwner] -getName]
-		puts stderr \
-		    "[normalize $key\_[$a -getName]\_$relName] added to [$obj -getName],\
-		    [$role -getName]"
+		set relName [$relation -getName]
 		set attr [$a -makeReferentialClone $key $relName]
 		if $identifier {
 		    $attr -identifier
@@ -671,20 +668,20 @@ itcl::class Association {
 		    if [$role1 -getSourceEnd] {
 			error "both ends of $name are marked as source"
 		    }
-		    $cl2 -addFormalizingAttributesTo $cl1 $role2 0
+		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
 		    $cl2 -sourceOfRelation $role1
 		} elseif [$role1 -getSourceEnd] {
-		    $cl1 -addFormalizingAttributesTo $cl2 $role1 0
+		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
 		    $cl1 -sourceOfRelation $role2
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
 			error "neither end of biconditional $name\
 				is marked as source"
 		    }
-		    $cl2 -addFormalizingAttributesTo $cl1 $role2 0
+		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
 		    $cl2 -sourceOfRelation $role1
 		} elseif [$role2 -getConditionality] {
-		    $cl1 -addFormalizingAttributesTo $cl2 $role1 0
+		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
 		    $cl1 -sourceOfRelation $role2
 		} else {
 		    error "neither end of unconditional $name\
@@ -694,7 +691,7 @@ itcl::class Association {
 	    "1:M"     {
 		# the identifying attributes in role 1 are used as 
 		# referential attributes in role 2
-		$cl1 -addFormalizingAttributesTo $cl2 $role1 0
+		$cl1 -addFormalizingAttributesTo $cl2 $this 0
 		$cl1 -sourceOfRelation $role2
 	    }
 	    "1-(1:1)" {error "oops! not yet implemented!"}
@@ -703,19 +700,18 @@ itcl::class Association {
 		# referential attributes in the associative object.
 		# Only the referential attributes from role 2 become
 		# identifiers in the associative object.
-		# XXX role 2 ????????
-		$cl1 -addFormalizingAttributesTo $assoc $role1 0
+		$cl1 -addFormalizingAttributesTo $assoc $this 0
 		$cl1 -sourceOfRelation $role2
-		$cl2 -addFormalizingAttributesTo $assoc $role2 1
+		$cl2 -addFormalizingAttributesTo $assoc $this 1
 		$cl2 -sourceOfRelation $role1
 	    }
 	    "1-(M:M)" {
 		# The identifying attributes in both roles are used as
 		# referential and identifying attributes in the associative
 		# object.
-                $cl1 -addFormalizingAttributesTo $assoc $role1 1
+		$cl1 -addFormalizingAttributesTo $assoc $this 1
 		$cl1 -sourceOfRelation $role2
-		$cl2 -addFormalizingAttributesTo $assoc $role2 1
+		$cl2 -addFormalizingAttributesTo $assoc $this 1
 		$cl2 -sourceOfRelation $role1
 	    }
 	}
@@ -889,6 +885,14 @@ itcl::class Inheritance {
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
 	    $c -addRelation [$this -getNumber]
+	    $p -addFormalizingAttributesTo $c $this 1
+	    set role [Role ::#auto]
+	    $role -owner $this
+	    $role -end 4
+	    $role -name "<is supertype of"
+	    $role -classname $ch
+	    # XXX more here!
+	    $p -sourceOfRelation $role
 	}
     }
 
@@ -1078,22 +1082,27 @@ itcl::class Attribute {
 	    puts stderr ""
 	    set rel [$r -getOwner]
 	    puts "[$rel -getNumber]"
-	    # If the relationship is associative, the using (formalising)
-	    # end is the associative object
-	    if [$rel -isAssociative] {
-		puts "2"
-		switch [$r -getEnd] {
-		    1       {puts "1"}
-		    2       {puts "0"}
-		    default {error "oops!"}
+	    if [$rel isa Association] {
+		# If the relationship is associative, the using (formalising)
+		# end is the associative object
+		if [$rel -isAssociative] {
+		    puts "2"
+		    switch [$r -getEnd] {
+			1       {puts "1"}
+			2       {puts "0"}
+			default {error "oops!"}
+		    }
+		    set user [$objects -atName [$rel -getAssociativeObjectName]]
+		} else {
+		    switch [$r -getEnd] {
+			1       {puts "0\n1"}
+			2       {puts "1\n0"}
+			default {error "oops!"}
+		    }
+		    set user [$objects -atName [$r -getClassname]]
 		}
-		set user [$objects -atName [$rel -getAssociativeObjectName]]
 	    } else {
-		switch [$r -getEnd] {
-		    1       {puts "0\n1"}
-		    2       {puts "1\n0"}
-		    default {error "oops!"}
-		}
+		puts "4\n3"
 		set user [$objects -atName [$r -getClassname]]
 	    }
 	    puts "[$user -getName]"
