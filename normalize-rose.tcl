@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v b69f4ac05bbc 2001/01/17 20:11:10 simon $
+# $Id: normalize-rose.tcl,v 6fe54241b151 2001/01/21 06:16:42 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -186,10 +186,14 @@ itcl::class IdentifierString {
 
 
 # The base class for all non-trivial XML elements. They will certainly have
-# an element name (eg, <foo> -> name "foo") and may contain a particular
-# attribute, the stereotype (eg, <foo stereotype="key=a, number=5">).
+# an element name (eg, <foo> -> name "foo") and may contain:
+# * a stereotype (eg, <foo stereotype="key=a, number=5">)
+# * documentation
+# * an annotation (any data in [[ ]] in the documentation text).
 itcl::class Element {
     inherit Base
+
+    variable annotation ""
 
     variable documentation ""
 
@@ -197,14 +201,59 @@ itcl::class Element {
 
     variable stereotype
 
-    method -documentation {d} {
-	set documentation $d
+    # called to process annotation information. The annotation info is
+    # of the form
+    #
+    # annotation ::= annotation ';' parameter-setting
+    #             | parameter-setting ;
+    # parameter-setting ::= parameter-name [ ':' value ];
+    #
+    # For each parameter-setting, method -parameter-name is invoked with one
+    # argument (value, or null).
+    method -handleAnnotation {} {
+	set a $annotation
+	set pattern {^[ \t]*([-a-z0-9_]+)[ \t]*(:([^;]+))?[;]?}
+	for {} {[regexp \
+		-nocase \
+		$pattern \
+		$a wh attr dummy value]} {} {
+	    if [catch {$this -[string tolower $attr] $value}] {
+		puts stderr \
+		    "annotation not handled, \"$name -[string tolower $attr] $value\""
+	    }
+	    regexp -nocase -indices $pattern $a wh
+	    set a [string range $a \
+		    [expr [lindex $wh 1] + 1] end]
+	}
     }
 
-    method -name {n} {set name $n}
+    # called for a <documentation> element to extract annotation information,
+    # if any, from the documentation string. The annotation info is contained
+    # between double square brackets [[ ]].
+    method -documentation {d} {
+	set documentation $d
+	regexp {\[\[(.*)\]\]} $d wh annotation
+	$this -handleAnnotationWhenRead
+    }
+    # normally the annotation can be processed as soon as it's seen;
+    # override to avoid this
+    method -handleAnnotationWhenRead {} {
+	$this -handleAnnotation
+    }
+
+    method -name {n} {
+	set name $n
+	$this -handleStereotype
+    }
 
     method -getName {} {return $name}
 
+    # Because stereotypes are seen before the <name> element, if we process
+    # the stereotype immediately we won't be able to report the name.
+    # So we postpone handling the stereotype until the -name method
+    # is called.
+    # Just for completeness, and in case there was no <name>, we try
+    # handling again on completeion.
     method -stereotype {s} {
 	set stereotype $s
     }
@@ -219,11 +268,14 @@ itcl::class Element {
 	    set s $stereotype
 	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
 		# n is the tag name, v the tag value if any
-		# should maybe catch errors here!
-		$this -[string tolower $n] "$v"
+		if [catch {$this -[string tolower $n] "$v"}] {
+		    puts stderr \
+		        "stereotype not handled, \"$name -[string tolower $n] $v\""
+		}
 		regexp -nocase -indices $p $s wh
 		set s [string range $s [expr [lindex $wh 1] + 1] end]
 	    }
+	    unset stereotype
 	}
     }
 
@@ -366,21 +418,8 @@ itcl::class Container {
     }
 }
 
-# XXX
-itcl::class Content {
-    # Concrete classes need constructor {name}
-
-    method -className {} {return "content"}
-
-    method -evaluate {domain} {}
-
-    method -generate {domain} {
-	error "[$this -className] -generate not overridden"
-    }
-}
-
 ########################################
-# DDF classes for storing the XML info #
+# Our classes for storing the XML info #
 ########################################
 
 # String classes
@@ -513,7 +552,6 @@ itcl::class Domain {
     method -terminators {l} {set terminators $l}
 
     method -complete {} {
-	$this -handleStereotype
 	$this -generate
     }
 
@@ -536,16 +574,10 @@ itcl::class Domain {
 	putElement date "[exec /bin/date]"
 	$objects -evaluate $this
 	$relationships -evaluate $this
-	#$datatypes -evaluate $this
-	#$typesfiles -evaluate $this
-	#$transitiontables -evaluate $this
-	#$terminators -evaluate $this
+	$datatypes -evaluate $this
 	$objects -generate $this
 	$relationships -generate $this
-	#$datatypes -evaluate $this
-	#$typesfiles -evaluate $this
-	#$transitiontables -evaluate $this
-	#$terminators -evaluate $this
+	$datatypes -generate $this
 	puts "</domain>"
     }
 }
@@ -605,40 +637,6 @@ itcl::class Object {
     # <<type>> object
     method -type {dummy} {set isType 1}
 
-    # called for a <documentation> element to extract the type information
-    # from the documentation string. The type info is contained between
-    # double square brackets [[ ]]
-    method -documentation {d} {
-	$this Element::-documentation $d
-	if [expr $isType && ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
-	     error "User data type $name has no type information"
-	}
-    }
-
-    # called when the type is an enumeration. Returns a list of the
-    # comma-separated enumerals, which have been normalized (underscores,
-    # mixed case)
-    private method -enumeration {values} {
-	set raw [split $values ","]
-	foreach v $raw {
-	    set vs [lappend vs [normalize $v]]
-	}
-	return $vs
-    }
-
-    # called when the type is a real. constraint is a set of key/value
-    # pairs, which may be newline- or comma-separated.
-    private method -real {constraint} {
-	return $constraint
-    }
-
-    # called when the type is a string. constraint is a set of
-    # key/value # pairs, which may be newline- or comma-separated.
-    private method -string {constraint} {
-	return $constraint
-    }
-
-
     method -attributes {l} {set attributes $l}
 
     method -hasIdentifier {} {
@@ -683,6 +681,15 @@ itcl::class Object {
 	}
     }
 
+    # because different annotations (text in [[ ]] in documentation) are
+    # appropriate in ordinary objects vs <type> objects, don't process
+    # annotations if this is a type.
+    method -handleAnnotationWhenRead {} {
+	if {!$isType} {
+	    $this -handleAnnotation
+	}
+    }
+
     method -complete {} {
 	$this -handleStereotype
 	if $isType {
@@ -693,16 +700,9 @@ itcl::class Object {
 		set dt [Datatype ::#auto $name]
 		$dts -add $dt $name
 	    }
-	    if [expr ![regexp {(^.*):(.*$)} $typeInfo wh kind values]] {
-		error "bad user type definition \"$typeInfo\""
-	    }
-	    # need to ensure $kind is trimmed, tolower will do this
-	    switch [string tolower $kind] {
-		enumeration {$dt -enumeration [$this -enumeration $values]}
-		real        {$dt -real [$this -real $values]}
-		string      {$dt -string [$this -string $values]}
-		default     {error "unrecognised user type definition $kind"}
-	    }
+	    # XXX it cannot be right that the only annotation available
+	    # on a class is whether it's a type!
+	    $dt -annotation $annotation
 	} elseif $isControl {
 	    puts stderr "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
@@ -727,7 +727,7 @@ itcl::class Object {
 	puts "<object>"
 	putElement name "$name"
 	putElement key "$key"
-	putElement number "$number"
+	#putElement number "$number"
 	$attributes -generate $domain
 	$operations -generate $domain
 	puts "</object>"
@@ -776,31 +776,17 @@ itcl::class Parameter {
     method -type {t} {set type $t}
 
     method -initial {i} {set initial $i}
-
-    # called for a <documentation> element to extract the mode information,
-    # if any, from the documentation string. The mode info is contained
-    # between double square brackets [[ ]]
-    method -documentation {d} {
-	$this Element::-documentation $d
-	if [regexp {\[\[(.*)\]\]} $d wh modeStr] {
-	    if [expr ![regexp {(^.*):(.*$)} $modeStr wh kind value]] {
-		error "bad parameter mode definition \"$d\""
-	    }
-	    switch [string trim $kind] {
-		mode    {
-		    switch [string trim $value] {
-			in       {set modeInfo ""}
-			"in out" -
-			inout    {set modeInfo inout}
-			out      {set modeInfo out}
-			default  {
-			    error "unrecognised parameter mode $value"
-			}
-		    }
-		}
-		default {
-		    error "bad parameter mode definition \"$kind: $value\""
-		}
+    
+    # called when documentation with a [[ mode : mode-setting ]] annotation
+    # has been found. mode-setting can be 'in', 'inout' or 'in out', or 'out'.
+    method -mode {value} {
+	switch [string trim $value] {
+	    in       {set modeInfo ""}
+	    "in out" -
+	    inout    {set modeInfo inout}
+	    out      {set modeInfo out}
+	    default  {
+		error "unrecognised parameter mode $value"
 	    }
 	}
     }
@@ -1140,7 +1126,7 @@ itcl::class Inheritance {
 	    $role -end 4
 	    $role -name "is supertype of"
 	    $role -classname $ch
-	    # XXX more here!
+	    # XXX more here????
 	    $p -sourceOfRelation $role
 	}
     }
@@ -1163,17 +1149,8 @@ itcl::class Inheritance {
 }
 
 itcl::class Datatype {
-    inherit Content
 
     variable type
-
-    variable package
-
-    variable constraint
-
-    variable objectUsers {}
-
-    variable relationshipUsers {}
 
     variable dataType "standard"
 
@@ -1181,20 +1158,32 @@ itcl::class Datatype {
 
     constructor {name} {set type $name}
 
-    method -className {} {return "datatype"}
-
-    method -addObjectUser {obj} {
-	set name [$obj -getName]
-	set objs [$obj -getOwner]
-	set index [$objs -index $name]
+    # process annotation.
+    method -annotation {a} {
+	set annotation $a
+	set pattern {^[ \t]*([-a-z0-9_]+)[ \t]*(:([^;]+))?[;]?}
+	for {} {[regexp \
+		-nocase \
+		$pattern \
+		$a wh attr dummy value]} {} {
+	    $this -[string tolower $attr] $value
+	    regexp -nocase -indices $pattern $a wh
+	    set a [string range $a \
+		    [expr [lindex $wh 1] + 1] end]
+	}
     }
 
+    method -className {} {return "datatype"}
+
     # called when the type is an enumeration. values is a list of the
-    # comma-separated enumerals, which have been normalized (underscores,
-    # mixed case)
+    # comma-separated enumerals, which have not been normalized.
     method -enumeration {values} {
 	set dataType "enumeration"
-	set dataDetail $values
+	set raw [split $values ","]
+	foreach v $raw {
+	    set vs [lappend vs [normalize $v]]
+	}
+	set dataDetail $vs
     }
 
     # called when the type is an integer. constraint is a set of key/value
@@ -1225,6 +1214,9 @@ itcl::class Datatype {
 	if [expr ![[stack -top] -isPresent $type]] {
 	    [stack -top] -add $this $type
 	}
+    }
+
+    method -evaluate {domain} {
     }
 
     method -generate {domain} {
@@ -1330,7 +1322,6 @@ itcl::class Attribute {
 	set res [Attribute ::#auto]
 	$res -name $name
 	$res -type $type
-	# XXX probably need to do something about datatype section
 	$res -referential
 	return $res
     }
@@ -1341,7 +1332,6 @@ itcl::class Attribute {
 	set res [Attribute ::#auto]
 	$res -name $key\_$name\_$relName
 	$res -type $type
-	# XXX probably need to do something about datatype section
 	$res -referential
 	return $res
     }
@@ -1359,13 +1349,10 @@ itcl::class Attribute {
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
-	    # XXX need to create more carefully. How does it get constructed?
 	    set datatype [Datatype ::#auto $type]
-	    $datatype -addObjectUser [$this -getOwningObject]
 	    $datatypes -add $datatype $type
 	} else {
 	    set datatype [$datatypes -atName $type]
-	    $datatype -addObjectUser [$this -getOwningObject]
 	}
     }
 
@@ -1474,13 +1461,6 @@ itcl::class Relationships {
 	$this Container::-evaluate $domain
     }
 
-    method -generateX {domain} {
-	puts "relationships"
-	puts "[$this -size]"
-	# for reasons that ain't obvious, we need to dump the relations in
-	# relation number order so a bsearch can be done later
-	foreach r $sorted {$r -generate $domain}
-    }
 }
 
 itcl::class Tags {
