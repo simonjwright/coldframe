@@ -1,21 +1,26 @@
---  $Id: regressions-suite.adb,v 8608c77e66d7 2003/11/11 20:59:00 simon $
+--  $Id: regressions-suite.adb,v f0dcec96f6b9 2003/11/19 05:28:30 simon $
 --
 --  Regression tests for ColdFrame.
 
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with AUnit.Assertions; use AUnit.Assertions;
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-use AUnit.Test_Cases;
+with AUnit.Test_Cases; use AUnit.Test_Cases;
+with Ada.Calendar;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
-pragma Warnings (Off, Ada.Text_IO);
+with ColdFrame.Project.Events.Standard;
 with ColdFrame.Project.Serialization;
+with ColdFrame.Project.Times;
 
 with Regressions.CB_Callback;
+with Regressions.Events;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
 with Regressions.Tear_Down;
 with Regressions.Serializable;
+
+pragma Warnings (Off, Ada.Text_IO);
 
 package body Regressions.Suite is
 
@@ -340,6 +345,148 @@ package body Regressions.Suite is
    end Callback_Tests;
 
 
+   package Null_Event_Tests is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Null_Event_Tests;
+
+   package body Null_Event_Tests is
+
+      T : ColdFrame.Project.Events.Timer;
+
+      procedure Standard_Posting (C : in out Test_Case'Class);
+      procedure Standard_Posting (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Post (null,
+                                        On => Events.Dispatcher);
+         Assert (False, "standard posting should have failed");
+      exception
+         when Constraint_Error => null;
+      end Standard_Posting;
+
+      procedure Post_To_Self (C : in out Test_Case'Class);
+      procedure Post_To_Self (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Post_To_Self (null,
+                                                On => Events.Dispatcher);
+         Assert (False, "self posting should have failed");
+      exception
+         when Constraint_Error => null;
+      end Post_To_Self;
+
+      procedure Post_At (C : in out Test_Case'Class);
+      procedure Post_At (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Post
+           (null,
+            On => Events.Dispatcher,
+            To_Fire_At =>
+              ColdFrame.Project.Times.Create
+              (From_Time => Ada.Calendar.Clock));
+         Assert (False, "posting ""at"" should have failed");
+      exception
+         when Constraint_Error => null;
+      end Post_At;
+
+      procedure Post_After (C : in out Test_Case'Class);
+      procedure Post_After (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Post (null,
+                                        On => Events.Dispatcher,
+                                        To_Fire_After => 0.1);
+         Assert (False, "posting ""after""should have failed");
+      exception
+         when Constraint_Error => null;
+      end Post_After;
+
+      procedure Set_At (C : in out Test_Case'Class);
+      procedure Set_At (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Set
+           (T,
+            On => Events.Dispatcher,
+            To_Fire => null,
+            At_Time =>
+              ColdFrame.Project.Times.Create
+              (From_Time => Ada.Calendar.Clock));
+         Assert (False, "setting ""at"" should have failed");
+      exception
+         when Constraint_Error => null;
+      end Set_At;
+
+      procedure Set_After (C : in out Test_Case'Class);
+      procedure Set_After (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => null,
+                                       After => 0.1);
+         Assert (False, "setting ""after"" should have failed");
+      exception
+         when Constraint_Error => null;
+      end Set_After;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Null_Event_Tests.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Standard_Posting'Access,
+            "null event (standard post)");
+         Register_Routine
+           (C,
+            Post_To_Self'Access,
+            "null event (post to self)");
+         Register_Routine
+           (C,
+            Post_At'Access,
+            "null event (post at)");
+         Register_Routine
+           (C,
+            Post_After'Access,
+            "null event (post after)");
+         Register_Routine
+           (C,
+            Set_At'Access,
+            "null event (set at)");
+         Register_Routine
+           (C,
+            Set_After'Access,
+            "null event (set after)");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Null_Event_Tests;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -347,6 +494,7 @@ package body Regressions.Suite is
       AUnit.Test_Suites.Add_Test (Result, new Find_Active_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Serialization_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Callback_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result, new Null_Event_Tests.Case_1);
       return Result;
    end Suite;
 
