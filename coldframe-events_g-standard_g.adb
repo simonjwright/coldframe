@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: f09ccc075042 $
---  $Date: 2002/05/22 19:42:58 $
+--  $Revision: d2cf17389759 $
+--  $Date: 2002/06/25 18:35:42 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -196,9 +196,20 @@ package body ColdFrame.Events_G.Standard_G is
 
          if Timed_Event_Queues.Is_Empty (The_Events) then
 
-            accept Append (The_Entry : Timer_Queue_Entry_P) do
-               Timed_Event_Queues.Append (The_Events, The_Entry);
-            end Append;
+            select
+               accept Append (The_Entry : Timer_Queue_Entry_P) do
+                  Timed_Event_Queues.Append (The_Events, The_Entry);
+               end Append;
+
+            or
+               accept Invalidate
+                 (For_The_Instance : Instance_Base_P);
+               --  Invalidate is called "just in case" (the Instance
+               --  being deleted can't tell whether there are any
+               --  outstanding held Events). But if we get here, the
+               --  queue was empty, so there can't be anything to do.
+
+            end select;
 
          else
 
