@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 148a24720159 2004/03/19 14:59:35 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 2f817b813a7b 2004/05/29 17:43:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -37,12 +37,18 @@
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
 
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -108,8 +114,13 @@
 
 
   <xsl:template mode="class-teardown-spec" match="domain/class">
+
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -157,6 +168,9 @@
 
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
+
+        <!-- Suppress style checks. -->
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -419,6 +433,10 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
@@ -432,6 +450,10 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down is&#10;</xsl:text>

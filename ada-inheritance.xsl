@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v 2f817b813a7b 2004/05/29 17:43:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -38,6 +38,9 @@
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
 
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:call-template name="inheritance-spec-context"/>
     
     <xsl:text>package </xsl:text>
@@ -76,6 +79,9 @@
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
     
+    <!-- Suppress style checks. -->
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:call-template name="inheritance-body-context"/>
     
     <xsl:text>package body </xsl:text>
