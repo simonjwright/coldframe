@@ -337,6 +337,7 @@ coldframe-project-global_storage_pool.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
 coldframe-project-held_event_support.ads \
+coldframe-project-high_resolution_time.ads \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
 coldframe-project-log_error.ads \
