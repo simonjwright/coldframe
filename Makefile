@@ -2,18 +2,31 @@
 # $Id$
 
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
+HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
 
+ITCLSH = itclsh3.1
+SAXON = java com.icl.saxon.StyleSheet
+
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT)
-	$(NORMALIZE_ROSE_SCRIPT) <$< >$@
+	$(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+
+%.html: %.norm $(HTMLGEN_SCRIPT)
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
 
 %.ada: %.norm $(CODEGEN_SCRIPT)
-	java com.icl.saxon.StyleSheet $< $(CODEGEN_SCRIPT) >$@
+	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
 
 %: %.ada
 	-mkdir $@
 	rm -f $@/*.ad[bs]
 	gnatchop $< $@
+
+%.doc: %.norm $(HTMLGEN_SCRIPT)
+	-mkdir $@
+	rm -f $@/*
+	$(MAKE) `basename $@ .doc`.html
+	mv `basename $@ .doc`.html $@
 
 TEXI2HTML = texi2html
 %.html: %.texi
