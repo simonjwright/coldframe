@@ -1,4 +1,4 @@
-<!-- $Id: use-of-bcs.html,v 930c36e7fd2a 2001/09/17 18:34:55 simon $ -->
+<!-- $Id: use-of-bcs.html,v 2d3ae9591eec 2002/06/11 19:01:31 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use of Booch Components</title>
@@ -341,56 +341,56 @@ iterators can only be created by the concrete
 <h4>Open iteration</h4>
 
 <pre>
-declare
+   declare
 
-   It : <i>Class</i>.Abstract_Containers.Iterator'Class
-     := <i>Class</i>.Collections.New_Iterator (The_Collection);
+      It : <i>Class</i>.Abstract_Containers.Iterator'Class
+	:= <i>Class</i>.Collections.New_Iterator (The_Collection);
 
-begin
+   begin
 
-   while not <i>Class</i>.Abstract_Containers.Is_Done (It) loop
+      while not <i>Class</i>.Abstract_Containers.Is_Done (It) loop
 
-      declare
-	 H : <i>Class</i>.Handle
-           := <i>Class</i>.Abstract_Containers.Current_Item (It);
-      begin
-	 -- do something with H
-      end;
+	 declare
+	    H : <i>Class</i>.Handle
+	      := <i>Class</i>.Abstract_Containers.Current_Item (It);
+	 begin
+	    -- do something with H
+	 end;
 
-      <i>Class</i>.Abstract_Containers.Next (It);
+	 <i>Class</i>.Abstract_Containers.Next (It);
 
-   end loop;
+      end loop;
 
-end;
+   end;
 </pre>
 
 <h4>Closed iteration</h4>
 
 <pre>
-declare
+   declare
 
-   procedure Process (H : <i>Class</i>.Handle; OK : out Boolean);
+      procedure Process (H : <i>Class</i>.Handle; OK : out Boolean);
 
-   procedure Process
-     is new <i>Class</i>.Abstract_Containers.Visit (Process);
+      procedure Process
+	is new <i>Class</i>.Abstract_Containers.Visit (Process);
 
-   procedure Process (H : <i>Class</i>.Handle; OK : out Boolean) is
+      procedure Process (H : <i>Class</i>.Handle; OK : out Boolean) is
+      begin
+
+	 OK := True; -- unless you want the iteration to stop early
+
+	 -- do something with H
+
+      end Process;
+
+      It : <i>Class</i>.Abstract_Containers.Iterator'Class
+	:= <i>Class</i>.Collections.New_Iterator (The_Collection);
+
    begin
 
-      OK := True; -- unless you want the iteration to stop early
+      Process (It);
 
-      -- do something with H
-
-   end Process;
-
-   It : <i>Class</i>.Abstract_Containers.Iterator'Class
-     := <i>Class</i>.Collections.New_Iterator (The_Collection);
-
-begin
-
-   Process (It);
-
-end;
+   end;
 </pre>
 
 <h3><a name="copying">Copying</a></h3>
@@ -407,26 +407,26 @@ vice versa, is provided by the generic <tt>BC.Copy</tt>.
 <tt>Track.Collections.Collection</tt>, we could write
 
 <pre>
-declare
+   declare
 
-   procedure Make_Set is new BC.Copy
-     (Item => Track.Handle,
-      Source => Track.Abstract_Containers,
-      From => Track.Collections.Collection,
-      Target => Track.Abstract_Containers,
-      To => Track.Sets.Set,
-      Clear => Track.Sets.Clear,
-      Add => Track.Sets.Add);
+      procedure Make_Set is new BC.Copy
+	(Item => Track.Handle,
+	 Source => Track.Abstract_Containers,
+	 From => Track.Collections.Collection,
+	 Target => Track.Abstract_Containers,
+	 To => Track.Sets.Set,
+	 Clear => Track.Sets.Clear,
+	 Add => Track.Sets.Add);
 
-   Engaged_Track_Set : Track.Sets.Set;
+      Engaged_Track_Set : Track.Sets.Set;
 
-begin
+   begin
 
-   Make_Set
-     (Input => Engaged_Tracks,
-      Output => Engaged_Track_Set);
+      Make_Set
+	(Input => Engaged_Tracks,
+	 Output => Engaged_Track_Set);
 
-   -- operations with Engaged_Track_Set
+      -- operations with Engaged_Track_Set
 </pre>
 
 <h3><a name="filtering">Filtering</a></h3>
@@ -458,28 +458,28 @@ all the other Items in the Collection will end up first.
 <tt>Track.Collections.Collection</tt>, is
 
 <pre>
-declare
+   declare
 
-   function Is_More_Threatening (L, R : Track.Handle) return Boolean;
+      function Is_More_Threatening (L, R : Track.Handle) return Boolean;
 
-   procedure Sort is new Track.Abstract_Containers.Quicksort
-     ("<" => Is_More_Threatening,
-      Container => Track.Collections.Collection,
-      Length => Track.Collections.Length);
+      procedure Sort is new Track.Abstract_Containers.Quicksort
+	("<" => Is_More_Threatening,
+	 Container => Track.Collections.Collection,
+	 Length => Track.Collections.Length);
 
-   function Is_More_Threatening (L, R : Track.Handle) return Boolean is
+      function Is_More_Threatening (L, R : Track.Handle) return Boolean is
+      begin
+	 return L.Time_Of_CPA < R.Time_Of_CPA;
+      end Is_More_Threatening;
+
    begin
-      return L.Time_Of_CPA < R.Time_Of_CPA;
-   end Is_More_Threatening;
-
-begin
-   Sort (Candidate_Tracks);
-end;
+      Sort (Candidate_Tracks);
+   end;
 </pre>
 
 after which <tt>Track.Collections.First (Candidate_Tracks)</tt> will
 return the track with the earliest <tt>Time_Of_CPA</tt> (<i>CPA</i>
-means Closest Point of Approach).
+means <i>Closest Point of Approach</i>).
 
 <p><hr>
 <i>
