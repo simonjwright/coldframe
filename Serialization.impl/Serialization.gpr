@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: Serialization.gpr,v $
---  $Revision: 9a7308d79310 $
---  $Date: 2003/03/01 11:33:13 $
+--  $Revision: ec18d819f835 $
+--  $Date: 2003/08/13 19:40:26 $
 --  $Author: simon $
 
 with "Options";
-with "ColdFrame_Defaults";
+with "ColdFrame";
 
 project Serialization is
 
