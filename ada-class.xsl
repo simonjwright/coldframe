@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 243f394280dd 2002/09/10 18:43:08 simon $ -->
+<!-- $Id: ada-class.xsl,v dc349f49f4ef 2002/09/12 20:50:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -744,7 +744,7 @@
         <!-- We'll need to free memory. -->
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
-        <xsl:if test="not(@max) or @max&gt;1 or statemachine">
+        <xsl:if test="not(@max) or not(@singleton) or statemachine">
           <!-- We'll need exception support. -->
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>
@@ -1113,7 +1113,7 @@
         <xsl:value-of select="$III"/>
         <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>end if&#10;</xsl:text>
+        <xsl:text>end if;&#10;</xsl:text>
 
         <!-- XXX check the ID is correct -->
         
@@ -1195,34 +1195,55 @@
       <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
 
-    <xsl:if test="not(@max) or @max&gt;1">
-      <xsl:value-of select="$II"/>
-      <xsl:text>Maps.Unbind&#10;</xsl:text>
-      <xsl:value-of select="$IIC"/>
-      <xsl:text>(The_Container,&#10;</xsl:text>
-      <xsl:value-of select="$IIC"/>
-      <xsl:text> (</xsl:text>
-      <xsl:for-each select="attribute[@identifier]">
-        <xsl:call-template name="attribute-name"/>
-        <xsl:text> =&gt; This.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
-        <xsl:if test="position() &lt; last()">
-          <xsl:text>,&#10;  </xsl:text>
-          <xsl:value-of select="$IIC"/>
-        </xsl:if>
-      </xsl:for-each>
-      <xsl:text>));&#10;</xsl:text>
-    </xsl:if>
-
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
       <xsl:text>abort This.The_T;&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>Free (This);&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
+    <xsl:choose>
+      
+      <xsl:when test="not(@max) or @max&gt;1">
 
+        <!-- Remove from the container .. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>Maps.Unbind&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>(The_Container,&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> (</xsl:text>
+        <xsl:for-each select="attribute[@identifier]">
+          <xsl:call-template name="attribute-name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;  </xsl:text>
+            <xsl:value-of select="$IIC"/>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>));&#10;</xsl:text>
+
+        <!-- .. and free the instance. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>Free (This);&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+
+        <!-- Remove from the "container" .. -->
+        <xsl:value-of select="$II"/>
+        <xsl:value-of select="name"/>
+        <xsl:text>.This := null;&#10;</xsl:text>
+
+        <!-- .. and free the instance. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>Free (This);&#10;</xsl:text>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+    <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
 
   </xsl:template>
