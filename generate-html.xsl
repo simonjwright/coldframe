@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v c6ff569870f7 2002/02/28 19:59:10 simon $ -->
+<!-- $Id: generate-html.xsl,v 2fe5501b1efc 2002/03/06 05:01:42 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -203,7 +203,7 @@
       <ul>
         <xsl:for-each select="event[@class]">
           <xsl:sort select="name"/>
-          <xsl:call-template name="event-details"/>
+          <xsl:call-template name="class-event-details"/>
         </xsl:for-each>
       </ul>
     </xsl:if>
@@ -264,7 +264,26 @@
   </xsl:template>
 
 
-  <!-- Output details of an Event. Called at statemachine/event
+  <!-- Output details of a class Event. Called at statemachine/event
+       in a List context. -->
+  <xsl:template name="class-event-details">
+
+    <li>
+      <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
+      <xsl:if test="type">
+        <xsl:text> (payload of type </xsl:text>
+        <xsl:call-template name="type-name-linked">
+          <xsl:with-param name="type" select="type"/>
+        </xsl:call-template>
+        <xsl:text>)</xsl:text>
+      </xsl:if>
+      <xsl:apply-templates select="documentation"/>
+    </li>
+
+  </xsl:template>
+
+
+  <!-- Output details of an instance Event. Called at statemachine/event
        in a List context. -->
   <xsl:template name="event-details">
 
