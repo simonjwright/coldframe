@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
+<!-- $Id: releases.html,v ac0bb82faa86 2002/05/19 06:57:30 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -101,6 +101,35 @@ prepending <tt>A</tt> or <tt>An</tt> to the class name.
 
 <p>Tear-down of an active non-singleton instance didn't terminate the
 associated task.
+
+
+<p>Some of the generated operations (eg, some accessors for
+referential attributes) are only intended to be called by generated
+code. These are now marked in the spec.
+
+
+<p>&#171;access&#187; functions were generated as though they were
+procedures.
+
+
+<p>ColdFrame now respects the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt> (in the absence of a
+case exception for <i>foo</i>).
+
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work).
+</ul>
+
+
+<p>The exceptions declared in <tt>ColdFrame.Exceptions</tt> are no
+longer renamings of Booch exceptions.
 
 
 <p><dt>20020116
