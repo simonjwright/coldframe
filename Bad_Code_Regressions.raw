@@ -3,13 +3,13 @@
 <name>Bad Code Regressions</name>
 <date>
 <year>2004</year>
-<month>3</month>
-<day>15</day>
-<time>20:58</time>
+<month>4</month>
+<day>4</day>
+<time>14:52</time>
 </date>
 <documentation>Regression tests that involve detecting errors.
 
-{ revision = $Revision: 7620f24adfba $ }</documentation>
+{ revision = $Revision: 5f827317e8ca $ }</documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -448,6 +448,61 @@
 <attributes>
 </attributes>
 <operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Bad Finalization</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="finalize">
+<name>a function</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>has parameters</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>x</parametername>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="finalize, class">
+<name>is class</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize, abstract">
+<name>is abstract</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
