@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: hierarchies-suite.adb,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 8f58d2e67045 $
+--  $Date: 2003/05/10 17:39:18 $
 --  $Author: simon $
 
 with Hierarchies.Test_Creations;
@@ -24,7 +24,7 @@ with Hierarchies.Test_Deletions;
 function Hierarchies.Suite
   return AUnit.Test_Suites.Access_Test_Suite is
    use AUnit.Test_Suites;
-   Result : Access_Test_Suite := new Test_Suite;
+   Result : constant Access_Test_Suite := new Test_Suite;
 begin
    Add_Test (Result, new Test_Creations.Test_Case);
    Add_Test (Result, new Test_Finds.Test_Case);
