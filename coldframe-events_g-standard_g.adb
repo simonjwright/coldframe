@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 2616e0b373bd $
---  $Date: 2002/11/26 20:12:58 $
+--  $Revision: f66057bc31b6 $
+--  $Date: 2003/01/19 18:26:24 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -64,6 +64,14 @@ package body ColdFrame.Events_G.Standard_G is
       end if;
 
    end Note;
+
+
+   function Copy
+     (The_Queue : access Event_Queue_Base) return Event_Queue_P is
+   begin
+      The_Queue.Access_Count := The_Queue.Access_Count + 1;
+      return Event_Queue_P (The_Queue);
+   end Copy;
 
 
    procedure Post (The_Event : Event_P;
