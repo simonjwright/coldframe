@@ -12,7 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: coldframe-test_string_hash.adb,v 13badf447884 2001/08/16 19:31:36 simon $
+--  $RCSfile: coldframe-test_string_hash.adb,v $
+--  $Revision: fe0f9536cdc0 $
+--  $Date: 2001/09/25 18:39:48 $
+--  $Author: simon $
 
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;

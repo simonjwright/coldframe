@@ -19,7 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $Id: coldframe-navigate_from_one_to_one_collection.ads,v 13badf447884 2001/08/16 19:31:36 simon $
+--  $RCSfile: coldframe-navigate_from_one_to_one_collection.ads,v $
+--  $Revision: fe0f9536cdc0 $
+--  $Date: 2001/09/25 18:39:48 $
+--  $Author: simon $
 
 --  This package supports navigation of a one-to-one association from
 --  a set of instances of the 'first' end to the set of instances at

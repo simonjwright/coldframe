@@ -22,7 +22,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $Id: coldframe-string_hash.adb,v 13badf447884 2001/08/16 19:31:36 simon $
+--  $RCSfile: coldframe-string_hash.adb,v $
+--  $Revision: fe0f9536cdc0 $
+--  $Date: 2001/09/25 18:39:48 $
+--  $Author: simon $
 
 with Ada.Numerics.Discrete_Random;
 

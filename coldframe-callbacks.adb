@@ -19,7 +19,10 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $Id: coldframe-callbacks.adb,v d34c9dbd812d 2001/09/11 05:16:37 simon $
+--  $RCSfile: coldframe-callbacks.adb,v $
+--  $Revision: fe0f9536cdc0 $
+--  $Date: 2001/09/25 18:39:48 $
+--  $Author: simon $
 
 package body ColdFrame.Callbacks is
 
