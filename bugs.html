@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d4ec9a6fc693 2003/05/01 05:21:07 simon $ -->
+<!-- $Id: bugs.html,v d0417f9d64e3 2003/05/04 10:03:39 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -157,11 +157,22 @@ included to give early and specific warning that this has occurred?
 <dd>If an operation of a &#171;type&#187; is a function returning a
 composite value, the generated code won't compile.
 
-<!-- next: 0171 -->
+<!-- next: 0172 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>2.v.03</h3>
+
+<dl>
+
+<dt>171 (raised 1.v.03)
+
+<dd>If you tear down an event queue that hasn't been started, the
+program hangs.
+
+</dl>
 
 <h3>1.v.03</h3>
 
@@ -169,11 +180,8 @@ composite value, the generated code won't compile.
 
 <dt>0129 (raised 8.x.02)
 
-<dd><tt>[[ callback ]]</tt> types tend to be unnoticeable; could a
+<dd><tt>[[callback]]</tt> types tend to be unnoticeable; could a
 &#171;callback&#187; stereotype be used instead?
-
-<br><i>It's already possible to use a stereotype like <em>&#171;type,
-callback=42&#187;</em>, or even <em>&#171;type, callback&#187;</em>.</i>
 
 </dl>
 
