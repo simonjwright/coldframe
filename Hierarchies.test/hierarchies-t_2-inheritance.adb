@@ -1,4 +1,3 @@
-with Ada.Exceptions;
 with Hierarchies.S_2.Inheritance;
 with Hierarchies.F_1;
 with Hierarchies.F_2;
@@ -6,20 +5,14 @@ with Hierarchies.F_2;
 package body Hierarchies.T_2.Inheritance is
 
    function Create_Tree (R1 : ColdFrame.Instances.Handle) return Handle is
-      S2 : S_2.Handle;
+      S2_H : S_2.Handle;
       use type ColdFrame.Instances.Handle;
    begin
       if R1 = null
         or else not (R1.all in Instance'Class) then
-         S2 := S_2.Inheritance.Create_Tree (R1);
+         S2_H := S_2.Inheritance.Create_Tree (R1);
          return Create
-           ((D_Parent => ColdFrame.Instances.Handle (S2)));
-      elsif not Maps.Is_Bound
-        (The_Container,
-         (D_Parent => R1)) then
-         Ada.Exceptions.Raise_Exception
-           (Constraint_Error'Identity,
-            "unbound handle in Create_Tree");
+           ((D_Parent => ColdFrame.Instances.Handle (S2_H)));
       else
          return Handle (R1);
       end if;
