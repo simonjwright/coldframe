@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 0540bc30a600 2004/03/15 20:59:18 simon $ -->
+<!-- $Id: ada-state.xsl,v bb2ed825e600 2004/04/22 22:06:40 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,7 +28,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  version="1.0">
+  version="1.1">
 
 
   <!-- Called at domain/class to generate event types. -->
@@ -516,11 +516,31 @@
     <xsl:param name="indent"/>
 
     <xsl:variable name="single" select="$class/@singleton"/>
-    <xsl:variable name="op" select="$class/operation[name=$operation]"/>
+    <xsl:variable name="impl-class">
+      <xsl:call-template name="class-of-operation-for-action">
+        <xsl:with-param name="class" select="$class"/>
+        <xsl:with-param name="action" select="$operation"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable
+      name="op"
+      select="/domain/class[name=$impl-class]/operation[name=$operation]"/>
     <xsl:variable name="params" select="$op/parameter"/>
 
     <!-- Check for errors. -->
     <xsl:choose>
+
+      <xsl:when test="not($op)">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: no operation for </xsl:text>
+          <xsl:value-of select="$class/name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>, </xsl:text>
+          <xsl:value-of select="$operation"/>
+        </xsl:message>
+      </xsl:when>
 
       <xsl:when test="$op/@return">
         <xsl:call-template name="log-error"/>
@@ -673,6 +693,39 @@
         </xsl:if>
 
       </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
+
+
+  <!-- Called to find the class of the actual operation for an action
+       (may be in a parent class). -->
+  <xsl:template name="class-of-operation-for-action">
+
+    <!-- The class(es) to be considered. -->
+    <xsl:param name="class"/>
+
+    <!-- The name of the action. -->
+    <xsl:param name="action"/>
+
+    <xsl:choose>
+
+      <xsl:when test="$class[operation[name=$action]]">
+        <!-- XXX should perhaps check count? but
+             (a) might not be at the same level,
+             (b) multiple parents with the same operation is a bug anyway. -->
+        <xsl:value-of select="$class/name"/>
+      </xsl:when>
+
+      <xsl:when test="$class">
+        <xsl:call-template name="class-of-operation-for-action">
+          <xsl:with-param
+            name="class"
+            select="/domain/class[name=../inheritance[child=$class/name]/parent]"/>
+          <xsl:with-param name="action" select="$action"/>
+        </xsl:call-template>
+      </xsl:when>
 
     </xsl:choose>
 
