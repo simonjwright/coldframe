@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 89f152890adc 2002/12/24 11:43:31 simon $ -->
+<!-- $Id: types.html,v 1baa89ad78ee 2003/01/13 20:37:43 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -40,7 +40,7 @@ you can have many different identical values of the same type.
 identifiers
 
 <li><i>Counterpart</i> - used for references to instances in other
-domains (but see the <i>[[counterpart]]</i> annotation blow).
+domains (but see the <i>[[counterpart]]</i> annotation below).
 
 <li><i>Timer</i> - used (mainly) for timeouts in state machines
 
@@ -84,6 +84,9 @@ records; the discriminant is an enumeration type with literals formed
 from the attribute names with <tt>_T</tt> appended.
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+
+<li><tt>extends : <i>external-type</i></tt> specifies that the
+given type extends (inherits) the specified  external reference.
 
 <li><tt>hash : <i>style</i></tt> specifies how a type (presumably
 <tt><i>imported</i></tt> or <tt><i>renames</i></tt>) is to be
@@ -145,7 +148,8 @@ case adjustment)
 <p>New types are declared in the domain package. Where appropriate,
 supporting code is generated as a child unit of the domain package.
 
-<p>Operations of types are generated in the domain package.
+<p>Operations of types are generated in the domain package. They have
+no <tt>This</tt> parameter.
 
 <h3>Annotations</h3>
  
@@ -205,6 +209,16 @@ gives, for example (see <a href="#discriminated-record-pic">above</a>),
      (Low,
       Medium,
       High);
+</pre>
+
+<li><tt>extends : <i>external-type</i></tt>: for a type named
+<tt>Derived</tt>, extending <tt><i>Other_Domain</i>.Base</tt>, gives
+<pre>
+   with <i>Other_Domain</i>;
+   ..
+   type Base is new <i>Other_Domain</i>.Base with record
+      ..
+   end record;
 </pre>
 
 <li><tt>imported : <i>external-reference</i></tt>: for a type named
@@ -273,6 +287,17 @@ example (see <a href="#discriminated-record-pic">above</a>),
 </ul>
 
 <h2>Use</h2>
+
+<h3>Type extension</h3>
+
+<p>The <i>extends</i> annotation is intended to support the use of
+external packages which require type extension (for example, to take
+data records). It is not meant to provide generalized support for type
+extension. If you <i>really</i> want to use Ada tagged types, or
+indeed other features of Ada that ColdFrame doesn't use, then either
+you should be translating your UML models by hand or your model needs
+rethinking; check out <a
+href="resources.html#build-object-models">Leon Starr's book</a>.
 
 <p><hr>
 <i>
