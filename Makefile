@@ -106,7 +106,7 @@ PROGS = COPYING \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS)
 
-SUPPORT = architecture*.ad[bs]
+SUPPORT = coldframe*.ad[bs]
 
 DEMO = Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
