@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v af74185be9c3 2001/01/12 20:39:57 simon $ -->
+<!-- $Id: generate-ada.xsl,v 985debbeef48 2001/01/13 18:30:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,21 +26,10 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
-  <!--
-  xmlns:adainit="http://www.pushface.org/java/ada_string_manipulation"
-  xmlns:str="http://www.pushface.org/java/string_manipulation"
-       -->
 
   <xsl:strip-space elements="*"/>
 
   <xsl:output method="text"/>
-
-  <!-- Since the support code is created in Ada, we need to initialize
-       the Ada runtime.
-  <xsl:variable
-    name="initialize-the-ada-runtime"
-    select="adainit:adainit()"/>
-  -->
 
 
   <!-- Generate the top-level package for the domain, then all the
@@ -203,6 +192,13 @@
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/object" mode="object-spec">
 
+    <!-- determine if this is a supertype (if there is an inheritance
+         relationship with this class as the parent) -->
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable
+      name="is-supertype"
+      select="boolean(../inheritance[parent=$name])"/>
+
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="object-spec-context"/>
 
@@ -222,8 +218,9 @@
       <!-- .. the Identifier record .. -->
       <xsl:call-template name="identifier-record"/>
 
-      <!-- .. the Instance record .. -->
-      <xsl:text>  type Instance is private;&#10;</xsl:text>
+      <!-- .. the Instance record (indefinite, so it can't be
+           allocated) .. -->
+      <xsl:text>  type Instance (&lt;&gt;) is private;&#10;</xsl:text>
 
       <!-- .. the Handle .. -->
       <xsl:text>  type Handle is access all Instance;&#10;</xsl:text>
@@ -237,6 +234,13 @@
       <xsl:text>  function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
       <xsl:text>  procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
       <xsl:text>  procedure Delete (This : in out Handle);&#10;</xsl:text>
+
+      <!-- .. subtype enumeration support, if required .. -->
+      <xsl:if test="$is-supertype">
+        <xsl:call-template name="subtype-enumeration"/>
+        <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class);&#10;</xsl:text>
+        <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class;&#10;</xsl:text>
+      </xsl:if>
 
       <!-- .. the attribute access operations .. -->
       <xsl:apply-templates mode="attribute-set-spec"/>
@@ -253,19 +257,21 @@
       <xsl:text>private&#10;</xsl:text>
 
       <!-- .. the Instance record .. -->
-      <xsl:call-template name="instance-record"/>
+      <xsl:call-template name="instance-record">
+        <xsl:with-param name="is-supertype" select="$is-supertype"/>
+      </xsl:call-template>
 
       <!-- .. the Hash function spec .. -->
       <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
 
       <!-- .. Container instantiations .. -->
       <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Identifier);&#10;</xsl:text>
-      <xsl:text>  package Maps is new Abstract_Maps.Unbounded&#10;</xsl:text>
+      <xsl:text>  package Maps is new Abstract_Maps.Dynamic&#10;</xsl:text>
       <xsl:text>     (Hash => Hash,&#10;</xsl:text>
       <xsl:text>      Buckets => 43,&#10;</xsl:text>
       <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
       <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-      <xsl:text>  subtype Map is Maps.Unbounded_Map;&#10;</xsl:text>
+      <xsl:text>  subtype Map is Maps.Dynamic_Map;&#10;</xsl:text>
 
       <!-- .. the instance container .. -->
       <xsl:text>  The_Container : Map;&#10;</xsl:text>
@@ -299,11 +305,27 @@
            a GNAT special. -->
       <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
 
-      <!-- All containers are Unbounded Maps (for the moment). -->
-      <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
+      <!-- All containers are Dynamic Maps (for the moment). -->
+      <xsl:text>with BC.Containers.Maps.Dynamic;&#10;</xsl:text>
 
     </xsl:if>
 
+  </xsl:template>
+
+
+  <!-- Called from a supertype domain/object to output the subtype enumeration
+       type -->
+  <xsl:template name="subtype-enumeration">
+    <xsl:variable name="name" select="name"/>
+    <xsl:text>  type Child_Class is&#10;</xsl:text>
+    <xsl:text>     (</xsl:text>
+    <xsl:for-each select="../inheritance[parent=$name]/child">
+      <xsl:value-of select="."/>
+      <xsl:if test="position() &lt; last()">
+        <xsl:text>,&#10;      </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+    <xsl:text>);&#10;</xsl:text>
   </xsl:template>
 
 
@@ -357,6 +379,13 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/object" mode="object-body">
 
+    <!-- determine if this is a supertype (if there is an inheritance
+         relationship with this class as the parent) -->
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable
+      name="is-supertype"
+      select="boolean(../inheritance[parent=$name])"/>
+
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="object-body-context"/>
 
@@ -375,7 +404,7 @@
       <xsl:apply-templates
         select="attribute[@identifier='yes']"
         mode="identifier-element-assignment"/>
-      <xsl:text>    -- need to initialize Result.Data?&#10;</xsl:text>
+      <xsl:text>    -- need to initialize Result?&#10;</xsl:text>
       <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
       <xsl:text>    return Result;&#10;</xsl:text>
       <xsl:text>  end Create;&#10;</xsl:text>
@@ -409,6 +438,18 @@
       <xsl:text>));&#10;</xsl:text>
       <xsl:text>    This := null;&#10;</xsl:text>
       <xsl:text>  end Delete;&#10;</xsl:text>
+
+      <!-- .. subtype enumeration support, if required .. -->
+      <xsl:if test="$is-supertype">
+        <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class) is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    This.Current_Child := To_Be;&#10;</xsl:text>
+        <xsl:text>  end Set_Child_Class;&#10;</xsl:text>
+        <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    return This.Current_Child;&#10;</xsl:text>
+        <xsl:text>  end Get_Child_Class;&#10;</xsl:text>
+      </xsl:if>
 
       <!-- .. attribute accessors .. -->
       <xsl:apply-templates mode="attribute-set-body"/>
@@ -598,15 +639,15 @@
     </xsl:variable>
 
     <!-- Collections package -->
-    <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
+    <xsl:text>with BC.Containers.Collections.Dynamic;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections is&#10;</xsl:text>
     <xsl:text>  package Abstract_Collections is new Abstract_Containers.Collections;&#10;</xsl:text>
-    <xsl:text>  package Concrete_Collections is new Abstract_Collections.Unbounded&#10;</xsl:text>
+    <xsl:text>  package Concrete_Collections is new Abstract_Collections.Dynamic&#10;</xsl:text>
     <xsl:text>     (Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
     <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-    <xsl:text>  subtype Collection is Concrete_Collections.Unbounded_Collection;&#10;</xsl:text>
+    <xsl:text>  subtype Collection is Concrete_Collections.Dynamic_Collection;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -864,14 +905,18 @@
   <!-- Called from domain/object to generate the actual instance
        record for the class. -->
   <xsl:template name="instance-record">
+    <xsl:param name="is-supertype"/>
     <xsl:choose>
 
-      <!-- Output only non-identifier attributes. -->
+      <!-- Output all attributes. -->
       <xsl:when test="count(attribute) &gt; 0">
         <xsl:text>  type Instance is record&#10;</xsl:text>
         <xsl:apply-templates
           mode="instance-record-component"
           select="attribute"/>
+        <xsl:if test="$is-supertype">
+          <xsl:text>    Current_Child : Child_Class;&#10;</xsl:text>
+        </xsl:if>
         <xsl:text>  end record;&#10;</xsl:text>
       </xsl:when>
 
