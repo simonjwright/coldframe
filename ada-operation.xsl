@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v eceba6426551 2003/01/18 16:03:52 simon $ -->
+<!-- $Id: ada-operation.xsl,v 0e9e15b2a2a9 2003/02/14 20:31:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -866,7 +866,7 @@
                       and not(/domain/type[name=current()/@return]/attribute)">
         <xsl:call-template name="should-edit"/>
 
-        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
@@ -886,14 +886,15 @@
 
       <!-- .. and this is for composite types (records) .. -->
       <xsl:when test="@return">
-        <xsl:value-of select="$heading"/>
+        <xsl:call-template name="should-edit"/>
 
-        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
         </xsl:call-template>
 
+        <xsl:value-of select="$heading"/>
         <xsl:value-of select="$I"/>
         <xsl:text>Dummy : </xsl:text>
         <xsl:value-of select="@return"/>
@@ -909,7 +910,7 @@
       <xsl:otherwise>
         <xsl:call-template name="should-edit"/>
 
-        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
