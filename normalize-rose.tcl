@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ae33d477a373 2001/06/26 18:49:47 simon $
+# $Id: normalize-rose.tcl,v 1d35f94e04c9 2001/07/13 18:41:39 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -811,6 +811,9 @@ itcl::class Operation {
     # is this a class operation?
     variable cls 0
 
+    # is this an initialize operation?
+    variable init 0
+
     # the return type, if any
     variable ret ""
 
@@ -834,6 +837,13 @@ itcl::class Operation {
     # operation
     method -class {dummy} {set cls 1}
 
+    # called via stereotype mechanism to indicate that this is an
+    # initialization operation (and also a class operation).
+    method -init {dummy} {
+	set cls 1
+	set init 1
+    }
+
     method -return {r} {set ret $r}
 
     method -parameters {pl} {set parameters $pl}
@@ -843,6 +853,7 @@ itcl::class Operation {
 	if $abstr {puts -nonewline " abstract=\"yes\""}
 	if $acc {puts -nonewline " access=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
+	if $init {puts -nonewline " initialize=\"yes\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
