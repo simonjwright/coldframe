@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 9b54f4213cc7 2001/09/08 05:08:35 simon $ -->
+<!-- $Id: ada-class.xsl,v bf3f9baf832f 2001/09/14 19:37:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -96,12 +96,12 @@
 
     </xsl:choose>
 
+    <!-- .. any access-to-subprogram types (before possible accessors) .. -->
+    <xsl:apply-templates mode="access-to-operation"/>
+
     <!-- .. the attribute access operations .. -->
     <xsl:apply-templates mode="attribute-set-spec"/>
     <xsl:apply-templates mode="attribute-get-spec"/>
-
-    <!-- .. any access-to-subprogram types .. -->
-    <xsl:apply-templates mode="access-to-operation"/>
 
     <!-- .. operations .. -->
     <xsl:call-template name="operation-specs"/>
@@ -551,73 +551,13 @@
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:call-template name="create-function-body"/>
+        <xsl:call-template name="find-function-body"/>
         
         <xsl:value-of select="$I"/>
-        <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>else&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>return null;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>end if;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>end Find;&#10;</xsl:text>
-        
-        <xsl:value-of select="$I"/>
-        <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
-        <xsl:value-of select="$I"/>
-        <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>H : Handle;&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Free (H);&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>end Delete;&#10;</xsl:text>
-        
-        <xsl:value-of select="$I"/>
-        <xsl:text>procedure Delete (This : in out Handle) is&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>begin&#10;</xsl:text>
-        <!-- This check is because of what seems to be a GNAT error for
-             fixed-size storage pools; the wrong exception is raised. -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>if This = null then&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>raise Constraint_Error;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>end if;&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Maps.Unbind&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(The_Container,&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> (</xsl:text>
-        <xsl:for-each select="attribute[@identifier]">
-          <xsl:call-template name="attribute-name"/>
-          <xsl:text> =&gt; This.</xsl:text>
-          <xsl:call-template name="attribute-name"/>
-          <xsl:if test="position() &lt; last()">
-            <xsl:text>,&#10;  </xsl:text>
-            <xsl:value-of select="$IIC"/>
-          </xsl:if>
-        </xsl:for-each>
-        <xsl:text>));&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Free (This);&#10;</xsl:text>
-        <xsl:value-of select="$I"/>
-        <xsl:text>end Delete;&#10;</xsl:text>
+        <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+        <xsl:call-template name="class-delete-procedure-body"/>     
+        <xsl:call-template name="delete-procedure-body"/>     
         
         <!-- .. subtype enumeration support, if required .. -->
         <xsl:call-template name="supertype-bodies"/>
@@ -797,7 +737,7 @@
       <xsl:otherwise>
         <xsl:text>procedure</xsl:text>
         <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$I"/>
+          <xsl:with-param name="indent" select="$IC"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -863,6 +803,9 @@
         <xsl:text>Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
+        <xsl:call-template name="set-parent-child-info">
+          <xsl:with-param name="handle" select="'Result'"/>
+        </xsl:call-template>
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -883,6 +826,9 @@
           mode="identifier-element-assignment"/>
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
+        <xsl:call-template name="set-parent-child-info">
+          <xsl:with-param name="handle" select="'Result'"/>
+        </xsl:call-template>
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -890,6 +836,266 @@
       </xsl:otherwise>
 
     </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Called from domain/class, within the Create function, to
+       set the parents' Current Child record. -->
+  <xsl:template name="set-parent-child-info">
+    <xsl:param name="handle" select="'This'"/>
+
+    <!--
+         {parent}.Set_{relation}_Child
+           ({handle}.{relation}_Parent,
+            (Current => {parent}.{child}_T),
+             {abbrev} => {handle});
+         -->
+    
+    <!-- Save the current class -->
+    <xsl:variable name="current" select="."/>
+
+    <xsl:for-each select="/domain/inheritance[child=$current/name]">
+      <xsl:sort select="name"/>
+
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Set_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(</xsl:text>
+      <xsl:value-of select="$handle"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> (Current =&gt; </xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$current/name"/>
+      <xsl:text>_T, </xsl:text>
+      <xsl:value-of select="$current/abbreviation"/>
+      <xsl:text> =&gt; </xsl:text>
+      <xsl:value-of select="$handle"/>
+      <xsl:text>));&#10;</xsl:text>
+    </xsl:for-each>
+
+  </xsl:template>
+
+
+  <!-- Called from domain/class to create the Find function body. -->
+  <xsl:template name="find-function-body">
+    <xsl:value-of select="$I"/>
+    <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>else&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>return null;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end Find;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Called from domain/class to create the class delete
+       procedure body. -->
+  <xsl:template name="class-delete-procedure-body">
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>H : Handle;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+    <xsl:call-template name="subtype-deletion">
+      <xsl:with-param name="handle" select="'H'"/>
+    </xsl:call-template>
+    <xsl:call-template name="perform-finalization">
+      <xsl:with-param name="handle" select="'H'"/>
+    </xsl:call-template>
+    <xsl:call-template name="clear-parent-child-info">
+      <xsl:with-param name="handle" select="'H'"/>
+    </xsl:call-template>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Free (H);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end Delete;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Called from domain/class to create the instance delete
+       procedure body. -->
+  <xsl:template name="delete-procedure-body">
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Delete (This : in out Handle) is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+    <!-- This check is because of what seems to be a GNAT error for
+         fixed-size storage pools; the wrong exception is raised. -->
+    <xsl:value-of select="$II"/>
+    <xsl:text>if This = null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>raise Constraint_Error;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
+    <xsl:call-template name="subtype-deletion">
+      <xsl:with-param name="handle" select="'This'"/>      
+    </xsl:call-template>
+    <xsl:call-template name="perform-finalization">
+      <xsl:with-param name="handle" select="'This'"/>      
+    </xsl:call-template>
+    <xsl:call-template name="clear-parent-child-info">
+      <xsl:with-param name="handle" select="'This'"/>
+    </xsl:call-template>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Maps.Unbind&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>(The_Container,&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text> (</xsl:text>
+    <xsl:for-each select="attribute[@identifier]">
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text> =&gt; This.</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:if test="position() &lt; last()">
+        <xsl:text>,&#10;  </xsl:text>
+        <xsl:value-of select="$IIC"/>
+      </xsl:if>
+    </xsl:for-each>
+    <xsl:text>));&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Free (This);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end Delete;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Called from domain/class, within one of the Delete procedures,
+       to delete any current children in inheritance relationships. -->
+  <xsl:template name="subtype-deletion">
+    <xsl:param name="handle" select="'This'"/>
+
+    <!--
+         case {handle}.{relation}_Current_Child.Current is
+           when {child-1}_T =>
+             {child-1}.Delete ({handle}.{relation}_Current_Child.{child-1-abbrev};
+           when Null_T => null;
+         end case;
+         -->
+
+    <!-- Save the current class -->
+    <xsl:variable name="current" select="."/>
+
+    <!-- XXX won't work with partitioned inheritance -->
+    <xsl:variable
+      name="rel"
+      select="/domain/inheritance[parent=$current/name]"/>
+
+    <xsl:if test="$rel">
+      
+      <xsl:value-of select="$II"/>
+      <xsl:text>case </xsl:text>
+      <xsl:value-of select="$handle"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$rel/name"/>
+      <xsl:text>_Current_Child.Current is&#10;</xsl:text>
+
+      <xsl:for-each select="$rel/child">
+        <xsl:sort select="."/>
+
+        <xsl:variable name="child" select="."/>
+        
+        <xsl:value-of select="$III"/>
+        <xsl:text>when </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>_T =&gt;&#10;</xsl:text>
+        
+        <xsl:value-of select="$IIII"/>
+        <xsl:value-of select="."/>
+        <xsl:text>.Delete (</xsl:text>
+        <xsl:value-of select="$handle"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="$rel/name"/>
+        <xsl:text>_Current_Child.</xsl:text>
+        <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
+        <xsl:text>);&#10;</xsl:text>
+
+      </xsl:for-each>
+      
+      <xsl:value-of select="$III"/>
+      <xsl:text>when Null_T =&gt; null;&#10;</xsl:text>
+
+      <xsl:value-of select="$II"/>
+      <xsl:text>end case;&#10;</xsl:text>
+
+    </xsl:if>
+
+  </xsl:template>
+  
+
+  <!-- Called from domain/class, within the Delete procedure, to
+       null the parents' Current Child record. -->
+  <xsl:template name="clear-parent-child-info">
+    <xsl:param name="handle" select="'This'"/>
+
+    <!--
+         {parent}.Set_{relation}_Child
+           ({handle}.{relation}_Parent, (Current => {parent}.Null_T));
+         -->
+    
+    <!-- Save the current class -->
+    <xsl:variable name="current" select="."/>
+
+    <xsl:for-each select="/domain/inheritance[child=$current/name]">
+      <xsl:sort select="name"/>
+
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Set_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(</xsl:text>
+      <xsl:value-of select="$handle"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Parent, </xsl:text>
+      <xsl:text>(Current =&gt; </xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Null_T));&#10;</xsl:text>
+    </xsl:for-each>
+
+  </xsl:template>
+
+
+  <!-- Called from domain/class, within the Delete procedures, to
+       call any finalization procedures. -->
+  <xsl:template name="perform-finalization">
+    <xsl:param name="handle" select="'This'"/>
+
+    <xsl:for-each select="operation[@finalize
+                          and not(@return)
+                          and not(@class)
+                          and not(parameter)]">
+      <xsl:sort select="name"/>
+
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="name"/>
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="$handle"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:for-each>
+
   </xsl:template>
 
 
