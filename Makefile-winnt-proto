@@ -6,13 +6,16 @@
 # Define these variables on the Make command line.
 
 BLANK_LINES = yes
-CASE_EXCEPTIONS = ~/.emacs_case_exceptions
 GENERATE_ACCESSORS = defined
 STACK_DUMP = no
 VERBOSE = no
 
 # Define these variables in an including Makefile (before the actual
-# include)
+# include) or in the environment
+
+ifeq ($(CASE_EXCEPTIONS), )
+  CASE_EXCEPTIONS = ~/.emacs_case_exceptions
+endif
 
 ifeq ($(COLDFRAMEOUT), )
   COLDFRAMEOUT = .
