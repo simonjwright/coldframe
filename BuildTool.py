@@ -2,7 +2,7 @@
 
 Copyright Simon Wright <simon@pushface.org>.
 
-$Id: BuildTool.py,v 659e7a8845e4 2005/03/25 14:36:10 simon $
+$Id: BuildTool.py,v d191d3e12222 2005/04/04 07:42:26 simon $
 
 """
 
@@ -10,6 +10,7 @@ from Tkinter import *
 from tkMessageBox import *
 from DirectoryDialog import *
 from FileDialog import *
+from xml.dom.minidom import *
 import os
 
 class ScrolledListBox(Frame):
@@ -302,12 +303,12 @@ class Application(Frame):
         pass
 
     def open_file(self):
-        self.domains.destroy()
-        ds = {}
-        for d in  ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-                   'Quite_A_Long_Name_For_A_Domain']:
-            ds[d] = Domain(d)
-        self.domains = Domains(self, ds)
+        file = LoadFileDialog(self).go(pattern="*.xml")
+        if file != None:
+            print 'parsing ' + file
+            self.domains.destroy()
+            dom = xml.dom.minidom.parse(file)
+            print dom.firstChild.tagName
 
     def save_file(self):
         self.domains.save(0)
