@@ -13,17 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: server.adb,v $
---  $Revision: 141dc30870c4 $
---  $Date: 2003/02/20 20:58:51 $
+--  $Revision: 5247b65fcf3c $
+--  $Date: 2003/03/01 17:05:38 $
 --  $Author: simon $
 
 --  This program receives and decodes TCP packets of type
 --  ColdFrame.Serialization.Base'Class, using port 40673.
 
 with Ada.Exceptions;
+with Ada.Text_IO;             --  need Flush
 with ColdFrame.Serialization;
-with GNAT.Sockets;
 with GNAT.IO; use GNAT.IO;
+with GNAT.Sockets;
 
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
@@ -39,6 +40,8 @@ procedure Server is
    Channel : GNAT.Sockets.Stream_Access;
 
 begin
+
+   GNAT.IO.Set_Output (GNAT.IO.Standard_Error);
 
    GNAT.Sockets.Initialize;
 
@@ -70,7 +73,9 @@ begin
             Rec : constant ColdFrame.Serialization.Base'Class :=
               ColdFrame.Serialization.Base'Class'Input (Channel);
          begin
-            Put_Line (ColdFrame.Serialization.Image (Rec));
+            Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
+                                  ColdFrame.Serialization.Image (Rec));
+            Ada.Text_IO.Flush;
          end;
 
       exception
