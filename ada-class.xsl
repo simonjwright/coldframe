@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a4ea432ad1b7 2002/06/04 10:01:59 simon $ -->
+<!-- $Id: ada-class.xsl,v 97709492bc1b 2002/07/13 18:25:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -114,7 +114,9 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
+            <xsl:text>type Instance (&lt;&gt;)&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
@@ -753,6 +755,9 @@
         <xsl:if test="not(@singleton)">
           <!-- We'll need to free memory. -->
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        </xsl:if>
+
+        <xsl:if test="not(@singleton) or statemachine">
           <!-- We'll need exception support. -->
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>
