@@ -1,14 +1,14 @@
 <domain>
-<extractor>cf-20030215t</extractor>
+<extractor>cf-20030330t</extractor>
 <name>Serialization</name>
 <date>
 <year>2003</year>
-<month>3</month>
-<day>5</day>
-<time>20:30</time>
+<month>4</month>
+<day>1</day>
+<time>07:36</time>
 </date>
 <documentation>This domain is a demonstration of the "serialization" features of ColdFrame.
-[[ revision : $Revision: b41351e86e9a $ ]]
+[[ revision : $Revision: 5572e3959478 $ ]]
 </documentation>
 <classes>
 <class stereotype="public">
@@ -24,13 +24,13 @@
 <documentation>Opens a TCP/IP connection to the remote host "On Host", using port "Using Port"., for the purpose of transmitting serialized data records to it.</documentation>
 <parameters>
 <parameter>
-<name>on host</name>
+<parametername>on host</parametername>
 <documentation></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>using port</name>
+<parametername>using port</parametername>
 <documentation></documentation>
 <type>Port</type>
 <initial></initial>
@@ -42,7 +42,7 @@
 <documentation>Creates a copy of the supplied value V, and posts it to the domain's event queue in a Posted Value event.</documentation>
 <parameters>
 <parameter>
-<name>v</name>
+<parametername>v</parametername>
 <documentation></documentation>
 <type>Serializable</type>
 <initial></initial>
@@ -113,13 +113,13 @@
 On successful return, the TCP/IP connection has been made.</documentation>
 <parameters>
 <parameter>
-<name>connecting to host</name>
+<parametername>connecting to host</parametername>
 <documentation></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>using port</name>
+<parametername>using port</parametername>
 <documentation></documentation>
 <type>Port</type>
 <initial></initial>
@@ -131,7 +131,7 @@ On successful return, the TCP/IP connection has been made.</documentation>
 <documentation>This entry action posts its parameter's payload to the output stream.</documentation>
 <parameters>
 <parameter>
-<name>v</name>
+<parametername>v</parametername>
 <documentation></documentation>
 <type>Buffer</type>
 <initial></initial>
