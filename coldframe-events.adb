@@ -20,12 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: 8937907f915d $
+--  $Date: 2002/02/06 20:50:35 $
 --  $Author: simon $
 
 --  with Ada.Calendar;
-with Ada.Exceptions;
+--  with Ada.Exceptions;
 with GNAT.IO; use GNAT.IO;
 --  with GNAT.Calendar.Time_IO;
 
@@ -68,18 +68,6 @@ package body ColdFrame.States is
       --  dispatch me! I want to die", rather than deleting them from
       --  the queue now.
    end Finalize;
-
-
-   procedure Retract (The : Event_P;
-                      On : access Event_Queue_Base;
-                      Success : out Boolean) is
-      Should_Have_Been_Overridden : exception;
-   begin
-      Success := False;
-      Ada.Exceptions.Raise_Exception
-        (Program_Error'Identity,
-         "ColdFrame.States.Retract should have been overridden");
-   end Retract;
 
 
    procedure Log_Retraction (The : Event_P;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: 8937907f915d $
+--  $Date: 2002/02/06 20:50:35 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -142,15 +142,6 @@ private
 
    type Event_Queue_Base is abstract tagged limited null record;
 
-   procedure Retract (The : Event_P;
-                      On : access Event_Queue_Base;
-                      Success : out Boolean);
-   --  Removes an event from the event queue; intended for use when we
-   --  find out that a timed event has already fired when an action
-   --  attempts to unset it.
-   --  Doesn't deallocate the Event.
-   --  If the event isn't in the event queue, Success is set False
-   --  (this is probably a Use_Error).
 
    --  Operations to support debug/logging. The implementation here
    --  is null.
