@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 2cf2e75278f5 2004/04/23 14:18:47 simon $ -->
+<!-- $Id: ada-state.xsl,v 7c9483a18bda 2004/04/23 14:24:54 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -427,7 +427,7 @@
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
-        <xsl:with-param name="operation" select="$tr/action"/>
+        <xsl:with-param name="action" select="$tr/action"/>
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
     </xsl:if>
@@ -447,7 +447,7 @@
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
-        <xsl:with-param name="operation" select="."/>
+        <xsl:with-param name="action" select="."/>
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
     </xsl:for-each>
@@ -509,8 +509,8 @@
     <!-- The triggering event's name. -->
     <xsl:param name="event"/>
 
-    <!-- The operation name. -->
-    <xsl:param name="operation"/>
+    <!-- The action name. -->
+    <xsl:param name="action"/>
 
     <!-- The indentation. -->
     <xsl:param name="indent"/>
@@ -519,18 +519,18 @@
     <xsl:variable name="impl-class">
       <xsl:call-template name="class-of-operation-for-action">
         <xsl:with-param name="class" select="$class"/>
-        <xsl:with-param name="action" select="$operation"/>
+        <xsl:with-param name="action" select="$action"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable
       name="op"
-      select="/domain/class[name=$impl-class]/operation[name=$operation]"/>
+      select="/domain/class[name=$impl-class]/operation[name=$action]"/>
     <xsl:variable name="params" select="$op/parameter"/>
 
     <!-- Check for errors. -->
     <xsl:choose>
 
-      <xsl:when test="not($op or $operation='Delete')">
+      <xsl:when test="not($op or $action='Delete')">
         <xsl:call-template name="log-error"/>
         <xsl:message>
           <xsl:text>Error: no operation for </xsl:text>
@@ -538,7 +538,7 @@
           <xsl:text>, state </xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>, action </xsl:text>
-          <xsl:value-of select="$operation"/>
+          <xsl:value-of select="$action"/>
         </xsl:message>
       </xsl:when>
 
@@ -550,12 +550,12 @@
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>, </xsl:text>
-          <xsl:value-of select="$operation"/>
+          <xsl:value-of select="$action"/>
           <xsl:text> is a function, can't be an entry action</xsl:text>
         </xsl:message>
       </xsl:when>
 
-      <xsl:when test="($operation='Delete' or $op/@final) and $single">
+      <xsl:when test="($action='Delete' or $op/@final) and $single">
         <xsl:call-template name="log-error"/>
         <xsl:message>
           <xsl:text>Error: </xsl:text>
@@ -574,7 +574,7 @@
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>, </xsl:text>
-          <xsl:value-of select="$operation"/>
+          <xsl:value-of select="$action"/>
           <xsl:text> has too many parameters to be an entry action</xsl:text>
         </xsl:message>
       </xsl:when>
@@ -592,7 +592,7 @@
             <xsl:text>'s payload is of the wrong type (</xsl:text>
             <xsl:value-of select="$class/event[name=$event]/type"/>
             <xsl:text>: </xsl:text>
-            <xsl:value-of select="$operation"/>
+            <xsl:value-of select="$action"/>
             <xsl:text> expects </xsl:text>
             <xsl:value-of select="$params/type"/>
             <xsl:text>)</xsl:text>
@@ -617,14 +617,14 @@
           <xsl:when test="$params">
 
             <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$operation"/>
+            <xsl:value-of select="$action"/>
             <xsl:text> (Ev.Payload);&#10;</xsl:text>
 
           </xsl:when>
 
           <xsl:otherwise>
             <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$operation"/>
+            <xsl:value-of select="$action"/>
             <xsl:text>;&#10;</xsl:text>
           </xsl:otherwise>
 
@@ -634,7 +634,7 @@
 
       <xsl:otherwise>
 
-        <xsl:if test="$operation='Delete' or $op/@final">
+        <xsl:if test="$action='Delete' or $op/@final">
           <!-- Delete() is permitted. -->
           <xsl:value-of select="$indent"/>
           <xsl:text>Mark_Deletable (This);&#10;</xsl:text>
@@ -642,7 +642,7 @@
 
         <xsl:choose>
 
-          <xsl:when test="$operation='Delete'">
+          <xsl:when test="$action='Delete'">
 
             <!--
                  declare
@@ -668,19 +668,19 @@
 
           <xsl:when test="$params">
             <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$operation"/>
+            <xsl:value-of select="$action"/>
             <xsl:text> (This, Ev.Payload);&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>
             <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$operation"/>
+            <xsl:value-of select="$action"/>
             <xsl:text> (This);&#10;</xsl:text>
           </xsl:otherwise>
 
         </xsl:choose>
 
-        <xsl:if test="$operation='Delete' or $op/@final">
+        <xsl:if test="$action='Delete' or $op/@final">
           <!--
                ColdFrame.Project.Events.Instance_Is_Deleted
                  (Ev'Unrestricted_Access);
