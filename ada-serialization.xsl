@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v f0a7698870dd 2004/04/29 05:09:48 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 476915a2c8fd 2004/05/29 17:42:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -39,6 +39,7 @@
     <xsl:value-of select="$blank-line"/>
 
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:if test="type/@serializable">
       <xsl:text>with ColdFrame.Project.Serialization;&#10;</xsl:text>
     </xsl:if>
