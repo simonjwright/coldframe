@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: b74ec27faba8 $
---  $Date: 2002/09/12 20:58:10 $
+--  $Revision: 850b06ce0448 $
+--  $Date: 2002/09/13 19:59:49 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -40,9 +40,9 @@ package body ColdFrame.Events_G.Standard_G is
    --
    --  Because of this use, it's necessary that (if any events are
    --  posted at all) they should all be to the same event queue.
-   procedure Note (The_Queue : access Event_Queue;
+   procedure Note (The_Queue : access Event_Queue_Base;
                    Used_By_The_Instance_Of : Event_P);
-   procedure Note (The_Queue : access Event_Queue;
+   procedure Note (The_Queue : access Event_Queue_Base;
                    Used_By_The_Instance_Of : Event_P) is
    begin
 
@@ -68,7 +68,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue) is
+                   On : access Event_Queue_Base) is
    begin
 
       Note (The_Queue => On,
@@ -84,7 +84,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue) is
+                           On : access Event_Queue_Base) is
    begin
 
       Note (The_Queue => On,
@@ -100,7 +100,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
       TE : Timer_Queue_Entry_P := new Timer_Event;
    begin
@@ -121,7 +121,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
    begin
 
@@ -142,7 +142,7 @@ package body ColdFrame.Events_G.Standard_G is
    begin
 
       --  Wait to be told when to start, if not immediately
-      if not Start_Started (The_Queue) then
+      if not The_Queue.Started then
          accept Start;
       end if;
 
@@ -179,7 +179,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   At_Time : Time.Time) is
    begin
@@ -213,7 +213,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
@@ -227,7 +227,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue) is
+                    On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
 
@@ -391,6 +391,8 @@ package body ColdFrame.Events_G.Standard_G is
               Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
             Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
          end if;
+         pragma Assert (The_Event /= null,
+                        "failed to fetch valid event");
       end Fetch;
 
 
@@ -465,9 +467,9 @@ package body ColdFrame.Events_G.Standard_G is
    end Excluder;
 
 
-   procedure Start_Queue (The_Queue : access Event_Queue) is
+   procedure Start_Queue (The_Queue : access Event_Queue_Base) is
    begin
-      --  This will block indefinitely if called for a standard Queue.
+      --  This will block indefinitely if called for a started Queue.
       --  But, the only way it's supposed to be called is via Start,
       --  which (at this level) doesn't in fact do so.
       The_Queue.The_Dispatcher.Start;
@@ -475,7 +477,7 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Invalidate_Events
-     (On : access Event_Queue;
+     (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class) is
    begin
 
@@ -495,7 +497,7 @@ package body ColdFrame.Events_G.Standard_G is
    end Invalidate_Events;
 
 
-   procedure Tear_Down (The_Queue : in out Event_Queue) is
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
    begin
 
       --  Perhaps this could be neater, but at least doing it in this
@@ -507,13 +509,13 @@ package body ColdFrame.Events_G.Standard_G is
    end Tear_Down;
 
 
-   procedure Locker (The_Queue : access Event_Queue) is
+   procedure Locker (The_Queue : access Event_Queue_Base) is
    begin
       The_Queue.The_Excluder.Lock;
    end Locker;
 
 
-   procedure Unlocker (The_Queue : access Event_Queue) is
+   procedure Unlocker (The_Queue : access Event_Queue_Base) is
    begin
       The_Queue.The_Excluder.Unlock;
    end Unlocker;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 03eeabe9a7c6 $
---  $Date: 2002/09/12 20:59:34 $
+--  $Revision: 850b06ce0448 $
+--  $Date: 2002/09/13 19:59:49 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -37,7 +37,7 @@ package body ColdFrame.Events_G.Test_G is
 
 
    function Is_Set (The_Timer : Timer;
-                    On : Event_Queue) return Boolean is
+                    On : access Event_Queue_Base) return Boolean is
       pragma Warnings (Off, On);
    begin
       return The_Timer.The_Entry /= null;
@@ -45,7 +45,7 @@ package body ColdFrame.Events_G.Test_G is
 
 
    function Expires_At (The_Timer : Timer;
-                        On : Event_Queue) return Time.Time is
+                        On : access Event_Queue_Base) return Time.Time is
       pragma Warnings (Off, On);
    begin
       if The_Timer.The_Entry = null then
@@ -57,20 +57,7 @@ package body ColdFrame.Events_G.Test_G is
    end Expires_At;
 
 
-   procedure Start (The_Queue : access Event_Queue) is
-   begin
-      if The_Queue.Started then
-         Ada.Exceptions.Raise_Exception
-           (Exceptions.Use_Error'Identity,
-            "event queue already started");
-      else
-         Start_Queue (The_Queue);
-         The_Queue.Started := True;
-      end if;
-   end Start;
-
-
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue;
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
    begin
       if Ignoring_Timers then
@@ -81,44 +68,37 @@ package body ColdFrame.Events_G.Test_G is
    end Wait_Until_Idle;
 
 
-   function Start_Started (The_Queue : access Event_Queue) return Boolean is
-      pragma Warnings (Off, The_Queue);
-   begin
-      return False;
-   end Start_Started;
-
-
-   procedure Add_Posted_Event (On : access Event_Queue) is
+   procedure Add_Posted_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Posted_Event;
    end Add_Posted_Event;
 
 
-   procedure Remove_Posted_Event (On : access Event_Queue) is
+   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Posted_Event;
    end Remove_Posted_Event;
 
 
-   procedure Add_Held_Event (On : access Event_Queue) is
+   procedure Add_Held_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Held_Event;
    end Add_Held_Event;
 
 
-   procedure Remove_Held_Event (On : access Event_Queue) is
+   procedure Remove_Held_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Held_Event;
    end Remove_Held_Event;
 
 
-   procedure Add_Timer_Event (On : access Event_Queue) is
+   procedure Add_Timer_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Add_Timer_Event;
    end Add_Timer_Event;
 
 
-   procedure Remove_Timer_Event (On : access Event_Queue) is
+   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
    begin
       On.The_Event_Count.Remove_Timer_Event;
    end Remove_Timer_Event;

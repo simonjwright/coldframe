@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 41c0b368c6a1 $
---  $Date: 2002/09/12 20:59:02 $
+--  $Revision: 850b06ce0448 $
+--  $Date: 2002/09/13 19:59:49 $
 --  $Author: simon $
 
 generic
@@ -36,7 +36,10 @@ package ColdFrame.Events_G.Test_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue is new Standard_Queue with private;
+   type Event_Queue_Base (Start_Started : Boolean)
+   is new Standard_Queue with private;
+
+   subtype Event_Queue is Event_Queue_Base (Start_Started => False);
 
 
    --------------
@@ -44,10 +47,10 @@ package ColdFrame.Events_G.Test_G is
    --------------
 
    function Is_Set (The_Timer : Timer;
-                    On : Event_Queue) return Boolean;
+                    On : access Event_Queue_Base) return Boolean;
 
    function Expires_At (The_Timer : Timer;
-                        On : Event_Queue) return Time.Time;
+                        On : access Event_Queue_Base) return Time.Time;
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
 
@@ -55,9 +58,7 @@ package ColdFrame.Events_G.Test_G is
    --  Unit test support  --
    -------------------------
 
-   procedure Start (The_Queue : access Event_Queue);
-
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue;
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
 
 private
@@ -88,25 +89,23 @@ private
    end Event_Count;
 
 
-   type Event_Queue is new Standard_Queue with record
-      Started : Boolean := False;
+   type Event_Queue_Base (Start_Started : Boolean)
+   is new Standard_Queue (Start_Started => Start_Started) with record
       The_Event_Count : Event_Count;
    end record;
 
 
-   function Start_Started (The_Queue : access Event_Queue) return Boolean;
+   procedure Add_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Add_Posted_Event (On : access Event_Queue);
+   procedure Remove_Posted_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Posted_Event (On : access Event_Queue);
+   procedure Add_Held_Event (On : access Event_Queue_Base);
 
-   procedure Add_Held_Event (On : access Event_Queue);
+   procedure Remove_Held_Event (On : access Event_Queue_Base);
 
-   procedure Remove_Held_Event (On : access Event_Queue);
+   procedure Add_Timer_Event (On : access Event_Queue_Base);
 
-   procedure Add_Timer_Event (On : access Event_Queue);
-
-   procedure Remove_Timer_Event (On : access Event_Queue);
+   procedure Remove_Timer_Event (On : access Event_Queue_Base);
 
 
 end ColdFrame.Events_G.Test_G;

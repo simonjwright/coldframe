@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.ads,v $
---  $Revision: 2bf0ced495ca $
---  $Date: 2002/09/12 21:00:08 $
+--  $Revision: 850b06ce0448 $
+--  $Date: 2002/09/13 19:59:49 $
 --  $Author: simon $
 
 generic
@@ -36,7 +36,8 @@ package ColdFrame.Events_G.Debug_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue is new Standard_Queue with private;
+   type Event_Queue (Start_Started : Boolean)
+   is new Standard_Queue with private;
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
@@ -75,7 +76,8 @@ package ColdFrame.Events_G.Debug_G is
 
 private
 
-   type Event_Queue is new Standard_Queue with null record;
+   type Event_Queue (Start_Started : Boolean)
+   is new Standard_Queue (Start_Started => Start_Started) with null record;
 
    procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue);

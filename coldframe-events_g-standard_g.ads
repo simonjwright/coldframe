@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: a6a99d306657 $
---  $Date: 2002/09/12 20:56:54 $
+--  $Revision: 850b06ce0448 $
+--  $Date: 2002/09/13 19:59:49 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -37,24 +37,27 @@ package ColdFrame.Events_G.Standard_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue is new Event_Queue_Base with private;
+   type Event_Queue_Base (Start_Started : Boolean)
+   is new Events_G.Event_Queue_Base with private;
+
+   subtype Event_Queue is Event_Queue_Base (Start_Started => True);
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue);
+                   On : access Event_Queue_Base);
 
    procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue);
+                           On : access Event_Queue_Base);
 
    ----------------------
    --  Delayed events  --
    ----------------------
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_At : Time.Time);
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration);
 
    --------------
@@ -62,17 +65,17 @@ package ColdFrame.Events_G.Standard_G is
    --------------
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   At_Time : Time.Time);
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue);
+                    On : access Event_Queue_Base);
 
 private
 
@@ -97,7 +100,7 @@ private
      (Storage => Event_Storage);
 
 
-   task type Dispatcher (The_Queue : access Event_Queue'Class) is
+   task type Dispatcher (The_Queue : access Event_Queue_Base'Class) is
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
@@ -108,7 +111,7 @@ private
    end Dispatcher;
 
 
-   task type Timer_Manager (The_Queue : access Event_Queue'Class) is
+   task type Timer_Manager (The_Queue : access Event_Queue_Base'Class) is
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
@@ -125,7 +128,7 @@ private
 
 
    --  Mutual exclusion between posters and the Dispatcher.
-   protected type Excluder (The_Queue : access Event_Queue'Class) is
+   protected type Excluder (The_Queue : access Event_Queue_Base'Class) is
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
@@ -169,26 +172,28 @@ private
 
 
    --  The actual Event Queue.
-   type Event_Queue is new Event_Queue_Base with record
-      The_Excluder : Excluder (Event_Queue'Access);
+   type Event_Queue_Base (Start_Started : Boolean)
+   is new Events_G.Event_Queue_Base (Start_Started => Start_Started)
+   with record
+      The_Excluder : Excluder (Event_Queue_Base'Access);
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Events : Unbounded_Posted_Event_Queues.Queue;
-      The_Dispatcher : Dispatcher (Event_Queue'Access);
-      The_Timer_Manager : Timer_Manager (Event_Queue'Access);
+      The_Dispatcher : Dispatcher (Event_Queue_Base'Access);
+      The_Timer_Manager : Timer_Manager (Event_Queue_Base'Access);
    end record;
 
-   procedure Start_Queue (The_Queue : access Event_Queue);
+   procedure Start_Queue (The_Queue : access Event_Queue_Base);
 
    procedure Invalidate_Events
-     (On : access Event_Queue;
+     (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
 
-   procedure Tear_Down (The_Queue : in out Event_Queue);
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 
    --  Locking.
 
-   procedure Locker (The_Queue : access Event_Queue);
+   procedure Locker (The_Queue : access Event_Queue_Base);
 
-   procedure Unlocker (The_Queue : access Event_Queue);
+   procedure Unlocker (The_Queue : access Event_Queue_Base);
 
 end ColdFrame.Events_G.Standard_G;
