@@ -130,7 +130,7 @@ PS2PDF = ps2pdf
 %.pdf: %.ps
 	$(PS2PDF) $<
 
-all:: html pdf
+all:: html
 
 html:: use-cases.html coldframe-architecture.html
 
@@ -143,11 +143,6 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 # coldframe-architecture.ps is made by printing the Rose Architecture package
 # diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
 
-PDFS = coldframe-architecture.pdf \
-  coldframe-callback.pdf \
-  coldframe-relationships.pdf
-pdf:: $(PDFS)
-
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
@@ -155,6 +150,8 @@ PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
  serialization-class-model-t.png serialization-state.png \
  serialization-state-t.png serialization-sequence.png \
  real_time.png recordable_real_time.png sample_a.png
+ type-mapping.png relationships-mapping.png operations-mapping.png \
+ metamodel.png event-mapping.png collections-mapping.png class-mappings.png
 
 ############################
 # Distribution construction
