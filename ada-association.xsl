@@ -1,5 +1,5 @@
-<!-- $Id: ada-association.xsl,v 7e6da1907630 2001/04/23 05:18:36 simon $ -->
-<!-- XSL stylesheet to generate Ada code for Relationships. -->
+<!-- $Id: ada-association.xsl,v b806c3ce4d90 2001/04/23 05:20:49 simon $ -->
+<!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
