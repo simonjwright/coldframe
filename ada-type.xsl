@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c92ca6655d81 2004/10/25 05:46:01 simon $ -->
+<!-- $Id: ada-type.xsl,v 8429877982ff 2004/10/25 05:48:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -128,10 +128,6 @@
        standard types). -->
   <xsl:template name="ty:domain-types">
     <xsl:param name="types" select="/domain/type"/>
-    <xsl:message>
-      <xsl:value-of select="count($types)"/>
-      <xsl:text> domain types.</xsl:text>
-    </xsl:message>
     <xsl:call-template name="ty:sorted-domain-types">
       <xsl:with-param name="types" select="$types"/>
       <xsl:with-param name="nodes" select="/.."/>
