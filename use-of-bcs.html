@@ -1,4 +1,4 @@
-<!-- $Id: use-of-bcs.html,v f24897427f02 2001/08/16 19:25:26 simon $ -->
+<!-- $Id: use-of-bcs.html,v 6f00c31e45e9 2001/08/26 14:39:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use of Booch Components</title>
@@ -12,13 +12,27 @@
 
 <li><a href="#containers">The Containers</a>
 
-<li><a href="#instantiations">Standard instantiations</a>
+<li><a href="#instantiations">Standard Container instantiations</a>
 
 <li><a href="#collections">Collections</a>
 
+<li><a href="#sets">Sets</a>
+
 <li><a href="#navigation">Navigation</a>
 
+<li>Operations
+
+<ul>
+
 <li><a href="#iteration">Iteration</a>
+
+<li><a href="#copying">Copying</a>
+
+<li><a href="#filtering">Filtering</a>
+
+<li><a href="#sorting">Sorting</a>
+
+</ul>
 
 </ul>
 
@@ -57,7 +71,7 @@ Handles, ie pointers to instances of the class concerned. Allocation
 of instances is handled within the class' <tt>Create</tt> function,
 and deallocation in <tt>Delete</tt>.
 
-<h2><a name="instantiations">Standard instantiations</a></h2>
+<h2><a name="instantiations">Standard Container instantiations</a></h2>
 
 <p>Given the domain <tt><i>Domain</i></tt> and the class
 <tt><i>Class</i></tt>, the standard Component instantiations are
@@ -99,12 +113,15 @@ function is provided (it's an instantiation of
 
 </dl>
 
+<p>Because each of these is intantiated at Library level, they have to
+be <tt>with</tt>ed individually.
+
 <h2><a name="collections">Collections</a></h2>
 
-<p>There are three utility functions for dealing with variables of
-type <tt><i>Domain.Class</i>.Collections.Collection</tt>. They are
-provided as child subprograms of <tt><i>Domain.Class</i></tt> (note,
-this means they have to be <tt>with</tt>ed individually):
+<p>ColdFrame provides three utility functions for dealing with
+variables of type <tt><i>Domain.Class</i>.Collections.Collection</tt>,
+as child subprograms of <tt><i>Domain.Class</i></tt> (note, this means
+they have to be <tt>with</tt>ed individually):
 
 <dl>
 
@@ -114,12 +131,11 @@ this means they have to be <tt>with</tt>ed individually):
 
 <pre>
 with <i>Domain.Class</i>.Collections;
-function <I>Domain.Class</I>.All_Instances
-   return <I>Domain.Class</I>.Collections.Collection;
-with <I>Domain.Class</I>.Collections;
+function <i>Domain.Class</i>.All_Instances
+   return <i>Domain.Class</i>.Collections.Collection;
 </pre>
 
-<dt>Filter_Function
+<dt><a name="filter-function">Filter_Function</a>
 
 <dd>given a <tt>Collection</tt>, returns a new <tt>Collection</tt>
 containing just those instances for which <tt>Pass</tt> returns
@@ -129,29 +145,89 @@ containing just those instances for which <tt>Pass</tt> returns
 with <i>Domain.Class</i>.Collections;
 generic
    with function Pass (This : Handle) return Boolean is <>;
-function <I>Domain.Class</I>.Filter_Function
-   (The_Collection : <I>Domain.Class</I>.Collections.Collection)
-   return <I>Domain.Class</I>.Collections.Collection;
+function <i>Domain.Class</i>.Filter_Function
+   (The_Collection : <i>Domain.Class</i>.Collections.Collection)
+   return <i>Domain.Class</i>.Collections.Collection;
 </pre>
 
-<dt>Selection_Function
+<dt><a name="selection-function">Selection_Function</a>
 
 <dd>returns all the current instances of <tt><i>Domain.Class</i></tt>
 for which <tt>Pass</tt> returns <tt>True</tt>:
 
 <pre>
-with <I>Domain.Class</I>.Collections;
+with <i>Domain.Class</i>.Collections;
 generic
    with function Pass (This : Handle) return Boolean is <>;
-function <I>Domain.Class</I>.Selection_Function
-   return <I>Domain.Class</I>.Collections.Collection;
+function <i>Domain.Class</i>.Selection_Function
+   return <i>Domain.Class</i>.Collections.Collection;
 </pre>
 
 <dt>
 
+<h2><a name="sets">Sets</a></h2>
+
+<p>In order to support some of the more complex <a
+href="#navigation">Navigations</a>, ColdFrame generates Set
+instantiations. These are of course available for other uses. The
+interesting operations provided are in
+<tt><i>Domain.Class</i>.Abstract_Sets</tt>.
+
+<p>Considering two Sets of Tracks (actually, Track.Handle), <tt>H</tt>
+containing all the <i>Hostile</i> tracks and <tt>C</tt> containing all
+the <i>Close</i> tracks, the operations are
+
+<table border=1 cellpadding=2>
+
+<tr>
+<th>Procedure
+<th>Call
+<th>Result
+
+<tr>
+<td>
+<pre>
+procedure Union
+  (S : in out Abstract_Set'Class;
+   O : Abstract_Set'Class);
+</pre>
+
+<td><tt>Union (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are either <i>Hostile</i> or
+<i>Close</i> or both.
+
+<tr>
+<td>
+<pre>
+procedure Intersection
+  (S : in out Abstract_Set'Class;
+   O : Abstract_Set'Class);
+</pre>
+
+<td><tt>Intersection (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are both <i>Hostile</i> and
+<i>Close</i>.
+
+<tr>
+<td>
+<pre>
+procedure Difference
+  (S : in out Abstract_Set'Class;
+   O : Abstract_Set'Class);
+</pre>
+
+<td><tt>Difference (H, C)</tt>
+
+<td><tt>H</tt> holds all the tracks which are <i>Hostile</i> but not
+<i>Close</i>.
+
+</table>
+
 <h2><a name="navigation">Navigation</a></h2>
 
-<p>Another way of getting hold of collections is by use of navigation
+<p>Another way of getting hold of Collections is by use of navigation
 functions related to associations.
 
 <p><img src="navigation.jpg">
@@ -159,7 +235,7 @@ functions related to associations.
 <p>In the figure, the association <i>r3</i> is translated to the
 package <tt><i>Domain</i>.R3</tt> containing the operations
 
-<table>
+<table border=1 cellpadding=2>
 
 <tr>
 <td>
@@ -240,10 +316,167 @@ other) Sensor Tracks.
 
 </table>
 
-<h2><a name="iteration">Iteration</a></h2>
+<h2>Operations</h2>
 
-<p>
+<h3><a name="iteration">Iteration</a></h3>
 
+<p>Two forms of iteration are supported: open and closed. Both require
+the creation of Iterators.
+
+<p>With open iterators, you explicitly advance
+the iterator to the next element in the container it references,
+until it's done; with closed iterators, you supply a procedure which
+gets called for each element in the container.
+
+<p>The operations on iterators are all defined in
+<tt><i>Domain.Class</i>.Abstract_Containers</tt>, while actual
+iterators can only be created by the concrete
+<tt><i>Domain.Class</i>.Collections</tt>.
+
+<p>Both examples below are in terms of a pre-existing container
+<tt>The_Collection</tt>:
+
+<h4>Open iteration</h4>
+
+<pre>
+declare
+
+   It : <i>Class</i>.Abstract_Containers.Iterator'Class
+     := <i>Class</i>.Collections.New_Iterator (The_Collection);
+
+begin
+
+   while not <i>Class</i>.Abstract_Containers.Done (It) loop
+
+      declare
+	 H : <i>Class</i>.Handle
+           := <i>Class</i>.Abstract_Containers.Current_Item (It);
+      begin
+	 -- do something with H
+      end;
+
+      <i>Class</i>.Abstract_Containers.Next (It);
+
+   end loop;
+
+end;
+</pre>
+
+<h4>Closed iteration</h4>
+
+<pre>
+declare
+
+   procedure Process (H : <i>Class</i>.Handle; OK : out Boolean);
+
+   procedure Process
+     is new <i>Class</i>.Abstract_Containers.Visit (Process);
+
+   procedure Process (H : <i>Class</i>.Handle; OK : out Boolean) is
+   begin
+
+      OK := True; -- unless you want the iteration to stop early
+
+      -- do something with H
+
+   end Process;
+
+   It : <i>Class</i>.Abstract_Containers.Iterator'Class
+     := <i>Class</i>.Collections.New_Iterator (The_Collection);
+
+begin
+
+   Process (It);
+
+end;
+</pre>
+
+<h3><a name="copying">Copying</a></h3>
+
+<p>If you're going to use the <a href="#sets">Set</a> operations,
+first catch your Set. The basic Containers used by ColdFrame (such as
+those produced by <a href="#navigation">navigations</a>) are
+Collections.
+
+<p>The operation that supports this conversion is provided by the
+generic <tt>BC.Copy</tt>.
+
+<p>Assuming the existence of <tt>Engaged_Tracks</tt> of type
+<tt>Track.Collections.Collection</tt>, we could write
+
+<pre>
+declare
+
+   procedure Make_Set is new BC.Copy
+     (Item => Track.Handle,
+      Source => Track.Abstract_Containers,
+      From => Track.Collections.Collection,
+      Target => Track.Abstract_Containers,
+      To => Track.Sets.Set,
+      Clear => Track.Sets.Clear,
+      Add => Track.Sets.Add);
+
+   Engaged_Track_Set : Track.Sets.Set;
+
+begin
+
+   Make_Set
+     (Input => Engaged_Tracks,
+      Output => Engaged_Track_Set);
+
+   -- operations with Engaged_Track_Set
+</pre>
+
+<h3><a name="filtering">Filtering</a></h3>
+
+<p>The Booch Components provide a filtering facility
+(<tt>BC.Filter</tt>). However, most filtering requirements should be
+met by the generated <a
+href="#filter-function"><tt>Filter_Function</tt></a> and <a
+href="#selection-function"><tt>Selection_Function</tt></a> generics.
+
+<h3><a name="sorting">Sorting</a></h3>
+
+<p>The Booch Components provide a generic sorting facility in
+<tt>BC.Containers.Quicksort</tt> and <tt>BC.Containers.Shellsort</tt>.
+
+<p>These can be instantiated for any sort of Container, but they'll
+fail (with the run time exception <tt>BC.Container_Error</tt>) if you
+try to <emph>use</emph> them for Sets.
+
+<p>Quicksort is usually faster than Shellsort, but can take a lot more
+stack when the initial input Collection is inconveniently ordered.
+
+<p>The resulting ordering is in terms of the function that
+instantiates the parameter <tt>"<"</tt>; the Item that is "less than"
+all the other Items in the Collection will end up first.
+
+<p>An example of sorting by threateningness, assuming the existence of
+<tt>Candidate_Tracks</tt> of type
+<tt>Track.Collections.Collection</tt>, is
+
+<pre>
+declare
+
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean;
+
+   procedure Sort is new Track.Abstract_Containers.Quicksort
+     ("<" => Is_More_Threatening,
+      Container => Track.Collections.Collection,
+      Length => Track.Collections.Length);
+
+   function Is_More_Threatening (L, R : Track.Handle) return Boolean is
+   begin
+      return L.Time_Of_CPA < R.Time_Of_CPA;
+   end Is_More_Threatening;
+
+begin
+   Sort (Candidate_Tracks);
+end;
+</pre>
+
+after which <tt>Track.Collections.First (Candidate_Tracks)</tt> will
+return the track with the earliest <tt>Time_Of_CPA</tt>.
 
 <p><hr>
 <i>
