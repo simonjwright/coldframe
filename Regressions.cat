@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 8a3727ce7bcf $}
+|{ revision = $Revision: 76f4b1e4ad62 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1589,30 +1589,13 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40864FAB0328"
-			    compartment 	(object Compartment
-				Parent_View 	@34
-				location   	(285, 283)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	582)
 			    width      	596
 			    height     	168
 			    annotation 	8
 			    autoResize 	TRUE)))))
 	(object Class_Category "Inheritance of action routines"
 	    quid       	"4087736A008A"
-	    stereotype 	"don't generate"
+	    stereotype 	"generate"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Parent With Action"
@@ -1843,23 +1826,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4087739103BB"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(394, 333)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	485)
 			    width      	506
 			    height     	264
 			    annotation 	8
@@ -1955,23 +1921,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40877D720051"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(1660, 902)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	238)
 			    width      	320
 			    height     	218
 			    annotation 	8
@@ -2055,7 +2004,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 8a3727ce7bcf $}
+|{ revision = $Revision: 76f4b1e4ad62 $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2101,7 +2050,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 8a3727ce7bcf 2004/04/22 08:22:08 simon $")
+		    label      	"$Id: Regressions.cat,v 76f4b1e4ad62 2004/04/22 22:05:04 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @49
 		    location   	(301, 318)
 		    font       	(object Font
@@ -2673,7 +2622,7 @@
 			nlines     	1
 			max_width  	346
 			justify    	0
-			label      	"<<don't generate>>")
+			label      	"<<generate>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
