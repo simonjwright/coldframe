@@ -1,4 +1,4 @@
-<!-- $Id: use-of-bcs.html,v 6f00c31e45e9 2001/08/26 14:39:54 simon $ -->
+<!-- $Id: use-of-bcs.html,v 930c36e7fd2a 2001/09/17 18:34:55 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use of Booch Components</title>
@@ -40,7 +40,8 @@
 
 <p>The current software architecture of ColdFrame uses Ada 95 <a
 href="resources.html#booch-components">Booch Components</a> (BCs),
-which provide various ways of handling collections of things.
+which provide various ways of handling groups of things in
+<i>containers</i>.
 
 <p>In ColdFrame, for each non-&#171;singleton&#187; Class, there's a
 private means of holding all the current Instances of the class,
@@ -56,7 +57,7 @@ collections of instances.
 <dl>
 
 <dt>Map<dd>for the internal storage of all the instances of the
-class. The Key is the class' Identifier record.
+class. The Key is the class's Identifier record.
 
 <dt>Collection<dd>for normal externally-visible aggregate
 manipulation.
@@ -68,13 +69,14 @@ general use where warranted.
 
 <p>In all cases the actual things contained (the BC "Item") are
 Handles, ie pointers to instances of the class concerned. Allocation
-of instances is handled within the class' <tt>Create</tt> function,
+of instances is handled within the class's <tt>Create</tt> function,
 and deallocation in <tt>Delete</tt>.
 
 <h2><a name="instantiations">Standard Container instantiations</a></h2>
 
 <p>Given the domain <tt><i>Domain</i></tt> and the class
-<tt><i>Class</i></tt>, the standard Component instantiations are
+<tt><i>Class</i></tt>, the standard public Component instantiations
+are the packages
 
 <dl>
 
@@ -346,7 +348,7 @@ declare
 
 begin
 
-   while not <i>Class</i>.Abstract_Containers.Done (It) loop
+   while not <i>Class</i>.Abstract_Containers.Is_Done (It) loop
 
       declare
 	 H : <i>Class</i>.Handle
@@ -398,8 +400,8 @@ first catch your Set. The basic Containers used by ColdFrame (such as
 those produced by <a href="#navigation">navigations</a>) are
 Collections.
 
-<p>The operation that supports this conversion is provided by the
-generic <tt>BC.Copy</tt>.
+<p>The operation that supports conversion from Collection to Set, and
+vice versa, is provided by the generic <tt>BC.Copy</tt>.
 
 <p>Assuming the existence of <tt>Engaged_Tracks</tt> of type
 <tt>Track.Collections.Collection</tt>, we could write
@@ -476,7 +478,8 @@ end;
 </pre>
 
 after which <tt>Track.Collections.First (Candidate_Tracks)</tt> will
-return the track with the earliest <tt>Time_Of_CPA</tt>.
+return the track with the earliest <tt>Time_Of_CPA</tt> (<i>CPA</i>
+means Closest Point of Approach).
 
 <p><hr>
 <i>
