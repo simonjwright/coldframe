@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v b45b061cc8b1 2002/07/05 05:01:01 simon $
+# $Id: normalize-rose.tcl,v 78463cfc5c83 2002/07/11 05:00:06 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -200,8 +200,7 @@ itcl::class Base {
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
 	    if [catch {$this -$i "$a($i)"}] {
-		Warning \
-			"XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
+		Warning "XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
 	    }
 	}
     }
@@ -407,7 +406,7 @@ itcl::class Element {
 		# n is the tag name, v the tag value if any
 		if [catch {$this -[join [split [string tolower $n]] "-"] "$v"}] {
 		    Warning \
-		        "stereotype not handled, \
+		        "stereotype not handled,\
 			\"$name <<[string tolower $n]>>\""
 		}
 		regexp -nocase -indices $p $s wh
@@ -430,7 +429,7 @@ itcl::class Element {
 	}
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
-	    Error "CF: error \"$msg\" adding a [$this -getXmlTag] \
+	    Error "CF: error \"$msg\" adding a [$this -getXmlTag]\
 		    to a [[stack -top] -getXmlTag]"
 	}
     }
@@ -1040,6 +1039,7 @@ itcl::class Class {
 
     method -evaluate {domain} {
 	$attributes -evaluate $domain
+	$operations -evaluate $domain
 	if [info exists statemachine] {
 	    $statemachine -evaluate $domain
 	}
@@ -1168,6 +1168,10 @@ itcl::class Operation {
     variable parameters
     method -parameters {pl} {set parameters $pl}
 
+    method -evaluate {domain} {
+	$parameters -evaluate {domain}
+    }
+
     method -generate {domain}  {
 	puts -nonewline "<operation"
 	if $abstr {puts -nonewline " abstract=\"yes\""}
@@ -1215,6 +1219,22 @@ itcl::class Parameter {
 	    }
 	}
     }
+
+    method -evaluate {domain} {
+ 	# check name, type present
+	if [expr [string length $name] == 0] {
+	    set op [[$this -getOwner] -getOwner]
+	    set cls [[$op -getOwner] -getOwner]
+	    Error "missing parameter name in\
+                    [$cls -getName].[$op -getName]"
+	}
+	if [expr [string length $type] == 0] {
+	    set op [[$this -getOwner] -getOwner]
+	    set cls [[$op -getOwner] -getOwner]
+	    Error "missing parameter type for\
+                    [$cls -getName].[$op -getName]($name)"
+	}
+   }
 
     method -generate {domain} {
 	puts -nonewline "<parameter"
@@ -2011,8 +2031,17 @@ itcl::class Attribute {
     method -evaluate {domain} {
 	# check id vs class
 	if {$identifier && $cls} {
-	    Error "attribute [[[$this -getOwner] -getOwner] -getName].$name \
+	    Error "attribute [[[$this -getOwner] -getOwner] -getName].$name\
 		    marked as <<class>> and <<id>>"
+	}
+	# check name, type present (in fact Rose requires the name)
+	if [expr [string length $name] == 0] {
+	    Error "missing attribute name in\
+                    [[[$this -getOwner] -getOwner] -getName]"
+	}
+	if [expr [string length $type] == 0] {
+	    Error "missing attribute type for\
+                    [[[$this -getOwner] -getOwner] -getName].$name"
 	}
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
