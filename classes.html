@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v e3342717f6d3 2002/11/14 21:21:12 simon $ -->
+<!-- $Id: classes.html,v be7c54945a41 2003/04/25 18:39:47 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -98,16 +98,22 @@ it's named after): each newly-created instance gets a new value.
 <h3>Use of Stereotypes</h3>
 
 <p>Classes which represent user-defined <a href="types.html">types</a>
-are marked with the stereotype <em>&#171;type&#187;</em>.
+are marked with the stereotype <em>&#171;type&#187;</em>. (The
+stereotypes <em>&#171;callback&#187;</em> and
+<em>&#171;discriminated&#187;</em> imply <em>&#171;type&#187;</em>).
 
 <p>Classes of which there is always precisely one instance are marked
 with the stereotype <em>&#171;singleton&#187;</em>.
 
-<p>Public classes, which are the only classes visible from outside the
-Domain, are marked with the stereotype
+<p>Public classes, which are normally the only classes visible from
+outside the Domain, are marked with the stereotype
 <em>&#171;public&#187;</em>. This implies the stereotype
 <em>&#171;singleton&#187;</em>. Public classes can't take part in
 <a href="associations.html">associations</a>.
+
+<p>For test support, it's possible to stereotype a class
+<em>&#171;visible-for-test&#187;</em>, which makes it visible from
+outside the domain.
 
 <p>Abstract classes (which must be parents in <a
 href="generalizations.html">inheritance relationships</a>) may be
@@ -156,10 +162,13 @@ multiplicity, depending on the version of Rose) of
 <p>All the classes in a <a href="domains.html">domain</a> are
 translated as first-level children of the domain package:
 <pre>
-   package <i>Domain.Class</i> is
+   <i>private</i> package <i>Domain.Class</i> is
       ...
    end <i>Domain.Class</i>;
 </pre>
+(<tt>private</tt> applies to all the classes bar those marked 
+<em>&#171;visible-for-test&#187;</em> and
+<em>&#171;public&#187;</em>).
 
 <p>For test purposes, each class has a child <tt>Tear_Down</tt>
 procedure <tt><i>Domain.Class</i>.Tear_Down</tt>, which is called by
