@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v a12e45792d8d 2004/02/09 12:35:17 simon $ -->
+<!-- $Id: error-messages.html,v 0e1ae14c3c5a 2004/02/11 11:08:44 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -144,6 +144,8 @@ want anything to happen!
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
 
 <dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
+
+<dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
 
 <dt>Error: drop-through and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
