@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e8416ee1e3bf 2003/07/10 20:19:59 simon $
+# $Id: normalize-rose.tcl,v c41d90950c52 2003/07/26 16:43:14 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -161,11 +161,6 @@ proc normalizeValue {s} {
     if [regexp {^\".*\"$} $tmp] {return $tmp}
     # handle characters
     if [regexp {^\'.\'$} $tmp] {return $tmp}
-    # allow signed entities
-#    if [regexp {[-+]} $tmp] {
-#	set sign [string index $tmp 0]
-#	return "$sign[normalizeValue [string range $tmp 1 end]]"
-#    }
     # allow based literals
     if [regexp -nocase {[0-9_]+\#[0-9a-f_.]*\#} $tmp] {return $tmp}
     switch -- [string tolower $tmp] {
@@ -827,12 +822,20 @@ itcl::class Parent {
     inherit IdentifierString
 }
 
+itcl::class Priority {
+    inherit ValueString
+}
+
 itcl::class Return {
     inherit IdentifierString
 }
 
 itcl::class Revision {
     inherit String
+}
+
+itcl::class StackSize {
+    inherit ValueString
 }
 
 itcl::class Static {
@@ -1093,7 +1096,7 @@ itcl::class Class {
 
     # specifies if this is an active class
     variable active 0
-    method -active {dummy} { set active 1}
+    method -active {dummy} {set active 1}
 
     method -concurrency {conc} {
 	set c [string trim $conc]
@@ -1102,6 +1105,14 @@ itcl::class Class {
 	    default {}
 	}
     }
+
+    # specifies stack size (for active classes)
+    variable stack
+    method -stack {s} {set stack $s}
+
+    # specifies priority (for active classes)
+    variable priority
+    method -priority {p} {set priority $p}
 
     # specifies if this is a public class
     variable public 0
@@ -1352,6 +1363,14 @@ itcl::class Class {
 		}
 	    }
 	}
+	if {!$active} {
+	    if [info exists stack] {
+		Error "can't specify stack for non-active class $name"
+	    }
+	    if [info exists priority] {
+		Error "can't specify priority for non-active class $name"
+	    }
+	}
 	if $isType {
 	    puts -nonewline "<type"
 	    if [info exists callback] {
@@ -1380,6 +1399,10 @@ itcl::class Class {
 	    if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
 	    if $abstr {puts -nonewline " abstract=\"yes\""}
 	    if $active {puts -nonewline " active=\"yes\""}
+	    if [info exists stack] {puts -nonewline " stack=\"$stack\""}
+	    if [info exists priority] {
+		puts -nonewline " priority=\"$priority\""
+	    }
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
 	    if $public {puts -nonewline " public=\"yes\""}
@@ -2747,12 +2770,14 @@ proc elementFactory {xmlTag} {
 	parametername     {return [ParameterName #auto]}
 	parameters        {return [Parameters #auto]}
 	parent            {return [Parent #auto]}
+	priority          {return [Priority #auto]}
 	relationship      {return [Relationship #auto]}
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
 	revision          {return [Revision #auto]}
 	role              {return [Role #auto]}
 	source            {return [Source #auto]}
+	stack             {return [StackSize #auto]}
 	state             {return [State #auto]}
 	statemachine      {return [StateMachine #auto]}
 	states            {return [States #auto]}
