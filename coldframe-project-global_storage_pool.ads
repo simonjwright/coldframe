@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-global_storage_pool.ads,v $
---  $Revision: c2203da97189 $
---  $Date: 2002/09/15 10:29:59 $
+--  $Revision: 40a8bb9abf83 $
+--  $Date: 2002/09/15 10:42:29 $
 --  $Author: simon $
 
 --  with BC.Support.Standard_Storage;
@@ -24,9 +24,7 @@ package ColdFrame.Project.Global_Storage_Pool is
 --       renames BC.Support.Standard_Storage.Pool;
 
    The_Pool : GNAT.Debug_Pools.Debug_Pool;
-   type T is access Integer;
-   for T'Storage_Pool use The_Pool;
    Pool : System.Storage_Pools.Root_Storage_Pool'Class
-     renames T'Storage_Pool;
+     renames System.Storage_Pools.Root_Storage_Pool'Class (The_Pool);
 
 end ColdFrame.Project.Global_Storage_Pool;
