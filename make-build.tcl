@@ -2,7 +2,7 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: make-build.tcl,v 8019a42d2d9d 2003/09/29 20:45:12 simon $
+# $Id: make-build.tcl,v 09b524475074 2004/02/10 06:05:50 simon $
 
 proc readDomains {domainFile} {
     if [catch {open $domainFile r} f] {
@@ -71,7 +71,7 @@ proc outputGPR {project main base} {
 
         # The standard compiler settings
         puts $o "   for Object_Dir use Options'Object_Dir & \"/main\";"
-        foreach c {Ide Builder Compiler Binder Linker} {
+        foreach c {IDE Builder Compiler Binder Linker} {
             puts $o "   package $c renames Options.$c;"
         }
 
