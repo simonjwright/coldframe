@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 576478a89cb9 2003/11/16 19:12:30 simon $ -->
+<!-- $Id: ada-class.xsl,v 05f9964ddd14 2003/11/25 21:31:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -431,7 +431,8 @@
 
         <!-- If the maximum numer of instances is more than 1 (so that a
              Map is needed), or if there are attributes/operations involving
-             _other_ classes, or the special Counterpart, need support for
+             _other_ classes, or the special Counterpart, or this is the
+             parent in an inheritance relationship, need support for
              standard Instances as well. -->
         <xsl:variable name="counterpart">
           <!-- Need an element to make a nodeset next. -->
@@ -446,7 +447,8 @@
                       or attribute[type=$other-classes]
                       or attribute[@refers=$other-classes]
                       or operation/parameter[type=$other-classes]
-                      or operation[@return=$other-classes]">
+                      or operation[@return=$other-classes]
+                      or name=../inheritance/parent">
           <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
         </xsl:if>
 
@@ -1244,8 +1246,10 @@
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>H : Handle;&#10;</xsl:text>
+    <xsl:if test="$max &gt; 1">
+      <xsl:value-of select="$II"/>
+      <xsl:text>This : Handle;&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:choose>
 
@@ -1286,9 +1290,6 @@
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
-        <xsl:value-of select="$II"/>
-        <xsl:text>H := This;&#10;</xsl:text>
-
       </xsl:when>
 
       <xsl:otherwise>
@@ -1310,33 +1311,33 @@
         <xsl:text>end if;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>H := Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));&#10;</xsl:text>
+        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));&#10;</xsl:text>
 
       </xsl:otherwise>
 
     </xsl:choose>
 
     <xsl:call-template name="subtype-deletion">
-      <xsl:with-param name="handle" select="'H'"/>
+      <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
     <xsl:call-template name="perform-finalization">
-      <xsl:with-param name="handle" select="'H'"/>
+      <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
     <xsl:call-template name="clear-parent-child-info">
-      <xsl:with-param name="handle" select="'H'"/>
+      <xsl:with-param name="handle" select="'This'"/>
     </xsl:call-template>
 
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
-      <xsl:text>abort H.The_T.all;&#10;</xsl:text>
+      <xsl:text>abort This.The_T.all;&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>Free (H.The_T);&#10;</xsl:text>
+      <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
     <!-- Finalize any Timers. -->
     <xsl:for-each select="attribute[type='Timer']">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Finalize (H.</xsl:text>
+      <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>);&#10;</xsl:text>
     </xsl:for-each>
@@ -1349,12 +1350,12 @@
     <!-- Clean up any events. -->
     <xsl:if test="statemachine">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Finalize (H);&#10;</xsl:text>
+      <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
     </xsl:if>
 
     <!-- Finalize the instance. -->
     <xsl:value-of select="$II"/>
-    <xsl:text>Free (H);&#10;</xsl:text>
+    <xsl:text>Free (This);&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
