@@ -575,6 +575,12 @@ Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
 
 TEST += \
+Stub_Test_Interface.cat Stub_Test_Interface.raw Stub_Test.gpr \
+Stub_Test.test/stub_test_harness.adb \
+Stub_Test.test/stub_test_suite.adb \
+Stub_Test.test/stub_test_suite.ads
+
+TEST += \
 Bad_Code_Regressions.cat Bad_Code_Regressions.raw \
 Bad_Model_Regressions.cat Bad_Model_Regressions.raw
 
