@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v cd24ad686be6 2003/07/04 19:20:28 simon $ -->
+<!-- $Id: ada-state.xsl,v 9b7e9ee5c7f3 2003/07/04 19:34:38 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -287,13 +287,13 @@
               and count(parameter)=1
               and parameter/type=$e]"/>
 
-    <xsl:if test="not(op)">
+    <xsl:if test="not($op)">
       <xsl:message terminate="yes">
         <xsl:text>Error: no handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
       </xsl:message>
     </xsl:if>
-    <xsl:if test="count(op) &gt; 1">
+    <xsl:if test="count($op) &gt; 1">
       <xsl:message terminate="yes">
         <xsl:text>Error: more than one handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
