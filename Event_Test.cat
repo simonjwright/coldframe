@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|[[revision : $Revision]] 
+|[[revision : $Revision: 3e71f6536e4b $]] 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1670,4 +1670,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v 29426124b04b 2003/08/30 13:58:18 simon $")))))
+		    label      	"$Id: Event_Test.cat,v 3e71f6536e4b 2003/10/22 19:14:28 simon $")))))
