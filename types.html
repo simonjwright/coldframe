@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 04aec9d906e3 2003/10/27 21:00:20 simon $ -->
+<!-- $Id: types.html,v dbdb39b66a27 2003/11/14 06:09:26 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -62,16 +62,18 @@ are provided.
 
 <h3>Type details</h3>
 
-<p>Extra information comes in
-<i>annotations</i>, placed in the documentation section (in Rose the
-bottom left pane), in sections delimited by <tt>[[&nbsp;]]</tt>; for
+<p>Extra information comes in UML
+<i>tagged values</i>, placed in the documentation section (in Rose the
+bottom left pane), in sections delimited by <tt>{&nbsp;}</tt>; for
 example,
+<tt>{&nbsp;discriminated&nbsp;}</tt>.
+
+<p>ColdFrame originally used "annotations", only available in the
+documentation section, in sections delimited by <tt>[[&nbsp;]]</tt>;
+for example,
 <tt>[[&nbsp;discriminated&nbsp;]]</tt>.
 
-<p>At some future time, this scheme may be converted to one using
-tagged values.
-
-<p>The annotations supported for <em>&#171;type&#187;</em>s are:
+<p>The tags supported for <em>&#171;type&#187;</em>s are:
 
 <ul>
 
@@ -81,60 +83,61 @@ support Observers from higher-level Domains, and the higher-level
 Domains can register to be notified when something has changed in the
 lower-level Domain.
 <br>As a shorthand, you can use the stereotype
-<em>&#171;callback&#187;</em>.
+<em>&#171;callback&#187;</em>, which implies &#171;type&#187;.
 
 <li><tt>counterpart</tt> is used for references to instances in other
 domains.
 <br>As a shorthand, you can use the stereotype
-<em>&#171;counterpart&#187;</em>.
+<em>&#171;counterpart&#187;</em>, which implies &#171;type&#187;.
 
 <li><tt>discriminated</tt> (only relevant if the type is a record
 type, ie has attributes) causes the generation of discriminated
 records; the discriminant is an enumeration type with literals formed
 from the attribute names with <tt>_T</tt> appended.
 <br>As a shorthand, you can use the stereotype
-<em>&#171;discriminated&#187;</em>.
+<em>&#171;discriminated&#187;</em>, which implies &#171;type&#187;.
 
-<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+<li><tt>enumeration = <i>literal-1</i> | <i>literal-2</i> | ...</tt>
 
-<li><tt>extends : <i>external-type</i></tt> specifies that the
+<li><tt>extends = <i>external-type</i></tt> specifies that the
 given type extends (inherits) the specified  external reference.
 
-<li><tt><a name="field-image">field-image</a> :
+<li><tt><a name="field-image">field-image</a> =
 <i>image-operation</i></tt> specifies the operation to be used to
 print a record field containing a value of the type when it has been
 serialized as one or more XML elements. See
 <a href="serialization.html">separate information</a>.
 
-<li><tt>hash : <i>style</i></tt> specifies how a type (presumably
+<li><tt>hash = <i>style</i></tt> specifies how a type (presumably
 <tt><i>imported</i></tt> or <tt><i>renames</i></tt>) is to be
 hashed. Currently the only supported <i>style</i> is
 <tt>discrete</tt>, which will work for imported enumerations or
 integer ranges but not for private or access types.
 
-<li><tt>image : <i>image-operation</i></tt> is an alternate for
+<li><tt>image = <i>image-operation</i></tt> is an alternate for
 <a href="#field-image"><tt>field-image</tt></a>, retained for
 compatibility..
 
-<li><tt>imported : <i>external-reference</i></tt> specifies that the
+<li><tt>imported = <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
 
 <li><tt>protected</tt> specifies that instances of the type are
-protected against concurrent access by multiple threads of execution.
+protected against concurrent access by multiple threads of
+execution. It implies &#171;type&#187;.
 
-<li><tt>renames : <i>external-type</i></tt> specifies that the given
+<li><tt>renames = <i>external-type</i></tt> specifies that the given
 type is a renaming of the specified external reference.
 
-<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
-upper <i>upper-bound</i></tt>
+<li><b>Annotation only!</b> <tt>real : digits <i>num-digits</i>, lower
+<i>low-bound</i>, upper <i>upper-bound</i></tt>
 
 <li><tt>serializable</tt> specifies support for outputting values of
 the type to an external medium. See
 <a href="serialization.html">separate information</a>.
 
-<li><tt>string : max <i>max-length</i></tt>
+<li><b>Annotation only!</b> <tt>string : max <i>max-length</i></tt>
 
-<li><tt>type-image : <i>image-operation</i></tt> specifies the
+<li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been
 serialized. See <a href="serialization.html">separate information</a>.
 
@@ -190,13 +193,13 @@ supporting code is generated as a child unit of the domain package.
 <p>Operations of types are generated in the domain package. They have
 no implicit <tt>This</tt> parameter.
 
-<h3>Annotations</h3>
+<h3>Tags</h3>
  
 <ul>
 
 <li><tt>callback</tt> (or &#171;callback&#187;)
 
-<p>For a type <tt>Typ</tt>, with <tt>[[ callback ]]</tt>, the
+<p>For a type <tt>Typ</tt>, with <tt>{callback}</tt>, the
 generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
 <pre>
    with ColdFrame.Callbacks;
@@ -222,7 +225,7 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
 
 <p>where <i>Alert Level</i> is an enumeration, <i>Information</i> is a
 lengthed string, and <i>Message</i> is
-<tt>[[&nbsp;discriminated&nbsp;]]</tt>, ColdFrame generates
+<tt>{discriminated}</tt>, ColdFrame generates
 <pre>
    type Message_Discriminant is
      (Info_T,
