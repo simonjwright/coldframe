@@ -41,16 +41,44 @@ package body Event_Test.Test_Instance is
    procedure Delete_As_Action
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
-      Ev : constant ColdFrame.Project.Events.Event_P
+      Ev1 : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Kill (H);
+      Ev2 : constant ColdFrame.Project.Events.Event_P
         := new Machine.Kill (H);
    begin
+      ColdFrame.Project.Events.Post (Ev1, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Post (Ev2, On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
-      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action;
+
+
+   --  Delete as an action with held events
+   procedure Delete_As_Action_With_Held
+      (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delete_As_Action_With_Held
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev1 : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Kill (H);
+      Ev2 : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Kill (H);
+   begin
+      ColdFrame.Project.Events.Post (Ev1,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.1);
+      ColdFrame.Project.Events.Post (Ev2,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.2);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+              Machine.Collections.Length (Machine.All_Instances)'Img &
+              " instance(s) remaining");
+   end Delete_As_Action_With_Held;
 
 
    --  An event will be delivered to its instance.
@@ -99,6 +127,10 @@ package body Event_Test.Test_Instance is
         (T, Post_To_Self'Access, "Illegal posting to self");
       Register_Routine
         (T, Delete_As_Action'Access, "Delete as an action");
+      Register_Routine
+        (T,
+         Delete_As_Action_With_Held'Access,
+         "Delete as an action (held events)");
       Register_Routine
         (T, Simple_Event'Access, "Simple event");
       Register_Routine
