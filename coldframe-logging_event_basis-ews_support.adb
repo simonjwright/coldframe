@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 26ce7c349e24 $
---  $Date: 2003/11/16 09:59:54 $
+--  $Revision: 9197014cdfa2 $
+--  $Date: 2003/11/17 15:16:55 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -145,12 +145,11 @@ package body ColdFrame.Logging_Event_Basis.EWS_Support is
         (Result,
          Adding => GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock,
                                                 "%c"));
+      EWS.Dynamic.Append
+        (Result, Adding => "</b>" & CRLF);
 
       Add_Section (For_Request => From_Request,
                    To => Result);
-
-      EWS.Dynamic.Append
-        (Result, Adding => "</b>" & CRLF);
 
       EWS.Dynamic.Append
         (Result,
