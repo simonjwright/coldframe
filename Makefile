@@ -258,6 +258,7 @@ coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
+coldframe-serialization_signature.ads \
 coldframe-time_signature.ads \
 coldframe.ads
 
@@ -275,7 +276,6 @@ coldframe-project-global_storage_pool.ads-debug \
 coldframe-project-global_storage_pool.ads-standard \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
-coldframe-project-serialization.adb \
 coldframe-project-serialization.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
