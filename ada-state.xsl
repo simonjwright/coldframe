@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v a793b4cd9758 2002/09/13 19:44:46 simon $ -->
+<!-- $Id: ada-state.xsl,v 27fbbed03065 2002/09/15 10:28:55 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -503,6 +503,17 @@
            <xsl:choose>
 
              <xsl:when test="$n='Delete'">
+
+               <!--
+                    declare
+                       H : Handle := This;
+                    
+                    begin
+                       Delete (H);
+                       ColdFrame.Project.Events.Instance_Is_Deleted
+                         (What'Unrestricted_Access);
+                    end;
+                    -->
                <xsl:value-of select="$II"/>
                <xsl:text>declare&#10;</xsl:text>
                <xsl:value-of select="$III"/>
@@ -511,8 +522,13 @@
                <xsl:text>begin&#10;</xsl:text>
                <xsl:value-of select="$III"/>
                <xsl:text>Delete (H);&#10;</xsl:text>
+               <xsl:value-of select="$III"/>
+               <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
+               <xsl:value-of select="$IIIC"/>
+               <xsl:text>(What'Unrestricted_Access);&#10;</xsl:text>
                <xsl:value-of select="$II"/>
                <xsl:text>end;&#10;</xsl:text>
+
              </xsl:when>
              
              <xsl:when test="$params">
