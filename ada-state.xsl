@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 565cb5dc67ac 2003/09/27 07:18:05 simon $ -->
+<!-- $Id: ada-state.xsl,v b97e9b023f1d 2003/09/27 16:38:55 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -114,6 +114,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:for-each select="statemachine/state/name">
+
       <!-- initial state first -->
       <!-- XXX final state last? -->
       <xsl:sort select="concat(not (../@initial),.)"/>
@@ -122,9 +123,50 @@
         <xsl:text>,&#10; </xsl:text>
         <xsl:value-of select="$IC"/>
       </xsl:if>
+
+      <!-- This seems like as good a place as any to check the state machine's
+           validity. -->
+      <xsl:variable name="leaving" select="../../transition[source=current()]"/>
+
+      <xsl:if test="count($leaving[not(event)]) &gt; 1">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: more than one drop-through transition from state </xsl:text>
+          <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="."/>
+        </xsl:message>
+      </xsl:if>
+
+      <xsl:if test="$leaving[event] and $leaving[not(event)]">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: drop-through and triggered transitions from state </xsl:text>
+          <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="."/>
+        </xsl:message>
+      </xsl:if>
+
+      <xsl:for-each select="$leaving">
+        <xsl:sort select="event"/>
+        <xsl:if test="event=preceding-sibling::node()/event">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
+            <xsl:text>Error: more than one transition triggered by </xsl:text>
+            <xsl:value-of select="event"/>
+            <xsl:text> from state </xsl:text>
+            <xsl:value-of select="../../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="source"/>
+          </xsl:message>
+        </xsl:if>
+      </xsl:for-each>
+
     </xsl:for-each>
     <xsl:text>);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
+
 
   </xsl:template>
 
@@ -380,31 +422,8 @@
     <xsl:variable
       name="drop-through"
       select="../transition[source=$tr/target and not(event)]"/>
-    <xsl:variable
-      name="triggered"
-      select="../transition[source=$tr/target and event]"/>
 
     <xsl:if test="$drop-through">
-
-      <xsl:if test="count($drop-through)&gt;1">
-        <xsl:call-template name="log-error"/>
-        <xsl:message>
-          <xsl:text>Error: more than one drop-through transition from state </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$tr/target"/>
-        </xsl:message>
-      </xsl:if>
-
-      <xsl:if test="$triggered">
-        <xsl:call-template name="log-error"/>
-        <xsl:message>
-          <xsl:text>Error: drop-through and triggered transitions from state </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$tr/target"/>
-        </xsl:message>
-      </xsl:if>
 
       <xsl:if test="$deleting">
         <xsl:call-template name="log-error"/>
@@ -460,6 +479,9 @@
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>, </xsl:text>
           <xsl:value-of select="$operation"/>
           <xsl:text> is a function, can't be an entry action.</xsl:text>
         </xsl:message>
@@ -470,7 +492,9 @@
         <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
-          <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>, Delete not allowed as a singleton entry action.</xsl:text>
         </xsl:message>
       </xsl:when>
 
@@ -480,6 +504,8 @@
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>, </xsl:text>
           <xsl:value-of select="$operation"/>
           <xsl:text> has too many parameters to be an entry action.</xsl:text>
         </xsl:message>
