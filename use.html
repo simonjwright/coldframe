@@ -1,4 +1,4 @@
-<!-- $Id: use.html,v e8766845892b 2003/11/29 18:41:34 simon $ -->
+<!-- $Id: use.html,v a5a6ae0fe5d9 2003/11/30 21:11:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use</title>
@@ -38,7 +38,7 @@ output from Rose
 Rose</a> and <a href="extraction.html">extracted it</a>, you can
 proceed to <a href="generation.html">generate your code</a>.
 
-<p>The distribution's <tt>example</tt> directory contains, amongst
+<p>The distribution's <tt>example/</tt> directory contains, amongst
 other models, a <i>House Management</i> example.
 
 <p>This example (a first release of an electronic house management
@@ -51,9 +51,65 @@ href="house-management.png">House Management</a> and <a
 href="digital-io.png">Digital IO</a>. The models have been converted
 to HTML <a href="House_Management.html">here</a> and <a
 href="Digital_IO.html">here</a>, and you can see the <a
-href="lamp.png">Lamp statechart</a>.
+href="lamp-state.png">Lamp statechart</a>.
 
-<p>
+<p>The model domains consist of the Rose <tt>.cat</tt> files and the
+code implementation directories, <tt>House_Management.impl/</tt> and
+<tt>Digital_IO.impl/</tt>.
+
+<p>If you have Rose, open the model (Examples.mdl), select the two
+domains, and extract (under the <i>Addins</i> menu, if the
+installation worked right). If not, pre-extracted (<tt>.raw</tt>)
+files are also supplied in the distribution's <tt>example/</tt>
+directory.
+
+<p>Now generate the House Management code (on Windows use
+<tt>Makefile-demo-winnt</tt>):
+<pre>
+   $ make -f Makefile-demo-unix House_Management.gen
+   <font color="green">generating House_Management.norm ...
+   generating House_Management.ada ...
+   generating House_Management.gen ...</font>
+       <font color="blue">removing House_Management.gen/house_management-button-changed.adb
+       removing House_Management.gen/house_management-button-pushed.adb
+       removing House_Management.gen/house_management-events-initialize.adb
+       removing House_Management.gen/house_management-lamp-button_pushed.adb
+       removing House_Management.gen/house_management-lamp-clear_timeout.adb
+       removing House_Management.gen/house_management-lamp-initialize.adb
+       removing House_Management.gen/house_management-lamp-set_timeout.adb
+       removing House_Management.gen/house_management-lamp-turn_off.adb
+       removing House_Management.gen/house_management-lamp-turn_on.adb</font>
+     <font color="red">extra source file stairwell_demo.adb in .impl</font>
+   <font color="green">checking for unimplemented bodies ...
+   ... none.
+   rm House_Management.norm House_Management.ada</font>
+</pre>
+
+<p>The <font color="blue">removed</font> files correspond to
+operations that have been implemented (in
+<tt>House_Management.impl/</tt>). In this case, the <font
+color="red">extra</font> file is the demonstration's main
+program. There were no unimplemented operation bodies.
+
+<p>Similarly, generate the Digital IO code. The <tt>COLDFRAMEOUT</tt>
+setting is what you need to do if you don't have Rose, and are relying
+on the pre-extracted <tt>.raw</tt> files:
+<pre>
+   $ make -f Makefile-demo-unix COLDFRAMEOUT=. Digital_IO.gen
+   <font color="green">generating Digital_IO.norm ...
+   generating Digital_IO.ada ...
+   generating Digital_IO.gen ...</font>
+       <font color="blue">removing Digital_IO.gen/digital_io-application-set_output.adb
+       removing Digital_IO.gen/digital_io-hci-get_state.adb
+       removing Digital_IO.gen/digital_io-hci-set_input.adb
+       removing Digital_IO.gen/digital_io-input-changed.adb
+       removing Digital_IO.gen/digital_io-output-changed.adb
+       removing Digital_IO.gen/digital_io-signal-initialize.adb
+       removing Digital_IO.gen/digital_io-signal-set_state.adb</font>
+   <font color="green">checking for unimplemented bodies ...
+   ... none.
+   rm Digital_IO.norm Digital_IO.ada</font>
+</pre>
 
 <p><hr>
 <i>
