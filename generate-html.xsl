@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 95f14da7dcc8 2002/02/24 10:34:51 simon $ -->
+<!-- $Id: generate-html.xsl,v 3c009d62cb58 2002/02/24 17:18:12 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -207,17 +207,23 @@
         </xsl:for-each>
       </ul>
     </xsl:if>
-    <xsl:if test="event[not(@class)]">
+    <xsl:if test="statemachine">
+      <h4>States</h4>
+      <ul>
+        <xsl:for-each select="statemachine/state">
+          <xsl:sort select="not(@initial)"/>
+          <xsl:sort select="name"/>
+          <xsl:call-template name="state-details"/>
+        </xsl:for-each>
+      </ul>
       <h4>Events</h4>
       <ul>
-        <xsl:for-each select="event[not(@class)]">
+        <xsl:for-each select="statemachine/event">
           <xsl:sort select="name"/>
           <xsl:call-template name="event-details"/>
         </xsl:for-each>
       </ul>
-    </xsl:if>
-    <xsl:if test="statemachine">
-      <h4>State Model</h4>
+      <h4>State-Event Matrix</h4>
       <xsl:call-template name="state-machine"/>
     </xsl:if>
     <xsl:if test="operation">
@@ -244,11 +250,24 @@
   </xsl:template>
 
 
-  <!-- Output details of an Event. Called at class/event in a List context. -->
+  <!-- Output details of a State. Called at statemachine/state
+       in a List context. -->
+  <xsl:template name="state-details">
+
+    <li>
+      <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
+      <xsl:apply-templates select="documentation"/>
+    </li>
+
+  </xsl:template>
+
+
+  <!-- Output details of an Event. Called at statemachine/event
+       in a List context. -->
   <xsl:template name="event-details">
 
     <li>
-      <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
+      <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="type">
         <xsl:text> (payload of type </xsl:text>
         <xsl:call-template name="type-name-linked">
@@ -279,7 +298,11 @@
         <xsl:sort select="name"/>
         <xsl:variable name="st" select="name"/>
         <tr>
-          <td><xsl:value-of select="name"/></td>
+          <td>
+            <a href="#{../../name}.{name}">
+              <xsl:value-of select="name"/>
+            </a>
+          </td>
           <xsl:for-each select="../event">
             <xsl:sort select="name"/>
             <td>
