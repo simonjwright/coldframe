@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 539d2ebec8dd 2004/03/18 14:09:15 simon $ -->
+<!-- $Id: generate-html.xsl,v 231d2825c80d 2004/03/18 14:17:35 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -89,6 +89,12 @@
       <body bgcolor="white">
         <h1><xsl:value-of select="name"/></h1>
         <xsl:apply-templates select="./documentation"/>
+        <xsl:if test="revision">
+          <p>
+            <xsl:text>Revision: </xsl:text>
+            <xsl:value-of select="revision"/>
+          </p>
+        </xsl:if>
         <h2>Contents</h2>
         <xsl:if test="class[@public]">
           <h3>Public Classes</h3>
