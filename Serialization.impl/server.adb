@@ -1,4 +1,4 @@
---  $Id: server.adb,v 03ad5137fc4e 2003/02/05 20:46:31 simon $
+--  $Id: server.adb,v 4c42bea90800 2003/02/05 20:48:34 simon $
 
 --  This program receives and decodes TCP packets of type
 --  ColdFrame.Serialization.Base'Class, using port 40673.
@@ -35,11 +35,16 @@ begin
      (GNAT.Sockets.Get_Host_By_Name ("localhost"), 1);
    Address.Port := 40673;
    GNAT.Sockets.Bind_Socket (Server_Socket, Address);
-   GNAT.Sockets.Listen_Socket (Server_Socket, 5);
+   GNAT.Sockets.Listen_Socket (Server_Socket, 1);
+
+   --  wait for a connection ..
    GNAT.Sockets.Accept_Socket (Server_Socket, Socket, Connected_Address);
+
+   --  .. got it, get thye stream.
    Channel := GNAT.Sockets.Stream (Socket, Connected_Address);
 
    loop
+      -- forever
 
       begin
 
