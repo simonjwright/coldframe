@@ -8,7 +8,10 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3CDD01290395"
-    documentation 	"Support for subtype migration in deeply layered multiple inheritance hierarchies."
+    documentation 	
+|[[ revision : $Id: Hierarchies.cat,v f3f3ab99534f 2002/05/18 16:09:35 simon $ ]]
+|Support for subtype migration in deeply layered multiple inheritance hierarchies.
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "R_1"
@@ -297,6 +300,13 @@
 		    result     	"T_2"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "create_new"
+		    quid       	"3CE6229C009C"
+		    stereotype 	"class"
+		    result     	"F_2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
 		    uid        	0)))
 	(object Class "T_3"
 	    quid       	"3CDD023102C2"
@@ -385,7 +395,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	783)
+			max_width  	825)
 		    width      	804
 		    height     	276
 		    annotation 	8
@@ -415,7 +425,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	783)
+			max_width  	825)
 		    width      	804
 		    height     	274
 		    annotation 	8
@@ -445,7 +455,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	783)
+			max_width  	825)
 		    width      	804
 		    height     	274
 		    annotation 	8
@@ -475,7 +485,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	783)
+			max_width  	825)
 		    width      	804
 		    height     	276
 		    annotation 	8
@@ -520,7 +530,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	5
-			max_width  	783)
+			max_width  	818)
 		    width      	804
 		    height     	324
 		    annotation 	8
@@ -548,7 +558,7 @@
 		    location   	(656, 1904)
 		    label      	(object ItemLabel
 			Parent_View 	@10
-			location   	(265, 1682)
+			location   	(265, 1659)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	782
@@ -560,14 +570,14 @@
 		    quidu      	"3CDD022701A7"
 		    compartment 	(object Compartment
 			Parent_View 	@10
-			location   	(265, 1741)
+			location   	(265, 1718)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	8
+			nlines     	9
 			max_width  	779)
 		    width      	800
-		    height     	468
+		    height     	514
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Hierarchies::S_3" @11
@@ -595,7 +605,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	5
-			max_width  	934)
+			max_width  	987)
 		    width      	956
 		    height     	324
 		    annotation 	8
@@ -633,7 +643,7 @@
 		(object InheritView "f" @14
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(656, 1556)
+			location   	(656, 1544)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -672,7 +682,7 @@
 		    location   	(1792, 1936)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(1709, 1908)
+			location   	(1709, 1910)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -911,7 +921,7 @@
 		    location   	(1152, 1312)
 		    label      	(object ItemLabel
 			Parent_View 	@27
-			location   	(1071, 1271)
+			location   	(1071, 1267)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	162
@@ -921,7 +931,7 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD022701A7"
-		    height     	107
+		    height     	115
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Hierarchies::T_3" @28
@@ -1082,7 +1092,7 @@
 		(object InheritView "f" @38
 		    label      	(object ItemLabel
 			Parent_View 	@38
-			location   	(1031, 1103)
+			location   	(1030, 1101)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1097,7 +1107,7 @@
 		(object InheritView "e" @39
 		    label      	(object ItemLabel
 			Parent_View 	@39
-			location   	(1272, 911)
+			location   	(1272, 909)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
