@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 081bd0744b4b 2003/01/11 17:32:10 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 070bdf8a264c 2003/02/15 18:46:11 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,7 +32,8 @@
   <!-- Called at domain/class to compute number of instances.
        If not, set parameter "c" to the class for which the computation
        is required.
-       Outputs a number; +Inf signals "unknown". -->
+       Outputs a number; 1000000000000 signals "unknown" (used to use
+       +Inf but comparisons failed). -->
   <xsl:template name="number-of-instances">
     <xsl:param name="c" select="."/>
 
@@ -69,7 +70,7 @@
             <xsl:choose>
               <xsl:when test="$result != $result">
                 <!-- ie, result is NaN; happens with Inf * Inf. -->
-                <xsl:value-of select="1 div 0"/>
+                <xsl:value-of select="1000000000000"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:value-of select="$result"/>
@@ -146,7 +147,7 @@
           </xsl:when>
 
           <xsl:otherwise>
-            <xsl:value-of select="1 div 0"/>
+            <xsl:value-of select="1000000000000"/>
           </xsl:otherwise>
 
         </xsl:choose>
@@ -158,7 +159,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="1 div 0"/>
+        <xsl:value-of select="1000000000000"/>
       </xsl:otherwise>
 
     </xsl:choose>
