@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 90205735650b 2002/03/05 06:03:46 simon $
+# $Id: normalize-rose.tcl,v e09817e6a2ab 2002/03/09 09:51:51 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1160,6 +1160,30 @@ itcl::class Association {
 	set role[$role -getEnd] $role
     }
 
+    # called from class cls during evaluation to indicate that the class
+    # named src is used as the source
+    method -formalizingSource {cls src} {
+	set r1cls [$role1 -getClassname]
+	set r2cls [$role2 -getClassname]
+	if {$r1cls == $src && $r2cls == $cls} {
+	    if [$role2 -getSourceEnd] {
+		Error "$cls tried to set $src as source for $name\
+                       when [$role2 -getName] already is"
+	    } else {
+		$role1 -setSourceEnd 1
+	    }
+	} elseif {$r2cls == $src && $r1cls == $cls} {
+	    if [$role1 -getSourceEnd] {
+		Error "$cls tried to set $src as source for $name\
+                       when [$role1 -getName] already is"
+	    } else {
+		$role2 -setSourceEnd 1
+	    }
+	} else {
+	    Error "$cls tried to set $src as source for $name"
+	}
+    }
+
     method -relationshipType {} {
 	set type "[$role1 -getCardinality]:[$role2 -getCardinality]"
 	switch $type {
@@ -1352,7 +1376,8 @@ itcl::class Role {
 			    "n"     -
 			    "*"     {set conditional 1; set cardinality "M"}
 			    default {
-				Warning "explicit size $upper in role $name ignored"
+				Warning "explicit size $upper in role $name\
+                                         ignored"
 				set conditional 1; set cardinality "M"
 			    }
 			}
@@ -1363,7 +1388,8 @@ itcl::class Role {
 			    "n"     -
 			    "*"     {set conditional 0; set cardinality "M"}
 			    default {
-				Warning "explicit size $upper in role $name ignored"
+				Warning "explicit size $upper in role $name\
+                                         ignored"
 				set conditional 0; set cardinality "M"
 			    }
 			}
@@ -1841,12 +1867,12 @@ itcl::class Attribute {
     method -class {dummy} {set cls 1}
 
     # indicates whether this attribute formalizes an association,
-    # where the analyst needs to mark what would otherwise be a
-    # non-identifying referential attribute
+    # where the analyst needs the attribute to help form the identifier
     variable formalizedAssociation
 
     # used via stereotype processing to indicate that this analyst-defined
-    # attribute formalizes an association
+    # attribute formalizes an association. It's implicit that the class
+    # at the other end will be the "source".
     method -formalizes {assoc} {
 	set formalizedAssociation [normalize $assoc]
     }
@@ -1869,7 +1895,16 @@ itcl::class Attribute {
 	    # we rely on Relationships being evaluated after Classes
 	    # (and Attributes are evaluated because they're in Classes).
 	    set rels [$domain -getRelationships]
-	    [$rels -atName $formalizedAssociation] -formalized
+	    if [$rels -isPresent $formalizedAssociation] {
+		set rel [$rels -atName $formalizedAssociation]
+		$rel -formalizingSource \
+		    [[[$this -getOwner] -getOwner] -getName] \
+		    $type
+	    } else {
+		Error "attribute\
+                       [[[$this -getOwner] -getOwner] -getName].$name \
+                       used to formalize non-existent $formalizedAssociation"
+	    }
 	}
     }
 
