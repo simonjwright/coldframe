@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3b62ea715cae 2001/04/22 10:46:07 simon $
+# $Id: normalize-rose.tcl,v d50183a491fb 2001/04/27 19:00:12 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -151,7 +151,7 @@ itcl::class Base {
 
     # called when the outermost closing </tag> is read to do the second
     # pass of processing
-    method -generate {outermost} {error "Undefined $tag method -generate"}
+    method -generate {outermost} {error "CF: undefined $tag method -generate"}
 }
 
 
@@ -255,6 +255,11 @@ itcl::class Element {
 	    puts "<documentation>"
 	    set pars [split $documentation "\n"]
 	    foreach p $pars {
+		regsub -all {&} $p {\&amp;} p
+		regsub -all {>} $p {\&gt;} p
+		regsub -all {<} $p {\&lt;} p
+		regsub -all {\\\\\{} $p {<} p
+		regsub -all {\\\\\}} $p {>} p
 		puts "<par>"
 		puts $p
 		puts "</par>"
@@ -275,7 +280,7 @@ itcl::class Element {
     # So we postpone handling the stereotype until the -name method
     # is called.
     # Just for completeness, and in case there was no <name>, we try
-    # handling again on completeion.
+    # handling again on completion.
     method -stereotype {s} {
 	set stereotype $s
     }
@@ -374,7 +379,7 @@ itcl::class Container {
     # Add the given object to the container at entry "name"
     method -add {object name} {
 	if [info exists byName($name)] {
-	    error "[$this -className] already holds an element named $name"
+	    error "CF: [$this -className] already holds an element named $name"
 	}
 	set newIndex [$this -size]
 	set byName($name) $newIndex
@@ -384,7 +389,7 @@ itcl::class Container {
     # Find the index of a named element in the Container
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
-	error "[$this -className] item $name not found\
+	error "CF: [$this -className] item $name not found\
 		([$this -size] entries, [array names byName])"
     }
 
@@ -393,7 +398,7 @@ itcl::class Container {
 	if {$index < [$this -size]} {
 	    return $byNumber($index)
 	}
-	error "[$this -className] index $index out of range\
+	error "CF: [$this -className] index $index out of range\
 		([$this -size] entries)"
     }
  
@@ -521,16 +526,19 @@ itcl::class Domain {
     }
 
     method -generate {} {
+	$classes -evaluate $this
+	$relationships -evaluate $this
+	$datatypes -evaluate $this
+
 	puts "<domain>"
 	putElement name "$name"
 	putElement date "[exec date]"
 	$this -generateDocumentation
-	$classes -evaluate $this
-	$relationships -evaluate $this
-	$datatypes -evaluate $this
+
 	$classes -generate $this
 	$relationships -generate $this
 	$datatypes -generate $this
+
 	puts "</domain>"
     }
 }
@@ -870,7 +878,7 @@ itcl::class Association {
 		$role2 -setSourceEnd 0
 		$cl1 -addFormalizingAttributesTo $cl2 $this 0
 	    }
-	    "1-(1:1)" {error "oops! not yet implemented!"}
+	    "1-(1:1)" {error "CF: oops! 1-(1:1) not yet implemented!"}
 	    "1-(1:M)" {
 		# The identifying attributes in both roles are used as
 		# referential attributes in the associative class.
@@ -1176,7 +1184,7 @@ itcl::class Datatype {
 		putElement standard $type
 	    }
 	    default {
-		error "oops! dataType '$dataType'"
+		error "CF: oops! dataType \"$dataType\""
 	    }
 	}
 	puts "</type>"
@@ -1465,7 +1473,12 @@ $parser configure \
 	-elementstartcommand startTag \
 	-elementendcommand endTag \
 	-characterdatacommand textInTag
-$parser parse [read stdin]
+#$parser parse [read stdin]
+#exit 0
+if [catch {$parser parse [read stdin]} msg] {
+    puts stderr "error: $msg"
+    exit 1
+}
 
 #;; for emacs:
 #;; Local Variables:
