@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 594912a94743 $
---  $Date: 2003/05/04 10:05:57 $
+--  $Revision: e60ac5fc72c0 $
+--  $Date: 2003/05/09 05:01:49 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -652,13 +652,11 @@ package body ColdFrame.Events_G.Standard_G is
       --  report that tear-down is in progress.
       The_Queue.The_Excluder.Tear_Down;
 
-      --  Just in case the queue wasn't started, tell the Dispatcher
-      --  we're finishing.
-      select
+      --  If the queue wasn't started, tell the Dispatcher we're
+      --  finishing.
+      if not The_Queue.Started then
          The_Queue.The_Dispatcher.Finish;
-      else
-         null;
-      end select;
+      end if;
 
       --  Wait until the Dispatcher has actually stopped.
       while not The_Queue.The_Dispatcher'Terminated loop
