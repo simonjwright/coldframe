@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 978d664697c1 2001/09/08 05:11:43 simon $ -->
+<!-- $Id: ada-type.xsl,v 74ad9a2bdaed 2001/09/27 18:28:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -168,13 +168,108 @@
     <xsl:choose>
 
       <xsl:when test="attribute">
-        <xsl:value-of select="$I"/>
-        <xsl:text>type </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text> is record&#10;</xsl:text>
-        <xsl:apply-templates mode="instance-record-component"/>
-        <xsl:value-of select="$I"/>
-        <xsl:text>end record;&#10;</xsl:text>
+
+        <xsl:choose>
+
+          <xsl:when test="@discriminated">
+
+            <!--
+                 type {name}_Discriminant is
+                   ({attr-name}_T,
+                    {attr-name}_T);
+                 type {name}
+                   (Discriminant : {name}_Discriminant
+                    := {name}_Discriminant'First)
+                 is record
+                   case Discriminant is
+                      when {attr-name}_T =>
+                         {attr-name} : {attr-type}[ := {attr-init}];
+                      when {attr-name}_T =>
+                         {attr-name} : {attr-type}[ := {attr-init}];
+                   end case;
+                 end record;
+                 -->
+
+            <!-- The discriminant enumeration type -->
+            <xsl:value-of select="$I"/>
+            <xsl:text>type </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>_Discriminant is</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IC"/>
+            <xsl:text>(</xsl:text>
+            <xsl:for-each select="attribute/name">
+              <xsl:sort select="."/>
+              <xsl:value-of select="."/>
+              <xsl:text>_T</xsl:text>
+              <xsl:if test="position() &lt; last()">
+                <xsl:text>,&#10;</xsl:text>
+                <xsl:value-of select="$IC"/>
+                <xsl:text> </xsl:text>
+              </xsl:if>
+            </xsl:for-each>
+            <xsl:text>);&#10;</xsl:text>
+
+            <!-- The discriminated record type -->
+            <xsl:value-of select="$I"/>
+            <xsl:text>type </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IC"/>
+            <xsl:text>(Discriminant : </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>_Discriminant</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IC"/>
+            <xsl:text> := </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>_Discriminant'First)&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is record&#10;</xsl:text>
+            <xsl:value-of select="$II"/>
+            <xsl:text>case Discriminant is&#10;</xsl:text>
+
+            <xsl:for-each select="attribute">
+              <xsl:sort select="name"/>
+
+              <xsl:value-of select="$III"/>
+              <xsl:text>when </xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>_T =&gt;&#10;</xsl:text>
+
+              <xsl:call-template name="single-record-component">
+                <xsl:with-param name="indent" select="$IIII"/>
+              </xsl:call-template>
+
+            </xsl:for-each>
+
+            <xsl:value-of select="$II"/>
+            <xsl:text>end case;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>end record;&#10;</xsl:text>
+
+          </xsl:when>
+
+          <xsl:otherwise>
+
+            <!--
+                 type {name} is record
+                   {attr-name} : {attr-type}[ := {attr-init}];
+                 end record;
+                 -->
+
+            <xsl:value-of select="$I"/>
+            <xsl:text>type </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text> is record&#10;</xsl:text>
+            <xsl:apply-templates mode="instance-record-component"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>end record;&#10;</xsl:text>
+            
+          </xsl:otherwise>
+
+        </xsl:choose>
+
       </xsl:when>
       
       <xsl:when test="enumeration">
