@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 8ff29bf89493 $
---  $Date: 2002/11/12 19:53:12 $
+--  $Revision: 2616e0b373bd $
+--  $Date: 2002/11/26 20:12:58 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -164,7 +164,7 @@ package body ColdFrame.Events_G.Standard_G is
                     (Severity => Logging.Error,
                      Message =>
                        Ada.Exceptions.Exception_Information (Ex) &
-                       "in Dispatcher (event " &
+                       " in Dispatcher (event " &
                        Ada.Tags.Expanded_Name (E.all'Tag) &
                        ")");
             end;
@@ -309,10 +309,12 @@ package body ColdFrame.Events_G.Standard_G is
            (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
            <= Ada.Real_Time.Clock then
 
-            while Time.Equivalent
-              (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
-              <= Ada.Real_Time.Clock loop
+            loop
                Process_First_Event;
+               exit when Timed_Event_Queues.Is_Empty (The_Events);
+               exit when Time.Equivalent
+                 (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
+                 > Ada.Real_Time.Clock;
             end loop;
 
          else
@@ -364,6 +366,13 @@ package body ColdFrame.Events_G.Standard_G is
 
       end loop;
 
+   exception
+      when E : others =>
+         Logging.Log
+           (Severity => Logging.Error,
+            Message =>
+              Ada.Exceptions.Exception_Information (E) &
+              " in Timer_Manager");
    end Timer_Manager;
 
 
