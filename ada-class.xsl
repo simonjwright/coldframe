@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f9366a02e078 2001/06/19 18:47:15 simon $ -->
+<!-- $Id: ada-class.xsl,v d03dfef789ea 2001/06/20 19:15:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,39 +27,8 @@
                 version="1.0">
 
 
-  <!-- XXX temporary : explore collecting the ancestors -->
-  <xsl:template name="get-ancestors">
-    <xsl:param name="parents" select="."/>
-    <xsl:param name="ancestors" select="/.."/>
-    <xsl:choose>
-      <xsl:when test="$parents">
-        <xsl:call-template name="get-ancestors">
-          <xsl:with-param
-            name="parents"
-            select="../class[name=../inheritance[child=$parents/name]/parent]"/>
-          <xsl:with-param name="ancestors" select="$parents | $ancestors"/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each select="$ancestors">
-          <xsl:message>
-            <xsl:text>  Family: </xsl:text>
-            <xsl:value-of select="name"/>
-          </xsl:message>
-        </xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
-
-    <xsl:message>
-      <xsl:text>Class: </xsl:text>
-      <xsl:value-of select="name"/>
-    </xsl:message>
-    <xsl:call-template name="get-ancestors"/>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
@@ -124,7 +93,7 @@
     <xsl:apply-templates mode="access-to-operation"/>
 
     <!-- .. operations .. -->
-    <xsl:apply-templates mode="operation-spec"/>
+    <xsl:call-template name="operation-specs"/>
 
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
@@ -210,69 +179,110 @@
 
 
   <!-- Called from domain/class to generate context clauses for package
-       spec -->
+       spec.
+       Since this may be a child type, we handle all the operations
+       in the ancestor tree as well as the present attributes. -->
   <xsl:template name="class-spec-context">
 
-    <xsl:if test="attribute/@refers">
-      <!-- We're going to use the GNAT "with type" extension -->
-      <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text>
-    </xsl:if>
+    <!-- The classes to be processed this time. The default is the
+         current class. -->
+    <xsl:param name="parents" select="."/>
 
-    <!-- Check for Unbounded_Strings. -->
-    <xsl:if test="attribute/type='Unbounded_String'
-                  or operation/parameter/type='Unbounded_String'
-                  or attribute/type='Text'
-                  or operation/parameter/type='Text'">
-      <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
-      <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
-    </xsl:if>
+    <!-- The ancestors so far. The default value is "null". -->
+    <xsl:param name="ancestors" select="/.."/>
 
-    <!-- Check for Ada.Calendar. -->
-    <xsl:if test="attribute/type='Date'
-                  or operation/parameter/type='Date'
-                  or attribute/type='Time'
-                  or operation/parameter/type='Time'">
-      <xsl:text>with Ada.Calendar;</xsl:text>
-      <xsl:text> use Ada.Calendar;&#10;</xsl:text>
-    </xsl:if>
+    <xsl:choose>
 
-    <!-- Choose the appropriate Map (unless this is a singleton). -->
-    <xsl:if test="not(@singleton)">
+      <xsl:when test="$parents">
 
-      <xsl:choose>
+        <!-- Still something to collect; call self recursively with the
+             parent node(s). -->
+        <xsl:call-template name="class-spec-context">
+          <xsl:with-param
+            name="parents"
+            select="../class[name=../inheritance[child=$parents/name]/parent]"/>
+          <xsl:with-param name="ancestors" select="$parents | $ancestors"/>
+        </xsl:call-template>
 
-        <xsl:when test="./@max">
-          <!-- Wnen there's a maximum size, use the Bounded version -->
-          <xsl:text>with BC.Containers.Maps.Bounded;&#10;</xsl:text>
-        </xsl:when>
+      </xsl:when>
 
-        <xsl:otherwise>
-          <!-- Use the Unbounded version -->
-          <!-- We need access to the standard heap storage pool. -->
-          <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
-          <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
-        </xsl:otherwise>
+      <xsl:otherwise>
 
-      </xsl:choose>
+        <!-- $ancestors contains all the nodes to be processed. -->
 
-    </xsl:if>
+        <xsl:if test="attribute[@refers and not(@refers=../name)]">
+          <!-- We have an attribute which refers to another class, so
+               w're going to use the GNAT "with type" extension.
+               XXX what about operations that take parameters of, or
+               return, another class? Why bother saying this when we need
+               -gnatX anyway? (GNAT 3.14a1) -->
+          <!-- <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text> -->
+        </xsl:if>
+        
+        <!-- Check for Unbounded_Strings. -->
+        <xsl:if test="attribute/type='Unbounded_String'
+                      or $ancestors/operation/parameter/type='Unbounded_String'
+                      or $ancestors/operation/@return='Unbounded_String'
+                      or attribute/type='Text'
+                      or $ancestors/operation/parameter/type='Text'
+                      or $ancestors/operation/@return='Text'">
+          <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
+          <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
+        </xsl:if>
+        
+        <!-- Check for Ada.Calendar. -->
+        <xsl:if test="attribute/type='Date'
+                      or $ancestors/operation/parameter/type='Date'
+                      or $ancestors/operation/@return='Date'
+                      or attribute/type='Time'
+                      or $ancestors/operation/parameter/type='Time'
+                      or $ancestors/operation/@return='Time'">
+          <xsl:text>with Ada.Calendar;</xsl:text>
+          <xsl:text> use Ada.Calendar;&#10;</xsl:text>
+        </xsl:if>
+        
+        <!-- Choose the appropriate Map (unless this is a singleton). -->
+        <xsl:if test="not(@singleton)">
+          
+          <xsl:choose>
+            
+            <xsl:when test="./@max">
+              <!-- Wnen there's a maximum size, use the Bounded version -->
+              <xsl:text>with BC.Containers.Maps.Bounded;&#10;</xsl:text>
+            </xsl:when>
+            
+            <xsl:otherwise>
+              <!-- Use the Unbounded version -->
+              <!-- We need access to the standard heap storage pool. -->
+              <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
+              <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
+            </xsl:otherwise>
+            
+          </xsl:choose>
+          
+        </xsl:if>
+        
+        <!-- Include "with type" for referential attributes (that
+             refer to other classes). -->
+        <!--XXX why doesn't this work always?<xsl:for-each
+             select="attribute[@refers
+             and not(@refers=preceding::attribute/@refers)]">-->
+        <xsl:for-each
+          select="attribute[@refers and not(@refers=../name)]">
+          <xsl:sort select="@refers"/>
+          <xsl:text>with type </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="@refers"/>
+          <xsl:text>.Handle is access;&#10;</xsl:text>
+        </xsl:for-each>
+        
+        <!-- Handle subprograms. -->
+        <xsl:apply-templates mode="operation-context" select="$ancestors"/>
 
-    <!-- Include "with type" for referential attributes. -->
-    <!--XXX why doesn't this work always?<xsl:for-each
-      select="attribute[@refers
-              and not(@refers=preceding::attribute/@refers)]">-->
-    <xsl:for-each
-      select="attribute[@refers]">
-      <xsl:sort select="@refers"/>
-      <xsl:text>with type </xsl:text>
-      <xsl:value-of select="../../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="@refers"/>
-      <xsl:text>.Handle is access;&#10;</xsl:text>
-    </xsl:for-each>
+      </xsl:otherwise>
 
-    <!-- Handle subprograms. -->
-    <xsl:apply-templates mode="operation-context" select="operation"/>
+    </xsl:choose>
 
   </xsl:template>
 
@@ -457,7 +467,7 @@
     </xsl:if>
     
     <!-- .. operation stubs .. -->
-    <xsl:apply-templates mode="operation-body-stub"/>
+    <xsl:call-template name="operation-body-stubs"/>
     
     <!-- and close. -->
     <xsl:text>end </xsl:text>
@@ -491,7 +501,7 @@
     </xsl:if>
 
     <!-- Child subprogram bodies for individual operations. -->
-    <xsl:apply-templates select="operation" mode="operation-body"/>
+    <xsl:call-template name="operation-bodies"/>
 
   </xsl:template>
 
