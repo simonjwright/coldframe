@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v a1c0319b3513 2000/04/30 06:32:06 simon $
+# $Id: ddf.tcl,v b2ed7f467c10 2000/06/08 08:27:08 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -499,6 +499,15 @@ itcl::class Object {
 
     method -attributes {l} {set attributes $l}
 
+    method -hasIdentifier {} {
+	foreach a [$attributes -getMembers] {
+	    if [$a -getIdentifier] {
+		return 1
+	    }
+	}
+	return 0
+    }
+
     method -addFormalizingAttributesTo {obj relation identifier} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
@@ -581,6 +590,12 @@ itcl::class Object {
 itcl::class Relationship {
     inherit Element
 
+    variable formalized 0
+
+    method -formalized {} {set formalized 1}
+
+    method -needsFormalizing {} {return [expr ! $formalized]}
+
     method -getNumber {} {
 	set name [$this -getName]
 	if [expr [regexp -nocase {^r([0-9]+)} $name wh number] == 1] {
@@ -649,12 +664,25 @@ itcl::class Association {
     }
 
     method -evaluate {domain} {
+	if [expr ! [$this -needsFormalizing]] {
+	    puts stderr "$name already formalized"
+	    return
+	}
 	set n [$this -getNumber]
 	set os [$domain -getObjects]
 	set type [$this -relationshipType]
 	set cl1 [$os -atName [$role1 -getClassname]]
-	$cl1 -addRelation $n
+	if [expr ! [$cl1 -hasIdentifier]] {
+	    puts stderr "[$cl1 -getName] has no identifier(s)"
+	    return
+	}
 	set cl2 [$os -atName [$role2 -getClassname]]
+	if [expr ! [$cl2 -hasIdentifier]] {
+	    puts stderr "[$cl2 -getName] has no identifier(s)"
+	    return
+	}
+	$this -formalized
+	$cl1 -addRelation $n
 	$cl2 -addRelation $n
 	if [$this -isAssociative] {
 	    set assoc [$os -atName $associative]
@@ -718,6 +746,9 @@ itcl::class Association {
     }
 
     method -generate {domain} {
+	if [$this -needsFormalizing] {
+	    error "[$this -getName] is unformalized"
+	}
 	puts "[$this -getNumber]"
 	puts "[$this -relationshipType]"
 	$role1 -generate $domain
@@ -879,8 +910,17 @@ itcl::class Inheritance {
     }
 
     method -evaluate {domain} {
+	if [expr ! [$this -needsFormalizing]] {
+	    puts stderr "$name already formalized"
+	    return
+	}
 	set os [$domain -getObjects]
 	set p [$os -atName $parent]
+	if [expr ! [$p -hasIdentifier]] {
+	    puts stderr "[$p -getName] has no identifier(s)"
+	    return
+	}
+	$this -formalized
 	$p -addRelation [$this -getNumber]
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
@@ -897,6 +937,9 @@ itcl::class Inheritance {
     }
 
     method -generate {domain} {
+	if [$this -needsFormalizing] {
+	    error "[$this -getName] is unformalized"
+	}
 	puts "[$this -getNumber]"
 	puts "[$this -relationshipType]"
 	set os [$domain -getObjects]
@@ -927,10 +970,29 @@ itcl::class Datatype {
 
     variable relationshipUsers {}
 
-    # dataType 0 -> Provided_Data (? XXX)
-    variable dataType 0
+    # dataType 0 -> Provided_Data
+    #          1 -> Instance_Handle
+    #          2 -> Structure
+    #          3 -> Time_Of_Day
+    #          4 -> Date
+    #          5 -> Real
+    #          6 -> Integer
+    #          7 -> Text
+    #          8 -> Deferred
+    #          9 -> Enumeration
+    variable dataType "provided"
 
-    constructor {name} {set type $name}
+    variable dataDetail
+
+    constructor {name} {
+	switch $name {
+	    Text {
+		set type "Text"
+		set package "Strings"
+	    }
+	    default {set type $name}
+	}
+    }
 
     method -className {} {return "datatype"}
 
@@ -941,11 +1003,17 @@ itcl::class Datatype {
 	puts stderr "$type -addObjectUser: name $name, index $index"
     }
 
+    method -enumeration {values} {
+	# values is a list of the enumeration's values
+	set dataType "enumeration"
+	set dataDetail $values
+    }
+
     method -complete {} {
 	if [[stack -top] -isPresent $type] {
-	    puts "$name already present"
+	    puts stderr "$name already present"
 	} else {
-	    [stack -top] -add $this $$type
+	    [stack -top] -add $this $type
 	}
     }
 
@@ -962,8 +1030,16 @@ itcl::class Datatype {
 	puts "1\n0"
 	# relationship users -- fossil, I think
 	puts 0
-	# data type switch, 0 -> provided
-	puts 0
+	# data type switch
+	switch $dataType {
+	    provided    {puts 0}
+	    enumeration {
+		puts 9
+		puts [llength $dataDetail]
+		foreach d $dataDetail { puts $d }
+	    }
+	    default     {error "oops! dataType $dataType"}
+	}
 	# event type
 	puts -1
 	# super type
@@ -971,6 +1047,56 @@ itcl::class Datatype {
 	# number of tags
 	puts 0
     }
+}
+
+# A UserDatatype is created during the XML parse. It receives the type
+# name and documentation string. The documentation string contains type
+# information inside [[, ]] delimiters.
+itcl::class UserDatatype {
+    inherit Element
+
+    variable typeInfo
+
+    method -documentation {d} {
+	if [expr ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
+	    error "User data type $name has no type information"
+	}
+    }
+
+    private method -enumeration {values} {
+	set raw [split $values ","]
+	foreach v $raw {
+	    set vs [lappend vs [normalize $v]]
+	}
+	return $vs
+    }
+
+    method -complete {} {
+	set dts [stack -top]
+	if [$dts -isPresent $name] {
+	    puts stderr "$name already present"
+	    set dt [$dts -atName $name]
+	} else {
+	    set dt [Datatype ::#auto $name]
+	    $dts -add $dt $name
+	}
+	if [expr ![regexp {(^.*):(.*$)} $typeInfo wh kind values]] {
+	    error "bad user type definition \"$typeInfo\""
+	}
+	switch [string tolower $kind] {
+	    enumeration {$dt -enumeration [$this -enumeration $values]}
+	    default     {error "unrecognised user type definition $kind"}
+	}
+    }
+
+    method -generate {domain} {
+	puts stderr "UserDatatype $name generated"
+    }
+
+}
+
+itcl::class Documentation {
+    inherit String
 }
 
 itcl::class Typesfile {
@@ -1090,14 +1216,14 @@ itcl::class Attribute {
 		    switch [$r -getEnd] {
 			1       {puts "1"}
 			2       {puts "0"}
-			default {error "oops!"}
+			default {error "oops! assoc attr end [$r -getEnd]"}
 		    }
 		    set user [$objects -atName [$rel -getAssociativeObjectName]]
 		} else {
 		    switch [$r -getEnd] {
 			1       {puts "0\n1"}
 			2       {puts "1\n0"}
-			default {error "oops!"}
+			default {error "oops! attribute end [$r -getEnd]"}
 		    }
 		    set user [$objects -atName [$r -getClassname]]
 		}
@@ -1221,6 +1347,7 @@ itcl::class Relationships {
 	    lappend sortedNumbers [$r -getNumber]
 	}
 	$this Container::-evaluate $domain
+	$this Container::-evaluate $domain
     }
 
     method -generate {domain} {
@@ -1270,6 +1397,7 @@ proc elementFactory {tag} {
 	classname         {return [Classname #auto]}
 	datatype          {return [Datatype #auto]}
 	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
+	documentation     {return [Documentation #auto]}
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
 	exportcontrol     {return [ExportControl #auto]}
@@ -1294,6 +1422,7 @@ proc elementFactory {tag} {
 	type              {return [Type #auto]}
 	typesfile         {return [Typesfile #auto]}
 	typesfiles        {return [Typesfiles #auto]}
+	userdatatype      {return [UserDatatype #auto]}
 	version           {return [Version #auto]}
 	default           {return [Element #auto]}
     }
