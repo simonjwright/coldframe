@@ -1,15 +1,14 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v 3c58e75d12b4 2003/11/16 10:26:49 simon $
+--  $Id: tash.gpr,v 51bebc997885 2003/11/16 11:10:47 simon $
 
 project Tash is
 
-  Top := external ("TOP", "c:");
-  Tash := external ("TASH", "tash832a");
+  Tash := external ("TASH", "c:/tash832a");
   Tcl := external ("TCL", "c:/Tcl");
   Tcl_Version := external ("TCL_VERSION", "82");
   Build_Dir := external ("BUILD_DIR", "c:/tmp/.build");
 
-  Tash_Src := Top & "/" & Tash & "/src";
+  Tash_Src := Tash & "/src";
 
   for Source_Dirs use (Tash_Src);
 
@@ -29,9 +28,9 @@ project Tash is
 
   --  These two files may need to be made by (a) configuring TASH by
   --  running setup.tcl under wish (wish82), (b) changing to the
-  --  source directory and running "make tkmacro.o
-  --  tclmacro.o". However, some versions of TASH (in particular the
-  --  Windows tash832a.zip) come prepared.
+  --  source directory and running "make tkmacro.o tclmacro.o".
+  --  However, some versions of TASH (in particular the Windows
+  --  tash832a.zip) come prepared.
   Objects := (Tash_Src & "/tkmacro.o",
               Tash_Src & "/tclmacro.o");
 
