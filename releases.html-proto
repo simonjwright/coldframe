@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8fbdafbc6e02 2004/07/07 21:06:13 simon $ -->
+<!-- $Id: releases.html-proto,v ed0aaa24029e 2004/07/17 17:52:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -85,6 +85,10 @@ will be generated.
 &#171;protected&#187; types; <i>public</i> and <i>protected</i>
 operations are public, <i>private</i> and <i>implementation</i>
 operations are private.
+
+
+<p>It's been made a bit more straightforward to <a
+href="extending.html">add your own code generation extensions</a>.
 
 
 <p><dt>20040319
