@@ -20,21 +20,23 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: ca6e1b27f85c $
---  $Date: 2002/07/06 10:16:09 $
+--  $Revision: 866ed849c796 $
+--  $Date: 2002/07/06 10:26:18 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
 
    Duplicate : exception;
-   --  Attempt to Create an object with an identifier that belongs to an
-   --  object that already exists
+   --  Attempt to Create an object with an identifier that belongs to
+   --  an object that already exists.
 
    Not_Found : exception;
-   --  Attempt to access an object by identifier when no such object exists
+   --  Attempt to access an object by identifier when no such object
+   --  exists.
 
    Existing_Child : exception;
-   --  Attempt to replace a non-null child in an inheritance relationship
+   --  Attempt to replace a non-null child in an inheritance
+   --  relationship.
 
    Cant_Happen : exception;
    --  An unexpected Event has occured.
