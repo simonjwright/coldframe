@@ -5,9 +5,10 @@ procedure Turn_Off
   (This : Handle) is
 
    Signals : constant array (Lamp_Name) of Digital_IO.Signal_Name
-     := (Lamp_A => Digital_IO.Lamp_A,
-         Lamp_B => Digital_IO.Lamp_B,
-         Lamp_C => Digital_IO.Lamp_C);
+     := (Second_Floor => Digital_IO.Lamp_A,
+         First_Floor => Digital_IO.Lamp_B,
+         Ground_Floor => Digital_IO.Lamp_C,
+         Basement => Digital_IO.Lamp_D);
 
 begin
 
