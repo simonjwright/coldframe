@@ -1,0 +1,4 @@
+#! /bin/sh
+# Copy CF to galadriel.frlngtn.gecm.com
+
+cd ~/ooa/rose/dist && rcp -r -p ./* sjw@galadriel:public_html/coldframe/
