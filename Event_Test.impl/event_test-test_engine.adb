@@ -1,16 +1,10 @@
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
---  with Event_Test.Initialize;
---  with Event_Test.Tear_Down;
 with Event_Test.Events;
 with Event_Test.Events.Tear_Down;
---  with Event_Test.Recipient;
 
---  with ColdFrame.Exceptions;
---  with ColdFrame.Instances;
 with ColdFrame.Project.Events;
---  with ColdFrame.Project.Event_Support;
 
 package body Event_Test.Test_Engine is
 
@@ -84,9 +78,48 @@ package body Event_Test.Test_Engine is
    end Handler;
 
 
+   --  This event takes a lock on its own Event Queue
+   type Nest is new ColdFrame.Project.Events.Event_Base with null record;
+
+   procedure Handler (For_The_Event : Nest);
+
+   procedure Handler (For_The_Event : Nest) is
+      L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+      pragma Warnings (Off, L);
+   begin
+      null;
+   end Handler;
+
+
    -----------------------
    --  Test procedures  --
    -----------------------
+
+   --  One task can take out nested locks.
+   procedure Lock_Vs_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Lock_Vs_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      declare
+         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+         pragma Warnings (Off, L);
+      begin
+         declare
+            L2 : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+            pragma Warnings (Off, L2);
+         begin
+            --  Of course, the real check is that the procedure
+            --  manages to pass this point!
+            Assert (True,
+                    "lock wasn't achieved");
+         end;
+      end;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+   end Lock_Vs_Self;
+
 
    --  Locks respect other locks.
    procedure Lock_Vs_Lock
@@ -148,36 +181,8 @@ package body Event_Test.Test_Engine is
    end Lock_Vs_Event;
 
 
-   --  Normal events have equal priority with Locks.
-   procedure Lock_Vs_Normal_Event
-     (R : in out AUnit.Test_Cases.Test_Case'Class);
-   procedure Lock_Vs_Normal_Event
-     (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
-      Ev : constant ColdFrame.Project.Events.Event_P
-        := new Post;
-      P : Post renames Post (Ev.all);
-   begin
-      P.Payload := 17;
-      P.To_Self := False;
-      P.Interval := 0.1;
-      ColdFrame.Project.Events.Post (Ev,
-                                     On => Events.Dispatcher);
-      ColdFrame.Project.Events.Start (Events.Dispatcher);
-      delay 0.01;
-      declare
-         L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
-         pragma Warnings (Off, L);
-      begin
-         Assert (Result = 0,
-                 "event has fired");
-      end;
-      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Result = 17,
-              "event hasn't fired");
-   end Lock_Vs_Normal_Event;
-
-
+   --  Normal events have equal priority with Locks. There is no
+   --  guarantee on relative timing.
    --  Self events have higher priority than Locks.
    procedure Lock_Vs_Self_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -206,6 +211,26 @@ package body Event_Test.Test_Engine is
    end Lock_Vs_Self_Event;
 
 
+   --  An event handler can take out a lock on its own Event Queue.
+   procedure Event_Takes_Lock
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Event_Takes_Lock
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Nest;
+   begin
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      --  Of course, the real check is that the procedure
+      --  manages to pass this point!
+      Assert (True,
+              "lock wasn't achieved");
+   end Event_Takes_Lock;
+
+
    ---------------
    --  Harness  --
    ---------------
@@ -213,13 +238,15 @@ package body Event_Test.Test_Engine is
    procedure Register_Tests (T : in out Test_Case) is
    begin
       Register_Routine
+        (T, Lock_Vs_Self'Access, "Nested lock");
+      Register_Routine
         (T, Lock_Vs_Lock'Access, "Lock against lock");
       Register_Routine
         (T, Lock_Vs_Event'Access, "Lock against event");
       Register_Routine
-        (T, Lock_Vs_Normal_Event'Access, "Lock against normal event");
-      Register_Routine
         (T, Lock_Vs_Self_Event'Access, "Lock against self event");
+      Register_Routine
+        (T, Event_Takes_Lock'Access, "Event handler takes nested lock");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
