@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v adab801e6bb4 2002/10/20 16:25:17 simon $ -->
+<!-- $Id: domains.html,v 5a6ffbc55904 2002/11/07 05:43:49 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -34,7 +34,8 @@ stand a better chance of getting the tool to do what you need.
 <h2>Modelling</h2>
 
 <p>Given the above, the obvious way to model domains is as packages in
-the logical model.
+the logical model (in Rose, the package is the unit of change control
+and separate development).
 
 <p>Domain packages can have child packages. This might be to make the
 model structure clearer (for example, by separating off all the type
@@ -56,9 +57,9 @@ derived from the package name using the usual name conversion rules.
 <em>not</em> reflected in the generated code (for example, all classes
 end up as direct Ada child packages of the domain package).
 
-<p>Domain types are implemented in the domain package. For string
-types, a string hash function is generated as a child subprogram of
-the domain package.
+<p>Domain <a href="types.html">types</a> are implemented in the domain
+package. For string types, a string hash function is generated as a
+child subprogram of the domain package.
 
 <p>Domain <a href="classes.html">classes</a> are implemented as
 children of the domain package.
