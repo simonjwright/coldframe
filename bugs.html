@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 17287300cb42 2003/01/09 21:21:44 simon $ -->
+<!-- $Id: bugs.html,v 0dcd0c745f60 2003/01/11 15:59:59 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -160,13 +160,32 @@ associated instances' handles.
 
 <dd>The Create operation could usefully check that referential
 parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
-of the correct actial type.
+of the correct actual type.
 
-<!-- next: 0145 -->
+<dt>0147 (raised 10.i.03)
+
+<dd>It would be useful to be able to specify type extension.
+
+<!-- next: 0148 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>10.i.03</h3>
+
+<dl>
+
+<dt>0145 (raised 10.i.03)
+
+<dd>Normalization crashes (<i>can't read "rel": no such variable</i>)
+if you have an association with no multiplicities.
+
+<dt>0146 (raised 10.i.03)
+
+<dd>The <i>make</i> process doesn't halt if normalization crashes.
+
+</dl>
 
 <h3>9.i.03</h3>
 
