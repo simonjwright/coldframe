@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: BC.gpr,v 0f7eda971a8e 2003/02/07 05:55:57 simon $
+--  $Id: BC.gpr,v 47375af5c8b3 2003/11/29 13:44:52 simon $
 --
 --  This file controls compilation of the Booch Components for
 --  ColdFrame.
@@ -31,7 +31,7 @@ project BC is
 
   for Source_Dirs use (Top & "/" & BC);
 
-  for Object_Dir use Options'Object_Dir;
+  for Object_Dir use Options'Object_Dir & "/bc";
 
   package Ide renames Options.Ide;
 

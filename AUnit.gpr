@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: AUnit.gpr,v 8a7bdb12a221 2003/03/22 16:28:40 simon $
+--  $Id: AUnit.gpr,v 47375af5c8b3 2003/11/29 13:44:52 simon $
 
 with "Options";
 
@@ -23,7 +23,7 @@ project AUnit is
 
   for Source_Dirs use (Top & "/" & AUnit & "/aunit/**");
 
-  for Object_Dir use ".build";
+  for Object_Dir use Options'Build & "/aunit";
 
   for Object_Dir use Options'Object_Dir;
   package Ide renames Options.Ide;
