@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 4740bc252c95 $
---  $Date: 2005/02/24 20:54:32 $
+--  $Revision: 1f74db81cc0d $
+--  $Date: 2005/02/25 11:30:36 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -370,17 +370,9 @@ package body ColdFrame.Test_Stub_Support is
          while not Is_Done (It)
          loop
             if Current_Item (It).Ordinal <= For_Occurrence then
-               declare
-                  E : constant Ada.Exceptions.Exception_Id :=
-                    Current_Item (It).E;
-                  use type Ada.Exceptions.Exception_Id;
-               begin
-                  if E /= Ada.Exceptions.Null_Id then
-                     Ada.Exceptions.Raise_Exception (E, "from stub");
-                  else
-                     exit;
-                  end if;
-               end;
+               Ada.Exceptions.Raise_Exception
+                 (Current_Item (It).E, "from stub");
+               exit;  --  in case it was a null exception
             end if;
             Next (It);
          end loop;

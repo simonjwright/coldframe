@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 4740bc252c95 $
---  $Date: 2005/02/24 20:54:32 $
+--  $Revision: 1f74db81cc0d $
+--  $Date: 2005/02/25 11:30:36 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -79,6 +79,10 @@ package ColdFrame.Test_Stub_Support is
    --  For_Subprogram_Named is the case-insensitive fully-qualified
    --  name of the subprogram (eg, if dealing with procedure
    --  Domain.Class.Operation, "Domain.Class.Operation").
+   --
+   --  Normally the exception will be raised for the named occurrence
+   --  and all later occurrences; to stop this, use
+   --  Ada.Exceptions.Null_Id.
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
                             For_Occurrence : Positive := 1);

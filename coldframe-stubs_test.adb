@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: 5e59d443dff6 $
---  $Date: 2005/02/24 21:16:39 $
+--  $Revision: 1f74db81cc0d $
+--  $Date: 2005/02/25 11:30:36 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -52,16 +52,23 @@ begin
    declare
       Result : Integer;
    begin
+
+      --  Setup
       Set_Output_Integer ("foo.bar.quux", "result", 42, 1);
       ColdFrame.Test_Stub_Support.Set_Exception
         ("foo.bar.quux", Foo_Exception'Identity, 2);
+      ColdFrame.Test_Stub_Support.Set_Exception
+        ("foo.bar.quux", Ada.Exceptions.Null_Id, 3);
       Set_Output_Integer ("foo.bar.quux", "result", 44, 3);
+      Set_Output_Integer ("foo.bar.quux", "result", 45, 4);
 
+      --  First call
       Generated_Stub_Procedure (24, Result);
       Put_Line ("result => " & Result'Img);           --  should be 42
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 1)'Img);  --  should be 24
 
+      --  Second call
       begin
          Generated_Stub_Procedure (25, Result);
       exception
@@ -72,10 +79,17 @@ begin
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 2)'Img);  --  should be 25
 
+      --  Third call
       Generated_Stub_Procedure (26, Result);
       Put_Line ("result => " & Result'Img);           --  should be 44
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 3)'Img);  --  should be 26
+
+      --  Fourth call
+      Generated_Stub_Procedure (27, Result);
+      Put_Line ("result => " & Result'Img);           --  should be 45
+      Put_Line ("input => " & Get_Input_Integer
+                  ("foo.bar.quux", "input", 4)'Img);  --  should be 27
 
    end;
 
