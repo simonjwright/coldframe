@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 5be5922c246e 2002/08/17 17:00:12 simon $ -->
+<!-- $Id: bugs.html,v 70c002850522 2002/08/20 18:32:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -153,12 +153,6 @@ would only make sense if they have operations, I suppose).
 <dd>It's not possible to have automatically-generated accessors for
 class variables.
 
-<dt>0097 (raised 25.vi.02)
-
-<dd>All the Events that transition to a State with an Action with a
-parameter must be the same. It would be helpful if this could be
-changed to "must carry the same payload".
-
 <dt>0098 (raised 25.vi.02)
 
 <dd>Multiple delayed events which are required to fire at the same
@@ -169,14 +163,29 @@ time will result in a <tt>delay&nbsp;0.0</tt> between each.
 <dd>If an enumeration type is imported or renamed, the enumeration
 literals aren't.
 
+<dt>0109 (raised 19.viii.02)
+
+<dd>The error where a state has more than one exiting transition
+triggered by the same event (or drop-through) isn't detected.
+
 </dl>
 
-<!-- next: 0109 -->
+<!-- next: 0110 -->
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>17.viii.02</h3>
+<h3>19.viii.02</h3>
+<dl>
 
+<dt>0097 (raised 25.vi.02)
+
+<dd>All the Events that transition to a State with an Action with a
+parameter must be the same. It would be helpful if this could be
+changed to "must carry the same payload".
+
+</dl>
+
+<h3>17.viii.02</h3>
 <dl>
 
 <dt>0073 (raised 11.iv.02)
@@ -199,7 +208,7 @@ Identifier is "deprecated".</i>
 <br><i>It's actually the <tt>Class_Initialize</tt> operation that does
 this.</i>
 
-<<dt>0103 (raised 16.vii.02)
+<dt>0103 (raised 16.vii.02)
 
 <dd>Automatic formation of abbreviations can result in generating
 reserved words.
@@ -230,7 +239,6 @@ you <tt>with</tt> two renamings of the same package.
 </dl>
 
 <h3>16.vii.02</h3>
-
 <dl>
 
 <dt>0102 (raised 15.vii.02)
@@ -247,7 +255,6 @@ renaming of <tt>Ada.Calendar</tt>.
 </dl>
 
 <h3>12.vii.02</h3>
-
 <dl>
 
 <dt>0101 (raised 5.vii.02)
@@ -258,7 +265,6 @@ linked.
 </dl>
 
 <h3>10.vii.02</h3>
-
 <dl>
 
 <dt>0027 (raised 5.x.01)
@@ -269,7 +275,6 @@ detect missing types (or names).
 </dl>
 
 <h3>7.vii.02</h3>
-
 <dl>
 
 <dt>0092 (raised 24.vi.02)
@@ -279,7 +284,6 @@ detect missing types (or names).
 </dl>
 
 <h3>4.v11.02</h3>
-
 <dl>
 
 <dt>0095 (raised 25.vi.02)
@@ -295,7 +299,6 @@ ColdFrame generates automatically).
 </dl>
 
 <h3>27.vi.02</h3>
-
 <dl>
 
 <dt>0079 (raised 1.v.02)
@@ -312,7 +315,6 @@ how to think about role names.</i>
 </dl>
 
 <h3>25.vi.02</h3>
-
 <dl>
 
 <dt>0093 (raised 24.vi.02)
@@ -327,7 +329,6 @@ outstanding.
 </dl>
 
 <h3>8.vi.02</h3>
-
 <dl>
 
 <dt>0089 (raised 7.vi.02)
@@ -339,7 +340,6 @@ involved has been specified).
 </dl>
 
 <h3>29.v.02</h3>
-
 <dl>
 
 <dt>0009 (raised 27.vi.01)
@@ -355,7 +355,6 @@ identifying referential attribute is <tt>null</tt>. As for
 </dl>
 
 <h3>20.v.02</h3>
-
 <dl>
 
 <dt>0014 (raised 13.vii.01)
@@ -408,7 +407,6 @@ generated code?
 </dl>
 
 <h3>9.v.02</h3>
-
 <dt>0025 (raised 26.ix.01)
 
 <dd>It would be a good thing if illegal characters in names were detected.
@@ -423,7 +421,6 @@ associated task.
 </dl>
 
 <h3>18.iv.02</h3>
-
 <dl>
 
 <dt>0077 (raised 18.iv.02)
@@ -438,7 +435,6 @@ prepending <tt>A</tt> or <tt>An</tt>.</it>
 </dl>
 
 <h3>17.iv.02</h3>
-
 <dl>
 
 <dt>0076 (raised 17.iv.02)
@@ -449,7 +445,6 @@ parameters whose type is the class in which the operation is declared.
 </dl>
 
 <h3>12.iv.02</h3>
-
 <dl>
 
 <dt>0074 (raised 11.iv.02)
@@ -463,7 +458,6 @@ none).<br>
 </dl>
 
 <h3>18.iii.02</h3>
-
 <dl>
 
 <dt>0070 (raised 15.iii.02)
@@ -474,7 +468,6 @@ long for (the Cygwin) <tt>bash</tt>.
 </dl>
 
 <h3>9.iii.02</h3>
-
 <dl>
 
 <dt>0066 (raised 5.iii.02)
@@ -493,7 +486,6 @@ association package doesn't <tt>with</tt> the necessary
 </dl>
 
 <h3>4.iii.02</h3>
-
 <dl>
 
 <dt>0054 (raised 8.i.02)
@@ -513,7 +505,6 @@ use on Linux vs Windows etc.
 </dl>
 
 <h3>24.i.02</h3>
-
 <dl>
 
 <dt>0026 (raised 4.x.01)
@@ -536,7 +527,6 @@ is <tt>ColdFrame.Instances.Handle</tt>; should be just
 </dl>
 
 <h3>17.i.02</h3>
-
 <dl>
 
 <dt>0060 (raised 17.i.02)
@@ -547,7 +537,6 @@ lines.
 </dl>
 
 <h3>16.i.02</h3>
-
 <dl>
 
 <dt>0058 (raised 16.i.02)
@@ -559,7 +548,6 @@ user <tt>Makefile</tt>; because she can change macro values in it.
 </dl>
 
 <h3>13.i.02</h3>
-
 <dl>
 
 <dt>0057 (raised 10.i.02)
@@ -570,7 +558,6 @@ example, in the header comments of the main domain package).
 </dl>
 
 <h3>3.i.02</h3>
-
 <dl>
 
 <dt>0051 (raised 2.i.02)
@@ -598,7 +585,6 @@ fixed.</i>
 </dl>
 
 <h3>11.xii.01</h3>
-
 <dl>
 
 <dt>0046 (raised 28.xi.01)
@@ -618,7 +604,6 @@ Documentation section prevents proper processing of annotations.
 </dl>
 
 <h3>3.xii.01</h3>
-
 <dl>
 
 <dt>0044 (raised 28.xi.01)

@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: releases.html,v 70c002850522 2002/08/20 18:32:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -43,6 +43,34 @@ ought to <u>know</u> whether a <i>Timer</i> is set or not.
 reported has changed.
 
 
+<p>The provided <tt>Coldframe.Projects.Calendar</tt> implements
+<tt>Time</tt> as a renaming (subtype) of <tt>Ada.Calendar.Time</tt>;
+there was an interaction with a GNAT feature (GCC PR/7613).
+
+<br>Generated code no longer <tt>use</tt>s
+<tt>Coldframe.Projects.Calendar</tt>; instead, there's a
+<tt>use&nbsp;type</tt> for it. This will change operations' profiles.
+
+
+<p>Attempts to use reserved words for identifiers are caught.
+
+
+<p><tt>Tear_Down</tt> now cleans up &#171;singleton&#187;s and class
+variables (actually, they're reset on the next <tt>Initialize</tt> via
+a new <tt>Class_Initialize</tt> operation; <tt>Class_Initialize</tt>
+is now reserved).
+
+
+<p>If an state entry action procedure has a parameter, it's of the
+type of the corresponding event's payload rather than the vent
+itself. This allows different events to cause transitions to the same
+state, so long as they all have the same payload type.
+
+
+<p>The Makefiles allow the Rose model to be extracted to a different
+directory from that under which the code is kept.
+
+
 <p><dt>20020716
 
 <dd>Event Queues now have a <tt>Wait_Until_Idle</tt> operation, for
@@ -67,7 +95,7 @@ before code is generated (during normalization).
 
 <p><i>Date</i>, <i>Time</i> types are translated to
 <tt>Coldframe.Projects.Calendar.Time</tt>, which is provided as a
-default renaming of <tt>Ada.Calendar</tt>.
+renaming of <tt>Ada.Calendar</tt>.
 
 
 <p><dt>20020706
