@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 68536b08e9a8 2002/02/28 19:57:09 simon $ -->
+<!-- $Id: ada-type.xsl,v 56c2e95ba65e 2002/03/09 09:50:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -362,13 +362,25 @@
         <xsl:value-of select="integer/upper"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:when test="real">
+
+        <!--
+             subtype {type} is [Long_]Float[ range {lower} .. {upper}];
+             -->
+
         <xsl:value-of select="$I"/>
-        <xsl:text>type </xsl:text>
+        <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is digits </xsl:text>
-        <xsl:value-of select="real/digits"/>
+        <xsl:text> is </xsl:text>
+        <xsl:choose>
+          <xsl:when test="real/digits &gt; 6">
+            <xsl:text>Long_Float</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>Float</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:if test="real/lower and real/upper">
           <xsl:text> range </xsl:text>
           <xsl:value-of select="real/lower"/>
@@ -376,6 +388,7 @@
           <xsl:value-of select="real/upper"/>
         </xsl:if>
         <xsl:text>;&#10;</xsl:text>
+
       </xsl:when>
       
       <xsl:when test="string">
