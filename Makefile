@@ -23,8 +23,9 @@ endif
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
-TCLXML = $(HOME)/tclxml-2.1theta
+TCLXML = /usr/local/lib/tclxml-2.1theta
 
+# the following assumes that CLASSPATH includes saxon.jar
 SAXON = java com.icl.saxon.StyleSheet
 
 ESCAPE_MARKUP_SCRIPT = escape-markup.awk
@@ -130,9 +131,11 @@ extraction.html \
 faq.html \
 generation.html \
 index.html \
+installation.html \
 preparation.html \
 principles.html \
 releases.html \
+reserved-names.html \
 resources.html \
 strategy.html \
 support.html \
