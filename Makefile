@@ -117,9 +117,9 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
 	echo "<recording>" >$<-t
-	cat $< >>$<-t
+	awk "/^<[a-z\/]/" $< >>$<-t
 	echo "</recording>" >>$<-t
-	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl
+	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl || rm -f $<-t
 	rm -f $<-t
 
 TEXI2HTML = texi2html
@@ -234,6 +234,7 @@ PROGS = COPYING \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS) \
+  $(OTHER_SCRIPTS) \
   $(TOOL_SRC)
 
 GPRS = AUnit.gpr \
