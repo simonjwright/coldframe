@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 228141d0ab93 2005/02/06 19:09:05 simon $
+# $Id: normalize-rose.tcl,v 0349c6ba8f5a 2005/02/10 05:13:06 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -198,15 +198,21 @@ proc normalizeValueInner {s} {
                                     set mins [split $plus "-"]
                                     set minl {}
                                     foreach min $mins {
-                                        set term [normalize $min]
-                                        switch -- [string tolower $term] {
-                                            pi      {
-                                                [Domain::currentDomain] \
-                                                    -references pi
-                                            }
-                                            default {}
-                                        }
-                                        lappend minl $term
+					set attrs [split $min {'}]
+					set attrl {}
+					foreach attr $attrs {
+					    set term [normalize $attr]
+					    switch -- [string tolower $term] {
+						pi      {
+						    [Domain::currentDomain] \
+							-references pi
+						}
+						default {}
+					    }
+					    lappend attrl $term
+					}
+					set attrl [join $attrl "'"]
+                                        lappend minl $attrl
                                     }
                                     set minl [join $minl " - "]
                                     regsub {^ - ([^(])} $minl {-\1} minl
@@ -224,7 +230,9 @@ proc normalizeValueInner {s} {
                 }
                 lappend lpl [join $rpl ")"]
             }
-            set tmp [join $lpl "("]
+            set tmp [join $lpl " ("]
+	    regsub {^ (.*)} $tmp {\1} tmp
+	    regsub -all {\( \(} $tmp {((} tmp
             return $tmp
         }
     }
@@ -1002,6 +1010,8 @@ itcl::class Domain {
 
     method -date {d} {set date $d}
     method -revision {r} {set revision [string trim $r]}
+
+    method -name {n} {set name [normalize $n]}
 
     method -classes {l} {set classes $l}
 
