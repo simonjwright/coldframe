@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v e370accd7e2e 2001/02/01 20:04:22 simon $ -->
+<!-- $Id: generate-ada.xsl,v e9e9b2746b42 2001/02/25 10:07:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -135,7 +135,7 @@
           <xsl:text>  package </xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Package is&#10;</xsl:text>
-          <xsl:text>     new Generic_Bounded_Length (Max => </xsl:text>
+          <xsl:text>     new Generic_Bounded_Length (Max =&gt; </xsl:text>
           <xsl:value-of select="string/max"/>
           <xsl:text>);&#10;</xsl:text>
           <xsl:text>  subtype </xsl:text>
@@ -265,12 +265,34 @@
         
         <!-- .. Container instantiations .. -->
         <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Identifier);&#10;</xsl:text>
-        <xsl:text>  package Maps is new Abstract_Maps.Dynamic&#10;</xsl:text>
-        <xsl:text>     (Hash => Hash,&#10;</xsl:text>
-        <xsl:text>      Buckets => 43,&#10;</xsl:text>
-        <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-        
+
+        <xsl:choose>
+
+          <xsl:when test="./@max">
+            <!-- Wnen there's a maximum size, use the Bounded version -->
+            <xsl:text>  package Maps is new Abstract_Maps.Bounded&#10;</xsl:text>
+            <xsl:text>     (Hash =&gt; Hash,&#10;</xsl:text>
+            <xsl:text>      Buckets =&gt; </xsl:text>
+            <xsl:call-template name="hash-buckets"/>
+            <xsl:text>,&#10;</xsl:text>
+            <xsl:text>      Maximum_Size =&gt; </xsl:text>
+            <xsl:value-of select="./@max"/>
+            <xsl:text>);&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <!-- Use the Unbounded version -->
+            <xsl:text>  package Maps is new Abstract_Maps.Unbounded&#10;</xsl:text>
+            <xsl:text>     (Hash =&gt; Hash,&#10;</xsl:text>
+            <xsl:text>      Buckets =&gt; </xsl:text>
+            <xsl:call-template name="hash-buckets"/>
+            <xsl:text>,&#10;</xsl:text>
+            <xsl:text>      Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+            <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+          </xsl:otherwise>
+
+        </xsl:choose>
+
         <!-- .. the instance container .. -->
         <xsl:text>  The_Container : Maps.Map;&#10;</xsl:text>
         
@@ -311,8 +333,21 @@
            a GNAT special. -->
       <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
 
-      <!-- All containers are Dynamic Maps (for the moment). -->
-      <xsl:text>with BC.Containers.Maps.Dynamic;&#10;</xsl:text>
+      <!-- Choose the appropriate Map -->
+
+      <xsl:choose>
+
+        <xsl:when test="./@max">
+          <!-- Wnen there's a maximum size, use the Bounded version -->
+          <xsl:text>with BC.Containers.Maps.Bounded;&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <!-- Use the Unbounded version -->
+          <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
+        </xsl:otherwise>
+
+      </xsl:choose>
 
     </xsl:if>
 
@@ -593,6 +628,40 @@
   </xsl:template>
 
 
+  <!-- Called from domain/object to compute the number of hash buckets. -->
+  <xsl:template name="hash-buckets">
+    <xsl:choose>
+
+      <xsl:when test="./@max">
+        <xsl:variable name="max" select="./@max"/>
+        <xsl:choose>
+          <xsl:when test="$max &lt; 11">
+            <xsl:text>3</xsl:text>
+          </xsl:when>
+          <xsl:when test="$max &lt; 51">
+            <xsl:text>7</xsl:text>
+          </xsl:when>
+          <xsl:when test="$max &lt; 101">
+            <xsl:text>13</xsl:text>
+          </xsl:when>
+          <xsl:when test="$max &lt; 501">
+            <xsl:text>29</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>43</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:text>43</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
+
+
   <!-- Generate child subprogram specs. -->
   <xsl:template match="object/operation" mode="operation-spec">
     <xsl:apply-templates select="." mode="operation-context"/>
@@ -697,18 +766,41 @@
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
-    <xsl:text>.Abstract_Collections is new Abstract_Containers.Collections;&#10;</xsl:text>
+    <xsl:text>.Abstract_Collections&#10;</xsl:text>
+    <xsl:text>   is new Abstract_Containers.Collections;&#10;</xsl:text>
 
-    <!-- Collections package -->
-    <xsl:text>with BC.Containers.Collections.Dynamic;&#10;</xsl:text>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Abstract_Collections;&#10;</xsl:text>
-    <xsl:text>package </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Collections is new Abstract_Collections.Dynamic&#10;</xsl:text>
-    <xsl:text>   (Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-    <xsl:text>    Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+    <!-- Concrete Collections package -->
+    <xsl:choose>
+
+      <xsl:when test="./@max">
+        <!-- Wnen there's a maximum size, use the Bounded version -->
+        <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Collections;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Collections&#10;</xsl:text>
+        <xsl:text>   is new Abstract_Collections.Bounded (Maximum_Size =&gt; </xsl:text>
+        <xsl:value-of select="./@max"/>
+        <xsl:text>);&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <!-- Use the Unbounded version -->
+        <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Collections;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Collections&#10;</xsl:text>
+        <xsl:text>   is new Abstract_Collections.Unbounded&#10;</xsl:text>
+        <xsl:text>     (Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
 
     <!-- Function to return a Collection of all the Instances -->
     <xsl:text>with </xsl:text>
@@ -717,6 +809,20 @@
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
+    <!-- Generic filter function to return a Collection of selected
+         Instances -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>generic&#10;</xsl:text>
+    <xsl:text>  with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Selection_Function&#10;</xsl:text>
     <xsl:text>   return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
@@ -773,13 +879,11 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances;&#10;</xsl:text>
 
-    <!-- Generic filter function for collections of Instances -->
+    <!-- Generic filter function to return a Collection of selected
+         Instances -->
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
-    <xsl:text>.Filter_Function&#10;</xsl:text>
-    <xsl:text>   (The_Collection : </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>.Selection_Function&#10;</xsl:text>
     <xsl:text>   return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
@@ -795,6 +899,33 @@
     <xsl:text>  Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:text>  Filter (The_Container, Result);&#10;</xsl:text>
+    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Selection_Function;&#10;</xsl:text>
+
+    <!-- Generic filter function for collections of Instances -->
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Filter_Function&#10;</xsl:text>
+    <xsl:text>   (The_Collection : </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection is&#10;</xsl:text>
+    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>  procedure Filter is new Abstract_Containers.Filter&#10;</xsl:text>
+    <xsl:text>     (From =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:text>  Filter (The_Collection, Result);&#10;</xsl:text>
     <xsl:text>  return Result;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
