@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v a26a009dc6c2 2001/08/08 18:02:41 simon $ -->
+<!-- $Id: releases.html,v 70e8c40455e1 2001/08/12 06:17:45 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -64,6 +64,31 @@ in the browser)
 <li>the ColdFrame releases (in the form <tt>cf-<i>yyyymmdd</i></tt>)
 of the extractor, normalizer and generator components of ColdFrame
 used.
+
+</ul>
+
+
+<p>You can extract more than one Domain at once by
+<ul>
+
+<li>having a class diagram showing the Domain packages to be
+extracted, and making it the active diagram
+
+<li>selecting more than one Domain package in the Rose browser (or the
+extraction diagram).
+
+</ul>
+
+
+<p>There is no longer an extraction dialog:
+<ul>
+
+<li>the extracted file name is formed from the package name, with
+spaces replaced by underscores
+
+<li>the extraction directory is that specified by the Rose Path Map
+variable <tt>ColdFrameOut</tt> or, if not specified, the current
+directory.
 
 </ul>
 
