@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v cd3a9adeb66f 2001/11/03 06:55:05 simon $ -->
+<!-- $Id: generate-html.xsl,v 71e314d309ef 2001/11/30 20:24:56 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -169,16 +169,26 @@
     <xsl:variable name="name" select="name"/>
     <h3><a name="{$name}"><xsl:value-of select="$name"/></a></h3>
     <xsl:apply-templates select="documentation"/>
-    <xsl:if test="../inheritance[child=$name]">
+    <xsl:for-each select="../inheritance[parent=$name]">
+      <xsl:sort select="name"/>
+      <xsl:text>Supertype in </xsl:text>
+      <a href="#{name}"><xsl:value-of select="name"/></a>.
+      <p/>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:for-each select="../inheritance[child=$name]">
+      <xsl:sort select="name"/>
       <xsl:variable
         name="parent"
         select="../inheritance[child=$name]/parent"/>
       <xsl:text>Subtype of </xsl:text>
-      <i><a href="#{$parent}">
-      <xsl:value-of select="$parent"/></a></i>.
+      <i><a href="#{parent}">
+      <xsl:value-of select="parent"/></a></i>
+      <xsl:text> in </xsl:text>
+      <a href="#{name}"><xsl:value-of select="name"/></a>.
       <p/>
       <xsl:text>&#10;</xsl:text>
-    </xsl:if>
+    </xsl:for-each>
     <xsl:text>&#10;</xsl:text>
     <xsl:if test="attribute">
       <h4>Attributes</h4>
@@ -188,9 +198,9 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
-    <xsl:if test="operation">
+    <xsl:if test="operation[not(@generated)]">
       <h4>Operations</h4>
-      <xsl:apply-templates select="operation">
+      <xsl:apply-templates select="operation[not(@generated)]">
         <xsl:sort select="."/>
       </xsl:apply-templates>
     </xsl:if>
@@ -255,10 +265,19 @@
 
 
   <!-- Output Operation info. -->
-  <xsl:template match="operation[not(generated)]">
+  <xsl:template match="operation">
     <h5><xsl:value-of select="name"/></h5>
     <xsl:if test="@abstract">
       <p>This operation is abstract.</p>
+    </xsl:if>
+    <xsl:if test="@class">
+      <p>This is a class operation.</p>
+    </xsl:if>
+    <xsl:if test="@finalize">
+      <p>This is a finalization operation.</p>
+    </xsl:if>
+    <xsl:if test="@init">
+      <p>This is an initialization operation.</p>
     </xsl:if>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
