@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 012165facc0c 2003/07/30 19:20:47 simon $ -->
+<!-- $Id: bugs.html,v 3d42b2306953 2003/08/11 21:01:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -156,7 +156,14 @@ message.
 <tt>Create</tt> operation which is not meant to be called by
 handwritten code. Perhaps it should be renamed.
 
-<!-- next: 0185 -->
+<dt>0185 (raised 11.viii.03)
+
+<dd>It can be very confusing to detect the error where an event is
+(mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
+zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
+used instead of <tt>Natural_Duration</tt>?
+
+<!-- next: 0186 -->
 
 </dl>
 
