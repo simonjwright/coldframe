@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 99ecb47e4623 2002/07/30 19:23:39 simon $ -->
+<!-- $Id: generate-ada.xsl,v 5bcb8d668fd5 2002/09/07 17:31:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -164,6 +164,13 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
+    <!-- .. initialization detection .. -->
+    <xsl:text>private&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+    <xsl:value-of select="$I"/>
+    <xsl:text>Domain_Initialized : Boolean := False;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
@@ -277,15 +284,18 @@
     <xsl:text>.Initialize is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
-    <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$I"/>
+    <xsl:text>if not Domain_Initialized then&#10;</xsl:text>
+
+    <!-- .. the Events package initialization .. -->
+    <xsl:value-of select="$II"/>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Initialize;&#10;</xsl:text>
 
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
       <xsl:sort select="name"/>
-      <xsl:value-of select="$I"/>
+      <xsl:value-of select="$II"/>
       <xsl:value-of select="name"/>
       <xsl:text>.Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
@@ -294,12 +304,17 @@
     <xsl:for-each select="$initialize-procedures">
       <xsl:sort select="../name"/>
       <xsl:sort select="name"/>
-      <xsl:value-of select="$I"/>
+      <xsl:value-of select="$II"/>
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
