@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: a5ae3891ae78 $
---  $Date: 2002/09/15 10:34:23 $
+--  $Revision: 1ce7cd65396f $
+--  $Date: 2002/09/17 18:14:42 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -102,7 +102,7 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TE : Timer_Queue_Entry_P := new Timer_Event;
+      TE : Timer_Queue_Entry_P := new Timer_Event (On_Timer => False);
    begin
 
       Note (The_Queue => On,
@@ -189,7 +189,7 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Add_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event;
+         The_Timer.The_Entry := new Timer_Event (On_Timer => True);
          The_Timer.The_Entry.On := Event_Queue_P (On);
          The_Timer.The_Entry.Time_To_Fire := At_Time;
          The_Timer.The_Entry.The_Event := To_Fire;
@@ -243,8 +243,6 @@ package body ColdFrame.Events_G.Standard_G is
 
          --  Unset the Timer
          The_Timer.The_Entry := null;
-
-         Remove_Timer_Event (On);
 
       end if;
 
@@ -320,7 +318,7 @@ package body ColdFrame.Events_G.Standard_G is
                declare
                   T : constant Timer_Queue_Entry_P
                     := Timed_Event_Queues.Front (The_Events);
-                  Held : constant Boolean := T.The_Timer = null;
+                  Held : constant Boolean := not T.On_Timer;
                begin
                   Timed_Event_Queues.Pop (The_Events);
                   Post (Event_P (T), The_Queue);
@@ -551,19 +549,19 @@ package body ColdFrame.Events_G.Standard_G is
          end loop;
       end;
 
---        declare
---           It : Abstract_Timed_Event_Containers.Iterator'Class
---             := Timed_Event_Queues.New_Iterator
---                  (The_Queue.The_Timed_Events);
---        begin
---           while not Is_Done (It) loop
---              declare
---                 E : Event_P := Event_P (Current_Item (It));
---              begin
---                 Delete (E);
---              end;
---           end loop;
---        end;
+      declare
+         It : Abstract_Timed_Event_Containers.Iterator'Class
+           := Timed_Event_Queues.New_Iterator
+           (The_Queue.The_Timed_Events);
+      begin
+         while not Is_Done (It) loop
+            declare
+               E : Event_P := Event_P (Current_Item (It));
+            begin
+               Delete (E);
+            end;
+         end loop;
+      end;
 
    end Tear_Down;
 
