@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-association.xsl,v 4f060e425539 2003/11/16 18:22:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,7 +40,7 @@
     <xsl:call-template name="commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-    
+
     <!-- Context clauses. -->
     <xsl:call-template name="association-spec-context"/>
 
@@ -87,7 +87,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$a"/>
     <xsl:if test="$role-a/@multiple">  <!-- stupid to have a singleton! -->
-      <xsl:text>.Collections</xsl:text>      
+      <xsl:text>.Collections</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
@@ -96,7 +96,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:if test="$role-b/@multiple">
-      <xsl:text>.Collections</xsl:text>      
+      <xsl:text>.Collections</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
 
@@ -106,8 +106,8 @@
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
       <xsl:if test="role/@multiple">
-        <xsl:text>.Collections</xsl:text>      
-      </xsl:if>      
+        <xsl:text>.Collections</xsl:text>
+      </xsl:if>
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
 
@@ -230,33 +230,33 @@
         <xsl:if test="$role-b/@source and not($role-a/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
-          <xsl:text>.Collections;&#10;</xsl:text>      
+          <xsl:text>.Collections;&#10;</xsl:text>
         </xsl:if>
-        
+
         <xsl:if test="$role-b/@source">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
-          <xsl:text>.Selection_Function;&#10;</xsl:text>      
+          <xsl:text>.Selection_Function;&#10;</xsl:text>
         </xsl:if>
-        
+
       </xsl:if>
 
       <xsl:if test="not(/domain/class[name=$b]/@singleton)">
-        
+
         <xsl:if test="$role-a/@source and not($role-b/@multiple)">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
-          <xsl:text>.Collections;&#10;</xsl:text>      
+          <xsl:text>.Collections;&#10;</xsl:text>
         </xsl:if>
-        
+
         <xsl:if test="$role-a/@source">
           <xsl:text>with </xsl:text>
           <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
-          <xsl:text>.Selection_Function;&#10;</xsl:text>      
+          <xsl:text>.Selection_Function;&#10;</xsl:text>
         </xsl:if>
-        
+
       </xsl:if>
-      
+
     </xsl:if>
 
     <xsl:if test="associative">
@@ -271,17 +271,17 @@
         <xsl:value-of select="associative"/>
         <xsl:text>.Abstract_Containers;&#10;</xsl:text>
       </xsl:if>
-      
+
       <xsl:text>with </xsl:text>
       <xsl:value-of select="/domain/name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Collections;&#10;</xsl:text>      
+      <xsl:text>.Collections;&#10;</xsl:text>
       <xsl:text>with </xsl:text>
       <xsl:value-of select="/domain/name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Selection_Function;&#10;</xsl:text>      
+      <xsl:text>.Selection_Function;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>
@@ -598,7 +598,7 @@
        if any. -->
   <xsl:template name="find-body">
     <xsl:if test="associative">
-      
+
       <xsl:variable name="n" select="name"/>
 
       <!--
@@ -613,45 +613,41 @@
 
       <xsl:call-template name="association-find-specification"/>
       <xsl:text> is&#10;</xsl:text>
-      
-      <xsl:value-of select="$II"/>
-      <xsl:text>Result : </xsl:text>
-      <xsl:value-of select="associative"/>
-      <xsl:text>.Handle;&#10;</xsl:text>
+
       <xsl:value-of select="$II"/>
       <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
-      
+
       <xsl:value-of select="$II"/>
       <xsl:text>return </xsl:text>
       <xsl:value-of select="associative"/>
       <xsl:text>.Find&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>((</xsl:text>
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
       <xsl:choose>
-        
-        
-        
+
+
+
         <xsl:when test="role[1]/@multiple and role[2]/@multiple">
           <!-- Both ends multiple; the associative class' identifier
                references both ends. -->
-          
+
           <!--
                {a-role-attr} => Handle ({a-role}),
                {b-role-attr} => Handle ({b-role})));
                -->
-          
+
           <xsl:variable name="r1" select="role[1]"/>
           <xsl:variable name="r2" select="role[2]"/>
-          
+
           <xsl:call-template name="attribute-name">
             <xsl:with-param
               name="a"
@@ -661,7 +657,7 @@
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r1/name"/>
           <xsl:text>),&#10;</xsl:text>
-          
+
           <xsl:value-of select="$IIC"/>
           <xsl:text>  </xsl:text>
           <xsl:call-template name="attribute-name">
@@ -672,26 +668,26 @@
           </xsl:call-template>
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r2/name"/>
-          
+
           <xsl:text>)));&#10;</xsl:text>
-          
+
         </xsl:when>
-        
-        
-        
-        
+
+
+
+
         <xsl:when test="role[@multiple]">
           <!-- One end multiple; the associative class' identifier
                references the multiple end, the other end is
                referenced by a plain attribute. -->
-          
+
           <!--
                {multiple-role-attr} => Handle ({multiple-role})));
                -->
-          
+
           <xsl:variable name="multiple-role" select="role[@multiple]"/>
           <xsl:variable name="single-role" select="role[not(@multiple)]"/>
-          
+
           <xsl:call-template name="attribute-name">
             <xsl:with-param
               name="a"
@@ -705,22 +701,22 @@
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$multiple-role/name"/>
           <xsl:text>)));&#10;</xsl:text>
-          
+
         </xsl:when>
-        
-        
-        
-        
+
+
+
+
         <xsl:otherwise>
           <!-- Neither end multiple -->
-          
+
           <!--
                {source-role-attr} => Handle ({source-role})));
                -->
-          
+
           <xsl:variable name="source-role" select="role[@source]"/>
           <xsl:variable name="non-source-role" select="role[not(@source)]"/>
-          
+
           <xsl:call-template name="attribute-name">
             <xsl:with-param
               name="a"
@@ -731,9 +727,9 @@
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$source-role/name"/>
           <xsl:text>)));&#10;</xsl:text>
-          
+
         </xsl:otherwise>
-        
+
 
 
 
@@ -753,7 +749,7 @@
       <!--
            end Find;
            -->
-      
+
       <xsl:value-of select="$I"/>
       <xsl:text>end Find;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -825,7 +821,7 @@
             <!-- If the referential attribute is part of the identifier,
                  we can't change it (there isn't a Set operation). So
                  we rather hope the user's about to delete the instance. -->
-            <!-- 
+            <!--
                  begin
                     null;
                  -->
@@ -1087,7 +1083,7 @@
     </xsl:variable>
 
     <xsl:choose>
-      
+
       <xsl:when test="$role-b/@multiple">
 
         <!--
@@ -1097,7 +1093,7 @@
                := {assoc}.Collections.New_Iterator ({assoc-abbrev});
              Result : {b}.Collections.Collection;
              -->
-        
+
         <xsl:value-of select="$II"/>
         <xsl:value-of
           select="/domain/class[name=$associative]/abbreviation"/>
@@ -1128,9 +1124,9 @@
         <xsl:text>.Collections.Collection;&#10;</xsl:text>
 
       </xsl:when>
-      
+
       <xsl:otherwise>
-        
+
         <!--
              {assoc-abbrev} : constant {assoc}.Handle
                := {role-a} ({a-abbrev});
@@ -1154,16 +1150,16 @@
         <xsl:text>use type </xsl:text>
         <xsl:value-of select="$assoc"/>
         <xsl:text>.Handle;&#10;</xsl:text>
-        
+
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
-      
+
       <xsl:when test="$role-b/@multiple">
 
         <!--
@@ -1204,7 +1200,7 @@
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:otherwise>
 
         <!--
@@ -1234,9 +1230,9 @@
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
       </xsl:otherwise>
-      
+
     </xsl:choose>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$role-a/name"/>
@@ -1335,7 +1331,7 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
-      
+
       <xsl:when test="$role-b/@multiple">
 
         <!--
@@ -1346,7 +1342,7 @@
         <xsl:text>return Result;&#10;</xsl:text>
 
       </xsl:when>
-      
+
       <xsl:when test="$role-a/@source">
 
         <!--
@@ -1374,7 +1370,7 @@
         <xsl:text>end if;&#10;</xsl:text>
 
       </xsl:when>
-      
+
       <xsl:otherwise>
 
         <!--
@@ -1402,7 +1398,7 @@
         <xsl:text>));&#10;</xsl:text>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
     <xsl:value-of select="$I"/>
@@ -1581,7 +1577,7 @@
         <xsl:text>return Result;&#10;</xsl:text>
 
       </xsl:when>
-      
+
       <xsl:otherwise>
 
          <!--
@@ -1609,7 +1605,7 @@
         <xsl:text>end if;&#10;</xsl:text>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
     <xsl:value-of select="$I"/>
@@ -1656,7 +1652,7 @@
     <xsl:text>.Handle</xsl:text>
 
   </xsl:template>
- 
+
 
   <!-- Called at domain/association to generate the specification (no closing
        ";" or "is") for the linking procedure spec for non-associative
@@ -1721,7 +1717,7 @@
     <xsl:text>.Handle</xsl:text>
 
   </xsl:template>
- 
+
 
   <!-- Called at domain/association to generate the unlinking procedure
        specification (no closing ";" or "is") for associative
