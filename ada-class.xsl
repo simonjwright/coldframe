@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 557c6c64e6a6 2003/07/24 21:04:15 simon $ -->
+<!-- $Id: ada-class.xsl,v aa0f52a6fa1a 2003/07/26 16:52:27 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1968,11 +1968,25 @@
   <xsl:template name="task-spec">
     <!--
          task type T (This : access Instance) is
+           pragma Priority ({priority});
+           pragma Storgae_Size ({stack});
            entry {e} ({parameters});
          end T;
          -->
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
+    <xsl:if test="@priority">
+      <xsl:value-of select="$II"/>
+      <xsl:text>pragma Priority (</xsl:text>
+      <xsl:value-of select="@priority"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
+    <xsl:if test="@stack">
+      <xsl:value-of select="$II"/>
+      <xsl:text>pragma Storage_Size (</xsl:text>
+      <xsl:value-of select="@stack"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
     <xsl:apply-templates mode="task-entry" select="operation">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
