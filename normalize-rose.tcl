@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3c7534b9c8b3 2001/01/30 19:47:48 simon $
+# $Id: normalize-rose.tcl,v bfce7f4d4d6f 2001/02/01 20:01:27 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -548,6 +548,7 @@ itcl::class Domain {
 	puts "<domain>"
 	putElement name "$name"
 	putElement date "[exec /bin/date]"
+	$this -generateDocumentation
 	$objects -evaluate $this
 	$relationships -evaluate $this
 	$datatypes -evaluate $this
@@ -650,14 +651,6 @@ itcl::class Object {
 	$attributes -add $a
     }
 
-    method -sourceOfRelation {role} {
-	foreach a [$attributes -getMembers] {
-	    if [$a -getIdentifier] {
-		$a -usedInRole $role
-	    }
-	}
-    }
-
     # because different annotations (text in [[ ]] in documentation) are
     # appropriate in ordinary objects vs <type> objects, don't process
     # annotations if this is a type.
@@ -733,6 +726,7 @@ itcl::class Operation {
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
+	$this -generateDocumentation
 	$parameters -generate $domain
 	puts "</operation>"
     }
@@ -775,6 +769,7 @@ itcl::class Parameter {
 	putElement type $type
 	if {[string length $initial] > 0} {putElement initial $initial}
 	if {[string length $modeInfo] > 0} {putElement mode $modeInfo}
+	$this -generateDocumentation
 	puts "</parameter>"
     }
 }
@@ -886,20 +881,16 @@ itcl::class Association {
 			error "both ends of $name are marked as source"
 		    }
 		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
-		    $cl2 -sourceOfRelation $role1
 		} elseif [$role1 -getSourceEnd] {
 		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
-		    $cl1 -sourceOfRelation $role2
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
 			error "neither end of biconditional $name\
 				is marked as source"
 		    }
 		    $cl2 -addFormalizingAttributesTo $cl1 $this 0
-		    $cl2 -sourceOfRelation $role1
 		} elseif [$role2 -getConditionality] {
 		    $cl1 -addFormalizingAttributesTo $cl2 $this 0
-		    $cl1 -sourceOfRelation $role2
 		} else {
 		    error "neither end of unconditional $name\
 			    is marked as source"
@@ -909,7 +900,6 @@ itcl::class Association {
 		# the identifying attributes in role 1 are used as 
 		# referential attributes in role 2
 		$cl1 -addFormalizingAttributesTo $cl2 $this 0
-		$cl1 -sourceOfRelation $role2
 	    }
 	    "1-(1:1)" {error "oops! not yet implemented!"}
 	    "1-(1:M)" {
@@ -918,18 +908,14 @@ itcl::class Association {
 		# Only the referential attributes from role 2 become
 		# identifiers in the associative object.
 		$cl1 -addFormalizingAttributesTo $assoc $this 0
-		$cl1 -sourceOfRelation $role2
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
-		$cl2 -sourceOfRelation $role1
 	    }
 	    "1-(M:M)" {
 		# The identifying attributes in both roles are used as
 		# referential and identifying attributes in the associative
 		# object.
 		$cl1 -addFormalizingAttributesTo $assoc $this 1
-		$cl1 -sourceOfRelation $role2
 		$cl2 -addFormalizingAttributesTo $assoc $this 1
-		$cl2 -sourceOfRelation $role1
 	    }
 	}
     }
@@ -1095,8 +1081,6 @@ itcl::class Inheritance {
 	    $role -end 4
 	    $role -name "is supertype of"
 	    $role -classname $ch
-	    # XXX more here????
-	    $p -sourceOfRelation $role
 	}
     }
 
@@ -1270,6 +1254,9 @@ itcl::class Attribute {
     # the type name
     variable type
 
+    # the initial value
+    variable initial ""
+
     # indicates whether this attribute is an identifier
     variable identifier 0
 
@@ -1278,10 +1265,12 @@ itcl::class Attribute {
 
     # a list of the roles (relationship ends) for which this attribute
     # is the source for a referential attribute at the other end
-    variable roles {}
+#    variable roles {}
 
     method -type {t} {set type $t}
 
+    method -initial {i} {set initial $i}
+    
     # used via stereotype processing to indicate this is an identifying
     # attribute
     method -id {dummy} {$this -identifier}
@@ -1316,9 +1305,9 @@ itcl::class Attribute {
 	return $res
     }
 
-    method -usedInRole {r} {
-	lappend roles $r
-    }
+#    method -usedInRole {r} {
+#	lappend roles $r
+#    }
 
     method -report {} {
 	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
@@ -1342,8 +1331,9 @@ itcl::class Attribute {
 	if $referential {puts -nonewline " referential=\"yes\""}
 	puts ">"
 	putElement name "$name"
-	# puts "$identifier"
 	putElement type "$type"
+	if {[string length $initial] > 0} {putElement initial $initial}
+	$this -generateDocumentation
 	puts "</attribute>"
     }
 }
