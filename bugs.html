@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3b5afff4ae5e 2004/05/21 16:28:39 simon $ -->
+<!-- $Id: bugs.html,v 22d63306fe9f 2004/05/27 05:11:16 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -208,7 +208,9 @@ others.
 
 <dt>0261 (raised 29.iv.04)
 
-<dd>The DTDs should be brought up-to-date.
+<dd>The DTDs should be brought up-to-date (or replaced by schemas).
+<br><i>Working on a schema for normalized data: see <a
+href="ColdFrame.xsd">ColdFrame.xsd</a>.</i>
 
 <dt>0262 (raised 14.v.04)
 
@@ -219,8 +221,15 @@ others.
 <dd>A race condition where tear-down involving a Timer can result in
 <tt>Program_Error</tt> exceptions makes unit test difficult. This is a
 result of the cure for bug <a href="#bug-0236">0236</a>.
+<br><i>Instead of raising an exception, ColdFrame now logs an
+error. Some sort of traceback would clearly be helpful, though.</i>
 
-<!-- next: 0265  -->
+<dt>0265 (raised 26.v.04)
+
+<dd>There is no check that associations' multiplicities have been
+maintained.
+
+<!-- next: 0266  -->
 
 </dl>
 
