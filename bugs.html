@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 031aae1cd4c7 2002/10/11 05:34:06 simon $ -->
+<!-- $Id: bugs.html,v e4b56cd91994 2002/10/13 18:11:11 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -59,11 +59,6 @@ reporting (perhaps in a separate pass?)
 <dd>The association support packages generated when one of the parties
 in a 1:1 association is a &#171;singleton&#187; won't work if the
 non-singleton party is marked <tt>[[source]]</tt>.
-
-<dt>0037 (raised 16.xi.01)
-
-<dd>Would it be better only to generate task entries when there's an
-&#171;entry&#187; stereotype?
 
 <dt>0047 (raised 6.xii.01)
 
@@ -168,11 +163,6 @@ literals aren't.
 <dd>The error where a state has more than one exiting transition
 triggered by the same event (or drop-through) isn't detected.
 
-<dt>0111 (raised 2.ix.02)
-
-<dd>It would make testing easier if non-&#171;public&#187; classes
-could be generated as non-<tt>private</tt> Ada packages.
-
 <dt>0128 (raised 8.x.02)
 
 <dd>It would be helpful to be able to specify how to hash
@@ -191,6 +181,26 @@ callback=4&#187;.</i>
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.x.02</h3>
+
+<dl>
+
+<dt>0037 (raised 16.xi.01)
+
+<dd>Would it be better only to generate task entries when there's an
+&#171;entry&#187; stereotype?
+
+<dt>0111 (raised 2.ix.02)
+
+<dd>It would make testing easier if non-&#171;public&#187; classes
+could be generated as non-<tt>private</tt> Ada packages.
+
+<br><i>Use the stereotype &#171;visible-for-test&#187;. You shouldn't
+do this sort of thing except for unit test, hence the
+explicitness.</i>
+
+</dl>
 
 <h3>9.x.02</h3>
 
