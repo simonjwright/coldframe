@@ -12,7 +12,7 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|[[ revision : $Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $ ]]
+|[[ revision : $Id: House_Management.cat,v 0537e7767731 2003/09/01 19:26:33 simon $ ]]
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
@@ -227,7 +227,7 @@
 				height     	134
 				autoResize 	TRUE)
 			    (object StateView "Normal" "lit" @3
-				location   	(1376, 688)
+				location   	(1398, 705)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -239,11 +239,11 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
-				    location   	(1376, 650)
+				    location   	(1398, 651)
 				    fill_color 	13434879
 				    anchor_loc 	1
 				    nlines     	2
-				    max_width  	302
+				    max_width  	344
 				    justify    	0
 				    label      	"lit")
 				icon_style 	"Label"
@@ -252,7 +252,7 @@
 				quidu      	"3DFCFEBB001D"
 				compartment 	(object Compartment
 				    Parent_View 	@3
-				    location   	(1234, 688)
+				    location   	(1235, 689)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -270,8 +270,8 @@
 				    compartmentItems 	(list Compartment
 					"entry/ turn on"
 					"entry/ set timeout"))
-				width      	398
-				height     	179
+				width      	440
+				height     	210
 				autoResize 	TRUE)
 			    (object TransView "" @4
 				stereotype 	TRUE
@@ -293,7 +293,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @6
 				    Parent_View 	@5
-				    location   	(1003, 370)
+				    location   	(1023, 399)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -319,10 +319,11 @@
 				vertices   	(list Points
 				    (817, 621)
 				    (1035, 400)
-				    (1270, 598))
+				    (1273, 600))
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @7
+			    (object Label @7
+				location   	(150, 1380)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -332,9 +333,59 @@
 				    strike     	FALSE
 				    color      	0
 				    default_color 	TRUE)
-				label      	(object SegLabel @8
-				    Parent_View 	@7
-				    location   	(1017, 957)
+				nlines     	1
+				max_width  	1585
+				label      	"$Id: House_Management.cat,v 0537e7767731 2003/09/01 19:26:33 simon $")
+			    (object SelfTransView "" @8
+				location   	(1398, 450)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @9
+				    Parent_View 	@8
+				    location   	(1545, 430)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	460
+				    justify    	0
+				    label      	"button push / clear timeout"
+				    pctDist    	1.776410
+				    height     	172
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F510B800355"
+				client     	@3
+				supplier   	@3
+				line_style 	4)
+			    (object TransView "" @10
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @11
+				    Parent_View 	@10
+				    location   	(1020, 852)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -358,62 +409,11 @@
 				client     	@3
 				supplier   	@2
 				vertices   	(list Points
-				    (1257, 776)
-				    (1053, 930)
-				    (835, 755))
+				    (1232, 809)
+				    (1035, 935)
+				    (828, 755))
 				line_style 	0
-				x_offset   	FALSE)
-			    (object Label @9
-				location   	(150, 1380)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				nlines     	1
-				max_width  	1585
-				label      	"$Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $")
-			    (object SelfTransView "" @10
-				location   	(1376, 449)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				label      	(object SegLabel @11
-				    Parent_View 	@10
-				    location   	(1520, 425)
-				    font       	(object Font
-					size       	10
-					face       	"Arial"
-					bold       	FALSE
-					italics    	FALSE
-					underline  	FALSE
-					strike     	FALSE
-					color      	0
-					default_color 	TRUE)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	460
-				    justify    	0
-				    label      	"button push / clear timeout"
-				    pctDist    	1.776410
-				    height     	172
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3F510B800355"
-				client     	@3
-				supplier   	@3
-				line_style 	4))))))
+				x_offset   	FALSE))))))
 	(object Class "Button"
 	    quid       	"3DFCFC250129"
 	    documentation 	"There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated."
@@ -557,7 +557,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	515)
+			max_width  	522)
 		    width      	536
 		    height     	484
 		    annotation 	8
@@ -605,7 +605,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	668)
+			max_width  	675)
 		    width      	688
 		    height     	258
 		    annotation 	8
@@ -783,17 +783,17 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@22
-			location   	(198, 658)
+			location   	(205, 658)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	308
+			max_width  	294
 			justify    	0
 			label      	"Button to Lamp")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC830160"
-		    width      	326
+		    width      	312
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -930,7 +930,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 05d65f92e4d8 2003/08/30 20:47:19 simon $")
+		    label      	"$Id: House_Management.cat,v 0537e7767731 2003/09/01 19:26:33 simon $")
 		(object NoteView @27
 		    location   	(1635, 1140)
 		    font       	(object Font
