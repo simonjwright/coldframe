@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v b581749e081d 2001/06/09 04:34:31 simon $ -->
+<!-- $Id: ada-class.xsl,v dc5b65067404 2001/06/13 18:47:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -67,7 +67,7 @@
         
       </xsl:when>
 
-      <xsl:when test="not(singleton)">
+      <xsl:when test="singleton">
 
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
