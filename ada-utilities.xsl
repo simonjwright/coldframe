@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 65ac87ddcbc4 2001/09/27 18:30:19 simon $ -->
+<!-- $Id: ada-utilities.xsl,v f566de1841bd 2001/10/10 04:48:00 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -160,6 +160,19 @@
 
     </xsl:choose>
     
+  </xsl:template>
+
+
+  <!-- Progress messages. -->
+  <xsl:template name="progress-message">
+    <xsl:param name="m"/>
+
+    <xsl:if test="not($verbose='no')">
+      <xsl:message>
+        <xsl:value-of select="$m"/>
+      </xsl:message>
+    </xsl:if>
+
   </xsl:template>
 
 
