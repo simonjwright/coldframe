@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d9a7345936be 2003/04/01 17:52:19 simon $ -->
+<!-- $Id: bugs.html,v 4d337cef130c 2003/04/07 18:19:44 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -150,16 +150,32 @@ dialog aren't seen as such.
 <dd>Attributes marked <i>class</i> in the class specification dialog
 aren't seen as such.
 
-<dt>0163 (1.iv.03)
+<dt>0163 (raised 1.iv.03)
 
 <dd>If an operation is made &#171;abstract&#187;, its previously
 implemented body will override the generated dispatching body.
 
-<!-- next: 0164 -->
+<!-- next: 0166 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>7.iv.03</h3>
+
+<dl>
+
+<dt>0164 (raised 7.iv.03)
+
+<dd>Deleting an instance with held events pending for it raises an
+exception.
+
+<dt>0165 (raised 7.iv.03)
+
+<dd>The special-case state entry action <tt>Delete</tt> isn't
+completely handled (the event isn't marked as "instance deleted").
+
+</dl>
 
 <h3>30.iii.03</h3>
 
