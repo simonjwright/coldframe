@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
+<!-- $Id: ada-association.xsl,v ea2e481f2b63 2002/05/29 18:43:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -158,6 +158,7 @@
     <xsl:value-of select="$blank-line"/>
 
     <!-- Suppress warnings. -->
+    <!-- XXX does this need to be more selective? -->
     <xsl:value-of select="$I"/>
     <xsl:text>pragma Warnings (Off);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -273,6 +274,8 @@
                 {role-b} : {b}.Handle) is
                 Result : {c}.Handle;
                 use ColdFrame.Instances;
+                pragma Assert (Handle ({role-a}) /= null);
+                pragma Assert (Handle ({role-b}) /= null);
              begin
                 Result := {c}.Create
                   ((
@@ -287,6 +290,15 @@
         <xsl:text>.Handle;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Assert (Handle (</xsl:text>
+        <xsl:value-of select="role[1]/name"/>
+        <xsl:text>) /= null);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Assert (Handle (</xsl:text>
+        <xsl:value-of select="role[2]/name"/>
+        <xsl:text>) /= null);&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -533,14 +545,6 @@
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Warnings (Off, </xsl:text>
-        <xsl:value-of select="role[1]/name"/>
-        <xsl:text>);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Warnings (Off, </xsl:text>
-        <xsl:value-of select="role[2]/name"/>
-        <xsl:text>);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>null;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
