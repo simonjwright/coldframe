@@ -1,9 +1,13 @@
+%-12345X@PJL JOB
+@PJL SET RESOLUTION = 600
+@PJL SET ECONOMODE = OFF
+@PJL ENTER LANGUAGE = POSTSCRIPT 
 %!PS-Adobe-3.0
 %%Title: Rose Diagram(s)
 %%Creator: Windows NT 4.0
-%%CreationDate: 18:23 2/3/2001
+%%CreationDate: 13:17 2/24/2001
 %%Pages: (atend)
-%%BoundingBox: 11 15 582 831
+%%BoundingBox: 14 13 581 829
 %%LanguageLevel: 2
 %%DocumentNeededFonts: (atend)
 %%DocumentSuppliedFonts: (atend)
@@ -30,49 +34,151 @@ languagelevel 2 ge}{false}ifelse def end def
 {1 dict dup/JobTimeout 4 -1 roll put setuserparams}
 {statusdict/setjobtimeout get exec}ifelse
 }stopped cleartomark
-[{300
+[{120
 /languagelevel where{pop languagelevel 2 ge}{false}ifelse
 {1 dict dup/WaitTimeout 4 -1 roll put setuserparams}
 {statusdict/waittimeout 3 -1 roll put}ifelse
 }stopped cleartomark
 /#copies 1 def
 [{
-%%BeginFeature: *Smoothing False
+%%BeginFeature: *HPPaperPolicy PromptUser
 
-  2 dict dup /PostRenderingEnhance false put setpagedevice
+   <</DeferredMediaSelection true>> setpagedevice
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPHalftone PrinterDefault
 
 %%EndFeature
 } stopped cleartomark
 [{
-%%BeginFeature: *BitsPerPixel None
+%%BeginFeature: *HPCollate False
+<</Collate false>> setpagedevice
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *Smoothing True
 
-  2 dict dup /PreRenderingEnhance false put setpagedevice
-
+  << /PostRenderingEnhance true /PostRenderingEnhanceDetails << /REValue 2 /Type 8 >>
+  >> setpagedevice
 %%EndFeature
 } stopped cleartomark
 [{
 %%BeginFeature: *PageSize A4
 
-   2 dict dup /PageSize [595 842] put dup /ImagingBBox null put setpagedevice
+  <</PageSize [595 842] /ImagingBBox null>> setpagedevice
 %%EndFeature
 } stopped cleartomark
 [{
-%%BeginFeature: *TraySwitch False
-1 dict dup /TraySwitch false put setpagedevice
-%%EndFeature
-} stopped cleartomark
-[{
-%%BeginFeature: *VMOption 8Meg
+%%BeginFeature: *MediaType None
 
 %%EndFeature
 } stopped cleartomark
 [{
-%%BeginFeature: *OptionalCassette1 False
+%%BeginFeature: *Duplex None
+
+  <</Duplex false>> setpagedevice
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPwmFont HelveticaB
+
+  /Helvetica-Bold findfont dup length dict begin
+    {1 index /FID ne {def} {pop pop} ifelse} forall
+    /Encoding ISOLatin1Encoding def currentdict 
+  end
+  /HPwmFont exch definefont pop
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPwmFontSize pt48
+userdict /HPwmSize 48 put
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPwmTextStyle Medium
+userdict /HPwmStyle .48 put
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPwmTextAngle Deg45
+userdict /HPwmAngle 45 put
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPwmText None
 
 %%EndFeature
 } stopped cleartomark
 [{
-%%BeginFeature: *OptionalEnvelopeFeeder False
+%%BeginFeature: *HPwmLocation True
+userdict /HPwmLocation true put
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPNup OneUp
+
+% Copyright (c) Hewlett-Packard Co 1997
+  userdict begin
+  true setglobal /HPwm 5 dict dup begin /HPwmOn true def /HPwmOdd true def end def false setglobal
+
+  userdict /HPwmAngle known not {/HPwmAngle 45 def} if
+  userdict /HPwmSize known not {/HPwmSize 48 def} if
+  userdict /HPwmLocation known not {/HPwmLocation true def} if
+  userdict /HPwmStyle known not {/HPwmStyle .48 def} if
+  userdict /HPwmDuplex known not {/HPwmDuplex 0 def} if
+
+  /HPwmEOP {HPwmDuplex 0 eq {true}{HPwmDuplex 1 eq HPwmOdd eq dup not {erasepage}if
+    true setglobal /HPwmOdd HPwmOdd not def false setglobal}ifelse} bind def
+  end
+
+  <<
+  /EndPage {userdict begin
+  userdict /HPwmText known HPwm /HPwmOn get and
+    {initmatrix
+     0 setgray 1 setlinewidth true setstrokeadjust 0 setlinejoin 0 setlinecap [] 0 setdash
+     currentpagedevice /PageSize get aload pop 2 div exch 2 div exch translate
+     HPwmAngle rotate /HPwmFont HPwmSize selectfont
+     HPwmText stringwidth 2 div neg exch 2 div neg exch HPwmSize .25 mul sub moveto
+     HPwmText false charpath userdict /HPwmStyle1 known
+       {gsave 1 setgray HPwmStyle1 HPwmStyle add setlinewidth stroke grestore} if
+     0 setgray HPwmStyle setlinewidth stroke
+     HPwmLocation not {true setglobal HPwm /HPwmOn false put false setglobal} if
+    } if
+  2 eq {pop false}{pop HPwm begin HPwmEOP end} ifelse
+  end } bind
+  >> setpagedevice
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *HPScalePatterns Scale
+/GDIBWPatternDict 18 dict def
+/dtransform {GDIBWPatternDict /Width known {currentpagedevice /HWResolution get 0 get
+150 div mul exch currentpagedevice /HWResolution get 0 get 150 div mul exch dtransform}{dtransform}ifelse} bind def
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *Option1 False
+
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *Option2 False
+
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *Option3 False
+
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *Option4 False
+
+%%EndFeature
+} stopped cleartomark
+[{
+%%BeginFeature: *VMOption 4MB
 
 %%EndFeature
 } stopped cleartomark
@@ -80,1184 +186,1581 @@ languagelevel 2 ge}{false}ifelse def end def
 NTPSOct95 begin
 %%Page: 1 1
 NTPSOct95 /PageSV save put
-11.68 831.961 translate 72 600 div dup neg scale
+14.441 829.738 translate 72 600 div dup neg scale
 0 0 transform .25 add round .25 sub exch .25 add round .25 sub exch itransform translate
-n
-619 154 2358 1342 B
-0.754 g
-f
+1 setlinecap
 1 sl
-0.191 g
+0.602 0 0.199 r
 n
-621 156 2357 1341 B
+851 213 2330 1836 B
 cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 %%IncludeFont: Helvetica
-[49.586 0 0 -49.586 0 0]/Helvetica MF
+[66.215 0 0 -66.215 0 0]/Helvetica MF
 0 g
-(Singleton Class Package)2388 1402 MS
-0.191 g
+(Singleton Class Package)2388 1915 MS
+0.602 0 0.199 r
 n
-621 71 2357 1426 B
+851 106 2330 1943 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-621 43 2357 1454 B
+851 69 2330 1980 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-519 153 1456 2513 B
-0.977 g
-f
-0.191 g
-n
-521 155 1455 2512 B
+715 213 1801 4743 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Instance Operation)1503 2573 MS
-0.191 g
+(Instance Operation)1879 4821 MS
+0.602 0 0.199 r
 n
-521 70 1455 2597 B
+715 106 1801 4850 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-521 41 1455 2626 B
+715 69 1801 4887 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-438 153 1628 1164 B
-0.977 g
-f
-0.191 g
-n
-440 155 1627 1163 B
+603 213 1504 1537 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Singleton Class)1671 1224 MS
-0.191 g
+(Singleton Class)1575 1616 MS
+0.602 0 0.199 r
 n
-440 70 1627 1248 B
+603 106 1504 1644 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-440 41 1627 1277 B
+603 69 1504 1681 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-438 153 1866 2037 B
-0.977 g
-f
-0.191 g
-n
-440 155 1865 2036 B
+603 213 1721 3330 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Class Operation)1904 2097 MS
-0.191 g
+(Class Operation)1786 3409 MS
+0.602 0 0.199 r
 n
-440 70 1865 2121 B
+603 106 1721 3437 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-440 41 1865 2150 B
+603 69 1721 3474 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+1 j
 n
-1965 1676 M
-1867 1319 L
+1913 2539 M
+1818 1751 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(1)1886 1381 MS
-0.191 g
+(1)1833 1855 MS
+0.602 0 0.199 r
 n
-1965 1676 M
-2062 2034 L
+1913 2539 M
+2010 3328 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(0..*)2032 1989 MS
-(1)1886 1381 MS
-(0..*)2032 1989 MS
+(0..*)1981 3249 MS
+(1)1833 1855 MS
+(0..*)1981 3249 MS
+0 j
+0.602 0 0.199 r
 n
-537 156 2656 2452 B
+739 216 2522 3872 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-539 158 2655 2451 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Class Operation Unit)2692 2512 MS
-0.191 g
+(Class Operation Unit)2587 3950 MS
+0.602 0 0.199 r
 n
-539 74 2655 2535 B
+739 109 2522 3979 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-539 45 2655 2564 B
+739 72 2522 4016 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 [144 48 ]0 sd
 1 g
 n
-2355 1351 M
-2068 1288 L
+2419 1834 M
+2108 1738 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-2355 1351 M
-2068 1288 L
+2419 1834 M
+2108 1738 L
 s
+1 j
 []0 sd
 n
-2068 1288 M
-2147 1278 L
-2135 1330 L
+2108 1738 M
+2217 1732 L
+2193 1804 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+0 j
 n
-616 138 2934 2818 B
+847 193 2984 4780 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-618 140 2933 2817 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Instance Operation Unit)2977 2878 MS
-0.191 g
+(Instance Operation Unit)3060 4859 MS
+0.602 0 0.199 r
 n
-618 56 2933 2901 B
+847 86 2984 4887 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-618 28 2933 2929 B
+847 49 2984 4924 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-473 153 2589 3088 B
+651 213 3109 5204 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-475 155 2588 3087 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Handle Parameter)2622 3148 MS
-0.191 g
+(Handle Parameter)3165 5283 MS
+0.602 0 0.199 r
 n
-475 71 2588 3171 B
+651 106 3109 5311 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-475 42 2588 3200 B
+651 68 3109 5349 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+1 j
 n
-3039 3021 M
-3135 2958 L
+3420 5087 M
+3413 4974 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(1)3091 2985 MS
-0.191 g
+(1)3384 5028 MS
+0.602 0 0.199 r
 n
-3039 3021 M
-2944 3086 L
+3420 5087 M
+3428 5203 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(1)2953 3092 MS
-(1)3091 2985 MS
-(1)2953 3092 MS
+(1)3411 5200 MS
+(1)3384 5028 MS
+(1)3411 5200 MS
 [144 48 ]0 sd
 1 g
 n
-2931 2827 M
-1977 2641 L
+2982 4867 M
+2517 4856 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-2931 2827 M
-1977 2641 L
+2982 4867 M
+2517 4856 L
 s
 []0 sd
 n
-1977 2641 M
-2056 2627 L
-2046 2682 L
+2517 4856 M
+2619 4821 L
+2619 4895 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
 [144 48 ]0 sd
 1 g
 n
-2763 2450 M
-2241 2192 L
+2717 3870 M
+2196 3544 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-2763 2450 M
-2241 2192 L
+2717 3870 M
+2196 3544 L
 s
 []0 sd
 n
-2241 2192 M
-2321 2201 L
-2296 2250 L
+2196 3544 M
+2303 3566 L
+2263 3631 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+0 j
 n
-247 138 395 1509 B
-0.977 g
-f
-0.191 g
-n
-249 140 394 1508 B
+342 192 549 2933 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Attribute)425 1568 MS
-0.191 g
+(Attribute)596 3011 MS
+0.602 0 0.199 r
 n
-249 55 394 1593 B
+342 85 549 3040 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-249 26 394 1622 B
+342 48 549 3077 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-537 150 377 1939 B
-0.977 g
-f
-0.191 g
-n
-539 152 376 1938 B
+739 209 567 3495 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Identifying Attribute)429 1999 MS
-0.191 g
+(Identifying Attribute)654 3573 MS
+0.602 0 0.199 r
 n
-539 68 376 2022 B
+739 102 567 3602 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-539 39 376 2051 B
+739 65 567 3639 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-269 153 1177 1977 B
-0.977 g
-f
-0.191 g
-n
-271 155 1176 1976 B
+352 192 869 2580 B
 cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Operation)1201 2037 MS
-0.191 g
+(Identifier)919 2658 MS
+0.602 0 0.199 r
 n
-271 69 1176 2062 B
+352 85 869 2687 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-271 41 1176 2090 B
+352 48 869 2724 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+1 j
 n
-1654 2510 M
-1370 2132 L
+992 3133 M
+949 3493 L
+CM 1.695 1.695 scale
 s
+SM
+0 g
+(1..*)910 3441 MS
+0.602 0 0.199 r
 n
-1370 2132 M
-1437 2176 L
-1393 2208 L
+992 3133 M
+1034 2773 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)998 2898 MS
+(1..*)910 3441 MS
+(1)998 2898 MS
+0 j
+0.602 0 0.199 r
+n
+596 193 910 1846 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Identified Class)981 1925 MS
+0.602 0 0.199 r
+n
+596 86 910 1953 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+596 49 910 1990 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+1126 2308 M
+1066 2578 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)1076 2528 MS
+0.602 0 0.199 r
+n
+1126 2308 M
+1187 2040 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)1165 2147 MS
+(1)1076 2528 MS
+(1)1165 2147 MS
+0.602 0 0.199 r
+n
+897 3493 M
+757 3126 L
+CM 1.695 1.695 scale
+s
+SM
+n
+757 3126 M
+829 3208 L
+757 3235 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+0 j
 n
-1864 2095 M
-1448 2064 L
+535 210 452 1430 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
+0 g
+(Plain Attribute)513 1509 MS
+0.602 0 0.199 r
 n
-1448 2064 M
-1525 2042 L
-1520 2096 L
+535 103 452 1537 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+535 65 452 1575 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+720 1641 M
+720 2931 L
+CM 1.695 1.695 scale
+s
+SM
+n
+720 2931 M
+757 2829 L
+683 2829 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+0 j
 n
-255 138 795 1588 B
-0.977 g
-f
-0.191 g
-n
-257 140 794 1587 B
-cp
-s
-0 g
-(Identifier)825 1648 MS
-0.191 g
-n
-257 56 794 1671 B
-cp
-s
-n
-257 27 794 1700 B
-cp
-s
-n
-787 1832 M
-706 1936 L
-s
-0 g
-(1..*)686 1934 MS
-0.191 g
-n
-787 1832 M
-867 1728 L
-s
-0 g
-(1)828 1775 MS
-(1..*)686 1934 MS
-(1)828 1775 MS
-n
-433 138 976 1191 B
-0.977 g
-f
-0.191 g
-n
-435 140 975 1190 B
-cp
-s
-0 g
-(Identified Class)1020 1251 MS
-0.191 g
-n
-435 54 975 1276 B
-cp
-s
-n
-435 26 975 1304 B
-cp
-s
-n
-1251 1653 M
-1299 1975 L
-s
-0 g
-(0..*)1271 1945 MS
-0.191 g
-n
-1251 1653 M
-1202 1331 L
-s
-0 g
-(1)1186 1396 MS
-(0..*)1271 1945 MS
-(1)1186 1396 MS
-0.191 g
-n
-1056 1458 M
-970 1586 L
-s
-0 g
-(1)988 1573 MS
-0.191 g
-n
-1056 1458 M
-1142 1331 L
-s
-0 g
-(1)1111 1392 MS
-(1)988 1573 MS
-(1)1111 1392 MS
-0.191 g
-n
-621 1936 M
-538 1649 L
-s
-n
-538 1649 M
-585 1713 L
-533 1728 L
+865 213 2834 1478 B
 cp
 gs
-1 g
-e
-gr
-s
-n
-220 153 1321 767 B
-0.977 g
-f
-0.191 g
-n
-222 155 1320 766 B
-cp
-s
-0 g
-(Class)1368 827 MS
-0.191 g
-n
-222 69 1320 852 B
-cp
-s
-n
-222 41 1320 880 B
-cp
-s
-n
-1764 1162 M
-1513 922 L
-s
-n
-1513 922 M
-1585 953 L
-1548 993 L
-cp
-gs
-1 g
-e
-gr
-s
-n
-1234 1189 M
-1387 922 L
-s
-n
-1387 922 M
-1373 1000 L
-1326 973 L
-cp
-gs
-1 g
-e
-gr
-s
-n
-388 151 471 947 B
-0.977 g
-f
-0.191 g
-n
-390 153 470 946 B
-cp
-s
-0 g
-(Plain Attribute)508 1007 MS
-0.191 g
-n
-390 68 470 1031 B
-cp
-s
-n
-390 39 470 1060 B
-cp
-s
-n
-644 1100 M
-537 1506 L
-s
-n
-537 1506 M
-581 1442 L
-529 1427 L
-cp
-gs
-1 g
-e
-gr
-s
-n
-1089 922 M
-1318 868 L
-s
-0 g
-(1)1261 896 MS
-0.191 g
-n
-1089 922 M
-861 974 L
-s
-0 g
-(0..*)877 992 MS
-(1)1261 896 MS
-(0..*)877 992 MS
-n
-628 154 3535 985 B
 0.754 g
-f
-0.191 g
-n
-630 156 3534 984 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(User Type Declaration)3598 1045 MS
-0.191 g
+(User Type Declaration)2938 1556 MS
+0.602 0 0.199 r
 n
-630 70 3534 1070 B
+865 106 2834 1585 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-630 42 3534 1098 B
+865 69 2834 1622 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-476 153 3155 569 B
+653 213 3310 676 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-478 155 3154 568 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Domain Package)3203 629 MS
-0.191 g
+(Domain Package)3384 755 MS
+0.602 0 0.199 r
 n
-478 70 3154 653 B
+653 106 3310 783 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-478 41 3154 682 B
+653 68 3310 821 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+1 j
 n
-3620 853 M
-3763 983 L
+3449 1182 M
+3315 1476 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(0..*)3701 972 MS
-0.191 g
+(0..*)3304 1432 MS
+0.602 0 0.199 r
 n
-3620 853 M
-3479 724 L
+3449 1182 M
+3584 890 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(1)3524 782 MS
-(0..*)3701 972 MS
-(1)3524 782 MS
+(1)3525 1027 MS
+(0..*)3304 1432 MS
+(1)3525 1027 MS
+0 j
+0.602 0 0.199 r
+gs
 n
-401 138 3418 2302 B
+560 263 4017 3061 CB
+n
+535 224 4036 3080 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-403 140 3417 2301 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
+gr
 0 g
-(Operation Unit)3456 2362 MS
-0.191 g
+(Get Accessor)4105 3159 MS
+0.602 0 0.199 r
+gs
 n
-403 56 3417 2385 B
+560 156 4017 3168 CB
+n
+535 117 4036 3187 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+gr
+gs
 n
-403 27 3417 2414 B
+560 118 4017 3206 CB
+n
+535 79 4036 3225 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+gr
 n
-3293 2815 M
-3566 2442 L
+532 223 4020 1408 B
+cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
+0 g
+(Set Accessor)4092 1487 MS
+0.602 0 0.199 r
 n
-3566 2442 M
-3545 2518 L
-3500 2486 L
+532 116 4020 1515 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+532 79 4020 1552 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+548 213 3622 2189 B
+cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Class Package)3676 2268 MS
+0.602 0 0.199 r
+n
+548 106 3622 2296 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+548 69 3622 2333 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+3764 1539 M
+3654 890 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3645 1054 MS
+0.602 0 0.199 r
+n
+3764 1539 M
+3875 2187 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1..*)3795 2095 MS
+(1)3645 1054 MS
+(1..*)3795 2095 MS
+0.602 0 0.199 r
+n
+3102 2050 M
+3620 2210 L
+CM 1.695 1.695 scale
+s
+SM
+n
+3620 2210 M
+3533 2143 L
+3513 2215 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
 n
-3195 2468 M
-3416 2417 L
+4099 2741 M
+4251 3079 L
+CM 1.695 1.695 scale
 s
+SM
+0 g
+(0..*)4143 3005 MS
+0.602 0 0.199 r
 n
-3416 2417 M
-3350 2460 L
-3338 2408 L
+4099 2741 M
+3946 2403 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3997 2567 MS
+(0..*)4143 3005 MS
+(1)3997 2567 MS
+0.602 0 0.199 r
+n
+4087 1909 M
+4227 1632 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)4121 1714 MS
+0.602 0 0.199 r
+n
+4087 1909 M
+3948 2187 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3971 2132 MS
+(0..*)4121 1714 MS
+(1)3971 2132 MS
+0 j
+0.602 0 0.199 r
+n
+553 213 3131 3330 B
+cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Hash Function)3194 3409 MS
+0.602 0 0.199 r
+n
+553 106 3131 3437 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+553 69 3131 3474 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+304 213 1219 912 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Class)1289 991 MS
+0.602 0 0.199 r
+n
+304 106 1219 1019 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+304 68 1219 1057 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+1731 1535 M
+1446 1126 L
+CM 1.695 1.695 scale
+s
+SM
+n
+1446 1126 M
+1535 1187 L
+1474 1232 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
 n
-388 161 3940 1656 B
-0.754 g
-f
-0.191 g
-n
-390 163 3939 1655 B
-cp
+1224 1844 M
+1351 1126 L
+CM 1.695 1.695 scale
 s
-0 g
-(Get Accessor)3983 1716 MS
-0.191 g
+SM
 n
-390 79 3939 1739 B
-cp
-s
-n
-390 50 3939 1768 B
-cp
-s
-n
-386 161 4000 1279 B
-0.754 g
-f
-0.191 g
-n
-388 163 3999 1278 B
-cp
-s
-0 g
-(Set Accessor)4047 1339 MS
-0.191 g
-n
-388 77 3999 1364 B
-cp
-s
-n
-388 49 3999 1392 B
-cp
-s
-n
-398 153 3214 1263 B
-0.754 g
-f
-0.191 g
-n
-400 155 3213 1262 B
-cp
-s
-0 g
-(Class Package)3246 1323 MS
-0.191 g
-n
-400 69 3213 1348 B
-cp
-s
-n
-400 41 3213 1376 B
-cp
-s
-n
-3402 992 M
-3394 724 L
-s
-0 g
-(1)3373 800 MS
-0.191 g
-n
-3402 992 M
-3410 1261 L
-s
-0 g
-(1..*)3363 1231 MS
-(1)3373 800 MS
-(1..*)3363 1231 MS
-0.191 g
-n
-2979 1386 M
-3211 1361 L
-s
-n
-3211 1361 M
-3140 1396 L
-3135 1341 L
+1351 1126 M
+1372 1233 L
+1297 1220 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
 n
-3515 1858 M
-3427 1418 L
+1043 1277 M
+1234 1126 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(1)3411 1478 MS
-0.191 g
+(1)1161 1191 MS
+0.602 0 0.199 r
 n
-3515 1858 M
-3603 2300 L
+1043 1277 M
+853 1429 L
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(0..*)3584 2295 MS
-(1)3411 1478 MS
-(0..*)3584 2295 MS
-0.191 g
+(0..*)878 1412 MS
+(1)1161 1191 MS
+(0..*)878 1412 MS
+0 j
+0.602 0 0.199 r
 n
-3769 1536 M
-3983 1654 L
+691 213 1981 1067 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(0..*)3878 1645 MS
-0.191 g
+(Type Specification)2057 1146 MS
+0.602 0 0.199 r
 n
-3769 1536 M
-3555 1418 L
+691 106 1981 1174 B
+cp
+CM 1.695 1.695 scale
 s
-0 g
-(1)3633 1483 MS
-(0..*)3878 1645 MS
-(1)3633 1483 MS
-0.191 g
+SM
 n
-3806 1350 M
-3998 1354 L
+691 69 1981 1211 B
+cp
+CM 1.695 1.695 scale
 s
-0 g
-(0..*)3897 1353 MS
-0.191 g
-n
-3806 1350 M
-3614 1345 L
-s
-0 g
-(1)3674 1368 MS
-(0..*)3897 1353 MS
-(1)3674 1368 MS
+SM
 [144 48 ]0 sd
 1 g
 n
-4330 1731 M
-4572 1726 L
+3021 1476 M
+2575 1281 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-4330 1731 M
-4572 1726 L
+3021 1476 M
+2575 1281 L
 s
-1 g
-n
-4572 1726 M
-4572 3360 L
-s
-0.191 g
-n
-4572 1726 M
-4572 3360 L
-s
-1 g
-n
-4572 3360 M
-218 3366 L
-s
-0.191 g
-n
-4572 3360 M
-218 3366 L
-s
-1 g
-n
-218 3366 M
-218 1577 L
-s
-0.191 g
-n
-218 3366 M
-218 1577 L
-s
-1 g
-n
-218 1577 M
-393 1577 L
-s
-0.191 g
-n
-218 1577 M
-393 1577 L
-s
+1 j
 []0 sd
 n
-393 1577 M
-319 1604 L
-319 1550 L
+2575 1281 M
+2683 1288 L
+2653 1355 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+0 j
+n
+328 213 2212 668 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Domain)2261 741 MS
+0.602 0 0.199 r
+n
+328 135 2212 746 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+328 98 2212 783 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+1867 897 M
+2210 814 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2113 850 MS
+0.602 0 0.199 r
+n
+1867 897 M
+1524 980 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1..*)1597 974 MS
+(1)2113 850 MS
+(1..*)1597 974 MS
 [144 48 ]0 sd
 1 g
 n
-4388 1360 M
-4557 1361 L
+3308 778 M
+2541 775 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-4388 1360 M
-4557 1361 L
-s
-1 g
-n
-4557 1361 M
-4557 400 L
-s
-0.191 g
-n
-4557 1361 M
-4557 400 L
-s
-1 g
-n
-4557 400 M
-662 407 L
-s
-0.191 g
-n
-4557 400 M
-662 407 L
-s
-1 g
-n
-662 407 M
-664 945 L
-s
-0.191 g
-n
-662 407 M
-664 945 L
+3308 778 M
+2541 775 L
 s
 []0 sd
 n
-664 945 M
-691 870 L
-637 870 L
+2541 775 M
+2643 737 L
+2643 812 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
 n
-401 154 2863 2175 B
+2349 973 M
+2339 1065 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)2317 1056 MS
+0.602 0 0.199 r
+n
+2349 973 M
+2361 882 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2325 927 MS
+(0..*)2317 1056 MS
+(1)2325 927 MS
+0 j
+0.602 0 0.199 r
+n
+627 193 2388 2960 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-403 156 2862 2174 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Hash Function)2902 2235 MS
-0.191 g
+(Identifier Record)2458 3039 MS
+0.602 0 0.199 r
 n
-403 71 2862 2259 B
+627 86 2388 3067 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-403 43 2862 2287 B
+627 49 2388 3104 B
 cp
+CM 1.695 1.695 scale
 s
+SM
+[144 48 ]0 sd
+1 g
 n
-455 138 2380 1925 B
+2386 2984 M
+1222 2715 L
+s
+0.602 0 0.199 r
+n
+2386 2984 M
+1222 2715 L
+s
+1 j
+[]0 sd
+n
+1222 2715 M
+1329 2702 L
+1312 2773 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+3045 3240 M
+2884 3154 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2921 3232 MS
+0.602 0 0.199 r
+n
+3045 3240 M
+3208 3328 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3145 3363 MS
+(1)2921 3232 MS
+(1)3145 3363 MS
+0 j
+0.602 0 0.199 r
+n
+304 216 3337 2731 B
+cp
+gs
 0.754 g
-f
-0.191 g
-n
-457 140 2379 1924 B
-cp
-s
-0 g
-(Identifier Record)2422 1985 MS
-0.191 g
-n
-457 56 2379 2008 B
-cp
-s
-n
-457 27 2379 2037 B
-cp
-s
-[144 48 ]0 sd
-1 g
-n
-2378 1948 M
-1052 1682 L
-s
-0.191 g
-n
-2378 1948 M
-1052 1682 L
-s
-[]0 sd
-n
-1052 1682 M
-1130 1670 L
-1120 1724 L
-cp
-gs
-1 g
 e
 gr
+CM 1.695 1.695 scale
 s
-n
-2829 2119 M
-2733 2065 L
-s
+SM
 0 g
-(1)2752 2120 MS
-0.191 g
+(Handle)3384 2809 MS
+0.602 0 0.199 r
 n
-2829 2119 M
-2924 2173 L
-s
-0 g
-(1)2874 2196 MS
-(1)2752 2120 MS
-(1)2874 2196 MS
-n
-238 153 1921 555 B
-0.977 g
-f
-0.191 g
-n
-240 155 1920 554 B
+304 109 3337 2838 B
 cp
+CM 1.695 1.695 scale
 s
-0 g
-(Domain)1954 615 MS
-0.191 g
+SM
 n
-240 69 1920 640 B
+304 72 3337 2875 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-240 41 1920 668 B
-cp
-s
-n
-1731 738 M
-1919 672 L
-s
-0 g
-(1)1864 701 MS
-0.191 g
-n
-1731 738 M
-1543 803 L
-s
-0 g
-(1..*)1574 797 MS
-(1)1864 701 MS
-(1..*)1574 797 MS
-[144 48 ]0 sd
-1 g
-n
-3153 642 M
-2161 632 L
-s
-0.191 g
-n
-3153 642 M
-2161 632 L
-s
-[]0 sd
-n
-2161 632 M
-2235 606 L
-2235 661 L
+895 193 2281 2389 B
 cp
 gs
-1 g
-e
-gr
-s
-n
-502 154 2337 985 B
-0.977 g
-f
-0.191 g
-n
-504 156 2336 984 B
-cp
-s
-0 g
-(Type Specification)2381 1045 MS
-0.191 g
-n
-504 71 2336 1069 B
-cp
-s
-n
-504 43 2336 1097 B
-cp
-s
-[144 48 ]0 sd
-1 g
-n
-3532 1062 M
-2841 1062 L
-s
-0.191 g
-n
-3532 1062 M
-2841 1062 L
-s
-[]0 sd
-n
-2841 1062 M
-2915 1090 L
-2915 1035 L
-cp
-gs
-1 g
-e
-gr
-s
-n
-2314 847 M
-2489 983 L
-s
-0 g
-(0..*)2396 936 MS
-0.191 g
-n
-2314 847 M
-2141 710 L
-s
-0 g
-(1)2162 769 MS
-(1)2162 769 MS
-(0..*)2396 936 MS
-n
-652 138 2460 1628 B
 0.754 g
-f
-0.191 g
-n
-654 140 2459 1627 B
-cp
+e
+gr
+CM 1.695 1.695 scale
 s
+SM
 0 g
-(Identified Class Package)2509 1687 MS
-0.191 g
+(Identified Class Package)2364 2468 MS
+0.602 0 0.199 r
 n
-654 56 2459 1711 B
+895 86 2281 2496 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 n
-654 28 2459 1739 B
+895 48 2281 2534 B
 cp
+CM 1.695 1.695 scale
 s
+SM
 [144 48 ]0 sd
 1 g
 n
-2529 1625 M
-1411 1319 L
+2459 2388 M
+1482 2040 L
 s
-0.191 g
+0.602 0 0.199 r
 n
-2529 1625 M
-1411 1319 L
+2459 2388 M
+1482 2040 L
+s
+1 j
+[]0 sd
+n
+1482 2040 M
+1591 2038 L
+1567 2109 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+3177 2412 M
+3620 2340 L
+CM 1.695 1.695 scale
+s
+SM
+n
+3620 2340 M
+3525 2395 L
+3515 2320 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+2714 2770 M
+2705 2958 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2683 2937 MS
+0.602 0 0.199 r
+n
+2714 2770 M
+2724 2583 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2716 2646 MS
+(1)2683 2937 MS
+(1)2716 2646 MS
+0.602 0 0.199 r
+n
+3136 2675 M
+3335 2766 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3284 2787 MS
+0.602 0 0.199 r
+n
+3136 2675 M
+2940 2583 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)2957 2653 MS
+(1)3284 2787 MS
+(1)2957 2653 MS
+0 j
+0.602 0 0.199 r
+n
+416 203 919 4449 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Parameter)973 4528 MS
+0.602 0 0.199 r
+n
+416 96 919 4556 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+416 59 919 4593 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+373 213 1402 3873 B
+cp
+gs
+1 1 0.801 r
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Operation)1443 3952 MS
+0.602 0 0.199 r
+n
+373 106 1402 3980 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+373 68 1402 4018 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+2088 4741 M
+1659 4087 L
+CM 1.695 1.695 scale
+s
+SM
+n
+1659 4087 M
+1745 4152 L
+1684 4193 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+1937 3544 M
+1675 3872 L
+CM 1.695 1.695 scale
+s
+SM
+n
+1675 3872 M
+1767 3816 L
+1709 3768 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+1395 2955 M
+1567 3872 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)1516 3767 MS
+0.602 0 0.199 r
+n
+1395 2955 M
+1226 2040 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)1207 2135 MS
+(0..*)1516 3767 MS
+(1)1207 2135 MS
+0.602 0 0.199 r
+n
+1355 4267 M
+1502 4087 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)1426 4197 MS
+0.602 0 0.199 r
+n
+1355 4267 M
+1209 4447 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)1207 4416 MS
+(1)1426 4197 MS
+(0..*)1207 4416 MS
+0 j
+0.602 0 0.199 r
+n
+308 199 4014 4451 B
+cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Param)4070 4529 MS
+0.602 0 0.199 r
+n
+308 92 4014 4558 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+308 55 4014 4595 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+552 193 3549 3773 B
+cp
+gs
+0.754 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(Operation Unit)3612 3852 MS
+0.602 0 0.199 r
+n
+552 86 3549 3880 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+n
+552 48 3549 3918 B
+cp
+CM 1.695 1.695 scale
+s
+SM
+1 j
+n
+3445 4778 M
+3783 3967 L
+CM 1.695 1.695 scale
+s
+SM
+n
+3783 3967 M
+3778 4074 L
+3710 4047 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+3262 3935 M
+3547 3901 L
+CM 1.695 1.695 scale
+s
+SM
+n
+3547 3901 M
+3450 3950 L
+3440 3875 L
+cp
+gs
+1 g
+e
+gr
+CM 1.695 1.695 scale
+s
+SM
+n
+3859 3087 M
+3890 2403 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3854 2487 MS
+0.602 0 0.199 r
+n
+3859 3087 M
+3829 3772 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)3812 3765 MS
+(1)3854 2487 MS
+(0..*)3812 3765 MS
+0.602 0 0.199 r
+n
+3993 4208 M
+3873 3967 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(1)3907 4103 MS
+0.602 0 0.199 r
+n
+3993 4208 M
+4115 4449 L
+CM 1.695 1.695 scale
+s
+SM
+0 g
+(0..*)4058 4426 MS
+(1)3907 4103 MS
+(0..*)4058 4426 MS
+[144 48 ]0 sd
+1 g
+n
+4012 4551 M
+1336 4551 L
+s
+0.602 0 0.199 r
+n
+4012 4551 M
+1336 4551 L
 s
 []0 sd
 n
-1411 1319 M
-1491 1313 L
-1476 1365 L
+1336 4551 M
+1397 4576 L
+CM 1.695 1.695 scale
+s
+SM
+n
+1336 4551 M
+1397 4525 L
+CM 1.695 1.695 scale
+s
+SM
+[144 48 ]0 sd
+1 g
+n
+4302 3305 M
+4295 4345 L
+s
+0.602 0 0.199 r
+n
+4302 3305 M
+4295 4345 L
+s
+1 g
+n
+4295 4345 M
+255 4328 L
+s
+0.602 0 0.199 r
+n
+4295 4345 M
+255 4328 L
+s
+1 g
+n
+255 4328 M
+255 3028 L
+s
+0.602 0 0.199 r
+n
+255 4328 M
+255 3028 L
+s
+1 g
+n
+255 3028 M
+547 3028 L
+s
+0.602 0 0.199 r
+n
+255 3028 M
+547 3028 L
+s
+[]0 sd
+n
+547 3028 M
+445 3065 L
+445 2991 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
+SM
+[144 48 ]0 sd
+1 g
 n
-2909 1625 M
-3275 1418 L
+4283 1406 M
+4270 495 L
 s
+0.602 0 0.199 r
 n
-3275 1418 M
-3224 1479 L
-3197 1432 L
+4283 1406 M
+4270 495 L
+s
+1 g
+n
+4270 495 M
+725 495 L
+s
+0.602 0 0.199 r
+n
+4270 495 M
+725 495 L
+s
+1 g
+n
+725 495 M
+720 1429 L
+s
+0.602 0 0.199 r
+n
+725 495 M
+720 1429 L
+s
+[]0 sd
+n
+720 1429 M
+757 1327 L
+683 1327 L
 cp
 gs
 1 g
 e
 gr
+CM 1.695 1.695 scale
 s
-n
-2696 1845 M
-2649 1923 L
-s
-0 g
-(1)2651 1909 MS
-0.191 g
-n
-2696 1845 M
-2743 1768 L
-s
-0 g
-(1)2720 1820 MS
-(1)2651 1909 MS
-(1)2720 1820 MS
-n
-220 156 3152 1916 B
-0.754 g
-f
-0.191 g
-n
-222 158 3151 1915 B
-cp
-s
-0 g
-(Handle)3182 1976 MS
-0.191 g
-n
-222 73 3151 2000 B
-cp
-s
-n
-222 45 3151 2028 B
-cp
-s
-n
-3024 1845 M
-3150 1923 L
-s
-0 g
-(1)3093 1924 MS
-0.191 g
-n
-3024 1845 M
-2899 1768 L
-s
-0 g
-(1)2923 1831 MS
-(1)3093 1924 MS
-(1)2923 1831 MS
+SM
 showpage
 PageSV restore
 %%Trailer
@@ -1267,4 +1770,4 @@ PageSV restore
 end
 %%Pages: 1
 %%EOF
-
+%-12345X@PJL EOJ
