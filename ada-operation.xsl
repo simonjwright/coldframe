@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 1b3977115b24 2002/10/11 05:31:04 simon $ -->
+<!-- $Id: ada-operation.xsl,v 21e0208d0b3f 2002/10/13 17:13:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,7 +56,9 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@suppressed) and not(name=$operations/name)]
+                      [not(@suppressed)
+                       and not(@entry)
+                       and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -164,7 +166,9 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@suppressed) and not(name=$operations/name)]
+                      [not(@suppressed)
+                       and not(@entry)
+                       and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -234,7 +238,9 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@suppressed) and not(name=$operations/name)]
+                      [not(@suppressed)
+                       and not(@entry)
+                       and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -256,9 +262,8 @@
 
 
   <!-- Generate the separate bodies of potentially dispatching operations
-       (but not access-to-operations, which are realized in the Class package,
-       or procedure operations of active classes, which generate a
-       call to the corresponding entry).
+       (but not access-to-operations, which are realized in the Class package).
+       XXX how could access-to-operations get here?
        The bodies are compilable but concrete ones generate Program_Error
        if called. -->
   <xsl:template
@@ -319,22 +324,9 @@
             </xsl:call-template>
           </xsl:when>
       
-          <xsl:when test="../@active and not (@class or @return or @finalize)">
-
-            <!-- Concrete non-class task entry in current class; we provide
-                 an implementation that calls the entry.
-                 Note, <<init>> operations are marked <<class>>, which
-                 means they don't get here even in <<singleton>> classes. -->
-
-            <xsl:call-template name="generate-entry-call">
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-
-          </xsl:when>
-
           <xsl:otherwise>
 
-            <!-- Concrete, non-task-entry in current class; we provide a stub
+            <!-- Concrete in current class; we provide a stub
                  implementation. -->
 
             <xsl:call-template name="generate-body">
@@ -962,58 +954,6 @@
     
   </xsl:template>
   
-
-  <!-- Called at class/operation to generate a body which calls the matching
-       task entry. -->
-  <xsl:template name="generate-entry-call">
-
-    <!-- The current class (not necessarily the one where the operation
-         is defined, if we're talking inheritance) -->
-    <xsl:param name="current"/>
-
-    <xsl:call-template name="do-not-edit"/>
-
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="$current/name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-    
-    <xsl:value-of select="$I"/>
-    <xsl:text>This.The_T.</xsl:text>
-    <xsl:value-of select="name"/>
-    
-    <xsl:if test="parameter">
-      
-      <xsl:text>&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text>(</xsl:text>
-      
-      <xsl:for-each select="parameter">
-        <xsl:value-of select="name"/>
-        <xsl:text> =&gt; </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:if test="position() &lt; last()">
-          <xsl:text>,&#10; </xsl:text>
-          <xsl:value-of select="$IC"/>
-        </xsl:if>
-      </xsl:for-each>
-      
-      <xsl:text>)</xsl:text>
-      
-    </xsl:if>
-    
-    <xsl:text>;&#10;</xsl:text>
-    
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
-
-  </xsl:template>
-
 
   <!-- Called to generate access-to-subprogram types. -->
   <xsl:template
