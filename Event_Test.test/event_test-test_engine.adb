@@ -85,6 +85,7 @@ package body Event_Test.Test_Engine is
 
    procedure Handler (For_The_Event : Nest) is
       L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+      pragma Warnings (Off, For_The_Event);
       pragma Warnings (Off, L);
    begin
       null;
