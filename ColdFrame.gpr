@@ -1,0 +1,12 @@
+--  This file extends ColdFrame_Defaults.gpr for use with demos.
+--  $Id: ColdFrame.gpr,v 92ddc96ac381 2003/03/22 18:30:31 simon $
+
+with "Options";
+
+project ColdFrame Extends "ColdFrame_Defaults" is
+
+  for Source_Dirs use ();
+
+  for Object_Dir use Options'Object_Dir;
+
+end ColdFrame;
