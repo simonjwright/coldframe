@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions-message.adb,v $
---  $Revision: 894e4d685403 $
---  $Date: 2001/11/03 06:59:38 $
+--  $Revision: 90e6e737e928 $
+--  $Date: 2002/11/21 05:55:48 $
 --  $Author: simon $
 
 with GNAT.IO;
@@ -29,7 +29,7 @@ procedure ColdFrame.Exceptions.Message
   (S : String; E : Ada.Exceptions.Exception_Occurrence) is
 begin
    GNAT.IO.Put_Line (S & ": " &
-                     Ada.Exceptions.Exception_Name (E) &
+                     Ada.Exceptions.Exception_Name (E) & ": " &
                      Ada.Exceptions.Exception_Message (E));
 end ColdFrame.Exceptions.Message;
 
