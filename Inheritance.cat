@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Inheritance"
@@ -18,7 +18,9 @@
 		    stereotype 	"abstract"
 		    parameters 	(list Parameters
 			(object Parameter "that"
-			    type       	"P"))
+			    quid       	"3EA92F7802D4"
+			    type       	"P"
+			    quidu      	"3CBCFAC603BE"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -40,7 +42,9 @@
 		    quid       	"3CBCFB550229"
 		    parameters 	(list Parameters
 			(object Parameter "that"
-			    type       	"C"))
+			    quid       	"3EA92F7802DE"
+			    type       	"C"
+			    quidu      	"3CBCFB140294"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -57,7 +61,9 @@
 		    quid       	"3CBCFB74007F"
 		    parameters 	(list Parameters
 			(object Parameter "that"
-			    type       	"G"))
+			    quid       	"3EA92F7802E8"
+			    type       	"G"
+			    quidu      	"3CBCFB220063"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -85,6 +91,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 320)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(281, 214)
@@ -99,7 +114,16 @@
 		    quidu      	"3CBCFAC603BE"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(281, 275)
+			location   	(281, 270)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -115,6 +139,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 928)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(411, 847)
@@ -129,7 +162,16 @@
 		    quidu      	"3CBCFB140294"
 		    compartment 	(object Compartment
 			Parent_View 	@2
-			location   	(411, 908)
+			location   	(411, 903)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -145,6 +187,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 1456)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(410, 1375)
@@ -159,7 +210,16 @@
 		    quidu      	"3CBCFB220063"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(410, 1436)
+			location   	(410, 1431)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -170,6 +230,15 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "i1" @4
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
 			location   	(528, 636)
@@ -185,6 +254,15 @@
 		    supplier   	@1
 		    line_style 	0)
 		(object InheritView "i2" @5
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(528, 1192)
@@ -201,6 +279,15 @@
 		    line_style 	0)
 		(object NoteView @6
 		    location   	(1440, 1456)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
 			location   	(1102, 1353)
@@ -218,6 +305,15 @@
 		    height     	219)
 		(object NoteView @7
 		    location   	(1408, 320)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
 			location   	(1117, 254)
@@ -231,6 +327,15 @@
 		    height     	144)
 		(object NoteView @8
 		    location   	(1424, 928)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
 			location   	(1108, 856)
@@ -266,9 +371,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 1936)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@12
-			location   	(447, 1885)
+			location   	(447, 1890)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	162
@@ -278,13 +392,22 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CBD533D0185"
-		    height     	126
+		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "i3" @13
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@13
-			location   	(528, 1710)
+			location   	(528, 1714)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450

@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Alternities"
@@ -42,6 +42,7 @@
 			    stereotype 	"class"
 			    parameters 	(list Parameters
 				(object Parameter "report"
+				    quid       	"3EA9318302AF"
 				    type       	"Track Report"))
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
@@ -69,6 +70,15 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(1184, 512)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@1
 				location   	(725, 381)
@@ -84,6 +94,15 @@
 			    compartment 	(object Compartment
 				Parent_View 	@1
 				location   	(725, 442)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -101,9 +120,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(272, 1040)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@2
-				location   	(116, 1011)
+				location   	(116, 1005)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	312
@@ -111,7 +139,7 @@
 				label      	"Track Report")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@2
-				location   	(116, 961)
+				location   	(116, 960)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -135,6 +163,15 @@
 			    line_style 	0)
 			(object NoteView @4
 			    location   	(1344, 1200)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@4
 				location   	(1009, 1094)
@@ -201,9 +238,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(960, 880)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@6
-				location   	(765, 796)
+				location   	(765, 790)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	390
@@ -211,7 +257,7 @@
 				label      	"Actual Reporter")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@6
-				location   	(765, 746)
+				location   	(765, 745)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -224,7 +270,16 @@
 			    quidu      	"3C10BD1E014E"
 			    compartment 	(object Compartment
 				Parent_View 	@6
-				location   	(765, 857)
+				location   	(765, 846)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -241,9 +296,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(400, 336)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@7
-				location   	(239, 277)
+				location   	(239, 271)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -251,7 +315,7 @@
 				label      	"Interface")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@7
-				location   	(239, 227)
+				location   	(239, 226)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -264,7 +328,16 @@
 			    quidu      	"3C10CCF503BC"
 			    compartment 	(object Compartment
 				Parent_View 	@7
-				location   	(239, 338)
+				location   	(239, 327)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -278,6 +351,15 @@
 			    autoResize 	TRUE)
 			(object NoteView @8
 			    location   	(1584, 304)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@8
 				location   	(1118, 185)
@@ -291,6 +373,15 @@
 			    height     	250)
 			(object NoteView @9
 			    location   	(1440, 1280)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@9
 				location   	(1093, 1220)
@@ -310,6 +401,15 @@
 			    line_style 	0)
 			(object NoteView @11
 			    location   	(304, 688)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@11
 				location   	(66, 622)
@@ -382,9 +482,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(896, 768)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@13
-				location   	(682, 684)
+				location   	(682, 678)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	428
@@ -392,7 +501,7 @@
 				label      	"Simulated Reporter")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@13
-				location   	(682, 634)
+				location   	(682, 633)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -405,7 +514,16 @@
 			    quidu      	"3C10BCD10183"
 			    compartment 	(object Compartment
 				Parent_View 	@13
-				location   	(682, 745)
+				location   	(682, 734)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -422,9 +540,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(384, 256)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@14
-				location   	(223, 197)
+				location   	(223, 191)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -432,7 +559,7 @@
 				label      	"Interface")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@14
-				location   	(223, 147)
+				location   	(223, 146)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -445,7 +572,16 @@
 			    quidu      	"3C10CD450233"
 			    compartment 	(object Compartment
 				Parent_View 	@14
-				location   	(223, 258)
+				location   	(223, 247)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -459,6 +595,15 @@
 			    autoResize 	TRUE)
 			(object NoteView @15
 			    location   	(1712, 256)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@15
 				location   	(1315, 128)
@@ -472,6 +617,15 @@
 			    height     	269)
 			(object NoteView @16
 			    location   	(1488, 1168)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@16
 				location   	(1147, 1103)
@@ -491,6 +645,15 @@
 			    line_style 	0)
 			(object NoteView @18
 			    location   	(288, 672)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@18
 				location   	(69, 612)
@@ -543,10 +706,12 @@
 			    type       	"Track Number")
 			(object ClassAttribute "x"
 			    quid       	"3C10BAD00359"
-			    type       	"Metres")
+			    type       	"Metres"
+			    quidu      	"3C10BA4900C9")
 			(object ClassAttribute "y"
 			    quid       	"3C10BADC02DE"
-			    type       	"Metres")
+			    type       	"Metres"
+			    quidu      	"3C10BA4900C9")
 			(object ClassAttribute "time valid"
 			    quid       	"3C10BAE100CC"
 			    type       	"Time")))
@@ -594,13 +759,16 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "creation"
 			    quid       	"3C10BB7F031A"
-			    type       	"Track Creation")
+			    type       	"Track Creation"
+			    quidu      	"3C10BB060013")
 			(object ClassAttribute "update"
 			    quid       	"3C10BB8C00C7"
-			    type       	"Track Update")
+			    type       	"Track Update"
+			    quidu      	"3C10BAA80268")
 			(object ClassAttribute "deletion"
 			    quid       	"3C10BB930328"
-			    type       	"Track Deletion")))
+			    type       	"Track Deletion"
+			    quidu      	"3C10BB2B0265")))
 		(object Class "Interface"
 		    quid       	"3C10CC90031F"
 		    stereotype 	"public"
@@ -625,9 +793,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(272, 1120)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@20
-				location   	(182, 1091)
+				location   	(182, 1085)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	180
@@ -635,7 +812,7 @@
 				label      	"Metres")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@20
-				location   	(182, 1041)
+				location   	(182, 1040)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -654,9 +831,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(304, 624)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@21
-				location   	(154, 595)
+				location   	(154, 589)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	300
@@ -664,7 +850,7 @@
 				label      	"Track Number")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@21
-				location   	(154, 545)
+				location   	(154, 544)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -683,9 +869,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(944, 528)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@22
-				location   	(755, 394)
+				location   	(755, 388)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -693,7 +888,7 @@
 				label      	"Track Update")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@22
-				location   	(755, 344)
+				location   	(755, 343)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -706,7 +901,16 @@
 			    quidu      	"3C10BAA80268"
 			    compartment 	(object Compartment
 				Parent_View 	@22
-				location   	(755, 455)
+				location   	(755, 444)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -725,9 +929,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(960, 1104)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@23
-				location   	(771, 1045)
+				location   	(771, 1039)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -735,7 +948,7 @@
 				label      	"Track Creation")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@23
-				location   	(771, 995)
+				location   	(771, 994)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -748,7 +961,16 @@
 			    quidu      	"3C10BB060013"
 			    compartment 	(object Compartment
 				Parent_View 	@23
-				location   	(771, 1106)
+				location   	(771, 1095)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -764,9 +986,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(976, 1600)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@24
-				location   	(787, 1541)
+				location   	(787, 1535)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -774,7 +1005,7 @@
 				label      	"Track Deletion")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@24
-				location   	(787, 1491)
+				location   	(787, 1490)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -787,7 +1018,16 @@
 			    quidu      	"3C10BB2B0265"
 			    compartment 	(object Compartment
 				Parent_View 	@24
-				location   	(787, 1602)
+				location   	(787, 1591)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -803,9 +1043,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(1744, 1104)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@25
-				location   	(1496, 995)
+				location   	(1496, 989)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	496
@@ -813,7 +1062,7 @@
 				label      	"Track Report")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@25
-				location   	(1496, 945)
+				location   	(1496, 944)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -826,7 +1075,16 @@
 			    quidu      	"3C10BB5601ED"
 			    compartment 	(object Compartment
 				Parent_View 	@25
-				location   	(1496, 1056)
+				location   	(1496, 1045)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -877,6 +1135,15 @@
 			    line_style 	0)
 			(object NoteView @31
 			    location   	(1744, 512)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@31
 				location   	(1397, 318)
@@ -902,9 +1169,18 @@
 			    ShowCompartmentStereotypes 	TRUE
 			    ShowOperationSignature 	TRUE
 			    location   	(256, 208)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@33
-				location   	(95, 149)
+				location   	(95, 143)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -912,7 +1188,7 @@
 				label      	"Interface")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@33
-				location   	(95, 99)
+				location   	(95, 98)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -925,7 +1201,16 @@
 			    quidu      	"3C10CC90031F"
 			    compartment 	(object Compartment
 				Parent_View 	@33
-				location   	(95, 210)
+				location   	(95, 199)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				icon_style 	"Label"
 				fill_color 	13434879
 				anchor     	2
@@ -963,6 +1248,15 @@
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Alternities::Radar Proxy" @36
 		    location   	(512, 304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@36
 			location   	(368, 220)
@@ -979,6 +1273,15 @@
 		    height     	180)
 		(object CategoryView "Logical View::Alternities::Real Source" @37
 		    location   	(272, 1008)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@37
 			location   	(128, 924)
@@ -995,6 +1298,15 @@
 		    height     	180)
 		(object CategoryView "Logical View::Alternities::Simulated Source" @38
 		    location   	(1088, 992)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@38
 			location   	(944, 908)
@@ -1011,6 +1323,15 @@
 		    height     	180)
 		(object CategoryView "Logical View::Alternities::Source" @39
 		    location   	(624, 640)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@39
 			location   	(480, 556)
@@ -1048,6 +1369,15 @@
 		    line_style 	0)
 		(object NoteView @43
 		    location   	(1792, 672)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@43
 			location   	(1470, 66)
