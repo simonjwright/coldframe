@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 7e4b9e524bdf 2002/05/10 05:06:58 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v eaa50e3876db 2002/05/14 20:06:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -151,12 +151,7 @@
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>      
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="associative"/>
-      <xsl:text>.Sets;&#10;</xsl:text>      
+      <xsl:text>.Abstract_Containers;&#10;</xsl:text>    
     </xsl:if>
 
   </xsl:template>
