@@ -14,6 +14,7 @@ CODEGEN_SCRIPT = generate-ada.xsl
 CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-association.xsl \
   ada-attribute.xsl \
+  ada-callback.xsl \
   ada-class.xsl \
   ada-collection.xsl \
   ada-operation.xsl \
@@ -60,12 +61,9 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 # coldframe-architecture.ps is made by printing the Rose Architecture package
 # diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
 
-pdf:: coldframe-architecture.pdf
-
-# preserve intermediate files
-.PRECIOUS:: Problem_Reporting.norm Problem_Reporting.ada
-.PRECIOUS:: Tewa.norm  Tewa.ada
-.PRECIOUS:: Weapon_Assignment.norm  Weapon_Assignment.ada
+pdf:: coldframe-architecture.pdf \
+  coldframe-callback.pdf \
+  coldframe-relationships.pdf
 
 ############################
 # Distribution construction
