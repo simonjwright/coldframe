@@ -149,7 +149,7 @@ PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
  serialization.png serialization-class-model.png serialization-sequence-t.png \
  serialization-class-model-t.png serialization-state.png \
  serialization-state-t.png serialization-sequence.png \
- real_time.png recordable_real_time.png sample_a.png
+ real_time.png recordable_real_time.png sample_a.png \
  type-mapping.png relationships-mapping.png operations-mapping.png \
  metamodel.png event-mapping.png collections-mapping.png class-mappings.png
 
