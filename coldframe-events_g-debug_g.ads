@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.ads,v $
---  $Revision: 850b06ce0448 $
---  $Date: 2002/09/13 19:59:49 $
+--  $Revision: a108c1bee283 $
+--  $Date: 2002/09/21 11:11:22 $
 --  $Author: simon $
 
 generic
@@ -36,14 +36,16 @@ package ColdFrame.Events_G.Debug_G is
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean)
    is new Standard_Queue with private;
 
+   subtype Event_Queue is Event_Queue_Base (Start_Started => True);
+
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue);
+                   On : access Event_Queue_Base);
 
    procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue);
+                           On : access Event_Queue_Base);
 
    ----------------------
    --  Delayed events  --
@@ -54,7 +56,7 @@ package ColdFrame.Events_G.Debug_G is
 --                     To_Fire_At : Time.Time);
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration);
 
    --------------
@@ -67,25 +69,25 @@ package ColdFrame.Events_G.Debug_G is
 --                    At_Time : Time.Time) is abstract;
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration);
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue);
+                    On : access Event_Queue_Base);
 
 private
 
-   type Event_Queue (Start_Started : Boolean)
+   type Event_Queue_Base (Start_Started : Boolean)
    is new Standard_Queue (Start_Started => Start_Started) with null record;
 
    procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue);
+                             On : access Event_Queue_Base);
 
    procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue);
+                               On : access Event_Queue_Base);
 
    procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue);
+                                On : access Event_Queue_Base);
 
 end ColdFrame.Events_G.Debug_G;
