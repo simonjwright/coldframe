@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 1187d3d6f63c 2001/06/09 04:36:16 simon $
+# $Id: normalize-rose.tcl,v 07d721272121 2001/06/20 19:10:29 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -802,6 +802,9 @@ itcl::class Class {
 itcl::class Operation {
     inherit Element
 
+    # is this abstract?
+    variable abstr 0
+
     # is this an access-to-operation?
     variable acc 0
 
@@ -812,6 +815,12 @@ itcl::class Operation {
     variable ret ""
 
     variable parameters
+
+    # called via stereotype mechanism to indicate that this is an
+    # abstract operation
+    method -abstract {summy} {
+	set abstr 1
+    }
 
     # called via stereotype mechanism to indicate that this is an
     # access-to-operation (and also a class operation; how would
@@ -831,6 +840,7 @@ itcl::class Operation {
 
     method -generate {domain}  {
 	puts -nonewline "<operation"
+	if $abstr {puts -nonewline " abstract=\"yes\""}
 	if $acc {puts -nonewline " access=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
