@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: 3b010735e777 $
+--  $Date: 2004/03/13 21:01:00 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -708,6 +708,7 @@ package body ColdFrame.Events_G.Standard_G is
             declare
                E : Event_P := Current_Item (It);
             begin
+               Tear_Down (E);
                Delete (E);
             end;
             Next (It);
@@ -724,6 +725,7 @@ package body ColdFrame.Events_G.Standard_G is
             declare
                E : Event_P := Current_Item (It);
             begin
+               Tear_Down (E);
                Delete (E);
             end;
             Next (It);
