@@ -10,15 +10,15 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.ads,v $
---  $Revision: 853a89e85ecf $
---  $Date: 2003/03/16 12:23:30 $
+--  $Revision: 557c6c64e6a6 $
+--  $Date: 2003/07/24 21:04:15 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
 with BC.Containers.Collections.Ordered.Unbounded;
 with Ada.Real_Time;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Global_Storage_Pool;
+with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Times;
 
 package ColdFrame.Project.Held_Events is
@@ -66,7 +66,7 @@ private
    is new Abstract_Duration_Containers.Collections;
    package Duration_Collections
    is new Abstract_Duration_Collections.Unbounded
-     (Storage => ColdFrame.Project.Global_Storage_Pool.Pool);
+     (Storage => ColdFrame.Project.Storage_Pools.Pool);
 
    type Time_Cell is record
       Time_To_Fire : Times.Time;
@@ -83,7 +83,7 @@ private
    is new Abstract_Time_Collections.Ordered;
    package Time_Collections
    is new Abstract_Ordered_Time_Collections.Unbounded
-     (Storage => ColdFrame.Project.Global_Storage_Pool.Pool);
+     (Storage => ColdFrame.Project.Storage_Pools.Pool);
 
    type Time_Queues is array (Times.Time_Kind) of Time_Collections.Collection;
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d4fbb3517cec 2003/07/23 19:00:41 simon $ -->
+<!-- $Id: ada-class.xsl,v 557c6c64e6a6 2003/07/24 21:04:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -203,15 +203,47 @@
         <xsl:text>function Instance_Hash (I : Instance) return Natural;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
-        <!-- .. if the maximum number of instances isn't too large, fix the
-             storage pool for Handle .. -->
-        <xsl:if test="$max &lt;= $max-bounded-container">
+        <xsl:choose>
+          
+        <!-- .. if the maximum number of instances isn't too large, provide
+             a bounded storage pool for Handle .. -->
+        <xsl:when test="$max &lt;= $max-bounded-container">
+          <!--
+               use type System.Storage_Elements.Storage_Offset;
+               Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+                 (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
+                  Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+                  Alignment => Instance'Alignment);
+               for Handle'Storage_Pool use Storage_Pool;
+               -->
           <xsl:value-of select="$I"/>
-          <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
+          <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
           <xsl:value-of select="$max"/>
-          <xsl:text>;&#10;</xsl:text>
+          <xsl:text>,&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
           <xsl:value-of select="$blank-line"/>
-        </xsl:if>
+        </xsl:when>
+
+        <!-- .. or use the standard pool ..-->
+        <xsl:otherwise>
+          <!--
+               for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;
+               -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>for Handle'Storage_Pool use ColdFrame.Project.Storage_Pools.Unbounded_Pool;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+        </xsl:otherwise>
+
+        </xsl:choose>
  
         <!-- .. the instance container .. -->
         <xsl:choose>
@@ -255,13 +287,33 @@
 
       <!-- Only one possible instance .. -->      
       <xsl:otherwise>
+
         <!-- .. fix the storage pool for Handle .. -->
+        <!--
+             use type System.Storage_Elements.Storage_Offset;
+            Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+               (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
+                Elmt_Size => Instance'Max_Size_In_Storage_Elements,
+                Alignment => Instance'Alignment);
+             for Handle'Storage_Pool use Storage_Pool;
+             -->
         <xsl:value-of select="$I"/>
-        <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
+        <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(Pool_Size => Instance'Max_Size_In_Storage_Elements * </xsl:text>
         <xsl:value-of select="$max"/>
-        <xsl:text>;&#10;</xsl:text>
+        <xsl:text>,&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text> Elmt_Size => Instance'Max_Size_In_Storage_Elements,&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text> Alignment => Instance'Alignment);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>for Handle'Storage_Pool use Storage_Pool;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
-         <!-- .. use a simple pointer .. -->
+
+        <!-- .. use a simple pointer .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>This : Handle;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
@@ -310,11 +362,6 @@
        in the ancestor tree as well as the present attributes. -->
   <xsl:template name="class-spec-context">
 
-    <!-- Calculate the maximum number of instances. -->
-    <xsl:variable name="max">
-      <xsl:call-template name="number-of-instances"/>
-    </xsl:variable>
-
     <!-- The classes to be processed this time. The default is the
          current class. -->
     <xsl:param name="parents" select="."/>
@@ -340,6 +387,18 @@
       <xsl:otherwise>
 
         <!-- $ancestors contains all the nodes to be processed. -->
+
+        <!-- Calculate the maximum number of instances. -->
+        <xsl:variable name="max">
+          <xsl:call-template name="number-of-instances"/>
+        </xsl:variable>
+
+        <!-- Always need storage management. -->
+        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
+        <!-- Need storage offset arithmetic for bounded classes. -->
+        <xsl:if test="$max &lt;= $max-bounded-container">
+          <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+        </xsl:if>
 
         <!-- Check for Unbounded_Strings. -->
         <xsl:if test="attribute/type='Unbounded_String'
@@ -761,6 +820,11 @@
 
         <!-- $ancestors contains all the nodes to be processed. -->
 
+        <!-- Calculate the maximum number of instances. -->
+        <xsl:variable name="max">
+          <xsl:call-template name="number-of-instances"/>
+        </xsl:variable>
+
         <!-- We'll need to free memory. -->
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -771,7 +835,9 @@
              without a state machine. -->
         <xsl:if test="not(@singleton) or statemachine">
           <!-- We'll need exception support. -->
-          <xsl:text>with BC;&#10;</xsl:text>
+          <xsl:if test="$max &gt; 1">
+            <xsl:text>with BC;&#10;</xsl:text>
+          </xsl:if>
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>
 

@@ -11,16 +11,16 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events.ads,v $
---  $Revision: 0020c8074f22 $
---  $Date: 2002/10/01 17:46:06 $
+--  $Revision: 557c6c64e6a6 $
+--  $Date: 2003/07/24 21:04:15 $
 --  $Author: simon $
 
 with ColdFrame.Events_G;
-with ColdFrame.Project.Global_Storage_Pool;
+with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Event_Support;
 with ColdFrame.Project.Logging_Support;
 
 package ColdFrame.Project.Events is new ColdFrame.Events_G
   (Logging => Logging_Support.Implementation,
    Time => ColdFrame.Project.Event_Support.Signature,
-   Event_Storage => ColdFrame.Project.Global_Storage_Pool.Pool);
+   Event_Storage => ColdFrame.Project.Storage_Pools.Pool);

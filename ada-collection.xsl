@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 59df58c6c1e2 2003/07/23 19:01:25 simon $ -->
+<!-- $Id: ada-collection.xsl,v 557c6c64e6a6 2003/07/24 21:04:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -106,7 +106,7 @@
         <!-- Use the Unbounded version -->
         <xsl:call-template name="do-not-edit"/>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
-        <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Collections;&#10;</xsl:text>
@@ -115,7 +115,7 @@
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>is new Abstract_Collections.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text>(Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>(Storage =&gt; ColdFrame.Project.Storage_Pools.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -167,7 +167,7 @@
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
         <xsl:text>with BC.Containers.Sets.Unbounded;&#10;</xsl:text>
-        <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Sets;&#10;</xsl:text>
@@ -184,7 +184,7 @@
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text> Storage =&gt; ColdFrame.Project.Storage_Pools.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>

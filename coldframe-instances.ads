@@ -20,13 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: b96d48dad1b3 $
---  $Date: 2003/07/13 06:33:51 $
+--  $Revision: 557c6c64e6a6 $
+--  $Date: 2003/07/24 21:04:15 $
 --  $Author: simon $
 
 with BC.Containers.Maps.Bounded;
 with BC.Containers.Maps.Unbounded;
-with ColdFrame.Project.Global_Storage_Pool;
+with ColdFrame.Project.Storage_Pools;
 
 package ColdFrame.Instances is
 
@@ -73,7 +73,7 @@ package ColdFrame.Instances is
    package Unbounded_Maps is new Abstract_Maps.Unbounded
      (Hash => Classwide_Hash,
       Buckets => 19,               --  the default
-      Storage => ColdFrame.Project.Global_Storage_Pool.Pool);
+      Storage => ColdFrame.Project.Storage_Pools.Pool);
 
 private
 
