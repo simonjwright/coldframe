@@ -97,7 +97,7 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	chmod -R a-w $@
 	chmod u+w $@
 	@echo "checking for unimplemented bodies .."
-	@grep -rl Program_Error $@ || echo ".. none."
+	@grep -rl 'edit this' $@ || echo ".. none."
 
 .PHONY: force
 
