@@ -57,7 +57,7 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
-	  || (echo "Generation problem."; rm -f $@; exit 1)
+	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)
 	sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
 	rm -f $@-t
