@@ -19,11 +19,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-exceptions.ads,v 0c24f384ffae 2001/05/05 09:38:43 simon $
+-- $Id: coldframe-exceptions.ads,v 250c3bc4ee83 2001/05/05 09:41:14 simon $
 
 with BC;
 
-package Architecture.Exceptions is
+package ColdFrame.Exceptions is
 
   Duplicate : exception renames BC.Duplicate;
   -- Attempt to Create an object with an identifier that belongs to an
@@ -32,4 +32,4 @@ package Architecture.Exceptions is
   Not_Found : exception renames BC.Not_Found;
   -- Attempt to access an object by identifier when no such object exists
 
-end Architecture.Exceptions;
+end ColdFrame.Exceptions;
