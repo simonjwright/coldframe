@@ -1,11 +1,11 @@
 <domain>
-<extractor>cf-20030703t</extractor>
+<extractor>cf-20030724t</extractor>
 <name>Interrupt Handling</name>
 <date>
 <year>2003</year>
 <month>7</month>
-<day>4</day>
-<time>13:09</time>
+<day>26</day>
+<time>18:46</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -14,7 +14,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
-<documentation></documentation>
+<documentation>[[ priority : (   15 + 16 - 20   ); stack : 40000 ]]</documentation>
 <attributes>
 <attribute>
 <name>timeout</name>
