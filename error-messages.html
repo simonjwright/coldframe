@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 6606eb80dd60 2003/09/27 16:49:09 simon $ -->
+<!-- $Id: error-messages.html,v a0be3f8642a1 2003/11/14 05:53:13 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -21,21 +21,21 @@ want anything to happen!
 
 <dl>
 
-<dt>Error: abbreviation of <i>name</i> is reserved word <dd>For class <i>name</i>, the standard abbreviation (for names of more than one word, formed from the initial letters of the words) makes an Ada reserved word. Specify your own, using the <tt>[[abbreviation]]</tt> annotation.
+<dt>Error: abbreviation of <i>name</i> is reserved word <dd>For class <i>name</i>, the standard abbreviation (for names of more than one word, formed from the initial letters of the words) makes an Ada reserved word. Specify your own, using the <tt>{abbreviation}</tt> tag.
 
 <dt>Error: attribute <i>Class.Attribute</i> used to formalize non-existent <i>Association</i> <dd>The <tt>formalizes</tt> annotation has been used naming an association that doesn't exist.
 
 <dt>Error: attribute <i>Class.Name</i> marked as &#171class;&#187; and &#171;id&#187; <dd>Class attributes can't be identifying attributes as well.
 
-<dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>[[source]]</tt> annotation has been specified on both ends of the named association.
+<dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>{source}</tt> tag has been specified on both ends of the named association.
 
 <dt>Error: can't specify priority for non-active class <i>Class</i> <dd>Priority can only be specified for &#171;active&#187; classes.
 
 <dt>Error: can't specify stack for non-active class <i>Class</i> <dd>Stack size can only be specified for &#171;active&#187; classes.
 
-<<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>[[source]]</tt> in a disallowed way (on the <i>many</i> end of an association).
+<<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>{source}</tt> in a disallowed way (on the <i>many</i> end of an association).
 
-<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>[[source]]</tt> on both ends of the named association.
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>{source}</tt> on both ends of the named association.
 
 <dt>Error: discriminated type <i>type</i> has no attributes <dd>Discriminated types must have attributes.
 
@@ -69,9 +69,9 @@ want anything to happen!
 
 <dt>Error: <i>name</i> has no identifier <dd>Ordinary classes must have identifiers.
 
-<dt>Error: neither end of biconditional <i>name</i> is marked as source <dd>Symmetric 0..1:0..1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
+<dt>Error: neither end of biconditional <i>name</i> is marked as source <dd>Symmetric 0..1:0..1 associations must have the source end marked. Place <tt>{source}</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
-<dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
+<dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>{source}</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
 <dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
 
@@ -103,12 +103,13 @@ want anything to happen!
 
 <dl>
 
-<dt>Warning: annotation not handled, "<i>Entity [[annotation :
-value]]</i>" <dd>The given annotation wasn't understood.
+<dt>Warning: annotation not handled, "<i>entity</i> [[<i>annotation</i> : <i>value</i>]]" <dd>The given annotation wasn't understood.
 
 <dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
 
 <dt>Warning: stereotype not handled, "<i>Entity &#171;stereotype&#187;</i>" <dd>The given stereotype wasn't understood.
+
+<dt>Warning: {<i>tag</i>=<i>value</i>} not handled in <i>name</i> <dd>The given tagged value wasn't understood.
 
 <dt>Warning: upper bound (<i>u</i>) of multiplicity in role <i>Association.Role</i> treated as * <dd>The upper bounds of associations are always treated as indefinite.
 
@@ -150,7 +151,7 @@ value]]</i>" <dd>The given annotation wasn't understood.
 
 <dl>
 
-<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>[[imported]]</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Instance_Hash</tt>.
+<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>{imported}</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Instance_Hash</tt>. <br>If the imported type is discrete (for example, an integer or an enumeration), you can say <tt>{hash=discrete}</tt>.
 
 </dl>
 
