@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: ada-operation.xsl,v 32ff8579ffc6 2002/09/12 20:51:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -526,7 +526,7 @@
 
       <!-- Date or Time -->
       <xsl:when test="$type='Date' or $type='Time'">
-        <xsl:text>Clock</xsl:text>
+        <xsl:text>ColdFrame.Project.Calendar.Clock</xsl:text>
       </xsl:when>
 
       <!-- Ordinary string -->
