@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a7f8d774610f 2003/03/08 19:40:08 simon $
+# $Id: normalize-rose.tcl,v 98b82f12d5a1 2003/03/13 20:41:24 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -114,6 +114,9 @@ proc normalize {s} {
     foreach c $components {
 	# handle the words; convert runs of spaces/underscores to spaces
 	set c [string trim $c]
+	if {[string length $c] == 0} {
+	    Warning "spare . in \"$s\""
+	}
 	regsub -all {[ _]+} $c " " c
 	set words [split $c]
 	set processedWords {}
@@ -2183,7 +2186,7 @@ itcl::class Datatype {
 
     # called to specify the hash mechanism (probably only relevant
     # for imported/renamed types)
-    method -hash {as} {set hash $as}
+    method -hash {as} {set hash [string tolower $as]}
 
     method -complete {} {
 	if [expr ![[stack -top] -isPresent $type]] {
