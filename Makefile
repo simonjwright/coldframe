@@ -161,9 +161,6 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 	$(SAXON) \
 	    Architecture.raw generate-architecture-html.xsl >$@
 
-# coldframe-architecture.ps is made by printing the Rose Architecture package
-# diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
-
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
