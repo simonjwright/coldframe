@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6f079bdc6f9e 2002/09/10 18:40:35 simon $
+# $Id: normalize-rose.tcl,v 5da76aef1c3d 2002/10/11 05:39:48 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -515,7 +515,7 @@ itcl::class Element {
     #   $this -number 5
     method -handleStereotype {} {
 	if [info exists stereotype] {
-	    set p {([-a-z0-9_ \t]+)(=[ \t]*([a-z0-9_,]+))?[ \t]*}
+	    set p {[ \t]*([-a-z0-9_ \t]+)(=[ \t]*([a-z0-9_,]+))?[ \t]*}
 	    set s $stereotype
 	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
 		# n is the tag name, v the tag value if any
@@ -1064,7 +1064,9 @@ itcl::class Class {
 
     # called (via annotation mechanism) to indicate that this is used
     # in a callback
-    method -callback {size} {set callback [string trim $size]}
+    method -callback {size} {
+	set callback [string trim $size]
+    }
 
     # called (via annotation mechanism) to indicate that this is a
     # discriminated (record) type
@@ -1726,7 +1728,11 @@ itcl::class Inheritance {
 
     constructor {} {set children [List ::\#auto]}
 
-    method -parent {p} {set parent $p}
+    method -parent {p} {
+	set parent $p
+    }
+
+    method -getParent {} {return $parent}
 
     method -child {c} {
 	set child $c
@@ -1752,8 +1758,12 @@ itcl::class Inheritance {
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
 	    set extant [$inheritances -atName $name]
-	    $extant -addChild $child
-	    $extant -documentation $documentation
+	    if {$parent != [$extant -getParent]} {
+		Error "multiple parents $parent, [$extant -getParent] in $name"
+	    } else {
+		$extant -addChild $child
+		$extant -documentation $documentation
+	    }
 	} else {
 	    $inheritances -add $this $name
 	}
