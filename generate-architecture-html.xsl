@@ -1,4 +1,4 @@
-<!-- $Id: generate-architecture-html.xsl,v ad669372645c 2001/02/04 11:51:39 simon $ -->
+<!-- $Id: generate-architecture-html.xsl,v 1b657fb64ecd 2001/02/04 12:04:33 simon $ -->
 <!-- XSL stylesheet to generate HTML for the Architecture. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,7 +27,7 @@
 
   <xsl:template match="domain/objects/object">
     <xsl:variable name="name" select="name"/>
-    <h3><i><a name="#{translate($name, ' ', '_')}">
+    <h3><i><a name="{translate($name, ' ', '_')}">
     <xsl:value-of select="$name"/></a></i></h3>
     <xsl:text>&#10;</xsl:text>
     <xsl:if test="../../relationships/inheritance[child=$name]">
