@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d60257408a94 2001/08/08 18:01:10 simon $ -->
+<!-- $Id: generate-ada.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,9 +40,26 @@
 
   <xsl:output method="text"/>
 
+  <!-- For identification info. -->
   <xsl:param name="coldframe-version"/>
 
+  <!-- Controls how attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors"/>
+
+  <!-- Control indentation. -->
+  <xsl:param name="standard-indent" select="'   '"/>
+  <xsl:param name="continuation-indent" select="'  '"/>
+
+
+  <!-- Global shorthands for indentation. -->
+  <xsl:param name="I" select="$standard-indent"/>
+  <xsl:param name="II" select="concat($I, $I)"/>
+  <xsl:param name="III" select="concat($II, $I)"/>
+  <xsl:param name="C" select="$continuation-indent"/>
+  <xsl:param name="IC" select="concat($I, $C)"/>
+  <xsl:param name="IIC" select="concat($II, $C)"/>
+  <xsl:param name="IIIC" select="concat($III, $C)"/>
+
 
   <!-- Generate the top-level package for the domain, then all the
        others. -->
@@ -68,7 +85,8 @@
 
     <!-- .. the Initialize procedure .. -->
     <xsl:message>.. the Initialize procedure ..</xsl:message>
-    <xsl:text>  procedure Initialize;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>procedure Initialize;&#10;</xsl:text>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -80,7 +98,8 @@
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
-    <xsl:text>  procedure Initialize is separate;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
@@ -121,7 +140,7 @@
         <xsl:for-each select="$initialize-procedures">
           <xsl:sort select="../name"/>
           <xsl:sort select="name"/>
-          <xsl:text>  </xsl:text>
+          <xsl:value-of select="$standard-indent"/>
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
@@ -130,7 +149,8 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:text>  null;&#10;</xsl:text>
+        <xsl:value-of select="$standard-indent"/>
+        <xsl:text>null;&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -184,7 +204,7 @@
 
   <!-- Called at domain to generate identification information. -->
   <xsl:template name="identification-info">
-    <xsl:text>-- Domain revision: </xsl:text>
+    <xsl:text>--  Domain revision: </xsl:text>
     <xsl:choose>
       <xsl:when test="revision">
         <xsl:value-of select="revision"/>        
@@ -194,7 +214,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>-- Extraction date: </xsl:text>
+    <xsl:text>--  Extraction date: </xsl:text>
     <xsl:value-of select="date/day"/>
     <xsl:text> </xsl:text>
     <xsl:value-of select="date/month"/>
@@ -203,13 +223,13 @@
     <xsl:text>, </xsl:text>
     <xsl:value-of select="date/time"/>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>-- Extractor: </xsl:text>
+    <xsl:text>--  Extractor: </xsl:text>
     <xsl:value-of select="extractor"/>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>-- Normalizer: </xsl:text>
+    <xsl:text>--  Normalizer: </xsl:text>
     <xsl:value-of select="normalizer"/>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>-- Generator: </xsl:text>
+    <xsl:text>--  Generator: </xsl:text>
     <xsl:value-of select="$coldframe-version"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
+<!-- $Id: ada-collection.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -51,7 +51,7 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers&#10;</xsl:text>
-    <xsl:text>   is new BC.Containers (Handle);&#10;</xsl:text>
+    <xsl:text>is new BC.Containers (Handle);&#10;</xsl:text>
 
     <!-- Abstract Collections package -->
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
@@ -61,7 +61,7 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Collections&#10;</xsl:text>
-    <xsl:text>   is new </xsl:text>
+    <xsl:text>is new </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers.Collections;&#10;</xsl:text>
 
@@ -73,7 +73,7 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Sets&#10;</xsl:text>
-    <xsl:text>   is new </xsl:text>
+    <xsl:text>is new </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers.Sets;&#10;</xsl:text>
 
@@ -89,7 +89,7 @@
         <xsl:text>package </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Collections&#10;</xsl:text>
-        <xsl:text>   is new Abstract_Collections.Bounded (Maximum_Size =&gt; </xsl:text>
+        <xsl:text>is new Abstract_Collections.Bounded (Maximum_Size =&gt; </xsl:text>
         <xsl:value-of select="./@max"/>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
@@ -103,9 +103,11 @@
         <xsl:text>package </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Collections&#10;</xsl:text>
-        <xsl:text>   is new Abstract_Collections.Unbounded&#10;</xsl:text>
-        <xsl:text>     (Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:text>      Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>is new Abstract_Collections.Unbounded&#10;</xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text>(Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -116,8 +118,10 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash&#10;</xsl:text>
     <xsl:text>is new ColdFrame.Access_Hash&#10;</xsl:text>
-    <xsl:text>  (T =&gt; Instance,&#10;</xsl:text>
-    <xsl:text>   Access_T =&gt; Handle);&#10;</xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(T =&gt; Instance,&#10;</xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Access_T =&gt; Handle);&#10;</xsl:text>
 
     <!-- Concrete Sets package -->
     <xsl:text>with </xsl:text>
@@ -136,13 +140,16 @@
         <xsl:value-of select="$class"/>
         <xsl:text>.Sets&#10;</xsl:text>
         <xsl:text>is new Abstract_Sets.Bounded&#10;</xsl:text>
-        <xsl:text>  (Hash =&gt; </xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text>(Hash =&gt; </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
-        <xsl:text>   Buckets =&gt; </xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Buckets =&gt; </xsl:text>
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
-        <xsl:text>   Maximum_Size =&gt; </xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Maximum_Size =&gt; </xsl:text>
         <xsl:value-of select="./@max"/>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
@@ -157,14 +164,18 @@
         <xsl:value-of select="$class"/>
         <xsl:text>.Sets&#10;</xsl:text>
         <xsl:text>is new Abstract_Sets.Unbounded&#10;</xsl:text>
-        <xsl:text>  (Hash =&gt; </xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> (Hash =&gt; </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
-        <xsl:text>   Buckets =&gt; </xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Buckets =&gt; </xsl:text>
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
-        <xsl:text>   Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:text>   Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:value-of select="$continuation-indent"/>
+        <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -176,7 +187,8 @@
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
 
@@ -186,11 +198,13 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
     <xsl:text>generic&#10;</xsl:text>
-    <xsl:text>  with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Selection_Function&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
 
@@ -199,14 +213,17 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
     <xsl:text>generic&#10;</xsl:text>
-    <xsl:text>  with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function&#10;</xsl:text>
-    <xsl:text>   (The_Collection : </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(The_Collection : </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
 
@@ -233,24 +250,44 @@
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
-    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
-    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
-    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
-    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
-    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
-    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
-    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:text>  Copy_Instances (The_Container, Result);&#10;</xsl:text>
-    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Copy_Instances (The_Container, Result);&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>return Result;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances;&#10;</xsl:text>
@@ -264,25 +301,47 @@
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Selection_Function&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
-    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
-    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
-    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
-    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
-    <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
-    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
-    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
-    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Add =&gt; Collections.Append);&#10;4/xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:text>  Filter (The_Container, Result);&#10;</xsl:text>
-    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Filter (The_Container, Result);&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>return Result;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Selection_Function;&#10;</xsl:text>
@@ -295,28 +354,51 @@
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function&#10;</xsl:text>
-    <xsl:text>   (The_Collection : </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(The_Collection : </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection)&#10;</xsl:text>
-    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
-    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
-    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
-    <xsl:text>      Source =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:text>      From =&gt; Collection,&#10;</xsl:text>
-    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
-    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
-    <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
-    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
-    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
-    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Source =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> From =&gt; Collection,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$continuation-indent"/>
+    <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Result : Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:text>  Filter (The_Collection, Result);&#10;</xsl:text>
-    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>Filter (The_Collection, Result);&#10;</xsl:text>
+    <xsl:value-of select="$standard-indent"/>
+    <xsl:text>return Result;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function;&#10;</xsl:text>
