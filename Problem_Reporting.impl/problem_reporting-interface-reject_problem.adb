@@ -1,3 +1,5 @@
+with ColdFrame.Instances;
+
 with Problem_Reporting.Rejected_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
