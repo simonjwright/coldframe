@@ -12,8 +12,29 @@
     logical_models 	(list unit_reference_list
 	(object Class "Monitor"
 	    quid       	"3C53D8D401BD"
-	    stereotype 	"singleton"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3C75000E014B"
+		    stereotype 	"message"
+		    label      	"Tick"
+		    supplier   	"Logical View::States::Device"
+		    quidu      	"3C74FFF7019E"))
 	    operations 	(list Operations
+		(object Operation "setup"
+		    quid       	"3C75D5890302"
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "receive"
+		    quid       	"3C75D539016D"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "m"
+			    type       	"Tick"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "set heartbeat timeout"
 		    quid       	"3C53D91F01F5"
 		    concurrency 	"Sequential"
@@ -40,6 +61,10 @@
 		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "dev"
+		    quid       	"3C75D4D401D6"
+		    stereotype 	"id"
+		    type       	"Device")
 		(object ClassAttribute "heartbeat timer"
 		    quid       	"3C53D8E9025C"
 		    type       	"Timer")
@@ -55,11 +80,8 @@
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C5179650218"
-				label      	""
 				supplier   	"warmup"
 				quidu      	"3C5176450389"
-				Event      	(object Event "start"
-				    quid       	"3C51954F032B")
 				sendEvent  	(object sendEvent
 				    quid       	"3C517965021B")))
 			type       	"StartState")
@@ -304,7 +326,7 @@
 			zoom       	92
 			max_height 	28350
 			max_width  	21600
-			origin_x   	510
+			origin_x   	1684
 			origin_y   	0
 			items      	(list diagram_item_list
 			    (object StateView "StartState" "$UNNAMED$0" @1
@@ -474,7 +496,7 @@
 				quidu      	"3C517765023F"
 				compartment 	(object Compartment
 				    Parent_View 	@9
-				    location   	(3120, 704)
+				    location   	(3120, 703)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -503,7 +525,7 @@
 				quidu      	"3C5177F80138"
 				compartment 	(object Compartment
 				    Parent_View 	@10
-				    location   	(3257, 1680)
+				    location   	(3257, 1679)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -612,11 +634,12 @@
 				label      	(object SegLabel @20
 				    Parent_View 	@19
 				    location   	(1549, 496)
+				    hidden     	TRUE
 				    anchor_loc 	1
 				    nlines     	1
-				    max_width  	81
+				    max_width  	60
 				    justify    	0
-				    label      	"start"
+				    label      	""
 				    pctDist    	0.500000
 				    height     	45
 				    orientation 	0)
@@ -703,10 +726,164 @@
 			    (object TransView "" @28
 				label      	(object SegLabel @29
 				    Parent_View 	@28
+				    location   	(2077, 1636)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	340
+				    justify    	0
+				    label      	"warmup timeout"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3C51768D0001"
+				client     	@3
+				supplier   	@5
+				line_style 	0
+				x_offset   	FALSE)
+			    (object NoteView @30
+				location   	(752, 1440)
+				label      	(object ItemLabel
+				    Parent_View 	@30
+				    location   	(522, 1310)
+				    fill_color 	13434879
+				    nlines     	5
+				    max_width  	425
+				    label      	"Heartbeat timeout can't occur in these states, because the 2s warmup timeout is shorter.")
+				line_color 	3342489
+				fill_color 	13434879
+				width      	485
+				height     	273)
+			    (object AttachView "" @31
+				stereotype 	TRUE
+				line_color 	3342489
+				client     	@30
+				supplier   	@3
+				line_style 	0)
+			    (object StateView "Normal" "first heartbeat" @32
+				location   	(1504, 1184)
+				label      	(object ItemLabel
+				    Parent_View 	@32
+				    location   	(1504, 1116)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	656
+				    justify    	0
+				    label      	"first heartbeat")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3C5182EE0220"
+				compartment 	(object Compartment
+				    Parent_View 	@32
+				    location   	(1185, 1157)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	3
+				    max_width  	659
+				    compartmentItems 	(list Compartment
+					"entry/ clear heartbeat timeout"
+					"entry/ set heartbeat timeout"
+					"entry/ set 2 second warmup timeout"))
+				width      	753
+				height     	251
+				autoResize 	TRUE)
+			    (object TransView "" @33
+				label      	(object SegLabel @34
+				    Parent_View 	@33
+				    location   	(1549, 944)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	177
+				    justify    	0
+				    label      	"heartbeat"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3C5182FF0348"
+				client     	@2
+				supplier   	@32
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @35
+				label      	(object SegLabel @36
+				    Parent_View 	@35
+				    location   	(2104, 557)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	393
+				    justify    	0
+				    label      	"heartbeat timeout"
+				    pctDist    	0.468869
+				    height     	14
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3C518325012D"
+				client     	@2
+				supplier   	@4
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @37
+				label      	(object SegLabel @38
+				    Parent_View 	@37
+				    location   	(1195, 1465)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	177
+				    justify    	0
+				    label      	"heartbeat"
+				    pctDist    	0.467283
+				    height     	33
+				    orientation 	1)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3C518376008D"
+				client     	@32
+				supplier   	@3
+				vertices   	(list Points
+				    (1359, 1308)
+				    (1212, 1437)
+				    (1395, 1582))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @39
+				label      	(object SegLabel @40
+				    Parent_View 	@39
+				    location   	(2054, 1451)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	340
+				    justify    	0
+				    label      	"warmup timeout"
+				    pctDist    	0.479746
+				    height     	3
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3C518398017E"
+				client     	@32
+				supplier   	@5
+				line_style 	0
+				x_offset   	FALSE)
+			    (object AttachView "" @41
+				stereotype 	TRUE
+				line_color 	3342489
+				client     	@30
+				supplier   	@32
+				line_style 	0)
+			    (object TransView "" @42
+				label      	(object SegLabel @43
+				    Parent_View 	@42
 				    location   	(3275, 924)
 				    anchor_loc 	1
 				    nlines     	1
-				    max_width  	349
+				    max_width  	393
 				    justify    	0
 				    label      	"heartbeat timeout"
 				    pctDist    	0.418663
@@ -719,9 +896,9 @@
 				supplier   	@11
 				line_style 	0
 				x_offset   	FALSE)
-			    (object TransView "" @30
-				label      	(object SegLabel @31
-				    Parent_View 	@30
+			    (object TransView "" @44
+				label      	(object SegLabel @45
+				    Parent_View 	@44
 				    location   	(3814, 1199)
 				    anchor_loc 	1
 				    nlines     	1
@@ -741,180 +918,11 @@
 				    (3791, 1150)
 				    (3530, 1582))
 				line_style 	0
-				x_offset   	FALSE)
-			    (object TransView "" @32
-				label      	(object SegLabel @33
-				    Parent_View 	@32
-				    location   	(2077, 1636)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	340
-				    justify    	0
-				    label      	"warmup timeout"
-				    pctDist    	0.500000
-				    height     	45
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C51768D0001"
-				client     	@3
-				supplier   	@5
-				line_style 	0
-				x_offset   	FALSE)
-			    (object NoteView @34
-				location   	(752, 1440)
-				label      	(object ItemLabel
-				    Parent_View 	@34
-				    location   	(522, 1310)
-				    fill_color 	13434879
-				    nlines     	5
-				    max_width  	425
-				    label      	"Heartbeat timeout can't occur in these states, because the 2s warmup timeout is shorter.")
-				line_color 	3342489
-				fill_color 	13434879
-				width      	485
-				height     	273)
-			    (object AttachView "" @35
-				stereotype 	TRUE
-				line_color 	3342489
-				client     	@34
-				supplier   	@3
-				line_style 	0)
-			    (object StateView "Normal" "first heartbeat" @36
-				location   	(1504, 1184)
-				label      	(object ItemLabel
-				    Parent_View 	@36
-				    location   	(1504, 1116)
-				    fill_color 	13434879
-				    anchor_loc 	1
-				    nlines     	2
-				    max_width  	656
-				    justify    	0
-				    label      	"first heartbeat")
-				icon_style 	"Label"
-				line_color 	3342489
-				fill_color 	13434879
-				quidu      	"3C5182EE0220"
-				compartment 	(object Compartment
-				    Parent_View 	@36
-				    location   	(1185, 1157)
-				    icon_style 	"Label"
-				    fill_color 	13434879
-				    anchor     	2
-				    nlines     	3
-				    max_width  	659
-				    compartmentItems 	(list Compartment
-					"entry/ clear heartbeat timeout"
-					"entry/ set heartbeat timeout"
-					"entry/ set 2 second warmup timeout"))
-				width      	753
-				height     	251
-				autoResize 	TRUE)
-			    (object TransView "" @37
-				label      	(object SegLabel @38
-				    Parent_View 	@37
-				    location   	(1549, 944)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	177
-				    justify    	0
-				    label      	"heartbeat"
-				    pctDist    	0.500000
-				    height     	45
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C5182FF0348"
-				client     	@2
-				supplier   	@36
-				line_style 	0
-				x_offset   	FALSE)
-			    (object TransView "" @39
-				label      	(object SegLabel @40
-				    Parent_View 	@39
-				    location   	(2104, 557)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	349
-				    justify    	0
-				    label      	"heartbeat timeout"
-				    pctDist    	0.468869
-				    height     	14
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C518325012D"
-				client     	@2
-				supplier   	@4
-				line_style 	0
-				x_offset   	FALSE)
-			    (object TransView "" @41
-				label      	(object SegLabel @42
-				    Parent_View 	@41
-				    location   	(1195, 1465)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	177
-				    justify    	0
-				    label      	"heartbeat"
-				    pctDist    	0.467283
-				    height     	33
-				    orientation 	1)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C518376008D"
-				client     	@36
-				supplier   	@3
-				vertices   	(list Points
-				    (1359, 1308)
-				    (1212, 1437)
-				    (1395, 1582))
-				line_style 	0
-				x_offset   	FALSE)
-			    (object TransView "" @43
-				label      	(object SegLabel @44
-				    Parent_View 	@43
-				    location   	(2054, 1451)
-				    anchor_loc 	1
-				    nlines     	1
-				    max_width  	340
-				    justify    	0
-				    label      	"warmup timeout"
-				    pctDist    	0.479746
-				    height     	3
-				    orientation 	0)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"3C518398017E"
-				client     	@36
-				supplier   	@5
-				line_style 	0
-				x_offset   	FALSE)
-			    (object AttachView "" @45
-				stereotype 	TRUE
-				line_color 	3342489
-				client     	@34
-				supplier   	@36
-				line_style 	0)
-			    (object NoteView @46
-				location   	(816, 352)
-				label      	(object ItemLabel
-				    Parent_View 	@46
-				    location   	(656, 214)
-				    fill_color 	13434879
-				    nlines     	5
-				    max_width  	284
-				    label      	"Singletons need an event to get them out of their initial state.")
-				line_color 	3342489
-				fill_color 	13434879
-				width      	344
-				height     	289)
-			    (object AttachView "" @47
-				stereotype 	TRUE
-				line_color 	3342489
-				client     	@46
-				supplier   	@19
-				line_style 	0)))))))
+				x_offset   	FALSE))))))
+	(object Class "Device"
+	    quid       	"3C74FFF7019E"
+	    documentation 	"[[ enumeration : input, output ]]"
+	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3C4EDD400112"
@@ -925,38 +933,31 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::States::Monitor" @48
+		(object ClassView "Class" "Logical View::States::Monitor" @46
 		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 480)
 		    label      	(object ItemLabel
-			Parent_View 	@48
-			location   	(222, 271)
+			Parent_View 	@46
+			location   	(222, 174)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	612
 			justify    	0
 			label      	"Monitor")
-		    stereotype 	(object ItemLabel
-			Parent_View 	@48
-			location   	(222, 221)
-			fill_color 	13434879
-			anchor     	10
-			nlines     	1
-			max_width  	612
-			justify    	0
-			label      	"<<singleton>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3C53D8D401BD"
 		    compartment 	(object Compartment
-			Parent_View 	@48
-			location   	(222, 332)
+			Parent_View 	@46
+			location   	(222, 235)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	8
+			nlines     	11
 			max_width  	618
 			compartmentItems 	(list Compartment
 			    "- heartbeat timer : Timer"
@@ -967,13 +968,13 @@
 			    "+ clear heartbeat timeout()"
 			    "+ clear warmup timeout()"))
 		    width      	630
-		    height     	542
+		    height     	636
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object NoteView @49
+		(object NoteView @47
 		    location   	(528, 1152)
 		    label      	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@47
 			location   	(184, 1093)
 			fill_color 	13434879
 			nlines     	2
@@ -984,9 +985,83 @@
 		    width      	713
 		    height     	131
 		    quidu      	"3C51670A02F9")
-		(object AttachView "" @50
+		(object AttachView "" @48
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@47
+		    supplier   	@46
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::States::Device" @49
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1936, 480)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(1845, 450)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"Device")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@49
+			location   	(1845, 400)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C74FFF7019E"
+		    width      	200
+		    height     	184
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "Tick" @50
+		    label      	(object ItemLabel
+			Parent_View 	@50
+			location   	(1339, 480)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	183
+			justify    	0
+			label      	"Tick")
+		    stereotype 	(object SegLabel @51
+			Parent_View 	@50
+			location   	(1339, 429)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<message>>"
+			pctDist    	0.500000
+			height     	52
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"3C75000E014B"
+		    client     	@46
+		    supplier   	@49
+		    line_style 	0)
+		(object NoteView @52
+		    location   	(1936, 896)
+		    label      	(object ItemLabel
+			Parent_View 	@52
+			location   	(1798, 836)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	240
+			label      	"enumeration: Input, Output")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	300
+		    height     	132)
+		(object AttachView "" @53
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    client     	@49
-		    supplier   	@48
+		    supplier   	@52
 		    line_style 	0)))))
