@@ -10,18 +10,30 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-logging_support.adb,v $
---  $Revision: e91d25f64219 $
---  $Date: 2002/10/01 17:43:10 $
+--  $Revision: e78eddd28392 $
+--  $Date: 2003/10/04 06:36:26 $
 --  $Author: simon $
 
-with GNAT.IO;
+with Ada.Text_IO;
+with BC.Support.Synchronization;
 
 package body ColdFrame.Project.Logging_Support is
 
 
+   --  Used to protect access to the "output log message" "resource".
+   Sem : aliased BC.Support.Synchronization.Semaphore;
+
+
    procedure Log (Severity : Severity_Code; Message : String) is
+      --  Lock the resource ..
+      L : BC.Support.Synchronization.Lock (Sem'Access);
+      pragma Warnings (Off, L);
+      --  .. resource now locked.
    begin
-      GNAT.IO.Put_Line ("ColdFrame: " & Severity'Img & ": " & Message);
+      Ada.Text_IO.Put_Line ("ColdFrame: " & Severity'Img & ": " & Message);
+      Ada.Text_IO.Flush;
+      -- to be sure not to lose anything in case of later exception
+      --  (particularly in the debugger).
    end Log;
 
 
