@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 67a341890419 2003/05/13 20:12:02 simon $ -->
+<!-- $Id: ada-class.xsl,v 454bb4eafced 2003/05/17 21:12:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -725,8 +725,8 @@
       <xsl:text>end T;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Child subprogram bodies for individual operations. -->
-    <xsl:call-template name="operation-bodies"/>
+    <!-- Separate subprogram bodies for individual operations. -->
+    <xsl:call-template name="operation-separate-bodies"/>
 
   </xsl:template>
 
