@@ -12,7 +12,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
 |
-|[[ revision : $Id: Digital_IO.cat,v 5bb69c85c5ad 2002/12/28 17:28:48 simon $ ]]
+|[[ revision : $Id: Digital_IO.cat,v 001fa38a3c0f 2002/12/30 18:02:08 simon $ ]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -173,7 +173,8 @@
 |floor 3,
 |lamp a,
 |lamp b,
-|lamp c
+|lamp c,
+|lamp d
 |]]
 	    
 	    stereotype 	"type"))
@@ -205,6 +206,14 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF783026E"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(386, 1108)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	665)
 		    width      	686
 		    height     	438
 		    annotation 	8
@@ -214,10 +223,10 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1456, 1056)
+		    location   	(1455, 1050)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1347, 983)
+			location   	(1346, 977)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	218
@@ -227,6 +236,14 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF7950224"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1346, 1033)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	215)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -234,7 +251,7 @@
 		(object InheritView "g1" @3
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1199, 1126)
+			location   	(1200, 1121)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -273,6 +290,14 @@
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCF80601AE"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(2376, 310)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	322)
 		    width      	336
 		    height     	264
 		    annotation 	8
@@ -295,6 +320,14 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF78D0241"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(1346, 1528)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	215)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -341,6 +374,14 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA6E0024"
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(175, 338)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	837)
 		    width      	852
 		    height     	220
 		    annotation 	8
@@ -372,6 +413,14 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA83024B"
+		    compartment 	(object Compartment
+			Parent_View 	@8
+			location   	(1180, 316)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	845)
 		    width      	858
 		    height     	264
 		    annotation 	8
@@ -411,4 +460,4 @@
 		    location   	(192, 2288)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v 5bb69c85c5ad 2002/12/28 17:28:48 simon $")))))
+		    label      	"$Id: Digital_IO.cat,v 001fa38a3c0f 2002/12/30 18:02:08 simon $")))))

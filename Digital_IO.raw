@@ -4,16 +4,19 @@
 <date>
 <year>2002</year>
 <month>12</month>
-<day>17</day>
-<time>20:51</time>
+<day>30</day>
+<time>16:52</time>
 </date>
-<documentation></documentation>
+<documentation>This domain manages digital (discrete) input/output.
+It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
+
+[[ revision : $Id: Digital_IO.raw,v 001fa38a3c0f 2002/12/30 18:02:08 simon $ ]]</documentation>
 <classes>
 <class>
 <name>Signal</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>Signals may be Input (from the hardware or HCI) or Output (to the hardware or HCI).</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>s</name>
@@ -31,13 +34,13 @@
 <operations>
 <operation stereotype="init">
 <name>initialize</name>
-<documentation></documentation>
+<documentation>Creates all the Signals.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="abstract">
 <name>changed</name>
-<documentation></documentation>
+<documentation>Called when a signal has changed.</documentation>
 <parameters>
 </parameters>
 </operation>
@@ -50,7 +53,7 @@
 </operation>
 <operation>
 <name>set state</name>
-<documentation></documentation>
+<documentation>Set the signal's state as indicated; call Changed if it has changed.</documentation>
 <parameters>
 <parameter>
 <name>to</name>
@@ -75,13 +78,13 @@
 <name>Input</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>Input Signals (from the hardware or, in this case, the HCI) support change notification via callback.</documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>changed</name>
-<documentation></documentation>
+<documentation>Called when the signal has changed state; notify any registered observers of Signal State.</documentation>
 <parameters>
 </parameters>
 </operation>
@@ -93,13 +96,13 @@
 <name>Output</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>Output signals are polled by the HCI.</documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>changed</name>
-<documentation></documentation>
+<documentation>Called when the signal has changed; no action for output signals (the HCI polls).</documentation>
 <parameters>
 </parameters>
 </operation>
@@ -111,34 +114,24 @@
 <name>Signal State</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[callback : 5 ]]</documentation>
+<documentation>Provides application domains with callback facilities for input signal state changes.
+
+[[callback : 5 ]]</documentation>
 <attributes>
 <attribute>
 <name>s</name>
-<documentation></documentation>
+<documentation>The name of the signal that has changed.</documentation>
 <type>Signal Name</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>state</name>
-<documentation></documentation>
+<documentation>The state that the signal has changed to.</documentation>
 <type>Boolean</type>
 <initial></initial>
 </attribute>
 </attributes>
 <operations>
-<operation stereotype="access">
-<name>receiver</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>s</name>
-<documentation></documentation>
-<type>Signal State</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
 </operations>
 <events>
 </events>
@@ -147,13 +140,14 @@
 <name>Application</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>The interface offered to support applications.
+State changes are visible via callback on Signal State.</documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>set output</name>
-<documentation></documentation>
+<documentation>Sets the specified output signal to the given state.</documentation>
 <parameters>
 <parameter>
 <name>s</name>
@@ -177,13 +171,13 @@
 <name>HCI</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>The interface offered to support HCI.</documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>get state</name>
-<documentation></documentation>
+<documentation>Returns the state of the specified signal.</documentation>
 <return>Boolean</return>
 <parameters>
 <parameter>
@@ -196,7 +190,7 @@
 </operation>
 <operation>
 <name>set input</name>
-<documentation></documentation>
+<documentation>Sets the specified input signal to the given value.</documentation>
 <parameters>
 <parameter>
 <name>of signal</name>
@@ -220,14 +214,18 @@
 <name>Signal Name</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration:
+<documentation>Names the supported digital signals.
+The 'floor' signals are inputs, the 'lamp' signals are outputs.
+
+[[ enumeration:
 floor 0,
 floor 1,
 floor 2,
 floor 3,
 lamp a,
 lamp b,
-lamp c
+lamp c,
+lamp d
 ]]</documentation>
 <attributes>
 </attributes>
