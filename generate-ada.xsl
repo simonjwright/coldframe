@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: generate-ada.xsl,v 4a3b043da5de 2002/10/11 05:37:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -137,7 +137,7 @@
       
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
-      <xsl:text>: exception;&#10;</xsl:text>
+      <xsl:text> : exception;&#10;</xsl:text>
       <xsl:call-template name="commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
