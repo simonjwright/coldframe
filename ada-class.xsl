@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v dc5b65067404 2001/06/13 18:47:18 simon $ -->
+<!-- $Id: ada-class.xsl,v 1582fa1fdb7f 2001/06/16 16:35:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -42,6 +42,8 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
 
+    <xsl:text>  procedure Initialize;&#10;</xsl:text>
+
     <xsl:choose>
 
       <xsl:when test="not(@singleton)">
@@ -67,7 +69,7 @@
         
       </xsl:when>
 
-      <xsl:when test="singleton">
+      <xsl:when test="@singleton and not(@interface)">
 
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
@@ -334,116 +336,119 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
-    <!-- If it's an inactive singleton with no attributes and no operations,
-         there's no body. -->
-    <!-- XXX If it's not a singleton and has no attributes or operations,
-         it doesn't matter very much if it won't compile. -->
-    <xsl:if test="not(@singleton) or @active or attribute or operation">
-
-      <!-- Any context clauses needed for the class body .. -->
-      <xsl:call-template name="class-body-context"/>
+    <!-- Any context clauses needed for the class body .. -->
+    <xsl:call-template name="class-body-context"/>
+    
+    <!-- .. start the body .. -->
+    <xsl:text>package body </xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text> is&#10;</xsl:text>
+    
+    <xsl:text>  procedure Initialize is separate;&#10;</xsl:text>
+    
+    <xsl:if test="@active">
+      <xsl:text>  task body T is separate;&#10;</xsl:text>
+    </xsl:if>
+    
+    <xsl:choose>
       
-      <!-- .. start the body .. -->
-      <xsl:text>package body </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text> is&#10;</xsl:text>
+      <xsl:when test="not(@singleton)">
+        
+        <!-- .. the creation, simple find, and deletion operations .. -->
+        <xsl:call-template name="create-function-body"/>
+        
+        <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+        <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>    else&#10;</xsl:text>
+        <xsl:text>      return null;&#10;</xsl:text>
+        <xsl:text>    end if;&#10;</xsl:text>
+        <xsl:text>  end Find;&#10;</xsl:text>
+        
+        <xsl:text>  procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
+        <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
+        <xsl:text>    H : Handle;&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>    Free (H);&#10;</xsl:text>
+        <xsl:text>  end Delete;&#10;</xsl:text>
+        
+        <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <!-- This check is because of what seems to be a GNAT error for
+             fixed-size storage pools. -->
+        <xsl:text>    if This = null then&#10;</xsl:text>
+        <xsl:text>      raise Constraint_Error;&#10;</xsl:text>
+        <xsl:text>    end if;&#10;</xsl:text>
+        <xsl:text>    Maps.Unbind&#10;</xsl:text>
+        <xsl:text>      (The_Container,&#10;</xsl:text>
+        <xsl:text>       (</xsl:text>
+        <xsl:for-each select="attribute[@identifier='yes']">
+          <xsl:call-template name="attribute-name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;      </xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>));&#10;</xsl:text>
+        <xsl:text>    Free (This);&#10;</xsl:text>
+        <xsl:text>  end Delete;&#10;</xsl:text>
+        
+        <!-- .. subtype enumeration support, if required .. -->
+        <xsl:call-template name="supertype-bodies"/>
+        
+      </xsl:when>
       
-      <xsl:if test="@active">
-        <xsl:text>  task body T is separate;&#10;</xsl:text>
-      </xsl:if>
-
-      <xsl:choose>
-
-        <xsl:when test="not(@singleton)">
-          
-          <!-- .. the creation, simple find, and deletion operations .. -->
-          <xsl:call-template name="create-function-body"/>
-          
-          <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <xsl:text>    if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-          <xsl:text>      return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-          <xsl:text>    else&#10;</xsl:text>
-          <xsl:text>      return null;&#10;</xsl:text>
-          <xsl:text>    end if;&#10;</xsl:text>
-          <xsl:text>  end Find;&#10;</xsl:text>
-          
-          <xsl:text>  procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
-          <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
-          <xsl:text>    H : Handle;&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <xsl:text>    H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-          <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-          <xsl:text>    Free (H);&#10;</xsl:text>
-          <xsl:text>  end Delete;&#10;</xsl:text>
-          
-          <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <!-- This check is because of what seems to be a GNAT error for
-               fixed-size storage pools. -->
-          <xsl:text>    if This = null then&#10;</xsl:text>
-          <xsl:text>      raise Constraint_Error;&#10;</xsl:text>
-          <xsl:text>    end if;&#10;</xsl:text>
-          <xsl:text>    Maps.Unbind&#10;</xsl:text>
-          <xsl:text>      (The_Container,&#10;</xsl:text>
-          <xsl:text>       (</xsl:text>
-          <xsl:for-each select="attribute[@identifier='yes']">
-            <xsl:call-template name="attribute-name"/>
-            <xsl:text> =&gt; This.</xsl:text>
-            <xsl:call-template name="attribute-name"/>
-            <xsl:if test="position() &lt; last()">
-              <xsl:text>,&#10;      </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:text>));&#10;</xsl:text>
-          <xsl:text>    Free (This);&#10;</xsl:text>
-          <xsl:text>  end Delete;&#10;</xsl:text>
-          
-          <!-- .. subtype enumeration support, if required .. -->
-          <xsl:call-template name="supertype-bodies"/>
-          
-        </xsl:when>
-
-        <xsl:when test="@singleton">
-
-          <!-- XXX Uses a GNAT-specific attribute. -->
-          <xsl:text>  function Find return Handle is&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <xsl:text>    return This'Unrestricted_Access;&#10;</xsl:text>
-          <xsl:text>  end Find;&#10;</xsl:text>
-
-        </xsl:when>
-
-      </xsl:choose>
+      <xsl:when test="@singleton and not(@interface)">
+        
+        <!-- XXX Uses a GNAT-specific attribute. -->
+        <xsl:text>  function Find return Handle is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    return This'Unrestricted_Access;&#10;</xsl:text>
+        <xsl:text>  end Find;&#10;</xsl:text>
+        
+      </xsl:when>
       
-      <!-- .. attribute accessors .. -->
-      <xsl:apply-templates mode="attribute-set-body"/>
-      <xsl:apply-templates mode="attribute-get-body"/>
-        
-      <xsl:if test="not(@singleton)">
-        
-        <!-- .. the hash function stub .. -->
-        <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
-        
-      </xsl:if>
-
-      <!-- .. operation stubs .. -->
-      <xsl:apply-templates mode="operation-body-stub"/>
+    </xsl:choose>
+    
+    <!-- .. attribute accessors .. -->
+    <xsl:apply-templates mode="attribute-set-body"/>
+    <xsl:apply-templates mode="attribute-get-body"/>
+    
+    <xsl:if test="not(@singleton)">
       
-      <!-- and close. -->
-      <xsl:text>end </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>;&#10;</xsl:text>
-
-      <xsl:if test="not(@singleton)">
-        
-        <!-- Output the separate hash function body. -->
-        <xsl:call-template name="hash-function"/>
-        
-      </xsl:if>
+      <!-- .. the hash function stub .. -->
+      <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
       
     </xsl:if>
+    
+    <!-- .. operation stubs .. -->
+    <xsl:apply-templates mode="operation-body-stub"/>
+    
+    <!-- and close. -->
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+    <!-- The separate Initialize body. -->
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:text>procedure Initialize is&#10;</xsl:text>
+    <xsl:text>begin &#10;</xsl:text>
+    <xsl:text>  null;&#10;</xsl:text>
+    <xsl:text>end Initialize;&#10;</xsl:text>
 
+    <xsl:if test="not(@singleton)">
+      
+      <!-- Output the separate hash function body. -->
+      <xsl:call-template name="hash-function"/>
+      
+    </xsl:if>
+    
     <xsl:if test="@active">
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
