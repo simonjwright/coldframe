@@ -50,6 +50,9 @@ SAXON = java -cp $(TOP)/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 # No user-servicable parts below
 
+# Ensure we have a sensible default target
+all::
+
 ifeq ($(STACK_DUMP), yes)
   NORM_STACK_DUMP = --stack-dump
 else

@@ -50,6 +50,9 @@ SAXON = $(TOP)/Saxon/saxon
 
 # No user-servicable parts below
 
+# Ensure we have a sensible default target
+all::
+
 ifeq ($(STACK_DUMP), yes)
   NORM_STACK_DUMP = --stack-dump
 else
