@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
+<!-- $Id: ada-state.xsl,v 262342ba3a49 2003/08/30 19:30:20 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -228,6 +228,7 @@
             <xsl:with-param
               name="tr"
               select="../transition[event=$e and source=$s]"/>
+            <xsl:with-param name="indent" select="$IIII"/>
           </xsl:call-template>
 
         </xsl:when>
@@ -326,6 +327,9 @@
     <!-- The (not ignored) transition we have to generate code for. -->
     <xsl:param name="tr"/>
 
+    <!-- Indentation. -->
+    <xsl:param name="indent"/>
+
     <xsl:message>
       <xsl:text>state </xsl:text>
       <xsl:value-of select="name"/>
@@ -337,7 +341,7 @@
       <xsl:value-of select="$tr/target"/>
     </xsl:message>
 
-    <xsl:value-of select="$IIII"/>
+    <xsl:value-of select="$indent"/>
     <xsl:text>This.State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
@@ -348,6 +352,7 @@
         <xsl:with-param name="class" select="../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
         <xsl:with-param name="operation" select="$tr/action"/>
+        <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
     </xsl:if>
 
@@ -360,6 +365,7 @@
         <xsl:with-param name="class" select="../../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
         <xsl:with-param name="operation" select="."/>
+        <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
     </xsl:for-each>
     
@@ -369,7 +375,7 @@
               or ../state[name=$tr/target]/action='Delete'"/>
 
     <xsl:if test="not($deleting)">
-      <xsl:value-of select="$IIII"/>
+      <xsl:value-of select="$indent"/>
       <xsl:text>This.Old_State_Machine_State := </xsl:text>
       <xsl:value-of select="$tr/target"/>
       <xsl:text>;&#10;</xsl:text>      
@@ -415,14 +421,12 @@
           </xsl:message>
 
           <!-- Need to change context to call perform-transition from the
-               current target state. Need a node-set. -->
+               current target state. -->
 
-          <xsl:variable name="target-state">
-            <xsl:value-of select="../state[name=$drop-through/source]"/>
-          </xsl:variable>
           <xsl:for-each select="../state[name=$drop-through/source]">
             <xsl:call-template name="perform-transition">
               <xsl:with-param name="tr" select="$drop-through"/>
+              <xsl:with-param name="indent" select="$indent"/>
             </xsl:call-template>
           </xsl:for-each>
 
@@ -448,6 +452,9 @@
 
     <!-- The operation name. -->
     <xsl:param name="operation"/>
+
+    <!-- The indentation. -->
+    <xsl:param name="indent"/>
 
     <xsl:variable name="single" select="$class/@singleton"/>
     <xsl:variable name="op" select="$class/operation[name=$operation]"/>
@@ -530,14 +537,14 @@
           
           <xsl:when test="$params">
             
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (Ev.Payload);&#10;</xsl:text>
             
           </xsl:when>
           
           <xsl:otherwise>
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text>;&#10;</xsl:text>               
           </xsl:otherwise>
@@ -561,31 +568,35 @@
                       (Ev'Unrestricted_Access);
                  end;
                  -->
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:text>declare&#10;</xsl:text>
-            <xsl:value-of select="$IIIII"/>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
             <xsl:text>H : Handle := This;&#10;</xsl:text>
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:text>begin&#10;</xsl:text>
-            <xsl:value-of select="$IIIII"/>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
             <xsl:text>Delete (H);&#10;</xsl:text>
-            <xsl:value-of select="$IIIII"/>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$I"/>
             <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
-            <xsl:value-of select="$IIIIIC"/>
+            <xsl:value-of select="$indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:text>end;&#10;</xsl:text>
             
           </xsl:when>
           
           <xsl:when test="$params">
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (This, Ev.Payload);&#10;</xsl:text>
           </xsl:when>
           
           <xsl:otherwise>
-            <xsl:value-of select="$IIII"/>
+            <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (This);&#10;</xsl:text>
           </xsl:otherwise>
@@ -884,49 +895,41 @@
        apply an unguarded transition (if any) from the initial state. -->
   <xsl:template name="initialize-state-machine">
     
-    <!-- standard: if there is an unguarded transition from the initial state
+    <!-- if there is an unguarded transition from the initial state
          declare
-            Creation : ColdFrame.Project.Events.Creation.Event (Result);
+            This : constant Handle renames Result;
+            Ev : ColdFrame.Project.Events.Creation.Event (Result);
          begin
-            Enter_{next-state} (Result, Creation);
-         end;
-         -->
-
-    <!-- singleton: if there is an unguarded transition from the initial state
-         declare
-            Creation : ColdFrame.Project.Events.Creation.Event (Result);
-         begin
-            Enter_{next-state} (Creation);
+            {perform-transition}
          end;
          -->
 
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
     <xsl:variable
-      name="next"
-      select="statemachine/transition[source=$init and not (event)]/target"/>
+      name="tr"
+      select="statemachine/transition[source=$init and not (event)]"/>
 
-    <xsl:if test="$next">
+    <xsl:if test="$tr">
 
       <xsl:value-of select="$II"/>
       <xsl:text>declare&#10;</xsl:text>
+      <!-- fudge with This to avoid extra parameters! -->
       <xsl:value-of select="$III"/>
-      <xsl:text>Creation : ColdFrame.Project.Events.Creation.Event (Result);&#10;</xsl:text>
+      <xsl:text>This : Handle renames Result;&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>Ev : ColdFrame.Project.Events.Creation.Event (This);&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>begin&#10;</xsl:text>
 
-      <xsl:value-of select="$III"/>
-      <xsl:text>Enter_</xsl:text>
-
-      <xsl:value-of select="$next"/>
-
-      <xsl:choose>
-        <xsl:when test="@singleton">
-          <xsl:text> (Creation);&#10;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text> (Result, Creation);&#10;</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
+      <!-- Need to change context to call perform-transition from the
+           target state. -->
+      
+      <xsl:for-each select="statemachine/state[name=$tr/source]">
+        <xsl:call-template name="perform-transition">
+          <xsl:with-param name="tr" select="$tr"/>
+          <xsl:with-param name="indent" select="$III"/>
+        </xsl:call-template>
+      </xsl:for-each>
 
       <xsl:value-of select="$II"/>
       <xsl:text>end;&#10;</xsl:text>
