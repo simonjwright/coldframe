@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v f3ba81af5d37 2000/04/08 07:35:59 simon $
+'$Id: ddf.ebs,v a637235ec7a9 2000/04/21 08:25:59 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -88,14 +88,16 @@ Sub DumpAssociation (assoc As Association)
 	Print #1, "<association>"
 	Print #1, "<name>" & assoc.Name & "</name>"
 	Print #1, "<role><end>1</end>"
-	Print #1, "<name>" & assoc.Role2.Name & "</name>"
-	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
-	Print #1, "<cardinality>" & assoc.Role1.Cardinality & "</cardinality>"
-	Print #1, "</role>"
-	Print #1, "<role><end>2</end>"
 	Print #1, "<name>" & assoc.Role1.Name & "</name>"
 	Print #1, "<classname>" & assoc.Role2.Class.Name & "</classname>"
 	Print #1, "<cardinality>" & assoc.Role2.Cardinality & "</cardinality>"
+	Print #1, "<exportcontrol>" & assoc.Role2.ExportControl & "</exportcontrol>"
+	Print #1, "</role>"
+	Print #1, "<role><end>2</end>"
+	Print #1, "<name>" & assoc.Role2.Name & "</name>"
+	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
+	Print #1, "<cardinality>" & assoc.Role1.Cardinality & "</cardinality>"
+	Print #1, "<exportcontrol>" & assoc.Role1.ExportControl & "</exportcontrol>"
 	Print #1, "</role>"
 	If Not assoc.LinkClass Is Nothing Then
 		Print #1, "<associative>" & assoc.LinkClass.Name & "</associative>"
