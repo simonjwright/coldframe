@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 3daa7f1e04bd 2002/02/03 10:26:21 simon $ -->
+<!-- $Id: support.html,v 9e1314113ec8 2002/06/11 19:00:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -18,8 +18,7 @@ user-interesting ones are
 
 <dt><tt>ColdFrame.Exceptions</tt>
 
-<dd>Provides exceptions. These are at present just renamings of <a
-href="use-of-bcs.html">Booch</a> exceptions.
+<dd>Provides exceptions.
 
 <dl>
 
@@ -31,7 +30,8 @@ href="use-of-bcs.html">Booch</a> exceptions.
 
 <dd>Enables GNAT's exception traceback facility, which is set up to
 report unhandled exceptions both in the main program and in tasks. To
-use it, you must
+use it (only in host-is-target environments; won't work in VxWorks),
+you must
 
 <ol>
 <li><tt>with</tt> this package,
@@ -79,14 +79,6 @@ classes).
 
 </dl>
 
-<dt><tt>ColdFrame.Global_Storage_Pool</tt>
-
-<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
-the standard system <tt>malloc</tt> pool, suitable for instantiating
-<a href="use-of-bcs.html">Booch Containers</a>.
-
-<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
-
 <dt><tt>ColdFrame.Instances</tt>
 
 <dd>Provides a type from which all Instances are derived.
@@ -94,6 +86,71 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 <br>The purpose is to allow mutual visibility (to support associations
 and inheritance relationships) without using non-standard extensions
 such as <i>WITH TYPE</i>.
+
+<dt><tt>ColdFrame.Events_G</tt>
+
+<dd>Standard support for <a href="events.html">Events</a>. This is a
+basic generic event management specification; the time aspects are
+provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
+
+<dl>
+
+<dt><tt>ColdFrame.Events_G.Creation_G</tt>
+
+<dd>Provides a "creation" event type, for use where there's no
+application event to cause transition from the initial state.
+
+<dt><tt>ColdFrame.Events_G.Standard_G</tt>
+
+<dd>A straightforward event queueing and dispatching service.
+
+<dt><tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>
+
+<dd>An event queueing and dispatching service which outputs a log to
+standard output.
+
+</dl>
+
+</dl>
+
+<p>For some purposes, ColdFrame generates code expecting certain
+services to be provided by specific packages (under
+<tt>ColdFrame.Project</tt>), where you would probably prefer to be
+able to provide your own version.
+
+<p>In these cases, sample implementations are provided. The support
+code above is distributed in the directory
+<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code is
+under <tt>cf-<i>yyyymmdd</i>/project</tt>.
+
+<dl>
+
+<dt><tt>ColdFrame.Project.Events</tt>
+
+<dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>.
+
+dt><tt>ColdFrame.Project.Events.Creation</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Creation_G</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Standard</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Standard_G</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Standard.Debug</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>.
+
+<dt><tt>ColdFrame.Project.Global_Storage_Pool</tt>
+
+<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
+the standard system <tt>malloc</tt> pool, suitable for instantiating
+<a href="use-of-bcs.html">Booch Containers</a>.
+
+<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
 </dl>
 
