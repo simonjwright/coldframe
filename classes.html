@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
+<!-- $Id: classes.html,v 4d72a895ed47 2002/05/20 22:32:21 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -51,13 +51,16 @@ be created, and may be deleted.
 
 <p>Instances of a normal class must be uniquely identifiable by some
 <a href="attributes.html">attribute</a> or combination of
-attributes. For example, a Vehicle Excise Disk (the round paper
-certificate, to be displayed on the vehicle's windscreen, that shows
-you've paid the UK road tax for the year) might be identified by the
-combination of Vehicle Index Mark (the string of letters and digits on
-the numberplate) and Validity Start Date. Vehicle Index Mark and
-Validity Start Date then become "identifying attributes", whereas Date
-Of Issue and Period Of Validity are just common-or-garden attributes.
+attributes. The identifying attributes, like any other attributes,
+ought to be of non-composite types.
+
+<p>For example, a Vehicle Excise Disk (the round paper certificate, to
+be displayed on the vehicle's windscreen, that shows you've paid the
+UK road tax for the year) might be identified by the combination of
+Vehicle Index Mark (the string of letters and digits on the
+numberplate) and Validity Start Date. Vehicle Index Mark and Validity
+Start Date then become "identifying attributes", whereas Date Of Issue
+and Period Of Validity are just common-or-garden attributes.
 
 <p>In ColdFrame, you <em>must not</em> specify identifiers for
 
