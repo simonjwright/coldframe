@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 09ffa216401e 2001/02/04 11:47:12 simon $ -->
+<!-- $Id: architecture.html,v 9aa1533e8028 2001/02/15 06:22:15 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -48,11 +48,9 @@ href="http://www.artisansw.com/">ARTiSAN Software</a>'s Real-Time
 Modeler.
 
 <p>It's important that the tool lets the architect adopt different
-strategies depending on circumstances. For example, the first release
-of ColdFrame assumes that a class with no attributes is a singleton
-(rather like a Controller) and generates quite different
-code. <i>[Possibly it should only do this if there are no
-<em>identifying</em> attributes?]</i>
+strategies depending on circumstances. For example, the 20010204
+release of ColdFrame assumes that a class with no identifying
+attributes is a singleton and generates quite different code.
 
 <p>This need makes it very advantageous to have a complete programming
 environment available while scripting the output. Predetermined
@@ -64,8 +62,8 @@ Rose</a></h2>
 <h3>Shlaer-Mellor aspects</h3>
 
 <p>It's not possible here to give a detailed tutorial on the
-Shaler-Mellor approach. An excellent book is "How to Build
-Shaler-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
+Shlaer-Mellor approach. An excellent book is "How to Build
+Shlaer-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
 0-13-207663-2.
 
 <p>Instances of a Class must be uniquely identifiable by some
@@ -245,7 +243,7 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 
 <dt><tt>Architecture.String_Hash</tt>
 
-<dd>Provides a set of hash functions, suitable for use as hashes (pr
+<dd>Provides a set of hash functions, suitable for use as hashes (or
 part of hashes) for instantiating <a href="#containers">Booch Map
 containers</a>.
 
