@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v e8c0be0c8084 2003/08/28 21:25:17 simon $ -->
+<!-- $Id: releases.html-proto,v 81153e83a652 2003/08/30 20:47:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,10 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dl>Code generation doesn't stop on the first error.
+
+<p>State machines support actions on transitions.
 
 
 <p><dt>20030815
