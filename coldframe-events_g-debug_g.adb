@@ -20,16 +20,22 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 0d9e9f2fbd8b $
---  $Date: 2002/09/21 11:35:59 $
+--  $Revision: 0020c8074f22 $
+--  $Date: 2002/10/01 17:46:06 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Tags;
 with ColdFrame.Exceptions;
-with GNAT.IO; use GNAT.IO;
 
 package body ColdFrame.Events_G.Debug_G is
+
+   procedure Put_Line (Message : String);
+   procedure Put_Line (Message : String) is
+   begin
+      Logging.Log (Severity => Logging.Informational,
+                   Message => Message);
+   end Put_Line;
 
 
    procedure Post (The_Event : Event_P;

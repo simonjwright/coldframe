@@ -20,15 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 410c71434f09 $
---  $Date: 2002/09/20 10:20:20 $
+--  $Revision: 0020c8074f22 $
+--  $Date: 2002/10/01 17:46:06 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
 with Ada.Tags;
 with ColdFrame.Exceptions;
-with GNAT.IO;
 
 package body ColdFrame.Events_G.Standard_G is
 
@@ -161,8 +160,10 @@ package body ColdFrame.Events_G.Standard_G is
                Log_Post_Dispatch (The_Event => E, On => The_Queue);
             exception
                when Ex : others =>
-                  GNAT.IO.Put_Line
-                    (Ada.Exceptions.Exception_Information (Ex) &
+                  Logging.Log
+                    (Severity => Logging.Error,
+                     Message =>
+                       Ada.Exceptions.Exception_Information (Ex) &
                        "in Dispatcher (event " &
                        Ada.Tags.Expanded_Name (E.all'Tag) &
                        ")");
