@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.ads,v e5c80aed495d 2001/04/25 19:37:36 simon $
+-- $Id: coldframe-navigate_from_many_collection.ads,v d8c01c68ecb4 2001/04/27 19:06:14 simon $
 
 -- This package supports navigation of a many-to-one association from
 -- a set of instances of the 'many' end to the set of instances at the
@@ -61,7 +61,7 @@ generic
   type To is new One.Container with private;
   -- The Collection type for the 'one' end of the association
 
-  with function Navigate_From_Many (S : Many_Handle) return To;
+  with function Navigate_From_Many (S : Many_Handle) return One_Handle;
   -- The simple many-to-one navigation
 
   with procedure Clear (The_Container : in out To);

@@ -19,32 +19,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.adb,v e5c80aed495d 2001/04/25 19:37:36 simon $
+-- $Id: coldframe-navigate_from_many_collection.adb,v d8c01c68ecb4 2001/04/27 19:06:14 simon $
 
 with BC.Copy;
 
 function Architecture.Navigate_From_Many_Collection (Input : From) return To is
-
-  -- Used instead of a real Clear in an instantiation of BC.Copy to
-  -- give incremental addition.
-  procedure Null_Clear (S : in out Set);
-  pragma Inline (Null_Clear);
-
-  -- Used in an instantiation of BC.Copy to add results to the
-  -- intermediate result set.
-  procedure Add_One (S : in out Set; I : One_Handle);
-  pragma Inline (Add_One);
-
-  -- Adds the result of a single many-to-one navigation to the
-  -- intermediate result set.
-  procedure Add_To_Result_Set is new BC.Copy
-     (Item => One_Handle,
-      Source => One,
-      From => To,
-      Target => Intermediate,
-      To => Set,
-      Clear => Null_Clear,
-      Add => Add_One);
 
 
   -- Adds the result of navigating from a single instance at the 'many'
@@ -53,7 +32,7 @@ function Architecture.Navigate_From_Many_Collection (Input : From) return To is
   pragma Inline (Add_Single_Navigation);
 
   -- Iterates over the input, navigating from each 'many' instance to
-  -- the corresponding set of 'one' instances, and adding them to the
+  -- the corresponding 'one' instance, and adding it to the
   -- intermediate result set.
   procedure Generate_Result_Set is new Many.Visit (Add_Single_Navigation);
 
@@ -73,23 +52,13 @@ function Architecture.Navigate_From_Many_Collection (Input : From) return To is
   Result_Set : Set;
   Result : To;
 
-  procedure Add_One (S : in out Set; I : One_Handle) is
-    Dummy : Boolean;
-  begin
-    Add_To_Set (S, I, Dummy);
-  end Add_One;
 
   procedure Add_Single_Navigation (This : Many_Handle; OK: out Boolean) is
+    Dummy : Boolean;
   begin
     OK := True;
-    Add_To_Result_Set (Navigate_From_Many (This), Result_Set);
+    Add_To_Set (Result_Set, Navigate_From_Many (This), Dummy);
   end Add_Single_Navigation;
-
-  procedure Null_Clear (S : in out Set) is
-    pragma Warnings (Off, S);
-  begin
-    null;
-  end Null_Clear;
 
 begin
   Generate_Result_Set (It);
