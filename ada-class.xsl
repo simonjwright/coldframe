@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-class.xsl,v d355ead87197 2003/09/17 05:12:08 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -173,21 +173,6 @@
     <xsl:call-template name="instance-record"/>
     <xsl:value-of select="$blank-line"/>
 
-    <!-- .. the State_Image function spec .. -->
-    <xsl:if test="statemachine">
-      <xsl:call-template name="state-image-spec"/>
-    </xsl:if>
-
-    <!-- .. any <<class>> attributes .. -->
-    <xsl:if test="attribute/@class">
-      <xsl:for-each select="attribute[@class]">
-        <xsl:call-template name="single-record-component">
-          <xsl:with-param name="indent" select="$I"/>
-        </xsl:call-template>
-      </xsl:for-each>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:if>
-
     <!-- .. the actual container .. -->
     <xsl:choose>
 
@@ -334,6 +319,16 @@
         
     </xsl:if>
 
+    <!-- .. the State_Image function spec .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-spec"/>
+    </xsl:if>
+
+    <!-- .. event handlers .. -->
+    <xsl:apply-templates mode="event-handler-specs" select="event">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- .. Autonumber support .. -->
     <xsl:if test="count(attribute[@identifier])=1
                   and attribute[@identifier]/type='Autonumber'">
@@ -342,10 +337,15 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <!-- .. event handlers .. -->
-    <xsl:apply-templates mode="event-handler-specs" select="event">
-      <xsl:sort select="name"/>
-    </xsl:apply-templates>
+    <!-- .. any <<class>> attributes .. -->
+    <xsl:if test="attribute/@class">
+      <xsl:for-each select="attribute[@class]">
+        <xsl:call-template name="single-record-component">
+          <xsl:with-param name="indent" select="$I"/>
+        </xsl:call-template>
+      </xsl:for-each>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
