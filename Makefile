@@ -64,6 +64,7 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 PDFS = coldframe-architecture.pdf \
   coldframe-callback.pdf \
   coldframe-relationships.pdf
+pdf:: $(PDFS)
 
 ############################
 # Distribution construction
