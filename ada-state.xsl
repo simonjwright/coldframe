@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 1a296a22ec87 2003/09/29 19:18:18 simon $ -->
+<!-- $Id: ada-state.xsl,v 3231bece797c 2004/01/03 17:43:28 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -229,7 +229,9 @@
                when {source-state (ignored transition)} =>
                   null;
                when {source-state} =>
-                  raise ColdFrame.Exceptions.Cant_Happen;
+                  Ada.Exceptions.Raise_Exception
+                    (ColdFrame.Exceptions.Cant_Happen'Identity,
+                     "{domain}.{class}.{event} in {source-state}");
             end case;
          end Handler;
          -->
@@ -279,7 +281,19 @@
 
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>raise ColdFrame.Exceptions.Cant_Happen;&#10;</xsl:text>
+          <xsl:text>Ada.Exceptions.Raise_Exception&#10;</xsl:text>
+          <xsl:value-of select="$IIIIC"/>
+          <xsl:text>(ColdFrame.Exceptions.Cant_Happen'Identity,&#10;</xsl:text>
+          <xsl:value-of select="$IIIIC"/>
+          <xsl:text> "</xsl:text>
+          <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$e"/>
+          <xsl:text> in </xsl:text>
+          <xsl:value-of select="$s"/>
+          <xsl:text>");&#10;</xsl:text>
         </xsl:otherwise>
 
       </xsl:choose>
@@ -352,8 +366,13 @@
   <!-- Called at domain/class to generate any class body "with"s. -->
   <xsl:template name="state-body-context">
 
+    <!-- Ada.Exceptions is only needed if there are Cant_Happen exceptions;
+         but that would be rather complex to detect. -->
+    <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
+    <xsl:text>pragma Warnings (Off, Ada.Exceptions);&#10;</xsl:text>
+
     <!-- The initial state automatically enters the next state if there's an
-         unguarded transtion. If so, and if there are actions with parameters
+         untriggered transtion. If so, and if there are actions with parameters
          in that state, we need a Creation event. -->
 
     <!-- the initial state .. -->
