@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 00f21012d60a 2004/01/13 12:31:41 simon $
+--  $Id: regressions-suite.adb,v 12943a14cdde 2004/02/01 21:20:30 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -11,7 +11,9 @@ with Ada.Text_IO; use Ada.Text_IO;
 with ColdFrame.Project.Events.Standard;
 with ColdFrame.Project.Serialization;
 with ColdFrame.Project.Times;
+with System.Assertions;
 
+with Regressions.Callback_Type_Callback;
 with Regressions.CB_Callback;
 with Regressions.Events;
 with Regressions.Find_Active;
@@ -592,6 +594,81 @@ package body Regressions.Suite is
    end Max_One_Tests;
 
 
+   package Callback_Registration_Tests is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Callback_Registration_Tests;
+
+   package body Callback_Registration_Tests is
+
+      procedure Callback (C : Callback_Type);
+      procedure Callback (C : Callback_Type) is
+         pragma Warnings (Off, C);
+      begin
+         null;
+      end Callback;
+
+      procedure Multiple_Registrations (C : in out Test_Case'Class);
+      procedure Multiple_Registrations (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         Callback_Type_Callback.Register (Callback'Unrestricted_Access);
+         begin
+            Callback_Type_Callback.Register (Callback'Unrestricted_Access);
+         exception
+            when System.Assertions.Assert_Failure => null;
+         end;
+      end Multiple_Registrations;
+
+      procedure Deregistration (C : in out Test_Case'Class);
+      procedure Deregistration (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         begin
+            Callback_Type_Callback.Deregister (Callback'Unrestricted_Access);
+         exception
+            when System.Assertions.Assert_Failure => null;
+         end;
+      end Deregistration;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Callback_Registration_Tests.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Multiple_Registrations'Access,
+            "multiple registrations");
+         Register_Routine
+           (C,
+            Deregistration'Access,
+            "deregistration when not registered");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize;
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Callback_Registration_Tests;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -601,6 +678,8 @@ package body Regressions.Suite is
       AUnit.Test_Suites.Add_Test (Result, new Callback_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Null_Event_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Max_One_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Callback_Registration_Tests.Case_1);
       return Result;
    end Suite;
 
