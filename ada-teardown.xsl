@@ -112,10 +112,17 @@
 
   <xsl:template mode="class-teardown-body" match="domain/class[@singleton]">
 
-    <!--
+    <!-- no state machine
          procedure {Domain}.{Class}.Tear_Down is
          begin
             null;
+         end {Domain}.{Class}.Tear_Down;
+         -->
+
+    <!-- state machine
+         procedure {Domain}.{Class}.Tear_Down is
+         begin
+            This.State_Machine_State := {initial-state}
          end {Domain}.{Class}.Tear_Down;
          -->
 
@@ -125,8 +132,20 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>null;&#10;</xsl:text>
+
+    <xsl:choose>
+      <xsl:when test="statemachine">
+        <xsl:value-of select="$I"/>
+        <xsl:text>This.State_Machine_State := </xsl:text>
+        <xsl:value-of select="statemachine/state[@initial]/name"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$I"/>
+        <xsl:text>null;&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -153,6 +172,7 @@
                Abstract_Map_Containers.Next (It);
             end loop;
             Maps.Clear (The_Container);
+            Next_Identifier := 0;                -  for Autonumbering
          end {Domain}.{Class}.Tear_Down;
          -->
 
@@ -188,6 +208,13 @@
 
     <xsl:value-of select="$I"/>
     <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>        
+
+    <!-- .. Autonumber support .. -->
+    <xsl:if test="count(attribute[@identifier])=1
+                  and attribute[@identifier]/type='Autonumber'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>Next_Identifier := 0;&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
