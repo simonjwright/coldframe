@@ -361,7 +361,7 @@ Makefile-demo-unix Makefile-demo-winnt \
 Examples.mdl
 
 DEMO += \
-stairwell_demo.adp stairwell_demo.gpr tash.gpr \
+stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
 Digital_IO.cat Digital_IO.raw \
