@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  $Id: regressions-suite.adb,v 84f34428ea1f 2004/03/09 14:54:57 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -30,6 +30,8 @@ with Regressions.Max_More;
 with Regressions.Max_One;
 with Regressions.Max_More_C;
 with Regressions.Max_One_C;
+with Regressions.One_Enum_ID;
+with Regressions.One_Int_ID;
 
 pragma Warnings (Off, Regressions.Bounded_String_ID);
 pragma Warnings (Off, Regressions.Fixed_String_Class);
@@ -37,6 +39,8 @@ pragma Warnings (Off, Regressions.Max_More);
 pragma Warnings (Off, Regressions.Max_One);
 pragma Warnings (Off, Regressions.Max_More_C);
 pragma Warnings (Off, Regressions.Max_One_C);
+pragma Warnings (Off, Regressions.One_Enum_ID);
+pragma Warnings (Off, Regressions.One_Int_ID);
 
 --  May not be referenced for released versions
 pragma Warnings (Off, Ada.Text_IO);
