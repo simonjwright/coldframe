@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 6d9f9515d067 $
---  $Date: 2003/11/15 14:48:16 $
+--  $Revision: 7870a424cc45 $
+--  $Date: 2003/11/15 18:37:23 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -65,16 +65,16 @@ begin
         & "<body bgcolor=""white"">"
         & CRLF);
 
-   EWS.Dynamic.Append_Content
+   EWS.Dynamic.Append
      (Result, Adding => "The time is <b>");
-   EWS.Dynamic.Append_Content
+   EWS.Dynamic.Append
      (Result,
       Adding => GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock,
                                              "%c"));
-   EWS.Dynamic.Append_Content
+   EWS.Dynamic.Append
      (Result, Adding => "</b>" & CRLF);
 
-   EWS.Dynamic.Append_Content
+   EWS.Dynamic.Append
      (Result,
       Adding =>
         "<p>"
@@ -102,7 +102,7 @@ begin
          D : constant Datum := Abstract_Datum_Containers.Current_Item (It);
          use BC.Support;
       begin
-         EWS.Dynamic.Append_Content
+         EWS.Dynamic.Append
            (Result,
             Adding =>
               "<tr>"
@@ -131,9 +131,9 @@ begin
       Abstract_Datum_Containers.Next (It);
    end loop;
 
-   EWS.Dynamic.Append_Content (Result, Adding => "</table>" & CRLF);
+   EWS.Dynamic.Append (Result, Adding => "</table>" & CRLF);
 
-   EWS.Dynamic.Append_Content
+   EWS.Dynamic.Append
      (Result,
       Adding =>
         "</body>"
