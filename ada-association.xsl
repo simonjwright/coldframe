@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-association.xsl,v d0fb99ee5723 2003/01/19 19:30:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -50,6 +50,9 @@
 
     <!-- Linking subprogram .. -->
     <xsl:call-template name="link-spec"/>
+
+    <!-- Finding function for associative classes .. -->
+    <xsl:call-template name="find-spec"/>
 
     <!-- .. unlinking procedure .. -->
     <xsl:call-template name="unlink-spec"/>
@@ -131,6 +134,17 @@
   </xsl:template>
 
 
+  <!-- Called at domain/association to generate the find function spec
+       if any. -->
+  <xsl:template name="find-spec">
+    <xsl:if test="associative">
+      <xsl:call-template name="association-find-specification"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+  </xsl:template>
+
+
   <!-- Called at domain/association to generate the unlinking procedure
        spec -->
   <xsl:template name="unlink-spec">
@@ -174,6 +188,9 @@
 
     <!-- Linking subprogram .. -->
     <xsl:call-template name="link-body"/>
+
+    <!-- Finding function for associative classes .. -->
+    <xsl:call-template name="find-body"/>
 
     <!-- .. unlinking procedure .. -->
     <xsl:call-template name="unlink-body"/>
@@ -280,7 +297,7 @@
         <!--
              function Link
                ({role-a} : {a}.Handle;
-                {role-b} : {b}.Handle) is
+                {role-b} : {b}.Handle) return {role-c}.Handle is
                 Result : {c}.Handle;
                 use ColdFrame.Instances;
                 pragma Assert (Handle ({role-a}) /= null);
@@ -344,7 +361,7 @@
             <xsl:text>),&#10;</xsl:text>
 
             <xsl:value-of select="$IIC"/>
-            <xsl:text> </xsl:text>
+            <xsl:text>  </xsl:text>
             <xsl:call-template name="attribute-name">
               <xsl:with-param
                 name="a"
@@ -572,6 +589,174 @@
 
     </xsl:choose>
 
+  </xsl:template>
+
+
+  <!-- Called at domain/association to generate the find function body,
+       if any. -->
+  <xsl:template name="find-body">
+    <xsl:if test="associative">
+      
+      <xsl:variable name="n" select="name"/>
+
+      <!--
+           function Find
+             ({role-a} : {a}.Handle;
+              {role-b} : {b}.Handle) return {role-c}.Handle is
+              use ColdFrame.Instances;
+           begin
+              return {c}.Find
+                ((
+           -->
+
+      <xsl:call-template name="association-find-specification"/>
+      <xsl:text> is&#10;</xsl:text>
+      
+      <xsl:value-of select="$II"/>
+      <xsl:text>Result : </xsl:text>
+      <xsl:value-of select="associative"/>
+      <xsl:text>.Handle;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      
+      <xsl:value-of select="$II"/>
+      <xsl:text>return </xsl:text>
+      <xsl:value-of select="associative"/>
+      <xsl:text>.Find&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>((</xsl:text>
+      
+      
+      
+      
+      
+      
+      <xsl:choose>
+        
+        
+        
+        <xsl:when test="role[1]/@multiple and role[2]/@multiple">
+          <!-- Both ends multiple; the associative class' identifier
+               references both ends. -->
+          
+          <!--
+               {a-role-attr} => Handle ({a-role}),
+               {b-role-attr} => Handle ({b-role})));
+               -->
+          
+          <xsl:variable name="r1" select="role[1]"/>
+          <xsl:variable name="r2" select="role[2]"/>
+          
+          <xsl:call-template name="attribute-name">
+            <xsl:with-param
+              name="a"
+              select="/domain/class/attribute
+                      [@relation=$n and @refers=$r1/classname]"/>
+          </xsl:call-template>
+          <xsl:text> => Handle (</xsl:text>
+          <xsl:value-of select="$r1/name"/>
+          <xsl:text>),&#10;</xsl:text>
+          
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>  </xsl:text>
+          <xsl:call-template name="attribute-name">
+            <xsl:with-param
+              name="a"
+              select="/domain/class/attribute
+                      [@relation=$n and @refers=$r2/classname]"/>
+          </xsl:call-template>
+          <xsl:text> => Handle (</xsl:text>
+          <xsl:value-of select="$r2/name"/>
+          
+          <xsl:text>)));&#10;</xsl:text>
+          
+        </xsl:when>
+        
+        
+        
+        
+        <xsl:when test="role[@multiple]">
+          <!-- One end multiple; the associative class' identifier
+               references the multiple end, the other end is
+               referenced by a plain attribute. -->
+          
+          <!--
+               {multiple-role-attr} => Handle ({multiple-role})));
+               -->
+          
+          <xsl:variable name="multiple-role" select="role[@multiple]"/>
+          <xsl:variable name="single-role" select="role[not(@multiple)]"/>
+          
+          <xsl:call-template name="attribute-name">
+            <xsl:with-param
+              name="a"
+              select="/domain/class/attribute
+                      [@relation=$n
+                      and @refers=$multiple-role/classname
+                      and @identifier]"/>
+            <!-- NB, had to be careful here because of possible reflexive
+                 associations. -->
+          </xsl:call-template>
+          <xsl:text> => Handle (</xsl:text>
+          <xsl:value-of select="$multiple-role/name"/>
+          <xsl:text>)));&#10;</xsl:text>
+          
+        </xsl:when>
+        
+        
+        
+        
+        <xsl:otherwise>
+          <!-- Neither end multiple -->
+          
+          <!--
+               {source-role-attr} => Handle ({source-role})));
+               -->
+          
+          <xsl:variable name="source-role" select="role[@source]"/>
+          <xsl:variable name="non-source-role" select="role[not(@source)]"/>
+          
+          <xsl:call-template name="attribute-name">
+            <xsl:with-param
+              name="a"
+              select="/domain/class/attribute
+                      [@relation=$n
+                      and @identifier]"/>
+          </xsl:call-template>
+          <xsl:text> => Handle (</xsl:text>
+          <xsl:value-of select="$source-role/name"/>
+          <xsl:text>)));&#10;</xsl:text>
+          
+        </xsl:otherwise>
+        
+
+
+
+
+
+      </xsl:choose>
+
+
+
+
+
+
+
+
+
+
+      <!--
+           end Find;
+           -->
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>end Find;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
+    </xsl:if>
   </xsl:template>
 
 
@@ -1442,6 +1627,12 @@
        associations. -->
   <xsl:template name="link-function-specification">
 
+    <!--
+         function Link
+           ({role-a} : {a}.Handle;
+            {role-b} : {b}.Handle) return {role-c}.Handle
+         -->
+
     <xsl:value-of select="$I"/>
     <xsl:text>function Link&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
@@ -1470,6 +1661,12 @@
        associations. -->
   <xsl:template name="link-procedure-specification">
 
+    <!--
+         procedure Link
+           ({role-a} : {a}.Handle;
+            {role-b} : {b}.Handle)
+         -->
+
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Link&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
@@ -1489,6 +1686,40 @@
 
   </xsl:template>
 
+
+  <!-- Called at domain/association[associative] to generate the
+       specification (no closing ";" or "is") for the find function
+       spec for associative associations. -->
+  <xsl:template name="association-find-specification">
+
+    <!--
+         function Find
+           ({role-a} : {a}.Handle;
+            {role-b} : {b}.Handle) return {role-c}.Handle
+         -->
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>function Find&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="role[1]/name"/>
+    <xsl:text> : </xsl:text>
+    <xsl:value-of select="role[1]/classname"/>
+    <xsl:text>.Handle</xsl:text>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="role[2]/name"/>
+    <xsl:text> : </xsl:text>
+    <xsl:value-of select="role[2]/classname"/>
+    <xsl:text>.Handle)&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>return </xsl:text>
+    <xsl:value-of select="associative"/>
+    <xsl:text>.Handle</xsl:text>
+
+  </xsl:template>
+ 
 
   <!-- Called at domain/association to generate the unlinking procedure
        specification (no closing ";" or "is") for associative
