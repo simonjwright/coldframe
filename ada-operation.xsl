@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 0507e6778854 2001/04/13 12:42:15 simon $ -->
+<!-- $Id: ada-operation.xsl,v 8072e75d7a82 2001/05/11 19:13:07 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,8 +26,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
-  <!-- Generate child subprogram specs. -->
-  <xsl:template match="class/operation" mode="operation-spec">
+  <!-- Generate child subprogram specs (but not access-to-operations,
+       which are realized in the Class package). -->
+  <xsl:template match="class/operation[not(@access)]" mode="operation-spec">
     <xsl:apply-templates select="." mode="operation-context"/>
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text>;&#10;</xsl:text>
@@ -74,9 +75,10 @@
   <xsl:template mode="operation-context" match="*"/>
 
 
-  <!-- Generate the bodies of child operations. The bodies are
+  <!-- Generate the bodies of child operations (but not access-to-operations,
+       which are realized in the Class package). The bodies are
        compilable but generate Program_Error if called. -->
-  <xsl:template match="class/operation" mode="operation-body">
+  <xsl:template match="class/operation[not(@access)]" mode="operation-body">
 
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text> is&#10;</xsl:text>
@@ -151,6 +153,7 @@
 
   <!-- Called from class/operation to generate a subprogram parameter list -->
   <xsl:template name="parameter-list">
+    <xsl:param name="indent" select="''"/>
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
@@ -161,14 +164,18 @@
       test="parameter or (not(../@singleton) and not(@class='yes'))">
 
       <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$indent"/>
       <xsl:text>  (</xsl:text>
       <xsl:if test="not(../@singleton) and not(@class='yes')">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10;   </xsl:text>
+          <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:if>
-      <xsl:apply-templates mode="parameter"/>
+      <xsl:apply-templates mode="parameter">
+        <xsl:with-param name="indent" select="$indent"/>
+      </xsl:apply-templates>
       <xsl:text>)</xsl:text>
 
     </xsl:if>
@@ -178,8 +185,11 @@
 
   <!-- Called from class/operation to generate a subprogram parameter -->
   <xsl:template match="operation/parameter" mode="parameter">
+    <xsl:param name="indent" select="''"/>
+
     <xsl:value-of select="name"/>
     <xsl:text> : </xsl:text>
+
     <xsl:choose>
       <xsl:when test="@mode='inout'">
         <xsl:text>in out </xsl:text>
@@ -188,17 +198,22 @@
         <xsl:text>out </xsl:text>
       </xsl:when>
     </xsl:choose>
+
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
+
     <xsl:if test="initial">
       <xsl:text> := </xsl:text>
       <xsl:value-of select="initial"/>
     </xsl:if>
+
     <xsl:if test="position() &lt; last()">
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$indent"/>
       <xsl:text>   </xsl:text>
     </xsl:if>
+
   </xsl:template>
 
   <xsl:template mode="parameter" match="*"/>
