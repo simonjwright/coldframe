@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 23e539d5e10b $
---  $Date: 2002/07/11 21:17:29 $
+--  $Revision: f0250ccf39c6 $
+--  $Date: 2002/07/16 17:37:03 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -165,6 +165,24 @@ package ColdFrame.Events_G is
    --  May raise Use_Error (if the Timer is already unset)
 
 
+   ---------------
+   --  Locking  --
+   ---------------
+
+   --  This type is typically to be used by <<public>> operations, to
+   --  ensure mutual exclusion between them and dispatched Events.
+   --
+   --  The "resource acquisition is initialization" idiom is used:
+   --
+   --     procedure P is
+   --        Lock : ColdFrame.Project.Events.Lock (Domain.Events.Dispatcher);
+   --        pragma Warnings (Off, Lock);
+   --     begin
+   --        ... the Dispatcher is released when the procedure exits
+
+   type Lock (The_Queue : access Event_Queue_Base'Class) is limited private;
+
+
    -------------------------
    --  Unit test support  --
    -------------------------
@@ -193,6 +211,7 @@ private
    --  If a timer is unset the held event must not be actioned.
    --
    --  Memory must be freed when finished with.
+
 
    --  An Instance_Terminator is a component of an Instance_Base which
    --  is used to cause removal of any outstanding events for that
@@ -225,6 +244,9 @@ private
 
    type Event_Queue_Base is abstract tagged limited null record;
 
+   --  Default private interface to invalidate events to deleted
+   --  instances. The implementation here raises Program_Error if
+   --  called.
    procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
@@ -242,6 +264,13 @@ private
 
    procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue_Base);
+
+   --  Operations to support Locking. The implementation here raises
+   --  Program_Error if called.
+
+   procedure Locker (The_Queue : access Event_Queue_Base);
+
+   procedure Unlocker (The_Queue : access Event_Queue_Base);
 
 
    type Timer_P is access all Timer;
@@ -279,5 +308,13 @@ private
       The_Entry : Timer_Queue_Entry_P;
    end record;
 
+
+   type Lock (The_Queue : access Event_Queue_Base'Class)
+      is new Ada.Finalization.Limited_Controlled with record
+        Finalized : Boolean := False;
+      end record;
+
+   procedure Initialize (The_Lock : in out Lock);
+   procedure Finalize (The_Lock : in out Lock);
 
 end ColdFrame.Events_G;

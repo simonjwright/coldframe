@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 23e539d5e10b $
---  $Date: 2002/07/11 21:17:29 $
+--  $Revision: f0250ccf39c6 $
+--  $Date: 2002/07/16 17:37:03 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -141,14 +141,30 @@ private
       --  Post an event-to-self.
 
       entry Fetch (The_Event : out Event_P);
-      --  Blocks until there is an event on the queue; when one is found,
-      --  removes it from the queue and sets "The".
+      --  Blocks until the queue is unlocked and there is an event on
+      --  it; when one is found, notes that execution is in progress,
+      --  removes the event from the queue and stores it
+      --  in"The_Event".
+
+      procedure Done;
+      --  Notes that execution is no longer in progress.
 
       procedure Invalidate_Events
         (For_The_Instance : access Instance_Base'Class);
       --  Marks all the events on the queue which are for
       --  For_The_Instance as invalid, so they won't be actioned when
       --  Fetched.
+
+      entry Lock;
+      --  Blocks until execution isn't in progress.
+
+      procedure Unlock;
+      --  Notes that the queue is no longer locked.
+
+   private
+
+      Locked : Boolean := False;
+      Executing : Boolean := False;
 
    end Excluder;
 
@@ -189,5 +205,10 @@ private
 
    procedure Tear_Down (The_Queue : in out Event_Queue);
 
+   --  Locking.
+
+   procedure Locker (The_Queue : access Event_Queue);
+
+   procedure Unlocker (The_Queue : access Event_Queue);
 
 end ColdFrame.Events_G.Standard_G;

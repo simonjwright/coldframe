@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 23e539d5e10b $
---  $Date: 2002/07/11 21:17:29 $
+--  $Revision: f0250ccf39c6 $
+--  $Date: 2002/07/16 17:37:03 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -155,6 +155,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          Delete (E);
          The_Queue.The_Event_Count.Remove_Posted_Event;
+         The_Queue.The_Excluder.Done;
 
       end loop;
 
@@ -342,12 +343,14 @@ package body ColdFrame.Events_G.Standard_G is
 
    protected body Excluder is
 
+
       procedure Post (The_Event : Event_P) is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
          The_Queue.The_Event_Count.Add_Posted_Event;
       end Post;
+
 
       procedure Post_To_Self (The_Event : Event_P) is
       begin
@@ -356,11 +359,14 @@ package body ColdFrame.Events_G.Standard_G is
          The_Queue.The_Event_Count.Add_Posted_Event;
       end Post_To_Self;
 
+
       entry Fetch (The_Event : out Event_P)
-      when not Unbounded_Posted_Event_Queues.Is_Empty
-        (The_Queue.The_Self_Events)
-        or else not Unbounded_Posted_Event_Queues.Is_Empty
-        (The_Queue.The_Events) is
+      when not Locked
+        and then (not Unbounded_Posted_Event_Queues.Is_Empty
+                    (The_Queue.The_Self_Events)
+                  or else not Unbounded_Posted_Event_Queues.Is_Empty
+                    (The_Queue.The_Events)) is
+         pragma Assert (not Executing, "already executing");
       begin
          if not Unbounded_Posted_Event_Queues.Is_Empty
            (The_Queue.The_Self_Events) then
@@ -372,7 +378,16 @@ package body ColdFrame.Events_G.Standard_G is
               Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
             Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
          end if;
+         Executing := True;
       end Fetch;
+
+
+      procedure Done is
+         pragma Assert (Executing, "not already executing");
+      begin
+         Executing := False;
+      end Done;
+
 
       procedure Invalidate_Events
         (For_The_Instance : access Instance_Base'Class) is
@@ -409,6 +424,20 @@ package body ColdFrame.Events_G.Standard_G is
            (Unbounded_Posted_Event_Queues.New_Iterator
               (The_Queue.The_Events));
       end Invalidate_Events;
+
+
+      entry Lock when not Locked and then not Executing is
+      begin
+         Locked := True;
+      end Lock;
+
+
+      procedure Unlock is
+         pragma Assert (Locked, "not already locked");
+      begin
+         Locked := False;
+      end Unlock;
+
 
    end Excluder;
 
@@ -474,6 +503,18 @@ package body ColdFrame.Events_G.Standard_G is
       abort The_Queue.The_Dispatcher;
 
    end Tear_Down;
+
+
+   procedure Locker (The_Queue : access Event_Queue) is
+   begin
+      The_Queue.The_Excluder.Lock;
+   end Locker;
+
+
+   procedure Unlocker (The_Queue : access Event_Queue) is
+   begin
+      The_Queue.The_Excluder.Unlock;
+   end Unlocker;
 
 
 end ColdFrame.Events_G.Standard_G;

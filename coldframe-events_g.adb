@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 2364234f0cf2 $
---  $Date: 2002/07/11 04:59:05 $
+--  $Revision: f0250ccf39c6 $
+--  $Date: 2002/07/16 17:37:03 $
 --  $Author: simon $
 
 package body ColdFrame.Events_G is
@@ -101,6 +101,20 @@ package body ColdFrame.Events_G is
    end Log_Post_Dispatch;
 
 
+   procedure Locker (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Locker;
+
+
+   procedure Unlocker (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Unlocker;
+
+
    procedure Handler (This : Timer_Event) is
       The_Event : Event_P := This.The_Event;
    begin
@@ -136,6 +150,25 @@ package body ColdFrame.Events_G is
 
          --  Invalidate the held event.
          The_Terminator.For_The_Timer.The_Entry.The_Event.Invalidated := True;
+
+      end if;
+
+   end Finalize;
+
+
+   procedure Initialize (The_Lock : in out Lock) is
+   begin
+      Locker (The_Lock.The_Queue);
+   end Initialize;
+
+
+   procedure Finalize (The_Lock : in out Lock) is
+   begin
+
+      if not The_Lock.Finalized then
+
+         The_Lock.Finalized := True;
+         Unlocker (The_Lock.The_Queue);
 
       end if;
 
