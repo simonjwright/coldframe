@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v d1334ebd2d9c 2005/03/01 06:28:04 simon $ -->
+<!-- $Id: testing.html,v 484a77a915cb 2005/03/02 22:19:17 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -36,12 +36,12 @@ procedures.
 
 <p>Most systems are composed of numerous domains, some of which
 provide resources and capabilities to others. In the diagram, the
-application-level <a href="House_Management.html">House Management</a>
-domain uses the services of the device-level <a
-href="Digital_IO.html">Digital IO</a> domain.
+application-level <a href="House_Management.html"><i>House
+Management</i></a> domain uses the services of the device-level <a
+href="Digital_IO.html"><i>Digital IO</i></a> domain.
 
-<p>While unit-testing House Management, it's a Bad Idea to use the
-real Digital IO, for various reasons:
+<p>While unit-testing <i>House Management</i>, it's a Bad Idea to use
+the real Digital IO, for various reasons:
 
 <ul>
 
@@ -57,9 +57,48 @@ real Digital IO, for various reasons:
 
 </ul>
 
+<p>What is needed is a version of <i>Digital IO</i> which provides the
+interfaces of the real thing but with an alternative implementation,
+more amenable to testing.
 
+<h3>Separating out the interface</h3>
 
+<p>The first thing to do is to make a child package, <i>Digital IO
+Interface</i>, stereotyped &#171;include&#187;. You may like to make
+it a separately controlled unit; you might even choose to create it as
+part of the development of the using domain, depending on the order of
+development.
 
+<p>In this package put all the &#171;public&#187; classes and
+&#171;callback&#187; types, any &#171;type&#187; types used by them,
+and any &#171;exception&#187;s.
+
+<p><table border='1'>
+
+<tr><td>Complete package<td><img src="digital-io.png">
+
+<tr><td>Interface package<td><img src="digital-io-interface.png">
+
+</table>
+
+<p>In the Interface package, include the tag <tt>{name = Digital
+IO}</tt>. This means that if you select the <i>Digital IO
+Interface</i> package and generate code from it, code will be
+generated as if it were the package <i>Digital IO</i> (though the code
+will still be placed in the directory derived from the actual package
+name, <tt>Digital_IO_Interface.gen/</tt>).
+
+<h3>Implementing stub functionality</h3>
+
+<p>If you want, you can provide implementations in the parallel
+<tt>Digital_IO_Interface.impl/</tt> directory, as normal. You'll want
+to provide some means of storing <tt>in</tt> parameters and providing
+values for <tt>out</tt> parameters and function results; you'll want
+to provide queries to find out what values were passed in. Remember
+that you can write package specs in the <tt>.impl</tt> directory, if
+needed.
+
+<h3>Generating stub functionality</h3>
 
 <p><hr>
 <i>
