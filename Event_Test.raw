@@ -1,13 +1,14 @@
 <domain>
-<extractor>cf-20030703t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Event Test</name>
 <date>
 <year>2003</year>
-<month>7</month>
-<day>6</day>
-<time>18:27</time>
+<month>8</month>
+<day>30</day>
+<time>14:31</time>
 </date>
-<documentation></documentation>
+<documentation>This domain contains material for testing ColdFrame's event handling.
+[[revision : $Revision]] </documentation>
 <classes>
 <class stereotype="singleton">
 <name>Recipient</name>
@@ -150,21 +151,8 @@
 <state>
 <name>handling self</name>
 <entryactions>
-<action>
-<name>handle self</name>
-</action>
-<action>
-<name>send done</name>
-</action>
-</entryactions>
-<documentation></documentation>
-</state>
-<state>
-<name>handling mark</name>
-<entryactions>
-<action>
-<name>handle mark</name>
-</action>
+<entryaction><name>handle self</name></entryaction>
+<entryaction><name>send done</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
@@ -173,41 +161,29 @@
 <transition>
 <source>initial</source>
 <target>idle</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>handling self</target>
-<event>
-<name>self</name>
-</event>
+<event><name>self</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
-<target>handling mark</target>
-<event>
-<name>mark</name>
-</event>
+<target>idle</target>
+<event><name>mark</name></event>
+<transitionaction><name>handle mark</name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>handling self</source>
 <target>idle</target>
-<event>
-<name>done</name>
-</event>
-<documentation></documentation>
-</transition>
-<transition>
-<source>handling mark</source>
-<target>idle</target>
-<event>
-<name></name>
-</event>
+<event><name>done</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 </transitions>
@@ -387,30 +363,27 @@
 <state>
 <name>handling self</name>
 <entryactions>
-<action>
-<name>handle self</name>
-</action>
-<action>
-<name>send done</name>
-</action>
-</entryactions>
-<documentation></documentation>
-</state>
-<state>
-<name>handling mark</name>
-<entryactions>
-<action>
-<name>handle mark</name>
-</action>
+<entryaction><name>handle self</name></entryaction>
+<entryaction><name>send done</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
 <state final="yes">
-<name>final</name>
+<name>deleting final</name>
 <entryactions>
-<action>
-<name>delete</name>
-</action>
+<entryaction><name>delete</name></entryaction>
+</entryactions>
+<documentation></documentation>
+</state>
+<state final="yes">
+<name>plain final</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>Intermediate</name>
+<entryactions>
 </entryactions>
 <documentation></documentation>
 </state>
@@ -419,49 +392,50 @@
 <transition>
 <source>initial</source>
 <target>idle</target>
-<event>
-<name></name>
-</event>
-<documentation></documentation>
-</transition>
-<transition>
-<source>idle</source>
-<target>handling mark</target>
-<event>
-<name>mark</name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>handling self</target>
-<event>
-<name>self</name>
-</event>
+<event><name>self</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
-<target>final</target>
-<event>
-<name>kill</name>
-</event>
+<target>deleting final</target>
+<event><name>kill</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>plain final</target>
+<event><name>kill and delete</name></event>
+<transitionaction><name>delete</name></transitionaction>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>idle</target>
+<event><name>mark</name></event>
+<transitionaction><name>handle mark</name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>handling self</source>
-<target>idle</target>
-<event>
-<name>done</name>
-</event>
+<target>Intermediate</target>
+<event><name>done</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
-<source>handling mark</source>
+<source>Intermediate</source>
 <target>idle</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 </transitions>
@@ -497,9 +471,7 @@
 <state final="yes">
 <name>final</name>
 <entryactions>
-<action>
-<name>Delete</name>
-</action>
+<entryaction><name>Delete</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
@@ -508,9 +480,8 @@
 <transition>
 <source>initial</source>
 <target>final</target>
-<event>
-<name>e</name>
-</event>
+<event><name>e</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 </transitions>
