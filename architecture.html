@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v f37eac2c66fc 2001/11/25 10:17:57 simon $ -->
+<!-- $Id: architecture.html,v 6c8b11bd9ae9 2002/01/04 06:29:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -114,8 +114,8 @@ diagram (if any). A recommended approach is to have a diagram (called
 <i>Code Generation</i>, perhaps) and drag all the Domain packages in
 your model onto it.
 
-<p>You can select packages to be extracted either in the broswer
-(<em>not</em> with Rose 98i) or in the Code Generation diagram.
+<p>You can select packages to be extracted in the Code Generation
+diagram.
 
 <p>The extracted domain definition file name is the domain name with
 underscores substituted for spaces.
@@ -168,21 +168,20 @@ raise the exception <tt>Program_Error</tt> if called. ColdFrame makes
 no attempt to allow you to modify generated bodies and preserve your
 changes on the next generation; instead, the idea is that you keep the
 generated code in one directory and your real code bodies in another
-directory that's earlier on the compiler's source search path. <i>[I'm
-not sure how the idea of placing real subprogram body files earlier in
-the compiler's source search path translates to compilers other than
-GNAT.]</i>
+directory that's earlier on the compiler's source search path. I'm not
+sure how the idea of placing real subprogram body files earlier in the
+compiler's source search path translates to compilers other than GNAT;
+however, on regeneration the supplied Makefile deletes all generated
+code bodies that have implementations (this should make use of the
+GNAT <i>Project</i> facility easier, when it arrives).
 
 <h2><a name="support">Specially written support components</a></h2>
 
 <p>Specially written support components appear under the top-level
-package <tt>ColdFrame</tt>.
+package <tt>ColdFrame</tt>. Some exist to support navigation; the more
+user-interesting ones are
 
 <dl>
-
-<dt><tt>ColdFrame.Access_Hash</tt>
-
-<dd>A hash function for access values (useful for associative classes).
 
 <dt><tt>ColdFrame.Callbacks</tt>
 
@@ -193,6 +192,64 @@ package <tt>ColdFrame</tt>.
 <dd>Provides exceptions. These are at present just renamings of <a
 href="use-of-bcs.html">Booch</a> exceptions.
 
+<dl>
+
+<dt><tt>ColdFrame.Exceptions.Message</tt>
+
+<dd>Provides exception reporting (to standard output).
+
+<dt><tt>ColdFrame.Exceptions.Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks. To
+use it, you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+</dl>
+
+<dt><tt>ColdFrame.Hash</tt>
+
+<dd>A family of hash functions, suitable for use as hashes (or part of
+hashes) for instantiating <a href="use-of-bcs.html">Booch Map
+containers</a>.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
+
+<dd>A hash function for access-to-instance values (useful for child
+classes).
+
+<dt><tt>ColdFrame.Hash.Strings</tt>
+
+<dd>A family of hash functions for strings.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Strings.Bounded</tt>
+
+<dd>A hash function for Bounded Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Standard</tt>
+
+<dd>A hash function for standard Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Unbounded</tt>
+
+<dd>A hash function for Unbounded Strings.
+
+</dl>
+
+</dl>
+
 <dt><tt>ColdFrame.Global_Storage_Pool</tt>
 
 <dd>Provides a (GNAT-specific) Storage Pool type and instance, using
@@ -201,11 +258,13 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
-<dt><tt>ColdFrame.String_Hash</tt>
+<dt><tt>ColdFrame.Instances</tt>
 
-<dd>Provides a set of hash functions, suitable for use as hashes (or
-part of hashes) for instantiating <a href="use-of-bcs.html">Booch Map
-containers</a>.
+<dd>Provides a type from which all Instances are derived.
+
+<br>The purpose is to allow mutual visibility (to support associations
+and inheritance relationships) without using non-standard extensions
+such as <i>WITH TYPE</i>.
 
 </dl>
 
