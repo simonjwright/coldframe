@@ -39,7 +39,7 @@ index.html \
 principles.html \
 releases.html \
 resources.html \
-use-cases.html \
+use-cases.html use-cases.texi \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
