@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v cb3bf3698dd6 2004/04/25 16:46:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -336,6 +336,7 @@
             use type ColdFrame.Project.Events.Event_Queue_P;
          begin
             if not Domain_Initialized then
+               Domain_Initialized := True;
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -344,7 +345,6 @@
                ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
                {class}.Class_Initialize:
                {class}.{init-operation};
-               Domain_Initialized := True;
             end if;
          exception
             when E : Others =>
@@ -411,6 +411,11 @@
     <xsl:value-of select="$I"/>
     <xsl:text>if not Domain_Initialized then&#10;</xsl:text>
 
+    <!-- Mark initialized (required for any Create calls in class 
+         initialization procedures). -->
+    <xsl:value-of select="$II"/>
+    <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
+
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>if Dispatcher /= null then&#10;</xsl:text>
@@ -444,8 +449,6 @@
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end if;&#10;</xsl:text>
 
