@@ -1,11 +1,11 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20031031t</extractor>
 <name>Bad Code Regressions</name>
 <date>
 <year>2003</year>
-<month>9</month>
-<day>29</day>
-<time>16:23</time>
+<month>10</month>
+<day>31</day>
+<time>07:08</time>
 </date>
 <documentation></documentation>
 <classes>

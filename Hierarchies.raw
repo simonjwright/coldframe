@@ -1,13 +1,13 @@
 <domain>
-<extractor>cf-20030703t</extractor>
+<extractor>cf-20031031t</extractor>
 <name>Hierarchies</name>
 <date>
 <year>2003</year>
-<month>7</month>
-<day>6</day>
-<time>18:27</time>
+<month>10</month>
+<day>31</day>
+<time>07:08</time>
 </date>
-<documentation>[[ revision : $Id: Hierarchies.raw,v 540bb9ecf98c 2003/07/10 20:19:09 simon $ ]]
+<documentation>[[ revision : $Id: Hierarchies.raw,v b1d73aa92c84 2003/10/31 06:46:39 simon $ ]]
 Support for subtype migration in deeply layered multiple inheritance hierarchies.</documentation>
 <classes>
 <class>
