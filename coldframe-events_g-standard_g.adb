@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 1ce7cd65396f $
---  $Date: 2002/09/17 18:14:42 $
+--  $Revision: 410c71434f09 $
+--  $Date: 2002/09/20 10:20:20 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -138,6 +138,7 @@ package body ColdFrame.Events_G.Standard_G is
    task body Dispatcher is
 
       E : Event_P;
+      Tearing_Down : Boolean;
 
    begin
 
@@ -148,7 +149,10 @@ package body ColdFrame.Events_G.Standard_G is
 
       loop
 
-         The_Queue.The_Excluder.Fetch (E); -- blocks until there's an event
+         The_Queue.The_Excluder.Fetch (E, Tearing_Down);
+         --  Blocks until there's an event or the queue needs
+         --  tearing down.
+         exit when  Tearing_Down;
 
          if not E.Invalidated then
             begin
@@ -276,6 +280,10 @@ package body ColdFrame.Events_G.Standard_G is
                --  outstanding held Events). But if we get here, the
                --  queue was empty, so there can't be anything to do.
 
+               or
+                  accept Tear_Down;
+                  exit;
+
             end select;
 
          else
@@ -311,6 +319,10 @@ package body ColdFrame.Events_G.Standard_G is
                      end loop;
                   end;
                end Invalidate;
+
+            or
+               accept Tear_Down;
+               exit;
 
             or
                delay until Time.Equivalent
@@ -349,41 +361,33 @@ package body ColdFrame.Events_G.Standard_G is
    protected body Excluder is
 
 
-      procedure Post (The_Event : Event_P) is
-      begin
-         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
-                                               The_Event);
-      end Post;
-
-
-      procedure Post_To_Self (The_Event : Event_P) is
+      procedure Done is
          use type Ada.Task_Identification.Task_Id;
       begin
-         --  We need to be sure that only event handlers called by our
-         --  Dispatcher post events-to-self.
-         if Owner /= Standard_G.Event_Queue_Base (The_Queue.all).
-                        The_Dispatcher'Identity then
-            Ada.Exceptions.Raise_Exception
-              (Exceptions.Use_Error'Identity,
-               "posting to self outside event handler");
-         else
-            Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
-                                                  The_Event);
+         if Unbounded_Posted_Event_Queues.Is_Empty
+           (The_Queue.The_Self_Events) then
+            Locks := 0;
+            Owner := Ada.Task_Identification.Null_Task_Id;
          end if;
-      end Post_To_Self;
+      end Done;
 
 
-      entry Fetch (The_Event : out Event_P)
+      entry Fetch (The_Event : out Event_P; Tearing_Down : out Boolean)
       --  If there are any events-to-self, we must have a lock already
       --  (the previous call to Done didn't release the lock, because
       --  we don't want external entities to see the intermediate
       --  states).
-      when not Unbounded_Posted_Event_Queues.Is_Empty
-                 (The_Queue.The_Self_Events)
+      when Excluder.Tearing_Down
+        or else not Unbounded_Posted_Event_Queues.Is_Empty
+                      (The_Queue.The_Self_Events)
         or else (Locks = 0
                    and then not Unbounded_Posted_Event_Queues.Is_Empty
                                   (The_Queue.The_Events)) is
       begin
+         Tearing_Down := Excluder.Tearing_Down;
+         if Tearing_Down then
+            return;
+         end if;
          Locks := 1;
          Owner := Fetch'Caller;
          if not Unbounded_Posted_Event_Queues.Is_Empty
@@ -399,17 +403,6 @@ package body ColdFrame.Events_G.Standard_G is
          pragma Assert (The_Event /= null,
                         "failed to fetch valid event");
       end Fetch;
-
-
-      procedure Done is
-         use type Ada.Task_Identification.Task_Id;
-      begin
-         if Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Self_Events) then
-            Locks := 0;
-            Owner := Ada.Task_Identification.Null_Task_Id;
-         end if;
-      end Done;
 
 
       procedure Invalidate_Events
@@ -459,6 +452,36 @@ package body ColdFrame.Events_G.Standard_G is
             requeue Waiting_For_Lock with abort;
          end if;
       end Lock;
+
+
+      procedure Post (The_Event : Event_P) is
+      begin
+         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
+                                               The_Event);
+      end Post;
+
+
+      procedure Post_To_Self (The_Event : Event_P) is
+         use type Ada.Task_Identification.Task_Id;
+      begin
+         --  We need to be sure that only event handlers called by our
+         --  Dispatcher post events-to-self.
+         if Owner /= Standard_G.Event_Queue_Base (The_Queue.all).
+                        The_Dispatcher'Identity then
+            Ada.Exceptions.Raise_Exception
+              (Exceptions.Use_Error'Identity,
+               "posting to self outside event handler");
+         else
+            Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
+                                                  The_Event);
+         end if;
+      end Post_To_Self;
+
+
+      procedure Tear_Down is
+      begin
+         Tearing_Down := True;
+      end Tear_Down;
 
 
       procedure Unlock is
@@ -518,8 +541,14 @@ package body ColdFrame.Events_G.Standard_G is
       --  Perhaps this could be neater, but at least doing it in this
       --  order we know that the Timer Manager can't post any more
       --  events on a dead Dispatcher.
-      abort The_Queue.The_Timer_Manager;
-      abort The_Queue.The_Dispatcher;
+      The_Queue.The_Timer_Manager.Tear_Down;
+      while not The_Queue.The_Timer_Manager'Terminated loop
+         delay 0.1;
+      end loop;
+      The_Queue.The_Excluder.Tear_Down;
+      while not The_Queue.The_Dispatcher'Terminated loop
+         delay 0.1;
+      end loop;
 
       declare
          It : Abstract_Posted_Event_Containers.Iterator'Class
@@ -532,6 +561,7 @@ package body ColdFrame.Events_G.Standard_G is
             begin
                Delete (E);
             end;
+            Next (It);
          end loop;
       end;
 
@@ -546,6 +576,7 @@ package body ColdFrame.Events_G.Standard_G is
             begin
                Delete (E);
             end;
+            Next (It);
          end loop;
       end;
 
@@ -560,6 +591,7 @@ package body ColdFrame.Events_G.Standard_G is
             begin
                Delete (E);
             end;
+            Next (It);
          end loop;
       end;
 
