@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 2b45e4b4b97e 2003/03/30 18:58:16 simon $
+# $Id: normalize-rose.tcl,v 99ec6dc54c76 2003/03/30 19:35:50 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1325,7 +1325,7 @@ itcl::class Operation {
 
     # does this have a calling convention?
     variable convention
-    # called via stereotype mechanism to indicate that this has a
+    # called via annotation mechanism to indicate that this has a
     # calling convention
     method -convention {conv} {set convention [normalize $conv]}
 
