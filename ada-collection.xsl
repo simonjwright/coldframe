@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 1540c4a0e9ad 2001/09/25 18:30:40 simon $ -->
+<!-- $Id: ada-collection.xsl,v d61ba0e458ec 2001/09/28 05:55:45 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -111,11 +111,11 @@
     </xsl:choose>
 
     <!-- Hash function for Handles -->
-    <xsl:text>with ColdFrame.Access_Hash;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash&#10;</xsl:text>
-    <xsl:text>is new ColdFrame.Access_Hash&#10;</xsl:text>
+    <xsl:text>is new ColdFrame.Hash.Access_Hash&#10;</xsl:text>
     <xsl:value-of select="$C"/>
     <xsl:text>(T =&gt; Instance,&#10;</xsl:text>
     <xsl:value-of select="$C"/>
