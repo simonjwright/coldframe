@@ -249,8 +249,13 @@ coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events.ads \
 coldframe-project-global_storage_pool.ads \
+coldframe-project-global_storage_pool.ads-debug \
+coldframe-project-global_storage_pool.ads-standard \
 coldframe-project-times.ad[bs]
 
+coldframe-project-global_storage_pool.ads-standard: \
+  coldframe-project-global_storage_pool.ads
+	cp -p $< $@
 
 DEMO = \
 Problem_Reporting.cat Problem_Reporting.raw \
