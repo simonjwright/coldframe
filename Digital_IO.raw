@@ -1,16 +1,16 @@
 <domain>
-<extractor>cf-20021204a</extractor>
+<extractor>cf-20030104a</extractor>
 <name>Digital IO</name>
 <date>
-<year>2002</year>
-<month>12</month>
-<day>30</day>
-<time>16:52</time>
+<year>2003</year>
+<month>1</month>
+<day>7</day>
+<time>17:28</time>
 </date>
 <documentation>This domain manages digital (discrete) input/output.
 It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
 
-[[ revision : $Id: Digital_IO.raw,v 001fa38a3c0f 2002/12/30 18:02:08 simon $ ]]</documentation>
+[[ revision : $Id: Digital_IO.raw,v 4158b05247ca 2003/01/07 20:06:32 simon $ ]]</documentation>
 <classes>
 <class>
 <name>Signal</name>

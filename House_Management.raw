@@ -1,16 +1,16 @@
 <domain>
-<extractor>cf-20021204a</extractor>
+<extractor>cf-20030104a</extractor>
 <name>House Management</name>
 <date>
-<year>2002</year>
-<month>12</month>
-<day>30</day>
-<time>17:21</time>
+<year>2003</year>
+<month>1</month>
+<day>7</day>
+<time>17:28</time>
 </date>
 <documentation>This domain represents an electronic houlsehold control system.
 The first release only manages the stairwell lighting system.
 
-[[ revision : $Id: House_Management.raw,v cbee3bacbcf7 2002/12/30 18:01:21 simon $ ]]</documentation>
+[[ revision : $Id: House_Management.raw,v 4158b05247ca 2003/01/07 20:06:32 simon $ ]]</documentation>
 <classes>
 <class>
 <name>Lamp</name>

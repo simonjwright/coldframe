@@ -109,7 +109,14 @@
 			location   	(175, 1040)
 			nlines     	1
 			max_width  	1585
-			label      	"$Id: Stairwell-Demo.mdl,v 9f30493aa17c 2003/01/04 11:40:49 simon $")))))
+			label      	"$Id: Stairwell-Demo.mdl,v 4158b05247ca 2003/01/07 20:06:32 simon $")
+		    (object ImportView "" @4
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"3E1B0DF501D9"
+			client     	@1
+			supplier   	@2
+			line_style 	0)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"3DFCF74B02E9"
 	physical_models 	(list unit_reference_list)

@@ -12,8 +12,13 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|[[ revision : $Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $ ]]
+|[[ revision : $Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $ ]]
     
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"3E1B0DF501D9"
+	    supplier   	"Logical View::Digital IO"
+	    quidu      	"3DFCF76B0011"))
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Lamp"
@@ -360,7 +365,7 @@
 				location   	(150, 1380)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $"))))))
+				label      	"$Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $"))))))
 	(object Class "Button"
 	    quid       	"3DFCFC250129"
 	    documentation 	"There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated."
@@ -729,7 +734,7 @@
 		    location   	(144, 1856)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v cbee3bacbcf7 2002/12/30 18:01:21 simon $")
+		    label      	"$Id: House_Management.cat,v 4158b05247ca 2003/01/07 20:06:32 simon $")
 		(object NoteView @30
 		    location   	(1635, 1140)
 		    label      	(object ItemLabel
