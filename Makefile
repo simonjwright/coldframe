@@ -117,7 +117,7 @@ pdf:: $(PDFS)
 
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
-PNGS = hierarchies.png
+PNGS = hierarchies.png hierarchies-full.png
 
 ############################
 # Distribution construction
