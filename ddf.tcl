@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v a58ca180249d 2000/04/21 08:28:10 simon $
+# $Id: ddf.tcl,v 5175fba8de64 2000/04/23 06:54:18 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -402,19 +402,23 @@ itcl::class Domain {
 
     method -key {k} {set key $k}
 
+    method -getKey {} {return $key}
+
     method -number {n} {set number $n}
+
+    method -getNumber {} {return $number}
 
     method -version {n} {set version $n}
 
     method -objects {l} {set objects $l}
 
-    method -relationships {l} {set relationships $l}
-
-    method -datatypes {l} {set datatypes $l}
-
     method -getObjects {} {return $objects}
 
+    method -relationships {l} {set relationships $l}
+
     method -getRelationships {} {return $relationships}
+
+    method -datatypes {l} {set datatypes $l}
 
     method -getDatatypes {} {return $datatypes}
 
@@ -647,30 +651,30 @@ itcl::class Association {
 	    $assoc -addRelation $n
 	}
 	set type [$this -relationshipType]
-	# XXX need extra logic to handle 1:1c automatically
 	switch $type {
 	    "1:1"     {
 		# ensure that one and only one of the roles is marked
 		# as the formalizing end
-		switch [$role1 -getFormalizingEnd] {
-		    0 {
-			switch [$role2 -getFormalizingEnd] {
-			    0 {error "neither end of $name is formalized"}
-			    1 {
-				$cl1 -addFormalizingAttributesTo $cl2 $role2
-				$cl1 -sourceOfRelation $role2
-			    }
-			}
+		if [$role1 -getFormalizingEnd] {
+		    if [$role2 -getFormalizingEnd] {
+			error "both ends of $name are marked formalized"
 		    }
-		    1 {
-			switch [$role2 -getFormalizingEnd] {
-			    0 {
-				$cl2 -addFormalizingAttributesTo $cl1 $role1
-				$cl2 -sourceOfRelation $role1
-			    }
-			    1 {error "both ends of $name are formalized"}
-			}
+		    $cl2 -addFormalizingAttributesTo $cl1 $role1
+		    $cl2 -sourceOfRelation $role1
+		} elseif [$role2 -getFormalizingEnd] {
+		    $cl1 -addFormalizingAttributesTo $cl2 $role2
+		    $cl1 -sourceOfRelation $role2
+		} elseif [$role1 -getConditionality] {
+		    if [$role2 -getConditionality] {
+			error "neither end of $name is marked formalized"
 		    }
+		    $cl2 -addFormalizingAttributesTo $cl1 $role1
+		    $cl2 -sourceOfRelation $role1
+		} elseif [$role2 -getConditionality] {
+		    $cl1 -addFormalizingAttributesTo $cl2 $role2
+		    $cl1 -sourceOfRelation $role2
+		} else {
+		    error "neither end of $name is marked formalized"
 		}
 	    }
 	    "1:M"     {
@@ -871,21 +875,23 @@ itcl::class Datatype {
 
     variable constraint
 
-    variable objectUsers
+    variable objectUsers {}
 
-    variable relationshipUsers
+    variable relationshipUsers {}
 
-    variable dataType
-
-    variable eventType
-
-    variable superType
-
-    variable tags
+    # dataType 0 -> Provided_Data (? XXX)
+    variable dataType 0
 
     constructor {name} {set type $name}
 
     method -className {} {return "datatype"}
+
+    method -addObjectUser {obj} {
+	set name [$obj -getName]
+	set objs [$obj -getOwner]
+	set index [$objs -index $name]
+	puts stderr "$type -addObjectUser: name $name, index $index"
+    }
 
     method -complete {} {
 	if [[stack -top] -isPresent $type] {
@@ -897,15 +903,19 @@ itcl::class Datatype {
 
     method -generate {domain} {
 	puts "$type"
-	puts "Standard"
+	if [info exists package] {
+	    puts "$package"
+	} else {
+	    puts "Types_d[$domain -getNumber]"
+	}
 	# constraint flag -- 0 -> no constraint
 	puts 0
-	# number of using objects
+	# number of using objects (dummy, object index 1 I think)
+	puts "1\n0"
+	# relationship users -- fossil, I think
 	puts 0
-	# relationship users
+	# data type switch, 0 -> provided
 	puts 0
-	# data type switch
-	puts -1
 	# event type
 	puts -1
 	# super type
@@ -954,8 +964,11 @@ itcl::class Attribute {
 
     variable identifier 0
 
+    # indicates whether this attribute is defined referentially
     variable referential 0
 
+    # a list of the roles (relationship ends) for which this attribute
+    # is the source for a referential attribute at the other end
     variable roles {}
 
     method -type {t} {set type $t}
@@ -963,6 +976,10 @@ itcl::class Attribute {
     method -identifier {} {set identifier 1}
 
     method -getIdentifier {} {return $identifier}
+
+    method -getOwningObject {} {
+	return [[$this -getOwner] -getOwner]
+    }
 
     method -referential {} {set referential 1}
 
@@ -988,8 +1005,13 @@ itcl::class Attribute {
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
+	    # XXX need to create more carefully. How does it get constructed?
 	    set datatype [Datatype ::#auto $type]
+	    $datatype -addObjectUser [$this -getOwningObject]
 	    $datatypes -add $datatype $type
+	} else {
+	    set datatype [$datatypes -atName $type]
+	    $datatype -addObjectUser [$this -getOwningObject]
 	}
     }
 
@@ -1004,7 +1026,7 @@ itcl::class Attribute {
 	puts "[llength $roles]"
 	set objects [$domain -getObjects]
 	foreach r $roles {
-	    set object [[$this -getOwner] -getOwner]
+	    set object [$this -getOwningObject]
 	    puts -nonewline stderr "[$object -getName].$name "
 	    puts -nonewline stderr "used in [[$r -getOwner] -getName] "
 	    puts -nonewline stderr "end [$r -getEnd] "
@@ -1012,9 +1034,9 @@ itcl::class Attribute {
 	    puts stderr ""
 	    set rel [$r -getOwner]
 	    puts "[$rel -getNumber]"
-		# XXXXXXXX!!!
-#  		1       {puts "1"; puts "0"}
-#  		2       {puts "0"; puts "1"}
+	    # XXX I thought that the first of these numbers was the end at
+	    # which the referential attribute is placed, the second the
+	    # source (0 -> A, 1 -> B), but this looks odd ..
 	    switch [$r -getEnd] {
 		1       {puts "0\n1"}
 		2       {puts "1\n0"}
@@ -1159,6 +1181,13 @@ itcl::class Transitiontables {
 
 itcl::class Typesfiles {
     inherit OuterList
+
+    method -generate {domain} {
+	# XXX not sure about this, probably need only this sort
+	puts "typesfiles"
+	puts "1"
+	puts "Types_d[$domain -getNumber]"
+    }
 }
 
 # Convert XML tag name to element of appropriate type
