@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: event-modelling.html,v 01c60f8ebc43 2003/10/04 07:10:48 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -175,9 +175,9 @@ occur in a state if there's no corresponding transition from that
 state (typically, a <i>Can't Happen</i> exception will be raised).
 
 <p>If you want an event to be ignored when it occurs in a particular
-state, provide a transition-to-self for that event and mark it
-<em>&#171;ignore&#187;</em>. This means that the event is completely
-ignored, and in particular any entry actions don't get
+state, provide a transition-to-current-state for that event and mark
+it <em>&#171;ignore&#187;</em>. This means that the event is
+completely ignored, and in particular any entry actions don't get
 called. <em>Don't</em> do this with a completion transition (one with
 no triggering event).
 
@@ -198,12 +198,17 @@ needs supporting in the class model.
 timeout</i> and <i>clear timeout</i> correspond to the entry actions
 on the statechart.
 
-<p>Instance entry actions can have a single parameter (aside from the
-implicit <tt>This</tt>): if you specify it, it must be of the type of
-the payload of the event that causes entry to the state concerned, and
-the actual payload will be passed at run time. This means that if you
-use this feature, all the events that cause entry to the state must
-carry the same payload type.
+<p>Instance entry and transition actions can have a single parameter
+(aside from the implicit <tt>This</tt>): if you specify it, it must be
+of the type of the payload of the event that causes entry to the state
+concerned, and the actual payload will be passed at run time. This
+means that if you use this feature, all the events that cause entry to
+the state must carry the same payload type.
+
+<p>You can use <tt>Delete</tt> as an entry action (ColdFrame doesn't
+check that it's in a <i>final</i> state). Of course, it needs to be
+the <em>last</em> action. <em>Don't</em> delete the instance in any
+other action.
 
 <p>The instance attribute <i>timeout</i>, of the ColdFrame-special
 type <i>Timer</i>, is used to hold timeouts. The concept of operation
