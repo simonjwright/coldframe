@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v d9f5636c8ffe 2004/11/11 15:08:22 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 59db5d7aafe5 2005/01/29 20:01:37 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -165,9 +165,10 @@
 
   <xsl:template name="ut:should-edit">
     <xsl:call-template name="user-banner"/>
-    <xsl:text>-------------------------------------------&#10;</xsl:text>
-    <xsl:text>--  Automatically generated: edit this!  --&#10;</xsl:text>
-    <xsl:text>-------------------------------------------&#10;</xsl:text>
+    <xsl:text>--------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated:  edit this!  --&#10;</xsl:text>
+    <xsl:text>--  PLEASE DELETE THIS BANNER AFTERWARDS  --&#10;</xsl:text>
+    <xsl:text>--------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
 
