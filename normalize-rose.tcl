@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v f43a7032c5cb 2004/10/25 05:45:40 simon $
+# $Id: normalize-rose.tcl,v 85149b42a25d 2004/10/29 12:43:34 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1260,13 +1260,6 @@ itcl::class Class {
         set discriminated 1
     }
 
-    variable private 0
-    # called (via annotation or stereotype mechanism) to indicate that this
-    # is a private type
-    method -private {dummy} {
-        set private 1
-    }
-
     variable protected 0
     method -protected {dummy} {
         $this -type 1
@@ -1283,6 +1276,15 @@ itcl::class Class {
     # is serializable
     method -serializable {dummy} {set serializable 1}
 
+    variable visibility "public"
+    # called (as part of extraction) to indicate this type's visibility.
+    # Class visibility is determined by <<public>>, <<visible-for-test>>.
+    method -visibility {a} {
+        switch $a {
+            PublicAccess     {set visibility public}
+            default          {set visibility private}
+        }
+    }
     #
     # variables and methods related to <<exception>> classes
     #
@@ -1364,14 +1366,12 @@ itcl::class Class {
                     $dt -tag $t $tags($t)
                 }
             }
+            $dt -visibility $visibility
             if [info exists callback] {
                 $dt -callback $callback
             }
             if $counterpart {
                 $dt -counterpart 1
-            }
-            if $private {
-                $dt -private 1
             }
             if $serializable {
                 $dt -serializable 1
@@ -1479,12 +1479,10 @@ itcl::class Class {
             if [info exists extends] {
                 puts -nonewline " extends=\"$extends\""
             }
-            if $private {
-                puts -nonewline " private=\"true\""
-            }
             if $serializable {
                 puts -nonewline " serializable=\"true\""
             }
+            puts -nonewline " visibility=\"$visibility\""
             puts ">"
             putElement name "$name"
             $this -generateDocumentation
@@ -2418,11 +2416,11 @@ itcl::class Datatype {
 
     variable operations
 
-    variable private 0
-
     variable serializable 0
 
     variable type
+
+    variable visibility "public"
 
     constructor {name} {set type $name}
 
@@ -2540,11 +2538,6 @@ itcl::class Datatype {
         set dataDetail [normalize $domain]
     }
 
-    # called when the type is private (stereotype on Class, or tag)
-    method -private {dummy} {
-        set private 1
-    }
-
     # called when the type renames some other type.
     method -renames {other} {
         set dataType "renames"
@@ -2615,6 +2608,11 @@ itcl::class Datatype {
                 Warning "unrecognised hash mechanism \"$hash\" for $type"
             }
         }
+    }
+
+    # called to set the visibility
+    method -visibility {v} {
+        set visibility $v
     }
 
     # utility to check the constraints (held in dataDetail).
@@ -2688,9 +2686,6 @@ itcl::class Datatype {
         if [info exists typeImage] {
             puts -nonewline " type-image=\"$typeImage\""
         }
-        if $private {
-            puts -nonewline " private=\"true\""
-        }
         if $serializable {
             puts -nonewline " serializable=\"true\""
         }
@@ -2716,6 +2711,7 @@ itcl::class Datatype {
             }
             default {}
         }
+        puts -nonewline " visibility=\"$visibility\""
         puts ">"
         putElement name "$type"
         $this -generateDocumentation

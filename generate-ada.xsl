@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v c92ca6655d81 2004/10/25 05:46:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v 85149b42a25d 2004/10/29 12:43:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -207,7 +207,9 @@
     </xsl:call-template>
 
     <xsl:call-template name="ty:domain-types">
-      <xsl:with-param name="types" select="/domain/type[not(@private)]"/>
+      <xsl:with-param 
+        name="types" 
+        select="/domain/type[not(@visibility='private')]"/>
     </xsl:call-template>
 
     <!-- .. any type operations .. -->
@@ -219,7 +221,7 @@
 
     <!-- .. access-to-operation .. -->
     <xsl:apply-templates
-      select="type[not(@private)]/operation[@access]"
+      select="type[not(@visibility='private')]/operation[@access]"
       mode="op:access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
@@ -227,7 +229,7 @@
 
     <!--  .. others .. -->
     <xsl:apply-templates
-      select="type[not(@private) and not(@protected)]
+      select="type[not(@visibility='private') and not(@protected)]
               /operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
@@ -245,7 +247,9 @@
     </xsl:call-template>
 
     <xsl:call-template name="ty:domain-types">
-      <xsl:with-param name="types" select="/domain/type[@private]"/>
+      <xsl:with-param
+        name="types"
+        select="/domain/type[@visibility='private']"/>
     </xsl:call-template>
 
     <!-- .. any type operations .. -->
@@ -257,7 +261,7 @@
 
     <!-- .. access-to-operation .. -->
     <xsl:apply-templates
-      select="type[@private]/operation[@access]"
+      select="type[@visibility='private']/operation[@access]"
       mode="op:access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
@@ -265,7 +269,7 @@
 
     <!--  .. others .. -->
     <xsl:apply-templates
-      select="type[@private and not(@protected)]
+      select="type[@visibility='private' and not(@protected)]
               /operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
