@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 8d478181158a 2003/02/07 05:59:18 simon $ -->
+<!-- $Id: generate-ada.xsl,v 99c86c09631d 2003/02/15 16:26:59 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -48,11 +48,14 @@
 
   <xsl:output method="text"/>
 
+
+  <!-- +++++ Command line parameters. +++++ -->
+
   <!-- For identification info. -->
   <xsl:param name="coldframe-version"/>
 
-  <!-- Controls how attribute accessor functions are generated. -->
-  <xsl:param name="generate-accessors"/>
+  <!-- Controls when attribute accessor functions are generated. -->
+  <xsl:param name="generate-accessors" select="defined"/>
 
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'   '"/>
@@ -66,6 +69,12 @@
 
   <!-- Control comment paragraph fill width. -->
   <xsl:param name="fill-column" select="70"/>
+
+  <!-- Control limit on using bounded containers. -->
+  <xsl:param name="max-bounded-container" select="49"/>
+
+  <!-- Control limit on number of hash buckets. -->
+  <xsl:param name="max-hash-buckets" select="49"/>
 
 
   <!-- Global shorthands for indentation. -->
