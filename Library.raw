@@ -1,23 +1,25 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20030703t</extractor>
 <name>Library</name>
 <date>
-<year>2001</year>
-<month>8</month>
-<day>16</day>
-<time>07:23</time>
+<year>2003</year>
+<month>7</month>
+<day>4</day>
+<time>13:13</time>
 </date>
 <documentation></documentation>
 <classes>
 <class>
 <name>Book</name>
-<documentation>[[ abbreviation : bk ]]
-</documentation>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
+<documentation>[[ abbreviation : bk ]]
+</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>title</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>text</type>
 <initial></initial>
@@ -25,15 +27,19 @@
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Borrower</name>
-<documentation></documentation>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>text</type>
 <initial></initial>
@@ -41,26 +47,34 @@
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Current Loan</name>
-<documentation></documentation>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Loan History</name>
-<documentation></documentation>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 </classes>
 <relationships>

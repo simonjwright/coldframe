@@ -1,22 +1,24 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20030703t</extractor>
 <name>Interrupt Handling</name>
 <date>
-<year>2002</year>
-<month>10</month>
-<day>11</day>
-<time>21:54</time>
+<year>2003</year>
+<month>7</month>
+<day>4</day>
+<time>13:09</time>
 </date>
 <documentation></documentation>
 <classes>
 <class stereotype="singleton">
 <name>Device</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>timeout</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Timer</type>
 <initial></initial>
@@ -25,30 +27,35 @@
 <operations>
 <operation stereotype="entry">
 <name>start</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>report entry</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set timeout</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear timeout</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="init">
 <name>initialize</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
