@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 7171e077d690 2004/09/14 11:24:31 simon $
+--  $Id: regressions-suite.adb,v 6044529fad21 2004/09/18 12:17:24 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -20,6 +20,7 @@ with Regressions.Event_Holder;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
+with Regressions.PT_User;
 with Regressions.Serializable;
 with Regressions.Tear_Down;
 
@@ -754,6 +755,62 @@ package body Regressions.Suite is
    end Tearing_Down_Active_Timers_Tests;
 
 
+   package Protected_Types_And_Access is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Protected_Types_And_Access;
+
+   package body Protected_Types_And_Access is
+
+      procedure Check_Values (C : in out Test_Case'Class);
+      procedure Check_Values (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         Assert (not PT_User.Get_State,
+                 "value not false");
+         PT_User.Set_State (False);
+         Assert (not PT_User.Get_State,
+                 "value not false");
+         PT_User.Set_State (True);
+         Assert (PT_User.Get_State,
+                 "value not true");
+      end Check_Values;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Protected_Types_And_Access.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Check_Values'Access,
+            "check values in protected object");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Protected_Types_And_Access;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -767,6 +824,8 @@ package body Regressions.Suite is
                                   new Callback_Registration_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Tearing_Down_Active_Timers_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Protected_Types_And_Access.Case_1);
       return Result;
    end Suite;
 
