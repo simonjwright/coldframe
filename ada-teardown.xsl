@@ -86,6 +86,9 @@
     <xsl:value-of select="$I"/>
     <xsl:text>Events.Tear_Down;&#10;</xsl:text>
     
+    <xsl:value-of select="$I"/>
+    <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
