@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 3831cc5607be 2003/01/26 19:09:20 simon $ -->
+<!-- $Id: ada-type.xsl,v 2d69c0c7f57f 2003/05/17 16:47:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,6 +32,11 @@
 
   <!-- Called at /domain to generate domain context clauses. -->
   <xsl:template name="domain-context">
+
+    <!-- Context for special references (eg pi). -->
+    <xsl:if test="references='pi'">
+      <xsl:text>with Ada.Numerics;&#10;</xsl:text>            
+    </xsl:if>
 
     <!-- Context for [[counterpart]] and Counterpart. -->
     <xsl:if test="type/counterpart
