@@ -16,7 +16,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: 38960f8e0d9a $ }
+|{ revision = $Revision: fb15fbf96993 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -36,7 +36,7 @@
 		    documentation 	"Called when a signal has changed."
 		    stereotype 	"abstract"
 		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
+		    opExportControl 	"Private"
 		    uid        	0)
 		(object Operation "get s"
 		    quid       	"3DFF6A5B033B"
@@ -207,7 +207,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: 38960f8e0d9a $ }
+|{ revision = $Revision: fb15fbf96993 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -258,7 +258,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	8
-			max_width  	665)
+			max_width  	672)
 		    width      	686
 		    height     	438
 		    annotation 	8
@@ -306,7 +306,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	215)
+			max_width  	222)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -387,7 +387,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	315)
+			max_width  	322)
 		    width      	336
 		    height     	264
 		    annotation 	8
@@ -435,7 +435,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	215)
+			max_width  	222)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -516,7 +516,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	830)
+			max_width  	837)
 		    width      	850
 		    height     	220
 		    annotation 	8
@@ -573,7 +573,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	838)
+			max_width  	845)
 		    width      	858
 		    height     	264
 		    annotation 	8
@@ -631,4 +631,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")))))
+		    label      	"$Id: Digital_IO.cat,v fb15fbf96993 2004/11/11 15:06:28 simon $")))))
