@@ -13,18 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-events-initialize.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: b72a3ecb25af $
+--  $Date: 2004/06/17 07:12:06 $
 --  $Author: simon $
 
---  Set up a debug Event Queue.
+--  Set up a tracing Event Queue.
 
-with ColdFrame.Project.Events.Standard.Debug;
+with ColdFrame.Project.Events.Standard.Trace;
 
 separate (House_Management.Events)
 procedure Initialize is
 begin
 
-   Dispatcher := new ColdFrame.Project.Events.Standard.Debug.Event_Queue;
+   Dispatcher := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
 
 end Initialize;
