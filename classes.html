@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 6a7bc5a07c1d 2002/05/02 20:31:30 simon $ -->
+<!-- $Id: classes.html,v dece449b3636 2002/05/07 19:58:59 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -82,7 +82,13 @@ instance gets a new value.
 
 <h2>Translation</h2>
 
-<h3>Ada library structure</h3>
+<ul>
+<li><a href="#library-structure">Ada library structure</a>
+<li><a href="#externals">Package externals</a>
+<li><a href="#internals">Package internals</a>
+</ul>
+
+<h3><a name="library-structure">Ada library structure</a></h3>
 
 <p>All the classes in a <a href="domains.html">domain</a> are
 translated as first-level children of the domain package:
@@ -230,9 +236,46 @@ is the same in either case.
 
 </dl>
 
+<h3><a name="externals">Package externals</a></h3>
+
+<p>A class's identifying attribute or attributes map to a record type
+named <tt>Identifier</tt>. Note that <em>&#171;public&#187;</em> and
+<em>&#171;singleton&#187;</em> classes don't have identifiers.
+
+<p>A class's instance data maps to a private record type named
+<tt>Instance</tt>, with an accessor <tt>Handle</tt>. In the case of
+<em>&#171;public&#187;</em> classes, these are both declared in the
+private part (in other words, they're only visible to operations of
+the class itself). Both <em>&#171;public&#187;</em> and
+<em>&#171;singleton&#187;</em> classes have a private variable
+<tt>This</tt> of type <tt>Handle</tt>, which accesses the only
+instance of the class. See also under <a
+href="attributes.html">Attributes</a>.
+
+<p>Normal classes have a <tt>Create</tt> operation, returning a
+<tt>Handle</tt>. If the class's only identifying attribute is of type
+<tt>Autonumber</tt>, <tt>Create</tt> takes no parameters; otherwise it
+takes a single parameter of type <tt>Identifier</tt>.
+
+<p>They also have a pair of <tt>Delete</tt> operations; one takes a
+parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
+single parameter of type <tt>Identifier</tt>.
+
+<p>Normal classes have a <tt>Find</tt> operation, taking a single
+parameter of type <tt>Identifier</tt> and returning a <tt>Handle</tt>
+(<tt>null</tt> is a possible return). <em>&#171;singleton&#187;</em>
+classes have a parameterless <tt>Find</tt> operation returning a
+<tt>Handle</tt>, which can't be <tt>null</tt>.
+
+<h3><a name="internals">Package internals</a></h3>
+
 <h2>Use</h2>
 
-<p><i>to follow</i>
+<p>If you're implementing operations of a
+<em>&#171;singleton&#187;</em> class, use <tt>This</tt> instead of
+<tt>Find</tt>; it'll be quicker.
+
+<p><i>more to follow</i>
 
 <p><hr>
 <i>
