@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 2581986f7139 2002/02/23 14:32:51 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -184,9 +184,15 @@
   </xsl:template>
 
   <xsl:template name="should-not-edit">
-    <xsl:text>-----------------------------------------------------&#10;</xsl:text>
-    <xsl:text>--  Automatically generated; should not be edited  --&#10;</xsl:text>
-    <xsl:text>-----------------------------------------------------&#10;</xsl:text>
+    <xsl:text>--------------------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated; should not need editing  --&#10;</xsl:text>
+    <xsl:text>--------------------------------------------------------&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="should-edit">
+    <xsl:text>-------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated; edit this!  --&#10;</xsl:text>
+    <xsl:text>-------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
 
