@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v a618cffed681 2005/02/26 13:23:22 simon $ -->
+<!-- $Id: ada-operation.xsl,v c27edd43a8e5 2005/02/28 20:25:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1045,7 +1045,11 @@
           <xsl:value-of select="name"/>
           <xsl:text>&quot;, Call, </xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>'Size));&#10;</xsl:text>
+          <xsl:text>'Size),&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
         </xsl:for-each>
         <xsl:value-of select="$I"/>
         <xsl:text>ColdFrame.Stubs.Check_For_Exception&#10;</xsl:text>
@@ -1080,6 +1084,7 @@
           <xsl:value-of select="$subprogram-name"/>
           <xsl:text>&quot;, &quot;return&quot;, Call));&#10;</xsl:text>
         </xsl:if>
+
       </xsl:when>
 
       <!-- If it's a function, we have to supply a return statement
