@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 2684f855980b $
---  $Date: 2004/06/10 19:59:49 $
+--  $Revision: 0ed71a11452c $
+--  $Date: 2004/06/10 20:23:12 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -396,7 +396,7 @@ package body ColdFrame.Events_G.Standard_G is
 
    begin
 
-      loop
+      Outer : loop
 
          --  This loop encloses an exception-catching block, so that
          --  the whole event queue doesn't just die. Of course, the
@@ -406,7 +406,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          begin
 
-            loop
+            Inner : loop
 
                --  This is the main loop.
 
@@ -441,7 +441,7 @@ package body ColdFrame.Events_G.Standard_G is
 
                   or
                      accept Tear_Down;
-                     exit;
+                     exit Outer;
 
                   end select;
 
@@ -485,7 +485,7 @@ package body ColdFrame.Events_G.Standard_G is
 
                   or
                      accept Tear_Down;
-                     exit;
+                     exit Outer;
 
                   or
                      delay until Held_Events.Next_Event_Time (The_Events);
@@ -495,7 +495,7 @@ package body ColdFrame.Events_G.Standard_G is
 
                end if;
 
-            end loop;
+            end loop Inner;
 
          exception
             when E : others =>
@@ -509,7 +509,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          delay 0.1;
 
-      end loop;
+      end loop Outer;
 
    end Timer_Manager;
 
