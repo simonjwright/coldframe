@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 285737f99b9a $
---  $Date: 2003/02/02 18:34:11 $
+--  $Revision: cc4d41d0f896 $
+--  $Date: 2003/05/10 17:16:23 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -86,7 +86,7 @@ package body ColdFrame.Callbacks is
       loop
          exit when The_Registered_Procedures.Next = null;
          declare
-            Next : Cell_P := The_Registered_Procedures.Next.Next;
+            Next : constant Cell_P := The_Registered_Procedures.Next.Next;
          begin
             Delete (The_Registered_Procedures.Next);
             The_Registered_Procedures.Next := Next;
