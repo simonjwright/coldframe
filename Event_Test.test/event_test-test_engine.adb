@@ -251,12 +251,33 @@ package body Event_Test.Test_Engine is
       ColdFrame.Project.Events.Post (Ev,
                                      On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
-      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      --  Of course, the real check is that the procedure
-      --  manages to pass this point!
-      Assert (True,
-              "lock wasn't achieved");
+      select
+         delay 1.0;
+         Assert (False, "lock wasn't achieved");
+      then abort
+         ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      end select;
    end Event_Takes_Lock;
+
+
+   --  You can tear down an Event_Queue that hasn't started.
+   procedure Tear_Down_Unstarted_Queue
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Tear_Down_Unstarted_Queue
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Copy_Of_Queue : ColdFrame.Project.Events.Event_Queue_P
+        := ColdFrame.Project.Events.Copy (Events.Dispatcher);
+      --  we need a copy so that the Tear_Down in the fixture doesn't
+      --  fail.
+   begin
+      select
+         delay 1.0;
+         Assert (False, "queue wasn't torn down");
+      then abort
+         ColdFrame.Project.Events.Tear_Down (Copy_Of_Queue);
+      end select;
+   end Tear_Down_Unstarted_Queue;
 
 
    ---------------
@@ -277,6 +298,10 @@ package body Event_Test.Test_Engine is
         (T, Lock_Vs_Self_Event'Access, "Lock against self event");
       Register_Routine
         (T, Event_Takes_Lock'Access, "Event handler takes nested lock");
+      Register_Routine
+        (T,
+         Tear_Down_Unstarted_Queue'Access,
+         "Unstarted queue can be torn down");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
