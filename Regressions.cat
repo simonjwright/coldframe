@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: c0b68025ef97 $}
+|{ revision = $Revision: 7b7c981e3b8d $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -587,7 +587,7 @@
 	(object Class "Null Record"
 	    quid       	"3FDAB0F002AB"
 	    documentation 	"{null}"
-	    stereotype 	"type")
+	    stereotype 	"type, serializable")
 	(object Class "Array Type"
 	    quid       	"400195C601EA"
 	    documentation 	"{array = record type, index = enum type}"
@@ -730,7 +730,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: c0b68025ef97 $}
+|{ revision = $Revision: 7b7c981e3b8d $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -1027,7 +1027,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v c0b68025ef97 2004/01/11 19:28:15 simon $")
+		    label      	"$Id: Regressions.cat,v 7b7c981e3b8d 2004/01/13 12:40:27 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -1836,7 +1836,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1065, 2515)
+		    location   	(1065, 2510)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1848,26 +1848,26 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@49
-			location   	(933, 2489)
+			location   	(874, 2484)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	264
+			max_width  	382
 			justify    	0
 			label      	"Null Record")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@49
-			location   	(933, 2444)
+			location   	(874, 2439)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	264
+			max_width  	380
 			justify    	0
-			label      	"<<type>>")
+			label      	"<<type, serializable>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FDAB0F002AB"
-		    width      	282
+		    width      	400
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -1985,7 +1985,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	205)
+			max_width  	212)
 		    width      	288
 		    height     	264
 		    annotation 	8

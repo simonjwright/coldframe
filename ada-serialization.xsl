@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 2588d6e5cdbc 2003/10/31 06:43:44 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 7b7c981e3b8d 2004/01/13 12:40:27 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -255,7 +255,16 @@
 
         <xsl:choose>
 
+          <xsl:when test="$type/@null">
+            <!-- Null record. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>""&gt;null&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+
           <xsl:when test="$type/name='Date' or $type/name='Time'">
+            <!-- Date/Time. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
@@ -270,6 +279,7 @@
           </xsl:when>
 
           <xsl:when test="$type/name='Text' or $type/name='Unbounded_String'">
+            <!-- Unbounded string. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
