@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d5677990a0ce 2004/05/01 13:23:54 simon $
+# $Id: normalize-rose.tcl,v fa951df1071c 2004/05/01 16:51:33 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -442,6 +442,13 @@ itcl::class String {
             }
             # strip out any property lists
             regsub -all "\{\[^}\]*\}" $text "" text
+            # for some strange reason, txlxml-2.1theta puts a
+            # backslash at the front of CDATA elements that begin with
+            # a brace. I can't run tclxml-2.5 here because it requires
+            # package uri (looks from the web as though it should be
+            # in Tcl 8.2 and later; I'm running 8.3 but no luck).
+            set text [string trim $text]
+            regsub {^\\} $text "" text
         }
     }
 
