@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: 26a7ccf780c7 $]]
+|[[revision : $Revision: 95ddd088c035 $]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -40,11 +40,41 @@
 	(object Class "Expression In Bound"
 	    quid       	"3F67ED0D011E"
 	    documentation 	"[[ real : digits 15, lower - 2.0 * pi, upper 2.0 * pi ]]"
-	    stereotype 	"type"))
+	    stereotype 	"type")
+	(object Class "S Record"
+	    quid       	"3FA1EEFD01B5"
+	    stereotype 	"type, serializable"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "i"
+		    quid       	"3FA1EF570182"
+		    type       	"Integer")
+		(object ClassAttribute "d"
+		    quid       	"3FA1F00C002E"
+		    type       	"D Record"
+		    quidu      	"3FA1EFA3029A")
+		(object ClassAttribute "e"
+		    quid       	"3FA1F01A03A9"
+		    type       	"Enum"
+		    quidu      	"3FA1EFE202CC")))
+	(object Class "D Record"
+	    quid       	"3FA1EFA3029A"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "d"
+		    quid       	"3FA1EFBC032C"
+		    type       	"Duration")))
+	(object Class "Enum"
+	    quid       	"3FA1EFE202CC"
+	    documentation 	"[[ enumeration : a, b, c ]]"
+	    stereotype 	"type, serializable"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
 	    title      	"Main"
+	    documentation 	
+|Contains ColdFrame regression tests.
+|[[revision : $Revision: 95ddd088c035 $]]
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
@@ -56,7 +86,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(361, 504)
+		    location   	(368, 439)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -68,7 +98,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(169, 451)
+			location   	(176, 386)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	384
@@ -76,7 +106,7 @@
 			label      	"Find Active")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(169, 406)
+			location   	(176, 341)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -89,7 +119,7 @@
 		    quidu      	"3F56123103DD"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(169, 507)
+			location   	(176, 442)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -138,7 +168,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(372, 783)
+		    location   	(372, 657)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -150,7 +180,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(148, 757)
+			location   	(148, 631)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	448
@@ -158,7 +188,7 @@
 			label      	"Find Active Singleton")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(148, 712)
+			location   	(148, 586)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -222,7 +252,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1097, 483)
+		    location   	(1119, 442)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -234,7 +264,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
-			location   	(708, 387)
+			location   	(730, 346)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	778
@@ -246,7 +276,7 @@
 		    quidu      	"3F67E8AE00D8"
 		    compartment 	(object Compartment
 			Parent_View 	@6
-			location   	(708, 443)
+			location   	(730, 402)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -260,7 +290,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	775)
+			max_width  	782)
 		    width      	796
 		    height     	214
 		    annotation 	8
@@ -292,7 +322,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1907, 470)
+		    location   	(1919, 427)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -304,7 +334,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(1709, 444)
+			location   	(1721, 401)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	396
@@ -312,7 +342,7 @@
 			label      	"Expression In Bound")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@8
-			location   	(1709, 399)
+			location   	(1721, 356)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -324,6 +354,196 @@
 		    fill_color 	13434879
 		    quidu      	"3F67ED0D011E"
 		    width      	414
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object Label @9
+		    location   	(127, 38)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1589
+		    label      	"$Id: Regressions.cat,v 95ddd088c035 2003/10/31 06:45:12 simon $")
+		(object NoteView @10
+		    location   	(367, 1034)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(159, 958)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	380
+			label      	"Serialization Image outputs record name")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	440
+		    height     	165)
+		(object ClassView "Class" "Logical View::Regressions::S Record" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(360, 1300)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(169, 1201)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	382
+			justify    	0
+			label      	"S Record")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@11
+			location   	(169, 1156)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	380
+			justify    	0
+			label      	"<<type, serializable>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FA1EEFD01B5"
+		    compartment 	(object Compartment
+			Parent_View 	@11
+			location   	(169, 1257)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	260)
+		    width      	400
+		    height     	310
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::D Record" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(350, 1596)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(229, 1543)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	242
+			justify    	0
+			label      	"D Record")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@12
+			location   	(229, 1498)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	242
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FA1EFA3029A"
+		    compartment 	(object Compartment
+			Parent_View 	@12
+			location   	(229, 1599)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	240)
+		    width      	260
+		    height     	218
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::Enum" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(357, 1826)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(166, 1800)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	382
+			justify    	0
+			label      	"Enum")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@13
+			location   	(166, 1755)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	380
+			justify    	0
+			label      	"<<type, serializable>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FA1EFE202CC"
+		    width      	400
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)))))
