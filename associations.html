@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v d6c03f6a7218 2002/10/11 05:33:38 simon $ -->
+<!-- $Id: associations.html,v dc040040a7a1 2002/10/20 16:22:57 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -59,8 +59,7 @@ usually don't need to provide referential attributes (it would be
 quite cumbersome to do so, since Rose, as is typical for a UML tool,
 is unaware of the concept). Instead, ColdFrame automatically
 implements the relationships. Sometimes it needs a little help, for
-example for <a href="#formalizes">complex formalization</a> or <a
-href="#source">in a symmetric association</a>.
+example for complex formalization or in a symmetric association.
 
 <h4>Complex formalization</h4>
 
@@ -78,7 +77,7 @@ and include the annotation
    [[ formalizes : r8 ]]
 </pre>
 
-<h4>Symmetric associations</h4>
+<h4><a name="symmetric">Symmetric associations</a></h4>
 
 <p>If you have a symmetrical association of multiplicity <i>1:1</i>,
 <i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, ColdFrame requires
@@ -103,9 +102,29 @@ unlinking and navigation from single instances
 
 <li>a package
 <tt><i>Domain.Association</i>.From_Collections</tt>, which deals with
-navigation from collections of instances.
+navigation from collections of instances
+
+<li>a "referential attribute" (or two, in the case of a many-to-many
+association, with its associative class).
 
 </ul>
+
+<p>The implementing referential attrubute, and its assciated "get",
+"set" operations are in the public part of the class package but
+aren't intended for general use; use the
+<tt><i>Domain.Association</i></tt> package's operations instead.
+
+<p>In the present implementation (18.x.02), each navigation has a
+<i>natural</i> and a <i>hard</i> direction. The natural direction is
+from the class in which the referential attribute is
+implemented.
+
+<p>Normally you have no choice; for example, in a <i>1:m</i>
+association, ColdFrame puts the referential attribute at the
+<i>many</i> end. However, in <a href="#symmetric">symmetric
+associations</a>, you should put the required
+<tt>[[&nbsp;source&nbsp;]]</tt> annotation on the end that you want to
+be able to get to more efficiently.
 
 <h2><a name="use">Use</a></h2>
 
