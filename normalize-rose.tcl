@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d36d970279e3 2001/01/12 20:39:05 simon $
+# $Id: normalize-rose.tcl,v b69f4ac05bbc 2001/01/17 20:11:10 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -191,9 +191,15 @@ itcl::class IdentifierString {
 itcl::class Element {
     inherit Base
 
+    variable documentation ""
+
     variable name "unnamed"
 
     variable stereotype
+
+    method -documentation {d} {
+	set documentation $d
+    }
 
     method -name {n} {set name $n}
 
@@ -465,8 +471,6 @@ itcl::class Domain {
 
     variable datatypes
 
-    variable typesfiles
-
     variable transitiontables
 
     variable terminators
@@ -532,16 +536,16 @@ itcl::class Domain {
 	putElement date "[exec /bin/date]"
 	$objects -evaluate $this
 	$relationships -evaluate $this
-	$datatypes -evaluate $this
-	$typesfiles -evaluate $this
-	$transitiontables -evaluate $this
-	$terminators -evaluate $this
+	#$datatypes -evaluate $this
+	#$typesfiles -evaluate $this
+	#$transitiontables -evaluate $this
+	#$terminators -evaluate $this
 	$objects -generate $this
 	$relationships -generate $this
-	$datatypes -generate $this
-	#$typesfiles -generate $this
-	#$transitiontables -generate $this
-	#$terminators -generate $this
+	#$datatypes -evaluate $this
+	#$typesfiles -evaluate $this
+	#$transitiontables -evaluate $this
+	#$terminators -evaluate $this
 	puts "</domain>"
     }
 }
@@ -605,6 +609,7 @@ itcl::class Object {
     # from the documentation string. The type info is contained between
     # double square brackets [[ ]]
     method -documentation {d} {
+	$this Element::-documentation $d
 	if [expr $isType && ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
 	     error "User data type $name has no type information"
 	}
@@ -776,6 +781,7 @@ itcl::class Parameter {
     # if any, from the documentation string. The mode info is contained
     # between double square brackets [[ ]]
     method -documentation {d} {
+	$this Element::-documentation $d
 	if [regexp {\[\[(.*)\]\]} $d wh modeStr] {
 	    if [expr ![regexp {(^.*):(.*$)} $modeStr wh kind value]] {
 		error "bad parameter mode definition \"$d\""
