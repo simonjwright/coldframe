@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 80292063474a 2003/08/13 19:46:25 simon $ -->
+<!-- $Id: ada-class.xsl,v edbf3fb7cf5e 2003/08/15 19:58:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -677,7 +677,7 @@
 
     <!-- .. the set-the-identifier operation .. -->
     <xsl:if test="not(@singleton) and
-                  (@max &gt; 1 or
+                  ($max &gt; 1 or
                    count(attribute[@identifier]) &gt; 1 or
                    not (attribute[@identifier]/type = 'Autonumber'))">
       <xsl:call-template name="set-identifier-procedure"/>     
