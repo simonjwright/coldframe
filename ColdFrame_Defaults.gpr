@@ -1,0 +1,28 @@
+--  $Id: ColdFrame_Defaults.gpr,v 88ea099206aa 2003/01/22 20:07:22 simon $
+--
+--  This file controls compilation of the standard "library" and
+--  "project" source for ColdFrame.
+--
+--  It's intended to be extended to override supplied source units
+--  with project-specific units.
+
+with "Options";
+with "BC";
+
+project Coldframe_ is
+
+  for Source_Dirs use ("lib", "project");
+
+  for Object_Dir use Options'Object_Dir;
+
+  package Ide renames Options.Ide;
+
+  package Builder renames Options.Builder;
+
+  package Compiler renames Options.Compiler;
+
+  package Binder renames Options.Binder;
+
+  package Linker renames Options.Linker;
+
+end Coldframe_;
