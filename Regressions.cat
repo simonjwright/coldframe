@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 0b71bbfa7c3b $}
+|{ revision = $Revision: 34c28758df64 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -572,6 +572,18 @@
 				supplier   	@14
 				line_style 	0
 				x_offset   	FALSE))))))
+	(object Class "Bounded String ID"
+	    quid       	"3FDAAA0200B6"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3FDAAA4E0322"
+		    stereotype 	"id"
+		    type       	"Bounded String"
+		    quidu      	"3FDAAA2902C4")))
+	(object Class "Bounded String"
+	    quid       	"3FDAAA2902C4"
+	    documentation 	"{string = max 15}"
+	    stereotype 	"type")
 	(object Class_Category "Not Yet Implemented"
 	    quid       	"3FA962850010"
 	    stereotype 	"dont generate"
@@ -696,13 +708,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 0b71bbfa7c3b $}
+|{ revision = $Revision: 34c28758df64 $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	0
+	    origin_y   	330
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Regressions::Find Active" @19
 		    ShowCompartmentStereotypes 	TRUE
@@ -756,7 +768,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	387)
+			max_width  	380)
 		    width      	402
 		    height     	218
 		    annotation 	8
@@ -913,7 +925,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	782)
+			max_width  	775)
 		    width      	796
 		    height     	214
 		    annotation 	8
@@ -993,7 +1005,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 0b71bbfa7c3b 2003/11/25 21:40:57 simon $")
+		    label      	"$Id: Regressions.cat,v 34c28758df64 2003/12/13 06:22:24 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -1068,7 +1080,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	267)
+			max_width  	260)
 		    width      	400
 		    height     	310
 		    annotation 	8
@@ -1125,7 +1137,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	247)
+			max_width  	240)
 		    width      	268
 		    height     	218
 		    annotation 	8
@@ -1244,7 +1256,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	437)
+			max_width  	430)
 		    width      	452
 		    height     	264
 		    annotation 	8
@@ -1301,7 +1313,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	272)
+			max_width  	265)
 		    width      	418
 		    height     	264
 		    annotation 	8
@@ -1414,7 +1426,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	352)
+			max_width  	345)
 		    width      	366
 		    height     	218
 		    annotation 	8
@@ -1664,4 +1676,114 @@
 		    quidu      	"3FC3BC2F021C"
 		    client     	@43
 		    supplier   	@40
-		    line_style 	0)))))
+		    line_style 	0)
+		(object NoteView @45
+		    location   	(365, 2306)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(162, 2240)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	370
+			label      	"Allow bounded string identifiers")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	430
+		    height     	145)
+		(object ClassView "Class" "Logical View::Regressions::Bounded String ID" @46
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(375, 2517)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(121, 2444)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	508
+			justify    	0
+			label      	"Bounded String ID")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FDAAA0200B6"
+		    compartment 	(object Compartment
+			Parent_View 	@46
+			location   	(121, 2500)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	505)
+		    width      	526
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::Bounded String" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(364, 2729)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(214, 2703)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	300
+			justify    	0
+			label      	"Bounded String")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@47
+			location   	(214, 2658)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	300
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FDAAA2902C4"
+		    width      	318
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)))))
