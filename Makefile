@@ -71,7 +71,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 C_CODEGEN_SCRIPT = generate-c.xsl
 C_CODEGEN_SCRIPTS = $(C_CODEGEN_SCRIPT) \
   c-utilities.xsl
-OTHER_SCRIPTS = serialized-to-csv.xsl \
+OTHER_SCRIPTS = serialized-to-csv.tcl \
   make-build.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
@@ -137,11 +137,7 @@ OTHER_SCRIPTS = serialized-to-csv.xsl \
 
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
-	echo "<recording>" >$<-t
-	awk "/^<[a-z\/]/" $< >>$<-t
-	echo "</recording>" >>$<-t
-	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl || rm -f $<-t
-	rm -f $<-t
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(CF)/serialized-to-csv.tcl <$<
 
 # Creates the build directory (Ada Library) tree, under $BUILD_BASE
 build-dirs::

@@ -71,7 +71,7 @@ ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
-CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
+CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
 	@echo generating $@ ...
@@ -125,13 +125,8 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
 	@grep -rl 'edit this' $@ || echo "... none."
 
 # Split serialized XML files into CSV format, one per serialized type found.
-# NB, the recording file needs to end cleanly (with </record>).
 %.csv: %.xml
-	echo "<recording>" >$<-t
-	awk "/^<[a-z\/]/" $< >>$<-t
-	echo "</recording>" >>$<-t
-	$(SAXON) $<-t $(CF)/serialized-to-csv.xsl || rm -f $<-t
-	rm -f $<-t
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(CSV_SCRIPT) <$<
 
 # Installs ColdFrame's project source files in your directory.
 # Suppose your overriding source is in ~/Base/Build/ColdFrameProject/project,
