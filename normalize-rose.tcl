@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3ebf4e31edd9 2002/02/28 20:05:03 simon $
+# $Id: normalize-rose.tcl,v 90205735650b 2002/03/05 06:03:46 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -363,7 +363,7 @@ itcl::class Element {
     method -complete {} {
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
-	    Error "error \"$msg\" adding a [$this -getXmlTag] \
+	    Error "CF: error \"$msg\" adding a [$this -getXmlTag] \
 		    to a [[stack -top] -getXmlTag]"
 	}
     }
@@ -1822,6 +1822,9 @@ itcl::class Attribute {
     # indicates whether this attribute is an identifier
     variable identifier 0
 
+    # indicates whether this is a class attribute
+    variable cls 0
+
     method -type {t} {set type $t}
 
     method -initial {i} {set initial $i}
@@ -1833,6 +1836,9 @@ itcl::class Attribute {
     method -identifier {} {set identifier 1}
 
     method -getIdentifier {} {return $identifier}
+
+    # used via stereotype processing to indicate this is a class attribute
+    method -class {dummy} {set cls 1}
 
     # indicates whether this attribute formalizes an association,
     # where the analyst needs to mark what would otherwise be a
@@ -1846,6 +1852,11 @@ itcl::class Attribute {
     }
 
     method -evaluate {domain} {
+	# check id vs class
+	if {$identifier && $cls} {
+	    Error "attribute [[[$this -getOwner] -getOwner] -getName].$name \
+		    marked as <<class>> and <<id>>"
+	}
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
@@ -1865,6 +1876,7 @@ itcl::class Attribute {
     method -generate {domain} {
 	puts -nonewline "<attribute"
 	if $identifier {puts -nonewline " identifier=\"yes\""}
+	if $cls {puts -nonewline " class=\"yes\""}
 	if [info exists formalizedAssociation] {
 	    puts -nonewline " refers=\"$type\""
 	    puts -nonewline " relation=\"$formalizedAssociation\""
