@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ecdb92db0a84 2003/08/28 19:47:28 simon $ -->
+<!-- $Id: bugs.html,v 07b3f8ca8cab 2003/08/28 19:48:32 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -170,7 +170,14 @@ used instead of <tt>Natural_Duration</tt>?
 you'd have preferred to put on transitions in a pale colour
 (white?)</i>
 
-<!-- next: 0191 -->
+<dt>0191 (raised 27.viii.03)
+
+<dd>In &#171;callback&#187; handling, if a registered callback
+operation raises an exception during <tt>Call_Callbacks</tt>
+processing will stop (so that some registered callback operations
+don't get called).
+
+<!-- next: 0192 -->
 
 </dl>
 
