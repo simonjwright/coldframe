@@ -1,9 +1,9 @@
-# $Id: setup.sh,v 4c09432124cf 2003/02/15 16:17:21 simon $
+# $Id: setup.sh,v 8590d689a774 2003/09/10 04:54:01 simon $
 # Sets up environment variables for development of the Stairwell demo
 # (on tiamat).
 
 export ADA_PROJECT_PATH=$HOME/cf:$HOME/timing
-export BC=${BC:-bc-devel}
+export BC=${BC:-bc}
 export BUILD=$HOME/cf/.build
 export BUILD_DIR=/home/simon/cf/.build
 export DEVEL=YES
