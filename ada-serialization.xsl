@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 78a807c77ec1 2004/10/23 16:06:23 simon $ -->
+<!-- $Id: ada-serialization.xsl,v f7abf95d626b 2005/01/29 20:04:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -103,10 +103,9 @@
 
       <xsl:call-template name="ut:do-not-edit"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+      <xsl:text>pragma Warnings (Off);&#10;</xsl:text>
       <xsl:call-template name="ut:identification-info"/>
-      <xsl:if test="type[@serializable]/array">
-        <xsl:text>with Ada.Strings.Fixed;&#10;</xsl:text>
-      </xsl:if>
+      <xsl:text>with Ada.Strings.Fixed;&#10;</xsl:text>
       <xsl:text>with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;&#10;</xsl:text>
 
       <xsl:call-template name="se:there-context"/>
@@ -117,17 +116,15 @@
 
       <xsl:value-of select="$blank-line"/>
 
-      <xsl:if test="type[@serializable]/array">
-        <xsl:value-of select="$I"/>
-        <xsl:text>function Trim&#10;</xsl:text>
-        <xsl:value-of select="$IC"/>
-        <xsl:text>(Source : in String;&#10;</xsl:text>
-        <xsl:value-of select="$IC"/>
-        <xsl:text> Side : in Ada.Strings.Trim_End := Ada.Strings.Both) return String&#10;</xsl:text>
-        <xsl:value-of select="$IC"/>
-        <xsl:text>renames Ada.Strings.Fixed.Trim;&#10;</xsl:text>
-      </xsl:if>
-
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Trim&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>(Source : in String;&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text> Side : in Ada.Strings.Trim_End := Ada.Strings.Both) return String&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>renames Ada.Strings.Fixed.Trim;&#10;</xsl:text>
+      
       <xsl:value-of select="$blank-line"/>
 
       <xsl:apply-templates
