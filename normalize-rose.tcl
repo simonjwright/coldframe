@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a04f9729c0a6 2001/11/30 20:20:31 simon $
+# $Id: normalize-rose.tcl,v 2d7e64955643 2002/01/03 06:19:47 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -38,7 +38,7 @@ proc setCaseExceptions {file} {
     global caseExceptions
 
     if [catch {open $file r} f] {
-	error "can't open $file: $f"
+	Warning "can't open $file: $f"
     } else {
 	while {[gets $f line] >= 0} {
 	    regsub -all {[\*\t ]} $line "" res
@@ -483,6 +483,10 @@ itcl::class Container {
 
 # String classes
 
+itcl::class Abstract {
+    inherit String
+}
+
 itcl::class Arguments {
     inherit String
 }
@@ -741,6 +745,11 @@ itcl::class Class {
 	}
     }
 
+    # specifies if this class is abstract
+    variable abstr 0
+
+    method -abstract {dummy} {set abstr 1}
+
     # specifies if this is an active class
     variable active 0
 
@@ -928,6 +937,7 @@ itcl::class Class {
 	    puts "</type>"
 	} else {
 	    puts -nonewline "<class"
+	    if $abstr {puts -nonewline " abstract=\"yes\""}
 	    if $active {puts -nonewline " active=\"yes\""}
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
@@ -975,9 +985,7 @@ itcl::class Operation {
 
     # called via stereotype mechanism to indicate that this is an
     # abstract operation
-    method -abstract {summy} {
-	set abstr 1
-    }
+    method -abstract {dummy} {set abstr 1}
 
     # called via stereotype mechanism to indicate that this is an
     # access-to-operation (and also a class operation; how would
@@ -1427,10 +1435,6 @@ itcl::class Inheritance {
 	}
 	set os [$domain -getClasses]
 	set p [$os -atName $parent]
-	if [expr ![$p -hasIdentifier]] {
-	    puts stderr "[$p -getName] has no identifier"
-	    return
-	}
 	$this -formalized
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
@@ -2010,6 +2014,7 @@ itcl::class Transitions {
 proc elementFactory {tag} {
     # XXX should this perhaps be an operation of Domain?
     switch $tag {
+	abstract          {return [Abstract #auto]}
 	action            {return [Action #auto]}
 	arguments         {return [Arguments #auto]}
 	attribute         {return [Attribute #auto]}
