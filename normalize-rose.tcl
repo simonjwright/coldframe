@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 2d7e64955643 2002/01/03 06:19:47 simon $
+# $Id: normalize-rose.tcl,v 658885bd31f4 2002/01/13 10:26:37 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -133,13 +133,13 @@ itcl::class Base {
 
     # holds the tag of the XML element - eg, for <foo>bar</foo> it will be
     # "foo"
-    variable tag
+    variable xmlTag
 
-    # set the tag
-    method -tag {t} {set tag $t}
+    # set the xmlTag
+    method -xmlTag {t} {set xmlTag $t}
 
-    # get the tag
-    method -getTag {} {return $tag}
+    # get the xmlTag
+    method -getXmlTag {} {return $xmlTag}
 
 
     # holds the textual content of the XML element - eg, for the element
@@ -167,7 +167,7 @@ itcl::class Base {
 	    set xmlattributes($i) "$a($i)"
 	    if [catch {$this -$i "$a($i)"}] {
 		Warning \
-			"XML attribute <$tag $i=\"$a($i)\"> not handled"
+			"XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
 	    }
 	}
     }
@@ -201,7 +201,7 @@ itcl::class Base {
 
     # called when the outermost closing </tag> is read to do the second
     # pass of processing
-    method -generate {outermost} {Error "CF: undefined $tag method -generate"}
+    method -generate {outermost} {Error "CF: undefined $xmlTag method -generate"}
 }
 
 
@@ -214,7 +214,7 @@ itcl::class String {
     # method with the same name as this tag to store the value (so, given
     # the example above, the containing object needs to offer a -name method)
     method -complete {} {
-	[stack -top] -$tag $text
+	[stack -top] -$xmlTag $text
     }
 }
 
@@ -225,11 +225,11 @@ itcl::class IdentifierString {
     inherit String
 
     # the object has already been popped off the stack; call the stack top's
-    # method with the same name as this tag to store the value after
+    # method with the same name as this xmlTag to store the value after
     # conversion to identifier form (so, given the example above, the
     # containing object needs to offer a -name method)
     method -complete {} {
-	[stack -top] -$tag [normalize $text]
+	[stack -top] -$xmlTag [normalize $text]
     }
 }
 
@@ -266,9 +266,12 @@ itcl::class Element {
 		-nocase \
 		$pattern \
 		$a wh attr dummy value]} {} {
-	    if [catch {$this -[string tolower $attr] $value}] {
+	    set attr [string tolower $attr]
+	    if {[string length $value] == 0} {set value "true"}
+	    if [catch {$this -$attr $value}] {
 		Warning \
-		    "annotation not handled, \"$name -[string tolower $attr] $value\""
+		    "annotation not handled, \
+		    \"$name \[\[$attr : [string trim $value]]]\""
 	    }
 	    regexp -nocase -indices $pattern $a wh
 	    set a [string range $a \
@@ -347,7 +350,8 @@ itcl::class Element {
 		# n is the tag name, v the tag value if any
 		if [catch {$this -[string tolower $n] "$v"}] {
 		    Warning \
-		        "stereotype not handled, \"$name -[string tolower $n] $v\""
+		        "stereotype not handled, \
+			\"$name <<[string tolower $n]>>\""
 		}
 		regexp -nocase -indices $p $s wh
 		set s [string range $s [expr [lindex $wh 1] + 1] end]
@@ -359,8 +363,8 @@ itcl::class Element {
     method -complete {} {
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
-	    Error \
-		    "error \"$msg\" adding a [$this -getTag] to a [[stack -top] -getTag]"
+	    Error "error \"$msg\" adding a [$this -getXmlTag] \
+		    to a [[stack -top] -getXmlTag]"
 	}
     }
 }
@@ -380,7 +384,7 @@ itcl::class List {
     method -getMembers {} {return $members}
 
     method -complete {} {
-	[stack -top] -$tag $this
+	[stack -top] -$xmlTag $this
     }
 
     method -evaluate {domain} {
@@ -1688,7 +1692,13 @@ itcl::class Datatype {
 		-nocase \
 		$pattern \
 		$a wh attr dummy value]} {} {
-	    $this -[string tolower $attr] $value
+	    set attr [string tolower $attr]
+	    if {[string length $value] == 0} {set value "true"}
+	    if [catch {$this -$attr $value}] {
+		Warning \
+		    "annotation not handled, \
+		    \"$type \[\[$attr : [string trim $value]]]\""
+	    }
 	    regexp -nocase -indices $pattern $a wh
 	    set a [string range $a \
 		    [expr [lindex $wh 1] + 1] end]
@@ -1816,7 +1826,7 @@ itcl::class Transitiontable {
     inherit Element
 }
 
-itcl::class Tag {
+itcl::class XmlTag {
     inherit Element
 }
 
@@ -1933,15 +1943,15 @@ itcl::class ReferentialAttribute {
 
 # Aggregate classes
 
-itcl::class TaggedList {
+itcl::class XmlTaggedList {
     inherit List
 
     # when generating, generates its contents within a container element
-    # (same name as the list tag).
+    # (same name as the list xmlTag).
     method -generate {domain} {
-	puts "<$tag>"
+	puts "<$xmlTag>"
 	$this List::-generate $domain
-	puts "</$tag>"
+	puts "</$xmlTag>"
     }
 }
 
@@ -2011,9 +2021,9 @@ itcl::class Transitions {
 
 # Convert XML tag name to element of appropriate type
 
-proc elementFactory {tag} {
+proc elementFactory {xmlTag} {
     # XXX should this perhaps be an operation of Domain?
-    switch $tag {
+    switch $xmlTag {
 	abstract          {return [Abstract #auto]}
 	action            {return [Action #auto]}
 	arguments         {return [Arguments #auto]}
@@ -2077,7 +2087,7 @@ proc startTag {tag attrs} {
     set t [string tolower $tag]
     set el [elementFactory $t]
     array set attr $attrs
-    $el -tag $t
+    $el -xmlTag $t
     if [expr [array size attr] > 0] {$el -xmlattributes attr}
     stack -push $el
 }
