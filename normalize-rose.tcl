@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 90801c084e81 2003/09/17 05:45:05 simon $
+# $Id: normalize-rose.tcl,v 62344aeaa0e6 2003/09/17 19:07:36 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2358,12 +2358,24 @@ itcl::class Datatype {
 	set dataDetail [normalize $other]
     }
 
+    # utility to deal with constraints (where the values may be expressions 
+    # involving spaces).
+    method -setConstraint {d} {
+	set constraints [split $d ",\n"]
+	set result {}
+	foreach c $constraints {
+	    set constraint [split [string trim $c]]
+	    lappend result [lindex $constraint 0] [lrange $constraint 1 end]
+	}
+	set dataDetail $result
+    }
+
     # called when the type is an integer. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful keys are lower, upper, size
     method -integer {constraint} {
 	set dataType "integer"
-	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
+	$this -setConstraint $constraint
     }
 
     # called when the type is a real. constraint is a set of key/value
@@ -2371,7 +2383,7 @@ itcl::class Datatype {
     # Useful keys are delta, digits, lower, upper, size, small
     method -real {constraint} {
 	set dataType "real"
-	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
+	$this -setConstraint $constraint
     }
 
     # called when the type is actually a record (a Class with isType set)
