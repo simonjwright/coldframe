@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f351f56fc5a1 2003/09/13 16:44:22 simon $ -->
+<!-- $Id: ada-state.xsl,v 565cb5dc67ac 2003/09/27 07:18:05 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -53,9 +53,9 @@
       <xsl:sort select="name"/>
 
       <xsl:choose>
-        
+
         <xsl:when test="@class">
-          
+
           <xsl:value-of select="$I"/>
           <xsl:text>type </xsl:text>
           <xsl:value-of select="name"/>
@@ -66,7 +66,7 @@
         </xsl:when>
 
         <xsl:otherwise>
-          
+
           <xsl:value-of select="$I"/>
           <xsl:text>type </xsl:text>
           <xsl:value-of select="name"/>
@@ -79,9 +79,9 @@
         </xsl:otherwise>
 
       </xsl:choose>
-      
+
       <xsl:choose>
-        
+
         <xsl:when test="type">
           <xsl:text>record&#10;</xsl:text>
           <xsl:value-of select="$II"/>
@@ -91,13 +91,13 @@
           <xsl:value-of select="$I"/>
           <xsl:text>end record;&#10;</xsl:text>
         </xsl:when>
-        
+
         <xsl:otherwise>
           <xsl:text>null record;&#10;</xsl:text>
         </xsl:otherwise>
-        
+
       </xsl:choose>
-      
+
       <xsl:value-of select="$blank-line"/>
 
     </xsl:for-each>
@@ -108,7 +108,7 @@
   <!-- Called at domain/class to generate the enumerated type for the state
        machine. -->
   <xsl:template name= "state-machine-states">
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>type State_Machine_State_T is&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
@@ -131,7 +131,7 @@
 
   <!-- Called at domain/class to generate the State_Image operation spec. -->
   <xsl:template name="state-image-spec">
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>function State_Image (This : Instance) return String;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -141,7 +141,7 @@
 
   <!-- Called at domain/class to generate the State_Image operation body. -->
   <xsl:template name="state-image-body">
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>function State_Image (This : Instance) return String is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -219,9 +219,9 @@
 
         <xsl:when test="../transition[event=$e and source=$s]/@ignore">
           <xsl:value-of select="$IIII"/>
-          <xsl:text>null;&#10;</xsl:text>          
+          <xsl:text>null;&#10;</xsl:text>
         </xsl:when>
-        
+
         <xsl:when test="../transition[event=$e and source=$s]">
 
           <xsl:call-template name="perform-transition">
@@ -232,14 +232,14 @@
           </xsl:call-template>
 
         </xsl:when>
-        
+
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
           <xsl:text>raise ColdFrame.Exceptions.Cant_Happen;&#10;</xsl:text>
         </xsl:otherwise>
-        
+
       </xsl:choose>
-          
+
     </xsl:for-each>
 
     <xsl:value-of select="$II"/>
@@ -255,7 +255,7 @@
   <!-- Generate event handler bodies for <<class events>>s. -->
   <xsl:template match="event[@class]" mode="event-handler-bodies">
 
-    <!-- 
+    <!--
          procedure Handler (Ev : {event}) is
          begin
             {receiver} (Ev);
@@ -293,7 +293,7 @@
 
     <xsl:value-of select="$II"/>
     <xsl:value-of select="$op/name"/>
-    <xsl:text> (Ev);&#10;</xsl:text>              
+    <xsl:text> (Ev);&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Handler;&#10;</xsl:text>
@@ -311,7 +311,7 @@
     <!-- The initial state automatically enters the next state if there's an
          unguarded transtion. If so, and if there are actions with parameters
          in that state, we need a Creation event. -->
-    
+
     <!-- the initial state .. -->
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
     <!-- .. the target state .. -->
@@ -326,7 +326,7 @@
     <xsl:if test="operation[name=$action]/parameter">
       <xsl:text>with ColdFrame.Project.Events.Creation;&#10;</xsl:text>
     </xsl:if>
-    
+
   </xsl:template>
 
 
@@ -344,7 +344,7 @@
     <xsl:text>This.State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
-    
+
     <xsl:if test="$tr/action">
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../.."/>
@@ -362,7 +362,7 @@
         <xsl:with-param name="indent" select="$indent"/>
       </xsl:call-template>
     </xsl:for-each>
-    
+
     <xsl:variable
       name="deleting"
       select="$tr/action='Delete'
@@ -372,54 +372,59 @@
       <xsl:value-of select="$indent"/>
       <xsl:text>This.Old_State_Machine_State := </xsl:text>
       <xsl:value-of select="$tr/target"/>
-      <xsl:text>;&#10;</xsl:text>      
+      <xsl:text>;&#10;</xsl:text>
     </xsl:if>
-    
+
     <!-- Now do drop-throughs (recursively). -->
 
     <xsl:variable
       name="drop-through"
       select="../transition[source=$tr/target and not(event)]"/>
+    <xsl:variable
+      name="triggered"
+      select="../transition[source=$tr/target and event]"/>
 
     <xsl:if test="$drop-through">
-      
-      <xsl:choose>
 
-        <xsl:when test="count($drop-through)&gt;1">
-          <xsl:call-template name="log-error"/>
-          <xsl:message>
-            <xsl:text>Error: more than one drop-through transition from state </xsl:text>
-            <xsl:value-of select="../../name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="name"/>
-          </xsl:message>
-        </xsl:when>
-        
-        <xsl:when test="$deleting">
-          <xsl:call-template name="log-error"/>
-          <xsl:message>
-            <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
-            <xsl:value-of select="../../name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$tr/target"/>
-          </xsl:message>
-        </xsl:when>
-        
-        <xsl:otherwise>
-          
-          <!-- Need to change context to call perform-transition from the
-               current target state. -->
+      <xsl:if test="count($drop-through)&gt;1">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: more than one drop-through transition from state </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$tr/target"/>
+        </xsl:message>
+      </xsl:if>
 
-          <xsl:for-each select="../state[name=$drop-through/source]">
-            <xsl:call-template name="perform-transition">
-              <xsl:with-param name="tr" select="$drop-through"/>
-              <xsl:with-param name="indent" select="$indent"/>
-            </xsl:call-template>
-          </xsl:for-each>
+      <xsl:if test="$triggered">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: drop-through and triggered transitions from state </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$tr/target"/>
+        </xsl:message>
+      </xsl:if>
 
-        </xsl:otherwise>
-      
-      </xsl:choose>
+      <xsl:if test="$deleting">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$tr/target"/>
+        </xsl:message>
+      </xsl:if>
+
+      <!-- Need to change context to call perform-transition from the
+           current target state. -->
+
+      <xsl:for-each select="../state[name=$drop-through/source]">
+        <xsl:call-template name="perform-transition">
+          <xsl:with-param name="tr" select="$drop-through"/>
+          <xsl:with-param name="indent" select="$indent"/>
+        </xsl:call-template>
+      </xsl:for-each>
 
     </xsl:if>
 
@@ -448,7 +453,7 @@
 
     <!-- Check for errors. -->
     <xsl:choose>
-      
+
       <xsl:when test="$op/@return">
         <xsl:call-template name="log-error"/>
         <xsl:message>
@@ -457,18 +462,18 @@
           <xsl:text>.</xsl:text>
           <xsl:value-of select="$operation"/>
           <xsl:text> is a function, can't be an entry action.</xsl:text>
-        </xsl:message>           
+        </xsl:message>
       </xsl:when>
-      
+
       <xsl:when test="$operation='Delete' and $single">
         <xsl:call-template name="log-error"/>
         <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
-        </xsl:message>           
+        </xsl:message>
       </xsl:when>
-      
+
       <xsl:when test="count($params)&gt;1">
         <xsl:call-template name="log-error"/>
         <xsl:message>
@@ -479,7 +484,7 @@
           <xsl:text> has too many parameters to be an entry action.</xsl:text>
         </xsl:message>
       </xsl:when>
-      
+
       <xsl:when test="count($params)=1">
         <!-- The full spec of the event is in the class, not the
              state machine. -->
@@ -497,45 +502,45 @@
           </xsl:message>
         </xsl:if>
       </xsl:when>
-      
+
       <!-- XXX what if there is an operation with a parameter for a state
            with more than one event type leading to it?
            Find the number of events leading to this state with type /=
            the operations's parameter type? -->
-      
+
     </xsl:choose>
-    
+
     <!-- Generate code. -->
     <xsl:choose>
-      
+
       <xsl:when test="$single">
-        
+
         <xsl:choose>
-          
+
           <xsl:when test="$params">
-            
+
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (Ev.Payload);&#10;</xsl:text>
-            
+
           </xsl:when>
-          
+
           <xsl:otherwise>
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
-            <xsl:text>;&#10;</xsl:text>               
+            <xsl:text>;&#10;</xsl:text>
           </xsl:otherwise>
-          
+
         </xsl:choose>
-        
+
       </xsl:when>
-      
+
       <xsl:otherwise>
-        
+
         <xsl:choose>
-          
+
           <xsl:when test="$operation='Delete'">
-            
+
             <!--
                  declare
                     H : Handle := This;
@@ -563,34 +568,34 @@
             <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
             <xsl:value-of select="$indent"/>
             <xsl:text>end;&#10;</xsl:text>
-            
+
           </xsl:when>
-          
+
           <xsl:when test="$params">
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (This, Ev.Payload);&#10;</xsl:text>
           </xsl:when>
-          
+
           <xsl:otherwise>
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$operation"/>
             <xsl:text> (This);&#10;</xsl:text>
           </xsl:otherwise>
-          
+
         </xsl:choose>
-        
+
       </xsl:otherwise>
-      
+
     </xsl:choose>
-    
+
   </xsl:template>
 
 
   <!-- Called from domain/class, within the Create function, to
        apply an unguarded transition (if any) from the initial state. -->
   <xsl:template name="initialize-state-machine">
-    
+
     <!-- if there is an unguarded transition from the initial state
          declare
             This : constant Handle renames Result;
@@ -629,7 +634,7 @@
 
       <!-- Need to change context to call perform-transition from the
            target state. -->
-      
+
       <xsl:for-each select="statemachine/state[name=$tr/source]">
         <xsl:call-template name="perform-transition">
           <xsl:with-param name="tr" select="$tr"/>
@@ -647,7 +652,7 @@
 
   <!-- Called from domain to generate the domain's event manager spec. -->
   <xsl:template name="event-manager-spec">
-    
+
     <!--
          with ColdFrame.Project.Events;
          package {domain}.Events is
@@ -676,7 +681,7 @@
 
   <!-- Called from domain to generate the domain's event manager body. -->
   <xsl:template name="event-manager-body">
-    
+
     <!--
          package body {domain}.Events is
            procedure Initialize is separate;
