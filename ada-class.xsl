@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 12ffb723ab7c 2002/09/20 13:49:06 simon $ -->
+<!-- $Id: ada-class.xsl,v 312108fceff0 2002/09/21 11:10:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1107,10 +1107,6 @@
       
       <xsl:when test="@max=1">
 
-        <!--  XXX temporary -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Warnings (Off, With_Identifier);&#10;</xsl:text>
-
         <!-- Check there is an instance. -->
         <xsl:value-of select="$II"/>
         <xsl:text>if This = null then&#10;</xsl:text>
@@ -1119,7 +1115,29 @@
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
-        <!-- XXX check the ID is correct -->
+        <!-- Check the ID is correct -->
+        <!--
+             if ({attr} => This.{attr},
+                 {attr} => This.{attr}) /= With_Identifier then
+                raise ColdFrame.Exceptions.Not_Found;
+             end if;
+             -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>if (</xsl:text>
+        <xsl:for-each select="attribute[@identifier]">
+          <xsl:call-template name="attribute-name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;    </xsl:text>
+            <xsl:value-of select="$II"/>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>) /= With_Identifier then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
         
         <xsl:value-of select="$II"/>
         <xsl:text>H := This;&#10;</xsl:text>
@@ -1435,17 +1453,41 @@
       
       <xsl:when test="@max=1">
 
-        <!-- XXX need to check the ID is right! -->
-        <!--  XXX temporary -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Warnings (Off, With_Identifier);&#10;</xsl:text>
-
         <!--
-             return This;
+             if This = null then
+                return null;
+             elsif ({attr} => This.{attr},
+                    {attr} => This.{attr}) /= With_Identifier then
+                return null;
+             else
+                return This;
+             end if;
              -->
       
         <xsl:value-of select="$II"/>
+        <xsl:text>if This = null then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>elsif (</xsl:text>
+        <xsl:for-each select="attribute[@identifier]">
+          <xsl:call-template name="attribute-name"/>
+          <xsl:text> =&gt; This.</xsl:text>
+          <xsl:call-template name="attribute-name"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;       </xsl:text>
+            <xsl:value-of select="$II"/>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>) /= With_Identifier then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>else&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
         <xsl:text>return This;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
 
       </xsl:when>
 
