@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: bc7edc787a53 $
---  $Date: 2005/02/23 23:12:32 $
+--  $Revision: 9158b03ef33b $
+--  $Date: 2005/02/24 18:18:55 $
 --  $Author: simon $
 
 with Ada.Streams;
@@ -45,10 +45,11 @@ package ColdFrame.Test_Stub_Support is
    --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
    -------------------------------------------------------------
 
-   --  Specify the result of calling a stubbed operation.
+   --  Specify the result of calling a stubbed operation for a
+   --  definite type T.
    --
-   --  Subprogram_Name is the case-insensitive fully-qualified name of
-   --  the subprogram (eg, if dealing with procedure
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
    --  Domain.Class.Operation, "Domain.Class.Operation").
    --
    --  Normally the named parameter will be an "out" (perhaps "in
@@ -58,8 +59,8 @@ package ColdFrame.Test_Stub_Support is
    --  want to have the first 4 calls to Domain.Class.Operation to set
    --  Output to 4, and any later ones to set it to 42, you'd say
    --
-   --     My_Set_Operation_Output_Value ("Output", 4, 1);
-   --     My_Set_Operation_Output_Value ("Output", 42, 5);
+   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
+   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
    --
    --  Special parameter names are "exception" (in which case T needs
    --  to be an Exception_ID) and "return". For "exception", the
@@ -67,26 +68,28 @@ package ColdFrame.Test_Stub_Support is
    --  "return", the To value will be the function result.
    generic
       type T is private;
-      Subprogram_Name : String;
-   procedure Set_Output_Value (For_Parameter_Named : String;
+   procedure Set_Output_Value (For_Subprogram_Named : String;
+                               For_Parameter_Named : String;
                                To : T;
                                For_Occurrence : Positive := 1);
 
 
-   --  Retrieve values passed to stubbed operations.
+   --  Retrieve values passed to stubbed operations for a definite
+   --  type T.
    --
-   --  Subprogram_Name is the case-insensitive fully-qualified name of
-   --  the subprogram (eg, if dealing with procedure
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
    --  Domain.Class.Operation, "Domain.Class.Operation").
    --
    --  The named parameter will be an "in" (perhaps "in out")
    --  parameter. To retrieve the result of the second call, you'd say
    --
-   --     Result := My_Get_Operation_Input_Value ("Input", 2);
+   --     Result := Get_Integer_Operation_Input_Value
+   --       ("Domain.Class.Operation", "Input", 2);
    generic
       type T is private;
-      Subprogram_Name : String;
-   function Get_Input_Value (For_Parameter_Named : String;
+   function Get_Input_Value (For_Subprogram_Named : String;
+                             For_Parameter_Named : String;
                              For_Occurrence : Positive := 1) return T;
 
 
@@ -121,7 +124,7 @@ package ColdFrame.Test_Stub_Support is
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
       For_Occurrence : Positive;
-      Max_Size_In_Storage_Elements : Positive := 512)
+      Max_Size_In_Storage_Elements : Ada.Streams.Stream_Element_Offset := 512)
      return Stream_Access;
 
 

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 5e5d12b869da $
---  $Date: 2005/02/23 23:11:25 $
+--  $Revision: 9158b03ef33b $
+--  $Date: 2005/02/24 18:18:55 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -178,10 +178,13 @@ package body ColdFrame.Test_Stub_Support is
    --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
    -------------------------------------------------------------
 
-   procedure Set_Output_Value (For_Parameter_Named : String;
+   procedure Set_Output_Value (For_Subprogram_Named : String;
+                               For_Parameter_Named : String;
                                To : T;
                                For_Occurrence : Positive := 1) is
-      SP : constant String := Subprogram_Name & "." & For_Parameter_Named;
+      pragma Assert (T'Constrained,
+                     "Set_Output_Value's generic type must be constrained");
+      SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       Str : constant Stream_Pointers.Pointer
@@ -205,9 +208,12 @@ package body ColdFrame.Test_Stub_Support is
    end Set_Output_Value;
 
 
-   function Get_Input_Value (For_Parameter_Named : String;
+   function Get_Input_Value (For_Subprogram_Named : String;
+                             For_Parameter_Named : String;
                              For_Occurrence : Positive := 1) return T is
-      SP : constant String := Subprogram_Name & "." & For_Parameter_Named;
+      pragma Assert (T'Constrained,
+                     "Get_Input_Value's generic type must be constrained");
+      SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
    begin
@@ -248,15 +254,15 @@ package body ColdFrame.Test_Stub_Support is
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
       For_Occurrence : Positive;
-      Max_Size_In_Storage_Elements : Positive := 512) return Stream_Access is
+      Max_Size_In_Storage_Elements : Ada.Streams.Stream_Element_Offset := 512)
+     return Stream_Access is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       Str : Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type
-           (Capacity => Ada.Streams.Stream_Element_Offset
-              (Max_Size_In_Storage_Elements)));
+           (Capacity => Max_Size_In_Storage_Elements));
       Coll : Stream_Pointer_Collection_Pointers.Pointer;
    begin
       if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
@@ -266,6 +272,11 @@ package body ColdFrame.Test_Stub_Support is
       else
          Coll := Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU);
       end if;
+      pragma Assert
+        (For_Occurrence =
+         Stream_Pointer_Collections.Length
+         (Stream_Pointer_Collection_Pointers.Value (Coll).all) + 1,
+         "mismatch in number of occurrences");
       Stream_Pointer_Collections.Append
         (Stream_Pointer_Collection_Pointers.Value (Coll).all, Str);
       return Stream_Pointers.Value (Str);

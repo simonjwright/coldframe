@@ -6,11 +6,10 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: 5e5d12b869da $
---  $Date: 2005/02/23 23:11:25 $
+--  $Revision: 9158b03ef33b $
+--  $Date: 2005/02/24 18:18:55 $
 --  $Author: simon $
 
-with Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;
 with ColdFrame.Test_Stub_Support;
 
@@ -38,15 +37,13 @@ procedure ColdFrame.Test_Stub_Support_Test is
    end Generated_Stub_Procedure;
 
 
-   procedure Set_Quux_Integer
-   is new ColdFrame.Test_Stub_Support.Set_Output_Value
-     (Integer, "foo.bar.quux");
+   procedure Set_Output_Integer
+   is new ColdFrame.Test_Stub_Support.Set_Output_Value (Integer);
 --     procedure Set_Quux_Exception
 --     is new ColdFrame.Test_Stub_Support.Set_Output_Value
 --       (Ada.Exceptions.Exception_Id, "foo.bar.quux");
-   function Get_Quux_Integer
-   is new ColdFrame.Test_Stub_Support.Get_Input_Value
-     (Integer, "foo.bar.quux");
+   function Get_Input_Integer
+   is new ColdFrame.Test_Stub_Support.Get_Input_Value (Integer);
 
    Foo_Exception : exception;
 
@@ -57,11 +54,12 @@ begin
    declare
       Result : Integer;
    begin
-      Set_Quux_Integer ("result", 42);
+      Set_Output_Integer ("foo.bar.quux", "result", 42);
 --        Set_Quux_Exception ("exception", Foo_Exception'Identity);
       Generated_Stub_Procedure (24, Result);
       Put_Line (Result'Img);                         --  should be 42
-      Put_Line (Get_Quux_Integer ("input", 1)'Img);  --  should be 24
+      Put_Line (Get_Input_Integer
+                  ("foo.bar.quux", "input", 1)'Img);  --  should be 24
    end;
 
    ColdFrame.Test_Stub_Support.Tear_Down;
