@@ -3,5 +3,8 @@
 cf-*.tgz cf-*.zip
 *.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 b~*.ad[bs]
+*.norm
 use-cases.html coldframe-architecture.html coldframe-architecture.pdf
+Problem_Reporting Problem_Reporting.doc
+Weapon_Assignment Weapon_Assignment.doc
 
