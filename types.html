@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v adab801e6bb4 2002/10/20 16:25:17 simon $ -->
+<!-- $Id: types.html,v 53d54fc6ad7d 2002/10/27 16:41:07 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -21,7 +21,36 @@ you can have many different identical values of the same type.
 
 <h2>Modelling</h2>
 
-<p>Most types are modelled in classes stereotyped
+<p>The following fundamental types are implicitly declared:
+<ul>
+
+<li><i>Date</i>, <i>Time</i>
+
+<li><i>Real</i>
+
+<li><i>Text</i>
+
+</ul>
+
+<p>As well as this, other implicitly-declared types are available:
+
+<ul>
+
+<li><i>Autonumber</i> - used for automatically-generated instance
+identifiers
+
+<li><i>Counterpart</i> - used for references to instances in other
+domains
+
+<li><i>Timer</i> - used (mainly) for timeouts in state machines
+
+<li>Any simple name (for example, <i>Boolean</i>, <i>Integer</i>)
+
+<li>Any class in the domain
+
+</ul>
+
+<p>Other types are modelled in classes stereotyped
 <em>&#171;type&#187;</em>.
 
 <h3>Type details</h3>
@@ -78,7 +107,33 @@ separators. This probably only makes sense for adding callbacks:
 
 <h2>Translation</h2>
 
-<p>Types are declared in the domain package. Where appropriate,
+<p>Implicity-declared types are translated as follows:
+
+<dl>
+
+<dt><i>Date</i>, <i>Time</i><dd><tt>ColdFrame.Calendar.Time</tt>
+
+<dt><i>Real</i><dd><tt>Float</tt>
+
+<dt><i>Text</i><dd><tt>Ada.Strings.Unbounded.Unbounded_String</tt>
+
+<dt><i>Autonumber</i><dd><tt>Long_Long_Integer</tt> (64 bits)
+
+<dt><i>Counterpart</i><dd><tt>ColdFrame.Instances.Handle</tt>
+
+<dt><i>Timer</i><dd><tt>ColdFrame.Project.Events.Timer</tt>
+
+<dt>Any simple name (for example, <i>Boolean</i>,
+<i>Integer</i>)<dd>itself (after replacing spaces by underscores and
+case adjustment)
+
+<dt>The current class<dd><tt>Handle</tt>
+
+<dt>Any other class in the domain<dd><tt>ColdFrame.Instances.Handle</tt>
+
+</dl>
+
+<p>New types are declared in the domain package. Where appropriate,
 supporting code is generated as a child unit of the domain package.
 
 <p>Operations of types are generated in the domain package.
