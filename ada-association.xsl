@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v dfdc95cc24cc 2003/11/16 18:23:29 simon $ -->
+<!-- $Id: ada-association.xsl,v 307723c5e87f 2004/02/09 12:35:37 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,6 +31,8 @@
 
   <!-- Generate specs for Association packages. -->
   <xsl:template match="domain/association" mode="association-spec">
+
+    <xsl:call-template name="check-association-validity"/>
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
@@ -69,6 +71,39 @@
   </xsl:template>
 
   <xsl:template match="*" mode="association-spec"/>
+
+
+  <!-- Called at domain/association to check for invalid associations. -->
+  <xsl:template name="check-association-validity">
+
+    <xsl:variable
+      name="class-a"
+      select="../class[name=current()/role[1]/classname]"/>
+    <xsl:variable
+      name="class-b"
+      select="../class[name=current()/role[2]/classname]"/>
+
+    <xsl:if test="$class-a/@public">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
+        <xsl:text>Error: illegal association </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> with class </xsl:text>
+        <xsl:value-of select="$class-a/name"/>
+      </xsl:message>
+    </xsl:if>
+
+    <xsl:if test="$class-b/@public">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
+        <xsl:text>Error: illegal association </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> with class </xsl:text>
+        <xsl:value-of select="$class-b/name"/>
+      </xsl:message>
+    </xsl:if>
+
+  </xsl:template>
 
 
   <!-- Called at domain/association to generate context clauses for the
