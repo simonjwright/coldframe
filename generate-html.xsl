@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 485716994f86 2004/04/17 16:44:07 simon $ -->
+<!-- $Id: generate-html.xsl,v 7949e00ea6f7 2004/05/29 15:48:58 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -508,9 +508,7 @@
       <xsl:if test="parameter">
         <h5>Parameters</h5>
         <dl>
-          <xsl:apply-templates select="parameter">
-            <xsl:sort select="name"/>
-          </xsl:apply-templates>
+          <xsl:apply-templates select="parameter"/>
         </dl>
       </xsl:if>
     </dd>
@@ -522,6 +520,14 @@
     <dt>
       <xsl:value-of select="name"/>
       <xsl:text> : </xsl:text>
+      <xsl:choose>
+        <xsl:when test="@mode='inout'">
+          <xsl:text>in out </xsl:text>
+        </xsl:when>
+        <xsl:when test="@mode='out'">
+          <xsl:text>out </xsl:text>
+        </xsl:when>
+      </xsl:choose>
       <xsl:call-template name="type-name-linked">
         <xsl:with-param name="type" select="type"/>
       </xsl:call-template>
