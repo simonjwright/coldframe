@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 92b4042f1949 2003/06/07 16:28:43 simon $ -->
+<!-- $Id: serialization.html,v a7d61b7a4af3 2003/06/07 16:35:36 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -60,9 +60,9 @@ record type and is marked <em>&#171;serializable&#187;</em>.
 <tt>T</tt>, which is the same as it would be without the
 &#171;serializable&#187; marking.
 
-<p>Because there is a &#171;serializable&#187; type, a child package
-<tt><i>Domain</i>.Serializable</tt> is generated as well. For each
-&#171;serializable&#187; type, a type and a subprogram are generated:
+<p>A child package <tt><i>Domain</i>.Serializable</tt> is generated as
+well. For each &#171;serializable&#187; type, a type and a subprogram
+are generated:
 <pre>
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
@@ -397,6 +397,10 @@ redirected).
 <tt>Recording</tt>) package; instead, it uses the real base class,
 which is ColdFrame's default. This ensures you don't run the risk of
 pulling in lots more of the application code than you need.
+
+<p>However, what you <em>do</em> have to do is to <tt>with</tt> all
+the <tt><i>Domain</i>.Serializable</tt> packages (if not, you'll get
+an exception in <tt>'Class'Input</tt>).
 
 
 <i>
