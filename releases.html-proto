@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d95e5fb76c7f 2003/09/27 16:39:08 simon $ -->
+<!-- $Id: releases.html-proto,v 644a62576219 2003/09/30 05:03:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -31,6 +31,10 @@ declared too late").
 
 
 <p>Improved detection and reporting of problems with state machines.
+
+
+<p>Code for &#171;accessor&#187;s is no longer inlined (compilation
+times were greatly extended).
 
 
 <p><dt>20030914
