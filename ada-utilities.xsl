@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v e5c4b2c50cdb 2001/05/30 18:32:33 simon $ -->
+<!-- $Id: ada-utilities.xsl,v aa0b60a04573 2001/06/02 16:45:24 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -37,17 +37,7 @@
         <xsl:text>Integer</xsl:text>
       </xsl:when>
 
-      <!-- Date maps to Time. -->
-      <xsl:when test="$type='Date'">
-        <xsl:text>Time</xsl:text>
-      </xsl:when>
-
-      <!-- Text maps to Unbounded_String. -->
-      <xsl:when test="$type='Text'">
-        <xsl:text>Unbounded_String</xsl:text>
-      </xsl:when>
-
-      <!-- Class -->
+      <!-- Class maps to a Handle. -->
       <xsl:when test="/domain/class/name=$type">
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
@@ -55,7 +45,22 @@
         <xsl:text>.Handle</xsl:text>
       </xsl:when>
 
-      <!-- Set (only works for class instances) -->
+      <!-- Date maps to Time. -->
+      <xsl:when test="$type='Date'">
+        <xsl:text>Time</xsl:text>
+      </xsl:when>
+
+      <!-- Real maps to Float. -->
+      <xsl:when test="$type='Real'">
+        <xsl:text>Float</xsl:text>
+      </xsl:when>
+
+      <!-- Text maps to Unbounded_String. -->
+      <xsl:when test="$type='Text'">
+        <xsl:text>Unbounded_String</xsl:text>
+      </xsl:when>
+
+      <!-- Set (only works for class instances) maps to a Collection. -->
       <xsl:when test="/domain/type[name=$type]/set">
         <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
         <xsl:if test="$type-name/set">
