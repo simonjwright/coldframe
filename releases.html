@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v adfa8d901ac3 2001/09/28 19:24:00 simon $ -->
+<!-- $Id: releases.html,v 10c77857e618 2001/10/04 19:11:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -56,12 +56,12 @@ identifier, so you'd get <tt>GNAT</tt> but <tt>Gnat_Id</tt>).
 <tt>--casing</tt>.
 
 
-<p>A child class' <tt>Create</tt> operation sets up the parents' child
-information record.
+<p>A child class's <tt>Create</tt> operation sets up the parents'
+child information record.
 
 
-<p>Deletion of an instance of a child class clears the parents' child
-information record.
+<p>Deletion of an instance of a child class clears the parent's (or
+parents') child information record(s).
 
 
 <p>Deletion of an instance of a parent class deletes the current child
@@ -81,9 +81,9 @@ Rose complaining.
 
 
 <p>The supplied Makefiles, when placing generated code in
-<tt><i>Domain</i>.gen</tt>, delete any <tt>.ad?</tt> files found in
-<tt><i>Domain</i>.impl</tt>. This should reduce confusion (and may
-make the use of GNAT Projects easier).
+<tt><i>Domain</i>.gen</tt>, delete any <tt>.ad?</tt> files which are
+already present in <tt><i>Domain</i>.impl</tt>. This should reduce
+confusion (and may make the use of GNAT Projects easier).
 
 
 <p>(Record) types marked <tt>[[discriminated]]</tt> are generated as
