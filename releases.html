@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 3eac0ecb5781 2002/09/15 18:37:43 simon $ -->
+<!-- $Id: releases.html,v dc4ca3d425ea 2002/09/17 18:17:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -23,13 +23,14 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dl>
 
-<p><dt>2002mmdd
+<p><dt>20020917
 
 <dd>Reworked how Time is handled in <tt>ColdFrame.Project.Events</tt>.
 
 
-<p>Added a new <tt>ColdFrame.Events_G.Test_G</tt> add-in which allows
-you to query whether a <i>Timer</i> is set, and when it will expire.
+<p>There's a new <tt>ColdFrame.Events_G.Test_G</tt> add-in which
+allows you to query whether a <i>Timer</i> is set, and when it will
+expire.
 
 <br>These are not appropriate in operational code; state machine logic
 should be encoded in the state machine, as far as possible, and you
@@ -79,6 +80,10 @@ is now reserved).
 type of the corresponding event's payload rather than the vent
 itself. This allows different events to cause transitions to the same
 state, so long as they all have the same payload type.
+
+
+<p>State entry actions can now see both the previous and the current
+state of the instance.
 
 
 <p><tt>Delete</tt> is supported as an entry action (not available for
