@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 708737c24742 2001/09/04 05:05:56 simon $ -->
+<!-- $Id: ada-operation.xsl,v cee29f091e91 2001/09/08 05:09:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -655,6 +655,8 @@
     <xsl:text>_Current_Child.Current is&#10;</xsl:text>
     
     <xsl:for-each select="$rel/child">
+
+      <xsl:variable name="child" select="."/>
       
       <xsl:value-of select="$II"/>
       <xsl:text>when </xsl:text>
@@ -671,8 +673,8 @@
       <xsl:value-of select="$IIIC"/>
       <xsl:text>(This =&gt; This.</xsl:text>
       <xsl:value-of select="$rel/name"/>
-      <xsl:text>_Current_Child.The_</xsl:text>
-      <xsl:value-of select="."/>
+      <xsl:text>_Current_Child.</xsl:text>
+      <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
       
       <xsl:for-each select="$op/parameter">
         <xsl:text>,&#10;</xsl:text>
@@ -711,7 +713,7 @@
 
     <!--          
          {return} {parent}.{operation-name}
-           (This => Get_{relation}_Child_Of_{parent-abbreviation} (This){,
+           (This => Get_{relation}_Parent (This){,
          other-parameter-assignments});
          -->
 
@@ -751,9 +753,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(This =&gt; Get_</xsl:text>
     <xsl:value-of select="$rel/name"/>
-    <xsl:text>_Child_Of_</xsl:text>
-    <xsl:value-of select="/domain/class[name=$rel/parent]/abbreviation"/>
-    <xsl:text> (This)</xsl:text>
+    <xsl:text>_Parent (This)</xsl:text>
     
     <xsl:for-each select="$op/parameter">
       <xsl:text>,&#10; </xsl:text>
