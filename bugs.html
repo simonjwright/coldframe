@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3db5bb3c7b46 2003/03/09 17:31:50 simon $ -->
+<!-- $Id: bugs.html,v a30bab8956ef 2003/03/13 20:38:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -135,12 +135,6 @@ be specified in a model.
 parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
 of the correct actual type.
 
-<dt>0150 (raised 6.ii.03)
-
-<dd>There needs to be a way to have the "held" Event Queue's entries
-be re-sorted when the basis of ordering changes (eg, between a local
-and a standard time frame).
-
 <dt>0153 (raised 21.ii.03)
 
 <dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
@@ -165,15 +159,51 @@ default <i>in</i> if absent.
 <br>This doesn't easily map to the way ColdFrame handles names, but
 some attempt should be made.
 
-<!-- next: 0158 -->
+<!-- next: 0161 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
 
+<h3>13.iii.03</h3>
+
+<dl>
+
+<dt>0159 (raised 13.iii.03)
+
+<dd>When normalizing names, trailing dots aren't noticed, resulting in
+obscure <i>gnatchop</i> errors.
+
+<dt>0160 (raised 13.iii.03)
+
+<dd>If you specify a class to have a multiplicity of <i>0..(n &gt;
+1)</i>, and the class has an identifying attribute whose type has only
+one value (eg an enumeration with only one literal), the generated
+code won't compile.
+
+</dl>
+
+<h3>10.iii.03</h3>
+
+<dl>
+
+<dt>0158 (raised 10.iii.03)
+
+<dd>If you use <tt>[[hash:<i>style</i>]]</tt> (<tt>discrete</tt> only
+at the moment), the <tt><i>style</i></tt> needs to be in lower case.
+
+</dl>
+
 <h3>9.iii.03</h3>
 
 <dl>
+
+<dt>0150 (raised 6.ii.03)
+
+<dd>There needs to be a way to have the "held" Event Queue's entries
+be re-sorted when the basis of ordering changes (eg, between a local
+and a standard time frame).
+<br><i>This is done the next time an event fires or is posted.</i>
 
 <dt>0151 (raised 11.ii.03)
 
