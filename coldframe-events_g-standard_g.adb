@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 5ab1b6c2adde $
---  $Date: 2002/10/17 20:31:33 $
+--  $Revision: 8ff29bf89493 $
+--  $Date: 2002/11/12 19:53:12 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -262,6 +262,24 @@ package body ColdFrame.Events_G.Standard_G is
 
       The_Events : Timed_Event_Queues.Queue renames The_Queue.The_Timed_Events;
 
+      procedure Process_First_Event;
+      pragma Inline (Process_First_Event);
+      procedure Process_First_Event is
+         T : constant Timer_Queue_Entry_P
+           := Timed_Event_Queues.Front (The_Events);
+         Held : constant Boolean := not T.On_Timer;
+      begin
+         Timed_Event_Queues.Pop (The_Events);
+         Post (Event_P (T), The_Queue);
+         if Held then
+            Remove_Held_Event (The_Queue);
+         else
+            Remove_Timer_Event (The_Queue);
+         end if;
+      end Process_First_Event;
+
+      use type Ada.Real_Time.Time;
+
    begin
 
       loop
@@ -286,6 +304,16 @@ package body ColdFrame.Events_G.Standard_G is
                exit;
 
             end select;
+
+         elsif Time.Equivalent
+           (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
+           <= Ada.Real_Time.Clock then
+
+            while Time.Equivalent
+              (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
+              <= Ada.Real_Time.Clock loop
+               Process_First_Event;
+            end loop;
 
          else
 
@@ -328,19 +356,7 @@ package body ColdFrame.Events_G.Standard_G is
             or
                delay until Time.Equivalent
                  (Timed_Event_Queues.Front (The_Events).Time_To_Fire);
-               declare
-                  T : constant Timer_Queue_Entry_P
-                    := Timed_Event_Queues.Front (The_Events);
-                  Held : constant Boolean := not T.On_Timer;
-               begin
-                  Timed_Event_Queues.Pop (The_Events);
-                  Post (Event_P (T), The_Queue);
-                  if Held then
-                     Remove_Held_Event (The_Queue);
-                  else
-                     Remove_Timer_Event (The_Queue);
-                  end if;
-               end;
+               Process_First_Event;
 
             end select;
 
@@ -526,7 +542,7 @@ package body ColdFrame.Events_G.Standard_G is
       On.The_Timer_Manager.Invalidate (Instance_Base_P (For_The_Instance));
       --  after which there can't be any more left (even one that was
       --  in the process of being posted must have gone, because it's
-      --  processed in another entry of the Timer_Manager task).
+      --  processed elsewhere in the Timer_Manager task).
 
       --  Next, tell the Excluder the same.
       On.The_Excluder.Invalidate_Events (For_The_Instance);
