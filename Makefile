@@ -231,6 +231,7 @@ coldframe-time_signature.ads \
 coldframe.ads
 
 PROJECT = \
+coldframe-project-calendar.ads \
 coldframe-project-event_support.adb \
 coldframe-project-event_support.ads \
 coldframe-project-events-creation.ads \

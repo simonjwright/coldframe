@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-project.ads,v $
---  $Revision: 6cd4886dc353 $
---  $Date: 2002/04/16 18:46:06 $
+--  $Revision: 18b7b04134cc $
+--  $Date: 2002/07/16 17:38:46 $
 --  $Author: simon $
 
 package ColdFrame.Project is
@@ -31,6 +31,9 @@ package ColdFrame.Project is
    --  rooted at this package.
    --
    --  Specifically,
+   --
+   --  ColdFrame.Project.Calendar provides the type Time used to
+   --  translate attributes and parameters of type Date or Time.
    --
    --  ColdFrame.Project.Events must contain an instantiation of
    --  ColdFrame.Events_G
