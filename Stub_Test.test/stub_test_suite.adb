@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: 25d83881d00e $
---  $Date: 2005/03/05 18:32:59 $
+--  $Revision: 16659fe5b129 $
+--  $Date: 2005/03/07 06:56:59 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -36,11 +36,53 @@ package body Stub_Test_Suite is
    is new ColdFrame.Stubs.Set_Output_Value (Stub_Test.Discriminated_Type);
    procedure Set_Record_Type
    is new ColdFrame.Stubs.Set_Output_Value (Stub_Test.Record_Type);
+   procedure Set_String
+   is new ColdFrame.Stubs.Set_Output_Value (String);
 
    function Get_Boolean
    is new ColdFrame.Stubs.Get_Input_Value (Boolean);
    function Get_Integer
    is new ColdFrame.Stubs.Get_Input_Value (Integer);
+   function Get_String
+   is new ColdFrame.Stubs.Get_Input_Value (String);
+
+
+   procedure Missing_Values
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Missing_Values
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      I : Integer;
+   begin
+      Set_Integer ("Stub_Test.Public.Get_Value", "return", 42, 2);
+      begin
+         I := Stub_Test.Public.Get_Value;
+         Assert (False, "should have raised exception (a)");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+      Stub_Test.Public.Set_Value (24);
+      I := Get_Integer ("Stub_Test.Public.Set_Value", "I", 1);
+      Assert (I = 24,
+              "wrong value (a)");
+      begin
+         I := Get_Integer ("Stub_Test.Public.Set_Value", "I", 2);
+         Assert (False, "should have raised exception (b)");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+      begin
+         declare
+            S : constant String :=
+              Get_String ("Stub_Test.Public.Process_String", "S", 1);
+            pragma Warnings (Off, S);
+         begin
+            Assert (False, "should have raised exception (c)");
+         end;
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+   end Missing_Values;
 
 
    procedure Call_With_Return
@@ -221,6 +263,10 @@ package body Stub_Test_Suite is
 
    procedure Register_Tests (C : in out Case_1) is
    begin
+      Register_Routine
+        (C,
+         Missing_Values'Access,
+         "missing values");
       Register_Routine
         (C,
          Call_With_Return'Access,
