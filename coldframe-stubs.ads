@@ -20,14 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: db99902d0f74 $
---  $Date: 2005/02/26 08:49:34 $
+--  $Revision: 4f6749da1de1 $
+--  $Date: 2005/02/26 11:34:00 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Streams;
 
-package ColdFrame.Test_Stub_Support is
+package ColdFrame.Stubs is
 
 
    -------------------------------
@@ -163,4 +163,4 @@ package ColdFrame.Test_Stub_Support is
                                     return Stream_Access;
 
 
-end ColdFrame.Test_Stub_Support;
+end ColdFrame.Stubs;
