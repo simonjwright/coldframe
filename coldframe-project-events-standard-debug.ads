@@ -4,13 +4,13 @@
 --  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 --  PARTICULAR PURPOSE.
 
---  This package supports debug project events.
+--  This package supports debugging of code involving events.
 --
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events-standard-debug.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: de928f3543dc $
+--  $Date: 2002/08/17 15:19:41 $
 --  $Author: simon $
 
 with ColdFrame.Events_G.Debug_G;
