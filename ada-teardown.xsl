@@ -29,6 +29,8 @@
        with AUnit. Called at domain. -->
   <xsl:template name="domain-teardown">
 
+    <xsl:call-template name="do-not-edit"/>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
@@ -100,6 +102,7 @@
 
 
   <xsl:template mode="class-teardown-spec" match="domain/class">
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -125,6 +128,8 @@
             This.State_Machine_State := {initial-state}
          end {Domain}.{Class}.Tear_Down;
          -->
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -175,6 +180,8 @@
             Next_Identifier := 0;                -  for Autonumbering
          end {Domain}.{Class}.Tear_Down;
          -->
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 

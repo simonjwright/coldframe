@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 0b2f9041ed9a 2002/02/10 11:16:48 simon $ -->
+<!-- $Id: ada-collection.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -47,6 +47,7 @@
     </xsl:variable>
 
     <!-- Abstract Containers package -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Containers;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
@@ -54,6 +55,7 @@
     <xsl:text>is new BC.Containers (Handle);&#10;</xsl:text>
 
     <!-- Abstract Collections package -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -65,6 +67,7 @@
     <xsl:text>Abstract_Containers.Collections;&#10;</xsl:text>
 
     <!-- Abstract Sets package -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -80,6 +83,7 @@
 
       <xsl:when test="./@max">
         <!-- Wnen there's a maximum size, use the Bounded version -->
+        <xsl:call-template name="do-not-edit"/>
         <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -94,6 +98,7 @@
 
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
+        <xsl:call-template name="do-not-edit"/>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -109,6 +114,7 @@
     </xsl:choose>
 
     <!-- Hash function for Handles -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -120,6 +126,7 @@
     <xsl:text> Access_T =&gt; Handle);&#10;</xsl:text>
 
     <!-- Concrete Sets package -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash;&#10;</xsl:text>
@@ -180,6 +187,7 @@
          function {domain}.{class}.All_Instances
          return {domain}.{class}.Collections.Collection;
          -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -201,6 +209,7 @@
          return {domain}.{class}.Collections.Collection;
          pragma Elaborate_Body ({domain}.{class}.Selection_Function);
          -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -228,6 +237,7 @@
          return {domain}.{class}.Collections.Collection;
          pragma Elaborate_Body ({domain}.{class}.Filter_Function);
          -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -258,6 +268,7 @@
             (Over : {domain}.{class}.Collections.Collection);
          pragma Elaborate_Body ({domain}.{class}.Iterate);
          -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -291,6 +302,7 @@
     </xsl:variable>
 
     <!-- Function to return a Collection of all the Instances -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Copy;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -335,6 +347,7 @@
 
     <!-- Generic filter function to return a Collection of selected
          Instances -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Filter;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -380,6 +393,7 @@
     <xsl:text>.Selection_Function;&#10;</xsl:text>
 
     <!-- Generic filter function for collections of Instances -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Filter;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -442,6 +456,7 @@
             end loop;
          end {domain}.{class}.Iterate;
          -->
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>

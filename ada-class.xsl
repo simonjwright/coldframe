@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 8b1e233f2816 2002/02/23 13:35:32 simon $ -->
+<!-- $Id: ada-class.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,6 +36,8 @@
         <xsl:value-of select="name"/>
       </xsl:with-param>
     </xsl:call-template>
+
+    <xsl:call-template name="do-not-edit"/>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
@@ -515,6 +517,8 @@
       </xsl:with-param>
     </xsl:call-template>
 
+    <xsl:call-template name="do-not-edit"/>
+
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
     
@@ -630,6 +634,11 @@
     </xsl:if>
     
     <xsl:if test="@active">
+
+      <!-- Output the separate task body. -->
+
+      <xsl:call-template name="should-edit"/>
+
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>)&#10;</xsl:text>
@@ -1259,6 +1268,8 @@
 
   <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="hash-function">
+
+    <xsl:call-template name="should-not-edit"/>
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>

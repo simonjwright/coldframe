@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v cf429dcd1865 2002/02/06 20:03:52 simon $ -->
+<!-- $Id: ada-operation.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -535,12 +535,6 @@
             <xsl:text>null</xsl:text>
           </xsl:when>
 
-          <!-- Set of classes -->
-          <xsl:when test="$the-type/set">
-            <xsl:value-of select="$the-type/set"/>
-            <xsl:text>.Collections.Null_Container</xsl:text>
-          </xsl:when>
-
           <!-- Default: assume scalar -->
           <xsl:otherwise>
             <xsl:call-template name="type-name">
@@ -582,6 +576,8 @@
       name="rel"
       select="/domain/inheritance[parent=$current/name]"/>
     
+    <xsl:call-template name="do-not-edit"/>
+
     <xsl:for-each select="$rel/child">
       <xsl:sort select="."/>
       <xsl:text>with </xsl:text>
@@ -685,6 +681,8 @@
     </xsl:variable>
     <xsl:variable name="rel" select="/domain/inheritance[name=$rel-name]"/>
 
+    <xsl:call-template name="do-not-edit"/>
+
     <xsl:text>with </xsl:text>
     <xsl:value-of select="/domain/name"/>
     <xsl:text>.</xsl:text>
@@ -780,6 +778,8 @@
     <xsl:variable name="att-to-get"
       select="$current/attribute[concat('Get_',name)=$n]"/>
 
+    <xsl:variable name="heading">
+
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
     <xsl:text>.</xsl:text>
@@ -788,6 +788,8 @@
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
+      
+    </xsl:variable>
 
     <xsl:choose>
 
@@ -796,6 +798,8 @@
                       and not(@return) and not(@class)
                       and count(parameter)=1
                       and $att-to-set/type=parameter/type">
+        <xsl:call-template name="should-not-edit"/>
+        <xsl:value-of select="$heading"/>
         <xsl:value-of select="$I"/>
         <xsl:text>This.</xsl:text>
         <xsl:value-of select="$att-to-set/name"/>
@@ -809,6 +813,8 @@
                       and @return and not(@class)
                       and not(parameter)
                       and $att-to-get/type=@return">
+        <xsl:call-template name="should-not-edit"/>
+        <xsl:value-of select="$heading"/>
         <xsl:value-of select="$I"/>
         <xsl:text>return This.</xsl:text>
         <xsl:value-of select="$att-to-get/name"/>
@@ -818,6 +824,8 @@
       <!-- If it's a function, we have to supply a return statement
            after raising the exception for it to compile.-->
       <xsl:when test="@return">
+        <xsl:call-template name="should-edit"/>
+        <xsl:value-of select="$heading"/>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Program_Error;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -829,7 +837,10 @@
       </xsl:when>
       
       <xsl:otherwise>
-        <xsl:text>   raise Program_Error;&#10;</xsl:text>
+        <xsl:call-template name="should-edit"/>
+        <xsl:value-of select="$heading"/>
+        <xsl:value-of select="$I"/>
+        <xsl:text>raise Program_Error;&#10;</xsl:text>
       </xsl:otherwise>
       
     </xsl:choose>
@@ -848,6 +859,8 @@
     <!-- The current class (not necessarily the one where the operation
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
