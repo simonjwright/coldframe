@@ -173,6 +173,7 @@
          begin
             while not Abstract_Map_Containers.Is_Done (It) loop
                H := Abstract_Map_Containers.Current_Item (It);
+               abort (H.The_T);                  -  if active
                Free (H);
                Abstract_Map_Containers.Next (It);
             end loop;
@@ -206,6 +207,12 @@
     <xsl:text>while not Abstract_Map_Containers.Is_Done (It) loop&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>H := Abstract_Map_Containers.Current_Item (It);&#10;</xsl:text>
+
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort H.The_T;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
