@@ -307,7 +307,20 @@ House_Management.impl/house_management-lamp-initialize.adb \
 House_Management.impl/house_management-lamp-set_timeout.adb \
 House_Management.impl/house_management-lamp-turn_off.adb \
 House_Management.impl/house_management-lamp-turn_on.adb \
-House_Management.impl/stairwell_demo.adb \
+House_Management.impl/stairwell_demo.adb
+
+DEMO += \
+Serialization.cat Serialization.raw Serialization_Demo.raw \
+Serialization.impl/client.adb \
+Serialization.impl/serialization-events-initialize.adb \
+Serialization.impl/serialization-interface-open.adb \
+Serialization.impl/serialization-interface-output.adb \
+Serialization.impl/serialization-server-create.adb \
+Serialization.impl/serialization-server-post.adb \
+Serialization.impl/serialization_support.ads \
+Serialization.impl/server.adb
+
+DEMO += \
 Interrupt_Handling.cat Interrupt_Handling.raw \
 Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb \
 Interrupt_Handling.impl/interrupt_handling-device-initialize.adb \
@@ -316,13 +329,17 @@ Interrupt_Handling.impl/interrupt_handling-device-set_timeout.adb \
 Interrupt_Handling.impl/interrupt_handling-device-t.adb \
 Interrupt_Handling.impl/interrupt_handling-events-initialize.adb \
 Interrupt_Handling.impl/interrupt_handling-harness.adb \
-Interrupt_Handling.impl/interrupt_handling-harness.ads \
+Interrupt_Handling.impl/interrupt_handling-harness.ads
+
+DEMO += \
 Library.cat Library.raw \
 Library.impl/library-test.adb \
 Library.impl/library-test.ads \
 Library.impl/library_test_harness.adb \
 Library.impl/library-tests.adb \
-Library.impl/library-tests.ads \
+Library.impl/library-tests.ads
+
+DEMO += \
 Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
 Problem_Reporting.impl/problem_reporting-component-clean.adb \
@@ -334,7 +351,9 @@ Problem_Reporting.impl/problem_reporting-interface-add_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-delete_component.adb \
 Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
 Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
-Problem_Reporting.impl/problem_reporting-interface-report_problems.adb \
+Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
+
+DEMO += \
 States.cat States.raw \
 States.impl/states-events-initialize.adb \
 States.impl/states-monitor-clear_heartbeat_timeout.adb \
