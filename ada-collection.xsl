@@ -1,0 +1,258 @@
+<!-- $Id: ada-collection.xsl,v 66d4e818f306 2001/04/13 12:30:53 simon $ -->
+<!-- XSL stylesheet to generate Ada code for Collections. -->
+<!-- Copyright (C) Simon Wright <simon@pushface.org> -->
+
+<!--
+     This program is free software; you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation; either version 2, or (at your option)
+     any later version.
+
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+
+     You should have received a copy of the GNU General Public License
+     along with this program; if not, write to the Free Software
+     Foundation, Inc., 59 Temple Place - Suite 330,
+     Boston, MA 02111-1307, USA.
+
+     As a special exception, when portions of this file are copied by a
+     stylesheet processor into an output file, you may use that output
+     file without restriction.
+     -->
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                version="1.0">
+
+  <!-- Called to generate Collection support packages (only for
+       non-singleton classes). -->
+  <xsl:template match="class[not(@singleton)]" mode="collection-support">
+    <xsl:apply-templates select="." mode="collection-support-spec"/>
+    <xsl:apply-templates select="." mode="collection-support-body"/>
+  </xsl:template>
+
+  <xsl:template mode="collection-support" match="*"/>
+
+
+  <!-- Called to generate Collection support package specs. -->
+  <xsl:template match="class" mode="collection-support-spec">
+
+    <!-- Make the name of the parent class (Domain.Class) -->
+    <xsl:variable name="class">
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:variable>
+
+    <!-- Abstract Containers package -->
+    <xsl:text>with BC.Containers;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers&#10;</xsl:text>
+    <xsl:text>   is new BC.Containers (Handle);&#10;</xsl:text>
+
+    <!-- Abstract Collections package -->
+    <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Collections&#10;</xsl:text>
+    <xsl:text>   is new </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers.Collections;&#10;</xsl:text>
+
+    <!-- Concrete Collections package -->
+    <xsl:choose>
+
+      <xsl:when test="./@max">
+        <!-- Wnen there's a maximum size, use the Bounded version -->
+        <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Collections;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Collections&#10;</xsl:text>
+        <xsl:text>   is new Abstract_Collections.Bounded (Maximum_Size =&gt; </xsl:text>
+        <xsl:value-of select="./@max"/>
+        <xsl:text>);&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <!-- Use the Unbounded version -->
+        <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Collections;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Collections&#10;</xsl:text>
+        <xsl:text>   is new Abstract_Collections.Unbounded&#10;</xsl:text>
+        <xsl:text>     (Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+    <!-- Function to return a Collection of all the Instances -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.All_Instances&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
+    <!-- Generic filter function to return a Collection of selected
+         Instances -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>generic&#10;</xsl:text>
+    <xsl:text>  with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Selection_Function&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
+    <!-- Generic filter function for collections of Instances -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>generic&#10;</xsl:text>
+    <xsl:text>  with function Pass (This : Handle) return Boolean is &lt;&gt;;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Filter_Function&#10;</xsl:text>
+    <xsl:text>   (The_Collection : </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
+  </xsl:template>
+
+  <xsl:template mode="collection-support-spec" match="*"/>
+
+
+  <!-- Called to generate Collection support package bodies. -->
+  <xsl:template match="class" mode="collection-support-body">
+
+    <!-- Make the name of the parent class (Domain.Class) -->
+    <xsl:variable name="class">
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:variable>
+
+    <!-- Function to return a Collection of all the Instances -->
+    <xsl:text>with BC.Copy;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.All_Instances&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection is&#10;</xsl:text>
+    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>  procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:text>  Copy_Instances (The_Container, Result);&#10;</xsl:text>
+    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.All_Instances;&#10;</xsl:text>
+
+    <!-- Generic filter function to return a Collection of selected
+         Instances -->
+    <xsl:text>with BC.Filter;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Selection_Function&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection is&#10;</xsl:text>
+    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:text>  Filter (The_Container, Result);&#10;</xsl:text>
+    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Selection_Function;&#10;</xsl:text>
+
+    <!-- Generic filter function for collections of Instances -->
+    <xsl:text>with BC.Filter;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Filter_Function&#10;</xsl:text>
+    <xsl:text>   (The_Collection : </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection)&#10;</xsl:text>
+    <xsl:text>   return </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection is&#10;</xsl:text>
+    <xsl:text>  use </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
+    <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
+    <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
+    <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
+    <xsl:text>  Result : Collection;&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:text>  Filter (The_Collection, Result);&#10;</xsl:text>
+    <xsl:text>  return Result;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Filter_Function;&#10;</xsl:text>
+
+  </xsl:template>
+
+  <xsl:template mode="collection-support-body" match="*"/>
+
+
+</xsl:stylesheet>
