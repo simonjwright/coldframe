@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v bbbeb7d333c4 2003/08/22 19:29:07 simon $ -->
+<!-- $Id: event-use.html,v 329446970b78 2004/04/20 21:07:46 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -49,19 +49,23 @@ it would be
    Payload : Message renames Class.Info (Ev.all).Payload;
 </pre>
 
-<p>(<tt>Ev.all</tt> is of type
+<ul>
+
+<li>(<tt>Ev.all</tt> is of type
 <tt>ColdFrame.Project.Events.Event_Base'Class</tt>,
 
-<br><tt>Class.Info (Ev.all)</tt> is a view conversion to
+<li><tt>Class.Info (Ev.all)</tt> is a view conversion to
 <tt>Class.Info</tt>,
 
-<br>after which you can set up the payload before posting the event.)
+<li>after which you can set up the payload before posting the event.)
+
+</ul>
 
 <p>In total,
 <pre>
    declare
       Ev : constant ColdFrame.Project.Events.Event_P
-	:= new Class.Info;
+        := new Class.Info;
       Payload : Message renames Class.Info (Ev.all).Payload;
    begin
       Payload := Some_Value;
