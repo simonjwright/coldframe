@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ColdFrame-norm.xsd,v f0afcb24a18c 2004/10/25 05:57:29 simon $ -->
 
 <!-- 
 
@@ -100,6 +100,7 @@
       <xsd:attribute name="field-image"/>
       <xsd:attribute name="hash"/>
       <xsd:attribute name="null"/>
+      <xsd:attribute name="private"/>
       <xsd:attribute name="protected"/>
       <xsd:attribute name="serializable"/>
       <xsd:attribute name="serializable-there"/>
