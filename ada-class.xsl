@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v b7480d0d2850 2003/07/28 19:42:45 simon $ -->
+<!-- $Id: ada-class.xsl,v 80292063474a 2003/08/13 19:46:25 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -676,7 +676,10 @@
     </xsl:apply-templates>
 
     <!-- .. the set-the-identifier operation .. -->
-    <xsl:if test="not(@singleton)">
+    <xsl:if test="not(@singleton) and
+                  (@max &gt; 1 or
+                   count(attribute[@identifier]) &gt; 1 or
+                   not (attribute[@identifier]/type = 'Autonumber'))">
       <xsl:call-template name="set-identifier-procedure"/>     
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
@@ -1030,11 +1033,6 @@
     <!-- .. the result .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>Result : Handle;&#10;</xsl:text>
-
-    <!-- .. the autonumbering identifier .. -->
-    <xsl:if test="count(attribute[@identifier])=1
-                      and attribute[@identifier]/type='Autonumber'">
-    </xsl:if>
 
     <!-- .. check that referential attributes are non-null and of the
          correct type .. -->
