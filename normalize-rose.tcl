@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 4f9ce84015cf 2004/06/12 19:22:45 simon $
+# $Id: normalize-rose.tcl,v babc192bb945 2004/06/25 04:54:24 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1433,16 +1433,16 @@ itcl::class Class {
                 puts -nonewline " callback=\"$callback\""
             }
             if $discriminated {
-                puts -nonewline " discriminated=\"yes\""
+                puts -nonewline " discriminated=\"true\""
             }
             if $protected {
-                puts -nonewline " protected=\"yes\""
+                puts -nonewline " protected=\"true\""
             }
             if [info exists extends] {
                 puts -nonewline " extends=\"$extends\""
             }
             if $serializable {
-                puts -nonewline " serializable=\"yes\""
+                puts -nonewline " serializable=\"true\""
             }
             puts ">"
             putElement name "$name"
@@ -1458,17 +1458,17 @@ itcl::class Class {
                 }
             }
             $this -putElementStart "class"
-            if {$utility} {puts -nonewline " utility=\"yes\""}
-            if $abstr {puts -nonewline " abstract=\"yes\""}
-            if $active {puts -nonewline " active=\"yes\""}
+            if {$utility} {puts -nonewline " utility=\"true\""}
+            if $abstr {puts -nonewline " abstract=\"true\""}
+            if $active {puts -nonewline " active=\"true\""}
             if [info exists stack] {puts -nonewline " stack=\"$stack\""}
             if [info exists priority] {
                 puts -nonewline " priority=\"$priority\""
             }
             if [info exists max] {puts -nonewline " max=\"$max\""}
-            if $singleton {puts -nonewline " singleton=\"yes\""}
-            if $public {puts -nonewline " public=\"yes\""}
-            if $visible {puts -nonewline " visible=\"yes\""}
+            if $singleton {puts -nonewline " singleton=\"true\""}
+            if $public {puts -nonewline " public=\"true\""}
+            if $visible {puts -nonewline " visible=\"true\""}
             puts ">"
             putElement name "$name"
             putElement abbreviation [$this -getAbbreviation]
@@ -1617,19 +1617,19 @@ itcl::class Operation {
 
     method -generate {domain}  {
         $this -putElementStart "operation"
-        if $abstr {puts -nonewline " abstract=\"yes\""}
-        if $acc {puts -nonewline " access=\"yes\""}
-        if $accessor {puts -nonewline " accessor=\"yes\""}
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $abstr {puts -nonewline " abstract=\"true\""}
+        if $acc {puts -nonewline " access=\"true\""}
+        if $accessor {puts -nonewline " accessor=\"true\""}
+        if $cls {puts -nonewline " class=\"true\""}
         if [info exists convention] {
             puts -nonewline " convention=\"$convention\""
         }
-        if $entry {puts -nonewline " entry=\"yes\""}
-        if $final {puts -nonewline " final=\"yes\""}
-        if $finalize {puts -nonewline " finalize=\"yes\""}
-        if $teardown {puts -nonewline " teardown=\"yes\""}
-        if $handler {puts -nonewline " handler=\"yes\""}
-        if $init {puts -nonewline " initialize=\"yes\""}
+        if $entry {puts -nonewline " entry=\"true\""}
+        if $final {puts -nonewline " final=\"true\""}
+        if $finalize {puts -nonewline " finalize=\"true\""}
+        if $teardown {puts -nonewline " teardown=\"true\""}
+        if $handler {puts -nonewline " handler=\"true\""}
+        if $init {puts -nonewline " initialize=\"true\""}
         if [info exists suppressed] {
             puts -nonewline " suppressed=\"$suppressed\""
         }
@@ -2038,9 +2038,9 @@ itcl::class Role {
 
     method -generate {domain} {
         $this -putElementStart "role"
-        if $conditional {puts -nonewline " conditional=\"yes\""}
-        if {$cardinality == "M"} {puts -nonewline " multiple=\"yes\""}
-        if $sourceEnd {puts -nonewline " source=\"yes\""}
+        if $conditional {puts -nonewline " conditional=\"true\""}
+        if {$cardinality == "M"} {puts -nonewline " multiple=\"true\""}
+        if $sourceEnd {puts -nonewline " source=\"true\""}
         puts ">"
         set os [$domain -getClasses]
         set cl [$os -atName $classname]
@@ -2189,7 +2189,7 @@ itcl::class Event {
 
     method -generate {domain} {
         $this -putElementStart "event"
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $cls {puts -nonewline " class=\"true\""}
         puts ">"
         putElement name $name
         if [info exists type] {
@@ -2220,8 +2220,8 @@ itcl::class State {
 
     method -generate {domain} {
         $this -putElementStart "state"
-        if $initial {puts -nonewline " initial=\"yes\""}
-        if $final {puts -nonewline " final=\"yes\""}
+        if $initial {puts -nonewline " initial=\"true\""}
+        if $final {puts -nonewline " final=\"true\""}
         puts ">"
         putElement name $name
         if [info exists entryactions] {
@@ -2314,8 +2314,8 @@ itcl::class Transition {
 
     method -generate {domain} {
         $this -putElementStart "transition"
-        if $ignore then {puts -nonewline " ignore=\"yes\""}
-        if $self then {puts -nonewline " self=\"yes\""}
+        if $ignore then {puts -nonewline " ignore=\"true\""}
+        if $self then {puts -nonewline " self=\"true\""}
         puts ">"
         if {[string length [$event -getName]] > 0} {
             putElement event [$event -getName]
@@ -2552,7 +2552,7 @@ itcl::class Datatype {
         }
         $this -putElementStart "type"
         if [info exists callback] {
-            puts -nonewline " callback=\"yes\""
+            puts -nonewline " callback=\"true\""
         }
         if [info exists hash] {
             puts -nonewline " hash=\"$hash\""
@@ -2564,27 +2564,27 @@ itcl::class Datatype {
             puts -nonewline " type-image=\"$typeImage\""
         }
         if $serializable {
-            puts -nonewline " serializable=\"yes\""
+            puts -nonewline " serializable=\"true\""
         }
         if {$dataType == "defined"} {
             Warning "no tags to indicate type of $type, treated as {null}"
-            puts -nonewline " null=\"yes\""
+            puts -nonewline " null=\"true\""
         }
         if $null {
             # do this as an attribute so it's easier to check for mistaken
             # usage (OK, could do it here ..)
-            puts -nonewline " null=\"yes\""
+            puts -nonewline " null=\"true\""
         }
         if [info exists unconstrained] {
             # actually only used in <array> element below.
-            puts -nonewline " unconstrained=\"yes\""
+            puts -nonewline " unconstrained=\"true\""
         }
         switch $dataType {
             implicit {
                 puts -nonewline " standard=\"no\""
             }
             standard {
-                puts -nonewline " standard=\"yes\""
+                puts -nonewline " standard=\"true\""
             }
             default {}
         }
@@ -2595,7 +2595,7 @@ itcl::class Datatype {
             array {
                 puts -nonewline "<array"
                 if [info exists unconstrained] {
-                    puts -nonewline " unconstrained=\"yes\""
+                    puts -nonewline " unconstrained=\"true\""
                 }
                 puts ">"
                 putElement type $arrayOf
@@ -2793,8 +2793,8 @@ itcl::class Attribute {
 
     method -generate {domain} {
         $this -putElementStart "attribute"
-        if $identifier {puts -nonewline " identifier=\"yes\""}
-        if $cls {puts -nonewline " class=\"yes\""}
+        if $identifier {puts -nonewline " identifier=\"true\""}
+        if $cls {puts -nonewline " class=\"true\""}
         if [info exists formalizedAssociation] {
             puts -nonewline " refers=\"$type\""
             puts -nonewline " relation=\"$formalizedAssociation\""
@@ -2843,7 +2843,7 @@ itcl::class ReferentialAttribute {
         puts -nonewline " refers=\"[$source -getName]\""
         puts -nonewline " relation=\"[$relation -getName]\""
         puts -nonewline " role=\"[$role -getName]\""
-        if $identifier {puts -nonewline " identifier=\"yes\""}
+        if $identifier {puts -nonewline " identifier=\"true\""}
         puts "/>"
     }
 }
