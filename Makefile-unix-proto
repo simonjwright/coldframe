@@ -29,7 +29,7 @@ CF = $(TOP)/cf-DATE
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
-TCLXML = ~/TclXML-1.2
+TCLXML = ~/tclxml-2.1theta
 
 SAXON = java com.icl.saxon.StyleSheet
 
