@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 2f10d942e470 2004/04/26 12:02:32 simon $
+--  $Id: regressions-suite.adb,v 85762c5c9be2 2004/05/19 16:34:34 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -283,6 +283,7 @@ package body Regressions.Suite is
       procedure C1 (V : CB);
       procedure C2 (V : CB);
       procedure C3 (V : CB);
+      procedure C4 (V : CB);
 
       C1_Called : Boolean;
       C2_Called : Boolean;
@@ -316,6 +317,12 @@ package body Regressions.Suite is
          end if;
       end C3;
 
+      procedure C4 (V : CB) is
+         pragma Warnings (Off, V);
+      begin
+         Regressions.CB_Callback.Deregister (C4'Access);
+      end C4;
+
       procedure Call_Callbacks_1 (C : in out Test_Case'Class);
       procedure Call_Callbacks_1 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
@@ -329,23 +336,29 @@ package body Regressions.Suite is
       procedure Call_Callbacks_2 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
       begin
-         begin
-            Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
-            Assert (C1_Called and C2_Called and C3_Called,
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
+         Assert (C1_Called and C2_Called and C3_Called,
                     "not all got called");
-         end;
       end Call_Callbacks_2;
 
       procedure Call_Callbacks_3 (C : in out Test_Case'Class);
       procedure Call_Callbacks_3 (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
       begin
-         begin
-            Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
-            Assert (C1_Called and C2_Called and C3_Called,
-                    "not all got called");
-         end;
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
+         Assert (C1_Called and C2_Called and C3_Called,
+                 "not all got called");
       end Call_Callbacks_3;
+
+      procedure Call_Callbacks_4 (C : in out Test_Case'Class);
+      procedure Call_Callbacks_4 (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.CB_Callback.Register (C4'Access);
+         Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
+         Assert (C1_Called and C2_Called and C3_Called,
+                 "not all got called");
+      end Call_Callbacks_4;
 
       function Name (C : Case_1) return String_Access is
          pragma Warnings (Off, C);
@@ -367,6 +380,10 @@ package body Regressions.Suite is
            (C,
             Call_Callbacks_3'Access,
             "call callbacks (3)");
+         Register_Routine
+           (C,
+            Call_Callbacks_4'Access,
+            "call callbacks (4)");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
