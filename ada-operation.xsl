@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 9d35c74e0738 2004/06/25 05:41:42 simon $ -->
+<!-- $Id: ada-operation.xsl,v 8f2eadfc3a0b 2004/07/01 05:22:38 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,7 +31,7 @@
 
 
   <!-- called at domain/class to generate subprogram specs for a class.
-       Since this may be a child type, we handle all the operations
+       Since this may be a child class, we handle all the operations
        in the ancestor tree. -->
   <xsl:template name="operation-specs">
 
@@ -150,45 +150,6 @@
   </xsl:template>
 
   <xsl:template mode="renaming-operation-spec" match="*"/>
-
-
-  <!-- Called at domain/class to generate the contribution to the
-       package body's context required by the operations. -->
-  <xsl:template name="operation-body-context">
-
-    <!-- The current class and all its ancestors -->
-    <xsl:param name="classes"/>
-
-    <xsl:variable name="current" select="."/>
-    <xsl:variable name="d" select="/domain/name"/>
-
-    <!-- Make a nodeset containing the class package names of those other
-         classes used in parameters or function results -->
-    <xsl:variable name="withs">
-      <xsl:for-each
-        select="$classes/operation/parameter/type
-                | $classes/operation/@return">
-        <xsl:if test="/domain/class/name=. and not(.=$current/name)">
-          <xsl:element name="with">
-            <xsl:value-of select="."/>
-          </xsl:element>
-        </xsl:if>
-      </xsl:for-each>
-    </xsl:variable>
-
-    <!-- Sort, uniqueify and output -->
-    <xsl:for-each select="$withs/with">
-      <xsl:sort/>
-      <xsl:if test="not (.=preceding-sibling::node())">
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="$d"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>;&#10;</xsl:text>
-      </xsl:if>
-    </xsl:for-each>
-
-  </xsl:template>
 
 
   <!-- called at domain/class to generate subprogram stubs for a class.
