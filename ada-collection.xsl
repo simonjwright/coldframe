@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 0507e6778854 2001/04/13 12:42:15 simon $ -->
+<!-- $Id: ada-collection.xsl,v 0e78e822bff9 2001/04/27 19:08:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -65,6 +65,18 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers.Collections;&#10;</xsl:text>
 
+    <!-- Abstract Sets package -->
+    <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Sets&#10;</xsl:text>
+    <xsl:text>   is new </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers.Sets;&#10;</xsl:text>
+
     <!-- Concrete Collections package -->
     <xsl:choose>
 
@@ -94,6 +106,65 @@
         <xsl:text>   is new Abstract_Collections.Unbounded&#10;</xsl:text>
         <xsl:text>     (Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
         <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+    <!-- Hash function for Handles -->
+    <xsl:text>with Architecture.Access_Hash;&#10;</xsl:text>
+    <xsl:text>function </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Handle_Hash&#10;</xsl:text>
+    <xsl:text>is new Architecture.Access_Hash&#10;</xsl:text>
+    <xsl:text>  (T =&gt; Instance,&#10;</xsl:text>
+    <xsl:text>   Access_T =&gt; Handle);&#10;</xsl:text>
+
+    <!-- Concrete Sets package -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Handle_Hash;&#10;</xsl:text>
+
+    <xsl:choose>
+
+      <xsl:when test="./@max">
+        <!-- Wnen there's a maximum size, use the Bounded version -->
+        <xsl:text>with BC.Containers.Sets.Bounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Sets;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Sets&#10;</xsl:text>
+        <xsl:text>is new Abstract_Sets.Bounded&#10;</xsl:text>
+        <xsl:text>  (Hash =&gt; </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Handle_Hash,&#10;</xsl:text>
+        <xsl:text>   Buckets =&gt; </xsl:text>
+        <xsl:call-template name="hash-buckets"/>
+        <xsl:text>,&#10;</xsl:text>
+        <xsl:text>   Maximum_Size =&gt; </xsl:text>
+        <xsl:value-of select="./@max"/>
+        <xsl:text>);&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <!-- Use the Unbounded version -->
+        <xsl:text>with BC.Containers.Sets.Unbounded;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Abstract_Sets;&#10;</xsl:text>
+        <xsl:text>package </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Sets&#10;</xsl:text>
+        <xsl:text>is new Abstract_Sets.Unbounded&#10;</xsl:text>
+        <xsl:text>  (Hash =&gt; </xsl:text>
+        <xsl:value-of select="$class"/>
+        <xsl:text>.Handle_Hash,&#10;</xsl:text>
+        <xsl:text>   Buckets =&gt; </xsl:text>
+        <xsl:call-template name="hash-buckets"/>
+        <xsl:text>,&#10;</xsl:text>
+        <xsl:text>   Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>   Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
