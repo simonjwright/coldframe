@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v d61ba0e458ec 2001/09/28 05:55:45 simon $ -->
+<!-- $Id: ada-collection.xsl,v c60bc1a963ce 2002/01/19 07:43:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -62,8 +62,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Collections&#10;</xsl:text>
     <xsl:text>is new </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Abstract_Containers.Collections;&#10;</xsl:text>
+    <xsl:text>Abstract_Containers.Collections;&#10;</xsl:text>
 
     <!-- Abstract Sets package -->
     <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
@@ -74,8 +73,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Sets&#10;</xsl:text>
     <xsl:text>is new </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Abstract_Containers.Sets;&#10;</xsl:text>
+    <xsl:text>Abstract_Containers.Sets;&#10;</xsl:text>
 
     <!-- Concrete Collections package -->
     <xsl:choose>
@@ -177,6 +175,11 @@
     </xsl:choose>
 
     <!-- Function to return a Collection of all the Instances -->
+    <!--
+         with {domain}.{class}.Collections;
+         function {domain}.{class}.All_Instances
+         return {domain}.{class}.Collections.Collection;
+         -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -190,6 +193,13 @@
 
     <!-- Generic filter function to return a Collection of selected
          Instances -->
+    <!--
+         with {domain}.{class}.Collections;
+         generic
+            with function Pass (This : Handle) return Boolean is <>;
+         function {domain}.{class}.Selection_Function
+         return {domain}.{class}.Collections.Collection;
+         -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -205,6 +215,14 @@
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
 
     <!-- Generic filter function for collections of Instances -->
+    <!--
+         with {domain}.{class}.Collections;
+         generic
+            with function Pass (This : Handle) return Boolean is <>;
+         function {domain}.{class}.Filter_Function
+            (The_Collection : {domain}.{class}.Collections.Collection)
+         return {domain}.{class}.Collections.Collection;
+         -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
