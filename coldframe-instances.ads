@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: f93ee5ec8abd $
---  $Date: 2002/01/27 11:12:50 $
+--  $Revision: 61de68b208d6 $
+--  $Date: 2002/03/22 05:45:00 $
 --  $Author: simon $
 
 package ColdFrame.Instances is
@@ -34,6 +34,7 @@ package ColdFrame.Instances is
    --  non-standard extensions such as WITH TYPE.
 
    type Handle is access all Instance_Base'Class;
+   for Handle'Storage_Size use 0;
 
 private
 
