@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 7f8de3dc1e88 $
---  $Date: 2002/09/15 10:31:13 $
+--  $Revision: 2e70ccfd970c $
+--  $Date: 2002/09/15 11:20:59 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -54,9 +54,6 @@ package ColdFrame.Events_G is
    for Instance_Base_P'Storage_Size use 0;
    --  .. but, of course, no storage collection is required.
 
-   function State_Image (This : Instance_Base) return String is abstract;
-   --  Used for debugging/logging.
-
 
    --------------
    --  Events  --
@@ -68,7 +65,6 @@ package ColdFrame.Events_G is
    type Event_P is access all Event_Base'Class;
    for Event_P'Storage_Pool use Event_Storage;
 
-
    procedure Handler (This : Event_Base) is abstract;
    --  Concrete Events implement this to perform the required
    --  processing.
@@ -77,11 +73,6 @@ package ColdFrame.Events_G is
    is abstract new Event_Base with private;
    --  All Instance Events are derived from this type. For_The_Instance
    --  is the instance to which the event is directed.
-
-   procedure Instance_Is_Deleted
-     (For_The_Event : access Instance_Event_Base'Class);
-   --  Note that the Instance has been deleted (so as to avoid
-   --  querying it in logging Queue variants).
 
 
    ---------------------
@@ -115,14 +106,17 @@ package ColdFrame.Events_G is
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
    --
-   --  May raise Exceptions.Use_Error if the Event is an
+   --  Will raise Exceptions.Use_Error if the Event is an
    --  Instance_Event and Instance_Events for this Instance have
    --  previously been posted to a different Queue.
 
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is abstract;
    --  Events to self take precedence over externally- or
-   --  timer-generated events.
+   --  timer-generated events and Locks.
+   --
+   --  Will raise Exceptions.Use_Error if not called from an event
+   --  action procedure.
 
 
    ----------------------
@@ -209,6 +203,23 @@ package ColdFrame.Events_G is
    --  feature is intended for the case where a unit test has driven
    --  the state machine to a point where a timer is set, but need go
    --  no further.
+
+
+   ---------------------------
+   --  Implementation only  --
+   ---------------------------
+
+   --  The operations here have to be in the public part of the spec,
+   --  but aren't intended for public use (they are called by
+   --  generated code).
+
+   function State_Image (This : Instance_Base) return String is abstract;
+   --  Used for debugging/logging.
+
+   procedure Instance_Is_Deleted
+     (For_The_Event : access Instance_Event_Base'Class);
+   --  Note that the Instance has been deleted (so as to avoid
+   --  querying it in logging Queue variants).
 
    procedure Tear_Down (The_Queue : in out Event_Queue_P);
    --  Terminates any tasks and deallocates The_Queue.
