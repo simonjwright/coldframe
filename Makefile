@@ -246,7 +246,7 @@ use-cases.html use-cases.texi \
 coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
-ddf.dtd coldframe.dtd \
+ddf.dtd ColdFrame.xsd \
 xslide-diff
 
 serialization-model.html: Serialization.html
