@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a37e9fec477b 2001/05/27 05:25:57 simon $ -->
+<!-- $Id: ada-class.xsl,v e5c4b2c50cdb 2001/05/30 18:32:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -55,7 +55,7 @@
       <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
 
       <!-- .. the creation, simple find, and deletion operations .. -->
-      <xsl:text>  function Create (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+      <xsl:call-template name="create-function-spec"/>
       <xsl:text>  function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
       <xsl:text>  procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
       <xsl:text>  procedure Delete (This : in out Handle);&#10;</xsl:text>
@@ -327,16 +327,7 @@
       <xsl:if test="not(@singleton)">
         
         <!-- .. the creation, simple find, and deletion operations .. -->
-        <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-        <xsl:text>    Result : Handle;&#10;</xsl:text>
-        <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    Result := new Instance;&#10;</xsl:text>
-        <xsl:apply-templates
-          select="attribute[@identifier='yes']"
-          mode="identifier-element-assignment"/>
-        <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
-        <xsl:text>    return Result;&#10;</xsl:text>
-        <xsl:text>  end Create;&#10;</xsl:text>
+        <xsl:call-template name="create-function-body"/>
         
         <xsl:text>  function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
         <xsl:text>  begin&#10;</xsl:text>
@@ -469,6 +460,71 @@
   </xsl:template>
 
   <xsl:template match="*" mode="access-to-operation"/>
+
+
+  <!-- Called from domain/class to generate the Create function spec. -->
+  <xsl:template name="create-function-spec">
+    <xsl:choose>
+
+      <xsl:when test="count(attribute[@identifier])=1
+                      and attribute[@identifier]/type='Autonumber'">
+        <xsl:text>  function Create return Handle;&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:if test="attribute/type='Autonumber'">
+          <xsl:message terminate="yes">
+            <xsl:text>ColdFrame: invalid use of Autonumber in </xsl:text>
+            <xsl:value-of select="name"/>
+          </xsl:message>
+        </xsl:if>
+        <xsl:text>  function Create (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Called from domain/class to generate the Create function body. -->
+  <xsl:template name="create-function-body">
+    <xsl:choose>
+
+      <xsl:when test="count(attribute[@identifier])=1
+                      and attribute[@identifier]/type='Autonumber'">
+        <xsl:variable name="id" select="attribute[@identifier]/name"/>
+        <xsl:text>  Next_Identifier : Integer := 0;&#10;</xsl:text>
+        <xsl:text>  function Create return Handle is&#10;</xsl:text>
+        <xsl:text>    Result : Handle;&#10;</xsl:text>
+        <xsl:text>    Id : Identifier;&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    Result := new Instance;&#10;</xsl:text>
+        <xsl:text>    Result.</xsl:text>
+        <xsl:value-of select="$id"/>
+        <xsl:text> := Next_Identifier;&#10;</xsl:text>
+        <xsl:text>    Id.</xsl:text>
+        <xsl:value-of select="$id"/>
+        <xsl:text> := Next_Identifier;&#10;</xsl:text>
+        <xsl:text>    Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
+        <xsl:text>    Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
+        <xsl:text>    return Result;&#10;</xsl:text>
+        <xsl:text>  end Create;&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:text>    Result : Handle;&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    Result := new Instance;&#10;</xsl:text>
+        <xsl:apply-templates
+          select="attribute[@identifier='yes']"
+          mode="identifier-element-assignment"/>
+        <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
+        <xsl:text>    return Result;&#10;</xsl:text>
+        <xsl:text>  end Create;&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+  </xsl:template>
 
 
   <!-- Called from domain/class to generate the separate hash function. -->

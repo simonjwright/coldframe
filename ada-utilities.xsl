@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v ddc0ed11feb8 2001/04/29 10:39:56 simon $ -->
+<!-- $Id: ada-utilities.xsl,v e5c4b2c50cdb 2001/05/30 18:32:33 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,6 +31,11 @@
   <xsl:template name="type-name">
     <xsl:param name="type"/>
     <xsl:choose>
+
+      <!-- Autonumber mps to Integer. -->
+      <xsl:when test="$type='Autonumber'">
+        <xsl:text>Integer</xsl:text>
+      </xsl:when>
 
       <!-- Date maps to Time. -->
       <xsl:when test="$type='Date'">
