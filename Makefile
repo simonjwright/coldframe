@@ -54,6 +54,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-type.xsl \
   ada-teardown.xsl \
   ada-utilities.xsl
+OTHER_SCRIPTS = serialized-to-csv.xsl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	echo $(COLDFRAMEOUT) $< $*
@@ -210,6 +211,10 @@ PROGS = COPYING \
   $(CODEGEN_SCRIPTS) \
   $(TOOL_SRC)
 
+GPRS = BC.gpr \
+ColdFrame_Defaults.gpr \
+Options.gpr
+
 SUPPORT = \
 coldframe-callbacks.adb \
 coldframe-callbacks.ads \
@@ -251,10 +256,13 @@ coldframe-interrupts.adb \
 coldframe-interrupts.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
+coldframe-serialization.adb \
+coldframe-serialization.ads \
 coldframe-time_signature.ads \
 coldframe.ads
 
 PROJECT = \
+coldframe-project-calendar.adb \
 coldframe-project-calendar.ads \
 coldframe-project-event_support.ads \
 coldframe-project-events-creation.ads \
@@ -267,6 +275,8 @@ coldframe-project-global_storage_pool.ads-debug \
 coldframe-project-global_storage_pool.ads-standard \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
+coldframe-project-serialization.adb \
+coldframe-project-serialization.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
 
@@ -391,10 +401,11 @@ dist: $(DISTRIBUTION_FILES) cf-$(DATE)
 	cd dist && zip download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
-cf-$(DATE): $(MAKEFILES) $(PROGS) $(SUPPORT) $(PROJECT) $(DEMO) $(TEST) force
+cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(DEMO) \
+$(TEST) force
 	-rm -rf $@
 	mkdir $@
-	cp -p $(PROGS) $(MAKEFILES) $@
+	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/project
