@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-callbacks.ads,v 878685b75ce7 2001/05/17 04:39:19 simon $
+-- $Id: coldframe-callbacks.ads,v b75a6a64d57e 2001/05/20 17:23:37 simon $
 
 with BC.Containers.Collections.Bounded;
 
@@ -27,21 +27,21 @@ generic
   type T is limited private;
   Maximum_Size : Positive;
 package ColdFrame.Callbacks is
-  
+
   pragma Elaborate_Body;
-  
+
   -- The Callback Procedure type
   type Callback is access procedure (The_T : T);
-  
+
   -- Called to register Proc to receive callbacks
   procedure Register (Proc : Callback);
-  
+
   -- Called to stop Proc receiving callbacks
   procedure Deregister (Proc : Callback);
-  
+
   -- Call all the registered callback preocedures with With_Param
   procedure Call_Callbacks (With_Param : T);
-  
+
 private
   package Abstract_Containers is new BC.Containers (Callback);
   package Abstract_Collections is new Abstract_Containers.Collections;
