@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 10f1cafa8536 2004/03/27 16:07:55 simon $ -->
+<!-- $Id: releases.html-proto,v 48391274e274 2004/04/23 14:16:24 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,7 +22,12 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>DATE
 
-<dd>
+<dd>Action routines can be inherited from the parent.
+
+
+<p>ColdFrame checks that operations corresponding to actions actually
+exist.
+
 
 <p><dt>20040319
 
