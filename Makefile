@@ -4,6 +4,12 @@
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
+CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
+  ada-attribute.xsl \
+  ada-class.xsl \
+  ada-collection.xsl \
+  ada-operation.xsl \
+  ada-utilities.xsl
 
 ITCLSH = itclsh3.1
 SAXON = java com.icl.saxon.StyleSheet
@@ -14,7 +20,7 @@ SAXON = java com.icl.saxon.StyleSheet
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
 
-%.ada: %.norm $(CODEGEN_SCRIPT)
+%.ada: %.norm $(CODEGEN_SCRIPTS)
 	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
 
 %: %.ada
@@ -74,7 +80,11 @@ coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
-PROGS = COPYING Makefile ddf.ebs normalize-rose.tcl generate-ada.xsl
+PROGS = COPYING Makefile \
+  ddf.ebs \
+  normalize-rose.tcl \
+  $(HTMLGEN_SCRIPT) \
+  $(CODEGEN_SCRIPTS)
 SUPPORT = architecture*.ad[bs]
 
 DEMO = Problem_Reporting.cat Problem_Reporting.raw \
