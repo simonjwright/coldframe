@@ -173,7 +173,55 @@ PROGS = COPYING \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS)
 
-SUPPORT = coldframe*.ad[bs]
+SUPPORT = \
+coldframe-callbacks.adb \
+coldframe-callbacks.ads \
+coldframe-events_g-creation_g.adb \
+coldframe-events_g-creation_g.ads \
+coldframe-events_g-standard_g-debug_g.adb \
+coldframe-events_g-standard_g-debug_g.ads \
+coldframe-events_g-standard_g.adb \
+coldframe-events_g-standard_g.ads \
+coldframe-events_g.adb \
+coldframe-events_g.ads \
+coldframe-events_test.adb \
+coldframe-events_test_support.adb \
+coldframe-events_test_support.ads \
+coldframe-exceptions-message.adb \
+coldframe-exceptions-message.ads \
+coldframe-exceptions-traceback.adb \
+coldframe-exceptions-traceback.ads \
+coldframe-exceptions.ads \
+coldframe-hash-access_hash.adb \
+coldframe-hash-access_hash.ads \
+coldframe-hash-combine_hash-test.adb \
+coldframe-hash-combine_hash.adb \
+coldframe-hash-combine_hash.ads \
+coldframe-hash-instance_access_hash.ads \
+coldframe-hash-strings-bounded.adb \
+coldframe-hash-strings-bounded.ads \
+coldframe-hash-strings-standard.adb \
+coldframe-hash-strings-standard.ads \
+coldframe-hash-strings-test.adb \
+coldframe-hash-strings-unbounded.adb \
+coldframe-hash-strings-unbounded.ads \
+coldframe-hash-strings.adb \
+coldframe-hash-strings.ads \
+coldframe-hash.ads \
+coldframe-instances.ads \
+coldframe-project.ads \
+coldframe-time_signature.ads \
+coldframe.ads
+
+PROJECT = \
+coldframe-project-event_support.adb \
+coldframe-project-event_support.ads \
+coldframe-project-events-creation.ads \
+coldframe-project-events-standard-debug.ads \
+coldframe-project-events-standard.ads \
+coldframe-project-events.ads \
+coldframe-project-global_storage_pool.ads
+
 
 DEMO = Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
@@ -207,6 +255,7 @@ dist: $(DISTRIBUTION_FILES) \
 $(DOCS) \
 $(PROGS) \
 $(SUPPORT) \
+$(PROJECT) \
 $(DEMO) \
 cf-$(DATE)
 	-@rm -rf dist
@@ -220,6 +269,8 @@ cf-$(DATE): $(MAKEFILES) $(PROGS) force
 	cp -p $(PROGS) $(MAKEFILES) $@
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
+	mkdir $@/project
+	cp -p $(PROJECT) $@/project
 	mkdir $@/example
 	tar cf - $(DEMO) | tar xf - -C $@/example
 
