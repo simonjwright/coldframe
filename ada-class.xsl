@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d355ead87197 2003/09/17 05:12:08 simon $ -->
+<!-- $Id: ada-class.xsl,v eb5a481b7fe4 2003/09/23 20:07:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -173,6 +173,11 @@
     <xsl:call-template name="instance-record"/>
     <xsl:value-of select="$blank-line"/>
 
+    <!-- .. the State_Image function spec .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-spec"/>
+    </xsl:if>
+
     <!-- .. the actual container .. -->
     <xsl:choose>
 
@@ -317,11 +322,6 @@
      <xsl:text>procedure Delete (This : in out Handle);&#10;</xsl:text>
      <xsl:value-of select="$blank-line"/>
         
-    </xsl:if>
-
-    <!-- .. the State_Image function spec .. -->
-    <xsl:if test="statemachine">
-      <xsl:call-template name="state-image-spec"/>
     </xsl:if>
 
     <!-- .. event handlers .. -->
