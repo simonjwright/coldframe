@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: generalizations.html,v 52e10923fce6 2003/03/26 19:54:33 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -8,7 +8,7 @@
 <h2>Motivation</h2>
 
 <p>The thinking behind ColdFrame is that instead of making code models
-you should be making you should be making what <a
+you should be making what <a
 href="resources.html#analysis-patterns">Martin Fowler</a>, in Appendix
 A1.1, calls "implicit specification models".
 
@@ -17,9 +17,9 @@ reasonable, independent of the software architecture (both the
 implementation language and the support infrastructure). What we are
 modelling is generalization. We may be able to implement
 generalization using inheritance in our implementation language, but
-this may well fall foul of practicalities; perhaps we have to
-implement in C; maybe we're using an SQL database to implement
-persistence; our implementation language may not support
+there may be practical difficulties; perhaps we have to implement in
+C; maybe we're using an SQL database to implement persistence; our
+implementation language may not support
 <em>multiple</em> inheritance.
 
 <p>Another aspect is dynamic versus static classification.
@@ -36,10 +36,10 @@ classification (subtyping Animal as Pig, Goat, Cow for example).
 A1.3). Rent-a-Wreck has a fleet of vans, which are sometimes on
 hire. We might want to model this as <i>Customer hires Van</i>, which
 is biconditional (a known Customer may not have any Van on hire at the
-moment; a Van may not be hired to anyone at the moment). The model can
-be made less vague by subtyping Van into Hired Van and Pool Van; now
-all Hired Vans have a Customer, so the code doesn't need to check
-whether there's a Customer or not.
+moment; a Van may not be hired to anyone at the moment) and hence a
+little vague. The model can be made crisper by subtyping Van into
+Hired Van and Pool Van; now all Hired Vans have a Customer, so the
+code doesn't need to check whether there's a Customer or not.
 
 <p>The attribute <i>termination</i> only has meaning if the van is on
 hire (it's the date when it's due back), so we shouldn't leave it
