@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-signal-initialize.adb,v $
---  $Revision: 25594980cdc0 $
---  $Date: 2003/02/07 05:51:00 $
+--  $Revision: e52e2300d52d $
+--  $Date: 2003/08/30 20:32:01 $
 --  $Author: simon $
 
 --  Creates all the Signals.
@@ -27,7 +27,9 @@ procedure Initialize is
 
    SH : Signal.Handle;
    IH : Input.Handle;
+   pragma Warnings (Off, IH);
    OH : Output.Handle;
+   pragma Warnings (Off, OH);
 
    subtype CIH is ColdFrame.Instances.Handle;
 
