@@ -1,0 +1,11 @@
+comp_opt=-gnatq -O -g -gnatwu
+gnatmake_opt=-g -m
+main=${current}
+main_unit=${current}
+build_dir=/home/simon/ooa/rose/Problem_Reporting.impl/
+casing=~/.emacs_case_exceptions/
+src_dir=./
+src_dir=../Problem_Reporting/
+src_dir=../
+src_dir=../../../bc/
+obj_dir=./
