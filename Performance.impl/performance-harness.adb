@@ -17,8 +17,6 @@ with ColdFrame.Project.Events;
 
 with High_Resolution_Time; use High_Resolution_Time;
 
-with Time_Logging;
-
 procedure Performance.Harness is
    subtype CIH is ColdFrame.Instances.Handle;
    T : Time;
@@ -357,15 +355,12 @@ begin
 
    begin
 
-      Time_Logging.Initialize;
-      Time_Logging.Log (1);
       T := Clock;
 
       declare
-         Ev : ColdFrame.Project.Events.Event_P := new Event_Timing.Ping;
-         P : Event_Timing.Ping renames Event_Timing.Ping (Ev.all);
+         Ev : ColdFrame.Project.Events.Event_P := new Event_Timing.Timing;
+         P : Event_Timing.Timing renames Event_Timing.Timing (Ev.all);
       begin
-         Time_Logging.Log (2);
          P.Count := 0;
          ColdFrame.Project.Events.Set (Event_Timing.Timer,
                                        On => Event_Timing.Dispatcher_A,
@@ -373,11 +368,10 @@ begin
                                        After => 0.0);
       end;
 
-      delay 1.0;
+      delay 2.0;
       D := Event_Timing.Done_At - T;
-      Time_Logging.Print;
-      Put_Line ("timer firing:"
-                  & Duration'Image (D));
+      Put_Line ("timer firing (same dispatcher):"
+                  & Duration'Image (D / Event_Timing.Loops));
 
    end;
 
