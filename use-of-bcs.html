@@ -1,4 +1,4 @@
-<!-- $Id: use-of-bcs.html,v 84808d6350f6 2003/11/14 06:10:20 simon $ -->
+<!-- $Id: use-of-bcs.html,v 544127ee0937 2005/03/01 06:29:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use of Booch Components</title>
@@ -53,16 +53,17 @@ collections of instances.
 
 <h2><a name="containers">The Containers</a></h2>
 
-<p>The container types used are
+<p>The container types used by generated code are
 <dl>
 
-<dt>Map<dd>for the internal storage of all the instances of the
-class. The Key is the class's Identifier record.
+<dt>Map <dd>for the internal storage of all the instances of a class
+when it's not possible to use an array. The Key is the class's
+Identifier record.
 
-<dt>Collection<dd>for normal externally-visible aggregate
+<dt>Collection <dd>for normal externally-visible aggregate
 manipulation.
 
-<dt>Set<dd>to support Association operations, but also available for
+<dt>Set <dd>to support Association operations, but also available for
 general use where warranted.
 
 </dl>
@@ -71,6 +72,8 @@ general use where warranted.
 Handles, ie pointers to instances of the class concerned. Allocation
 of instances is handled within the class's <tt>Create</tt> function,
 and deallocation in <tt>Delete</tt>.
+
+<p><a href="testing.html#stubs">Stubs</a> use Ordered Collections.
 
 <h2><a name="instantiations">Standard Container instantiations</a></h2>
 
@@ -477,7 +480,9 @@ stack when the initial input Collection is inconveniently ordered.
 
 <p>The resulting ordering is in terms of the function that
 instantiates the parameter <tt>"<"</tt>; the Item that is "less than"
-all the other Items in the Collection will end up first.
+all the other Items in the Collection will end up first. Neither sort
+method should be expected to be stable; that is, don't expect Items
+which compare <tt>"="</tt> to remain in the same order.
 
 <p>An example of sorting by threateningness, assuming the existence of
 <tt>Candidate_Tracks</tt> of type
