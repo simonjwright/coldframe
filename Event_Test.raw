@@ -1,0 +1,133 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Event Test</name>
+<date>
+<year>2002</year>
+<month>5</month>
+<day>21</day>
+<time>18:33</time>
+</date>
+<documentation></documentation>
+<classes>
+<class stereotype="singleton">
+<name>Recipient</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>ordinal</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>offset</name>
+<documentation></documentation>
+<type>Duration</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="init">
+<name>init</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>information handler</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>i</name>
+<documentation></documentation>
+<type>Information</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>wait handler</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>w</name>
+<documentation></documentation>
+<type>Wait</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get ordinal</name>
+<documentation></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>get offset</name>
+<documentation></documentation>
+<return>Duration</return>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+<event stereotype="class event">
+<name>Information</name>
+<type>Content</type>
+</event>
+<event stereotype="class event">
+<name>wait</name>
+<type>Delayer</type>
+</event>
+</events>
+</class>
+<class stereotype="type">
+<name>Content</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>ordinal</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>expected at</name>
+<documentation></documentation>
+<type>Time</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Delayer</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>interval</name>
+<documentation></documentation>
+<type>Duration</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>

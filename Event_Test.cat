@@ -1,0 +1,182 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Event Test"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CEA58590211"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Recipient"
+	    quid       	"3CEA5887005D"
+	    stereotype 	"singleton"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3CEA58F3007C"
+		    stereotype 	"class event"
+		    label      	"Information"
+		    supplier   	"Logical View::Event Test::Content"
+		    quidu      	"3CEA58A00152"))
+	    operations 	(list Operations
+		(object Operation "init"
+		    quid       	"3CEA8146035B"
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "information handler"
+		    quid       	"3CEA592E0260"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    type       	"Information"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get ordinal"
+		    quid       	"3CEA59600225"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get offset"
+		    quid       	"3CEA59AE018D"
+		    result     	"Duration"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ordinal"
+		    quid       	"3CEA597601F2"
+		    type       	"Integer")
+		(object ClassAttribute "offset"
+		    quid       	"3CEA598401F2"
+		    type       	"Duration")))
+	(object Class "Content"
+	    quid       	"3CEA58A00152"
+	    documentation 	"[[ callback : 1 ]]"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ordinal"
+		    quid       	"3CEA5909017C"
+		    type       	"Integer")
+		(object ClassAttribute "expected at"
+		    quid       	"3CEA591101CA"
+		    type       	"Time"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CEA588102B7"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Event Test::Recipient" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(512, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(59, 520)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	906
+			justify    	0
+			label      	"Recipient")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(59, 470)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	906
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CEA5887005D"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(59, 581)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	7
+			max_width  	903)
+		    width      	924
+		    height     	492
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Event Test::Content" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1920, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1725, 620)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	390
+			justify    	0
+			label      	"Content")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(1725, 570)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	390
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CEA58A00152"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1725, 681)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	387)
+		    width      	408
+		    height     	292
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "Information" @3
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1345, 704)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"Information")
+		    stereotype 	(object SegLabel @4
+			Parent_View 	@3
+			location   	(1362, 664)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.524465
+			height     	41
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"3CEA58F3007C"
+		    client     	@1
+		    supplier   	@2
+		    line_style 	0)))))
