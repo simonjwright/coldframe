@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v b2ed7f467c10 2000/06/08 08:27:08 simon $
+# $Id: ddf.tcl,v fcee2ca06b02 2000/06/09 06:06:11 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -17,6 +17,11 @@ package require Itcl
 # Utilities #
 #############
 
+# Given a string,
+# - trims leading and trailing white space
+# - capitalizes the first letter of each word
+# - replaces each run of white space by a single underscore
+# and returns the result
 proc normalize {s} {
     set tmp [string tolower [string trim $s]]
     regsub -all {_} "$tmp" " " tmp
@@ -46,28 +51,36 @@ itcl::class Stack {
 # XML utility classes #
 #######################
 
+# The Base class supports the XML parse.
 itcl::class Base {
 
+    variable tag
+    # holds the tag of the XML element - eg, for <foo>bar</foo> it will be
+    # "foo"
+
+    # set the tag
+    method -tag {t} {set tag $t}
+
+
     variable text ""
-
-    variable tag "untagged"
-
-    variable xmlattributes
-
-    variable owner
+    # holds the textual content of the XML element - eg, for the element
+    # above it will be "bar"
 
     method -addText {str} {
 	if {$str != "\n"} {set text "$text$str"}
     }
+    # the textual content of the XML element may be received in chunks;
+    # add another chunk, ignoring newlines (XXX)
 
     method -text {t} {set text $t}
+    # set the textual content
 
-    method -tag {t} {set tag $t}
 
-    method -complete {} {}
-
-    method -xmlattributes {arrayname} {
-	upvar $arrayname a
+    variable xmlattributes
+    # an array, indexed by attribute name, containing attribute values
+    
+    method -xmlattributes {attributes} {
+	upvar $attributes a
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
 	    if [expr [string compare "stereotype" $i] == 0] {
@@ -75,6 +88,8 @@ itcl::class Base {
 	    }
 	}
     }
+    # copies the attributes from the given array (created during the
+    # parse) into the local store
 
     method -formatxmlattributes {} {
 	set res ""
@@ -85,35 +100,60 @@ itcl::class Base {
 	}
 	return $res
     }
+    # debug utility, returns a string representation of the attributes
+
+
+    variable owner
+    # the immediately enclosing XML element
 
     method -owner {o} {set owner $o}
-
     method -getOwner {} {return $owner}
 
-    method -report {} {puts "aBase"}
 
-    method -evaluate {domain} {}
+    method -complete {} {}
+    # called when the closing </tag> is read to take any necessary
+    # actions
 
-    method -generate {domain} {error "Undefined $tag method -generate"}
+    method -evaluate {outermost} {}
+    # called when the outermost closing <tag> is read to do the first
+    # pass of processing
+
+    method -generate {outermost} {error "Undefined $tag method -generate"}
+    # called when the outermost closing </tag> is read to do the second
+    # pass of processing
 }
 
+
+# The base class for all XML elements whose interesting aspect is their
+# textual content - eg, <name>foo</name>
 itcl::class String {
     inherit Base
 
     method -complete {} {
 	[stack -top] -$tag $text
     }
+    # the object has already been popped off the stack; call the stack top's
+    # method with the same name as this tag to store the value (so, given
+    # the example above, the containing object needs to offer a -name method)
 
-    method -report {} {puts "$tag $text"}
 }
 
+
+# The base class for all XML elements which represent identifiers; stores
+# eg " hELLO   world " as "Hello_World"
 itcl::class IdentifierString {
     inherit String
 
     method -complete {} {
 	[stack -top] -$tag [normalize $text]
     }
+    # the object has already been popped off the stack; call the stack top's
+    # method with the same name as this tag to store the value after
+    # conversion to identifier form (so, given the example above, the
+    #containing object needs to offer a -name method)
+
 }
+
 
 itcl::class Element {
     inherit Base
@@ -130,20 +170,16 @@ itcl::class Element {
 	set stereotype $s
     }
 
-    method -stereotypePattern {} {return ""}
-
     method -handleStereotype {} {
 	if [info exists stereotype] {
-	    set p [$this -stereotypePattern]
-	    if {[string length $p] > 0} {
-		set s $stereotype
-		for {} {[regexp -nocase $p $s wh n v]} {} {
-		    # n is the tag name, v the tag value
-		    # should maybe catch errors here!
-		    $this -$n "$v"
-		    regexp -nocase -indices $p $s wh
-		    set s [string range $s [expr [lindex $wh 1] + 1] end]
-		}
+	    set p {[ \t]*([a-z0-9_]+)[ \t]*(=[ \t]*([a-z0-9_,]+))?[ \t]*}
+	    set s $stereotype
+	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
+		# n is the tag name, v the tag value if any
+		# should maybe catch errors here!
+		$this -[string tolower $n] "$v"
+		regexp -nocase -indices $p $s wh
+		set s [string range $s [expr [lindex $wh 1] + 1] end]
 	    }
 	}
     }
@@ -396,10 +432,6 @@ itcl::class Domain {
 	set datatypes [Datatypes ::#auto]
     }
 
-    method -stereotypePattern {} {
-	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
-    }
-
     method -key {k} {set key $k}
 
     method -getKey {} {return $key}
@@ -477,10 +509,6 @@ itcl::class Object {
 
     variable attributes
 
-    method -stereotypePattern {} {
-	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
-    }
-
     method -key {k} {set key $k}
 
     method -getKey {} {return $key}
@@ -496,6 +524,30 @@ itcl::class Object {
     }
 
     method -tags {l} {set tags $l}
+
+    #################################################
+    # variables & methods related to <<type>> objects
+    #################################################
+
+    variable isType 0
+
+    variable typeInfo
+
+    method -type {dummy} {set isType 1}
+
+    method -documentation {d} {
+	if [expr $isType && ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
+	     error "User data type $name has no type information"
+	}
+    }
+
+    private method -enumeration {values} {
+	set raw [split $values ","]
+	foreach v $raw {
+	    set vs [lappend vs [normalize $v]]
+	}
+	return $vs
+    }
 
     method -attributes {l} {set attributes $l}
 
@@ -539,7 +591,24 @@ itcl::class Object {
 
     method -complete {} {
 	$this -handleStereotype
-	[stack -top] -add $this $name
+	if $isType {
+	    set dts [[Domain::currentDomain] -getDatatypes]
+	    if [$dts -isPresent $name] {
+		set dt [$dts -atName $name]
+	    } else {
+		set dt [Datatype ::#auto $name]
+		$dts -add $dt $name
+	    }
+	    if [expr ![regexp {(^.*):(.*$)} $typeInfo wh kind values]] {
+		error "bad user type definition \"$typeInfo\""
+	    }
+	    switch [string tolower $kind] {
+		enumeration {$dt -enumeration [$this -enumeration $values]}
+		default     {error "unrecognised user type definition $kind"}
+	    }
+	} else {
+	    [stack -top] -add $this $name
+	}
     }
 
     method -report {} {
@@ -823,7 +892,6 @@ itcl::class Role {
     method -getEnd {} {return $end}
 
     method -exportcontrol {e} {
-	puts stderr "$name, exportcontrol $e"
 	switch $e {
 	    "PublicAccess"         -
 	    "PrivateAccess"        -
@@ -1000,7 +1068,6 @@ itcl::class Datatype {
 	set name [$obj -getName]
 	set objs [$obj -getOwner]
 	set index [$objs -index $name]
-	puts stderr "$type -addObjectUser: name $name, index $index"
     }
 
     method -enumeration {values} {
@@ -1010,9 +1077,7 @@ itcl::class Datatype {
     }
 
     method -complete {} {
-	if [[stack -top] -isPresent $type] {
-	    puts stderr "$name already present"
-	} else {
+	if [expr ![[stack -top] -isPresent $type]] {
 	    [stack -top] -add $this $type
 	}
     }
@@ -1047,52 +1112,6 @@ itcl::class Datatype {
 	# number of tags
 	puts 0
     }
-}
-
-# A UserDatatype is created during the XML parse. It receives the type
-# name and documentation string. The documentation string contains type
-# information inside [[, ]] delimiters.
-itcl::class UserDatatype {
-    inherit Element
-
-    variable typeInfo
-
-    method -documentation {d} {
-	if [expr ![regexp {\[\[(.*)\]\]} $d wh typeInfo]] {
-	    error "User data type $name has no type information"
-	}
-    }
-
-    private method -enumeration {values} {
-	set raw [split $values ","]
-	foreach v $raw {
-	    set vs [lappend vs [normalize $v]]
-	}
-	return $vs
-    }
-
-    method -complete {} {
-	set dts [stack -top]
-	if [$dts -isPresent $name] {
-	    puts stderr "$name already present"
-	    set dt [$dts -atName $name]
-	} else {
-	    set dt [Datatype ::#auto $name]
-	    $dts -add $dt $name
-	}
-	if [expr ![regexp {(^.*):(.*$)} $typeInfo wh kind values]] {
-	    error "bad user type definition \"$typeInfo\""
-	}
-	switch [string tolower $kind] {
-	    enumeration {$dt -enumeration [$this -enumeration $values]}
-	    default     {error "unrecognised user type definition $kind"}
-	}
-    }
-
-    method -generate {domain} {
-	puts stderr "UserDatatype $name generated"
-    }
-
 }
 
 itcl::class Documentation {
@@ -1236,9 +1255,6 @@ itcl::class Attribute {
 	    puts "[normalize [$object -getKey]\_$name\_[$rel -getName]]"
 	}
 	# defined-referentially flag
-	if $referential {
-	    puts stderr "referential attribute [[$this -getOwningObject] -getName].$name"
-	}
 	puts "$referential"
     }
 }
@@ -1422,7 +1438,6 @@ proc elementFactory {tag} {
 	type              {return [Type #auto]}
 	typesfile         {return [Typesfile #auto]}
 	typesfiles        {return [Typesfiles #auto]}
-	userdatatype      {return [UserDatatype #auto]}
 	version           {return [Version #auto]}
 	default           {return [Element #auto]}
     }
@@ -1433,11 +1448,11 @@ proc elementFactory {tag} {
 #######################
 
 proc startTag {tag attrs} {
-    # puts "start tag $tag"
     # I tried doing these as one operation -- itcl got v confused
-    set el [elementFactory $tag]
+    set t [string tolower $tag]
+    set el [elementFactory $t]
     array set attr $attrs
-    $el -tag $tag
+    $el -tag $t
     if [expr [array size attr] > 0] {$el -xmlattributes attr}
     stack -push $el
 }
