@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 397c432627f0 2001/03/20 05:43:51 simon $
+'$Id: ddf.ebs,v f8be4a48e859 2001/04/01 10:01:46 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -125,9 +125,8 @@ Sub DumpClasses (domain As Category)
 End Sub
 
 Sub DumpAssociation (assoc As Association)
-	'NB the role names assume the opposite convention from KC's: the role name is a
-	' verb phrase of which the class is the subject -- the class at the other end
-	' being the object
+	'NB the role name is a verb phrase of which the class is the object
+	' -- the class at the other End being the subject.
 	Print "    association"
 	Print #1, "<association>"
 	Print #1, "<name>" & assoc.Name & "</name>"
