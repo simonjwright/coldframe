@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v c98edbc060c1 2001/06/19 18:45:55 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 2be32c5b8301 2001/07/01 10:53:38 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,11 +33,11 @@
     <xsl:choose>
 
       <!-- Output only identifier attributes. -->
-      <xsl:when test="count(attribute[@identifier='yes']) &gt; 0">
+      <xsl:when test="count(attribute[@identifier]) &gt; 0">
         <xsl:text>  type Identifier is record&#10;</xsl:text>
         <xsl:apply-templates
           mode="instance-record-component"
-          select="attribute[@identifier='yes']"/>
+          select="attribute[@identifier]"/>
         <xsl:text>  end record;&#10;</xsl:text>
       </xsl:when>
 
