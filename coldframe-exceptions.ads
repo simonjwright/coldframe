@@ -20,11 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 27fde0b4309e $
---  $Date: 2002/05/19 06:57:14 $
+--  $Revision: ec420ed9d047 $
+--  $Date: 2002/05/19 07:07:34 $
 --  $Author: simon $
-
-with BC;
 
 package ColdFrame.Exceptions is
 
