@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cebcea02f7eb 2001/09/27 18:26:40 simon $
+# $Id: normalize-rose.tcl,v a263a5471a9c 2001/10/08 18:53:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -50,14 +50,21 @@ proc setCaseExceptions {file} {
 
 # Given a string,
 # - trims leading and trailing white space
-# - capitalizes the first letter of each word
+# - capitalizes the first letter of each word, unless it matches a case
+#   exception in which case the exception is taken
 # - replaces each run of white space by a single underscore
+# - checks whether the whole matches a case exception, in which case the
+#   exception is taken
+# - if there are any dots in the result, apply the 'first letter of each
+#   word' rule (XXX what about Interfaces.C.int???)
 # and returns the result
 proc normalize {s} {
     global caseExceptions
 
     set tmp [string trim $s]
+    # handle strings
     if [string match "\"*" $tmp] {return $tmp}
+    # handle white space/underscore
     set tmp [string tolower $tmp]
     regsub -all {_} "$tmp" " " tmp
     set tmp [split $tmp]
@@ -71,12 +78,19 @@ proc normalize {s} {
 	}
     }
     regsub -all {[ \t]+} "[string trim $und]" "_" und
-    regsub -all {\.} "$und" " " tmp
+    # try to match complete identifier for case adjustment
+    if [info exists caseExceptions([string tolower $und])] {
+	set und "$caseExceptions([string tolower $und])"
+    }
+    # handle dots, if any
+    if {[regsub -all {\.} "$und" " " tmp] == 0} {
+	return $und
+    }
     set tmp [split $tmp]
     set res ""
     foreach w $tmp {
 	set res \
-	    "$res [string toupper [string index $w 0]][string range $w 1 end]"
+		"$res [string toupper [string index $w 0]][string range $w 1 end]"
     }
     regsub -all {[ \t]+} "[string trim $res]" "." res
     return $res
