@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 4319959c01ba 2002/01/24 20:18:01 simon $
+# $Id: normalize-rose.tcl,v e5ffd8f85449 2002/01/27 11:14:19 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -725,12 +725,14 @@ itcl::class Class {
 			switch -exact $upper {
 			    "1"     {$this -singleton dummy}
 			    default {
-				Error "illegal lower bound 1 in cardinality \"$c\" for $name"
+				Error "illegal lower bound 1 in cardinality \
+				\"$c\" for $name"
 			    }
 			}
 		    }
 		    default {
-			Error "illegal lower bound $lower in cardinality \"$c\" for $name"
+			Error "illegal lower bound $lower in cardinality \
+			\"$c\" for $name"
 		    }
 		}
 	    } else {
@@ -1624,11 +1626,21 @@ itcl::class State {
 itcl::class StateMachine {
     inherit Element
 
+    constructor {} {set events [Events ::#auto]}
+
     variable states
     method -states {s} {set states $s}
 
     variable transitions
     method -transitions {t} {set transitions $t}
+
+    variable events
+    # called by each transition during evaluation to add its event.
+    method -addEvent {e} {
+	if [$events -isMissing [$e -getName]] {
+	    $events -add $e [$e -getName]
+	}
+    }
 
     method -complete {} {
 	[stack -top] -statemachine $this
@@ -1642,6 +1654,7 @@ itcl::class StateMachine {
     method -generate {domain} {
 	puts "<statemachine>"
 	$states -generate $domain
+	$events -generate $domain
 	$transitions -generate $domain
 	puts "</statemachine>"
     }
@@ -1661,14 +1674,22 @@ itcl::class Transition {
     method -target {t} {set target $t}
 
     method -evaluate {domain} {
-	$event -evaluate $domain
+	# tell the statemachine about the event unless this is an unguarded
+	# transition (XXX what's the word for that?)
+	if {[string length [$event -getName]] > 0} {
+	    $event -evaluate $domain
+	    set mc [[$this -getOwner] -getOwner]
+	    $mc -addEvent $event
+	}
     }
 
     method -generate {domain} {
 	puts "<transition>"
+	if {[string length [$event -getName]] > 0} {
+	    putElement event [$event -getName]
+	}
 	putElement source $source
 	putElement target $target
-	$event -generate $domain
 	puts "</transition>"
     }
 
@@ -1842,10 +1863,6 @@ itcl::class Attribute {
 
     method -getIdentifier {} {return $identifier}
 
-#    method -getOwningClass {} {
-#	return [[$this -getOwner] -getOwner]
-#    }
-
     # indicates whether this attribute formalizes an association,
     # where the analyst needs to mark what would otherwise be a
     # non-identifying referential attribute
@@ -1970,6 +1987,7 @@ itcl::class Datatypes {
 	$this -add [Datatype ::#auto Real] Real
 	$this -add [Datatype ::#auto String] String
 	$this -add [Datatype ::#auto Time] Time
+	$this -add [Datatype ::#auto Timer] Timer
 	$this -add [Datatype ::#auto Unbounded_String] Unbounded_String
     }
 
@@ -1979,6 +1997,11 @@ itcl::class Datatypes {
 
 itcl::class EntryActions {
     inherit List
+}
+
+itcl::class Events {
+    inherit Container
+    method -className {} {return "events"}
 }
 
 itcl::class Inheritances {
