@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v bfe117aa39e0 2002/07/04 04:53:42 simon $ -->
+<!-- $Id: bugs.html,v 75420c6f6445 2002/07/05 04:54:49 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -201,15 +201,27 @@ changed to "must carry the same payload".
 <dd>Multiple delayed events which are required to fire at the same
 time will result in a <tt>delay&nbsp;0.0</tt> between each.
 
-<dt>0099 (raised 27.vi.02)
-
-<dd>Association across reflexive associations is incorrect.
-
 </dl>
 
-<!-- next: 0100 -->
+<!-- next: 0101 -->
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>4.v11.02</h3>
+
+<dl>
+
+<dt>0095 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s are generated even if they're
+marked &#171;generated&#187; (which means that they're operations that
+ColdFrame generates automatically).
+
+<dt>0100 (raised 4.vii.01)
+
+<dd>Signed initializers aren't supported.
+
+</dl>
 
 <h3>27.vi.02</h3>
 
@@ -236,12 +248,6 @@ how to think about role names.</i>
 
 <dd>Deleting an instance may hang if there are no timed events
 outstanding.
-
-<dt>0095 (raised 25.vi.02)
-
-<dd>Operations of &#171;type&#187;s are generated even if they're
-marked &#171;generated&#187; (which means that they're operations that
-ColdFrame generates automatically).
 
 <dt>0096 (raised 25.vi.02)
 
