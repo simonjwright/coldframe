@@ -241,6 +241,7 @@ support.html \
 target.html \
 translation-rules.html \
 types.html \
+use.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
