@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 49a34b52c5ce 2000/04/03 16:54:21 simon $
+# $Id: ddf.tcl,v 6380a446b5a6 2000/04/08 07:30:56 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -118,6 +118,7 @@ itcl::class List {
     variable members {}
     method -add {elem} {lappend members $elem}
     method -size {} {return [llength $members]}
+    method -getMembers {} {return $members}
     method -complete {} {
 	stack -pop
 	[stack -top] -$tag $this
@@ -381,9 +382,15 @@ itcl::class Object {
     }
     method -key {k} {set key $k}
     method -number {n} {set number $n}
+    method -getNumber {} {return $number}
     method -relations {l} {set objectrelations $l}
     method -tags {l} {set tags $l}
     method -attributes {l} {set attributes $l}
+    method -complete {} {
+	$this -handleStereotype
+	stack -pop
+	[stack -top] -add $this $name
+    }
     method -report {} {
 	$this Element::-report
 	$objectrelations -report
@@ -413,21 +420,19 @@ itcl::class Object {
 }
 
 itcl::class Relationship {
-    inherit Element Content
-    method -report {} {
-	$this Element::-report
-    }
-    method -complete {} {error oops}
-    method -evaluate {domain} {
-	puts "evaluating [$this -getName]"
-    }
-    method -generate {domain} {
-	puts "generating [$this -getName]"
+    inherit Element
+    method -getNumber {} {
+	set name [$this -getName]
+	if [expr [regexp -nocase {^r([0-9]+)} $name wh number] == 1] {
+	    return $number
+	} else {
+	    error "bad relationship name \"$name\""
+	}
     }
 }
 
 itcl::class Association {
-    inherit Element
+    inherit Relationship
     variable role1
     variable role2
     variable associative
@@ -444,10 +449,10 @@ itcl::class Association {
 	$this Element::-report
     }
     method -evaluate {domain} {
-	puts "evaluating [$this -getName]"
+	puts "evaluating [$this -getName], number [$this -getNumber]"
     }
     method -generate {domain} {
-	puts "generating association $name"
+	puts "generating association [$this -getName], number [$this -getNumber]"
     }
 }
 
@@ -474,7 +479,7 @@ itcl::class Role {
 }
 
 itcl::class Inheritance {
-    inherit Element
+    inherit Relationship
     variable parent
     # child is the lazy way of not handing the list head ..
     variable child
@@ -486,7 +491,7 @@ itcl::class Inheritance {
 	$children -add $c
     }
     method -addChild {c} {
-	$children -add $child
+	$children -add $c
     }
     method -report {} {
 	$this Element::-report
@@ -507,7 +512,18 @@ itcl::class Inheritance {
 	puts "evaluating [$this -getName]"
     }
     method -generate {domain} {
-	puts "generating inheritance $name"
+	puts [$this -getNumber]
+	puts "Super/Sub"
+	set os [$domain -getObjects]
+	set p [$os -atName $parent]
+	puts "[$p -getNumber]"
+	puts "[$p -getName]"
+	puts "[$children -size]"
+	foreach ch [$children -getMembers] {
+	    set c [$os -atName $ch]
+	    puts "[$c -getName]"
+	    puts "[$c -getNumber]"
+	}
     }
 }
 
@@ -685,25 +701,21 @@ itcl::class ObjectRelations {
 }
 
 itcl::class Objects {
-    inherit OuterList
+    inherit Container
+    method -className {} {return "objects"}
+    method -generate {domain} {
+	puts "[$this -size]"
+	$this Container::-generate $domain
+    }
 }
 
 itcl::class Relationships {
     inherit Container
-    variable associations
-    variable inheritances
     method -className {} {return "relationships"}
-    method -associations {a} {set associations $a}
-    method -inheritances {r} {set inheritances $r}
-    method -evaluate {domain} {
-	$associations -evaluate $domain
-	$inheritances -evaluate $domain
-    }
     method -generate {domain} {
 	puts "relationships"
-	puts "[expr [$associations -size] + [$inheritances -size]]"
-	$associations -generate $domain
-	$inheritances -generate $domain
+	puts "[$this -size]"
+	Container::-generate $domain
     }
 }
 
