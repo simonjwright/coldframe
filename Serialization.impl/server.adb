@@ -1,4 +1,4 @@
---  $Id: server.adb,v 3d93d0840eae 2003/01/26 19:06:06 simon $
+--  $Id: server.adb,v 03ad5137fc4e 2003/02/05 20:46:31 simon $
 
 --  This program receives and decodes TCP packets of type
 --  ColdFrame.Serialization.Base'Class, using port 40673.
@@ -22,6 +22,8 @@ procedure Server is
    Channel : GNAT.Sockets.Stream_Access;
 
 begin
+
+   GNAT.Sockets.Initialize;
 
    GNAT.Sockets.Create_Socket (Server_Socket,
                                GNAT.Sockets.Family_Inet,

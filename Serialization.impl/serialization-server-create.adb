@@ -1,4 +1,4 @@
---  $Id: serialization-server-create.adb,v e8866e2aa71e 2003/01/24 06:24:16 simon $
+--  $Id: serialization-server-create.adb,v 03ad5137fc4e 2003/02/05 20:46:31 simon $
 
 separate (Serialization.Server)
 procedure Create
@@ -9,6 +9,8 @@ procedure Create
    Address : GNAT.Sockets.Sock_Addr_Type;
 
 begin
+
+   GNAT.Sockets.Initialize;
 
    H := Create;
 
