@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 0e1f844df234 2003/02/07 06:20:57 simon $ -->
+<!-- $Id: domains.html,v f9849814c666 2003/03/13 20:39:34 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -64,7 +64,7 @@ child subprogram of the domain package.
 <p>Domain <a href="classes.html">classes</a> are implemented as
 children of the domain package.
 
-<p>Three further children are generated as standard:
+<p>Five further children are generated as standard:
 
 <dl>
 
@@ -91,12 +91,35 @@ Queue, or (if it's <tt>null</tt>) by calling
 
 The calls are in alphabetical order by class and then by operation.
 
-<!-- XXX need to check about singletons and tasks. -->
-
 <dt><tt><i>Domain</i>.Tear_Down</tt>
 <dd>For <a href="resources.html#testing">testing</a> purposes, returns
 the domain to its initial state by deleting all the class instances
 and associations.
+
+<dt><tt><i>Domain</i>.Cascade_Initialize</tt>
+<dd>If you need the services of a domain, you have (of course) to
+include all the domains that it uses in the build process, At run
+time, these domains need to be initialized. The idea behind
+<tt>Cascade_Initialize</tt> is to make this process easier, especially
+for unit test.
+<br>It takes an Event Queue parameter, defaulting to
+<tt>null</tt>. The generated code merely calls <tt>Initialize</tt>
+with the supplied Event Queue.
+<br>To use it as intended, modify it to
+
+<ol>
+
+<li>call <tt>Cascade_Initialize</tt> for all called domains,
+
+<li>call its own <tt>Initialize</tt>,
+
+<li>and then call <tt>Cascade_Initialize</tt> for any domains known to
+require this one (eg, device bottom halves).
+
+</ol>
+
+<dt><tt><i>Domain</i>.Cascade_Tear_Down</tt>
+<dd>The inverse of <tt>Cascade_Initialize</tt>.
 
 </dl>
 
@@ -104,7 +127,9 @@ and associations.
 
 <p>Each domain must be initialized by calling the procedure
 <tt><i>Domain</i>.Initialize</tt>, probably from your main
-program. Because it's a child, it must be <tt>with</tt>ed explicitly.
+program. Because it's a child unit, it must be <tt>with</tt>ed
+explicitly. <tt><i>Domain</i>.Cascade_Initialize</tt> may save
+trouble.
 
 <p>If you're building your application, rather than unit tests, you'll
 probably want to pass <tt><i>Domain</i>.Initialize</tt> the Event
