@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 23e0db45bc28 2002/02/23 14:37:01 simon $ -->
+<!-- $Id: ada-operation.xsl,v f6f2b02a3db4 2002/04/12 18:55:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -764,8 +764,7 @@
   </xsl:template>
 
 
-  <!-- Called at class/operation to generate a body (which compiles,
-       but raises Program_Error). -->
+  <!-- Called at class/operation to generate a body. -->
   <xsl:template name="generate-body">
 
     <!-- The current class (not necessarily the one where the operation

@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
+<!-- $Id: ada-state.xsl,v f6f2b02a3db4 2002/04/12 18:55:39 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -265,7 +265,7 @@
   </xsl:template>
 
 
-  <!-- Generate event handler bodies for <<message>>s. -->
+  <!-- Generate event handler bodies for <<class events>>s. -->
   <xsl:template match="event[@class]" mode="event-handler-bodies">
 
     <!-- 
