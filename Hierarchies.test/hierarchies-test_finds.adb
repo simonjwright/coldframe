@@ -1,3 +1,22 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  $RCSfile: hierarchies-test_finds.adb,v $
+--  $Revision: 134092fa9408 $
+--  $Date: 2002/06/06 07:24:43 $
+--  $Author: simon $
+
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
@@ -40,7 +59,7 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Assert (S_2.Inheritance.Find_R1_Parent (S2_H) = R1_H,
+      Assert (S_2.Inheritance.Find_R_1_Parent (S2_H) = R1_H,
               "parent not found");
    end Find_Root_One;
 
@@ -50,7 +69,7 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Assert (T_2.Inheritance.Find_R1_Parent (T2_H) = R1_H,
+      Assert (T_2.Inheritance.Find_R_1_Parent (T2_H) = R1_H,
               "parent not found");
    end Find_Root_Two;
 
@@ -60,7 +79,7 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_R1_Parent (F2_H) = R1_H,
+      Assert (F_2.Inheritance.Find_R_1_Parent (F2_H) = R1_H,
               "parent not found");
    end Find_Root_Three;
 
@@ -70,7 +89,7 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_T2_Parent (F2_H) = T2_H,
+      Assert (F_2.Inheritance.Find_T_2_Parent (F2_H) = T2_H,
               "parent not found");
    end Find_Intermediate_One;
 
@@ -80,7 +99,7 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_S2_Parent (F2_H) = S2_H,
+      Assert (F_2.Inheritance.Find_S_2_Parent (F2_H) = S2_H,
               "parent not found");
    end Find_Intermediate_Two;
 
