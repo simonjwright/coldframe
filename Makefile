@@ -383,17 +383,11 @@ DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
-dist: $(DISTRIBUTION_FILES) \
-$(DOCS) \
-$(PROGS) \
-$(SUPPORT) \
-$(PROJECT) \
-$(DEMO) \
-$(TEST) \
-cf-$(DATE)
+dist: $(DISTRIBUTION_FILES) cf-$(DATE)
 	-@rm -rf dist
 	mkdir -p dist/download
 	cp -p $(DOCS) dist/
+	cd dist && zip download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
 cf-$(DATE): $(MAKEFILES) $(PROGS) $(SUPPORT) $(PROJECT) $(DEMO) $(TEST) force
