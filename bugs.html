@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 002a2863c730 2004/05/20 15:04:26 simon $ -->
+<!-- $Id: bugs.html,v 3b5afff4ae5e 2004/05/21 16:28:39 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -214,7 +214,13 @@ others.
 
 <dd>Extraction can fail silently.
 
-<!-- next: 0264  -->
+<dt>0264 (raised 20.v.04)
+
+<dd>A race condition where tear-down involving a Timer can result in
+<tt>Program_Error</tt> exceptions makes unit test difficult. This is a
+result of the cure for bug <a href="#bug-0236">0236</a>.
+
+<!-- next: 0265  -->
 
 </dl>
 
@@ -484,7 +490,7 @@ within any other operation will result in a
 
 <dl>
 
-<dt>0236 (raised 17.ii.04)
+<dt><a name="bug-0236">0236</a> (raised 17.ii.04)
 
 <dd>It would be helpful to detect the error of creating (and using) a
 Timer on the stack.
