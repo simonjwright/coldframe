@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 46588af85227 2000/04/12 09:15:54 simon $
+# $Id: ddf.tcl,v 4c2b92d71ec3 2000/04/12 09:37:21 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -49,12 +49,13 @@ itcl::class Base {
     variable text ""
     variable tag "untagged"
     variable xmlattributes
+    variable owner
     method -addText {str} {
 	if {$str != "\n"} {set text "$text$str"}
     }
     method -text {t} {set text $t}
     method -tag {t} {set tag $t}
-    method -complete {} {stack -pop}
+    method -complete {} {}
     method -xmlattributes {arrayname} {
 	upvar $arrayname a
 	foreach i [array names a] {
@@ -73,6 +74,8 @@ itcl::class Base {
 	}
 	return $res
     }
+    method -owner {o} {set owner $o}
+    method -getOwner {} {return $owner}
     # I expect iterator, output stuff here
     method -report {} {puts "aBase"}
     method -evaluate {domain} {}
@@ -82,7 +85,6 @@ itcl::class Base {
 itcl::class String {
     inherit Base
     method -complete {} {
-	stack -pop
 	[stack -top] -$tag $text
     }
     method -report {} {puts "$tag $text"}
@@ -91,7 +93,6 @@ itcl::class String {
 itcl::class IdentifierString {
     inherit String
     method -complete {} {
-	stack -pop
 	[stack -top] -$tag [normalize $text]
     }
 }
@@ -123,7 +124,6 @@ itcl::class Element {
     }
     method -complete {} {
 	$this -handleStereotype
-	stack -pop
 	[stack -top] -add $this
     }
     method -report {} {
@@ -140,7 +140,6 @@ itcl::class List {
     method -size {} {return [llength $members]}
     method -getMembers {} {return $members}
     method -complete {} {
-	stack -pop
 	[stack -top] -$tag $this
     }
     method -report {} {
@@ -222,7 +221,6 @@ itcl::class Container {
     }
  
     method -complete {} {
-	stack -pop
 	[stack -top] -[$this -className] $this
     }
 
@@ -276,7 +274,6 @@ itcl::class Type {
 itcl::class Protection {
     inherit String
     method -complete {} {
-	stack -pop
 	switch $text {
 	    PublicAccess {[stack -top] -identifier}
 	    default {}
@@ -412,7 +409,6 @@ itcl::class Object {
     method -attributes {l} {set attributes $l}
     method -complete {} {
 	$this -handleStereotype
-	stack -pop
 	[stack -top] -add $this $name
     }
     method -report {} {
@@ -423,7 +419,7 @@ itcl::class Object {
     }
     method -evaluate {domain} {
 #	$tags -evaluate $domain
-	$attributes -evaluate $domain $this
+	$attributes -evaluate $domain
     }
     method -generate {domain} {
 	puts "$name"
@@ -466,7 +462,6 @@ itcl::class Association {
 	set role[$role -getEnd] $role
     }
     method -complete {} {
-	stack -pop
 	[stack -top] -add $this $name
     }
     method -report {} {
@@ -551,7 +546,6 @@ itcl::class Role {
     method -end {e} {set end $e}
     method -getEnd {} {return $end}
     method -complete {} {
-	stack -pop
 	[stack -top] -role $this
     }
     method -report {} {
@@ -600,7 +594,6 @@ itcl::class Inheritance {
 	$this Element::-report
     }
     method -complete {} {
-	stack -pop
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
 	    set extant [$inheritances -atName $name]
@@ -650,7 +643,6 @@ itcl::class Datatype {
     constructor {name} {set type $name}
     method -className {} {return "datatype"}
     method -complete {} {
-	stack -pop
 	if [[stack -top] -isPresent $type] {
 	    puts "$name already present"
 	} else {
@@ -710,7 +702,6 @@ itcl::class Attribute {
     variable type
     variable identifier 0
     variable relations {}
-    variable object
     method -stereotypePattern {} {
 	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
     }
@@ -724,14 +715,13 @@ itcl::class Attribute {
 	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
 	puts "$tag $name : $type [$this -formatxmlattributes]"
     }
-    method -evaluate {domain obj} {
+    method -evaluate {domain} {
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
 	    set datatype [Datatype ::#auto $type]
 	    $datatypes -add $datatype $type
 	}
-	set object $obj
     }
     method -generate {domain} {
 	puts "$name"
@@ -745,7 +735,8 @@ itcl::class Attribute {
 	if [info exists relations] {
 	    # handle referential attributes
 	    # $relations is a list of the names of relationships for which this
-	    # is a referential attribute in this object.
+	    # is a referential attribute in the owner object.
+	    set object [[$this -getOwner] -getOwner]
 	    set rels [$domain -getRelationships]
 	    foreach r $relations {
 		set rel [$rels -atName $r]
@@ -779,9 +770,6 @@ itcl::class OuterList {
 
 itcl::class Attributes {
     inherit CountedList
-    method -evaluate {domain object} {
-	foreach el $members {$el -evaluate $domain $object}
-    }
 }
 
 itcl::class Associations {
@@ -937,7 +925,9 @@ proc textInTag {str} {
 }
 
 proc endTag {tag} {
-    [stack -top] -complete
+    set el [stack -pop]
+    $el -owner [stack -top]
+    $el -complete
 }
 
 ###########
