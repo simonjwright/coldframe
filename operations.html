@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: operations.html,v fa3f06379c5c 2005/01/12 13:47:41 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -108,7 +108,9 @@ have more than one &#171;teardown&#187; operation. These are intended
 to clean up resources such as file descriptors; don't try to tidy up
 associations, they're in an indeterminate state during teardown.
 
-<br>&#171;finalize&#187; operations can call &#171;teardown&#187;s.
+<p>&#171;finalize&#187; operations can call &#171;teardown&#187;s,
+but &#171;teardown&#187; operations should <em>not</em> call
+&#171;finalize&#187; ones.
 
 <h3><a name="statemachines">State machines</a></h3>
 
