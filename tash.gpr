@@ -1,18 +1,18 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v 51bebc997885 2003/11/16 11:10:47 simon $
+--  $Id: tash.gpr,v 47c4f06bf162 2004/01/18 07:13:05 simon $
 
 project Tash is
 
   Tash := external ("TASH", "c:/tash832a");
   Tcl := external ("TCL", "c:/Tcl");
   Tcl_Version := external ("TCL_VERSION", "82");
-  Build_Dir := external ("BUILD_DIR", "c:/tmp/.build");
+  Build_Base := external ("BUILD_BASE", "c:/tmp/.build");
 
   Tash_Src := Tash & "/src";
 
   for Source_Dirs use (Tash_Src);
 
-  for Object_Dir use Build_Dir;
+  for Object_Dir use Build_Base;
 
   package Builder is
      for Default_Switches ("Ada") use ("-g",
