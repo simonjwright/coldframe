@@ -1,4 +1,4 @@
-<!-- $Id: use-of-bcs.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: use-of-bcs.html,v 844992bf965e 2003/10/22 19:15:40 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Use of Booch Components</title>
@@ -115,7 +115,7 @@ function is provided (it's an instantiation of
 
 </dl>
 
-<p>Because each of these is intantiated at Library level, they have to
+<p>Because each of these is instantiated at Library level, they have to
 be <tt>with</tt>ed individually.
 
 <h2><a name="collections">Collections</a></h2>
@@ -322,12 +322,19 @@ other) Sensor Tracks.
 
 <h3><a name="iteration">Iteration</a></h3>
 
-<p>Two forms of iteration are supported: open and closed. Both require
-the creation of Iterators.
+<p>For each Class, ColdFrame generates a generic procedure
+<tt><i>Domain.Class</i>.Iterate</tt>; in most cases, it's easier to
+<a href="#coldframe-iteration">use this</a> than to use the BC
+iteration facilities directly. Also, direct use means that your code
+is more closely tied than it need be to the current ColdFrame
+implementation strategy.
 
-<p>With open iterators, you explicitly advance
+<p>If you do need to use BC iteration, there are two forms: open and
+closed. Both require the creation of Iterators.
+
+<p>With open iteration, you explicitly advance
 the iterator to the next element in the container it references,
-until it's done; with closed iterators, you supply a procedure which
+until it's done; with closed iteration, you supply a procedure which
 gets called for each element in the container.
 
 <p>The operations on iterators are all defined in
@@ -335,8 +342,9 @@ gets called for each element in the container.
 iterators can only be created by the concrete
 <tt><i>Domain.Class</i>.Collections</tt>.
 
-<p>Both examples below are in terms of a pre-existing container
-<tt>The_Collection</tt>:
+<p>The examples below are in terms of a pre-existing container
+<tt>The_Collection</tt>. You may take exception to the overloading of
+the name <tt>Process</tt>!
 
 <h4>Open iteration</h4>
 
@@ -344,20 +352,20 @@ iterators can only be created by the concrete
    declare
 
       It : <i>Class</i>.Abstract_Containers.Iterator'Class
-	:= <i>Class</i>.Collections.New_Iterator (The_Collection);
+        := <i>Class</i>.Collections.New_Iterator (The_Collection);
 
    begin
 
       while not <i>Class</i>.Abstract_Containers.Is_Done (It) loop
 
-	 declare
-	    H : <i>Class</i>.Handle
-	      := <i>Class</i>.Abstract_Containers.Current_Item (It);
-	 begin
-	    -- do something with H
-	 end;
+         declare
+            H : <i>Class</i>.Handle
+              := <i>Class</i>.Abstract_Containers.Current_Item (It);
+         begin
+            -- do something with H
+         end;
 
-	 <i>Class</i>.Abstract_Containers.Next (It);
+         <i>Class</i>.Abstract_Containers.Next (It);
 
       end loop;
 
@@ -370,26 +378,44 @@ iterators can only be created by the concrete
    declare
 
       procedure Process (H : <i>Class</i>.Handle; OK : out Boolean);
+      pragma Inline_Always (Process);
 
       procedure Process
-	is new <i>Class</i>.Abstract_Containers.Visit (Process);
+        is new <i>Class</i>.Abstract_Containers.Visit (Process);
 
       procedure Process (H : <i>Class</i>.Handle; OK : out Boolean) is
       begin
-
-	 OK := True; -- unless you want the iteration to stop early
-
-	 -- do something with H
-
+         OK := True; -- unless you want the iteration to stop early
+         -- do something with H
       end Process;
 
       It : <i>Class</i>.Abstract_Containers.Iterator'Class
-	:= <i>Class</i>.Collections.New_Iterator (The_Collection);
+        := <i>Class</i>.Collections.New_Iterator (The_Collection);
 
    begin
-
       Process (It);
+   end;
+</pre>
 
+<h4><a name="coldframe-iteration">Iteration using ColdFrame's
+<tt><i>Domain.Class</i>.Iterate</tt></a></h4>
+
+<pre>
+   declare
+
+      procedure Process (H : <i>Class</i>.Handle);
+      pragma Inline_Always (Process);
+
+      procedure Process
+        is new <i>Class</i>.Iterate (Process);
+
+      procedure Process (H : <i>Class</i>.Handle) is
+      begin
+         -- do something with H
+      end Process;
+
+   begin
+      Process (The_Collection);
    end;
 </pre>
 
@@ -410,21 +436,21 @@ vice versa, is provided by the generic <tt>BC.Copy</tt>.
    declare
 
       procedure Make_Set is new BC.Copy
-	(Item => Track.Handle,
-	 Source => Track.Abstract_Containers,
-	 From => Track.Collections.Collection,
-	 Target => Track.Abstract_Containers,
-	 To => Track.Sets.Set,
-	 Clear => Track.Sets.Clear,
-	 Add => Track.Sets.Add);
+        (Item => Track.Handle,
+         Source => Track.Abstract_Containers,
+         From => Track.Collections.Collection,
+         Target => Track.Abstract_Containers,
+         To => Track.Sets.Set,
+         Clear => Track.Sets.Clear,
+         Add => Track.Sets.Add);
 
       Engaged_Track_Set : Track.Sets.Set;
 
    begin
 
       Make_Set
-	(Input => Engaged_Tracks,
-	 Output => Engaged_Track_Set);
+        (Input => Engaged_Tracks,
+         Output => Engaged_Track_Set);
 
       -- operations with Engaged_Track_Set
 </pre>
@@ -444,7 +470,7 @@ href="#selection-function"><tt>Selection_Function</tt></a> generics.
 
 <p>These can be instantiated for any sort of Container, but they'll
 fail (with the run time exception <tt>BC.Container_Error</tt>) if you
-try to <emph>use</emph> them for Sets.
+try to <em>use</em> them for Sets.
 
 <p>Quicksort is usually faster than Shellsort, but can take a lot more
 stack when the initial input Collection is inconveniently ordered.
@@ -461,15 +487,16 @@ all the other Items in the Collection will end up first.
    declare
 
       function Is_More_Threatening (L, R : Track.Handle) return Boolean;
+      pragma Inline_Always (Is_More_Threatening);
 
       procedure Sort is new Track.Abstract_Containers.Quicksort
-	("<" => Is_More_Threatening,
-	 Container => Track.Collections.Collection,
-	 Length => Track.Collections.Length);
+        ("<" => Is_More_Threatening,
+         Container => Track.Collections.Collection,
+         Length => Track.Collections.Length);
 
       function Is_More_Threatening (L, R : Track.Handle) return Boolean is
       begin
-	 return L.Time_Of_CPA < R.Time_Of_CPA;
+         return L.Time_Of_CPA < R.Time_Of_CPA;
       end Is_More_Threatening;
 
    begin
