@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v b0f635177028 2001/06/06 19:26:05 simon $ -->
+<!-- $Id: releases.html,v e8fdd874388a 2001/06/09 04:37:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -49,11 +49,24 @@ properly.
 <p>Support "autonumber" attributes.
 
 
-<p>Domain types are generated in (reverse) dependency order. so you
+<p>Domain types are generated in (reverse) dependency order, so you
 can safely specify records containing records.
 
 
-<p>1-(1:1), 1-(1:1c), i-(1c:1c) associations now supported.
+<p>1-(1:1), 1-(1:1c), 1-(1c:1c) associations now supported.
+
+
+<p>Operations are generated with "separate" bodies, instead of using
+child subprogram units.
+
+
+<p>Active classes (in Rose, go to the Class/Detail tab and select
+Active) are generated with a task for each instance. The task body is
+"separate".
+
+
+<p>Singleton classes now provide a <tt>Handle</tt> type (accessed
+through the <tt>Find</tt> function), for use in associations.
 
 
 <p>
