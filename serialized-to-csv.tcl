@@ -2,7 +2,7 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: serialized-to-csv.tcl,v 243967d6b136 2004/01/12 12:52:11 simon $
+# $Id: serialized-to-csv.tcl,v e3e67fd5841e 2004/01/12 17:00:32 simon $
 
 # Converts a document containing mixed serialization output from
 # ColdFrame to comma-separated-variable files, one file per record
@@ -25,88 +25,43 @@ exec tclsh "$0" "$@"
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
-package require xml
-
-#######################
-# XML parse interface #
-#######################
-
-proc startTag {tag attrs} {
-    global files currentFile firstLine itemNo item names
-    switch $tag {
-        record  {
-            array set attr $attrs
-            set file $attr(name).csv
-            if [expr ![info exists files($file)]] {
-                set firstLine 1
-                set files($file) [open $file w]
-            } else {
-                set firstLine 0
-            }
-            set currentFile $files($file)
-            set itemNo 1
+while {![eof stdin]} {
+    gets stdin l
+    if {[regexp {^<record name=\"([a-zA-Z0-9_.]+)\">$} $l wh name]} {
+        set file $name.csv
+        if [expr ![info exists files($file)]] {
+            set firstLine 1
+            set files($file) [open $file w]
+        } else {
+            set firstLine 0
         }
-        field {
-            array set attr $attrs
-            set names($itemNo) $attr(name)
-            set item ""
-        }
-        default {}
-    }
-}
-
-proc textInTag {str} {
-    global item
-    set item "$item$str"
-}
-
-proc endTag {tag} {
-    global currentFile firstLine item itemNo items names
-    switch $tag {
-        field {
-            set items($itemNo) $item
-            incr itemNo
-        }
-        record {
-            if $firstLine {
+        set currentFile $files($file)
+        set itemNo 1
+        set done 0
+        while {!$done} {
+            gets stdin l
+            if [eof stdin] {
+                set done 1
+            } elseif [regexp {^</record>$} $l wh] {
+                set done 1
+                if $firstLine {
+                    for {set i 1} {$i < $itemNo} {incr i} {
+                        puts -nonewline $currentFile "$names($i),"
+                    }
+                    puts $currentFile ""
+                }
                 for {set i 1} {$i < $itemNo} {incr i} {
-                    puts -nonewline $currentFile "$names($i),"
+                    puts -nonewline $currentFile "$items($i),"
                 }
                 puts $currentFile ""
-            }
-            for {set i 1} {$i < $itemNo} {incr i} {
-               puts -nonewline $currentFile "$items($i),"
-            }
-            puts $currentFile ""
+            } elseif \
+		{[regexp \
+		      {^<field name=\"([a-zA-Z0-9_.]+)\">([^<]*)</field>$} \
+		      $l wh n v]} {
+			  set names($itemNo) $n
+			  set items($itemNo) $v
+			  incr itemNo
+		      }
         }
-        default {}
-    }
-}
-
-###########
-# Globals #
-###########
-
-set firstLine 0
-set item ""
-set stackDump 1
-
-################
-# Main program #
-################
-
-set parser [xml::parser]
-$parser configure \
-        -elementstartcommand startTag \
-        -elementendcommand endTag \
-        -characterdatacommand textInTag
-
-set stackDump 1
-if $stackDump {
-    $parser parse [read stdin]
-} else {
-    if [catch {$parser parse [read stdin]} msg] {
-        puts stderr "CF: internal error: $msg"
-        exit 1
     }
 }
