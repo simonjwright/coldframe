@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 7b811c64f0d2 2004/06/24 05:02:56 simon $ -->
+<!-- $Id: releases.html-proto,v 0c11f2b2a90a 2004/07/03 10:29:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,9 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>For this release, it's necessary to re-extract all Domains from
+the model.
 
 <dd>Action routines can be inherited from the parent.
 
