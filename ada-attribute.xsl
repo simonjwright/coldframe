@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v f6542b12083f 2003/05/17 21:36:48 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 1f4c4f81be2f 2003/06/14 11:08:07 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,8 +61,8 @@
 
     <xsl:choose>
 
-      <xsl:when test="attribute or @active or statemachine">
-        <!-- There are attributes; output them all. -->
+      <xsl:when test="attribute[not(@class)] or @active or statemachine">
+        <!-- There are instance attributes; output them all. -->
 
         <xsl:value-of select="$I"/>
         <xsl:choose>
