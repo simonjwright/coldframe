@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f14fb0352793 2001/09/28 18:42:16 simon $ -->
+<!-- $Id: ada-class.xsl,v 315d6ed811d7 2001/10/04 19:45:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -872,7 +872,9 @@
       <xsl:value-of select="parent"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="$current/name"/>
-      <xsl:text>_T, </xsl:text>
+      <xsl:text>_T,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>  </xsl:text>
       <xsl:value-of select="$current/abbreviation"/>
       <xsl:text> =&gt; </xsl:text>
       <xsl:value-of select="$handle"/>
@@ -987,7 +989,8 @@
     <!--
          case {handle}.{relation}_Current_Child.Current is
            when {child-1}_T =>
-             {child-1}.Delete ({handle}.{relation}_Current_Child.{child-1-abbrev};
+             {child-1}.Delete
+               ({handle}.{relation}_Current_Child.{child-1-abbrev};
            when Null_T => null;
          end case;
          -->
@@ -1021,7 +1024,9 @@
         
         <xsl:value-of select="$IIII"/>
         <xsl:value-of select="."/>
-        <xsl:text>.Delete (</xsl:text>
+        <xsl:text>.Delete&#10;</xsl:text>
+        <xsl:value-of select="$IIIIC"/>
+        <xsl:text>(</xsl:text>
         <xsl:value-of select="$handle"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$rel/name"/>
@@ -1049,7 +1054,8 @@
 
     <!--
          {parent}.Set_{relation}_Child
-           ({handle}.{relation}_Parent, (Current => {parent}.Null_T));
+           ({handle}.{relation}_Parent,
+            (Current => {parent}.Null_T));
          -->
     
     <!-- Save the current class -->
@@ -1068,8 +1074,9 @@
       <xsl:value-of select="$handle"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Parent, </xsl:text>
-      <xsl:text>(Current =&gt; </xsl:text>
+      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> (Current =&gt; </xsl:text>
       <xsl:value-of select="parent"/>
       <xsl:text>.Null_T));&#10;</xsl:text>
     </xsl:for-each>
@@ -1213,7 +1220,8 @@
           <!--
                declare
                   function H is new ColdFrame.Hash.Access_Hash
-                    ({class}.Instance, {class}.Handle);
+                    ({class}.Instance,
+                     {class}.Handle);
                begin
                   Result := Result xor M (H (Id.{name}));
                end;
@@ -1226,7 +1234,9 @@
           <xsl:value-of select="$IIC"/>
           <xsl:text>(</xsl:text>
           <xsl:value-of select="@refers"/>
-          <xsl:text>.Instance, </xsl:text>
+          <xsl:text>.Instance,&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text> </xsl:text>
           <xsl:value-of select="@refers"/>
           <xsl:text>.Handle);&#10;</xsl:text>
           <xsl:value-of select="$I"/>
