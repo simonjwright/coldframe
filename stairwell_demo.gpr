@@ -1,11 +1,13 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 1e7115caad37 2002/12/28 17:52:45 simon $
+--  $Id: stairwell_demo.gpr,v 9f7d8d3b77b8 2003/01/01 22:12:45 simon $
 
 with "tash";
-with "bc";
-with "coldframe";
 
 project Stairwell_Demo is
+
+  Top := external ("TOP", "c:");
+  Booch := external ("BC", "bc-20021230");
+  Build := external ("BUILD", "c:/tmp/.build");
 
   for Main use ("stairwell_demo");
 
@@ -14,9 +16,12 @@ project Stairwell_Demo is
   for Source_Dirs use ("House_Management.impl",
                        "House_Management.gen",
                        "Digital_IO.impl",
-                       "Digital_IO.gen");
+                       "Digital_IO.gen",
+                       "../project",
+                       "../lib",
+                       Top & "/" & Booch);
 
-  for Object_Dir use ".build";
+  for Object_Dir use Build;
 
   package Builder is
      for Default_Switches ("Ada") use ("-g",
