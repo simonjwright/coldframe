@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 60e5a62ab2c3 2002/02/24 10:27:46 simon $
+'$Id: ddf.ebs,v ffcf12ac841c 2002/02/24 17:17:05 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -164,6 +164,7 @@ Sub DumpStates (c As Class)
 				End If
 				Print #1, "<name>" + StateName(st) + "</name>"
 				DumpEntryActions(st)
+				Print #1, "<documentation>" & st.Documentation & "</documentation>"
 				Print #1, "</state>"			
 			Next s
 			Print #1, "</states>"
@@ -177,6 +178,7 @@ Sub DumpStates (c As Class)
 				Print #1, "<source>" & StateName(tr.GetSourceState()) & "</source>"
 				Print #1, "<target>" & StateName(tr.GetTargetState()) & "</target>"
 				DumpEvent(tr.GetTriggerEvent())
+				Print #1, "<documentation>" & tr.Documentation & "</documentation>"
 				Print #1, "</transition>"
 			Next t
 			Print #1, "</transitions>"

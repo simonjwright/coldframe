@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 5580076fd72f 2002/02/24 10:34:10 simon $
+# $Id: normalize-rose.tcl,v ffcf12ac841c 2002/02/24 17:17:05 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1576,6 +1576,7 @@ itcl::class State {
 	if [info exists entryactions] {
 	    $entryactions -generate $domain
 	}
+	$this -generateDocumentation
 	puts "</state>"
     }
 
@@ -1656,6 +1657,7 @@ itcl::class Transition {
 	}
 	putElement source $source
 	putElement target $target
+	$this -generateDocumentation
 	puts "</transition>"
     }
 
