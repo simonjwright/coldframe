@@ -1,9 +1,10 @@
 #! /usr/bin/awk -f
 
-# $Id: escape-markup.awk,v 4cf1b5207af0 2004/01/18 18:07:05 simon $
+# $Id: escape-markup.awk,v 7dbcfabab614 2004/01/18 18:09:50 simon $
 
 # Escapes XML-significant characters in the <documentation> element of an
-# XML Domain Definition file, generated from Rose by extractor.ebs.
+# XML Domain Definition (.raw) file, generated from Rose by
+# extractor.ebs.
 
 # Copyright (C) Simon Wright <simon@pushface.org>
 
