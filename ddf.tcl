@@ -1,9 +1,9 @@
 #!/bin/sh
 # the next line restarts using itclsh \
-exec tclsh "$0" "$@"
+exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 73f83b044ea3 2000/03/19 17:39:28 simon $
+# $Id: ddf.tcl,v 8f13dbf59a4c 2000/03/26 09:08:00 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -39,7 +39,6 @@ itcl::class Base {
     variable text ""
     variable tag "untagged"
     variable xmlattributes
-    #constructor {args} {eval configure $args}
     method -addText {str} {
 	if {$str != "\n"} {set text "$text$str"}
     }
@@ -71,7 +70,6 @@ itcl::class Base {
 
 itcl::class String {
     inherit Base
-    #constructor {args} {eval configure $args}
     method -complete {} {
 	stack -pop
 	[stack -top] -$tag $text
@@ -83,8 +81,8 @@ itcl::class Element {
     inherit Base
     variable name "unnamed"
     variable stereotype
-    #constructor {args} {eval configure $args}
     method -name {n} {set name $n}
+    method -getName {} {return $name}
     method -stereotype {s} {
 	set stereotype $s
     }
@@ -133,15 +131,9 @@ itcl::class List {
     }
 }
 
-########################################
-# DDF classes for storing the XML info #
-########################################
-
-# Non-XML derived classes
-
-itcl::class Datatypes {
+itcl::class Container {
     # byName is indexed by name and holds the index number in byNumber
-    # byNumber is indexed by number and holds the Datatype
+    # byNumber is indexed by number and holds the Content
     private variable byName
     private variable byNumber
     constructor {} {
@@ -149,22 +141,26 @@ itcl::class Datatypes {
 	array set byNumber {}
 	return $this
     }
+    method -className {} {return "Container"}
+    method -contentClass {} {
+	error "[$this -className] -contentClass not overriden"
+    }
     method -size {} {return [array size byName]}
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
 	set newIndex [$this -size]
 	set byName($name) $newIndex
-	set byNumber($newIndex) [Datatype #auto $name]
+	set byNumber($newIndex) [[$this -contentClass] #auto $name]
 	return $newIndex
     }
     method -atIndex {index} {
 	if {$index < [$this -size]} {
 	    return $byNumber($index)
 	}
-	error "Datatype index $index out of range ([$this -size] entries)"
+	error "[$this -className] index $index out of range ([$this -size] entries)"
     } 
     method -generate {domain} {
-	puts "datatypes"
+	puts "[$this -className]"
 	set size [$this -size]
 	puts "$size"
 	for {set i 0} {$i < $size} {incr i 1} {
@@ -173,36 +169,18 @@ itcl::class Datatypes {
     }
 }
 
-itcl::class Datatype {
-    variable type
-    variable package
-    variable constraint
-    variable objectUsers
-    variable relationshipUsers
-    variable dataType
-    variable eventType
-    variable superType
-    variable tags
-    constructor {name} {set type $name}
+itcl::class Content {
+    # Concrete classes need constructor {name}
+    method -className {} {return "Content"}
     method -generate {domain} {
-	puts "$type"
-	puts "SomePackage"
-	# constraint flag -- 0 -> no constraint
-	puts 0
-	# number of using objects
-	puts 0
-	# relationship users
-	puts 0
-	# data type switch
-	puts -1
-	# event type
-	puts -1
-	# super type
-	puts -1
-	# number of tags
-	puts 0
+	error "[$this -className] -generate not overridden"
     }
 }
+
+
+########################################
+# DDF classes for storing the XML info #
+########################################
 
 # String classes
 
@@ -250,7 +228,6 @@ itcl::class Domain {
     variable typesfiles
     variable transitiontables
     variable terminators
-    #constructor {args} {eval configure $args}
     method -stereotypePattern {} {
 	return {[ \t]*([a-z0-9_]+)[ \t]*=[ \t]*([a-z0-9_,]+)[ \t]*}
     }
@@ -263,10 +240,18 @@ itcl::class Domain {
     method -getDatatypes {} {
 	if [expr ! [info exists datatypes]] {
 	    # XXX I don't understand _when_ it's necessary to put the name
-	    # in the global scope.
+	    # in the global scope. ?? these aren't Elements
 	    set datatypes [Datatypes ::#auto]
 	}
 	return $datatypes
+    }
+    method -getRelationships {} {
+	if [expr ! [info exists relationships]] {
+	    # XXX I don't understand _when_ it's necessary to put the name
+	    # in the global scope. ?? these aren't Elements
+	    set relationships [Relationships ::#auto]
+	}
+	return $relationships
     }
     method -typesfiles {l} {set typesfiles $l}
     method -transitiontables {l} {set transitiontables $l}
@@ -303,7 +288,7 @@ itcl::class Object {
     inherit Element
     variable key
     variable number
-    variable relations
+    variable objectrelations
     variable tags
     variable attributes
     method -stereotypePattern {} {
@@ -311,16 +296,12 @@ itcl::class Object {
     }
     method -key {k} {set key $k}
     method -number {n} {set number $n}
-    method -relations {l} {set relations $l}
+    method -relations {l} {set objectrelations $l}
     method -tags {l} {set tags $l}
     method -attributes {l} {set attributes $l}
-#    method -complete {} {
-#	stack -pop
-#	[stack -top] -add $this
-#    }	
     method -report {} {
 	$this Element::-report
-	$relations -report
+	$objectrelations -report
 	$tags -report
 	$attributes -report
     }
@@ -328,8 +309,8 @@ itcl::class Object {
 	puts "$name"
 	puts "$key"
 	puts "$number"
-	# relations
-	$relations -generate $domain
+	# objectrelations
+	$objectrelations -generate $domain
 	# withs
 	puts 0
 	# stt index
@@ -341,23 +322,49 @@ itcl::class Object {
 }
 
 itcl::class Relationship {
-    inherit Element
-#    method -complete {} {
-#	stack -pop
-#	[stack -top] -add $this
-#    }	
+    inherit Element Content
+    variable name
+    constructor {name} {set name $name}
     method -report {} {
 	$this Element::-report
     }
 }
 
+itcl::class Datatype {
+    inherit Content
+    variable type
+    variable package
+    variable constraint
+    variable objectUsers
+    variable relationshipUsers
+    variable dataType
+    variable eventType
+    variable superType
+    variable tags
+    constructor {name} {set type $name}
+    method -className {} {return "datatype"}
+    method -generate {domain} {
+	puts "$type"
+	puts "SomePackage"
+	# constraint flag -- 0 -> no constraint
+	puts 0
+	# number of using objects
+	puts 0
+	# relationship users
+	puts 0
+	# data type switch
+	puts -1
+	# event type
+	puts -1
+	# super type
+	puts -1
+	# number of tags
+	puts 0
+    }
+}
+
 itcl::class Typesfile {
     inherit Element
-    variable attributes [List #auto]
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
     method -report {} {
 	$this Element::-report
     }
@@ -365,10 +372,6 @@ itcl::class Typesfile {
 
 itcl::class Transitiontable {
     inherit Element
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
     method -report {} {
 	$this Element::-report
     }
@@ -376,22 +379,17 @@ itcl::class Transitiontable {
 
 itcl::class Terminator {
     inherit Element
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
     method -report {} {
 	$this Element::-report
     }
 }
 
-itcl::class Relation {
+itcl::class ObjectRelation {
     inherit Element
-    variable relations [List #auto]
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
+    method -complete {} {
+	$this -name $text
+	$this Element::-complete
+    }
     method -report {} {
 	$this Element::-report
     }
@@ -399,10 +397,6 @@ itcl::class Relation {
 
 itcl::class Tag {
     inherit Element
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
     method -report {} {
 	$this Element::-report
     }
@@ -414,10 +408,6 @@ itcl::class Attribute {
     variable identifier 0
     method -type {t} {set type $t}
     method -identifier {} {set identifier 1}
-#      method -complete {} {
-#  	stack -pop
-#  	[stack -top] -add $this
-#      }	
     method -report {} {
 	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
 	puts "$tag $name : $type [$this -formatxmlattributes]"
@@ -439,6 +429,7 @@ itcl::class Attribute {
 # List classes
 
 itcl::class CountedList {
+    # when generating, outputs its size and then generates its contents.
     inherit List
     method -generate {domain} {
 	puts "[$this -size]"
@@ -447,6 +438,7 @@ itcl::class CountedList {
 }
 
 itcl::class OuterList {
+    # like CountedList, but outputs its own name first
     inherit CountedList
     method -generate {domain} {
 	puts "$tag"
@@ -459,7 +451,15 @@ itcl::class Objects {
 }
 
 itcl::class Relationships {
-    inherit OuterList
+    inherit Container List
+    method -className {} {return "relationships"}
+    method -contentClass {} {return Relationship}
+}
+
+itcl::class Datatypes {
+    inherit Container List
+    method -className {} {return "datatypes"}
+    method -contentClass {} {return Datatype}
 }
 
 itcl::class Typesfiles {
@@ -474,8 +474,21 @@ itcl::class Terminators {
     inherit OuterList
 }
 
-itcl::class Relations {
-    inherit CountedList
+itcl::class ObjectRelations {
+    inherit List
+    method -generate {domain} {
+	set size [$this -size]
+	puts "$size"
+	if {$size > 0} {	    
+	    set rels [$domain -getRelationships]
+	    foreach r $members {
+		puts -nonewline "rel [$r -getName] at [$rels -index [$r -getName]] "
+	    }
+	    puts ""
+	}
+	# XXX fake the "withs" by selecting all possibilities
+	puts "-1"
+    }
 }
 
 itcl::class Tags {
@@ -509,8 +522,8 @@ proc elementFactory {tag} {
 	transitiontable   {return [Transitiontable #auto]}
 	terminators       {return [Terminators #auto]}
 	terminator        {return [Terminator #auto]}
-	relations         {return [Relations #auto]}
-	relation          {return [Relation #auto]}
+	relations         {return [ObjectRelations #auto]}
+	relation          {return [ObjectRelation #auto]}
 	tags              {return [Tags #auto]}
 	tag               {return [Tag #auto]}
 	attributes        {return [Attributes #auto]}
