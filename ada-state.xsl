@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 5eaa20121d6b 2002/01/27 11:20:12 simon $ -->
+<!-- $Id: ada-state.xsl,v ffbdb9c5fe8b 2002/02/01 20:45:46 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -101,6 +101,32 @@
   </xsl:template>
 
 
+  <!-- Called at domain/class to generate the State_Image operation spec. -->
+  <xsl:template name="state-image-spec">
+    
+    <xsl:value-of select="$I"/>
+    <xsl:text>function State_Image (This : Instance) return String;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
+  </xsl:template>
+
+
+  <!-- Called at domain/class to generate the State_Image operation body. -->
+  <xsl:template name="state-image-body">
+    
+    <xsl:value-of select="$I"/>
+    <xsl:text>function State_Image (This : Instance) return String is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>return This.State_Machine_State'Img;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end State_Image;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
+  </xsl:template>
+
+
   <!-- Generate event handler specs. -->
   <xsl:template match="statemachine/event" mode="event-handler-specs">
 
@@ -158,11 +184,6 @@
     <xsl:text>That : Handle := This.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>ColdFrame.States.Log ("</xsl:text>
-    <xsl:value-of select="$e"/>
-    <xsl:text>", That.State_Machine_State'Img);&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>case That.State_Machine_State is&#10;</xsl:text>
@@ -318,11 +339,6 @@
 
      <xsl:value-of select="$I"/>
      <xsl:text>begin&#10;</xsl:text>
-
-     <xsl:value-of select="$II"/>
-     <xsl:text>ColdFrame.States.Log ("</xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>");&#10;</xsl:text>
 
      <xsl:for-each select="action">
 
