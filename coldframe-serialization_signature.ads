@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization_signature.ads,v $
---  $Revision: 986d85db4d3e $
---  $Date: 2003/02/02 19:07:46 $
+--  $Revision: c9c656aa4c2b $
+--  $Date: 2003/02/16 19:30:45 $
 --  $Author: simon $
 
 --  This package specifies the characteristics required to support the
@@ -29,13 +29,13 @@
 --
 --  ColdFrame.Project.Serialization is expected to provide the
 --  facilities required by this package, so it will be easiest to
---  provide is as an instantiation of this package.
+--  provide it as an instantiation of this package.
 
 generic
 
    type Actual_Base is abstract tagged private;
    --  The basis for all serialized values. It should have a primitive
-   --  function
+   --  subprogram
    --
    --     function Image (S : Actual_Base) return String;
    --
