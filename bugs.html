@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8d9e6285ba28 2003/11/11 20:10:38 simon $ -->
+<!-- $Id: bugs.html,v 6ed18442672d 2003/11/12 13:02:37 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -208,7 +208,16 @@ the same event isn't detected.
 <tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
 Instance</tt>?
 
-<!-- next: 0214 -->
+<dt>0214 (raised 12.xi.03)
+
+<dd>The mechanism for dealing with multiple users of the same Event
+Queue is flawed;
+<ul>
+<li>it's up to the user to remember to call the <tt>Copy</tt> operation
+<li>the <tt>Copy</tt> operation won't accept a null parameter.
+</ul>
+
+<!-- next: 0215 -->
 
 </dl>
 
