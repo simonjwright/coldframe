@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v ca8a4e9ea334 2004/01/22 13:58:53 simon $ -->
+<!-- $Id: ada-operation.xsl,v 48eb83c8f3d3 2004/01/27 06:22:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -959,7 +959,7 @@
 
     <xsl:choose>
 
-      <!-- Check for auto-generated Set operations -->
+      <!-- Check for non-accessor auto-generated Set operations -->
       <xsl:when test="$generate-accessors='defined'
                       and not(@return) and count(parameter)=1
                       and $att-to-set/type=parameter/type
@@ -967,6 +967,13 @@
                       or (not($att-to-set/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:call-template name="identification-info"/>
+
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -979,7 +986,7 @@
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
 
-      <!-- Check for auto-generated Get operations -->
+      <!-- Check for non-accessor auto-generated Get operations -->
       <xsl:when test="$generate-accessors='defined'
                       and @return and not(parameter)
                       and $att-to-get/type=@return
@@ -987,6 +994,13 @@
                       or (not($att-to-get/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:call-template name="identification-info"/>
+
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
