@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 57fded4eb685 2004/04/17 17:40:28 simon $ -->
+<!-- $Id: bugs.html,v 5bedf4397e55 2004/04/20 08:57:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -213,7 +213,14 @@ compatibility.</i>
 
 <dd>Unsigned types should be supported.
 
-<!-- next: 0253  -->
+<dt>0253 (raised 19.iv.04)
+
+<dd>In a state chart, the error of having more than one state with the
+same name is not detected as such (this can be particularly confusing
+if you name one of your states <i>initial</i> or <i>final</i>, which
+are the default names used for initial and final states).
+
+<!-- next: 0254  -->
 
 </dl>
 
