@@ -20,21 +20,33 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.adb,v $
---  $Revision: dc7bcd001839 $
---  $Date: 2003/11/09 17:45:35 $
+--  $Revision: 39651b1cec4b $
+--  $Date: 2003/11/11 06:42:10 $
 --  $Author: simon $
 
 with Ada.Tags;
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Unchecked_Conversion;
+with BC.Containers.Collections.Unmanaged;
 with BC.Containers.Maps.Unmanaged;
-with BC.Support.Statistics;
+with BC.Support.Synchronization;
 with ColdFrame.Exceptions;
-with ColdFrame.Hash.Strings.Standard;
+with ColdFrame.Hash.Access_Hash;
 
 package body ColdFrame.Logging_Event_Basis is
 
 
-   function Tag_Hash (T : Ada.Tags.Tag) return Natural;
+   --  The remainder of the spec's implementation of collections of
+   --  Datums.
+
+   package Abstract_Datum_Collections
+   is new Abstract_Datum_Containers.Collections;
+
+   package Datum_Collections
+   is new Abstract_Datum_Collections.Unmanaged;
+
+
+   --  The Map for data collection (no string key here, for
+   --  performance reasons).
 
    type Info is record
       Queueing : BC.Support.Statistics.Instance;
@@ -42,24 +54,30 @@ package body ColdFrame.Logging_Event_Basis is
    end record;
    type Info_P is access Info;
 
-   package Abstract_Containers
+   function Tag_Hash (T : Ada.Tags.Tag) return Natural;
+
+   package Abstract_Info_Containers
    is new BC.Containers (Info_P);
 
-   package Abstract_Maps
-   is new Abstract_Containers.Maps (Key => Ada.Tags.Tag,
-                                   "=" => Ada.Tags."=");
+   package Abstract_Info_Maps
+   is new Abstract_Info_Containers.Maps (Key => Ada.Tags.Tag,
+                                         "=" => Ada.Tags."=");
 
-   package Maps
-   is new Abstract_Maps.Unmanaged (Hash => Tag_Hash,
-                                   Buckets => 89);
+   package Info_Maps
+   is new Abstract_Info_Maps.Unmanaged (Hash => Tag_Hash,
+                                        Buckets => 89);
 
    function Tag_Hash (T : Ada.Tags.Tag) return Natural is
+      type P is access all Integer;
+      function To_P is new Ada.Unchecked_Conversion (Ada.Tags.Tag, P);
+      function P_Hash is new ColdFrame.Hash.Access_Hash (Integer, P);
    begin
-      return ColdFrame.Hash.Strings.Standard (Ada.Tags.Expanded_Name (T));
+      return P_Hash (To_P (T));
    end Tag_Hash;
 
 
-   Data : Maps.Map;
+   Data : Info_Maps.Map;
+   Access_Control : BC.Support.Synchronization.Semaphore;
 
 
    procedure Log (The_Event : access Event_Base;
@@ -90,11 +108,12 @@ package body ColdFrame.Logging_Event_Basis is
                  := Event_Base'Class (The_Event.all)'Tag;
                Inf : Info_P;
             begin
-               if Maps.Is_Bound (Data, Tag) then
-                  Inf := Maps.Item_Of (Data, Tag);
+               BC.Support.Synchronization.Seize (Access_Control);
+               if Info_Maps.Is_Bound (Data, Tag) then
+                  Inf := Info_Maps.Item_Of (Data, Tag);
                else
                   Inf := new Info;
-                  Maps.Bind (Data, Tag, Inf);
+                  Info_Maps.Bind (Data, Tag, Inf);
                end if;
                BC.Support.Statistics.Add
                  (Long_Float (The_Event.Dispatched - The_Event.Posted),
@@ -102,49 +121,101 @@ package body ColdFrame.Logging_Event_Basis is
                BC.Support.Statistics.Add
                  (Long_Float (Now - The_Event.Dispatched),
                   To => Inf.Executing);
+               BC.Support.Synchronization.Release (Access_Control);
             end;
       end case;
    end Log;
 
 
-   procedure Print is
-      It : Abstract_Containers.Iterator'Class
-        := Maps.New_Iterator (Data);
+   procedure Print
+     (To_File : Ada.Text_IO.File_Type := Ada.Text_IO.Standard_Output) is
+      It : Abstract_Info_Containers.Iterator'Class
+        := Info_Maps.New_Iterator (Data);
+      use Ada.Text_IO;
    begin
-      Put_Line ("printing event statistics:");
-      while not Abstract_Containers.Is_Done (It) loop
+      BC.Support.Synchronization.Seize (Access_Control);
+      Abstract_Info_Containers.Reset (It);
+      while not Abstract_Info_Containers.Is_Done (It) loop
          declare
             T : constant Ada.Tags.Tag
-              := Abstract_Maps.Current_Key
-                    (Abstract_Maps.Map_Iterator'Class (It));
+              := Abstract_Info_Maps.Current_Key
+              (Abstract_Info_Maps.Map_Iterator'Class (It));
             Inf : constant Info_P
-              := Abstract_Containers.Current_Item (It);
+              := Abstract_Info_Containers.Current_Item (It);
             use BC.Support;
          begin
-            Put (Ada.Tags.Expanded_Name (T));
-            Put (',');
-            Put (Integer'Image (Statistics.Count (Inf.Queueing)));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Mean (Inf.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Min (Inf.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Max (Inf.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Sigma (Inf.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Mean (Inf.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Min (Inf.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Max (Inf.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Sigma (Inf.Executing))));
-            New_Line;
+            Put (To_File,
+                 Ada.Tags.Expanded_Name (T));
+            Put (To_File, ',');
+            Put (To_File,
+                 Integer'Image (Statistics.Count (Inf.Queueing)));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Mean (Inf.Queueing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Min (Inf.Queueing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Max (Inf.Queueing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Sigma (Inf.Queueing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Mean (Inf.Executing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Min (Inf.Executing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Max (Inf.Executing))));
+            Put (To_File, ',');
+            Put (To_File,
+                 Duration'Image (Duration
+                                   (Statistics.Sigma (Inf.Executing))));
+            New_Line (To_File);
          end;
-         Abstract_Containers.Next (It);
+         Abstract_Info_Containers.Next (It);
       end loop;
+      BC.Support.Synchronization.Release (Access_Control);
    end Print;
+
+
+   function Results return Abstract_Datum_Containers.Container'Class is
+      Result : Datum_Collections.Collection;
+      It : Abstract_Info_Containers.Iterator'Class
+        := Info_Maps.New_Iterator (Data);
+   begin
+      BC.Support.Synchronization.Seize (Access_Control);
+      Abstract_Info_Containers.Reset (It);
+      while not Abstract_Info_Containers.Is_Done (It) loop
+         declare
+            T : constant Ada.Tags.Tag
+              := Abstract_Info_Maps.Current_Key
+                    (Abstract_Info_Maps.Map_Iterator'Class (It));
+            Inf : constant Info_P
+              := Abstract_Info_Containers.Current_Item (It);
+            use Ada.Strings.Unbounded;
+         begin
+            Datum_Collections.Append
+              (Result,
+               (To_Unbounded_String (Ada.Tags.Expanded_Name (T)),
+                Inf.Queueing,
+                Inf.Executing));
+         end;
+         Abstract_Info_Containers.Next (It);
+      end loop;
+      BC.Support.Synchronization.Release (Access_Control);
+      return Result;
+   end Results;
 
 
 end ColdFrame.Logging_Event_Basis;
