@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v bf3f9baf832f 2001/09/14 19:37:58 simon $ -->
+<!-- $Id: ada-class.xsl,v bfa45a599b17 2001/09/25 18:30:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -179,7 +179,6 @@
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
-            <xsl:text> Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
             <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
           </xsl:otherwise>
@@ -285,8 +284,8 @@
             <xsl:otherwise>
               <!-- Use the Unbounded version -->
               <!-- We need access to the standard heap storage pool. -->
-              <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
               <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
+              <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
             </xsl:otherwise>
             
           </xsl:choose>
