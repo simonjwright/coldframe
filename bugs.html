@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v fbac8d15cde7 2001/06/26 18:55:34 simon $ -->
+<!-- $Id: bugs.html,v d73d169e9954 2001/07/01 10:57:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -21,14 +21,35 @@ number of instances is specified.
 hoops involving <tt>.all'Unrestricted_Access</tt> to get a
 <tt>Handle.</tt>
 
+<dt>0009 (raised 27.vi.01)
+
+<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
+operations of child classes checked that the given identifier (of the
+parent class's instance) isn't <tt>null</tt>.
+
+<dt>0010 (raised 27.vi.01)
+
+<dd>It would be helpful if active tasks' procedures (which call the
+corresponding entries) trapped and reported exceptions.
+
+<dt>0011 (raised 27.vi.01)
+
+<dd><tt>Unlink</tt> operations on simple associations should null out
+referential attributes.
+
+</dl>
+
+<h2>Fixed</h2>
+
+<h3>28.vi.01</h3>
+<dl>
+
 <dt>0008 (raised 26.vi.01)
 
 <dd>Class operations of active classes generate an entry and a
 matching (bad) body stub.
 
 </dl>
-
-<h2>Fixed</h2>
 
 <h3>26.vi.01</h3>
 <dl>
