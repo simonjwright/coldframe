@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a26a009dc6c2 2001/08/08 18:02:41 simon $ -->
+<!-- $Id: bugs.html,v f48c6f1eb840 2001/09/08 05:12:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -47,7 +47,32 @@ generated in stub subprograms.
 generated for many-to-many associations where the analyst hasn't
 provided one already.
 
-<!-- next: 0017 -->
+<dt>0017 (raised 4.ix.01)
+
+<dd>It would be good if the generated hash functions made some attempt
+to actually hash.
+
+<dt>0018 (raised 4.ix.01)
+
+<dd>For efficiency, classes whose identifier has a limited range (eg,
+Forward/Aft or 1..10) should be implemented with array-like behaviour.
+
+<dt>0019 (raised 4.ix.01)
+
+<dd>It would be good to support private operations (particularly for
+active classes, where procedure operations turn into task entries).
+
+<dt>0020 (raised 4.ix.01)
+
+<dd>Cardinalities and multiplicities of the form 1..42 should be
+recognised (even if not implemented as specified: a warning would be
+sensible in that case).
+
+<dt>0021 (raised 4.ix.01)
+
+<dd>Identifier normalization should match GLIDE's casing rules.
+
+<!-- next: 0022 -->
 
 </dl>
 
