@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 6031357ace85 2003/09/13 16:40:28 simon $ -->
+<!-- $Id: ada-type.xsl,v f82093d5c469 2003/11/05 21:09:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -78,7 +78,7 @@
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for imported, renamed and extending types and imported or
+    <!-- Context for imported, renamed and extended types and imported or
          renamed exceptions, ensuring uniqueness. -->
 
     <!-- First, make a nodeset containing "with" elements containing
