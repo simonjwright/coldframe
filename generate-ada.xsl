@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 0262f83ca1df 2002/06/25 18:37:44 simon $ -->
+<!-- $Id: generate-ada.xsl,v 7fa724225c1d 2002/06/27 18:30:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -115,6 +115,20 @@
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
+
+    <!-- .. any exceptions .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. any exceptions ..'"/>
+    </xsl:call-template>
+    <xsl:for-each select="exception">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>: exception;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+       
+   </xsl:for-each>
 
     <!-- .. any specially-declared types .. -->
     <xsl:call-template name="progress-message">
