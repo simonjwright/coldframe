@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: 897b7c01d5eb $
+--  $Date: 2004/05/19 16:24:53 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -49,11 +49,16 @@ package body ColdFrame.Callbacks is
 
    procedure Call_Callbacks (With_Param : T) is
       Current : Cell_P := The_Registered_Procedures.Next;
+      Next : Cell_P;
       Error : Ada.Exceptions.Exception_Occurrence;
       Error_Occurred : Boolean := False;
    begin
       loop
          exit when Current = null;
+         Next := Current.Next;
+         --  In case the called procedure deregisters itself.  NB, no
+         --  protection in case the deregistered cell is the next one!
+         --  but that would be bizarre ..
          begin
             Current.CB (With_Param);
          exception
@@ -64,7 +69,7 @@ package body ColdFrame.Callbacks is
                                                   Target => Error);
                end if;
          end;
-         Current := Current.Next;
+         Current := Next;
       end loop;
       if Error_Occurred then
          Ada.Exceptions.Reraise_Occurrence (Error);
