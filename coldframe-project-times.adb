@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.adb,v $
---  $Revision: b720f64f3037 $
---  $Date: 2002/09/28 17:13:37 $
+--  $Revision: 05c65fa0c96a $
+--  $Date: 2003/03/09 16:04:01 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -33,25 +33,6 @@ package body ColdFrame.Project.Times is
    end Create;
 
 
-   function Equivalent (Of_Time : Time) return Ada.Real_Time.Time is
-      use type Ada.Calendar.Time;
-      use type Ada.Real_Time.Time;
-   begin
-      case Of_Time.Kind is
-         when Calendar =>
-            declare
-               Offset : constant Duration
-                 := Of_Time.C - Ada.Calendar.Clock;
-            begin
-               return Ada.Real_Time.Clock
-                 + Ada.Real_Time.To_Time_Span (Offset);
-            end;
-         when Real_Time =>
-            return Of_Time.R;
-      end case;
-   end Equivalent;
-
-
    function From_Now (Period : Duration) return Time is
       use type Ada.Calendar.Time;
    begin
@@ -71,6 +52,48 @@ package body ColdFrame.Project.Times is
                  (Of_Time.R - Ada.Real_Time.Time_First));
       end case;
    end Image;
+
+
+   function Equivalent (Of_Time : Time) return Ada.Real_Time.Time is
+      use type Ada.Calendar.Time;
+      use type Ada.Real_Time.Time;
+   begin
+      case Of_Time.Kind is
+         when Calendar =>
+            declare
+               Offset : constant Duration
+                 := Of_Time.C - Ada.Calendar.Clock;
+            begin
+               return Ada.Real_Time.Clock
+                 + Ada.Real_Time.To_Time_Span (Offset);
+            end;
+         when Real_Time =>
+            return Of_Time.R;
+      end case;
+   end Equivalent;
+
+
+   function "<" (L, R : Time) return Boolean is
+      use type Ada.Calendar.Time;
+      use type Ada.Real_Time.Time;
+   begin
+      case L.Kind is
+         when Calendar =>
+            case R.Kind is
+               when Calendar =>
+                  return L.C < R.C;
+               when Real_Time =>
+                  return Equivalent (L) < Equivalent (R);
+            end case;
+         when Real_Time =>
+            case R.Kind is
+               when Calendar =>
+                  return Equivalent (L) < Equivalent (R);
+               when Real_Time =>
+                  return L.R < R.R;
+            end case;
+      end case;
+   end "<";
 
 
 end ColdFrame.Project.Times;
