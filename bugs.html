@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e4b56cd91994 2002/10/13 18:11:11 simon $ -->
+<!-- $Id: bugs.html,v f67aed82484c 2002/10/25 19:05:46 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -90,12 +90,6 @@ associated class is specified).
 
 <dd>It would be useful to be able to specify constants.
 
-<dt>0065 (raised 28.ii.02)
-
-<dd>The mechanism for handling multiple case exception files isn't
-easy to reconcile with use in Makefiles. Probably needs to use an
-environment variable.
-
 <dt>0067 (raised 5.iii.02)
 
 <dd>If the action associated with a timed event sets the just-fired
@@ -176,11 +170,42 @@ imported/renamed types.
 <br><i>It's already possible to use a stereotype like &#171;type,
 callback=4&#187;.</i>
 
-<!-- next: 0130 -->
+<dt>0131 (raised 25.x.02)
+
+<dd>&#171;finalize&#187; operations don't get called during teardown.
+
+<br><i>This is deliberate; finalization is about keeping the model
+consistent, while teardown is much more brutal. However, the case in
+point involved closing a socket, which <em>does</em> need to happen at
+teardown. Perhaps an additional stereotype &#171;teardown&#187; is
+needed.</i>
+
+<!-- next: 0132 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>22.x.02</h3>
+
+<dl>
+
+<dt>0065 (raised 28.ii.02)
+
+<dd>The mechanism for handling multiple case exception files isn't
+easy to reconcile with use in Makefiles. Probably needs to use an
+environment variable.
+
+<br><i>The environment variable <tt>CASE_EXCEPTIONS</tt> specifies one
+or more case exception files. If there's more than one, the separator
+is ; on Windows, : on Unix.</i>
+
+<dt>0130 (raised 22.x.02)
+
+<dd>Active classes tend to be unnoticeable; could an
+&#171;active&#187; stereotype be used instead? as well?
+
+</dl>
 
 <h3>13.x.02</h3>
 
@@ -287,7 +312,7 @@ both have the same value.</i>
 <dd>The <i>Lock</i> facility of Event Queues ought to allow "events to
 self" a higher priority than external locks.
 
-x</dl>
+</dl>
 
 <h3>12.ix.02</h3>
 <dl>
@@ -737,7 +762,7 @@ the grandchildren are processed, resulting in failed normalization.
 <dt>0052 (raised 2.i.02)
 
 <dd>The Makefiles expect a Case Exception File, and normalization
-fails if it's not present.<br>
+fails if it's not present.
 
 <dt>0053 (raised 2.i.02)
 
