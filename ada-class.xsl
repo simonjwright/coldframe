@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f17219c69d16 2002/01/27 11:08:57 simon $ -->
+<!-- $Id: ada-class.xsl,v 341b8a8a1ac4 2002/01/27 11:29:41 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -238,6 +238,7 @@
       <xsl:when test="@singleton">
         <xsl:value-of select="$I"/>
         <xsl:text>The : aliased Instance;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
         <xsl:text>This : constant Handle := The'Access;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:when>
