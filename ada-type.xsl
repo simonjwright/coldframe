@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v f33fae5b6535 2004/11/12 06:50:25 simon $ -->
+<!-- $Id: ada-type.xsl,v dab255fe9caf 2004/11/15 17:12:43 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -210,7 +210,6 @@
         <!-- No more types able to be output, check we haven't missed any.
              These should only be records with attributes of undeclared
              type. -->
-        <!-- XXX I don't think this can happen. -->
 
         <xsl:variable
           name="missing"
@@ -226,9 +225,14 @@
               <xsl:value-of select="name"/>
               <xsl:text>&#10;</xsl:text>
               <xsl:for-each
-                select="attribute[not($processed/name=type)]/type
-                        | array[not($processed/name=type)]/type
-                        | array[not($processed/name=index)]/index">
+                select=
+                  "attribute[not($processed/name=type)]/type
+                   | array[not($processed/name=type)]/type
+                   | array[not($processed/name=index)]/index
+                   | operation[not(@access) and ../@protected]
+                        /parameter[not($processed/name=type)]/type
+                   | operation[not(@access) and ../@protected
+                        and result and not($processed/name=result)]/result">
                 <xsl:sort select="."/>
                 <xsl:text>  problem with type </xsl:text>
                 <xsl:value-of select="."/>
