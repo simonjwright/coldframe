@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 32bd0287932d 2001/09/22 05:53:17 simon $ -->
+<!-- $Id: ada-attribute.xsl,v b58d328b3f9f 2001/09/27 18:27:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -102,15 +102,9 @@
   <!-- Generate the individual components of the class identifier 
        or instance record. -->
   <xsl:template match="attribute" mode="instance-record-component">
-    <xsl:value-of select="$II"/>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text> : </xsl:text>
-    <xsl:call-template name="attribute-type"/>
-    <xsl:if test="initial">
-      <xsl:text> := </xsl:text>
-      <xsl:value-of select="initial"/>
-    </xsl:if>
-    <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="single-record-component">
+      <xsl:with-param name="indent" select="$II"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template mode="instance-record-component" match="*"/>
@@ -261,7 +255,24 @@
   <xsl:template mode="attribute-set-body" match="*"/>
 
 
-  <!-- Generate attribute name. Normally called at class/attribute;
+  <!-- Called at {class,type}/attribute to generate a record component,
+       with optional initializer. -->
+  <xsl:template name="single-record-component">
+    <xsl:param name="indent" select="$II"/>
+
+    <xsl:value-of select="$indent"/>
+    <xsl:call-template name="attribute-name"/>
+    <xsl:text> : </xsl:text>
+    <xsl:call-template name="attribute-type"/>
+    <xsl:if test="initial">
+      <xsl:text> := </xsl:text>
+      <xsl:value-of select="initial"/>
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Generate attribute name. Normally called at {class,type}/attribute;
        if not, supply parameter "a" as the attribute concerned.
        If this is an anonymous referential attribute, we make up its
        name from the abbreviation of the supplier, the role name, and
@@ -282,7 +293,7 @@
   </xsl:template>
 
 
-  <!-- Generate attribute type. Called at class/attribute -->
+  <!-- Generate attribute type. Called at {class,type}/attribute -->
   <xsl:template name="attribute-type">
     <xsl:choose>
       <xsl:when test="@refers">
