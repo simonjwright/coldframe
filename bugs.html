@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 588d929dda1b 2002/09/17 18:11:03 simon $ -->
+<!-- $Id: bugs.html,v 6d2a5deed502 2002/09/20 10:41:44 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -173,11 +173,35 @@ triggered by the same event (or drop-through) isn't detected.
 <dd>It would make testing easier if non-&#171;public&#187; classes
 could be generated as non-<tt>private</tt> Ada packages.
 
-<!-- next: 0120 -->
+<!-- next: 0124 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>20.ix.02</h3>
+<dl>
+
+<dt>0120 (raised 19.ix.02)
+
+<dd>Extraction from Rose doesn't notice if a Domain package isn't
+actually loaded. The result is a very sparsely-populated domain.
+
+<dt>0121 (raised 19.ix.02)
+
+<dd>Using the Windows environment variable <tt>ColdFrameOut</tt>
+causes trouble under Cygwin; it comes out as <tt>COLDFRAMEOUT</tt>.
+
+<dt>0122 (raised 19.ix.02)
+
+<dd>Tear-down of Event Queues results in strange
+<tt>Storage_Error</tt> or <tt>Program_Error</tt> exceptions.
+
+<dt>0123 (raised 19.ix.02)
+
+<dd>Navigation from a 0..1 instance results in <tt>Constraint_Error</tt>.
+
+</dl>
 
 <h3>17.ix.02</h3>
 <dl>
@@ -186,6 +210,11 @@ could be generated as non-<tt>private</tt> Ada packages.
 
 <dd>Entry actions would be simpler to write, in some cases, if the
 state variable contained the new state rather than the old one.
+
+<br><i>There are two instance variables: <tt>State_Machine_State</tt>
+and <tt>Old_State_Machine_State</tt>. Inside an action,
+<tt>State_Machine_State</tt> holds the new state; outside an action,
+both have the same value.</i>
 
 </dl>
 
