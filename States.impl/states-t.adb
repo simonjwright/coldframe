@@ -12,7 +12,7 @@ begin
    for N in 1 .. 10 loop
       delay 1.0;
       E := new Monitor.Tick;
-      Monitor.Tick (E.all).The := Input;
+      Monitor.Tick (E.all).Payload := Input;
       Put_Line ("generating input Tick");
       ColdFrame.Events.Post (The => E, On => Events.Dispatcher);
    end loop;
@@ -21,7 +21,7 @@ begin
    for N in 1 .. 10 loop
       delay 1.0;
       E := new Monitor.Tick;
-      Monitor.Tick (E.all).The := Input;
+      Monitor.Tick (E.all).Payload := Input;
       Put_Line ("generating input Tick");
       ColdFrame.Events.Post (The => E, On => Events.Dispatcher);
    end loop;
