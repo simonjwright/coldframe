@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 6ea040caff18 2004/10/09 10:37:13 simon $
+--  $Id: regressions-suite.adb,v f21998251d32 2004/10/23 16:05:45 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -217,6 +217,9 @@ package body Regressions.Suite is
 
    package body Serialization_Tests is
 
+      --  May have to report the bad value first (length limit on
+      --  message, I think).
+
       procedure Enum (C : in out Test_Case'Class);
       procedure Enum (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
@@ -233,6 +236,24 @@ package body Regressions.Suite is
          Assert (Image = Expected,
                  "expecting '" & Expected & "', got '" & Image & "'");
       end Enum;
+
+      procedure Enum_Array (C : in out Test_Case'Class);
+      procedure Enum_Array (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Expected : constant String
+           := "<record name=""Regressions.Enum_Array"">" & ASCII.LF
+           & "<field name=""Enum_Array.FALSE"">A</field>" & ASCII.LF
+           & "<field name=""Enum_Array.TRUE"">B</field>" & ASCII.LF
+           & "</record>";
+         Value : constant Serializable.Enum_Array
+           := (ColdFrame.Project.Serialization.Base with
+                 Payload => (False => A, True => B));
+         Image : constant String
+           := Serializable.Image (Value);
+      begin
+         Assert (Image = Expected,
+                 "got '" & Image & "', expecting '" & Expected & "'");
+      end Enum_Array;
 
       procedure S_Record (C : in out Test_Case'Class);
       procedure S_Record (C : in out Test_Case'Class) is
@@ -255,6 +276,84 @@ package body Regressions.Suite is
          Assert (Image = Expected,
                  "expecting '" & Expected & "', got '" & Image & "'");
       end S_Record;
+
+      procedure S_Record_Array (C : in out Test_Case'Class);
+      procedure S_Record_Array (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Expected : constant String
+           := "<record name=""Regressions.S_Record_Array"">" & ASCII.LF
+           & "<field name=""S_Record_Array.0.I""> 42</field>" & ASCII.LF
+           & "<field name=""S_Record_Array.0.D.D""> 0.250000000</field>"
+           & ASCII.LF
+           & "<field name=""S_Record_Array.0.E"">A</field>" & ASCII.LF
+           & "<field name=""S_Record_Array.1.I""> 43</field>" & ASCII.LF
+           & "<field name=""S_Record_Array.1.D.D""> 0.500000000</field>"
+           & ASCII.LF
+           & "<field name=""S_Record_Array.1.E"">B</field>" & ASCII.LF
+           & "<field name=""S_Record_Array.2.I""> 44</field>" & ASCII.LF
+           & "<field name=""S_Record_Array.2.D.D""> 0.750000000</field>"
+           & ASCII.LF
+           & "<field name=""S_Record_Array.2.E"">C</field>" & ASCII.LF
+           & "</record>";
+         Value : constant Serializable.S_Record_Array
+           := (ColdFrame.Project.Serialization.Base with
+                 Payload =>
+                 (0 => (I => 42,
+                        D => (D => 0.25),
+                        E => Regressions.A),
+                  1 => (I => 43,
+                        D => (D => 0.5),
+                       E => Regressions.B),
+                  2 => (I => 44,
+                        D => (D => 0.75),
+                        E => Regressions.C)));
+         Image : constant String
+           := Serializable.Image (Value);
+      begin
+         Assert (Image = Expected,
+                 "got '" & Image & "', expecting '" & Expected & "'");
+      end S_Record_Array;
+
+      procedure Array_Composite (C : in out Test_Case'Class);
+      procedure Array_Composite (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Expected : constant String
+           := "<record name=""Regressions.Array_Composite"">" & ASCII.LF
+           & "<field name=""E.FALSE"">A</field>" & ASCII.LF
+           & "<field name=""E.TRUE"">B</field>" & ASCII.LF
+           & "<field name=""S.0.I""> 42</field>" & ASCII.LF
+           & "<field name=""S.0.D.D""> 0.250000000</field>"
+           & ASCII.LF
+           & "<field name=""S.0.E"">A</field>" & ASCII.LF
+           & "<field name=""S.1.I""> 43</field>" & ASCII.LF
+           & "<field name=""S.1.D.D""> 0.500000000</field>"
+           & ASCII.LF
+           & "<field name=""S.1.E"">B</field>" & ASCII.LF
+           & "<field name=""S.2.I""> 44</field>" & ASCII.LF
+           & "<field name=""S.2.D.D""> 0.750000000</field>"
+           & ASCII.LF
+           & "<field name=""S.2.E"">C</field>" & ASCII.LF
+           & "</record>";
+         Value : constant Serializable.Array_Composite
+           := (ColdFrame.Project.Serialization.Base with
+                 Payload =>
+                 (E => (False => A,
+                        True => B),
+                  S => (0 => (I => 42,
+                              D => (D => 0.25),
+                              E => Regressions.A),
+                        1 => (I => 43,
+                              D => (D => 0.5),
+                              E => Regressions.B),
+                        2 => (I => 44,
+                              D => (D => 0.75),
+                              E => Regressions.C))));
+         Image : constant String
+           := Serializable.Image (Value);
+      begin
+         Assert (Image = Expected,
+                 "got '" & Image & "', expecting '" & Expected & "'");
+      end Array_Composite;
 
       procedure Null_Record (C : in out Test_Case'Class);
       procedure Null_Record (C : in out Test_Case'Class) is
@@ -287,8 +386,20 @@ package body Regressions.Suite is
             "can image an enum");
          Register_Routine
            (C,
+            Enum_Array'Access,
+            "can image an array of enums");
+         Register_Routine
+           (C,
             S_Record'Access,
             "can image a record");
+         Register_Routine
+           (C,
+            Array_Composite'Access,
+            "can image a record of arrays");
+         Register_Routine
+           (C,
+            S_Record_Array'Access,
+            "can image an array of records");
          Register_Routine
            (C,
             Null_Record'Access,
