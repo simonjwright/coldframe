@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c0b68025ef97 2004/01/11 19:28:15 simon $
+# $Id: normalize-rose.tcl,v 97ef9f20448a 2004/01/21 20:24:25 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -397,7 +397,9 @@ itcl::class Base {
 
     # called when the outermost closing </tag> is read to do the second
     # pass of processing
-    method -generate {outermost} {Error "CF: undefined $xmlTag method -generate"}
+    method -generate {outermost} {
+        Error "CF: undefined $xmlTag method -generate"
+    }
 }
 
 
@@ -2293,6 +2295,8 @@ itcl::class Datatype {
 
     variable arrayIndexBy
 
+    variable unconstrained
+
     variable callback
 
     variable dataDetail
@@ -2363,6 +2367,11 @@ itcl::class Datatype {
     # called when the user has specified an (array) index
     method -index {by} {
         set arrayIndexBy [normalize $by]
+    }
+
+    # called when the user has specified an unconstrained (array)
+    method -unconstrained {by} {
+        set unconstrained 1
     }
 
     # called when the user has requested a callback.
@@ -2440,7 +2449,7 @@ itcl::class Datatype {
         $this -setConstraint $constraint
     }
 
-    # called when the ttype is a null record
+    # called when the type is a null record
     method -null {dummy} {
         set dataType "null"
         set null 1
@@ -2509,12 +2518,19 @@ itcl::class Datatype {
             # usage (OK, could do it here ..)
             puts -nonewline " null=\"yes\""
         }
+        if [info exists unconstrained] {
+            puts -nonewline " unconstrained=\"yes\""
+        }
         puts ">"
         putElement name "$type"
         $this -generateDocumentation
         switch $dataType {
             array {
-                puts "<array>"
+                puts -nonewline "<array"
+                if [info exists unconstrained] {
+                    puts -nonewline " unconstrained=\"yes\""
+                }
+                puts ">"
                 putElement type $arrayOf
                 if [info exists arrayIndexBy] {
                     putElement index $arrayIndexBy
