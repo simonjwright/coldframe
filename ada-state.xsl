@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f7ceac841c0e 2003/08/31 08:23:13 simon $ -->
+<!-- $Id: ada-state.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -657,6 +657,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
@@ -688,6 +689,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
@@ -699,6 +701,7 @@
     <xsl:text>.Events;&#10;</xsl:text>
 
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
+<!-- $Id: ada-type.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -579,6 +579,7 @@
     match="type/operation[not(@renames)]"
     mode="domain-type-operation-body">
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
     <xsl:text>)&#10;</xsl:text>
@@ -683,6 +684,7 @@
   <xsl:template match="type[@protected]" mode="protected-type-body">
 
     <xsl:call-template name="should-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:value-of select="$blank-line"/>
     <xsl:call-template name="commentary">

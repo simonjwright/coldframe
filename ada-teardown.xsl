@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -35,12 +35,14 @@
   <xsl:template name="domain-teardown">
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -107,6 +109,7 @@
 
   <xsl:template mode="class-teardown-spec" match="domain/class">
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -145,6 +148,7 @@
              -->
 
         <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         
@@ -222,6 +226,7 @@
              -->
 
         <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -303,6 +308,7 @@
   <xsl:template name="event-teardown-spec">
     
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
@@ -315,6 +321,7 @@
   <xsl:template name="event-teardown-body">
     
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down is&#10;</xsl:text>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
+<!-- $Id: ada-class.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -46,6 +46,7 @@
     </xsl:call-template>
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <!-- Commentary. -->
     <xsl:value-of select="$blank-line"/>
@@ -658,6 +659,7 @@
     </xsl:variable>
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
@@ -771,6 +773,7 @@
       <!-- Output the separate task body. -->
 
       <xsl:call-template name="should-edit"/>
+      <xsl:call-template name="identification-info"/>
       <xsl:value-of select="$blank-line"/>
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -1700,6 +1703,7 @@
     match="class[attribute[@class and initial] or @singleton]">
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -1707,6 +1711,7 @@
     <xsl:text>.Class_Initialize;&#10;</xsl:text>
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -1796,6 +1801,7 @@
   <xsl:template name="hash-function-body">
 
     <xsl:call-template name="should-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>

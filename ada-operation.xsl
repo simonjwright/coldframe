@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
+<!-- $Id: ada-operation.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -956,6 +956,7 @@
                       and (($att-to-set/@class and @class)
                       or (not($att-to-set/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -975,6 +976,7 @@
                       and (($att-to-get/@class and @class)
                       or (not($att-to-get/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
+        <xsl:call-template name="identification-info"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -992,6 +994,7 @@
       <xsl:when test="@return
                       and not(/domain/type[name=current()/@return]/attribute)">
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
@@ -1014,6 +1017,7 @@
       <!-- .. and this is for composite types (records) .. -->
       <xsl:when test="@return">
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">
@@ -1036,6 +1040,7 @@
       <!-- .. and this is for procedures. -->
       <xsl:otherwise>
         <xsl:call-template name="should-edit"/>
+        <xsl:call-template name="identification-info"/>
 
         <xsl:value-of select="$blank-line"/>
         <xsl:call-template name="commentary">

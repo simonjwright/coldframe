@@ -1,4 +1,4 @@
-<!-- $Id: ada-callback.xsl,v 2e17a0652133 2003/02/02 18:33:46 simon $ -->
+<!-- $Id: ada-callback.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacks. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -39,6 +39,7 @@
          -->
 
     <xsl:call-template name="do-not-edit"/>
+    <xsl:call-template name="identification-info"/>
 
     <xsl:text>with ColdFrame.Callbacks;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
