@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization_signature.ads,v $
---  $Revision: 4080adc3eb93 $
---  $Date: 2003/02/02 19:05:25 $
+--  $Revision: 986d85db4d3e $
+--  $Date: 2003/02/02 19:07:46 $
 --  $Author: simon $
 
 --  This package specifies the characteristics required to support the
@@ -56,6 +56,7 @@ package ColdFrame.Serialization_Signature is
 
    subtype Base is Actual_Base;
 
-   function Class_Image (B : Base'Class) return String renames Actual_Image;
+   function Class_Image (B : Base'Class) return String
+     renames Actual_Class_Image;
 
 end ColdFrame.Serialization_Signature;
