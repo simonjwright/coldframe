@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
+<!-- $Id: ada-operation.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -81,7 +81,7 @@
 
     <xsl:if test="..=$current or not(@class)">
       <xsl:call-template name="subprogram-specification">
-        <xsl:with-param name="indent" select="$standard-indent"/>
+        <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
@@ -243,7 +243,7 @@
 
     <xsl:if test="..=$current or not(@class)">
       <xsl:call-template name="subprogram-specification">
-        <xsl:with-param name="indent" select="$standard-indent"/>
+        <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:text> is separate;&#10;</xsl:text>
     </xsl:if>
@@ -443,6 +443,8 @@
   <xsl:template name="subprogram-specification">
     <xsl:param name="indent"/>
 
+    <xsl:variable name="cont" select="concat($indent, $C)"/>
+
     <xsl:choose>
 
       <!-- If there's a return attribute, it's a function. -->
@@ -451,13 +453,10 @@
         <xsl:text>function </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
-          <xsl:with-param
-            name="indent"
-            select="concat($indent, $continuation-indent)"/>
+          <xsl:with-param name="indent" select="$cont"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$indent"/>
-        <xsl:value-of select="$continuation-indent"/>
+        <xsl:value-of select="$cont"/>
         <xsl:text>return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
@@ -471,9 +470,7 @@
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
-          <xsl:with-param
-            name="indent"
-            select="concat($indent, $continuation-indent)"/>
+          <xsl:with-param name="indent" select="$cont"/>
         </xsl:call-template>
       </xsl:otherwise>
 
@@ -650,32 +647,26 @@
     <xsl:text>begin&#10;</xsl:text>
     
     <!-- XXX won't work for partitioned inheritance -->
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>case Get_</xsl:text>
     <xsl:value-of select="$rel/name"/>
     <xsl:text>_Child_Class (This) is&#10;</xsl:text>
     
     <xsl:for-each select="$rel/child">
       
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$II"/>
       <xsl:text>when </xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>_T =&gt;&#10;</xsl:text>
       
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$III"/>
       <xsl:if test="$op/@return">
         <xsl:text>return </xsl:text>
       </xsl:if>
       <xsl:value-of select="."/>.<xsl:value-of select="$op/name"/>
       <xsl:text>&#10;</xsl:text>
       
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$continuation-indent"/>
+      <xsl:value-of select="$IIIC"/>
       <xsl:text>(This =&gt; </xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>.Find ((</xsl:text>
@@ -686,10 +677,7 @@
       
       <xsl:for-each select="$op/parameter">
         <xsl:text>,&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$continuation-indent"/>
+        <xsl:value-of select="$IIIC"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> =&gt; </xsl:text>
@@ -700,7 +688,7 @@
       
     </xsl:for-each>
     
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>end case;&#10;</xsl:text>
     
     <xsl:text>end </xsl:text>
@@ -746,7 +734,7 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:if test="$op/@return">
       <xsl:text>return </xsl:text>
     </xsl:if>
@@ -756,8 +744,7 @@
     <xsl:value-of select="$op/name"/>
     <xsl:text>&#10;</xsl:text>
     
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$continuation-indent"/>
+    <xsl:value-of select="$IC"/>
     <xsl:text>(This =&gt; Get_</xsl:text>
     <xsl:value-of select="$rel/name"/>
     <xsl:text>_Child_Of_</xsl:text>
@@ -766,8 +753,7 @@
     
     <xsl:for-each select="$op/parameter">
       <xsl:text>,&#10; </xsl:text>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$continuation-indent"/>
+      <xsl:value-of select="$IC"/>
       <xsl:value-of select="name"/>
       <xsl:text> =&gt; </xsl:text>
       <xsl:value-of select="name"/>
@@ -812,7 +798,7 @@
                       and not(@return) and not(@class)
                       and count(parameter)=1
                       and $att-to-set/type=parameter/type">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>This.</xsl:text>
         <xsl:value-of select="$att-to-set/name"/>
         <xsl:text> := </xsl:text>
@@ -825,7 +811,7 @@
                       and @return and not(@class)
                       and not(parameter)
                       and $att-to-get/type=@return">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>return This.</xsl:text>
         <xsl:value-of select="$att-to-get/name"/>
         <xsl:text>;&#10;</xsl:text>
@@ -834,9 +820,9 @@
       <!-- If it's a function, we have to supply a return statement
            after raising the exception for it to compile.-->
       <xsl:when test="@return">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>raise Program_Error;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>return </xsl:text>
         <xsl:call-template name="default-value">
           <xsl:with-param name="type" select="@return"/>
@@ -874,14 +860,13 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>This.The_T.</xsl:text>
     <xsl:value-of select="name"/>
     
     <xsl:if test="parameter">
       
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$continuation-indent"/>
+      <xsl:value-of select="$IC"/>
       <xsl:text>&#10;(</xsl:text>
       
       <xsl:for-each select="parameter">
@@ -890,8 +875,7 @@
         <xsl:value-of select="name"/>
         <xsl:if test="position() &lt; last()">
           <xsl:text>,&#10; </xsl:text>
-          <xsl:value-of select="$standard-indent"/>
-          <xsl:value-of select="$continuation-indent"/>
+          <xsl:value-of select="$IC"/>
         </xsl:if>
       </xsl:for-each>
       

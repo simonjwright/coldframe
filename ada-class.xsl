@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
+<!-- $Id: ada-class.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,20 +56,20 @@
         
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
         
         <!-- .. the Handle .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Handle is access Instance;&#10;</xsl:text>
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:call-template name="create-function-spec"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (This : in out Handle);&#10;</xsl:text>
         
         <!-- .. subtype enumeration support, if required .. -->
@@ -81,15 +81,15 @@
 
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
         
         <!-- .. the Handle .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Handle is access Instance;&#10;</xsl:text>
         
         <!-- .. the find operation .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle;&#10;</xsl:text>
 
       </xsl:when>
@@ -110,7 +110,7 @@
     <xsl:text>private&#10;</xsl:text>
  
     <xsl:if test="@public">
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
     </xsl:if>
 
@@ -132,40 +132,37 @@
              minimal number of bits, not necessarily a whole number of
              bytes. -->
         <xsl:if test="@max">
-          <xsl:value-of select="$standard-indent"/>
+          <xsl:value-of select="$I"/>
           <xsl:text>for Handle'Storage_Size use Instance'Object_Size / 8 * </xsl:text>
           <xsl:value-of select="@max"/>
           <xsl:text>;&#10;</xsl:text>
         </xsl:if>
         
         <!-- .. basic Container instantiation for Maps -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>package Abstract_Map_Containers is new BC.Containers (Handle);&#10;</xsl:text>
         
         <!-- .. the Hash function spec .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
         
         <!-- .. Container instantiations .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>package Abstract_Maps is new Abstract_Map_Containers.Maps (Identifier);&#10;</xsl:text>
         
         <xsl:choose>
           
           <xsl:when test="@max">
             <!-- Wnen there's a maximum size, use the Bounded version -->
-            <xsl:value-of select="$standard-indent"/>
+            <xsl:value-of select="$I"/>
             <xsl:text>package Maps is new Abstract_Maps.Bounded&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text>(Hash =&gt; Hash,&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text> Buckets =&gt; </xsl:text>
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text> Maximum_Size =&gt; </xsl:text>
             <xsl:value-of select="./@max"/>
             <xsl:text>);&#10;</xsl:text>
@@ -173,34 +170,30 @@
           
           <xsl:otherwise>
             <!-- Use the Unbounded version -->
-            <xsl:value-of select="$standard-indent"/>
+            <xsl:value-of select="$I"/>
             <xsl:text>package Maps is new Abstract_Maps.Unbounded&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text>(Hash =&gt; Hash,&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text> Buckets =&gt; </xsl:text>
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text> Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IC"/>
             <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
           </xsl:otherwise>
           
         </xsl:choose>
         
         <!-- .. the instance container .. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>The_Container : Maps.Map;&#10;</xsl:text>
         
       </xsl:when>
       
       <xsl:when test="@singleton">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>This : aliased Instance;&#10;</xsl:text>
       </xsl:when>
       
@@ -389,14 +382,14 @@
       <xsl:call-template name="subtype-enumeration"/>
       <xsl:call-template name="subtype-selection"/>
 
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class);&#10;</xsl:text>
       
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class (This : Handle) return </xsl:text>
@@ -417,38 +410,36 @@
     <xsl:for-each select="../inheritance[parent=$parent-name]">
       <xsl:sort select="name"/>
 
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class) is&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$II"/>
       <xsl:text>This.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Current_Child := To_Be;&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>end Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class;&#10;</xsl:text>
       
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class (This : Handle) return </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class is&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$II"/>
       <xsl:text>return This.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Current_Child;&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>end Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child_Class;&#10;</xsl:text>
@@ -461,19 +452,17 @@
   <!-- Called from domain/inheritance to output the subtype enumeration
        type (sorted), with a "null" value. -->
   <xsl:template name="subtype-enumeration">
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>_Child_Class is&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$continuation-indent"/>
+    <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
     <xsl:for-each select="child">
       <xsl:sort select="."/>
       <xsl:value-of select="."/>
       <xsl:text>_T,&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$continuation-indent"/>
+      <xsl:value-of select="$IC"/>
       <xsl:text> </xsl:text>
     </xsl:for-each>
     <xsl:text>Null_T);&#10;</xsl:text>
@@ -483,20 +472,17 @@
   <!-- Called from domain/inheritance to output the subtype selection
        record. -->
   <xsl:template name="subtype-selection">
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>_Child (Current : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>_Child_Class := Null_T) is record&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>case Current is&#10;</xsl:text>
     <xsl:for-each select="child">
       <xsl:sort select="."/>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$III"/>
       <xsl:text>when </xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>_T =&gt; The_</xsl:text>
@@ -505,14 +491,11 @@
       <xsl:value-of select="."/>
       <xsl:text>.Handle;&#10;</xsl:text>
     </xsl:for-each>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$III"/>
     <xsl:text>when Null_T =&gt; null;&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>end case;&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>end record;&#10;</xsl:text>
   </xsl:template>
 
@@ -534,7 +517,7 @@
     <xsl:text> is&#10;</xsl:text>
     
     <xsl:if test="@active">
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
     </xsl:if>
     
@@ -545,77 +528,57 @@
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:call-template name="create-function-body"/>
         
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$III"/>
         <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$III"/>
         <xsl:text>return null;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Find;&#10;</xsl:text>
         
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>H : Handle;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Free (H);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Delete;&#10;</xsl:text>
         
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (This : in out Handle) is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
         <!-- This check is because of what seems to be a GNAT error for
-             fixed-size storage pools. -->
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+             fixed-size storage pools; the wrong exception is raised. -->
+        <xsl:value-of select="$II"/>
         <xsl:text>if This = null then&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$III"/>
         <xsl:text>raise Constraint_Error;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Maps.Unbind&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$continuation-indent"/>
+        <xsl:value-of select="$IIC"/>
         <xsl:text>(The_Container,&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$continuation-indent"/>
+        <xsl:value-of select="$IIC"/>
         <xsl:text> (</xsl:text>
         <xsl:for-each select="attribute[@identifier]">
           <xsl:call-template name="attribute-name"/>
@@ -623,16 +586,13 @@
           <xsl:call-template name="attribute-name"/>
           <xsl:if test="position() &lt; last()">
             <xsl:text>,&#10;  </xsl:text>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$standard-indent"/>
-            <xsl:value-of select="$continuation-indent"/>
+            <xsl:value-of select="$IIC"/>
           </xsl:if>
         </xsl:for-each>
         <xsl:text>));&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Delete;&#10;</xsl:text>
         
         <!-- .. subtype enumeration support, if required .. -->
@@ -643,14 +603,13 @@
       <xsl:when test="@singleton and not(@public)">
         
         <!-- XXX Uses a GNAT-specific attribute. -->
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>return This'Unrestricted_Access;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Find;&#10;</xsl:text>
         
       </xsl:when>
@@ -690,7 +649,7 @@
       <xsl:text>)&#10;</xsl:text>
       <xsl:text>task body T is&#10;</xsl:text>
       <xsl:text>begin&#10;</xsl:text>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>raise Program_Error;&#10;</xsl:text>
       <xsl:text>end T;&#10;</xsl:text>
     </xsl:if>
@@ -771,11 +730,12 @@
   <xsl:template
     match="attribute[@identifier]"
     mode="identifier-element-assignment">
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>Result.</xsl:text>
     <xsl:call-template name="attribute-name"/>
-    <xsl:text> := With_Identifier.</xsl:text>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>:= With_Identifier.</xsl:text>
     <xsl:call-template name="attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
@@ -787,7 +747,7 @@
   <xsl:template
     match="operation[@access]"
     mode="access-to-operation">
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is access </xsl:text>
@@ -795,11 +755,10 @@
       <xsl:when test="@result">
         <xsl:text>function</xsl:text>
         <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$standard-indent"/>
+          <xsl:with-param name="indent" select="$I"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
@@ -809,7 +768,7 @@
       <xsl:otherwise>
         <xsl:text>procedure</xsl:text>
         <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$standard-indent"/>
+          <xsl:with-param name="indent" select="$I"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -825,7 +784,7 @@
 
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle;&#10;</xsl:text>
       </xsl:when>
 
@@ -836,7 +795,7 @@
             <xsl:value-of select="name"/>
           </xsl:message>
         </xsl:if>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Create (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
       </xsl:otherwise>
 
@@ -851,65 +810,53 @@
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
         <xsl:variable name="id" select="attribute[@identifier]/name"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>Next_Identifier : Integer := 0;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Result : Handle;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Id : Identifier;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Result.</xsl:text>
         <xsl:value-of select="$id"/>
         <xsl:text> := Next_Identifier;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Id.</xsl:text>
         <xsl:value-of select="$id"/>
         <xsl:text> := Next_Identifier;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Create;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Result : Handle;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
         <xsl:apply-templates
           select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Create;&#10;</xsl:text>
       </xsl:otherwise>
 
@@ -928,7 +875,7 @@
     <xsl:text>)&#10;</xsl:text>
     <xsl:text>function Hash (Id : Identifier) return Natural is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>return 0;&#10;</xsl:text>
     <xsl:text>end Hash;&#10;</xsl:text>
   </xsl:template>
@@ -975,10 +922,10 @@
            entry e (parameters);
          end t;
          -->
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
     <xsl:apply-templates mode="task-entry" select="operation"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>end T;&#10;</xsl:text>
   </xsl:template>
 
@@ -997,16 +944,11 @@
                   or not(count(parameter)=1)
                   or not($att-to-set/type=parameter/type)">
       
-      <xsl:value-of select="$standard-indent"/>
-      <xsl:value-of select="$standard-indent"/>
+      <xsl:value-of select="$I"/>
       <xsl:text>entry </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:call-template name="entry-parameter-list">
-        <xsl:with-param
-          name="indent"
-          select="concat($standard-indent,
-                  $standard-indent,
-                  $continuation-indent)"/>
+        <xsl:with-param name="indent" select="$IIC"/>
       </xsl:call-template>
       <xsl:text>;&#10;</xsl:text>
       

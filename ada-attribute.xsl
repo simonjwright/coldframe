@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
+<!-- $Id: ada-attribute.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -34,17 +34,17 @@
 
       <!-- Output only identifier attributes. -->
       <xsl:when test="count(attribute[@identifier]) &gt; 0">
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Identifier is record&#10;</xsl:text>
         <xsl:apply-templates
           mode="instance-record-component"
           select="attribute[@identifier]"/>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Identifier is null record;&#10;</xsl:text>
       </xsl:otherwise>
 
@@ -61,12 +61,11 @@
       <xsl:when test="attribute or @active">
         <!-- There are attributes; output them all. -->
 
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Instance is limited record&#10;</xsl:text>
 
         <xsl:if test="@active">
-          <xsl:value-of select="$standard-indent"/>
-          <xsl:value-of select="$standard-indent"/>
+          <xsl:value-of select="$II"/>
           <xsl:text>The_T : T (Instance'Access);&#10;</xsl:text>
         </xsl:if>
 
@@ -79,21 +78,20 @@
         <!-- supertype attributes -->
         <xsl:for-each select="../inheritance[parent=$parent-name]">
           <xsl:sort select="name"/>
-          <xsl:value-of select="$standard-indent"/>
-          <xsl:value-of select="$standard-indent"/>
+          <xsl:value-of select="$II"/>
           <xsl:value-of select="name"/>
           <xsl:text>_Current_Child : </xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Child_Class;&#10;</xsl:text>
         </xsl:for-each>
 
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
 
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>type Instance is limited null record;&#10;</xsl:text>
       </xsl:otherwise>
 
@@ -104,8 +102,7 @@
   <!-- Generate the individual components of the class identifier 
        or instance record. -->
   <xsl:template match="attribute" mode="instance-record-component">
-    <xsl:value-of select="$standard-indent"/>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$II"/>
     <xsl:call-template name="attribute-name"/>
     <xsl:text> : </xsl:text>
     <xsl:call-template name="attribute-type"/>

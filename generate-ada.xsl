@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 13badf447884 2001/08/16 19:31:36 simon $ -->
+<!-- $Id: generate-ada.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -85,7 +85,7 @@
 
     <!-- .. the Initialize procedure .. -->
     <xsl:message>.. the Initialize procedure ..</xsl:message>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>procedure Initialize;&#10;</xsl:text>
 
     <!-- .. and close. -->
@@ -98,7 +98,7 @@
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
-    <xsl:value-of select="$standard-indent"/>
+    <xsl:value-of select="$I"/>
     <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
@@ -140,7 +140,7 @@
         <xsl:for-each select="$initialize-procedures">
           <xsl:sort select="../name"/>
           <xsl:sort select="name"/>
-          <xsl:value-of select="$standard-indent"/>
+          <xsl:value-of select="$I"/>
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
@@ -149,7 +149,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$standard-indent"/>
+        <xsl:value-of select="$I"/>
         <xsl:text>null;&#10;</xsl:text>
       </xsl:otherwise>
 
