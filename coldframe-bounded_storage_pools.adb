@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: 6df8619783c1 $
---  $Date: 2003/09/09 04:14:58 $
+--  $Revision: 83ccda78d743 $
+--  $Date: 2004/05/20 05:03:42 $
 --  $Author: simon $
 
 package body ColdFrame.Bounded_Storage_Pools is
@@ -111,6 +111,29 @@ package body ColdFrame.Bounded_Storage_Pools is
 
       --  seize the pool
       Pool.Excluder.Seize;
+
+      --  refill the allocated memory
+      declare
+         use type System.Storage_Elements.Storage_Offset;
+         subtype Storage
+         is System.Storage_Elements.Storage_Array
+           (0 .. Storage_Size - 1);
+         Result_Address : constant System.Address := Address;
+         Result : Storage;
+         pragma Import (Ada, Result);
+         for Result'Address use Result_Address;
+         Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
+           := (16#de#, 16#ad#, 16#be#, 16#ef#, 16#de#, 16#ad#, 16#be#, 16#ef#);
+         Remnant : constant System.Storage_Elements.Storage_Offset
+           := Storage_Size mod Filler'Length;
+      begin
+         for S in 0 .. Storage_Size / Filler'Length - 1 loop
+            Result (S * Filler'Length .. S * Filler'Length + Filler'Length - 1)
+              := Filler;
+         end loop;
+         Result (Result'Last - Remnant + 1 .. Result'Last)
+           := Filler (0 .. Remnant - 1);
+      end;
 
       --  deallocate the storage
       System.Pool_Size.Deallocate
