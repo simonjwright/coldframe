@@ -19,7 +19,7 @@ exec tclsh "$0" "$@"
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
-# $Id: split-csv.tcl,v 674683dc8190 2004/02/11 06:26:03 simon $
+# $Id: split-csv.tcl,v 85b360780dda 2004/02/11 06:30:38 simon $
 
 # Splits a CSV file containing a header line and data lines into
 # multiple CSV files, depending on the value in a particular column.
@@ -92,7 +92,7 @@ proc process {from baseName col} {
             set file "$baseName.$field.csv"
 
             # create it if necessary
-            if [expr ![info exists files($file)]] {
+            if {![info exists files($file)]} {
 
                 # report the new filename
                 puts stderr "opening file $file"
