@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v bfa45a599b17 2001/09/25 18:30:03 simon $ -->
+<!-- $Id: ada-class.xsl,v 6ea75e6307f7 2001/09/28 05:54:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1100,18 +1100,120 @@
 
   <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="hash-function">
-    <xsl:if test="attribute/type/@identifier/..='Unbounded_String'
-                  or attribute/type/@identifier/..='Text'">
-      <xsl:text>with ColdFrame.String_Hash;&#10;</xsl:text>
+
+    <!-- collect all the identifying attributes -->
+    <xsl:variable name="identifiers" select="attribute[@identifier]"/>
+
+    <xsl:if test="$identifiers/type='Unbounded_String'
+                  or $identifiers/type='Text'">
+      <xsl:text>with ColdFrame.Hash.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
+
+    <xsl:if test="$identifiers/@refers">
+      <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>)&#10;</xsl:text>
     <xsl:text>function Hash (Id : Identifier) return Natural is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>return 0;&#10;</xsl:text>
+    <xsl:text>type M is mod 2**31;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>Result : M := 0;&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:for-each select="$identifiers">
+      <xsl:sort select="name"/>
+
+      <xsl:if test="position() &gt; 1">
+        <xsl:value-of select="$I"/>
+        <xsl:text>Result := Result * 10019;&#10;</xsl:text>
+      </xsl:if>
+
+      <xsl:variable name="type-name" select="type"/>
+      <xsl:variable name="type" select="/domain/type[name=$type-name]"/>
+
+      <xsl:choose>
+        
+        <xsl:when test="$type/enumeration or type='Boolean'">
+          <!-- XXX GNAT extension -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>'Enum_Rep;&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="$type/integer or type='Integer' or type='Autonumber'">
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor M (Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="type='Unbounded_String' or type='Text'">
+
+          <!--
+               Result := Result
+                 xor M (ColdFrame.Hash.Strings.Unbounded (Id.{name}));
+               -->
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>M (ColdFrame.Hash.Strings.Unbounded (Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>));&#10;</xsl:text>
+
+        </xsl:when>
+
+        <xsl:when test="@refers">
+
+          <!--
+               declare
+                  function H is new ColdFrame.Hash.Access_Hash
+                    ({class}.Instance, {class}.Handle);
+               begin
+                  Result := Result xor M (H (Id.{name}));
+               end;
+               -->
+
+          <xsl:value-of select="$I"/>
+          <xsl:text>declare&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>function H is new ColdFrame.Hash.Access_Hash&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(</xsl:text>
+          <xsl:value-of select="@refers"/>
+          <xsl:text>.Instance, </xsl:text>
+          <xsl:value-of select="@refers"/>
+          <xsl:text>.Handle);&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>begin&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>Result := Result xor M (H (Id.</xsl:text>
+          <xsl:call-template name="attribute-name">
+            <xsl:with-param name="a" select="."/>
+          </xsl:call-template>
+          <xsl:text>));&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>end;&#10;</xsl:text>
+
+        </xsl:when>
+
+        <xsl:otherwise>
+          <!-- XXX should this be a Program_Error? -->
+        </xsl:otherwise>
+
+      </xsl:choose>
+
+    </xsl:for-each>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>return Natural (Result);&#10;</xsl:text>
+
     <xsl:text>end Hash;&#10;</xsl:text>
+
   </xsl:template>
 
 
