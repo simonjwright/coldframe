@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
+<!-- $Id: ada-type.xsl,v 1cb00891fd2a 2002/06/25 18:34:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -512,7 +512,7 @@
       <xsl:text>;&#10;</xsl:text>
     </xsl:if>
     <xsl:text>end </xsl:text>
-    <xsl:value-of select="../name"/>
+    <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
