@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v defd14cbabbe 2004/05/12 19:35:40 simon $ -->
+<!-- $Id: ada-state.xsl,v 554d8ed956b1 2004/05/12 20:37:28 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -148,10 +148,11 @@
         </xsl:message>
       </xsl:if>
 
-      <!--
       <xsl:for-each select="$leaving">
         <xsl:sort select="event"/>
-        <xsl:if test="event=preceding-sibling::node()/event">
+        <xsl:variable name="pos" select="position()"/>
+        <!-- XXX I can't believe having to do this isn't a Saxon bug! -->
+        <xsl:if test="$leaving[$pos]/event=$leaving[$pos - 1]/event">
           <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:text>Error: more than one transition triggered by </xsl:text>
@@ -163,7 +164,6 @@
           </xsl:message>
         </xsl:if>
       </xsl:for-each>
-      -->
 
     </xsl:for-each>
     <xsl:text>);&#10;</xsl:text>
