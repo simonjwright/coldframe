@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a36cb872678f 2002/03/05 06:00:13 simon $ -->
+<!-- $Id: ada-class.xsl,v 58bbaf4ecabb 2002/03/09 09:46:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -545,7 +545,9 @@
     </xsl:if>
     
     <!-- .. state entry procedure specs .. -->
-    <xsl:apply-templates mode="state-entry-specs" select="statemachine/state">
+    <xsl:apply-templates
+      mode="state-entry-specs"
+      select="statemachine/state[not(@initial)]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -614,7 +616,9 @@
     </xsl:if>
     
     <!-- .. state entry procedure bodies .. -->
-    <xsl:apply-templates mode="state-entry-bodies" select="statemachine/state">
+    <xsl:apply-templates
+      mode="state-entry-bodies"
+      select="statemachine/state[not(@initial)]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
