@@ -1,0 +1,131 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Interrupt Handling</name>
+<date>
+<year>2002</year>
+<month>10</month>
+<day>11</day>
+<time>21:54</time>
+</date>
+<documentation></documentation>
+<classes>
+<class stereotype="singleton">
+<name>Device</name>
+<cardinality>n</cardinality>
+<concurrency>Active</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>timeout</name>
+<documentation></documentation>
+<type>Timer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="entry">
+<name>start</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>report entry</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>set timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>clear timeout</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="init">
+<name>initialize</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>idle</name>
+<entryactions>
+<action>
+<name>report entry</name>
+</action>
+<action>
+<name>set timeout</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>interrupted</name>
+<entryactions>
+<action>
+<name>report entry</name>
+</action>
+<action>
+<name>clear timeout</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>interrupted</target>
+<event>
+<name>interrupt</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>idle</target>
+<event>
+<name>timeout</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>interrupted</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
