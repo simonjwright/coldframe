@@ -20,11 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 06f6eca47e1b $
---  $Date: 2003/11/15 14:34:05 $
+--  $Revision: 6d9f9515d067 $
+--  $Date: 2003/11/15 14:48:16 $
 --  $Author: simon $
 
 with Ada.Calendar;
+with Ada.Characters.Latin_1;
 with EWS.Types;
 with GNAT.Calendar.Time_IO;
 
@@ -50,24 +51,36 @@ function ColdFrame.Logging_Event_Basis.EWS_Page
    It : Abstract_Datum_Containers.Iterator'Class
      := Abstract_Datum_Containers.New_Iterator (Data);
 
+   use Ada.Characters.Latin_1;
+   CRLF : constant String := CR & LF;
+
 begin
 
    EWS.Dynamic.Set_Content_Type (Result, To => EWS.Types.HTML);
 
    EWS.Dynamic.Set_Content
      (Result,
-      "<html><head><title>ColdFrame event statistics</title><head>"
+      "<html><head><title>ColdFrame event statistics</title></head>"
+        & CRLF
         & "<body bgcolor=""white"">"
-        & "The time is <b>");
+        & CRLF);
+
+   EWS.Dynamic.Append_Content
+     (Result, Adding => "The time is <b>");
    EWS.Dynamic.Append_Content
      (Result,
       Adding => GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock,
                                              "%c"));
+   EWS.Dynamic.Append_Content
+     (Result, Adding => "</b>" & CRLF);
 
    EWS.Dynamic.Append_Content
      (Result,
-      "<p>"
+      Adding =>
+        "<p>"
+        & CRLF
         & "<table border=1>"
+        & CRLF
         & "<tr>"
         & "<th bgcolor=""#eeeeee"">Event"
         & "<th>No"
@@ -78,7 +91,8 @@ begin
         & "<th>D mean"
         & "<th>sd"
         & "<th>min"
-        & "<th>max");
+        & "<th>max"
+        & CRLF);
 
    Sort (Data);
    Abstract_Datum_Containers.Reset (It);
@@ -90,7 +104,8 @@ begin
       begin
          EWS.Dynamic.Append_Content
            (Result,
-            "<tr>"
+            Adding =>
+              "<tr>"
               & "<td bgcolor=""#eeeeee"">"
               & Ada.Strings.Unbounded.To_String (D.Event)
               & "<td>"
@@ -110,18 +125,21 @@ begin
               & "<td>"
               & Duration (Statistics.Min (D.Executing))'Img
               & "<td>"
-              & Duration (Statistics.Max (D.Executing))'Img);
+              & Duration (Statistics.Max (D.Executing))'Img
+              & CRLF);
       end;
       Abstract_Datum_Containers.Next (It);
    end loop;
 
-   EWS.Dynamic.Append_Content (Result, "</table>");
+   EWS.Dynamic.Append_Content (Result, Adding => "</table>" & CRLF);
 
    EWS.Dynamic.Append_Content
      (Result,
-      "</b>"
-        & "</body>"
-        & "</html>");
+      Adding =>
+        "</body>"
+        & CRLF
+        & "</html>"
+        & CRLF);
 
    return Result;
 
