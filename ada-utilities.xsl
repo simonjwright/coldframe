@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 070bdf8a264c 2003/02/15 18:46:11 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 8ea34429df94 2003/03/13 20:34:41 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -43,6 +43,10 @@
       select="/domain/association[associative=$name]"/>
         
     <xsl:choose>
+
+      <xsl:when test="$c/@max">
+        <xsl:value-of select="$c/@max"/>
+      </xsl:when>
 
       <xsl:when test="$assoc">
 
@@ -130,6 +134,8 @@
         
         <xsl:choose>
 
+          <xsl:when test="$type/name='Boolean'">2</xsl:when>
+
           <xsl:when test="$type/enumeration">
             <xsl:value-of select="count($type/enumeration/literal)"/>
           </xsl:when>
@@ -142,20 +148,12 @@
             
           </xsl:when>
 
-          <xsl:when test="$c/@max">
-            <xsl:value-of select="$c/@max"/>
-          </xsl:when>
-
           <xsl:otherwise>
             <xsl:value-of select="1000000000000"/>
           </xsl:otherwise>
 
         </xsl:choose>
 
-      </xsl:when>
-
-      <xsl:when test="$c/@max">
-        <xsl:value-of select="$c/@max"/>
       </xsl:when>
 
       <xsl:otherwise>
@@ -191,6 +189,12 @@
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: should not need editing  --&#10;</xsl:text>
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="could-edit">
+    <xsl:text>-------------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated: may need editing  --&#10;</xsl:text>
+    <xsl:text>-------------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template name="should-edit">
