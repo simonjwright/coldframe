@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 39232e97cf74 $
---  $Date: 2002/04/12 18:59:39 $
+--  $Revision: 24c5b5796cf5 $
+--  $Date: 2002/05/22 04:35:01 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -39,19 +39,6 @@ generic
 package ColdFrame.Events_G is
 
    pragma Elaborate_Body;
-
-   ------------------
-   --  Exceptions  --
-   ------------------
-
-   Cant_Happen : exception;
-   --  Raised when an unexpected Event occurs.
-
-   Use_Error : exception;
-   --  Raised on misuse of the facilities (eg, attempting to post
-   --  Events for the same Instance to more than one Queue; attempting
-   --  to set a Timer that's already set).
-
 
    -----------------------
    --  Class instances  --
@@ -122,6 +109,30 @@ package ColdFrame.Events_G is
    --  to a different Queue.
 
 
+   ----------------------
+   --  Delayed events  --
+   ----------------------
+
+   --  These two interfaces are to be used in "fire and forget" mode.
+   --  Timers (below) allow users to retract events (for example, when
+   --  you set a timeout for some occurrence and the occurrence
+   --  actually occurs).
+   --
+   --  Use these interfaces if there's no need for retraction (a
+   --  regular heartbeat, perhaps) or if you need lots of events
+   --  queued up (a queue of scenario events).
+
+   subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue_Base;
+                   To_Fire_At : Time.Time) is abstract;
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue_Base;
+                   To_Fire_After : Natural_Duration) is abstract;
+
+
    --------------
    --  Timers  --
    --------------
@@ -137,9 +148,6 @@ package ColdFrame.Events_G is
                   To_Fire : Event_P;
                   At_Time : Time.Time) is abstract;
    --  May raise Use_Error (if the Timer is already set)
-
-
-   subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
    procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue_Base;
