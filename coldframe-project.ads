@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-project.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: e9da3cc4beaf $
+--  $Date: 2004/05/11 05:14:49 $
 --  $Author: simon $
 
 package ColdFrame.Project is
@@ -33,12 +33,27 @@ package ColdFrame.Project is
    --  Specifically,
    --
    --  ColdFrame.Project.Calendar provides the type Time used to
-   --  translate attributes and parameters of type Date or Time
+   --  translate attributes and parameters of type Date or Time, the
+   --  function Clock used to generate default return values, and the
+   --  function Image used for (de)serialization
    --
    --  ColdFrame.Project.Events must contain an instantiation of
    --  ColdFrame.Events_G
    --
-   --  ColdFrame.Project.Global_Storage_Pool must contain an object
-   --  Pool of type System.Storage_Pools.Root_Storage_Pool'Class
+   --  ColdFrame.Project.Log_Error must be an error-logging procedure
+   --
+   --  ColdFrame.Project.Serialization must provide an abstract tagged
+   --  type Base and operations Image, Base_Attribute_Image as in
+   --  ColdFrame.Serialization
+   --
+   --  ColdFrame.Project.Storage_Pools must contain
+   --  * an object Pool, used for unbounded allocations, of type
+   --    System.Storage_Pools.Root_Storage_Pool'Class
+   --  * a (sub)type Bounded_Pool, used for bounded allocations, like
+   --      type Bounded_Pool
+   --        (Pool_Size : System.Storage_Elements.Storage_Count;
+   --         Elmt_Size : System.Storage_Elements.Storage_Count;
+   --         Alignment : System.Storage_Elements.Storage_Count)
+   --      is new System.Storage_Pools.Root_Storage_Pool with private;
 
 end ColdFrame.Project;
