@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 881a87c28c6f 2000/04/25 06:27:25 simon $
+# $Id: ddf.tcl,v c431dbfe5484 2000/04/28 19:28:57 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -499,19 +499,24 @@ itcl::class Object {
 
     method -attributes {l} {set attributes $l}
 
-    method -addFormalizingAttributesTo {obj role} {
+    method -addFormalizingAttributesTo {obj role identifier} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
 		set relName [[$role -getOwner] -getName]
 		puts stderr \
-		    "$key\_[$a -getName]\_$relName added to [$obj -getName]"
+		    "[normalize $key\_[$a -getName]\_$relName] added to [$obj -getName],\
+		    [$role -getName]"
 		set attr [$a -makeReferentialClone $key $relName]
+		if $identifier {
+		    $attr -identifier
+		}
 		$obj -addReferentialAttribute $attr
 	    }
 	}
     }
 
     method -addReferentialAttribute {a} {
+	puts stderr "referential attribute [$a -getName] added to $name"
 	$a -owner $attributes
 	$attributes -add $a
     }
@@ -602,6 +607,8 @@ itcl::class Association {
 
     method -associative {a} {set associative $a}
 
+    method -getAssociativeObjectName {} {return $associative}
+
     method -isAssociative {} {return [info exists associative]}
 
     method -role {role} {
@@ -659,20 +666,20 @@ itcl::class Association {
 		    if [$role1 -getSourceEnd] {
 			error "both ends of $name are marked as source"
 		    }
-		    $cl2 -addFormalizingAttributesTo $cl1 $role1
+		    $cl2 -addFormalizingAttributesTo $cl1 $role2 0
 		    $cl2 -sourceOfRelation $role1
 		} elseif [$role1 -getSourceEnd] {
-		    $cl1 -addFormalizingAttributesTo $cl2 $role2
+		    $cl1 -addFormalizingAttributesTo $cl2 $role1 0
 		    $cl1 -sourceOfRelation $role2
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
 			error "neither end of biconditional $name\
 				is marked as source"
 		    }
-		    $cl2 -addFormalizingAttributesTo $cl1 $role1
+		    $cl2 -addFormalizingAttributesTo $cl1 $role2 0
 		    $cl2 -sourceOfRelation $role1
 		} elseif [$role2 -getConditionality] {
-		    $cl1 -addFormalizingAttributesTo $cl2 $role2
+		    $cl1 -addFormalizingAttributesTo $cl2 $role1 0
 		    $cl1 -sourceOfRelation $role2
 		} else {
 		    error "neither end of unconditional $name\
@@ -682,12 +689,33 @@ itcl::class Association {
 	    "1:M"     {
 		# the identifying attributes in role 1 are used as 
 		# referential attributes in role 2
-		$cl1 -addFormalizingAttributesTo $cl2 $role2
+		$cl1 -addFormalizingAttributesTo $cl2 $role1 0
 		$cl1 -sourceOfRelation $role2
 	    }
-	    "1-(1:1)" -
-	    "1-(1:M)" -
-	    "1-(M:M)" {error "oops! not yet implemented!"}
+	    "1-(1:1)" {error "oops! not yet implemented!"}
+	    "1-(1:M)" {
+		# The identifying attributes in both roles are used as
+		# referential attributes in the associative object.
+		# Only the referential attributes from role 2 become
+		# identifiers in the associative object.
+		set assocRole1 [$role1 -makeAssociativeClone]
+		set assocRole2 [$role2 -makeAssociativeClone]
+		$cl1 -addFormalizingAttributesTo $assoc $assocRole2 0
+		$cl1 -sourceOfRelation $assocRole2
+		$cl2 -addFormalizingAttributesTo $assoc $assocRole1 1
+		$cl2 -sourceOfRelation $assocRole1
+	    }
+	    "1-(M:M)" {
+		# The identifying attributes in both roles are used as
+		# referential and identifying attributes in the associative
+		# object.
+		set assocRole1 [$role1 -makeAssociativeClone]
+		set assocRole2 [$role2 -makeAssociativeClone]
+                $cl1 -addFormalizingAttributesTo $assoc $assocRole2 1
+		$cl1 -sourceOfRelation $assocRole2
+		$cl2 -addFormalizingAttributesTo $assoc $assocRole1 1
+		$cl2 -sourceOfRelation $assocRole1
+	    }
 	}
     }
 
@@ -702,8 +730,8 @@ itcl::class Association {
 	    puts "1"
 	    puts "[$cl -getName]"
 	    puts "[$cl -getNumber]"
-	    # associative object's cardinality is none
-	    puts "2"
+	    # associative object's cardinality is single (no M-(M:M)'s)
+	    puts "0"
 	    # associative object is unconditional
 	    puts "0"
 	    # associative object has no role
@@ -721,23 +749,23 @@ itcl::class Association {
 itcl::class Role {
     inherit Element
 
+    variable associative 0
+
     variable cardinality
 
     variable classname
 
     variable conditional
 
-    # the end (A => 0, B => 1) at which the role is defined in the analysis.
-    # may change if the relation is normalized (eg, M:1 -> 1:M)
+    # The end (A => 0, B => 1) at which the role is defined in the analysis.
+    # May change if the relation is normalized (eg, M:1 -> 1:M)
     variable end
 
-    # true if the object at this end provides the referential attributes
+    # True if the object at this end provides the referential attributes
     # that formalize the relation
     variable sourceEnd 0
 
-    method -classname {n} {set classname $n}
-
-    method -getClassname {} {return $classname}
+    method -getAssociative {} {return $associative}
 
     method -cardinality {c} {
 	switch $c {
@@ -751,6 +779,10 @@ itcl::class Role {
     }
 
     method -getCardinality {} {return $cardinality}
+
+    method -classname {n} {set classname $n}
+
+    method -getClassname {} {return $classname}
 
     method -getConditionality {} {return $conditional}
 
@@ -771,6 +803,22 @@ itcl::class Role {
     }
 
     method -getSourceEnd {} {return $sourceEnd}
+
+    private method -setAssociative {a} {set associative $a}
+    private method -setCardinality {c} {set cardinality $c}
+    private method -setConditional {c} {set conditional $c}
+
+    method -makeAssociativeClone {} {
+	set res [Role ::#auto]
+	$res -name "<associative>"
+	$res -owner [$this -getOwner]
+	$res -classname [$this -getClassname]
+	$res -setAssociative 1
+	$res -setConditional 0
+	$res -setCardinality 1
+	$res -end $end
+	return $res
+    }
 
     method -complete {} {
 	[stack -top] -role $this
@@ -795,9 +843,13 @@ itcl::class Role {
 	puts "$conditional"
 	set r [normalize [$this -getName]]
 	set l [string length $r]
-	puts "$l"
+	# XXX not sure if what's wanted is a boolean flag, the length of the
+	# role name or what ...
+#	puts "$l"
 	if [expr $l > 0] {
-	    puts "$r"
+	    puts "1\n$r"
+	} else {
+	    puts "0"
 	}
 	puts "[expr $end - 1]"
     }
@@ -987,11 +1039,11 @@ itcl::class Attribute {
 	return [[$this -getOwner] -getOwner]
     }
 
-    method -referential {} {set referential 1}
+    private method -referential {} {set referential 1}
 
     method -makeReferentialClone {key relName} {
 	set res [Attribute ::#auto]
-	$res -name $key\_$name\_$relName
+	$res -name [normalize $key\_$name\_$relName]
 	$res -type $type
 	# XXX probably need to do something about datatype section
 	$res -referential
@@ -1040,20 +1092,32 @@ itcl::class Attribute {
 	    puts stderr ""
 	    set rel [$r -getOwner]
 	    puts "[$rel -getNumber]"
-	    # XXX I thought that the first of these numbers was the end at
-	    # which the referential attribute is placed, the second the
-	    # source (0 -> A, 1 -> B), but this looks odd ..
-	    switch [$r -getEnd] {
-		1       {puts "0\n1"}
-		2       {puts "1\n0"}
-		default {error "oops!"}
+	    # If the relationship is associative, the using (formalising)
+	    # end is the associative object
+	    if [$rel -isAssociative] {
+		puts "2"
+		switch [$r -getEnd] {
+		    1       {puts "1"}
+		    2       {puts "0"}
+		    default {error "oops!"}
+		}
+		set user [$objects -atName [$rel -getAssociativeObjectName]]
+	    } else {
+		switch [$r -getEnd] {
+		    1       {puts "0\n1"}
+		    2       {puts "1\n0"}
+		    default {error "oops!"}
+		}
+		set user [$objects -atName [$r -getClassname]]
 	    }
-	    set user [$objects -atName [$r -getClassname]]
 	    puts "[$user -getName]"
 	    puts "[$user -getNumber]"
-	    puts "[$object -getKey]\_$name\_[$rel -getName]"
+	    puts "[normalize [$object -getKey]\_$name\_[$rel -getName]]"
 	}
 	# defined-referentially flag
+	if $referential {
+	    puts stderr "referential attribute [[$this -getOwningObject] -getName].$name"
+	}
 	puts "$referential"
     }
 }
