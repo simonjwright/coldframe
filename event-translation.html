@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v 19d21851b72c 2003/03/29 18:11:33 simon $ -->
+<!-- $Id: event-translation.html,v d0a9e08e21a3 2003/05/26 08:59:57 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -82,7 +82,7 @@ event is thrown away.
 <li>If the transition isn't in the model, the exception
 <tt>ColdFrame.Exceptions.Cant_Happen</tt> is raised.
 
-<li>Otherwise, it's a legal transition.
+<li>Otherwise, it's a legal transition:
 
 <ol>
 
@@ -98,9 +98,13 @@ target state,
 
 </ul>
 
+<p>so you can write your action operation to behave differently
+according to what state you're now in (or have come from, or
+both). Please <b>don't</b> alter these variables yourself.
+
 <p>It is legal to use the instance <tt>Delete</tt> operation as an
 entry action (ColdFrame doesn't check that it's in a <i>final</i>
-state). Of course, it needs to be the <em>last</em> action!
+state). Of course, it needs to be the <em>last</em> action.
 
 <h2>Class event handlers</h2>
 
