@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 1d35f94e04c9 2001/07/13 18:41:39 simon $
+# $Id: normalize-rose.tcl,v 681a53789acf 2001/08/08 18:02:19 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -469,6 +469,10 @@ itcl::class Concurrency {
     inherit String
 }
 
+itcl::class Day {
+    inherit String
+}
+
 itcl::class End {
     inherit String
 }
@@ -477,8 +481,16 @@ itcl::class ExportControl {
     inherit String
 }
 
+itcl::class Extractor {
+    inherit String
+}
+
 itcl::class Initial {
     inherit IdentifierString
+}
+
+itcl::class Month {
+    inherit String
 }
 
 itcl::class Name {
@@ -493,6 +505,10 @@ itcl::class Return {
     inherit IdentifierString
 }
 
+itcl::class Revision {
+    inherit String
+}
+
 itcl::class Source {
     inherit IdentifierString
 }
@@ -501,8 +517,50 @@ itcl::class Target {
     inherit IdentifierString
 }
 
+itcl::class Time {
+    inherit String
+}
+
 itcl::class Type {
     inherit IdentifierString
+}
+
+itcl::class Year {
+    inherit String
+}
+
+# Date classes
+
+proc monthName {m} {
+    return [lindex {Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec} [incr m -1]]
+}
+
+itcl::class Date {
+    inherit Base
+
+    variable day
+    variable month
+    variable year
+    variable time
+
+    method -day {d} {set day $d}
+    method -month {m} {set month $m}
+    method -year {y} {set year $y}
+    method -time {t} {set time $t}
+
+    method -complete {} {
+	$owner -date $this
+    }
+
+    method -generate {dom} {
+	puts "<date>"
+	putElement year $year
+	putElement month [monthName $month]
+	putElement day $day
+	putElement time $time
+	puts "</date>"
+    }
+
 }
 
 # Element classes
@@ -511,6 +569,11 @@ itcl::class Domain {
     inherit Element
 
     private common currentDomain
+
+    variable extractor
+
+    variable date
+    variable revision
 
     variable classes
 
@@ -528,6 +591,11 @@ itcl::class Domain {
 	set relationships [Relationships ::#auto]
 	set datatypes [Datatypes ::#auto]
     }
+
+    method -extractor {e} {set extractor $e}
+
+    method -date {d} {set date $d}
+    method -revision {r} {set revision [string trim $r]}
 
     method -classes {l} {set classes $l}
 
@@ -548,17 +616,26 @@ itcl::class Domain {
     }
 
     method -generate {} {
+	global coldFrameVersion
+
 	$classes -evaluate $this
 	$relationships -evaluate $this
 	$datatypes -evaluate $this
 
 	puts "<domain>"
 	putElement name "$name"
-	if [catch {set date [exec date]}] {
-	    puts stderr "CF: problem with the \"date\" command"
-	} else {
-	    putElement date "$date"
+
+	putElement extractor $extractor
+
+	$date -generate $this
+	if [info exists revision] {
+	    putElement revision $revision
 	}
+
+	if [info exists coldFrameVersion] {
+	    putElement normalizer $coldFrameVersion
+	}
+
 	$this -generateDocumentation
 
 	$classes -generate $this
@@ -618,12 +695,16 @@ itcl::class Class {
 	}
     }
 
-    # specifies if this is an interface class
-    variable interface 0
+    # specifies if this is a public class
+    variable public 0
+
+    method -public {dummy} {
+	set public 1
+	set singleton 1
+    }
 
     method -interface {dummy} {
-	set interface 1
-	set singleton 1
+	$this -public $dummy
     }
 
     # true if there's one and only one instance of the class
@@ -784,7 +865,7 @@ itcl::class Class {
 	    if $active {puts -nonewline " active=\"yes\""}
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
-	    if $interface {puts -nonewline " interface=\"yes\""}
+	    if $public {puts -nonewline " public=\"yes\""}
 	    puts ">"
 	    putElement name "$name"
 	    putElement abbreviation [$this -getAbbreviation]
@@ -963,6 +1044,15 @@ itcl::class Association {
     method -complete {} {
 	# -relationshipType may swap the roles over! Must be called before
 	# anything else is done.
+	if {[string length $name] == 0} {
+	    error "unnamed association"
+	}
+	if {[string length [$role1 -getName]] == 0} {
+	    error "unnamed role in association $name"
+	}
+	if {[string length [$role2 -getName]] == 0} {
+	    error "unnamed role in association $name"
+	}
 	$this -relationshipType
 	[stack -top] -add $this $name
     }
@@ -1113,7 +1203,7 @@ itcl::class Role {
 	    "n"     {set conditional 0; set cardinality "M"}
 	    "0..1"  {set conditional 1; set cardinality "1"}
 	    "0..n"  {set conditional 1; set cardinality "M"}
-	    default {error "unrecognised multiplicity $c"}
+	    default {error "unrecognised multiplicity \"$c\" in role \"$name\""}
 	}
     }
 
@@ -1189,6 +1279,9 @@ itcl::class Inheritance {
     }
 
     method -complete {} {
+	if {[string length $name] == 0} {
+	    error "unnamed inheritance"
+	}
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
 	    set extant [$inheritances -atName $name]
@@ -1791,15 +1884,19 @@ proc elementFactory {tag} {
 	concurrency       {return [Concurrency #auto]}
 	datatype          {return [Datatype #auto]}
 	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
+	date              {return [Date #auto]}
+	day               {return [Day #auto]}
 	documentation     {return [Documentation #auto]}
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
 	exportcontrol     {return [ExportControl #auto]}
+	extractor         {return [Extractor #auto]}
 	inheritance       {return [Inheritance #auto]}
 	inheritances      {return [Inheritances #auto]}
 	initial           {return [Initial #auto]}
+	month             {return [Month #auto]}
 	name              {return [Name #auto]}
 	operation         {return [Operation #auto]}
 	operations        {return [Operations #auto]}
@@ -1809,15 +1906,18 @@ proc elementFactory {tag} {
 	relationship      {return [Relationship #auto]}
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
+	revision          {return [Revision #auto]}
 	role              {return [Role #auto]}
 	source            {return [Source #auto]}
 	state             {return [State #auto]}
 	statemachine      {return [StateMachine #auto]}
 	states            {return [States #auto]}
 	target            {return [Target #auto]}
+	time              {return [Time #auto]}
 	transition        {return [Transition #auto]}
 	transitions       {return [Transitions #auto]}
 	type              {return [Type #auto]}
+	year              {return [Year #auto]}
 	default           {return [Element #auto]}
     }
 }
@@ -1856,13 +1956,35 @@ Stack stack
 # Main program #
 ################
 
+# process command line:
+# flags
+#   --version cf-20010607
+
+set argState expectingFlag
+foreach arg $argv {
+    switch -- $argState {
+	expectingFlag {
+	    switch -- $arg {
+		--version { set argState expectingVersion}
+		default   {error "unknown flag $arg"}
+	    }
+	}
+	expectingVersion {
+	    set coldFrameVersion $arg
+	    set argState expectingFlag
+	}
+    }
+}
+
 set parser [xml::parser]
 $parser configure \
 	-elementstartcommand startTag \
 	-elementendcommand endTag \
 	-characterdatacommand textInTag
-#$parser parse [read stdin]
-#exit 0
+
+$parser parse [read stdin]
+exit 0
+
 if [catch {$parser parse [read stdin]} msg] {
     puts stderr "error: $msg"
     exit 1
