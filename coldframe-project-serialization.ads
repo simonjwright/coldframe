@@ -20,13 +20,15 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-project-serialization.ads,v $
---  $Revision: f8620372b3d6 $
---  $Date: 2003/01/19 17:12:55 $
+--  $Revision: 2c0dfa2a36b1 $
+--  $Date: 2003/01/22 19:53:09 $
 --  $Author: simon $
 
 with ColdFrame.Serialization;
 
 package ColdFrame.Project.Serialization is
+
+   pragma Elaborate_Body;
 
    --  This package provides off-the-shelf support for {serializable}
    --  <<type>> classes.
@@ -39,5 +41,9 @@ package ColdFrame.Project.Serialization is
    --     end record;
 
    subtype Base is ColdFrame.Serialization.Base;
+
+   function Image (S : Base'Class) return String;
+   --  This function dispatches to the generated Image function (there
+   --  is no way to rename the primitive Image).
 
 end ColdFrame.Project.Serialization;
