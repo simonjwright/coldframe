@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 9423388320bf 2001/06/09 04:33:14 simon $ -->
+<!-- $Id: ada-attribute.xsl,v c98edbc060c1 2001/06/19 18:45:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -114,18 +114,22 @@
     match="class/attribute"
     mode="attribute-get-spec">
 
-    <!-- Get function -->
-    <xsl:text>  function Get_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:if test="@refers or $generate-accessors='yes'">
 
-    <!-- If this isn't a singleton, we need a handle parameter -->
-    <xsl:if test="not(../@singleton)">
-      <xsl:text> (This : Handle)</xsl:text>
+      <!-- Get function -->
+      <xsl:text>  function Get_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      
+      <!-- If this isn't a singleton, we need a handle parameter -->
+      <xsl:if test="not(../@singleton)">
+        <xsl:text> (This : Handle)</xsl:text>
+      </xsl:if>
+      
+      <xsl:text> return </xsl:text>
+      <xsl:call-template name="attribute-type"/>
+      <xsl:text>;&#10;</xsl:text>
+
     </xsl:if>
-
-    <xsl:text> return </xsl:text>
-    <xsl:call-template name="attribute-type"/>
-    <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
@@ -135,22 +139,26 @@
   <!-- Called from domain/class to generate set specs (non-
        identifier attributes only) -->
   <xsl:template
-    match="class/attribute[not(@identifier='yes')]"
+    match="class/attribute[not(@identifier)]"
     mode="attribute-set-spec">
 
-    <!-- Set procedure -->
-    <xsl:text>  procedure Set_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text> (</xsl:text>
+    <xsl:if test="@refers or $generate-accessors='yes'">
+      
+      <!-- Set procedure -->
+      <xsl:text>  procedure Set_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text> (</xsl:text>
+      
+      <!-- If this isn't a singleton, we need a handle parameter -->
+      <xsl:if test="not(../@singleton)">
+        <xsl:text>This : Handle; </xsl:text>
+      </xsl:if>
+      
+      <xsl:text>To_Be : </xsl:text>
+      <xsl:call-template name="attribute-type"/>
+      <xsl:text>);&#10;</xsl:text>
 
-    <!-- If this isn't a singleton, we need a handle parameter -->
-    <xsl:if test="not(../@singleton)">
-      <xsl:text>This : Handle; </xsl:text>
     </xsl:if>
-
-    <xsl:text>To_Be : </xsl:text>
-    <xsl:call-template name="attribute-type"/>
-    <xsl:text>);&#10;</xsl:text>
 
   </xsl:template>
 
@@ -162,25 +170,29 @@
     match="class/attribute"
     mode="attribute-get-body">
 
-    <!-- Get function -->
-    <xsl:text>  function Get_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:if test="@refers or $generate-accessors='yes'">
 
-    <!-- If this isn't a singleton, we need a handle parameter -->
-    <xsl:if test="not(../@singleton)">
-      <xsl:text> (This : Handle)</xsl:text>
+      <!-- Get function -->
+      <xsl:text>  function Get_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      
+      <!-- If this isn't a singleton, we need a handle parameter -->
+      <xsl:if test="not(../@singleton)">
+        <xsl:text> (This : Handle)</xsl:text>
+      </xsl:if>
+      
+      <xsl:text> return </xsl:text>
+      <xsl:call-template name="attribute-type"/>
+      <xsl:text> is&#10;</xsl:text>
+      <xsl:text>  begin&#10;</xsl:text>
+      <xsl:text>    return This.</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:text>  end Get_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text>;&#10;</xsl:text>
+
     </xsl:if>
-
-    <xsl:text> return </xsl:text>
-    <xsl:call-template name="attribute-type"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>  begin&#10;</xsl:text>
-    <xsl:text>    return This.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
-    <xsl:text>  end Get_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
@@ -190,29 +202,33 @@
   <!-- Called from domain/class to generate set bodies (non-
        identifier attributes only) -->
   <xsl:template
-    match="class/attribute[not(@identifier='yes')]"
+    match="class/attribute[not(@identifier)]"
     mode="attribute-set-body">
+    
+    <xsl:if test="@refers or $generate-accessors='yes'">
+      
+      <!-- Set procedure -->
+      <xsl:text>  procedure Set_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text> (</xsl:text>
+      
+      <!-- If this isn't a singleton, we need a handle parameter -->
+      <xsl:if test="not(../@singleton)">
+        <xsl:text>This : Handle; </xsl:text>
+      </xsl:if>
+      
+      <xsl:text>To_Be : </xsl:text>
+      <xsl:call-template name="attribute-type"/>
+      <xsl:text>) is&#10;</xsl:text>
+      <xsl:text>  begin&#10;</xsl:text>
+      <xsl:text>    This.</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text> := To_Be;&#10;</xsl:text>
+      <xsl:text>  end Set_</xsl:text>
+      <xsl:call-template name="attribute-name"/>
+      <xsl:text>;&#10;</xsl:text>
 
-    <!-- Set procedure -->
-    <xsl:text>  procedure Set_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text> (</xsl:text>
-
-    <!-- If this isn't a singleton, we need a handle parameter -->
-    <xsl:if test="not(../@singleton)">
-      <xsl:text>This : Handle; </xsl:text>
     </xsl:if>
-
-    <xsl:text>To_Be : </xsl:text>
-    <xsl:call-template name="attribute-type"/>
-    <xsl:text>) is&#10;</xsl:text>
-    <xsl:text>  begin&#10;</xsl:text>
-    <xsl:text>    This.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text> := To_Be;&#10;</xsl:text>
-    <xsl:text>  end Set_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
