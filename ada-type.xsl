@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-type.xsl,v 8a7547284b6b 2004/03/24 08:52:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -141,14 +141,16 @@
     <xsl:param name="finished"/>
 
     <!-- Saxon-5.5 needs this, or it goes into an infinite loop. -->
-    <!-- <xsl:message>
-      <xsl:text>domain-types: nodes </xsl:text>
+    <!--
+    <xsl:message>
+      <xsl:text>domain-types: to do now </xsl:text>
       <xsl:value-of select="count($nodes)"/>
-      <xsl:text>, finished </xsl:text>
+      <xsl:text>, finished already </xsl:text>
       <xsl:value-of select="count($finished)"/>
-      <xsl:text>, total </xsl:text>
+      <xsl:text>, total in domain </xsl:text>
       <xsl:value-of select="count(type)"/>
-    </xsl:message> -->
+    </xsl:message>
+    -->
 
     <!-- Output the types for this pass -->
     <xsl:for-each select="$nodes">
@@ -169,9 +171,9 @@
       name="next"
       select="type[not($processed/name=name)
               and not(
-              attribute/type[not($processed/name=.)]
-              or array/type[not($processed/name=.)]
-              or array/index[not($processed/name=.)]
+              attribute[not($processed/name=type)]
+              or array[not($processed/name=type)]
+              or array[not($processed/name=index)]
               )]"/>
 
     <xsl:choose>
@@ -197,16 +199,19 @@
 
         <xsl:if test="$missing">
 
-          <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:for-each select="$missing">
+              <xsl:call-template name="log-error"/>
               <xsl:sort select="name"/>
               <xsl:text>Error: couldn't generate type </xsl:text>
               <xsl:value-of select="name"/>
               <xsl:text>&#10;</xsl:text>
-              <xsl:for-each select="attribute/type[not($processed/name=.)]">
+              <xsl:for-each
+                select="attribute[not($processed/name=type)]/type
+                        | array[not($processed/name=type)]/type
+                        | array[not($processed/name=index)]/index">
                 <xsl:sort select="."/>
-                <xsl:text>  undeclared type </xsl:text>
+                <xsl:text>  problem with type </xsl:text>
                 <xsl:value-of select="."/>
                 <xsl:text>&#10;</xsl:text>
               </xsl:for-each>
