@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fe00ae03610e 2001/05/16 05:35:28 simon $
+# $Id: normalize-rose.tcl,v 9fbd98ed25ba 2001/05/20 17:14:44 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -548,21 +548,44 @@ itcl::class Domain {
 itcl::class Class {
     inherit Element
 
-    # an abbreviation of the name may be useful (eg, when making names
-    # for referential attributes)
-    variable abbreviation
-
     # contains the attributes
     variable attributes
+
+    method -attributes {l} {set attributes $l}
 
     # contains the operations
     variable operations
 
+    method -operations {l} {set operations $l}
+
     # specifies the maximum number of instances (optional)
     variable max
 
+    method -max {s} {set max [string trim $s]}
+
+    method -cardinality {c} {
+	set c [string trim $c]
+	switch $c {
+	    "n" -
+	    "0..n" -
+	    "1..n" {}
+	    "0..0" -
+	    "0..1" {
+		puts stderr "cardinality $c ignored for $name"
+	    }
+	    "1..1" {$this -singleton dummy}
+	    default {
+		if ![regexp {^[0-9]+$} $c] {
+		    error "bad cardinality $c for $name"
+		}
+		$this -max $c
+	    }
+	}
+    }
+
     # specifies if this is an interface class
     variable interface 0
+
     method -interface {dummy} {
 	set interface 1
 	set singleton 1
@@ -570,7 +593,12 @@ itcl::class Class {
 
     # true if there's one and only one instance of the class
     variable singleton 0
+
     method -singleton {dummy} {set singleton 1}
+
+    # an abbreviation of the name may be useful (eg, when making names
+    # for referential attributes)
+    variable abbreviation
 
     method -abbreviation {a} {
 	set abbreviation [string toupper [string trim $a]]
@@ -590,18 +618,12 @@ itcl::class Class {
 	return $abbreviation
     }
 
-    method -operations {l} {set operations $l}
-
-    method -max {s} {set max [string trim $s]}
-
     #
     # variables & methods related to <<control>> classes (XXX needed?)
     #
 
     variable isControl 0
 
-    # called (via stereotype mechanism) to indicate that this is a
-    # <<control>> class
     method -control {dummy} {set isControl 1}
 
     #
@@ -621,8 +643,6 @@ itcl::class Class {
     # called (via stereotype mechanism) to indicate that this is used
     # in a callback
     method -callback {size} {set callback [string trim $size]}
-
-    method -attributes {l} {set attributes $l}
 
     method -hasIdentifier {} {
 	foreach a [$attributes -getMembers] {
