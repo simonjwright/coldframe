@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 16ed70e81f7c 2003/01/18 16:03:35 simon $ -->
+<!-- $Id: bugs.html,v 82e67382b814 2003/01/19 18:34:11 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -140,11 +140,6 @@ callback=42&#187;</em>.</i>
 &#171;class&nbsp;event&#187; without a payload, which can't actually
 be specified in a model.
 
-<dt>0139 (raised 2.xii.02)
-
-<dd>If an event queue is designated by more than one domain, the
-tear-down unit test support won't work properly.
-
 <dt>0141 (raised 13.xii.02)
 
 <dd>Ada doesn't allow functions to have <tt>in out</tt> or
@@ -168,9 +163,16 @@ of the correct actual type.
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>18.i.03</h3>
+<h3>19.i.03</h3>
 
 <dl>
+
+<dt>0139 (raised 2.xii.02)
+
+<dd>If an event queue is designated by more than one domain, the
+tear-down unit test support won't work properly.
+<br><i>Use <tt>ColdFrame.Events.Copy</tt> to copy
+<tt><i>Domain</i>.Events.Dispatcher</tt>.</i>
 
 <dt>0148 (raised 16.i.03)
 
