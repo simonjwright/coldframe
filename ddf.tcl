@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 3b7905efb8b8 2000/07/14 09:04:44 simon $
+# $Id: ddf.tcl,v 27d78ac79c48 2000/10/07 16:03:08 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -533,6 +533,16 @@ itcl::class Object {
 
     method -tags {l} {set tags $l}
 
+    ####################################################
+    # variables & methods related to <<control>> objects
+    ####################################################
+
+    variable isControl 0
+
+    method -control {dummy} {set isControl 1}
+    # called (via stereotype mechanism) to indicate that this is a
+    # <<control>> object
+
     #################################################
     # variables & methods related to <<type>> objects
     #################################################
@@ -630,6 +640,8 @@ itcl::class Object {
 		real        {$dt -real [$this -real $values]}
 		default     {error "unrecognised user type definition $kind"}
 	    }
+	} elseif $isControl {
+	    puts stderr "<<control>> not yet handled"
 	} else {
 	    [stack -top] -add $this $name
 	}
@@ -1144,7 +1156,7 @@ itcl::class Datatype {
 	    enumeration {
 		puts 9
 		puts [llength $dataDetail]
-		foreach d $dataDetail { puts $d }
+		foreach d $dataDetail {puts $d}
 	    }
 	    default     {error "oops! dataType $dataType"}
 	}
