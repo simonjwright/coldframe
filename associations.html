@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: associations.html,v d6c03f6a7218 2002/10/11 05:33:38 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -48,19 +48,48 @@ there.
 
 <p>In the original Shlaer-Mellor method, associations and inheritance
 relationships needed to be "formalised" by the use of "referential
-attributes". Considering the <em>Window "appears on" Screen</em>,
-where clearly there are many <em>Window</em>s but only one
-<em>Screen</em>, you'd need a referential attribute
-<em>screen&nbsp;id</em> in the <em>Window</em> instance.
+attributes". Considering <em>Window "appears on" Screen</em>, where
+clearly there are many <em>Window</em>s but only one <em>Screen</em>,
+you'd need a referential attribute <em>screen&nbsp;id</em> in the
+<em>Window</em> instance.
 
 <p>ColdFrame, however, follows <a
 href="resources.html#build-object-models">Executable UML</a>; you
 usually don't need to provide referential attributes (it would be
-quite cumbersome to do so, since Rose (taking it as a typical UML
-tool) is unaware of the concept). Instead, ColdFrame automatically
+quite cumbersome to do so, since Rose, as is typical for a UML tool,
+is unaware of the concept). Instead, ColdFrame automatically
 implements the relationships. Sometimes it needs a little help, for
 example for <a href="#formalizes">complex formalization</a> or <a
 href="#source">in a symmetric association</a>.
+
+<h4>Complex formalization</h4>
+
+<p>Consider R8, <em>Licence</em> <em>"is issued by"</em> <em>Licensing
+Office</em>. The identifier of Licence consists of the licence number
+and also the issuing Licensing Office, since the various offices don't
+use disjoint licence number ranges. In this case, we'd specify the
+attribute as
+<pre>
+   &#171;id&#187; issuing office : Licensing Office
+</pre>
+
+and include the annotation
+<pre>
+   [[ formalizes : r8 ]]
+</pre>
+
+<h4>Symmetric associations</h4>
+
+<p>If you have a symmetrical association of multiplicity <i>1:1</i>,
+<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, ColdFrame requires
+you to tell it how the association is to be formalized.
+
+<p>You do this by including the annotation
+<pre>
+   [[ source ]]
+</pre>
+
+<p>in the documentation of one of the roles.
 
 <h2>Translation</h2>
 
