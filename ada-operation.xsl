@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 8726d2738da5 2001/11/17 06:06:14 simon $ -->
+<!-- $Id: ada-operation.xsl,v 778743033aa0 2002/01/20 10:37:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -45,7 +45,7 @@
 
         <!-- Still something to collect; call self recursively with the
              parent node(s), omitting operations we already have and
-             <<generated>> operations. -->
+             <<generated>> (etc) operations. -->
         <xsl:call-template name="operation-specs">
           <xsl:with-param
             name="parents"
@@ -53,7 +53,7 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@generated) and not(name=$operations/name)]
+                      [not(@suppressed) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -187,7 +187,7 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@generated) and not(name=$operations/name)]
+                      [not(@suppressed) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -257,7 +257,7 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@generated) and not(name=$operations/name)]
+                      [not(@suppressed) and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 0b51fe406424 2001/12/09 10:36:38 simon $ -->
+<!-- $Id: ada-class.xsl,v 778743033aa0 2002/01/20 10:37:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1378,7 +1378,7 @@
   <xsl:template
     mode="task-entry"
     match="operation
-           [not(@abstract or @return or @class or @finalize or @generated)]">
+           [not(@abstract or @return or @class or @finalize or @suppressed)]">
 
     <!-- Checking for operations whose profile matches an accessor. -->
     <xsl:variable name="n" select="name"/>
