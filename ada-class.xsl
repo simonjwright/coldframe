@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-class.xsl,v c89fc19be07d 2002/10/11 05:30:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -942,6 +942,7 @@
     </xsl:if>
 
     <!-- .. check that referential attributes are non-null .. -->
+    <!-- XXX why the view conversion? -->
     <xsl:if test="attribute[@identifier and @refers]">
       <xsl:value-of select="$II"/>
       <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
