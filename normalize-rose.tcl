@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 39a93be1f108 2003/06/14 14:28:38 simon $
+# $Id: normalize-rose.tcl,v f07122557f82 2003/06/25 19:56:19 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1258,10 +1258,10 @@ itcl::class Class {
     }
 
     # because different annotations (text in [[ ]] in documentation) are
-    # appropriate in ordinary classes vs <type> classes, don't process
-    # annotations if this is a type.
+    # appropriate in ordinary classes vs <type> or <exception> classes,
+    # don't process annotations if this is a type or an exception.
     method -handleAnnotationWhenRead {} {
-	if {!$isType} {
+	if {!$isType && !$isException} {
 	    $this -handleAnnotation
 	}
     }
@@ -1310,6 +1310,7 @@ itcl::class Class {
 	    set ex [Exception ::\#auto $name] 
 	    $exs -add $ex $name
 	    $ex -documentation $documentation
+	    $ex -annotation $annotation
 	} else {
 	    if $isType {
 		# must be a record type
@@ -1451,6 +1452,12 @@ itcl::class Operation {
 	set final 1
     }
 
+    # is this a renaming?
+    variable renaming
+    method -renames {other} {
+	set renaming [normalize $other]
+    }
+
     # is this a teardown operation?
     variable teardown 0
     # called via stereotype mechanism to indicate that this is an
@@ -1523,6 +1530,9 @@ itcl::class Operation {
 	puts -nonewline " visibility=\"$visibility\""
 	puts ">"
 	putElement name $name
+	if [info exists renaming] {
+	    putElement renames $renaming
+	}
 	$this -generateDocumentation
 	$parameters -generate $domain
 	puts "</operation>"
@@ -2393,9 +2403,23 @@ itcl::class Exception {
 
     constructor {n} {set name $n}
 
+    variable renaming
+    method -renames {other} {
+	set renaming [normalize $other]
+    }
+
+    # process annotation.
+    method -annotation {a} {
+	set annotation $a
+	$this -handleAnnotation
+    }
+
     method -generate {domain} {
 	puts "<exception>"
 	putElement name "$name"
+	if [info exists renaming] {
+	    putElement renames $renaming
+	}
 	$this -generateDocumentation
 	puts "</exception>"
     }
