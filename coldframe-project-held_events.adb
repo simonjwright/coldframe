@@ -10,9 +10,11 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: c1e2d532a451 $
---  $Date: 2003/03/09 16:09:24 $
+--  $Revision: 05740ccec705 $
+--  $Date: 2003/03/09 19:42:26 $
 --  $Author: simon $
+
+with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Project.Held_Events is
 
@@ -162,24 +164,57 @@ package body ColdFrame.Project.Held_Events is
       end loop;
       while not Is_Done (RI) loop
          Events.Invalidate (Current_Item (RI).Event,
-                     If_For_Instance => For_The_Instance);
+                            If_For_Instance => For_The_Instance);
          Next (RI);
       end loop;
       while not Is_Done (AI) loop
          Events.Invalidate (Current_Item (AI).Event,
-                     If_For_Instance => For_The_Instance);
+                            If_For_Instance => For_The_Instance);
          Next (AI);
       end loop;
    end Invalidate_Events;
 
 
    procedure Tear_Down (Q : in out Queue) is
+      DI : Abstract_Duration_Containers.Iterator'Class
+        := Duration_Collections.New_Iterator (Q.Duration_Queue);
+      RI : Abstract_Time_Containers.Iterator'Class
+        := Time_Collections.New_Iterator (Q.Real_Time_Queue);
+      AI : Abstract_Time_Containers.Iterator'Class
+        := Time_Collections.New_Iterator (Q.Calendar_Queue);
+      use Abstract_Duration_Containers;
+      use Abstract_Time_Containers;
+      procedure Delete
+      is new Ada.Unchecked_Deallocation (Events.Event_Base'Class,
+                                         Events.Event_P);
    begin
       Q.Started := False;
-      --  XXX need to delete the events! or perhaps that should be the
-      --  other guy ..
+      while not Is_Done (DI) loop
+         declare
+            E : Events.Event_P := Current_Item (DI).Event;
+         begin
+            Delete (E);
+         end;
+         Next (DI);
+      end loop;
       Duration_Collections.Clear (Q.Duration_Queue);
+      while not Is_Done (RI) loop
+         declare
+            E : Events.Event_P := Current_Item (RI).Event;
+         begin
+            Delete (E);
+         end;
+         Next (RI);
+      end loop;
       Time_Collections.Clear (Q.Real_Time_Queue);
+      while not Is_Done (AI) loop
+         declare
+            E : Events.Event_P := Current_Item (AI).Event;
+         begin
+            Delete (E);
+         end;
+         Next (AI);
+      end loop;
       Time_Collections.Clear (Q.Calendar_Queue);
    end Tear_Down;
 
