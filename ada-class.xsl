@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 307c4e6da271 2003/05/10 17:38:41 simon $ -->
+<!-- $Id: ada-class.xsl,v 67a341890419 2003/05/13 20:12:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -442,7 +442,7 @@
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
-      <xsl:text>--  Consider using dispatching operations&#10;</xsl:text>
+      <xsl:text>--  Consider using dispatching operations instead&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
