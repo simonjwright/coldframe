@@ -1,11 +1,9 @@
-# $Id: setup.sh,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
-# Sets up environment variables for development of the Stairwell demo
-# (on tiamat).
+# $Id: setup.sh,v 15d4bd05896d 2004/09/14 11:25:17 simon $
 
-export ADA_PROJECT_PATH=$HOME/cf
+export ADA_PROJECT_PATH=$HOME/cf-20040319p
 export BC=${BC:-bc}
-export BUILD=$HOME/cf/.build
-export BUILD_BASE=/home/simon/cf/.build
+export BUILD=$HOME/cf-20040319p/.build
+export BUILD_BASE=/home/simon/cf-20040319p/.build
 # I think the first writable one is where new entries are added ..
 export CASE_EXCEPTIONS=\
 $HOME/.emacs_case_exceptions:\
