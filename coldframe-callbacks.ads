@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.ads,v $
---  $Revision: fe0f9536cdc0 $
---  $Date: 2001/09/25 18:39:48 $
+--  $Revision: 1e4488bbaa25 $
+--  $Date: 2001/11/17 06:05:09 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Bounded;
@@ -44,6 +44,9 @@ package ColdFrame.Callbacks is
 
    --  Call all the registered callback preocedures with With_Param
    procedure Call_Callbacks (With_Param : T);
+
+   --  Clear all registered callbacks
+   procedure Clear;
 
 private
    package Abstract_Containers is new BC.Containers (Callback);
