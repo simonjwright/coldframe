@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e613c0df3fe3 2001/10/13 13:11:00 simon $ -->
+<!-- $Id: bugs.html,v c9c4e6f03d66 2001/10/13 17:12:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -83,15 +83,32 @@ detect missing types (or names).
 <dd>The WITH TYPE extension seems to trigger a lot of instability in
 GNAT. An alternative would be better.
 
-<dt>0029 (raised 12.x.01)
+<dt>0030 (raised 13.x.01)
 
-<dd>The generated Tear_Down procedure bodies have unused WITH clauses.
+<dd>&#171;finalize&#187; operations shouldn't be inherited.
 
-<!-- next: 0030 -->
+<dt>0031 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations which are functions or have
+parameters (or are &#171;class&#187; operations, though I don't see
+how they could be both!) are silently <em>not</em> called at
+finalization. There are other instances of bad usage which need
+reporting (perhaps in a separate pass?)
+
+<!-- next: 0032 -->
 
 </dl>
 
 <h2>Fixed</h2>
+
+<h3>13.x.01</h3>
+<dl>
+
+<dt>0029 (raised 12.x.01)
+
+<dd>The generated Tear_Down procedure bodies have unused WITH clauses.
+
+</dl>
 
 <h3>28.ix.01</h3>
 <dl>
