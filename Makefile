@@ -147,6 +147,7 @@ classes.html \
 conversion.html \
 directions.html \
 domains.html \
+error-messages.html \
 events.html \
 event-modelling.html \
 event-motivation.html \
