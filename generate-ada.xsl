@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 4951a62654a1 2002/06/29 18:58:19 simon $ -->
+<!-- $Id: generate-ada.xsl,v 8a59acfce4e7 2002/07/05 04:58:27 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -187,7 +187,7 @@
         select="'.. operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="type/operation[not(@access)]"
+      select="type/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-body">
     </xsl:apply-templates>
 
