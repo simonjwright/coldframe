@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization-server-create.adb,v $
---  $Revision: 141dc30870c4 $
---  $Date: 2003/02/20 20:58:51 $
+--  $Revision: 4189c9bd3f91 $
+--  $Date: 2003/03/27 20:51:25 $
 --  $Author: simon $
 
 separate (Serialization.Server)
@@ -23,6 +23,7 @@ procedure Create
    Using_Port : Port) is
 
    H : Handle;
+   pragma Warnings (Off, H);
    Address : GNAT.Sockets.Sock_Addr_Type;
 
 begin
