@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d0417f9d64e3 2003/05/04 10:03:39 simon $ -->
+<!-- $Id: bugs.html,v adb33c70e86c 2003/05/10 17:42:15 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -121,12 +121,6 @@ be specified in a model.
 <dd>Ada doesn't allow functions to have <tt>in out</tt> or
 <tt>out</tt> parameters; ColdFrame should check.
 
-<dt>0143 (raised 9.i.03)
-
-<dd>The Create operation could usefully check that referential
-parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
-of the correct actual type.
-
 <dt>0153 (raised 21.ii.03)
 
 <dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
@@ -162,6 +156,18 @@ composite value, the generated code won't compile.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>10.v.03</h3>
+
+<dl>
+
+<dt>0143 (raised 9.i.03)
+
+<dd>The Create operation could usefully check that referential
+parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
+of the correct actual type.
+
+</dl>
 
 <h3>2.v.03</h3>
 
