@@ -16,7 +16,7 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 78bdb0d7c570 $ }
+|{ revision = $Revision: d2ede1cc8698 $ }
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
@@ -339,7 +339,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 78bdb0d7c570 2003/11/29 18:13:25 simon $")
+				label      	"$Id: House_Management.cat,v d2ede1cc8698 2003/11/29 18:32:20 simon $")
 			    (object SelfTransView "" @8
 				location   	(1398, 450)
 				font       	(object Font
@@ -507,7 +507,7 @@
 		    quidu      	"3DFCFC250129"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
-	    AssociationClass 	"Logical View::ColdFrame Examples::House Management::Button to Lamp"))
+	    AssociationClass 	"Logical View::House Management::Button to Lamp"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCFC0C0232"
@@ -520,7 +520,7 @@
 |This domain represents an electronic houlsehold control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 78bdb0d7c570 $ }
+|{ revision = $Revision: d2ede1cc8698 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -571,7 +571,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	9
-			max_width  	515)
+			max_width  	522)
 		    width      	536
 		    height     	484
 		    annotation 	8
@@ -619,7 +619,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	4
-			max_width  	668)
+			max_width  	675)
 		    width      	688
 		    height     	258
 		    annotation 	8
@@ -797,17 +797,17 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@22
-			location   	(198, 658)
+			location   	(205, 658)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	308
+			max_width  	294
 			justify    	0
 			label      	"Button to Lamp")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC830160"
-		    width      	326
+		    width      	312
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -944,7 +944,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 78bdb0d7c570 2003/11/29 18:13:25 simon $")
+		    label      	"$Id: House_Management.cat,v d2ede1cc8698 2003/11/29 18:32:20 simon $")
 		(object NoteView @27
 		    location   	(1635, 1140)
 		    font       	(object Font
@@ -979,4 +979,26 @@
 		    line_color 	3342489
 		    client     	@22
 		    supplier   	@14
-		    line_style 	0)))))
+		    line_style 	0)
+		(object NoteView @30
+		    location   	(2135, 1680)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1867, 1574)
+			fill_color 	13434879
+			nlines     	4
+			max_width  	500
+			label      	"Only modify this domain from the Examples model! (the association class is given by an absolute reference)")
+		    line_color 	3342489
+		    fill_color 	255
+		    width      	560
+		    height     	225)))))
