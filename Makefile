@@ -314,6 +314,8 @@ coldframe-interrupts.adb \
 coldframe-interrupts.ads \
 coldframe-logging_event_basis.adb \
 coldframe-logging_event_basis.ads \
+coldframe-logging_event_basis-ews_page.adb \
+coldframe-logging_event_basis-ews_page.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
@@ -332,7 +334,9 @@ coldframe-project-events-standard.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events-standard-test_debug.ads \
-coldframe-project-events.ads coldframe-project-events.ads-logging \
+coldframe-project-events.ads \
+coldframe-project-events.ads-standard \
+coldframe-project-events.ads-logging \
 coldframe-project-global_storage_pool.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
@@ -346,6 +350,9 @@ coldframe-project-serialization.ads \
 coldframe-project-storage_pools.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
+
+coldframe-project-events.ads-standard: coldframe-project-events.ads
+	cp -p $< $@
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
