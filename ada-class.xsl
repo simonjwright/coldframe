@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
+<!-- $Id: ada-class.xsl,v f17219c69d16 2002/01/27 11:08:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,8 +61,15 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Base with private;&#10;</xsl:text>
-        
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.States.Instance_Base with private;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+       
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
@@ -94,7 +101,14 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Base with private;&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.States.Instance_Base with private;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
@@ -120,6 +134,9 @@
     <!-- .. operations .. -->
     <xsl:call-template name="operation-specs"/>
 
+    <!-- .. state machine: event types .. -->
+    <xsl:call-template name="event-type-specs"/>
+
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -133,7 +150,11 @@
     <xsl:if test="@active">
       <xsl:call-template name="task-spec"/>
     </xsl:if>
-    
+
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-machine-states"/>
+    </xsl:if>
+
     <!-- .. the Instance record .. -->
     <xsl:call-template name="instance-record"/>
     <xsl:value-of select="$blank-line"/>
@@ -216,11 +237,25 @@
       
       <xsl:when test="@singleton">
         <xsl:value-of select="$I"/>
-        <xsl:text>This : aliased Instance;&#10;</xsl:text>
+        <xsl:text>The : aliased Instance;&#10;</xsl:text>
+        <xsl:text>This : constant Handle := The'Access;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:when>
       
     </xsl:choose>
+
+    <!-- .. Autonumber support .. -->
+    <xsl:if test="count(attribute[@identifier])=1
+                  and attribute[@identifier]/type='Autonumber'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>Next_Identifier : Long_Long_Integer := 0;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
+    <!-- .. event handlers .. -->
+    <xsl:apply-templates mode="event-handler-specs" select="statemachine/event">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -307,8 +342,19 @@
           
         </xsl:if>
         
-        <!-- Include the basis for all instance types. -->
-        <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+        <!-- If this class has a state machine, include support for that;
+             otherwise, just support for standard Instances. -->
+        <xsl:choose>
+          <xsl:when test="attribute[type='Timer']">
+            <xsl:text>with ColdFrame.States.Timers;&#10;</xsl:text>            
+          </xsl:when>
+          <xsl:when test="statemachine">
+            <xsl:text>with ColdFrame.States;&#10;</xsl:text>          
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
 
       </xsl:otherwise>
 
@@ -472,13 +518,19 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
-    
+
+    <!-- .. the task spec for active classes .. -->    
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
     
+    <!-- .. state entry procedure specs .. -->
+    <xsl:apply-templates mode="state-entry-specs" select="statemachine/state">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <xsl:choose>
       
       <xsl:when test="not(@singleton)">
@@ -513,9 +565,10 @@
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>return This'Unrestricted_Access;&#10;</xsl:text>
+        <xsl:text>return This;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end Find;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
       </xsl:when>
       
@@ -537,6 +590,17 @@
     <!-- .. operation stubs .. -->
     <xsl:call-template name="operation-body-stubs"/>
     
+    <!-- .. state entry procedure bodies .. -->
+    <xsl:apply-templates mode="state-entry-bodies" select="statemachine/state">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- .. event handlers .. -->
+    <xsl:apply-templates
+      mode="event-handler-bodies" select="statemachine/event">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -602,6 +666,9 @@
           <!-- We'll need to free memory. -->
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
+
+        <!-- Any additions to the context for state machines. -->
+        <xsl:call-template name="state-body-context"/>
 
         <xsl:variable name="current" select="."/>
         <xsl:variable name="name" select="name"/>
@@ -784,10 +851,6 @@
 
         <xsl:variable name="id" select="attribute[@identifier]/name"/>
 
-        <xsl:value-of select="$I"/>
-        <xsl:text>Next_Identifier : Long_Long_Integer := 0;&#10;</xsl:text>
-        <xsl:value-of select="$blank-line"/>
-
         <!--
              function Create return Handle is
                 Result : Handle;
@@ -823,9 +886,13 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
 
+        <!-- Set up inheritance info. -->
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!-- Set up the state machine (if any). -->
+        <xsl:call-template name="initialize-state-machine"/>  
 
         <!--
                 return Result;
@@ -856,20 +923,25 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
 
+        <!-- Set up attributes. -->
         <xsl:apply-templates
           select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
 
         <!--
-             Maps.Bind (The_Container, With_Identifier, Result);
+                Maps.Bind (The_Container, With_Identifier, Result);
              -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
 
+        <!-- Set up inheritance info. -->
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!-- Set up the state machine (if any). -->
+        <xsl:call-template name="initialize-state-machine"/>  
 
         <!--
                 return Result;
