@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v a51b39c2872a 2002/03/28 12:03:35 simon $ -->
+<!-- $Id: event-modelling.html,v 99df852bd66e 2002/04/12 19:00:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -110,6 +110,21 @@ href="#lamp.gif">the diagram below</a>.
 <p>It's best if the payload doesn't contain allocated data, because it
 may lead to memory leaks (this depends on the way the support software
 works).
+
+<h3>Transitions</h3>
+
+<p>Instance events cause transitions. It's illegal for an event to
+occur in a state if there's no corresponding transition from that
+state (typically, a <i>Can't Happen</i> exception will be raised).
+
+<p>If you want an event to be ignored when it occurs in a particular
+state, provide a transition-to-self for that event and mark it
+<em>&#171;ignore&#187;</em>. This means that the event is completely
+ignored, and in particular any entry actions don't get called.
+
+<p>Note that you need to reserve <i>Can't Happen</i> for when it's
+logically impossible for the event to happen in the state, not just
+when it's undesirable!
 
 <h3>Class modelling</h3>
 

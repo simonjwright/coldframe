@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v cf35c76caae1 2002/03/28 12:00:57 simon $ -->
+<!-- $Id: bugs.html,v 99df852bd66e 2002/04/12 19:00:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -155,11 +155,31 @@ in type range specifications.
 <dd>It seems unnecessary that the <tt>[[callback]]</tt> facility
 requires you to specify the maximum number of instances.
 
-<!-- next: 0073 -->
+<dt>0073 (raised 11.iv.02)
+
+<dd>If a class has a multiplicity of 0..1, it should be possible to
+<tt>Find</tt> the only instance (or of course <tt>null</tt>) without
+supplying an Identifier.
+
+<!-- next: 0075 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>12.iv.02</h3>
+
+<dl>
+
+<dt>0074 (raised 11.iv.02)
+
+<dd>On Windows, an error in code generation doesn't cause the Make
+process to quit (so you get a truncated Ada output file rather than
+none).<br>
+
+<i>Fix is to use <tt>instantsaxon</tt> version 6.5.1 or later.</i>
+
+</dl>
 
 <h3>18.iii.02</h3>
 
