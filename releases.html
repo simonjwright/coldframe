@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v dc4ca3d425ea 2002/09/17 18:17:36 simon $ -->
+<!-- $Id: releases.html,v b695695e2bab 2002/09/20 10:41:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,6 +22,31 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 2001.
 
 <dl>
+
+<p><dt>20020920
+
+<dd>Extraction from Rose now loads a Domain package if it isn't
+already loaded.
+
+
+<p>The Rose <i>Path Map</i> variable and the environment variable
+<tt>ColdFrameOut</tt> are both now capitalized
+(<tt>COLDFRAMEOUT</tt>). This is because of an interaction between
+Windows and Cygwin.
+
+
+<p>Extraction checks the environment variable <tt>COLDFRAMEOUT</tt> if
+there's no <i>Path Map</i> setting. There are <a
+href="installation.html">notes</a>.
+
+
+<p>There was an error in Event <tt>Tear_Down</tt> which caused
+<tt>Storage_Error</tt> if there were in fact any Events.
+
+
+<p>The <tt>Selection_Function</tt> of a class with multiplicity 0..1
+gave a <tt>Constraint_Error</tt> if there was no instance.
+
 
 <p><dt>20020917
 
