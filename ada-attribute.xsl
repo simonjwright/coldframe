@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
+<!-- $Id: ada-attribute.xsl,v bcd46b1579f2 2002/03/05 05:59:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -117,7 +117,7 @@
 
   <!-- Generate the individual components of the class identifier 
        or instance record. -->
-  <xsl:template match="attribute" mode="instance-record-component">
+  <xsl:template match="attribute[not(@class)]" mode="instance-record-component">
     <xsl:call-template name="single-record-component">
       <xsl:with-param name="indent" select="$II"/>
     </xsl:call-template>
@@ -128,7 +128,7 @@
 
   <!-- Generate get specs. -->
   <xsl:template
-    match="class/attribute"
+    match="class/attribute[not(@class)]"
     mode="attribute-get-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
@@ -173,7 +173,7 @@
 
   <!-- Generate set specs (non-identifier attributes only). -->
   <xsl:template
-    match="class/attribute[not(@identifier)]"
+    match="class/attribute[not(@identifier) and not(@class)]"
     mode="attribute-set-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
@@ -219,7 +219,7 @@
 
   <!-- Called from domain/class to generate get bodies -->
   <xsl:template
-    match="class/attribute"
+    match="class/attribute[not(@class)]"
     mode="attribute-get-body">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
@@ -248,7 +248,7 @@
   <!-- Called from domain/class to generate set bodies (non-
        identifier attributes only) -->
   <xsl:template
-    match="class/attribute[not(@identifier)]"
+    match="class/attribute[not(@identifier) and not(@class)]"
     mode="attribute-set-body">
     
     <xsl:if test="@refers or $generate-accessors='yes'">
