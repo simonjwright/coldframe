@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 85149b42a25d 2004/10/29 12:43:34 simon $
+# $Id: normalize-rose.tcl,v 1ea423125066 2004/10/29 13:42:15 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -226,6 +226,28 @@ proc normalizeValueInner {s} {
             }
             set tmp [join $lpl "("]
             return $tmp
+        }
+    }
+}
+
+
+# Convert Rose 'visibility' specifications to standard form.
+proc normalizeVisibility {v} {
+    switch {$v} {
+        PublicAccess {
+            return public
+        }
+        ProtectedAccess {
+            return protected
+        }
+        PrivateAccess {
+            return private
+        }
+        ImplementationAccess {
+            return implementation
+        }
+        default {
+            return [string tolower [string trim $v]]
         }
     }
 }
@@ -1280,9 +1302,10 @@ itcl::class Class {
     # called (as part of extraction) to indicate this type's visibility.
     # Class visibility is determined by <<public>>, <<visible-for-test>>.
     method -visibility {a} {
-        switch $a {
-            PublicAccess     {set visibility public}
-            default          {set visibility private}
+        set v [normalizeVisibility $a]
+        switch $v {
+            public  {set visibility public}
+            default {set visibility private}
         }
     }
     #
@@ -1530,10 +1553,11 @@ itcl::class Operation {
     variable visibility "public"
     # used in Rose to indicate visibility
     method -visibility {a} {
-        switch $a {
-            PublicAccess     {set visibility public}
-            ProtectedAccess  {set visibility protected}
-            default          {set visibility private}
+        set v [normalizeVisibility $a]
+        switch $v {
+            public -
+            protected {set visibility $v}
+            default   {set visibility private}
         }
     }
 
@@ -2862,9 +2886,10 @@ itcl::class Attribute {
 
     # used in Rose to indicate visibility
     method -visibility {a} {
-        switch $a {
-            PublicAccess  {set visibility public}
-            default       {set visibility private}
+        set v [normalizeVisibility $a]
+        switch $v {
+            public  {set visibility public}
+            default {set visibility private}
         }
     }
 
