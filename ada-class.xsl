@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 256b8fc38a8c 2003/03/15 19:51:52 simon $ -->
+<!-- $Id: ada-class.xsl,v da6eb09a3d03 2003/04/08 18:30:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -384,12 +384,13 @@
           
         </xsl:choose>
         
-        <!-- If this class has any events at all, include event support.
+        <!-- If this class has any events at all, or any Timers, include 
+             event support.
              If it has a state machine, that would normally be it; otherwise,
              or if there are attributes/operations involving _other_
              classes, or the special Counterpart, need support for standard
              Instances as well. -->
-        <xsl:if test="event">
+        <xsl:if test="event or attribute/type='Timer'">
           <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>          
         </xsl:if>
         <xsl:variable name="counterpart">
