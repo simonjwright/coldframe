@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 4654987f7825 2001/05/02 19:46:26 simon $ -->
+<!-- $Id: generate-html.xsl,v 35c787eff563 2001/05/17 04:37:28 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -175,7 +175,7 @@
     
 
   <!-- Output details of a Class' Attribute. -->
-  <xsl:template match="class/attribute">
+  <xsl:template match="attribute">
     <xsl:variable name="name">
       <xsl:call-template name="attribute-name"/>
     </xsl:variable>
@@ -213,7 +213,7 @@
 
 
   <!-- Output Operation info. -->
-  <xsl:template match="class/operation">
+  <xsl:template match="operation">
      <h5><xsl:value-of select="name"/></h5>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
@@ -364,8 +364,16 @@
 
   <xsl:template match="domain/type">
     <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
+    <xsl:if test="@callback">
+      <p>
+        <xsl:text>Callback support is provided, with support for </xsl:text>
+        <xsl:value-of select="@callback"/>
+        <xsl:text> registrations.</xsl:text>
+      </p>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="enumeration">
+        <p>An enumeration, with literals:</p>
         <ul>
           <xsl:for-each select="enumeration/literal">
             <li>
@@ -374,24 +382,68 @@
           </xsl:for-each>
         </ul>
       </xsl:when>
-      <xsl:when test="real">
-        <p>
-          <xsl:text>A real number, with minimum value </xsl:text>
-          <xsl:value-of select="real/lower"/>
-          <xsl:text>, maximum value </xsl:text>
-          <xsl:value-of select="real/upper"/>
-          <xsl:text>, and </xsl:text>
-          <xsl:value-of select="real/digits"/>
-          <xsl:text> significant digits.</xsl:text>
-        </p>
-      </xsl:when>
       <xsl:when test="integer">
+        <p>An integral number, with:</p>
+        <ul>
+          <xsl:if test="integer/lower">
+            <li>
+              <xsl:text>minimum value </xsl:text>
+              <xsl:value-of select="integer/lower"/>
+            </li>
+          </xsl:if>
+          <xsl:if test="integer/upper">
+            <li>
+              <xsl:text>maximum value </xsl:text>
+              <xsl:value-of select="integer/upper"/>
+            </li>
+          </xsl:if>
+        </ul>
+      </xsl:when>
+      <xsl:when test="real">
+        <p>A real number, with:</p>
+        <ul>
+          <xsl:if test="real/lower">
+            <li>
+              <xsl:text>minimum value </xsl:text>
+              <xsl:value-of select="real/lower"/>
+            </li>
+          </xsl:if>
+          <xsl:if test="real/upper">
+            <li>
+              <xsl:text>maximum value </xsl:text>
+              <xsl:value-of select="real/upper"/>
+            </li>
+          </xsl:if>
+          <xsl:if test="real/digits">
+            <li>
+              <xsl:value-of select="real/digits"/>
+              <xsl:text> significant digits</xsl:text>
+            </li>
+          </xsl:if>
+        </ul>
+      </xsl:when>
+      <xsl:when test="@record">
+        <p>A record type:</p>
+        <xsl:if test="attribute">
+          <h4>Attributes</h4>
+          <dl>
+            <xsl:apply-templates select="attribute">
+              <xsl:sort select="."/>
+            </xsl:apply-templates>
+          </dl>
+        </xsl:if>
+        <xsl:if test="operation">
+          <h4>Operations</h4>
+          <xsl:apply-templates select="operation">
+            <xsl:sort select="."/>
+          </xsl:apply-templates>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test="set">
         <p>
-          <xsl:text>An integral number, with minimum value </xsl:text>
-          <xsl:value-of select="integer/lower"/>
-          <xsl:text> and maximum value </xsl:text>
-          <xsl:value-of select="integer/upper"/>
-          <xsl:text>.</xsl:text>
+          <xsl:text>A set of references to </xsl:text>
+          <a href="#{set}"><xsl:value-of select="set"/></a>
+          <xsl:text>s.</xsl:text>
         </p>
       </xsl:when>
       <xsl:when test="string">
@@ -399,13 +451,6 @@
           <xsl:text>A string of maximum length </xsl:text>
           <xsl:value-of select="string/max"/>
           <xsl:text> characters.</xsl:text>
-        </p>
-      </xsl:when>
-      <xsl:when test="set">
-        <p>
-          <xsl:text>A set of references to </xsl:text>
-          <a href="#{set}"><xsl:value-of select="set"/></a>
-          <xsl:text>s.</xsl:text>
         </p>
       </xsl:when>
       <xsl:otherwise>
