@@ -23,22 +23,22 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-strings-bounded.adb,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 44621b3276c9 $
+--  $Date: 2001/09/28 04:49:58 $
 --  $Author: simon $
 
 function ColdFrame.Hash.Strings.Bounded
-  (S : Bounded_Strings.Bounded_String) return Integer is
+  (S : Bounded_Strings.Bounded_String) return Natural is
    K : Special_Integer := 0;
    N : Special_Integer := 0;
    use Bounded_Strings;
 begin
-   
+
    for M in 1 .. Length (S) loop
       N := Character_Hash (Element (S, M));
       K := K + Special_Integer (M) * N;
    end loop;
-   
-   return Integer (K);
-   
+
+   return Natural (K);
+
 end ColdFrame.Hash.Strings.Bounded;

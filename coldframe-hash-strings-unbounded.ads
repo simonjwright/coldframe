@@ -20,12 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-strings-unbounded.ads,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 44621b3276c9 $
+--  $Date: 2001/09/28 04:49:58 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
 
 function ColdFrame.Hash.Strings.Unbounded
-  (S : Ada.Strings.Unbounded.Unbounded_String) return Integer;
+  (S : Ada.Strings.Unbounded.Unbounded_String) return Natural;
 pragma Elaborate_Body (ColdFrame.Hash.Strings.Unbounded);

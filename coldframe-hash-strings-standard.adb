@@ -23,24 +23,24 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-strings-standard.adb,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 44621b3276c9 $
+--  $Date: 2001/09/28 04:49:58 $
 --  $Author: simon $
 
-function ColdFrame.Hash.Strings.Standard (S : String) return Integer is
+function ColdFrame.Hash.Strings.Standard (S : String) return Natural is
    K : Special_Integer := 0;
    N : Special_Integer := 0;
 begin
-   
+
    if S = "" then
       return 0;
    end if;
-   
+
    for M in S'Range loop
       N := Character_Hash (S (M));
       K := K + Special_Integer (M) * N;
    end loop;
-   
-   return Integer (K);
-   
+
+   return Natural (K);
+
 end ColdFrame.Hash.Strings.Standard;

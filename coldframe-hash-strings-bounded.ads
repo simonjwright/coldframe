@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-strings-bounded.ads,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 44621b3276c9 $
+--  $Date: 2001/09/28 04:49:58 $
 --  $Author: simon $
 
 with Ada.Strings.Bounded;
@@ -30,5 +30,5 @@ generic
    with package Bounded_Strings
    is new Ada.Strings.Bounded.Generic_Bounded_Length (<>);
 function ColdFrame.Hash.Strings.Bounded
-  (S : Bounded_Strings.Bounded_String) return Integer;
+  (S : Bounded_Strings.Bounded_String) return Natural;
 pragma Elaborate_Body (ColdFrame.Hash.Strings.Bounded);
