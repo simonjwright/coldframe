@@ -4,7 +4,7 @@ with Problem_Reporting.Diagnosed_Problem_Report.Collections;
 with Problem_Reporting.Diagnosed_Problem_Report.Iterate;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
-with Problem_Reporting.R100;
+with Problem_Reporting.R100.From_Collections;
 with ColdFrame.Instances;
 
 with GNAT.IO;
@@ -26,7 +26,7 @@ procedure Clean
 
    Defects : constant Defect.Collections.Collection := R100.Affects (This);
    DPRs : constant Diagnosed_Problem_Report.Collections.Collection
-     := R100.Affects (Defects);
+     := R100.From_Collections.Affects (Defects);
 
    procedure Delete (D : Defect.Handle) is
       That : Defect.Handle := D;
