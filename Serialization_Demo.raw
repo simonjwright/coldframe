@@ -1,16 +1,16 @@
 <domain>
-<extractor>cf-20030107a</extractor>
+<extractor>cf-20030215t</extractor>
 <name>Serialization Demo</name>
 <date>
 <year>2003</year>
 <month>2</month>
-<day>2</day>
-<time>12:22</time>
+<day>20</day>
+<time>20:30</time>
 </date>
 <documentation>This domain is a demonstration of Serialization's faclilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-[[ revision : $Id: Serialization_Demo.raw,v 2cd92cbbdec1 2003/02/02 17:22:12 simon $ ]]</documentation>
+[[ revision : $Id: Serialization_Demo.raw,v 7542140b35a6 2003/02/20 21:01:40 simon $ ]]</documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
@@ -73,6 +73,50 @@ It is to be extracted separately from the main Serialization package (that's why
 <documentation>[[ string : max 32 ]]
 </documentation>
 <attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Real Time</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[ renames : Ada.Real_Time.Time;
+  image : Real Time Image ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>real time image</name>
+<documentation></documentation>
+<return>String</return>
+<parameters>
+<parameter>
+<name>v</name>
+<documentation></documentation>
+<type>Real Time</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type, serializable">
+<name>Recordable Real Time</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>t</name>
+<documentation></documentation>
+<type>Real Time</type>
+<initial></initial>
+</attribute>
 </attributes>
 <operations>
 </operations>
