@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v f07122557f82 2003/06/25 19:56:19 simon $
+# $Id: normalize-rose.tcl,v 6784e5502188 2003/06/26 05:07:07 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1526,13 +1526,13 @@ itcl::class Operation {
 	if [info exists suppressed] {
 	    puts -nonewline " suppressed=\"$suppressed\""
 	}
+	if [info exists renaming] {
+	    puts -nonewline " renames=\"$renaming\""
+	}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts -nonewline " visibility=\"$visibility\""
 	puts ">"
 	putElement name $name
-	if [info exists renaming] {
-	    putElement renames $renaming
-	}
 	$this -generateDocumentation
 	$parameters -generate $domain
 	puts "</operation>"
@@ -2403,6 +2403,11 @@ itcl::class Exception {
 
     constructor {n} {set name $n}
 
+    variable imported
+    method -imported {from} {
+	set imported [normalize $from]
+    }
+
     variable renaming
     method -renames {other} {
 	set renaming [normalize $other]
@@ -2415,11 +2420,15 @@ itcl::class Exception {
     }
 
     method -generate {domain} {
-	puts "<exception>"
-	putElement name "$name"
-	if [info exists renaming] {
-	    putElement renames $renaming
+	puts -nonewline "<exception"
+	if [info exists imported] {
+	    puts -nonewline " imported=\"$imported\""
 	}
+	if [info exists renaming] {
+	    puts -nonewline " renames=\"$renaming\""
+	}
+	puts ">"
+	putElement name "$name"
 	$this -generateDocumentation
 	puts "</exception>"
     }
