@@ -20,44 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 9f3a96052286 $
+--  $Date: 2002/03/06 05:03:55 $
 --  $Author: simon $
 
---  with Ada.Calendar;
---  with Ada.Exceptions;
 with GNAT.IO; use GNAT.IO;
---  with GNAT.Calendar.Time_IO;
 
 package body ColdFrame.Events is
-
-
---     function Seconds (Date : Ada.Calendar.Time) return String;
---     function Seconds (Date : Ada.Calendar.Time) return String is
---        use type Ada.Calendar.Time;
---        S : Duration
---          := Duration (GNAT.Calendar.Second (Date))
---          + GNAT.Calendar.Sub_Second (Date);
---     begin
---        return GNAT.Calendar.Time_IO.Image (Date, "%H%M") & S'Img;
---     end Seconds;
-
-
---     procedure Log (Event : String; State : String) is
---     begin
---        Put_Line ("event "
---                  & Event
---                  & " occurred in state "
---                  & State
---                  & " at "
---                  & Seconds (Ada.Calendar.Clock));
---     end Log;
-
-
---     procedure Log (Entering : String) is
---     begin
---        Put_Line ("entering state " & Entering);
---     end Log;
 
 
    procedure Finalize (The_Terminator : in out Terminator) is
@@ -72,6 +41,8 @@ package body ColdFrame.Events is
 
    procedure Log_Retraction (The : Event_P;
                              On : access Event_Queue_Base) is
+      pragma Warnings (Off, The);
+      pragma Warnings (Off, On);
    begin
       null;
    end Log_Retraction;
@@ -79,6 +50,8 @@ package body ColdFrame.Events is
 
    procedure Log_Pre_Dispatch (The : Event_P;
                                On : access Event_Queue_Base) is
+      pragma Warnings (Off, The);
+      pragma Warnings (Off, On);
    begin
       null;
    end Log_Pre_Dispatch;
@@ -86,9 +59,19 @@ package body ColdFrame.Events is
 
    procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue_Base) is
+      pragma Warnings (Off, The);
+      pragma Warnings (Off, On);
    begin
       null;
    end Log_Post_Dispatch;
+
+
+   procedure Finalize (T : in out Timer) is
+   begin
+      if T.The_Event /= null then
+         T.The_Event.Invalidated := True;
+      end if;
+   end Finalize;
 
 
 end ColdFrame.Events;
