@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8bf02ff75718 2002/04/20 06:03:03 simon $
+# $Id: normalize-rose.tcl,v 80db7242a5c8 2002/05/09 20:39:48 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -55,15 +55,39 @@ proc setCaseExceptions {file} {
 # - replaces each run of white space by a single underscore
 # - checks whether the whole matches a case exception, in which case the
 #   exception is taken
-# - if there are any dots in the result, apply the 'first letter of each
-#   word' rule (XXX what about Interfaces.C.int???)
+# - if there are any dots in the result, reaapply the rules for each
+#   '.'-separated component
 # and returns the result
 proc normalize {s} {
     global caseExceptions
 
     set tmp [string trim $s]
     # handle strings
-    if [string match "\"*" $tmp] {return $tmp}
+    if [regexp {\".*\"} $tmp] {return $tmp}
+    # allow based literals
+    if [regexp -nocase {[0-9]+\#[0-9a-f.]*\#} $tmp] {return $tmp}
+    # check for illegal characters
+    regsub -all {[A-Za-z0-9_ \t.]} $tmp "" illegal
+    if {[string length $illegal] > 0} {
+	set tag [[stack -top] -getXmlTag]
+	if {$tag == "parameter"} {
+	    # Special circuitry to report the most likely occurrence in
+	    # a more helpful manner.
+	    # XXX probably needs help from class Stack.
+	    set p [stack -pop]
+	    set ps [stack -pop]
+	    set op [stack -pop]
+	    set ops [stack -pop]
+	    set cls [stack -top]
+	    stack -push $ops
+	    stack -push $op
+	    stack -push $ps
+	    stack -push $p
+	    Error "illegal name \"$tmp\" in [$cls -getName].[$op -getName]"
+	} else {
+	    Error "illegal name \"$tmp\" in <$tag>"
+	}
+    }
     # handle white space/underscore
     set tmp [string tolower $tmp]
     regsub -all {_} "$tmp" " " tmp
