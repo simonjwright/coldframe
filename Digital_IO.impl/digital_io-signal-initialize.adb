@@ -27,5 +27,7 @@ begin
    OH := Output.Create ((G1_Parent => CIH (SH)));
    SH := Signal.Create ((S => Lamp_C));
    OH := Output.Create ((G1_Parent => CIH (SH)));
+   SH := Signal.Create ((S => Lamp_D));
+   OH := Output.Create ((G1_Parent => CIH (SH)));
 
 end Initialize;
