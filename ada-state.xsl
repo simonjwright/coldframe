@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 45d32fd61f90 2003/09/27 16:52:02 simon $ -->
+<!-- $Id: ada-state.xsl,v 1a296a22ec87 2003/09/29 19:18:18 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -148,6 +148,7 @@
         </xsl:message>
       </xsl:if>
 
+      <!--
       <xsl:for-each select="$leaving">
         <xsl:sort select="event"/>
         <xsl:if test="event=preceding-sibling::node()/event">
@@ -156,12 +157,13 @@
             <xsl:text>Error: more than one transition triggered by </xsl:text>
             <xsl:value-of select="event"/>
             <xsl:text> from state </xsl:text>
-            <xsl:value-of select="../../../name"/>
+            <xsl:value-of select="../../name"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="source"/>
           </xsl:message>
         </xsl:if>
       </xsl:for-each>
+      -->
 
     </xsl:for-each>
     <xsl:text>);&#10;</xsl:text>
