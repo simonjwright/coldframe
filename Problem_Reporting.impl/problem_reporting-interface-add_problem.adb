@@ -1,7 +1,9 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
-procedure Problem_Reporting.Interface.Add_Problem
+
+separate (Problem_Reporting.Interface)
+procedure Add_Problem
   (Number : Integer;
    Reporter : String;
    Details : String) is
@@ -28,4 +30,4 @@ begin
   -- Create the corresponding Unallocated Problem Report
   U := Unallocated_Problem_Report.Create ((R1_Child_Of_PR => H));
 
-end Problem_Reporting.Interface.Add_Problem;
+end Add_Problem;

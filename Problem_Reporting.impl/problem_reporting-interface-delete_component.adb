@@ -1,16 +1,18 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Problem_Reporting.Component;
-procedure Problem_Reporting.Interface.Delete_Component
+
+separate (Problem_Reporting.Interface)
+procedure Delete_Component
   (Component_Name : String) is
-  
+
   function "+" (Source : String) return Unbounded_String
     renames To_Unbounded_String;
 
 begin
-  
+
   -- Delete the Component; NB, there would be some checks here for
   -- referential integrity! or should those checks be put in
   -- Component.Delete?
   Component.Delete ((Id => +Component_Name));
 
-end Problem_Reporting.Interface.Delete_Component;
+end Delete_Component;

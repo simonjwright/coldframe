@@ -1,6 +1,8 @@
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Problem_Reporting.Component;
-procedure Problem_Reporting.Interface.Add_Component
+
+separate (Problem_Reporting.Interface)
+procedure Add_Component
    (Named : String) is
 
   function "+" (Source : String) return Unbounded_String
@@ -13,4 +15,4 @@ begin
   -- Create the new Component
   H := Component.Create ((Id => +Named));
 
-end Problem_Reporting.Interface.Add_Component;
+end Add_Component;

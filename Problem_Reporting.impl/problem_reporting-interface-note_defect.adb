@@ -7,7 +7,9 @@ with Problem_Reporting.Diagnosed_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
 with Problem_Reporting.R100;
-procedure Problem_Reporting.Interface.Note_Defect
+
+separate (Problem_Reporting.Interface)
+procedure Note_Defect
   (Problem_Number : Integer;
    Component_Name : String;
    Description : String) is
@@ -67,4 +69,4 @@ begin
   -- Store the diagnosed Problem in the new Defect.
   Defect.Set_Problem (Def, +Description);
 
-end Problem_Reporting.Interface.Note_Defect;
+end Note_Defect;

@@ -1,7 +1,9 @@
 with Problem_Reporting.Rejected_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
-procedure Problem_Reporting.Interface.Reject_Problem
+
+separate (Problem_Reporting.Interface)
+procedure Reject_Problem
    (Number : Integer;
     Reason : String) is
 
@@ -29,4 +31,4 @@ begin
   Rejected_Problem_Report.Set_Rejection_Reason
      (R, Summary_String_Package.To_Bounded_String (Reason));
 
-end Problem_Reporting.Interface.Reject_Problem;
+end Reject_Problem;

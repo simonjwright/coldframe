@@ -10,7 +10,9 @@ with Problem_Reporting.Defect.Collections;
 with Problem_Reporting.Defect.Selection_Function;
 with Problem_Reporting.Diagnosed_Problem_Report;
 with Problem_Reporting.Problem_Report;
-procedure Problem_Reporting.Interface.Report_Problems is
+
+separate (Problem_Reporting.Interface)
+procedure Report_Problems is
 
   -- Process a single Component.
   procedure Process_Component (C : Component.Handle; OK : out Boolean);
@@ -98,4 +100,4 @@ begin
   -- Process all the Components.
   Visit_Components (Comp_Iter);
 
-end Problem_Reporting.Interface.Report_Problems;
+end Report_Problems;
