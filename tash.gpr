@@ -1,11 +1,11 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v d1391b3f228a 2003/01/01 22:13:05 simon $
+--  $Id: tash.gpr,v 4d5690427d05 2003/01/04 12:30:22 simon $
 
 project Tash is
 
   Top := external ("TOP", "c:");
   Tash := external ("TASH", "tash832a");
-  Tcl := external ("TCL", "Tcl");
+  Tcl := external ("TCL", "c:/Tcl");
   Tcl_Version := external ("TCL_VERSION", "82");
   Build := external ("BUILD", "c:/tmp/.build");
 
@@ -27,13 +27,15 @@ project Tash is
                                        "-O2");
   end Compiler;
 
-  --  These two files need to be made by (a) configuring TASH -- run
+  --  These two files may need to be made by (a) configuring TASH run
   --  setup.tcl under wish (wish82), (b) changing to the source
-  --  directory and running "make tkmacro.o tclmacro.o".
+  --  directory and running "make tkmacro.o tclmacro.o". However, some
+  --  versions of TASH (in particular the Windows tash832a.zip) come
+  --  prepared.
   Objects := (Tash_Src & "/tkmacro.o",
               Tash_Src & "/tclmacro.o");
 
-  Options := ("-L" & Top & "/" & Tcl & "/lib",
+  Options := ("-L" & Tcl & "/lib",
               "-ltk" & Tcl_Version,
               "-ltcl" & Tcl_Version);
 
