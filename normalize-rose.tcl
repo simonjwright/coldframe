@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 681a53789acf 2001/08/08 18:02:19 simon $
+# $Id: normalize-rose.tcl,v 509b34faa342 2001/09/08 05:16:47 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -31,12 +31,31 @@ package require Itcl
 # Utilities #
 #############
 
+# Reads case exceptions from a file. The file format is basically
+# that used by ACT's GLIDE, but we don't distinguish substring specs
+# from whole-identifier ones.
+proc setCaseExceptions {file} {
+    global caseExceptions
+
+    if [catch {open $file r} f] {
+	error "can't open $file: $f"
+    } else {
+	while {[gets $f line] >= 0} {
+	    regsub -all {[\*\t ]} $line "" res
+	    set caseExceptions([string tolower $res]) $res
+	}
+	close $f
+    }
+}
+
 # Given a string,
 # - trims leading and trailing white space
 # - capitalizes the first letter of each word
 # - replaces each run of white space by a single underscore
 # and returns the result
 proc normalize {s} {
+    global caseExceptions
+
     set tmp [string trim $s]
     if [string match "\"*" $tmp] {return $tmp}
     set tmp [string tolower $tmp]
@@ -44,8 +63,12 @@ proc normalize {s} {
     set tmp [split $tmp]
     set und ""
     foreach w $tmp {
-	set und \
-	    "$und [string toupper [string index $w 0]][string range $w 1 end]"
+	if [info exists caseExceptions($w)] {
+	    set und "$und $caseExceptions($w)"
+	} else {
+	    set und \
+	      "$und [string toupper [string index $w 0]][string range $w 1 end]"
+	}
     }
     regsub -all {[ \t]+} "[string trim $und]" "_" und
     regsub -all {\.} "$und" " " tmp
@@ -1310,7 +1333,7 @@ itcl::class Inheritance {
 	    set role [Role ::#auto]
 	    $role -owner $this
 	    $role -end 4
-	    $role -name "Child_Of"
+	    $role -name "Parent"
 	    $role -classname $ch
 	    $p -addFormalizingAttributesTo $c $this $role 1
 	}
@@ -1959,18 +1982,24 @@ Stack stack
 # process command line:
 # flags
 #   --version cf-20010607
+#   --casing filename
 
 set argState expectingFlag
 foreach arg $argv {
     switch -- $argState {
 	expectingFlag {
 	    switch -- $arg {
-		--version { set argState expectingVersion}
+		--version {set argState expectingVersion}
+		--casing  {set argState expectingCaseExceptionFile}
 		default   {error "unknown flag $arg"}
 	    }
 	}
 	expectingVersion {
 	    set coldFrameVersion $arg
+	    set argState expectingFlag
+	}
+	expectingCaseExceptionFile {
+	    setCaseExceptions $arg
 	    set argState expectingFlag
 	}
     }
