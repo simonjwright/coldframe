@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 07d721272121 2001/06/20 19:10:29 simon $
+# $Id: normalize-rose.tcl,v ae33d477a373 2001/06/26 18:49:47 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1850,8 +1850,8 @@ $parser configure \
 	-elementstartcommand startTag \
 	-elementendcommand endTag \
 	-characterdatacommand textInTag
-$parser parse [read stdin]
-exit 0
+#$parser parse [read stdin]
+#exit 0
 if [catch {$parser parse [read stdin]} msg] {
     puts stderr "error: $msg"
     exit 1
