@@ -117,7 +117,9 @@ DATE = $(shell date +%Y%m%d)
 DOCS = architecture.html \
 bugs.html \
 directions.html \
+faq.html \
 index.html \
+preparation.html \
 principles.html \
 releases.html \
 resources.html \
