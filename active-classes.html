@@ -1,4 +1,4 @@
-<!-- $Id: active-classes.html,v d0dd593ad9db 2004/01/09 12:01:06 simon $ -->
+<!-- $Id: active-classes.html,v 20be285bb7bc 2004/01/09 14:29:45 simon $ -->
 <head>
 <title>ColdFrame: Active Classes</title>
 </head>
@@ -30,7 +30,8 @@ doesn't have inbuilt support, you can call operating system primitives
 (for example, an SMP-aware Linux), the program's tasks can be truly
 independent, so that more than one is running at any instant. Of
 course, there are still likely to be many fewer CPUs than tasks! The
-normal situation is for the CPU to be shared between the tasks.
+normal situation is to have one CPU per computer, shared between the
+tasks.
 
 <p>This might seem to be adding complexity, and indeed it does bring
 its own difficulties for programmers (especially in getting tasks to
@@ -91,7 +92,7 @@ need to be made from distinct tasks.
 <p>Two (related) approaches to managing multiple concurrent jobs which
 have to meet deadlines are <a
 href="http://www.sei.cmu.edu/str/descriptions/rma_body.html">Rate
-Monotonic Analysis</a> a(RMA) nd <a
+Monotonic Analysis</a> (RMA) and <a
 href="http://www.embedded.com/2000/0006/0006feat1.htm">Deadline
 Monotonic Analysis</a> (DMA).
 
