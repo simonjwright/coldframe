@@ -123,7 +123,6 @@
 
     <!--
          with Ada.Unchecked_Deallocation;
-         with {each package we have a referential attribute for};
          procedure {Domain}.{Class}.Tear_Down is
             It : Abstract_Map_Containers.Iterator'Class
               := Maps.New_Iterator (The_Container);
@@ -139,7 +138,7 @@
          end {Domain}.{Class}.Tear_Down;
          -->
 
-    <xsl:call-template name="class-body-context"/>
+    <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
