@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: test_bounded_storage_pools.adb,v $
---  $Revision: d515d80b9067 $
---  $Date: 2003/08/23 07:41:22 $
+--  $Revision: 924181660f29 $
+--  $Date: 2003/08/23 07:54:41 $
 --  $Author: simon $
 
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
@@ -24,27 +24,43 @@ with System.Storage_Elements;
 
 procedure Test_Bounded_Storage_Pools is
 
-   type T is new System.Storage_Elements.Storage_Array (1 .. 17);
-
-   T_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
-     (Pool_Size => 1024,
-      Elmt_Size => T'Max_Size_In_Storage_Elements,
-      Alignment => T'Alignment);
-   pragma Warnings (Off, T_Pool);
-
-   type T_P is access T;
-   --     for T_P'Storage_Pool use ColdFrame.Project.Storage_Pools.Pool;
-   for T_P'Storage_Pool use T_Pool;
-
-   P : T_P;
-
 begin
 
-   P := new T;
+   for Size in System.Storage_Elements.Storage_Offset'(0) .. 17 loop
 
-   for I in P.all'Range loop
-      Put (Integer (P (I)), Base => 16);
-      New_Line;
+      declare
+
+         type T is new System.Storage_Elements.Storage_Array (1 .. Size);
+
+         T_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
+           (Pool_Size => 1024,
+            Elmt_Size => T'Max_Size_In_Storage_Elements,
+            Alignment => T'Alignment);
+         pragma Warnings (Off, T_Pool);
+
+         type T_P is access T;
+         for T_P'Storage_Pool use T_Pool;
+
+         P : T_P;
+
+      begin
+
+         P := new T;
+
+         Put_Line ("size is" & Size'Img);
+
+         for I in P.all'Range loop
+            declare
+               Tmp : String (1 .. 6);
+            begin
+               Put (Tmp, Integer (P (I)), Base => 16);
+               Put (Tmp (4 .. 5));
+            end;
+         end loop;
+         New_Line;
+
+      end;
+
    end loop;
 
 end Test_Bounded_Storage_Pools;
