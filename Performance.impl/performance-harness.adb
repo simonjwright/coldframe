@@ -1,108 +1,173 @@
 with GNAT.IO; use GNAT.IO;
 with Performance.Initialize;
 with Performance.Tear_Down;
-with Performance.Owner;
+with Performance.Person.All_Instances;
+with Performance.Person.Collections;
+with Performance.Owner.Inheritance;
 with Performance.Pet.Collections;
 with Performance.Cat.Inheritance;
 with Performance.A1;
+with Performance.A2;
+with Performance.House.All_Instances;
+with Performance.House.Collections;
+with ColdFrame.Instances;
 with Seawolf_High_Resolution_Time; use Seawolf_High_Resolution_Time;
 
 procedure Performance.Harness is
-   O : Owner.Handle;
-   P : Pet.Handle;
+   subtype CIH is ColdFrame.Instances.Handle;
    T : Time;
    D : Duration;
 begin
 
-   Performance.Initialize;
    T := Clock;
-   for I in Owners loop
-      O := Owner.Create ((Name => I));
-   end loop;
    D := Clock - T;
-   Put_Line ("average creation time (identifier, enum):"
+   Put_Line ("no-op:"
                & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
 
-   T := Clock;
-   for I in Owners loop
-      O := Owner.Find ((Name => I));
-   end loop;
-   D := Clock - T;
-   Put_Line ("average find time (identifier, enum):"
-               & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
-
-   T := Clock;
-   for I in Owners loop
-      Owner.Delete ((Name => I));
-   end loop;
-   D := Clock - T;
-   Put_Line ("average deletion time (identifier, enum):"
-               & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
-   Performance.Tear_Down;
-
-   Performance.Initialize;
    declare
-      Os : array (Owners) of Owner.Handle;
+      Pr : Person.Handle;
    begin
-      for O in Os'Range loop
-         Os (O) := Owner.Create ((Name => O));
+
+      Performance.Initialize;
+
+      T := Clock;
+      for I in Owners loop
+         Pr := Person.Create ((Name => I));
+      end loop;
+      D := Clock - T;
+      Put_Line ("average creation time (identifier, enum):"
+                  & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+
+      T := Clock;
+      for I in Owners loop
+         Pr := Person.Find ((Name => I));
+      end loop;
+      D := Clock - T;
+      Put_Line ("average find time (identifier, enum):"
+                  & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+
+      T := Clock;
+      for I in Owners loop
+         Person.Delete ((Name => I));
+      end loop;
+      D := Clock - T;
+      Put_Line ("average deletion time (identifier, enum):"
+                  & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+
+      Performance.Tear_Down;
+
+   end;
+
+   declare
+      Ps : array (Owners) of Person.Handle;
+   begin
+
+      Performance.Initialize;
+
+      for P in Ps'Range loop
+         Ps (P) := Person.Create ((Name => P));
       end loop;
       T := Clock;
-      for O in Owners loop
-         Owner.Delete (Os (O));
+      for P in Owners loop
+         Person.Delete (Ps (P));
       end loop;
       D := Clock - T;
       Put_Line ("average deletion time (handle):"
                   & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+
+      Performance.Tear_Down;
+
    end;
-   Performance.Tear_Down;
 
-   Performance.Initialize;
-   T := Clock;
-   for I in Pets loop
-      P := Pet.Create;
-      Pet.Set_Name (P, To => I);
-   end loop;
-   D := Clock - T;
-   Put_Line ("average creation time (auto, set 1 attr):"
-               & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
-   Performance.Tear_Down;
-
-   Performance.Initialize;
    declare
-      Os : array (Owners) of Owner.Handle;
-      Ps : array (Pets) of Pet.Handle;
+      Pr : Person.Handle;
+      Prc : Person.Collections.Collection;
    begin
 
-      for I in Os'Range loop
-         Os (I) := Owner.Create ((Name => I));
+      Performance.Initialize;
+
+      --  We only create one instance of Person, so as to give a
+      --  worst-case result.
+
+      for P in Owners'First .. Owners'First loop
+         Pr := Person.Create ((Name => P));
       end loop;
-      for J in Ps'Range loop
-         Ps (J) := Pet.Create;
+      T := Clock;
+      Prc := Person.All_Instances;
+      D := Clock - T;
+      Put_Line ("obtain all instances (per instance):"
+                  & Duration'Image (D / Person.Collections.Length (Prc)));
+
+      Performance.Tear_Down;
+
+   end;
+
+   declare
+      Pt : Pet.Handle;
+   begin
+
+      Performance.Initialize;
+
+      T := Clock;
+      for I in Pets loop
+         Pt := Pet.Create;
+         Pet.Set_Name (Pt, To => I);
+      end loop;
+      D := Clock - T;
+      Put_Line ("average creation time (auto, set 1 attr):"
+                  & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
+
+      Performance.Tear_Down;
+
+   end;
+
+   declare
+      Prs : array (Owners) of Person.Handle;
+      Os : array (Owners) of Owner.Handle;
+      Pts : array (Pets) of Pet.Handle;
+      O : Owner.Handle;
+   begin
+
+      Performance.Initialize;
+
+      --  The association is set up with only one object on the "many"
+      --  side. This should give a worst-case result, since the whole
+      --  extent will have to be searched for just one result (clearly
+      --  more results would take longer, but the average time would
+      --  be less, depending on the relative costs of scanning the
+      --  input/inserting matches in the output).
+
+      for I in Os'Range loop
+         Prs (I) := Person.Create ((Name => I));
+         Os (I) := Owner.Inheritance.Create_Tree
+           (A_Person => CIH (Prs (I)));
+      end loop;
+      for J in Pts'Range loop
+         Pts (J) := Pet.Create;
       end loop;
       T := Clock;
       for I in Owners loop
          A1.Link (Is_Owned_By => Os (I),
-                  Owns => Ps (Pets'Val (Owners'Pos (I))));
+                  Owns => Pts (Pets'Val (Owners'Pos (I))));
       end loop;
       D := Clock - T;
       Put_Line ("average link time (simple):"
                   & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
 
       T := Clock;
-      for I in Ps'Range loop
-         O := A1.Owns (Ps (I));
+      for I in Pts'Range loop
+         O := A1.Owns (Pts (I));
       end loop;
       D := Clock - T;
       Put_Line ("average navigation time (simple, easy):"
                   & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
 
       declare
-         Pc : Pet.Collections.Collection;
+         Ptc : Pet.Collections.Collection;
       begin
          T := Clock;
          for I in Os'Range loop
-            Pc := A1.Is_Owned_By (Os (I));
+            Ptc := A1.Is_Owned_By (Os (I));
          end loop;
          D := Clock - T;
          Put_Line ("average navigation time (simple, hard):"
@@ -112,20 +177,98 @@ begin
       T := Clock;
       for I in Owners loop
          A1.Unlink (Is_Owned_By => Os (I),
-                  Owns => Ps (Pets'Val (Owners'Pos (I))));
+                    Owns => Pts (Pets'Val (Owners'Pos (I))));
       end loop;
       D := Clock - T;
       Put_Line ("average unlink time (simple):"
                   & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
 
-   end;
-   Performance.Tear_Down;
+      Performance.Tear_Down;
 
-   Performance.Initialize;
+   end;
+
+   declare
+      Prs : array (Owners) of Person.Handle;
+      Pts : array (Pets) of Pet.Handle;
+      H : House.Handle;
+   begin
+
+      Performance.Initialize;
+
+      --  The association is set up with only one object on the "many"
+      --  side. This should give a worst-case result, since the whole
+      --  extent will have to be searched for just one result (clearly
+      --  more results would take longer, but the average time would
+      --  be less, depending on the relative costs of scanning the
+      --  input/inserting matches in the output).
+
+      for I in Prs'Range loop
+         Prs (I) := Person.Create ((Name => I));
+      end loop;
+      for J in Pts'Range loop
+         Pts (J) := Pet.Create;
+      end loop;
+      T := Clock;
+      for I in Owners loop
+            H := A2.Link (Lives_With => Prs (I),
+                          Feeds => Pts (Pets'Val (Owners'Pos (I))));
+      end loop;
+      D := Clock - T;
+      Put_Line ("average link time (associative):"
+                  & Duration'Image (D / (Owners'Pos (Owners'Last) + 1)));
+
+      declare
+         Hc : House.Collections.Collection;
+      begin
+         T := Clock;
+         for I in Pts'Range loop
+            Hc := A2.Feeds (Pts (I));
+         end loop;
+         D := Clock - T;
+         Put_Line ("average navigation time (associative, to assoc):"
+                     & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
+      end;
+
+      declare
+         Prc : Person.Collections.Collection;
+      begin
+         T := Clock;
+         for I in Pts'Range loop
+            Prc := A2.Feeds (Pts (I));
+         end loop;
+         D := Clock - T;
+         Put_Line ("average navigation time (associative, to other):"
+                     & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
+      end;
+
+      declare
+         type Houses is array (Positive range <>) of House.Handle;
+         Hc : constant House.Collections.Collection := House.All_Instances;
+         Hs : Houses (1 .. House.Collections.Length (Hc));
+      begin
+
+         for H in Hs'Range loop
+            Hs (H) := House.Collections.Item_At (Hc, H);
+         end loop;
+         T := Clock;
+         for H in Hs'Range loop
+            A2.Unlink (House_Handle => Hs (H));
+         end loop;
+         D := Clock - T;
+         Put_Line ("average unlink time (associative):"
+                     & Duration'Image (D / Hs'Length));
+      end;
+
+      Performance.Tear_Down;
+
+   end;
+
    declare
       Ps : array (Pets) of Pet.Handle;
       Cs : array (Pets) of Cat.Handle;
    begin
+
+      Performance.Initialize;
 
       T := Clock;
       for I in Cs'Range loop
@@ -160,8 +303,8 @@ begin
       Put_Line ("average inherited call time:"
                   & Duration'Image (D / (Pets'Pos (Pets'Last) + 1)));
 
+      Performance.Tear_Down;
 
    end;
-   Performance.Tear_Down;
 
 end Performance.Harness;
