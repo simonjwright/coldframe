@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 2bf0ced495ca $
---  $Date: 2002/09/12 21:00:08 $
+--  $Revision: 24a3dd8de3f1 $
+--  $Date: 2002/09/13 20:01:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -35,23 +35,19 @@ package body ColdFrame.Events_G.Debug_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue) is
    begin
-
       Put_Line ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
       Post (The_Event => The_Event,
             On => Standard_Queue (On.all)'Access);
-
    end Post;
 
 
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue) is
    begin
-
       Put_Line
         ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag) & " to self");
       Post_To_Self (The_Event => The_Event,
                     On => Standard_Queue (On.all)'Access);
-
    end Post_To_Self;
 
 
@@ -59,7 +55,6 @@ package body ColdFrame.Events_G.Debug_G is
                    On : access Event_Queue;
                    To_Fire_After : Natural_Duration) is
    begin
-
       Put_Line ("posting a " &
                   Ada.Tags.Expanded_Name (The_Event'Tag) &
                   ", delay" &
@@ -67,7 +62,6 @@ package body ColdFrame.Events_G.Debug_G is
       Post (The_Event => The_Event,
             On => Standard_Queue (On.all)'Access,
             To_Fire_After => To_Fire_After);
-
    end Post;
 
 
@@ -76,7 +70,6 @@ package body ColdFrame.Events_G.Debug_G is
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
-
       Put_Line ("setting a Timer for a " &
                   Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
                   ", delay" &
@@ -85,7 +78,6 @@ package body ColdFrame.Events_G.Debug_G is
            On => Standard_Queue (On.all)'Access,
            To_Fire => To_Fire,
            After => After);
-
    end Set;
 
 
@@ -93,7 +85,6 @@ package body ColdFrame.Events_G.Debug_G is
                     On : access Event_Queue) is
 
    begin
-
       if The_Timer.The_Entry = null then
          Ada.Exceptions.Raise_Exception
            (Exceptions.Use_Error'Identity,
@@ -108,10 +99,8 @@ package body ColdFrame.Events_G.Debug_G is
               & Ada.Tags.Expanded_Name
                   (The_Timer.The_Entry.The_Event.all'Tag));
       end if;
-
       Unset (The_Timer => The_Timer,
              On => Standard_Queue (On.all)'Access);
-
    end Unset;
 
 
@@ -147,10 +136,14 @@ package body ColdFrame.Events_G.Debug_G is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then
-         Put_Line
-           (".. new state "
-              & State_Image
-              (Instance_Event_Base (The_Event.all).For_The_Instance.all));
+         if Instance_Event_Base (The_Event.all).Instance_Deleted then
+            Put_Line (".. deleted");
+         else
+            Put_Line
+              (".. new state "
+                 & State_Image
+                 (Instance_Event_Base (The_Event.all).For_The_Instance.all));
+         end if;
       end if;
    end Log_Post_Dispatch;
 
