@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 9ac0744c0449 $
---  $Date: 2002/10/01 17:44:46 $
+--  $Revision: bd96cd3c1539 $
+--  $Date: 2003/01/19 18:27:17 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -101,6 +101,11 @@ package ColdFrame.Events_G is
    --  Events (which can be Posted or Set on the Queue beforehand).
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
+
+   function Copy
+     (The_Queue : access Event_Queue_Base) return Event_Queue_P is abstract;
+   --  Clones a reference to an event queue so that teardown of queues
+   --  shared by multiple domains can be properly managed.
 
    procedure Start (The_Queue : access Event_Queue_Base);
    --  Raises Use_Error if the Queue is already started.
@@ -285,7 +290,17 @@ private
 
    type Event_Queue_Base (Start_Started : Boolean)
    is abstract tagged limited record
+      --  Attributes to manage teardown, particularly for queues
+      --  shared by multiple domains.
+
+      --  when this reaches 0, the queue can be deleted
+      Access_Count : Natural := 1;
+      --  if this is true, the queue has been stopped
+      Torn_Down : Boolean := False;
+
+      --  the queue is running
       Started : Boolean := Start_Started;
+
    end record;
 
 

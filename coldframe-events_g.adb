@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: ce5cd76582ab $
---  $Date: 2002/09/17 18:13:19 $
+--  $Revision: bd96cd3c1539 $
+--  $Date: 2003/01/19 18:27:17 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -232,8 +232,14 @@ package body ColdFrame.Events_G is
                                          Event_Queue_P);
    begin
       if The_Queue /= null then
-         Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
-         Delete (The_Queue);
+         if not The_Queue.Torn_Down then
+            The_Queue.Torn_Down := True;
+            Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
+         end if;
+         The_Queue.Access_Count := The_Queue.Access_Count - 1;
+         if The_Queue.Access_Count = 0 then
+            Delete (The_Queue);
+         end if;
       end if;
    end Tear_Down;
 
