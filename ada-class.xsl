@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 90108e9ea23b 2002/07/30 19:23:07 simon $ -->
+<!-- $Id: ada-class.xsl,v e3ffd47bf6bb 2002/07/30 20:31:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -140,16 +140,6 @@
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
  
-    <!-- .. any <<class>> attributes .. -->
-    <xsl:if test="attribute/@class">
-      <xsl:for-each select="attribute[@class]">
-        <xsl:call-template name="single-record-component">
-          <xsl:with-param name="indent" select="$I"/>
-        </xsl:call-template>
-      </xsl:for-each>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:if>
-
     <xsl:if test="@public">
       <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
@@ -185,6 +175,16 @@
       <xsl:text>for Handle'Storage_Size use Instance'Object_Size / 8 * </xsl:text>
       <xsl:value-of select="@max"/>
       <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+ 
+    <!-- .. any <<class>> attributes .. -->
+    <xsl:if test="attribute/@class">
+      <xsl:for-each select="attribute[@class]">
+        <xsl:call-template name="single-record-component">
+          <xsl:with-param name="indent" select="$I"/>
+        </xsl:call-template>
+      </xsl:for-each>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
@@ -640,7 +640,7 @@
     <xsl:if test="not(@singleton)">
       
       <!-- .. the hash function stub .. -->
-      <xsl:if test="not(@nax) or @max&gt;1">
+      <xsl:if test="not(@max) or @max&gt;1">
         <xsl:value-of select="$I"/>
         <xsl:text>function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
