@@ -13,22 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events_test.adb,v $
---  $Revision: 23f14b3a7737 $
---  $Date: 2003/11/09 12:40:22 $
+--  $Revision: 7b81e996f93f $
+--  $Date: 2003/11/26 10:59:08 $
 --  $Author: simon $
 
-with Ada.Calendar;
-with Ada.Task_Identification;
-with ColdFrame.Exceptions.Traceback;
-pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 with ColdFrame.Events_Test_Support;
+with ColdFrame.Exceptions.Traceback;
 with ColdFrame.Project.Events;
-with Ada.Text_IO. use Ada.Text_IO;
+pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
 procedure ColdFrame.Events_Test is
 
    Noisy_Ins : aliased Events_Test_Support.Instance;
-   Quiet_Ins : aliased Events_Test_Support.Instance;
 
    E : Project.Events.Event_P;
 
@@ -48,26 +44,7 @@ begin
 
    delay 4.0;
 
-   declare
-      Start : Ada.Calendar.Time := Ada.Calendar.Clock;
-      Interval : Duration;
-      Ev : Project.Events.Event_P;
-      use type Ada.Calendar.Time;
-      Loops : constant := 10_000;
-   begin
-      for I in 1 .. Loops / 1000 loop
-         for J in 1 .. 1000 loop
-            Ev := new Events_Test_Support.Quiet_Ev
-              (Quiet_Ins'Unchecked_Access);
-            Project.Events.Post (The_Event => Ev,
-                                 On => Events_Test_Support.Quiet_Dispatcher);
-         end loop;
-         delay 0.00001;
-      end loop;
-      Interval := ((Ada.Calendar.Clock - Start) / Loops) * 1_000_000;
-      Put_Line ("wall dispatcher took" & Interval'Img);
-   end;
-
-   Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
+   Project.Events.Tear_Down (Events_Test_Support.Noisy_Dispatcher);
+   Project.Events.Tear_Down (Events_Test_Support.Quiet_Dispatcher);
 
 end ColdFrame.Events_Test;
