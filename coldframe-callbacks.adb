@@ -20,45 +20,79 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 8e43dd8e8891 $
---  $Date: 2002/10/11 05:35:35 $
+--  $Revision: 285737f99b9a $
+--  $Date: 2003/02/02 18:34:11 $
 --  $Author: simon $
+
+with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Callbacks is
 
-   The_Registered_Procedures : Collections.Collection;
+
+   type Cell;
+
+   type Cell_P is access all Cell;
+
+   type Cell is record
+      Next : Cell_P;
+      CB : Callback;
+   end record;
+
+   procedure Delete is new Ada.Unchecked_Deallocation (Cell, Cell_P);
+
+
+   The_Registered_Procedures : aliased Cell;
+
 
    procedure Register (Proc : Callback) is
+      Current_Next : constant Cell_P := The_Registered_Procedures.Next;
    begin
-      Collections.Append (C => The_Registered_Procedures,
-                          Elem => Proc);
+      The_Registered_Procedures.Next := new Cell'(Current_Next, Proc);
    end Register;
 
+
    procedure Deregister (Proc : Callback) is
-      Loc : Natural;
+      Current : Cell_P := The_Registered_Procedures'Access;
    begin
-      Loc := Collections.Location (The_Registered_Procedures, Proc);
-      Collections.Remove (The_Registered_Procedures, Loc);
+      loop
+         exit when Current.Next = null;
+         if Current.Next.CB = Proc then
+            declare
+               To_Be_Removed : Cell_P := Current.Next;
+            begin
+               Current.Next := Current.Next.Next;
+               Delete (To_Be_Removed);
+            end;
+         else
+            Current := Current.Next;
+         end if;
+      end loop;
    end Deregister;
 
+
    procedure Call_Callbacks (With_Param : T) is
-      procedure Process (The_Callback : Callback; OK : out Boolean);
-      pragma Inline (Process);
-      procedure Process_All is new Abstract_Containers.Visit (Process);
-      It : Abstract_Containers.Iterator'Class
-        := Collections.New_Iterator (The_Registered_Procedures);
-      procedure Process (The_Callback : Callback; OK : out Boolean) is
-      begin
-         OK := True;
-         The_Callback.all (With_Param);
-      end Process;
+      Current : Cell_P := The_Registered_Procedures.Next;
    begin
-      Process_All (It);
+      loop
+         exit when Current = null;
+         Current.CB (With_Param);
+         Current := Current.Next;
+      end loop;
    end Call_Callbacks;
+
 
    procedure Clear is
    begin
-      Collections.Clear (The_Registered_Procedures);
+      loop
+         exit when The_Registered_Procedures.Next = null;
+         declare
+            Next : Cell_P := The_Registered_Procedures.Next.Next;
+         begin
+            Delete (The_Registered_Procedures.Next);
+            The_Registered_Procedures.Next := Next;
+         end;
+      end loop;
    end Clear;
+
 
 end ColdFrame.Callbacks;
