@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 658885bd31f4 2002/01/13 10:26:37 simon $
+# $Id: normalize-rose.tcl,v ff29748803a5 2002/01/20 10:42:30 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -979,8 +979,8 @@ itcl::class Operation {
     variable final 0
 
     # is this operation one that we expect to be generated?
-    # may be unset, "framework", "navigation".
-    variable generated
+    # may be unset, "framework", "navigation", "instantiation".
+    variable suppressed
 
     # the return type, if any
     variable ret ""
@@ -1018,12 +1018,16 @@ itcl::class Operation {
 
     # called via stereotype mechanism to indicate that this is
     # expected to be generated or otherwise omitted, and is only
-    # included for completeness
+    # included for completeness and to allow its inclusion in
+    # sequence diagrams etc
     method -generated {dummy} {
-	set generated "framework"
+	set suppressed "framework"
     }
     method -navigation {dummy} {
-	set generated "navigation"
+	set suppressed "navigation"
+    }
+    method -instantiation {dummy} {
+	set suppressed "instantiation"
     }
 
     method -return {r} {set ret $r}
@@ -1037,7 +1041,9 @@ itcl::class Operation {
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
-	if [info exists generated] {puts -nonewline " generated=\"$generated\""}
+	if [info exists suppressed] {
+	    puts -nonewline " suppressed=\"$suppressed\""
+	}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
