@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: ada-utilities.xsl,v d5fac0af6072 2002/08/17 16:31:09 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -231,9 +231,9 @@
         <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
 
-      <!-- Date maps to Time. -->
+      <!-- Date maps to ColdFrame.Project.Calendar.Time. -->
       <xsl:when test="$type='Date'">
-        <xsl:text>Time</xsl:text>
+        <xsl:text>ColdFrame.Project.Calendar.Time</xsl:text>
       </xsl:when>
 
       <!-- Real maps to Float. -->
@@ -244,6 +244,11 @@
       <!-- Text maps to Unbounded_String. -->
       <xsl:when test="$type='Text'">
         <xsl:text>Unbounded_String</xsl:text>
+      </xsl:when>
+
+      <!-- Time maps to ColdFrame.Project.Calendar.Time. -->
+      <xsl:when test="$type='Time'">
+        <xsl:text>ColdFrame.Project.Calendar.Time</xsl:text>
       </xsl:when>
 
       <!-- Timer maps to ColdFrame.Project.Events.Timer. -->
