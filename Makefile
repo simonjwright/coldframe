@@ -179,6 +179,7 @@ browse-state-model.png \
 class-mappings.png \
 collections-mapping.png \
 digital-io.png \
+digital-io-interface.png \
 discriminated-record.png \
 event-mapping.png \
 hierarchies-full.png \
@@ -409,7 +410,7 @@ DEMO += \
 stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
-Digital_IO.cat Digital_IO.raw \
+Digital_IO.cat Digital_IO.raw Digital_IO_Interface.raw \
 Digital_IO.impl/digital_io-application-set_output.adb \
 Digital_IO.impl/digital_io-hci-get_state.adb \
 Digital_IO.impl/digital_io-hci-set_input.adb \
