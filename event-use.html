@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 84510294d56e 2005/01/01 14:53:34 simon $ -->
+<!-- $Id: event-use.html,v a678fe3fa43f 2005/01/28 06:20:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -86,12 +86,12 @@ creates a <tt>Button Push</tt> event for the Lamp concerned
 
 <p>This style of event processing, which could be called
 <i>synchronous</i>, is subject to one limitation: if an action needs
-to create an event, the event must be posted rather than being
-processed synchronously. There's no logical difference between the
-synchronous and posting styles; posting is more consistent, while
-synchronous is more efficient (it saves a memory allocation/freeing
-and a couple of context switches, saving perhaps 20 to 30
-microseconds).
+to create an event <em>on the same instance of the same class</em>,
+the event must be posted rather than being processed
+synchronously. There's no logical difference between the synchronous
+and posting styles; posting is more consistent, while synchronous is
+more efficient (it saves a memory allocation/freeing and a couple of
+context switches, perhaps 20 to 30 microseconds).
 
 
 <h2>Posting an event</h2>
