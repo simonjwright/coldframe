@@ -20,19 +20,27 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-access_hash.adb,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 784618302cac $
+--  $Date: 2003/11/04 06:12:17 $
 --  $Author: simon $
 
 with System.Storage_Elements;
 
 function ColdFrame.Hash.Access_Hash
   (The_Access_Value : Access_T) return Natural is
-   Integer_Address : constant System.Storage_Elements.Integer_Address
-     := System.Storage_Elements.To_Integer (The_Access_Value.all'Address);
-   use type System.Storage_Elements.Integer_Address;
 begin
-   --  This is just a quick hack, more thought needed.
-   return Natural (((Integer_Address / 8) * 43) mod 10019);
+   if The_Access_Value = null then
+      return 0;
+   else
+      --  This is just a quick hack, more thought needed.
+      declare
+         Integer_Address : constant System.Storage_Elements.Integer_Address
+           := System.Storage_Elements.To_Integer
+                (The_Access_Value.all'Address);
+         use type System.Storage_Elements.Integer_Address;
+      begin
+         return Natural (((Integer_Address / 8) * 43) mod 10019);
+      end;
+   end if;
 end ColdFrame.Hash.Access_Hash;
 
