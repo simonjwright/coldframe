@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 53d54fc6ad7d 2002/10/27 16:41:07 simon $ -->
+<!-- $Id: types.html,v c840d16e9ed0 2002/11/14 20:10:23 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -40,7 +40,7 @@ you can have many different identical values of the same type.
 identifiers
 
 <li><i>Counterpart</i> - used for references to instances in other
-domains
+domains (but see the <i>[[counterpart]]</i> annotation blow).
 
 <li><i>Timer</i> - used (mainly) for timeouts in state machines
 
@@ -74,6 +74,9 @@ generated. The idea here is that a (lower-level) Domain may need to
 support up to <tt><i>max</i></tt> Observers from higher-level Domains,
 and the higher-level Domains can register to be notified when
 something has changed in the lower-level Domain.
+
+<li><tt>counterpart</tt> is used for references to instances in other
+domains.
 
 <li><tt>discriminated</tt> (only relevant if the type is a record
 type, ie has attributes) causes the generation of discriminated
@@ -152,6 +155,15 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
    is new ColdFrame.Callbacks
      (T => <i>Domain</i>.<i>Typ</i>,
       Maximum_Size => 4);
+</pre>
+
+<li><tt>counterpart</tt>
+
+<p>For a type named <tt>T_Handle</tt>, gives
+<pre>
+   with ColdFrame.Instances;
+   ..
+   subtype T_Handle is ColdFrame.Instances.Handle;
 </pre>
 
 <li><tt>discriminated</tt>

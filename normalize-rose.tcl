@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 7e83d52d948d 2002/11/11 06:05:51 simon $
+# $Id: normalize-rose.tcl,v c840d16e9ed0 2002/11/14 20:10:23 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2039,6 +2039,11 @@ itcl::class Datatype {
 	Error  "CF: can't specify callback on type $type, must be a record"
     }
 
+    # Called when the type is a counterpart.
+    method -counterpart {dummy} {
+	set dataType "counterpart"
+    }
+
     # called when the type is an enumeration. values is a list of the
     # comma-separated enumerals, which have not been normalized.
     method -enumeration {values} {
@@ -2101,6 +2106,9 @@ itcl::class Datatype {
 	putElement name "$type"
 	$this -generateDocumentation
 	switch $dataType {
+	    counterpart {
+		puts "<counterpart/>"
+	    }
 	    enumeration {
 		puts "<enumeration>"
 		foreach d $dataDetail {putElement literal $d}

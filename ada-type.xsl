@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-type.xsl,v c840d16e9ed0 2002/11/14 20:10:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,6 +32,11 @@
 
   <!-- Called at /domain to generate domain context clauses. -->
   <xsl:template name="domain-context">
+
+    <!-- Context for [[counterparts]]. -->
+    <xsl:if test="type/counterpart">
+      <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>      
+    </xsl:if>
 
     <!-- Context for time (in record components). -->
 
@@ -306,6 +311,13 @@
 
         </xsl:choose>
 
+      </xsl:when>
+
+      <xsl:when test="counterpart">
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is ColdFrame.Instances.Handle;&#10;</xsl:text>
       </xsl:when>
       
       <xsl:when test="enumeration">
