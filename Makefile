@@ -300,6 +300,7 @@ coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-events_g-held_event_queue_signature.ads \
+coldframe-instances.adb \
 coldframe-instances.ads \
 coldframe-interrupts.adb \
 coldframe-interrupts.ads \
