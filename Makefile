@@ -357,6 +357,8 @@ coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
+coldframe-stubs.adb \
+coldframe-stubs.ads \
 coldframe-time_signature.ads \
 coldframe-unbounded_storage_pools.adb \
 coldframe-unbounded_storage_pools.ads \
