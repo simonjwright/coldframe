@@ -20,18 +20,36 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 5eaa20121d6b $
---  $Date: 2002/01/27 11:20:12 $
+--  $Revision: 7c33bf090766 $
+--  $Date: 2002/01/28 06:43:45 $
 --  $Author: simon $
 
+with Ada.Calendar;
 with GNAT.IO; use GNAT.IO;
+with GNAT.Calendar.Time_IO;
 
 package body ColdFrame.States is
 
 
+   function Seconds (Date : Ada.Calendar.Time) return String;
+   function Seconds (Date : Ada.Calendar.Time) return String is
+      use type Ada.Calendar.Time;
+      S : Duration
+        := Duration (GNAT.Calendar.Second (Date))
+        + GNAT.Calendar.Sub_Second (Date);
+   begin
+      return GNAT.Calendar.Time_IO.Image (Date, "%H%M") & S'Img;
+   end Seconds;
+
+
    procedure Log (Event : String; State : String) is
    begin
-      Put_Line ("event " & Event & " occurred in state " & State);
+      Put_Line ("event "
+                & Event
+                & " occurred in state "
+                & State
+                & " at "
+                & Seconds (Ada.Calendar.Clock));
    end Log;
 
 
