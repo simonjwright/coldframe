@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_one_to_many_collection.ads,v 0c24f384ffae 2001/05/05 09:38:43 simon $
+-- $Id: coldframe-navigate_from_one_to_many_collection.ads,v 53b905614d6f 2001/05/20 17:12:02 simon $
 
 -- This package supports navigation of a one-to-many association from
 -- a set of instances of the 'one' end to the set of instances at the
@@ -32,7 +32,8 @@ with BC.Containers;
 
 generic
 
-  type One_Handle is private;
+  type One_Instance (<>) is limited private;
+  type One_Handle is access One_Instance;
   -- The handle for the 'one' end of the association
 
   with package One is new BC.Containers (One_Handle);
@@ -41,7 +42,8 @@ generic
   type From is new One.Container with private;
   -- The Collection type for the 'one' end of the association
 
-  type Many_Handle is private;
+  type Many_Instance (<>) is limited private;
+  type Many_Handle is access Many_Instance;
   -- The handle for the 'many' end of the association
 
   with package Many is new BC.Containers (Many_Handle);
