@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 48b16f3f9282 2003/04/01 17:52:56 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 9ffc2302f587 2003/05/10 19:16:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,62 +31,61 @@
   version="1.0">
 
 
-  <!-- Called at domain to output a child package spec if there
-       are any serializable types. -->
+  <!-- Called at domain to output the Serializable child package spec. -->
   <xsl:template name="serializable-type-spec">
 
+    <xsl:call-template name="do-not-edit"/>
+
     <xsl:if test="type/@serializable">
-
-      <xsl:call-template name="do-not-edit"/>
       <xsl:text>with ColdFrame.Project.Serialization;&#10;</xsl:text>
-      <xsl:text>package </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>.Serializable is&#10;</xsl:text>
-
-      <xsl:value-of select="$blank-line"/>
-
-      <xsl:for-each select="type[@serializable]">
-        <xsl:sort select="name"/>
-
-            <!--
-                 type {name}
-                 is new ColdFrame.Project.Serialization.Base with record
-                   Payload : {domain}.{name};
-                 end record;
-                 function Image (S : {name}) return String;
-                 -->
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>type </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>is new ColdFrame.Project.Serialization.Base with record&#10;</xsl:text>
-            <xsl:value-of select="$II"/>
-            <xsl:text>Payload : </xsl:text>
-            <xsl:value-of select="../name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>;&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>end record;&#10;</xsl:text>
-
-            <xsl:value-of select="$blank-line"/>
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>function Image (S : </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>) return String;&#10;</xsl:text>
-            
-            <xsl:value-of select="$blank-line"/>
-
-      </xsl:for-each>
-
-      <xsl:text>end </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>.Serializable;&#10;</xsl:text>
-      
     </xsl:if>
+
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Serializable is&#10;</xsl:text>
+    
+    <xsl:value-of select="$blank-line"/>
+    
+    <xsl:for-each select="type[@serializable]">
+      <xsl:sort select="name"/>
+      
+      <!--
+           type {name}
+           is new ColdFrame.Project.Serialization.Base with record
+           Payload : {domain}.{name};
+           end record;
+           function Image (S : {name}) return String;
+           -->
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>type </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>is new ColdFrame.Project.Serialization.Base with record&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>Payload : </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>end record;&#10;</xsl:text>
+      
+      <xsl:value-of select="$blank-line"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Image (S : </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>) return String;&#10;</xsl:text>
+      
+      <xsl:value-of select="$blank-line"/>
+      
+    </xsl:for-each>
+    
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Serializable;&#10;</xsl:text>
     
   </xsl:template>
 

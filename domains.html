@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v f099910454e8 2003/03/26 19:53:57 simon $ -->
+<!-- $Id: domains.html,v 9ffc2302f587 2003/05/10 19:16:36 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -64,7 +64,7 @@ child subprogram of the domain package.
 <p>Domain <a href="classes.html">classes</a> are implemented as
 children of the domain package.
 
-<p>Five further children are generated as standard:
+<p>Six further children are generated as standard:
 
 <dl>
 
@@ -121,10 +121,11 @@ require this one (eg, device bottom halves).
 <dt><tt><i>Domain</i>.Cascade_Tear_Down</tt>
 <dd>The inverse of <tt>Cascade_Initialize</tt>.
 
+<dt><tt><i>Domain</i>.Serializable</tt>
+<dd>Provides support for transferring data, both via network
+connections and also to files.
+
 </dl>
-<p>If anly of the <em>&#171;type&#187;</em>s in the domain are <a
-href="serialization.html"><em>serializable</em></a>, a package
-<tt><i>Domain</i>.Serializable</tt> is generated.
 
 <h2>Use</h2>
 
