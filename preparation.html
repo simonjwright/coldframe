@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v e7818a1e3fb2 2002/01/20 10:45:18 simon $ -->
+<!-- $Id: preparation.html,v 67196687b080 2002/02/03 10:16:58 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -37,6 +37,11 @@ All other classes <em>must</em> have identifiers. In this, ColdFrame
 doesn't follow <a href="resources.html#build-object-models">Executable
 UML</a>; it seems risky to apply too many defaults.
 
+<p>For the case where there's no suitable naming attribute, ColdFrame
+provides the attribute type <tt><i>Autonumber</i></tt> (rather like
+the Microsoft Access feature it's named after): each newly-created
+instance gets a new value.
+
 <h3>Associations and role names</h3>
 
 <p>Role names in associations are very important, and should be verbs
@@ -54,8 +59,11 @@ standing.
 
 <h3>Associations and multiplicity</h3>
 
-<p>Careful consideration of the multiplicity of associations is very
-important. Clearly each <em>Screen</em> <em>"displays"</em> a number
+<p>You need to think carefully about the multiplicity of associations;
+they capture application rules and policies, which it's important to
+get right.
+
+<p>Clearly each <em>Screen</em> <em>"displays"</em> a number
 of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
 more than one <em>Screen</em>? (perhaps, if you have multi-headed
 display capability). Can you have a <em>Window</em> which <em>"appears
@@ -67,6 +75,38 @@ right either, since the application could be iconised).
 is conditional (0..1, 0..n), maybe you should think more carefully
 about it. Perhaps there's some super/subtype (inheritance)
 relationship lurking in there.
+
+<h3>Inheritance</h3>
+
+<p>Most programming languages implement inheritance in a way that
+supports static classification (a Cat is-a Animal). Once you've got a
+Cat, an Animal it stays!
+
+<p>On the other hand, if you're thinking at the analysis level, you
+can see that at different stages of its lifecycle an object can take
+part in different relationships.
+
+<p><img src="inheritance.gif">
+
+<p>The attribute <i>termination</i> only has meaning if the van is on
+hire (it's the date when it's due back), so we shouldn't leave it
+lying around in the parent <i>Van</i> class. Also, the association
+<i>r3</i>, <i>Hired Van</i> <i>is-on-loan-to</i> <i>Customer</i> is
+unconditional, which is good.
+
+<p>Note also the way <i>r1</i>, which maintains the service history of
+the <i>Van</i>, is independent of whether the <i>Van</i> is currently
+hired out or in the pool.
+
+<p>At present (2 Feb 2002), ColdFrame expects the set of child
+instances to be complete, which is why <i>Pool Van</i> appears in the
+model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
+<i>Pool Van</i>. This only actually shows up in implementing
+dispatching operations; if you try calling a dispatching operation for
+an instance without a current child you'll get a
+<tt>Constraint_Error</tt>. Often you'll find something interesting to
+say about all the child classes; in the example, it seems likely that
+only <i>Pool Van</i>s can be sent for servicing.
 
 <h3>Containers</h3>
 
