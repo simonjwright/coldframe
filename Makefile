@@ -112,7 +112,8 @@ PDFS = coldframe-architecture.pdf \
   coldframe-relationships.pdf
 pdf:: $(PDFS)
 
-GIFS = States.gif States-Monitor.gif
+GIFS = States.gif States-Monitor.gif inheritance.gif
+JPEGS = navigation.jpg window-screen.jpg
 
 ############################
 # Distribution construction
@@ -122,18 +123,24 @@ DATE = $(shell date +%Y%m%d)
 
 DOCS = architecture.html \
 bugs.html \
+conversion.html \
 directions.html \
+extraction.html \
 faq.html \
+generation.html \
 index.html \
 preparation.html \
 principles.html \
 releases.html \
 resources.html \
+strategy.html \
+support.html \
+target.html \
+translation-rules.html \
 use-of-bcs.html \
-navigation.jpg \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
-$(GIFS) $(PDFS) \
+$(GIFS) $(JPEGS) $(PDFS) \
 coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
