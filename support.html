@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 7766afdf50a8 2003/02/16 19:39:58 simon $ -->
+<!-- $Id: support.html,v a0c284da9c7c 2003/03/13 20:44:37 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -177,13 +177,14 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 
 <br>The provided default contains renamings of
 <tt>Ada.Calendar.Time</tt> and <tt>Ada.Calendar.Clock</tt>, and an
-<tt>Image</tt> cunction used in serialization support.
+<tt>Image</tt> function used in serialization support.
 
 <dt><tt>ColdFrame.Project.Events</tt>
 
 <dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with time
-support from <tt>ColdFrame.Project.Times</tt> and logging from
-<tt>ColdFrame.Project.Logging_Support</tt>.
+support from <tt>ColdFrame.Project.Times</tt>, logging from
+<tt>ColdFrame.Project.Logging_Support</tt>, and storage from
+<tt>ColdFrame.Project.Global_Storage_Pool</tt>.
 
 <br>Three concrete instantiations are provided:
 <dl>
@@ -191,7 +192,8 @@ support from <tt>ColdFrame.Project.Times</tt> and logging from
 <dt><tt>ColdFrame.Project.Events.Standard</tt>
 
 <dd>A standard instantiation of
-<tt>ColdFrame.Events_G.Standard_G</tt>.
+<tt>ColdFrame.Events_G.Standard_G</tt>, with held events from
+<tt>ColdFrame.Project.Held_Event_Support</tt>.
 
 <dt><tt>ColdFrame.Project.Events.Standard.Debug</tt>
 
@@ -235,6 +237,11 @@ href="http://www.adapower.com/rationale/rat95-p2-12.html">signature
 packages</a>:
 
 <dl>
+
+<dt><tt>ColdFrame.Project.Events.Held_Event_Queue_Signature</tt>
+
+<dd>Specifies how "held events" (events posted to fire at some later
+time) are stored.
 
 <dt><tt>ColdFrame.Logging_Signature</tt>
 
