@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0b71bbfa7c3b 2003/11/25 21:40:57 simon $ -->
+<!-- $Id: releases.html-proto,v b5efde9d7fee 2003/12/17 14:15:53 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,24 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
+reported.
+
+
+<p>Tagged values with names containing illegal characters are treated
+as errors. (Legal characters are alphanumerics, hyphen and
+underscore).
+
+
+<p>Using a bounded string (<tt>{string = max 15}</tt> say) in an
+identifier is allowed.
+
+
+<p>You can specify an empty type using the tag <i>{null}</i>.
+
+
+<p><dt>20031126
 
 <dd>The class <tt>Delete</tt> operation for a 0..1 class didn't null
 out the container, so it appeared that there was still an instance.
