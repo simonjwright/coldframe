@@ -20,19 +20,19 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: fe0f9536cdc0 $
---  $Date: 2001/09/25 18:39:48 $
+--  $Revision: 27fde0b4309e $
+--  $Date: 2002/05/19 06:57:14 $
 --  $Author: simon $
 
 with BC;
 
 package ColdFrame.Exceptions is
 
-   Duplicate : exception renames BC.Duplicate;
+   Duplicate : exception;
    --  Attempt to Create an object with an identifier that belongs to an
    --  object that already exists
 
-   Not_Found : exception renames BC.Not_Found;
+   Not_Found : exception;
    --  Attempt to access an object by identifier when no such object exists
 
 end ColdFrame.Exceptions;
