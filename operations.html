@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v 74cc77ada93d 2003/07/05 17:10:15 simon $ -->
+<!-- $Id: operations.html,v 56274a8f7579 2003/11/14 05:55:22 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -151,12 +151,12 @@ sequence diagrams.
 
 <h3><a name="renaming">Renaming</a></h3>
 
-<p>You can use the <tt><i>renames</i></tt> annotation to specify a
+<p>You can use the <tt><i>renames</i></tt> tag to specify a
 form of overloading (ColdFrame's translation approach rules out actual
 overloading). Ada semantics apply (for example, you can change
 parameter defaults).
 
-<p>The form is <tt>[[ renames : <i>other-operation</i> ]]</tt>.
+<p>The form is <tt>{ renames = <i>other-operation</i> }</tt>.
 
 <h2>Translation</h2>
 
