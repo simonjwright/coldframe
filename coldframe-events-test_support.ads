@@ -13,14 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test_support.ads,v $
---  $Revision: adb4147b26e2 $
---  $Date: 2002/02/06 20:47:58 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
-with ColdFrame.States.Wall_Timer.Debug;
-with ColdFrame.States.Real_Timer.Debug;
+with ColdFrame.Events.Wall_Timer.Debug;
+with ColdFrame.Events.Real_Timer.Debug;
 
-package ColdFrame.States.Test_Support is
+package ColdFrame.Events.Test_Support is
 
    type Instance is new Instance_Base with null record;
    function State_Image (This : Instance) return String;
@@ -35,13 +35,13 @@ package ColdFrame.States.Test_Support is
 
    procedure Handler (This : Noisy_Ev);
 
-   Quiet_Real_Dispatcher : ColdFrame.States.Event_Queue_P
-     := new ColdFrame.States.Real_Timer.Event_Queue;
-   Quiet_Wall_Dispatcher : ColdFrame.States.Event_Queue_P
-     := new ColdFrame.States.Wall_Timer.Event_Queue;
-   Noisy_Dispatcher : ColdFrame.States.Event_Queue_P
-     := new ColdFrame.States.Real_Timer.Debug.Event_Queue;
+   Quiet_Real_Dispatcher : Events.Event_Queue_P
+     := new Events.Real_Timer.Event_Queue;
+   Quiet_Wall_Dispatcher : Events.Event_Queue_P
+     := new Events.Wall_Timer.Event_Queue;
+   Noisy_Dispatcher : Events.Event_Queue_P
+     := new Events.Real_Timer.Debug.Event_Queue;
 
-   T1, T2 : States.Timer;
+   T1, T2 : Events.Timer;
 
-end ColdFrame.States.Test_Support;
+end ColdFrame.Events.Test_Support;

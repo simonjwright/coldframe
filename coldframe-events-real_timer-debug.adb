@@ -20,14 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-real_timer-debug.adb,v $
---  $Revision: 8f8b358d26d1 $
---  $Date: 2002/02/06 20:46:50 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 with Ada.Tags;
 with GNAT.IO; use GNAT.IO;
 
-package body ColdFrame.States.Real_Timer.Debug is
+package body ColdFrame.Events.Real_Timer.Debug is
 
 
    procedure Post (The : Event_P;
@@ -98,4 +98,4 @@ package body ColdFrame.States.Real_Timer.Debug is
    end Log_Post_Dispatch;
 
 
-end ColdFrame.States.Real_Timer.Debug;
+end ColdFrame.Events.Real_Timer.Debug;

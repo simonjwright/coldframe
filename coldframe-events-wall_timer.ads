@@ -20,14 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.ads,v $
---  $Revision: 82446a9d6129 $
---  $Date: 2002/02/06 20:49:33 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
 with ColdFrame.Global_Storage_Pool;
 
-package ColdFrame.States.Wall_Timer is
+package ColdFrame.Events.Wall_Timer is
 
    pragma Elaborate_Body;
 
@@ -94,4 +94,4 @@ private
    end record;
 
 
-end ColdFrame.States.Wall_Timer;
+end ColdFrame.Events.Wall_Timer;

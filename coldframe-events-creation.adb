@@ -20,11 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-creation.adb,v $
---  $Revision: 5eaa20121d6b $
---  $Date: 2002/01/27 11:20:12 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
-package body ColdFrame.States.Creation is
+package body ColdFrame.Events.Creation is
 
 
    procedure Handler (This : Event) is
@@ -33,4 +33,4 @@ package body ColdFrame.States.Creation is
    end Handler;
 
 
-end ColdFrame.States.Creation;
+end ColdFrame.Events.Creation;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 8937907f915d $
---  $Date: 2002/02/06 20:50:35 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 --  with Ada.Calendar;
@@ -29,7 +29,7 @@
 with GNAT.IO; use GNAT.IO;
 --  with GNAT.Calendar.Time_IO;
 
-package body ColdFrame.States is
+package body ColdFrame.Events is
 
 
 --     function Seconds (Date : Ada.Calendar.Time) return String;
@@ -91,4 +91,4 @@ package body ColdFrame.States is
    end Log_Post_Dispatch;
 
 
-end ColdFrame.States;
+end ColdFrame.Events;

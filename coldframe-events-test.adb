@@ -13,18 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test.adb,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 with Ada.Calendar;
 with Ada.Task_Identification;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
-with ColdFrame.States.Test_Support;
+with ColdFrame.Events.Test_Support;
 with GNAT.IO; use GNAT.IO;
 
-procedure ColdFrame.States.Test is
+procedure ColdFrame.Events.Test is
 
    Ins : aliased Test_Support.Instance;
 
@@ -33,13 +33,13 @@ procedure ColdFrame.States.Test is
 begin
 
    E := new Test_Support.Noisy_Ev (Ins'Unchecked_Access);
-   States.Set (The => Test_Support.T1,
+   Events.Set (The => Test_Support.T1,
                On => Test_Support.Noisy_Dispatcher,
                To_Fire => E,
                After => 1.0);
 
    E := new Test_Support.Noisy_Ev (Ins'Unchecked_Access);
-   States.Set (The => Test_Support.T2,
+   Events.Set (The => Test_Support.T2,
                On => Test_Support.Noisy_Dispatcher,
                To_Fire => E,
                After => 2.0);
@@ -56,7 +56,7 @@ begin
       for I in 1 .. Loops / 1000 loop
          for J in 1 .. 1000 loop
             Ev := new Test_Support.Quiet_Ev (Ins'Unchecked_Access);
-            States.Post (The => Ev, On => Test_Support.Quiet_Wall_Dispatcher);
+            Events.Post (The => Ev, On => Test_Support.Quiet_Wall_Dispatcher);
          end loop;
          delay 0.00001;
       end loop;
@@ -74,7 +74,7 @@ begin
       for I in 1 .. Loops / 1000 loop
          for J in 1 .. 1000 loop
             Ev := new Test_Support.Quiet_Ev (Ins'Unchecked_Access);
-            States.Post (The => Ev, On => Test_Support.Quiet_Real_Dispatcher);
+            Events.Post (The => Ev, On => Test_Support.Quiet_Real_Dispatcher);
          end loop;
          delay 0.00001;
       end loop;
@@ -84,4 +84,4 @@ begin
 
    Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
 
-end ColdFrame.States.Test;
+end ColdFrame.Events.Test;

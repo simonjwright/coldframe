@@ -20,14 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.adb,v $
---  $Revision: 82446a9d6129 $
---  $Date: 2002/02/06 20:49:33 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
 with BC.Containers.Queues.Ordered.Unbounded;
 
-package body ColdFrame.States.Wall_Timer is
+package body ColdFrame.Events.Wall_Timer is
 
 
    procedure Post (The : Event_P;
@@ -251,4 +251,4 @@ package body ColdFrame.States.Wall_Timer is
    end Excluder;
 
 
-end ColdFrame.States.Wall_Timer;
+end ColdFrame.Events.Wall_Timer;

@@ -20,11 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer-debug.ads,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
-package ColdFrame.States.Wall_Timer.Debug is
+package ColdFrame.Events.Wall_Timer.Debug is
 
    pragma Elaborate_Body;
 
@@ -58,4 +58,4 @@ private
    procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue);
 
-end ColdFrame.States.Wall_Timer.Debug;
+end ColdFrame.Events.Wall_Timer.Debug;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: 8937907f915d $
---  $Date: 2002/02/06 20:50:35 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -29,7 +29,7 @@ with Ada.Real_Time;
 with Ada.Finalization;
 with ColdFrame.Instances;
 
-package ColdFrame.States is
+package ColdFrame.Events is
 
    pragma Elaborate_Body;
 
@@ -183,4 +183,4 @@ private
    --  Timer_Queue; we supply both slots, Timer_Queue to choose.
 
 
-end ColdFrame.States;
+end ColdFrame.Events;

@@ -13,11 +13,11 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test_support.adb,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
-package body ColdFrame.States.Test_Support is
+package body ColdFrame.Events.Test_Support is
 
 
    function State_Image (This : Instance) return String is
@@ -34,8 +34,8 @@ package body ColdFrame.States.Test_Support is
    procedure Handler (This : Noisy_Ev) is
    begin
       delay 0.5;
-      States.Unset (The => T2,
+      Events.Unset (The => T2,
                     On => Noisy_Dispatcher);
    end Handler;
 
-end ColdFrame.States.Test_Support;
+end ColdFrame.Events.Test_Support;

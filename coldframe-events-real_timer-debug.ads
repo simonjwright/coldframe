@@ -20,11 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-real_timer-debug.ads,v $
---  $Revision: 8f8b358d26d1 $
---  $Date: 2002/02/06 20:46:50 $
+--  $Revision: fa4d5d083322 $
+--  $Date: 2002/02/20 20:23:57 $
 --  $Author: simon $
 
-package ColdFrame.States.Real_Timer.Debug is
+package ColdFrame.Events.Real_Timer.Debug is
 
    pragma Elaborate_Body;
 
@@ -58,4 +58,4 @@ private
    procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue);
 
-end ColdFrame.States.Real_Timer.Debug;
+end ColdFrame.Events.Real_Timer.Debug;
