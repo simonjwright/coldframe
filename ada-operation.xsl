@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v cdac8979a291 2001/10/13 16:42:12 simon $ -->
+<!-- $Id: ada-operation.xsl,v 0399a24898f9 2001/10/29 05:54:29 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -692,23 +692,27 @@
   <xsl:template name="generate-dispatch-to-parent">
 
     <!-- The current class (not necessarily the one where the operation
-         is defined, if we're talking inheritance) -->
+         is defined; we're talking inheritance) -->
     <xsl:param name="current"/>
 
     <!--          
          {return} {parent}.{operation-name}
            (This => {parent}.Handle (Get_{relation}_Parent (This)){,
-         other-parameter-assignments});
+            other-parameter-assignments});
          -->
 
     <!-- Save the current operation. -->
     <xsl:variable name="op" select="."/>
-    
-    <!-- XXX won't work with multiple inheritance -->
-    <xsl:variable
-      name="rel"
-      select="/domain/inheritance[child=$current/name]"/>
-    
+
+    <!-- Find the relation through which we've inherited the operation. -->    
+    <xsl:variable name="rel-name">
+      <xsl:call-template name="find-implementing-relationship">
+          <xsl:with-param name="child" select="$current/name"/>
+          <xsl:with-param name="parents" select="../name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="rel" select="/domain/inheritance[name=$rel-name]"/>
+
     <xsl:text>with </xsl:text>
     <xsl:value-of select="/domain/name"/>
     <xsl:text>.</xsl:text>
@@ -757,7 +761,39 @@
 
   </xsl:template>
 
-  
+
+  <!-- Called at class/operation to determine the relationship through
+       which an operation is inherited. I had hoped to return the
+       relationship, but can only manage to return a string. -->
+  <xsl:template name="find-implementing-relationship">
+
+    <!-- The potential parents. -->
+    <xsl:param name="parents"/>
+
+    <!-- The child class we're looking for. -->
+    <xsl:param name="child"/>
+
+    <xsl:choose>
+
+      <xsl:when test="/domain/inheritance[child=$child and parent=$parents]">
+        <xsl:value-of select="/domain/inheritance
+                              [child=$child and parent=$parents]/name"/>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:call-template name="find-implementing-relationship">
+          <xsl:with-param name="child" select="$child"/>
+          <xsl:with-param
+            name="parents"
+            select="/domain/inheritance[parent=$parents]/child"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
+
+
   <!-- Called at class/operation to generate a body (which compiles,
        but raises Program_Error). -->
   <xsl:template name="generate-body">
