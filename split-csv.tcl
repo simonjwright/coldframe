@@ -19,7 +19,7 @@ exec tclsh "$0" "$@"
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
 # USA.
 
-# $Id: split-csv.tcl,v 873ac776fc89 2004/02/10 09:44:27 simon $
+# $Id: split-csv.tcl,v 674683dc8190 2004/02/11 06:26:03 simon $
 
 # Splits a CSV file containing a header line and data lines into
 # multiple CSV files, depending on the value in a particular column.
@@ -65,13 +65,6 @@ proc process {from baseName col} {
         exit 1
     }
 
-    # make a regex which extracts the required column
-    set rgx "^"
-    for {set c 1} {$c < $col} {incr c} {
-        set rgx [format "%s\[^,\]*," $rgx]
-    }
-    set rgx [format "%s(\[^,\]+)" $rgx]
-
     # we need the header line to copy into every output file
     gets $from firstLine
 
@@ -84,44 +77,36 @@ proc process {from baseName col} {
         if {![eof $from]} {
 
             # extract the required column
-            if {![regexp $rgx $l wh field]} {
+            set field [string trim [lindex [split $l ","] [expr $col - 1]]]
 
-                puts stderr "failed to find column $col in line $l"
-
-            } else {
-
-                # remove white space
-                set field [string trim $field]
-
-                # check for sensible content (we don't want hundreds
-                # of files to be created if the user names a numeric
-                # field by mistake!)
-                if {![regexp {^[a-z]} [string tolower $field]]} {
-                    puts stderr "split column contains \"$field\", \
+            # check for sensible content (we don't want hundreds of
+            # files to be created if the user names a numeric field by
+            # mistake!)
+            if {![regexp {^[a-z]} [string tolower $field]]} {
+                puts stderr "split column contains \"$field\", \
                                  not splitting"
-                    exit 1
-                }
-
-                # make the file name
-                set file "$baseName.$field.csv"
-
-                # create it if necessary
-                if [expr ![info exists files($file)]] {
-
-                    # report the new filename
-                    puts stderr "opening file $file"
-
-                    # open the file
-                    set files($file) [open $file w]
-
-                    # output the header line
-                    puts $files($file) $firstLine
-                }
-
-                # output the line just read
-                puts $files($file) $l
-
+                exit 1
             }
+
+            # make the file name
+            set file "$baseName.$field.csv"
+
+            # create it if necessary
+            if [expr ![info exists files($file)]] {
+
+                # report the new filename
+                puts stderr "opening file $file"
+
+                # open the file
+                set files($file) [open $file w]
+
+                # output the header line
+                puts $files($file) $firstLine
+            }
+
+            # output the line just read
+            puts $files($file) $l
+
         }
     }
     # should close the files ..
