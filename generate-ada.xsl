@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v a41d8eaf800b 2002/01/27 11:12:16 simon $ -->
+<!-- $Id: generate-ada.xsl,v 6e5c476abc77 2002/02/17 11:29:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,6 +28,7 @@
   version="1.0">
 
   <xsl:import href="ada-association.xsl"/>
+  <xsl:import href="ada-association-collection.xsl"/>
   <xsl:import href="ada-attribute.xsl"/>
   <xsl:import href="ada-callback.xsl"/>
   <xsl:import href="ada-class.xsl"/>
@@ -238,6 +239,26 @@
         select="'.. package bodies for Associations ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="association" mode="association-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package specs for Associations (navigation from collections) -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package specs for Associations (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates select="association" mode="association-collection-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Associations (navigation from collections) -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package bodies for Associations (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates select="association" mode="association-collection-body">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 

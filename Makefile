@@ -33,6 +33,7 @@ HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
 CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-association.xsl \
+  ada-association-collection.xsl \
   ada-attribute.xsl \
   ada-callback.xsl \
   ada-class.xsl \
