@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6594fd7ac00e 2001/06/26 18:48:32 simon $ -->
+<!-- $Id: ada-class.xsl,v 3a64376f8125 2001/07/01 10:55:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -455,7 +455,7 @@
         <xsl:text>    Maps.Unbind&#10;</xsl:text>
         <xsl:text>      (The_Container,&#10;</xsl:text>
         <xsl:text>       (</xsl:text>
-        <xsl:for-each select="attribute[@identifier='yes']">
+        <xsl:for-each select="attribute[@identifier]">
           <xsl:call-template name="attribute-name"/>
           <xsl:text> =&gt; This.</xsl:text>
           <xsl:call-template name="attribute-name"/>
@@ -603,7 +603,7 @@
   <!-- Called to assign values to attributes on creation (identifier
        attributes only) -->
   <xsl:template
-    match="attribute[@identifier='yes']"
+    match="attribute[@identifier]"
     mode="identifier-element-assignment">
     <xsl:text>    Result.</xsl:text>
     <xsl:call-template name="attribute-name"/>
@@ -658,7 +658,7 @@
       <xsl:otherwise>
         <xsl:if test="attribute/type='Autonumber'">
           <xsl:message terminate="yes">
-            <xsl:text>ColdFrame: invalid use of Autonumber in </xsl:text>
+            <xsl:text>CF: invalid use of Autonumber in </xsl:text>
             <xsl:value-of select="name"/>
           </xsl:message>
         </xsl:if>
@@ -700,7 +700,7 @@
         <xsl:text>  begin&#10;</xsl:text>
         <xsl:text>    Result := new Instance;&#10;</xsl:text>
         <xsl:apply-templates
-          select="attribute[@identifier='yes']"
+          select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
         <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
         <xsl:text>    return Result;&#10;</xsl:text>
@@ -775,7 +775,9 @@
 
 
   <!-- Generate task entry specs. -->
-  <xsl:template mode="task-entry" match="operation[not(@return)]">
+  <xsl:template
+    mode="task-entry"
+    match="operation[not(@return) and not(@class)]">
     <xsl:text>    entry </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:call-template name="entry-parameter-list">
