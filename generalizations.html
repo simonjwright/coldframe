@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v f62314dda0bd 2004/11/13 18:01:24 simon $ -->
+<!-- $Id: generalizations.html,v 451b108e065d 2004/12/06 10:06:24 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -83,12 +83,24 @@ only <i>Pool Van</i>s can be sent for servicing.
 <p>You <em>must not</em> specify identifiers for child classes in
 inheritance relationships.
 
-<p>ColdFrame supports polymorphism. Instance operations marked
-<em>&#171;abstract&#187;</em> are dispatched to the current child
-(skipping down the inheritance tree until a concrete implementation is
-found), while a child class receives upward-dispatching
-implementations of all normal (non-<em>&#171;class&#187;</em>) concrete
-parental instance operations.
+<p>ColdFrame supports polymorphism.
+
+<ul>
+
+<li>You can mark an instance operation <em>&#171;abstract&#187;</em>
+in a parent to show that it will be implemented (differently,
+presumably!) by the children.
+
+<li>A public or protected concrete (non-abstract) instance operation
+in a parent class has matching versions available to be called in all
+the children (you can provide an alternative for a particular child if
+it makes sense, in which case its children inherit the version closer
+to them).
+<br>Note that this includes <em>&#171;accessor&#187;</em> operations
+(this is how to get at parental attributes).
+
+
+</ul>
 
 <p>ColdFrame supports multiple inheritance, but not partitioned
 inheritance. In spite of this, you need to name all the
@@ -178,6 +190,26 @@ identifier with one identifying attribute for each parent.
 <p>There's <a href="generalizations-extended.html">additional
 support</a>, particularly for dynamic classification (subtype
 migration).
+
+<h3>Operations</h3>
+
+<p>Instance operations marked <em>&#171;abstract&#187;</em> are
+dispatched to the current child (skipping down the inheritance tree
+until a concrete implementation is found), while a child class
+receives upward-dispatching implementations of all concrete parental
+instance operations provided that
+<ul>
+<li>they aren't <em>&#171;class&#187;</em> operations,
+<li>they are public or protected.
+</ul>
+
+<h3>Attributes</h3>
+
+<p>With this translator, the attributes of a parental class aren't
+visible to children any more than to any other class (in C++ terms,
+they are <i>provate</i>).. You can provide
+<em>&#171;accessor&#187;</em> operations in the parent to give the
+necessary visibility.
 
 <h2>Use</h2>
 
