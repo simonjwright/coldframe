@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v f0d376d8da8e 2001/10/04 19:48:31 simon $ -->
+<!-- $Id: releases.html,v a9a9cbb1e768 2001/10/11 19:49:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -108,9 +108,17 @@ value.
 <tt>ColdFrame.Hash</tt>.
 
 
-<p>
+<p>Generated package specs and bodies have added blank lines to make
+them easier to read. This is controlled by the Make variable
+<tt>BLANK_LINES</tt> (<tt>yes</tt> means "add blank lines", anything
+else means "don't").
 
-<dt>20010819
+
+<p>Verbosity is controlled by the Make variable <tt>VERBOSE</tt>;
+<tt>yes</tt> means "be chatty", anything else means "don't".
+
+
+<p><dt>20010819
 
 <dd>The Domain <tt>Initialize</tt> procedure used to call an
 <tt>Initialize</tt> procedure for each Class, for which a default
@@ -177,9 +185,7 @@ indentation 3 spaces, continuations 2 spaces). These can be
 overridden.
 
 
-<p>
-
-<dt>20010707
+<p><dt>20010707
 
 <dd>Generate the <tt>Link</tt> operation for 1-(1:1) associations correctly.
 
@@ -209,9 +215,7 @@ possible. This is because of GNAT 3.14a1 problems with complex
 separates.
 
 
-<p>
-
-<dt>20010623
+<p><dt>20010623
 
 <dd>Operations can be stereotyped as "access to subprogram" (and, by
 implication, as &#171;class&#187; operations) using
@@ -277,9 +281,7 @@ operations.
 <p>Associations with &#171;singleton&#187;s now supported.
 
 
-<p>
-
-<dt>20010520
+<p><dt>20010520
 
 <dd>Includes support for Associations.
 
@@ -298,9 +300,7 @@ are declared after record types that they reference).
 or &#171;singleton&#187;.
 
 
-<p>
-
-<dt>20010325
+<p><dt>20010325
 
 <dd>Whether a class is a singleton or not is now determined by the
 &#171;singleton&#187; stereotype (or annotation).
@@ -343,9 +343,7 @@ file (<tt>gnat.adc</tt>) or use the <tt>-gnatX</tt> flag.
 href="http://www.pushface.org/components/bc/">Booch Components</a>.
 
 
-<p>
-
-<dt>20010228
+<p><dt>20010228
 
 <dd>Choose between Bounded and Unbounded Containers depending on the
 class' <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
@@ -356,9 +354,7 @@ class' <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
 <p>Added documentation on the paraphernalia surrounding an Identified
 Class Package.
 
-<p>
-
-<dt>20010204
+<p><dt>20010204
 
 <dd>Added support for singleton classes (classes with no Identifier
 attributes).
@@ -366,9 +362,7 @@ attributes).
 <p>Added documentation of the relationship between the normalized
 ColdFrame metamodel and generated Ada.
 
-<p>
-
-<dt>20010130
+<p><dt>20010130
 
 <dd>Initial release.
 
