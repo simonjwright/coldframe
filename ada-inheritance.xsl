@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v d2df40ab4bc8 2002/06/08 05:46:50 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v 81fbcf0e111e 2002/07/05 05:52:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -170,6 +170,9 @@
       <xsl:text>.Inheritance;&#10;</xsl:text>
     </xsl:for-each>
 
+    <!-- We need ColdFrame.Exceptions. -->
+    <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+
     <!-- XXX ColdFrame.Instances? (state machines) -->
 
   </xsl:template>
@@ -296,7 +299,7 @@
 
         <!--
              if {abbrev} = null then
-                return Create; - or raise Program_Error if not auto-id
+                return Create; - or raise No_Default_Create if not auto-id
              else
                 pragma Assert
                   ({abbrev}.all in Instance'Class,
@@ -323,7 +326,7 @@
 
           <xsl:otherwise>
              <xsl:value-of select="$III"/>
-             <xsl:text>raise Program_Error;&#10;</xsl:text>
+             <xsl:text>raise ColdFrame.Exceptions.No_Default_Create;&#10;</xsl:text>
              <xsl:value-of select="$III"/>
              <xsl:text>return null;&#10;</xsl:text>
          </xsl:otherwise>
@@ -379,10 +382,10 @@
                   (({rel-1}_Parent => ColdFrame.Instances.Handle ({p1-abbrev}_H)),
                     {rel-2}_Parent => ColdFrame.Instances.Handle ({p2-abbrev}_H));
              else
-                pragma Assert
-                  ({rp1-abbrev} = {rp2-abbrev}
-                   and then {rp2-abbrev} = {rp3-abbrev},
-                   "mismatched handles in Create_Tree");
+                if {rp1-abbrev} /= {rp2-abbrev}
+                  or else rp2-abbrev} /= {rp3-abbrev} then
+                   raise ColdFrame.Exceptions.Mismatched_Handles;
+                end if;
                 - pragma Assert
                 -   (Maps.Is_Bound (The_Container, (Id => Handle ({rp1-abbrev}).Id)),
                 -    "unbound handle in Create_Tree");
@@ -465,9 +468,7 @@
           <!-- We need to check that all the "root" handles are the same. -->
             
           <xsl:value-of select="$III"/>
-          <xsl:text>pragma Assert&#10;</xsl:text>
-          <xsl:value-of select="$IIIC"/>
-          <xsl:text>(</xsl:text>
+          <xsl:text>if </xsl:text>
 
           <!-- Need a variable here .. following-sibling won't match
                otherwise, because we'd have to go back up (and the
@@ -484,18 +485,20 @@
           <xsl:for-each select="$roots/root">
             <xsl:if test="not(position()=last())">
               <xsl:value-of select="."/>
-              <xsl:text> = </xsl:text>
+              <xsl:text> /= </xsl:text>
               <xsl:value-of select="following-sibling::node()"/>
               <xsl:if test="position()&lt;(last()-1)">
                 <xsl:text>&#10;</xsl:text>
                 <xsl:value-of select="$IIIC"/>
-                <xsl:text> and then </xsl:text>
+                <xsl:text> or else </xsl:text>
               </xsl:if>
             </xsl:if>
           </xsl:for-each>
-          <xsl:text>,&#10;</xsl:text>
-          <xsl:value-of select="$IIIC"/>
-          <xsl:text> "mismatched handles in Create_Tree");&#10;</xsl:text>
+          <xsl:text> then&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>raise ColdFrame.Exceptions.Mismatched_Handles;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>end if;&#10;</xsl:text>
 
         </xsl:if>
 
