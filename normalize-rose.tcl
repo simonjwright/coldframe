@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 018f4445d7dc 2002/02/17 10:07:27 simon $
+# $Id: normalize-rose.tcl,v 1a28ff9af4ee 2002/02/23 13:37:11 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -462,6 +462,16 @@ itcl::class Container {
 	return [$this -atIndex $index]
     }
 
+    # Return a List of the members
+    method -getMembers {} {
+	set res {}
+	set size [$this -size]
+	for {set i 0} {$i < $size} {incr i 1} {
+	    lappend res [$this -atIndex $i]
+	}
+	return $res
+    }
+
     method -complete {} {
 	[stack -top] -[$this -className] $this
     }
@@ -693,6 +703,8 @@ itcl::class Domain {
 itcl::class Class {
     inherit Element
 
+    constructor {} {set events [EventSet ::#auto]}
+
     # contains the attributes
     variable attributes
 
@@ -702,6 +714,22 @@ itcl::class Class {
     variable operations
 
     method -operations {l} {set operations $l}
+
+    # contains any events
+    variable events
+
+    method -events {l} {
+	foreach e [$l -getMembers] {
+	    $events -add $e [$e -getName]
+	}
+    }
+
+    # Interface to let a StateMachine tell us its events
+    method -addEvent {e} {
+	if [$events -isMissing [$e -getName]] {
+	    $events -add $e [$e -getName]
+	}
+    }
 
     # specifies the maximum number of instances (optional)
     variable max
@@ -953,6 +981,7 @@ itcl::class Class {
 	    $this -generateDocumentation
 	    $attributes -generate $domain
 	    $operations -generate $domain
+	    $events -generate $domain
 	    if [info exists statemachine] {
 		$statemachine -generate $domain
 	    }
@@ -978,6 +1007,9 @@ itcl::class Operation {
 
     # is this a finalize operation?
     variable final 0
+
+    # is this a <<message>> event handler:
+    variable handler 0
 
     # is this operation one that we expect to be generated?
     # may be unset, "framework", "navigation", "instantiation".
@@ -1017,6 +1049,13 @@ itcl::class Operation {
 	set final 1
     }
 
+    # called via stereotype mechanism to indicate that this is a
+    # <<message>> event handler (and also a class operation).
+    method -handler {dummy} {
+	set cls 1
+	set handler 1
+    }
+
     # called via stereotype mechanism to indicate that this is
     # expected to be generated or otherwise omitted, and is only
     # included for completeness and to allow its inclusion in
@@ -1042,6 +1081,7 @@ itcl::class Operation {
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
+	if $handler {puts -nonewline " handler=\"yes\""}
 	if [info exists suppressed] {
 	    puts -nonewline " suppressed=\"$suppressed\""
 	}
@@ -1552,10 +1592,19 @@ itcl::class Argument {
 itcl::class Event {
     inherit Element
 
+    variable type
+    method -type {t} { set type $t}
+
     variable arguments
     method -arguments {a} {set arguments $a}
 
+    # Dependencies stereotyped <<event>> produce instance (state machine)
+    # events. Dependencies stereotyped <<message>> produce class events.
+    variable cls 0
+    method -message {dummy} {set cls 1}
+
     variable args {}
+
 
     method -complete {} {
 	if [info exists arguments] {
@@ -1573,8 +1622,13 @@ itcl::class Event {
     }
 
     method -generate {domain} {
-	puts "<event>"
+	puts "<event"
+	if $cls {puts -nonewline "class=\"yes\""}
+	puts ">"
 	putElement name $name
+	if [info exists type] {
+	    putElement type $type
+	}
 	foreach arg $args {
 	    $arg -generate $domain
 	}
@@ -1628,7 +1682,7 @@ itcl::class State {
 itcl::class StateMachine {
     inherit Element
 
-    constructor {} {set events [Events ::#auto]}
+    constructor {} {set events [EventSet ::#auto]}
 
     variable states
     method -states {s} {set states $s}
@@ -1651,12 +1705,19 @@ itcl::class StateMachine {
     method -evaluate {domain} {
 	$states -evaluate $domain
 	$transitions -evaluate $domain
+	set es [$events -getMembers]
+	foreach e $es {
+	    [$this -getOwner] -addEvent $e
+	}
     }
 
     method -generate {domain} {
 	puts "<statemachine>"
 	putElement name "$name"
 	$states -generate $domain
+	# output the events here as well as in the class, so we can generate
+	# the state machine-specific bits (might have some events not
+	# involved in state machine).
 	$events -generate $domain
 	$transitions -generate $domain
 	puts "</statemachine>"
@@ -2002,9 +2063,16 @@ itcl::class EntryActions {
     inherit List
 }
 
-itcl::class Events {
+itcl::class EventSet {
     inherit Container
-    method -className {} {return "events"}
+    method -className {} {return "eventset"}
+}
+
+# This is used because Event occurs in 2 contexts; (a) in <transition>,
+# (b) in <events>.
+itcl::class Events {
+    inherit List
+    method -event {e} {$this -add $e}
 }
 
 itcl::class Inheritances {
@@ -2061,6 +2129,7 @@ proc elementFactory {xmlTag} {
 	end               {return [End #auto]}
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
+	events            {return [Events #auto]}
 	exportcontrol     {return [ExportControl #auto]}
 	extractor         {return [Extractor #auto]}
 	inheritance       {return [Inheritance #auto]}
