@@ -314,6 +314,8 @@ coldframe-project-global_storage_pool.ads-debug \
 coldframe-project-global_storage_pool.ads-standard \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
+coldframe-project-log_error.ads \
+coldframe-project-log_error.adb \
 coldframe-project-serialization.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
