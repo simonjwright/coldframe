@@ -326,7 +326,7 @@ coldframe-project-global_storage_pool.ads-standard: \
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
-ColdFrame.gpr
+ColdFrame.gpr Examples.mdl
 
 DEMO += \
 stairwell_demo.adp stairwell_demo.gpr tash.gpr \
@@ -384,6 +384,15 @@ Library.impl/library-test.ads \
 Library.impl/library_test_harness.adb \
 Library.impl/library-tests.adb \
 Library.impl/library-tests.ads
+
+DEMO += \
+Performance.cat Performance.raw Performance.gpr \
+Performance.impl/performance-cat-speak.adb \
+Performance.impl/performance-event_timing.adb \
+Performance.impl/performance-event_timing.ads \
+Performance.impl/performance-harness.adb \
+Performance.impl/performance-harness.ads \
+Performance.impl/performance-pet-eat.adb
 
 DEMO += \
 Problem_Reporting.cat Problem_Reporting.raw \
