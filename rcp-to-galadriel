@@ -1,4 +1,4 @@
 #! /bin/sh
-# Copy CF to galadriel.frlngtn.gecm.com
+# Copy CF to galadriel.broadoak.portsmth.gecm.com
 
 cd ./dist && rcp -r -p ./* sjw@galadriel:public_html/coldframe/
