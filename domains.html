@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v b0b105a458c4 2004/04/20 20:52:12 simon $ -->
+<!-- $Id: domains.html,v a14ab37067b7 2004/04/20 21:04:28 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -103,7 +103,7 @@ domain's Event Queue and deletes it if this was the last reference,
 
 </ol>
 
-<dt><tt><i>Domain</i>.Cascade_Initialize</tt>
+<dt><tt><a name="cascade-initialize"><i>Domain</i>.Cascade_Initialize</tt></a>
 <dd>If you need the services of a domain, you have (of course) to
 include all the domains that it uses in the build process, At run
 time, these domains need to be initialized. The idea behind
@@ -141,8 +141,9 @@ connections and also to files.
 <p>Each domain must be initialized by calling the procedure
 <tt><i>Domain</i>.Initialize</tt>, probably from your main
 program. Because it's a child unit, it must be <tt>with</tt>ed
-explicitly. <tt><i>Domain</i>.Cascade_Initialize</tt> may save
-trouble.
+explicitly. <a
+href="#cascade-initialize"><tt><i>Domain</i>.Cascade_Initialize</tt></a>
+may save trouble.
 
 <p>If you're building your application, rather than unit tests, you'll
 probably want to pass <tt><i>Domain</i>.Initialize</tt> the Event
