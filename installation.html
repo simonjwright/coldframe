@@ -1,0 +1,287 @@
+<!-- $Id: installation.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Installation</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Installation</h1>
+
+<hr>
+
+<ul>
+<li><a href="#linux">under Linux</a>
+<li><a href="#windows">under Windows</a> 
+</ul>
+
+<hr>
+
+<h2><a name="linux">Installation under Linux</a></h2>
+
+<p>You need
+
+<ul>
+
+<li><a href="http://www.sourceforge.net/projects/tcl/">Tcl/Tk</a>, <a
+href="http://www.sourceforge.net/projects/incrtcl/">[incr Tcl]</a>
+
+<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+(version 2.1theta recommended)
+
+<li>a Java runtime; the <a
+href="http://www.blackdown.org/">Blackdown</a> 1.3.0 version works
+fine
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a>
+(6.<i>n</i>; you need the full version)
+
+<li><a href="ftp://cs.nyu.edu/pub/gnat/">GNAT</a> (at least 3.13p)
+
+<li>The <a href="http://www.pushface.org/components/bc/">Booch
+Components</a>; release 20020117 or later
+
+</ul>
+
+<p>The following installation notes match what's provided in the
+supplied <tt>Makefile-unix</tt>. If you install software elsewhere,
+you'll need to adjust the Makefile (it has hooks for you to use
+environment or command line variables).
+
+<h3>[incr Tcl]</h3>
+
+<p>This one is a bit puzzling. I'd thought that you needed to build
+[incr Tcl] over your Tcl/Tk installation, but it seems that recent
+releases of Tcl/Tk have included [incr Tcl] in the baseline.
+
+<h3>TclXML</h3>
+
+<p>The archive should contain path information, so unpack it at
+<tt>/usr/local/lib</tt>. The Makefile assumes
+<tt>/usr/local/lib/tclxml-2.1theta</tt>.
+
+<h3>Saxon</h3>
+
+<p>The archive doesn't contain path information. A possible
+installation route (for Saxon 6.5.1) is
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> mkdir saxon-6.5.1
+  <i>#</i> ln -sf saxon-6.5.1 saxon
+  <i>#</i> cd saxon
+  <i>#</i> unzip <i>/your/download/directory</i>/saxon6_5_1.zip
+</pre>
+
+<h3>GNAT</h3>
+
+<p>The supplied Makefile assumes only that <tt>gnatchop</tt> is on
+your <tt>PATH</tt>.
+
+<p>You may find it useful to use <a
+href="http://www.pushface.org/gnatfe"><tt>gnatfe</tt></a> to manage
+installing GNAT while retaining your standard <tt>gcc</tt>
+compiler. If you do this, customize <tt>ada-prj-default-comp-cmd</tt>
+so that the compiler is <tt><b>gnat</b>gcc</tt>.
+
+<h3>Booch Components</h3>
+
+<p>Install under <tt>/usr/local/lib</tt>:
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> tar zxvf <i>/your/download/directory</i>/bc-<i>yyymmdd</i>.tgz
+</pre>
+
+<p>installs the BCs in <tt>/usr/local/lib/bc-<i>yyymmdd</i></tt>.
+
+<h3>ColdFrame</h3>
+
+<p>Install under <tt>/usr/local/lib</tt>:
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> tar zxvf <i>/your/download/directory</i>/cf-<i>yyymmdd</i>.tgz
+</pre>
+
+<p>installs ColdFrame in <tt>/usr/local/lib/cf-<i>yyymmdd</i></tt>
+(Ada source is in the <tt>lib</tt> and <tt>project</tt>
+subdirectories).
+
+<h3>Your Makefile</h3>
+
+<p>Create a <tt>Makefile</tt> in the directory where your extracted
+<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
+up the Makefile that ColdFrame provides.
+
+<p>It should contain at least
+
+<pre>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+</pre>
+
+which means you need to type
+
+<pre>
+  <i>$</i> make <i>Domain</i>.gen
+</pre>
+
+If you want to make life even easier, you can change your Makefile to
+
+<pre>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>all:: <i>Domain_1</i>.gen</b>
+  <b>all:: <i>Domain_2</i>.gen</b>
+</pre>
+
+etc, after which you only need to say
+
+<pre>
+  <i>$</i> make
+</pre>
+
+(until, of course, you find you need to add <tt>Domain_3</tt>).
+
+
+
+<p><hr>
+
+<h2><a name="windows">Installation under Windows</a></h2>
+
+<p>You need
+
+<ul>
+
+<li><a href="http://www.cygwin.com/">Cygwin</a>
+
+<li><a href="http://www.Sensus.org/tcl/win32/itcl82.exe">[incr Tcl]</a>
+([incr Tcl] 3.1, over Tcl 8.2)
+
+<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+(version 2.1theta recommended)
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a>
+(6.<i>n</i>; you'll probably find the <i>instantsaxon</i> version
+easiest)
+
+<li><a href="ftp://cs.nyu.edu/pub/gnat/">GNAT</a> (at least 3.13p)
+
+<li>The <a href="http://www.pushface.org/components/bc/">Booch
+Components</a>; release 20020117 or later
+
+</ul>
+
+<h3>Drive</h3>
+
+<p>This note is written assuming that everything is installed on the
+<tt>C:</tt> drive at the top level. <a
+href="#alternate-location">Alternate locations</a> are possible.
+
+<h3>Cygwin</h3>
+
+<p>This is required to allow you to use Make. At some stage I may look
+into a Tk-based build process.
+
+<p>There are no special installation requirements.
+
+<h3>[incr Tcl]</h3>
+
+<p>This needs installing into <tt>C:\Tcl</tt> (not the default
+<i>Program Files</i> location).
+
+<p>You need to select a full installation to get the <i>[incr Tcl]</i>
+components.
+
+<h3>TclXML</h3>
+
+<p>This archive already contains a directory name;
+<tt>C:\tclxml-2.1theta</tt> is what the Makefile assumes.
+
+<h3>Saxon</h3>
+
+<p>This needs unpacking into <tt>C:\Saxon</tt>.
+
+<h3>GNAT</h3>
+
+<p>There are no special installation requirements. However, unless you
+are strongly wedded to the student AdaGIDE environment, I'd recommend
+using <a href="ftp://ftp.gnu.org/gnu/windows/emacs/">Emacs</a> (I know
+20.7 needs some minor tweaks, 21.1 should be OK) and <a
+href="http://libre.act-europe.fr/adamode/">ada-mode</a> (3.6).
+
+<p>If you do use AdaGIDE, you'll probably need to use the
+<tt>ADA_INCLUDE_PATH</tt> environment variable.
+
+<h3>Booch Components</h3>
+
+<p>This needs unpacking into <tt>C:\bc-<i>yyyymmdd</i></tt>.
+
+<h3>ColdFrame</h3>
+
+<p>This needs unpacking into <tt>C:\cf-<i>yyyymmdd</i></tt> (Ada
+source is in the <tt>lib</tt> and <tt>project</tt> subdirectories).
+
+<h3>Your Makefile</h3>
+
+<p>Create a <tt>Makefile</tt> in the directory where your extracted
+<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
+up the Makefile that ColdFrame provides.
+
+<p>It should contain at least
+
+<pre>
+  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+</pre>
+
+(you really do need a forward slash here) which means you need to type
+
+<pre>
+  <i>$</i> make <i>Domain</i>.gen
+</pre>
+
+If you want to make life even easier, you can change your Makefile to
+
+<pre>
+  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>all:: <i>Domain_1</i>.gen</b>
+  <b>all:: <i>Domain_2</i>.gen</b>
+</pre>
+
+etc, after which you only need to say
+
+<pre>
+  <i>$</i> make
+</pre>
+
+(until, of course, you find you need to add <tt>Domain_3</tt>).
+
+<h3><a name="alternate-location">Alternate software locations</a></h3>
+
+<p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
+ColdFrame are installed on the same drive, at the same level; for
+example, <tt>L:\Software\Tools</tt>.
+
+<p>Assuming this location, you'd change your Makefile to
+
+<pre>
+  include <b>L:/Software/Tools</b>/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>TOP = L:/Software/Tools</b>
+
+  all:: <i>Domain_1</i>.gen
+  all:: <i>Domain_2</i>.gen
+</pre>
+
+(and I <em>do</em> mean <tt>/</tt>, not <tt>\</tt>!)
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

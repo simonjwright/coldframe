@@ -1,0 +1,322 @@
+<!-- $Id: generalizations.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<head>
+<title>ColdFrame: Generalizations</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Generalizations</h1>
+
+<h2>Motivation</h2>
+
+<p>The thinking behind ColdFrame is that instead of making code models
+you should be making you should be making what <a
+href="resources.html#analysis-patterns">Martin Fowler</a>, in Appendix
+A1.1, calls "implicit specification models".
+
+<p>One way of looking at it is that modelling ought to be, as far as
+reasonable, independent of the software architecture (both the
+implementation language and the support infrastructure). What we are
+modelling is generalization. We may be able to implement
+generalization using inheritance in our implementation language, but
+this may well fall foul of practicalities; perhaps we have to
+implement in C; maybe we're using an SQL database to implement
+persistence; our implementation language may not support
+<em>multiple</em> inheritance.
+
+<p>Another aspect is dynamic versus static classification.
+
+<p>The major use of generalization (well, specialization) is to
+classify aspects of the subject matter. Inheritance, as implemented in
+C++ or other object-oriented programming languages, is fine for static
+classification (subtyping Animal as Pig, Goat, Cow for example).
+
+<p><a name="rentawreck"><img src="inheritance.gif"></a>
+
+<p>However, a very useful analysis technique is dynamic classification
+(<a href="resources.html#analysis-patterns">Fowler</a>
+A1.3). Rent-a-Wreck has a fleet of vans, which are sometimes on
+hire. We might want to model this as <i>Customer hires Van</i>, which
+is biconditional (a known Customer may not have any Van on hire at the
+moment; a Van may not be hired to anyone at the moment). The model can
+be made less vague by subtyping Van into Hired Van and Pool Van; now
+all Hired Vans have a Customer, so the code doesn't need to check
+whether there's a Customer or not.
+
+<p>The attribute <i>termination</i> only has meaning if the van is on
+hire (it's the date when it's due back), so we shouldn't leave it
+lying around in the parent <i>Van</i> class. Also, the association
+<i>r3</i>, <i>Hired Van</i> <i>is-on-loan-to</i> <i>Customer</i> is
+unconditional, which is good.
+
+<p>Note also the way <i>r1</i>, which maintains the service history of
+the <i>Van</i>, is independent of whether the <i>Van</i> is currently
+hired out or in the pool.
+
+<p>The problem with implementing this model using programming language
+inheritance arises when the Van changes from being Pooled to being
+Hired. There's only one code object, so you have to create a new
+<i>HiredVan</i>, copy the relevant attributes from the old
+<i>PoolVan</i> to it, break any associations with other objects
+(for instance, the <i>Service</i> history), delete the old
+<i>PoolVan</i> and remake the associations.
+
+<p>ColdFrame adopts a halfway-house approach to this, combining the <a
+href="resources.html#build-object-models">Executable UML (originally
+Shlaer-Mellor) view of generalization</a> with dispatching and
+inherited operations.
+
+<p>Of course, there is a cost to dynamic classification; you have to
+decide whether increased precision in the model is worth the extra run
+time costs of maintaining the model.
+
+<p>At present (11 June 2002), ColdFrame expects the set of child
+instances to be complete, which is why <i>Pool Van</i> appears in the
+model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
+<i>Pool Van</i>. This only actually shows up in implementing
+dispatching operations; if you try calling a dispatching operation for
+an instance without a current child you'll get a
+<tt>Constraint_Error</tt>. Often you'll find something interesting to
+say about all the child classes; in the example, it seems likely that
+only <i>Pool Van</i>s can be sent for servicing.
+
+<h2>Modelling</h2>
+
+<p>You <em>must not</em> specify identifiers for child classes in
+inheritance relationships.
+
+<p>ColdFrame supports polymorphism. Instance operations marked
+<em>&#171;abstract&#187;</em> are dispatched to the current child
+(skipping down the inheritance tree until a concrete implementation is
+found), while a child class receives upward-dispatching
+implementations of all normal (non-<em>&#171;class&#187;</em>) concrete
+parental instance operations.
+
+<p>ColdFrame supports multiple inheritance, but not partitioned
+inheritance. In spite of this, you need to name all the
+generalization/specialization links in your class diagram,
+<em>and all the links for a particular relationship must have the same
+name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>).
+
+<h2>Translation</h2>
+
+<h3>Basic mapping</h3>
+
+<h4>Single inheritance</h4>
+
+<p>In the parent class, an inheritance relationship <i>G</i> is mapped onto
+
+<ul>
+
+<li>an enumeration <tt><i>G</i>_Child_Class</tt>, whose literals are
+the names of the child classes with <tt>_T</tt> appended plus a final
+<tt>Null_T</tt>,
+
+<li>a discriminated record <tt><i>G</i>_Child</tt>, with discriminant
+of type <tt><i>G</i>_Child_Class</tt> defaulted to <tt>Null_T</tt>,
+each branch selecting a <tt>ColdFrame.Instances.Handle</tt> of the
+appropriate type,
+
+<li>Get and Set accessor operations (<tt>Get_<i>G</i>_Child</tt>,
+<tt>Set_<i>G</i>_Child</tt>).
+
+</ul>
+
+<p><a href="#rentawreck">From the diagram</a>, we'd get
+
+<pre>
+   type R2_Child_Class is
+     (Hired_Van_T,
+      Pool_Van_T,
+      Null_T);
+
+   type R2_Child (Current : R2_Child_Class := Null_T) is record
+      case Current is
+         when Hired_Van_T =>
+            HV : ColdFrame.Instances.Handle;
+         when Pool_Van_T =>
+            PV : ColdFrame.Instances.Handle;
+         when Null_T => null;
+      end case;
+   end record;
+
+   procedure Set_R2_Child (This : Handle; To_Be : R2_Child);
+
+   function Get_R2_Child (This : Handle) return R2_Child;
+</pre>
+
+<p>In a child class, an inheritance relationship <i>G</i> is mapped onto
+
+<ul>
+
+<li>an identifying attribute named <tt><i>G</i>_Parent</tt> of type
+<tt>ColdFrame.Instances.Handle</tt>,
+
+<li>a Get accessor <tt>Get_<i>G</i>_Parent</tt> (there's no Set,
+because this is an identifying attribute).
+
+</ul>
+
+<p>The <tt>Create</tt> operation in a child class fixes up the
+<tt><i>G</i>_Child</tt> record in the parent.
+
+<p>The <tt>Delete</tt> operation in a parent class deletes the current
+child, if any, recursively; the <tt>Delete</tt> operation in a child
+class nulls out the <tt><i>G</i>_Child</tt> record in the parent.
+
+<h4>Multiple inheritance</h4>
+
+<p>There's no difference between multiple and single inheritance from
+the point of view of a parent (ColdFrame disallows partitioned
+inheritance trees, which in any case aren't really related to
+<em>multiple</em> inheritance).
+
+<p>For children, the implementation for single inheritance is repeated
+for each parent. Note particularly that this means you get an
+identifier with one identifying attribute for each parent.
+
+<h3>Extended mapping</h3>
+
+<p>There's additional support, particularly for dynamic classification
+(subtype migration). It's in child packages
+<tt><i>Domain.Class</i>.Inheritance</tt>, one for each class involved
+in inheritance relationships.
+
+<p>There are two motivations for the use of a child package:
+
+<ul>
+
+<li>you don't need to add to your executable's size unless you use the
+feature,
+
+<li>it's possible to use <tt><i>Class</i>.Handle</tt> rather than
+<tt>ColdFrame.Instances.Handle</tt> - at any rate for "finds".
+
+</ul>
+
+<p><img src="hierarchies-full.png">
+
+<p>The picture shows a fairly complex inheritance hierarchy.
+
+<p><img src="hierarchies.png">
+
+<p>This picture shows a subset of the hierarchy, with all the
+generated operations (in
+<tt><i>Domain.Class</i>.Inheritance</tt>). The operation
+<tt>create&nbsp;new()</tt> was included to show that an operation of a
+class can invoke operations declared in child packages of the class.
+
+<h4>Creation</h4>
+
+<p>All of the classes have a <tt>Create_Tree</tt> function. This
+function has as many parameters as there are "ultimate" or "root"
+ancestors; so classes which are in fact roots classes themselves have
+only the one parameter. The parameters' names are the abbreviations of
+the ultimate ancestor classes, and the types are all
+<tt>ColdFrame.Instances.Handle</tt>.
+
+<p>As you'd expect from the name, the operation creates complete
+trees. The simple example is where you don't already have any
+instances and just want to create the tree all the way to the root(s):
+so, say you wanted a new <i>F_2</i>, you'd write
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree (null, null, null);
+</pre>
+
+<p>which results in new instances of <i>R_1</i>, <i>R_2</i>,
+<i>R_3</i>, <i>S_2</i>, <i>S_3</i>, <i>T_2</i> and <i>F_2</i>, all
+properly linked.
+
+<p><em>Note, this can only work where the root classes have
+<tt>Autonumber</tt> identifiers.</em> If you have a root class with a
+user-supplied identifier, ie with a <tt>Create</tt> function that
+takes parameters, you'll need to do the root creation for this class
+yourself:
+
+<pre>
+   R1_H := R_1.Create ((Name => +"Foo"));
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => ColdFrame.Instances.Handle (R1_H),
+      R2 => null,
+      R3 => null);
+</pre>
+
+<p>(if you don't, you'll get a
+<tt>ColdFrame.Exceptions.No_Default_Create</tt> exception).
+
+<p>If you already have a <i>T_2</i> (in <tt>T2_H</tt>) and want to
+create a new <i>F_2</i> with a new right hand side, you'd say
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => ColdFrame.Instances.Handle (T2_H),
+      R2 => null,
+      R3 => null);
+</pre>
+
+<p>If you already have an <i>S_3</i> (in <tt>S3_H</tt>) and want to
+create a new <i>F_2</i> with a new left hand side, you'd say
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => null,
+      R2 => ColdFrame.Instances.Handle (S3_H),
+      R3 => ColdFrame.Instances.Handle (S3_H));
+</pre>
+
+<p>So, the rule is that you supply the handle of the existing parent
+on the way to each root class; and, if the existing parent has two (or
+more!) root ancestors, you supply its handle for each. If you make a
+mistake here, you'll get one of two exceptions from
+<tt>ColdFrame.Exceptions</tt>:
+
+<dl>
+
+<dt>Unexpected_Class<dd>means that a supplied handle didn't match any
+class along the indicated route.
+
+<dt>Mismatched_Instances<dd>occurs if you supply different instances
+of a class with more than one ultimate ancestor.
+
+</dl>
+
+<h4>Finds</h4>
+
+<p>Each child class has an operation
+<tt><i>Domain.Class</i>.Inheritance.Find_<i>parent-class</i>_Parent</tt>
+for each parental class, returning
+<tt><i>parent-class</i>.Handle</tt>.
+
+<h4>Deletion</h4>
+
+<p>All classes that have children (ie, not <i>F_2</i> in the diagram)
+have a <tt>Delete_Child</tt> operation. This deletes the entire
+subtree beneath.
+
+<h2>Use</h2>
+
+<p>The fact that the relationships are managed using
+<tt>ColdFrame.Instances.Handle</tt> means that you need to do view
+conversions rather more often than is quite friendly.
+
+<pre>
+   Child_H := Child.Create
+      ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
+</pre>
+
+<p>If you're doing this a lot you may find a type renaming convenient:
+
+<pre>
+   subtype CIH is ColdFrame.Instances.Handle;
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

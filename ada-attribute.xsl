@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -58,11 +58,19 @@
 
     <xsl:choose>
 
-      <xsl:when test="attribute or @active">
+      <xsl:when test="attribute or @active or statemachine">
         <!-- There are attributes; output them all. -->
 
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance is limited record&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance is new ColdFrame.Project.Events.Instance_Base with record&#10;</xsl:text>
+            
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance is new ColdFrame.Instances.Instance_Base with record&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
 
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
@@ -85,6 +93,14 @@
           <xsl:text>_Child;&#10;</xsl:text>
         </xsl:for-each>
 
+        <!-- state machine status -->
+        <xsl:if test="statemachine">
+          <xsl:value-of select="$II"/>
+          <xsl:text>State_Machine_State : State_Machine_State_T := </xsl:text>
+          <xsl:value-of select="statemachine/state[@initial]/name"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:if>
+
         <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
 
@@ -92,7 +108,7 @@
 
       <xsl:otherwise>
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance is limited null record;&#10;</xsl:text>
+        <xsl:text>type Instance is new ColdFrame.Instances.Instance_Base with null record;&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -101,7 +117,7 @@
 
   <!-- Generate the individual components of the class identifier 
        or instance record. -->
-  <xsl:template match="attribute" mode="instance-record-component">
+  <xsl:template match="attribute[not(@class)]" mode="instance-record-component">
     <xsl:call-template name="single-record-component">
       <xsl:with-param name="indent" select="$II"/>
     </xsl:call-template>
@@ -112,12 +128,22 @@
 
   <!-- Generate get specs. -->
   <xsl:template
-    match="class/attribute"
+    match="class/attribute[not(@class)]"
     mode="attribute-get-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
 
-      <!-- Get function -->
+      <!-- Get function, with comment for generated associative referential
+           attributes -->
+
+      <xsl:if test="@refers">
+        <xsl:variable name="rel" select="@relation"/>
+        <xsl:if test="/domain/association/name=$rel and not(name)">
+          <xsl:value-of select="$I"/>
+          <xsl:text>--  Private use only&#10;</xsl:text>
+        </xsl:if>
+      </xsl:if>
+
       <xsl:call-template name="attribute-get-header"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -157,12 +183,22 @@
 
   <!-- Generate set specs (non-identifier attributes only). -->
   <xsl:template
-    match="class/attribute[not(@identifier)]"
+    match="class/attribute[not(@identifier) and not(@class)]"
     mode="attribute-set-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
       
-      <!-- Set procedure -->
+      <!-- Set procedure, with comment for generated associative referential
+           attributes -->
+
+      <xsl:if test="@refers">
+        <xsl:variable name="rel" select="@relation"/>
+        <xsl:if test="/domain/association/name=$rel and not(name)">
+          <xsl:value-of select="$I"/>
+          <xsl:text>--  Private use only&#10;</xsl:text>
+        </xsl:if>
+      </xsl:if>
+
       <xsl:call-template name="attribute-set-header"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -203,7 +239,7 @@
 
   <!-- Called from domain/class to generate get bodies -->
   <xsl:template
-    match="class/attribute"
+    match="class/attribute[not(@class)]"
     mode="attribute-get-body">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
@@ -232,7 +268,7 @@
   <!-- Called from domain/class to generate set bodies (non-
        identifier attributes only) -->
   <xsl:template
-    match="class/attribute[not(@identifier)]"
+    match="class/attribute[not(@identifier) and not(@class)]"
     mode="attribute-set-body">
     
     <xsl:if test="@refers or $generate-accessors='yes'">
@@ -300,10 +336,7 @@
   <xsl:template name="attribute-type">
     <xsl:choose>
       <xsl:when test="@refers">
-        <xsl:call-template name="type-name">
-          <xsl:with-param name="type" select="@refers"/>
-          <xsl:with-param name="class" select=".."/>
-        </xsl:call-template>
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="type-name">

@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: library-tests.adb,v f4fe3a74c81e 2001/09/04 05:20:33 simon $
+--  $Id: library-tests.adb,v f4174e313367 2001/10/13 13:09:04 simon $
 
 with AUnit.Test_Cases.Registration;
 use AUnit.Test_Cases.Registration;
@@ -22,10 +22,8 @@ with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with ColdFrame.Exceptions;
 
-with Library.Book.Abstract_Containers;
 with Library.Book.All_Instances;
 with Library.Book.Collections;
-with Library.Borrower.Abstract_Containers;
 with Library.Borrower.All_Instances;
 with Library.Borrower.Collections;
 with Library.Current_Loan.Collections;
@@ -39,6 +37,8 @@ with Library.Tear_Down;
 
 package body Library.Tests is
 
+
+   pragma Style_Checks (Off);
 
    function "+" (S : String) return Unbounded_String
      renames To_Unbounded_String;
@@ -119,6 +119,7 @@ package body Library.Tests is
 
 
    procedure T1 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       B : Borrower.Handle;
       use type Borrower.Handle;
    begin
@@ -128,6 +129,7 @@ package body Library.Tests is
    end T1;
 
    procedure T2 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       B : Borrower.Handle;
       use type Borrower.Handle;
    begin
@@ -136,6 +138,7 @@ package body Library.Tests is
    end T2;
 
    procedure T3 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
       use type Book.Handle;
    begin
@@ -145,6 +148,7 @@ package body Library.Tests is
    end T3;
 
    procedure T4 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
       use type Book.Handle;
    begin
@@ -154,6 +158,7 @@ package body Library.Tests is
    end T4;
 
    procedure T5 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
       use type Book.Handle;
    begin
@@ -171,6 +176,7 @@ package body Library.Tests is
    end T5;
 
    procedure T6 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bs : Borrower.Collections.Collection;
    begin
       Bs := Authorship.Wrote (Book.Collections.Null_Container);
@@ -179,6 +185,7 @@ package body Library.Tests is
    end T6;
 
    procedure T7 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bs : Borrower.Collections.Collection;
    begin
       Bs := Authorship.Wrote (Book.All_Instances);
@@ -195,6 +202,7 @@ package body Library.Tests is
    end T7;
 
    procedure T8 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
    begin
       Bks := Authorship.Was_Written_By (Borrower.Collections.Null_Container);
@@ -203,6 +211,7 @@ package body Library.Tests is
    end T8;
 
    procedure T9 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
    begin
       Bks := Authorship.Was_Written_By (Borrower.All_Instances);
@@ -211,6 +220,7 @@ package body Library.Tests is
    end T9;
 
    procedure T10 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Cl : Current_Loan.Handle;
    begin
       Cl := Current.Link (Is_On_Loan_To => Alice,
@@ -220,6 +230,7 @@ package body Library.Tests is
    end T10;
 
    procedure T11 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       B : Borrower.Handle;
       use type Borrower.Handle;
    begin
@@ -229,6 +240,7 @@ package body Library.Tests is
    end T11;
 
    procedure T12 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       B : Borrower.Handle;
       use type Borrower.Handle;
    begin
@@ -238,6 +250,7 @@ package body Library.Tests is
    end T12;
 
    procedure T13 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       B : Borrower.Handle;
       use type Borrower.Handle;
    begin
@@ -247,6 +260,7 @@ package body Library.Tests is
    end T13;
 
    procedure T14 (T : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
    begin
       Bks := Current.Is_On_Loan_To (null);

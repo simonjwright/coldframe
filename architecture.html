@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 077f9f0c3669 2001/09/27 18:30:58 simon $ -->
+<!-- $Id: architecture.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -6,506 +6,92 @@
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Architecture</h1>
 
-The first version of ColdFrame contains a single software
+<p>The first version of ColdFrame contains a single software
 architecture. This involves:
 
 <ul>
 
-<li><a href="#target">a target platform</a>,
+<li><a href="target.html">a target platform</a>,
 
-<li><a href="#strategy">a strategy</a>,
+<li><a href="strategy.html">a strategy</a>,
 
-<li><a href="#preparation">preparation of models in Rational Rose</a>,
+<li><a href="preparation.html">preparation of models in Rational Rose</a>,
 
-<li><a href="#extraction">extraction of models from Rose</a>,
+<li><a href="extraction.html">extraction of models from Rose</a>,
 
-<li><a href="#conversion">conversion to standard form</a>,
-
-<li><a href="#generation">generation of code</a>,
-
-<li>using <a href="#support">specially written support components</a>
-
-<li>and a set of <a href="use-of-bcs.html">generic container
-components</a>.
+<li><a href="conversion.html">conversion to standard form</a>,
 
 </ul>
 
+(which should all be implementation-independent), followed by
+
+<ul>
+
+<li><a href="generation.html">generation of code</a>
+
+<li>according to a set of <a href="translation-rules.html">translation
+rules</a>,
+
+<li>using <a href="support.html">specially written support
+components</a>
+
+<li>and a set of <a href="use-of-bcs.html">generic container
+components (with notes on their use)</a>.
+
+</ul>
+
+
+<p>I'm considering an alternate presentation of the architecture, with
+discussion of a number of topics under the headings Motivation (why),
+Modelling (how, hints and tips, annotations), Translation (mappings,
+effect of annotations) and Use (tips on calling etc):
+
+<ul>
+
+<li><a href="domains.html">Domains</a>
+
+<li><a href="classes.html">Classes</a>
+
+<ul>
+
+<li><a href="attributes.html">Attributes</a>
+
+<li><a href="operations.html">Operations</a>
+
+<ul>
+
+<li><a href="operation-parameters.html">Parameters</a>
+
+<li><a href="operation-results.html">Results</a>
+
+</ul>
+
+</ul>
+
+<li><a href="associations.html">Associations</a>
+
+<li><a href="generalizations.html">Generalisations/specialisations</a>
+
+<li><a href="types.html">Types</a>
+
+<ul>
+
+<li><a href="type-callbacks.html">Callbacks</a>
+
+</ul>
+
+<li><a href="events.html">Events</a>
+
+</ul>
+
+<!--
 <p>You can see a UML <a href="coldframe-architecture.pdf">diagram</a>
 of the current architecture, together with <a
 href="coldframe-architecture.html">descriptions</a> of the classes
 involved.
+-->
 
-<h2><a name="target">Target platform</a></h2>
-
-<p>The target is a memory-resident Ada software architecture (for
-example, a <a href="http://www.windriver.com/">VxWorks</a>-based
-controller).
-
-<h2><a name="strategy">Strategy</a></h2>
-
-<p>It's fundamental to the idea of ColdFrame that you don't need to
-build a design model by decorating your clean, beautiful analysis
-model with all sorts of support clutter (lists, queues etc). The
-software architect decides how analysis models are to be translated
-into code, and a mechanical process (applied either by a programmer or
-by a program) applies the rules.
-
-<p>That isn't to say that you can be slapdash about your models. Often
-people will treat the modelling phase as if it were a sketchy
-whiteboard activity; you can't do that if the model is going to be
-translated directly into code (not that that was ever a good idea!)
-
-<p>Examples of commercial products which take this approach are
-Software through Pictures from <a
-href="http://www.aonix.com/">Aonix</a> and <a
-href="http://www.artisansw.com/">ARTiSAN Software</a>'s Real-Time
-Modeler.
-
-<p>It's important that the tool lets the architect adopt different
-strategies depending on circumstances. For example, ColdFrame
-generates quite different code for a class with the stereotype
-<em>&#171;singleton&#187;</em>.
-
-<p>This need makes it very advantageous to have a complete programming
-environment available while scripting the output. Predetermined
-substitution variables aren't likely to fill the bill.
-
-<h2><a name="preparation">Preparation of models in Rational
-Rose</a></h2>
-
-<h3>Shlaer-Mellor aspects</h3>
-
-<p>It's not possible here to give a detailed tutorial on the
-Shlaer-Mellor approach. An excellent book is "How to Build
-Shlaer-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
-0-13-207663-2. Note also that the full Shlaer-Mellor approach involves
-full translation of the code of operations and actions as well as the
-generation of the framework which is all that ColdFrame attempts (this
-year).
-
-<p>Instances of a Class must be uniquely identifiable by some
-attribute or combination of attributes. For example, a Vehicle Excise
-Disk might be identified by the combination of Vehicle Index Mark and
-Validity Start Date. Vehicle Index Mark and Validity Start Date then
-become "identifying attributes", whereas Date Of Issue and Period Of
-Validity are just common-or-garden attributes.
-
-<p>In ColdFrame, you must <em>not</em> specify identifiers for
-
-<ul>
-<li>child classes in inheritance relationships,
-<li>associative classes,
-<li>singletons, or
-<li>types.
-</ul>
-
-All other classes must have identifiers.
-
-<p>Role names in associations are very important, and should be verbs
-or verb phrases. Each end of the association must be named; the object
-of the verb phrase is the class at the same end as the name, the
-subject is the class at the other end. So, for example, you might have
-<em>Window "appears on" Screen</em>, <em>Screen "displays"
-Window</em>. Often the role names will be inverses of each other, but
-sometimes things really do seem different depending on where you're
-standing. <em>[By the way, the references are far from clear whether
-this choice of end convention is in fact correct. I think it is,
-judging by the way Rose and Rhapsody show associations in the Browser
-and generate code.]</em>
-
-<p>Careful consideration of the multiplicity of associations is very
-important. Clearly each <em>Screen</em> <em>"displays"</em> a number
-of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
-more than one <em>Screen</em>? (perhaps, if you have multi-headed
-display capability). Can you have a <em>Window</em> which <em>"appears
-on"</em> no <em>Screen</em>s? (well, no, not if your display
-technology is X--in which case <em>"appears on"</em> may not be quite
-right either, since the application could be iconised).
-
-<p>Unconditional multiplicity is good; if each end of an association
-is conditional (0..1, 0..n), maybe you should think more carefully
-about it. Perhaps there's some super/subtype (inheritance)
-relationship lurking in there.
-
-<p>Resist the temptation to put containers in the model. In <em>Window
-"appears on" Screen</em>, the association itself models the user
-concept of "each screen displays a list of windows" (actually,
-thinking about it, I'm not at all sure that the actual user ever had
-the concept "list" in mind at all. She's much more likely to have said
-"each screen displays a <em>number</em> of windows". I think this
-"list" was implanted there by some ex-programmer with a solution in
-mind, rather than by someone listening to the customer!)
-
-<p>Associations need to be "formalised" by the use of "referential
-attributes". Considering the <em>Window "appears on" Screen</em>,
-where clearly there are many <em>Window</em>s but only one
-<em>Screen</em>, you'd need a referential attribute
-<em>screen&nbsp;id</em> in the <em>Window</em> instance.
-
-<p>All parent classes in inheritance relationships are, in a sense,
-abstract: whenever an instance of the parent class exists, there
-exists precisely one related instance of one of the child
-classes. Inheritance relationships are also formalised; typically the
-child class has the same identifying attributes as the parent, but in
-ColdFrame the formalization is a reference to the parent.
-
-<p>ColdFrame supports polymorphism. Instance operations marked
-<em>&#171;abstract&#187;</em> are dispatched to the current child
-(skipping down the inheritance tree until a concrete implementation is
-found), while a child class receives upward-dispatching
-implementations of all concrete parental instance operations.
-
-<p>In spite of the above, with ColdFrame you usually don't need to
-provide referential attributes (it would be quite cumbersome to do so,
-since Rose is unaware of the concept). Instead, ColdFrame
-automatically inserts them using an appropriate naming
-convention. Sometimes it needs a little help, for example for <a
-href="#formalizes">complex formalization</a> or <a href="#source">in a
-symmetric association</a>.
-
-<h3>Use of Stereotypes</h3>
-
-<h4>Attributes</h4>
-
-<p>Identifying attributes are marked with the stereotype
-<em>&#171;id&#187;</em>.
-
-<h4>Classes</h4>
-
-<p>Classes which represent user-defined types are marked with the
-stereotype <em>&#171;type&#187;</em>.
-
-<p>Classes of which there is only ever one instance are marked with
-the stereotype <em>&#171;singleton&#187;</em>.
-
-<p>Public classes, which are the only classes visible from outside the
-Domain, are marked with the stereotype
-<em>&#171;public&#187;</em>. This implies the stereotype
-<em>&#171;singleton&#187;</em>.
-
-<h4>Operations</h4>
-
-<p>Dispatching operations are marked with the stereotype
-<em>&#171;abstract&#187;</em>.
-
-<p>Class operations are marked with the stereotype
-<em>&#171;class&#187;</em>.
-
-<p>Operations to be called from the Domain <tt>Initialize</tt>
-procedure are marked with the stereotype
-<em>&#171;init&#187;</em>. This implies the stereotype
-<em>&#171;class&#187;</em>. These operations must be parameterless
-procedures.
-
-<p>Operations to be called to clean up as an instance is deleted (for
-example, to tidy up associations) are marked with the stereotype
-<em>&#171;finalize&#187;</em>. (It would be possible in theory to use
-Ada's controlled types, but (a) that depends on your target language
-being Ada, and (b) GNAT (3.14) has a problem in the interaction of the
-<tt>with type</tt> facility and controlled types).
-
-<p>Operations which are automatically generated by ColdFrame but which
-are required to be present so that they can be used on sequence
-diagrams (eg, <tt>Find</tt>, <tt>Delete</tt>, <tt>All_Instances</tt>)
-are marked with the stereotype <em>&#171;generated&#187;</em>. This
-effectively means "ignore this".
-
-<h3><a name="annotation">Other annotations</a></h3>
-
-<p>It's not at all convenient to put all the extra information you
-need for code generation into stereotypes. Instead, "annotations" can
-be put into the documentation section (in Rose the bottom left pane),
-in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
-<tt>[[&nbsp;mode&nbsp;:&nbsp;in&nbsp;out&nbsp;]]</tt>.
-
-<p>Annotations supported are:
-
-<dl>
-
-<dt>on domains<dd><ul>
-
-<li><tt>revision : <i>revision-id-string</i></tt> specifies the
-domain's version control ID.
-
-<p>In Rose with CVS, you'd select the domain Package in the browser
-and add the line
-
-<!-- couldn't actually use the $ here! -->
-<pre>
-  [[ revision : &#36;Id&#36; ]]
-</pre>
-
-to the documentation pane. Modify as required by your version control
-system.
-
-</ul>
-
-<p>
-
-<dt>on classes<dd><ul>
-
-<li><tt>abbreviation : <i>abbrev</i></tt> specifies the class'
-abbreviation. By default, the abbreviation is composed of the initial
-letters of the full class name; this wouldn't work for, for example,
-<i>Pet</i> and <i>Person</i>.
-
-<li><tt>max : <i>max-size</i></tt> specifies the maximum number of
-instances that will coexist. This may provoke a different code
-generation strategy.
-
-</ul>
-
-<p>
-
-<dt>on <em>&#171;type&#187;</em> classes<dd><ul>
-
-<li><tt>callback : <i>max</i></tt> specifies that <a
-href="coldframe-callback.pdf">callback support code</a> is to be
-generated. The idea here is that a (lower-level) Domain may need to
-support up to <tt><i>max</i></tt> Observers from higher-level Domains,
-and the higher-level Domains can register to be notified when
-something has changed in the lower-level Domain.
-
-<li><tt>discriminated</tt> (only relevant if the type is a record
-type, ie has attributes) causes the generation of discriminated
-records; the discriminant is an enumeration type with literals formed
-from the attribute names with <tt>_T</tt> appended.
-
-<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
-
-<li><tt>imported : <i>external-reference</i></tt> specifies that the
-given type is to be found at the specified external reference. For
-Ada, this results (for a type named <tt>T</tt>) in
-<pre>
-  with <i>external-reference</i>;
-  ..
-  subtype T is <i>external-reference</i>.T;
-</pre>
-(clearly <tt><i>external-reference</i></tt> needs to correspond to a
-with-able package name).
-
-<li><tt>integer : lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>
-
-<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
-upper <i>upper-bound</i></tt>
-
-<li><tt>set : <i>class-name</i></tt> (for parameters or return values
-of operations involving more than one instance at once, eg "find all
-the outstanding Problem Reports on this Component").
-
-<li><tt>string : max <i>max-length</i></tt>
-
-</ul>
-
-<p>
-
-<dt>on attributes<dd><ul>
-
-<li><tt>id</tt> indicates that the attribute is an identifying
-attribute. This is an alternative to the <em>&#171;id&#187;</em>
-stereotype.
-
-<li><a name="formalizes"><tt>formalizes :
-<i>association-name</i></tt></a> indicates that the attribute is a
-referential attribute.
-
-<p>This is needed when the attribute has to be specified by the
-analyst (normally, ColdFrame can create referential attributes as
-required).
-
-<p>Consider R8, Licence is-issued-by Licensing Office. The identifier
-of Licence consists of the licence number and also the issuing
-Licensing Office, since the various offices don't use disjoint licence
-number ranges. In this case, we'd specify the attribute as
-<pre>
-  &#171;id&#187; issuing office : Licensing Office
-</pre>
-
-and include the annotation
-<pre>
-  [[ formalizes : r8 ]]
-</pre>
-
-</ul>
-
-<dt>on operations<dd><ul>
-
-<li><tt>abstract</tt> indicates that the operation will be implemented
-in a child class.
-
-<li><tt>access</tt> indicates that the operation is in fact an access
-type (pointer-to-subprogram with the indicated profile).
-
-<li><tt>class</tt> indicates that the operation is a class operation
-(no <tt>This</tt> parameter will be generated). This is an
-alternative to the <em>&#171;class&#187;</em> stereotype.
-
-</ul>
-
-<p>
-
-<dt>on parameters<dd><ul>
-
-<li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
-<ul>
-<li><tt>in</tt>
-<li><tt>inout</tt> or <tt>in out</tt>
-<li><tt>out</tt>
-</ul>
-
-</ul>
-
-<p>
-
-<dt>on roles<dd><ul>
-
-<li><a name="source"><tt>source</tt></a> indicates that the class at
-this end is the source of formalising (referential) attributes for the
-association: only useful for symmetrical associations <i>1:1</i>,
-<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, for which it is
-required.
-
-</ul>
-
-</dl>
-
-<p>You can only have one annotation section per documentation section,
-but multiple semicolon-separated annotations are allowed
-(syntactically; ColdFrame may not check whether they make sense
-semantically).
-
-<h2><a name="extraction">Extraction of models from Rose</a></h2>
-
-<p>The Rose model is extracted to a raw "domain definition file" (type
-<tt>.raw</tt>) using a RoseScript script <tt>extractor.ebs</tt>.
-
-<p>Install <tt>extractor.ebs</tt> in the Rose <i>Add-ins</i> menu (or
-whichever other one you want to use). In
-<tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
-<tt>rose.mnu</tt>:
-
-<blockquote>
-<pre>
-Menu Add-Ins
-{
-  Separator
-
-  option "Generate &XML..."	
-   {
-	RoseScript $ColdFrame\extractor.ebs
-   }
-
-}
-</pre>
-</blockquote>
-
-<p>This means, of course, that you must set the Rose Path Map variable
-<tt>ColdFrame</tt> to the directory where ColdFrame is installed (eg,
-<tt>d:\cf-20010707</tt>).
-
-<p>The Extractor extracts data for the selected Domain packages or, if
-none are selected, for all the packages on the current active class
-diagram (if any). A recommended approach is to have a diagram (called
-<i>Code Generation</i>, perhaps) and drag all the Domain packages in
-your model onto it.
-
-<p>You can select packages to be extracted either in the broswer
-(<em>not</em> with Rose 98i) or in the Code Generation diagram.
-
-<p>The extracted domain definition file name is the domain name with
-underscores substituted for spaces.
-
-<p>You can specify the output file location using the Rose Path Map
-variable <tt>ColdFrameOut</tt>. The default output file location if
-<tt>ColdFrameOut</tt> isn't specified is the directory that
-<tt>extractor.ebs</tt> was loaded from (sorry about
-that). Double-clicking on the <tt>.mdl</tt> file or using the "recent
-documents" facility of Windows opens Rose with the correct default
-directory.
-
-<p>The output format is XML, using a Document Type Description (<a
-href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
-and to handle in the next stage using a SAX-compliant parser.
-
-<h2><a name="conversion">Conversion to standard form</a></h2>
-
-<p>ColdFrame's "standard form" uses a home-grown <a
-href="coldframe.dtd">DTD</a> rather than the standard XMI Metadata
-Interchange (XMI) one. This is, I'm afraid, because I didn't think to
-check what standardisation activities were under way; however, I think
-it would have taken a lot longer if I'd used XMI. Perhaps an
-appropriate approach would be to use an XSL transform to convert
-documents from XMI to ColdFrame.
-
-<p>The processing is done using the <em><a
-href="resources.html#tcl">itcl</a></em> script
-<tt>normalize-rose.tcl</tt>, which uses the <a
-href="resources.html#xml">TclXML</a> package to handle the parse of
-the <tt><i>package-name</i>.raw</tt> file. The Makefile places the
-output in <tt><i>package-name</i>.norm</tt>.
-
-<h2><a name="generation">Generation of code</a></h2>
-
-<p>Code is generated using the <a href="resources.html#xslt">XSLT</a>
-stylesheet <tt>generate-ada.xsl</tt>. The XSLT processor I've used is
-<em>Saxon</em>.
-
-<p>The output is placed by the <tt>Makefile</tt> into one Ada source
-file, <tt><i>package-name</i>.ada</tt>.
-
-<p>If you're using <a href="http://www.gnat.com/">GNAT</a>, you'll
-then need to use <tt>gnatchop</tt> to split the file into the required
-"one file per library unit" style. Other compilers will have their own
-way of importing the code.
-
-<p>The generated code is compilable, but all the operation bodies will
-raise the exception <tt>Program_Error</tt> if called. ColdFrame makes
-no attempt to allow you to modify generated bodies and preserve your
-changes on the next generation; instead, the idea is that you keep the
-generated code in one directory and your real code bodies in another
-directory that's earlier on the compiler's source search path. <i>[I'm
-not sure how the idea of placing real subprogram body files earlier in
-the compiler's source search path translates to compilers other than
-GNAT.]</i>
-
-<h2><a name="support">Specially written support components</a></h2>
-
-<p>Specially written support components appear under the top-level
-package <tt>ColdFrame</tt>.
-
-<dl>
-
-<dt><tt>ColdFrame.Access_Hash</tt>
-
-<dd>A hash function for access values (useful for associative classes).
-
-<dt><tt>ColdFrame.Callbacks</tt>
-
-<dd>Provides callback (Observer) support.
-
-<dt><tt>ColdFrame.Exceptions</tt>
-
-<dd>Provides exceptions. These are at present just renamings of <a
-href="use-of-bcs.html">Booch</a> exceptions.
-
-<dt><tt>ColdFrame.Global_Storage_Pool</tt>
-
-<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
-the standard system <tt>malloc</tt> pool, suitable for instantiating
-<a href="use-of-bcs.html">Booch Containers</a>.
-
-<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
-
-<dt><tt>ColdFrame.String_Hash</tt>
-
-<dd>Provides a set of hash functions, suitable for use as hashes (or
-part of hashes) for instantiating <a href="use-of-bcs.html">Booch Map
-containers</a>.
-
-</dl>
-
-<hr>
+<p><hr>
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>

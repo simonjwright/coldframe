@@ -1,46 +1,54 @@
-with Ada.Text_Io;
-With Problem_Reporting.Interface;
+with Ada.Text_IO;
+with Problem_Reporting.Initialize;
+with Problem_Reporting.Interface;
 
 procedure Demo is
 
-  use Problem_Reporting.Interface;
+   use Problem_Reporting.Interface;
 
 begin
 
-  Problem_Reporting.Initialize;
+   Problem_Reporting.Initialize;
 
-  Add_Component ("foo");
-  Add_Component ("bar");
-  Add_Component ("baz");
-  Add_Component ("quux");
+   Add_Component ("foo");
+   Add_Component ("bar");
+   Add_Component ("baz");
+   Add_Component ("quux");
 
-  Add_Problem (1, "alice", "complex");
-  Add_Problem (2, "bob", "boring");
-  Add_Problem (3, "carol", "silly");
-  Add_Problem (4, "dave", "over-bold");
+   Add_Problem (1, "alice", "complex");
+   Add_Problem (2, "bob", "boring");
+   Add_Problem (3, "carol", "silly");
+   Add_Problem (4, "dave", "over-bold");
 
-  Note_Defect (1, "foo", "hairy");
-  Note_Defect (1, "bar", "very hairy");
-  Note_Defect (2, "quux", "tedious");
-  Note_Defect (2, "foo", "very tedious");
+   Note_Defect (1, "foo", "hairy");
+   Note_Defect (1, "bar", "very hairy");
+   Note_Defect (2, "quux", "tedious");
+   Note_Defect (2, "foo", "very tedious");
 
-  Reject_Problem (4, "just right");
+   Reject_Problem (4, "just right");
 
-  Report_Problems;
+   Report_Problems;
 
-  Ada.Text_Io.New_Line;
-  Ada.Text_Io.Put_Line
+   Ada.Text_IO.New_Line;
+   Ada.Text_IO.Put_Line
      ("deleting a simple Component, and then adding a new Component:");
-  Delete_Component ("baz");
-  Add_Component ("squeeg");
+   Delete_Component ("baz");
+   Add_Component ("squeeg");
 
-  Report_Problems;
+   Report_Problems;
 
-  Ada.Text_Io.New_Line;
-  Ada.Text_Io.Put_Line
+   Ada.Text_IO.New_Line;
+   Ada.Text_IO.Put_Line
      ("deleting a Component with defects:");
-  Delete_Component ("foo");
+   Delete_Component ("foo");
 
-  Report_Problems;
+   Report_Problems;
+
+   Ada.Text_IO.New_Line;
+   Ada.Text_IO.Put_Line
+     ("deleting a Component with defects (should delete DPR):");
+   Delete_Component ("bar");
+
+   Report_Problems;
 
 end Demo;

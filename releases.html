@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 9cd15431a0a4 2001/10/11 19:54:58 simon $ -->
+<!-- $Id: releases.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -6,21 +6,13 @@
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Releases</h1>
 
-<!-- Begin Mind It Box -->
-<form method=POST action="http://minder.netmind.com/mindit.shtml">
-<table border=0 cellpadding=5 cellspacing=0 bgcolor=#005599>
-<tr><td align=center colspan=2>
-<font face=arial,helvetica size=-1 color=#ffffff>
-<b>Receive email when this page changes</b>
-</td></tr><tr><td>
-<input type=text value="Enter email address" name="EMAIL" size=20></td><td rowspan=2>
-<input type="image" src="http://www.netmind.com/html/mindit.gif" border="0" width="76" height="28">
-<br><font face=arial,helvetica size=-2 color=#ffffff><center>
-<b>Click Here</td></tr>
-<tr valign=top><td colspan=1 align=center>
-<font face=arial,helvetica size=-2 color=#ffffff>•<b> Powered by Netmind </b>•
-</td></tr></table></form>
-<!-- End Mind It Box -->
+<hr>
+
+<i>I removed the Mind-It facility, they've decided to <a
+href="http://www.pumatech.com/mind-it_service/service.html">charge for
+the service</a>.</i>
+
+<hr>
 
 <p>Source can be downloaded <a href="download/">here</a>.
 
@@ -31,7 +23,283 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dl>
 
-<dt>20011011
+<p><dt>2002mmdd
+
+<dd>Reworked how Time is handled in <tt>ColdFrame.Project.Events</tt>.
+
+
+<p>Added a new <tt>ColdFrame.Events_G.Test_G</tt> add-in which allows
+you to query whether a <i>Timer</i> is set, and when it will expire.
+
+<br>These are not appropriate in operational code; state machine logic
+should be encoded in the state machine, as far as possible, and you
+ought to <u>know</u> whether a <i>Timer</i> is set or not.
+
+
+<p>Documentation is copied through into the generated code.
+
+
+<p>The way in which the "lines of code" count is generated and
+reported has changed.
+
+
+<p><dt>20020716
+
+<dd>Event Queues now have a <tt>Wait_Until_Idle</tt> operation, for
+unit tests to use after posting test Events; the operation blocks the
+test thread of control until all event activity has terminated.
+
+
+<p>Event Queues now have a <tt>Tear_Down</tt> operation; this is
+automatically called from the domain <tt>Tear_Down</tt>. Note, this is
+also intended for unit test!
+
+
+<p>There is a new <tt>Post_To_Self</tt> operation on Event Queues, to
+be used by a state machine instance which is posting an event to
+itself to make sure that the event is processed before any
+externally-signalled events to the same instance.
+
+
+<p>Missing names/types are detected for attributes and parameters
+before code is generated (during normalization).
+
+
+<p><i>Date</i>, <i>Time</i> types are translated to
+<tt>Coldframe.Projects.Calendar.Time</tt>, which is provided as a
+default renaming of <tt>Ada.Calendar</tt>.
+
+
+<p><dt>20020706
+
+<dd>
+
+&#171;instantiation&#187; can be used to mark operations which you
+want to appear on a sequence diagram but which will be implemented by
+instantiating a generic (for example,
+<tt><i>Class</i>.Selection_Function</tt>).
+
+
+<p>The <tt>[[set]]</tt> annotation (defining a type consisting of a
+collection of instances of a class) is no longer available; I couldn't
+find a sensible mechanism to implement it now that I don't use <i>WITH
+TYPE</i> any more.
+
+
+<p>Initial support for state machines.
+
+
+<p>Support &#171;class&#187; attributes.
+
+
+<p>Added <i>Counterparts</i>.
+
+
+<p>Create the default "abbreviation" for single-word classes by
+prepending <tt>A</tt> or <tt>An</tt> to the class name.
+
+
+<p>Check for illegal characters in identifiers.
+
+
+<p>Added Exceptions (like &#171;type&#187;s, but marked
+&#171;exception&#187;, generated in the Domain package).
+
+
+<p>Initializers can be signed.
+
+
+<p>Autonumbering is reset by <tt>Tear_Down</tt>.
+
+
+<p>Added <tt>pragma Elaborate_Body</tt> for generated instantiable
+units.
+
+
+<p>Navigation of associations from collections is now in a separate
+child package <tt><i>Domain.Association</i>.From_Collections</tt>.
+
+
+<p>Include "don't edit" warnings in generated code.
+
+
+<p>It's no longer necessary to mess with your CLASSPATH to include
+<tt>saxon.jar</tt>; <i>java</i>'s called with <tt>-cp</tt>. You do
+need to unpack Saxon where the <tt>Makefile</tt>'s expecting it (see
+the <a href="installation.html">installation notes</a>).
+
+
+<p>Added special processing where an dispatching or inherited
+operation has a parmeter of the same type as its class; the parameter
+is converted to the same type as the implicit <tt>This</tt> parameter.
+
+<br>This may be what's called <i>covariance</i> in Eiffel.
+
+
+<p>Tear-down of an active non-singleton instance didn't terminate the
+associated task.
+
+
+<p>Some of the generated operations (eg, some accessors for
+referential attributes) are only intended to be called by generated
+code. These are now marked in the spec.
+
+
+<p>&#171;access&#187; functions were generated as though they were
+procedures.
+
+
+<p>ColdFrame now respects the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt> (in the absence of a
+case exception for <i>foo</i>).
+
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work).
+</ul>
+
+
+<p>There's a new exception
+<tt>ColdFrame.Exceptions.Existing_Child</tt>, raised when you create a
+child of a parent which already has one.
+
+
+<p>Operations of &#171;type&#187;s are generated.
+
+<br>This allows you to have domain-wide &#171;access&#187; operations,
+too: declare them as operations of some &#171;type&#187; (if there are
+no other <tt>[[annotations]]</tt>, attributes or operations the
+&#171;type&#187; itself won't be generated).
+
+
+<p>As well as setting Events that you want to be delivered at some
+future time on Timers, which allows you to retract the event (by
+unsetting the timer), you can just Post them (in a "fire and forget"
+way).
+
+
+<p>Event-related exceptions have been moved to
+<tt>ColdFrame.Exceptions</tt> (with the rest).
+
+
+<p>The generated bodies of functions that return composite (record)
+types now compile.
+
+
+<p><tt>Create</tt> operations <tt>Assert</tt> that any identifying
+referential attributes aren't <tt>null</tt>.
+
+<br><tt>Link</tt> operations <tt>Assert</tt> that their arguments aren't
+<tt>null</tt>.
+
+
+<p>"Subtype migration" (<a href="faq.html#inheritance">dynamic
+classification</a>) is supported; for each class involved in an
+inheritance relationship there's a child package
+(<tt><i>Domain.Class</i>.Inheritance</tt>) containing the new
+operations.
+
+
+<p>Include <a href="installation.html">installation notes</a>.
+
+
+<p>Projects will want to provide their own versions of supporting Ada
+packages, for example to provide the default storage pool; but
+ColdFrame needs to know how to <tt>with</tt> them.
+
+<br>A new package hierarchy rooted at <tt>ColdFrame.Project</tt> is
+used to hold such packages.
+
+<br>A new Ada source library directory
+<tt>cf-<i>yyyymmdd</i>/project</tt> is provided to hold example
+versions of required packages.
+
+
+<p>The exceptions declared in <tt>ColdFrame.Exceptions</tt> are no
+longer renamings of Booch exceptions.
+
+
+<p><dt>20020116
+
+<dd>&#171;abstract&#187; is supported on Classes (nothing is done with
+it yet).
+
+
+<p>The supplied <tt>Makefile</tt>s assume there's a case exceptions
+file (<tt>~/.emacs_case_exceptions</tt>); normalization no longer
+fails if there isn't one.
+
+
+<p>Normalization no longer checks that the parent in an inheritance
+relationship has an identifier (if it hasn't, that will be found later
+anyway). This means it's no longer a fluke if inheritance trees work
+properly!
+
+
+<p>The Rose Extractor only extracts (selected) packages in the current
+class diagram; it pops up a dialog box on completion to say what it's
+done.
+
+
+<p>Reports of unhandled stereotypes, annotations tidied up.
+
+
+<p>The domain package comments include the generated lines-of-code
+count (actually, the usual Ada "number of semicolons").
+
+
+<p>Normally ColdFrame only extracts classes and associations from the
+top-level (domain) package. If you prefer to organize your model with,
+say, the &#171;type&#187;s in a "Types" child package, mark it with
+&#171;generate&#187;.
+
+
+<p><dt>20011209
+
+<dd>There's a new scheme for mutual visibility of Class package specs,
+<em>not</em> involving the GNAT <i>WITH TYPE</i> extension.
+
+
+<p>In multiple inheritance, an inherited operation is called in the
+correct parent.
+
+
+<p>&#171;abstract&#187; and &#171;finalize&#187; operations don't map
+to task entries.
+
+
+<p>A new operation stereotype &#171;navigation&#187; is like
+&#171;generated&#187; (but is intended to mark operations that are in
+fact provided in an association package).
+
+
+<p>&#171;finalize&#187; operations aren't inherited.
+
+
+<p>The domain <tt>Tear_Down</tt> clears all registered Callbacks.
+
+
+<p>A proper error message is given when a <tt>[[callback]]</tt>
+annotation is given on a non-record type (a type without attributes).
+
+
+<p>Implement the <tt>[[renames]]</tt> annotation.
+
+
+<p>Sort out multiplicities (on roles) and cardinalities (on classes).
+
+
+<p>Implement <i>Autonumber</i> using GNAT's <tt>Long_Long_Integer</tt>
+(64 bits). Let's see you overflow <em>that</em>!
+
+
+<p><dt>20011011
 
 <dd>To support testing with <a
 href="http://www.adapower.com/reuse/aunit.html">AUnit</a>, a

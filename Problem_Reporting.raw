@@ -1,12 +1,20 @@
 <domain>
+<extractor>cf-DATE</extractor>
 <name>Problem_Reporting</name>
+<date>
+<year>2002</year>
+<month>1</month>
+<day>27</day>
+<time>21:39</time>
+</date>
 <documentation></documentation>
 <classes>
 <class>
 <name>Problem Report</name>
+<cardinality>0 .. 10100</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
 </documentation>
-<cardinality>10100</cardinality>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
@@ -28,12 +36,51 @@
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set details</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>set reporter</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>get details</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class>
 <name>Rejected Problem Report</name>
-<documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
 <attributes>
 <attribute>
 <name>rejection reason</name>
@@ -43,12 +90,32 @@
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set rejection reason</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Summary String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get rejection reason</name>
+<documentation></documentation>
+<return>Summary String</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class>
 <name>Diagnosed Problem Report</name>
-<documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -56,13 +123,14 @@
 </class>
 <class>
 <name>Component</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
 
 Purely for demonstration purposes, the maximum number of Components is limited to 4.
 
 [[max: 4]]
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
@@ -72,10 +140,39 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>report</name>
+<documentation>Generate a report on the Component and each associated Defect (if any).</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="class">
+<name>report all</name>
+<documentation>Generate a report on all the Components.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>clean</name>
+<documentation>Maintain referential integrity when the Component is deleted, by removing any associated Defects.
+
+Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).</documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class>
 <name>Unallocated Problem Report</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>An Unallocated Problem Report is awaiting determination of appropriate handling.
 
 If it's decided not in fact to be a problem, it will be rejected (see Rejected Problem Report).
@@ -84,7 +181,6 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 
 [[ abbreviation : UPR ]]
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -92,12 +188,13 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 </class>
 <class>
 <name>Defect</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Defect denotes something that is wrong with a Component.
 
 It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
 
 It should address one logical error (which may correspond to several necessary changes in the affected Component).</documentation>
-<cardinality>n</cardinality>
 <attributes>
 <attribute>
 <name>problem</name>
@@ -107,15 +204,41 @@ It should address one logical error (which may correspond to several necessary c
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set problem</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get problem</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>report</name>
+<documentation>Report details of this Defect.</documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class stereotype="type">
 <name>Summary String</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Summary String is used to hold brief statements.
 
 [[string: max 80]]
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -123,8 +246,9 @@ It should address one logical error (which may correspond to several necessary c
 </class>
 <class stereotype="Interface">
 <name>Interface</name>
-<documentation>Provides the public interface to the Problem Reporting domain.</documentation>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Provides the public interface to the Problem Reporting domain.</documentation>
 <attributes>
 </attributes>
 <operations>

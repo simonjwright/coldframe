@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-access_hash.ads,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 02ac6283bbc5 $
+--  $Date: 2002/01/16 22:14:31 $
 --  $Author: simon $
 
 generic
@@ -29,3 +29,4 @@ generic
    type Access_T is access T;
 function ColdFrame.Hash.Access_Hash
   (The_Access_Value : Access_T) return Natural;
+pragma Elaborate_Body (ColdFrame.Hash.Access_Hash);

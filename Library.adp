@@ -1,8 +1,9 @@
 comp_opt=-gnatq -gnatQ -gnatX -gnatwu -gnatf -gnaty -g -O2
-gnatmake_opt=-g -m -j2
+bind_opt=-E
+gnatmake_opt=-g -m -j3 -k
 main=library_test_harness
 main_unit=library_test_harness
-build_dir=/home/simon/ooa/rose/.build/
+build_dir=/home/simon/cf/.build/
 check_cmd=${cross_prefix}gnatgcc -c ${comp_opt} -gnats ${full_current}
 make_cmd=cd ${build_dir}
 make_cmd=${cross_prefix}gnatmake -o ${main} ${main_unit} ${gnatmake_opt} -cargs ${comp_opt} -bargs ${bind_opt} -largs ${link_opt}

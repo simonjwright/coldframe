@@ -1,0 +1,70 @@
+<!-- $Id: extraction.html,v 3daa7f1e04bd 2002/02/03 10:26:21 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Extraction of models from Rose</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Extraction of models from Rose</h1>
+
+<p>The Rose model is extracted to a raw "domain definition file" (type
+<tt>.raw</tt>) using a RoseScript script <tt>extractor.ebs</tt>.
+
+<p>Install <tt>extractor.ebs</tt> in the Rose <i>Add-ins</i> menu (or
+whichever other one you want to use). In
+<tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
+<tt>rose.mnu</tt>:
+
+<blockquote>
+<pre>
+Menu Add-Ins
+{
+  Separator
+
+  option "Generate &XML..."	
+   {
+	RoseScript $ColdFrame\extractor.ebs
+   }
+
+}
+</pre>
+</blockquote>
+
+<p>This means, of course, that you must set the Rose Path Map variable
+<tt>ColdFrame</tt> to the directory where ColdFrame is installed (eg,
+<tt>d:\cf-20010707</tt>).
+
+<p>The Extractor extracts data for the selected Domain packages or, if
+none are selected, for all the packages on the current active class
+diagram (if any). A recommended approach is to have a diagram (called
+<i>Code Generation</i>, perhaps) and drag all the Domain packages in
+your model onto it.
+
+<p>You can select packages to be extracted in the Code Generation
+diagram.
+
+<p>The extracted domain definition file name is the domain name with
+underscores substituted for spaces.
+
+<p>You can specify the output file location using the Rose Path Map
+variable <tt>ColdFrameOut</tt>. The default output file location if
+<tt>ColdFrameOut</tt> isn't specified is the directory that
+<tt>extractor.ebs</tt> was loaded from (sorry about
+that). Double-clicking on the <tt>.mdl</tt> file or using the "recent
+documents" facility of Windows opens Rose with the correct default
+directory.
+
+<p>The output format is XML, using a Document Type Description (<a
+href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
+and to handle in the next stage using a SAX-compliant parser.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

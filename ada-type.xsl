@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 47cb74c6e5ad 2001/10/29 05:46:06 simon $ -->
+<!-- $Id: ada-type.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -25,49 +25,77 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  version="1.0">
+  version="1.1">
 
-  <!-- Generate domain context clauses. -->
-  <xsl:template mode="domain-context" match="domain/type">
+  <!-- Called at /domain to generate domain context clauses. -->
+  <xsl:template name="domain-context">
 
-    <!-- Context for non-record domain types. -->
+    <!-- Context for time (in record components). -->
 
-    <xsl:if test="string/max">
+    <xsl:if test="type/attribute/type='Date'
+                  or type/operation/parameter/type='Date'
+                  or type/attribute/type='Time'
+                  or type/operation/parameter/type='Time'">
+      <!-- The above imply use of Calendar. -->
+      <xsl:text>with ColdFrame.Project.Calendar; use ColdFrame.Project.Calendar;&#10;</xsl:text>
+    </xsl:if>
+
+    <!-- Context for bounded strings -->
+    <xsl:if test="type/string/max">
       <!-- string/max implies an instantiation of Ada.Strings.Bounded -->
-      <xsl:text>with Ada.Strings.Bounded;</xsl:text>
-      <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
+      <xsl:text>with Ada.Strings.Bounded; use Ada.Strings.Bounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for imported types. -->
-    <xsl:if test="imported">
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="imported"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
+    <!-- Context for unbounded strings (in record components). -->
 
-    <!-- Context for record domain types; cf class-spec-context. -->
-
-    <xsl:if test="attribute/type='Date'
-                  or operation/parameter/type='Date'
-                  or attribute/type='Time'
-                  or operation/parameter/type='Time'">
-      <!-- The above imply use of Ada.Calendar. -->
-      <xsl:text>with Ada.Calendar;</xsl:text>
-      <xsl:text> use Ada.Calendar;&#10;</xsl:text>
-    </xsl:if>
-
-    <xsl:if test="attribute/type='Unbounded_String'
-                  or operation/parameter/type='Unbounded_String'
-                  or attribute/type='Text'
-                  or operation/parameter/type='Text'">
+    <xsl:if test="type/attribute/type='Unbounded_String'
+                  or type/operation/parameter/type='Unbounded_String'
+                  or type/attribute/type='Text'
+                  or type/operation/parameter/type='Text'">
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-  </xsl:template>
+    <!-- Context for imported and renamed types, ensuring uniqueness. -->
 
-  <xsl:template mode="domain-context" match="*"/>
+    <!-- First, make a nodeset containing "with" elements containing
+         the package names. -->
+    <xsl:variable name="imported-renamed-withs">
+      <xsl:for-each select="type/imported">
+        <xsl:element name="with">
+          <xsl:value-of select="."/>
+        </xsl:element>
+      </xsl:for-each>
+      <xsl:for-each select="type/renames">
+        <xsl:variable name="package">
+          <xsl:call-template name="find-source-package">
+            <xsl:with-param name="input" select="."/>
+          </xsl:call-template>
+        </xsl:variable>
+        <xsl:if test="string-length($package)">
+          <xsl:element name="with">
+            <xsl:value-of select="$package"/>
+          </xsl:element>
+        </xsl:if>      
+      </xsl:for-each>
+    </xsl:variable>
+
+    <!-- Then, sort, and output unique occurrences. -->
+    <!-- XXX Saxon 6.5.1 allows this result tree fragment to be
+         implicitly converted to a node set if the version is 1.1,
+         so I've changed this file to require 1.1.
+         Should consider saxon:node-set() or exsl:node-set(). -->
+    <xsl:for-each select="$imported-renamed-withs/with">
+      <xsl:sort select="."/>
+      <xsl:if test="not (.=preceding-sibling::node())">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+
+  </xsl:template>
 
 
   <!-- Called at domain to generate domain Types entries (not for
@@ -90,7 +118,7 @@
     <!-- The types which have already been output -->
     <xsl:param name="finished"/>
 
-    <!-- Saxon-5.5 needs this, or it goes into an infinite loop, -->
+    <!-- Saxon-5.5 needs this, or it goes into an infinite loop. -->
     <!-- <xsl:message>
       <xsl:text>domain-types: nodes </xsl:text>
       <xsl:value-of select="count($nodes)"/>
@@ -104,6 +132,9 @@
     <xsl:for-each select="$nodes">
       <xsl:sort select="name"/>
       <xsl:call-template name="domain-type"/>
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$I"/>
+      </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
@@ -296,9 +327,30 @@
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is </xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>is </xsl:text>
         <xsl:value-of select="imported"/>
         <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="renames">
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>is </xsl:text>
+        <xsl:value-of select="renames"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
@@ -313,13 +365,25 @@
         <xsl:value-of select="integer/upper"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:when test="real">
+
+        <!--
+             subtype {type} is [Long_]Float[ range {lower} .. {upper}];
+             -->
+
         <xsl:value-of select="$I"/>
-        <xsl:text>type </xsl:text>
+        <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is digits </xsl:text>
-        <xsl:value-of select="real/digits"/>
+        <xsl:text> is </xsl:text>
+        <xsl:choose>
+          <xsl:when test="real/digits &gt; 6">
+            <xsl:text>Long_Float</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>Float</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:if test="real/lower and real/upper">
           <xsl:text> range </xsl:text>
           <xsl:value-of select="real/lower"/>
@@ -327,11 +391,9 @@
           <xsl:value-of select="real/upper"/>
         </xsl:if>
         <xsl:text>;&#10;</xsl:text>
+
       </xsl:when>
       
-      <!-- sets are implemented as class Collections; no action here -->
-      <xsl:when test="set"/>
-        
       <xsl:when test="string">
         <xsl:value-of select="$I"/>
         <xsl:text>package </xsl:text>
@@ -372,11 +434,11 @@
         
         <xsl:when test="imported"/>
 
+        <xsl:when test="renames"/>
+
         <xsl:when test="integer"/>
 
         <xsl:when test="real"/>
-
-        <xsl:when test="set"/>
 
         <xsl:when test="string">
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>
@@ -402,5 +464,107 @@
 
   <xsl:template mode="domain-type-support" match="*"/>
 
+
+  <!-- Called to generate operation specifications for types. -->
+  <xsl:template matc`="type/operation" mode="domain-type-operation-spec">
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="commentary">
+      <xsl:with-param name="indent" select="$I"/>
+    </xsl:call-template>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-spec" match="*"/>
+
+
+  <!-- Called to generate operation body stubs for types. -->
+  <xsl:template match="type/operation" mode="domain-type-operation-body-stub">
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text> is separate;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+
+
+  <!-- Called to generate operation bodies for types. -->
+  <xsl:template match="type/operation" mode="domain-type-operation-body">
+    <xsl:call-template name="should-edit"/>
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="''"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>raise Program_Error;&#10;</xsl:text>
+    <xsl:if test="@return">
+      <xsl:value-of select="$I"/>
+      <xsl:text>return </xsl:text>
+      <xsl:call-template name="default-value">
+        <xsl:with-param name="type" select="@return"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+
+
+  <!-- Called to extract the package name from a (possibly) qualified
+       type name. -->
+  <xsl:template name="find-source-package">
+    <!-- The input name -->
+    <xsl:param name="input"/>
+    <!-- The package name so far -->
+    <xsl:param name="package" select="''"/>
+
+    <xsl:variable name="before" select="substring-before($input, '.')"/>
+    <xsl:variable name="after" select="substring-after($input, '.')"/>
+
+    <xsl:choose>
+
+      <!-- Terminate recursion when there are no more components in the
+           input to process -->
+      <xsl:when test="string-length($before)=0">
+        <xsl:value-of select="$package"/>
+      </xsl:when>
+
+      <xsl:otherwise>
+        
+        <xsl:variable name="new-package">
+          <xsl:choose>
+            <xsl:when test="string-length($package)=0">
+              <xsl:value-of select="$before"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="concat($package, '.', $before)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:call-template name="find-source-package">
+          <xsl:with-param name="input" select="$after"/>
+          <xsl:with-param name="package" select="$new-package"/>
+        </xsl:call-template>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
 
 </xsl:stylesheet>

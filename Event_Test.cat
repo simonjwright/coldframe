@@ -1,0 +1,677 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Event Test"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CEA58590211"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Recipient"
+	    quid       	"3CEA5887005D"
+	    stereotype 	"singleton"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3CEA58F3007C"
+		    stereotype 	"class event"
+		    label      	"Information"
+		    supplier   	"Logical View::Event Test::Content"
+		    quidu      	"3CEA58A00152")
+		(object Uses_Relationship
+		    quid       	"3D2ED82A01E1"
+		    stereotype 	"class event"
+		    label      	"Wait"
+		    supplier   	"Logical View::Event Test::Waiting"
+		    quidu      	"3D2ED7E302C6"))
+	    operations 	(list Operations
+		(object Operation "init"
+		    quid       	"3CEA8146035B"
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "information handler"
+		    quid       	"3CEA592E0260"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "i"
+			    type       	"Information"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get ordinal"
+		    quid       	"3CEA59600225"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get offset"
+		    quid       	"3CEA59AE018D"
+		    result     	"Duration"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "wait handler"
+		    quid       	"3D2ED6E4002A"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "w"
+			    type       	"Wait"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ordinal"
+		    quid       	"3CEA597601F2"
+		    type       	"Integer")
+		(object ClassAttribute "offset"
+		    quid       	"3CEA598401F2"
+		    type       	"Duration")))
+	(object Class "Content"
+	    quid       	"3CEA58A00152"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ordinal"
+		    quid       	"3CEA5909017C"
+		    type       	"Integer")
+		(object ClassAttribute "expected at"
+		    quid       	"3CEA591101CA"
+		    type       	"Time")))
+	(object Class "Waiting"
+	    quid       	"3D2ED7E302C6"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "interval"
+		    quid       	"3D2ED81D03AF"
+		    type       	"Duration")))
+	(object Class "Machine"
+	    quid       	"3D2EE2D100E8"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3D2EE3580345"
+		    stereotype 	"instance event"
+		    label      	"Self"
+		    supplier   	"Logical View::Event Test::Content"
+		    quidu      	"3CEA58A00152")
+		(object Uses_Relationship
+		    quid       	"3D2EE36C01B3"
+		    stereotype 	"instance event"
+		    label      	"Mark"
+		    supplier   	"Logical View::Event Test::Content"
+		    quidu      	"3CEA58A00152"))
+	    operations 	(list Operations
+		(object Operation "get ordinal"
+		    quid       	"3D2EE3010119"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get offset"
+		    quid       	"3D2EE30A0267"
+		    result     	"Duration"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "handle self"
+		    quid       	"3D2EE3160336"
+		    parameters 	(list Parameters
+			(object Parameter "ev"
+			    type       	"Self"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "handle mark"
+		    quid       	"3D2EE3210288"
+		    parameters 	(list Parameters
+			(object Parameter "ev"
+			    type       	"Mark"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "send done"
+		    quid       	"3D2EE33003D4"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3D2EE2E10163"
+		    stereotype 	"id"
+		    type       	"Autonumber")
+		(object ClassAttribute "ordinal"
+		    quid       	"3D2EE2EA00A8"
+		    type       	"Integer")
+		(object ClassAttribute "offset"
+		    quid       	"3D2EE2F00075"
+		    type       	"Duration"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"3D2EC70C00F0"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$0"
+			quid       	"3D2EC71001C8"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3D2EE11403AF"
+				supplier   	"idle"
+				quidu      	"3D2EC71603A7"
+				sendEvent  	(object sendEvent
+				    quid       	"3D2EE11403B2")))
+			type       	"StartState")
+		    (object State "idle"
+			quid       	"3D2EC71603A7"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3D2EC76501CA"
+				label      	""
+				supplier   	"handling mark"
+				quidu      	"3D2EC73B001B"
+				Event      	(object Event "mark"
+				    quid       	"3D2EC76501CB")
+				sendEvent  	(object sendEvent
+				    quid       	"3D2EC76501CD"))
+			    (object State_Transition
+				quid       	"3D2EE11A03E0"
+				label      	""
+				supplier   	"handling self"
+				quidu      	"3D2EC7270153"
+				Event      	(object Event "self"
+				    quid       	"3D2EE11A03E1")
+				sendEvent  	(object sendEvent
+				    quid       	"3D2EE11A03E3")))
+			type       	"Normal")
+		    (object State "handling self"
+			quid       	"3D2EC7270153"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3D2EC75B0202"
+				label      	""
+				supplier   	"idle"
+				quidu      	"3D2EC71603A7"
+				Event      	(object Event "done"
+				    quid       	"3D2EC75B0203")
+				sendEvent  	(object sendEvent
+				    quid       	"3D2EC75B0205")))
+			actions    	(list action_list
+			    (object action "handle self"
+				quid       	"3D2EC78001D3"
+				ActionTime 	(object ActionTime
+				    when       	"Entry"))
+			    (object action "send done"
+				quid       	"3D2EC79C01A1"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal")
+		    (object State "handling mark"
+			quid       	"3D2EC73B001B"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3D2EC76D01A4"
+				supplier   	"idle"
+				quidu      	"3D2EC71603A7"
+				sendEvent  	(object sendEvent
+				    quid       	"3D2EC76D01A7")))
+			actions    	(list action_list
+			    (object action "handle mark"
+				quid       	"3D2EC7B20030"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal"))
+		partitions 	(list Partitions)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram3"
+			quid       	"3D2EC70C00FA"
+			title      	"NewDiagram3"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	360
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$0" @1
+				location   	(540, 495)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(582, 465)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3D2EC71001C8"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "idle" @2
+				location   	(1350, 495)
+				label      	(object ItemLabel
+				    Parent_View 	@2
+				    location   	(1350, 479)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"idle")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3D2EC71603A7"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "handling self" @3
+				location   	(870, 1050)
+				label      	(object ItemLabel
+				    Parent_View 	@3
+				    location   	(870, 1012)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	296
+				    justify    	0
+				    label      	"handling self")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3D2EC7270153"
+				compartment 	(object Compartment
+				    Parent_View 	@3
+				    location   	(731, 1050)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	2
+				    max_width  	288
+				    compartmentItems 	(list Compartment
+					"entry/ handle self"
+					"entry/ send done"))
+				width      	393
+				height     	179
+				autoResize 	TRUE)
+			    (object StateView "Normal" "handling mark" @4
+				location   	(1650, 1035)
+				label      	(object ItemLabel
+				    Parent_View 	@4
+				    location   	(1650, 1008)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	324
+				    justify    	0
+				    label      	"handling mark")
+				icon_style 	"Label"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3D2EC73B001B"
+				compartment 	(object Compartment
+				    Parent_View 	@4
+				    location   	(1497, 1046)
+				    icon_style 	"Label"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	1
+				    max_width  	315
+				    compartmentItems 	(list Compartment
+					"entry/ handle mark"))
+				width      	420
+				height     	157
+				autoResize 	TRUE)
+			    (object TransView "" @5
+				label      	(object SegLabel @6
+				    Parent_View 	@5
+				    location   	(1165, 782)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	92
+				    justify    	0
+				    label      	"done"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3D2EC75B0202"
+				client     	@3
+				supplier   	@2
+				vertices   	(list Points
+				    (1005, 960)
+				    (1183, 845)
+				    (1318, 562))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @7
+				label      	(object SegLabel @8
+				    Parent_View 	@7
+				    location   	(1416, 763)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	88
+				    justify    	0
+				    label      	"mark"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3D2EC76501CA"
+				client     	@2
+				supplier   	@4
+				vertices   	(list Points
+				    (1355, 561)
+				    (1375, 785)
+				    (1564, 956))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @9
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3D2EC76D01A4"
+				client     	@4
+				supplier   	@2
+				vertices   	(list Points
+				    (1645, 956)
+				    (1635, 760)
+				    (1422, 562))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @10
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3D2EE11403AF"
+				client     	@1
+				supplier   	@2
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @11
+				label      	(object SegLabel @12
+				    Parent_View 	@11
+				    location   	(942, 724)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"self"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3D2EE11A03E0"
+				client     	@2
+				supplier   	@3
+				vertices   	(list Points
+				    (1198, 562)
+				    (890, 698)
+				    (875, 960))
+				line_style 	0
+				x_offset   	FALSE)))))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CEA588102B7"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	466
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Event Test::Recipient" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1425, 990)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(997, 802)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	856
+			justify    	0
+			label      	"Recipient")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@13
+			location   	(997, 757)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	856
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CEA5887005D"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(997, 858)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	8
+			max_width  	860)
+		    width      	874
+		    height     	488
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Event Test::Content" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2835, 990)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(2640, 900)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	390
+			justify    	0
+			label      	"Content")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@14
+			location   	(2640, 855)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	390
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CEA58A00152"
+		    compartment 	(object Compartment
+			Parent_View 	@14
+			location   	(2640, 956)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	387)
+		    width      	408
+		    height     	292
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Event Test::Waiting" @15
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(225, 990)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(54, 937)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	342
+			justify    	0
+			label      	"Waiting")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@15
+			location   	(54, 892)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	342
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D2ED7E302C6"
+		    compartment 	(object Compartment
+			Parent_View 	@15
+			location   	(54, 993)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	347)
+		    width      	360
+		    height     	218
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Event Test::Machine" @16
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1590, 1935)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(1366, 1705)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"Machine")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D2EE2D100E8"
+		    compartment 	(object Compartment
+			Parent_View 	@16
+			location   	(1366, 1761)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	9
+			max_width  	452)
+		    width      	466
+		    height     	482
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "Information" @17
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(2246, 990)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"Information")
+		    stereotype 	(object SegLabel @18
+			Parent_View 	@17
+			location   	(2259, 953)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.516927
+			height     	37
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"3CEA58F3007C"
+		    client     	@13
+		    supplier   	@14
+		    line_style 	0)
+		(object UsesView "Wait" @19
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(696, 990)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"Wait")
+		    stereotype 	(object SegLabel @20
+			Parent_View 	@19
+			location   	(696, 931)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.500000
+			height     	60
+			orientation 	1)
+		    line_color 	3342489
+		    quidu      	"3D2ED82A01E1"
+		    client     	@13
+		    supplier   	@15
+		    line_style 	0)
+		(object UsesView "Self" @21
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(2171, 1328)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"Self")
+		    stereotype 	(object SegLabel @22
+			Parent_View 	@21
+			location   	(2176, 1282)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<instance event>>"
+			pctDist    	0.524265
+			height     	38
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"3D2EE3580345"
+		    client     	@16
+		    supplier   	@14
+		    vertices   	(list Points
+			(1811, 1693)
+			(2130, 1349)
+			(2630, 1092))
+		    line_style 	0)
+		(object UsesView "Mark" @23
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(2459, 1719)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"Mark")
+		    stereotype 	(object SegLabel @24
+			Parent_View 	@23
+			location   	(2459, 1665)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<instance event>>"
+			pctDist    	0.537239
+			height     	25
+			orientation 	1)
+		    line_color 	3342489
+		    quidu      	"3D2EE36C01B3"
+		    client     	@16
+		    supplier   	@14
+		    vertices   	(list Points
+			(1823, 1876)
+			(2458, 1721)
+			(2757, 1136))
+		    line_style 	0)))))

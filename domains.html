@@ -1,0 +1,120 @@
+<!-- $Id: domains.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<head>
+<title>ColdFrame: Domains</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Domains</h1>
+
+<p>Here, a <i>domain</i> is an independent subject matter.
+
+<h2>Motivation</h2>
+
+<h3>Separation of concerns</h3>
+
+<p>The main reason for using domains is that it simplifies the
+analyst's job. It's hard enough to think about one subject matter at a
+time, without mixing them up.
+
+<p>A prime example is input/output; if you're considering the rules of
+engagement for a weapon system, you really don't want to be worrying
+about how the data gets into and out of the system.
+
+<p>Of course, you do need to think about this at some point!
+
+<h3>Separation of activity</h3>
+
+<p>Most CASE tools are pretty bad at allowing more than one person to
+access the model at once. If you can arrange that a group of classes
+and relationships can be treated as a group, by minimising the
+interactions with other groups of classes as far as possible, you
+stand a better chance of getting the tool to do what you need.
+
+<h3>Software management</h3>
+
+<p>Another reason is to provide sensible work packages!
+
+<h2>Modelling</h2>
+
+<p>Given the above, the obvious way to model domains is as packages in
+the logical model.
+
+<p>Domain packages can have child packages. This might be to make the
+model structure clearer (for example, by separating off all the type
+definitions), or perhaps to keep tentative parts of the model out of
+the way of code generation.
+
+<p>In the latter case, you'll need (with Rose, at any rate) to be
+careful about associations; they too are held in packages, and you
+need to make sure that the associations you do want are in packages
+visible to code generation, and vice versa.
+
+<h2>Translation</h2>
+
+<p>A domain is translated as a top-level Ada package, with the name
+derived from the package name using the usual name conversion rules.
+
+<p>Child UML packages are included (recursively) if they are marked
+<em>&#171;generate&#187;</em>. The child UML package structure is
+<em>not</em> reflected in the generated code (for example, all classes
+end up as direct Ada child packages of the domain package).
+
+<p>Domain types are implemented in the domain package. For string
+types, a string hash function is generated as a child subprogram of
+the domain package.
+
+<p>Domain <a href="classes.html">classes</a> are implemented as
+children of the domain package.
+
+<p>Three further children are generated as standard:
+
+<dl>
+
+<dt><tt><i>Domain</i>.Events</tt>
+<dd>Provides <a href="events.html">Event</a> queueing and dispatching.
+
+<dt><tt><i>Domain</i>.Initialize</tt>
+<dd>Initializes the domain by calling
+<tt><i>Domain</i>.Events.Initialize</tt> and then all the
+<em>&#171;init&#187;</em> operations of all the classes. The calls are
+in alphabetical order by class and then by operation.
+
+<!-- XXX need to check about singletons and tasks. -->
+
+<dt><tt><i>Domain</i>.Tear_Down</tt>
+<dd>For <a href="resources.html#testing">testing</a> purposes, returns
+the domain to its initial state by deleting all the class instances
+and associations.
+
+</dl>
+
+<h2>Use</h2>
+
+<p>Each domain must be initialized by calling the procedure
+<tt><i>Domain</i>.Initialize</tt>, probably from your main
+program. Because it's a child, it must be <tt>with</tt>ed explicitly.
+
+<p>Because all the packages in a domain are implemented as children,
+you don't need to mention the domain package when referencing other
+packages (you do need to mention the domain in the context clauses,
+though):
+
+<pre>
+   <b>with <i>Domain.Other_Class</i>;</b>
+   separate (<i>Domain.Class</i>)
+   procedure Foo is
+   begin
+      <b><i>Other_Class</i></b>.Bar;
+      ...
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

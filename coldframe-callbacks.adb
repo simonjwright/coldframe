@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: fe0f9536cdc0 $
---  $Date: 2001/09/25 18:39:48 $
+--  $Revision: 1e4488bbaa25 $
+--  $Date: 2001/11/17 06:05:09 $
 --  $Author: simon $
 
 package body ColdFrame.Callbacks is
@@ -57,5 +57,10 @@ package body ColdFrame.Callbacks is
    begin
       Process_All (It);
    end Call_Callbacks;
+
+   procedure Clear is
+   begin
+      Collections.Clear (The_Registered_Procedures);
+   end Clear;
 
 end ColdFrame.Callbacks;

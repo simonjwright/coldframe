@@ -1,0 +1,142 @@
+<!-- $Id: associations.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<head>
+<title>ColdFrame: Associations</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Associations</h1>
+
+<h2>Motivation</h2>
+
+<h2>Modelling</h2>
+
+<h3>Associations and role names</h3>
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing.
+
+<h3>Associations and multiplicity</h3>
+
+<p>You need to think carefully about the multiplicity of associations;
+they capture application rules and policies, which it's important to
+get right.
+
+<p>Clearly each <em>Screen</em> <em>"displays"</em> a number
+of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
+more than one <em>Screen</em>? (perhaps, if you have multi-headed
+display capability). Can you have a <em>Window</em> which <em>"appears
+on"</em> no <em>Screen</em>s? (well, no, not if your display
+technology is X--in which case <em>"appears on"</em> may not be quite
+right either, since the application could be iconised).
+
+<p>Unconditional multiplicity is good; if each end of an association
+is conditional (0..1, 0..n), maybe you should think more carefully
+about it. Perhaps there's some super/subtype (<a
+href="generalizations.html">inheritance</a>) relationship lurking in
+there.
+
+<h3>Formalising associations</h3>
+
+<p>In the original Shlaer-Mellor method, associations and inheritance
+relationships needed to be "formalised" by the use of "referential
+attributes". Considering the <em>Window "appears on" Screen</em>,
+where clearly there are many <em>Window</em>s but only one
+<em>Screen</em>, you'd need a referential attribute
+<em>screen&nbsp;id</em> in the <em>Window</em> instance.
+
+<p>ColdFrame, however, follows <a
+href="resources.html#build-object-models">Executable UML</a>; you
+usually don't need to provide referential attributes (it would be
+quite cumbersome to do so, since Rose (taking it as a typical UML
+tool) is unaware of the concept). Instead, ColdFrame automatically
+implements the relationships. Sometimes it needs a little help, for
+example for <a href="#formalizes">complex formalization</a> or <a
+href="#source">in a symmetric association</a>.
+
+<h2>Translation</h2>
+
+<p>Each Association maps into
+
+<ul>
+
+<li>a package
+<tt><i>Domain.Association</i></tt>, which deals with linking,
+unlinking and navigation from single instances
+
+<li>a package
+<tt><i>Domain.Association</i>.From_Collections</tt>, which deals with
+navigation from collections of instances.
+
+</ul>
+
+<h2><a name="use">Use</a></h2>
+
+<p>It can be difficult to work out which of the navigation operations
+you need to use.
+
+<p><img src="simple-association.png">
+
+<p>In the diagram, <tt><i>Domain</i>.A2</tt> has two navigation
+operations:
+
+<ul>
+
+<li><tt>Is_Borrowing</tt> takes a <i>Book</i> (<tt>Book.Handle</tt>)
+parameter and returns a <i>Borrower</i> (<tt>Borrower.Handle</tt>),
+which may be <tt>null</tt>.
+
+<li><tt>Is_On_Loan_To</tt> takes a <i>Borrower</i> and returns a
+collection of <i>Books</i> (<tt>Book.Collections.Collection</tt>).
+
+</ul>
+
+<p>This is as though <i>is&nbsp;borrowing()</i> were an operation of
+<i>Book</i> and <i>is&nbsp;on&nbsp;loan&nbsp;to()</i> were an
+operation of <i>Borrower</i>.
+
+<p>It may help to ask yourself, as you write the assignment
+<pre>
+   Borrower_H := A2.<i>what goes here</i> (Book_H);
+</pre>
+
+<blockquote>
+"what is the <i>result</i> that <i>role</i> this <i>starting
+instance</i>?"
+</blockquote>
+
+<p>which in this case is "what is the <i>Borrower</i> that <i>is
+borrowing</i> this <i>Book</i>?"
+
+<p><img src="reflexive.png">
+
+<p>It's more difficult with reflexive associations, and if you get it
+wrong the compiler won't be able to help you. The litte mnemonic above
+needs adjustment;
+
+<blockquote>
+"what is the <b>other</b> <i>Strategy</i> that
+<i>role</i> this <i>Strategy</i>"
+</blockquote>
+
+<p>and the answer is probably "<i>is fallback for</i>".
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

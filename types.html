@@ -1,0 +1,111 @@
+<!-- $Id: types.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<head>
+<title>ColdFrame: Types</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Types</h1>
+
+<h2>Motivation</h2>
+
+<p>Clearly a class corresponds, in a programming language sense, to a
+type. In Ada, you'll see statements like
+<pre>
+   type My_Class is ...
+</pre>
+
+<p>The distinction that ColdFrame makes between <i>type</i> and
+<i>class</i> is that classes have instances, each instance being
+distinct from any other instance, while types merely have values, and
+you can have many different identical values of the same type.
+
+
+<h2>Modelling</h2>
+
+<p>Most types are modelled in classes stereotyped
+<em>&#171;type&#187;</em>.
+
+<h3>Type details</h3>
+
+<p>Extra information comes in
+<i>annotations</i>, placed in the documentation section (in Rose the
+bottom left pane), in sections delimited by <tt>[[&nbsp;]]</tt>; for
+example,
+<tt>[[&nbsp;mode&nbsp;:&nbsp;in&nbsp;out&nbsp;]]</tt>.
+
+<p>At some future time, this scheme may be converted to one using
+tagged values.
+
+<p>The annotations supported for <em>&#171;type&#187;</em>s are:
+
+<ul>
+
+<li><tt>callback : <i>max</i></tt> specifies that <a
+href="coldframe-callback.pdf">callback support code</a> is to be
+generated. The idea here is that a (lower-level) Domain may need to
+support up to <tt><i>max</i></tt> Observers from higher-level Domains,
+and the higher-level Domains can register to be notified when
+something has changed in the lower-level Domain.
+
+<li><tt>discriminated</tt> (only relevant if the type is a record
+type, ie has attributes) causes the generation of discriminated
+records; the discriminant is an enumeration type with literals formed
+from the attribute names with <tt>_T</tt> appended.
+
+<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+
+<li><tt>imported : <i>external-reference</i></tt> specifies that the
+given type is to be found at the specified external reference. For
+Ada, this results (for a type named <tt>T</tt>) in
+<pre>
+   with <i>external-reference</i>;
+   ..
+   subtype T is <i>external-reference</i>.T;
+   use type T;
+</pre>
+(clearly <tt><i>external-reference</i></tt> needs to correspond to a
+with-able package name).
+
+<li><tt>renames : <i>external-type</i></tt> specifies that the given
+type is a renaming of the specified external reference. For Ada, this
+results (for a type named <tt>T</tt>, renaming
+<tt>Ada.Real_Time.Time</tt>) in
+<pre>
+   with Ada.Real_Time;
+   ..
+   subtype T is Ada.Real_Time.Time;
+   use type T;
+</pre>
+
+<li><tt>integer : lower <i>low-bound</i>, upper
+<i>upper-bound</i></tt>
+
+<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
+upper <i>upper-bound</i></tt>
+
+<li><tt>string : max <i>max-length</i></tt>
+
+</ul>
+
+<h3>Operations</h3>
+
+<p>
+
+<h2>Translation</h2>
+
+<p>Types are declared in the domain package. For string types, a
+string hash function is generated as a child subprogram of the domain
+package.
+
+<h2>Use</h2>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

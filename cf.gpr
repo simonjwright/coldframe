@@ -1,0 +1,24 @@
+--  Project file (GCC-3.1, GNAT-3.15) for ColdFrame
+--  $Id: cf.gpr,v 79a018bc7fbd 2002/07/27 12:46:55 simon $
+
+with "bc";
+
+project CF is
+
+  for Source_Dirs use (".");
+
+  for Object_Dir use ".build";
+
+  package Builder is
+     for Default_Switches ("Ada") use ("-m", "-g");
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("Ada") use ("-gnatqQafy", "-gnatwaL", "-O2");
+  end Compiler;
+
+  package Binder is
+     for Default_Switches ("Ada") use ("-E");
+  end Binder;
+
+end CF;

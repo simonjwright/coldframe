@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e613c0df3fe3 2001/10/13 13:11:00 simon $ -->
+<!-- $Id: bugs.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -6,26 +6,19 @@
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Bugs</h1>
 
-<h2>Outstanding</h2>
+<ul>
+
+<li><a href="#outstanding">Outstanding</a>
+
+<li><a href="#fixed">Fixed</a>
+
+<li><a href="#rejected">Rejected</a>
+
+</ul>
+
+<h2><a name="outstanding">Outstanding</a></h2>
 
 <dl>
-
-<dt>0005 (raised 25.vi.01)
-
-<dd>The translation for active classes fails when the <tt>[[max]]</tt>
-number of instances is specified.
-
-<dt>0006 (raised 25.vi.01)
-
-<dd>The translation for active classes requires users to jump through
-hoops involving <tt>.all'Unrestricted_Access</tt> to get a
-<tt>Handle.</tt>
-
-<dt>0009 (raised 27.vi.01)
-
-<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
-operations of child classes checked that the given identifier (of the
-parent class's instance) isn't <tt>null</tt>.
 
 <dt>0010 (raised 27.vi.01)
 
@@ -36,10 +29,6 @@ corresponding entries) trapped and reported exceptions.
 
 <dd>It would be helpful if exception handlers could be automatically
 generated in stub subprograms.
-
-<dt>0014 (raised 13.vii.01)
-
-<dd>No code is generated for operations of &#171;type&#187;s.
 
 <dt>0016 (raised 6.viii.01)
 
@@ -57,41 +46,668 @@ Forward/Aft or 1..10) should be implemented with array-like behaviour.
 <dd>It would be good to support private operations (particularly for
 active classes, where procedure operations turn into task entries).
 
-<dt>0020 (raised 4.ix.01)
+<dt>0031 (raised 13.x.01)
 
-<dd>Cardinalities and multiplicities of the form 1..42 should be
-recognised (even if not implemented as specified: a warning would be
-sensible in that case).
+<dd>&#171;finalize&#187; operations which are functions or have
+parameters (or are &#171;class&#187; operations, though you would have
+to work hard to make one both!) are silently <em>not</em> called at
+finalization. There are other instances of bad usage which need
+reporting (perhaps in a separate pass?)
 
-<dt>0025 (raised 26.ix.01)
+<dt>0035 (raised 1.xi.01)
 
-<dd>It would be a good thing if illegal characters in names were detected.
+<dd>The association support packages generated when one of the parties
+in a 1:1 association is a &#171;singleton&#187; won't work if the
+non-singleton party is marked <tt>[[source]]</tt>.
 
-<dt>0026 (raised 4.x.01)
+<dt>0037 (raised 16.xi.01)
 
-<dd>It should probably be possible for an operation to take or return
-a collection of its own class. At present this gives rise to a cyclic
-dependency.
+<dd>Would it be better only to generate task entries when there's an
+&#171;entry&#187; stereotype?
+
+<dt>0047 (raised 6.xii.01)
+
+<dd>It might be useful to be able to describe <i>array</i>
+&#171;type&#187;s.
+
+<dt>0049 (raised 27.xii.01)
+
+<dd>It would be a good thing if project-specific configuration
+information (such as multiplicities) could be supplied in a separate
+document from the domain model.
+
+<dt>0050 (raised 27.xii.01)
+
+<dd>It would be a good thing if the multiplicity of an association
+class was calculated automatically (where the multiplicity of each
+associated class is specified).
+
+<dt>0055 (raised 8.i.02)
+
+<dd>To create an instance of a child class (or any class that has a
+reference to another class in its identifier), you have to type
+convert the <tt>Handle</tt> to <tt>ColdFrame.Instances.Handle</tt>.
+
+<br>This could be avoided by making (all?) <tt>Create</tt> operations
+children of the class package.
+
+<dt>0056 (raised 8.i.02)
+
+<dd>The generated HTML doesn't report default parameter values.
+
+<dt>0059 (raised 16.i.02)
+
+<dd>It would be proper to use UML tagged values instead of
+<tt>[[&nbsp;]]</tt> annotations.
+
+<dt>0062 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify constants.
+
+<dt>0065 (raised 28.ii.02)
+
+<dd>The mechanism for handling multiple case exception files isn't
+easy to reconcile with use in Makefiles. Probably needs to use an
+environment variable.
+
+<dt>0067 (raised 5.iii.02)
+
+<dd>If the action associated with a timed event sets the just-fired
+timer again, there's a race condition which can result in a Use_Error
+exception.
+
+<dt>0068 (raised 6.iii.02)
+
+<dd>It would be useful to be able to specify subtypes (eg, of
+enumerations).
+
+<dt>0071 (raised 19.iii.02)
+
+<dd>It would be useful to be able to use Pi (<tt>Ada.Numerics.Pi</tt>)
+in type range specifications.
+
+<dt>0072 (raised 19.iii.02)
+
+<dd>It seems unnecessary that the <tt>[[callback]]</tt> facility
+requires you to specify the maximum number of instances.
+
+<dt>0073 (raised 11.iv.02)
+
+<dd>If a class has a multiplicity of 0..1, it should be possible to
+<tt>Find</tt> the only instance (or of course <tt>null</tt>) without
+supplying an Identifier.
+
+<dt>0078 (raised 18.iv.02)
+
+<dd>It would be helpful if ColdFrame could detect the error of having
+non-unique abbreviations.
+
+<dt>0080 (raised 1.v.02)
+
+<dd>In multiple inheritance, would it be possible for an operation
+inherited from one parent to act as the concrete version of an
+abstract operation declared in the other parent?
+
+<dt>0081 (raised 9.v.02)
+
+<dd>Tear_Down doesn't clean up singletons (especially active ones).
+
+<dt>0086 (raised 14.v.02)
+
+<dd>It would be helpful if the build process could report
+unimplemented bodies.
+
+<dt>0087 (raised 21.v.02)
+
+<dd><tt>Tear_Down</tt> doesn't reset &#171;class&#187; variables.
+
+<dt>0088 (raised 7.vi.02)
+
+<dd>Extraction hangs if the output directory (<tt>ColdFrameOut</tt> in
+the Path Map) doesn't exist.
+
+<dt>0090 (raised 7.vi.02)
+
+<dd>It should be possible to declare &#171;type&#187;s "private" (this
+would only make sense if they have operations, I suppose).
+
+<dt>0094 (raised 24.vi.02)
+
+<dd>It's not possible to have automatically-generated accessors for
+class variables.
+
+<dt>0097 (raised 25.vi.02)
+
+<dd>All the Events that transition to a State with an Action with a
+parameter must be the same. It would be helpful if this could be
+changed to "must carry the same payload".
+
+<dt>0098 (raised 25.vi.02)
+
+<dd>Multiple delayed events which are required to fire at the same
+time will result in a <tt>delay&nbsp;0.0</tt> between each.
+
+<dt>0103 (raised 16.vii.02)
+
+<dd>Automatic formation of abbreviations can result in generating
+reserved words.
+
+<dt>0105 (raised 23.vii.02)
+
+<dd>If an enumeration type is imported or renamed, the enumeration
+literals aren't.
+
+<dt>0106 (raised 25.vii.02)
+
+<dd>The generated lines-of-code count is wrong, and less useful than
+it could be.
+
+<dt>0107 (raised 25.vii.02)
+
+<dd>It would be a good thing if documentation in the model could be
+carried through into the generated code.
+
+</dl>
+
+<!-- next: 0108 -->
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>16.vii.02</h3>
+
+<dl>
+
+<dt>0102 (raised 15.vii.02)
+
+<dd>Date, Time should be translated to
+<tt>Coldframe.Projects.Calendar.Time</tt>, with a provided default
+renaming of <tt>Ada.Calendar</tt>.
+
+<dt>0104 (raised 16.vii.02)
+
+<dd>&#171;Singleton&#187;s with state machines don't <i>with</i>
+<tt>ColdFrame.Exceptions</tt>.
+
+</dl>
+
+<h3>12.vii.02</h3>
+
+<dl>
+
+<dt>0101 (raised 5.vii.02)
+
+<dd>Link operations should check that the instances aren't already
+linked.
+
+</dl>
+
+<h3>10.vii.02</h3>
+
+<dl>
 
 <dt>0027 (raised 5.x.01)
 
 <dd>For attributes and operation parameters, it would be good to
 detect missing types (or names).
 
+</dl>
+
+<h3>7.vii.02</h3>
+
+<dl>
+
+<dt>0092 (raised 24.vi.02)
+
+<dd>There's no <tt>Tear_Down</tt> for Event management.
+
+</dl>
+
+<h3>4.v11.02</h3>
+
+<dl>
+
+<dt>0095 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s are generated even if they're
+marked &#171;generated&#187; (which means that they're operations that
+ColdFrame generates automatically).
+
+<dt>0100 (raised 4.vii.01)
+
+<dd>Signed initializers aren't supported.
+
+</dl>
+
+<h3>27.vi.02</h3>
+
+<dl>
+
+<dt>0079 (raised 1.v.02)
+
+<dd>It would be helpful if there was a means of declaring exceptions.
+
+<dt>0099 (raised 27.vi.02)
+
+<dd>Association across reflexive associations is incorrect.
+
+<br><i>Actually, it's not; but there needs to be more documentation on
+how to think about role names.</i>
+
+</dl>
+
+<h3>25.vi.02</h3>
+
+<dl>
+
+<dt>0093 (raised 24.vi.02)
+
+<dd>Deleting an instance may hang if there are no timed events
+outstanding.
+
+<dt>0096 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s don't compile.
+
+</dl>
+
+<h3>8.vi.02</h3>
+
+<dl>
+
+<dt>0089 (raised 7.vi.02)
+
+<dd>Reflexive associations (without an associative class) generate
+code that doesn't compile (especially if the cardinality of the class
+involved has been specified).
+
+</dl>
+
+<h3>29.v.02</h3>
+
+<dl>
+
+<dt>0009 (raised 27.vi.01)
+
+<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
+operations of child classes checked that the given identifier (of the
+parent class's instance) isn't <tt>null</tt>.
+
+<br>Actually, this comes down to checking in <tt>Create</tt> that no
+identifying referential attribute is <tt>null</tt>. As for
+<tt>Find</tt>, there seems no particular reason to check.
+
+</dl>
+
+<h3>20.v.02</h3>
+
+<dl>
+
+<dt>0014 (raised 13.vii.01)
+
+<dd>No code is generated for operations of &#171;type&#187;s.
+
+</dl>
+
+<h3>18.v.02</h3>
+
+<dl>
+
+<dt>0075 (raised 16.iv.02)
+
+<dd>Some of the generated operations (eg, accessors for referential
+attributes) are only intended to be called by generated code. It would
+be good to indicate this somehow.
+
+<dt>0083 (raised 14.v.02)
+
+<dd>&#171;access&#187; functions are generated as though they were
+procedures.
+
+<dt>0084 (raised 14.v.02)
+
+<dd>ColdFrame ought to respect the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt>.
+
+<i>
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work)
+</ul>
+</i>
+
+<dt>0085 (raised 14.v.02)
+
+<dd>ColdFrame generates accessors for referential attributes, but they
+aren't intended for general use. Can they be marked "private" in the
+generated code?
+
+<br><i>See also 0075.</i>
+
+</dl>
+
+<h3>9.v.02</h3>
+
+<dt>0025 (raised 26.ix.01)
+
+<dd>It would be a good thing if illegal characters in names were detected.
+
+<dt>0082 (raised 9.v.02)
+
+<dd>Tear_Down of an active non-singleton doesn't clean up the
+associated task.
+
+<dl>
+
+</dl>
+
+<h3>18.iv.02</h3>
+
+<dl>
+
+<dt>0077 (raised 18.iv.02)
+
+<dd>If a class has a one-word name, the automatically-generated
+abbreviation is a single letter. It's a nuisance to have to think of
+an abbreviation for each such class.
+
+<br><it>The default "abbreviation" for a single-word class is made by
+prepending <tt>A</tt> or <tt>An</tt>.</it>
+
+</dl>
+
+<h3>17.iv.02</h3>
+
+<dl>
+
+<dt>0076 (raised 17.iv.02)
+
+<dd>In inheritance hierarchies, bad code is generated for operation
+parameters whose type is the class in which the operation is declared.
+
+</dl>
+
+<h3>12.iv.02</h3>
+
+<dl>
+
+<dt>0074 (raised 11.iv.02)
+
+<dd>On Windows, an error in code generation doesn't cause the Make
+process to quit (so you get a truncated Ada output file rather than
+none).<br>
+
+<i>Fix is to use <tt>instantsaxon</tt> version 6.5.1 or later.</i>
+
+</dl>
+
+<h3>18.iii.02</h3>
+
+<dl>
+
+<dt>0070 (raised 15.iii.02)
+
+<dd>For large domains, the Makefile can generate command lines too
+long for (the Cygwin) <tt>bash</tt>.
+
+</dl>
+
+<h3>9.iii.02</h3>
+
+<dl>
+
+<dt>0066 (raised 5.iii.02)
+
+<dd>Making generated real types <tt>new</tt> will mean lots of
+instantiations of
+<tt>Ada.Numerics.Generic_Elementary_Functions</tt>. Perhaps subtypes
+of <tt>Float</tt>, <tt>Long_Float</tt> would be better.
+
+<dt>0069 (raised 8.iii.02)
+
+<dd>If an association is formalized using <tt>[[formalizes]]</tt> the
+association package doesn't <tt>with</tt> the necessary
+<tt>Selection_Function</tt>.
+
+</dl>
+
+<h3>4.iii.02</h3>
+
+<dl>
+
+<dt>0054 (raised 8.i.02)
+
+<dd>Attribute, parameter and result types in the generated HTML should
+be hyperlinked to their definitions (unless they're standard).
+
+<dt>0063 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify class variables.
+
+<dt>0064 (raised 23.i.02)
+
+<dd>There's no documentation on how to set up the Makefiles, how to
+use on Linux vs Windows etc.
+
+</dl>
+
+<h3>24.i.02</h3>
+
+<dl>
+
+<dt>0026 (raised 4.x.01)
+
+<dd>It should probably be possible for an operation to take or return
+a collection of its own class. At present this gives rise to a cyclic
+dependency.<br>
+
+<i>"Fix" is to withdraw the <tt>[[set]]</tt> facility. The way to get
+hold of collections of instances is to use the <tt>All_Instances</tt>,
+<tt>Selection/Filter_Function</tt>, and association navigation
+facilities.</i>
+
+<dt>0033 (raised 30.x.01)
+
+<dd>The generated HTML for <i>&#171;class&#187; op (this : Class)</i>
+is <tt>ColdFrame.Instances.Handle</tt>; should be just
+<tt>Handle</tt>.
+
+</dl>
+
+<h3>17.i.02</h3>
+
+<dl>
+
+<dt>0060 (raised 17.i.02)
+
+<dd>Imported and renamed types can lead to excessively long source
+lines.
+
+</dl>
+
+<h3>16.i.02</h3>
+
+<dl>
+
+<dt>0058 (raised 16.i.02)
+
+<dd>The installable Makefiles (<tt>Makefile-winnt</tt>,
+<tt>Makefile-unix</tt>) ought to make code generation depend on the
+user <tt>Makefile</tt>; because she can change macro values in it.
+
+</dl>
+
+<h3>13.i.02</h3>
+
+<dl>
+
+<dt>0057 (raised 10.i.02)
+
+<dd>Please can the number of lines of code generated be reported (for
+example, in the header comments of the main domain package).
+
+</dl>
+
+<h3>3.i.02</h3>
+
+<dl>
+
+<dt>0051 (raised 2.i.02)
+
+<dd>In inheritance trees, the parents may not have been processed when
+the grandchildren are processed, resulting in failed normalization.
+
+<dt>0052 (raised 2.i.02)
+
+<dd>The Makefiles expect a Case Exception File, and normalization
+fails if it's not present.<br>
+
+<dt>0053 (raised 2.i.02)
+
+<dd>Model domains are extracted for all selected packages, not just
+those in the current diagram.
+
+<dt>0061 (raised 23.i.02)
+
+<dd>The supplied Windows makefile (<tt>Makefile-winnt</tt>) assumes
+software is installed on the <tt>D:</tt> drive; better if the default
+was <tt>C:</tt>. <i>The customer bug report came after the problem was
+fixed.</i>
+
+</dl>
+
+<h3>11.xii.01</h3>
+
+<dl>
+
+<dt>0046 (raised 28.xi.01)
+
+<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
+clear.
+
+<dt>0048 (raised 11.xii.01)
+
+<dd>Using escapable HTML entities (&amp;, &lt;, &gt;) in the
+Documentation section prevents proper processing of annotations.
+
+<br>
+<i>Use a newer <a href="resources.html#xml">TclXML</a> release
+(tclxml-2.1theta works fine).</i>
+
+</dl>
+
+<h3>3.xii.01</h3>
+
+<dl>
+
+<dt>0044 (raised 28.xi.01)
+
+<dd>The <i>Autonumber</i> facility is implemented using plain
+<tt>Integer</tt>s. This might cause integer overflow under heavy
+long-term use.
+
+</dl>
+
+<h3>29.xi.01</h3>
+<dl>
+
+<dt>0020 (raised 4.ix.01)
+
+<dd>Cardinalities and multiplicities of the form 1..42 should be
+recognised (even if not implemented as specified: a warning would be
+sensible in that case).
+
+<dt>0038 (raised 16.xi.01)
+
+<dd>&#171;abstract&#187; procedure operations of active classes
+generate task entries. They probably shouldn't.
+
+<dt>0042 (raised 28.xi.01)
+
+<dd>Operations of <tt>[[imported]]</tt> types aren't visible.
+
+<dt>0045 (raised 28.xi.01)
+
+<dd>Multiplicity and cardinality processing in normalization only
+recognizes the <i>n</i> forms; the official <i>*</i> forms should be
+supported too.
+
+</dl>
+
+<h3>19.xi.01</h3>
+<dl>
+
+<dt>0041 (raised 19.xi.01)
+
+<dd><tt>[[callback]]</tt> doesn't work on plain types, you need to use
+a record.<br>
+<i>An error is reported.</i>
+
+</dl>
+
+<h3>17.xi.01</h3>
+<dl>
+
+<dt>0036 (raised 16.xi.01)
+
+<dd>The domain <tt>Initialize</tt> procedure should be a child
+unit. As it is, a <tt>with</tt> of the domain package, probably for
+its types, calls in all the class packages that have &#171;init&#187;
+operations.
+
+<dt>0040 (raised 17.xi.01)
+
+<dd>&#171;generated&#187; and &#171;navigation&#187; procedure
+operations of active classes generate task entries.
+
+</dl>
+
+<h3>16.xi.01</h3>
+<dl>
+
+<dt>0030 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations shouldn't be inherited.
+
+<dt>0034 (raised 1.xi.01)
+
+<dd>&#171;finalize&#187; operations of active classes shouldn't be
+mapped to task entries.
+
+<dt>0039 (raised 16.xi.01)
+
+<dd><tt>Tear_Down</tt> should clear out any registered Callbacks.
+
+</dl>
+
+<h3>29.x.01</h3>
+<dl>
+
 <dt>0028 (raised 12.x.01)
 
 <dd>The WITH TYPE extension seems to trigger a lot of instability in
 GNAT. An alternative would be better.
 
+<dt>0032 (raised 28.x.01)
+
+<dd>With multiple inheritance, ColdFrame doesn't necessarily choose
+the right parent class to call inherited operations.
+
+</dl>
+
+<h3>13.x.01</h3>
+<dl>
+
 <dt>0029 (raised 12.x.01)
 
 <dd>The generated Tear_Down procedure bodies have unused WITH clauses.
 
-<!-- next: 0030 -->
-
 </dl>
-
-<h2>Fixed</h2>
 
 <h3>28.ix.01</h3>
 <dl>
@@ -206,6 +822,55 @@ class (resulting in a circular dependency).
 
 </dl>
 
+<h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vii.02</h3>
+<dl>
+
+<dt>0043 (raised 28.xi.01)
+
+<dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
+targeted to specific instances of a particular class.
+
+<br>This can be done with the <i>Counterpart</i> facility, if
+required.
+
+</dl>
+
+<h3>25.vi.02</h3>
+<dl>
+
+<dt>0091 (raised 10.vi.02)
+
+<dd>It would be helpful if an association with an unnamed role could
+be identified more precisely ("unnamed role in association" isn't very
+good!)
+
+<br><i>This only happens when the association itself isn't named. Not
+much we can do.</i>
+
+</dl>
+
+<h3>4.xii.01</h3>
+<dl>
+
+<dt>0005 (raised 25.vi.01)
+
+<dd>The translation for active classes fails when the <tt>[[max]]</tt>
+number of instances is specified.<br>
+<i>Can't reproduce this.</i>
+
+<dt>0006 (raised 25.vi.01)
+
+<dd>The translation for active classes requires users to jump through
+hoops involving <tt>.all'Unrestricted_Access</tt> to get a
+<tt>Handle.</tt><br>
+<i>A simple <tt>Handle&nbsp;(This)</tt> type conversion will do the
+trick, not so bad I think.</i>
+
+</dl>
+
+<p>
 <hr>
 <i>
 <address>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v af1f91f97d0f 2001/10/10 04:49:01 simon $ -->
+<!-- $Id: ada-class.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -24,7 +24,7 @@
      -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+                version="1.1">
 
 
   <!-- Generate the class packages (specs). -->
@@ -37,6 +37,14 @@
       </xsl:with-param>
     </xsl:call-template>
 
+    <xsl:call-template name="do-not-edit"/>
+
+    <!-- Commentary. -->
+    <xsl:value-of select="$blank-line"/>
+    <xsl:call-template name="commentary">
+      <xsl:with-param name="separate-pars" select="$blank-line"/>
+    </xsl:call-template>
+    
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
 
@@ -61,11 +69,20 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
-        
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance (&lt;&gt;)&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+       
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
         <!-- .. the creation, simple find, and deletion operations .. -->
@@ -73,7 +90,14 @@
         <xsl:value-of select="$blank-line"/>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="@maxXXX = 1">
+            <xsl:text>function Find return Handle;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:value-of select="$blank-line"/>
 
         <xsl:value-of select="$I"/>
@@ -94,11 +118,20 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance (&lt;&gt;)&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
         <!-- .. the find operation .. -->
@@ -117,6 +150,9 @@
     <xsl:apply-templates mode="attribute-set-spec"/>
     <xsl:apply-templates mode="attribute-get-spec"/>
 
+    <!-- .. state machine: event types .. -->
+    <xsl:call-template name="event-type-specs"/>
+
     <!-- .. operations .. -->
     <xsl:call-template name="operation-specs"/>
 
@@ -124,19 +160,40 @@
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
  
+    <!-- .. any <<class>> attributes .. -->
+    <xsl:if test="attribute/@class">
+      <xsl:for-each select="attribute[@class]">
+        <xsl:call-template name="single-record-component">
+          <xsl:with-param name="indent" select="$I"/>
+        </xsl:call-template>
+      </xsl:for-each>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
     <xsl:if test="@public">
       <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
     <xsl:if test="@active">
       <xsl:call-template name="task-spec"/>
     </xsl:if>
-    
+
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-machine-states"/>
+    </xsl:if>
+
     <!-- .. the Instance record .. -->
     <xsl:call-template name="instance-record"/>
     <xsl:value-of select="$blank-line"/>
+
+    <!-- .. the State_Image function spec .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-spec"/>
+    </xsl:if>
 
     <xsl:choose>
 
@@ -201,7 +258,7 @@
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
-            <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+            <xsl:text> Storage =&gt; ColdFrame.Project.Global_Storage_Pool.Pool);&#10;</xsl:text>
             <xsl:value-of select="$blank-line"/>
           </xsl:otherwise>
           
@@ -216,11 +273,26 @@
       
       <xsl:when test="@singleton">
         <xsl:value-of select="$I"/>
-        <xsl:text>This : aliased Instance;&#10;</xsl:text>
+        <xsl:text>The : aliased Instance;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>This : constant Handle := The'Access;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:when>
       
     </xsl:choose>
+
+    <!-- .. Autonumber support .. -->
+    <xsl:if test="count(attribute[@identifier])=1
+                  and attribute[@identifier]/type='Autonumber'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>Next_Identifier : Long_Long_Integer := 0;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
+    <!-- .. event handlers .. -->
+    <xsl:apply-templates mode="event-handler-specs" select="event">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -264,15 +336,6 @@
 
         <!-- $ancestors contains all the nodes to be processed. -->
 
-        <xsl:if test="attribute[@refers and not(@refers=../name)]">
-          <!-- We have an attribute which refers to another class, so
-               w're going to use the GNAT "with type" extension. -->
-          <!-- XXX what about operations that take parameters of, or
-               return, another class? Why bother saying this when we need
-               -gnatX anyway? (GNAT 3.14a1) -->
-          <!-- <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text> -->
-        </xsl:if>
-        
         <!-- Check for Unbounded_Strings. -->
         <xsl:if test="attribute/type='Unbounded_String'
                       or $ancestors/operation/parameter/type='Unbounded_String'
@@ -284,15 +347,15 @@
           <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
         </xsl:if>
         
-        <!-- Check for Ada.Calendar. -->
+        <!-- Check for Calendar. -->
         <xsl:if test="attribute/type='Date'
                       or $ancestors/operation/parameter/type='Date'
                       or $ancestors/operation/@return='Date'
                       or attribute/type='Time'
                       or $ancestors/operation/parameter/type='Time'
                       or $ancestors/operation/@return='Time'">
-          <xsl:text>with Ada.Calendar;</xsl:text>
-          <xsl:text> use Ada.Calendar;&#10;</xsl:text>
+          <xsl:text>with ColdFrame.Project.Calendar;</xsl:text>
+          <xsl:text> use ColdFrame.Project.Calendar;&#10;</xsl:text>
         </xsl:if>
         
         <!-- Choose the appropriate Map (unless this is a singleton). -->
@@ -309,110 +372,42 @@
               <!-- Use the Unbounded version -->
               <!-- We need access to the standard heap storage pool. -->
               <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
-              <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
+              <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
             </xsl:otherwise>
             
           </xsl:choose>
           
         </xsl:if>
         
-        <!-- Include necessary "with" or "with type" for referential
-             attributes (that refer to other classes). -->
-        <!--XXX why doesn't this work always?<xsl:for-each
-             select="attribute[@refers
-             and not(@refers=preceding::attribute/@refers)]">-->
-        <xsl:choose>
-
-          <!-- It seems (26.vi.01) that GNAT 3.14a1 has a problem with
-               "with type" and tasks. -->
-          <xsl:when test="@active">
-            <xsl:for-each
-              select="attribute[@refers and not(@refers=../name)]">
-              <xsl:sort select="@refers"/>
-              <xsl:text>with </xsl:text>
-              <xsl:value-of select="../../name"/>
-              <xsl:text>.</xsl:text>
-              <xsl:value-of select="@refers"/>
-              <xsl:text>;&#10;</xsl:text>
-            </xsl:for-each>
-          </xsl:when>
-
-          <!-- Normally, use "with type" to minimise risk of circularities. -->
-          <xsl:otherwise>
-            <xsl:for-each
-              select="attribute[@refers and not(@refers=../name)]">
-              <xsl:sort select="@refers"/>
-
-              <xsl:text>with type </xsl:text>
-              <xsl:value-of select="../../name"/>
-              <xsl:text>.</xsl:text>
-              <xsl:value-of select="@refers"/>
-              <xsl:text>.Handle is access;&#10;</xsl:text>
-
-            </xsl:for-each>
-
-          </xsl:otherwise>
-        </xsl:choose>
-        
-        <!-- Handle subprograms. -->
-        <xsl:apply-templates
-          mode="operation-spec-context"
-          select="$ancestors/operation">
-          <xsl:with-param name="current" select="."/>
-        </xsl:apply-templates>
-
-        <!-- Subtype handles are needed for the subtype selection
-             record. -->
-        <xsl:call-template name="supertype-spec-context"/>
+        <!-- If this class has any events at all, include event support.
+             If it has a state machine, that would normally be it; otherwise,
+             or if there are attributes/operations involving _other_
+             classes, or the special Counterpart, need support for standard
+             Instances as well. -->
+        <xsl:if test="event">
+          <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>          
+        </xsl:if>
+        <xsl:variable name="counterpart">
+          <!-- Need an element to make a nodeset next. -->
+          <xsl:element name="name">Counterpart</xsl:element>
+        </xsl:variable>
+        <xsl:variable
+          name="other-classes"
+          select="$counterpart/name
+                  | /domain/class[name != current()/name]/name"/>
+        <xsl:if test="not(statemachine)
+                      or attribute[type=$other-classes]
+                      or attribute[@refers=$other-classes]
+                      or operation/parameter[type=$other-classes]
+                      or operation[@return=$other-classes]">
+          <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+        </xsl:if>
 
       </xsl:otherwise>
 
     </xsl:choose>
 
   </xsl:template>
-
-
-  <!-- Called at domain/class to generate any required supertype spec context
-       information. -->
-  <xsl:template name="supertype-spec-context">
-    
-    <xsl:variable name="parent-name" select="name"/>
-
-    <xsl:for-each select="../inheritance[parent=$parent-name]/child">
-      <xsl:sort select="name"/>
-
-      <!-- XXX may need to take special action not to use "with type" for
-           active classes (but only til the GNAT 3.14a1 bug is fixed). -->
-
-      <xsl:text>with type </xsl:text>
-      <xsl:value-of select="../../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>.Handle is access;&#10;</xsl:text>
-
-    </xsl:for-each>
-
-  </xsl:template>
-
-  <!-- Called at domain/class to generate any required supertype body context
-       information. -->
-  <xsl:template name="supertype-body-context">
-    
-    <xsl:variable name="parent-name" select="name"/>
-
-    <xsl:for-each select="../inheritance[parent=$parent-name]/child">
-      <xsl:sort select="name"/>
-
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>;&#10;</xsl:text>
-
-    </xsl:for-each>
-
-  </xsl:template>
-
 
 
   <!-- Called at domain/class to generate any required supertype spec
@@ -460,6 +455,17 @@
     <xsl:for-each select="../inheritance[parent=$parent-name]">
       <xsl:sort select="name"/>
 
+      <!--
+           procedure Set_{rel}_Child (This : Handle; To_Be : {rel}_Child) is
+           begin
+           if To_Be.Current /= Null_T
+             and then This.{rel}_Current_Child.Current /= Null_T then
+                 raise ColdFrame.Exceptions.Existing_Child;
+              end if;
+              This.{rel}_Current_Child := To_Be;
+           end Set_{rel}_Child;
+           -->
+
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
@@ -469,6 +475,16 @@
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
+      <xsl:text>if To_Be.Current /= Null_T&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>and then This.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Current_Child.Current /= Null_T then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>raise ColdFrame.Exceptions.Existing_Child;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
       <xsl:text>This.</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Current_Child := To_Be;&#10;</xsl:text>
@@ -477,6 +493,13 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
+
+      <!--
+           function Get_{rel}_Child (This : Handle) return {rel}_Child is
+           begin
+              return This.{rel}_Current_Child;
+           end Get_{rel}_Child;
+           -->
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
@@ -541,9 +564,7 @@
       <xsl:text>_T =&gt;&#10;</xsl:text>
       <xsl:value-of select="$IIII"/>
       <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
-      <xsl:text> : </xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>.Handle;&#10;</xsl:text>
+      <xsl:text> : ColdFrame.Instances.Handle;&#10;</xsl:text>
     </xsl:for-each>
     <xsl:value-of select="$III"/>
     <xsl:text>when Null_T =&gt; null;&#10;</xsl:text>
@@ -564,6 +585,8 @@
       </xsl:with-param>
     </xsl:call-template>
 
+    <xsl:call-template name="do-not-edit"/>
+
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
     
@@ -572,13 +595,21 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
-    
+
+    <!-- .. the task spec for active classes .. -->    
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
     
+    <!-- .. state entry procedure specs .. -->
+    <xsl:apply-templates
+      mode="state-entry-specs"
+      select="statemachine/state[not(@initial)]">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <xsl:choose>
       
       <xsl:when test="not(@singleton)">
@@ -607,15 +638,15 @@
       
       <xsl:when test="@singleton and not(@public)">
         
-        <!-- XXX Uses a GNAT-specific attribute. -->
         <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>return This'Unrestricted_Access;&#10;</xsl:text>
+        <xsl:text>return This;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end Find;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
       </xsl:when>
       
@@ -636,7 +667,31 @@
     
     <!-- .. operation stubs .. -->
     <xsl:call-template name="operation-body-stubs"/>
+
+    <!-- .. state image body .. -->
+    <xsl:if test="statemachine">
+      <xsl:call-template name="state-image-body"/>
+    </xsl:if>
     
+    <!-- .. state entry procedure bodies .. -->
+    <xsl:apply-templates
+      mode="state-entry-bodies"
+      select="statemachine/state[not(@initial)]">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- .. <<message>> event handler bodies .. -->
+    <xsl:apply-templates mode="event-handler-bodies" select="event[@class]">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- .. <<event>> event handler bodies .. -->
+    <xsl:apply-templates
+      mode="event-handler-bodies"
+      select="statemachine/event">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -650,6 +705,11 @@
     </xsl:if>
     
     <xsl:if test="@active">
+
+      <!-- Output the separate task body. -->
+
+      <xsl:call-template name="should-edit"/>
+
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>)&#10;</xsl:text>
@@ -669,9 +729,7 @@
 
 
   <!-- Called from domain/class to generate context clauses for package
-       body.
-       There is (GNAT 3.14a1) an issue with "with type", so we include
-       corresponding "with"'s for the packages involved. -->
+       body. -->
   <xsl:template name="class-body-context">
 
     <!-- The classes to be processed this time. The default is the
@@ -705,28 +763,69 @@
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- Withs for attributes of the current class -->
-        <xsl:for-each
-          select="attribute[@refers and not(@refers=../name)]">
-          <xsl:sort select="@refers"/>
-          <xsl:text>with </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>;&#10;</xsl:text>
+        <xsl:if test="not(@singleton) or statemachine">
+          <!-- We'll need exception support. -->
+          <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- Any additions to the context for state machines. -->
+        <xsl:call-template name="state-body-context"/>
+
+        <xsl:variable name="current" select="."/>
+        <xsl:variable name="name" select="name"/>
+
+        <!-- We want to output only one "with" for each package.
+             The strategy is to sort the list pf packages and only
+             output unique members. To do this, we need a nodeset. -->
+
+        <xsl:variable name="withs">
+          
+          <!-- Withs for referential attributes of the current class -->
+          <xsl:for-each
+            select="attribute[@refers and not(@refers=$name)]">
+            <xsl:element name="with">
+              <xsl:value-of select="@refers"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs for subprograms of this and ancestor classes.
+               We only want classes (not including the current class). -->
+          <xsl:for-each select="$ancestors/operation/parameter/type
+                                | $ancestors/operation/@return">
+            <xsl:if test="/domain/class/name=. and not(.=$name)">
+              <xsl:element name="with">
+                <xsl:value-of select="."/>
+              </xsl:element>
+            </xsl:if>
+          </xsl:for-each>
+
+          <!-- Withs for child classes. Needed for the subtype selection
+               record. -->
+          <xsl:for-each select="../inheritance[parent=$name]/child">
+            <xsl:element name="with">
+              <xsl:value-of select="."/>
+            </xsl:element>
+          </xsl:for-each>
+
+        </xsl:variable>
+
+        <xsl:variable name="d" select="/domain/name"/>
+
+        <!-- Sort, uniqueify and output. -->
+        <!-- XXX Saxon 6.5.1 allows this result tree fragment to be
+             implicitly converted to a node set if the version is 1.1,
+             so I've changed this file to require 1.1.
+             Should consider saxon:node-set() or exsl:node-set(). -->
+        <xsl:for-each select="$withs/with">
+          <xsl:sort/>
+          <xsl:if test="not (.=preceding-sibling::node())">
+            <xsl:text>with </xsl:text>
+            <xsl:value-of select="$d"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;&#10;</xsl:text>
+          </xsl:if>
         </xsl:for-each>
-
-        <!-- Withs for subprograms of this and ancestor classes -->
-
-        <xsl:apply-templates
-          mode="operation-body-context"
-          select="$ancestors/operation">
-          <xsl:with-param name="current" select="."/>
-        </xsl:apply-templates>
-
-        <!-- Complete subtype handles, needed for the subtype selection
-             record. -->
-        <xsl:call-template name="supertype-body-context"/>
 
       </xsl:otherwise>
 
@@ -741,57 +840,60 @@
   <xsl:template
     match="attribute[@identifier]"
     mode="identifier-element-assignment">
-    <xsl:value-of select="$II"/>
-    <xsl:text>Result.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>&#10;</xsl:text>
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= With_Identifier.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
-    <xsl:text>;&#10;</xsl:text>
+
+    <xsl:choose>
+
+      <xsl:when test="@refers">
+        
+        <!--
+             Result.{attr} := ColdFrame.Instances.Handle
+                (With_Identifier.{attr});
+             -->
+        
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text> := ColdFrame.Instances.Handle&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>(With_Identifier.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>);&#10;</xsl:text>
+    
+      </xsl:when>
+
+      <xsl:otherwise>
+
+        <!--
+             Result.{attr}
+               := With_Identifier.{attr};
+             -->
+        
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>:= With_Identifier.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>;&#10;</xsl:text>
+    
+      </xsl:otherwise>
+
+    </xsl:choose>
+
   </xsl:template>
 
   <xsl:template mode="identifier-element-assignment" match="*"/>
 
 
-  <!-- Called to generate access-to-subprogram types. -->
-  <xsl:template
-    match="operation[@access]"
-    mode="access-to-operation">
-    <xsl:value-of select="$I"/>
-    <xsl:text>type </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text> is access </xsl:text>
-    <xsl:choose>
-      <xsl:when test="@result">
-        <xsl:text>function</xsl:text>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$I"/>
-        </xsl:call-template>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>return </xsl:text>
-        <xsl:call-template name="type-name">
-          <xsl:with-param name="type" select="@return"/>
-          <xsl:with-param name="class" select=".."/>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>procedure</xsl:text>
-        <xsl:call-template name="parameter-list">
-          <xsl:with-param name="indent" select="$IC"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:text>;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-  </xsl:template>
-
-  <xsl:template match="*" mode="access-to-operation"/>
-
-
   <!-- Called from domain/class to generate the Create function spec. -->
   <xsl:template name="create-function-spec">
+
+    <xsl:if test="../association/associative=current()/name">
+      <xsl:value-of select="$I"/>
+      <xsl:text>--  Private use only&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:choose>
 
       <xsl:when test="count(attribute[@identifier])=1
@@ -824,9 +926,17 @@
 
         <xsl:variable name="id" select="attribute[@identifier]/name"/>
 
-        <xsl:value-of select="$I"/>
-        <xsl:text>Next_Identifier : Integer := 0;&#10;</xsl:text>
-        <xsl:value-of select="$blank-line"/>
+        <!--
+             function Create return Handle is
+                Result : Handle;
+                Id : Identifier;
+             begin
+                Result := new Instance;
+                Result.{id} := Next_Identifier;
+                Id.{id} := Next_Identifier;
+                Next_Identifier := Next_Identifier + 1;
+                Maps.Bind (The_Container, Id, Result);
+             -->
 
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
@@ -850,36 +960,108 @@
         <xsl:text>Next_Identifier := Next_Identifier + 1;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, Id, Result);&#10;</xsl:text>
+
+        <!-- Set up inheritance info. -->
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!-- Set up the state machine (if any). -->
+        <xsl:call-template name="initialize-state-machine"/>  
+
+        <!--
+                return Result;
+             exception
+                when BC.Duplicate => raise ColdFrame.Exceptions.Duplicate;
+             end Create;
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
+
+        <!-- XXX how can this exception occur? -->
         <xsl:value-of select="$I"/>
-        <xsl:text>end Create;&#10;</xsl:text>
+        <xsl:text>exception&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>when BC.Duplicate =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+       <xsl:text>end Create;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
+
+        <!--
+             function Create (With_Identifier : Identifier) return Handle is
+                Result : Handle;
+                use type ColdFrame.Instances.Handle;
+                pragma Assert
+                   (ColdFrame.Instances.Handle
+                    (With_Identifier.{ref-attr-name}) /= null);
+             begin
+                Result := new Instance;
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result : Handle;&#10;</xsl:text>
+
+        <xsl:if test="attribute[@identifier and @refers]">
+          <xsl:value-of select="$II"/>
+          <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
+          <xsl:for-each select="attribute[@identifier and @refers]">
+            <xsl:value-of select="$II"/>
+            <xsl:text>pragma Assert&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>(ColdFrame.Instances.Handle&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text> (With_Identifier.</xsl:text>
+            <xsl:call-template name="attribute-name"/>
+            <xsl:text>) /= null);&#10;</xsl:text>
+          </xsl:for-each>
+        </xsl:if>
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
+
+        <!-- Set up identifying attributes. -->
         <xsl:apply-templates
           select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
+
+        <!--
+                Maps.Bind (The_Container, With_Identifier, Result);
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
+
+        <!-- Set up inheritance info. -->
         <xsl:call-template name="set-parent-child-info">
           <xsl:with-param name="handle" select="'Result'"/>
         </xsl:call-template>
+
+        <!-- Set up the state machine (if any). -->
+        <xsl:call-template name="initialize-state-machine"/>  
+
+        <!--
+                return Result;
+             exception
+                when BC.Duplicate => raise ColdFrame.Exceptions.Duplicate;
+             end Create;
+             -->
+
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
+        <xsl:text>exception&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>when BC.Duplicate =&gt; raise ColdFrame.Exceptions.Duplicate;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
         <xsl:text>end Create;&#10;</xsl:text>
+
       </xsl:otherwise>
 
     </xsl:choose>
@@ -889,13 +1071,13 @@
   <!-- Called from domain/class, within the Create function, to
        set the parents' Current Child record. -->
   <xsl:template name="set-parent-child-info">
-    <xsl:param name="handle" select="'This'"/>
+    <xsl:param name="handle" select="'set-parent-child-info-handle'"/>
 
     <!--
          {parent}.Set_{relation}_Child
-           ({handle}.{relation}_Parent,
-            (Current => {parent}.{child}_T),
-             {abbrev} => {handle});
+           ({parent}.Handle ({handle}.{relation}_Parent),
+            (Current => {parent}.{child}_T,
+             {abbrev} => ColdFrame.Instances.Handle ({handle})));
          -->
     
     <!-- Save the current class -->
@@ -911,10 +1093,12 @@
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>(</xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:text>_Parent),&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text> (Current =&gt; </xsl:text>
       <xsl:value-of select="parent"/>
@@ -924,32 +1108,77 @@
       <xsl:value-of select="$IIC"/>
       <xsl:text>  </xsl:text>
       <xsl:value-of select="$current/abbreviation"/>
-      <xsl:text> =&gt; </xsl:text>
+      <xsl:text> =&gt; ColdFrame.Instances.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
-      <xsl:text>));&#10;</xsl:text>
+      <xsl:text>)));&#10;</xsl:text>
     </xsl:for-each>
 
   </xsl:template>
 
 
-  <!-- Called from domain/class to create the Find function body. -->
+  <!-- Called from domain/class to create the Find function body for
+       non-singletons. -->
   <xsl:template name="find-function-body">
-    <xsl:value-of select="$I"/>
-    <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>else&#10;</xsl:text>
-    <xsl:value-of select="$III"/>
-    <xsl:text>return null;&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
-    <xsl:text>end if;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>end Find;&#10;</xsl:text>
+
+    <xsl:choose>
+      
+      <xsl:when test="@maxXXX = 1">
+        <!-- no parameter needed. -->
+
+        <!--
+             function Find return Handle is
+             begin
+                return This;
+             end Find;
+             -->
+      
+        <xsl:value-of select="$I"/>
+        <xsl:text>function Find return Handle is&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>raise Program_Error;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end Find;&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+        
+        <!--
+             function Find (With_Identifier : Identifier) return Handle is
+             begin
+                if Maps.Is_Bound (The_Container, With_Identifier) then
+                   return Maps.Item_Of (The_Container, With_Identifier);
+                else
+                   return null;
+                end if;
+             end Find;
+             -->
+      
+        <xsl:value-of select="$I"/>
+        <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>else&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>return null;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end Find;&#10;</xsl:text>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+      
   </xsl:template>
 
 
@@ -963,6 +1192,12 @@
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$II"/>
+    <xsl:text>if not Maps.Is_Bound (The_Container, With_Identifier) then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
     <xsl:text>H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
     <xsl:call-template name="subtype-deletion">
       <xsl:with-param name="handle" select="'H'"/>
@@ -975,8 +1210,16 @@
     </xsl:call-template>
     <xsl:value-of select="$II"/>
     <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort H.The_T;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>exception&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>when BC.Not_Found =&gt; raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
   </xsl:template>
@@ -1022,6 +1265,10 @@
       </xsl:if>
     </xsl:for-each>
     <xsl:text>));&#10;</xsl:text>
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort This.The_T;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (This);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -1038,7 +1285,7 @@
          case {handle}.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {child-1}.Delete
-               ({handle}.{relation}_Current_Child.{child-1-abbrev};
+               ({child-1}.Handle ({handle}.{relation}_Current_Child.{child-1-abbrev}));
            when Null_T => null;
          end case;
          -->
@@ -1075,12 +1322,14 @@
         <xsl:text>.Delete&#10;</xsl:text>
         <xsl:value-of select="$IIIIC"/>
         <xsl:text>(</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>.Handle (</xsl:text>
         <xsl:value-of select="$handle"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$rel/name"/>
         <xsl:text>_Current_Child.</xsl:text>
         <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
-        <xsl:text>);&#10;</xsl:text>
+        <xsl:text>));&#10;</xsl:text>
 
       </xsl:for-each>
       
@@ -1102,7 +1351,7 @@
 
     <!--
          {parent}.Set_{relation}_Child
-           ({handle}.{relation}_Parent,
+           ({parent}.Handle ({handle}.{relation}_Parent),
             (Current => {parent}.Null_T));
          -->
     
@@ -1119,10 +1368,12 @@
       <xsl:text>_Child&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text>(</xsl:text>
+      <xsl:value-of select="parent"/>
+      <xsl:text>.Handle (</xsl:text>
       <xsl:value-of select="$handle"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Parent,&#10;</xsl:text>
+      <xsl:text>_Parent),&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text> (Current =&gt; </xsl:text>
       <xsl:value-of select="parent"/>
@@ -1138,11 +1389,12 @@
     <xsl:param name="handle" select="'This'"/>
 
     <xsl:for-each select="operation[@finalize
+                          and not(@abstract)
                           and not(@return)
                           and not(@class)
                           and not(parameter)]">
       <xsl:sort select="name"/>
-
+      
       <xsl:value-of select="$II"/>
       <xsl:value-of select="name"/>
       <xsl:text> (</xsl:text>
@@ -1155,6 +1407,8 @@
 
   <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="hash-function">
+
+    <xsl:call-template name="should-not-edit"/>
 
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>
@@ -1173,7 +1427,7 @@
     </xsl:for-each>
 
     <xsl:if test="$identifiers/@refers">
-      <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Hash.Instance_Access_Hash;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:if test="$identifiers/type='Unbounded_String'
@@ -1204,6 +1458,14 @@
 
       <xsl:choose>
         
+        <xsl:when test="type='Autonumber'">
+          <!-- Must be the only identifying attribute. -->
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor M (Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text> mod 2**31);&#10;</xsl:text>
+        </xsl:when>
+
         <xsl:when test="$type/enumeration or type='Boolean'">
 
           <!--
@@ -1219,7 +1481,7 @@
 
         </xsl:when>
 
-        <xsl:when test="$type/integer or type='Integer' or type='Autonumber'">
+        <xsl:when test="$type/integer or type='Integer'">
           <xsl:value-of select="$I"/>
           <xsl:text>Result := Result xor M (Id.</xsl:text>
           <xsl:value-of select="name"/>
@@ -1266,37 +1528,21 @@
         <xsl:when test="@refers">
 
           <!--
-               declare
-                  function H is new ColdFrame.Hash.Access_Hash
-                    ({class}.Instance,
-                     {class}.Handle);
-               begin
-                  Result := Result xor M (H (Id.{name}));
-               end;
+               Result := Result xor M
+                 (ColdFrame.Hash.Instance_Access_Hash
+                  (Id.{name}));
                -->
 
           <xsl:value-of select="$I"/>
-          <xsl:text>declare&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>function H is new ColdFrame.Hash.Access_Hash&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>(</xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>.Instance,&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>.Handle);&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>begin&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>Result := Result xor M (H (Id.</xsl:text>
+          <xsl:text>Result := Result xor M&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Hash.Instance_Access_Hash&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> (Id.</xsl:text>
           <xsl:call-template name="attribute-name">
             <xsl:with-param name="a" select="."/>
           </xsl:call-template>
           <xsl:text>));&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>end;&#10;</xsl:text>
 
         </xsl:when>
 
@@ -1358,13 +1604,15 @@
   <!-- Called from domain/class to generate a task spec. -->
   <xsl:template name="task-spec">
     <!--
-         task type t (this : access instance) is
-           entry e (parameters);
-         end t;
+         task type T (This : access Instance) is
+           entry {e} ({parameters});
+         end T;
          -->
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
-    <xsl:apply-templates mode="task-entry" select="operation"/>
+    <xsl:apply-templates mode="task-entry" select="operation">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
     <xsl:value-of select="$I"/>
     <xsl:text>end T;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -1374,7 +1622,8 @@
   <!-- Generate task entry specs. -->
   <xsl:template
     mode="task-entry"
-    match="operation[not(@return) and not(@class)]">
+    match="operation
+           [not(@abstract or @return or @class or @finalize or @suppressed)]">
 
     <!-- Checking for operations whose profile matches an accessor. -->
     <xsl:variable name="n" select="name"/>

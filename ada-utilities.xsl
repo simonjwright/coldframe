@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v f566de1841bd 2001/10/10 04:48:00 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -176,6 +176,26 @@
   </xsl:template>
 
 
+  <!-- "Don't edit" warnings. -->
+  <xsl:template name="do-not-edit">
+    <xsl:text>--------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated: do not edit  --&#10;</xsl:text>
+    <xsl:text>--------------------------------------------&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="should-not-edit">
+    <xsl:text>--------------------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated: should not need editing  --&#10;</xsl:text>
+    <xsl:text>--------------------------------------------------------&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template name="should-edit">
+    <xsl:text>-------------------------------------------&#10;</xsl:text>
+    <xsl:text>--  Automatically generated: edit this!  --&#10;</xsl:text>
+    <xsl:text>-------------------------------------------&#10;</xsl:text>
+  </xsl:template>
+
+
   <!-- Handle special type name conversions. -->
   <xsl:template name="type-name">
 
@@ -185,22 +205,30 @@
     <!-- The current class. -->
     <xsl:param name="class" select="/.."/>
 
+    <!-- Does the current class map to Handle? -->
+    <xsl:param name="use-handle" select="'yes'"/>
+
     <xsl:choose>
 
-      <!-- Autonumber maps to Integer. -->
+      <!-- Autonumber maps to Long Integer. -->
       <xsl:when test="$type='Autonumber'">
-        <xsl:text>Integer</xsl:text>
+        <xsl:text>Long_Long_Integer</xsl:text>
       </xsl:when>
 
       <!-- The current Class maps to just Handle. -->
-      <xsl:when test="$type=$class/name">
+      <xsl:when test="$type=$class/name and $use-handle='yes'">
         <xsl:text>Handle</xsl:text>
       </xsl:when>
 
-      <!-- A Class (not the current class) maps to {class}.Handle. -->
+      <!-- A Class (not the current class) maps to
+           ColdFrame.Instances.Handle. -->
       <xsl:when test="/domain/class/name=$type">
-        <xsl:value-of select="$type"/>
-        <xsl:text>.Handle</xsl:text>
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
+      </xsl:when>
+
+      <!-- Counterpart maps to ColdFrame.Instances.Handle. -->
+      <xsl:when test="$type='Counterpart'">
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
 
       <!-- Date maps to Time. -->
@@ -218,13 +246,9 @@
         <xsl:text>Unbounded_String</xsl:text>
       </xsl:when>
 
-      <!-- Set (only works for class instances) maps to a Collection. -->
-      <xsl:when test="/domain/type[name=$type]/set">
-        <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
-        <xsl:if test="$type-name/set">
-          <xsl:value-of select="$type-name/set"/>
-          <xsl:text>.Collections.Collection</xsl:text>
-        </xsl:if>
+      <!-- Timer maps to ColdFrame.Project.Events.Timer. -->
+      <xsl:when test="$type='Timer'">
+        <xsl:text>ColdFrame.Project.Events.Timer</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
@@ -232,6 +256,104 @@
       </xsl:otherwise>
 
     </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Generate commentary. -->
+  <xsl:template name="commentary">
+    <!-- The current indentation. -->
+    <xsl:param name="indent" select="''"/>
+    <!-- Either a newline or an empty string. -->
+    <xsl:param name="separate-pars" select="''"/>
+
+    <xsl:for-each select="documentation/par">
+      
+      <xsl:call-template name="comment-line">
+        <xsl:with-param name="indent" select="$indent"/>
+        <xsl:with-param name="line" select="normalize-space(.)"/>
+      </xsl:call-template>
+      
+      <xsl:value-of select="$separate-pars"/>
+    
+    </xsl:for-each>
+
+  </xsl:template>
+
+
+  <!-- Output a paragraph of comment. -->
+  <xsl:template name="comment-line">
+    <!-- The current indentation. -->
+    <xsl:param name="indent"/>
+    <!-- The rest of the line to be output. -->
+    <xsl:param name="line"/>
+    <!-- The length of text output so far. -->
+    <xsl:param name="length" select="0"/>
+
+    <xsl:variable name="word">
+      <xsl:choose>
+        <xsl:when test="contains($line, ' ')">
+          <xsl:value-of select="substring-before($line, ' ')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$line"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="rest" select="substring-after($line, ' ')"/>
+
+    <xsl:choose>
+
+      <xsl:when test="$length=0 and string-length($line)&gt;0">
+
+        <xsl:variable name="start">
+          <xsl:value-of select="$indent"/>
+          <xsl:text>--  </xsl:text>
+          <xsl:value-of select="$word"/>
+        </xsl:variable>
+        
+        <xsl:value-of select="$start"/>
+
+        <xsl:call-template name="comment-line">
+          <xsl:with-param name="indent" select="$indent"/>
+          <xsl:with-param name="line" select="$rest"/>
+          <xsl:with-param name="length" select="string-length($start)"/>
+        </xsl:call-template>
+
+      </xsl:when>
+
+      <xsl:when test="string-length($line)=0">
+        <xsl:text>&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:when test="$length
+                      + 1
+                      + string-length($word)&gt;$fill-column">
+
+        <xsl:text>&#10;</xsl:text>
+        
+        <xsl:call-template name="comment-line">
+          <xsl:with-param name="indent" select="$indent"/>
+          <xsl:with-param name="line" select="$line"/>
+        </xsl:call-template>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+        
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$word"/>
+
+        <xsl:call-template name="comment-line">
+          <xsl:with-param name="indent" select="$indent"/>
+          <xsl:with-param name="line" select="$rest"/>
+          <xsl:with-param name="length"
+            select="$length + 1 + string-length($word)"/>
+        </xsl:call-template>
+
+      </xsl:otherwise>
+      
+    </xsl:choose>
+
   </xsl:template>
 
 

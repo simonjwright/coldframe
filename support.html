@@ -1,0 +1,175 @@
+<!-- $Id: support.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Specially written support components</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Specially written support components</h1>
+
+<p>Specially written support components appear under the top-level
+package <tt>ColdFrame</tt>. Some exist to support navigation; the more
+user-interesting ones are
+
+<dl>
+
+<dt><tt>ColdFrame.Callbacks</tt>
+
+<dd>Provides callback (Observer) support.
+
+<dt><tt>ColdFrame.Exceptions</tt>
+
+<dd>Provides exceptions.
+
+<dl>
+
+<dt><tt>ColdFrame.Exceptions.Message</tt>
+
+<dd>Provides exception reporting (to standard output).
+
+<dt><tt>ColdFrame.Exceptions.Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks. To
+use it (only in host-is-target environments; won't work in VxWorks),
+you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+</dl>
+
+<dt><tt>ColdFrame.Hash</tt>
+
+<dd>A family of hash functions, suitable for use as hashes (or part of
+hashes) for instantiating <a href="use-of-bcs.html">Booch Map
+containers</a>.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
+
+<dd>A hash function for access-to-instance values (useful for child
+classes).
+
+<dt><tt>ColdFrame.Hash.Strings</tt>
+
+<dd>A family of hash functions for strings.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Strings.Bounded</tt>
+
+<dd>A hash function for Bounded Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Standard</tt>
+
+<dd>A hash function for standard Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Unbounded</tt>
+
+<dd>A hash function for Unbounded Strings.
+
+</dl>
+
+</dl>
+
+<dt><tt>ColdFrame.Instances</tt>
+
+<dd>Provides a type from which all Instances are derived.
+
+<br>The purpose is to allow mutual visibility (to support associations
+and inheritance relationships) without using non-standard extensions
+such as <i>WITH TYPE</i>.
+
+<dt><tt>ColdFrame.Events_G</tt>
+
+<dd>Standard support for <a href="events.html">Events</a>. This is a
+basic generic event management specification; the time aspects are
+provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
+
+<dl>
+
+<dt><tt>ColdFrame.Events_G.Creation_G</tt>
+
+<dd>Provides a "creation" event type, for use where there's no
+application event to cause transition from the initial state.
+
+<dt><tt>ColdFrame.Events_G.Standard_G</tt>
+
+<dd>A straightforward event queueing and dispatching service.
+
+<dt><tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>
+
+<dd>An event queueing and dispatching service which outputs a log to
+standard output.
+
+</dl>
+
+</dl>
+
+<p>For some purposes, ColdFrame generates code expecting certain
+services to be provided by specific packages (under
+<tt>ColdFrame.Project</tt>), where you would probably prefer to be
+able to provide your own version.
+
+<p>In these cases, sample implementations are provided. The support
+code above is distributed in the directory
+<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code is
+under <tt>cf-<i>yyyymmdd</i>/project</tt>.
+
+<dl>
+
+<dt><tt>ColdFrame.Project.Calendar</tt>
+
+<dd><tt>ColdFrame.Project.Calendar.Time</tt> is used as the
+translation for <i>Date</i>, <i>Time</i> attributes.
+
+<br>The provided default is a renaming of <tt>Ada.Calendar</tt>.
+
+<dt><tt>ColdFrame.Project.Events</tt>
+
+<dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with time
+support from <tt>Ada.Calendar</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Creation</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Creation_G</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Standard</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Standard_G</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Standard.Debug</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>.
+
+<dt><tt>ColdFrame.Project.Global_Storage_Pool</tt>
+
+<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
+the standard system <tt>malloc</tt> pool, suitable for instantiating
+<a href="use-of-bcs.html">Booch Containers</a>.
+
+<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

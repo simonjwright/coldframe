@@ -29,6 +29,8 @@
        with AUnit. Called at domain. -->
   <xsl:template name="domain-teardown">
 
+    <xsl:call-template name="do-not-edit"/>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
@@ -44,33 +46,45 @@
 
     </xsl:for-each>
 
+    <xsl:for-each select="type[@callback]">
+      <xsl:sort select="name"/>
+
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Callback;&#10;</xsl:text>
+    </xsl:for-each>
+
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:choose>
-
-      <xsl:when test="class">
-        
-        <xsl:for-each select="class">
-          <xsl:sort select="name"/>
-          
-          <xsl:value-of select="$I"/>
-          <xsl:value-of select="name"/>
-          <xsl:text>.Tear_Down;&#10;</xsl:text>
-          
-        </xsl:for-each>
-
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:otherwise>
-
-    </xsl:choose>
-
+    
+    <xsl:for-each select="class">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      
+    </xsl:for-each>
+    
+    <xsl:for-each select="type[@callback]">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Callback.Clear;&#10;</xsl:text>
+    </xsl:for-each>
+    
+    <xsl:value-of select="$I"/>
+    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
+    
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
@@ -82,6 +96,7 @@
 
 
   <xsl:template mode="class-teardown-spec" match="domain/class">
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -94,12 +109,21 @@
 
   <xsl:template mode="class-teardown-body" match="domain/class[@singleton]">
 
-    <!--
+    <!-- no state machine
          procedure {Domain}.{Class}.Tear_Down is
          begin
             null;
          end {Domain}.{Class}.Tear_Down;
          -->
+
+    <!-- state machine
+         procedure {Domain}.{Class}.Tear_Down is
+         begin
+            This.State_Machine_State := {initial-state}
+         end {Domain}.{Class}.Tear_Down;
+         -->
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -107,8 +131,20 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>null;&#10;</xsl:text>
+
+    <xsl:choose>
+      <xsl:when test="statemachine">
+        <xsl:value-of select="$I"/>
+        <xsl:text>This.State_Machine_State := </xsl:text>
+        <xsl:value-of select="statemachine/state[@initial]/name"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$I"/>
+        <xsl:text>null;&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -123,7 +159,6 @@
 
     <!--
          with Ada.Unchecked_Deallocation;
-         with {each package we have a referential attribute for};
          procedure {Domain}.{Class}.Tear_Down is
             It : Abstract_Map_Containers.Iterator'Class
               := Maps.New_Iterator (The_Container);
@@ -132,14 +167,18 @@
          begin
             while not Abstract_Map_Containers.Is_Done (It) loop
                H := Abstract_Map_Containers.Current_Item (It);
+               abort (H.The_T);                  -  if active
                Free (H);
                Abstract_Map_Containers.Next (It);
             end loop;
             Maps.Clear (The_Container);
+            Next_Identifier := 0;                -  for Autonumbering
          end {Domain}.{Class}.Tear_Down;
          -->
 
-    <xsl:call-template name="class-body-context"/>
+    <xsl:call-template name="do-not-edit"/>
+
+    <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -162,6 +201,12 @@
     <xsl:text>while not Abstract_Map_Containers.Is_Done (It) loop&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>H := Abstract_Map_Containers.Current_Item (It);&#10;</xsl:text>
+
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort H.The_T;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
@@ -172,6 +217,13 @@
     <xsl:value-of select="$I"/>
     <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>        
 
+    <!-- .. Autonumber support .. -->
+    <xsl:if test="count(attribute[@identifier])=1
+                  and attribute[@identifier]/type='Autonumber'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>Next_Identifier := 0;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -181,6 +233,36 @@
   </xsl:template>
 
   <xsl:template mode="class-teardown-body" match="*"/>
+
+
+  <!-- Called at domain to generate the spec of the Events teardown
+       procedure. -->
+  <xsl:template name="event-teardown-spec">
+    
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Called at domain to generate the body of the Events teardown
+       procedure. -->
+  <xsl:template name="event-teardown-body">
+    
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>ColdFrame.Project.Events.Tear_Down (Dispatcher);&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
+  </xsl:template>
 
 
 </xsl:stylesheet>

@@ -1,0 +1,101 @@
+<!-- $Id: conversion.html,v 3daa7f1e04bd 2002/02/03 10:26:21 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Conversion to standard form</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Conversion to standard form</h1>
+
+<p>ColdFrame's "standard form" uses a home-grown <a
+href="coldframe.dtd">DTD</a> rather than the standard XMI Metadata
+Interchange (XMI) one. This is, I'm afraid, because I didn't think to
+check what standardisation activities were under way; however, I think
+it would have taken a lot longer if I'd used XMI. Perhaps an
+appropriate approach would be to use an XSL transform to convert
+documents from XMI to ColdFrame.
+
+<p>The processing is done using the <em><a
+href="resources.html#tcl">itcl</a></em> script
+<tt>normalize-rose.tcl</tt>, which uses the <a
+href="resources.html#xml">TclXML</a> package to handle the parse of
+the <tt><i>package-name</i>.raw</tt> file. The Makefile places the
+output in <tt><i>package-name</i>.norm</tt>.
+
+<h2>Options</h2>
+
+<p><tt>normalize-rose.tcl</tt> takes the options
+
+<dl>
+
+<dt><tt>--casing <i>filename</i></tt>
+
+<dd>Specifies the name of a case-exceptions file.
+
+<p>The file format is basically that used by ACT's GLIDE (Emacs
+<tt>ada-mode</tt>), except that ColdFrame doesn't distinguish
+substring specs from whole-identifier ones.
+
+<p>Each line contains a single specification of a desired
+casing. <tt>ColdFrame</tt> means that all occurrences of the string
+<tt>coldframe</tt>, in any case, as the whole of an identifier or as a
+space- or underscore-delimited part of an identifier, will be
+capitalized as given.
+
+<p>GLIDE's rules require you to indicate which are "substring
+exceptions", so if you want <tt>io</tt> to be capitalized as
+<tt>IO</tt> even if it occurs in <tt>text_io</tt>, resulting in
+<tt>Text_IO</tt>, you have to write <tt>*IO</tt> in the exceptions
+file.
+
+<p><tt>--casing</tt> can be repeated as often as required for
+multiple case exception files. If an exception occurs multiple times,
+the last one counts.
+
+<p>Default is to do "title case" casing always (so <tt>text io</tt>
+comes out as <tt>Text_Io</tt>).
+
+<p>
+
+<dt><tt>--stack-dump</tt>
+
+<dd>Specifies whether a Tcl stack dump is to be produced if an error
+is detected in <tt>normalize-rose.tcl</tt>. This is intended for
+debugging ColdFrame, not your model!
+
+<p>Default is <i>off</i>.
+
+<p>
+
+<dt><tt>--verbose</tt>
+
+<dd>Specifies whether ColdFrame should report what it's doing.
+
+<p>Default is <i>off</i>.
+
+<p>
+
+<dt><tt>--version <i>version-string</i></tt>
+
+<dd>Specifies a string (the supplied Makefiles use
+<tt>cf-<i>yyyymmdd</i></tt>) which is output by this phase in the
+<tt>&lt;normalizer&gt;</tt> element and is included in the comments in
+the generated Ada to tell the release of <tt>normalize-rose.tcl</tt>
+that was used (you might have kept an old <tt>.norm</tt> file around
+after installation of a new release of ColdFrame; not necessarily a
+bad thing, just nice to know).
+
+<p>Default is not to include any string.
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

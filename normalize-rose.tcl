@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c23f1a844592 2001/10/10 04:55:29 simon $
+# $Id: normalize-rose.tcl,v 281d11e491da 2002/07/27 13:05:23 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -38,7 +38,7 @@ proc setCaseExceptions {file} {
     global caseExceptions
 
     if [catch {open $file r} f] {
-	error "can't open $file: $f"
+	Warning "can't open $file: $f"
     } else {
 	while {[gets $f line] >= 0} {
 	    regsub -all {[\*\t ]} $line "" res
@@ -48,30 +48,54 @@ proc setCaseExceptions {file} {
     }
 }
 
+
 # Given a string,
-# - trims leading and trailing white space
 # - capitalizes the first letter of each word, unless it matches a case
 #   exception in which case the exception is taken
 # - replaces each run of white space by a single underscore
 # - checks whether the whole matches a case exception, in which case the
 #   exception is taken
-# - if there are any dots in the result, apply the 'first letter of each
-#   word' rule (XXX what about Interfaces.C.int???)
+# - if there are any dots in the result, reaapply the rules for each
+#   '.'-separated component
 # and returns the result
 proc normalize {s} {
     global caseExceptions
 
     set tmp [string trim $s]
-    # handle strings
-    if [string match "\"*" $tmp] {return $tmp}
+    # check for illegal characters
+    regsub -all {[A-Za-z0-9_ \t.]} $tmp "" illegal
+    if {[string length $illegal] > 0} {
+	set tag [[stack -top] -getXmlTag]
+	if {$tag == "parameter"} {
+	    # Special circuitry to report the most likely occurrence in
+	    # a more helpful manner.
+	    # XXX probably needs help from class Stack.
+	    set p [stack -pop]
+	    set ps [stack -pop]
+	    set op [stack -pop]
+	    set ops [stack -pop]
+	    set cls [stack -top]
+	    stack -push $ops
+	    stack -push $op
+	    stack -push $ps
+	    stack -push $p
+	    Error "illegal name \"$tmp\" in [$cls -getName].[$op -getName]"
+	} else {
+	    Error "illegal name \"$tmp\" in <$tag>"
+	}
+    }
+    # check for reserved words
+    if [isLanguageReservedWord $tmp] {
+ 	set tag [[stack -top] -getXmlTag]
+	Error "reserved word \"$tmp\" in <$tag>"
+    }
     # handle white space/underscore
-    set tmp [string tolower $tmp]
     regsub -all {_} "$tmp" " " tmp
     set tmp [split $tmp]
     set und ""
     foreach w $tmp {
-	if [info exists caseExceptions($w)] {
-	    set und "$und $caseExceptions($w)"
+	if [info exists caseExceptions([string tolower $w])] {
+	    set und "$und $caseExceptions([string tolower $w])"
 	} else {
 	    set und \
 	      "$und [string toupper [string index $w 0]][string range $w 1 end]"
@@ -89,11 +113,124 @@ proc normalize {s} {
     set tmp [split $tmp]
     set res ""
     foreach w $tmp {
-	set res \
-		"$res [string toupper [string index $w 0]][string range $w 1 end]"
+	if [info exists caseExceptions([string tolower $w])] {
+	    set res "$res $caseExceptions([string tolower $w])"
+	} else {
+	    set res \
+	      "$res [string toupper [string index $w 0]][string range $w 1 end]"
+	}
     }
     regsub -all {[ \t]+} "[string trim $res]" "." res
     return $res
+}
+
+
+# Given a string,
+# - trims leading and trailing white space
+# - handles "strings" and 'c'haracters directly
+# - handles signed entities by recursion
+# - handles based literals directly
+# - handles null directly
+# otherwise,
+# - handles as identifier.
+proc normalizeValue {s} {
+    set tmp [string trim $s]
+    # handle strings
+    if [regexp {^\".*\"$} $tmp] {return $tmp}
+    # handle characters
+    if [regexp {^\'.\'$} $tmp] {return $tmp}
+    # allow signed entities
+    if [regexp {[-+]} $tmp] {
+	set sign [string index $tmp 0]
+	return "$sign[normalizeValue [string range $tmp 1 end]]"
+    }
+    # allow based literals
+    if [regexp -nocase {[0-9_]+\#[0-9a-f_.]*\#} $tmp] {return $tmp}
+    switch [string tolower $tmp] {
+	null       {return null}
+	default    {return [normalize $tmp]}
+    }
+}
+
+
+# check for Ada reserved words
+proc isLanguageReservedWord {w} {
+    global languageReservedWord
+    return [info exists languageReservedWord([string tolower $w])]
+}
+
+foreach w {
+    abort
+    abs
+    abstract
+    accept
+    access
+    aliased
+    all
+    and
+    array
+    at
+    begin
+    body
+    case
+    constant
+    declare
+    delay
+    delta
+    digits
+    do
+    else
+    elsif
+    end
+    entry
+    exception
+    exit
+    for
+    function
+    generic
+    goto
+    if
+    in
+    is
+    limited
+    loop
+    mod
+    new
+    not
+    null
+    of
+    or
+    others
+    out
+    package
+    pragma
+    private
+    procedure
+    protected
+    raise
+    range
+    record
+    rem
+    renames
+    requeue
+    return
+    reverse
+    select
+    separate
+    subtype
+    tagged
+    task
+    terminate
+    then
+    type
+    until
+    use
+    when
+    while
+    with
+    xor
+} {
+    set languageReservedWord($w) 1
 }
 
 # Output a simple XML element.
@@ -129,13 +266,13 @@ itcl::class Base {
 
     # holds the tag of the XML element - eg, for <foo>bar</foo> it will be
     # "foo"
-    variable tag
+    variable xmlTag
 
-    # set the tag
-    method -tag {t} {set tag $t}
+    # set the xmlTag
+    method -xmlTag {t} {set xmlTag $t}
 
-    # get the tag
-    method -getTag {} {return $tag}
+    # get the xmlTag
+    method -getXmlTag {} {return $xmlTag}
 
 
     # holds the textual content of the XML element - eg, for the element
@@ -162,8 +299,7 @@ itcl::class Base {
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
 	    if [catch {$this -$i "$a($i)"}] {
-		Warning \
-			"XML attribute <$tag $i=\"$a($i)\"> not handled"
+		Warning "XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
 	    }
 	}
     }
@@ -197,35 +333,72 @@ itcl::class Base {
 
     # called when the outermost closing </tag> is read to do the second
     # pass of processing
-    method -generate {outermost} {Error "CF: undefined $tag method -generate"}
+    method -generate {outermost} {Error "CF: undefined $xmlTag method -generate"}
 }
 
 
 # The base class for all XML elements whose interesting aspect is their
 # textual content - eg, <name>foo</name>
+# Also handles tagged values; if there are any, the stack top needs to
+# offer a "-tag tag value" method.
 itcl::class String {
     inherit Base
 
-    # the object has already been popped off the stack; call the stack top's
+    method -processTags {} {
+	if [regexp "\[\{\}\]" $text] {
+	    regsub -all "\}\[^{\]*\{" $text "," stripInner
+	    regsub -all "(^.*\{)|(\}.*$)" $stripInner "" stripOuter
+	    set taglist [split $stripOuter ","]
+	    foreach t $taglist {
+		regexp {([^=]*)(=(.*))?} $t wh tag eq val
+		if {[string length $val] == 0} {
+		    set val true
+		}
+		[stack -top] -tag [string trim $tag] [string trim $val]
+	    }
+	    # strip out any property lists
+	    regsub -all "\{\[^}\]*\}" $text "" text
+	}
+    }
+
+    # The object has already been popped off the stack; call the stack top's
     # method with the same name as this tag to store the value (so, given
-    # the example above, the containing object needs to offer a -name method)
+    # the example above, the containing object needs to offer a -name method).
     method -complete {} {
-	[stack -top] -$tag $text
+	$this -processTags
+	[stack -top] -$xmlTag $text
     }
 }
 
 
 # The base class for all XML elements which represent identifiers; stores
-# eg " hELLO   world " as "Hello_World"
+# eg " hELLO   world " as "Hello_World".
 itcl::class IdentifierString {
     inherit String
 
     # the object has already been popped off the stack; call the stack top's
-    # method with the same name as this tag to store the value after
+    # method with the same name as this xmlTag to store the value after
     # conversion to identifier form (so, given the example above, the
     # containing object needs to offer a -name method)
     method -complete {} {
-	[stack -top] -$tag [normalize $text]
+	$this -processTags
+	[stack -top] -$xmlTag [normalize $text]
+    }
+}
+
+
+# The base class for all XML elements which represent values; stores
+# eg " hELLO   world " as "Hello_World".
+itcl::class ValueString {
+    inherit String
+
+    # the object has already been popped off the stack; call the stack top's
+    # method with the same name as this xmlTag to store the value after
+    # conversion to clean value form (so, given the example above, the
+    # containing object needs to offer a -name method)
+    method -complete {} {
+#	$this -processTags
+	[stack -top] -$xmlTag [normalizeValue $text]
     }
 }
 
@@ -246,6 +419,8 @@ itcl::class Element {
 
     variable stereotype
 
+    variable tags
+
     # called to process annotation information. The annotation info is
     # of the form
     #
@@ -262,9 +437,12 @@ itcl::class Element {
 		-nocase \
 		$pattern \
 		$a wh attr dummy value]} {} {
-	    if [catch {$this -[string tolower $attr] $value}] {
+	    set attr [string tolower $attr]
+	    if {[string length $value] == 0} {set value "true"}
+	    if [catch {$this -$attr $value}] {
 		Warning \
-		    "annotation not handled, \"$name -[string tolower $attr] $value\""
+		    "annotation not handled, \
+		    \"$name \[\[$attr : [string trim $value]]]\""
 	    }
 	    regexp -nocase -indices $pattern $a wh
 	    set a [string range $a \
@@ -337,13 +515,14 @@ itcl::class Element {
     #   $this -number 5
     method -handleStereotype {} {
 	if [info exists stereotype] {
-	    set p {[ \t]*([a-z0-9_]+)[ \t]*(=[ \t]*([a-z0-9_,]+))?[ \t]*}
+	    set p {([-a-z0-9_ \t]+)(=[ \t]*([a-z0-9_,]+))?[ \t]*}
 	    set s $stereotype
 	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
 		# n is the tag name, v the tag value if any
-		if [catch {$this -[string tolower $n] "$v"}] {
+		if [catch {$this -[join [split [string tolower $n]] "-"] "$v"}] {
 		    Warning \
-		        "stereotype not handled, \"$name -[string tolower $n] $v\""
+		        "stereotype not handled,\
+			\"$name <<[string tolower $n]>>\""
 		}
 		regexp -nocase -indices $p $s wh
 		set s [string range $s [expr [lindex $wh 1] + 1] end]
@@ -352,11 +531,21 @@ itcl::class Element {
 	}
     }
 
+    # Handle property lists of tagged values.
+    method -tag {tag value} {
+	set tags($tag) $value 
+    }
+
     method -complete {} {
+	if [info exists tags] {
+	    foreach w [array names tags] {
+		puts stderr "$xmlTag $name: $w=$tags($w)"
+	    }
+	}
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
-	    Error \
-		    "error \"$msg\" adding a [$this -getTag] to a [[stack -top] -getTag]"
+	    Error "CF: error \"$msg\" adding a [$this -getXmlTag]\
+		    to a [[stack -top] -getXmlTag]"
 	}
     }
 }
@@ -376,7 +565,7 @@ itcl::class List {
     method -getMembers {} {return $members}
 
     method -complete {} {
-	[stack -top] -$tag $this
+	[stack -top] -$xmlTag $this
     }
 
     method -evaluate {domain} {
@@ -454,6 +643,16 @@ itcl::class Container {
 	return [$this -atIndex $index]
     }
 
+    # Return a List of the members
+    method -getMembers {} {
+	set res {}
+	set size [$this -size]
+	for {set i 0} {$i < $size} {incr i 1} {
+	    lappend res [$this -atIndex $i]
+	}
+	return $res
+    }
+
     method -complete {} {
 	[stack -top] -[$this -className] $this
     }
@@ -479,7 +678,7 @@ itcl::class Container {
 
 # String classes
 
-itcl::class Arguments {
+itcl::class Abstract {
     inherit String
 }
 
@@ -520,7 +719,7 @@ itcl::class Extractor {
 }
 
 itcl::class Initial {
-    inherit IdentifierString
+    inherit ValueString
 }
 
 itcl::class Month {
@@ -610,20 +809,21 @@ itcl::class Domain {
     variable revision
 
     variable classes
-
-    variable relationships
-
+    
     variable datatypes
-
-#    variable transitiontables
-
+    
+    variable exceptions
+    
+    variable relationships
+    
     proc currentDomain {} {return $currentDomain}
-
+    
     constructor {} {
 	set currentDomain $this
-	set classes [Classes ::#auto]
-	set relationships [Relationships ::#auto]
-	set datatypes [Datatypes ::#auto]
+	set classes [Classes ::\#auto]
+	set datatypes [Datatypes ::\#auto]
+	set exceptions [Exceptions ::\#auto]
+	set relationships [Relationships ::\#auto]
     }
 
     method -extractor {e} {set extractor $e}
@@ -635,15 +835,17 @@ itcl::class Domain {
 
     method -getClasses {} {return $classes}
 
-    method -relationships {l} {set relationships $l}
-
-    method -getRelationships {} {return $relationships}
-
     method -datatypes {l} {set datatypes $l}
 
     method -getDatatypes {} {return $datatypes}
 
-#    method -transitiontables {l} {set transitiontables $l}
+    method -exceptions {l} {set exceptions $l}
+
+    method -getExceptions {} {return $exceptions}
+
+    method -relationships {l} {set relationships $l}
+
+    method -getRelationships {} {return $relationships}
 
     method -complete {} {
 	$this -generate
@@ -653,8 +855,9 @@ itcl::class Domain {
 	global coldFrameVersion
 
 	$classes -evaluate $this
-	$relationships -evaluate $this
 	$datatypes -evaluate $this
+	$exceptions -evaluate $this
+	$relationships -evaluate $this
 
 	puts "<domain>"
 	putElement name "$name"
@@ -673,8 +876,9 @@ itcl::class Domain {
 	$this -generateDocumentation
 
 	$classes -generate $this
-	$relationships -generate $this
 	$datatypes -generate $this
+	$exceptions -generate $this
+	$relationships -generate $this
 
 	puts "</domain>"
     }
@@ -682,6 +886,8 @@ itcl::class Domain {
 
 itcl::class Class {
     inherit Element
+
+    constructor {} {set events [EventSet ::\#auto]}
 
     # contains the attributes
     variable attributes
@@ -693,6 +899,22 @@ itcl::class Class {
 
     method -operations {l} {set operations $l}
 
+    # contains any events
+    variable events
+
+    method -events {l} {
+	foreach e [$l -getMembers] {
+	    $events -add $e [$e -getName]
+	}
+    }
+
+    # Interface to let a StateMachine tell us its events
+    method -addEvent {e} {
+	if [$events -isMissing [$e -getName]] {
+	    $events -add $e [$e -getName]
+	}
+    }
+
     # specifies the maximum number of instances (optional)
     variable max
 
@@ -700,23 +922,50 @@ itcl::class Class {
 
     method -cardinality {c} {
 	set c [string trim $c]
-	switch $c {
-	    "n" -
-	    "0..n" -
-	    "1..n" {}
-	    "0..0" -
-	    "0..1" {
-		Warning "cardinality $c ignored for $name"
-	    }
-	    "1..1" {$this -singleton dummy}
-	    default {
-		if ![regexp {^[0-9]+$} $c] {
-		    Error "bad cardinality $c for $name"
+	if [regexp {^(([0-9]+) *\.\. *)?([1-9][0-9]*|n|\*)$} $c \
+		whole b1 lower upper] {
+	    if [string length $lower] {
+		switch -exact $lower {
+		    "0"     {
+			switch -exact $upper {
+			    "n"     -
+			    "*"     {}
+			    default {$this -max $upper}
+			}
+		    }
+		    "1"     {
+			switch -exact $upper {
+			    "1"     {$this -singleton dummy}
+			    default {
+				Error "illegal lower bound 1 in cardinality \
+				\"$c\" for $name"
+			    }
+			}
+		    }
+		    default {
+			Error "illegal lower bound $lower in cardinality \
+			\"$c\" for $name"
+		    }
 		}
-		$this -max $c
+	    } else {
+		switch -exact $upper {
+		    "n"     -
+		    "*"     {}
+		    "1"     {$this -singleton dummy}
+		    default {
+			Error "must specify cardinality for $name as 0..$upper"
+		    }
+		}
 	    }
+	} else {
+	    Error "unrecognised cardinality \"$c\" in $name"
 	}
     }
+
+    # specifies if this class is abstract
+    variable abstr 0
+
+    method -abstract {dummy} {set abstr 1}
 
     # specifies if this is an active class
     variable active 0
@@ -755,14 +1004,24 @@ itcl::class Class {
     }
 
     method -getAbbreviation {} {
-	# if no abbreviation has been supplied, make one up from the
-	# initial letters of the name (which will already have been
-	# capitalised)
+	# if no abbreviation has been supplied,
+	#   if the name consists of more than one word, make one up from
+	#     the initial letters of the name (which will already have been
+	#     capitalised)
+	#   otherwise, prefix the name with A.
 	if ![info exists abbreviation] {
 	    set tmp [split $name "_"]
-	    set abbreviation ""
-	    foreach w $tmp {
-		set abbreviation "$abbreviation[string index $w 0]"
+	    if {[llength $tmp] == 1} {
+		if [string match {[AEIOU]} [string index $name 0]] {
+		    set abbreviation "An_$name"
+		} else {
+		    set abbreviation "A_$name"
+		}
+	    } else {
+		set abbreviation ""
+		foreach w $tmp {
+		    set abbreviation "$abbreviation[string index $w 0]"
+		}
 	    }
 	}
 	return $abbreviation
@@ -800,6 +1059,14 @@ itcl::class Class {
     # discriminated (record) type
     method -discriminated {dummy} {set discriminated 1}
 
+    #
+    # variables and methods related to <<exception>> classes
+    #
+
+    variable isException 0
+
+    method -exception {dummy} {set isException 1}
+
     # state machine, if specified
     variable statemachine
     method -statemachine {s} {set statemachine $s}
@@ -821,7 +1088,7 @@ itcl::class Class {
     # identifier is true if the formalizing attribute(s) are to
     #   be part of obj's identifier
     method -addFormalizingAttributesTo {obj relation role identifier} {
-	set attr [ReferentialAttribute ::#auto $this $relation $role $identifier]
+	set attr [ReferentialAttribute ::\#auto $this $relation $role $identifier]
 	$obj -addReferentialAttribute $attr
     }
 
@@ -842,21 +1109,29 @@ itcl::class Class {
 
     method -complete {} {
 	$this -handleStereotype
-	if [expr $isType && [$attributes -size] == 0] {
+	if {$isType && [$attributes -size] == 0} {
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
 	    } else {
-		set dt [Datatype ::#auto $name]
+		set dt [Datatype ::\#auto $name]
 		$dts -add $dt $name
 	    }
-	    # transfer the documentation and the (already-extracted) annotation
-	    # to the new Datatype.
+	    # transfer the operations, the documentation and the
+	    # already-extracted annotation to the new Datatype.
+	    if [info exists operations] {
+		$dt -operations $operations
+	    }
 	    $dt -documentation $documentation
 	    $dt -annotation $annotation
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
+	} elseif $isException {
+	    set exs [[Domain::currentDomain] -getExceptions]
+	    set ex [Exception ::\#auto $name] 
+	    $exs -add $ex $name
+	    $ex -documentation $documentation
 	} else {
 	    if $isType {
 		# must be a record type
@@ -865,9 +1140,12 @@ itcl::class Class {
 		if [$dts -isPresent $name] {
 		    set dt [$dts -atName $name]
 		} else {
-		    set dt [Datatype ::#auto $name]
+		    set dt [Datatype ::\#auto $name]
 		    $dts -add $dt $name
 		}
+#		if [info exists operations] {
+#		    $dt -operations $operations
+#		}
 		$dt -record
 	    }
 	    [stack -top] -add $this $name
@@ -876,6 +1154,7 @@ itcl::class Class {
 
     method -evaluate {domain} {
 	$attributes -evaluate $domain
+	$operations -evaluate $domain
 	if [info exists statemachine] {
 	    $statemachine -evaluate $domain
 	}
@@ -905,6 +1184,7 @@ itcl::class Class {
 	    puts "</type>"
 	} else {
 	    puts -nonewline "<class"
+	    if $abstr {puts -nonewline " abstract=\"yes\""}
 	    if $active {puts -nonewline " active=\"yes\""}
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
@@ -915,6 +1195,7 @@ itcl::class Class {
 	    $this -generateDocumentation
 	    $attributes -generate $domain
 	    $operations -generate $domain
+	    $events -generate $domain
 	    if [info exists statemachine] {
 		$statemachine -generate $domain
 	    }
@@ -928,33 +1209,12 @@ itcl::class Operation {
 
     # is this abstract?
     variable abstr 0
+    # called via stereotype mechanism to indicate that this is an
+    # abstract operation
+    method -abstract {dummy} {set abstr 1}
 
     # is this an access-to-operation?
     variable acc 0
-
-    # is this a class operation?
-    variable cls 0
-
-    # is this an initialize operation?
-    variable init 0
-
-    # is this a finalize operation?
-    variable final 0
-
-    # is this operation one that we expect to be generated?
-    variable generated 0
-
-    # the return type, if any
-    variable ret ""
-
-    variable parameters
-
-    # called via stereotype mechanism to indicate that this is an
-    # abstract operation
-    method -abstract {summy} {
-	set abstr 1
-    }
-
     # called via stereotype mechanism to indicate that this is an
     # access-to-operation (and also a class operation; how would
     # we know which instance to invoke?)
@@ -963,10 +1223,18 @@ itcl::class Operation {
 	set cls 1
     }
 
+    # is this an accessor?
+    variable accessor 0
+    method -accessor {dummy} {set accessor 1}
+
+    # is this a class operation?
+    variable cls 0
     # called via stereotype mechanism to indicate that this is a class
     # operation
     method -class {dummy} {set cls 1}
 
+    # is this an initialize operation?
+    variable init 0
     # called via stereotype mechanism to indicate that this is an
     # initialization operation (and also a class operation).
     method -init {dummy} {
@@ -974,30 +1242,63 @@ itcl::class Operation {
 	set init 1
     }
 
+    # is this a finalize operation?
+    variable final 0
     # called via stereotype mechanism to indicate that this is an
     # instance finalization operation.
     method -finalize {dummy} {
 	set final 1
     }
 
-    # called via stereotype mechanism to indicate that this is
-    # expected to be generated, and is only included for completeness
-    method -generated {dummy} {
-	set generated 1
+    # is this a <<class event>> event handler:
+    variable handler 0
+    # called via stereotype mechanism to indicate that this is a
+    # <<class event>> event handler (and also a class operation).
+    method -handler {dummy} {
+	set cls 1
+	set handler 1
     }
 
+    # is this operation one that we expect to be generated?
+    # may be unset, "framework", "navigation", "instantiation".
+    variable suppressed
+    # called via stereotype mechanism to indicate that this is
+    # expected to be generated or otherwise omitted, and is only
+    # included for completeness and to allow its inclusion in
+    # sequence diagrams etc
+    method -generated {dummy} {
+	set suppressed "framework"
+    }
+    method -navigation {dummy} {
+	set suppressed "navigation"
+    }
+    method -instantiation {dummy} {
+	set suppressed "instantiation"
+    }
+
+    # the return type, if any
+    variable ret ""
     method -return {r} {set ret $r}
 
+    variable parameters
     method -parameters {pl} {set parameters $pl}
+
+    method -evaluate {domain} {
+	$parameters -evaluate {domain}
+    }
 
     method -generate {domain}  {
 	puts -nonewline "<operation"
 	if $abstr {puts -nonewline " abstract=\"yes\""}
 	if $acc {puts -nonewline " access=\"yes\""}
+	if $accessor {puts -nonewline " accessor=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
-	if $generated {puts -nonewline " generated=\"yes\""}
+	if $handler {puts -nonewline " handler=\"yes\""}
+	if [info exists suppressed] {
+	    puts -nonewline " suppressed=\"$suppressed\""
+	}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
@@ -1033,6 +1334,22 @@ itcl::class Parameter {
 	    }
 	}
     }
+
+    method -evaluate {domain} {
+ 	# check name, type present
+	if [expr [string length $name] == 0] {
+	    set op [[$this -getOwner] -getOwner]
+	    set cls [[$op -getOwner] -getOwner]
+	    Error "missing parameter name in\
+                    [$cls -getName].[$op -getName]"
+	}
+	if [expr [string length $type] == 0] {
+	    set op [[$this -getOwner] -getOwner]
+	    set cls [[$op -getOwner] -getOwner]
+	    Error "missing parameter type for\
+                    [$cls -getName].[$op -getName]($name)"
+	}
+   }
 
     method -generate {domain} {
 	puts -nonewline "<parameter"
@@ -1079,6 +1396,30 @@ itcl::class Association {
 	set role[$role -getEnd] $role
     }
 
+    # called from class cls during evaluation to indicate that the class
+    # named src is used as the source
+    method -formalizingSource {cls src} {
+	set r1cls [$role1 -getClassname]
+	set r2cls [$role2 -getClassname]
+	if {$r1cls == $src && $r2cls == $cls} {
+	    if [$role2 -getSourceEnd] {
+		Error "$cls tried to set $src as source for $name\
+                       when [$role2 -getName] already is"
+	    } else {
+		$role1 -setSourceEnd 1
+	    }
+	} elseif {$r2cls == $src && $r1cls == $cls} {
+	    if [$role1 -getSourceEnd] {
+		Error "$cls tried to set $src as source for $name\
+                       when [$role1 -getName] already is"
+	    } else {
+		$role2 -setSourceEnd 1
+	    }
+	} else {
+	    Error "$cls tried to set $src as source for $name"
+	}
+    }
+
     method -relationshipType {} {
 	set type "[$role1 -getCardinality]:[$role2 -getCardinality]"
 	switch $type {
@@ -1108,7 +1449,8 @@ itcl::class Association {
 	# -relationshipType may swap the roles over! Must be called before
 	# anything else is done.
 	if {[string length $name] == 0} {
-	    Error "unnamed association"
+	    Error "unnamed association between \"[$role1 -getClassname]\"\
+		    and \"[$role2 -getClassname]\""
 	}
 	if {[string length [$role1 -getName]] == 0} {
 	    Error "unnamed role in association $name"
@@ -1259,14 +1601,54 @@ itcl::class Role {
     variable sourceEnd 0
 
     method -cardinality {c} {
-	switch $c {
-	    "1"     -
-	    "1..1"  {set conditional 0; set cardinality "1"}
-	    "1..n"  -
-	    "n"     {set conditional 0; set cardinality "M"}
-	    "0..1"  {set conditional 1; set cardinality "1"}
-	    "0..n"  {set conditional 1; set cardinality "M"}
-	    default {Error "unrecognised multiplicity \"$c\" in role \"$name\""}
+	set c [string trim $c]
+	if [regexp {^(([0-9]+) *\.\. *)?([1-9][0-9]*|n|\*)$} $c \
+		whole b1 lower upper] {
+	    if [string length $lower] {
+		switch -exact $lower {
+		    "0"     {
+			switch -exact $upper {
+			    "1"     {set conditional 1; set cardinality "1"}
+			    "n"     -
+			    "*"     {set conditional 1; set cardinality "M"}
+			    default {
+				Warning "explicit size $upper in role $name\
+                                         ignored"
+				set conditional 1; set cardinality "M"
+			    }
+			}
+		    }
+		    "1"     {
+			switch -exact $upper {
+			    "1"     {set conditional 0; set cardinality "1"}
+			    "n"     -
+			    "*"     {set conditional 0; set cardinality "M"}
+			    default {
+				Warning "explicit size $upper in role $name\
+                                         ignored"
+				set conditional 0; set cardinality "M"
+			    }
+			}
+		    }
+		    default {
+			Error "illegal lower bound $lower in role $name"
+			# set some values to allow further processing
+			set conditional 0; set cardinality "1"
+		    }
+		}
+	    } else {
+		switch -exact $upper {
+		    "1"     {set conditional 0; set cardinality "1"}
+		    "n"     -
+		    "*"     {set conditional 1; set cardinality "M"}
+		    default {
+			Warning "explicit size $upper in role $name ignored"
+			set conditional 0; set cardinality "M"
+		    }
+		}
+	    }
+	} else {
+	    Error "unrecognised multiplicity \"$c\" in role $name"
 	}
     }
 
@@ -1289,9 +1671,6 @@ itcl::class Role {
 
     method -complete {} {
 	[stack -top] -role $this
-    }
-
-    method -evaluate {domain} {
     }
 
     method -generate {domain} {
@@ -1320,7 +1699,7 @@ itcl::class Inheritance {
     # children is a List of the names of the subtype classes
     variable children
 
-    constructor {} {set children [List ::#auto]}
+    constructor {} {set children [List ::\#auto]}
 
     method -parent {p} {set parent $p}
 
@@ -1363,14 +1742,10 @@ itcl::class Inheritance {
 	}
 	set os [$domain -getClasses]
 	set p [$os -atName $parent]
-	if [expr ![$p -hasIdentifier]] {
-	    puts stderr "[$p -getName] has no identifier"
-	    return
-	}
 	$this -formalized
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
-	    set role [Role ::#auto]
+	    set role [Role ::\#auto]
 	    $role -owner $this
 	    $role -end 4
 	    $role -name "Parent"
@@ -1400,74 +1775,10 @@ itcl::class Inheritance {
 itcl::class Action {
     inherit Element
 
-    variable arguments
-    method -arguments {a} {set arguments $a}
-
-    variable args {}
-
-    method -complete {} {
-	if [info exists arguments] {
-	    foreach arg [split $arguments ","] {
-		lappend args [Argument::parse $arg]
-	    }
-	}
-	[stack -top] -add $this
-    }
-
-    method -evaluate {domain} {
-	foreach arg $args {
-	    $arg -evaluate $domain
-	}
-    }
-
     method -generate {domain} {
 	puts "<action>"
 	putElement name $name
-	foreach arg $args {
-	    $arg -generate $domain
-	}
 	puts "</action>"
-    }
-
-}
-
-itcl::class Argument {
-    variable name
-    variable type
-
-    # arg is of the form "name : type"
-    proc parse {arg} {
-	set spl [split $arg ":"]
-	if [expr [llength $spl] != 2] {
-	    Error "invalid argument \"$arg\""
-	}
-	set n [normalize [lindex $spl 0]]
-	set t [normalize [lindex $spl 1]]
-	return [Argument ::#auto $n $t]
-    }
-
-    constructor {n t} {
-	set name $n
-	set type $t
-	return $this
-    }
-
-    method -evaluate {domain} {
-	# cf Attribute
-	set datatypes [$domain -getDatatypes]
-	if [$datatypes -isMissing $type] {
-	    set datatype [Datatype ::#auto $type]
-	    $datatypes -add $datatype $type
-	} else {
-#	    set datatype [$datatypes -atName $type]
-	}
-    }
-
-    method -generate {domain} {
-	puts "<argument>"
-	putElement name $name
-	putElement type $type
-	puts "</argument>"
     }
 
 }
@@ -1475,31 +1786,26 @@ itcl::class Argument {
 itcl::class Event {
     inherit Element
 
-    variable arguments
-    method -arguments {a} {set arguments $a}
+    variable type
+    method -type {t} { set type $t}
 
-    variable args {}
+    # Dependencies stereotyped <<event>> produce instance (state machine)
+    # events. Dependencies stereotyped <<class event>> produce class events.
+    variable cls 0
+    method -class-event {dummy} {set cls 1}
+    method -instance-event {dummy} {set cls 0}
 
     method -complete {} {
-	if [info exists arguments] {
-	    foreach arg [split $arguments ","] {
-		lappend args [Argument::parse $arg]
-	    }
-	}
 	[stack -top] -event $this
     }
 
-    method -evaluate {domain} {
-	foreach arg $args {
-	    $arg -evaluate $domain
-	}
-    }
-
     method -generate {domain} {
-	puts "<event>"
+	puts -nonewline "<event"
+	if $cls {puts -nonewline " class=\"yes\""}
+	puts ">"
 	putElement name $name
-	foreach arg $args {
-	    $arg -generate $domain
+	if [info exists type] {
+	    putElement type $type
 	}
 	puts "</event>"
     }
@@ -1519,16 +1825,6 @@ itcl::class State {
     method -initial {dummy} {set initial 1}
 
     method -evaluate {domain} {
-#	if [expr [string length $name] == 0] {
-#	    if $initial {
-#		set name "Initial"
-#	    } elseif $final {
-#		set name "Final"
-#	    } else {
-#		# how can I identify this more clearly?
-#		Error "unnamed state"
-#	    }
-#	}
 	if [info exists entryactions] {
 	    $entryactions -evaluate $domain
 	}
@@ -1543,6 +1839,7 @@ itcl::class State {
 	if [info exists entryactions] {
 	    $entryactions -generate $domain
 	}
+	$this -generateDocumentation
 	puts "</state>"
     }
 
@@ -1551,11 +1848,21 @@ itcl::class State {
 itcl::class StateMachine {
     inherit Element
 
+    constructor {} {set events [EventSet ::\#auto]}
+
     variable states
     method -states {s} {set states $s}
 
     variable transitions
     method -transitions {t} {set transitions $t}
+
+    variable events
+    # called by each transition during evaluation to add its event.
+    method -addEvent {e} {
+	if [$events -isMissing [$e -getName]] {
+	    $events -add $e [$e -getName]
+	}
+    }
 
     method -complete {} {
 	[stack -top] -statemachine $this
@@ -1564,11 +1871,20 @@ itcl::class StateMachine {
     method -evaluate {domain} {
 	$states -evaluate $domain
 	$transitions -evaluate $domain
+	set es [$events -getMembers]
+	foreach e $es {
+	    [$this -getOwner] -addEvent $e
+	}
     }
 
     method -generate {domain} {
 	puts "<statemachine>"
+	putElement name "$name"
 	$states -generate $domain
+	# output the events here as well as in the class, so we can generate
+	# the state machine-specific bits (might have some events not
+	# involved in state machine).
+	$events -generate $domain
 	$transitions -generate $domain
 	puts "</statemachine>"
     }
@@ -1581,6 +1897,13 @@ itcl::class Transition {
     variable event
     method -event {e} {set event $e}
 
+    variable ignore 0
+    method -ignore {dummy} {set ignore 1}
+
+    # is this a transition triggered by an event-to-self?
+    variable self 0
+    method -self {dummy} {set self 1}
+
     variable source
     method -source {s} {set source $s}
 
@@ -1588,14 +1911,26 @@ itcl::class Transition {
     method -target {t} {set target $t}
 
     method -evaluate {domain} {
-	$event -evaluate $domain
+	# tell the statemachine about the event unless this is an unguarded
+	# transition (XXX what's the word for that?)
+	if {[string length [$event -getName]] > 0} {
+	    $event -evaluate $domain
+	    set mc [[$this -getOwner] -getOwner]
+	    $mc -addEvent $event
+	}
     }
 
     method -generate {domain} {
-	puts "<transition>"
+	puts -nonewline "<transition"
+	if $ignore then {puts -nonewline " ignore=\"yes\""}
+	if $self then {puts -nonewline " self=\"yes\""}
+	puts ">"
+	if {[string length [$event -getName]] > 0} {
+	    putElement event [$event -getName]
+	}
 	putElement source $source
 	putElement target $target
-	$event -generate $domain
+	$this -generateDocumentation
 	puts "</transition>"
     }
 
@@ -1610,6 +1945,8 @@ itcl::class Datatype {
 
     variable dataDetail
 
+    variable operations
+
     constructor {name} {set type $name}
 
     # process annotation.
@@ -1620,7 +1957,13 @@ itcl::class Datatype {
 		-nocase \
 		$pattern \
 		$a wh attr dummy value]} {} {
-	    $this -[string tolower $attr] $value
+	    set attr [string tolower $attr]
+	    if {[string length $value] == 0} {set value "true"}
+	    if [catch {$this -$attr $value}] {
+		Warning \
+		    "annotation not handled, \
+		    \"$type \[\[$attr : [string trim $value]]]\""
+	    }
 	    regexp -nocase -indices $pattern $a wh
 	    set a [string range $a \
 		    [expr [lindex $wh 1] + 1] end]
@@ -1629,11 +1972,20 @@ itcl::class Datatype {
 
     method -className {} {return "datatype"}
 
+    method -operations {ops} {
+	set operations $ops
+    }
+
+    # called when the user has (mistakenly) requested a callback.
+    method -callback {max} {
+	Error  "CF: can't specify callback on type $type, must be a record"
+    }
+
     # called when the type is an enumeration. values is a list of the
     # comma-separated enumerals, which have not been normalized.
     method -enumeration {values} {
 	set dataType "enumeration"
-	set raw [split $values ","]
+	set raw [split $values ",|"]
 	foreach v $raw {
 	    set vs [lappend vs [normalize $v]]
 	}
@@ -1644,6 +1996,12 @@ itcl::class Datatype {
     method -imported {domain} {
 	set dataType "imported"
 	set dataDetail [normalize $domain]
+    }
+
+    # called when the type renames some other type.
+    method -renames {other} {
+	set dataType "renames"
+	set dataDetail [normalize $other]
     }
 
     # called when the type is an integer. constraint is a set of key/value
@@ -1665,13 +2023,6 @@ itcl::class Datatype {
     # called when the type is actually a record (a Class with isType set)
     method -record {} {set dataType "record"}
 
-    # called when the type is a set of instances of a class. cls
-    # is the name of the class, which has not been normalized.
-    method -set {cls} {
-	set dataType "set"
-	set dataDetail [normalize $cls]
-    }
-
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful key is max (max length).
@@ -1684,9 +2035,6 @@ itcl::class Datatype {
 	if [expr ![[stack -top] -isPresent $type]] {
 	    [stack -top] -add $this $type
 	}
-    }
-
-    method -evaluate {domain} {
     }
 
     method -generate {domain} {
@@ -1712,15 +2060,18 @@ itcl::class Datatype {
 	    imported {
 		putElement imported $dataDetail
 	    }
-	    set {
-		putElement set $dataDetail
+	    renames {
+		putElement renames $dataDetail
 	    }
 	    standard {
 		putElement standard $type
 	    }
 	    default {
-		Error "CF: oops! dataType \"$dataType\""
+		Error "CF: unhandled dataType \"$dataType\""
 	    }
+	}
+	if [info exists operations] {
+	    $operations -generate $domain
 	}
 	puts "</type>"
     }
@@ -1730,11 +2081,24 @@ itcl::class Documentation {
     inherit String
 }
 
+itcl::class Exception {
+    inherit Element
+
+    constructor {n} {set name $n}
+
+    method -generate {domain} {
+	puts "<exception>"
+	putElement name "$name"
+	$this -generateDocumentation
+	puts "</exception>"
+    }
+}
+
 itcl::class Transitiontable {
     inherit Element
 }
 
-itcl::class Tag {
+itcl::class XmlTag {
     inherit Element
 }
 
@@ -1750,6 +2114,9 @@ itcl::class Attribute {
     # indicates whether this attribute is an identifier
     variable identifier 0
 
+    # indicates whether this is a class attribute
+    variable cls 0
+
     method -type {t} {set type $t}
 
     method -initial {i} {set initial $i}
@@ -1762,26 +2129,39 @@ itcl::class Attribute {
 
     method -getIdentifier {} {return $identifier}
 
-#    method -getOwningClass {} {
-#	return [[$this -getOwner] -getOwner]
-#    }
+    # used via stereotype processing to indicate this is a class attribute
+    method -class {dummy} {set cls 1}
 
     # indicates whether this attribute formalizes an association,
-    # where the analyst needs to mark what would otherwise be a
-    # non-identifying referential attribute
+    # where the analyst needs the attribute to help form the identifier
     variable formalizedAssociation
 
     # used via stereotype processing to indicate that this analyst-defined
-    # attribute formalizes an association
+    # attribute formalizes an association. It's implicit that the class
+    # at the other end will be the "source".
     method -formalizes {assoc} {
 	set formalizedAssociation [normalize $assoc]
     }
 
     method -evaluate {domain} {
+	# check id vs class
+	if {$identifier && $cls} {
+	    Error "attribute [[[$this -getOwner] -getOwner] -getName].$name\
+		    marked as <<class>> and <<id>>"
+	}
+	# check name, type present (in fact Rose requires the name)
+	if [expr [string length $name] == 0] {
+	    Error "missing attribute name in\
+                    [[[$this -getOwner] -getOwner] -getName]"
+	}
+	if [expr [string length $type] == 0] {
+	    Error "missing attribute type for\
+                    [[[$this -getOwner] -getOwner] -getName].$name"
+	}
 	# extract and store data types
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
-	    set datatype [Datatype ::#auto $type]
+	    set datatype [Datatype ::\#auto $type]
 	    $datatypes -add $datatype $type
 	} else {
 #	    set datatype [$datatypes -atName $type]
@@ -1790,13 +2170,23 @@ itcl::class Attribute {
 	    # we rely on Relationships being evaluated after Classes
 	    # (and Attributes are evaluated because they're in Classes).
 	    set rels [$domain -getRelationships]
-	    [$rels -atName $formalizedAssociation] -formalized
+	    if [$rels -isPresent $formalizedAssociation] {
+		set rel [$rels -atName $formalizedAssociation]
+		$rel -formalizingSource \
+		    [[[$this -getOwner] -getOwner] -getName] \
+		    $type
+	    } else {
+		Error "attribute\
+                       [[[$this -getOwner] -getOwner] -getName].$name \
+                       used to formalize non-existent $formalizedAssociation"
+	    }
 	}
     }
 
     method -generate {domain} {
 	puts -nonewline "<attribute"
 	if $identifier {puts -nonewline " identifier=\"yes\""}
+	if $cls {puts -nonewline " class=\"yes\""}
 	if [info exists formalizedAssociation] {
 	    puts -nonewline " refers=\"$type\""
 	    puts -nonewline " relation=\"$formalizedAssociation\""
@@ -1851,15 +2241,15 @@ itcl::class ReferentialAttribute {
 
 # Aggregate classes
 
-itcl::class TaggedList {
+itcl::class XmlTaggedList {
     inherit List
 
     # when generating, generates its contents within a container element
-    # (same name as the list tag).
+    # (same name as the list xmlTag).
     method -generate {domain} {
-	puts "<$tag>"
+	puts "<$xmlTag>"
 	$this List::-generate $domain
-	puts "</$tag>"
+	puts "</$xmlTag>"
     }
 }
 
@@ -1882,15 +2272,16 @@ itcl::class Datatypes {
 
     constructor {} {
 	# insert standard (provided) types.
-	$this -add [Datatype ::#auto Autonumber] Autonumber
-	$this -add [Datatype ::#auto Boolean] Boolean
-	$this -add [Datatype ::#auto Date] Date
-	$this -add [Datatype ::#auto Float] Float
-	$this -add [Datatype ::#auto Integer] Integer
-	$this -add [Datatype ::#auto Real] Real
-	$this -add [Datatype ::#auto String] String
-	$this -add [Datatype ::#auto Time] Time
-	$this -add [Datatype ::#auto Unbounded_String] Unbounded_String
+	$this -add [Datatype ::\#auto Autonumber] Autonumber
+	$this -add [Datatype ::\#auto Boolean] Boolean
+	$this -add [Datatype ::\#auto Date] Date
+	$this -add [Datatype ::\#auto Float] Float
+	$this -add [Datatype ::\#auto Integer] Integer
+	$this -add [Datatype ::\#auto Real] Real
+	$this -add [Datatype ::\#auto String] String
+	$this -add [Datatype ::\#auto Time] Time
+	$this -add [Datatype ::\#auto Timer] Timer
+	$this -add [Datatype ::\#auto Unbounded_String] Unbounded_String
     }
 
     method -className {} {return "datatypes"}
@@ -1899,6 +2290,23 @@ itcl::class Datatypes {
 
 itcl::class EntryActions {
     inherit List
+}
+
+itcl::class EventSet {
+    inherit Container
+    method -className {} {return "eventset"}
+}
+
+# This is used because Event occurs in 2 contexts; (a) in <transition>,
+# (b) in <events>.
+itcl::class Events {
+    inherit List
+    method -event {e} {$this -add $e}
+}
+
+itcl::class Exceptions {
+    inherit Container
+    method -className {} {return "exceptions"}
 }
 
 itcl::class Inheritances {
@@ -1929,11 +2337,11 @@ itcl::class Transitions {
 
 # Convert XML tag name to element of appropriate type
 
-proc elementFactory {tag} {
+proc elementFactory {xmlTag} {
     # XXX should this perhaps be an operation of Domain?
-    switch $tag {
+    switch $xmlTag {
+	abstract          {return [Abstract #auto]}
 	action            {return [Action #auto]}
-	arguments         {return [Arguments #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
@@ -1954,6 +2362,9 @@ proc elementFactory {tag} {
 	end               {return [End #auto]}
 	entryactions      {return [EntryActions #auto]}
 	event             {return [Event #auto]}
+	events            {return [Events #auto]}
+	exception         {return [Exception #auto]}
+	exceptions        {return [Exceptions #auto]}
 	exportcontrol     {return [ExportControl #auto]}
 	extractor         {return [Extractor #auto]}
 	inheritance       {return [Inheritance #auto]}
@@ -1994,7 +2405,7 @@ proc startTag {tag attrs} {
     set t [string tolower $tag]
     set el [elementFactory $t]
     array set attr $attrs
-    $el -tag $t
+    $el -xmlTag $t
     if [expr [array size attr] > 0] {$el -xmlattributes attr}
     stack -push $el
 }
@@ -2030,12 +2441,12 @@ proc Message {str} {
 }
 
 proc Warning {str} {
-    puts stderr $str
+    puts stderr "Warning: $str"
 }
 
 proc Error {str} {
     global errors
-    puts stderr $str
+    puts stderr "Error: $str"
     incr errors
 }
 
@@ -2088,7 +2499,11 @@ if $stackDump {
 }
 
 if $errors {
-    puts stderr "$errors errors detected."
+    if {$errors == 1} {
+	puts stderr "One error detected."
+    } else {
+	puts stderr "$errors errors detected."
+    }
     exit 1
 }
 

@@ -1,0 +1,240 @@
+<!-- $Id: event-modelling.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Event modelling</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Event modelling</h1>
+
+<h2>State modelling</h2>
+
+<blockquote>
+A word of warning: although Rational Rose gives you the impression
+that there can be more than one state model per class, and that
+statecharts and activity diagrams are different, in fact there can be
+only one.
+</blockquote>
+
+<h3>Restrictions</h3>
+
+<p>The vocabulary available for statechart modelling in UML is
+extensive. In fact, it's so extensive that to support all of it would
+be difficult, while for modellers to use all of it would be confusing
+for their audience if not for themselves.
+
+<p>ColdFrame only supports statecharts where
+
+<ul>
+
+<li>there are no nested states,
+
+<li>there are no guards, and
+
+<li>the only actions are entry actions (ie, these are Moore Model
+statecharts).
+
+</ul>
+
+<p>These restrictions may seem draconian, and indeed models produced
+with them will tend to have more states. However, they do allow you to
+make complete state models. The basic idea is that it's better to have
+a small language that you understand completely rather than a bigger
+but vaguer language.
+
+<h3>Example model</h3>
+
+<p><a name="lamp-state.gif"><img src="lamp-state.gif"></a>
+
+<p>This is a statechart for a Lamp. I assume that it's OK to turn on
+the lamp if it's already on and to turn it off if it's already off;
+we'd need some more intermediate states if not.
+
+<p>The Lamp is the kind that you find on shared stairwells; it stays
+on for a period of time after being switched on by a pushbutton, and
+you can extend the period by pushing again while it's still on.
+
+<ol type="alpha">
+
+<li>The state model starts at the <i>initial</i> state (the black
+spot). Since the transition from the <i>initial</i> state is
+unguarded, the model immediately transitions to the <i>off</i> state.
+
+<li>On entry to the <i>off</i> state, the entry action <i>turn off</i>
+is executed.
+
+<li>The state model remains in the <i>off</i> state until a <i>push</i>
+event occurs. It then transitions to the <i>on</i> state.
+
+<li>On entry to the <i>on</i> state, the entry actions <i>turn on</i>
+and <i>set timeout</i> are executed, in the order shown in the
+model. It would be possible for the timeout period to be controlled by
+a Lamp instance variable, if required.
+
+<li>If no further user action occurs, the timeout set at step d
+occurs, and the state model transitions back to the <i>off</i> state
+(step b).
+
+<li>If on the other hand the user pushes the button again, the state
+model transitions to the <i>resetting</i> state.
+
+<li>On entry to the <i>resetting</i> state, the entry action <i>clear
+timeout</i> is called to cancel the timeout set in step d. Because
+there is no guard, the model immediately transitions back to state
+<i>on</i> (step d).
+
+</ol>
+
+<h3>Timed events</h3>
+
+<p>The Lamp statechart involves a timeout, which is a special case of
+a delayed event.
+
+<p>Given an event, there are five things you can do with it:
+
+<ol type="alpha">
+
+<li><i>Post</i> it, to be handled as soon as possible (in order),
+
+<li><i>Post</i> it, to be handled at a specific time in the future,
+
+<li><i>Post</i> it, to be handled after at least a specified interval,
+
+<li><i>Set</i> it on a <i>Timer</i>, to he handled at a specific time
+in the future,
+
+<li><i>Set</i> it on a <i>Timer</i>, to he handled after at least a
+specified interval.
+
+</ol>
+
+<p>The difference between <i>Posting</i> and <i>Setting on a Timer</i>
+is that <i>Posted</i> events are "fire and forget", whereas <i>Set</i>
+events can be retracted. <i>Set</i> events are the kind to use for
+timeouts (indeed, in state machines in general, with perhaps odd
+exceptions).
+
+<p>Note that ColdFrame requires you to cancel (<i>Unset</i>) unfired
+timers before setting them again, and will also insist that a timer is
+in fact <i>Set</i> before you can <i>Unset</i> it. To make up for
+this, it guarantees that you can <i>Unset</i> a timer which has in
+fact fired at any point before the corresponding event has actually
+been handled, and the event won't be delivered.
+
+<h3>Event kinds and payloads</h3>
+
+<p>Events are always directed to a class. They may be Instance Events
+(typically used in state machines) or Class Events (typically used for
+domain isolation).
+
+<p>Class Events will always carry a payload; Instance Events need not.
+
+<p>To model an instance event without any payload, it's only necessary
+to <a href="#lamp-state.gif">show it on a statechart</a>.
+
+<p>To model an event with a payload, show a dependency, named with the
+event name and stereotyped <em>&#171;instance&nbsp;event&#187;</em> or
+<em>&#171;class&nbsp;event&#187;</em> as appropriate, from the class
+to the <em>&#171;type&#187;</em> involved; this is shown in <a
+href="#lamp.gif">the diagram below</a>.
+
+<p>It's best if the payload doesn't contain allocated data, because it
+may lead to memory leaks (this depends on the way the support software
+works).
+
+<p>You need a <em>&#171;type&#187;</em> to model an event with a
+payload, but it doesn't have to be a special
+<em>&#171;type&#187;</em>. Also, you can use the same
+<em>&#171;type&#187;</em> as the payload for several different events.
+
+<h3>Transitions</h3>
+
+<p>Instance events cause transitions. It's illegal for an event to
+occur in a state if there's no corresponding transition from that
+state (typically, a <i>Can't Happen</i> exception will be raised).
+
+<p>If you want an event to be ignored when it occurs in a particular
+state, provide a transition-to-self for that event and mark it
+<em>&#171;ignore&#187;</em>. This means that the event is completely
+ignored, and in particular any entry actions don't get called.
+
+<p>Note that you need to reserve <i>Can't Happen</i> for when it's
+logically impossible for the event to happen in the state, not just
+when it's undesirable!
+
+<h3>Class modelling</h3>
+
+<p><a name="lamp.gif"><img src="lamp.gif"></a>
+
+<h4>Instance events</h4>
+
+<p>The <a href="#lamp-state.gif">statechart</a> for the Lamp class
+needs supporting in the class model.
+
+<p>The instance operations <i>turn on</i>, <i>turn off</i>, <i>set
+timeout</i> and <i>clear timeout</i> correspond to the entry actions
+on the statechart.
+
+<p>Instance entry actions can have a single parameter (aside from the
+implicit <tt>This</tt>): if you specify it, it must be of the event
+type that causes entry to the state concerned, and the actual event
+will be passed at run time. This means you can't use this feature if
+more than one event type can cause entry to the state.
+
+<p>The instance attribute <i>timeout</i>, of the ColdFrame-special
+type <i>Timer</i>, is used to hold timeouts. The concept of operation
+for timeouts is:
+
+<ol type="alpha">
+
+<li>you create an event
+
+<li>you <i>set</i> it on the timer
+
+<li>the timer fires, and the event is posted on the event queue
+
+<li>the event reaches the head of the event queue, and is handled.
+
+</ol>
+
+<p>The timer can be <i>unset</i> between the time when it's set and
+the time when the event is handled; if you do this, the event won't be
+delivered.
+
+<p>If you need to have more than one concurrent timeout, allocate a
+Timer variable for each.
+
+<h4>Class events</h4>
+
+<p>In addition, the class diagram shows
+<i>&#171;class&nbsp;event&#187;</i> support.
+
+<p>There is a <i>Lamp</i> class event <i>creation&nbsp;event</i>,
+which carries a payload of type <i>Location</i>.
+
+<p>The event is handled by the operation <i>creation</i>; ColdFrame
+knows this because
+
+<ol type="alpha">
+
+<li>the operation is stereotyped <i>&#171;handler&#187;</i>
+
+<li>it has a single parameter of <i>&#171;class&nbsp;event&#187;</i>
+type.
+
+</ol>
+
+<p>Class events can be <i>set</i> on Timers; you'll probably want to
+make the Timer a <em>&#171;class&#187;</em> attribute.
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

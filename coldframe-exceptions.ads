@@ -20,19 +20,46 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: fe0f9536cdc0 $
---  $Date: 2001/09/25 18:39:48 $
+--  $Revision: 281d11e491da $
+--  $Date: 2002/07/27 13:05:23 $
 --  $Author: simon $
-
-with BC;
 
 package ColdFrame.Exceptions is
 
-   Duplicate : exception renames BC.Duplicate;
-   --  Attempt to Create an object with an identifier that belongs to an
-   --  object that already exists
+   Duplicate : exception;
+   --  Attempt to Create an object with an identifier that belongs to
+   --  an object that already exists.
 
-   Not_Found : exception renames BC.Not_Found;
-   --  Attempt to access an object by identifier when no such object exists
+   Not_Found : exception;
+   --  Attempt to access an object by identifier when no such object
+   --  exists.
+
+   Existing_Child : exception;
+   --  Attempt to replace a non-null child in an inheritance
+   --  relationship.
+
+   Cant_Happen : exception;
+   --  An unexpected Event has occured.
+
+   Use_Error : exception;
+   --  Misuse of facilities (eg, attempting to post Events for the
+   --  same Instance to more than one Queue; attempting to set a Timer
+   --  that's already set).
+
+   No_Default_Create : exception;
+   --  Raised in Inheritance.Create_Tree if a root instance needs to
+   --  be created but the Create operation requires an identifier (ie,
+   --  the identifier isn't Autonumber).
+
+   Unexpected_Class : exception;
+   --  Raised in Inheritance.Create_Tree if an instance handle was
+   --  provided but didn't match any class along the indicated route.
+
+   Mismatched_Instances : exception;
+   --  Raised in Inheritance.Create_Tree if a non-root class with
+   --  multiple parents finds that all of the supplied handles match
+   --  it (ie, the programmer is trying to designate an instance of
+   --  this class as the required parent) and the handles are not all
+   --  the same.
 
 end ColdFrame.Exceptions;

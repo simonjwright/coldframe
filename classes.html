@@ -1,0 +1,334 @@
+<!-- $Id: classes.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<head>
+<title>ColdFrame: Classes</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Classes</h1>
+
+<h2>Motivation</h2>
+
+<p>A class typically is an abstraction of something in the <a
+href="domains.html ">domain</a> of interest. It represents the common
+properties and behaviour shared by all instances of the class.
+
+<p>Not all classes represent concrete concepts (such as <em>Cat</em>
+or <em>Book</em>). It's common for classes to represent incidents
+(<em>Button Press</em>), relationships (<em>Book Borrowing</em>) or
+roles {<em>Hired Van</em>).
+
+<p>See also:
+<ul>
+<li><a href="attributes.html">attributes</a>
+<li><a href="operations.html">operations</a>
+</ul>
+
+<h2>Modelling</h2>
+
+<p>A class is modelled, of course, by a UML class.
+
+<p>In ColdFrame, not all UML "class" symbols represent what we're
+discussing here:
+
+<ul>
+
+<li>you use the stereotype <em>&#171;type&#187;</em> when the class
+symbol in fact represents a <a href="types.html">type</a>.
+
+<li>you use the stereotype <em>&#171;public&#187;</em> when the class
+symbol in fact represents a callable interface between the domain and
+other domains.
+
+</ul>
+
+<p>Given that, classes come in two flavours: normal and singleton.
+
+<p>A singleton class (marked <em>&#171;singleton&#187;</em>) always
+has precisely one instance; you don't need to create it, and you can't
+delete it.
+
+<p>Normal classes start off with no instances; the instances have to
+be created, and may be deleted.
+
+<p>Instances of a normal class must be uniquely identifiable by some
+<a href="attributes.html">attribute</a> or combination of
+attributes. The identifying attributes, like any other attributes,
+ought to be of non-composite types.
+
+<p>For example, a Vehicle Excise Disk (the round paper certificate, to
+be displayed on the vehicle's windscreen, that shows you've paid the
+UK road tax for the year) might be identified by the combination of
+Vehicle Index Mark (the string of letters and digits on the
+numberplate) and Validity Start Date. Vehicle Index Mark and Validity
+Start Date then become "identifying attributes", whereas Date Of Issue
+and Period Of Validity are just common-or-garden attributes.
+
+<p>In ColdFrame, you <em>must not</em> specify identifiers for
+
+<ul>
+<li>child classes in <a href="generalizations.html">inheritance
+relationships</a>,
+<li>associative classes,
+<li>public classes,
+<li>singletons, or
+<li>types.
+</ul>
+
+All other classes <em>must</em> have identifiers. In this,
+ColdFrame doesn't follow <a
+href="resources.html#build-object-models">Executable UML</a>; it seems
+risky to apply too many defaults.
+
+<p>For the case where there's no suitable naming attribute, ColdFrame
+provides the attribute <a href="types.html">type</a>
+<tt><i>Autonumber</i></tt> (rather like the Microsoft Access feature
+it's named after): each newly-created instance gets a new value.
+
+<h3>Use of Stereotypes</h3>
+
+<p>Classes which represent user-defined <a href="types.html">types</a>
+are marked with the stereotype <em>&#171;type&#187;</em>.
+
+<p>Classes of which there is always precisely one instance are marked
+with the stereotype <em>&#171;singleton&#187;</em>.
+
+<p>Public classes, which are the only classes visible from outside the
+Domain, are marked with the stereotype
+<em>&#171;public&#187;</em>. This implies the stereotype
+<em>&#171;singleton&#187;</em>. Public classes can't take part in
+<a href="associations.html">associations</a>.
+
+<p>Abstract classes (which must be parents in <a
+href="generalizations.html">inheritance relationships</a>) may be
+marked with the stereotype <em>&#171;abstract&#187;</em>. This has no
+effect on code generation at present (3.i.02).
+<em>&#171;abstract&#187;</em> is an alternative to the use of the
+<i>Abstract</i> checkbox in the Rose <i>Class Specification</i> dialog
+(<i>Detail</i> tab).
+
+<h3>Annotations</h3>
+
+<p><tt>[[ abbreviation : <i>abbrev</i> ]]</tt> specifies the class's
+abbreviation. By default, the abbreviation is composed of the initial
+letters of the full class name or, if the name is a single word, the
+name prefixed with <tt>A_</tt> or <tt>An_</tt> as appropriate. This
+rule wouldn't work for, for example, <i>New Threat</i> and <i>Non
+Threat</i>.
+
+<p><tt>[[ max : <i>max-size</i> ]]</tt> specifies the maximum number
+of instances that will coexist. This may provoke a different code
+generation strategy.
+
+<br>You can get the same effect by specifying a cardinality (or
+multiplicity, depending on the version of Rose) of
+<tt>0..<i>max-size</i></tt> under the Rose Class Specification
+<i>Detail</i> tab.
+
+<h2>Translation</h2>
+
+<ul>
+<li><a href="#library-structure">Ada library structure</a>
+<li><a href="#externals">Package externals</a>
+<li><a href="#internals">Package internals</a>
+</ul>
+
+<h3><a name="library-structure">Ada library structure</a></h3>
+
+<p>All the classes in a <a href="domains.html">domain</a> are
+translated as first-level children of the domain package:
+<pre>
+   package <i>Domain.Class</i> is
+      ...
+   end <i>Domain.Class</i>;
+</pre>
+
+<p>For test purposes, each class has a child <tt>Tear_Down</tt>
+procedure <tt><i>Domain.Class</i>.Tear_Down</tt>, which is called by
+the domain <tt>Tear_Down</tt> procedure. This procedure returns the
+class to its initial state, deleting all the instances for normal
+classes and resetting <em>&#171;singleton&#187;</em>s. It should not
+need editing.
+
+<!-- XXX is that true about singletons? what about tasks? -->
+
+<p>If the class is <em>&#171;public&#187;</em> or a
+<em>&#171;singleton&#187;</em>, that's it. For normal classes, the
+following additional library units are generated:
+
+<dl>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Containers</tt>
+<dd>A basic instantiation of the Booch Components for class
+<tt>Handle</tt>s. Supports iteration.
+
+<pre>
+   with BC.Containers;
+   package <i>Domain.Class</i>.Abstract_Containers
+   is new BC.Containers (Handle);
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Collections</tt>
+<dd>An abstract instantiation of Booch Collections (like Lists) of
+<tt>Handle</tt>s. Probably not of much importance to the programmer.
+
+<pre>
+   with BC.Containers.Collections;
+   with <i>Domain.Class</i>.Abstract_Containers;
+   package <i>Domain.Class</i>.Abstract_Collections
+   is new Abstract_Containers.Collections;
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Collections</tt>
+<dd>A concrete instantiation of Booch Collections of
+<tt>Handle</tt>s. If the maximum number of instances was specified,
+these will be the Bounded variety; otherwise, Unbounded. The interface
+is the same in either case.
+
+<pre>
+   with BC.Containers.Collections.Bounded;
+   with <i>Domain.Class</i>.Abstract_Collections;
+   package <i>Domain.Class</i>.Collections
+   is new Abstract_Collections.Bounded (Maximum_Size => 42);
+</pre>
+
+<dt><tt><i>Domain.Class</i>.All_Instances</tt>
+<dd>A function which returns a Collection containing the
+<tt>Handle</tt>s of all the current instances of the class.
+
+<pre>
+   with <i>Domain.Class</i>.Collections;
+   function <i>Domain.Class</i>.All_Instances
+     return <i>Domain.Class</i>.Collections.Collection;
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Selection_Function</tt>
+<dd>A generic function which is instantiated with a <tt>Pass</tt>
+function that takes a <tt>Handle</tt> and returns <tt>True</tt> if the
+instance is required. It takes no parameters and returns a Collection
+containing the <tt>Handle</tt>s of all the current instances of the
+class that pass the <tt>Pass</tt> function.
+
+<pre>
+   with <i>Domain.Class</i>.Collections;
+   generic
+      with function Pass (This : Handle) return Boolean is &lt;&gt;;
+   function <i>Domain.Class</i>.Selection_Function
+     return <i>Domain.Class</i>.Collections.Collection;
+   pragma Elaborate_Body (<i>Domain.Class</i>.Selection_Function);
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Filter_Function</tt>
+<dd>A generic function which is instantiated with a <tt>Pass</tt>
+function that takes a <tt>Handle</tt> and returns <tt>True</tt> if the
+instance is required. It takes a Collection parameter and returns
+another Collection containing the <tt>Handle</tt>s of all the
+instances in the input Collection that pass the <tt>Pass</tt>
+function.
+
+<pre>
+   with <i>Domain.Class</i>.Collections;
+   generic
+      with function Pass (This : Handle) return Boolean is &lt;&gt;;
+   function <i>Domain.Class</i>.Filter_Function
+     (The_Collection : <i>Domain.Class</i>.Collections.Collection)
+     return <i>Domain.Class</i>.Collections.Collection;
+   pragma Elaborate_Body (<i>Domain.Class</i>.Filter_Function);
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Iterate</tt>
+<dd>A simple generic closed iterator over Collections; to be
+instantiated with the procedure to be called to process each
+<tt>Handle</tt>.
+
+<pre>
+   with <i>Domain.Class</i>.Collections;
+   generic
+      with procedure Process (H : Handle);
+   procedure <i>Domain.Class</i>.Iterate
+     (Over : <i>Domain.Class</i>.Collections.Collection);
+   pragma Elaborate_Body (<i>Domain.Class</i>.Iterate);
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Sets</tt>
+<dd>An abstract instantiation of Booch Sets of
+<tt>Handle</tt>s. Contains set <tt>Difference</tt>,
+<tt>Intersection</tt> and <tt>Union</tt> operations.
+
+<pre>
+   with BC.Containers.Sets;
+   with <i>Domain.Class</i>.Abstract_Containers;
+   package <i>Domain.Class</i>.Abstract_Sets
+   is new Abstract_Containers.Sets;
+</pre>
+
+<dt><tt><i>Domain.Class</i>.Sets</tt>
+<dd>A concrete instantiation of Booch Sets of
+<tt>Handle</tt>s. If the maximum number of instances was specified,
+these will be the Bounded variety; otherwise, Unbounded. The interface
+is the same in either case.
+
+<pre>
+   with <i>Domain.Class</i>.Handle_Hash;
+   with BC.Containers.Sets.Bounded;
+   with <i>Domain.Class</i>.Abstract_Sets;
+   package <i>Domain.Class</i>.Sets
+   is new Abstract_Sets.Bounded
+     (Hash => <i>Domain.Class</i>.Handle_Hash,
+      Buckets => 11,
+      Maximum_Size => 42);
+</pre>
+
+</dl>
+
+<h3><a name="externals">Package externals</a></h3>
+
+<p>A class's identifying attribute or attributes map to a record type
+named <tt>Identifier</tt>. Note that <em>&#171;public&#187;</em> and
+<em>&#171;singleton&#187;</em> classes don't have identifiers.
+
+<p>A class's instance data maps to a private record type named
+<tt>Instance</tt>, with an accessor <tt>Handle</tt>. In the case of
+<em>&#171;public&#187;</em> classes, these are both declared in the
+private part (in other words, they're only visible to operations of
+the class itself). Both <em>&#171;public&#187;</em> and
+<em>&#171;singleton&#187;</em> classes have a private variable
+<tt>This</tt> of type <tt>Handle</tt>, which accesses the only
+instance of the class. See also under <a
+href="attributes.html">Attributes</a>.
+
+<p>Normal classes have a <tt>Create</tt> operation, returning a
+<tt>Handle</tt>. If the class's only identifying attribute is of type
+<tt>Autonumber</tt>, <tt>Create</tt> takes no parameters; otherwise it
+takes a single parameter of type <tt>Identifier</tt>.
+
+<p>They also have a pair of <tt>Delete</tt> operations; one takes a
+parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
+single parameter of type <tt>Identifier</tt>.
+
+<p>Normal classes have a <tt>Find</tt> operation, taking a single
+parameter of type <tt>Identifier</tt> and returning a <tt>Handle</tt>
+(you may get <tt>null</tt> if there aren't presently any instances
+with that identifier). <em>&#171;singleton&#187;</em> classes have a
+parameterless <tt>Find</tt> operation returning a
+<tt>Handle</tt> (which can't be <tt>null</tt>).
+
+<h3><a name="internals">Package internals</a></h3>
+
+<h2>Use</h2>
+
+<p>If you're implementing operations of a
+<em>&#171;singleton&#187;</em> class, use <tt>This</tt> instead of
+<tt>Find</tt>; it'll be quicker.
+
+<p><i>[more to follow?]</i>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

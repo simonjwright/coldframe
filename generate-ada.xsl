@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v af1f91f97d0f 2001/10/10 04:49:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,15 +27,18 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
 
-  <xsl:import href="ada-association.xsl"/>
-  <xsl:import href="ada-attribute.xsl"/>
-  <xsl:import href="ada-callback.xsl"/>
-  <xsl:import href="ada-class.xsl"/>
-  <xsl:import href="ada-collection.xsl"/>
-  <xsl:import href="ada-operation.xsl"/>
-  <xsl:import href="ada-teardown.xsl"/>
-  <xsl:import href="ada-type.xsl"/>
-  <xsl:import href="ada-utilities.xsl"/>
+  <xsl:include href="ada-association.xsl"/>
+  <xsl:include href="ada-association-collection.xsl"/>
+  <xsl:include href="ada-attribute.xsl"/>
+  <xsl:include href="ada-callback.xsl"/>
+  <xsl:include href="ada-class.xsl"/>
+  <xsl:include href="ada-collection.xsl"/>
+  <xsl:include href="ada-inheritance.xsl"/>
+  <xsl:include href="ada-operation.xsl"/>
+  <xsl:include href="ada-state.xsl"/>
+  <xsl:include href="ada-teardown.xsl"/>
+  <xsl:include href="ada-type.xsl"/>
+  <xsl:include href="ada-utilities.xsl"/>
 
   <xsl:strip-space elements="*"/>
 
@@ -57,17 +60,22 @@
   <!-- Control verbosity: no or yes. -->
   <xsl:param name="verbose" select="'no'"/>
 
+  <!-- Control comment paragraph fill width. -->
+  <xsl:param name="fill-column" select="70"/>
+
 
   <!-- Global shorthands for indentation. -->
   <xsl:param name="I" select="$standard-indent"/>
   <xsl:param name="II" select="concat($I, $I)"/>
   <xsl:param name="III" select="concat($II, $I)"/>
   <xsl:param name="IIII" select="concat($III, $I)"/>
+  <xsl:param name="IIIII" select="concat($IIII, $I)"/>
   <xsl:param name="C" select="$continuation-indent"/>
   <xsl:param name="IC" select="concat($I, $C)"/>
   <xsl:param name="IIC" select="concat($II, $C)"/>
   <xsl:param name="IIIC" select="concat($III, $C)"/>
   <xsl:param name="IIIIC" select="concat($IIII, $C)"/>
+  <xsl:param name="IIIIIC" select="concat($IIIII, $C)"/>
 
   <!-- Added blank lines -->
   <xsl:param name="blank-line">
@@ -81,22 +89,32 @@
     </xsl:choose>
   </xsl:param>
 
+  <!-- Remember the main document. -->
+  <xsl:variable name="main-document" select="/"/>
 
   <!-- Generate the top-level package for the domain, then all the
        others. -->
   <xsl:template match="domain">
+
+    <xsl:call-template name="do-not-edit"/>
 
     <!-- Identification info -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'Generating identification info ..'"/>
     </xsl:call-template>
     <xsl:call-template name="identification-info"/>
+
+    <!-- Commentary. -->
+    <xsl:value-of select="$blank-line"/>
+    <xsl:call-template name="commentary">
+      <xsl:with-param name="separate-pars" select="$blank-line"/>
+    </xsl:call-template>
     
     <!-- Any context clause needed for top-level package .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. domain context ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates mode="domain-context"/>
+    <xsl:call-template name="domain-context"/>
 
     <!-- .. the top-level package spec .. -->
     <xsl:call-template name="progress-message">
@@ -107,46 +125,113 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
+    <!-- .. any exceptions .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. any exceptions ..'"/>
+    </xsl:call-template>
+    <xsl:for-each select="exception">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>: exception;&#10;</xsl:text>
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$I"/>
+      </xsl:call-template>
+      <xsl:value-of select="$blank-line"/>
+       
+   </xsl:for-each>
+
     <!-- .. any specially-declared types .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. any specially-declared types ..'"/>
     </xsl:call-template>
     <xsl:call-template name="domain-types"/>
 
-    <!-- .. the Initialize procedure .. -->
+    <!-- .. any type operations .. -->
     <xsl:call-template name="progress-message">
-      <xsl:with-param name="m" select="'.. the Initialize procedure ..'"/>
+      <xsl:with-param name="m" select="'.. any operations of types ..'"/>
     </xsl:call-template>
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Initialize;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
+    <xsl:apply-templates
+      select="type/operation[@access and not(@suppressed)]"
+      mode="access-to-operation">
+      <xsl:sort select="name"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:apply-templates>
+    <xsl:apply-templates
+      select="type/operation[not(@access) and not(@suppressed)]"
+      mode="domain-type-operation-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
 
-    <!-- The top-level package body. -->
-    <xsl:call-template name="progress-message">
-      <xsl:with-param name="m" select="'.. the top-level package body ..'"/>
-    </xsl:call-template>
-    <xsl:text>package body </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
+    <!-- .. the domain package body, if needed .. -->
+    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
 
-    <!-- The separate Initialize procedure body. -->
+      <xsl:call-template name="do-not-edit"/>
+      
+      <xsl:text>package body </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> is&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
+      <xsl:apply-templates
+        select="type/operation[not(@access) and not(@suppressed)]"
+        mode="domain-type-operation-body-stub">
+        <xsl:sort select="name"/>
+      </xsl:apply-templates>
+
+      <!-- .. and close. -->
+      <xsl:text>end </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+
+    </xsl:if>
+
+    <!-- .. domain type operations .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
         name="m"
-        select="'.. the separate Initialize procedure body ..'"/>
+        select="'.. operations of types ..'"/>
     </xsl:call-template>
+    <xsl:apply-templates
+      select="type/operation[not(@access) and not(@suppressed)]"
+      mode="domain-type-operation-body">
+    </xsl:apply-templates>
+
+
+    <!-- .. the domain event manager .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain event manager ..'"/>
+    </xsl:call-template>
+    <xsl:call-template name="event-manager-spec"/>
+    <xsl:call-template name="event-manager-body"/>
+
+    <!-- .. the domain Initialize procedure .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Initialize procedure ..'"/>
+    </xsl:call-template>
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Initialize;&#10;</xsl:text>
+
+    <!-- The domain Initialize procedure body. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Initialize procedure body ..'"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:variable
       name="initialize-procedures"
@@ -161,6 +246,11 @@
       </xsl:message>
     </xsl:for-each>
 
+    <!-- .. withs, starting with the Events package .. -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events;&#10;</xsl:text>
+
     <xsl:for-each select="$initialize-procedures">
       <xsl:sort select="../name"/>
       <xsl:sort select="name"/>
@@ -169,34 +259,30 @@
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:text>separate (</xsl:text>
+    <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:text>procedure Initialize is&#10;</xsl:text>
+    <xsl:text>.Initialize is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:choose>
-      
-      <xsl:when test="$initialize-procedures">
-        <xsl:for-each select="$initialize-procedures">
-          <xsl:sort select="../name"/>
-          <xsl:sort select="name"/>
-          <xsl:value-of select="$I"/>
-          <xsl:value-of select="../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:for-each>
-      </xsl:when>
+    <!-- .. the Events package initialization .. -->
+    <xsl:value-of select="$I"/>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Initialize;&#10;</xsl:text>
 
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:otherwise>
+    <!-- .. <<init>> operations .. -->
+    <xsl:for-each select="$initialize-procedures">
+      <xsl:sort select="../name"/>
+      <xsl:sort select="name"/>
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:for-each>
 
-    </xsl:choose>
-
-    <xsl:text>end Initialize;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Initialize;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
     <xsl:call-template name="progress-message">
@@ -252,6 +338,46 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
+    <!-- Package specs for Associations (navigation from collections) -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package specs for Associations (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates select="association" mode="association-collection-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Associations (navigation from collections) -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. package bodies for Associations (collection navigation) ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates select="association" mode="association-collection-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package specs for Inheritances -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. package specs for Inheritances ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[name=../inheritance/child or name=../inheritance/parent]"
+      mode="inheritance-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Inheritances -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. package bodies for Inheritances ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[name=../inheritance/child or name=../inheritance/parent]"
+      mode="inheritance-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- Package specs for callbacks. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. package specs for Callbacks ..'"/>
@@ -265,6 +391,8 @@
       <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>
     </xsl:call-template>
     <xsl:call-template name="domain-teardown"/>
+    <xsl:call-template name="event-teardown-spec"/>
+    <xsl:call-template name="event-teardown-body"/>
 
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. done.'"/>
@@ -303,6 +431,7 @@
     <xsl:text>--  Generator: </xsl:text>
     <xsl:value-of select="$coldframe-version"/>
     <xsl:text>&#10;</xsl:text>
+    <xsl:text>--  Lines: LINES-OF-CODE&#10;</xsl:text>
   </xsl:template>
 
 
