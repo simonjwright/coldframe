@@ -1,5 +1,5 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v 6d27c638eceb 2003/11/16 10:25:29 simon $
+--  $Id: tash.gpr,v 3c58e75d12b4 2003/11/16 10:26:49 simon $
 
 project Tash is
 
@@ -27,11 +27,11 @@ project Tash is
                                        "-O2");
   end Compiler;
 
-  --  These two files may need to be made by (a) configuring TASH run
-  --  setup.tcl under wish (wish82), (b) changing to the source
-  --  directory and running "make tkmacro.o tclmacro.o". However, some
-  --  versions of TASH (in particular the Windows tash832a.zip) come
-  --  prepared.
+  --  These two files may need to be made by (a) configuring TASH by
+  --  running setup.tcl under wish (wish82), (b) changing to the
+  --  source directory and running "make tkmacro.o
+  --  tclmacro.o". However, some versions of TASH (in particular the
+  --  Windows tash832a.zip) come prepared.
   Objects := (Tash_Src & "/tkmacro.o",
               Tash_Src & "/tclmacro.o");
 
