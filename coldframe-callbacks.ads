@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.ads,v $
---  $Revision: fbc3205e6500 $
---  $Date: 2003/08/28 21:16:25 $
+--  $Revision: cbd85b8e8a21 $
+--  $Date: 2005/01/28 06:19:06 $
 --  $Author: simon $
 
 generic
@@ -40,10 +40,9 @@ package ColdFrame.Callbacks is
    procedure Deregister (Proc : Callback);
 
    --  Call all the registered callback procedures with With_Param. If
-   --  an exception occurs in a callback procedure, it will be
-   --  re-raised after all the registered callback procedures have
-   --  been called. If multiple exceptions occur, the first is
-   --  re-raised.
+   --  an exception occurs in a callback procedure, it will be logged
+   --  via ColdFrame.Project.Log_Error, and the remaining registered
+   --  callback procedures will be called.
    procedure Call_Callbacks (With_Param : T);
 
    --  Clear all registered callbacks
