@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 6e5c476abc77 2002/02/17 11:29:01 simon $ -->
+<!-- $Id: ada-association.xsl,v 0465690ba413 2002/02/17 15:46:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -60,31 +60,41 @@
        spec. -->
   <xsl:template name="association-spec-context">
 
-    <!-- XXX Could be more picky about Sets, since we don't always
-         need both (1:1 or 1-(1:1)) -->
-    <xsl:for-each select="role/classname | associative">
+    <!-- XXX will duplicate withs for reflexive associations -->
 
-      <xsl:sort select="."/>
+    <xsl:variable name="role-a" select="role[1]"/>
+    <xsl:variable name="role-b" select="role[2]"/>
+    <xsl:variable name="a" select="$role-a/classname"/>
+    <xsl:variable name="b" select="$role-b/classname"/>
 
-      <xsl:variable name="n" select="."/>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="/domain/name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$a"/>
+    <xsl:if test="$role-a/@multiple">  <!-- stupid to have a singleton! -->
+      <xsl:text>.Collections</xsl:text>      
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
-      <xsl:choose>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="/domain/name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$b"/>
+    <xsl:if test="$role-b/@multiple">
+      <xsl:text>.Collections</xsl:text>      
+    </xsl:if>
+    <xsl:text>;&#10;</xsl:text>
 
-        <xsl:when test="/domain/class[name=$n]/@singleton">
-          <xsl:text>with </xsl:text>
-          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:text>with </xsl:text>
-          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-          <xsl:text>.Collections;&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-
-    </xsl:for-each>
+    <xsl:if test="associative">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="associative"/>
+      <xsl:if test="role/@multiple">
+        <xsl:text>.Collections</xsl:text>      
+      </xsl:if>      
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
 
   </xsl:template>
 
@@ -168,35 +178,73 @@
 
     <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
 
-    <!-- XXX not sure about the exact conditions here. -->
-    <xsl:if test="role/@multiple">
-      <xsl:text>with ColdFrame.Navigate_From_Many_Collection;&#10;</xsl:text>
-      <xsl:text>with ColdFrame.Navigate_From_One_To_Many_Collection;&#10;</xsl:text>
-    </xsl:if>
-    <xsl:if test="not(role/@multiple) or associative">
-      <xsl:text>with ColdFrame.Navigate_From_One_To_One_Collection;&#10;</xsl:text>
-    </xsl:if>
+    <!-- XXX doesn't suppress duplicates for reflexive associations -->
 
-    <!-- XXX not all of these are required in all circumstances. -->
-    <xsl:for-each select="role/classname | associative">
+    <xsl:variable name="role-a" select="role[1]"/>
+    <xsl:variable name="role-b" select="role[2]"/>
+    <xsl:variable name="a" select="$role-a/classname"/>
+    <xsl:variable name="b" select="$role-b/classname"/>
 
-      <xsl:sort select="."/>
+    <xsl:if test="not(associative)">
 
-      <xsl:variable name="n" select="."/>
+      <xsl:if test="not(/domain/class[name=$a]/@singleton)">
 
-      <xsl:if test="not(/domain/class[name=$n]/@singleton)">
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-        <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-        <xsl:text>.Selection_Function;&#10;</xsl:text>
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-        <xsl:text>.Sets;&#10;</xsl:text>
+        <xsl:if test="$role-b/@source and not($role-a/@multiple)">
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
+          <xsl:text>.Collections;&#10;</xsl:text>      
+        </xsl:if>
+        
+        <xsl:if test="$role-b/@source">
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$a"/>
+          <xsl:text>.Selection_Function;&#10;</xsl:text>      
+        </xsl:if>
+        
       </xsl:if>
 
-    </xsl:for-each>
+      <xsl:if test="not(/domain/class[name=$b]/@singleton)">
+        
+        <xsl:if test="$role-a/@source and not($role-b/@multiple)">
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
+          <xsl:text>.Collections;&#10;</xsl:text>      
+        </xsl:if>
+        
+        <xsl:if test="$role-a/@source">
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="$b"/>
+          <xsl:text>.Selection_Function;&#10;</xsl:text>      
+        </xsl:if>
+        
+      </xsl:if>
+      
+    </xsl:if>
+
+    <xsl:if test="associative">
+
+      <!-- XXX The generated code isn't optimised for associations
+           with singletons; not very important, I think. -->
+
+      <xsl:if test="role/@multiple">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="associative"/>
+        <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+      </xsl:if>
+      
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="associative"/>
+      <xsl:text>.Collections;&#10;</xsl:text>      
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="associative"/>
+      <xsl:text>.Selection_Function;&#10;</xsl:text>      
+    </xsl:if>
 
   </xsl:template>
 
@@ -359,7 +407,7 @@
                         [@relation=$n and @refers=$non-source-role/classname]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$II"/>
+            <xsl:value-of select="$IIC"/>
             <xsl:text>(Result, Handle (</xsl:text>
             <xsl:value-of select="$non-source-role/name"/>
             <xsl:text>));&#10;</xsl:text>
@@ -728,6 +776,9 @@
         <!--
              {assoc-abbrev} : constant {assoc}.Collections.Collection
                := {role-a} ({a-abbrev});
+             It : {assoc}.Abstract_Containers.Iterator'Class
+               := {assoc}.Collections.New_Iterator ({assoc-abbrev});
+             Result : {b}.Collections.Collection;
              -->
         
         <xsl:value-of select="$II"/>
@@ -743,7 +794,22 @@
         <xsl:value-of
           select="/domain/class[name=$role-a/classname]/abbreviation"/>
         <xsl:text>);&#10;</xsl:text>
-        
+        <xsl:value-of select="$II"/>
+        <xsl:text>It : </xsl:text>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> := </xsl:text>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Collections.New_Iterator (</xsl:text>
+        <xsl:value-of
+          select="/domain/class[name=$associative]/abbreviation"/>
+        <xsl:text>);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result : </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
       </xsl:when>
       
       <xsl:otherwise>
@@ -784,16 +850,42 @@
       <xsl:when test="$role-b/@multiple">
 
         <!--
-             return {role-a} ({assoc-abbrev});
+             while not {associative}.Abstract_Containers.Is_Done (It) loop
+                {b}.Collections.Append
+                  (Result,
+                   {role-a}
+                     ({associative}.Abstract_Containers.Current_Item (It)));
+                {associative}.Abstract_Containers.Next (It);
+             end loop;
+             return Result;
              -->
 
         <xsl:value-of select="$II"/>
-        <xsl:text>return </xsl:text>
-        <xsl:value-of  select="$role-a/name"/>
-        <xsl:text> (</xsl:text>
-        <xsl:value-of
-          select="/domain/class[name=$associative]/abbreviation"/>
-        <xsl:text>);&#10;</xsl:text>
+        <xsl:text>while not </xsl:text>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Abstract_Containers.Is_Done (It) loop&#10;</xsl:text>
+
+        <xsl:value-of select="$III"/>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Append&#10;</xsl:text>
+        <xsl:value-of select="$IIIC"/>
+        <xsl:text>(Result,&#10;</xsl:text>
+        <xsl:value-of select="$IIIC"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$role-a/name"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IIIIC"/>
+        <xsl:text>(</xsl:text>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Abstract_Containers.Current_Item (It)));&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:value-of select="$assoc"/>
+        <xsl:text>.Abstract_Containers.Next (It);&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>return Result;&#10;</xsl:text>
       </xsl:when>
       
       <xsl:otherwise>
@@ -1099,7 +1191,7 @@
          function Sel (This : {c}.Handle) return Boolean;
          function Sel (This : {c}.Handle) return Boolean is
             H : constant ColdFrame.Instances.Handle
-              := {c}.Get_{a-ref} (This);
+              := {c}.Get_{a-ref-attr} (This);
             use type {a}.Handle;
          begin
             return {a}.Handle (H) = {a-abbrev};
