@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 21e0208d0b3f 2002/10/13 17:13:32 simon $ -->
+<!-- $Id: ada-operation.xsl,v 694c73190bad 2002/12/03 21:13:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -282,16 +282,6 @@
 
       <xsl:when test="$current=..">
 
-        <!-- The operation is declared in the current class.
-             We may (if $generate-accessors is 'defined') need to
-             check for operations whose profile matches an accessor. -->
-
-        <xsl:variable name="n" select="name"/>
-        <xsl:variable name="att-to-set"
-          select="$current/attribute[concat('Set_',name)=$n]"/>
-        <xsl:variable name="att-to-get"
-          select="$current/attribute[concat('Get_',name)=$n]"/>
-
         <xsl:choose>
 
           <xsl:when test="@abstract">
@@ -304,30 +294,10 @@
 
           </xsl:when>
 
-          <!-- Check for auto-generated Set operations -->
-          <xsl:when test="$generate-accessors='defined'
-                          and not(@return) and not(@class)
-                          and count(parameter)=1
-                          and $att-to-set/type=parameter/type">
-            <xsl:call-template name="generate-body">
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-          </xsl:when>
-          
-          <!-- Check for auto-generated Get operations -->
-          <xsl:when test="$generate-accessors='defined'
-                          and @return and not(@class)
-                          and not(parameter)
-                          and $att-to-get/type=@return">
-            <xsl:call-template name="generate-body">
-              <xsl:with-param name="current" select="$current"/>
-            </xsl:call-template>
-          </xsl:when>
-      
           <xsl:otherwise>
 
-            <!-- Concrete in current class; we provide a stub
-                 implementation. -->
+            <!-- Concrete in current class; we provide an implementation
+                 (may be stub or accessor). -->
 
             <xsl:call-template name="generate-body">
               <xsl:with-param name="current" select="$current"/>
@@ -834,11 +804,10 @@
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <xsl:variable name="n" select="name"/>
     <xsl:variable name="att-to-set"
-      select="$current/attribute[concat('Set_',name)=$n]"/>
+      select="$current/attribute[concat('Set_',name)=current()/name]"/>
     <xsl:variable name="att-to-get"
-      select="$current/attribute[concat('Get_',name)=$n]"/>
+      select="$current/attribute[concat('Get_',name)=current()/name]"/>
 
     <!-- The "edit/don't" comments depend on the circumstances, so calculate
          the heading here for reuse. -->
@@ -856,14 +825,17 @@
 
       <!-- Check for auto-generated Set operations -->
       <xsl:when test="$generate-accessors='defined'
-                      and not(@return) and not(@class)
-                      and count(parameter)=1
-                      and $att-to-set/type=parameter/type">
+                      and not(@return) and count(parameter)=1
+                      and $att-to-set/type=parameter/type
+                      and (($att-to-set/@class and @class)
+                      or (not($att-to-set/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>This.</xsl:text>
+        <xsl:if test="not(@class)">
+          <xsl:text>This.</xsl:text>          
+        </xsl:if>
         <xsl:value-of select="$att-to-set/name"/>
         <xsl:text> := </xsl:text>
         <xsl:value-of select="parameter/name"/>
@@ -872,14 +844,18 @@
       
       <!-- Check for auto-generated Get operations -->
       <xsl:when test="$generate-accessors='defined'
-                      and @return and not(@class)
-                      and not(parameter)
-                      and $att-to-get/type=@return">
+                      and @return and not(parameter)
+                      and $att-to-get/type=@return
+                      and (($att-to-get/@class and @class)
+                      or (not($att-to-get/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>return This.</xsl:text>
+        <xsl:text>return </xsl:text>
+        <xsl:if test="not(@class)">
+          <xsl:text>This.</xsl:text>          
+        </xsl:if>
         <xsl:value-of select="$att-to-get/name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
