@@ -22,6 +22,11 @@ package Performance.Event_Timing is
    end record;
    procedure Handler (Ev : Pong);
 
+   type Timing is new ColdFrame.Project.Events.Event_Base with record
+      Count : Natural := Loops;
+   end record;
+   procedure Handler (Ev : Timing);
+
    Timer : ColdFrame.Project.Events.Timer;
 
    Dispatcher_A : ColdFrame.Project.Events.Event_Queue_P;

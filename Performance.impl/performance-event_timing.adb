@@ -1,7 +1,5 @@
 with ColdFrame.Project.Events.Standard.Debug;
 
-with Time_Logging;
-
 package body Performance.Event_Timing is
 
 
@@ -32,7 +30,6 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_B);
          end;
       else
-         Time_Logging.Log (12);
          Done_At := High_Resolution_Time.Clock;
       end if;
    end Handler;
@@ -45,6 +42,22 @@ package body Performance.Event_Timing is
             Next : ColdFrame.Project.Events.Event_P := new Ping;
          begin
             Ping (Next.all).Count := Ev.Count - 1;
+            ColdFrame.Project.Events.Post (Next,
+                                           On => Dispatcher_A);
+         end;
+      else
+         Done_At := High_Resolution_Time.Clock;
+      end if;
+   end Handler;
+
+
+   procedure Handler (Ev : Timing) is
+   begin
+      if Ev.Count > 0 then
+         declare
+            Next : ColdFrame.Project.Events.Event_P := new Timing;
+         begin
+            Timing (Next.all).Count := Ev.Count - 1;
             ColdFrame.Project.Events.Post (Next,
                                            On => Dispatcher_A);
          end;
