@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 05532db53265 2004/06/18 19:49:52 simon $
+--  $Id: regressions-suite.adb,v 4f0f861e8c91 2004/07/07 20:42:42 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -28,7 +28,9 @@ with Regressions.Tear_Down;
 --  The following units only have to compile
 
 with Regressions.Bounded_String_ID;
+with Regressions.CT_Class;
 with Regressions.Child_Uses_Action;
+with Regressions.Class_Operation_Access_Modes;
 with Regressions.Fixed_String_Class;
 with Regressions.Identified_Class;
 with Regressions.Max_More;
@@ -40,13 +42,17 @@ with Regressions.One_Int_ID;
 with Regressions.Parent_With_Action;
 with Regressions.Public_With_Attributes;
 with Regressions.Public_Without_Attributes;
+with Regressions.Renaming_Operations_Child;
+with Regressions.Renaming_Operations_Parent;
 with Regressions.Singleton_With_Attributes;
 with Regressions.Singleton_With_Referential_Attribute;
 with Regressions.Singleton_Without_Attributes;
 with Regressions.Utility;
 
 pragma Warnings (Off, Regressions.Bounded_String_ID);
+pragma Warnings (Off, Regressions.CT_Class);
 pragma Warnings (Off, Regressions.Child_Uses_Action);
+pragma Warnings (Off, Regressions.Class_Operation_Access_Modes);
 pragma Warnings (Off, Regressions.Fixed_String_Class);
 pragma Warnings (Off, Regressions.Identified_Class);
 pragma Warnings (Off, Regressions.Max_More);
@@ -58,6 +64,8 @@ pragma Warnings (Off, Regressions.One_Int_ID);
 pragma Warnings (Off, Regressions.Parent_With_Action);
 pragma Warnings (Off, Regressions.Public_With_Attributes);
 pragma Warnings (Off, Regressions.Public_Without_Attributes);
+pragma Warnings (Off, Regressions.Renaming_Operations_Child);
+pragma Warnings (Off, Regressions.Renaming_Operations_Parent);
 pragma Warnings (Off, Regressions.Singleton_With_Attributes);
 pragma Warnings (Off, Regressions.Singleton_With_Referential_Attribute);
 pragma Warnings (Off, Regressions.Singleton_Without_Attributes);
