@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 5175fba8de64 2000/04/23 06:54:18 simon $
+# $Id: ddf.tcl,v 881a87c28c6f 2000/04/25 06:27:25 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -654,19 +654,20 @@ itcl::class Association {
 	switch $type {
 	    "1:1"     {
 		# ensure that one and only one of the roles is marked
-		# as the formalizing end
-		if [$role1 -getFormalizingEnd] {
-		    if [$role2 -getFormalizingEnd] {
-			error "both ends of $name are marked formalized"
+		# as the source end
+		if [$role2 -getSourceEnd] {
+		    if [$role1 -getSourceEnd] {
+			error "both ends of $name are marked as source"
 		    }
 		    $cl2 -addFormalizingAttributesTo $cl1 $role1
 		    $cl2 -sourceOfRelation $role1
-		} elseif [$role2 -getFormalizingEnd] {
+		} elseif [$role1 -getSourceEnd] {
 		    $cl1 -addFormalizingAttributesTo $cl2 $role2
 		    $cl1 -sourceOfRelation $role2
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
-			error "neither end of $name is marked formalized"
+			error "neither end of biconditional $name\
+				is marked as source"
 		    }
 		    $cl2 -addFormalizingAttributesTo $cl1 $role1
 		    $cl2 -sourceOfRelation $role1
@@ -674,7 +675,8 @@ itcl::class Association {
 		    $cl1 -addFormalizingAttributesTo $cl2 $role2
 		    $cl1 -sourceOfRelation $role2
 		} else {
-		    error "neither end of $name is marked formalized"
+		    error "neither end of unconditional $name\
+			    is marked as source"
 		}
 	    }
 	    "1:M"     {
@@ -719,15 +721,19 @@ itcl::class Association {
 itcl::class Role {
     inherit Element
 
-    variable classname
-
     variable cardinality
 
-    variable end
-
-    variable formalizingEnd 0
+    variable classname
 
     variable conditional
+
+    # the end (A => 0, B => 1) at which the role is defined in the analysis.
+    # may change if the relation is normalized (eg, M:1 -> 1:M)
+    variable end
+
+    # true if the object at this end provides the referential attributes
+    # that formalize the relation
+    variable sourceEnd 0
 
     method -classname {n} {set classname $n}
 
@@ -757,14 +763,14 @@ itcl::class Role {
 	switch $e {
 	    "PublicAccess"         -
 	    "PrivateAccess"        -
-	    "ImplementationAccess" {set formalizingEnd 0}
-	    "ProtectedAccess"      {set formalizingEnd 1}
+	    "ImplementationAccess" {set sourceEnd 0}
+	    "ProtectedAccess"      {set sourceEnd 1}
 	    default                {error "unrecognised exportcontrol $e"}
 	}
 	set exportcontrol $e
     }
 
-    method -getFormalizingEnd {} {return $formalizingEnd}
+    method -getSourceEnd {} {return $sourceEnd}
 
     method -complete {} {
 	[stack -top] -role $this
