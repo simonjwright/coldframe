@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 9a7cb23ac424 2003/11/14 06:00:06 simon $ -->
+<!-- $Id: serialization.html,v 1af1e0d72065 2004/01/20 06:24:38 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -26,6 +26,11 @@ stream (perhaps each item needs a defined header), and
 processing.
 
 </ul>
+
+<p>The first is met by providing a user-overridable
+<tt><i>Serializable_Base</i></tt> class, extended by the data to be
+serialized; the second by generating code to convert the data stream
+to <a href="resources.html#xml">XML</a>.
 
 <h2>Modelling</h2>
 
@@ -103,8 +108,10 @@ record type and is marked <em>&#171;serializable&#187;</em>.
 &#171;serializable&#187; marking.
 
 <p>A child package <tt><i>Domain</i>.Serializable</tt> is generated as
-well. For each &#171;serializable&#187; type, a type and a subprogram
-are generated:
+well. If there are no &#171;serializable&#187; types it is empty (so
+you can always <i>with</i> it in your analysis program). Otherwise,
+for each &#171;serializable&#187; type, a type and a subprogram are
+generated:
 <pre>
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
@@ -119,8 +126,8 @@ are generated:
 
 <p><tt>ColdFrame.Project.Serialization</tt> is expected to be (a
 renaming of) a package containing a tagged type <tt>Base</tt>, which
-the Project output package understands (it might want to add timestamp
-information, for example).
+your project output package understands (you might want to add
+timestamp information, for example).
 
 <p>The provided <tt>ColdFrame.Project.Serialization</tt> is a renaming
 of <tt>ColdFrame.Serialization</tt>, which provides the minimum needed
@@ -142,6 +149,9 @@ a tagged type <tt>Base</tt> with two primitive operations:
 <dt><tt>Base_Attribute_Image</tt>
 <dd>contributes components to <tt>Image</tt> for any attributes of
 your <tt>Base</tt> type.
+<br>It is a good idea not to use field names which might correspond to
+generated field names; you can do this by, for example, including
+non-identifier characters (<tt>*timestamp*</tt>, perhaps).
 
 </dl>
 
@@ -160,13 +170,13 @@ available (<tt>Boolean</tt>, <tt>Integer</tt>, <tt>Duration</tt>,
 <tt>Float</tt> ...)
 
 <li>user-defined scalars (<tt><i>{enumeration}</i></tt>,
-<tt><i>[[integer]]</i></tt>, <tt><i>[[real]]</i></tt>)
+<tt><i>{integer}</i></tt>, <tt><i>{real}</i></tt>)
 
-<li>strings (<tt>Text</tt> and user-defined <i><tt>[[string]]</tt></i>s)
+<li>strings (<tt>Text</tt> and user-defined <i><tt>{string}</tt></i>s)
 
 <li><tt>Time</tt> (note, <em>not</em> <tt>Ada.Calendar.Time</tt>, just
 plain <tt>Time</tt>, which ColdFrame translates to
-<tt>ColdFrame.Project.Calendar.Time</tt>
+<tt>ColdFrame.Project.Calendar.Time</tt>)
 
 </ul>
 
@@ -246,7 +256,7 @@ is". The code generated in the domain package spec is
    end record;
 </pre>
 
-<p>(<i>Name String</i> is a bounded string, <tt>[[string:max 32]]</tt>).
+<p>(<i>Name String</i> is a bounded string, <tt>{string = max 32}</tt>).
 
 <p>The code generated in the <tt>Serializable</tt> child package spec
 is
