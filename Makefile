@@ -540,10 +540,10 @@ Regressions.impl/regressions-max_more-f.adb \
 Regressions.impl/regressions-max_more-t.adb \
 Regressions.impl/regressions-max_one-f.adb \
 Regressions.impl/regressions-max_one-t.adb \
-regressions-pt_holder.adb \
-regressions-pt_owner-get_h_access.adb \
-regressions-pt_user-get_state.adb \
-regressions-pt_user-set_state.adb \
+Regressions.impl/regressions-pt_holder.adb \
+Regressions.impl/regressions-pt_owner-get_h_access.adb \
+Regressions.impl/regressions-pt_user-get_state.adb \
+Regressions.impl/regressions-pt_user-set_state.adb \
 Regressions.impl/regressions-suite.adb \
 Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
