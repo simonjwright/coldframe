@@ -1,7 +1,19 @@
 # Copyright (c) 2001 Simon Wright <simon@pushface.org>
 # $Id$
 
-GENERATE_ACCESSORS = yes
+BLANK_LINES = yes
+CASE_EXCEPTIONS = ~/.emacs_case_exceptions
+GENERATE_ACCESSORS = defined
+STACK_DUMP = --stack-dump
+VERBOSE = no
+
+ifeq ($(VERBOSE), yes)
+  NORM_VERBOSE = --verbose
+  CHOP_VERBOSE =
+else
+  NORM_VERBOSE =
+  CHOP_VERBOSE = -q
+endif
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
@@ -28,6 +40,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing ~/.emacs_case_exceptions \
+	  $(STACK_DUMP) \
+	  $(NORM_VERBOSE) \
 	  --version cf-DATE \
 	  >$@ || rm -f $@
 
@@ -36,8 +50,11 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	$(SAXON) $< $(CODEGEN_SCRIPT) \
+	  add-blank-lines=$(BLANK_LINES) \
 	  coldframe-version=cf-DATE \
-	  generate-accessors=$(GENERATE_ACCESSORS) >$@ \
+	  generate-accessors=$(GENERATE_ACCESSORS) \
+	  verbose=$(VERBOSE) \
+	  >$@ \
 	  || (echo "Generation problem." && rm -f $@)
 
 # Create the target directory
@@ -49,7 +66,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 %.gen: %.ada
 	-mkdir $@
 	rm -f $@/*.ad[bs]
-	gnatchop -gnatX $< $@
+	gnatchop $(CHOP_VERBOSE) -gnatX $< $@
 	[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad?)`; do \
 	   [ ! -f $@/$$f ] || ( echo rm $@/$$f; rm $@/$$f); \
 	done
