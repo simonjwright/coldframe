@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b3ee92f79b72 2005/01/29 06:31:29 simon $ -->
+<!-- $Id: releases.html-proto,v 1931357cf02d 2005/01/31 16:56:18 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -50,9 +50,9 @@ newly-allocated memory with an obviously bad pattern
 pattern.
 
 
-<p>An <a href="http://xml.coverpages.org/schemas.html">XML Schema</a>
-is now <a href="ColdFrame-norm.xsd">supplied</a> for ColdFrame's
-"normalized" XML.
+<p><a href="http://xml.coverpages.org/schemas.html">XML Schemas</a>
+are now supplied for ColdFrame's "<a href="ColdFrame-raw.xsd">raw</a>"
+and "<a href="ColdFrame-norm.xsd">normalized</a>" XML.
 
 
 <p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
@@ -64,7 +64,7 @@ the new <tt>Trace</tt> versions instead (for example,
 message rather than an exception.
 
 
-<p>The Event Queue task responsible for delayed Events is has been
+<p>The Event Queue task responsible for delayed Events has been
 renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
 (since it doesn't just deal with Timers).
 
@@ -90,13 +90,16 @@ operations are public, <i>private</i> and <i>implementation</i>
 operations are private (unless they are marked &#171;init&#187;).
 
 
-<p>You can declare types <tt>private</tt>, either by saying
-&#171;type, private&#187; or (more tidily, perhaps) by tagging
-<i>{private}</i>.
+<p>You can declare types <tt>private</tt>,  by saying
+&#171;type, private&#187;, (more tidily, perhaps) by tagging
+<i>{private}</i>, or even by using the Rose class specification dialog
+box!
 
 
 <p>It's been made a bit more straightforward to <a
-href="extending.html">add your own code generation extensions</a>.
+href="extending.html">add your own code generation extensions</a>. You
+can also customize the banner Coldframe outputs at the head of each
+file.
 
 
 <p>You can declare unsigned (modular) types.
