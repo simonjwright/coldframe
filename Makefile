@@ -117,6 +117,7 @@ pdf:: $(PDFS)
 
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
+PNGS = hierarchies.png
 
 ############################
 # Distribution construction
@@ -160,7 +161,7 @@ types.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
-$(GIFS) $(JPEGS) $(PDFS) \
+$(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
