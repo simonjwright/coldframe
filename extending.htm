@@ -1,0 +1,116 @@
+<!-- $Id: extending.htm,v 8c85161c693d 2004/07/17 17:46:17 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Extending</title>
+</head>
+<body>
+<h1>ColdFrame: Extending</h1>
+
+<p>You may find it useful to use your own tagged values to control
+your own extensions to ColdFrame's code generation. It's only really
+straightforward to do this for generating <i>additional</i> Ada units;
+to change the standard generated code requires a deeper fix!
+
+<h2>Basic scheme</h2>
+
+<p>You need (at least) one new stylesheet for each extension, and one
+master stylesheet to rule them all (including ColdFrame's standard
+ones).
+
+<p>The template for your extensions should take the form
+<pre>
+   &lt;xsl:stylesheet
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+     version="1.0"&gt;
+
+     &lt;xsl:strip-space elements="*"/&gt;
+
+     &lt;xsl:output method="text"/&gt;
+
+     &lt;!-- The overridable main template. --&gt;
+     &lt;xsl:template match="domain"&gt;
+       &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
+     &lt;/xsl:template&gt;
+
+
+     &lt;!-- Your extension. --&gt;
+     &lt;xsl:template match="domain" mode="<font color="red">your-extension</font>"&gt;
+
+       &lt;!-- ... --&gt;
+
+     &lt;/xsl:template&gt;
+
+   &lt;/xsl-stylesheet&gt;
+</pre>
+
+which allows you to test it on its own by, for example,
+
+<pre>
+   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">your-extension.xsl</font> <i>Domain</i>.ada
+</pre>
+
+In order to combine with ColdFrame's code generation, so that all the
+generated Ada ends up in the <tt>.gen</tt> subdirectory, you need a
+combining script:
+<pre>
+   &lt;?xml version="1.0" encoding="utf-8"?&gt;
+   &lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                   version="1.0"&gt;
+
+     &lt;xsl:import href="generate-ada.xsl"/&gt;
+     &lt;xsl:import href="<font color="red">your-extension.xsl</font>"/&gt;
+
+     &lt;xsl:strip-space elements="*"/&gt;
+
+     &lt;xsl:output method="text"/&gt;
+
+
+     &lt;xsl:template match="domain"&gt;
+
+       &lt;xsl:apply-templates select="." mode="coldframe"/&gt;
+
+       &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
+
+     &lt;/xsl:template&gt;
+
+
+   &lt;/xsl:stylesheet&gt;
+</pre>
+
+and then you can say
+
+<pre>
+   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
+</pre>
+
+This should be easily extendable to multiple extensions. Clearly it
+will be best if they don't interact!
+
+<h2>Practicalities</h2>
+
+<p>One problem is, where are these scripts going to be?
+
+<p>The <i>xsl:import</i> element's <i>hfer</i> attribute allows you to
+specify absolute and relative paths, but doesn't (I think) allow you
+to use environment variables.
+
+<p>Without any path information, as above, the scripts are all
+expected to be in the same place as <tt>combined-codegen.xsl</tt>. So
+one approach would be to copy all of ColdFrame's scripts and all of
+your extensions to the same place and specify that:
+
+<pre>
+   $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="blue">/my/script/dir/</font><font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
