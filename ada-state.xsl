@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-state.xsl,v 07a9454620a7 2004/12/08 06:20:19 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -234,7 +234,8 @@
 
     <!--
          procedure Handler (The_Event : {event}) is
-            This : constant Handle := The_Event.For_The_Instance.all'Unchecked_Access;
+            This : constant Handle
+              := The_Event.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
                when {source-state (normal transition)} =>
@@ -257,7 +258,9 @@
     <xsl:text>) is&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>This : constant Handle := The_Event.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
+    <xsl:text>This : constant Handle&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>:= The_Event.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
@@ -419,11 +422,21 @@
     <!-- The target state. -->
     <xsl:variable name="target" select="../state[name=$tr/target]"/>
 
+    <!-- Save current (old) state, in case they really really want to use it.
+         Do it here rather than after the transition, because it needs to be
+         consistent even if there was an exception last time. -->
+    <xsl:value-of select="$indent"/>
+    <xsl:text>This.Old_State_Machine_State := </xsl:text>
+    <xsl:value-of select="$tr/source"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+    <!-- Set new state. -->
     <xsl:value-of select="$indent"/>
     <xsl:text>This.State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
 
+    <!-- Do any transition action (only one possible). -->
     <xsl:if test="$tr/action">
       <!-- Check for actions after instance deletion. -->
       <xsl:if test="($tr/action='Delete'
@@ -445,6 +458,7 @@
       </xsl:call-template>
     </xsl:if>
 
+    <!-- Do entry action(s) in the target state. -->
     <xsl:for-each select="$target/action">
       <!-- Check for actions after instance deletion. -->
       <xsl:if test="(.='Delete' or ../../../operation[name=.]/@final)
@@ -471,13 +485,6 @@
               or $target/@final
               or $target/action='Delete'
               or $target/action/@final"/>
-
-    <xsl:if test="not($deleting)">
-      <xsl:value-of select="$indent"/>
-      <xsl:text>This.Old_State_Machine_State := </xsl:text>
-      <xsl:value-of select="$tr/target"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
 
     <!-- Now do drop-throughs (recursively). -->
 

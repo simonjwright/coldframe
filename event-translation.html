@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v 64914bbfad36 2004/07/22 19:47:44 simon $ -->
+<!-- $Id: event-translation.html,v 07a9454620a7 2004/12/08 06:20:19 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -85,13 +85,13 @@ event is thrown away.
 
 <ol>
 
+<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
+current state;
+
 <li>the instance variable <tt>State_Machine_State</tt> is set to the
 target state;
 
-<li>the entry actions are executed in order;
-
-<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
-current state.
+<li>the transition action and the entry actions are executed in order.
 
 </ol>
 
