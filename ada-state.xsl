@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 5d3da25ab8ab 2003/07/24 19:55:36 simon $ -->
+<!-- $Id: ada-state.xsl,v 729dd8ca193e 2003/08/30 09:57:13 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -159,10 +159,10 @@
   <xsl:template match="event" mode="event-handler-specs">
 
     <!--
-         procedure Handler (This : {event});
+         procedure Handler (Ev : {event});
          -->
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -176,12 +176,12 @@
   <xsl:template match="statemachine/event" mode="event-handler-bodies">
 
     <!-- non-singleton
-         procedure Handler (This : {event}) is
-            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
+         procedure Handler (Ev : {event}) is
+            This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;
          begin
             case That.State_Machine_State is
                when {source-state} =>
-                  Enter_{target-state} (That, This);
+                  Enter_{target-state} (This, Ev);
                when {source-state} =>
                   null;
                when {source-state} =>
@@ -191,12 +191,12 @@
          -->
 
     <!-- singleton
-         procedure Handler (This : {event}) is
-            That : constant Handle := This.For_The_Instance.all'Unchecked_Access;
+         procedure Handler (Ev : {event}) is
+            This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;
          begin
-            case That.State_Machine_State is
+            case This.State_Machine_State is
                when {source-state} =>
-                  Enter_{target-state} (This);
+                  Enter_{target-state} (Ev);
                when {source-state} =>
                   null;
                when {source-state} =>
@@ -208,17 +208,17 @@
     <xsl:variable name="e" select="name"/>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>That : constant Handle := This.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
+    <xsl:text>This : constant Handle := Ev.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>case That.State_Machine_State is&#10;</xsl:text>
+    <xsl:text>case This.State_Machine_State is&#10;</xsl:text>
 
     <xsl:for-each select="../state">
       <xsl:sort select="name"/>
@@ -238,17 +238,24 @@
         </xsl:when>
         
         <xsl:when test="../transition[event=$e and source=$s]">
+
+          <xsl:if test="../transition[event=$e and source=$s]/action">
+            <xsl:value-of select="$IIII"/>
+            <xsl:text>--  TRANSITION ACTION HERE!&#10;</xsl:text>
+          </xsl:if>
+
           <xsl:value-of select="$IIII"/>
           <xsl:text>Enter_</xsl:text>
           <xsl:value-of select="../transition[event=$e and source=$s]/target"/>
           <xsl:choose>
             <xsl:when test="../../@singleton">
-              <xsl:text> (This);&#10;</xsl:text>              
+              <xsl:text> (Ev);&#10;</xsl:text>              
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text> (That, This);&#10;</xsl:text>              
+              <xsl:text> (This, Ev);&#10;</xsl:text>              
             </xsl:otherwise>
           </xsl:choose>
+
         </xsl:when>
         
         <xsl:otherwise>
@@ -274,9 +281,9 @@
   <xsl:template match="event[@class]" mode="event-handler-bodies">
 
     <!-- 
-         procedure Handler (This : {event}) is
+         procedure Handler (Ev : {event}) is
          begin
-            {receiver} (This);
+            {receiver} (Ev);
          end Handler;
          -->
 
@@ -301,7 +308,7 @@
     </xsl:if>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:text>procedure Handler (Ev : </xsl:text>
     <xsl:value-of select="$e"/>
     <xsl:text>) is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -309,7 +316,7 @@
 
     <xsl:value-of select="$II"/>
     <xsl:value-of select="$op/name"/>
-    <xsl:text> (This);&#10;</xsl:text>              
+    <xsl:text> (Ev);&#10;</xsl:text>              
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Handler;&#10;</xsl:text>
@@ -342,13 +349,13 @@
     <!-- non-singleton
          procedure Enter_{state}
            (This : Handle;
-            What : ColdFrame.Project.Events.Instance_Event_Base'Class);
+            Ev : ColdFrame.Project.Events.Instance_Event_Base'Class);
          pragma Warnings (Off, Enter_{initial-state});
          -->
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Instance_Event_Base'Class);
+           (Ev : ColdFrame.Project.Events.Instance_Event_Base'Class);
          -->
 
      <xsl:variable name="s" select="name"/>
@@ -362,12 +369,12 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
+         <xsl:text>(Ev : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
          <xsl:text>(This : Handle;&#10;</xsl:text>
          <xsl:value-of select="$IC"/>
-         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
+         <xsl:text> Ev : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text>;&#10;</xsl:text>
@@ -385,27 +392,27 @@
     <!-- non-singleton
          procedure Enter_{state}
            (This : Handle;
-            What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
-           pragma Warnings (Off, What);
+            Ev : ColdFrame.Project.Events.Instance_Event_Base'Class) is
+           pragma Warnings (Off, Ev);
          begin
             This.State_Machine_State := {state};
-            {entry-action} (This, {event} (What).Payload);  -  if has parameter
-            {entry-action} (This);                          -  if no parameter
+            {entry-action} (This, {event} (Ev).Payload);   -  if has parameter
+            {entry-action} (This);                         -  if no parameter
             This.Old_State_Machine_State := {state};
-            Enter_{next-state} (This, What);                -  if unguarded exit
+            Enter_{next-state} (This, Ev);                 -  if unguarded exit
          end Enter_{state};
          -->
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
-           pragma Warnings (Off, What);
+           (Ev : ColdFrame.Project.Events.Instance_Event_Base'Class) is
+           pragma Warnings (Off, Ev);
          begin
             This.State_Machine_State := {state};
-            {entry-action} ({event} (What).Payload);        -  if has parameter
-            {entry-action};                                 -  if no parameter
+            {entry-action} ({event} (Ev).Payload);         -  if has parameter
+            {entry-action};                                -  if no parameter
             This.Old_State_Machine_State := {state};
-            Enter_{next-state} (Wnat);                      -  if unguarded exit
+            Enter_{next-state} (Ev);                       -  if unguarded exit
          end Enter_{state};
          -->
 
@@ -420,18 +427,18 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
+         <xsl:text>(Ev : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
          <xsl:text>(This : Handle;&#10;</xsl:text>
          <xsl:value-of select="$IC"/>
-         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
+         <xsl:text> Ev : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text> is&#10;</xsl:text>
 
      <xsl:value-of select="$II"/>
-     <xsl:text>pragma Warnings (Off, What);&#10;</xsl:text>
+     <xsl:text>pragma Warnings (Off, Ev);&#10;</xsl:text>
 
      <xsl:value-of select="$I"/>
      <xsl:text>begin&#10;</xsl:text>
@@ -510,7 +517,7 @@
                <xsl:value-of select="$n"/>
                <xsl:text> (</xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload);&#10;</xsl:text>
+               <xsl:text> (Ev).Payload);&#10;</xsl:text>
                
              </xsl:when>
 
@@ -536,7 +543,7 @@
                     begin
                        Delete (H);
                        ColdFrame.Project.Events.Instance_Is_Deleted
-                         (What'Unrestricted_Access);
+                         (Ev'Unrestricted_Access);
                     end;
                     -->
                <xsl:value-of select="$II"/>
@@ -550,7 +557,7 @@
                <xsl:value-of select="$III"/>
                <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
                <xsl:value-of select="$IIIC"/>
-               <xsl:text>(What'Unrestricted_Access);&#10;</xsl:text>
+               <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
                <xsl:value-of select="$II"/>
                <xsl:text>end;&#10;</xsl:text>
 
@@ -561,7 +568,7 @@
                <xsl:value-of select="$n"/>
                <xsl:text> (This, </xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload);&#10;</xsl:text>
+               <xsl:text> (Ev).Payload);&#10;</xsl:text>
              </xsl:when>
 
              <xsl:otherwise>
@@ -592,10 +599,10 @@
        <xsl:value-of select="../transition[source=$s and not(event)]/target"/>
        <xsl:choose>
          <xsl:when test="$singleton">
-           <xsl:text> (What);&#10;</xsl:text>
+           <xsl:text> (Ev);&#10;</xsl:text>
          </xsl:when>
          <xsl:otherwise>
-           <xsl:text> (This, What);&#10;</xsl:text>
+           <xsl:text> (This, Ev);&#10;</xsl:text>
          </xsl:otherwise>
        </xsl:choose>
      </xsl:if>
