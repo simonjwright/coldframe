@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0b9f47170b2b 2002/12/10 20:08:29 simon $
+# $Id: normalize-rose.tcl,v 890e1d92cabf 2002/12/24 11:45:31 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2018,29 +2018,31 @@ itcl::class Transition {
 itcl::class Datatype {
     inherit Element
 
-    variable type
-
-    variable dataType "standard"
+    variable callback 0
 
     variable dataDetail
 
+    variable dataType "standard"
+
+    variable hash
+
     variable operations
 
-    variable callback 0
+    variable type
 
     constructor {name} {set type $name}
 
     # process annotation.
     method -annotation {a} {
 	set annotation $a
-	set pattern {^[ \t]*([-a-z0-9_]+)[ \t]*(:([^;]+))?[;]?}
+	set pattern {^[ \t\n]*([-a-z0-9_]+)[ \t\n]*(:([^;]+))?[;]?}
 	for {} {[regexp \
 		-nocase \
 		$pattern \
 		$a wh attr dummy value]} {} {
 	    set attr [string tolower $attr]
 	    if {[string length $value] == 0} {set value "true"}
-	    if [catch {$this -$attr $value}] {
+	    if [catch {$this -$attr [string trim $value]}] {
 		Warning \
 		    "annotation not handled, \
 		    \"$type \[\[$attr : [string trim $value]]]\""
@@ -2117,6 +2119,10 @@ itcl::class Datatype {
 	regsub -all {,[ \t]*} "[string trim $constraint]" "\n" dataDetail
     }
 
+    # called to specify the hash mechanism (probably only relevant
+    # for imported/renamed types)
+    method -hash {as} {set hash $as}
+
     method -complete {} {
 	if [expr ![[stack -top] -isPresent $type]] {
 	    [stack -top] -add $this $type
@@ -2162,6 +2168,9 @@ itcl::class Datatype {
 	    default {
 		Error "CF: unhandled dataType \"$dataType\""
 	    }
+	}
+	if [info exists hash] {
+	    putElement hash $hash
 	}
 	if [info exists operations] {
 	    $operations -generate $domain
