@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: d12544923d05 $
---  $Date: 2005/02/26 11:58:40 $
+--  $Revision: 42f362448f7d $
+--  $Date: 2005/03/01 06:31:19 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -415,8 +415,8 @@ package body ColdFrame.Stubs is
    begin
       if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SPU) then
          Ada.Exceptions.Raise_Exception
-           (Constraint_Error'Identity,
-            "Output " & SP & " not found");
+           (No_Value'Identity,
+            "for output " & SP);
       end if;
       declare
          Pointers : Sparse_Stream_Pointer_Collections.Collection
@@ -449,7 +449,9 @@ package body ColdFrame.Stubs is
             Next (It);
          end loop;
       end;
-      raise Program_Error;
+      Ada.Exceptions.Raise_Exception
+        (No_Value'Identity,
+         "for output " & SP & " for call" & For_Call'Img);
    end Get_Output_Value_Stream;
 
 
