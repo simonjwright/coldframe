@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 9cb02f78b0a2 2001/06/26 18:49:15 simon $ -->
+<!-- $Id: ada-association.xsl,v ae4ec4f8e03f 2001/07/01 10:54:29 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -388,19 +388,65 @@
        body -->
   <xsl:template name="unlink-body">
 
-    <xsl:choose>
-      <xsl:when test="associative">
-        <xsl:call-template name="unlink-associative-specification"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="unlink-specification"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="n" select="name"/>
 
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>  begin&#10;</xsl:text>
-    <xsl:text>    null;&#10;</xsl:text>
-    <xsl:text>  end Unlink;&#10;</xsl:text>
+    <xsl:choose>
+
+      <xsl:when test="associative">
+
+        <!-- There's no point in trying to null out the referential
+             attrubutes, since (presumably) the user's about to delete
+             the associative class instance anyway. -->
+        <xsl:call-template name="unlink-associative-specification"/>
+        <xsl:text> is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    null;&#10;</xsl:text>
+        <xsl:text>  end Unlink;&#10;</xsl:text>
+
+      </xsl:when>
+
+      <xsl:when test="not(associative)">
+
+        <xsl:call-template name="unlink-specification"/>
+        <xsl:text> is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+
+        <xsl:choose>
+
+          <xsl:when test="/domain/class/attribute[@relation=$n]/@identifier">
+            <!-- If the referential attribute is part of the identifier,
+                 we can't change it (there isn't a Set operation). So
+                 we rather hope the user's about to delete the instance. -->
+            <xsl:text>    null;&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <!-- Null out the referential attribute. -->
+            <xsl:variable name="src" select="role[@source]"/>
+            <xsl:variable name="dst" select="role[not(@source)]"/>
+            <xsl:text>    </xsl:text>
+            <xsl:value-of select="/domain/name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$dst/classname"/>
+            <xsl:text>.Set_</xsl:text>
+            <xsl:call-template name="attribute-name">
+              <xsl:with-param
+                name="a"
+                select="/domain/class/attribute
+                        [@relation=$n and @refers=$src/classname]"/>
+            </xsl:call-template>
+            <xsl:text> (</xsl:text>
+            <xsl:value-of select="$dst/name"/>
+            <xsl:text>, null);&#10;</xsl:text>
+          </xsl:otherwise>
+
+        </xsl:choose>
+
+        <xsl:text>  end Unlink;&#10;</xsl:text>
+
+      </xsl:when>
+
+    </xsl:choose>
 
   </xsl:template>
 
