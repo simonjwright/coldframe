@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 7b725a212f7e 2004/04/04 06:41:57 simon $ -->
+<!-- $Id: ada-class.xsl,v 911c59a21024 2004/04/04 06:48:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1785,7 +1785,7 @@
         <xsl:when test="@abstract or @return or @class or parameter">
           <xsl:call-template name="log-error"/>
           <xsl:message>
-            <xsl:text>Error: illegal &gt;finalize&lt; operation </xsl:text>
+            <xsl:text>Error: illegal &lt;finalize&gt; operation </xsl:text>
             <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
           </xsl:message>
         </xsl:when>
