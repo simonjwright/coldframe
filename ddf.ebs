@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 9537a529fb8c 2001/05/24 18:24:38 simon $
+'$Id: ddf.ebs,v 2f1d13d8b1c4 2001/05/27 05:23:16 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -299,7 +299,7 @@ Sub Main
 	'(only) selected Package (Category?!)
 	Dim cats As CategoryCollection
 	'ordinary Print output goes to this window, if it's open.
-	Viewport.Open
+'	Viewport.Open
 	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
 	If cats.Count = 0 Then
 		MsgBox "Must select a Package"
