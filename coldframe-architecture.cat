@@ -1,0 +1,2126 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Architecture"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3A6BCE9E0236"
+    documentation 	
+|This package describes the underlying model of the model assumed by ColdFrame (the metamodel) and one possible mapping to code.<br/>
+|
+|A note on names: Ada is case-insensitive, but the convention is that words in names are separated by an underscore, and the first letter of each word is capitalized. ColdFrame normalizes names to this convention.
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Domain"
+	    quid       	"3A6BCED103CE"
+	    documentation 	"The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).")
+	(object Class "Class"
+	    quid       	"3A6BCEE900C1"
+	    documentation 	"A Class denotes a set of objects in the Domain that have common properties and behaviour.")
+	(object Class "Domain Package"
+	    quid       	"3A6BCF000041"
+	    documentation 	
+|Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
+|
+|The notation <tt><i>metaclass name</i></tt> means "the normalized name of the metaclass in this model"; so, if the Domain were named "Problem Reporting", <tt><i>Domain</i></tt> would be <tt>Problem_Reporting</tt>.
+	    
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD5F601B7"
+		    supplier   	"Logical View::Architecture::Domain"
+		    quidu      	"3A6BCED103CE")))
+	(object Class "Class Operation"
+	    quid       	"3A6BCF02029D"
+	    documentation 	
+|A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
+|
+|All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class".
+	    
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD13403A6"
+		    supplier   	"Logical View::Architecture::Operation"
+		    quidu      	"3A6BCF0400BF")))
+	(object Class "Operation"
+	    quid       	"3A6BCF0400BF"
+	    documentation 	"An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).")
+	(object Class "Handle Parameter"
+	    quid       	"3A6BCF050098"
+	    documentation 	"An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.")
+	(object Class "Identified Class"
+	    quid       	"3A6BCF0503AF"
+	    documentation 	"An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD11E01A5"
+		    supplier   	"Logical View::Architecture::Class"
+		    quidu      	"3A6BCEE900C1")))
+	(object Class "User Type Declaration"
+	    quid       	"3A6BCF06032F"
+	    documentation 	
+|User Type Definitions are type definitions in the top-level Domain package.<br/>
+|
+|Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.
+	    
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD6130168"
+		    supplier   	"Logical View::Architecture::Type Specification"
+		    quidu      	"3A6BD036022A")))
+	(object Class "Singleton Class"
+	    quid       	"3A6BCF0802A3"
+	    documentation 	"A Singleton Class is one of which there is always precisely one instance."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD12200A3"
+		    supplier   	"Logical View::Architecture::Class"
+		    quidu      	"3A6BCEE900C1")))
+	(object Class "Instance Operation"
+	    quid       	"3A6BCF090330"
+	    documentation 	"An Instance Operation of a Class is an Operation that applies to a specific instance of the Class."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD1310018"
+		    supplier   	"Logical View::Architecture::Operation"
+		    quidu      	"3A6BCF0400BF")))
+	(object Class "Hash Function"
+	    quid       	"3A6BCF0B0152"
+	    documentation 	"A Hash Function is required for each Identifier Record. It is implemented as  a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).")
+	(object Class "Class Package"
+	    quid       	"3A6BCF0C0399"
+	    documentation 	"Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.")
+	(object Class "Type Specification"
+	    quid       	"3A6BD036022A"
+	    documentation 	
+|The Domain can contain a number of domain-specific type definitions.<br/>
+|
+|A Type Specification is a class with the "type" stereotype.<br/>
+|
+|Its documentation must contain an Annotation, which is text contained in double square brackets.<br/>
+|
+|Supported annotations are:<br/>
+|
+|<tt>enumeration: <i>literal 1</i>, <i>literal 2</i> ...</tt>; defines an enumeration.<br/>
+|
+|<tt>real: digits <i>9</i>, lower <i>0.0</i>, upper <i>100.0</i></tt>; defines a real number.<br/>
+|
+|<tt>set: <i>class-name</i></tt>; defines a set of instances of the class class-name.<br/>
+|
+|<tt>string: max <i>80</i></tt>; defines a bounded string.
+|
+	    )
+	(object Class "Identified Class Package"
+	    quid       	"3A6BD1810261"
+	    documentation 	"Each Identified Class is mapped to an Identified Class Package."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD1A103CB"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"))
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD62002DD"
+		    supplier   	"Logical View::Architecture::Identified Class"
+		    quidu      	"3A6BCF0503AF")))
+	(object Class "Singleton Class Package"
+	    quid       	"3A6BD1830073"
+	    documentation 	"Each Singleton Class is mapped to a Singleton Class Package."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD1A602E5"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"))
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD6260223"
+		    supplier   	"Logical View::Architecture::Singleton Class"
+		    quidu      	"3A6BCF0802A3")))
+	(object Class "Operation Unit"
+	    quid       	"3A6BD59702CB"
+	    documentation 	
+|An Operation maps to an Operation Unit.<br/>
+|
+|An Operation Unit is implemented as a child subprogram unit of the Class package.
+	    )
+	(object Class "Instance Operation Unit"
+	    quid       	"3A6BD5A201D4"
+	    documentation 	"An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD6350137"
+		    supplier   	"Logical View::Architecture::Operation Unit"
+		    quidu      	"3A6BD59702CB"))
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD669020D"
+		    supplier   	"Logical View::Architecture::Instance Operation"
+		    quidu      	"3A6BCF090330")))
+	(object Class "Class Operation Unit"
+	    quid       	"3A6BD5AE00FC"
+	    documentation 	"A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD63902C8"
+		    supplier   	"Logical View::Architecture::Operation Unit"
+		    quidu      	"3A6BD59702CB"))
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD66E004C"
+		    supplier   	"Logical View::Architecture::Class Operation"
+		    quidu      	"3A6BCF02029D")))
+	(object Class "Identifier"
+	    quid       	"3A6BD6B8012E"
+	    documentation 	"The Identifier of a Class (an Identified Class) uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.")
+	(object Class "Identifier Record"
+	    quid       	"3A6BD6CC00FB"
+	    documentation 	"An Identified Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute."
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6BD6ED00D1"
+		    supplier   	"Logical View::Architecture::Identifier"
+		    quidu      	"3A6BD6B8012E")))
+	(object Class "Attribute"
+	    quid       	"3A6BD72201FC"
+	    documentation 	
+|Attributes are described by a Name and a Type.<br/>
+|
+|Attributes may be Plain or Identifying.<br/>
+|
+|Referential attributes (those which formalise relationships) are automatically inserted by normalize-rose.tcl.
+	    )
+	(object Class "Identifying Attribute"
+	    quid       	"3A6BD81D0176"
+	    documentation 	"An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD9920119"
+		    supplier   	"Logical View::Architecture::Attribute"
+		    quidu      	"3A6BD72201FC")))
+	(object Class "Plain Attribute"
+	    quid       	"3A6BD94200F4"
+	    documentation 	"A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3A6BD99600FC"
+		    supplier   	"Logical View::Architecture::Attribute"
+		    quidu      	"3A6BD72201FC")))
+	(object Class "Get Accessor"
+	    quid       	"3A6CA026001A"
+	    documentation 	"A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>."
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6CA17B021E"
+		    supplier   	"Logical View::Architecture::Attribute"
+		    quidu      	"3A6BD72201FC")))
+	(object Class "Set Accessor"
+	    quid       	"3A6CA03D0193"
+	    documentation 	
+|A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
+|<tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.
+	    
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"3A6CA1540233"
+		    documentation 	"A Plain Attribute is one that is not part of a Class's Identifier. It may have an initial value."
+		    supplier   	"Logical View::Architecture::Plain Attribute"
+		    quidu      	"3A6BD94200F4")))
+	(object Class "Handle"
+	    quid       	"3A7C3037017F"
+	    documentation 	"The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.")
+	(object Association "$UNNAMED$0"
+	    quid       	"3A6BD07B0135"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$1"
+		    quid       	"3A6BD07C008C"
+		    supplier   	"Logical View::Architecture::Domain"
+		    quidu      	"3A6BCED103CE"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$2"
+		    quid       	"3A6BD07C00A0"
+		    supplier   	"Logical View::Architecture::Class"
+		    quidu      	"3A6BCEE900C1"
+		    client_cardinality 	(value cardinality "1..n"))))
+	(object Association "$UNNAMED$3"
+	    quid       	"3A6BD0F5023B"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$4"
+		    quid       	"3A6BD0F601BA"
+		    supplier   	"Logical View::Architecture::Domain Package"
+		    quidu      	"3A6BCF000041"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$5"
+		    quid       	"3A6BD0F601EC"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"
+		    client_cardinality 	(value cardinality "1..n"))))
+	(object Association "$UNNAMED$6"
+	    quid       	"3A6BD35B0385"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$7"
+		    quid       	"3A6BD35E000B"
+		    supplier   	"Logical View::Architecture::Operation"
+		    quidu      	"3A6BCF0400BF"
+		    client_cardinality 	(value cardinality "0..n"))
+		(object Role "$UNNAMED$8"
+		    quid       	"3A6BD35E001F"
+		    supplier   	"Logical View::Architecture::Identified Class"
+		    quidu      	"3A6BCF0503AF"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$9"
+	    quid       	"3A6BD39C03A5"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$10"
+		    quid       	"3A6BD39D037E"
+		    supplier   	"Logical View::Architecture::Singleton Class"
+		    quidu      	"3A6BCF0802A3"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$11"
+		    quid       	"3A6BD39D0393"
+		    supplier   	"Logical View::Architecture::Class Operation"
+		    quidu      	"3A6BCF02029D"
+		    client_cardinality 	(value cardinality "0..n"))))
+	(object Association "$UNNAMED$12"
+	    quid       	"3A6BD3C801A8"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$13"
+		    quid       	"3A6BD3C901E0"
+		    supplier   	"Logical View::Architecture::User Type Declaration"
+		    quidu      	"3A6BCF06032F"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$14"
+		    quid       	"3A6BD3C901FE"
+		    supplier   	"Logical View::Architecture::Domain Package"
+		    quidu      	"3A6BCF000041"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$15"
+	    quid       	"3A6BD64000C1"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$16"
+		    quid       	"3A6BD6400374"
+		    supplier   	"Logical View::Architecture::Instance Operation Unit"
+		    quidu      	"3A6BD5A201D4"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$17"
+		    quid       	"3A6BD6400388"
+		    supplier   	"Logical View::Architecture::Handle Parameter"
+		    quidu      	"3A6BCF050098"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$18"
+	    quid       	"3A6BD7490293"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$19"
+		    quid       	"3A6BD74A0140"
+		    supplier   	"Logical View::Architecture::Identifier"
+		    quidu      	"3A6BD6B8012E"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$20"
+		    quid       	"3A6BD74A0168"
+		    supplier   	"Logical View::Architecture::Identified Class"
+		    quidu      	"3A6BCF0503AF"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$21"
+	    quid       	"3A6BD7B702C5"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$22"
+		    quid       	"3A6BD7B90228"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$23"
+		    quid       	"3A6BD7B90250"
+		    supplier   	"Logical View::Architecture::Operation Unit"
+		    quidu      	"3A6BD59702CB"
+		    client_cardinality 	(value cardinality "0..n"))))
+	(object Association "$UNNAMED$24"
+	    quid       	"3A6BD93300A7"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$25"
+		    quid       	"3A6BD9370107"
+		    supplier   	"Logical View::Architecture::Identifying Attribute"
+		    quidu      	"3A6BD81D0176"
+		    client_cardinality 	(value cardinality "1..n"))
+		(object Role "$UNNAMED$26"
+		    quid       	"3A6BD937011B"
+		    supplier   	"Logical View::Architecture::Identifier"
+		    quidu      	"3A6BD6B8012E"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$27"
+	    quid       	"3A6BD9A7037D"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$28"
+		    quid       	"3A6BD9A80284"
+		    supplier   	"Logical View::Architecture::Class"
+		    quidu      	"3A6BCEE900C1"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$29"
+		    quid       	"3A6BD9A802B6"
+		    supplier   	"Logical View::Architecture::Plain Attribute"
+		    quidu      	"3A6BD94200F4"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$30"
+	    quid       	"3A6CA04F037B"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$31"
+		    quid       	"3A6CA050023C"
+		    supplier   	"Logical View::Architecture::Get Accessor"
+		    quidu      	"3A6CA026001A"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$32"
+		    quid       	"3A6CA0500250"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$33"
+	    quid       	"3A6CA0590201"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$34"
+		    quid       	"3A6CA05A02DF"
+		    supplier   	"Logical View::Architecture::Set Accessor"
+		    quidu      	"3A6CA03D0193"
+		    client_cardinality 	(value cardinality "0..n"))
+		(object Role "$UNNAMED$35"
+		    quid       	"3A6CA05A02F3"
+		    supplier   	"Logical View::Architecture::Class Package"
+		    quidu      	"3A6BCF0C0399"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$36"
+	    quid       	"3A7B26A900AA"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$37"
+		    quid       	"3A7B26AA02C8"
+		    supplier   	"Logical View::Architecture::Identifier Record"
+		    quidu      	"3A6BD6CC00FB"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$38"
+		    quid       	"3A7B26AA02D2"
+		    supplier   	"Logical View::Architecture::Identified Class Package"
+		    quidu      	"3A6BD1810261"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$39"
+	    quid       	"3A7B2792014C"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$40"
+		    quid       	"3A7B279300C1"
+		    supplier   	"Logical View::Architecture::Identifier Record"
+		    quidu      	"3A6BD6CC00FB"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$41"
+		    quid       	"3A7B279300F3"
+		    supplier   	"Logical View::Architecture::Hash Function"
+		    quidu      	"3A6BCF0B0152"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$42"
+	    quid       	"3A7C2E970017"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$43"
+		    quid       	"3A7C2E9702B6"
+		    supplier   	"Logical View::Architecture::Type Specification"
+		    quidu      	"3A6BD036022A"
+		    client_cardinality 	(value cardinality "0..n"))
+		(object Role "$UNNAMED$44"
+		    quid       	"3A7C2E9702CA"
+		    supplier   	"Logical View::Architecture::Domain"
+		    quidu      	"3A6BCED103CE"
+		    client_cardinality 	(value cardinality "1"))))
+	(object Association "$UNNAMED$45"
+	    quid       	"3A7C307101BB"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$46"
+		    quid       	"3A7C307201C3"
+		    supplier   	"Logical View::Architecture::Handle"
+		    quidu      	"3A7C3037017F"
+		    client_cardinality 	(value cardinality "1"))
+		(object Role "$UNNAMED$47"
+		    quid       	"3A7C307201CD"
+		    supplier   	"Logical View::Architecture::Identified Class Package"
+		    quidu      	"3A6BD1810261"
+		    client_cardinality 	(value cardinality "1")))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3A6BCEBC0151"
+	    title      	"Main"
+	    documentation 	"In the diagram, buff classes are part of the metamodel, grey classes show  how they are mapped to Ada 95 code."
+	    zoom       	73
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	820
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Architecture::Singleton Class Package" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2032, 1024)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1790, 973)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"Singleton Class Package")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD1830073"
+		    width      	502
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Instance Operation" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1264, 1968)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1062, 1917)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	404
+			justify    	0
+			label      	"Instance Operation")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCF090330"
+		    width      	422
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Singleton Class" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1370, 880)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1201, 829)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	338
+			justify    	0
+			label      	"Singleton Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCF0802A3"
+		    width      	356
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Class Operation" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1562, 1584)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(1393, 1533)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	338
+			justify    	0
+			label      	"Class Operation")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCF02029D"
+		    width      	356
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$9" @5
+		    location   	(1465, 1231)
+		    label      	(object SegLabel @6
+			Parent_View 	@5
+			location   	(1478, 1219)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.716667
+			height     	12
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD39C03A5"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$10" @7
+			    Parent_View 	@5
+			    location   	(601, -33)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD39D037E"
+			    client     	@5
+			    supplier   	@3
+			    line_style 	0
+			    label      	(object SegLabel @8
+				Parent_View 	@7
+				location   	(1412, 979)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.897062
+				height     	14
+				orientation 	1))
+			(object RoleView "$UNNAMED$11" @9
+			    Parent_View 	@5
+			    location   	(601, -33)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD39D0393"
+			    client     	@5
+			    supplier   	@4
+			    line_style 	0
+			    label      	(object SegLabel @10
+				Parent_View 	@9
+				location   	(1549, 1469)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.875743
+				height     	19
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Architecture::Class Operation Unit" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2240, 1920)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(2031, 1868)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	418
+			justify    	0
+			label      	"Class Operation Unit")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD5AE00FC"
+		    width      	436
+		    height     	128
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @12
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD6260223"
+		    client     	@1
+		    supplier   	@3
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Instance Operation Unit" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2496, 2208)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(2255, 2163)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	482
+			justify    	0
+			label      	"Instance Operation Unit")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD5A201D4"
+		    width      	500
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Handle Parameter" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2160, 2432)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(1977, 2381)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	366
+			justify    	0
+			label      	"Handle Parameter")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BCF050098"
+		    width      	384
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$15" @15
+		    location   	(2332, 2316)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(2332, 2321)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.500000
+			height     	5
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD64000C1"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$16" @17
+			    Parent_View 	@15
+			    location   	(860, 460)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD6400374"
+			    client     	@15
+			    supplier   	@13
+			    line_style 	0
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(2385, 2273)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.732893
+				height     	8
+				orientation 	0))
+			(object RoleView "$UNNAMED$17" @19
+			    Parent_View 	@15
+			    location   	(860, 460)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD6400388"
+			    client     	@15
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @20
+				Parent_View 	@19
+				location   	(2273, 2359)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.781073
+				height     	2
+				orientation 	0))))
+		(object RealizeView "" @21
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD669020D"
+		    client     	@13
+		    supplier   	@2
+		    line_style 	0)
+		(object RealizeView "" @22
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD66E004C"
+		    client     	@11
+		    supplier   	@4
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Attribute" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(298, 1152)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(206, 1107)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	184
+			justify    	0
+			label      	"Attribute")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BD72201FC"
+		    width      	202
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Identifying Attribute" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(400, 1504)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(191, 1454)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	418
+			justify    	0
+			label      	"Identifying Attribute")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BD81D0176"
+		    width      	436
+		    height     	124
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Operation" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(938, 1536)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(837, 1485)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	202
+			justify    	0
+			label      	"Operation")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCF0400BF"
+		    width      	220
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @26
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD1310018"
+		    client     	@2
+		    supplier   	@25
+		    line_style 	0)
+		(object InheritView "" @27
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD13403A6"
+		    client     	@4
+		    supplier   	@25
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Identifier" @28
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(624, 1216)
+		    label      	(object ItemLabel
+			Parent_View 	@28
+			location   	(529, 1171)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	190
+			justify    	0
+			label      	"Identifier")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BD6B8012E"
+		    width      	208
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$24" @29
+		    location   	(514, 1357)
+		    label      	(object SegLabel @30
+			Parent_View 	@29
+			location   	(513, 1356)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.483333
+			height     	1
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD93300A7"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$25" @31
+			    Parent_View 	@29
+			    location   	(-78, 109)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD9370107"
+			    client     	@29
+			    supplier   	@24
+			    line_style 	0
+			    label      	(object SegLabel @32
+				Parent_View 	@31
+				location   	(463, 1425)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.799438
+				height     	1
+				orientation 	0))
+			(object RoleView "$UNNAMED$26" @33
+			    Parent_View 	@29
+			    location   	(-78, 109)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD937011B"
+			    client     	@29
+			    supplier   	@28
+			    line_style 	0
+			    label      	(object SegLabel @34
+				Parent_View 	@33
+				location   	(558, 1297)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.719206
+				height     	4
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Architecture::Identified Class" @35
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(842, 896)
+		    label      	(object ItemLabel
+			Parent_View 	@35
+			location   	(675, 851)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"Identified Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCF0503AF"
+		    width      	352
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$6" @36
+		    location   	(889, 1212)
+		    label      	(object SegLabel @37
+			Parent_View 	@36
+			location   	(890, 1183)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.516667
+			height     	29
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD35B0385"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$7" @38
+			    Parent_View 	@36
+			    location   	(425, 444)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD35E000B"
+			    client     	@36
+			    supplier   	@25
+			    line_style 	0
+			    label      	(object SegLabel @39
+				Parent_View 	@38
+				location   	(935, 1434)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.865370
+				height     	13
+				orientation 	0))
+			(object RoleView "$UNNAMED$8" @40
+			    Parent_View 	@36
+			    location   	(425, 444)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD35E001F"
+			    client     	@36
+			    supplier   	@35
+			    line_style 	0
+			    label      	(object SegLabel @41
+				Parent_View 	@40
+				location   	(847, 991)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.922898
+				height     	9
+				orientation 	0))))
+		(object AssociationViewNew "$UNNAMED$18" @42
+		    location   	(731, 1055)
+		    label      	(object SegLabel @43
+			Parent_View 	@42
+			location   	(731, 1060)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.500000
+			height     	5
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD7490293"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$19" @44
+			    Parent_View 	@42
+			    location   	(267, 287)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD74A0140"
+			    client     	@42
+			    supplier   	@28
+			    line_style 	0
+			    label      	(object SegLabel @45
+				Parent_View 	@44
+				location   	(687, 1134)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.726936
+				height     	7
+				orientation 	0))
+			(object RoleView "$UNNAMED$20" @46
+			    Parent_View 	@42
+			    location   	(267, 287)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD74A0168"
+			    client     	@42
+			    supplier   	@35
+			    line_style 	0
+			    label      	(object SegLabel @47
+				Parent_View 	@46
+				location   	(787, 988)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.702692
+				height     	9
+				orientation 	1))))
+		(object InheritView "" @48
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD9920119"
+		    client     	@24
+		    supplier   	@23
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Class" @49
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1034, 560)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(953, 509)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCEE900C1"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @50
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD12200A3"
+		    client     	@3
+		    supplier   	@49
+		    line_style 	0)
+		(object InheritView "" @51
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD11E01A5"
+		    client     	@35
+		    supplier   	@49
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Plain Attribute" @52
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(416, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@52
+			location   	(267, 654)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	298
+			justify    	0
+			label      	"Plain Attribute")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BD94200F4"
+		    width      	316
+		    height     	124
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @53
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD99600FC"
+		    client     	@52
+		    supplier   	@23
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$27" @54
+		    location   	(758, 623)
+		    label      	(object SegLabel @55
+			Parent_View 	@54
+			location   	(757, 616)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.483333
+			height     	7
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD9A7037D"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$28" @56
+			    Parent_View 	@54
+			    location   	(102, -145)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD9A80284"
+			    client     	@54
+			    supplier   	@49
+			    line_style 	0
+			    label      	(object SegLabel @57
+				Parent_View 	@56
+				location   	(908, 588)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.713561
+				height     	0
+				orientation 	1))
+			(object RoleView "$UNNAMED$29" @58
+			    Parent_View 	@54
+			    location   	(102, -145)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD9A802B6"
+			    client     	@54
+			    supplier   	@52
+			    line_style 	0
+			    label      	(object SegLabel @59
+				Parent_View 	@58
+				location   	(617, 665)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.666513
+				height     	9
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Architecture::User Type Declaration" @60
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2986, 736)
+		    label      	(object ItemLabel
+			Parent_View 	@60
+			location   	(2740, 685)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	492
+			justify    	0
+			label      	"User Type Declaration")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BCF06032F"
+		    width      	510
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Domain Package" @61
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2618, 400)
+		    label      	(object ItemLabel
+			Parent_View 	@61
+			location   	(2434, 349)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	368
+			justify    	0
+			label      	"Domain Package")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BCF000041"
+		    width      	386
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$12" @62
+		    location   	(2801, 567)
+		    label      	(object SegLabel @63
+			Parent_View 	@62
+			location   	(2801, 556)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.500000
+			height     	11
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD3C801A8"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$13" @64
+			    Parent_View 	@62
+			    location   	(865, 407)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD3C901E0"
+			    client     	@62
+			    supplier   	@60
+			    line_style 	0
+			    label      	(object SegLabel @65
+				Parent_View 	@64
+				location   	(2896, 649)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.763845
+				height     	4
+				orientation 	0))
+			(object RoleView "$UNNAMED$14" @66
+			    Parent_View 	@62
+			    location   	(865, 407)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD3C901FE"
+			    client     	@62
+			    supplier   	@61
+			    line_style 	0
+			    label      	(object SegLabel @67
+				Parent_View 	@66
+				location   	(2734, 496)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.630858
+				height     	7
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::Architecture::Operation Unit" @68
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2800, 1792)
+		    label      	(object ItemLabel
+			Parent_View 	@68
+			location   	(2646, 1747)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	308
+			justify    	0
+			label      	"Operation Unit")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD59702CB"
+		    width      	326
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @69
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD6350137"
+		    client     	@13
+		    supplier   	@68
+		    line_style 	0)
+		(object InheritView "" @70
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD63902C8"
+		    client     	@11
+		    supplier   	@68
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Get Accessor" @71
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3216, 1280)
+		    label      	(object ItemLabel
+			Parent_View 	@71
+			location   	(3067, 1226)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	298
+			justify    	0
+			label      	"Get Accessor")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6CA026001A"
+		    width      	316
+		    height     	132
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Set Accessor" @72
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3264, 976)
+		    label      	(object ItemLabel
+			Parent_View 	@72
+			location   	(3116, 922)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	296
+			justify    	0
+			label      	"Set Accessor")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6CA03D0193"
+		    width      	314
+		    height     	132
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Class Package" @73
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2634, 960)
+		    label      	(object ItemLabel
+			Parent_View 	@73
+			location   	(2481, 909)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	306
+			justify    	0
+			label      	"Class Package")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BCF0C0399"
+		    width      	324
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$3" @74
+		    location   	(2625, 679)
+		    label      	(object SegLabel @75
+			Parent_View 	@74
+			location   	(2608, 654)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.216667
+			height     	25
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD0F5023B"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$4" @76
+			    Parent_View 	@74
+			    location   	(705, 7)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD0F601BA"
+			    client     	@74
+			    supplier   	@61
+			    line_style 	0
+			    label      	(object SegLabel @77
+				Parent_View 	@76
+				location   	(2612, 510)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.788832
+				height     	9
+				orientation 	0))
+			(object RoleView "$UNNAMED$5" @78
+			    Parent_View 	@74
+			    location   	(705, 7)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD0F601EC"
+			    client     	@74
+			    supplier   	@73
+			    line_style 	0
+			    label      	(object SegLabel @79
+				Parent_View 	@78
+				location   	(2623, 858)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.824000
+				height     	7
+				orientation 	1))))
+		(object InheritView "" @80
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD1A602E5"
+		    client     	@1
+		    supplier   	@73
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$21" @81
+		    location   	(2716, 1378)
+		    label      	(object SegLabel @82
+			Parent_View 	@81
+			location   	(2699, 1366)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.216667
+			height     	13
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD7B702C5"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$22" @83
+			    Parent_View 	@81
+			    location   	(668, -478)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD7B90228"
+			    client     	@81
+			    supplier   	@73
+			    line_style 	0
+			    label      	(object SegLabel @84
+				Parent_View 	@83
+				location   	(2643, 1057)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.911434
+				height     	9
+				orientation 	0))
+			(object RoleView "$UNNAMED$23" @85
+			    Parent_View 	@81
+			    location   	(668, -478)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD7B90250"
+			    client     	@81
+			    supplier   	@68
+			    line_style 	0
+			    label      	(object SegLabel @86
+				Parent_View 	@85
+				location   	(2802, 1716)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.958658
+				height     	18
+				orientation 	0))))
+		(object AssociationViewNew "$UNNAMED$30" @87
+		    location   	(2921, 1118)
+		    label      	(object SegLabel @88
+			Parent_View 	@87
+			location   	(2921, 1106)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.500000
+			height     	12
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6CA04F037B"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$31" @89
+			    Parent_View 	@87
+			    location   	(441, 158)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6CA050023C"
+			    client     	@87
+			    supplier   	@71
+			    line_style 	0
+			    label      	(object SegLabel @90
+				Parent_View 	@89
+				location   	(3039, 1192)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.699435
+				height     	9
+				orientation 	1))
+			(object RoleView "$UNNAMED$32" @91
+			    Parent_View 	@87
+			    location   	(441, 158)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6CA0500250"
+			    client     	@87
+			    supplier   	@73
+			    line_style 	0
+			    label      	(object SegLabel @92
+				Parent_View 	@91
+				location   	(2822, 1061)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.586180
+				height     	3
+				orientation 	1))))
+		(object AssociationViewNew "$UNNAMED$33" @93
+		    location   	(2951, 968)
+		    label      	(object SegLabel @94
+			Parent_View 	@93
+			location   	(2951, 973)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.500000
+			height     	5
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6CA0590201"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$34" @95
+			    Parent_View 	@93
+			    location   	(471, 8)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6CA05A02DF"
+			    client     	@93
+			    supplier   	@72
+			    line_style 	0
+			    label      	(object SegLabel @96
+				Parent_View 	@95
+				location   	(3054, 956)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.753946
+				height     	16
+				orientation 	0))
+			(object RoleView "$UNNAMED$35" @97
+			    Parent_View 	@93
+			    location   	(471, 8)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6CA05A02F3"
+			    client     	@93
+			    supplier   	@73
+			    line_style 	0
+			    label      	(object SegLabel @98
+				Parent_View 	@97
+				location   	(2855, 968)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.721675
+				height     	2
+				orientation 	0))))
+		(object RealizeView "" @99
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6CA17B021E"
+		    client     	@71
+		    supplier   	@23
+		    vertices   	(list Points
+			(3374, 1275)
+			(3569, 1271)
+			(3569, 2589)
+			(55, 2594)
+			(55, 1151)
+			(196, 1151))
+		    line_style 	0)
+		(object RealizeView "" @100
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6CA1540233"
+		    client     	@72
+		    supplier   	@52
+		    vertices   	(list Points
+			(3421, 976)
+			(3557, 977)
+			(3557, 202)
+			(413, 207)
+			(415, 641))
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Hash Function" @101
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2352, 1696)
+		    label      	(object ItemLabel
+			Parent_View 	@101
+			location   	(2198, 1645)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	308
+			justify    	0
+			label      	"Hash Function")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BCF0B0152"
+		    width      	326
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Architecture::Identifier Record" @102
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1984, 1488)
+		    label      	(object ItemLabel
+			Parent_View 	@102
+			location   	(1808, 1443)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	352
+			justify    	0
+			label      	"Identifier Record")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD6CC00FB"
+		    width      	370
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @103
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD6ED00D1"
+		    client     	@102
+		    supplier   	@28
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$39" @104
+		    location   	(2162, 1588)
+		    label      	(object SegLabel @105
+			Parent_View 	@104
+			location   	(2162, 1577)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.516667
+			height     	12
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A7B2792014C"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$40" @106
+			    Parent_View 	@104
+			    location   	(-382, -76)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7B279300C1"
+			    client     	@104
+			    supplier   	@102
+			    line_style 	0
+			    label      	(object SegLabel @107
+				Parent_View 	@106
+				location   	(2111, 1575)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.593654
+				height     	14
+				orientation 	0))
+			(object RoleView "$UNNAMED$41" @108
+			    Parent_View 	@104
+			    location   	(-382, -76)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7B279300F3"
+			    client     	@104
+			    supplier   	@101
+			    line_style 	0
+			    label      	(object SegLabel @109
+				Parent_View 	@108
+				location   	(2210, 1636)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.821762
+				height     	19
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::Architecture::Domain" @110
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1526, 389)
+		    label      	(object ItemLabel
+			Parent_View 	@110
+			location   	(1438, 338)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	176
+			justify    	0
+			label      	"Domain")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BCED103CE"
+		    width      	194
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$0" @111
+		    location   	(1276, 474)
+		    label      	(object SegLabel @112
+			Parent_View 	@111
+			location   	(1277, 462)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.516667
+			height     	12
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD07B0135"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$1" @113
+			    Parent_View 	@111
+			    location   	(540, 42)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD07C008C"
+			    client     	@111
+			    supplier   	@110
+			    line_style 	0
+			    label      	(object SegLabel @114
+				Parent_View 	@113
+				location   	(1394, 430)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.778335
+				height     	4
+				orientation 	0))
+			(object RoleView "$UNNAMED$2" @115
+			    Parent_View 	@111
+			    location   	(540, 42)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A6BD07C00A0"
+			    client     	@111
+			    supplier   	@49
+			    line_style 	0
+			    label      	(object SegLabel @116
+				Parent_View 	@115
+				location   	(1179, 508)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.642342
+				height     	1
+				orientation 	1))))
+		(object RealizeView "" @117
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD5F601B7"
+		    client     	@61
+		    supplier   	@110
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Architecture::Type Specification" @118
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1968, 736)
+		    label      	(object ItemLabel
+			Parent_View 	@118
+			location   	(1773, 685)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	390
+			justify    	0
+			label      	"Type Specification")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3A6BD036022A"
+		    width      	408
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @119
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD6130168"
+		    client     	@60
+		    supplier   	@118
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$42" @120
+		    location   	(1747, 562)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A7C2E970017"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$43" @121
+			    Parent_View 	@120
+			    location   	(227, 178)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7C2E9702B6"
+			    client     	@120
+			    supplier   	@118
+			    line_style 	0
+			    label      	(object SegLabel @122
+				Parent_View 	@121
+				location   	(1843, 620)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.622745
+				height     	14
+				orientation 	0))
+			(object RoleView "$UNNAMED$44" @123
+			    Parent_View 	@120
+			    location   	(227, 178)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7C2E9702CA"
+			    client     	@120
+			    supplier   	@110
+			    line_style 	0
+			    label      	(object SegLabel @124
+				Parent_View 	@123
+				location   	(1635, 485)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.761830
+				height     	9
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Architecture::Identified Class Package" @125
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2128, 1248)
+		    label      	(object ItemLabel
+			Parent_View 	@125
+			location   	(1873, 1203)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	510
+			justify    	0
+			label      	"Identified Class Package")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A6BD1810261"
+		    width      	528
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @126
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD62002DD"
+		    client     	@125
+		    supplier   	@35
+		    line_style 	0)
+		(object InheritView "" @127
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A6BD1A103CB"
+		    client     	@125
+		    supplier   	@73
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$36" @128
+		    location   	(2055, 1367)
+		    label      	(object SegLabel @129
+			Parent_View 	@128
+			location   	(2053, 1371)
+			font       	(object Font
+			    italics    	TRUE)
+			hidden     	TRUE
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	""
+			pctDist    	0.483333
+			height     	4
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A7B26A900AA"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$37" @130
+			    Parent_View 	@128
+			    location   	(-313, 71)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7B26AA02C8"
+			    client     	@128
+			    supplier   	@102
+			    line_style 	0
+			    label      	(object SegLabel @131
+				Parent_View 	@130
+				location   	(2030, 1405)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.763678
+				height     	4
+				orientation 	1))
+			(object RoleView "$UNNAMED$38" @132
+			    Parent_View 	@128
+			    location   	(-313, 71)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7B26AA02D2"
+			    client     	@128
+			    supplier   	@125
+			    line_style 	0
+			    label      	(object SegLabel @133
+				Parent_View 	@132
+				location   	(2085, 1333)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.784615
+				height     	7
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::Architecture::Handle" @134
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2512, 1488)
+		    label      	(object ItemLabel
+			Parent_View 	@134
+			location   	(2431, 1436)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Handle")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	12632256
+		    quidu      	"3A7C3037017F"
+		    height     	128
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$45" @135
+		    location   	(2320, 1367)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3A7C307101BB"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$46" @136
+			    Parent_View 	@135
+			    location   	(192, 119)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7C307201C3"
+			    client     	@135
+			    supplier   	@134
+			    line_style 	0
+			    label      	(object SegLabel @137
+				Parent_View 	@136
+				location   	(2386, 1417)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.861947
+				height     	8
+				orientation 	1))
+			(object RoleView "$UNNAMED$47" @138
+			    Parent_View 	@135
+			    location   	(192, 119)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3A7C307201CD"
+			    client     	@135
+			    supplier   	@125
+			    line_style 	0
+			    label      	(object SegLabel @139
+				Parent_View 	@138
+				location   	(2249, 1342)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.763794
+				height     	17
+				orientation 	0))))))))

@@ -1,0 +1,560 @@
+<domain>
+<name>Architecture</name>
+<documentation>This package describes the underlying model of the model assumed by ColdFrame (the metamodel) and one possible mapping to code.</documentation>
+<objects>
+<object stereotype="">
+<name>Domain</name>
+<documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Class</name>
+<documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Domain Package</name>
+<documentation>Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
+
+The notation <tt><i>metaclass name</i></tt> means "the normalized name of the metaclass in this model"; so, if the Domain were named "Problem Reporting", <tt><i>Domain</i></tt> would be <tt>Problem_Reporting</tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Class Operation</name>
+<documentation>A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
+
+All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class".</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Operation</name>
+<documentation>An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Handle Parameter</name>
+<documentation>An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Identified Class</name>
+<documentation>An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>User Type Declaration</name>
+<documentation>User Type Definitions are type definitions in the top-level Domain package.<br/>
+
+Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Singleton Class</name>
+<documentation>A Singleton Class is one of which there is always precisely one instance.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Instance Operation</name>
+<documentation>An Instance Operation of a Class is an Operation that applies to a specific instance of the Class.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Hash Function</name>
+<documentation>A Hash Function is required for each Identifier Record. It is implemented as  a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Class Package</name>
+<documentation>Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Type Specification</name>
+<documentation>The Domain can contain a number of domain-specific type definitions.<br/>
+
+A Type Specification is a class with the "type" stereotype.<br/>
+
+Its documentation must contain an Annotation, which is text contained in double square brackets.<br/>
+
+Supported annotations are:<br/>
+
+<tt>enumeration: <i>literal 1</i>, <i>literal 2</i> ...</tt>; defines an enumeration.<br/>
+
+<tt>real: digits <i>9</i>, lower <i>0.0</i>, upper <i>100.0</i></tt>; defines a real number.<br/>
+
+<tt>set: <i>class-name</i></tt>; defines a set of instances of the class class-name.<br/>
+
+<tt>string: max <i>80</i></tt>; defines a bounded string.
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Identified Class Package</name>
+<documentation>Each Identified Class is mapped to an Identified Class Package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Singleton Class Package</name>
+<documentation>Each Singleton Class is mapped to a Singleton Class Package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Operation Unit</name>
+<documentation>An Operation maps to an Operation Unit.<br/>
+
+An Operation Unit is implemented as a child subprogram unit of the Class package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Instance Operation Unit</name>
+<documentation>An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Class Operation Unit</name>
+<documentation>A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Identifier</name>
+<documentation>The Identifier of a Class (an Identified Class) uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Identifier Record</name>
+<documentation>An Identified Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Attribute</name>
+<documentation>Attributes are described by a Name and a Type.<br/>
+
+Attributes may be Plain or Identifying.<br/>
+
+Referential attributes (those which formalise relationships) are automatically inserted by normalize-rose.tcl.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Identifying Attribute</name>
+<documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Plain Attribute</name>
+<documentation>A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Get Accessor</name>
+<documentation>A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Set Accessor</name>
+<documentation>A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
+<tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Handle</name>
+<documentation>The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+</objects>
+<relationships>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Domain</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class</classname>
+<cardinality>1..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Domain Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Package</classname>
+<cardinality>1..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Operation</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Singleton Class</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Operation</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>User Type Declaration</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Instance Operation Unit</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Handle Parameter</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifier</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Operation Unit</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifying Attribute</classname>
+<cardinality>1..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identifier</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Class</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Plain Attribute</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Get Accessor</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Set Accessor</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifier Record</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifier Record</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Hash Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Type Specification</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Handle</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Class Operation</child>
+<parent>Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Identified Class</child>
+<parent>Class</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Singleton Class</child>
+<parent>Class</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Instance Operation</child>
+<parent>Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Identified Class Package</child>
+<parent>Class Package</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Singleton Class Package</child>
+<parent>Class Package</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Instance Operation Unit</child>
+<parent>Operation Unit</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Class Operation Unit</child>
+<parent>Operation Unit</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Identifying Attribute</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Plain Attribute</child>
+<parent>Attribute</parent>
+</inheritance>
+</relationships>
+</domain>
