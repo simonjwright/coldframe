@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 70e8c40455e1 2001/08/12 06:17:45 simon $ -->
+<!-- $Id: architecture.html,v 9e001e684358 2001/08/19 16:15:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -23,7 +23,8 @@ architecture. This involves:
 
 <li>using <a href="#support">specially written support components</a>
 
-<li>and a set of <a href="#containers">generic container components</a>.
+<li>and a set of <a href="use-of-bcs.html">generic container
+components</a>.
 
 </ul>
 
@@ -182,7 +183,7 @@ domain's version control ID.
 and add the line
 
 <pre>
-  [[ revision : $Id: architecture.html,v 70e8c40455e1 2001/08/12 06:17:45 simon $ ]]
+  [[ revision : $Id: architecture.html,v 9e001e684358 2001/08/19 16:15:02 simon $ ]]
 </pre>
 
 to the documentation pane. Modify as required by your version control
@@ -431,48 +432,21 @@ package <tt>ColdFrame</tt>.
 <dt><tt>ColdFrame.Exceptions</tt>
 
 <dd>Provides exceptions. These are at present just renamings of <a
-href="#containers">Booch</a> exceptions.
+href="use-of-bcs.html">Booch</a> exceptions.
 
 <dt><tt>ColdFrame.Global_Storage_Pool</tt>
 
 <dd>Provides a (GNAT-specific) Storage Pool type and instance, using
 the standard system <tt>malloc</tt> pool, suitable for instantiating
-<a href="#containers">Booch Containers</a>.
+<a href="use-of-bcs.html">Booch Containers</a>.
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
 <dt><tt>ColdFrame.String_Hash</tt>
 
 <dd>Provides a set of hash functions, suitable for use as hashes (or
-part of hashes) for instantiating <a href="#containers">Booch Map
+part of hashes) for instantiating <a href="use-of-bcs.html">Booch Map
 containers</a>.
-
-</dl>
-
-<h2><a name="containers">Generic container components</a></h2>
-
-<p>This architecture uses Ada 95 <a
-href="resources.html#booch-components">Booch Components</a>.
-
-<p>The components used are:
-
-<dl>
-
-<dt>Collections
-
-<dd>to hold multiple instances, as for example when finding all the
-instances of a class that match a particular criterion (not involving
-the class' Identifier, which by definition can return at most one
-instance).
-
-<dt>Maps
-
-<dd>to hold all the instances of a class; the range of the Map is the
-class' Identifier, the domain is (pointers to) the instances.
-
-<p>Maps are implemented using a hash table, and require a hash
-function (based on the identifier of the class); some <a
-href="#support">support for hashes</a> is provided.
 
 </dl>
 
