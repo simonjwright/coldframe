@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 778743033aa0 2002/01/20 10:37:30 simon $ -->
+<!-- $Id: ada-class.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -39,9 +39,6 @@
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
-
-    <!-- Include the basis for all instance types. -->
-    <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
 
     <!-- .. the class package .. -->
     <xsl:if test="not(@public)">
@@ -310,39 +307,14 @@
           
         </xsl:if>
         
-        <!-- Handle subprograms. -->
-        <xsl:apply-templates
-          mode="operation-spec-context"
-          select="$ancestors/operation">
-          <xsl:with-param name="current" select="."/>
-        </xsl:apply-templates>
+        <!-- Include the basis for all instance types. -->
+        <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
 
       </xsl:otherwise>
 
     </xsl:choose>
 
   </xsl:template>
-
-
-  <!-- Called at domain/class to generate any required supertype body context
-       information. -->
-  <xsl:template name="supertype-body-context">
-    
-    <xsl:variable name="parent-name" select="name"/>
-
-    <xsl:for-each select="../inheritance[parent=$parent-name]/child">
-      <xsl:sort select="name"/>
-
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>;&#10;</xsl:text>
-
-    </xsl:for-each>
-
-  </xsl:template>
-
 
 
   <!-- Called at domain/class to generate any required supertype spec
@@ -597,9 +569,7 @@
 
 
   <!-- Called from domain/class to generate context clauses for package
-       body.
-       There is (GNAT 3.14a1) an issue with "with type", so we include
-       corresponding "with"'s for the packages involved. -->
+       body. -->
   <xsl:template name="class-body-context">
 
     <!-- The classes to be processed this time. The default is the
@@ -633,28 +603,57 @@
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- Withs for attributes of the current class -->
-        <xsl:for-each
-          select="attribute[@refers and not(@refers=../name)]">
-          <xsl:sort select="@refers"/>
-          <xsl:text>with </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>;&#10;</xsl:text>
+        <xsl:variable name="current" select="."/>
+        <xsl:variable name="name" select="name"/>
+
+        <!-- We want to output only one "with" for each package.
+             The strategy is to sort the list pf packages and only
+             output unique members. To do this, we need a nodeset. -->
+
+        <xsl:variable name="withs">
+          
+          <!-- Withs for referential attributes of the current class -->
+          <xsl:for-each
+            select="attribute[@refers and not(@refers=$name)]">
+            <xsl:element name="with">
+              <xsl:value-of select="@refers"/>
+            </xsl:element>
+          </xsl:for-each>
+
+          <!-- Withs for subprograms of this and ancestor classes.
+               We only want classes (not including the current class). -->
+          <xsl:for-each select="$ancestors/operation/parameter/type
+                                | $ancestors/operation/@return">
+            <xsl:if test="/domain/class/name=. and not(.=$name)">
+              <xsl:element name="with">
+                <xsl:value-of select="."/>
+              </xsl:element>
+            </xsl:if>
+          </xsl:for-each>
+
+          <!-- Withs for child classes. Needed for the subtype selection
+               record. -->
+          <xsl:for-each select="../inheritance[parent=$name]/child">
+            <xsl:element name="with">
+              <xsl:value-of select="."/>
+            </xsl:element>
+          </xsl:for-each>
+
+        </xsl:variable>
+
+        <xsl:variable name="d" select="/domain/name"/>
+
+        <!-- Sort, uniqueify and output -->
+        <xsl:for-each select="$withs/with">
+          <xsl:sort/>
+          <xsl:if test="not (.=preceding-sibling::node())">
+            <xsl:text>with </xsl:text>
+            <xsl:value-of select="$d"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;&#10;</xsl:text>
+          </xsl:if>
         </xsl:for-each>
-
-        <!-- Withs for subprograms of this and ancestor classes -->
-
-        <xsl:apply-templates
-          mode="operation-body-context"
-          select="$ancestors/operation">
-          <xsl:with-param name="current" select="."/>
-        </xsl:apply-templates>
-
-        <!-- Complete subtype handles, needed for the subtype selection
-             record. -->
-        <xsl:call-template name="supertype-body-context"/>
 
       </xsl:otherwise>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 6daa06112c88 2002/01/17 20:00:18 simon $ -->
+<!-- $Id: ada-type.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,61 +27,75 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
 
-  <!-- Generate domain context clauses. -->
-  <xsl:template mode="domain-context" match="domain/type">
+  <!-- Called at /domain to generate domain context clauses. -->
+  <xsl:template name="domain-context">
 
-    <!-- Context for non-record domain types. -->
+    <!-- Context for time (in record components). -->
 
-    <xsl:if test="string/max">
-      <!-- string/max implies an instantiation of Ada.Strings.Bounded -->
-      <xsl:text>with Ada.Strings.Bounded;</xsl:text>
-      <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
-    </xsl:if>
-
-    <!-- Context for imported types. -->
-    <xsl:if test="imported">
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="imported"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
-
-    <!-- Context for renamed types. -->
-    <xsl:if test="renames">
-      <xsl:variable name="package">
-        <xsl:call-template name="find-source-package">
-          <xsl:with-param name="input" select="renames"/>
-        </xsl:call-template>
-      </xsl:variable>
-      <xsl:if test="string-length($package)">
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="$package"/>
-        <xsl:text>;&#10;</xsl:text>
-      </xsl:if>
-    </xsl:if>
-
-    <!-- Context for record domain types; cf class-spec-context. -->
-
-    <xsl:if test="attribute/type='Date'
-                  or operation/parameter/type='Date'
-                  or attribute/type='Time'
-                  or operation/parameter/type='Time'">
+    <xsl:if test="type/attribute/type='Date'
+                  or type/operation/parameter/type='Date'
+                  or type/attribute/type='Time'
+                  or type/operation/parameter/type='Time'">
       <!-- The above imply use of Ada.Calendar. -->
       <xsl:text>with Ada.Calendar;</xsl:text>
       <xsl:text> use Ada.Calendar;&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:if test="attribute/type='Unbounded_String'
-                  or operation/parameter/type='Unbounded_String'
-                  or attribute/type='Text'
-                  or operation/parameter/type='Text'">
+    <!-- Context for bounded strings -->
+    <xsl:if test="type/string/max">
+      <!-- string/max implies an instantiation of Ada.Strings.Bounded -->
+      <xsl:text>with Ada.Strings.Bounded;</xsl:text>
+      <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
+    </xsl:if>
+
+    <!-- Context for unbounded strings (in record components). -->
+
+    <xsl:if test="type/attribute/type='Unbounded_String'
+                  or type/operation/parameter/type='Unbounded_String'
+                  or type/attribute/type='Text'
+                  or type/operation/parameter/type='Text'">
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-  </xsl:template>
+    <!-- Context for imported and renamed types, ensuring uniqueness. -->
 
-  <xsl:template mode="domain-context" match="*"/>
+    <!-- First, make a nodeset containing "with" elements containing
+         the package names. -->
+    <xsl:variable name="imported-renamed-withs">
+      <xsl:for-each select="type/imported">
+        <xsl:element name="with">
+          <xsl:value-of select="."/>
+        </xsl:element>
+      </xsl:for-each>
+      <xsl:for-each select="type/renames">
+        <xsl:variable name="package">
+          <xsl:call-template name="find-source-package">
+            <xsl:with-param name="input" select="."/>
+          </xsl:call-template>
+        </xsl:variable>
+        <xsl:if test="string-length($package)">
+          <xsl:element name="with">
+            <xsl:value-of select="$package"/>
+          </xsl:element>
+        </xsl:if>      
+      </xsl:for-each>
+    </xsl:variable>
+
+    <!-- Then, sort, and output unique occurrences. The need to call
+         preceding-sibling::node() is what drives making a nodeset
+         above. -->
+    <xsl:for-each select="$imported-renamed-withs/with">
+      <xsl:sort select="."/>
+      <xsl:if test="not (.=preceding-sibling::node())">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+
+  </xsl:template>
 
 
   <!-- Called at domain to generate domain Types entries (not for
@@ -104,7 +118,7 @@
     <!-- The types which have already been output -->
     <xsl:param name="finished"/>
 
-    <!-- Saxon-5.5 needs this, or it goes into an infinite loop, -->
+    <!-- Saxon-5.5 needs this, or it goes into an infinite loop. -->
     <!-- <xsl:message>
       <xsl:text>domain-types: nodes </xsl:text>
       <xsl:value-of select="count($nodes)"/>
@@ -364,9 +378,6 @@
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
       
-      <!-- sets are implemented as class Collections; no action here -->
-      <xsl:when test="set"/>
-        
       <xsl:when test="string">
         <xsl:value-of select="$I"/>
         <xsl:text>package </xsl:text>
@@ -412,8 +423,6 @@
         <xsl:when test="integer"/>
 
         <xsl:when test="real"/>
-
-        <xsl:when test="set"/>
 
         <xsl:when test="string">
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>

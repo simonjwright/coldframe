@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 778743033aa0 2002/01/20 10:37:30 simon $ -->
+<!-- $Id: ada-operation.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -94,72 +94,43 @@
   <xsl:template mode="operation-spec" match="*"/>
 
 
-  <!-- Generate subprogram context for specs. -->
-  <!-- XXX at present, doesn't ensure there's only one of each -->
-  <xsl:template match="class/operation" mode="operation-spec-context">
+  <!-- Called at domain/class to generate the contribution to the
+       package body's context required by the operations. -->
+  <xsl:template name="operation-body-context">
 
-    <!-- The current class. -->
-    <xsl:param name="current"/>
+    <!-- The current class and all its ancestors -->
+    <xsl:param name="classes"/>
 
-    <!-- Find the names of all the types involved -->
-    <xsl:for-each select="parameter/type | @return">
+    <xsl:variable name="current" select="."/>
+    <xsl:variable name="d" select="/domain/name"/>
 
-      <!-- .. sorted, so we can uniqueify them (when I've worked
-           out how) .. -->
-      <xsl:sort select="."/>
+    <!-- Make a nodeset containing the class package names of those other
+         classes used in parameters or function results -->
+    <xsl:variable name="withs">
+      <xsl:for-each
+        select="$classes/operation/parameter/type
+                | $classes/operation/@return">
+        <xsl:if test="/domain/class/name=. and not(.=$current/name)">
+          <xsl:element name="with">
+            <xsl:value-of select="."/>
+          </xsl:element>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
 
-      <!-- .. or sets of classes in the domain .. -->
-      <!-- XXX we'll need to make sure this doesn't include the
-           current class; like
-           test="/domain/class/name=. and not(.=$current/name)"
-           -->
-      <xsl:variable name="type" select="."/>
-      <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
-      <xsl:if test="$type-name/set">
+    <!-- Sort, uniqueify and output -->
+    <xsl:for-each select="$withs/with">
+      <xsl:sort/>
+      <xsl:if test="not (.=preceding-sibling::node())">
         <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="$type-name/set"/>
-        <xsl:text>.Collections;&#10;</xsl:text>
-      </xsl:if>
-
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template mode="operation-spec-context" match="*"/>
-
-
-  <!-- Generate subprogram context for bodies. -->
-  <!-- XXX at present, doesn't ensure there's only one of each -->
-  <xsl:template match="class/operation" mode="operation-body-context">
-
-    <!-- The current class. -->
-    <xsl:param name="current"/>
-
-    <!-- Find the names of all the types involved -->
-    <xsl:for-each select="parameter/type | @return">
-
-      <!-- .. sorted, so we can uniqueify them (when I've worked
-           out how) .. -->
-      <xsl:sort select="."/>
-
-      <!-- .. only using those whose names are those of classes in
-           the domain (and not the current class) .. -->
-
-      <xsl:if test="/domain/class/name=. and not(.=$current/name)">
-
-        <xsl:text>with </xsl:text>
-        <xsl:value-of select="/domain/name"/>
+        <xsl:value-of select="$d"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="."/>
         <xsl:text>;&#10;</xsl:text>
-        
       </xsl:if>
-
     </xsl:for-each>
-  </xsl:template>
 
-  <xsl:template mode="operation-body-context" match="*"/>
+  </xsl:template>
 
 
   <!-- called at domain/class to generate subprogram stubs for a class.
