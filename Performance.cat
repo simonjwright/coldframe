@@ -34,6 +34,7 @@
 		    uid        	0)
 		(object Operation "get name"
 		    quid       	"3D3873840382"
+		    stereotype 	"accessor"
 		    result     	"Pets"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -41,6 +42,7 @@
 		    quidu      	"3D36DB980154")
 		(object Operation "set name"
 		    quid       	"3D38739400E6"
+		    stereotype 	"accessor"
 		    parameters 	(list Parameters
 			(object Parameter "to"
 			    quid       	"3EF48524022C"
@@ -407,10 +409,10 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(2341, 896)
+			location   	(2250, 896)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	448
+			max_width  	630
 			justify    	0
 			label      	"Pet")
 		    icon_style 	"Label"
@@ -419,7 +421,7 @@
 		    quidu      	"3D36DB1500E8"
 		    compartment 	(object Compartment
 			Parent_View 	@7
-			location   	(2341, 952)
+			location   	(2250, 952)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -433,13 +435,13 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	7
-			max_width  	452)
-		    width      	466
+			max_width  	628)
+		    width      	648
 		    height     	392
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @8
-		    location   	(1810, 1080)
+		    location   	(1765, 1080)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -451,7 +453,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @9
 			Parent_View 	@8
-			location   	(1810, 1021)
+			location   	(1765, 1021)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -476,7 +478,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "owns" @10
 			    Parent_View 	@8
-			    location   	(1270, 420)
+			    location   	(1225, 420)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -488,7 +490,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @11
 				Parent_View 	@10
-				location   	(2226, 1039)
+				location   	(2145, 1039)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -515,7 +517,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @12
 				Parent_View 	@10
-				location   	(2280, 1119)
+				location   	(2193, 1119)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -536,7 +538,7 @@
 				orientation 	1))
 			(object RoleView "is owned by" @13
 			    Parent_View 	@8
-			    location   	(1270, 420)
+			    location   	(1225, 420)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -548,7 +550,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @14
 				Parent_View 	@13
-				location   	(1441, 1038)
+				location   	(1429, 1038)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -575,7 +577,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @15
 				Parent_View 	@13
-				location   	(1379, 1108)
+				location   	(1372, 1108)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"

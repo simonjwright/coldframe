@@ -4,8 +4,8 @@
 <date>
 <year>2003</year>
 <month>6</month>
-<day>21</day>
-<time>17:42</time>
+<day>22</day>
+<time>18:44</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -57,7 +57,7 @@
 <parameters>
 </parameters>
 </operation>
-<operation>
+<operation stereotype="accessor">
 <name>get name</name>
 <visibility>PublicAccess</visibility>
 <documentation></documentation>
@@ -65,7 +65,7 @@
 <parameters>
 </parameters>
 </operation>
-<operation>
+<operation stereotype="accessor">
 <name>set name</name>
 <visibility>PublicAccess</visibility>
 <documentation></documentation>
