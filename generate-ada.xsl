@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
+<!-- $Id: generate-ada.xsl,v fe65668a78db 2002/05/22 04:25:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -125,6 +125,7 @@
       select="type/operation[@access]"
       mode="access-to-operation">
       <xsl:sort select="name"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
     </xsl:apply-templates>
     <xsl:apply-templates
       select="type/operation[not(@access)]"

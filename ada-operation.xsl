@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
+<!-- $Id: ada-operation.xsl,v fe65668a78db 2002/05/22 04:25:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -969,6 +969,7 @@
   <xsl:template
     match="operation[@access]"
     mode="access-to-operation">
+    <xsl:param name="use-handle" select="'yes'"/>
     <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
@@ -978,6 +979,7 @@
         <xsl:text>function</xsl:text>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$I"/>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -985,12 +987,14 @@
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
           <xsl:with-param name="class" select=".."/>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>procedure</xsl:text>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$IC"/>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
