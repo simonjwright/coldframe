@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 469fb0202bff 2003/05/09 05:07:50 simon $ -->
+<!-- $Id: ada-class.xsl,v 307c4e6da271 2003/05/10 17:38:41 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -943,14 +943,17 @@
       <xsl:text>Id : Identifier;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- .. check that referential attributes are non-null .. -->
-    <!-- XXX good to check they're the right class. -->
+    <!-- .. check that referential attributes are non-null and of the
+         correct type .. -->
     <xsl:if test="attribute[@identifier and @refers]">
 
       <!--
            use type ColdFrame.Instances.Handle;
            pragma Assert
              (With_Identifier.{attr} /= null);
+           pragma Assert
+             (With_Identifier.{attr}.all
+              in {attr-class}.Instance'Class);
            -->
 
       <xsl:value-of select="$II"/>
@@ -962,6 +965,18 @@
         <xsl:text>(With_Identifier.</xsl:text>
         <xsl:call-template name="attribute-name"/>
         <xsl:text> /= null);&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Assert&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>(With_Identifier.</xsl:text>
+        <xsl:call-template name="attribute-name"/>
+        <xsl:text>.all&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> in </xsl:text>
+        <xsl:value-of select="@refers"/>
+        <xsl:text>.Instance'Class);&#10;</xsl:text>
+
       </xsl:for-each>
     </xsl:if>
 
