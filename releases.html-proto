@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 7aaa96be8500 2004/05/20 15:11:49 simon $ -->
+<!-- $Id: releases.html-proto,v 863e31e34b5e 2004/05/23 18:17:14 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -41,6 +41,11 @@ register/deregister oprations aren't task-safe).
 newly-allocated memory with an obviously bad pattern
 (<tt>16#deadbeef#</tt>), now refill just-freed memory with the same
 pattern.
+
+
+<p>An <a href="http://xml.coverpages.org/schemas.html">XML Schema</a>
+is now <a href="ColdFrame.xsd">supplied</a> for ColdFrame's
+"normalized" XML.
 
 
 <p><dt>20040319
