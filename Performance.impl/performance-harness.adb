@@ -14,6 +14,8 @@ with Performance.Event_Timing;
 
 with ColdFrame.Instances;
 with ColdFrame.Project.Events;
+with ColdFrame.Exceptions.Symbolic_Traceback;
+pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
 
 with High_Resolution_Time; use High_Resolution_Time;
 
