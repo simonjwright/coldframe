@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8ff199e0b093 2002/06/11 18:59:05 simon $ -->
+<!-- $Id: bugs.html,v dc4437ab01ce 2002/06/25 18:34:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -191,7 +191,42 @@ would only make sense if they have operations, I suppose).
 be identified more precisely ("unnamed role in association" isn't very
 good!)
 
-<!-- next: 0092 -->
+<dt>0092 (raised 24.vi.02)
+
+<dd>There's no <tt>Tear_Down</tt> for Event management.
+
+<dt>0093 (raised 24.vi.02)
+
+<dd>Deleting an instance may hang if there are no timed events
+outstanding.
+
+<dt>0094 (raised 24.vi.02)
+
+<dd>It's not possible to have automatically-generated accessors for
+class variables.
+
+<dt>0095 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s are generated even if they're
+marked &#171;generated&#187; (which means that they're operations that
+ColdFrame generates automatically).
+
+<dt>0096 (raised 25.vi.02)
+
+<dd>Operations of &#171;type&#187;s don't compile.
+
+<dt>0097 (raised 25.vi.02)
+
+<dd>All the Events that transition to a State with an Action with a
+parameter must be the same. It would be helpful if this could be
+changed to "must carry the same payload".
+
+<dt>0098 (raised 25.vi.02)
+
+<dd>Multiple delayed events which are required to fire at the same
+time will result in a <tt>delay&nbsp;0.0</tt> between each.
+
+<!-- next: 0099 -->
 
 <h2>8.vi.02</h2>
 
