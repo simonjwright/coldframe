@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 7c9483a18bda 2004/04/23 14:24:54 simon $ -->
+<!-- $Id: ada-state.xsl,v 934f180d060f 2004/04/24 20:24:39 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -590,7 +590,17 @@
             <xsl:text>.</xsl:text>
             <xsl:value-of select="$event"/>
             <xsl:text>'s payload is of the wrong type (</xsl:text>
-            <xsl:value-of select="$class/event[name=$event]/type"/>
+            <xsl:variable
+              name="payload"
+              select="$class/event[name=$event]/type"/>
+            <xsl:choose>
+              <xsl:when test="$payload">
+                <xsl:value-of select="$payload"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>null</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="$action"/>
             <xsl:text> expects </xsl:text>
