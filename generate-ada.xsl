@@ -1,4 +1,4 @@
-<!-- SId$ -->
+<!-- $Id: generate-ada.xsl,v 3506d5592d5e 2001/01/07 09:57:23 simon $ -->
 <!-- Generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -108,29 +108,41 @@
 
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/object" mode="object-spec">
-    <xsl:call-template name="object-context"/>
+    <xsl:call-template name="object-spec-context"/>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>  Key : constant String := &quot;</xsl:text>
     <xsl:value-of select="key"/>
     <xsl:text>&quot;;&#10;</xsl:text>
-    <xsl:text>  type T is private;&#10;</xsl:text>
+    <xsl:call-template name="identifier-record"/>
+    <xsl:call-template name="instance-record"/>
     <xsl:apply-templates mode="operation-spec"/>
     <xsl:text>private&#10;</xsl:text>
-    <xsl:call-template name="instance-record"/>
+    <xsl:text>  function Hash (Id : Identifier) return Positive;&#10;</xsl:text>
+    <xsl:text>  package Abstract_Containers is new BC.Containers (Identifier);&#10;</xsl:text>
+    <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Instance);&#10;</xsl:text>
+    <xsl:text>  package Maps is new Abstract_Maps.Unbounded_Map&#10;</xsl:text>
+    <xsl:text>     (Buckets => 43,&#10;</xsl:text>
+    <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+    <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
-  <!-- Called from domain/object to generate context clauses -->
-  <xsl:template name="object-context">
+  <!-- Called from domain/object to generate context clauses for package
+       spec -->
+  <xsl:template name="object-spec-context">
     <xsl:if test="attribute/type='Unbounded_String'
-                  or operation/parameter/type='Unbounded_String'">
+                  or operation/parameter/type='Unbounded_String'
+                  or attribute/type='Text'
+                  or operation/parameter/type='Text'">
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
+    <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
+    <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
   </xsl:template>
 
   <!-- Called from domain/object to generate subprogram specs -->
@@ -143,15 +155,37 @@
 
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/object" mode="object-body">
-    <xsl:if test="operation">
-      <xsl:text>package body </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text> is&#10;</xsl:text>
-      <xsl:apply-templates mode="operation-body"/>
-      <xsl:text>end </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="object-body-context"/>
+    <xsl:text>package body </xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>  function Hash (Id : Identifier) return Positive is separate;&#10;</xsl:text>
+    <xsl:apply-templates mode="operation-body"/>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="hash-function"/>
+  </xsl:template>
+
+  <!-- Called from domain/object to generate context clauses for package
+       body -->
+  <xsl:template name="object-body-context">
+  </xsl:template>
+
+  <!-- Called from domain/object to generate the separate hash function -->
+  <xsl:template name="hash-function">
+    <!-- This needs to recognise Bounded String usage, too -->
+    <xsl:if test="attribute/type/@identifier/..='Unbounded_String'
+                  or attribute/type/@identifier/..='Text'">
+      <xsl:text>with Architecture.String_Hash;&#10;</xsl:text>
     </xsl:if>
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:text>function Hash (Id : Identifier) return Positive is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:text>  return 0;&#10;</xsl:text>
+    <xsl:text>end Hash;&#10;</xsl:text>
   </xsl:template>
 
   <!-- Called from domain/object to generate separate subprogram bodies -->
@@ -162,7 +196,8 @@
     <xsl:text> is separate;&#10;</xsl:text>
    </xsl:template>
 
-  <!-- Generate the separate bodies of operations. -->
+  <!-- Generate the separate bodies of operations. The bodies are
+       compilable but generate Program_Error if called. -->
   <xsl:template match="domain/object/operation" mode="operation-separate">
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>.<xsl:value-of select="../name"/>
@@ -262,7 +297,7 @@
       <xsl:when test="$type='String'">
         <xsl:text>""</xsl:text>
       </xsl:when>
-      <xsl:when test="$type='Unbounded_String'">
+      <xsl:when test="$type='Unbounded_String' or $type='Text'">
         <xsl:text>Null_Unbounded_String</xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -283,19 +318,36 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Called from domain/object to generate the actual identifier
+       record for the class. -->
+  <xsl:template name="identifier-record">
+    <xsl:choose>
+      <xsl:when test="count(attribute/@identifier) &gt; 0">
+        <xsl:text>  type Identifier is record&#10;</xsl:text>
+        <xsl:apply-templates
+          mode="instance-record-component"
+          select="attribute/@identifier/.."/>
+        <xsl:text>  end record;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>  type Identifier is null record;&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <!-- Called from domain/object to generate the actual instance
        record for the class. -->
   <xsl:template name="instance-record">
     <xsl:choose>
       <xsl:when test="count(attribute) &gt; 0">
-        <xsl:text>  type T is record&#10;</xsl:text>
+        <xsl:text>  type Instance is record&#10;</xsl:text>
         <xsl:apply-templates
           mode="instance-record-component"
           select="attribute"/>
         <xsl:text>  end record;&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>  type T is null record;&#10;</xsl:text>
+        <xsl:text>  type Instance is null record;&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -330,7 +382,14 @@
   <!--- none at present -->
   <xsl:template name="type-name">
     <xsl:param name="type"/>
-    <xsl:value-of select="$type"/>
+    <xsl:choose>
+      <xsl:when test="$type='Text'">
+        <xsl:text>Unbounded_String</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$type"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Catch unspecified default matches -->
