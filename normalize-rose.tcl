@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e43a54de1340 2003/11/15 08:17:58 simon $
+# $Id: normalize-rose.tcl,v a0620e4829ec 2003/12/12 22:10:08 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -418,7 +418,12 @@ itcl::class String {
                 if {[string length $val] == 0} {
                     set val true
                 }
-                [stack -top] -tag [string trim $tag] [string trim $val]
+                set tag [string trim $tag]
+                if [regexp "\[^-_a-zA-Z\]" $tag] {
+                    Error "illegal tag name in {[string trim $t]}"
+                } else {
+                    [stack -top] -tag $tag [string trim $val]
+                }
             }
             # strip out any property lists
             regsub -all "\{\[^}\]*\}" $text "" text
@@ -518,7 +523,7 @@ itcl::class Element {
             foreach t [array names tags] {
                 set tag [string tolower $t]
                 if [catch {$this -$tag $tags($t)}] {
-                    Warning \
+                    Info \
                         "{$tag=$tags($t)} not handled in $name"
                 } else {
                     unset tags($t)
@@ -608,7 +613,7 @@ itcl::class Element {
             for {} {[regexp -nocase $p $s wh n opt v]} {} {
                 # n is the tag name, v the tag value if any
                 if [catch {$this -[join [split [string tolower $n]] "-"] "$v"}] {
-                    Warning \
+                    Info \
                         "stereotype not handled,\
                         \"$name <<[string tolower $n]>>\""
                 }
@@ -1325,9 +1330,9 @@ itcl::class Class {
             $dt -documentation $documentation
             $dt -annotation $annotation
             if [info exists tags] {
-		foreach t [array names tags] {
-		    $dt -tag $t $tags($t)
-		}
+                foreach t [array names tags] {
+                    $dt -tag $t $tags($t)
+                }
             }
             if [info exists callback] {
                 $dt -callback $callback
@@ -2332,14 +2337,14 @@ itcl::class Datatype {
 
     # called when there were tags in the datatype
     method -tag {t v} {
-	set tags($t) $v
-	set tag [string tolower $t]
-	if [catch {$this -$tag $v}] {
-	    Warning \
-		"{$tag=$v} not handled in $type"
-	} else {
-	    unset tags($t)
-	}
+        set tags($t) $v
+        set tag [string tolower $t]
+        if [catch {$this -$tag $v}] {
+            Info \
+                "{$tag=$v} not handled in $type"
+        } else {
+            unset tags($t)
+        }
     }
 
     method -className {} {return "datatype"}
@@ -2916,6 +2921,10 @@ proc Message {str} {
     if $verbose {
         puts stderr $str
     }
+}
+
+proc Info {str} {
+#    puts stderr "Info: $str"
 }
 
 proc Warning {str} {
