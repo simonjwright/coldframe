@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d03dfef789ea 2001/06/20 19:15:10 simon $ -->
+<!-- $Id: ada-class.xsl,v 416bac71f85a 2001/06/21 19:29:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -97,7 +97,11 @@
 
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
-    
+ 
+    <xsl:if test="@interface">
+        <xsl:text>  type Instance;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:if test="@active">
       <xsl:call-template name="task-spec"/>
     </xsl:if>
@@ -278,7 +282,11 @@
         </xsl:for-each>
         
         <!-- Handle subprograms. -->
-        <xsl:apply-templates mode="operation-context" select="$ancestors"/>
+        <xsl:apply-templates
+          mode="operation-context"
+          select="$ancestors/operation">
+          <xsl:with-param name="current" select="name"/>
+        </xsl:apply-templates>
 
       </xsl:otherwise>
 
