@@ -2,10 +2,10 @@
 <extractor>cf-DATE</extractor>
 <name>Digital IO</name>
 <date>
-<year>2004</year>
-<month>11</month>
-<day>11</day>
-<time>15:06</time>
+<year>2005</year>
+<month>3</month>
+<day>2</day>
+<time>21:23</time>
 </date>
 <documentation><![CDATA[ Copyright (C) Simon Wright <simon@pushface.org>
 
@@ -14,7 +14,7 @@ This package is free software; you can redistribute it and/or modify it under te
 This domain manages digital (discrete) input/output.
 It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 
-{ revision = $Revision: fb15fbf96993 $ } ]]></documentation>
+{ revision = $Revision: b592a1c68ebe $ } ]]></documentation>
 <classes>
 <class>
 <name>Signal</name>
@@ -129,35 +129,6 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
 <events>
 </events>
 </class>
-<class stereotype="callback">
-<name>Signal State</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ Provides application domains with callback facilities for input signal state changes.
- ]]></documentation>
-<attributes>
-<attribute>
-<name>s</name>
-<visibility>PrivateAccess</visibility>
-<documentation><![CDATA[ The name of the signal that has changed. ]]></documentation>
-<type>Signal Name</type>
-<initial></initial>
-</attribute>
-<attribute>
-<name>state</name>
-<visibility>PrivateAccess</visibility>
-<documentation><![CDATA[ The state that the signal has changed to. ]]></documentation>
-<type>Boolean</type>
-<initial></initial>
-</attribute>
-</attributes>
-<operations>
-</operations>
-<events>
-</events>
-</class>
 <class stereotype="public">
 <name>Application</name>
 <visibility>PublicAccess</visibility>
@@ -188,6 +159,32 @@ State changes are visible via callback on Signal State. ]]></documentation>
 </parameter>
 </parameters>
 </operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Signal Name</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ Names the supported digital signals.
+The 'floor' signals are inputs, the 'lamp' signals are outputs.
+
+{ enumeration =
+floor 0 |
+floor 1 |
+floor 2 |
+floor 3 |
+lamp a |
+lamp b |
+lamp c |
+lamp d
+} ]]></documentation>
+<attributes>
+</attributes>
+<operations>
 </operations>
 <events>
 </events>
@@ -239,26 +236,29 @@ State changes are visible via callback on Signal State. ]]></documentation>
 <events>
 </events>
 </class>
-<class stereotype="type">
-<name>Signal Name</name>
+<class stereotype="callback">
+<name>Signal State</name>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[ Names the supported digital signals.
-The 'floor' signals are inputs, the 'lamp' signals are outputs.
-
-{ enumeration =
-floor 0 |
-floor 1 |
-floor 2 |
-floor 3 |
-lamp a |
-lamp b |
-lamp c |
-lamp d
-} ]]></documentation>
+<documentation><![CDATA[ Provides application domains with callback facilities for input signal state changes.
+ ]]></documentation>
 <attributes>
+<attribute>
+<name>s</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ The name of the signal that has changed. ]]></documentation>
+<type>Signal Name</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>state</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ The state that the signal has changed to. ]]></documentation>
+<type>Boolean</type>
+<initial></initial>
+</attribute>
 </attributes>
 <operations>
 </operations>
