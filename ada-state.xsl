@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v bb2ed825e600 2004/04/22 22:06:40 simon $ -->
+<!-- $Id: ada-state.xsl,v 159f6735a2b6 2004/04/22 22:10:26 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -535,9 +535,9 @@
         <xsl:message>
           <xsl:text>Error: no operation for </xsl:text>
           <xsl:value-of select="$class/name"/>
-          <xsl:text>.</xsl:text>
+          <xsl:text>, state </xsl:text>
           <xsl:value-of select="../name"/>
-          <xsl:text>, </xsl:text>
+          <xsl:text>, action </xsl:text>
           <xsl:value-of select="$operation"/>
         </xsl:message>
       </xsl:when>
