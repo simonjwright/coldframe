@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 815f6db60586 2003/05/17 17:08:16 simon $
+# $Id: normalize-rose.tcl,v da92b04afe95 2003/06/06 10:37:55 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1164,6 +1164,8 @@ itcl::class Class {
 
     variable discriminated 0
 
+    variable protected 0
+
     variable extends
 
     variable serializable 0
@@ -1184,6 +1186,13 @@ itcl::class Class {
     method -counterpart {dummy} {
 	$this -type 1
 	set counterpart 1
+    }
+
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is a protected type
+    method -protected {dummy} {
+	$this -type 1
+	set protected 1
     }
 
     # called (via annotation or stereotype mechanism) to indicate that this
@@ -1254,6 +1263,9 @@ itcl::class Class {
 	if {$isType && [$attributes -size] == 0} {
 	    if $discriminated {
 		Error "discriminated type [$this -getName] has no attributes"
+	    }
+	    if $protected {
+		Error "protected type [$this -getName] has no attributes"
 	    }
 	    if [info exists extends] {
 		Error "tried to extend [$this -getName],\
@@ -1330,6 +1342,9 @@ itcl::class Class {
 	    }
 	    if $discriminated {
 		puts -nonewline " discriminated=\"yes\""
+	    }
+	    if $protected {
+		puts -nonewline " protected=\"yes\""
 	    }
 	    if [info exists extends] {
 		puts -nonewline " extends=\"$extends\""
