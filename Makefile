@@ -227,7 +227,6 @@ generation.html \
 index.html \
 installation.html \
 operation-parameters.html \
-operation-results.html \
 operations.html \
 preparation.html \
 principles.html \
