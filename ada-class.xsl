@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 1a09ce2fd6b9 2002/09/15 18:52:24 simon $ -->
+<!-- $Id: ada-class.xsl,v d855378b8188 2002/09/15 18:56:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1245,9 +1245,13 @@
         </xsl:for-each>
         <xsl:text>));&#10;</xsl:text>
 
+        <!-- .. clean up any events .. -->
+        <xsl:if test="statemachine">
+          <xsl:value-of select="$II"/>
+          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>          
+        </xsl:if>
+
         <!-- .. and free the instance. -->
-        <xsl:value-of select="$II"/>
-        <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
@@ -1260,7 +1264,7 @@
         <xsl:value-of select="name"/>
         <xsl:text>.This := null;&#10;</xsl:text>
 
-        <!-- Clean up any events. -->
+        <!-- .. clean up any events .. -->
         <xsl:if test="statemachine">
           <xsl:value-of select="$II"/>
           <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>          
