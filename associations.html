@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v 29b642712ce1 2003/01/19 19:40:28 simon $ -->
+<!-- $Id: associations.html,v 373edfa5f968 2003/03/30 15:16:41 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -109,11 +109,60 @@ association, with its associative class).
 
 </ul>
 
+<h3>Linking</h3>
+
+<p>All association packages include a <tt>Link</tt> operation. In the
+case of the Library example <a href="#simple-association">below</a>,
+this would be
+<pre>
+   procedure Link
+     (Is_On_Loan_To : Borrower.Handle;
+      Is_Borrowing : Book.Handle);
+</pre>
+
+<p>whereas if the association had had an association class <i>Current
+Loan</i> (not a bad idea; where else would you put the date when the
+book is due for return?) the <tt>Link</tt> operation would be a
+function:
+<pre>
+   function Link
+     (Is_On_Loan_To : Borrower.Handle;
+      Is_Borrowing : Book.Handle)
+     return Current_Loan.Handle;
+</pre>
+
+<h3>Unlinking</h3>
+
+<p>All association packages include an <tt>Unlink</tt> operation. In
+the case of the Library example <a
+href="#simple-association">below</a>, this would be
+<pre>
+   procedure Unlink
+     (Is_On_Loan_To : Borrower.Handle;
+      Is_Borrowing : Book.Handle);
+</pre>
+
+<p>whereas if the association had had an association class <i>Current
+Loan</i> the <tt>Unlink</tt> operation would be
+<pre>
+   procedure Unlink
+     (Current_Loan_Handle : Current_Loan.Handle);
+</pre>
+
+<p>Note that in this case <tt>Unlink</tt> doesn't actually delete the
+association instance; this is because you may have cleaning-up jobs to
+do (unlinking other associations with the association instance, for
+example).
+
+<h3>Finding</h3>
+
 <p>For associations with an associative class, a <tt>Find</tt>
 operation is generated in <tt><i>Domain.Association</i></tt> which,
 given the handles of two potentially associated instances, returns the
 corresponding associative instance's handle (or <tt>null</tt>, of
 course).
+
+<h3>Referential attributes</h3>
 
 <p>The implementing referential attrubute, and its assciated "get",
 "set" operations are in the public part of the class package but
@@ -125,19 +174,19 @@ aren't intended for general use; use the
 from the class in which the referential attribute is
 implemented.
 
-<p>Normally you have no choice; for example, in a <i>1:m</i>
-association, ColdFrame puts the referential attribute at the
-<i>many</i> end. However, in <a href="#symmetric">symmetric
-associations</a>, you should put the required
-<tt>[[&nbsp;source&nbsp;]]</tt> annotation on the end that you want to
-be able to get to more efficiently.
+<p>Normally you have no choice on where the referential attributes go;
+for example, in a <i>1:m</i> association, ColdFrame puts the
+referential attribute at the <i>many</i> end. However, in <a
+href="#symmetric">symmetric associations</a>, you should put the
+required <tt>[[&nbsp;source&nbsp;]]</tt> annotation on the end that
+you want to be able to get to more efficiently.
 
 <h2><a name="use">Use</a></h2>
 
 <p>It can be difficult to work out which of the navigation operations
 you need to use.
 
-<p><img src="simple-association.png">
+<p><a name="simple-association"><img src="simple-association.png"></a>
 
 <p>In the diagram, <tt><i>Domain</i>.A2</tt> has two navigation
 operations:
