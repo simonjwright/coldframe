@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c44e7e785c75 2002/01/17 20:00:38 simon $ -->
+<!-- $Id: bugs.html,v da97823607b7 2002/01/24 20:23:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -60,12 +60,6 @@ active classes, where procedure operations turn into task entries).
 
 <dd>It would be a good thing if illegal characters in names were detected.
 
-<dt>0026 (raised 4.x.01)
-
-<dd>It should probably be possible for an operation to take or return
-a collection of its own class. At present this gives rise to a cyclic
-dependency.
-
 <dt>0027 (raised 5.x.01)
 
 <dd>For attributes and operation parameters, it would be good to
@@ -78,12 +72,6 @@ parameters (or are &#171;class&#187; operations, though you would have
 to work hard to make one both!) are silently <em>not</em> called at
 finalization. There are other instances of bad usage which need
 reporting (perhaps in a separate pass?)
-
-<dt>0033 (raised 30.x.01)
-
-<dd>The generated HTML for <i>&#171;class&#187; op (this : Class)</i>
-is <tt>ColdFrame.Instances.Handle</tt>; should be just
-<tt>Handle</tt>.
 
 <dt>0035 (raised 1.xi.01)
 
@@ -136,22 +124,58 @@ package.
 
 <dd>The generated HTML doesn't report default parameter values.
 
-<dt>0058 (raised 16.i.02)
-
-<dd>The installable Makefiles (<tt>Makefile-winnt</tt>,
-<tt>Makefile-unix</tt>) ought to make code generation depend on the
-user <tt>Makefile</tt>; because she can change macro values in it.
-
 <dt>0059 (raised 16.i.02)
 
 <dd>It would be proper to use UML tagged values instead of
-<tt>[[&nbsp;]]</tt>annotations.
+<tt>[[&nbsp;]]</tt> annotations.
 
-<!-- next: 0061 -->
+<dt>0061 (raised 23.i.02)
+
+<dd>The supplied Windows makefile (<tt>Makefile-winnt</tt>) assumes
+software is installed on the <tt>D:</tt> drive; better if the default
+was <tt>C:</tt>.
+
+<dt>0062 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify constants.
+
+<dt>0063 (raised 23.i.02)
+
+<dd>It would be useful to be able to specify class variables.
+
+<dt>0064 (raised 23.i.02)
+
+<dd>There's no documentation on how to set up the Makefiles, how to
+use on Linux vs Windows etc.
+
+<!-- next: 0065 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>24.i.02</h3>
+
+<dl>
+
+<dt>0026 (raised 4.x.01)
+
+<dd>It should probably be possible for an operation to take or return
+a collection of its own class. At present this gives rise to a cyclic
+dependency.<br>
+
+<i>"Fix" is to withdraw the <tt>[[set]]</tt> facility. The way to get
+hold of collections of instances is to use the <tt>All_Instances</tt>,
+<tt>Selection/Filter_Function</tt>, and association navigation
+facilities.</i>
+
+<dt>0033 (raised 30.x.01)
+
+<dd>The generated HTML for <i>&#171;class&#187; op (this : Class)</i>
+is <tt>ColdFrame.Instances.Handle</tt>; should be just
+<tt>Handle</tt>.
+
+</dl>
 
 <h3>17.i.02</h3>
 
@@ -199,7 +223,7 @@ the grandchildren are processed, resulting in failed normalization.
 <dt>0052 (raised 2.i.02)
 
 <dd>The Makefiles expect a Case Exception File, and normalization
-fails if it's not present.
+fails if it's not present.<br>
 
 <dt>0053 (raised 2.i.02)
 
