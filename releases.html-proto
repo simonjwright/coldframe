@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1931357cf02d 2005/01/31 16:56:18 simon $ -->
+<!-- $Id: releases.html-proto,v 80ff6d1e009f 2005/02/10 05:16:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -125,6 +125,13 @@ if you find it clearer.
 previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
 <tt>Tear_Down</tt> are now named <tt>CF_Class_Initialize</tt> and
 <tt>CF_Tear_Down</tt> respectively.
+
+
+<p>You can change the generated top-level package name of a domain,
+using <i>{ name = New Name }</i>.
+
+
+<p>You can use attributes in values (initial values, bounds).
 
 
 <p><dt>20040319
