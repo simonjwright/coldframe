@@ -19,21 +19,32 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-callbacks.ads,v 35e50a57c3b6 2001/05/11 19:18:50 simon $
+-- $Id: coldframe-callbacks.ads,v 878685b75ce7 2001/05/17 04:39:19 simon $
 
-with BC.Containers;
+with BC.Containers.Collections.Bounded;
+
 generic
-   type T is limited private;
-   type P is access procedure (The_T : T);
-   with package Callback_Containers is new BC.Containers (P);
-   type Container is new Callback_Containers.Container with private;
-   with procedure Add (To : in out Container; The_Procedure : P) is <>;
-   with procedure Remove (From : in out Container; The_Procedure : P) is <>;
+  type T is limited private;
+  Maximum_Size : Positive;
 package ColdFrame.Callbacks is
-   procedure Register (The_Procedure : P);
-   procedure Deregister (The_Procedure : P);
-   procedure Call_Registered_Procedures (With_The_T : T);
+  
+  pragma Elaborate_Body;
+  
+  -- The Callback Procedure type
+  type Callback is access procedure (The_T : T);
+  
+  -- Called to register Proc to receive callbacks
+  procedure Register (Proc : Callback);
+  
+  -- Called to stop Proc receiving callbacks
+  procedure Deregister (Proc : Callback);
+  
+  -- Call all the registered callback preocedures with With_Param
+  procedure Call_Callbacks (With_Param : T);
+  
 private
-   The_Registered_Procedures : Container;
+  package Abstract_Containers is new BC.Containers (Callback);
+  package Abstract_Collections is new Abstract_Containers.Collections;
+  package Collections is new Abstract_Collections.Bounded
+     (Maximum_Size => Maximum_Size);
 end ColdFrame.Callbacks;
-
