@@ -252,7 +252,6 @@
   <xsl:template name="event-teardown-body">
     
     <xsl:call-template name="do-not-edit"/>
-    <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
