@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 5a6ffbc55904 2002/11/07 05:43:49 simon $ -->
+<!-- $Id: domains.html,v 3b4fbc32838e 2002/11/14 20:56:36 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -72,10 +72,22 @@ children of the domain package.
 <dd>Provides <a href="events.html">Event</a> queueing and dispatching.
 
 <dt><tt><i>Domain</i>.Initialize</tt>
-<dd>Initializes the domain by calling
-<tt><i>Domain</i>.Events.Initialize</tt> and then all the
-<em>&#171;init&#187;</em> operations of all the classes. The calls are
-in alphabetical order by class and then by operation.
+<dd>Initializes the domain by
+
+<ol>
+
+<li>initializing the domain's Event Queue by calling
+<tt>Events.Initialize</tt>,
+
+<li>initializing all class attributes and singletons via
+<tt><i>Class</i>.Class_Initialize</tt>,
+
+<li>and then calling all the
+<em>&#171;init&#187;</em> operations of all the classes.
+
+</ol>
+
+The calls are in alphabetical order by class and then by operation.
 
 <!-- XXX need to check about singletons and tasks. -->
 
@@ -93,9 +105,9 @@ and associations.
 program. Because it's a child, it must be <tt>with</tt>ed explicitly.
 
 <p>Because all the packages in a domain are implemented as children,
-you don't need to mention the domain package when referencing other
-packages (you do need to mention the domain in the context clauses,
-though):
+you hardly ever need to mention the domain package when referencing
+other packages (you do need to mention the domain in the context
+clauses, though):
 
 <pre>
    <b>with <i>Domain.Other_Class</i>;</b>
