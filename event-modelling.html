@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: event-modelling.html,v 675e746dbde3 2002/09/07 17:32:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -41,7 +41,7 @@ make complete state models. The basic idea is that it's better to have
 a small language that you understand completely rather than a bigger
 but vaguer language.
 
-<h3>Example model</h3>
+<h3><a name="example-model">Example model</a></h3>
 
 <p><a name="lamp-state.gif"><img src="lamp-state.gif"></a>
 
@@ -53,7 +53,7 @@ we'd need some more intermediate states if not.
 on for a period of time after being switched on by a pushbutton, and
 you can extend the period by pushing again while it's still on.
 
-<ol type="alpha">
+<ol>
 
 <li>The state model starts at the <i>initial</i> state (the black
 spot). Since the transition from the <i>initial</i> state is
@@ -70,17 +70,17 @@ and <i>set timeout</i> are executed, in the order shown in the
 model. It would be possible for the timeout period to be controlled by
 a Lamp instance variable, if required.
 
-<li>If no further user action occurs, the timeout set at step d
+<li>If no further user action occurs, the timeout set at step 4
 occurs, and the state model transitions back to the <i>off</i> state
-(step b).
+(step 2).
 
 <li>If on the other hand the user pushes the button again, the state
 model transitions to the <i>resetting</i> state.
 
 <li>On entry to the <i>resetting</i> state, the entry action <i>clear
-timeout</i> is called to cancel the timeout set in step d. Because
+timeout</i> is called to cancel the timeout set in step 4. Because
 there is no guard, the model immediately transitions back to state
-<i>on</i> (step d).
+<i>on</i> (step 4).
 
 </ol>
 
@@ -175,10 +175,11 @@ timeout</i> and <i>clear timeout</i> correspond to the entry actions
 on the statechart.
 
 <p>Instance entry actions can have a single parameter (aside from the
-implicit <tt>This</tt>): if you specify it, it must be of the event
-type that causes entry to the state concerned, and the actual event
-will be passed at run time. This means you can't use this feature if
-more than one event type can cause entry to the state.
+implicit <tt>This</tt>): if you specify it, it must be of the type of
+the payload of the event that causes entry to the state concerned, and
+the actual payload will be passed at run time. This means that if you
+use this feature, all the events that cause entry to the state must
+carry the same payload type.
 
 <p>The instance attribute <i>timeout</i>, of the ColdFrame-special
 type <i>Timer</i>, is used to hold timeouts. The concept of operation

@@ -1,10 +1,71 @@
-<!-- $Id: event-translation.html,v d2a221e6481f 2002/04/21 14:04:45 simon $ -->
+<!-- $Id: event-translation.html,v 675e746dbde3 2002/09/07 17:32:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
 </head>
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Event translation</h1>
+
+<h2>Events</h2>
+
+<p>Each event is mapped to a distinct type, derived from
+<tt>ColdFrame.Project.Events.Event_Base</tt>. Instance events are
+derived from <tt>Instance_Event_Base</tt>, a child of
+<tt>Event_Base</tt> which is constrained by an access to the instance
+to which the event is directed.
+
+<p>For a class event, this results in
+<pre>
+   type Wait
+   is new ColdFrame.Project.Events.Event_Base with null record;
+</pre>
+
+<p>and for an instance event, in
+<pre>
+   type Done (For_The_Instance : access Instance)
+   is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+   with null record;
+</pre>
+
+<p>If the event has a payload, it translates to an extension component
+of the type concerned, named <tt>Payload</tt>:
+<pre>
+   type Info
+   is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Message;
+   end record;
+</pre>
+
+<h2>States</h2>
+
+<p>The states in the state model are translated as a private
+enumeration type, <tt>State_Machine_State_T</tt>. The initial state
+(by default <tt>Initial</tt>) is the first literal.
+
+<p><a href="event-modelling.html#example-model">In the example</a>,
+the type would be
+<pre>
+   type State_Machine_State_T is
+     (Initial,
+      Off,
+      On,
+      Resetting);
+</pre>
+
+<p>The instance state is represented by a created instance variable
+<pre>
+   State_Machine_State : State_Machine_State_T := Initial;
+</pre>
+
+<p>This is not intended to be made directly visible outside the
+class. Instead, it's expected that you'll test it within operations
+and return an appropriate result:
+<pre>
+   function Is_On (This : Handle) return Boolean is
+   begin
+      return This.State_Machine_State = On;
+   end Is_On;
+</pre>
 
 <hr>
 <i>

@@ -1,10 +1,53 @@
-<!-- $Id: event-use.html,v d2a221e6481f 2002/04/21 14:04:45 simon $ -->
+<!-- $Id: event-use.html,v 675e746dbde3 2002/09/07 17:32:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
 </head>
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Event use</h1>
+
+The typical code for posting an event <tt>Ev</tt> is
+<pre>
+   ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+</pre>
+
+<p>Clearly <tt>Ev</tt> has to be created. If it's a class event of
+type <tt>Wait</tt> to class <i>Class</i>, this would be
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Wait;
+</pre>
+
+<p>whereas if it's an instance event, and we have a handle <tt>H</tt>,
+it would be
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Done (H);
+</pre>
+
+<p>If you need to set the payload, add a renaming:
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Info;
+   Payload : Message renames Class.Info (Ev.all).Payload;
+</pre>
+
+<p>(<tt>Ev.all</tt> is of type
+<tt>ColdFrame.Project.Events.Event_Base'Class</tt>, <tt>Class.Info
+(Ev.all)</tt> is a view conversion to <tt>Class.Info</tt>), after
+which you can set up the payload before posting the event.
+
+<p>In total,
+<pre>
+   declare
+      Ev : constant ColdFrame.Project.Events.Event_P
+	:= new Class.Info;
+      Payload : Message renames Class.Info (Ev.all).Payload;
+   begin
+      Payload := Some_Value;
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+   end;
+</pre>
 
 <hr>
 <i>
