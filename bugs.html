@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 2e66c64ccdb8 2002/03/06 05:00:07 simon $ -->
+<!-- $Id: bugs.html,v 151d4c0b3665 2002/03/09 09:54:21 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -134,6 +134,27 @@ package.
 easy to reconcile with use in Makefiles. Probably needs to use an
 environment variable.
 
+<dt>0067 (raised 5.iii.02)
+
+<dd>If the action associated with a timed event sets the just-fired
+timer again, there's a race condition which can result in a Use_Error
+exception.
+
+<dt>0068 (raised 6.iii.02)
+
+<dd>It would be useful to be able to specify subtypes (eg, of
+enumerations).
+
+<!-- next: 0070 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>9.iii.02</h3>
+
+<dl>
+
 <dt>0066 (raised 5.iii.02)
 
 <dd>Making generated real types <tt>new</tt> will mean lots of
@@ -141,17 +162,13 @@ instantiations of
 <tt>Ada.Numerics.Generic_Elementary_Functions</tt>. Perhaps subtypes
 of <tt>Float</tt>, <tt>Long_Float</tt> would be better.
 
-<dt>0067 (raised 5.iii.02)
+<dt>0069 (raised 8.iii.02)
 
-<dd>If the action associated with a timed event sets the just-fired
-timer again, there's a race condition which can result in a Use_Error
-exception.
-
-<!-- next: 0068 -->
+<dd>If an association is formalized using <tt>[[formalizes]]</tt> the
+association package doesn't <tt>with</tt> the necessary
+<tt>Selection_Function</tt>.
 
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>4.iii.02</h3>
 
