@@ -1,6 +1,11 @@
 # Copyright (c) 2001 Simon Wright <simon@pushface.org>
 # $Id$
 
+ITCLSH = /usr/bin/itclsh3.1
+TCLXML = $(HOME)/TclXML-1.2
+
+SAXON = java com.icl.saxon.StyleSheet
+
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
@@ -9,13 +14,11 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-class.xsl \
   ada-collection.xsl \
   ada-operation.xsl \
+  ada-relation.xsl \
   ada-utilities.xsl
 
-ITCLSH = itclsh3.1
-SAXON = java com.icl.saxon.StyleSheet
-
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT)
-	$(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
@@ -23,7 +26,7 @@ SAXON = java com.icl.saxon.StyleSheet
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
 
-%: %.ada
+%.gen: %.ada
 	-mkdir $@
 	rm -f $@/*.ad[bs]
 	gnatchop $< $@
@@ -80,11 +83,21 @@ coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
-PROGS = COPYING Makefile \
+# This is the published makefile for development of ColdFrame itself.
+# Other makefiles are
+# * Makefile-winnt for inclusion in a user makefile under Windows
+# * Makefile-unix for inclusion in a user makefile under Unix.
+
+Makefile-cf: Makefile
+	cp -p $< $@
+
+PROGS = COPYING \
+  Makefile-cf Makefile-unix Makefile-winnt \
   ddf.ebs \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS)
+
 SUPPORT = architecture*.ad[bs]
 
 DEMO = Problem_Reporting.cat Problem_Reporting.raw \
