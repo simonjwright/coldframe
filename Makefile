@@ -387,11 +387,11 @@ coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
 Event_Test.cat Event_Test.raw \
-Event_Test.gpr \
-Event_Test.impl/debugging.ads \
+Event_Test.gpr Event_Test_Test.gpr \
+Event_Test.test/debugging.ads \
 Event_Test.impl/event_test-events-initialize.adb \
-Event_Test.impl/event_test-harness.adb \
-Event_Test.impl/event_test-harness.ads \
+Event_Test.test/event_test-harness.adb \
+Event_Test.test/event_test-harness.ads \
 Event_Test.impl/event_test-machine-handle_mark.adb \
 Event_Test.impl/event_test-machine-handle_self.adb \
 Event_Test.impl/event_test-machine-send_done.adb \
@@ -401,16 +401,16 @@ Event_Test.impl/event_test-recipient-information_handler.adb \
 Event_Test.impl/event_test-recipient-init.adb \
 Event_Test.impl/event_test-recipient-send_done.adb \
 Event_Test.impl/event_test-recipient-wait_handler.adb \
-Event_Test.impl/event_test-suite.adb \
-Event_Test.impl/event_test-suite.ads \
-Event_Test.impl/event_test-test_class.adb \
-Event_Test.impl/event_test-test_class.ads \
-Event_Test.impl/event_test-test_engine.adb \
-Event_Test.impl/event_test-test_engine.ads \
-Event_Test.impl/event_test-test_instance.adb \
-Event_Test.impl/event_test-test_instance.ads \
-Event_Test.impl/event_test-test_singleton_instance.adb \
-Event_Test.impl/event_test-test_singleton_instance.ads
+Event_Test.test/event_test-suite.adb \
+Event_Test.test/event_test-suite.ads \
+Event_Test.test/event_test-test_class.adb \
+Event_Test.test/event_test-test_class.ads \
+Event_Test.test/event_test-test_engine.adb \
+Event_Test.test/event_test-test_engine.ads \
+Event_Test.test/event_test-test_instance.adb \
+Event_Test.test/event_test-test_instance.ads \
+Event_Test.test/event_test-test_singleton_instance.adb \
+Event_Test.test/event_test-test_singleton_instance.ads
 
 TEST += \
 Hierarchies.cat Hierarchies.raw \
