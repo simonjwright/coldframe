@@ -1,0 +1,53 @@
+<!ELEMENT association ( name, role+, associative ) >
+
+<!ELEMENT associative ( #PCDATA ) >
+
+<!ELEMENT attribute ( name, documentation, type ) >
+<!ATTLIST attribute stereotype NMTOKEN #IMPLIED >
+
+<!ELEMENT attributes ( attribute* ) >
+
+<!ELEMENT cardinality ( #PCDATA ) >
+
+<!ELEMENT child ( #PCDATA ) >
+
+<!ELEMENT classname ( #PCDATA ) >
+
+<!ELEMENT documentation ( #PCDATA ) >
+
+<!ELEMENT domain ( name, objects, relationships ) >
+
+<!ELEMENT end ( #PCDATA ) >
+
+<!ELEMENT exportcontrol ( #PCDATA ) >
+
+<!ELEMENT inheritance ( name, child, parent ) >
+
+<!ELEMENT initial ( #PCDATA ) >
+
+<!ELEMENT name ( #PCDATA ) >
+
+<!ELEMENT object ( name, documentation, attributes, operations ) >
+<!ATTLIST object stereotype CDATA #REQUIRED >
+
+<!ELEMENT objects ( object+ ) >
+
+<!ELEMENT operation ( documentation | name | parameters | return )* >
+<!ATTLIST operation stereotype NMTOKEN #IMPLIED >
+
+<!ELEMENT operations ( operation* ) >
+
+<!ELEMENT parameter ( documentation | initial | name | type )* >
+
+<!ELEMENT parameters ( parameter* ) >
+
+<!ELEMENT parent ( #PCDATA ) >
+
+<!ELEMENT relationships ( association, inheritance+ ) >
+
+<!ELEMENT return ( #PCDATA ) >
+
+<!ELEMENT role ( end, name, classname, cardinality, exportcontrol ) >
+
+<!ELEMENT type ( #PCDATA ) >
+

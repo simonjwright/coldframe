@@ -1,0 +1,66 @@
+<!ELEMENT abbreviation ( #PCDATA ) >
+
+<!ELEMENT association ( name, role+, associative ) >
+
+<!ELEMENT associative ( #PCDATA ) >
+
+<!ELEMENT attribute ( name, type ) >
+<!ATTLIST attribute identifier NMTOKEN #IMPLIED >
+<!ATTLIST attribute referential NMTOKEN #IMPLIED >
+
+<!ELEMENT child ( #PCDATA ) >
+
+<!ELEMENT classname ( #PCDATA ) >
+
+<!ELEMENT date ( #PCDATA ) >
+
+<!ELEMENT digits ( #PCDATA ) >
+
+<!ELEMENT documentation ( par ) >
+
+<!ELEMENT domain ( name, date, object+, association, inheritance, type+ ) >
+
+<!ELEMENT enumeration ( literal+ ) >
+
+<!ELEMENT inheritance ( name, parent, child+ ) >
+
+<!ELEMENT initial ( #PCDATA ) >
+
+<!ELEMENT literal ( #PCDATA ) >
+
+<!ELEMENT lower ( #PCDATA ) >
+
+<!ELEMENT max ( #PCDATA ) >
+
+<!ELEMENT mode ( #PCDATA ) >
+
+<!ELEMENT name ( #PCDATA ) >
+
+<!ELEMENT object ( abbreviation | attribute | documentation | name | operation )* >
+
+<!ELEMENT operation ( name, parameter* ) >
+<!ATTLIST operation class NMTOKEN #IMPLIED >
+<!ATTLIST operation return NMTOKEN #IMPLIED >
+
+<!ELEMENT par ( #PCDATA ) >
+
+<!ELEMENT parameter ( name, type, initial?, mode? ) >
+<!ATTLIST parameter mode NMTOKEN #IMPLIED >
+
+<!ELEMENT parent ( #PCDATA ) >
+
+<!ELEMENT real ( digits, lower, upper ) >
+
+<!ELEMENT role ( classname, name ) >
+<!ATTLIST role multiple NMTOKEN #IMPLIED >
+
+<!ELEMENT set ( #PCDATA ) >
+
+<!ELEMENT standard ( #PCDATA ) >
+
+<!ELEMENT string ( max ) >
+
+<!ELEMENT type ( #PCDATA | enumeration | name | real | set | standard | string )* >
+
+<!ELEMENT upper ( #PCDATA ) >
+
