@@ -20,29 +20,19 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.adb,v $
---  $Revision: 7af0bcf0d4e0 $
---  $Date: 2003/11/11 21:25:05 $
+--  $Revision: 10d535c97f50 $
+--  $Date: 2003/11/15 14:11:10 $
 --  $Author: simon $
 
 with Ada.Tags;
 with Ada.Unchecked_Conversion;
-with BC.Containers.Collections.Unmanaged;
 with BC.Containers.Maps.Unmanaged;
+with BC.Containers.Shellsort;
 with BC.Support.Synchronization;
 with ColdFrame.Exceptions;
 with ColdFrame.Hash.Access_Hash;
 
 package body ColdFrame.Logging_Event_Basis is
-
-
-   --  The remainder of the spec's implementation of collections of
-   --  Datums.
-
-   package Abstract_Datum_Collections
-   is new Abstract_Datum_Containers.Collections;
-
-   package Datum_Collections
-   is new Abstract_Datum_Collections.Unmanaged;
 
 
    --  The Map for data collection (no string key here, for
@@ -216,6 +206,17 @@ package body ColdFrame.Logging_Event_Basis is
       BC.Support.Synchronization.Release (Access_Control);
       return Result;
    end Results;
+
+
+   procedure Sort (Data : in out Abstract_Datum_Containers.Container'Class) is
+      procedure SHS
+      is new Abstract_Datum_Containers.Shellsort
+        (Container => Datum_Collections.Collection,
+         "<" => "<",
+         Length => Datum_Collections.Length);
+   begin
+      SHS (Datum_Collections.Collection (Data));
+   end Sort;
 
 
 end ColdFrame.Logging_Event_Basis;
