@@ -181,7 +181,8 @@ lamp-state.png
 # Create the current date, in the form yyyymmdd. This certainly works in Linux.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
-DOCS = architecture.html \
+DOCS = annotations.html \
+architecture.html \
 associations.html \
 attributes.html \
 bugs.html \
