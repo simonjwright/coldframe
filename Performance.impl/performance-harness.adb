@@ -1,4 +1,4 @@
---  $Id: performance-harness.adb,v 44a17870c8ca 2003/11/11 06:44:51 simon $
+--  $Id: performance-harness.adb,v 9382f921505c 2003/11/11 22:22:12 simon $
 
 with Performance.Initialize;
 with Performance.Tear_Down;
@@ -14,8 +14,8 @@ with Performance.House.Collections;
 with Performance.Event_Timing;
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Ada.Task_Identification;
 with Ada.Text_IO; use Ada.Text_IO;
+with BC.Support.Memory_Streams;
 with BC.Support.Statistics;
 with ColdFrame.Instances;
 with ColdFrame.Logging_Event_Basis;
@@ -23,7 +23,8 @@ with ColdFrame.Project.Events;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
-with High_Resolution_Time; use High_Resolution_Time;
+with ColdFrame.Project.High_Resolution_Time;
+use ColdFrame.Project.High_Resolution_Time;
 
 procedure Performance.Harness is
    subtype CIH is ColdFrame.Instances.Handle;
@@ -386,44 +387,53 @@ begin
 
    end;
 
-   ColdFrame.Logging_Event_Basis.Print;
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
 
    declare
-      use ColdFrame.Logging_Event_Basis;
-      Data : constant Abstract_Datum_Containers.Container'Class := Results;
-      It : Abstract_Datum_Containers.Iterator'Class
-        := Abstract_Datum_Containers.New_Iterator (Data);
+      package LE renames ColdFrame.Logging_Event_Basis;
+      package DC
+        renames ColdFrame.Logging_Event_Basis.Abstract_Datum_Containers;
+      package MS renames BC.Support.Memory_Streams;
+      package ST renames BC.Support.Statistics;
+      S : aliased MS.Stream_Type (10_000);
    begin
-      while not Abstract_Datum_Containers.Is_Done (It) loop
-         declare
-            D : constant Datum := Abstract_Datum_Containers.Current_Item (It);
-            use BC.Support;  -- for Statistics
-         begin
-            Put (To_String (D.Event));
-            Put (',');
-            Put (Integer'Image (Statistics.Count (D.Queueing)));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Mean (D.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Min (D.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Max (D.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Sigma (D.Queueing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Mean (D.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Min (D.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Max (D.Executing))));
-            Put (',');
-            Put (Duration'Image (Duration (Statistics.Sigma (D.Executing))));
-            New_Line;
-         end;
-         Abstract_Datum_Containers.Next (It);
-      end loop;
+      DC.Container'Class'Output (S'Access, LE.Results);
+      Put_Line ("stream size is" & MS.Length (S)'Img);
+      declare
+         Data : constant DC.Container'Class
+           := DC.Container'Class'Input (S'Access);
+         It : DC.Iterator'Class
+           := DC.New_Iterator (Data);
+      begin
+         while not DC.Is_Done (It) loop
+            declare
+               D : constant LE.Datum := DC.Current_Item (It);
+            begin
+               Put (To_String (D.Event));
+               Put (',');
+               Put (Integer'Image (ST.Count (D.Queueing)));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Mean (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Min (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Max (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Sigma (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Mean (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Min (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Max (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Sigma (D.Executing))));
+               New_Line;
+            end;
+            DC.Next (It);
+         end loop;
+      end;
    end;
-
-   Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
 
 end Performance.Harness;
