@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: 16659fe5b129 $
---  $Date: 2005/03/07 06:56:59 $
+--  $Revision: 020fc7b624aa $
+--  $Date: 2005/03/08 05:57:24 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -251,6 +251,29 @@ package body Stub_Test_Suite is
    end Call_With_In_Parameter_And_Variant_Return;
 
 
+   procedure Call_With_String
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Call_With_String
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+   begin
+      Set_String ("Stub_Test.Public.Process_String",
+                  "return",
+                  (1 .. 80 => 'a', 81 .. 160 =>  'b', 161 .. 240 =>  'c'));
+      declare
+         S : constant String :=
+           Stub_Test.Public.Process_String
+           ((1 .. 80 => 'z', 81 .. 160 =>  'y', 161 .. 240 =>  'x'));
+      begin
+         Assert (S = (1 .. 80 => 'a', 81 .. 160 =>  'b', 161 .. 240 =>  'c'),
+                 "wrong string returned");
+         Assert (Get_String ("Stub_Test.Public.Process_String", "S")
+                   = (1 .. 80 => 'z', 81 .. 160 =>  'y', 161 .. 240 =>  'x'),
+                 "wrong string passed");
+      end;
+   end Call_With_String;
+
+
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
 
    procedure Register_Tests (C : in out Case_1);
@@ -287,6 +310,10 @@ package body Stub_Test_Suite is
         (C,
          Call_With_In_Parameter_And_Variant_Return'Access,
          "functions with in parameters and variant returns");
+      Register_Routine
+        (C,
+         Call_With_String'Access,
+         "strings");
    end Register_Tests;
 
    function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
