@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 23a5403e8db3 2005/02/10 05:35:04 simon $ -->
+<!-- $Id: releases.html-proto,v a6ac90b9739c 2005/02/24 06:39:28 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -128,10 +128,22 @@ previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
 
 
 <p>You can change the generated top-level package name of a domain,
-using <i>{ name = New Name }</i>.
+using <i>{ name = New Name }</i> on the domain.
 
 
 <p>You can use Ada attributes in values (initial values, bounds).
+
+
+<p>You can specify an initialization operation to be called before any
+&#171;init&#187; operations during domain initialization, using 
+<i>{ init = package.operation }</i> on the domain.
+
+
+<p>You can specify <i>atomic</i>,
+<i>volatile</i> on types or attributes (translating to the
+corresponding pragmas). If the type is an <i>{array}</i> type, the
+components are marked as <i>atomic</i> or <i>volatile</i> (the array
+itself will almost certainly be too large to be marked as a whole).
 
 
 <p><dt>20040319
