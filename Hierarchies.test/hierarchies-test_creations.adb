@@ -13,14 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: hierarchies-test_creations.adb,v $
---  $Revision: 79324d28e4e1 $
---  $Date: 2002/07/05 05:53:50 $
+--  $Revision: 65db035d97d1 $
+--  $Date: 2002/07/06 10:16:55 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
-with System.Assertions;
 with ColdFrame.Exceptions;
 with ColdFrame.Instances;
 
@@ -495,7 +494,7 @@ package body Hierarchies.Test_Creations is
       F2_H := F_2.Inheritance.Create_Tree (null, null, CIH (S3_H));
       Assert (False, "creation succeeded");
    exception
-      when System.Assertions.Assert_Failure => null;
+      when ColdFrame.Exceptions.Unexpected_Class => null;
    end Create_Third_Child_With_Bad_R2_S3;
 
    procedure Create_Third_Child_With_Bad_S3_S3
@@ -510,7 +509,7 @@ package body Hierarchies.Test_Creations is
       F2_H := F_2.Inheritance.Create_Tree (null, CIH (S3_H), CIH (S3_H2));
       Assert (False, "creation succeeded");
    exception
-      when ColdFrame.Exceptions.Mismatched_Handles => null;
+      when ColdFrame.Exceptions.Mismatched_Instances => null;
    end Create_Third_Child_With_Bad_S3_S3;
 
    procedure Create_Third_Child_With_Deleted
