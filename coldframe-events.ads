@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 048faee9af8e $
+--  $Date: 2002/02/23 13:38:59 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -48,16 +48,20 @@ package ColdFrame.Events is
    --  Events  --
    --------------
 
-   type Event_Base (For_The_Instance : access Instance_Base'Class)
-   is abstract tagged limited private;
-   --  All Events are derived from this type. For_The_Instance is the
-   --  instance to which the event is directed.
+   type Event_Base is abstract tagged limited private;
+   --  All Events are derived from this type.
 
    type Event_P is access all Event_Base'Class;
 
    procedure Handler (This : Event_Base) is abstract;
    --  Concrete Events implement this to perform the required
    --  processing.
+
+   type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
+   is abstract new Event_Base with private;
+   --  All Instance Events are derived from this
+   --  type. For_The_Instance is the instance to which the event is
+   --  directed.
 
 
    ---------------------
@@ -134,10 +138,13 @@ private
    --  should be a constraint.
 
 
-   type Event_Base (For_The_Instance : access Instance_Base'Class)
-   is abstract tagged limited record
+   type Event_Base is abstract tagged limited record
       Invalidated : Boolean := False;  --  set if the event is retracted
    end record;
+
+
+   type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
+   is abstract new Event_Base with null record;
 
 
    type Event_Queue_Base is abstract tagged limited null record;
