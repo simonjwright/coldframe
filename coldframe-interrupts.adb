@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-interrupts.adb,v $
---  $Revision: ef9a354d4800 $
---  $Date: 2002/10/17 20:39:08 $
+--  $Revision: 2ebcaff1d8af $
+--  $Date: 2002/10/20 16:24:33 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -60,12 +60,6 @@ package body ColdFrame.Interrupts is
 
    end Handling;
 
---     type Handling_P is access Handling;
-
---     type Handler is new Ada.Finalization.Limited_Controlled with record
---        Handling_PO : Handling_P;
---        Old_Handler : Ada.Interrupts.Parameterless_Handler;
---     end record;
 
    procedure Initialize (H : in out Handler) is
    begin
