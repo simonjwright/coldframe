@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v dfbc8976a2d7 2004/06/12 19:19:14 simon $ -->
+<!-- $Id: ada-type.xsl,v 66845dd7d2a4 2004/07/03 15:10:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -748,7 +748,9 @@
 
     <xsl:value-of select="$blank-line"/>
 
-    <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
+    <xsl:for-each select="operation[not(@access)
+                                    and not(@suppressed)
+                                    and not(@visibility='private')]">
       <xsl:sort select="name"/>
       <xsl:call-template name="subprogram-specification">
         <xsl:with-param name="indent" select="$II"/>
@@ -764,9 +766,27 @@
     <xsl:value-of select="$I"/>
     <xsl:text>private&#10;</xsl:text>
 
-    <xsl:apply-templates mode="instance-record-component"/>
-    <xsl:value-of select="$I"/>
+    <xsl:for-each select="operation[not(@access)
+                                    and not(@suppressed)
+                                    and @visibility='private']">
+      <xsl:sort select="name"/>
+      <xsl:if test="position()=1">
+        <xsl:text>&#10;</xsl:text>
+      </xsl:if>
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="$II"/>
+        <xsl:with-param name="is-class" select="'no'"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$II"/>
+      </xsl:call-template>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:for-each>
 
+    <xsl:apply-templates mode="instance-record-component"/>
+
+    <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
