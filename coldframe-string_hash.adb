@@ -22,18 +22,17 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-string_hash.adb,v 1e50618976a0 2001/01/12 20:36:19 simon $
+-- $Id: coldframe-string_hash.adb,v 0c39e5850919 2001/03/20 05:39:04 simon $
 
 with Ada.Numerics.Discrete_Random;
-with Ada.Text_Io;
 
 package body Architecture.String_Hash is
-  
-  
+
+
   type Special_Integer is mod 2 ** 32;
   Character_Hash : array (Character) of Special_Integer;
-  
-  
+
+
   procedure Init (Seed : Integer := 10009) is
     package Random_Integer is new
        Ada.Numerics.Discrete_Random (Result_Subtype => Special_Integer);
@@ -42,17 +41,17 @@ package body Architecture.String_Hash is
     Random_Integer.Reset (Gen => Generator, Initiator => Seed);
     for K in Character_Hash'Range loop
       Character_Hash (K) :=
-	 Random_Integer.Random (Gen => Generator);
+         Random_Integer.Random (Gen => Generator);
     end loop;
   end Init;
 
-  
+
   function Hash
      (S : String; Hash_Table_Size : in Integer := 43) return Integer is
     K : Special_Integer := 0;
     N : Special_Integer := 0;
   begin
-  
+
     if S = "" then
       return 0;
     end if;
@@ -65,16 +64,16 @@ package body Architecture.String_Hash is
     return Integer (K) mod Hash_Table_Size;
 
   end Hash;
-  
-  
+
+
   function Bounded_Hash (S : Bounded.Bounded_String;
-			 Hash_Table_Size : in Integer := 43)
-			return Integer is
+                         Hash_Table_Size : in Integer := 43)
+                        return Integer is
     K : Special_Integer := 0;
     N : Special_Integer := 0;
     use Bounded;
   begin
-  
+
     for M in 1 .. Length (S) loop
       N := Character_Hash (Element (S, M));
       K := K + Special_Integer (M) * N;
@@ -83,8 +82,8 @@ package body Architecture.String_Hash is
     return Integer (K) mod Hash_Table_Size;
 
   end Bounded_Hash;
-  
-  
+
+
   function Hash (S : Ada.Strings.Unbounded.Unbounded_String;
                  Hash_Table_Size : in Integer := 43)
                 return Integer is
@@ -92,7 +91,7 @@ package body Architecture.String_Hash is
     N : Special_Integer := 0;
     use Ada.Strings.Unbounded;
   begin
-  
+
     for M in 1 .. Length (S) loop
       N := Character_Hash (Element (S, M));
       K := K + Special_Integer (M) * N;
@@ -104,7 +103,7 @@ package body Architecture.String_Hash is
 
 
 begin
-  
+
   Init;
 
 end Architecture.String_Hash;
