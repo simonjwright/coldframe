@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 24f948ddfd32 2003/07/24 20:57:16 simon $ -->
+<!-- $Id: support.html,v ab2df21d45ae 2003/11/11 21:56:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -45,7 +45,15 @@ allocator but fills allocated memory with improbable data
 <dd>Standard support for <a href="events.html">Events</a>. This is a
 basic generic event management specification; the time aspects are
 provided using <tt>ColdFrame.Time_Signature</tt>, and logging using
-<tt>ColdFrame.Logging_Signature</tt> Child packages are
+<tt>ColdFrame.Logging_Signature</tt>.
+
+<br>Events are based on an abstract <i>basis</i> type; the "no-frills"
+version is in <tt>ColdFrame.Events_Basis</tt>, while the version in
+<tt>ColdFrame.Logging_Events_Basis</tt> captures statistics on the
+time for which events are queued and on the time taken to handle each
+event.
+
+<br>Child packages are
 
 <dl>
 
@@ -75,6 +83,7 @@ application event to cause transition from the initial state.
 <li>the event queue doesn't start until told.
 
 </ul>
+
 
 </dl>
 
@@ -195,8 +204,9 @@ translation for <i>Date</i>, <i>Time</i> attributes.
 
 <dt><tt>ColdFrame.Project.Events</tt>
 
-<dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with time
-support from <tt>ColdFrame.Project.Times</tt>, logging from
+<dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with
+event basis from <tt>ColdFrame.Project.Event_Basis</tt>, time support
+from <tt>ColdFrame.Project.Times</tt>, logging from
 <tt>ColdFrame.Project.Logging_Support</tt>, and storage from
 <tt>ColdFrame.Project.Storage_Pools</tt>.
 
@@ -234,6 +244,11 @@ which prints what's going on)..
 
 <dd>A standard instantiation of
 <tt>ColdFrame.Events_G.Creation_G</tt>.
+
+<dt><tt>ColdFrame.Project.High_Resolution_Time</tt>
+
+<dd>Provides high resolution time measurement; used by
+<tt>ColdFrame.Logging_Event_Basis</tt>.
 
 <dt><tt>ColdFrame.Project.Storage_Pools</tt>
 
