@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: serialization.html,v c9ddb46499a4 2003/09/13 16:29:09 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -43,19 +43,45 @@ text.
 
 <ol>
 
-<li>basic types (scalars, strings, and time) and for &#171;type&#187;s
-for which you specify a conversion function using
-<tt>[[image&nbsp;:&nbsp;<i>conversion-function</i>]]</tt> in the
-documentation section for the type.
+<li><i>&#171;type&#187;</i>s for which you specify a conversion
+function,
 
 <li>simple (non-<i>&#171;discriminated&#187;</i>) records where each
-attribute is either of a basic type or one with a specified conversion
-function.
+attribute is of
+
+<ol>
+
+<li>a basic type (scalars, strings, or time),
+
+<li>a <i>&#171;type&#187;</i> with a specified conversion function,
+
+<li>a simple record type, nested recursively if required.
 
 </ol>
 
-<p>Note, <b>this rules out nested records</b> (unless you supply a
-conversion function for the nested types).
+</ol>
+
+<p>There are two styles of conversion function:
+
+<dl>
+
+<dt><tt>[[type-image : <i>image-operation</i>]]</tt>
+<dd><tt><i>image-operation</i></tt> is the name of a function taking a
+value of the type and returning a string representing just the value..
+
+<dt><tt>[[field-image : <i>image-operation</i>]]</tt>
+<dd><tt><i>image-operation</i></tt> is the name of a function taking a
+value of the type and a field name, returning a string representing
+the value as a (set of) XML elements.
+
+</dl>
+
+<p><tt>[[field-image]]</tt> would be best used for imported types with
+structure (for example, an array).
+
+<p>For compatibility with ColdFrame releases up to and including
+20030906, the annotation <tt>[[image]]</tt> is a shorthand for
+<tt>[[field-image]]</tt>.
 
 <h2>Translation</h2>
 
