@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d1d6b549ff16 2003/05/17 16:48:28 simon $ -->
+<!-- $Id: generate-ada.xsl,v a0311f28b937 2003/05/25 17:53:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -273,6 +273,11 @@
     </xsl:call-template>
 
     <!--
+         with Ada.Exceptions;
+         with ColdFrame.Exceptions;
+         with ColdFrame.Project.Log_Error;
+         with {domain}.Events;
+         with {domain}.{class};
          procedure {domain}.Initialize
            (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null) is
             use type ColdFrame.Project.Events.Event_Queue_P;
@@ -287,6 +292,11 @@
                {class}.{init-operation};
                Domain_Initialized := True;
             end if;
+         exception
+            when E : Others =>
+               ColdFrame.Project.Log_Error
+                 (Ada.Exceptions.Exception_Information (E));
+               raise ColdFrame.Exceptions.Initialization_Error;
          end {domain}.Initialize;
          -->
     <xsl:call-template name="do-not-edit"/>
@@ -308,7 +318,11 @@
       </xsl:message>
     </xsl:for-each>
 
-    <!-- .. withs, starting with the Events package .. -->
+    <!-- .. withs, starting with exception handling .. -->
+    <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
+    <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
@@ -377,6 +391,16 @@
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end if;&#10;</xsl:text>
+
+    <xsl:text>exception&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>when E : others =&gt;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>(Ada.Exceptions.Exception_Information (E));&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>raise ColdFrame.Exceptions.Initialization_Error;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
