@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 11fd79eb119c 2003/09/03 20:20:48 simon $ -->
+<!-- $Id: bugs.html,v 0f783a69b447 2003/09/05 18:48:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -165,7 +165,31 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
-<!-- next: 0194 -->
+<dt>0194 (raised 5.ix.03)
+
+<dd>Would it be possible to put the "identification information"
+header comments in all generated files, not just the domain spec?
+<br><i>Is it necessary still to output the number of generated lines
+of code? What algorithm should be used (at present it's a semicolon
+count)?</i>
+
+<dt>0195 (raised 5.ix.03)
+
+<dd>For &#171;public&#187; classes without attributes, it seems
+wasteful to allocate an <tt>Instance</tt>.
+
+<dt>0196 (raised 5.ix.03)
+
+<dd>Now that state machines support actions on transitions, what about
+guards?
+
+<dd>0197 (raised 5.ix.03)
+
+<dd>If you need an event action, you have to specify the matching
+(procedure) operation in the model. Would it be possible for the
+existence of the action to imply the operation?
+
+<!-- next: 0198 -->
 
 </dl>
 
