@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v c2d6fc8ae2d2 2004/07/01 05:34:57 simon $ -->
+<!-- $Id: ada-operation.xsl,v 2221991cf7e7 2004/07/01 21:06:38 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,7 +33,7 @@
   <!-- called at domain/class to generate subprogram specs for a class.
        Since this may be a child class, we handle all the operations
        in the ancestor tree. -->
-  <xsl:template name="operation-specs">
+  <xsl:template name="visible-operation-specs">
 
     <!-- The classes to be processed this time. The default is the
          current class. -->
@@ -49,7 +49,7 @@
         <!-- Still something to collect; call self recursively with the
              parent node(s), omitting operations we already have and
              <<generated>> (etc) operations. -->
-        <xsl:call-template name="operation-specs">
+        <xsl:call-template name="visible-operation-specs">
           <xsl:with-param
             name="parents"
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
@@ -57,10 +57,10 @@
             name="operations"
             select="$parents/operation
                       [not(name=$operations/name)
+                       and not(@visibility='private')
                        and not(@suppressed)
                        and not(@entry)
-                       and not(@renames)
-                       and (true() or not(@visibility='private'))]
+                       and not(@renames)]
                     | $operations"/>
         </xsl:call-template>
 
@@ -71,6 +71,7 @@
         <!-- $operations contains all the nodes to be processed. -->
 
         <xsl:apply-templates select="$operations" mode="operation-spec">
+          <xsl:sort select="name"/>
           <xsl:with-param name="current" select="."/>
         </xsl:apply-templates>
 
