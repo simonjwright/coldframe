@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
+<!-- $Id: ada-type.xsl,v dc1b02912301 2001/11/30 20:22:41 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -43,6 +43,20 @@
       <xsl:text>with </xsl:text>
       <xsl:value-of select="imported"/>
       <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+
+    <!-- Context for renamed types. -->
+    <xsl:if test="renames">
+      <xsl:variable name="package">
+        <xsl:call-template name="find-source-package">
+          <xsl:with-param name="input" select="renames"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:if test="string-length($package)">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="$package"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
     </xsl:if>
 
     <!-- Context for record domain types; cf class-spec-context. -->
@@ -301,6 +315,23 @@
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="renames">
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is </xsl:text>
+        <xsl:value-of select="renames"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>use type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
       </xsl:when>
       
       <xsl:when test="integer">
@@ -372,6 +403,8 @@
         
         <xsl:when test="imported"/>
 
+        <xsl:when test="renames"/>
+
         <xsl:when test="integer"/>
 
         <xsl:when test="real"/>
@@ -403,5 +436,48 @@
 
   <xsl:template mode="domain-type-support" match="*"/>
 
+
+  <!-- Called to extract the package name from a (possibly) qualified
+       type name. -->
+  <xsl:template name="find-source-package">
+    <!-- The input name -->
+    <xsl:param name="input"/>
+    <!-- The package name so far -->
+    <xsl:param name="package" select="''"/>
+
+    <xsl:variable name="before" select="substring-before($input, '.')"/>
+    <xsl:variable name="after" select="substring-after($input, '.')"/>
+
+    <xsl:choose>
+
+      <!-- Terminate recursion when there are no more components in the
+           input to process -->
+      <xsl:when test="string-length($before)=0">
+        <xsl:value-of select="$package"/>
+      </xsl:when>
+
+      <xsl:otherwise>
+        
+        <xsl:variable name="new-package">
+          <xsl:choose>
+            <xsl:when test="string-length($package)=0">
+              <xsl:value-of select="$before"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="concat($package, '.', $before)"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:call-template name="find-source-package">
+          <xsl:with-param name="input" select="$after"/>
+          <xsl:with-param name="package" select="$new-package"/>
+        </xsl:call-template>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
 
 </xsl:stylesheet>
