@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 81fbcf0e111e 2002/07/05 05:52:46 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v 3d692bb6da15 2002/07/06 10:15:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -170,8 +170,23 @@
       <xsl:text>.Inheritance;&#10;</xsl:text>
     </xsl:for-each>
 
-    <!-- We need ColdFrame.Exceptions. -->
-    <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+    <!-- We need ColdFrame.Exceptions if we are a root class, or if
+         we have more than one ultimate ancestor. -->
+    <xsl:variable name="roots">
+      <xsl:call-template name="ultimate-ancestors">
+        <xsl:with-param
+          name="starting-at"
+          select="."/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="not(../inheritance[child=current()/name])">
+        <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:when test="count($roots/result/root)&gt;1">
+        <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
 
     <!-- XXX ColdFrame.Instances? (state machines) -->
 
@@ -301,9 +316,9 @@
              if {abbrev} = null then
                 return Create; - or raise No_Default_Create if not auto-id
              else
-                pragma Assert
-                  ({abbrev}.all in Instance'Class,
-                   "unexpected class found at root in Create_Tree");
+                if not ({abbrev}.all in Instance'Class) then
+                   raise ColdFrame.Exceptions.Unexpected_Class;
+                end if;
                 - pragma Assert
                 -   (Maps.Is_Bound (The_Container, (Id => Handle ({abbrev}).Id)),
                 -    "unbound handle in Create_Tree");
@@ -336,13 +351,13 @@
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <xsl:value-of select="$III"/>
-        <xsl:text>pragma Assert&#10;</xsl:text>
-        <xsl:value-of select="$IIIC"/>
-        <xsl:text>(</xsl:text>
+        <xsl:text>if not (</xsl:text>
         <xsl:value-of select="abbreviation"/>
-        <xsl:text>.all in Instance'Class,&#10;</xsl:text>
-        <xsl:value-of select="$IIIC"/>
-        <xsl:text> "unexpected class found at root in Create_Tree");&#10;</xsl:text>
+        <xsl:text>.all in Instance'Class) then&#10;</xsl:text>
+        <xsl:value-of select="$IIII"/>
+        <xsl:text>raise ColdFrame.Exceptions.Unexpected_Class;&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>end if;&#10;</xsl:text>
 
         <!-- XXX this is hard; we'd have to make up the identifier.
         <xsl:value-of select="$III"/>
@@ -384,7 +399,7 @@
              else
                 if {rp1-abbrev} /= {rp2-abbrev}
                   or else rp2-abbrev} /= {rp3-abbrev} then
-                   raise ColdFrame.Exceptions.Mismatched_Handles;
+                   raise ColdFrame.Exceptions.Mismatched_Instances;
                 end if;
                 - pragma Assert
                 -   (Maps.Is_Bound (The_Container, (Id => Handle ({rp1-abbrev}).Id)),
@@ -496,7 +511,7 @@
           </xsl:for-each>
           <xsl:text> then&#10;</xsl:text>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>raise ColdFrame.Exceptions.Mismatched_Handles;&#10;</xsl:text>
+          <xsl:text>raise ColdFrame.Exceptions.Mismatched_Instances;&#10;</xsl:text>
           <xsl:value-of select="$III"/>
           <xsl:text>end if;&#10;</xsl:text>
 
@@ -793,8 +808,8 @@
       <xsl:when test="$starting-at">
 
         <!-- This variable collects the names of all the classes in 
-             $starting-at which are not children (XXX and which aren't
-             the starting class???).
+             $starting-at which are not children (including the starting
+             class).
              The reason is that when we do the recursive call below,
              where we'd like to select the nodes that aren't children,
              we can't select the ones in $starting-at (current() there
