@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 930777b8a245 2003/11/21 06:37:18 simon $ -->
+<!-- $Id: bugs.html,v 0b71bbfa7c3b 2003/11/25 21:40:57 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -221,11 +221,28 @@ source</a> are wrong for both <a
 href="installation.html#linux-override">Linux</a> and <a
 href="installation.html#windows-override">Windows</a>.
 
-!-- next: 0217 -->
+!-- next: 0219 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>25.xi.03</h3>
+
+<dl>
+
+<dt>0217 (raised 25.xi.03)
+
+<dd>The class Delete operation for a 0..1 class doesn't null out the
+container, so it appears that there is still an instance.
+
+<dt>0218 (raised 25.xi.03)
+
+<dd>If a class with multiplicity 0..1 is the parent in an inheritance
+relationship and has a state machine, the generated code may not
+compile.
+
+</dl>
 
 <h3>21.xi.03</h3>
 
