@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v a672eee1b1ea 2001/05/02 19:09:58 simon $ -->
+<!-- $Id: generate-html.xsl,v 4654987f7825 2001/05/02 19:46:26 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -214,13 +214,13 @@
 
   <!-- Output Operation info. -->
   <xsl:template match="class/operation">
-     <h3><xsl:value-of select="name"/></h3>
+     <h5><xsl:value-of select="name"/></h5>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
       <xsl:apply-templates select="@result"/>
     </xsl:if>
     <xsl:if test="parameter">
-      <h5>Parameters</h5>
+      <h6>Parameters</h6>
       <dl>
         <xsl:apply-templates select="parameter">
           <xsl:sort select="name"/>
@@ -318,6 +318,7 @@
   <!-- Output an Association's associative class (if it has one). -->
   <xsl:template match="association/associative">
     <p>
+      <xsl:text>Associative class: </xsl:text>
       <a href="#{.}"><xsl:value-of select="."/></a>
     </p>
   </xsl:template>
