@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v c2d1f5b5afdf 2004/12/09 05:45:52 simon $ -->
+<!-- $Id: event-modelling.html,v d0029a999f00 2004/12/24 09:11:48 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -210,7 +210,7 @@ when it's undesirable!
 
 <h2>Class modelling</h2>
 
-<p><a name="lamp.gif"><img src="lamp.gif"></a>
+<p><a name="lamp.png"><img src="lamp.png"></a>
 
 <h3>Instance events</h3>
 
@@ -268,17 +268,17 @@ Timer variable for each.
 intended for use where you have <a
 href="event-motivation.html">communication between domains</a>.
 
-<p>There is a <i>Lamp</i> class event <i>creation&nbsp;event</i>,
-which carries a payload of type <i>Location</i>.
+<p>There is a <i>Button</i> class event <i>Button&nbsp;Event</i>,
+which carries a payload of type <i>Button Name</i>.
 
-<p>The event is handled by the operation <i>creation</i>; ColdFrame
+<p>The event is handled by the operation <i>pushed</i>; ColdFrame
 knows this because
 
 <ol type="alpha">
 
 <li>the operation is stereotyped <i>&#171;handler&#187;</i>
 
-<li>it has a single parameter of <i>&#171;class&nbsp;event&#187;</i>
+<li>it has a single parameter of <i>&#171;Button&nbsp;Event&#187;</i>
 type.
 
 </ol>
