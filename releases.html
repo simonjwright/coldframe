@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v e49e45e7a5c2 2003/02/07 06:21:45 simon $ -->
+<!-- $Id: releases.html,v e77aafc462b4 2003/02/15 16:37:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,6 +22,14 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 2001.
 
 <dl>
+
+<p><dt>2003mmdd
+
+<p>Case normalization has been improved; the GLIDE rules are now
+followed, so that you can specify that <i>short</i> comes out as
+<tt>short</tt> while <i>short&nbsp;message</i> comes out as
+<tt>Short_Message</tt>.
+
 
 <p><dt>20030207w
 
@@ -87,7 +95,8 @@ should) delete the instance - unless of course it's a defunct
 <p>If you want to make a class visible for unit test support, mark it
 &#171;visible-for-test&#187;.
 
-<br>This should be reserved for unusual cases (typically, unit testvariants of device support domains).
+<br>This should be reserved for unusual cases (typically, unit test
+variants of device support domains).
 
 
 <p>Added <tt>ColdFrame.Interrupts</tt> for interrupt support.
