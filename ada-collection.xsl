@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-collection.xsl,v 7cb2e41267d3 2003/10/26 17:51:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -379,7 +379,7 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
-      
+
       <xsl:when test="$max &gt; 1">
 
         <xsl:value-of select="$I"/>
@@ -422,9 +422,13 @@
             Result : Collections.Collection;
          begin
             while not Is_Done (It) loop
-               if Pass (Handle (Current_Item (It))) then
-                  Collections.Append (Result, Handle (Current_Item (It)));
-               end if;
+               declare
+                  H : constant Handle := Handle (Current_Item (It));
+               begin
+                  if Pass (H) then
+                     Collections.Append (Result, H);
+                  end if;
+               end;
                Next (It);
             end loop;
             return Result;
@@ -453,35 +457,47 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
-      
+
       <xsl:when test="$max &gt; 1">
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+
         <xsl:value-of select="$II"/>
-        <xsl:text>if Pass (Handle (Current_Item (It))) then&#10;</xsl:text>
+        <xsl:text>declare&#10;</xsl:text>
         <xsl:value-of select="$III"/>
-        <xsl:text>Collections.Append (Result, Handle (Current_Item (It)));&#10;</xsl:text>
+        <xsl:text>H : constant Handle := Handle (Current_Item (It));&#10;</xsl:text>
         <xsl:value-of select="$II"/>
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:value-of select="$III"/>
+        <xsl:text>if Pass (H) then&#10;</xsl:text>
+        <xsl:value-of select="$IIII"/>
+        <xsl:text>Collections.Append (Result, H);&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
         <xsl:text>end if;&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>end;&#10;</xsl:text>
+
         <xsl:value-of select="$II"/>
         <xsl:text>Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
-        
+
       </xsl:when>
-      
+
       <xsl:otherwise>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>if This /= null and then Pass (This) then&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Collections.Append (Result, This);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end if;&#10;</xsl:text>
-        
+
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
     <xsl:value-of select="$I"/>
@@ -491,7 +507,7 @@
     <xsl:text>.Selection_Function;&#10;</xsl:text>
 
     <!-- Generic filter function for collections of Instances -->
-    <!-- 
+    <!--
          with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.Filter_Function
            (The_Collection : {dom}.{class}.Collections.Collection)
@@ -501,9 +517,13 @@
             Result : Collections.Collection;
          begin
             while not Is_Done (It) loop
-               if Pass (Current_Item (It)) then
-                  Collections.Append (Result, Current_Item (It));
-               end if;
+               declare
+                  H : constant Handle := Handle (Current_Item (It));
+               begin
+                  if Pass (H) then
+                     Collections.Append (Result, H);
+                  end if;
+               end;
                Next (It);
             end loop;
             return Result;
@@ -532,24 +552,36 @@
     <xsl:text>use Abstract_Containers;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>It : Iterator'Class := Collections.New_Iterator (The_Collection);&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>Result : Collections.Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+
     <xsl:value-of select="$II"/>
-    <xsl:text>if Pass (Current_Item (It)) then&#10;</xsl:text>
+    <xsl:text>declare&#10;</xsl:text>
     <xsl:value-of select="$III"/>
-    <xsl:text>Collections.Append (Result, Current_Item (It));&#10;</xsl:text>
+    <xsl:text>H : constant Handle := Current_Item (It);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:value-of select="$III"/>
+    <xsl:text>if Pass (H) then&#10;</xsl:text>
+    <xsl:value-of select="$IIII"/>
+    <xsl:text>Collections.Append (Result, H);&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>end if;&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>end;&#10;</xsl:text>
+
     <xsl:value-of select="$II"/>
     <xsl:text>Next (It);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end loop;&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>return Result;&#10;</xsl:text>
     <xsl:text>end </xsl:text>
