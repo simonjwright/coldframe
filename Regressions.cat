@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 6c19778d5fda $}
+|{ revision = $Revision: 705864bf621f $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -2527,14 +2527,959 @@
 		(object Class "Untagged Type"
 		    quid       	"4090812502A9"
 		    stereotype 	"type"))
-	    logical_presentations 	(list unit_reference_list)))
+	    logical_presentations 	(list unit_reference_list))
+	(object Class_Category "Checks on association multiplicity"
+	    quid       	"40B5710300D7"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Class A in Association"
+		    quid       	"40B57126018B"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "id"
+			    quid       	"40B571EC0294"
+			    stereotype 	"id"
+			    type       	"Autonumber")))
+		(object Class "Class B in Association"
+		    quid       	"40B5717E02FA"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "id"
+			    quid       	"40B571FD032F"
+			    stereotype 	"id"
+			    type       	"Autonumber")))
+		(object Class "A to B Conditional"
+		    quid       	"40B57C13038C")
+		(object Class "A to B"
+		    quid       	"40B57C8A0094")
+		(object Association "one to one"
+		    quid       	"40B5719A002A"
+		    roles      	(list role_list
+			(object Role "{source} has b"
+			    quid       	"40B5719F0171"
+			    label      	"{source} has b"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class B in Association"
+			    quidu      	"40B5717E02FA"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE)
+			(object Role "has a"
+			    quid       	"40B5719F017B"
+			    label      	"has a"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class A in Association"
+			    quidu      	"40B57126018B"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE)))
+		(object Association "one to one c"
+		    quid       	"40B5725500F1"
+		    roles      	(list role_list
+			(object Role "has b"
+			    quid       	"40B57256021F"
+			    label      	"has b"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class B in Association"
+			    quidu      	"40B5717E02FA"
+			    client_cardinality 	(value cardinality "0..1")
+			    is_navigable 	TRUE)
+			(object Role "has a"
+			    quid       	"40B57256022A"
+			    label      	"has a"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class A in Association"
+			    quidu      	"40B57126018B"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE)))
+		(object Association "one to one c assoc"
+		    quid       	"40B57BD50365"
+		    roles      	(list role_list
+			(object Role "has b"
+			    quid       	"40B57BD80251"
+			    label      	"has b"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class B in Association"
+			    quidu      	"40B5717E02FA"
+			    client_cardinality 	(value cardinality "0..1")
+			    is_navigable 	TRUE)
+			(object Role "has a"
+			    quid       	"40B57BD8026F"
+			    label      	"has a"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class A in Association"
+			    quidu      	"40B57126018B"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE))
+		    AssociationClass 	"Logical View::Regressions::Checks on association multiplicity::A to B Conditional")
+		(object Association "one to one assoc"
+		    quid       	"40B57C44007F"
+		    roles      	(list role_list
+			(object Role "{source} has b"
+			    quid       	"40B57C4B038C"
+			    label      	"{source} has b"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class B in Association"
+			    quidu      	"40B5717E02FA"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE)
+			(object Role "has a"
+			    quid       	"40B57C4B03AB"
+			    label      	"has a"
+			    supplier   	"Logical View::Regressions::Checks on association multiplicity::Class A in Association"
+			    quidu      	"40B57126018B"
+			    client_cardinality 	(value cardinality "1")
+			    is_navigable 	TRUE))
+		    AssociationClass 	"Logical View::Regressions::Checks on association multiplicity::A to B"))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"40B571200183"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object CategoryView "Logical View::Regressions" @60
+			    location   	(2290, 200)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@60
+				location   	(2120, 116)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	340
+				justify    	0
+				label      	"Regressions")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"3F5611DF02F9"
+			    width      	352
+			    height     	180)
+			(object ClassView "Class" "Logical View::Regressions::Checks on association multiplicity::A to B Conditional" @61
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1209, 976)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@61
+				location   	(1095, 908)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	228
+				justify    	0
+				label      	"A to B Conditional")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40B57C13038C"
+			    width      	246
+			    height     	158
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Checks on association multiplicity::Class A in Association" @62
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(498, 599)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@62
+				location   	(237, 526)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	522
+				justify    	0
+				label      	"Class A in Association")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40B57126018B"
+			    compartment 	(object Compartment
+				Parent_View 	@62
+				location   	(237, 582)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	452)
+			    width      	540
+			    height     	168
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Checks on association multiplicity::Class B in Association" @63
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1638, 594)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@63
+				location   	(1377, 521)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	522
+				justify    	0
+				label      	"Class B in Association")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40B5717E02FA"
+			    compartment 	(object Compartment
+				Parent_View 	@63
+				location   	(1377, 577)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	452)
+			    width      	540
+			    height     	168
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object AssociationViewNew "one to one" @64
+			    location   	(1066, 108)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @65
+				Parent_View 	@64
+				location   	(1066, 49)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	202
+				justify    	0
+				label      	"one to one"
+				pctDist    	0.500000
+				height     	60
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"40B5719A002A"
+			    roleview_list 	(list RoleViews
+				(object RoleView "{source} has b" @66
+				    Parent_View 	@64
+				    location   	(568, -491)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @67
+					Parent_View 	@66
+					location   	(1709, 397)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	277
+					justify    	0
+					label      	"+{source} has b"
+					pctDist    	0.926271
+					height     	145
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B5719F0171"
+				    client     	@64
+				    supplier   	@63
+				    vertices   	(list Points
+					(1066, 108)
+					(1423, 105)
+					(1600, 509))
+				    line_style 	0
+				    label      	(object SegLabel @68
+					Parent_View 	@66
+					location   	(1621, 446)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.938259
+					height     	45
+					orientation 	0))
+				(object RoleView "has a" @69
+				    Parent_View 	@64
+				    location   	(568, -491)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @70
+					Parent_View 	@69
+					location   	(463, 467)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has a"
+					pctDist    	0.980962
+					height     	82
+					orientation 	1)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B5719F017B"
+				    client     	@64
+				    supplier   	@62
+				    vertices   	(list Points
+					(1066, 108)
+					(710, 110)
+				(532, 514))
+				    line_style 	0
+				    label      	(object SegLabel @71
+					Parent_View 	@69
+					location   	(614, 461)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.900000
+					height     	54
+					orientation 	0))))
+			(object AssociationViewNew "one to one c" @72
+			    location   	(1103, 359)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @73
+				Parent_View 	@72
+				location   	(1103, 300)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	228
+				justify    	0
+				label      	"one to one c"
+				pctDist    	0.500000
+				height     	60
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"40B5725500F1"
+			    roleview_list 	(list RoleViews
+				(object RoleView "has b" @74
+				    Parent_View 	@72
+				    location   	(605, -240)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @75
+					Parent_View 	@74
+					location   	(1395, 442)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has b"
+					pctDist    	0.800000
+					height     	42
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57256021F"
+				    client     	@72
+				    supplier   	@63
+				    line_style 	0
+				    label      	(object SegLabel @76
+					Parent_View 	@74
+					location   	(1339, 487)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..1"
+					pctDist    	0.712772
+					height     	23
+					orientation 	1))
+				(object RoleView "has a" @77
+				    Parent_View 	@72
+				    location   	(605, -240)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @78
+					Parent_View 	@77
+					location   	(741, 436)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has a"
+					pctDist    	0.800000
+					height     	42
+					orientation 	1)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57256022A"
+				    client     	@72
+				    supplier   	@62
+				    vertices   	(list Points
+					(1103, 359)
+					(1048, 335)
+					(672, 514))
+				    line_style 	0
+				    label      	(object SegLabel @79
+					Parent_View 	@77
+					location   	(790, 492)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.756558
+					height     	31
+					orientation 	0))))
+			(object AssociationViewNew "one to one c assoc" @80
+			    location   	(1107, 815)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @81
+				Parent_View 	@80
+				location   	(1057, 785)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	354
+				justify    	0
+				label      	"one to one c assoc"
+				pctDist    	-0.333333
+				height     	30
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"40B57BD50365"
+			    roleview_list 	(list RoleViews
+				(object RoleView "has b" @82
+				    Parent_View 	@80
+				    location   	(609, 216)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @83
+					Parent_View 	@82
+					location   	(1352, 668)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has b"
+					pctDist    	0.800000
+					height     	42
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57BD80251"
+				    client     	@80
+				    supplier   	@63
+				    line_style 	0
+				    label      	(object SegLabel @84
+					Parent_View 	@82
+					location   	(1302, 686)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"0..1"
+					pctDist    	0.649710
+					height     	43
+					orientation 	0))
+				(object RoleView "has a" @85
+				    Parent_View 	@80
+				    location   	(609, 216)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @86
+					Parent_View 	@85
+					location   	(702, 742)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has a"
+					pctDist    	0.929829
+					height     	50
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57BD8026F"
+				    client     	@80
+				    supplier   	@62
+				    vertices   	(list Points
+					(1107, 815)
+					(1052, 838)
+					(693, 683))
+				    line_style 	0
+				    label      	(object SegLabel @87
+					Parent_View 	@85
+					location   	(783, 700)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.801865
+					height     	20
+					orientation 	1))))
+			(object AssocAttachView "" @88
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@61
+			    supplier   	@80
+			    line_style 	0)
+			(object AssociationViewNew "one to one assoc" @89
+			    location   	(1083, 1372)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @90
+				Parent_View 	@89
+				location   	(1083, 1313)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	TRUE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	328
+				justify    	0
+				label      	"one to one assoc"
+				pctDist    	0.500000
+				height     	60
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"40B57C44007F"
+			    roleview_list 	(list RoleViews
+				(object RoleView "{source} has b" @91
+				    Parent_View 	@89
+				    location   	(585, 773)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @92
+					Parent_View 	@91
+					location   	(1598, 797)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	277
+					justify    	0
+					label      	"+{source} has b"
+					pctDist    	0.887075
+					height     	21
+					orientation 	1)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57C4B038C"
+				    client     	@89
+				    supplier   	@63
+				    vertices   	(list Points
+					(1083, 1372)
+					(1407, 1370)
+					(1612, 678))
+				    line_style 	0
+				    label      	(object SegLabel @93
+					Parent_View 	@91
+					location   	(1629, 739)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.948681
+					height     	34
+					orientation 	1))
+				(object RoleView "has a" @94
+				    Parent_View 	@89
+				    location   	(585, 773)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object SegLabel @95
+					Parent_View 	@94
+					location   	(551, 789)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	1
+					anchor_loc 	1
+					nlines     	1
+					max_width  	117
+					justify    	0
+					label      	"+has a"
+					pctDist    	0.896630
+					height     	13
+					orientation 	0)
+				    stereotype 	TRUE
+				    line_color 	3342489
+				    quidu      	"40B57C4B03AB"
+				    client     	@89
+				    supplier   	@62
+				    vertices   	(list Points
+					(1083, 1372)
+					(770, 1373)
+					(527, 683))
+				    line_style 	0
+				    label      	(object SegLabel @96
+					Parent_View 	@94
+					location   	(562, 716)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					anchor     	2
+					anchor_loc 	1
+					nlines     	1
+					max_width  	15
+					justify    	0
+					label      	"1"
+					pctDist    	0.959063
+					height     	22
+					orientation 	1))))
+			(object ClassView "Class" "Logical View::Regressions::Checks on association multiplicity::A to B" @97
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1155, 1545)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@97
+				location   	(1074, 1499)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	162
+				justify    	0
+				label      	"A to B")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40B57C8A0094"
+			    height     	114
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object AssocAttachView "" @98
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@97
+			    supplier   	@89
+			    line_style 	0))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 6c19778d5fda $}
+|{ revision = $Revision: 705864bf621f $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2542,7 +3487,7 @@
 	    origin_x   	0
 	    origin_y   	2425
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Regressions" @60
+		(object CategoryView "Logical View::Regressions" @99
 		    location   	(2482, 190)
 		    font       	(object Font
 			size       	10
@@ -2554,7 +3499,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@60
+			Parent_View 	@99
 			location   	(2312, 106)
 			fill_color 	13434879
 			nlines     	2
@@ -2567,7 +3512,7 @@
 		    quidu      	"3F5611DF02F9"
 		    width      	352
 		    height     	180)
-		(object Label @61
+		(object Label @100
 		    location   	(127, 38)
 		    font       	(object Font
 			size       	10
@@ -2580,8 +3525,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 6c19778d5fda 2004/04/29 05:29:07 simon $")
-		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @62
+		    label      	"$Id: Regressions.cat,v 705864bf621f 2004/05/29 17:21:59 simon $")
+		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @101
 		    location   	(301, 318)
 		    font       	(object Font
 			size       	10
@@ -2593,7 +3538,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@62
+			Parent_View 	@101
 			location   	(141, 279)
 			fill_color 	13434879
 			nlines     	2
@@ -2601,7 +3546,7 @@
 			justify    	0
 			label      	"Find hangs for active classes")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@62
+			Parent_View 	@101
 			location   	(141, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -2615,7 +3560,7 @@
 		    quidu      	"4051E4F90039"
 		    width      	332
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @63
+		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @102
 		    location   	(715, 320)
 		    font       	(object Font
 			size       	10
@@ -2627,7 +3572,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@63
+			Parent_View 	@102
 			location   	(523, 281)
 			fill_color 	13434879
 			nlines     	2
@@ -2635,7 +3580,7 @@
 			justify    	0
 			label      	"Can't have class variable of class type")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@63
+			Parent_View 	@102
 			location   	(523, 236)
 			fill_color 	13434879
 			anchor     	10
@@ -2649,7 +3594,7 @@
 		    quidu      	"4051E5420337"
 		    width      	396
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @64
+		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @103
 		    location   	(1202, 318)
 		    font       	(object Font
 			size       	10
@@ -2661,7 +3606,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@64
+			Parent_View 	@103
 			location   	(966, 279)
 			fill_color 	13434879
 			nlines     	2
@@ -2669,7 +3614,7 @@
 			justify    	0
 			label      	"Can't have expressions in bounds")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@64
+			Parent_View 	@103
 			location   	(966, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -2683,7 +3628,7 @@
 		    quidu      	"4051E57F02C7"
 		    width      	484
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @65
+		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @104
 		    location   	(1711, 310)
 		    font       	(object Font
 			size       	10
@@ -2695,7 +3640,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@65
+			Parent_View 	@104
 			location   	(1521, 271)
 			fill_color 	13434879
 			nlines     	2
@@ -2703,7 +3648,7 @@
 			justify    	0
 			label      	"Serialization Image outputs record name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@65
+			Parent_View 	@104
 			location   	(1521, 226)
 			fill_color 	13434879
 			anchor     	10
@@ -2717,7 +3662,7 @@
 		    quidu      	"4051E5B00169"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have an <access> operation on <type>" @66
+		(object CategoryView "Logical View::Regressions::Can't have an <access> operation on <type>" @105
 		    location   	(2547, 535)
 		    font       	(object Font
 			size       	10
@@ -2729,7 +3674,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@66
+			Parent_View 	@105
 			location   	(2297, 496)
 			fill_color 	13434879
 			nlines     	2
@@ -2737,7 +3682,7 @@
 			justify    	0
 			label      	"Can't have an <access> operation on <type>")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@66
+			Parent_View 	@105
 			location   	(2297, 451)
 			fill_color 	13434879
 			anchor     	10
@@ -2751,7 +3696,7 @@
 		    quidu      	"4051E604035E"
 		    width      	512
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @67
+		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @106
 		    location   	(288, 603)
 		    font       	(object Font
 			size       	10
@@ -2763,7 +3708,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@67
+			Parent_View 	@106
 			location   	(144, 564)
 			fill_color 	13434879
 			nlines     	2
@@ -2771,7 +3716,7 @@
 			justify    	0
 			label      	"Exceptions in callbacks")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@67
+			Parent_View 	@106
 			location   	(144, 519)
 			fill_color 	13434879
 			anchor     	10
@@ -2785,7 +3730,7 @@
 		    quidu      	"4051E6AE01E6"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @68
+		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @107
 		    location   	(810, 608)
 		    font       	(object Font
 			size       	10
@@ -2797,7 +3742,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@68
+			Parent_View 	@107
 			location   	(538, 569)
 			fill_color 	13434879
 			nlines     	2
@@ -2805,7 +3750,7 @@
 			justify    	0
 			label      	"Class delete for 0..1 classes doesn't null the container")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@68
+			Parent_View 	@107
 			location   	(538, 524)
 			fill_color 	13434879
 			anchor     	10
@@ -2819,7 +3764,7 @@
 		    quidu      	"4051E6DC000B"
 		    width      	556
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @69
+		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @108
 		    location   	(1452, 617)
 		    font       	(object Font
 			size       	10
@@ -2831,7 +3776,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@69
+			Parent_View 	@108
 			location   	(1305, 578)
 			fill_color 	13434879
 			nlines     	2
@@ -2839,7 +3784,7 @@
 			justify    	0
 			label      	"Allow bounded string identifiers")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@69
+			Parent_View 	@108
 			location   	(1305, 533)
 			fill_color 	13434879
 			anchor     	10
@@ -2853,7 +3798,7 @@
 		    quidu      	"4051E74D000E"
 		    width      	306
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow null records" @70
+		(object CategoryView "Logical View::Regressions::Allow null records" @109
 		    location   	(312, 902)
 		    font       	(object Font
 			size       	10
@@ -2865,7 +3810,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@70
+			Parent_View 	@109
 			location   	(168, 863)
 			fill_color 	13434879
 			nlines     	2
@@ -2873,7 +3818,7 @@
 			justify    	0
 			label      	"Allow null records")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@70
+			Parent_View 	@109
 			location   	(168, 818)
 			fill_color 	13434879
 			anchor     	10
@@ -2887,7 +3832,7 @@
 		    quidu      	"4051E7820082"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Array types" @71
+		(object CategoryView "Logical View::Regressions::Array types" @110
 		    location   	(732, 910)
 		    font       	(object Font
 			size       	10
@@ -2899,7 +3844,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@71
+			Parent_View 	@110
 			location   	(588, 871)
 			fill_color 	13434879
 			nlines     	2
@@ -2907,7 +3852,7 @@
 			justify    	0
 			label      	"Array types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@71
+			Parent_View 	@110
 			location   	(588, 826)
 			fill_color 	13434879
 			anchor     	10
@@ -2921,7 +3866,7 @@
 		    quidu      	"4051E7A40370"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @72
+		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @111
 		    location   	(1319, 920)
 		    font       	(object Font
 			size       	10
@@ -2933,7 +3878,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@72
+			Parent_View 	@111
 			location   	(1003, 881)
 			fill_color 	13434879
 			nlines     	2
@@ -2941,7 +3886,7 @@
 			justify    	0
 			label      	"Callback registration/deregistration assertions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@72
+			Parent_View 	@111
 			location   	(1003, 836)
 			fill_color 	13434879
 			anchor     	10
@@ -2955,7 +3900,7 @@
 		    quidu      	"4051E7EC0161"
 		    width      	644
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Fixed strings" @73
+		(object CategoryView "Logical View::Regressions::Fixed strings" @112
 		    location   	(322, 1200)
 		    font       	(object Font
 			size       	10
@@ -2967,7 +3912,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@73
+			Parent_View 	@112
 			location   	(178, 1161)
 			fill_color 	13434879
 			nlines     	2
@@ -2975,7 +3920,7 @@
 			justify    	0
 			label      	"Fixed strings")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@73
+			Parent_View 	@112
 			location   	(178, 1116)
 			fill_color 	13434879
 			anchor     	10
@@ -2989,7 +3934,7 @@
 		    quidu      	"4051E82F006D"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Identifier has one value" @74
+		(object CategoryView "Logical View::Regressions::Identifier has one value" @113
 		    location   	(742, 1205)
 		    font       	(object Font
 			size       	10
@@ -3001,7 +3946,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@74
+			Parent_View 	@113
 			location   	(598, 1166)
 			fill_color 	13434879
 			nlines     	2
@@ -3009,7 +3954,7 @@
 			justify    	0
 			label      	"Identifier has one value")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@74
+			Parent_View 	@113
 			location   	(598, 1121)
 			fill_color 	13434879
 			anchor     	10
@@ -3023,7 +3968,7 @@
 		    quidu      	"4051E84F02CC"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @75
+		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @114
 		    location   	(1415, 1213)
 		    font       	(object Font
 			size       	10
@@ -3035,7 +3980,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@75
+			Parent_View 	@114
 			location   	(1218, 1174)
 			fill_color 	13434879
 			nlines     	2
@@ -3043,7 +3988,7 @@
 			justify    	0
 			label      	"Can't tear down active class with timer")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@75
+			Parent_View 	@114
 			location   	(1218, 1129)
 			fill_color 	13434879
 			anchor     	10
@@ -3057,7 +4002,7 @@
 		    quidu      	"4051E899023C"
 		    width      	406
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Exponential expressions" @76
+		(object CategoryView "Logical View::Regressions::Exponential expressions" @115
 		    location   	(330, 1508)
 		    font       	(object Font
 			size       	10
@@ -3069,7 +4014,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@76
+			Parent_View 	@115
 			location   	(186, 1469)
 			fill_color 	13434879
 			nlines     	2
@@ -3077,7 +4022,7 @@
 			justify    	0
 			label      	"Exponential expressions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@76
+			Parent_View 	@115
 			location   	(186, 1424)
 			fill_color 	13434879
 			anchor     	10
@@ -3091,7 +4036,7 @@
 		    quidu      	"406AC32301A8"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Identifier type with based literal range" @77
+		(object CategoryView "Logical View::Regressions::Identifier type with based literal range" @116
 		    location   	(765, 1518)
 		    font       	(object Font
 			size       	10
@@ -3103,7 +4048,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@77
+			Parent_View 	@116
 			location   	(588, 1479)
 			fill_color 	13434879
 			nlines     	2
@@ -3111,7 +4056,7 @@
 			justify    	0
 			label      	"Identifier type with based literal range")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@77
+			Parent_View 	@116
 			location   	(588, 1434)
 			fill_color 	13434879
 			anchor     	10
@@ -3125,7 +4070,7 @@
 		    quidu      	"40864F3300C2"
 		    width      	366
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Inheritance of action routines" @78
+		(object CategoryView "Logical View::Regressions::Inheritance of action routines" @117
 		    location   	(1301, 1508)
 		    font       	(object Font
 			size       	10
@@ -3137,7 +4082,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@78
+			Parent_View 	@117
 			location   	(1128, 1469)
 			fill_color 	13434879
 			nlines     	2
@@ -3145,7 +4090,7 @@
 			justify    	0
 			label      	"Inheritance of action routines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@78
+			Parent_View 	@117
 			location   	(1128, 1424)
 			fill_color 	13434879
 			anchor     	10
@@ -3159,7 +4104,7 @@
 		    quidu      	"4087736A008A"
 		    width      	358
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Omitting bounds for integer, real" @79
+		(object CategoryView "Logical View::Regressions::Omitting bounds for integer, real" @118
 		    location   	(1763, 1505)
 		    font       	(object Font
 			size       	10
@@ -3171,7 +4116,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@79
+			Parent_View 	@118
 			location   	(1593, 1466)
 			fill_color 	13434879
 			nlines     	2
@@ -3179,7 +4124,7 @@
 			justify    	0
 			label      	"Omitting bounds for integer, real")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@79
+			Parent_View 	@118
 			location   	(1593, 1421)
 			fill_color 	13434879
 			anchor     	10
@@ -3193,7 +4138,7 @@
 		    quidu      	"40907D73029F"
 		    width      	352
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::No tag to define Type" @80
+		(object CategoryView "Logical View::Regressions::No tag to define Type" @119
 		    location   	(328, 1780)
 		    font       	(object Font
 			size       	10
@@ -3205,7 +4150,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@80
+			Parent_View 	@119
 			location   	(184, 1741)
 			fill_color 	13434879
 			nlines     	2
@@ -3213,7 +4158,7 @@
 			justify    	0
 			label      	"No tag to define Type")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@80
+			Parent_View 	@119
 			location   	(184, 1696)
 			fill_color 	13434879
 			anchor     	10
@@ -3226,4 +4171,38 @@
 		    fill_color 	13434879
 		    quidu      	"40908724038D"
 		    width      	300
+		    height     	180)
+		(object CategoryView "Logical View::Regressions::Checks on association multiplicity" @120
+		    location   	(760, 1778)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@120
+			location   	(543, 1739)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	434
+			justify    	0
+			label      	"Checks on association multiplicity")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@120
+			location   	(543, 1694)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40B5710300D7"
+		    width      	446
 		    height     	180)))))
