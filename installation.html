@@ -1,3 +1,4 @@
+<!-- $Id: installation.html,v e4ae9e524e68 2002/03/02 08:39:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -70,8 +71,9 @@ Components</a>; release 20020117 or later
 
 <h3>Drive</h3>
 
-<p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
-ColdFrame are installed on the same drive, at the same level.
+<p>This note is written assuming that everything is installed on the
+<tt>C:</tt> drive at the top level. <a
+href="#alternate-location">Alternate locations</a> are possible.
 
 <h3>Cygwin</h3>
 
@@ -151,17 +153,24 @@ etc, after which you only need to say
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
-<p>If you had to install your software in <tt>D:\Software</tt>, you'd
-change your Makefile to
+<h3><a name="alternate-location">Alternate software locations</a></h3>
+
+<p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
+ColdFrame are installed on the same drive, at the same level; for
+example, <tt>L:\Software\Tools</tt>.
+
+<p>Assuming this location, you'd change your Makefile to
 
 <pre>
-  include <b>D:/Software</b>/cf-<i>yyymmdd</i>/Makefile-winnt
+  include <b>L:/Software/Tools</b>/cf-<i>yyymmdd</i>/Makefile-winnt
 
-  <b>TOP = D:/Software</b>
+  <b>TOP = L:/Software/Tools</b>
 
   all:: <i>Domain_1</i>.gen
   all:: <i>Domain_2</i>.gen
 </pre>
+
+(and I <em>do</em> mean <tt>/</tt>, not <tt>\</tt>!)
 
 <p><hr>
 <i>
