@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: installation.html,v 748efbefec2b 2004/03/27 17:15:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -13,13 +13,17 @@
 <ul>
 <li><a href="#linux-environment">environment</a>
 <li><a href="#linux-makefile"><tt>Makefile</tt></a>
-<li><a href="#linux-override">Overriding <tt>ColdFrame.Project</tt> source</a>
+<li><a href="#linux-create-build-dirs">creating your build directories</a>
+<li><a href="#linux-create-gnat-project">creating a GNAT Project file</a>
+<li><a href="#linux-override">overriding <tt>ColdFrame.Project</tt> source</a>
 </ul>
 <li><a href="#windows">under Windows</a>
 <ul>
 <li><a href="#windows-environment">environment</a>
 <li><a href="#windows-makefile"><tt>Makefile</tt></a>
-<li><a href="#windows-override">Overriding <tt>ColdFrame.Project</tt> source</a>
+<li><a href="#windows-create-build-dirs">creating your build directories</a>
+<li><a href="#windows-create-gnat-project">creating a GNAT Project file</a>
+<li><a href="#windows-override">overriding <tt>ColdFrame.Project</tt> source</a>
 </ul>
 </ul>
 
@@ -137,7 +141,7 @@ sections assume these settings.
 <tr>
 <td><tt>BC</tt>
 <td>Directory name for the Booch Components
-<td><tt>bc-<i>20020602</i></tt>
+<td><tt>bc-<i>20040319</i></tt>
 
 <tr>
 <td><tt>BUILD_BASE</tt>
@@ -147,7 +151,7 @@ sections assume these settings.
 <tr>
 <td><tt>COLDFRAME</tt>
 <td>Directory name for ColdFrame
-<td><tt>cf-<i>20020921</i></tt>
+<td><tt>cf-<i>20040319</i></tt>
 
 <tr>
 <td><tt>COLDFRAMEOUT</tt>
@@ -220,15 +224,71 @@ etc, after which you only need to say
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
+<p>If you're prepared to issue a slightly more complex command to
+build, you can get away without a Makefile at all:
+
+<pre>
+  <i>$</i> make -f $(TOP)/$(COLDFRAME)/Makefile-unix <i>Domain</i>.gen
+</pre>
+
+(note, no brackets).
+
+<h3><a name="linux-create-build-dirs">Creating your build
+directories</a></h3>
+
+<p>Assuming you have the <a href="#linux-environment">environment
+variables set up</a>, say
+
+<pre>
+  <i>$</i> $TOP/$COLDFRAME/create-build-directories
+</pre>
+
+<h3><a name="linux-create-gnat-project">Creating a <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> file</a></h3>
+
+<p>If you don't need to override any of the <tt>ColdFrame.Project</tt>
+source, your project file can be pretty simple: the supplied
+<tt>Regressions.gpr</tt> (in the <tt>test/</tt> subdirectory) is
+
+<pre>
+  with "Options";
+  with "ColdFrame";
+  with "BC";
+  with "AUnit";
+
+  project Regressions is
+
+    for Main use ("<i>regression_tests</i>");
+
+    for Exec_Dir use ".";
+
+    for Source_Dirs use
+      (
+       "<i>Regressions</i>.impl",
+       "<i>Regressions</i>.gen"
+      );
+
+    for Object_Dir use Options'Object_Dir & "/main";
+    package IDE renames Options.IDE;
+    package Builder renames Options.Builder;
+    package Compiler renames Options.Compiler;
+    package Binder renames Options.Binder;
+    package Linker renames Options.Linker;
+
+  end Regressions;
+</pre>
+
+<p>Add further domains as required, of course.
+
 <h3><a name="linux-override">Overriding <tt>ColdFrame.Project</tt>
 source</a></h3>
 
 <p>If you need to override some of the Ada source code in the
-<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, you can't just extend
-the supplied <tt>ColdFrame_Defaults.gpr</tt> project file to include a
-new directory containing your overriding source. Instead, your
-extending project (<tt>ColdFrame.gpr</tt> would be a good name) must
-include a complete set of <tt>ColdFrame.Project</tt> sources.
+<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, life becomes
+complicated because you have to avoid circularity and having multiple
+occurrences of the same file; you can't use the supplied
+<tt>ColdFrame.gpr</tt>.
 
 <p>Suppose your overriding source is in
 <tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
@@ -240,24 +300,42 @@ include a complete set of <tt>ColdFrame.Project</tt> sources.
 <p>This will place those of ColdFrame's files that you haven't
  overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
-<p>Now create a file
- <tt>~/Base/Build/ColdFrameProject/ColdFrame.gpr</tt>, containing
-<pre>
-   with "Options";
+<p>The project file now looks like
 
-   project ColdFrame extends "ColdFrame_Defaults" is
+<p><pre>
+  with "Options";
+  with "BC";
+  with "AUnit";
 
-     for Source_Dirs use ("project", "inherited");
+  project Regressions is
 
-     for Object_Dir use Options'Object_Dir;
+    for Main use ("<i>regression_tests</i>");
 
-   end ColdFrame;
+    for Exec_Dir use ".";
+
+    Project_Base = external ("HOME") & "/Base/Build/ColdFrameProject";
+
+    for Source_Dirs use
+      (
+       "<i>Regressions</i>.impl",
+       "<i>Regressions</i>.gen",
+       external ("TOP") & "/" & external ("COLDFRAME") & "/lib",
+       Project_Base & "/project",
+       Project_Base & "/inherited"
+      );
+
+    for Object_Dir use Options'Object_Dir & "/main";
+    package IDE renames Options.IDE;
+    package Builder renames Options.Builder;
+    package Compiler renames Options.Compiler;
+    package Binder renames Options.Binder;
+    package Linker renames Options.Linker;
+
+  end Regressions;
 </pre>
 
-<p>and put this on your <tt>ADA_PROJECT_PATH</tt>.
 
-
-<p><hr>
+<hr>
 
 <h2><a name="windows">Installation under Windows</a></h2>
 
@@ -355,7 +433,7 @@ settings.
 <tr>
 <td><tt>BC</tt>
 <td>Directory name for the Booch Components
-<td><tt>bc-<i>20020602</i></tt>
+<td><tt>bc-<i>20040319</i></tt>
 
 <tr>
 <td><tt>BUILD_BASE</tt>
@@ -365,7 +443,7 @@ settings.
 <tr>
 <td><tt>COLDFRAME</tt>
 <td>Directory name for ColdFrame
-<td><tt>cf-<i>20020921</i></tt>
+<td><tt>cf-<i>20040319</i></tt>
 
 <tr>
 <td><tt>COLDFRAMEOUT</tt>
@@ -444,41 +522,116 @@ etc, after which you only need to say
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
+<p>If you're prepared to issue a slightly more complex command to
+build, you can get away without a Makefile at all:
+
+<pre>
+  <i>$</i> make -f $TOP/$COLDFRAME/Makefile-winnt <i>Domain</i>.gen
+</pre>
+
+(note, no brackets).
+
+<h3><a name="windows-create-build-dirs">Creating your build
+directories</a></h3>
+
+<p>Assuming you have the <a href="#windows-environment">environment
+variables set up</a>, say
+
+<pre>
+  <i>$</i> $TOP/$COLDFRAME/create-build-directories
+</pre>
+
+<h3><a name="windows-create-gnat-project">Creating a <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> file</a></h3>
+
+<p>If you don't need to override any of the <tt>ColdFrame.Project</tt>
+source, your project file can be pretty simple: the supplied
+<tt>Regressions.gpr</tt> (in the <tt>test/</tt> subdirectory) is
+
+<pre>
+  with "Options";
+  with "ColdFrame";
+  with "BC";
+  with "AUnit";
+
+  project Regressions is
+
+    for Main use ("<i>regression_tests</i>");
+
+    for Exec_Dir use ".";
+
+    for Source_Dirs use
+      (
+       "<i>Regressions</i>.impl",
+       "<i>Regressions</i>.gen"
+      );
+
+    for Object_Dir use Options'Object_Dir & "/main";
+    package IDE renames Options.IDE;
+    package Builder renames Options.Builder;
+    package Compiler renames Options.Compiler;
+    package Binder renames Options.Binder;
+    package Linker renames Options.Linker;
+
+  end Regressions;
+</pre>
+
+<p>Add further domains as required, of course.
+
 <h3><a name="windows-override">Overriding <tt>ColdFrame.Project</tt>
 source</a></h3>
 
 <p>If you need to override some of the Ada source code in the
-<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, you can't just extend
-the supplied <tt>ColdFrame_Defaults.gpr</tt> project file to include a
-new directory containing your overriding source. Instead, your
-extending project (<tt>ColdFrame.gpr</tt> would be a good name) must
-include a complete set of <tt>ColdFrame.Project</tt> sources.
+<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, life becomes
+complicated because you have to avoid circularity and having multiple
+occurrences of the same file; you can't use the supplied
+<tt>ColdFrame.gpr</tt>.
 
 <p>Suppose your overriding source is in
-<tt>C:\Base\Build\ColdFrameProject\project</tt>; change directory to
-<tt> C:\Base\Build\ColdFrameProject</tt> and say
+<tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
+<tt>~/Base/Build/ColdFrameProject</tt> and say
 <pre>
-   $ make -f $TOP/$COLDFRAME/Makefile-winnt install
+   $ make -f $TOP/$COLDFRAME/Makefile-unix install
 </pre>
 
 <p>This will place those of ColdFrame's files that you haven't
- overridden in <tt>C:\Base\Build\ColdFrameProject\inherited</tt>.
+ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
- <p>Now create a file
- <tt>C:\Base\Build\ColdFrameProject\ColdFrame.gpr</tt>, containing
-<pre>
-   with "Options";
+<p>The project file now looks like
 
-   project ColdFrame extends "ColdFrame_Defaults" is
+<p><pre>
+  with "Options";
+  with "BC";
+  with "AUnit";
 
-     for Source_Dirs use ("project", "inherited");
+  project Regressions is
 
-     for Object_Dir use Options'Object_Dir;
+    for Main use ("<i>regression_tests</i>");
 
-   end ColdFrame;
+    for Exec_Dir use ".";
+
+    Project_Base = external ("HOME") & "/Base/Build/ColdFrameProject";
+
+    for Source_Dirs use
+      (
+       "<i>Regressions</i>.impl",
+       "<i>Regressions</i>.gen",
+       external ("TOP") & "/" & external ("COLDFRAME") & "/lib",
+       Project_Base & "/project",
+       Project_Base & "/inherited"
+      );
+
+    for Object_Dir use Options'Object_Dir & "/main";
+    package IDE renames Options.IDE;
+    package Builder renames Options.Builder;
+    package Compiler renames Options.Compiler;
+    package Binder renames Options.Binder;
+    package Linker renames Options.Linker;
+
+  end Regressions;
 </pre>
 
-<p>and put this on your <tt>ADA_PROJECT_PATH</tt>.
 
 <p><hr>
 <i>
