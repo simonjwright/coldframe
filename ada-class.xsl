@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v da6eb09a3d03 2003/04/08 18:30:34 simon $ -->
+<!-- $Id: ada-class.xsl,v 469fb0202bff 2003/05/09 05:07:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -848,47 +848,20 @@
   <xsl:template
     match="attribute[@identifier]"
     mode="identifier-element-assignment">
-
-    <xsl:choose>
-
-      <xsl:when test="@refers">
-        
-        <!--
-             Result.{attr} := ColdFrame.Instances.Handle
-                (With_Identifier.{attr});
-             -->
-        
-        <xsl:value-of select="$II"/>
-        <xsl:text>Result.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
-        <xsl:text> := ColdFrame.Instances.Handle&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>(With_Identifier.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
-        <xsl:text>);&#10;</xsl:text>
+    <!--
+         Result.{attr}
+         := With_Identifier.{attr};
+         -->
     
-      </xsl:when>
-
-      <xsl:otherwise>
-
-        <!--
-             Result.{attr}
-               := With_Identifier.{attr};
-             -->
-        
-        <xsl:value-of select="$II"/>
-        <xsl:text>Result.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text>:= With_Identifier.</xsl:text>
-        <xsl:call-template name="attribute-name"/>
-        <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Result.</xsl:text>
+    <xsl:call-template name="attribute-name"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>:= With_Identifier.</xsl:text>
+    <xsl:call-template name="attribute-name"/>
+    <xsl:text>;&#10;</xsl:text>
     
-      </xsl:otherwise>
-
-    </xsl:choose>
-
   </xsl:template>
 
   <xsl:template mode="identifier-element-assignment" match="*"/>
@@ -971,19 +944,24 @@
     </xsl:if>
 
     <!-- .. check that referential attributes are non-null .. -->
-    <!-- XXX why the view conversion? -->
+    <!-- XXX good to check they're the right class. -->
     <xsl:if test="attribute[@identifier and @refers]">
+
+      <!--
+           use type ColdFrame.Instances.Handle;
+           pragma Assert
+             (With_Identifier.{attr} /= null);
+           -->
+
       <xsl:value-of select="$II"/>
       <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
       <xsl:for-each select="attribute[@identifier and @refers]">
         <xsl:value-of select="$II"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
-        <xsl:text>(ColdFrame.Instances.Handle&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
-        <xsl:text> (With_Identifier.</xsl:text>
+        <xsl:text>(With_Identifier.</xsl:text>
         <xsl:call-template name="attribute-name"/>
-        <xsl:text>) /= null);&#10;</xsl:text>
+        <xsl:text> /= null);&#10;</xsl:text>
       </xsl:for-each>
     </xsl:if>
 
