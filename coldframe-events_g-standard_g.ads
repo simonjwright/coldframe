@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: ede7ee592c82 $
---  $Date: 2002/07/07 18:31:52 $
+--  $Revision: 23e539d5e10b $
+--  $Date: 2002/07/11 21:17:29 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -40,6 +40,9 @@ package ColdFrame.Events_G.Standard_G is
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
+
+   procedure Post_To_Self (The_Event : Event_P;
+                           On : access Event_Queue);
 
    ----------------------
    --  Delayed events  --
@@ -134,6 +137,9 @@ private
       procedure Post (The_Event : Event_P);
       --  Post an event.
 
+      procedure Post_To_Self (The_Event : Event_P);
+      --  Post an event-to-self.
+
       entry Fetch (The_Event : out Event_P);
       --  Blocks until there is an event on the queue; when one is found,
       --  removes it from the queue and sets "The".
@@ -170,6 +176,7 @@ private
    --  The actual Event Queue.
    type Event_Queue is new Event_Queue_Base with record
       The_Excluder : Excluder (Event_Queue'Access);
+      The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Dispatcher : Dispatcher (Event_Queue'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);

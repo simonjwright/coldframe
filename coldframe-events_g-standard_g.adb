@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: a6ada649a454 $
---  $Date: 2002/07/11 19:43:10 $
+--  $Revision: 23e539d5e10b $
+--  $Date: 2002/07/11 21:17:29 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -77,6 +77,18 @@ package body ColdFrame.Events_G.Standard_G is
       On.The_Excluder.Post (The_Event);
 
    end Post;
+
+
+   procedure Post_To_Self (The_Event : Event_P;
+                           On : access Event_Queue) is
+   begin
+
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => The_Event);
+
+      On.The_Excluder.Post_To_Self (The_Event);
+
+   end Post_To_Self;
 
 
    procedure Post (The_Event : Event_P;
@@ -337,35 +349,65 @@ package body ColdFrame.Events_G.Standard_G is
          The_Queue.The_Event_Count.Add_Posted_Event;
       end Post;
 
-      entry Fetch (The_Event : out Event_P)
-      when not Unbounded_Posted_Event_Queues.Is_Empty (The_Queue.The_Events) is
+      procedure Post_To_Self (The_Event : Event_P) is
       begin
-         The_Event :=
-           Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
-         Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
+         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
+                                               The_Event);
+         The_Queue.The_Event_Count.Add_Posted_Event;
+      end Post_To_Self;
+
+      entry Fetch (The_Event : out Event_P)
+      when not Unbounded_Posted_Event_Queues.Is_Empty
+        (The_Queue.The_Self_Events)
+        or else not Unbounded_Posted_Event_Queues.Is_Empty
+        (The_Queue.The_Events) is
+      begin
+         if not Unbounded_Posted_Event_Queues.Is_Empty
+           (The_Queue.The_Self_Events) then
+            The_Event :=
+              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Self_Events);
+            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Self_Events);
+         else
+            The_Event :=
+              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
+            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
+         end if;
       end Fetch;
 
       procedure Invalidate_Events
         (For_The_Instance : access Instance_Base'Class) is
-         It : Abstract_Posted_Event_Containers.Iterator'Class
-           := Unbounded_Posted_Event_Queues.New_Iterator
-                (The_Queue.The_Events);
-         use Abstract_Posted_Event_Containers;
+
+         procedure Invalidate_Events
+           (Using : Abstract_Posted_Event_Containers.Iterator'Class);
+         procedure Invalidate_Events
+           (Using : Abstract_Posted_Event_Containers.Iterator'Class) is
+            use Abstract_Posted_Event_Containers;
+            It : Abstract_Posted_Event_Containers.Iterator'Class := Using;
+            --  We need a variable here
+         begin
+            while not Is_Done (It) loop
+               if Current_Item (It).all in Instance_Event_Base'Class then
+                  declare
+                     E : Instance_Event_Base
+                       renames Instance_Event_Base (Current_Item (It).all);
+                  begin
+                     if Instance_Base_P (E.For_The_Instance)
+                       = Instance_Base_P (For_The_Instance) then
+                        E.Invalidated := True;
+                     end if;
+                  end;
+               end if;
+               Next (It);
+            end loop;
+         end Invalidate_Events;
+
       begin
-         while not Is_Done (It) loop
-            if Current_Item (It).all in Instance_Event_Base'Class then
-               declare
-                  E : Instance_Event_Base
-                    renames Instance_Event_Base (Current_Item (It).all);
-               begin
-                  if Instance_Base_P (E.For_The_Instance)
-                    = Instance_Base_P (For_The_Instance) then
-                     E.Invalidated := True;
-                  end if;
-               end;
-            end if;
-            Next (It);
-         end loop;
+         Invalidate_Events
+           (Unbounded_Posted_Event_Queues.New_Iterator
+              (The_Queue.The_Self_Events));
+         Invalidate_Events
+           (Unbounded_Posted_Event_Queues.New_Iterator
+              (The_Queue.The_Events));
       end Invalidate_Events;
 
    end Excluder;

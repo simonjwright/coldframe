@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: ede7ee592c82 $
---  $Date: 2002/07/07 18:31:52 $
+--  $Revision: 23e539d5e10b $
+--  $Date: 2002/07/11 21:17:29 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -107,6 +107,11 @@ package ColdFrame.Events_G is
    --  May raise Use_Error if the Event is an Instance_Event and
    --  Instance_Events for this Instance have previously been posted
    --  to a different Queue.
+
+   procedure Post_To_Self (The_Event : Event_P;
+                           On : access Event_Queue_Base) is abstract;
+   --  Events to self take precedence over externally- or
+   --  timer-generated events.
 
 
    ----------------------
