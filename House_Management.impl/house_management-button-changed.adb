@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: 38b303ce7174 $
---  $Date: 2004/12/24 08:52:35 $
+--  $Revision: 5c7e8127275f $
+--  $Date: 2004/12/27 19:03:24 $
 --  $Author: simon $
 
 --  Acts as receiver of state changes from Digital IO, via Signal
@@ -44,17 +44,12 @@ begin
       if S.S in Floors then
 
          declare
-
             E : constant ColdFrame.Project.Events.Event_P
               := new Button_Event;
             P : Button_Name renames Button_Event (E.all).Payload;
-
          begin
-
             P := Buttons (S.S);
-
             ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
-
          end;
 
       else
