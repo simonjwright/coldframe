@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 17d39877893f 2001/03/20 05:55:00 simon $ -->
+<!-- $Id: generate-ada.xsl,v 9b324703e077 2001/03/22 20:27:21 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -208,6 +208,10 @@
     <xsl:call-template name="class-spec-context"/>
 
     <!-- .. the class package .. -->
+    <xsl:if test="not(@interface)">
+      <!-- only interface packages are externally visible -->
+      <xsl:text>private </xsl:text>
+    </xsl:if>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
@@ -222,11 +226,7 @@
       <xsl:text>  type Instance (&lt;&gt;) is private;&#10;</xsl:text>
 
       <!-- .. the Handle .. -->
-      <xsl:text>  type Handle is access all Instance;&#10;</xsl:text>
-
-      <!-- .. basic Container instantiation; public, so that child packages
-           can use the same instantiation .. -->
-      <xsl:text>  package Abstract_Containers is new BC.Containers (Handle);&#10;</xsl:text>
+      <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
 
       <!-- .. the creation, simple find, and deletion operations .. -->
       <xsl:text>  function Create (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
@@ -259,16 +259,27 @@
         <xsl:call-template name="instance-record">
           <xsl:with-param name="is-supertype" select="$is-supertype"/>
         </xsl:call-template>
-        
+
+        <!-- Use a fixed (effectively, static) storage pool if this is
+             a bounded class -->
+        <xsl:if test="@max">
+          <xsl:text>  for Handle'Storage_Size use Instance'Size / 8 * </xsl:text>
+          <xsl:value-of select="@max"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- .. basic Container instantiation for Maps -->
+        <xsl:text>  package Abstract_Map_Containers is new BC.Containers (Handle);&#10;</xsl:text>
+
         <!-- .. the Hash function spec .. -->
         <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
         
         <!-- .. Container instantiations .. -->
-        <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Identifier);&#10;</xsl:text>
+        <xsl:text>  package Abstract_Maps is new Abstract_Map_Containers.Maps (Identifier);&#10;</xsl:text>
 
         <xsl:choose>
 
-          <xsl:when test="./@max">
+          <xsl:when test="@max">
             <!-- Wnen there's a maximum size, use the Bounded version -->
             <xsl:text>  package Maps is new Abstract_Maps.Bounded&#10;</xsl:text>
             <xsl:text>     (Hash =&gt; Hash,&#10;</xsl:text>
@@ -334,8 +345,6 @@
 
     <xsl:if test="not(@singleton)">
 
-      <!-- We need access to the standard heap storage pool. -->
-      <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
 
       <!-- Choose the appropriate Map -->
 
@@ -348,6 +357,8 @@
 
         <xsl:otherwise>
           <!-- Use the Unbounded version -->
+          <!-- We need access to the standard heap storage pool. -->
+          <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
           <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
         </xsl:otherwise>
 
@@ -478,10 +489,14 @@
         <xsl:text>      return null;&#10;</xsl:text>
         <xsl:text>    end if;&#10;</xsl:text>
         <xsl:text>  end Find;&#10;</xsl:text>
-        
+
+        <xsl:text>  procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>        
         <xsl:text>  procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
+        <xsl:text>    H : Handle;&#10;</xsl:text>
         <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    H := Maps.Item_Of (The_Container, With_Identifier);&#10;</xsl:text>
         <xsl:text>    Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+        <xsl:text>    Free (H);&#10;</xsl:text>
         <xsl:text>  end Delete;&#10;</xsl:text>
         
         <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
@@ -497,7 +512,7 @@
           </xsl:if>
         </xsl:for-each>
         <xsl:text>));&#10;</xsl:text>
-        <xsl:text>    This := null;&#10;</xsl:text>
+        <xsl:text>    Free (This);&#10;</xsl:text>
         <xsl:text>  end Delete;&#10;</xsl:text>
         
         <!-- .. subtype enumeration support, if required .. -->
@@ -545,6 +560,12 @@
   <!-- Called from domain/class to generate context clauses for package
        body. -->
   <xsl:template name="class-body-context">
+      <xsl:if test="not(@singleton)">
+        
+        <!-- We'll need to free memory. -->
+        <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        
+      </xsl:if>
   </xsl:template>
 
 
@@ -644,13 +665,13 @@
         <xsl:variable name="max" select="./@max"/>
         <xsl:choose>
           <xsl:when test="$max &lt; 11">
-            <xsl:text>3</xsl:text>
+            <xsl:text>1</xsl:text>
           </xsl:when>
           <xsl:when test="$max &lt; 51">
-            <xsl:text>7</xsl:text>
+            <xsl:text>5</xsl:text>
           </xsl:when>
           <xsl:when test="$max &lt; 101">
-            <xsl:text>13</xsl:text>
+            <xsl:text>11</xsl:text>
           </xsl:when>
           <xsl:when test="$max &lt; 501">
             <xsl:text>29</xsl:text>
@@ -662,7 +683,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:text>43</xsl:text>
+        <xsl:text>19</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -770,12 +791,24 @@
       <xsl:value-of select="name"/>
     </xsl:variable>
 
+    <!-- Abstract Containers package -->
+    <xsl:text>with BC.Containers;&#10;</xsl:text>
+    <xsl:text>package </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers&#10;</xsl:text>
+    <xsl:text>   is new BC.Containers (Handle);&#10;</xsl:text>
+
     <!-- Abstract Collections package -->
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Collections&#10;</xsl:text>
-    <xsl:text>   is new Abstract_Containers.Collections;&#10;</xsl:text>
+    <xsl:text>   is new </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers.Collections;&#10;</xsl:text>
 
     <!-- Concrete Collections package -->
     <xsl:choose>
@@ -865,6 +898,10 @@
     </xsl:variable>
 
     <!-- Function to return a Collection of all the Instances -->
+    <xsl:text>with BC.Copy;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.All_Instances&#10;</xsl:text>
@@ -874,8 +911,11 @@
     <xsl:text>  use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Copy_Instances is new Abstract_Containers.Copy&#10;</xsl:text>
-    <xsl:text>     (From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>  procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
     <xsl:text>      Add =&gt; Collections.Append);&#10;</xsl:text>
@@ -889,6 +929,10 @@
 
     <!-- Generic filter function to return a Collection of selected
          Instances -->
+    <xsl:text>with BC.Filter;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Selection_Function&#10;</xsl:text>
@@ -898,8 +942,11 @@
     <xsl:text>  use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Filter is new Abstract_Containers.Filter&#10;</xsl:text>
-    <xsl:text>     (From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
     <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
@@ -913,6 +960,10 @@
     <xsl:text>.Selection_Function;&#10;</xsl:text>
 
     <!-- Generic filter function for collections of Instances -->
+    <xsl:text>with BC.Filter;&#10;</xsl:text>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function&#10;</xsl:text>
@@ -925,8 +976,11 @@
     <xsl:text>  use </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:text>  procedure Filter is new Abstract_Containers.Filter&#10;</xsl:text>
-    <xsl:text>     (From =&gt; Collection,&#10;</xsl:text>
+    <xsl:text>  procedure Filter is new BC.Filter&#10;</xsl:text>
+    <xsl:text>     (Item =&gt; Handle,&#10;</xsl:text>
+    <xsl:text>      Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
+    <xsl:text>      From =&gt; Maps.Map,&#10;</xsl:text>
+    <xsl:text>      Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:text>      To =&gt; Collection,&#10;</xsl:text>
     <xsl:text>      Pass =&gt; Pass,&#10;</xsl:text>
     <xsl:text>      Clear =&gt; Collections.Clear,&#10;</xsl:text>
