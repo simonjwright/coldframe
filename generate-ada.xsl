@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 3831cc5607be 2003/01/26 19:09:20 simon $ -->
+<!-- $Id: generate-ada.xsl,v 8d478181158a 2003/02/07 05:59:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -231,10 +231,20 @@
         name="m"
         select="'.. the domain Initialize procedure ..'"/>
     </xsl:call-template>
+
+    <!--
+         with ColdFrame.Project.Events;
+         procedure {domain}.Initialize
+           (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);
+         -->
+
     <xsl:call-template name="do-not-edit"/>
+    <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Initialize;&#10;</xsl:text>
+    <xsl:text>.Initialize&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);&#10;</xsl:text>
 
     <!-- The domain Initialize procedure body. -->
     <xsl:call-template name="progress-message">
@@ -243,6 +253,23 @@
         select="'.. the domain Initialize procedure body ..'"/>
     </xsl:call-template>
 
+    <!--
+         procedure {domain}.Initialize
+           (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null) is
+            use type ColdFrame.Project.Events.Event_Queue_P;
+         begin
+            if not Domain_Initialized then
+               if Dispatcher /= null then
+                  Events.Dispatcher := Dispatcher;
+               else
+                  Events.Initialize;
+               end if;
+               {class}.Class_Initialize:
+               {class}.{init-operation};
+               Domain_Initialized := True;
+            end if;
+         end {domain}.Initialize;
+         -->
     <xsl:call-template name="do-not-edit"/>
 
     <xsl:variable
@@ -286,7 +313,11 @@
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Initialize is&#10;</xsl:text>
+    <xsl:text>.Initialize&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null) is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>use type ColdFrame.Project.Events.Event_Queue_P;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
@@ -294,7 +325,15 @@
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
+    <xsl:text>if Dispatcher /= null then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
+    <xsl:text>Events.Dispatcher := Dispatcher;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>else&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>Events.Initialize;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
