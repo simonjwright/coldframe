@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 1f74db81cc0d $
---  $Date: 2005/02/25 11:30:36 $
+--  $Revision: d632fd77e3a1 $
+--  $Date: 2005/02/25 15:56:31 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -153,9 +153,14 @@ package body ColdFrame.Test_Stub_Support is
    --  that we can find the appropriate entry for a particular entry
    --  by iterating until we come to a cell whose Ordinal is less than
    --  or equal to the one we require.
+   --
+   --  We hold two Memory Streams; Stream is for the original data,
+   --  Copy is refilled each time the data is to be read (so we don't
+   --  get End_Error if it's read more than once).
    type Output_Cell is record
       Ordinal : Positive;
       Stream : Stream_Pointers.Pointer;
+      Copy : Stream_Pointers.Pointer;
    end record;
 
    function "=" (L, R : Output_Cell) return Boolean;
@@ -250,8 +255,13 @@ package body ColdFrame.Test_Stub_Support is
       end if;
       Sparse_Stream_Pointer_Collections.Append
         (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all,
-         Output_Cell'(For_Occurrence, Str));
-      T'Write (Stream_Pointers.Value (Str), To);
+         Output_Cell'(Ordinal => For_Occurrence,
+                      Stream => Str,
+                      Copy => Stream_Pointers.Create
+                        (new BC.Support.Memory_Streams.Stream_Type
+                           (Capacity => Ada.Streams.Stream_Element_Offset
+                              (T'Max_Size_In_Storage_Elements)))));
+      T'Output (Stream_Pointers.Value (Str), To);
    end Set_Output_Value;
 
 
@@ -290,16 +300,24 @@ package body ColdFrame.Test_Stub_Support is
            (Constraint_Error'Identity,
             "Input " & SP & " not found");
       end if;
+      --  We have to get the result from a copy of the memory stream,
+      --  otherwise the user will get an End_Error if she reads it
+      --  more than once.
       declare
+         package AS renames Ada.Streams;
+         package BSMS renames BC.Support.Memory_Streams;
          Pointers : Stream_Pointer_Collections.Collection
            renames Stream_Pointer_Collection_Pointers.Value
            (Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU)).all;
-         Str : Stream_Access
-           renames Stream_Pointers.Value
-           (Stream_Pointer_Collections.Item_At
-              (Pointers, For_Occurrence));
+         Str : BSMS.Stream_Type
+           renames BSMS.Stream_Type (Stream_Pointers.Value
+                                       (Stream_Pointer_Collections.Item_At
+                                          (Pointers, For_Occurrence)).all);
+         Copy : aliased BSMS.Stream_Type
+           (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
       begin
-         return T'Input (Str);
+         BSMS.Set_Contents (BSMS.Contents (Str), Copy);
+         return T'Input (Copy'Access);
       end;
    end Get_Input_Value;
 
@@ -405,7 +423,22 @@ package body ColdFrame.Test_Stub_Support is
          while not Is_Done (It)
          loop
             if Current_Item (It).Ordinal <= For_Occurrence then
-               return Stream_Pointers.Value (Current_Item (It).Stream);
+               --  We have to give the user a copy of the memory
+               --  stream to get the result from, otherwise she'll get
+               --  an End_Error if she reads it more than once.
+               declare
+                  package BSMS renames BC.Support.Memory_Streams;
+                  C : Output_Cell renames Current_Item (It);
+                  Stream : BSMS.Stream_Type
+                    renames BSMS.Stream_Type
+                    (Stream_Pointers.Value (C.Stream).all);
+                  Copy : BSMS.Stream_Type
+                    renames BSMS.Stream_Type
+                    (Stream_Pointers.Value (C.Copy).all);
+               begin
+                  BSMS.Set_Contents (BSMS.Contents (Stream), Copy);
+                  return Stream_Pointers.Value (C.Copy);
+               end;
             end if;
             Next (It);
          end loop;
