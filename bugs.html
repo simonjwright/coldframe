@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v b98c61f21645 2004/11/12 09:35:20 simon $ -->
+<!-- $Id: bugs.html,v c04c9942f723 2004/11/15 17:16:59 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -220,7 +220,16 @@ action.
 and inheritance</a> doesn't describe what you're supposed to do with
 operations and attributes.
 
-<!-- next: 0289  -->
+<dt>0289 (raised 15.xi.04)
+
+<dd>If a &#171;protected&#187; type can't be declared because of an
+undeclared type in one of its operations, the error message doesn't
+mention the offending type.
+<br><i>The actual problem was <tt>Natural</tt>, which of course Ada
+programmers know exists in package <tt>Standard</tt>. Perhaps some
+more of Ada's standard types should be predefined for ColdFrame.</i>
+
+<!-- next: 0290  -->
 
 </dl>
 
