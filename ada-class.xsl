@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 315d6ed811d7 2001/10/04 19:45:19 simon $ -->
+<!-- $Id: ada-class.xsl,v 666b4b300428 2001/10/08 18:53:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -178,7 +178,6 @@
             <xsl:text> Buckets =&gt; </xsl:text>
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
-            <xsl:value-of select="$IC"/>
             <xsl:value-of select="$IC"/>
             <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
           </xsl:otherwise>
