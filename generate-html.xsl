@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 39999868f6dc 2002/01/20 10:39:43 simon $ -->
+<!-- $Id: generate-html.xsl,v 2a24366a436b 2002/01/24 20:17:01 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -521,13 +521,6 @@
             <xsl:sort select="."/>
           </xsl:apply-templates>
         </xsl:if>
-      </xsl:when>
-      <xsl:when test="set">
-        <p>
-          <xsl:text>A set of references to </xsl:text>
-          <a href="#{set}"><xsl:value-of select="set"/></a>
-          <xsl:text>s.</xsl:text>
-        </p>
       </xsl:when>
       <xsl:when test="string">
         <p>
