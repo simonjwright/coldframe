@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 09df8643f583 2004/03/12 16:54:40 simon $ -->
+<!-- $Id: bugs.html,v d7d1ee879b21 2004/03/13 21:05:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -244,16 +244,22 @@ action (ie, with the Event Queue locked).
 attributes and no type-specifying tags (<i>{real}</i> etc) into a
 <tt>null record</tt>, perhaps with a warning.
 
-<dt>0242 (raised 12.iii.04)
-
-<dd>Domain tear down will fail if you have an &#171;active&#187; class
-with a <i>Timer</i> and an instance's Timer has a held event.
-
-<!-- next: 0242 -->
+<!-- next: 0244 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.iii.04</h3>
+
+<dl>
+
+<dt>0243 (raised 12.iii.04)
+
+<dd>Domain tear down will fail if you have an &#171;active&#187; class
+with a <i>Timer</i>, and an instance's Timer has a held event.
+
+</dl>
 
 <h3>9.iii.04</h3>
 
