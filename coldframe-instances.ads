@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: 557c6c64e6a6 $
---  $Date: 2003/07/24 21:04:15 $
+--  $Revision: 70436b7cabaa $
+--  $Date: 2003/08/12 20:14:01 $
 --  $Author: simon $
 
 with BC.Containers.Maps.Bounded;
@@ -63,7 +63,7 @@ package ColdFrame.Instances is
    package Abstract_Containers is new BC.Containers (Handle);
    package Abstract_Maps is new Abstract_Containers.Maps
      (Key => Handle,
-     "=" => Classwide_Identifier_Equality);
+      "=" => Classwide_Identifier_Equality);
 
    package Bounded_Maps is new Abstract_Maps.Bounded
      (Hash => Classwide_Hash,
