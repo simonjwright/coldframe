@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 4a3b043da5de 2002/10/11 05:37:03 simon $ -->
+<!-- $Id: generate-ada.xsl,v c145d3ee7b62 2002/11/06 06:25:53 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -292,8 +292,7 @@
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Initialize;&#10;</xsl:text>
+    <xsl:text>Events.Initialize;&#10;</xsl:text>
 
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
