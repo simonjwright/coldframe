@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<xsv xmlns="http://www.w3.org/2000/05/xsv" docElt="{None}domain"
+     instanceAssessed="true" instanceErrors="0" schemaDocs="ColdFrame.xsd"
+     schemaErrors="0" target="/home/simon/cf/States.norm" validation="lax"
+     version="XSV 2.7-1 of 2004/04/01 13:40:50">
+  <schemaDocAttempt URI="/home/simon/cf/ColdFrame.xsd" outcome="success"
+                    source="command line"
+                    trueURI="file:///home/simon/cf/ColdFrame.xsd"/>
+</xsv>
