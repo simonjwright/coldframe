@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f9c671cc8ed1 2004/03/11 15:29:03 simon $ -->
+<!-- $Id: bugs.html,v 09df8643f583 2004/03/12 16:54:40 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -243,6 +243,11 @@ action (ie, with the Event Queue locked).
 <dd>It would be helpful to translate a &#171;type&#187; with no
 attributes and no type-specifying tags (<i>{real}</i> etc) into a
 <tt>null record</tt>, perhaps with a warning.
+
+<dt>0242 (raised 12.iii.04)
+
+<dd>Domain tear down will fail if you have an &#171;active&#187; class
+with a <i>Timer</i> and an instance's Timer has a held event.
 
 <!-- next: 0242 -->
 
