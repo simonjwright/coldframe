@@ -106,6 +106,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # remove any generated files which are also present in the implementation
 # directory (.impl)
 # write-protect the generated files (careful, in case there are a lot of them!)
+# make the target directory itself writable (so users can delete files in it)
 # report unimplemented bodies
 %.gen: %.ada
 	@echo generating $@ ...
