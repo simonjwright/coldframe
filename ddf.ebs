@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 7d7b8b63d212 2000/06/08 08:30:04 simon $
+'$Id: ddf.ebs,v 1ae8efc9ce2a 2000/08/08 10:36:55 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -34,7 +34,8 @@ Sub DumpTagInfo (o As Class)
 End Sub
 
 Sub DumpStatusAttribute (o As Class)
-	'the Status attribute is an extra attribute, needed if there's an STT
+	'the Status attribute is an extra attribute, needed if there's an STT.
+	'I expect it will be auto-generated when I get rount to STTs.
 End Sub
 
 Sub DumpAttributes (o As Class)
@@ -66,7 +67,7 @@ Sub DumpClass (o As Class)
 	Print "  object " & o.Name
 	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
 	Print #1, "<name>" & o.Name & "</name>"
-	'DumpObjectRelationInfo (o)
+	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	DumpTagInfo (o)
 	DumpAttributes (o)
 	Print #1, "</object>"
@@ -202,7 +203,10 @@ Sub DumpDomainData (domain As Category)
 End Sub
 
 Sub Main
+	'S-M OOA Domains are mapped onto Packages. Output data for the
+	'(only) selected Package (Category?!)
 	Dim cats As CategoryCollection
+	'ordinary Print output goes to this window
 	Viewport.Open
 	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
 	For cid = 1 To cats.Count
