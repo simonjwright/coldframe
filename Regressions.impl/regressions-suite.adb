@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v d0f98832c28d 2004/05/19 16:25:16 simon $
+--  $Id: regressions-suite.adb,v 7171e077d690 2004/09/14 11:24:31 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -47,6 +47,11 @@ pragma Warnings (Off, Regressions.One_Int_ID);
 pragma Warnings (Off, Ada.Text_IO);
 
 package body Regressions.Suite is
+
+
+   --  Check that protected type operations can be <<access>
+   OOPT : Access_Operation_Of_Protected_Type;
+   pragma Warnings (Off, OOPT);
 
 
    package Find_Active_Tests is
