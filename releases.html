@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 94a12c38f0a1 2002/07/16 17:44:52 simon $ -->
+<!-- $Id: releases.html,v c6f42cff5a95 2002/07/16 20:33:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -23,7 +23,7 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dl>
 
-<p><dt>2002mmdd
+<p><dt>20020716
 
 <dd>Event Queues now have a <tt>Wait_Until_Idle</tt> operation, for
 unit tests to use after posting test Events; the operation blocks the
@@ -45,9 +45,16 @@ externally-signalled events to the same instance.
 before code is generated (during normalization).
 
 
+<p><i>Date</i>, <i>Time</i> types are translated to
+<tt>Coldframe.Projects.Calendar.Time</tt>, which is provided as a
+default renaming of <tt>Ada.Calendar</tt>.
+
+
 <p><dt>20020706
 
-<dd>&#171;instantiation&#187; can be used to mark operations which you
+<dd>
+
+&#171;instantiation&#187; can be used to mark operations which you
 want to appear on a sequence diagram but which will be implemented by
 instantiating a generic (for example,
 <tt><i>Class</i>.Selection_Function</tt>).
@@ -59,10 +66,30 @@ find a sensible mechanism to implement it now that I don't use <i>WITH
 TYPE</i> any more.
 
 
-<p>Autonumbering is reset by <tt>Tear_Down</tt>.
-
-
 <p>Initial support for state machines.
+
+
+<p>Support &#171;class&#187; attributes.
+
+
+<p>Added <i>Counterparts</i>.
+
+
+<p>Create the default "abbreviation" for single-word classes by
+prepending <tt>A</tt> or <tt>An</tt> to the class name.
+
+
+<p>Check for illegal characters in identifiers.
+
+
+<p>Added Exceptions (like &#171;type&#187;s, but marked
+&#171;exception&#187;, generated in the Domain package).
+
+
+<p>Initializers can be signed.
+
+
+<p>Autonumbering is reset by <tt>Tear_Down</tt>.
 
 
 <p>Added <tt>pragma Elaborate_Body</tt> for generated instantiable
@@ -73,14 +100,7 @@ units.
 child package <tt><i>Domain.Association</i>.From_Collections</tt>.
 
 
-<p>Association navigation no longer relies on instantiating generics
-(the code is generated explicitly).
-
-
 <p>Include "don't edit" warnings in generated code.
-
-
-<p>Include <a href="installation.html">installation notes</a>.
 
 
 <p>It's no longer necessary to mess with your CLASSPATH to include
@@ -89,36 +109,11 @@ need to unpack Saxon where the <tt>Makefile</tt>'s expecting it (see
 the <a href="installation.html">installation notes</a>).
 
 
-<p>Support &#171;class&#187; attributes.
-
-
-<p>Added <i>Counterparts</i>.
-
-
-<p>Projects will want to provide their own versions of supporting Ada
-packages, for example to provide the default storage pool; but
-ColdFrame needs to know how to <tt>with</tt> them.
-
-<br>A new package hierarchy rooted at <tt>ColdFrame.Project</tt> is
-used to hold such packages.
-
-<br>A new Ada source library directory
-<tt>cf-<i>yyyymmdd</i>/project</tt> is provided to hold example
-versions of required packages.
-
-
 <p>Added special processing where an dispatching or inherited
 operation has a parmeter of the same type as its class; the parameter
 is converted to the same type as the implicit <tt>This</tt> parameter.
 
 <br>This may be what's called <i>covariance</i> in Eiffel.
-
-
-<p>Create the default "abbreviation" for single-word classes by
-prepending <tt>A</tt> or <tt>An</tt> to the class name.
-
-
-<p>Check for illegal characters in identifiers.
 
 
 <p>Tear-down of an active non-singleton instance didn't terminate the
@@ -148,10 +143,6 @@ case-sensitive
 <li>you need to use the case that ColdFrame expects (for example,
 <tt>AutoNumber</tt> won't work).
 </ul>
-
-
-<p>The exceptions declared in <tt>ColdFrame.Exceptions</tt> are no
-longer renamings of Booch exceptions.
 
 
 <p>There's a new exception
@@ -195,11 +186,23 @@ inheritance relationship there's a child package
 operations.
 
 
-<p>Added Exceptions (like &#171;type&#187;s, but marked
-&#171;exception&#187;, generated in the Domain package).
+<p>Include <a href="installation.html">installation notes</a>.
 
 
-<p>Initializers can be signed.
+<p>Projects will want to provide their own versions of supporting Ada
+packages, for example to provide the default storage pool; but
+ColdFrame needs to know how to <tt>with</tt> them.
+
+<br>A new package hierarchy rooted at <tt>ColdFrame.Project</tt> is
+used to hold such packages.
+
+<br>A new Ada source library directory
+<tt>cf-<i>yyyymmdd</i>/project</tt> is provided to hold example
+versions of required packages.
+
+
+<p>The exceptions declared in <tt>ColdFrame.Exceptions</tt> are no
+longer renamings of Booch exceptions.
 
 
 <p><dt>20020116
