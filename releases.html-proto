@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v a6ac90b9739c 2005/02/24 06:39:28 simon $ -->
+<!-- $Id: releases.html-proto,v f6089ff6f96a 2005/02/24 13:35:33 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -98,7 +98,7 @@ box!
 
 <p>It's been made a bit more straightforward to <a
 href="extending.html">add your own code generation extensions</a>. You
-can also customize the banner Coldframe outputs at the head of each
+can also customize the banner ColdFrame outputs at the head of each
 file.
 
 
@@ -139,11 +139,11 @@ using <i>{ name = New Name }</i> on the domain.
 <i>{ init = package.operation }</i> on the domain.
 
 
-<p>You can specify <i>atomic</i>,
-<i>volatile</i> on types or attributes (translating to the
-corresponding pragmas). If the type is an <i>{array}</i> type, the
-components are marked as <i>atomic</i> or <i>volatile</i> (the array
-itself will almost certainly be too large to be marked as a whole).
+<p>You can specify <i>{atomic}</i>, <i>{volatile}</i> on types or
+attributes (translating to the corresponding pragmas). If the type is
+an <i>{array}</i> type, the components are marked as <i>atomic</i> or
+<i>volatile</i> (the array itself will almost certainly be too large
+to be marked as a whole).
 
 
 <p><dt>20040319
