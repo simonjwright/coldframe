@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 39dce0898768 2004/01/11 19:25:45 simon $ -->
+<!-- $Id: releases.html-proto,v 3bbfe3ac0f00 2004/01/21 20:46:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -38,12 +38,34 @@ identifier is allowed.
 <p>You can specify an empty type using the tag <i>{null}</i>.
 
 
-<p><tt>Cant_Happen</tt> exceptions are accompanied by exception
-information (to make them easier to debug).
+<p><tt>Cant_Happen</tt> exceptions in state machines are accompanied
+by exception information (to make them easier to debug).
 
 
 <p>You can specify array &#171;type&#187;s
-(<tt>{array=<i>element-type</i>, index=<i>index-type</i>}</tt>).
+(<tt>{array=<i>element-type</i>, index=<i>index-type</i>}</tt>).  You
+can also say <tt>{unconstrained}</tt>: since unconstrained arrays are
+indefinite (<a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-3.html#I1396">ARM
+3.3(23)</a>, <a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-7.html#I1869">3.7(26)</a>),
+you can't use them as attributes, but they can be used as parameters.
+
+
+<p>For increased performance, if a class has a single identifier of
+type
+<ul>
+<li><tt>Boolean</tt>
+<li>an <tt>{imported}</tt> or <tt>{renames}</tt> &#171;type&#187;
+markedt <tt>{hash=enumeration}</tt>
+<li>an <tt>{integer}</tt> or <tt>{enumerated}</tt> &#171;type&#187; of
+small enough range (currently 49)
+</ul>
+
+<p>the container for the extent of the class (all the current instances)
+is implemented as an array rather than a <a
+href="resources.html#booch-components">Booch Components</a>
+<tt>Map</tt>.
 
 
 <p><dt>20031126
