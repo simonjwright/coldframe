@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.adb,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 8036534a3bf3 $
+--  $Date: 2002/02/26 06:20:46 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -113,6 +113,7 @@ package body ColdFrame.Events.Wall_Timer is
                declare
                   Success : Boolean;
                begin
+                  Log_Retraction (The => The.The_Event, On => On);
                   On.The_Excluder.Retract (The.The_Event, Success);
                   if not Success then
                      raise Program_Error;
@@ -129,6 +130,7 @@ package body ColdFrame.Events.Wall_Timer is
             declare
                Success : Boolean;
             begin
+               Log_Retraction (The => The.The_Event, On => On);
                On.The_Excluder.Retract (The.The_Event, Success);
                if not Success then
                   raise Use_Error;
@@ -242,7 +244,6 @@ package body ColdFrame.Events.Wall_Timer is
          if Loc = 0 then
             Success := False;
          else
-            Log_Retraction (The => The, On => The_Queue);
             Unbounded_Posted_Event_Queues.Remove (The_Queue.The_Events, Loc);
             Success := True;
          end if;
