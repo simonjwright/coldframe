@@ -1,0 +1,754 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Weapon_Assignment"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"38FE92C90018"
+    documentation 	"some domain documentation"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Weapon"
+	    quid       	"38FE9311026B"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"38FE93E00164"
+		    stereotype 	"id"
+		    type       	"Integer")
+		(object ClassAttribute "status"
+		    quid       	"393E6F680232"
+		    type       	"Policy"
+		    initv      	"weapons tight")))
+	(object Class "Track"
+	    quid       	"3903EC150373"
+	    documentation 	"[[ abbreviation : TR ]]"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3903EC1E0326"
+		    stereotype 	"id"
+		    type       	"integer"))
+	    abstract   	TRUE)
+	(object Class "Assignment"
+	    quid       	"39087F3401E9")
+	(object Class "Unallocated Track"
+	    quid       	"390B04B8015D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"390F0D56024B"
+		    documentation 	"an inheritance relation"
+		    label      	"r10"
+		    supplier   	"Logical View::Weapon_Assignment::Track"
+		    quidu      	"3903EC150373")))
+	(object Class "Target"
+	    quid       	"390B04C503B5"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"390F0D510335"
+		    label      	"r10"
+		    supplier   	"Logical View::Weapon_Assignment::Track"
+		    quidu      	"3903EC150373"))
+	    operations 	(list Operations
+		(object Operation "foo"
+		    quid       	"3A5F1FD403CE"
+		    parameters 	(list Parameters
+			(object Parameter "p1"
+			    type       	"integer")
+			(object Parameter "p2"
+			    type       	"Track")
+			(object Parameter "p3"
+			    type       	"Weapon"))
+		    result     	"Track"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "bar"
+		    quid       	"3A5F1FF503B7"
+		    stereotype 	"class"
+		    result     	"Track"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Missile"
+	    quid       	"390F0E8C039C"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"390F0E9A03E2"
+		    stereotype 	"id"
+		    type       	"integer")))
+	(object Class "Policy"
+	    quid       	"393E700302A3"
+	    documentation 	
+|Policy defines missile launch authorisation requirements.
+|
+|"Tight" means that specific authorisation is required.
+|
+|"Free" means "launch at will".
+|
+|[[enumeration: weapons tight, weapons free]]
+|
+	    
+	    stereotype 	"type")
+	(object Class "Distance"
+	    quid       	"396DAEB50134"
+	    documentation 	
+|A Distance represents a range in metres (we can't use "Range", it's a reserved word in Ada).
+|
+|[[real: digits 6, lower 0.0, upper 100_000.0]]
+|
+	    
+	    stereotype 	"type")
+	(object Class "Test"
+	    quid       	"397ECF99000E"
+	    documentation 	"[[ abbreviation : TEST ]]"
+	    operations 	(list Operations
+		(object Operation "t4"
+		    quid       	"397ECFC100F3"
+		    external_docs 	(list external_doc_list
+			(object external_doc
+			    external_doc_path 	"E:\\rose\\t4.fn"))
+		    parameters 	(list Parameters
+			(object Parameter "arg"
+			    type       	"Boolean"
+			    initv      	"true"))
+		    result     	"Boolean"
+		    exceptions 	"bad, badder, baddest"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "t5"
+		    quid       	"3991214D01AD"
+		    external_docs 	(list external_doc_list
+			(object external_doc
+			    external_doc_path 	"E:\\rose\\t5.fn"))
+		    parameters 	(list Parameters
+			(object Parameter "pol"
+			    type       	"Policy"
+			    initv      	"weapons tight")
+			(object Parameter "ident"
+			    documentation 	"[[ mode : in out ]]"
+			    type       	"Integer")
+			(object Parameter "val"
+			    documentation 	"[[ mode : out ]]"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "t6"
+		    quid       	"3A3790F70093"
+		    parameters 	(list Parameters
+			(object Parameter "arg"
+			    type       	"String"))
+		    result     	"Unbounded String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "t7"
+		    quid       	"3A3A0D570317"
+		    parameters 	(list Parameters
+			(object Parameter "st"
+			    type       	"Unbounded String"))
+		    result     	"String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "t8"
+		    quid       	"3A3A16840378"
+		    result     	"Title String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "x"
+		    quid       	"3A787012025B"
+		    type       	"policy"
+		    initv      	"weapons free")))
+	(object Class "Title String"
+	    quid       	"3A37AAB80390"
+	    documentation 	
+|This is a string used for titles. Its length is variable, up to 30 characters.
+|
+|[[string: max 30]]
+|
+	    
+	    stereotype 	"type")
+	(object Class "Threat List"
+	    quid       	"3AACC5C003D5"
+	    stereotype 	"singleton")
+	(object Association "r9"
+	    quid       	"390B053F0342"
+	    documentation 	"an association"
+	    roles      	(list role_list
+		(object Role "is target for"
+		    quid       	"390B05400343"
+		    label      	"is target for"
+		    supplier   	"Logical View::Weapon_Assignment::Target"
+		    quidu      	"390B04C503B5"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "is aimed at"
+		    quid       	"390B0540034D"
+		    label      	"is aimed at"
+		    supplier   	"Logical View::Weapon_Assignment::Weapon"
+		    quidu      	"38FE9311026B"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Weapon_Assignment::Assignment")
+	(object Association "r12"
+	    quid       	"390F0EC600CE"
+	    roles      	(list role_list
+		(object Role "is loaded in"
+		    quid       	"390F0EC700F7"
+		    label      	"is loaded in"
+		    supplier   	"Logical View::Weapon_Assignment::Missile"
+		    quidu      	"390F0E8C039C"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "can fire"
+		    quid       	"390F0EC70101"
+		    label      	"can fire"
+		    supplier   	"Logical View::Weapon_Assignment::Weapon"
+		    quidu      	"38FE9311026B"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "r13"
+	    quid       	"3AACC5D2037F"
+	    roles      	(list role_list
+		(object Role "is a threat in"
+		    quid       	"3AACC5D30395"
+		    label      	"is a threat in"
+		    supplier   	"Logical View::Weapon_Assignment::Track"
+		    quidu      	"3903EC150373"
+		    client_cardinality 	(value cardinality "0..n"))
+		(object Role "contains"
+		    quid       	"3AACC5D303B3"
+		    label      	"contains"
+		    supplier   	"Logical View::Weapon_Assignment::Threat List"
+		    quidu      	"3AACC5C003D5"
+		    client_cardinality 	(value cardinality "0..1")))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"38FE93040226"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Assignment" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1008, 1680)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(883, 1628)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	250
+			justify    	0
+			label      	"Assignment")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"39087F3401E9"
+		    width      	268
+		    height     	128
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Unallocated Track" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1680, 240)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1488, 188)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	384
+			justify    	0
+			label      	"Unallocated Track")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"390B04B8015D"
+		    width      	402
+		    height     	128
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Target" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1680, 1168)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1213, 1062)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	934
+			justify    	0
+			label      	"Target")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"390B04C503B5"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1213, 1123)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	931)
+		    width      	952
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Missile" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(304, 1776)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(110, 1695)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	388
+			justify    	0
+			label      	"Missile")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"390F0E8C039C"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(110, 1756)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	393)
+		    width      	406
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Weapon" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(320, 1168)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(13, 1062)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	614
+			justify    	0
+			label      	"Weapon")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"38FE9311026B"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(13, 1123)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	621)
+		    width      	632
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r9" @6
+		    location   	(919, 1168)
+		    label      	(object SegLabel @7
+			Parent_View 	@6
+			location   	(919, 1109)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r9"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"390B053F0342"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is target for" @8
+			    Parent_View 	@6
+			    location   	(615, 0)
+			    label      	(object SegLabel @9
+				Parent_View 	@8
+				location   	(1116, 1129)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	228
+				justify    	0
+				label      	"+is target for"
+				pctDist    	0.697872
+				height     	40
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"390B05400343"
+			    client     	@6
+			    supplier   	@3
+			    line_style 	0
+			    label      	(object SegLabel @10
+				Parent_View 	@8
+				location   	(1174, 1222)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "is aimed at" @11
+			    Parent_View 	@6
+			    location   	(615, 0)
+			    label      	(object SegLabel @12
+				Parent_View 	@11
+				location   	(710, 1129)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	224
+				justify    	0
+				label      	"+is aimed at"
+				pctDist    	0.737740
+				height     	40
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"390B0540034D"
+			    client     	@6
+			    supplier   	@5
+			    line_style 	0
+			    label      	(object SegLabel @13
+				Parent_View 	@11
+				location   	(665, 1222)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object AssocAttachView "" @14
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@1
+		    supplier   	@6
+		    line_style 	0)
+		(object AssociationViewNew "r12" @15
+		    location   	(311, 1484)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(309, 1490)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r12"
+			pctDist    	0.483333
+			height     	6
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"390F0EC600CE"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is loaded in" @17
+			    Parent_View 	@15
+			    location   	(7, 316)
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(169, 1637)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	240
+				justify    	0
+				label      	"+is loaded in"
+				pctDist    	0.788235
+				height     	139
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"390F0EC700F7"
+			    client     	@15
+			    supplier   	@4
+			    line_style 	0
+			    label      	(object SegLabel @19
+				Parent_View 	@17
+				location   	(360, 1627)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.715847
+				height     	53
+				orientation 	0))
+			(object RoleView "can fire" @20
+			    Parent_View 	@15
+			    location   	(7, 316)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(198, 1343)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	158
+				justify    	0
+				label      	"+can fire"
+				pctDist    	0.700000
+				height     	118
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"390F0EC70101"
+			    client     	@15
+			    supplier   	@5
+			    line_style 	0
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(368, 1360)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.631868
+				height     	54
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Test" @23
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1856, 1648)
+		    label      	(object ItemLabel
+			Parent_View 	@23
+			location   	(1297, 1442)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1118
+			justify    	0
+			label      	"Test")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"397ECF99000E"
+		    compartment 	(object Compartment
+			Parent_View 	@23
+			location   	(1297, 1503)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	1125)
+		    width      	1136
+		    height     	436
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Track" @24
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1088, 592)
+		    font       	(object Font
+			italics    	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@24
+			location   	(894, 511)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	388
+			justify    	0
+			label      	"Track")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3903EC150373"
+		    compartment 	(object Compartment
+			Parent_View 	@24
+			location   	(894, 572)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	393)
+		    width      	406
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "r10" @25
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(1407, 401)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r10")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"390F0D56024B"
+		    client     	@2
+		    supplier   	@24
+		    line_style 	0)
+		(object InheritView "r10" @26
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(1370, 867)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r10")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"390F0D510335"
+		    client     	@3
+		    supplier   	@24
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Threat List" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(144, 592)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(12, 563)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"Threat List")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@27
+			location   	(12, 513)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3AACC5C003D5"
+		    width      	282
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r13" @28
+		    location   	(584, 592)
+		    label      	(object SegLabel @29
+			Parent_View 	@28
+			location   	(584, 629)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r13"
+			pctDist    	0.500000
+			height     	37
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3AACC5D2037F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is a threat in" @30
+			    Parent_View 	@28
+			    location   	(168, 144)
+			    label      	(object SegLabel @31
+				Parent_View 	@30
+				location   	(747, 551)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	250
+				justify    	0
+				label      	"+is a threat in"
+				pctDist    	0.542320
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3AACC5D30395"
+			    client     	@28
+			    supplier   	@24
+			    line_style 	0
+			    label      	(object SegLabel @32
+				Parent_View 	@30
+				location   	(824, 634)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.798996
+				height     	42
+				orientation 	1))
+			(object RoleView "contains" @33
+			    Parent_View 	@28
+			    location   	(168, 144)
+			    label      	(object SegLabel @34
+				Parent_View 	@33
+				location   	(387, 551)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	184
+				justify    	0
+				label      	"+contains"
+				pctDist    	0.657233
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3AACC5D303B3"
+			    client     	@28
+			    supplier   	@27
+			    line_style 	0
+			    label      	(object SegLabel @35
+				Parent_View 	@33
+				location   	(328, 625)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.858491
+				height     	33
+				orientation 	0))))))))

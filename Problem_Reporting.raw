@@ -1,0 +1,266 @@
+<domain>
+<name>Problem_Reporting</name>
+<documentation></documentation>
+<classes>
+<class>
+<name>Problem Report</name>
+<documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
+</documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation>Id is an integer allocated uniquely to identify Problem Reports.</documentation>
+<type>integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>details</name>
+<documentation>Details holds the text of the Problem Report.</documentation>
+<type>Text</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>reporter</name>
+<documentation>Reporter holds the email address of the person who originally raised the Problem Report.</documentation>
+<type>Text</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>add problem</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>number</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>reporter</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>details</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="class">
+<name>reject problem</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>number</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>reason</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="class">
+<name>note defect</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>problem</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>component</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>description</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Rejected Problem Report</name>
+<documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
+<attributes>
+<attribute>
+<name>rejection reason</name>
+<documentation>The Rejection Reason is a summary of the reason that the Problem Report has been rejected.</documentation>
+<type>Summary String</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Diagnosed Problem Report</name>
+<documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>related components</name>
+<documentation>[[class]]
+</documentation>
+<return>components</return>
+<parameters>
+<parameter>
+<name>simons arg</name>
+<documentation></documentation>
+<type>Summary String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Component</name>
+<documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.</documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation>Id is the name of the software Component. It uniquely identifies the Component.</documentation>
+<type>Text</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>add component</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>named</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="class">
+<name>report problems</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Unallocated Problem Report</name>
+<documentation>An Unallocated Problem Report is awaiting determination of appropriate handling.
+
+If it's decided not in fact to be a problem, it will be rejected (see Rejected Problem Report).
+
+If it is really a problem, it will become a Diagnosed Problem Report.
+
+[[ abbreviation : UPR ]]
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Defect</name>
+<documentation>A Defect denotes something that is wrong witha Component.
+
+It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
+
+It should address one logical error (which may correspond to several necessary changes in the affected Component).</documentation>
+<attributes>
+<attribute>
+<name>problem</name>
+<documentation>Problem contains a description of the Defect.</documentation>
+<type>Text</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+</class>
+<class stereotype="type">
+<name>Summary String</name>
+<documentation>A Summary String is used to hold brief statements.
+
+[[string: max 80]]
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class stereotype="type">
+<name>Components</name>
+<documentation>[[set : component]]
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class stereotype="type">
+<name>Diagnosed Problem Reports</name>
+<documentation>[[set : diagnosed problem report]]
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+</classes>
+<relationships>
+<association>
+<name>r100</name>
+<documentation></documentation>
+<role><end>1</end>
+<name>is affected by</name>
+<classname>Component</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name>affects</name>
+<classname>Diagnosed Problem Report</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<associative>Defect</associative>
+</association>
+<inheritance>
+<name>r1</name>
+<documentation></documentation>
+<child>Rejected Problem Report</child>
+<parent>Problem Report</parent>
+</inheritance>
+<inheritance>
+<name>r1</name>
+<documentation></documentation>
+<child>Diagnosed Problem Report</child>
+<parent>Problem Report</parent>
+</inheritance>
+<inheritance>
+<name>r1</name>
+<documentation></documentation>
+<child>Unallocated Problem Report</child>
+<parent>Problem Report</parent>
+</inheritance>
+</relationships>
+</domain>
