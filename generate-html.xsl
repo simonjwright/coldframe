@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 71e314d309ef 2001/11/30 20:24:56 simon $ -->
+<!-- $Id: generate-html.xsl,v 31eebd8dff03 2002/01/08 21:06:30 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -240,7 +240,7 @@
           <xsl:text>Integer (autonumbering)</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="type-name">
+          <xsl:call-template name="type-name-linked">
             <xsl:with-param name="type" select="type"/>
           </xsl:call-template>
         </xsl:otherwise>
@@ -276,13 +276,21 @@
     <xsl:if test="@finalize">
       <p>This is a finalization operation.</p>
     </xsl:if>
+    <xsl:if test="@generated">
+      <p>This is an automatically-generated operation.</p>
+    </xsl:if>
     <xsl:if test="@init">
       <p>This is an initialization operation.</p>
     </xsl:if>
-    <xsl:apply-templates select="documentation"/>
-    <xsl:if test="@result">
-      <xsl:apply-templates select="@result"/>
+    <xsl:if test="@return">
+      <p>
+        <xsl:text>Returns </xsl:text>
+        <xsl:call-template name="type-name-linked">
+          <xsl:with-param name="type" select="@return"/>
+        </xsl:call-template>
+      </p>
     </xsl:if>
+    <xsl:apply-templates select="documentation"/>
     <xsl:if test="parameter">
       <h6>Parameters</h6>
       <dl>
@@ -294,22 +302,12 @@
   </xsl:template>
 
 
-  <!-- Output details of an Operation's Result. -->
-  <xsl:template match="operation/@result">
-    <h5>Result</h5>
-    <p>
-      <xsl:value-of select="."/>
-    </p>
-    <xsl:apply-templates select="documentation"/>
-  </xsl:template>
-
-
   <!-- Output details of an Operation's Parameter. -->
   <xsl:template match="operation/parameter">
     <dt>
       <xsl:value-of select="name"/>
       <xsl:text> : </xsl:text>
-      <xsl:call-template name="type-name">
+      <xsl:call-template name="type-name-linked">
         <xsl:with-param name="type" select="type"/>
       </xsl:call-template>
     </dt>
@@ -430,9 +428,9 @@
     <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
     <xsl:if test="@callback">
       <p>
-        <xsl:text>Callback support is provided, with support for </xsl:text>
+        <xsl:text>Callback support is provided, for up to </xsl:text>
         <xsl:value-of select="@callback"/>
-        <xsl:text> registrations.</xsl:text>
+        <xsl:text> observers.</xsl:text>
       </p>
     </xsl:if>
     <xsl:choose>
@@ -445,6 +443,13 @@
             </li>
           </xsl:for-each>
         </ul>
+      </xsl:when>
+      <xsl:when test="imported">
+        <p>
+          <xsl:text>Imported from </xsl:text>
+          <tt><xsl:value-of select="imported"/></tt>
+          <xsl:text>.</xsl:text>
+        </p>
       </xsl:when>
       <xsl:when test="integer">
         <p>An integral number, with:</p>
@@ -466,6 +471,12 @@
       <xsl:when test="real">
         <p>A real number, with:</p>
         <ul>
+          <xsl:if test="real/digits">
+            <li>
+              <xsl:value-of select="real/digits"/>
+              <xsl:text> significant digits</xsl:text>
+            </li>
+          </xsl:if>
           <xsl:if test="real/lower">
             <li>
               <xsl:text>minimum value </xsl:text>
@@ -478,13 +489,14 @@
               <xsl:value-of select="real/upper"/>
             </li>
           </xsl:if>
-          <xsl:if test="real/digits">
-            <li>
-              <xsl:value-of select="real/digits"/>
-              <xsl:text> significant digits</xsl:text>
-            </li>
-          </xsl:if>
         </ul>
+      </xsl:when>
+      <xsl:when test="renames">
+        <p>
+          <xsl:text>Renames </xsl:text>
+          <tt><xsl:value-of select="renames"/></tt>
+          <xsl:text>.</xsl:text>
+        </p>
       </xsl:when>
       <xsl:when test="attribute">
         <p>A record type:</p>
@@ -526,6 +538,48 @@
 
 
   <!-- Utilities -->
+
+  <!-- Output a type name, with a hyperlink to the definition if the
+       type is non-standard. -->
+  <xsl:template name="type-name-linked">
+    <xsl:param name="type" select="."/>
+
+    <xsl:variable name="type-name">
+      <xsl:call-template name="type-name">
+        <xsl:with-param name="type" select="$type"/>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:variable
+      name="defined"
+      select="/domain/type[name=$type-name]"/>
+
+    <xsl:choose>
+      
+      <xsl:when test="$defined">
+
+        <xsl:choose>
+
+          <xsl:when test="$defined/standard">
+            <xsl:value-of select="$type-name"/>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <a href="#{$type-name}"><xsl:value-of select="$type-name"/></a>
+          </xsl:otherwise>
+          
+        </xsl:choose>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:value-of select="$type-name"/>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
+
 
   <!-- Templates to support HTML markup. -->
 
