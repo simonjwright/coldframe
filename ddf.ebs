@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 3057b3e16a96 2001/05/20 17:12:44 simon $
+'$Id: ddf.ebs,v 9537a529fb8c 2001/05/24 18:24:38 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -98,6 +98,94 @@ Sub DumpOperations (o As Class)
 	Print #1, "</operations>"
 End Sub
 
+Function StateName (s As State) As String
+	If Len(s.Name) = 0 Then
+		If s.StateKind = "Initial" Then
+			StateName = "initial"
+		Else
+			If s.StateKind = "Final" Then
+				StateName = "final"
+			Else
+				StateName = "anonymous!"
+			End If
+		End If
+	Else
+		StateName = s.Name
+	End If
+End Function
+
+Sub DumpAction(a As Action)
+	Print #1, "<action>"
+	Print #1, "<name>" & a.Name & "</name>"
+'	Print #1, "<target>" & a.Target & "</target>"
+	Print #1, "<arguments>" & a.Arguments & "</arguments>"
+	Print #1, "</action>"
+End Sub
+
+Sub DumpEntryActions(s As State)
+	Dim eas As ActionCollection
+	Set eas = s.GetEntryActions()
+	Print #1, "<entryactions>"
+	For e = 1 To eas.Count
+		DumpAction(eas.GetAt(e))
+	Next e
+	Print #1, "</entryactions>"
+End Sub
+
+Sub DumpEvent(e As Event)
+	'NB we don't do Guard Conditions or Actions.
+	Print #1, "<event>"
+	Print #1, "<name>" + e.Name + "</name>"
+	If Len(e.Arguments)	> 0 Then
+ 		Print #1, "<arguments>" + e.Arguments + "</arguments>"
+	End If
+	Print #1, "</event>"
+End Sub
+
+Sub DumpStates (c As Class)
+	'NB we only do single-level State Machines and Entry Actions.
+	Dim sm As StateMachine
+	Set sm = c.StateMachine
+	If sm Is Not Nothing Then
+		Print "  state machine"
+		Print #1, "<statemachine>"
+		Dim ss As StateCollection
+		Set ss = sm.GetAllStates()
+   		Print #1, "<states>"
+		For s = 1 To ss.Count
+			Dim st As State
+			Set st = ss.GetAt(s)
+			If st.StateKind = "Initial" Then
+		   		Print #1, "<state initial=" & Chr(34) & "yes" & Chr(34) & ">"
+			Else
+				If st.StateKind = "Final" Then
+					Print #1, "<state final=" & Chr(34) & "yes" & Chr(34) & ">"
+				Else
+					Print #1, "<state>"
+				End If
+			End If
+			Print #1, "<name>" + StateName(st) + "</name>"
+			DumpEntryActions(st)
+			Print #1, "</state>"			
+		Next s
+		Print #1, "</states>"
+		Dim trs As TransitionCollection
+		Set trs = sm.GetAllTransitions()
+		Print #1, "<transitions>"
+		For t = 1 To trs.Count
+			Dim tr As Transition
+			Set tr = trs.GetAt(t)
+			Print #1, "<transition>"
+			Print #1, "<source>" & StateName(tr.GetSourceState()) & "</source>"
+			Print #1, "<target>" & StateName(tr.GetTargetState()) & "</target>"
+			DumpEvent(tr.GetTriggerEvent())
+			Print #1, "</transition>"
+		Next t
+		Print #1, "</transitions>"
+		Print #1, "</statemachine>"
+	End If
+End Sub
+
 Sub DumpClass (o As Class)
 	Print "  class " & o.Name
 	Dim s As String
@@ -112,6 +200,7 @@ Sub DumpClass (o As Class)
 	Print #1, "<cardinality>" & o.Cardinality & "</cardinality>"
 	DumpAttributes (o)
 	DumpOperations (o)
+	DumpStates (o)
 	Print #1, "</class>"
 End Sub
 
@@ -210,7 +299,7 @@ Sub Main
 	'(only) selected Package (Category?!)
 	Dim cats As CategoryCollection
 	'ordinary Print output goes to this window, if it's open.
-'	Viewport.Open
+	Viewport.Open
 	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
 	If cats.Count = 0 Then
 		MsgBox "Must select a Package"

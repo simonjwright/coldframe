@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 9fbd98ed25ba 2001/05/20 17:14:44 simon $
+# $Id: normalize-rose.tcl,v 9537a529fb8c 2001/05/24 18:24:38 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -124,9 +124,13 @@ itcl::class Base {
 	upvar $attributes a
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
-	    if [expr [string compare "stereotype" $i] == 0] {
-		$this -stereotype "$a($i)"
+	    if [catch {$this -$i "$a($i)"}] {
+		puts stderr \
+			"XML attribute <$tag $i=\"$a($i)\"> not handled"
 	    }
+#	    if [expr [string compare "stereotype" $i] == 0] {
+#		$this -stereotype "$a($i)"
+#	    }
 	}
     }
 
@@ -441,6 +445,10 @@ itcl::class Container {
 
 # String classes
 
+itcl::class Arguments {
+    inherit String
+}
+
 itcl::class Associative {
     inherit IdentifierString
 }
@@ -481,6 +489,14 @@ itcl::class Return {
     inherit IdentifierString
 }
 
+itcl::class Source {
+    inherit IdentifierString
+}
+
+itcl::class Target {
+    inherit IdentifierString
+}
+
 itcl::class Type {
     inherit IdentifierString
 }
@@ -498,7 +514,7 @@ itcl::class Domain {
 
     variable datatypes
 
-    variable transitiontables
+#    variable transitiontables
 
     proc currentDomain {} {return $currentDomain}
 
@@ -521,7 +537,7 @@ itcl::class Domain {
 
     method -getDatatypes {} {return $datatypes}
 
-    method -transitiontables {l} {set transitiontables $l}
+#    method -transitiontables {l} {set transitiontables $l}
 
     method -complete {} {
 	$this -generate
@@ -644,6 +660,10 @@ itcl::class Class {
     # in a callback
     method -callback {size} {set callback [string trim $size]}
 
+    # state machine, if specified
+    variable statemachine
+    method -statemachine {s} {set statemachine $s}
+
     method -hasIdentifier {} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
@@ -708,6 +728,9 @@ itcl::class Class {
 
     method -evaluate {domain} {
 	$attributes -evaluate $domain
+	if [info exists statemachine] {
+	    $statemachine -evaluate $domain
+	}
     }
 
     method -generate {domain} {
@@ -740,6 +763,9 @@ itcl::class Class {
 	    $this -generateDocumentation
 	    $attributes -generate $domain
 	    $operations -generate $domain
+	    if [info exists statemachine] {
+		$statemachine -generate $domain
+	    }
 	    puts "</class>"
 	}
     }
@@ -1138,6 +1164,210 @@ itcl::class Inheritance {
     }
 }
 
+itcl::class Action {
+    inherit Element
+
+    variable arguments
+    method -arguments {a} {set arguments $a}
+
+    variable args {}
+
+    method -complete {} {
+	if [info exists arguments] {
+	    foreach arg [split $arguments ","] {
+		lappend args [Argument::parse $arg]
+	    }
+	}
+	[stack -top] -add $this
+    }
+
+    method -evaluate {domain} {
+	foreach arg $args {
+	    $arg -evaluate $domain
+	}
+    }
+
+    method -generate {domain} {
+	puts "<action>"
+	putElement name $name
+	foreach arg $args {
+	    $arg -generate $domain
+	}
+	puts "</action>"
+    }
+
+}
+
+itcl::class Argument {
+    variable name
+    variable type
+
+    # arg is of the form "name : type"
+    proc parse {arg} {
+	set spl [split $arg ":"]
+	if [expr [llength $spl] != 2] {
+	    error "invalid argument \"$arg\""
+	}
+	set n [normalize [lindex $spl 0]]
+	set t [normalize [lindex $spl 1]]
+	return [Argument ::#auto $n $t]
+    }
+
+    constructor {n t} {
+	set name $n
+	set type $t
+	return $this
+    }
+
+    method -evaluate {domain} {
+	# cf Attribute
+	set datatypes [$domain -getDatatypes]
+	if [$datatypes -isMissing $type] {
+	    set datatype [Datatype ::#auto $type]
+	    $datatypes -add $datatype $type
+	} else {
+#	    set datatype [$datatypes -atName $type]
+	}
+    }
+
+    method -generate {domain} {
+	puts "<argument>"
+	putElement name $name
+	putElement type $type
+	puts "</argument>"
+    }
+
+}
+
+itcl::class Event {
+    inherit Element
+
+    variable arguments
+    method -arguments {a} {set arguments $a}
+
+    variable args {}
+
+    method -complete {} {
+	if [info exists arguments] {
+	    foreach arg [split $arguments ","] {
+		lappend args [Argument::parse $arg]
+	    }
+	}
+	[stack -top] -event $this
+    }
+
+    method -evaluate {domain} {
+	foreach arg $args {
+	    $arg -evaluate $domain
+	}
+    }
+
+    method -generate {domain} {
+	puts "<event>"
+	putElement name $name
+	foreach arg $args {
+	    $arg -generate $domain
+	}
+	puts "</event>"
+    }
+
+}
+
+itcl::class State {
+    inherit Element
+
+    variable entryactions
+    method -entryactions {e} {set entryactions $e}
+
+    variable final 0
+    method -final {dummy} {set final 1}
+
+    variable initial 0
+    method -initial {dummy} {set initial 1}
+
+    method -evaluate {domain} {
+#	if [expr [string length $name] == 0] {
+#	    if $initial {
+#		set name "Initial"
+#	    } elseif $final {
+#		set name "Final"
+#	    } else {
+#		# how can I identify this more clearly?
+#		error "unnamed state"
+#	    }
+#	}
+	if [info exists entryactions] {
+	    $entryactions -evaluate $domain
+	}
+    }
+
+    method -generate {domain} {
+	puts -nonewline "<state"
+	if $initial {puts -nonewline " initial=\"yes\""}
+	if $final {puts -nonewline " final=\"yes\""}
+	puts ">"
+	putElement name $name
+	if [info exists entryactions] {
+	    $entryactions -generate $domain
+	}
+	puts "</state>"
+    }
+
+}
+
+itcl::class StateMachine {
+    inherit Element
+
+    variable states
+    method -states {s} {set states $s}
+
+    variable transitions
+    method -transitions {t} {set transitions $t}
+
+    method -complete {} {
+	[stack -top] -statemachine $this
+    }
+
+    method -evaluate {domain} {
+	$states -evaluate $domain
+	$transitions -evaluate $domain
+    }
+
+    method -generate {domain} {
+	puts "<statemachine>"
+	$states -generate $domain
+	$transitions -generate $domain
+	puts "</statemachine>"
+    }
+
+}
+
+itcl::class Transition {
+    inherit Element
+
+    variable event
+    method -event {e} {set event $e}
+
+    variable source
+    method -source {s} {set source $s}
+
+    variable target
+    method -target {t} {set target $t}
+
+    method -evaluate {domain} {
+	$event -evaluate $domain
+    }
+
+    method -generate {domain} {
+	puts "<transition>"
+	putElement source $source
+	putElement target $target
+	$event -generate $domain
+	puts "</transition>"
+    }
+
+}
+
 itcl::class Datatype {
     inherit Element
 
@@ -1295,9 +1525,9 @@ itcl::class Attribute {
 
     method -getIdentifier {} {return $identifier}
 
-    method -getOwningClass {} {
-	return [[$this -getOwner] -getOwner]
-    }
+#    method -getOwningClass {} {
+#	return [[$this -getOwner] -getOwner]
+#    }
 
     # indicates whether this attribute formalizes an association,
     # where the analyst needs to mark what would otherwise be a
@@ -1317,7 +1547,7 @@ itcl::class Attribute {
 	    set datatype [Datatype ::#auto $type]
 	    $datatypes -add $datatype $type
 	} else {
-	    set datatype [$datatypes -atName $type]
+#	    set datatype [$datatypes -atName $type]
 	}
 	if [info exists formalizedAssociation] {
 	    # we rely on Relationships being evaluated after Classes
@@ -1405,6 +1635,11 @@ itcl::class Associations {
     method -className {} {return "associations"}
 }
 
+itcl::class Classes {
+    inherit Container
+    method -className {} {return "classes"}
+}
+
 itcl::class Datatypes {
     inherit Container
 
@@ -1422,14 +1657,13 @@ itcl::class Datatypes {
 
 }
 
+itcl::class EntryActions {
+    inherit List
+}
+
 itcl::class Inheritances {
     inherit Container
     method -className {} {return "inheritances"}
-}
-
-itcl::class Classes {
-    inherit Container
-    method -className {} {return "classes"}
 }
 
 itcl::class Operations {
@@ -1445,7 +1679,11 @@ itcl::class Relationships {
     method -className {} {return "relationships"}
 }
 
-itcl::class Transitiontables {
+itcl::class States {
+    inherit List
+}
+
+itcl::class Transitions {
     inherit List
 }
 
@@ -1454,6 +1692,8 @@ itcl::class Transitiontables {
 proc elementFactory {tag} {
     # XXX should this perhaps be an operation of Domain?
     switch $tag {
+	action            {return [Action #auto]}
+	arguments         {return [Arguments #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
@@ -1469,6 +1709,8 @@ proc elementFactory {tag} {
 	documentation     {return [Documentation #auto]}
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
+	entryactions      {return [EntryActions #auto]}
+	event             {return [Event #auto]}
 	exportcontrol     {return [ExportControl #auto]}
 	inheritance       {return [Inheritance #auto]}
 	inheritances      {return [Inheritances #auto]}
@@ -1483,8 +1725,13 @@ proc elementFactory {tag} {
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
 	role              {return [Role #auto]}
-	transitiontable   {return [Transitiontable #auto]}
-	transitiontables  {return [Transitiontables #auto]}
+	source            {return [Source #auto]}
+	state             {return [State #auto]}
+	statemachine      {return [StateMachine #auto]}
+	states            {return [States #auto]}
+	target            {return [Target #auto]}
+	transition        {return [Transition #auto]}
+	transitions       {return [Transitions #auto]}
 	type              {return [Type #auto]}
 	default           {return [Element #auto]}
     }
