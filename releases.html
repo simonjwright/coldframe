@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v a2d9c1c269e3 2002/09/04 19:00:19 simon $ -->
+<!-- $Id: releases.html,v 90f92f2a1cf8 2002/09/12 21:06:57 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -35,11 +35,19 @@ you to query whether a <i>Timer</i> is set, and when it will expire.
 should be encoded in the state machine, as far as possible, and you
 ought to <u>know</u> whether a <i>Timer</i> is set or not.
 
+<br>The <tt>Start</tt> operation has a default implementation which
+raises <tt>ColdFrame.Exceptions.Use_Error</tt> (because operational
+code shouldn't be calling it). Test queues support this operation; the
+queue doesn't start dispatching events until the operation is called.
+
 <br>The <tt>Wait_Until_Idle</tt> operation has a default
 implementation which raises <tt>ColdFrame.Exceptions.Use_Error</tt>
 (because operational code shouldn't be calling it). Test queues
 support this operation; the operation blocks the test thread of
-control until all event activity has terminated.
+control until all event activity has terminated. A parameter
+<tt>Ignoring_Timers</tt> (defaulted to <tt>False</tt>) controls
+whether <i>Timer</i>s are included in the count.
+
 
 <p>Documentation is copied through into the generated code.
 
@@ -50,7 +58,8 @@ reported has changed.
 
 <p>The provided <tt>Coldframe.Projects.Calendar</tt> implements
 <tt>Time</tt> as a renaming (subtype) of <tt>Ada.Calendar.Time</tt>;
-there was an interaction with a GNAT feature (GCC PR/7613).
+there was an interaction with a GNAT feature (GCC PR/7613) when the
+whole package was a renaming of <tt>Ada.Calendar</tt>.
 
 <br>Generated code no longer <tt>use</tt>s
 <tt>Coldframe.Projects.Calendar</tt>; instead, there's a
@@ -70,6 +79,10 @@ is now reserved).
 type of the corresponding event's payload rather than the vent
 itself. This allows different events to cause transitions to the same
 state, so long as they all have the same payload type.
+
+
+<p><tt>Delete</tt> is supported as an entry action (not available for
+&#171;singleton&#187;s).
 
 
 <p>The Makefiles allow the Rose model to be extracted to a different
