@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v ad3062ca79ee 2001/03/20 05:40:53 simon $ -->
+<!-- $Id: architecture.html,v 36d87aa411b7 2001/03/25 09:37:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -48,9 +48,9 @@ href="http://www.artisansw.com/">ARTiSAN Software</a>'s Real-Time
 Modeler.
 
 <p>It's important that the tool lets the architect adopt different
-strategies depending on circumstances. For example, the 20010204
-release of ColdFrame assumes that a class with no identifying
-attributes is a singleton and generates quite different code.
+strategies depending on circumstances. For example, ColdFrame
+generates quite different code for a class with the stereotype
+<em>&#171;singleton&#187;</em>.
 
 <p>This need makes it very advantageous to have a complete programming
 environment available while scripting the output. Predetermined
@@ -81,7 +81,9 @@ have <em>Window "appears on" Screen</em>, <em>Screen "displays"
 Window</em>. Often the role names will be inverses of each other, but
 sometimes things really do seem different depending on where you're
 standing. <i>[By the way, the references are far from clear whether
-this choice of end convention is in fact correct.]</i>
+this choice of end convention is in fact correct. Judging by the way
+Rose and Rhapsody show associations in the Browser, I may in fact have
+it the wrong way round.]</i>
 
 <p>Careful consideration of multiplicity is very important.
 Unconditional multiplicity is good; if each end of an association is
@@ -117,6 +119,14 @@ inserts them using an appropriate naming convention.
 
 <p>Classes which represent user-defined types are marked with the
 stereotype <em>&#171;type&#187;</em>.
+
+<p>Classes of which there is only ever one instance are marked with
+the stereotype <em>&#171;singleton&#187;</em>.
+
+<p>Interface classes, which are the only classes visible from outside
+the Domain, are marked with the stereotype
+<em>&#171;interface&#187;</em>. This implies the stereotype
+<em>&#171;singleton&#187;</em>.
 
 <h3>Other annotations</h3>
 
@@ -156,7 +166,7 @@ stereotype.
 <dt>on operations<dd><ul>
 
 <li><tt>class</tt> indicates that the operation is a class operation
-(no <tt>This</tt> parameter will the generated). This is an
+(no <tt>This</tt> parameter will be generated). This is an
 alternative to the <em>&#171;class&#187;</em> stereotype.
 
 </ul>
@@ -230,8 +240,8 @@ places the output in <tt><i>package-name</i>.norm</tt>.
 
 <h2><a name="generation">Generation of code</a></h2>
 
-<p>Code is generated using the XSLT stylesheet
-<tt>generate-ada.xsl</tt>. The XSLT processor I've used is
+<p>Code is generated using the <a href="resources.html#xslt">XSLT</a>
+stylesheet <tt>generate-ada.xsl</tt>. The XSLT processor I've used is
 <em>Saxon</em>.
 
 <p>The output is placed by the <tt>Makefile</tt> into one Ada source
@@ -260,11 +270,18 @@ package <tt>Architecture</tt> <i>[Should that be
 
 <dl>
 
+<dt><tt>Architecture.Exceptions</tt>
+
+<dd>Provides exceptions. These are at present just renamings of <a
+href="#containers">Booch</a> exceptions.
+
 <dt><tt>Architecture.Global_Storage_Pool</tt>
 
 <dd>Provides a (GNAT-specific) Storage Pool type and instance, using
 the standard system <tt>malloc</tt> pool, suitable for instantiating
 <a href="#containers">Booch Containers</a>.
+
+<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
 <dt><tt>Architecture.String_Hash</tt>
 
@@ -287,7 +304,8 @@ href="resources.html#booch-components">Booch Components</a>.
 
 <dd>to hold multiple instances, as for example when finding all the
 instances of a class that match a particular criterion (not involving
-the class' Identifier)
+the class' Identifier, which by definition can return at most one
+instance).
 
 <dt>Maps
 
