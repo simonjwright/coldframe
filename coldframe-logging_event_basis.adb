@@ -20,15 +20,46 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.adb,v $
---  $Revision: bc275143d585 $
---  $Date: 2003/11/08 17:12:59 $
+--  $Revision: dc7bcd001839 $
+--  $Date: 2003/11/09 17:45:35 $
 --  $Author: simon $
 
 with Ada.Tags;
 with Ada.Text_IO; use Ada.Text_IO;
+with BC.Containers.Maps.Unmanaged;
+with BC.Support.Statistics;
 with ColdFrame.Exceptions;
+with ColdFrame.Hash.Strings.Standard;
 
 package body ColdFrame.Logging_Event_Basis is
+
+
+   function Tag_Hash (T : Ada.Tags.Tag) return Natural;
+
+   type Info is record
+      Queueing : BC.Support.Statistics.Instance;
+      Executing : BC.Support.Statistics.Instance;
+   end record;
+   type Info_P is access Info;
+
+   package Abstract_Containers
+   is new BC.Containers (Info_P);
+
+   package Abstract_Maps
+   is new Abstract_Containers.Maps (Key => Ada.Tags.Tag,
+                                   "=" => Ada.Tags."=");
+
+   package Maps
+   is new Abstract_Maps.Unmanaged (Hash => Tag_Hash,
+                                   Buckets => 89);
+
+   function Tag_Hash (T : Ada.Tags.Tag) return Natural is
+   begin
+      return ColdFrame.Hash.Strings.Standard (Ada.Tags.Expanded_Name (T));
+   end Tag_Hash;
+
+
+   Data : Maps.Map;
 
 
    procedure Log (The_Event : access Event_Base;
@@ -55,22 +86,64 @@ package body ColdFrame.Logging_Event_Basis is
             declare
                Now : constant High_Resolution_Time.Time
                  := High_Resolution_Time.Clock;
+               Tag : constant Ada.Tags.Tag
+                 := Event_Base'Class (The_Event.all)'Tag;
+               Inf : Info_P;
             begin
-               Put_Line
-                 (Ada.Tags.Expanded_Name (Event_Base'Class (The_Event.all)'Tag)
-                    & ","
-                    & Duration'Image
-                        (The_Event.Dispatched - The_Event.Posted)
-                    & ","
-                    & Duration'Image (Now - The_Event.Dispatched));
+               if Maps.Is_Bound (Data, Tag) then
+                  Inf := Maps.Item_Of (Data, Tag);
+               else
+                  Inf := new Info;
+                  Maps.Bind (Data, Tag, Inf);
+               end if;
+               BC.Support.Statistics.Add
+                 (Long_Float (The_Event.Dispatched - The_Event.Posted),
+                  To => Inf.Queueing);
+               BC.Support.Statistics.Add
+                 (Long_Float (Now - The_Event.Dispatched),
+                  To => Inf.Executing);
             end;
       end case;
    end Log;
 
 
    procedure Print is
+      It : Abstract_Containers.Iterator'Class
+        := Maps.New_Iterator (Data);
    begin
-      null;
+      Put_Line ("printing event statistics:");
+      while not Abstract_Containers.Is_Done (It) loop
+         declare
+            T : constant Ada.Tags.Tag
+              := Abstract_Maps.Current_Key
+                    (Abstract_Maps.Map_Iterator'Class (It));
+            Inf : constant Info_P
+              := Abstract_Containers.Current_Item (It);
+            use BC.Support;
+         begin
+            Put (Ada.Tags.Expanded_Name (T));
+            Put (',');
+            Put (Integer'Image (Statistics.Count (Inf.Queueing)));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Mean (Inf.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Min (Inf.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Max (Inf.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Sigma (Inf.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Mean (Inf.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Min (Inf.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Max (Inf.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Sigma (Inf.Executing))));
+            New_Line;
+         end;
+         Abstract_Containers.Next (It);
+      end loop;
    end Print;
 
 
