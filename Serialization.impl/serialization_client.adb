@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_client.adb,v $
---  $Revision: b5ed8d10bf31 $
---  $Date: 2005/01/29 06:18:07 $
+--  $Revision: 8157fbf110f9 $
+--  $Date: 2005/01/29 07:08:54 $
 --  $Author: simon $
 
 with GNAT.IO; use GNAT.IO;
@@ -63,7 +63,8 @@ begin
                  ("bounded"),
                R => (T => Ada.Real_Time.Clock),
                R1 => (X => 8),
-               Ra => (Y => 9))));
+               Ra => (Y => 9),
+               C => (True => 'b', False => 'a'))));
       delay 0.5;
       Put_Line ("outputting a Recordable_Real_Time record");
       Serialization.Interface.Output
