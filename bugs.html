@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c9c4e6f03d66 2001/10/13 17:12:22 simon $ -->
+<!-- $Id: bugs.html,v 36b9991a5ebf 2001/11/03 06:56:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -90,16 +90,44 @@ GNAT. An alternative would be better.
 <dt>0031 (raised 13.x.01)
 
 <dd>&#171;finalize&#187; operations which are functions or have
-parameters (or are &#171;class&#187; operations, though I don't see
-how they could be both!) are silently <em>not</em> called at
+parameters (or are &#171;class&#187; operations, though you would have
+to work hard to make one both!) are silently <em>not</em> called at
 finalization. There are other instances of bad usage which need
 reporting (perhaps in a separate pass?)
 
-<!-- next: 0032 -->
+<dt>0033 (raised 30.x.01)
+
+<dd>The generated HTML for <i>&#171;class&#187; op (this : Class)</i>
+is <tt>ColdFrame.Instances.Handle</tt>; should be just
+<tt>Handle</tt>.
+
+<dt>0034 (raised 1.xi.01)
+
+<dd>&#171;finalize&#187; operations of active classes shouldn't be
+mapped to task entries. Come to that, would it be better only to
+generate task entries when there's an &#171;entry&#187; stereotype?
+
+<dt>0035 (raised 1.xi.01)
+
+<dd>The association support packages generated when one of the parties
+in a 1:1 association is a &#171;singleton&#187; won't work if the
+non-singleton party is marked <tt>[[source]]</tt>.
+
+<!-- next: 0036 -->
 
 </dl>
 
 <h2>Fixed</h2>
+
+<h3>29.x.01</h3>
+<dl>
+
+<dt>0032 (raised 28.x.01)
+
+<dd>With multiple inheritance, ColdFrame doesn't necessarily choose
+the right parent class to call inherited operations.
+
+</dl>
 
 <h3>13.x.01</h3>
 <dl>
