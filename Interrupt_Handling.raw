@@ -1,20 +1,22 @@
 <domain>
-<extractor>cf-20030724t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Interrupt Handling</name>
 <date>
 <year>2003</year>
-<month>7</month>
-<day>28</day>
-<time>20:15</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
-<documentation></documentation>
+<documentation>Demonstration of Interrupt Handling using Ada facilities.
+
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class stereotype="singleton">
 <name>Device</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
-<documentation>[[ priority :  +1  ; stack : 40000 ]]</documentation>
+<documentation>{ priority =  +1, stack = 40000 }</documentation>
 <attributes>
 <attribute>
 <name>timeout</name>
@@ -74,24 +76,16 @@
 <state>
 <name>idle</name>
 <entryactions>
-<action>
-<name>report entry</name>
-</action>
-<action>
-<name>set timeout</name>
-</action>
+<entryaction><name>report entry</name></entryaction>
+<entryaction><name>set timeout</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
 <state>
 <name>interrupted</name>
 <entryactions>
-<action>
-<name>report entry</name>
-</action>
-<action>
-<name>clear timeout</name>
-</action>
+<entryaction><name>report entry</name></entryaction>
+<entryaction><name>clear timeout</name></entryaction>
 </entryactions>
 <documentation></documentation>
 </state>
@@ -100,33 +94,29 @@
 <transition>
 <source>initial</source>
 <target>idle</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>interrupted</target>
-<event>
-<name>interrupt</name>
-</event>
+<event><name>interrupt</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>idle</target>
-<event>
-<name>timeout</name>
-</event>
+<event><name>timeout</name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 <transition>
 <source>interrupted</source>
 <target>idle</target>
-<event>
-<name></name>
-</event>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
 <documentation></documentation>
 </transition>
 </transitions>

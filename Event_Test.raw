@@ -1,14 +1,14 @@
 <domain>
-<extractor>cf-20031031t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Event Test</name>
 <date>
 <year>2003</year>
-<month>10</month>
-<day>31</day>
-<time>07:08</time>
+<month>11</month>
+<day>15</day>
+<time>18:09</time>
 </date>
 <documentation>This domain contains material for testing ColdFrame's event handling.
-[[revision : $Revision: b1d73aa92c84 $]] </documentation>
+{revision = $Revision: 3c33faafeb46 $} </documentation>
 <classes>
 <class stereotype="singleton">
 <name>Recipient</name>

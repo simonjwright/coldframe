@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v 74cc77ada93d 2003/07/05 17:10:15 simon $ -->
+<!-- $Id: operations.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -26,7 +26,7 @@ of the domain.
 
 <li><a href="#unit">to support unit test</a>,
 
-<li>to support state machines,
+<li><a href="#statemachines">to support state machines</a>,
 
 <li>to process class (non-state machine) events,
 
@@ -39,6 +39,9 @@ of the domain.
 <li><a href="#seq">to support sequence diagrams</a>.
 
 </ul>
+
+<p>You can specify the <a href="#convention">programming language
+convention</a> to be used.
 
 <p><a href="#renaming">Renamings</a> are provided to allow a form of
 overloading.
@@ -107,6 +110,16 @@ associations, they're in an indeterminate state during teardown.
 
 <br>&#171;finalize&#187; operations can call &#171;teardown&#187;s.
 
+<h3><a name="statemachines">State machines</a></h3>
+
+<p>Usually, an operation used as a state machine action mustn't delete
+the instance. The <tt>Delete</tt> operation is specially recognised;
+if you need to make one of your own operations delete the instance,
+you must stereotype it &#171;final&#187;.
+
+<p>A &#171;final&#187; operation should <em>always</em> delete the
+instance.
+
 <h3><a name="type">Access-to-subprogram types</a></h3>
 
 <p><em>&#171;access&#187;</em> indicates that the operation is in fact
@@ -126,6 +139,11 @@ ordinary operation with the same name as an &#171;entry&#187;, because
 <p>In a &#171;protected&#187; type, you can nominate procedures
 (operations without a return value) as entries using the
 <em>&#171;entry&#187;</em> stereotype.
+
+<p>The point about an entry of a <a
+href="http://www.adaic.org/standards/95lrm/html/RM-9-4.html">protected
+type</a> is that your implementation specifies a guard condition;
+callers of the entry block until the guard becomes open.
 
 <h3><a name="seq">Sequence diagram support</a></h3>
 
@@ -149,14 +167,20 @@ want to show local-to-operation instantiations of generics provided by
 ColdFrame (eg, <tt><i>Domain.Class</i>.Selection_Function</tt>) on
 sequence diagrams.
 
+<h3><a name="convention"></a>Convention</h3>
+
+<p>You can use the <i>convention</i> tag to specify the calling
+convention to be supported by the operation.
+
+<p>The form is <tt>{convention = <i>language</i>}</tt>.
+
 <h3><a name="renaming">Renaming</a></h3>
 
-<p>You can use the <tt><i>renames</i></tt> annotation to specify a
-form of overloading (ColdFrame's translation approach rules out actual
-overloading). Ada semantics apply (for example, you can change
-parameter defaults).
+<p>You can use the <i>renames</i> tag to specify a form of overloading
+(ColdFrame's translation approach rules out actual overloading). Ada
+semantics apply (for example, you can change parameter defaults).
 
-<p>The form is <tt>[[ renames : <i>other-operation</i> ]]</tt>.
+<p>The form is <tt>{renames = <i>other-operation</i>}</tt>.
 
 <h2>Translation</h2>
 
@@ -167,6 +191,12 @@ diagrams</a> generate no code.
 declarations in the domain package specification (for those declared
 in &#171;type&#187;s) or the class package specification (for those
 declared in classes).
+
+<p>Operations tagged with a <a href="#convention">convention</a>
+(<i>C</i>, probably) will have
+<pre>
+   pragma Convention (<i>operation</i>, <i>language</i>);
+</pre>
 
 <p><a href="#task-entry">Task entries</a> map to <tt>entry</tt>
 specifications in the class's task specification.
@@ -194,6 +224,9 @@ href="http://www.adapower.com/rm95/arm95_161.html">ARM 10.1.3</a>
 (14))</i>.
 
 </ul>
+
+<p>Operations with returns (<i>op():type-name</i> in the model) are
+implemented as functions.
 
 <!--
 <h2>Use</h2>

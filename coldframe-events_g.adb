@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: d42456779d35 $
---  $Date: 2003/09/02 18:57:03 $
+--  $Revision: 38960f8e0d9a $
+--  $Date: 2004/02/27 06:32:50 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -30,17 +30,29 @@ with ColdFrame.Exceptions;
 package body ColdFrame.Events_G is
 
 
-   procedure Finalize (The_Lock : in out Lock) is
+   procedure Add_Reference (To : Event_Queue_P) is
    begin
-
-      if not The_Lock.Finalized then
-
-         The_Lock.Finalized := True;
-         Unlocker (The_Lock.The_Queue);
-
+      if To /= null then
+         To.Access_Count := To.Access_Count + 1;
       end if;
+   end Add_Reference;
 
-   end Finalize;
+
+   procedure Check_Deletable (The_Instance : access Instance_Base) is
+   begin
+      if The_Instance.In_Handler then
+         Ada.Exceptions.Raise_Exception
+           (ColdFrame.Exceptions.Use_Error'Identity,
+            "deleting instance from event handler");
+      end if;
+   end Check_Deletable;
+
+
+   function Copy
+     (The_Queue : Event_Queue_P) return Event_Queue_P is
+   begin
+      return The_Queue;
+   end Copy;
 
 
    procedure Finalize (The_Instance : access Instance_Base'Class) is
@@ -50,6 +62,15 @@ package body ColdFrame.Events_G is
          Invalidate_Events
            (On => The_Instance.Events_Posted_On,
             For_The_Instance => The_Instance);
+      end if;
+   end Finalize;
+
+
+   procedure Finalize (The_Lock : in out Lock) is
+   begin
+      if not The_Lock.Finalized then
+         The_Lock.Finalized := True;
+         Unlocker (The_Lock.The_Queue);
       end if;
    end Finalize;
 
@@ -64,6 +85,29 @@ package body ColdFrame.Events_G is
 
          --  Invalidate the held event.
          Timer_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
+
+         The_Timer.The_Entry := null;
+
+      end if;
+   end Finalize;
+
+
+   procedure Finalize (The_Checker : in out Timer_Checker) is
+      The_Timer : Timer renames The_Checker.For_The_Timer.all;
+   begin
+      if The_Timer.The_Entry /= null then
+
+         Finalize (The_Timer);
+
+         --  Tell the user there's been an error (maybe the Timer was
+         --  declared on the stack?)
+         --
+         --  Because this will be raised during finalization, it'll
+         --  appear as Program_Error. Still, if it's caught in the
+         --  debugger this should be slightly more helpful.
+         Ada.Exceptions.Raise_Exception
+           (ColdFrame.Exceptions.Use_Error'Identity,
+            "timer still has held event");
 
       end if;
    end Finalize;
@@ -81,9 +125,14 @@ package body ColdFrame.Events_G is
 
       --  Handle the held event, unless it's been invalidated.
       if not The_Event.Invalidated then
+         Log (The_Event, Event_Basis.Posting);
+         Log (The_Event, Event_Basis.Dispatching);
          Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
+         Start_Handling (The_Event);
          Handler (The_Event.all);   --  XXX what about exceptions here?
+         Stop_Handling (The_Event);
          Log_Post_Dispatch (The_Event => The_Event, On => This.On);
+         Log (The_Event, Event_Basis.Finishing);
       end if;
 
       --  Free the referenced memory (the outer dispatcher will free
@@ -175,6 +224,12 @@ package body ColdFrame.Events_G is
    end Log_Retraction;
 
 
+   procedure Mark_Deletable (The_Instance : access Instance_Base) is
+   begin
+      The_Instance.In_Handler := False;
+   end Mark_Deletable;
+
+
    procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
@@ -230,6 +285,32 @@ package body ColdFrame.Events_G is
    end Start;
 
 
+   procedure Start_Handling (The_Event : access Event_Base) is
+      pragma Warnings (Off, The_Event);
+   begin
+      null;
+   end Start_Handling;
+
+
+   procedure Start_Handling (The_Event : access Instance_Event_Base) is
+   begin
+      The_Event.For_The_Instance.In_Handler := True;
+   end Start_Handling;
+
+
+   procedure Stop_Handling (The_Event : access Event_Base) is
+      pragma Warnings (Off, The_Event);
+   begin
+      null;
+   end Stop_Handling;
+
+
+   procedure Stop_Handling (The_Event : access Instance_Event_Base) is
+   begin
+      The_Event.For_The_Instance.In_Handler := False;
+   end Stop_Handling;
+
+
    procedure Start_Queue (The_Queue : access Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
@@ -242,7 +323,7 @@ package body ColdFrame.Events_G is
    begin
       Ada.Exceptions.Raise_Exception
         (Exceptions.Use_Error'Identity,
-         "Tear_Down only legal with Test event queue");
+         "Tear_Down not implemented in concrete event queue");
    end Tear_Down;
 
 

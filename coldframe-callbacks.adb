@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: fe5de807621d $
---  $Date: 2003/08/28 21:12:05 $
+--  $Revision: 38960f8e0d9a $
+--  $Date: 2004/02/27 06:32:50 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -41,18 +41,54 @@ package body ColdFrame.Callbacks is
 
    procedure Delete is new Ada.Unchecked_Deallocation (Cell, Cell_P);
 
+   --  Local assertion support.
+   function Is_Present (CB : Callback) return Boolean;
 
    The_Registered_Procedures : aliased Cell;
 
 
-   procedure Register (Proc : Callback) is
-      Current_Next : constant Cell_P := The_Registered_Procedures.Next;
+   procedure Call_Callbacks (With_Param : T) is
+      Current : Cell_P := The_Registered_Procedures.Next;
+      Error : Ada.Exceptions.Exception_Occurrence;
+      Error_Occurred : Boolean := False;
    begin
-      The_Registered_Procedures.Next := new Cell'(Current_Next, Proc);
-   end Register;
+      loop
+         exit when Current = null;
+         begin
+            Current.CB (With_Param);
+         exception
+            when E : others =>
+               if not Error_Occurred then
+                  Error_Occurred := True;
+                  Ada.Exceptions.Save_Occurrence (Source => E,
+                                                  Target => Error);
+               end if;
+         end;
+         Current := Current.Next;
+      end loop;
+      if Error_Occurred then
+         Ada.Exceptions.Reraise_Occurrence (Error);
+      end if;
+   end Call_Callbacks;
+
+
+   procedure Clear is
+   begin
+      loop
+         exit when The_Registered_Procedures.Next = null;
+         declare
+            Next : constant Cell_P := The_Registered_Procedures.Next.Next;
+         begin
+            Delete (The_Registered_Procedures.Next);
+            The_Registered_Procedures.Next := Next;
+         end;
+      end loop;
+   end Clear;
 
 
    procedure Deregister (Proc : Callback) is
+      pragma Assert (Is_Present (Proc),
+                     "callback procedure not registered");
       Current : Cell_P := The_Registered_Procedures'Access;
    begin
       loop
@@ -71,44 +107,28 @@ package body ColdFrame.Callbacks is
    end Deregister;
 
 
-   procedure Call_Callbacks (With_Param : T) is
+   function Is_Present (CB : Callback) return Boolean is
       Current : Cell_P := The_Registered_Procedures.Next;
-      Error : Ada.Exceptions.Exception_Occurrence_Access;
-      use type Ada.Exceptions.Exception_Occurrence_Access;
    begin
       loop
-         exit when Current = null;
-         begin
-            Current.CB (With_Param);
-         exception
-            when E : others =>
-               if Error = null then
-                  Error := Ada.Exceptions.Save_Occurrence (E);
-               end if;
-         end;
+         if Current = null then
+            return False;
+         end if;
+         if Current.CB = CB then
+            return True;
+         end if;
          Current := Current.Next;
       end loop;
-      if Error /= null then
-         Ada.Exceptions.Reraise_Occurrence (Error.all);
-         --  This will probably leak the allocated
-         --  Exception_Occurrence_Access; let's hope it doesn't happen
-         --  too often.
-      end if;
-   end Call_Callbacks;
+   end Is_Present;
 
 
-   procedure Clear is
+   procedure Register (Proc : Callback) is
+      pragma Assert (not Is_Present (Proc),
+                     "callback procedure already registered");
+      Current_Next : constant Cell_P := The_Registered_Procedures.Next;
    begin
-      loop
-         exit when The_Registered_Procedures.Next = null;
-         declare
-            Next : constant Cell_P := The_Registered_Procedures.Next.Next;
-         begin
-            Delete (The_Registered_Procedures.Next);
-            The_Registered_Procedures.Next := Next;
-         end;
-      end loop;
-   end Clear;
+      The_Registered_Procedures.Next := new Cell'(Current_Next, Proc);
+   end Register;
 
 
 end ColdFrame.Callbacks;

@@ -1,6 +1,5 @@
-with Ada.Task_Identification;
+--  $Id: performance-harness.adb,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
 
-with GNAT.IO; use GNAT.IO;
 with Performance.Initialize;
 with Performance.Tear_Down;
 with Performance.Person.All_Instances;
@@ -14,12 +13,18 @@ with Performance.House.All_Instances;
 with Performance.House.Collections;
 with Performance.Event_Timing;
 
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Text_IO; use Ada.Text_IO;
+with BC.Support.Memory_Streams;
+with BC.Support.Statistics;
 with ColdFrame.Instances;
+with ColdFrame.Logging_Event_Basis;
 with ColdFrame.Project.Events;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
-with High_Resolution_Time; use High_Resolution_Time;
+with ColdFrame.Project.High_Resolution_Time;
+use ColdFrame.Project.High_Resolution_Time;
 
 procedure Performance.Harness is
    subtype CIH is ColdFrame.Instances.Handle;
@@ -35,6 +40,7 @@ begin
 
    declare
       Pr : Person.Handle;
+      pragma Warnings (Off, Pr);
    begin
 
       Performance.Initialize;
@@ -90,6 +96,7 @@ begin
 
    declare
       Pr : Person.Handle;
+      pragma Warnings (Off, Pr);
       Prc : Person.Collections.Collection;
    begin
 
@@ -132,6 +139,7 @@ begin
       Os : array (Owners) of Owner.Handle;
       Pts : array (Pets) of Pet.Handle;
       O : Owner.Handle;
+      pragma Warnings (Off, O);
    begin
 
       Performance.Initialize;
@@ -197,6 +205,7 @@ begin
       Prs : array (Owners) of Person.Handle;
       Pts : array (Pets) of Pet.Handle;
       H : House.Handle;
+      pragma Warnings (Off, H);
    begin
 
       Performance.Initialize;
@@ -378,6 +387,53 @@ begin
 
    end;
 
-   Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
+
+   declare
+      package LE renames ColdFrame.Logging_Event_Basis;
+      package DC
+        renames ColdFrame.Logging_Event_Basis.Abstract_Datum_Containers;
+      package MS renames BC.Support.Memory_Streams;
+      package ST renames BC.Support.Statistics;
+      S : aliased MS.Stream_Type (10_000);
+   begin
+      DC.Container'Class'Output (S'Access, LE.Results);
+      Put_Line ("stream size is" & MS.Length (S)'Img);
+      declare
+         Data : constant DC.Container'Class
+           := DC.Container'Class'Input (S'Access);
+         It : DC.Iterator'Class
+           := DC.New_Iterator (Data);
+      begin
+         while not DC.Is_Done (It) loop
+            declare
+               D : constant LE.Datum := DC.Current_Item (It);
+            begin
+               Put (To_String (D.Event));
+               Put (',');
+               Put (Integer'Image (ST.Count (D.Queueing)));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Mean (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Min (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Max (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Sigma (D.Queueing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Mean (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Min (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Max (D.Executing))));
+               Put (',');
+               Put (Duration'Image (Duration (ST.Sigma (D.Executing))));
+               New_Line;
+            end;
+            DC.Next (It);
+         end loop;
+      end;
+   end;
 
 end Performance.Harness;

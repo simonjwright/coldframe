@@ -1,0 +1,54 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Tagged Values</name>
+<date>
+<year>2003</year>
+<month>11</month>
+<day>13</day>
+<time>17:27</time>
+</date>
+<documentation>{what, the=hell}</documentation>
+<classes>
+<class stereotype="type">
+<name>T</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{ renames = boolean }
+
+{hello = world}
+{goodbye}
+{callback}
+
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>S</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{now, is, the=time}</documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>opname</name>
+<visibility>PublicAccess</visibility>
+<documentation>{i, give=up, instantiation}</documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>

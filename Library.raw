@@ -1,11 +1,11 @@
 <domain>
-<extractor>cf-20030703t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Library</name>
 <date>
 <year>2003</year>
-<month>7</month>
-<day>4</day>
-<time>13:13</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
 <documentation></documentation>
 <classes>

@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Arrays"
@@ -10,48 +10,1749 @@
     quid       	"3D7CC2550197"
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
-	(object Class "T"
-	    quid       	"3D7CC27C00E9"
-	    documentation 	"[[ array: element integer, lower 0, upper 6 ]]"
-	    stereotype 	"type"))
+	(object Class "My Boolean"
+	    quid       	"400998390150"
+	    documentation 	
+|{renames = boolean,
+| hash = enumeration}
+	    
+	    stereotype 	"type")
+	(object Class "Enum"
+	    quid       	"4009986D0295"
+	    documentation 	
+|{enumeration = a|b|c}
+|
+	    
+	    stereotype 	"type")
+	(object Class "My Int"
+	    quid       	"4009988D0164"
+	    documentation 	
+|{integer = lower 3 | upper 9}
+|
+	    
+	    stereotype 	"type")
+	(object Class "My Boolean Class"
+	    quid       	"400998B300D3"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF32202B1"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998C90305"
+		    stereotype 	"id"
+		    type       	"My Boolean"
+		    quidu      	"400998390150")
+		(object ClassAttribute "b"
+		    quid       	"40099D350295"
+		    type       	"Enum"
+		    quidu      	"4009986D0295"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF4360182"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$0"
+			quid       	"400AF43B0175"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF44D0225"
+				supplier   	"$UNNAMED$1"
+				quidu      	"400AF44A01E5"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF44D0228")))
+			type       	"StartState")
+		    (object State "$UNNAMED$1"
+			quid       	"400AF44A01E5"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram"
+			quid       	"400AF43601DC"
+			title      	"NewDiagram"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$0" @1
+				location   	(673, 373)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(715, 343)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF43B0175"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$1" @2
+				location   	(1292, 375)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@2
+				    location   	(1346, 333)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF44A01E5"
+				autoResize 	TRUE)
+			    (object TransView "" @3
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF44D0225"
+				client     	@1
+				supplier   	@2
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Enum Class"
+	    quid       	"400998D80285"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF3310154"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998E00150"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")
+		(object ClassAttribute "b"
+		    quid       	"40099D3F03B2"
+		    type       	"My Int"
+		    quidu      	"4009988D0164"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF46201C1"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$2"
+			quid       	"400AF4640192"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF4680397"
+				supplier   	"$UNNAMED$3"
+				quidu      	"400AF46601F9"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF468039A")))
+			type       	"StartState")
+		    (object State "$UNNAMED$3"
+			quid       	"400AF46601F9"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram2"
+			quid       	"400AF4620211"
+			title      	"NewDiagram2"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$2" @4
+				location   	(450, 328)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@4
+				    location   	(492, 298)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4640192"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$3" @5
+				location   	(753, 338)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@5
+				    location   	(807, 296)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF46601F9"
+				autoResize 	TRUE)
+			    (object TransView "" @6
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF4680397"
+				client     	@4
+				supplier   	@5
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "My Int Class"
+	    quid       	"400998EF009D"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF33B0235"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998F7008A"
+		    stereotype 	"id"
+		    type       	"My Int"
+		    quidu      	"4009988D0164")
+		(object ClassAttribute "b"
+		    quid       	"40099D480120"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF471010F"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$4"
+			quid       	"400AF4730085"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF47702C6"
+				supplier   	"$UNNAMED$5"
+				quidu      	"400AF475002E"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF47702C9")))
+			type       	"StartState")
+		    (object State "$UNNAMED$5"
+			quid       	"400AF475002E"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram3"
+			quid       	"400AF4710155"
+			title      	"NewDiagram3"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$4" @7
+				location   	(273, 303)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@7
+				    location   	(315, 273)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4730085"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$5" @8
+				location   	(593, 343)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@8
+				    location   	(647, 301)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF475002E"
+				autoResize 	TRUE)
+			    (object TransView "" @9
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF47702C6"
+				client     	@7
+				supplier   	@8
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Large Int"
+	    quid       	"40099C2F00AD"
+	    documentation 	
+|{integer = lower 0 | upper 1000}
+|
+	    
+	    stereotype 	"type")
+	(object Class "Large Int Class"
+	    quid       	"40099C4B0270"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF3E30088"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099C550379"
+		    stereotype 	"id"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD")
+		(object ClassAttribute "b"
+		    quid       	"40099D4E039F"
+		    type       	"Enum"
+		    quidu      	"4009986D0295"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF47E006D"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$6"
+			quid       	"400AF480021E"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF4850149"
+				supplier   	"$UNNAMED$7"
+				quidu      	"400AF482016D"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF485014C")))
+			type       	"StartState")
+		    (object State "$UNNAMED$7"
+			quid       	"400AF482016D"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram4"
+			quid       	"400AF47E009F"
+			title      	"NewDiagram4"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$6" @10
+				location   	(690, 263)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@10
+				    location   	(732, 233)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF480021E"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$7" @11
+				location   	(1153, 268)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@11
+				    location   	(1207, 226)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF482016D"
+				autoResize 	TRUE)
+			    (object TransView "" @12
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF4850149"
+				client     	@10
+				supplier   	@11
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Integer Class"
+	    quid       	"40099CB90048"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF3ED005A"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099CC5001D"
+		    stereotype 	"id"
+		    type       	"Integer")
+		(object ClassAttribute "b"
+		    quid       	"40099D5501AA"
+		    type       	"Enum"
+		    quidu      	"4009986D0295"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF48C0244"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$8"
+			quid       	"400AF48E0391"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF49301D6"
+				supplier   	"$UNNAMED$9"
+				quidu      	"400AF4900268"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF49301D9")))
+			type       	"StartState")
+		    (object State "$UNNAMED$9"
+			quid       	"400AF4900268"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram5"
+			quid       	"400AF48C028A"
+			title      	"NewDiagram5"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$8" @13
+				location   	(418, 248)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@13
+				    location   	(460, 218)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF48E0391"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$9" @14
+				location   	(923, 250)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@14
+				    location   	(977, 208)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4900268"
+				autoResize 	TRUE)
+			    (object TransView "" @15
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF49301D6"
+				client     	@13
+				supplier   	@14
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "My Boolean Class B"
+	    quid       	"40099D030365"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF3F4039A"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099E740384"
+		    stereotype 	"id"
+		    type       	"My Boolean"
+		    quidu      	"400998390150")
+		(object ClassAttribute "b"
+		    quid       	"40099E7D0296"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF49B01FF"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$10"
+			quid       	"400AF49E01F0"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF4A601C9"
+				supplier   	"$UNNAMED$11"
+				quidu      	"400AF4A0018E"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF4A601CC")))
+			type       	"StartState")
+		    (object State "$UNNAMED$11"
+			quid       	"400AF4A0018E"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram6"
+			quid       	"400AF49B0245"
+			title      	"NewDiagram6"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$10" @16
+				location   	(423, 285)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@16
+				    location   	(465, 255)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF49E01F0"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$11" @17
+				location   	(805, 278)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@17
+				    location   	(859, 236)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4A0018E"
+				autoResize 	TRUE)
+			    (object TransView "" @18
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF4A601C9"
+				client     	@16
+				supplier   	@17
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Enum Class B"
+	    quid       	"40099E5702E2"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF3FC00D4"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099E90013F"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")
+		(object ClassAttribute "b"
+		    quid       	"40099E980336"
+		    stereotype 	"id"
+		    type       	"My Int"
+		    quidu      	"4009988D0164"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF4AE0058"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$12"
+			quid       	"400AF4B001B9"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF4B4030A"
+				supplier   	"$UNNAMED$13"
+				quidu      	"400AF4B20090"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF4B4030D")))
+			type       	"StartState")
+		    (object State "$UNNAMED$13"
+			quid       	"400AF4B20090"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram7"
+			quid       	"400AF4AE009E"
+			title      	"NewDiagram7"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$12" @19
+				location   	(410, 283)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@19
+				    location   	(452, 253)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4B001B9"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$13" @20
+				location   	(843, 293)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@20
+				    location   	(897, 251)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4B20090"
+				autoResize 	TRUE)
+			    (object TransView "" @21
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF4B4030A"
+				client     	@19
+				supplier   	@20
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "My Int Class B"
+	    quid       	"40099E650075"
+	    stereotype 	"active"
+	    operations 	(list Operations
+		(object Operation "f"
+		    quid       	"400AF40400AE"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099EA7039B"
+		    stereotype 	"id"
+		    type       	"My Int"
+		    quidu      	"4009988D0164")
+		(object ClassAttribute "b"
+		    quid       	"40099EB00073"
+		    stereotype 	"id"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD"))
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"400AF4BC02CF"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$14"
+			quid       	"400AF4BF011B"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"400AF4C30333"
+				supplier   	"$UNNAMED$15"
+				quidu      	"400AF4C00311"
+				sendEvent  	(object sendEvent
+				    quid       	"400AF4C30336")))
+			type       	"StartState")
+		    (object State "$UNNAMED$15"
+			quid       	"400AF4C00311"
+			type       	"EndState"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "NewDiagram8"
+			quid       	"400AF4BC02F7"
+			title      	"NewDiagram8"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$14" @22
+				location   	(348, 293)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@22
+				    location   	(390, 263)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4BF011B"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$15" @23
+				location   	(763, 310)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@23
+				    location   	(817, 268)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"400AF4C00311"
+				autoResize 	TRUE)
+			    (object TransView "" @24
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"400AF4C30333"
+				client     	@22
+				supplier   	@23
+				line_style 	0
+				x_offset   	FALSE))))))
+	(object Class "Child"
+	    quid       	"400AF564037B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"400AF57A0174"
+		    label      	"g1"
+		    supplier   	"Logical View::Arrays::My Boolean Class"
+		    quidu      	"400998B300D3")
+		(object Inheritance_Relationship
+		    quid       	"400AF57E0061"
+		    label      	"g2"
+		    supplier   	"Logical View::Arrays::Enum Class"
+		    quidu      	"400998D80285")
+		(object Inheritance_Relationship
+		    quid       	"400AF581021E"
+		    label      	"g3"
+		    supplier   	"Logical View::Arrays::My Int Class"
+		    quidu      	"400998EF009D")
+		(object Inheritance_Relationship
+		    quid       	"400AF58402FF"
+		    label      	"g4"
+		    supplier   	"Logical View::Arrays::Large Int Class"
+		    quidu      	"40099C4B0270")
+		(object Inheritance_Relationship
+		    quid       	"400AF58801EC"
+		    label      	"g5"
+		    supplier   	"Logical View::Arrays::Integer Class"
+		    quidu      	"40099CB90048")
+		(object Inheritance_Relationship
+		    quid       	"400AF58C011F"
+		    label      	"g6"
+		    supplier   	"Logical View::Arrays::My Boolean Class B"
+		    quidu      	"40099D030365")
+		(object Inheritance_Relationship
+		    quid       	"400AF58F0337"
+		    label      	"g7"
+		    supplier   	"Logical View::Arrays::Enum Class B"
+		    quidu      	"40099E5702E2")
+		(object Inheritance_Relationship
+		    quid       	"400AF5940207"
+		    label      	"g8"
+		    supplier   	"Logical View::Arrays::My Int Class B"
+		    quidu      	"40099E650075"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3D7CC26D00AC"
 	    title      	"Main"
-	    zoom       	100
+	    zoom       	95
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Arrays::T" @1
+		(object ClassView "Class" "Logical View::Arrays::My Boolean" @25
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(640, 624)
+		    location   	(2716, 619)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@1
-			location   	(557, 597)
+			Parent_View 	@25
+			location   	(2581, 593)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	270
+			justify    	0
+			label      	"My Boolean")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@25
+			location   	(2581, 548)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	270
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998390150"
+		    width      	288
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2719, 881)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(2636, 855)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
 			justify    	0
-			label      	"T")
+			label      	"Enum")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@1
-			location   	(557, 552)
+			Parent_View 	@26
+			location   	(2636, 810)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	163
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4009986D0295"
+		    width      	184
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Int" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2730, 1144)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(2647, 1118)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"My Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@27
+			location   	(2647, 1073)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
 			max_width  	166
 			justify    	0
 			label      	"<<type>>")
-		    icon_style 	"Label"
+		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"3D7CC27C00E9"
+		    quidu      	"4009988D0164"
 		    width      	184
-		    height     	166
+		    height     	164
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Boolean Class" @28
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(480, 254)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@28
+			location   	(265, 156)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	430
+			justify    	0
+			label      	"My Boolean Class")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@28
+			location   	(265, 111)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	430
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998B300D3"
+		    compartment 	(object Compartment
+			Parent_View 	@28
+			location   	(265, 212)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	426)
+		    width      	448
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum Class" @29
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(482, 601)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@29
+			location   	(315, 503)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"Enum Class")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@29
+			location   	(315, 458)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998D80285"
+		    compartment 	(object Compartment
+			Parent_View 	@29
+			location   	(315, 559)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	331)
+		    width      	352
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Int Class" @30
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(486, 936)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(322, 838)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	328
+			justify    	0
+			label      	"My Int Class")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@30
+			location   	(322, 793)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	328
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998EF009D"
+		    compartment 	(object Compartment
+			Parent_View 	@30
+			location   	(322, 894)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	326)
+		    width      	346
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Arrays" @31
+		    location   	(2831, 230)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@31
+			location   	(2662, 146)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	338
+			justify    	0
+			label      	"Arrays")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D7CC2550197"
+		    width      	350
+		    height     	180)
+		(object ClassView "Class" "Logical View::Arrays::Large Int" @32
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2739, 1391)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@32
+			location   	(2642, 1365)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	194
+			justify    	0
+			label      	"Large Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@32
+			location   	(2642, 1320)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	194
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099C2F00AD"
+		    width      	212
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Large Int Class" @33
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(482, 1278)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@33
+			location   	(293, 1180)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"Large Int Class")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@33
+			location   	(293, 1135)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099C4B0270"
+		    compartment 	(object Compartment
+			Parent_View 	@33
+			location   	(293, 1236)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	376)
+		    width      	396
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Integer Class" @34
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(486, 1618)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@34
+			location   	(312, 1520)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"Integer Class")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@34
+			location   	(312, 1475)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099CB90048"
+		    compartment 	(object Compartment
+			Parent_View 	@34
+			location   	(312, 1576)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	345)
+		    width      	366
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Boolean Class B" @35
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(488, 1959)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@35
+			location   	(273, 1861)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	430
+			justify    	0
+			label      	"My Boolean Class B")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@35
+			location   	(273, 1816)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	430
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099D030365"
+		    compartment 	(object Compartment
+			Parent_View 	@35
+			location   	(273, 1917)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	426)
+		    width      	448
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum Class B" @36
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(499, 2318)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@36
+			location   	(332, 2220)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"Enum Class B")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@36
+			location   	(332, 2175)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	334
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099E5702E2"
+		    compartment 	(object Compartment
+			Parent_View 	@36
+			location   	(332, 2276)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	331)
+		    width      	352
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Int Class B" @37
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(497, 2660)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(308, 2562)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"My Int Class B")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@37
+			location   	(308, 2517)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"<<active>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099E650075"
+		    compartment 	(object Compartment
+			Parent_View 	@37
+			location   	(308, 2618)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	376)
+		    width      	396
+		    height     	308
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Child" @38
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1725, 1286)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@38
+			location   	(1644, 1240)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Child")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400AF564037B"
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @39
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(1161, 818)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF57A0174"
+		    client     	@38
+		    supplier   	@28
+		    line_style 	0)
+		(object InheritView "g2" @40
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@40
+			location   	(1146, 966)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g2")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF57E0061"
+		    client     	@38
+		    supplier   	@29
+		    line_style 	0)
+		(object InheritView "g3" @41
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@41
+			location   	(1146, 1122)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g3")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF581021E"
+		    client     	@38
+		    supplier   	@30
+		    line_style 	0)
+		(object InheritView "g4" @42
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@42
+			location   	(1157, 1282)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g4")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF58402FF"
+		    client     	@38
+		    supplier   	@33
+		    line_style 	0)
+		(object InheritView "g5" @43
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@43
+			location   	(1152, 1437)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g5")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF58801EC"
+		    client     	@38
+		    supplier   	@34
+		    line_style 	0)
+		(object InheritView "g6" @44
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@44
+			location   	(1172, 1584)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g6")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF58C011F"
+		    client     	@38
+		    supplier   	@35
+		    line_style 	0)
+		(object InheritView "g7" @45
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(1272, 1903)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g7")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF58F0337"
+		    client     	@38
+		    supplier   	@36
+		    vertices   	(list Points
+			(1682, 1343)
+			(1213, 1984)
+			(675, 2234))
+		    line_style 	0)
+		(object InheritView "g8" @46
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(1404, 2136)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g8")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"400AF5940207"
+		    client     	@38
+		    supplier   	@37
+		    vertices   	(list Points
+			(1703, 1343)
+			(1373, 2218)
+			(695, 2558))
+		    line_style 	0)))))

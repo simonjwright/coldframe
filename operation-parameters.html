@@ -1,4 +1,4 @@
-<!-- $Id: operation-parameters.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: operation-parameters.html,v 378dfe27fd30 2003/12/13 18:10:37 simon $ -->
 <head>
 <title>ColdFrame: Parameters</title>
 </head>
@@ -7,11 +7,80 @@
 
 <h2>Motivation</h2>
 
+<p>Operation parameters are modelled as just that, of course. The only
+thing to note is modelling the parameter's <i>mode</i>.
+
+<p>A parameter's mode may be
+<dl>
+
+<dt><i>in</i> (the default)
+<dd>the parameter represents a value; amongst other things, the actual
+can be an expression.
+
+<dt><i>inout</i>
+<dd>the actual must be a variable; its original value is available to
+the operation, and the operation can update it.
+
+<dt><i>out</i>
+<dd>the actual must be a variable; its original value is <em>not</em>
+available to the operation, and the operation can update it.
+
+</dl>
+
 <h2>Modelling</h2>
+
+<p>The UML syntax is
+<blockquote>
+[mode] name : type [= default-value]
+</blockquote>
+
+The <i>mode</i> and the <i>default-value</i> are optional.
+
+<p>Because ColdFrame normalizes the <i>name</i> by adjusting case and
+replacing internal white space by underscores, you <b>must</b> specify
+the <i>mode</i> <b>in lower case</b> (or it will be treated as part of
+the <i>name</i>). If you have a variable whose first word is
+<i>in</i>, <i>inout</i>. or <i>out</i> you <b>must</b> either <b>use
+mixed case</b> or <b>use underscores</b> (or both):
+<pre>
+   In Range : Boolean
+</pre>
+or
+<pre>
+   in_range : Boolean
+</pre>
+
+<p>The <i>default-value</i> can be an expression.
 
 <h2>Translation</h2>
 
+<p>If the mode is <i>in</i> it is omitted.
+
+<p>The language rules aren't checked by the code generator: for
+example, only an <i>in</i> parameter can have a <i>default-value</i>,
+and functions can't have <tt>in&nbsp;out</tt> or <tt>out</tt>
+parameters.
+
 <h2>Use</h2>
+
+<p>As a matter of style, always name parameters from the point of view
+of the operation's caller, <em>not</em> from your point of view as
+implementer. Try to make the names read well, especially if the caller
+uses named parameter association:
+<pre>
+   SNTP.User.Receive_Broadcasts_Via
+     (The_Agent => Service,
+      Reporting_To => S_Support.Receiver'Access);
+</pre>
+
+<p>Don't use long parameter names that repeat the type name. There is
+plenty of context available to the reader, and you make it more
+difficult than it need be to follow coding standards that ask for
+limits on line lengths.
+
+<p>Don't make a parameter <i>inout</i> or <i>out</i> just because it's
+large (a large record, perhaps, or an array). Trust the compiler (if
+Ada) or ColdFrame to do the Right Thing.
 
 <p><hr>
 <i>

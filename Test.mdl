@@ -72,7 +72,12 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Bad_Code_Regressions.cat"
-		quid       	"3F6738F4023A"))
+		quid       	"3F6738F4023A")
+	    (object Class_Category "Bad Model Regressions"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Bad_Model_Regressions.cat"
+		quid       	"3FDAA7500168"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3EF216CA022A"
@@ -148,7 +153,7 @@
 			max_width  	1211
 			label      	
 |These packages are part of ColdFrame's test suite.
-|$Id: Test.mdl,v c8289b799b69 2003/09/28 15:52:18 simon $
+|$Id: Test.mdl,v 783ee7a31d08 2003/12/13 07:05:34 simon $
 			)
 		    (object CategoryView "Logical View::Regressions" @4
 			location   	(400, 1078)
@@ -198,6 +203,31 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"3F6738F4023A"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Bad Model Regressions" @6
+			location   	(1803, 663)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@6
+			    location   	(1659, 579)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Bad Model Regressions")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"3FDAA7500168"
 			width      	300
 			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"

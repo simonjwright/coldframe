@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 1a296a22ec87 2003/09/29 19:18:18 simon $ -->
+<!-- $Id: ada-state.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -229,7 +229,9 @@
                when {source-state (ignored transition)} =>
                   null;
                when {source-state} =>
-                  raise ColdFrame.Exceptions.Cant_Happen;
+                  Ada.Exceptions.Raise_Exception
+                    (ColdFrame.Exceptions.Cant_Happen'Identity,
+                     "{domain}.{class}.{event} in {source-state}");
             end case;
          end Handler;
          -->
@@ -279,7 +281,19 @@
 
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>raise ColdFrame.Exceptions.Cant_Happen;&#10;</xsl:text>
+          <xsl:text>Ada.Exceptions.Raise_Exception&#10;</xsl:text>
+          <xsl:value-of select="$IIIIC"/>
+          <xsl:text>(ColdFrame.Exceptions.Cant_Happen'Identity,&#10;</xsl:text>
+          <xsl:value-of select="$IIIIC"/>
+          <xsl:text> "</xsl:text>
+          <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$e"/>
+          <xsl:text> in </xsl:text>
+          <xsl:value-of select="$s"/>
+          <xsl:text>");&#10;</xsl:text>
         </xsl:otherwise>
 
       </xsl:choose>
@@ -352,8 +366,13 @@
   <!-- Called at domain/class to generate any class body "with"s. -->
   <xsl:template name="state-body-context">
 
+    <!-- Ada.Exceptions is only needed if there are Cant_Happen exceptions;
+         but that would be rather complex to detect. -->
+    <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
+    <xsl:text>pragma Warnings (Off, Ada.Exceptions);&#10;</xsl:text>
+
     <!-- The initial state automatically enters the next state if there's an
-         unguarded transtion. If so, and if there are actions with parameters
+         untriggered transtion. If so, and if there are actions with parameters
          in that state, we need a Creation event. -->
 
     <!-- the initial state .. -->
@@ -384,12 +403,27 @@
     <!-- Indentation. -->
     <xsl:param name="indent"/>
 
+    <!-- The target state. -->
+    <xsl:variable name="target" select="../state[name=$tr/target]"/>
+
     <xsl:value-of select="$indent"/>
     <xsl:text>This.State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
 
     <xsl:if test="$tr/action">
+      <!-- Check for actions after instance deletion. -->
+      <xsl:if test="($tr/action='Delete'
+                     or ../../operation[name=$tr/action]/@final)
+                    and $target/action">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: entry action(s) after final action on transition to </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$tr/target"/>
+        </xsl:message>
+      </xsl:if>
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
@@ -398,7 +432,18 @@
       </xsl:call-template>
     </xsl:if>
 
-    <xsl:for-each select="../state[name=$tr/target]/action">
+    <xsl:for-each select="$target/action">
+      <!-- Check for actions after instance deletion. -->
+      <xsl:if test="(.='Delete' or ../../../operation[name=.]/@final)
+                    and not(position()=last())">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: entry action(s) after final action in </xsl:text>
+          <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+        </xsl:message>
+      </xsl:if>
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
@@ -410,7 +455,9 @@
     <xsl:variable
       name="deleting"
       select="$tr/action='Delete'
-              or ../state[name=$tr/target]/action='Delete'"/>
+              or $target/@final
+              or $target/action='Delete'
+              or $target/action/@final"/>
 
     <xsl:if test="not($deleting)">
       <xsl:value-of select="$indent"/>
@@ -430,7 +477,7 @@
       <xsl:if test="$deleting">
         <xsl:call-template name="log-error"/>
         <xsl:message>
-          <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
+          <xsl:text>Error: drop-through transition after final state </xsl:text>
           <xsl:value-of select="../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="$tr/target"/>
@@ -489,14 +536,14 @@
         </xsl:message>
       </xsl:when>
 
-      <xsl:when test="$operation='Delete' and $single">
+      <xsl:when test="($operation='Delete' or $op/@final) and $single">
         <xsl:call-template name="log-error"/>
         <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
-          <xsl:text>, Delete not allowed as a singleton entry action</xsl:text>
+          <xsl:text>, a singleton entry action may not delete the instance</xsl:text>
         </xsl:message>
       </xsl:when>
 
@@ -565,6 +612,12 @@
 
       <xsl:otherwise>
 
+        <xsl:if test="$operation='Delete' or $op/@final">
+          <!-- Delete() is permitted. -->
+          <xsl:value-of select="$indent"/>
+          <xsl:text>Mark_Deletable (This);&#10;</xsl:text>
+        </xsl:if>
+
         <xsl:choose>
 
           <xsl:when test="$operation='Delete'">
@@ -574,8 +627,6 @@
                     H : Handle := This;
                  begin
                     Delete (H);
-                    ColdFrame.Project.Events.Instance_Is_Deleted
-                      (Ev'Unrestricted_Access);
                  end;
                  -->
             <xsl:value-of select="$indent"/>
@@ -588,12 +639,6 @@
             <xsl:value-of select="$indent"/>
             <xsl:value-of select="$I"/>
             <xsl:text>Delete (H);&#10;</xsl:text>
-            <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$I"/>
-            <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
-            <xsl:value-of select="$indent"/>
-            <xsl:value-of select="$IC"/>
-            <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
             <xsl:value-of select="$indent"/>
             <xsl:text>end;&#10;</xsl:text>
 
@@ -612,6 +657,18 @@
           </xsl:otherwise>
 
         </xsl:choose>
+
+        <xsl:if test="$operation='Delete' or $op/@final">
+          <!--
+               ColdFrame.Project.Events.Instance_Is_Deleted
+                 (Ev'Unrestricted_Access);
+               -->
+          <xsl:value-of select="$indent"/>
+          <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
+          <xsl:value-of select="$indent"/>
+          <xsl:value-of select="$C"/>
+          <xsl:text>(Ev'Unrestricted_Access);&#10;</xsl:text>
+        </xsl:if>
 
       </xsl:otherwise>
 

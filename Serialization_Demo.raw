@@ -3,14 +3,14 @@
 <name>Serialization Demo</name>
 <date>
 <year>2003</year>
-<month>9</month>
-<day>11</day>
-<time>20:41</time>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
 <documentation>This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-[[ revision : $Revision: e5d0cd6ea338 $ ]]</documentation>
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
@@ -93,7 +93,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ string : max 32 ]]
+<documentation>{ string = max 32 }
 </documentation>
 <attributes>
 </attributes>
@@ -107,8 +107,8 @@ It is to be extracted separately from the main Serialization package (that's why
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ renames : Ada.Real_Time.Time;
-  image : Real Time Image ]]</documentation>
+<documentation>{ renames = Ada.Real_Time.Time,
+  image = Real Time Image }</documentation>
 <attributes>
 </attributes>
 <operations>

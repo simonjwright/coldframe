@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 3425bf96d7fc 2003/11/05 22:49:06 simon $ -->
+<!-- $Id: generate-ada.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -118,7 +118,7 @@
     <xsl:call-template name="commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-    
+
     <!-- Any context clauses needed for top-level package .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. domain context ..'"/>
@@ -140,7 +140,7 @@
     </xsl:call-template>
     <xsl:for-each select="exception">
       <xsl:sort select="name"/>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
       <xsl:text> : exception</xsl:text>
@@ -165,7 +165,7 @@
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
-       
+
     </xsl:for-each>
 
     <!-- .. any constants .. -->
@@ -183,7 +183,7 @@
       <xsl:with-param name="m" select="'.. any specially-declared types ..'"/>
     </xsl:call-template>
     <xsl:call-template name="domain-types"/>
-    
+
     <!-- .. any type operations .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. any operations of types ..'"/>
@@ -203,30 +203,33 @@
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
-    
+
     <!-- .. initialization detection .. -->
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized : Boolean := False;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
-    
+
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
-    
+
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
-      
+    <xsl:if test="type/operation[not(@access)
+                  and not(@suppressed)
+                  and not(@imported)
+                  and not(@renames)]">
+
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
-      
+
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-      
+
       <!-- Protected types need stubs. -->
       <xsl:for-each select="type[@protected]">
         <xsl:sort select="name"/>
@@ -236,7 +239,7 @@
         <xsl:text> is separate;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:for-each>
-      
+
       <!-- Operations that were analyst-specified need stubs. -->
       <xsl:apply-templates
         select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
@@ -248,9 +251,9 @@
       <xsl:text>end </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
-      
+
     </xsl:if>
-    
+
     <!-- .. domain type operations .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
@@ -261,8 +264,8 @@
       select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-body">
     </xsl:apply-templates>
-    
-    
+
+
     <!-- .. protected type bodies .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
@@ -273,8 +276,8 @@
       select="type[@protected]"
       mode="protected-type-body">
     </xsl:apply-templates>
-    
-    
+
+
     <!-- .. the domain event manager .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
@@ -283,7 +286,7 @@
     </xsl:call-template>
     <xsl:call-template name="event-manager-spec"/>
     <xsl:call-template name="event-manager-body"/>
-    
+
     <!-- .. the domain Initialize procedure .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
@@ -329,6 +332,7 @@
                else
                   Events.Initialize;
                end if;
+               ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
                {class}.Class_Initialize:
                {class}.{init-operation};
                Domain_Initialized := True;
@@ -409,6 +413,8 @@
     <xsl:text>Events.Initialize;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>end if;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);&#10;</xsl:text>
 
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
@@ -673,7 +679,7 @@
     <xsl:apply-templates select="type[@callback]" mode="callback-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
-    
+
     <!-- Teardown -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. Teardown procedures ..'"/>

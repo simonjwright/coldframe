@@ -42,7 +42,6 @@ package body Event_Test.Test_Engine is
    end record;
 
    procedure Handler (For_The_Event : Wait);
-
    procedure Handler (For_The_Event : Wait) is
    begin
       Waiting := True;
@@ -59,7 +58,6 @@ package body Event_Test.Test_Engine is
    end record;
 
    procedure Handler (For_The_Event : Store);
-
    procedure Handler (For_The_Event : Store) is
    begin
       Result := For_The_Event.Payload;
@@ -76,7 +74,6 @@ package body Event_Test.Test_Engine is
    end record;
 
    procedure Handler (For_The_Event : Post);
-
    procedure Handler (For_The_Event : Post) is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Store (The_Instance'Access);
@@ -100,8 +97,20 @@ package body Event_Test.Test_Engine is
    type Nest is new ColdFrame.Project.Events.Event_Base with null record;
 
    procedure Handler (For_The_Event : Nest);
-
    procedure Handler (For_The_Event : Nest) is
+      L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+      pragma Warnings (Off, For_The_Event);
+      pragma Warnings (Off, L);
+   begin
+      null;
+   end Handler;
+
+
+   --  This event does nothing.
+   type Empty is new ColdFrame.Project.Events.Event_Base with null record;
+
+   procedure Handler (For_The_Event : Empty);
+   procedure Handler (For_The_Event : Empty) is
       L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
       pragma Warnings (Off, For_The_Event);
       pragma Warnings (Off, L);
@@ -284,18 +293,62 @@ package body Event_Test.Test_Engine is
    procedure Tear_Down_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
-      Copy_Of_Queue : ColdFrame.Project.Events.Event_Queue_P
-        := ColdFrame.Project.Events.Copy (Events.Dispatcher);
-      --  we need a copy so that the Tear_Down in the fixture doesn't
-      --  fail.
    begin
+      ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
+      --  we need to add a use so that the Tear_Down in the fixture
+      --  doesn't fail.
       select
          delay 1.0;
          Assert (False, "queue wasn't torn down");
       then abort
-         ColdFrame.Project.Events.Tear_Down (Copy_Of_Queue);
+         ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);
       end select;
    end Tear_Down_Unstarted_Queue;
+
+
+   --  Deleting a Timer without a held event is OK.
+   procedure Delete_Timer_Without_Held_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delete_Timer_Without_Held_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      declare
+         T : ColdFrame.Project.Events.Timer;
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => new Empty,
+                                       After => 0.01);
+         ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      end;
+   exception
+      when Program_Error =>
+         Assert (False, "shouldn't have raised exception");
+   end Delete_Timer_Without_Held_Event;
+
+
+   --  Deleting a Timer with a held event (probably declared on the
+   --  stack) is detected.
+   procedure Delete_Timer_With_Held_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delete_Timer_With_Held_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+   begin
+      declare
+         T : ColdFrame.Project.Events.Timer;
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => new Empty,
+                                       After => 1.0);
+      end;
+      Assert (False, "should have raised exception");
+   exception
+      when Program_Error => null;
+   end Delete_Timer_With_Held_Event;
 
 
    ---------------
@@ -320,6 +373,14 @@ package body Event_Test.Test_Engine is
         (T,
          Tear_Down_Unstarted_Queue'Access,
          "Unstarted queue can be torn down");
+      Register_Routine
+        (T,
+         Delete_Timer_Without_Held_Event'Access,
+         "Checks deleting a Timer without a held event");
+      Register_Routine
+        (T,
+         Delete_Timer_With_Held_Event'Access,
+         "Detects deleting a Timer with a held event");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is

@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Event_Test_Test.gpr,v 71c1e8215ac2 2003/03/15 19:56:42 simon $
+--  $Id: Event_Test_Test.gpr,v 049ea604e537 2004/02/21 22:11:59 simon $
 
 with "Options";
 with "AUnit";
@@ -26,8 +26,8 @@ project Event_Test_Test is
 
   for Source_Dirs use ("Event_Test.test");
 
-  for Object_Dir use Options'Object_Dir;
-  package Ide renames Options.Ide;
+  for Object_Dir use Options'Object_Dir & "/main";
+  package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;

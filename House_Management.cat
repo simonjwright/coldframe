@@ -9,15 +9,19 @@
     is_loaded  	TRUE
     quid       	"3DFCF75D00CF"
     documentation 	
-|This domain represents an electronic houlsehold control system.
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This domain represents an electronic household control system.
 |The first release only manages the stairwell lighting system.
 |
-|[[ revision : $Id: House_Management.cat,v 6df8619783c1 2003/09/09 04:14:58 simon $ ]]
+|{ revision = $Revision: 38960f8e0d9a $ }
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
 	    quid       	"3E1B0DF501D9"
-	    supplier   	"Logical View::ColdFrame Examples::Digital IO"
+	    supplier   	"Logical View::Digital IO"
 	    quidu      	"3DFCF76B0011"))
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -335,7 +339,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 6df8619783c1 2003/09/09 04:14:58 simon $")
+				label      	"$Id: House_Management.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")
 			    (object SelfTransView "" @8
 				location   	(1398, 450)
 				font       	(object Font
@@ -454,12 +458,12 @@
 	    documentation 	
 |There is a lamp beween each pair of landings. This type names the lamps.
 |
-|[[  enumeration :
-|basement,
-|ground floor,
-|first floor,
+|{ enumeration =
+|basement |
+|ground floor |
+|first floor |
 |second floor
-|]]
+|}
 	    
 	    stereotype 	"type")
 	(object Class "Button Name"
@@ -467,12 +471,12 @@
 	    documentation 	
 |There is a pushbutton on each landing. This type names the pushbuttons.
 |
-|[[ enumeration:
-|basement,
-|ground floor,
-|first floor,
+|{ enumeration =
+|basement |
+|ground floor |
+|first floor |
 |second floor
-|]]
+|}
 	    
 	    stereotype 	"type")
 	(object Class "Signal State"
@@ -480,7 +484,7 @@
 	    documentation 	
 |This type is used by the supporting Digital IO domain to report switch state changes.
 |
-|[[ imported : Digital IO ]]
+|{ imported = Digital IO }
 	    
 	    stereotype 	"type")
 	(object Association "a1"
@@ -492,29 +496,39 @@
 		(object Role "controls"
 		    quid       	"3DFCFC370338"
 		    label      	"controls"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Lamp"
+		    supplier   	"Logical View::House Management::Lamp"
 		    quidu      	"3DFCFC1401ED"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE)
 		(object Role "is controlled by"
 		    quid       	"3DFCFC370342"
 		    label      	"is controlled by"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Button"
+		    supplier   	"Logical View::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
-	    AssociationClass 	"Logical View::ColdFrame Examples::House Management::Button to Lamp"))
+	    AssociationClass 	"Logical View::House Management::Button to Lamp"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCFC0C0232"
 	    title      	"Main"
+	    documentation 	
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This domain represents an electronic household control system.
+|The first release only manages the stairwell lighting system.
+|
+|{ revision = $Revision: 38960f8e0d9a $ }
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp" @12
+		(object ClassView "Class" "Logical View::House Management::Lamp" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -553,8 +567,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
+			icon_style 	"Icon"
+			fill_color 	16777215
 			anchor     	2
 			nlines     	9
 			max_width  	522)
@@ -562,7 +576,7 @@
 		    height     	484
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button" @13
+		(object ClassView "Class" "Logical View::House Management::Button" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -601,8 +615,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
+			icon_style 	"Icon"
+			fill_color 	16777215
 			anchor     	2
 			nlines     	4
 			max_width  	675)
@@ -766,7 +780,7 @@
 				pctDist    	0.897638
 				height     	58
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button to Lamp" @22
+		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @22
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -797,7 +811,7 @@
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp Name" @23
+		(object ClassView "Class" "Logical View::House Management::Lamp Name" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -837,7 +851,7 @@
 		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button Name" @24
+		(object ClassView "Class" "Logical View::House Management::Button Name" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -877,7 +891,7 @@
 		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Signal State" @25
+		(object ClassView "Class" "Logical View::House Management::Signal State" @25
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -930,7 +944,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 6df8619783c1 2003/09/09 04:14:58 simon $")
+		    label      	"$Id: House_Management.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")
 		(object NoteView @27
 		    location   	(1635, 1140)
 		    font       	(object Font
@@ -965,4 +979,26 @@
 		    line_color 	3342489
 		    client     	@22
 		    supplier   	@14
-		    line_style 	0)))))
+		    line_style 	0)
+		(object NoteView @30
+		    location   	(2135, 1680)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1867, 1574)
+			fill_color 	13434879
+			nlines     	4
+			max_width  	500
+			label      	"Only modify this domain from the Examples model! (the association class is given by an absolute reference)")
+		    line_color 	3342489
+		    fill_color 	255
+		    width      	560
+		    height     	225)))))

@@ -71,7 +71,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 C_CODEGEN_SCRIPT = generate-c.xsl
 C_CODEGEN_SCRIPTS = $(C_CODEGEN_SCRIPT) \
   c-utilities.xsl
-OTHER_SCRIPTS = serialized-to-csv.xsl \
+OTHER_SCRIPTS = serialized-to-csv.tcl \
+  split-csv.tcl \
   make-build.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
@@ -117,6 +118,7 @@ OTHER_SCRIPTS = serialized-to-csv.xsl \
 # remove any generated files which are also present in the implementation
 # directory (.impl)
 # write-protect the generated files (careful, in case there are a lot of them!)
+# make the target directory itself writable (so users can delete files in it)
 # report unimplemented bodies
 %.gen: %.ada
 	@echo generating $@ ...
@@ -137,11 +139,15 @@ OTHER_SCRIPTS = serialized-to-csv.xsl \
 
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
-	echo "<recording>" >$<-t
-	awk "/^<[a-z\/]/" $< >>$<-t
-	echo "</recording>" >>$<-t
-	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl || rm -f $<-t
-	rm -f $<-t
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(CF)/serialized-to-csv.tcl <$<
+
+# Creates the build directory (Ada Library) tree, under $BUILD_BASE
+build-dirs::
+	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
+	@for d in aunit bc coldframe fixes main; do \
+	  [ -d $(BUILD_BASE)/$$d ] || \
+	    (echo mkdir -p $(BUILD_BASE)/$$d; mkdir -p $(BUILD_BASE)/$$d);\
+	done
 
 TEXI2HTML = texi2html
 %.html: %.texi
@@ -161,19 +167,35 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 	$(SAXON) \
 	    Architecture.raw generate-architecture-html.xsl >$@
 
-# coldframe-architecture.ps is made by printing the Rose Architecture package
-# diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
-
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif
 JPEGS = navigation.jpg window-screen.jpg
-PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
-serialization.png serialization-class-model.png serialization-sequence-t.png \
-serialization-class-model-t.png serialization-state.png \
-serialization-state-t.png serialization-sequence.png \
-real_time.png recordable_real_time.png sample_a.png \
-type-mapping.png relationships-mapping.png operations-mapping.png \
-metamodel.png event-mapping.png collections-mapping.png class-mappings.png \
-lamp-state.png
+PNGS = \
+browse-state-model.png \
+class-mappings.png \
+collections-mapping.png \
+digital-io.png \
+discriminated-record.png \
+event-mapping.png \
+hierarchies-full.png \
+hierarchies.png \
+house-digital-io.png \
+house-management.png \
+lamp-state.png\
+metamodel.png \
+operations-mapping.png \
+real_time.png \
+recordable_real_time.png \
+relationships-mapping.png \
+sample_a.png \
+serialization-class-model-t.png \
+serialization-class-model.png \
+serialization-sequence-t.png \
+serialization-sequence.png \
+serialization-state-t.png \
+serialization-state.png \
+serialization.png \
+type-mapping.png
+
 
 ############################
 # Distribution construction
@@ -181,7 +203,10 @@ lamp-state.png
 # Create the current date, in the form yyyymmdd. This certainly works in Linux.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
-DOCS = architecture.html \
+DOCS = \
+active-classes.html \
+annotations.html \
+architecture.html \
 associations.html \
 attributes.html \
 bugs.html \
@@ -203,7 +228,6 @@ generation.html \
 index.html \
 installation.html \
 operation-parameters.html \
-operation-results.html \
 operations.html \
 preparation.html \
 principles.html \
@@ -217,6 +241,7 @@ support.html \
 target.html \
 translation-rules.html \
 types.html \
+use.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
@@ -272,6 +297,8 @@ coldframe-bounded_storage_pools.adb \
 coldframe-bounded_storage_pools.ads \
 coldframe-callbacks.adb \
 coldframe-callbacks.ads \
+coldframe-event_basis.adb \
+coldframe-event_basis.ads \
 coldframe-events_g-creation_g.adb \
 coldframe-events_g-creation_g.ads \
 coldframe-events_g-debug_g.adb \
@@ -310,6 +337,8 @@ coldframe-instances.adb \
 coldframe-instances.ads \
 coldframe-interrupts.adb \
 coldframe-interrupts.ads \
+coldframe-logging_event_basis.adb \
+coldframe-logging_event_basis.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
@@ -329,10 +358,13 @@ coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events-standard-test_debug.ads \
 coldframe-project-events.ads \
+coldframe-project-events.ads-standard \
+coldframe-project-events.ads-logging \
 coldframe-project-global_storage_pool.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
-coldframe-project-held_event_support.ads \
+coldframe-project-held_events-signature.ads \
+coldframe-project-high_resolution_time.ads \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
 coldframe-project-log_error.ads \
@@ -342,12 +374,19 @@ coldframe-project-storage_pools.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
 
+coldframe-project-events.ads-standard: coldframe-project-events.ads
+	cp -p $< $@
+
+EXTRAS = \
+coldframe-logging_event_basis-ews_support.adb \
+coldframe-logging_event_basis-ews_support.ads
+
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
 Examples.mdl
 
 DEMO += \
-stairwell_demo.adp stairwell_demo.gpr tash.gpr \
+stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
 Digital_IO.cat Digital_IO.raw \
@@ -496,7 +535,8 @@ Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
 
 TEST += \
-Bad_Code_Regressions.cat Bad_Code_Regressions.raw
+Bad_Code_Regressions.cat Bad_Code_Regressions.raw \
+Bad_Model_Regressions.cat Bad_Model_Regressions.raw
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
@@ -509,8 +549,8 @@ dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	cd dist && zip download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
-cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(DEMO) \
-$(TEST) force
+cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
+$(DEMO) $(TEST) force
 	-rm -rf $@
 	mkdir $@
 	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
@@ -518,6 +558,8 @@ $(TEST) force
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/project
 	cp -p $(PROJECT) $@/project
+	mkdir $@/extras
+	cp -p $(EXTRAS) $@/extras
 	mkdir $@/example
 	tar cf - $(DEMO) | tar xf - -C $@/example
 	mkdir $@/test

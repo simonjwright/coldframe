@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v 3ad75b4eada0 2003/02/07 05:52:53 simon $
+--  $Id: stairwell_demo.adb,v cc16430ef5df 2004/02/22 15:52:37 simon $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -75,6 +75,7 @@ procedure Stairwell_Demo is
    function Init (Interp : in Tcl.Tcl_Interp) return C.int is
       package CreateCommands is new Tcl.Ada.Generic_Command (Integer);
       Command : Tcl.Tcl_Command;
+      pragma Warnings (Off, Command);
    begin
 
       if Tcl.Tcl_Init (Interp) = Tcl.TCL_ERROR then
@@ -165,7 +166,7 @@ procedure Stairwell_Demo is
    Argc : C.int;
    Argv : CArgv.Chars_Ptr_Ptr;
 
-   Dispatcher : ColdFrame.Project.Events.Event_Queue_P
+   Dispatcher : constant ColdFrame.Project.Events.Event_Queue_P
      := new ColdFrame.Project.Events.Standard.Debug.Event_Queue;
 
 begin

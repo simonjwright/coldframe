@@ -1,0 +1,31 @@
+--  GNAT project file for the Stairwell demonstration.
+--  $Id: stairwell_logging_demo.gpr,v a398ed08aee5 2003/11/15 14:00:05 simon $
+
+with "Options";
+with "ColdFrame";
+with "../ews/EWS";
+with "tash";
+
+project Stairwell_Logging_Demo is
+
+  for Main use ("stairwell_logging_demo");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("House_Management.impl",
+                       "House_Management.gen",
+                       "Digital_IO.impl",
+                       "Digital_IO.gen");
+
+  for Object_Dir use Options'Object_Dir;
+
+  package IDE renames Options.IDE;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+
+  package Linker is
+     for Default_Switches ("Ada") use Tash.Objects & Tash.Options;
+  end Linker;
+
+end Stairwell_Logging_Demo;

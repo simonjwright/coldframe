@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 424840497357 2003/09/13 17:20:53 simon $ -->
+<!-- $Id: serialization.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -27,11 +27,16 @@ processing.
 
 </ul>
 
+<p>The first is met by providing a user-overridable
+<tt><i>Serializable_Base</i></tt> class, extended by the data to be
+serialized; the second by generating code to convert the data stream
+to <a href="resources.html#xml">XML</a>.
+
 <h2>Modelling</h2>
 
 <p>To indicate that a <i>&#171;type&#187;</i> needs serialization
-support, annotate it <tt>[[serializable]]</tt> (as usual, you can
-stereotype as
+support, tag it <tt>{serializable}</tt> (as usual, you can stereotype
+as
 <em>&#171;type,&nbsp;serializable&#187;</em>).
 
 <p>ColdFrame generates code which outputs <a
@@ -65,23 +70,24 @@ attribute is of
 
 <dl>
 
-<dt><tt>[[type-image : <i>image-operation</i>]]</tt>
+<dt><tt>{type-image = <i>image-operation</i>}</tt>
 <dd><tt><i>image-operation</i></tt> is the name of a function taking a
 value of the type and returning a string representing just the value..
 
-<dt><tt>[[field-image : <i>image-operation</i>]]</tt>
+<dt><tt>{field-image = <i>image-operation</i>}</tt>
 <dd><tt><i>image-operation</i></tt> is the name of a function taking a
 value of the type and a field name, returning a string representing
 the value as a (set of) XML elements.
 
 </dl>
 
-<p><tt>[[field-image]]</tt> would be best used for imported types with
-structure (for example, an array).
+<p><tt>{field-image}</tt> would be best used for types with structure
+(for example, an array, either specified in ColdFrfame using
+<i>{array}</i> or <i>{imported}</i>).
 
 <p>For compatibility with ColdFrame releases up to and including
-20030906, the annotation <tt>[[image]]</tt> is a shorthand for
-<tt>[[field-image]]</tt>.
+20030906, the tag <tt>{image}</tt> is a shorthand for
+<tt>{field-image}</tt>.
 
 <h2>Translation</h2>
 
@@ -103,8 +109,10 @@ record type and is marked <em>&#171;serializable&#187;</em>.
 &#171;serializable&#187; marking.
 
 <p>A child package <tt><i>Domain</i>.Serializable</tt> is generated as
-well. For each &#171;serializable&#187; type, a type and a subprogram
-are generated:
+well. If there are no &#171;serializable&#187; types it is empty (so
+you can always <i>with</i> it in your analysis program). Otherwise,
+for each &#171;serializable&#187; type, a type and a subprogram are
+generated:
 <pre>
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
@@ -119,8 +127,8 @@ are generated:
 
 <p><tt>ColdFrame.Project.Serialization</tt> is expected to be (a
 renaming of) a package containing a tagged type <tt>Base</tt>, which
-the Project output package understands (it might want to add timestamp
-information, for example).
+your project output package understands (you might want to add
+timestamp information, for example).
 
 <p>The provided <tt>ColdFrame.Project.Serialization</tt> is a renaming
 of <tt>ColdFrame.Serialization</tt>, which provides the minimum needed
@@ -142,6 +150,9 @@ a tagged type <tt>Base</tt> with two primitive operations:
 <dt><tt>Base_Attribute_Image</tt>
 <dd>contributes components to <tt>Image</tt> for any attributes of
 your <tt>Base</tt> type.
+<br>It is a good idea not to use field names which might correspond to
+generated field names; you can do this by, for example, including
+non-identifier characters (<tt>*timestamp*</tt>, perhaps).
 
 </dl>
 
@@ -159,14 +170,14 @@ representation for itself. This includes
 available (<tt>Boolean</tt>, <tt>Integer</tt>, <tt>Duration</tt>,
 <tt>Float</tt> ...)
 
-<li>user-defined scalars (<tt><i>[[enumeration]]</i></tt>,
-<tt><i>[[integer]]</i></tt>, <tt><i>[[real]]</i></tt>)
+<li>user-defined scalars (<tt><i>{enumeration}</i></tt>,
+<tt><i>{integer}</i></tt>, <tt><i>{real}</i></tt>)
 
-<li>strings (<tt>Text</tt> and user-defined <i><tt>[[string]]</tt></i>s)
+<li>strings (<tt>Text</tt> and user-defined <i><tt>{string}</tt></i>s)
 
 <li><tt>Time</tt> (note, <em>not</em> <tt>Ada.Calendar.Time</tt>, just
 plain <tt>Time</tt>, which ColdFrame translates to
-<tt>ColdFrame.Project.Calendar.Time</tt>
+<tt>ColdFrame.Project.Calendar.Time</tt>)
 
 </ul>
 
@@ -175,9 +186,9 @@ domains or your own hand-written packages (it's OK for types which are
 visibly scalar, such as <tt>GNAT.Sockets.Port_Type</tt>). In this
 case, you can specify an image function for the type.
 
-<p>The simplest type is a <tt>[[type-image]]</tt> function; if for a
+<p>The simplest type is a <tt>{type-image}</tt> function; if for a
 &#171;type&#187; <i>T</i> you specify
-<tt>[[type-image&nbsp;:&nbsp;f]</tt>, ColdFrame expects you to provide
+<tt>{type-image&nbsp;=&nbsp;f}</tt>, ColdFrame expects you to provide
 <pre>
    function F (V : T) return String;
 </pre>
@@ -186,9 +197,9 @@ case, you can specify an image function for the type.
 example, arrays). <a href="#serialization.png">In the diagram</a>,
 <i>Foreign</i> is a renaming of type
 <tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
-function to use via the annotation <i><tt>[[field-image]]</tt></i>, in
+function to use via the tag <i><tt>{field-image}</tt></i>, in
 this case
-<tt>[[field-image&nbsp;:&nbsp;<i>Other_Domain</i>.Image_Of_Exported]]</tt>.
+<tt>{field-image&nbsp;=&nbsp;<i>Other_Domain</i>.Image_Of_Exported}</tt>.
 ColdFrame then expects to be able to call
 <pre>
    function <i>[Other_Domain.]</i>Image_Of_Exported
@@ -246,7 +257,7 @@ is". The code generated in the domain package spec is
    end record;
 </pre>
 
-<p>(<i>Name String</i> is a bounded string, <tt>[[string:max 32]]</tt>).
+<p>(<i>Name String</i> is a bounded string, <tt>{string = max 32}</tt>).
 
 <p>The code generated in the <tt>Serializable</tt> child package spec
 is
@@ -285,7 +296,7 @@ the number of seconds since the POSIX epoch, 1 January 1970 00:00).
 function for <tt>Ada.Real_Time.Time</tt>, we have to provide our own;
 this is the function <i>real time image()</i>. We tell ColdFrame that
 this is the image function by
-<tt>[[image&nbsp;:&nbsp;Real_Time_Image]]</tt>.
+<tt>{image&nbsp;=&nbsp;Real_Time_Image}</tt>.
 
 <p>The code generated in the domain package spec is
 <pre>
@@ -356,7 +367,7 @@ so it's output verbatim.
 <p><img src="recordable_real_time.png">
 
 <p><i>Recordable Real Time</i> is a record with a component of a type
-with an <tt>[[image]]</tt> function.
+with an <tt>{image}</tt> function.
 
 <p>The code generated in the domain package spec is
 <pre>

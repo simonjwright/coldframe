@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 3283535a01a5 2003/09/28 16:15:13 simon $ -->
+<!-- $Id: generate-html.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -49,6 +49,12 @@
 
   <!-- Control comment paragraph fill width. -->
   <xsl:param name="fill-column" select="70"/>
+
+  <!-- Control limit on using bounded containers. -->
+  <xsl:param name="max-bounded-container" select="49"/>
+
+  <!-- Control limit on number of hash buckets. -->
+  <xsl:param name="max-hash-buckets" select="49"/>
 
 
   <!-- Global shorthands for indentation. -->
@@ -116,10 +122,10 @@
             </xsl:apply-templates>
           </ul>
         </xsl:if>
-        <xsl:if test="type[not(standard)]">
+        <xsl:if test="type[not(@standard)]">
           <h3>Types</h3>
           <ul>
-            <xsl:apply-templates select="type[not(standard)]" mode="index">
+            <xsl:apply-templates select="type[not(@standard)]" mode="index">
               <xsl:sort select="name"/>
             </xsl:apply-templates>
           </ul>
@@ -150,9 +156,9 @@
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
-        <xsl:if test="type[not(standard)]">
+        <xsl:if test="type[not(@standard)]">
           <h2>Types</h2>
-          <xsl:apply-templates select="type[not(standard)]">
+          <xsl:apply-templates select="type[not(@standard)]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
@@ -704,7 +710,14 @@
           </xsl:apply-templates>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="string">
+      <xsl:when test="string/fixed">
+        <p>
+          <xsl:text>A string of fixed length </xsl:text>
+          <xsl:value-of select="string/fixed"/>
+          <xsl:text> characters.</xsl:text>
+        </p>
+      </xsl:when>
+      <xsl:when test="string/max">
         <p>
           <xsl:text>A string of maximum length </xsl:text>
           <xsl:value-of select="string/max"/>
@@ -745,7 +758,7 @@
         <a href="#{../../name}.{$type}"><xsl:value-of select="$type"/></a>
       </xsl:when>
 
-      <xsl:when test="/domain/type[name=$type]/standard">
+      <xsl:when test="/domain/type[name=$type]/@standard">
         <!-- a standard type -->
         <xsl:value-of select="$type"/>
       </xsl:when>

@@ -10,13 +10,13 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events-standard.ads,v $
---  $Revision: ad7bfbd362d8 $
---  $Date: 2003/03/09 16:02:01 $
+--  $Revision: 34e4d059fac4 $
+--  $Date: 2004/01/16 07:13:07 $
 --  $Author: simon $
 
 with ColdFrame.Events_G.Standard_G;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Held_Event_Support;
+with ColdFrame.Project.Held_Events.Signature;
 
 package ColdFrame.Project.Events.Standard
-is new Project.Events.Standard_G (Held_Events => Held_Event_Support.Signature);
+is new Project.Events.Standard_G (Held_Events => Held_Events.Signature);

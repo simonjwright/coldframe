@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 01c60f8ebc43 2003/10/04 07:10:48 simon $ -->
+<!-- $Id: event-modelling.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -14,6 +14,19 @@ that there can be more than one state model per class, and that
 statecharts and activity diagrams are different, in fact there can be
 only one.
 </blockquote>
+
+<p>Because of this, you <em>must</em> mark the State/Activity Model
+part of the Rose model as <i>&#171;generate&#187;</i> to show
+ColdFrame that you mean it. The easiest way of doing this is in the
+browser:
+
+<p><img src="browse-state-model.png">
+
+<p>Note also that ColdFrame requires that the <i>name</i> of the
+State/Activity Model be either literally <tt>State/Activity Model</tt>
+or a name that can be translated into a simple Ada name. If Rose
+decides to call it <tt>State/Activity Model<b>2</b></tt>, you must
+edit it.
 
 <h3>Restrictions</h3>
 
@@ -185,11 +198,11 @@ no triggering event).
 logically impossible for the event to happen in the state, not just
 when it's undesirable!
 
-<h3>Class modelling</h3>
+<h2>Class modelling</h2>
 
 <p><a name="lamp.gif"><img src="lamp.gif"></a>
 
-<h4>Instance events</h4>
+<h3>Instance events</h3>
 
 <p>The <a href="#lamp-state.img">statechart</a> for the Lamp class
 needs supporting in the class model.
@@ -233,7 +246,7 @@ delivered.
 <p>If you need to have more than one concurrent timeout, allocate a
 Timer variable for each.
 
-<h4>Class events</h4>
+<h3>Class events</h3>
 
 <p>In addition, the class diagram shows
 <i>&#171;class&nbsp;event&#187;</i> support.

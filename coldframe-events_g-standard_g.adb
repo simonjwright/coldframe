@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: afff70e1b5c1 $
---  $Date: 2003/11/01 08:26:56 $
+--  $Revision: 38960f8e0d9a $
+--  $Date: 2004/02/27 06:32:50 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -66,17 +66,16 @@ package body ColdFrame.Events_G.Standard_G is
    end Note;
 
 
-   function Copy
-     (The_Queue : access Event_Queue_Base) return Event_Queue_P is
-   begin
-      The_Queue.Access_Count := The_Queue.Access_Count + 1;
-      return Event_Queue_P (The_Queue);
-   end Copy;
-
-
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base) is
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event");
+      end if;
+
+      Log (The_Event, Event_Basis.Posting);
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -93,6 +92,13 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (self)");
+      end if;
+
+      Log (The_Event, Event_Basis.Posting);
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -113,6 +119,11 @@ package body ColdFrame.Events_G.Standard_G is
                                                  On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (at)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -136,6 +147,11 @@ package body ColdFrame.Events_G.Standard_G is
                                                  On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (after)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -200,8 +216,11 @@ package body ColdFrame.Events_G.Standard_G is
 
             if not E.Invalidated then
                begin
+                  Log (E, Event_Basis.Dispatching);
                   Log_Pre_Dispatch (The_Event => E, On => The_Queue);
+                  Start_Handling (E);
                   Handler (E.all);
+                  Stop_Handling (E);
                   Log_Post_Dispatch (The_Event => E, On => The_Queue);
                exception
                   when Ex : others =>
@@ -215,6 +234,7 @@ package body ColdFrame.Events_G.Standard_G is
                end;
             end if;
 
+            Log (E, Event_Basis.Finishing);
             Delete (E);
             Note_Removal_Of_Posted_Event (The_Queue);
             The_Queue.The_Excluder.Done;
@@ -231,6 +251,11 @@ package body ColdFrame.Events_G.Standard_G is
                   To_Fire : Event_P;
                   At_Time : Time.Time) is
    begin
+
+      if To_Fire = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "setting null event (at)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);
@@ -270,6 +295,11 @@ package body ColdFrame.Events_G.Standard_G is
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
+
+      if To_Fire = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "setting null event (after)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);

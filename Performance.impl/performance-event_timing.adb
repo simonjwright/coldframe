@@ -1,3 +1,5 @@
+--  $Id: performance-event_timing.adb,v 284dd276058e 2003/11/11 22:23:17 simon $
+
 with ColdFrame.Project.Events.Standard;
 
 package body Performance.Event_Timing is
@@ -14,7 +16,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_A);
          end;
       else
-         Done_At := High_Resolution_Time.Clock;
+         Done_At := ColdFrame.Project.High_Resolution_Time.Clock;
       end if;
    end Handler;
 
@@ -30,7 +32,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_B);
          end;
       else
-         Done_At := High_Resolution_Time.Clock;
+         Done_At := ColdFrame.Project.High_Resolution_Time.Clock;
       end if;
    end Handler;
 
@@ -46,7 +48,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_A);
          end;
       else
-         Done_At := High_Resolution_Time.Clock;
+         Done_At := ColdFrame.Project.High_Resolution_Time.Clock;
       end if;
    end Handler;
 
@@ -62,7 +64,7 @@ package body Performance.Event_Timing is
                                            On => Dispatcher_A);
          end;
       else
-         Done_At := High_Resolution_Time.Clock;
+         Done_At := ColdFrame.Project.High_Resolution_Time.Clock;
       end if;
    end Handler;
 

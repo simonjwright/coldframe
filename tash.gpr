@@ -1,19 +1,18 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v 4d5690427d05 2003/01/04 12:30:22 simon $
+--  $Id: tash.gpr,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
 
 project Tash is
 
-  Top := external ("TOP", "c:");
-  Tash := external ("TASH", "tash832a");
+  Tash := external ("TASH", "c:/tash832a");
   Tcl := external ("TCL", "c:/Tcl");
   Tcl_Version := external ("TCL_VERSION", "82");
-  Build := external ("BUILD", "c:/tmp/.build");
+  Build_Base := external ("BUILD_BASE", "c:/tmp/.build");
 
-  Tash_Src := Top & "/" & Tash & "/src";
+  Tash_Src := Tash & "/src";
 
   for Source_Dirs use (Tash_Src);
 
-  for Object_Dir use Build;
+  for Object_Dir use Build_Base;
 
   package Builder is
      for Default_Switches ("Ada") use ("-g",
@@ -27,11 +26,11 @@ project Tash is
                                        "-O2");
   end Compiler;
 
-  --  These two files may need to be made by (a) configuring TASH run
-  --  setup.tcl under wish (wish82), (b) changing to the source
-  --  directory and running "make tkmacro.o tclmacro.o". However, some
-  --  versions of TASH (in particular the Windows tash832a.zip) come
-  --  prepared.
+  --  These two files may need to be made by (a) configuring TASH by
+  --  running setup.tcl under wish (wish82), (b) changing to the
+  --  source directory and running "make tkmacro.o tclmacro.o".
+  --  However, some versions of TASH (in particular the Windows
+  --  tash832a.zip) come prepared.
   Objects := (Tash_Src & "/tkmacro.o",
               Tash_Src & "/tclmacro.o");
 

@@ -1,0 +1,177 @@
+<!-- $Id: active-classes.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<head>
+<title>ColdFrame: Active Classes</title>
+</head>
+<body bgcolor="white">
+<h1>ColdFrame: Active Classes</h1>
+
+<h2>Background</h2>
+
+<p>A <i>task</i> is an independent thread of execution within a
+program. Tasks are supported by the operating system in use, which may
+well have a different name for the concept (VxWorks uses <i>task</i>,
+Linux uses <i>thread</i>, Solaris uses <i>light-weight process</i>).
+
+<p>Desktop operating systems like Windows and Linux have an additional
+concept <i>process</i>. Typically, processes don't share memory but
+can contain multiple threads/tasks, which do share process memory (and
+other resources, such as file handles).
+
+<p>VxWorks only has tasks.
+
+<p>Some programming languages provide tasking (concurrency) constructs
+as part of the language - for example, Ada, Java, C#. If your language
+doesn't have inbuilt support, you can call operating system primitives
+(for example, the VxWorks task creation operation is
+<tt>taskSpawn</tt>) or rely on support libraries such as
+<i>pthreads</i>.
+
+<p>With multiple CPUs, under an operating system which can use them
+(for example, an SMP-aware Linux), the program's tasks can be truly
+independent, so that more than one is running at any instant. Of
+course, there are still likely to be many fewer CPUs than tasks! The
+normal situation is to have one CPU per computer, shared between the
+tasks.
+
+<p>This might seem to be adding complexity, and indeed it does bring
+its own difficulties for programmers (especially in getting tasks to
+share data safely).
+
+<p>A key benefit is that it's much easier to deal with a multiply
+concurrent problem if the separate aspects can be designed
+independently. If the computer has to receive LAN updates from a radar
+system at the same time as initializing a different comms device using
+a complex multi-step protocol, it's as well if the two concerns can be
+kept separate (including, if possible, implementation by different
+teams).
+
+
+<h2>Motivation</h2>
+
+<p>Aside from the tasks which are semi-incidentally involved with <a
+href="events.html">event handling</a>, tasks are needed for two
+purposes:
+
+<ul>
+
+<li>to manage blocking input-output, and
+
+<li>to manage hard real time responses.
+
+</ul>
+
+<h3>Blocking input-output</h3>
+
+<p>If your application has to wait for something to arrive from the
+outside (for example, for an Ethernet message from another part of the
+system), the natural way to program it is to use a blocking read.
+
+<p>One example would be calling <tt>GNAT.Sockets.Accept_Socket</tt>,
+which blocks until a client (probably in another processor) chooses to
+call <tt>Connect_Socket</tt>.
+
+<p>Another example, from the <a
+href="serialization.html">serialization</a> demonstration, is
+<pre>
+   declare
+      Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+        ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+   begin
+      ...
+</pre>
+
+<p>where the <tt>'Class'Input</tt> call blocks.
+
+<p>It would be <em>quite incorrect</em> to make these calls within
+ColdFrame's normal event processing, because the event queue concerned
+would be effectively stopped until the blocking call completed. They
+need to be made from distinct tasks.
+
+<h3>Hard real time responses</h3>
+
+<p>Two (related) approaches to managing multiple concurrent jobs which
+have to meet deadlines are <a
+href="http://www.sei.cmu.edu/str/descriptions/rma_body.html">Rate
+Monotonic Analysis</a> (RMA) and <a
+href="http://www.embedded.com/2000/0006/0006feat1.htm">Deadline
+Monotonic Analysis</a> (DMA).
+
+<p>Both are concerned mainly with <i>periodic</i> or cyclic jobs; for
+example, driving a tracker radar to point at its target at 64 Hz,
+where you mustn't miss the correct time to output the demands because
+you'll lose the target (or perhaps rattle the tracker to pieces!)
+
+<p>Both rely on preemptive scheduling (high-priority tasks forcibly
+suspend, or preempt, lower-priority tasks). Each job is allocated to a
+task (usually one job per task, but two jobs with the same scheduling
+requirements could be allocated to one task, other things being
+equal).
+
+<p>RMA allocates the highest priority to the task which has to run
+most frequently, while DMA allocates it to the task with the shortest
+deadline (ie, the shortest period between when it can start a cycle of
+processing and when it has to have completed).
+
+
+<h2>Modelling</h2>
+
+<p>You specify a class as active by marking it with the stereotype
+«active» or, if preferred, by setting the Concurrency attribute in the
+Detail tab of the Rose specification dialog box to <i>Active</i> (which is
+less immediately visible).
+
+<p>Procedure operations (ie, those without a return value) of an
+active class can be stereotyped «entry»; see <a
+href="http://www.adaic.org/standards/95lrm/html/RM-9-5.html">ARM
+9.5</a> for a discussion on entries.
+
+<p>It is permitted for an «entry» operation to have the same name as
+an ordinary operation.
+
+<p>You can specify the run-time priority of the task using the tag
+<i>priority</i>. The form is
+<pre>
+   {priority = <i>priority relative to system default</i>}
+</pre>
+
+<p>You can specify the stack size of the task using the tag
+<i>stack</i>. The form is
+<pre>
+   {stack = <i>stack size</i>}
+</pre>
+
+
+<h2>Translation</h2>
+
+<p>Each instance of an «active» class has an associated task. The
+task's name, if supported by the operating system, is
+<tt><i>Domain.Class</i></tt>.
+
+<p>You access the task using <tt>This.The_T</tt>; so if there is an
+<i>«entry» Start</i>, you would call it as <tt>This.The_T.Start</tt>.
+
+<p>The task is constrained by <tt>This : access Instance</tt>, so you
+can quite often treat <tt>This</tt> as if it were a
+<tt>Handle</tt>. However, it isn't quite, so if the compiler complains
+use a view conversion:
+<pre>
+   Handle (This)
+</pre>
+
+
+<!--
+<h2>Use</h2>
+-->
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

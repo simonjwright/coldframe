@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: 6df8619783c1 $
---  $Date: 2003/09/09 04:14:58 $
+--  $Revision: 2a8244452919 $
+--  $Date: 2004/02/21 18:15:15 $
 --  $Author: simon $
 
 with BC.Containers.Maps.Bounded;
@@ -29,6 +29,11 @@ with BC.Containers.Maps.Unbounded;
 with ColdFrame.Project.Storage_Pools;
 
 package ColdFrame.Instances is
+
+
+   --  NOTE, none  of the operations in this  package are intended  --
+   --  to be called directly by the user.                           --
+
 
    type Instance_Base is abstract tagged limited private;
    --  All Instances are derived from this type.

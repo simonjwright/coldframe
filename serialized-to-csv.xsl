@@ -1,4 +1,4 @@
-<!-- $Id: serialized-to-csv.xsl,v 691a8f36ad8f 2003/03/01 16:58:31 simon $ -->
+<!-- $Id: serialized-to-csv.xsl,v c6dd3980acf1 2003/11/18 12:12:52 simon $ -->
 <!-- XSL stylesheet to convert a document containing mixed serialization
      output from ColdFrame to comma-separated-variable files, one file per
      record name. -->
@@ -37,7 +37,7 @@
   <xsl:variable name="main-document" select="/"/>
 
 
-  <xsl:template match="recording">
+  <xsl:template match="*">
 
     <!-- collect all the record names -->
     <xsl:variable name="records">
@@ -64,7 +64,7 @@
           <!-- process all the records in the original document for
                this name -->
           <xsl:apply-templates
-            select="$main-document/recording/record[@name=current()]"/>
+            select="$main-document/*/record[@name=current()]"/>
 
         </xsl:document>
 
@@ -75,7 +75,7 @@
 
 
   <!-- output the records for a particular record name -->
-  <xsl:template match="/recording/record">
+  <xsl:template match="record">
     <xsl:if test="position()=1">
       <!-- output the headings, only for the first -->
       <xsl:for-each select="field/@name">
@@ -90,10 +90,6 @@
     </xsl:for-each>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
-
-
-  <!-- Catch unspecified default matches -->
-  <xsl:template match="*"/>
 
 
 </xsl:stylesheet>

@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events_test_support.ads,v $
---  $Revision: 4cebef8cccbf $
---  $Date: 2003/03/16 12:20:31 $
+--  $Revision: 20fa36e4021f $
+--  $Date: 2003/11/26 10:59:35 $
 --  $Author: simon $
 
 with ColdFrame.Project;
 with ColdFrame.Project.Events.Standard.Debug;
+with System;
 
 package ColdFrame.Events_Test_Support is
 
@@ -41,7 +42,9 @@ package ColdFrame.Events_Test_Support is
      := new Project.Events.Standard.Event_Queue;
    Noisy_Dispatcher : Project.Events.Event_Queue_P
      := new Project.Events.Standard.Debug.Event_Queue_Base
-              (Start_Started => True);
+           (Start_Started => True,
+            Priority => System.Default_Priority,
+            Storage_Size => 20_480);
 
    T1, T2 : Project.Events.Timer;
 

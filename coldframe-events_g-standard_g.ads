@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 0f2f89a7a8a8 $
---  $Date: 2003/07/29 20:10:48 $
+--  $Revision: afff1d12dda5 $
+--  $Date: 2004/02/23 17:22:27 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -49,9 +49,6 @@ package ColdFrame.Events_G.Standard_G is
      (Start_Started => True,
       Priority => System.Default_Priority,
       Storage_Size => 20_000);
-
-   function Copy
-     (The_Queue : access Event_Queue_Base) return Event_Queue_P;
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base);

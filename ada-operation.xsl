@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v e7ebc1824dcd 2003/09/30 05:06:42 simon $ -->
+<!-- $Id: ada-operation.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -281,7 +281,7 @@
             </xsl:call-template>
             <xsl:text> is separate;&#10;</xsl:text>
             <xsl:value-of select="$blank-line"/>
-            
+
           </xsl:otherwise>
 
         </xsl:choose>
@@ -388,7 +388,7 @@
 
 
   <!-- Generate the separate bodies of operations. If recognised as
-       accessors (but not marked as such) they will contain real 
+       accessors (but not marked as such) they will contain real
        implementations, otherwise they'll Program_Error if called. -->
   <xsl:template
     mode="operation-separate-body"
@@ -402,13 +402,13 @@
                   and not(@abstract)
                   and not(@accessor)
                   and not(@renames)">
-      
+
       <!-- Concrete in current class. -->
-      
+
       <xsl:call-template name="generate-separate-body">
         <xsl:with-param name="current" select="$current"/>
       </xsl:call-template>
-      
+
     </xsl:if>
 
   </xsl:template>
@@ -485,7 +485,7 @@
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
-         the Class is a singleton (or a Type), all operations are 
+         the Class is a singleton (or a Type), all operations are
          class operations, otherwise it depends on the @class attribute. -->
     <xsl:if test="parameter or
                   ($is-class='yes' and not(../@singleton) and not(@class))">
@@ -576,7 +576,7 @@
       <xsl:when test="../../class/name=$type">
         <xsl:text>null</xsl:text>
       </xsl:when>
-      
+
       <xsl:otherwise>
         <xsl:variable name="the-type" select="../../type[name=$type]"/>
         <xsl:choose>
@@ -587,8 +587,13 @@
             <xsl:text>_Package.Null_Bounded_String</xsl:text>
           </xsl:when>
 
+          <!-- Standard string -->
+          <xsl:when test="$the-type/string/fixed">
+            <xsl:text>(others =&gt; ' ')</xsl:text>
+          </xsl:when>
+
           <!-- Counterpart -->
-          <xsl:when test="$the-type/counterpart">            
+          <xsl:when test="$the-type/counterpart">
             <xsl:text>null</xsl:text>
           </xsl:when>
 
@@ -614,7 +619,7 @@
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <!-- 
+    <!--
          case This.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {return} {child-1}.{operation}
@@ -625,45 +630,45 @@
              raise Constraint_Error;
          end case;
          -->
-    
+
     <!-- Save the current operation. -->
     <xsl:variable name="op" select="."/>
-    
+
     <!-- XXX won't work with partitioned inheritance -->
     <xsl:variable
       name="rel"
       select="/domain/inheritance[parent=$current/name]"/>
-    
+
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
-    
+
     <!-- XXX won't work for partitioned inheritance -->
     <xsl:value-of select="$II"/>
     <xsl:text>case This.</xsl:text>
     <xsl:value-of select="$rel/name"/>
     <xsl:text>_Current_Child.Current is&#10;</xsl:text>
-    
+
     <xsl:for-each select="$rel/child">
       <xsl:sort select="."/>
 
       <xsl:variable name="child" select="."/>
-      
+
       <xsl:value-of select="$III"/>
       <xsl:text>when </xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>_T =&gt;&#10;</xsl:text>
-      
+
       <xsl:value-of select="$IIII"/>
       <xsl:if test="$op/@return">
         <xsl:text>return </xsl:text>
       </xsl:if>
       <xsl:value-of select="."/>.<xsl:value-of select="$op/name"/>
       <xsl:text>&#10;</xsl:text>
-      
+
       <xsl:value-of select="$IIIIC"/>
       <xsl:text>(This =&gt; </xsl:text>
       <xsl:value-of select="$child"/>
@@ -674,7 +679,7 @@
       <xsl:text>_Current_Child.</xsl:text>
       <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
       <xsl:text>)</xsl:text>
-      
+
       <xsl:for-each select="$op/parameter">
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$IIIIC"/>
@@ -701,34 +706,34 @@
           </xsl:when>
 
           <xsl:otherwise>
-            <xsl:value-of select="name"/>            
+            <xsl:value-of select="name"/>
           </xsl:otherwise>
 
         </xsl:choose>
 
       </xsl:for-each>
-      
+
       <xsl:text>);&#10;</xsl:text>
-      
+
     </xsl:for-each>
 
     <xsl:value-of select="$III"/>
     <xsl:text>when Null_T =&gt;&#10;</xsl:text>
     <xsl:value-of select="$IIII"/>
     <xsl:text>raise Constraint_Error;&#10;</xsl:text>
-    
+
     <xsl:value-of select="$II"/>
     <xsl:text>end case;&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
- 
+
   </xsl:template>
 
-  
+
   <!-- Called at class/operation to generate a dispatch-to-parent body. -->
   <xsl:template name="generate-dispatch-to-parent">
 
@@ -736,7 +741,7 @@
          is defined; we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <!--          
+    <!--
          {return} {parent}.{operation-name}
            (This => {parent}.Handle (Get_{relation}_Parent (This)){,
             other-parameter-assignments});
@@ -745,7 +750,7 @@
     <!-- Save the current operation. -->
     <xsl:variable name="op" select="."/>
 
-    <!-- Find the relation through which we've inherited the operation. -->    
+    <!-- Find the relation through which we've inherited the operation. -->
     <xsl:variable name="rel-name">
       <xsl:call-template name="find-implementing-relationship">
           <xsl:with-param name="child" select="$current/name"/>
@@ -760,24 +765,24 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
-    
+
     <xsl:value-of select="$II"/>
     <xsl:if test="$op/@return">
       <xsl:text>return </xsl:text>
     </xsl:if>
-    
+
     <xsl:value-of select="$rel/parent"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$op/name"/>
     <xsl:text>&#10;</xsl:text>
-    
+
     <xsl:value-of select="$IIC"/>
     <xsl:text>(This =&gt; </xsl:text>
     <xsl:value-of select="$rel/parent"/>
     <xsl:text>.Handle (Get_</xsl:text>
     <xsl:value-of select="$rel/name"/>
     <xsl:text>_Parent (This))</xsl:text>
-    
+
     <xsl:for-each select="$op/parameter">
       <xsl:text>,&#10; </xsl:text>
       <xsl:value-of select="$IIC"/>
@@ -801,15 +806,15 @@
           </xsl:when>
 
           <xsl:otherwise>
-            <xsl:value-of select="name"/>            
+            <xsl:value-of select="name"/>
           </xsl:otherwise>
 
         </xsl:choose>
 
     </xsl:for-each>
-    
+
     <xsl:text>);&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
@@ -880,14 +885,14 @@
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:if test="not(@class)">
-          <xsl:text>This.</xsl:text>          
+          <xsl:text>This.</xsl:text>
         </xsl:if>
         <xsl:value-of select="$att-to-set/name"/>
         <xsl:text> := </xsl:text>
         <xsl:value-of select="parameter/name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <!-- Check for Get accessor. -->
       <xsl:when test="$generate-accessors='defined'
                       and @return and not(parameter)
@@ -899,31 +904,32 @@
         <xsl:value-of select="$II"/>
         <xsl:text>return </xsl:text>
         <xsl:if test="not(@class)">
-          <xsl:text>This.</xsl:text>          
+          <xsl:text>This.</xsl:text>
         </xsl:if>
         <xsl:value-of select="$att-to-get/name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <!-- If neither, it's an error. -->
       <xsl:otherwise>
         <xsl:call-template name="log-error"/>
         <xsl:message>
-          <xsl:text>Error: invalid &lt;&lt;accessor&gt;&gt; on </xsl:text>
+          <xsl:text>Error: </xsl:text>
           <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+          <xsl:text> is wrongly stereotyped as an accessor</xsl:text>
         </xsl:message>
       </xsl:otherwise>
-      
+
     </xsl:choose>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
-    
+
   </xsl:template>
-  
+
 
   <!-- Called at class/operation to generate a separate body. -->
   <xsl:template name="generate-separate-body">
@@ -947,11 +953,19 @@
       <xsl:text>)&#10;</xsl:text>
       <xsl:call-template name="subprogram-specification"/>
       <xsl:text> is&#10;</xsl:text>
+      <xsl:if test="../@public">
+        <!-- Check on public class operations that the domain has been
+             initialized; hopefully the implementer will retain this. -->
+        <xsl:value-of select="$I"/>
+        <xsl:text>pragma Assert (Domain_Initialized, "</xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text> not initialized");&#10;</xsl:text>
+       </xsl:if>
     </xsl:variable>
 
     <xsl:choose>
 
-      <!-- Check for auto-generated Set operations -->
+      <!-- Check for non-accessor auto-generated Set operations -->
       <xsl:when test="$generate-accessors='defined'
                       and not(@return) and count(parameter)=1
                       and $att-to-set/type=parameter/type
@@ -959,19 +973,26 @@
                       or (not($att-to-set/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:call-template name="identification-info"/>
+
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:if test="not(@class)">
-          <xsl:text>This.</xsl:text>          
+          <xsl:text>This.</xsl:text>
         </xsl:if>
         <xsl:value-of select="$att-to-set/name"/>
         <xsl:text> := </xsl:text>
         <xsl:value-of select="parameter/name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
-      <!-- Check for auto-generated Get operations -->
+
+      <!-- Check for non-accessor auto-generated Get operations -->
       <xsl:when test="$generate-accessors='defined'
                       and @return and not(parameter)
                       and $att-to-get/type=@return
@@ -979,17 +1000,24 @@
                       or (not($att-to-get/@class) and not(@class)))">
         <xsl:call-template name="should-not-edit"/>
         <xsl:call-template name="identification-info"/>
+
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+
         <xsl:value-of select="$heading"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>return </xsl:text>
         <xsl:if test="not(@class)">
-          <xsl:text>This.</xsl:text>          
+          <xsl:text>This.</xsl:text>
         </xsl:if>
         <xsl:value-of select="$att-to-get/name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <!-- If it's a function, we have to supply a return statement
            after raising the exception for it to compile.
            There are two styles: this is for non-composite types .. -->
@@ -1038,7 +1066,7 @@
         <xsl:value-of select="$I"/>
         <xsl:text>return Dummy;&#10;</xsl:text>
       </xsl:when>
-      
+
       <!-- .. and this is for procedures. -->
       <xsl:otherwise>
         <xsl:call-template name="should-edit"/>
@@ -1055,15 +1083,15 @@
         <xsl:value-of select="$I"/>
         <xsl:text>raise Program_Error;&#10;</xsl:text>
       </xsl:otherwise>
-      
+
     </xsl:choose>
-    
+
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
-    
+
   </xsl:template>
-  
+
 
   <!-- Called to generate access-to-subprogram types. -->
   <xsl:template

@@ -2,15 +2,18 @@
 <extractor>cf-DATE</extractor>
 <name>Problem_Reporting</name>
 <date>
-<year>2002</year>
-<month>1</month>
-<day>27</day>
-<time>21:39</time>
+<year>2003</year>
+<month>11</month>
+<day>15</day>
+<time>18:10</time>
 </date>
-<documentation></documentation>
+<documentation>Classes for Problem Reporting.
+
+{ revision = $Revision: 3c33faafeb46 $ }</documentation>
 <classes>
 <class>
 <name>Problem Report</name>
+<kind>NormalClass</kind>
 <cardinality>0 .. 10100</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
@@ -18,18 +21,21 @@
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<visibility>PrivateAccess</visibility>
 <documentation>An integer allocated uniquely to identify Problem Reports.</documentation>
 <type>integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>details</name>
+<visibility>PrivateAccess</visibility>
 <documentation>The text of the Problem Report.</documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>reporter</name>
+<visibility>PrivateAccess</visibility>
 <documentation>The email address of the person who originally raised the Problem Report.</documentation>
 <type>Text</type>
 <initial></initial>
@@ -38,10 +44,11 @@
 <operations>
 <operation>
 <name>set details</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Text</type>
 <initial></initial>
@@ -50,10 +57,11 @@
 </operation>
 <operation>
 <name>set reporter</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Text</type>
 <initial></initial>
@@ -62,6 +70,7 @@
 </operation>
 <operation>
 <name>get id</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Integer</return>
 <parameters>
@@ -69,21 +78,26 @@
 </operation>
 <operation>
 <name>get details</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Rejected Problem Report</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
 <attributes>
 <attribute>
 <name>rejection reason</name>
+<visibility>PrivateAccess</visibility>
 <documentation>The Rejection Reason is a summary of the reason that the Problem Report has been rejected.</documentation>
 <type>Summary String</type>
 <initial></initial>
@@ -92,10 +106,11 @@
 <operations>
 <operation>
 <name>set rejection reason</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Summary String</type>
 <initial></initial>
@@ -104,15 +119,19 @@
 </operation>
 <operation>
 <name>get rejection reason</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Summary String</return>
 <parameters>
 </parameters>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Diagnosed Problem Report</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
@@ -120,9 +139,12 @@
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Component</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
@@ -134,6 +156,7 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<visibility>PrivateAccess</visibility>
 <documentation>Id is the name of the software Component. It uniquely identifies the Component.</documentation>
 <type>Text</type>
 <initial></initial>
@@ -142,6 +165,7 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 <operations>
 <operation>
 <name>get id</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Text</return>
 <parameters>
@@ -149,18 +173,21 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 </operation>
 <operation>
 <name>report</name>
+<visibility>PublicAccess</visibility>
 <documentation>Generate a report on the Component and each associated Defect (if any).</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="class">
 <name>report all</name>
+<visibility>PublicAccess</visibility>
 <documentation>Generate a report on all the Components.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="finalize">
 <name>clean</name>
+<visibility>PublicAccess</visibility>
 <documentation>Maintain referential integrity when the Component is deleted, by removing any associated Defects.
 
 Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).</documentation>
@@ -168,9 +195,12 @@ Note that this will require deleting any of the associated Diagnosed Problem Rep
 </parameters>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Unallocated Problem Report</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>An Unallocated Problem Report is awaiting determination of appropriate handling.
@@ -185,9 +215,12 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Defect</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Defect denotes something that is wrong with a Component.
@@ -198,6 +231,7 @@ It should address one logical error (which may correspond to several necessary c
 <attributes>
 <attribute>
 <name>problem</name>
+<visibility>PrivateAccess</visibility>
 <documentation>Contains a description of the Defect.</documentation>
 <type>Text</type>
 <initial></initial>
@@ -206,10 +240,11 @@ It should address one logical error (which may correspond to several necessary c
 <operations>
 <operation>
 <name>set problem</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Text</type>
 <initial></initial>
@@ -218,6 +253,7 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>get problem</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Text</return>
 <parameters>
@@ -225,27 +261,34 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>report</name>
+<visibility>PublicAccess</visibility>
 <documentation>Report details of this Defect.</documentation>
 <parameters>
 </parameters>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 <class stereotype="type">
 <name>Summary String</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>A Summary String is used to hold brief statements.
 
-[[string: max 80]]
+{string = max 80}
 </documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class stereotype="Interface">
 <name>Interface</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Provides the public interface to the Problem Reporting domain.</documentation>
@@ -254,10 +297,11 @@ It should address one logical error (which may correspond to several necessary c
 <operations>
 <operation>
 <name>add component</name>
+<visibility>PublicAccess</visibility>
 <documentation>Add a Component to the set of Components known to the System.</documentation>
 <parameters>
 <parameter>
-<name>named</name>
+<parametername>named</parametername>
 <documentation>The name of the Component to be added.</documentation>
 <type>String</type>
 <initial></initial>
@@ -266,22 +310,23 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>add problem</name>
+<visibility>PublicAccess</visibility>
 <documentation>Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated.</documentation>
 <parameters>
 <parameter>
-<name>number</name>
+<parametername>number</parametername>
 <documentation>The identifying Number of the Problem_Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>reporter</name>
+<parametername>reporter</parametername>
 <documentation>The e-mail address of the person reporting the problem.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>details</name>
+<parametername>details</parametername>
 <documentation>A description of the problem.</documentation>
 <type>String</type>
 <initial></initial>
@@ -290,10 +335,11 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>delete component</name>
+<visibility>PublicAccess</visibility>
 <documentation>Deletes the named Component.</documentation>
 <parameters>
 <parameter>
-<name>component name</name>
+<parametername>component name</parametername>
 <documentation>The identifying name of the Component to be deleted.</documentation>
 <type>String</type>
 <initial></initial>
@@ -302,22 +348,23 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>note defect</name>
+<visibility>PublicAccess</visibility>
 <documentation>A Defect has been discovered in the given Component, related to the given Problem Report.</documentation>
 <parameters>
 <parameter>
-<name>problem number</name>
+<parametername>problem number</parametername>
 <documentation>The identifying Number of the Problem Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>component name</name>
+<parametername>component name</parametername>
 <documentation>Thw identifying Name of the Component.</documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>description</name>
+<parametername>description</parametername>
 <documentation>The particular defect in this Component that results in the given Problem Report.</documentation>
 <type>String</type>
 <initial></initial>
@@ -326,16 +373,17 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>reject problem</name>
+<visibility>PublicAccess</visibility>
 <documentation>The indicated Problem has been determined not to be valid: reject it.</documentation>
 <parameters>
 <parameter>
-<name>number</name>
+<parametername>number</parametername>
 <documentation>The identifying Number of the Problem Report.</documentation>
 <type>Integer</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>reason</name>
+<parametername>reason</parametername>
 <documentation>The reason for rejecting the Problem Report.</documentation>
 <type>String</type>
 <initial></initial>
@@ -344,11 +392,14 @@ It should address one logical error (which may correspond to several necessary c
 </operation>
 <operation>
 <name>report problems</name>
+<visibility>PublicAccess</visibility>
 <documentation>Generate a report on each Component known to the system, detailing any related Problem Reports and the associated Defects.</documentation>
 <parameters>
 </parameters>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 </classes>
 <relationships>

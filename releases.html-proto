@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6e016c9fc7d2 2003/11/02 19:38:43 simon $ -->
+<!-- $Id: releases.html-proto,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,100 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
+reported.
+
+
+<p>Tagged values with names containing illegal characters are treated
+as errors. (Legal characters are alphanumerics, hyphen and
+underscore).
+
+
+<p>Using a bounded string (<tt>{string = max 15}</tt> say) in an
+identifier is allowed.
+
+
+<p>You can specify an empty type using the tag <i>{null}</i>.
+
+
+<p><tt>Cant_Happen</tt> exceptions in state machines are accompanied
+by exception information (to make them easier to debug).
+
+
+<p>You can specify array &#171;type&#187;s
+(<tt>{array=<i>element-type</i>, index=<i>index-type</i>}</tt>).  You
+can also say <tt>{unconstrained}</tt>: since unconstrained arrays are
+indefinite (<a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-3.html#I1396">ARM
+3.3(23)</a>, <a
+href="http://www.adaic.org/standards/95lrm/html/RM-3-7.html#I1869">3.7(26)</a>),
+you can't use them as attributes, but they can be used as parameters
+or as function return values.
+<br>If you want to <a href="serialization.html">serialize</a> array
+types, you must supply your own field-image operation.
+
+
+<p>For increased performance, if a class has a single identifier of
+type
+<ul>
+<li><tt>Boolean</tt>
+<li>an <tt>{imported}</tt> or <tt>{renames}</tt> &#171;type&#187;
+marked <tt>{hash=enumeration}</tt>
+<li>an <tt>{integer}</tt> or <tt>{enumerated}</tt> &#171;type&#187; of
+small enough range (currently 49 by default, the parameter
+<tt>max-hash-buckets</tt>)
+</ul>
+<p>the container for the extent of the class (all the current instances)
+is implemented as an array rather than a <a
+href="resources.html#booch-components">Booch Components</a>
+<tt>Map</tt>.
+
+
+<p>Callback support asserts that:
+<ul>
+<li>on registering, the procedure hasn't already been registered
+<li>on deregistering, the procedure has been registered
+</ul>
+
+
+<p>Making an association with a &#171;public&#187; class isn't
+supported; doing so results in an error during code generation.
+
+
+<p>Fixed-length strings are supported (say <tt>{string = fixed
+27}</tt>, for example).
+
+
+<p>A state machine action is allowed to delete its instance if
+<ul>
+<li>The operation is the (generated) <tt>Delete</tt>.
+<li>The operation is stereotyped &#171;final&#187;.
+</ul>
+<p>Other uses will result in an exception.
+
+
+<p><dt>20031126
+
+<dd>The class <tt>Delete</tt> operation for a 0..1 class didn't null
+out the container, so it appeared that there was still an instance.
+
+
+<p><dt>20031123
+
+<dd>There was a memory leak if an exception should occur in a callback
+routine.
+
+
+<p>The generated separate bodies of operations of types didn't include
+any documentation comments.
+
+
+<p>UML <i>tagged values</i> are supported as well as ColdFrame's
+original <tt>[[annotations]]</tt>.
+
+
+<p><dt>20031102
 
 <dd>Improved the default error logging (stop concurrent access
 mangling the output; flush the output after each message).

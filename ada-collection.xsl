@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 7cb2e41267d3 2003/10/26 17:51:32 simon $ -->
+<!-- $Id: ada-collection.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -183,7 +183,7 @@
         <xsl:text>.Sets&#10;</xsl:text>
         <xsl:text>is new Abstract_Sets.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> (Hash =&gt; </xsl:text>
+        <xsl:text>(Hash =&gt; </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
@@ -341,6 +341,11 @@
       <xsl:call-template name="number-of-instances"/>
     </xsl:variable>
 
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
+    </xsl:variable>
+
     <!-- Function to return a Collection of all the Instances -->
     <!-- full version ..
          function {dom}.{class}.All_Instances
@@ -367,7 +372,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if test="$max &gt; 1">
+    <xsl:if test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
       <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -379,6 +384,21 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
+
+      <xsl:when test="$array = 'yes'">
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>for H in The_Container'Range loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if The_Container (H) /= null then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Collections.Append (Result, The_Container (H));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max &gt; 1">
 
@@ -445,7 +465,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if  test="$max &gt; 1">
+    <xsl:if  test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
       <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -457,6 +477,23 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
+
+      <xsl:when test="$array = 'yes'">
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>for H in The_Container'Range loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if The_Container (H) /= null&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>and then Pass (The_Container (H)) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Collections.Append (Result, The_Container (H));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max &gt; 1">
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 2588d6e5cdbc 2003/10/31 06:43:44 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -145,6 +145,9 @@
               & "<field name=""{bstring-attr-name}"">"
               & {type}_Package.To_String (S.Payload.{bstring-attr-name})
               & "</field>" & ASCII.LF
+              & "<field name=""{fstring-attr-name}"">"
+              & S.Payload.{fstring-attr-name}
+              & "</field>" & ASCII.LF
               & {field-image} (S.Payload.{field-imaged-attr-name}, "field-imaged-attr-name") & ASCII.LF
               & "</record>";
          end Image;
@@ -255,7 +258,16 @@
 
         <xsl:choose>
 
+          <xsl:when test="$type/@null">
+            <!-- Null record. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>""&gt;null&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+
           <xsl:when test="$type/name='Date' or $type/name='Time'">
+            <!-- Date/Time. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
@@ -270,6 +282,7 @@
           </xsl:when>
 
           <xsl:when test="$type/name='Text' or $type/name='Unbounded_String'">
+            <!-- Unbounded string. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
@@ -283,7 +296,7 @@
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
 
-          <xsl:when test="$type/string">
+          <xsl:when test="$type/string/max">
             <!-- Bounded string. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;field name=""</xsl:text>
@@ -297,6 +310,41 @@
             <xsl:text>)&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:when test="$type/string/fixed">
+            <!-- Fixed string. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; S.</xsl:text>
+            <xsl:value-of select="$field"/>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:when test="$type/@field-image">
+            <!-- The type has a user-defined field image operation. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:value-of select="$type/@field-image"/>
+            <xsl:text> (S.</xsl:text>
+            <xsl:value-of select="$field"/>
+            <xsl:text>, "</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>") &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:when test="$type/array">
+            <!-- This is an array type without a field-image; not supported. -->
+            <xsl:call-template name="log-error"/>
+            <xsl:message>
+              <xsl:text>Error: can't create image for array </xsl:text>
+              <xsl:value-of select="$type/name"/>
+            </xsl:message>
           </xsl:when>
 
           <xsl:when test="$type/@type-image">
@@ -313,18 +361,6 @@
             <xsl:text>)&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-          </xsl:when>
-
-          <xsl:when test="$type/@field-image">
-            <!-- The type has a user-defined field image operation. -->
-            <xsl:value-of select="$IIC"/>
-            <xsl:text>&amp; </xsl:text>
-            <xsl:value-of select="$type/@field-image"/>
-            <xsl:text> (S.</xsl:text>
-            <xsl:value-of select="$field"/>
-            <xsl:text>, "</xsl:text>
-            <xsl:value-of select="$name"/>
-            <xsl:text>") &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>

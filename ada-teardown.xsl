@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 1992d02e6921 2004/01/17 23:00:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -73,27 +73,27 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>Events.Tear_Down;&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
       <xsl:text>.Tear_Down;&#10;</xsl:text>
-      
+
     </xsl:for-each>
-    
+
     <xsl:for-each select="type[@callback]">
       <xsl:sort select="name"/>
-      
+
       <xsl:value-of select="$I"/>
       <xsl:value-of select="name"/>
       <xsl:text>_Callback.Clear;&#10;</xsl:text>
     </xsl:for-each>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
 
@@ -127,11 +127,16 @@
       <xsl:call-template name="number-of-instances"/>
     </xsl:variable>
 
+    <!-- Determine whether an array can be used. -->
+    <xsl:variable name="array">
+      <xsl:call-template name="can-use-array"/>
+    </xsl:variable>
+
     <xsl:choose>
-      
+
       <xsl:when test="$max=1">
-        
-        <!-- 
+
+        <!--
              with Ada.Unchecked_Deallocation;
              procedure {Domain}.{Class}.Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
@@ -149,23 +154,23 @@
 
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
-        
+
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
-        
+
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>.Tear_Down is&#10;</xsl:text>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
-        
+
         <xsl:text>begin&#10;</xsl:text>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>if This /= null then&#10;</xsl:text>
-        
+
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
           <xsl:call-template name="instance-teardown-call">
@@ -173,7 +178,7 @@
             <xsl:with-param name="param-name" select="'This'"/>
           </xsl:call-template>
         </xsl:for-each>
-        
+
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
           <xsl:text>if not This.The_T'Terminated then&#10;</xsl:text>
@@ -184,24 +189,102 @@
           <xsl:value-of select="$II"/>
           <xsl:text>Free (This.The_T);&#10;</xsl:text>
         </xsl:if>
-        
+
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>end if;&#10;</xsl:text>
-        
+
         <xsl:text>end </xsl:text>
         <xsl:value-of select="../name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>.Tear_Down;&#10;</xsl:text>
-        
+
       </xsl:when>
-      
+
+      <xsl:when test="$array='yes'">
+
+        <!--
+             with Ada.Unchecked_Deallocation;
+             procedure {Domain}.{Class}.Tear_Down is
+                procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+             begin
+                for I in The_Container'Range loop
+                   if The_Container (I)  /= null then
+                      {teardown} {(The_Container (I))};              - teardown
+                      if not The_Container (I).The_T'Terminated then - active
+                         abort The_Container (I).The_T.all;
+                      end if;
+                      Free (The_Container (I).The_T);                - active
+                      Free (The_Container (I));
+                   end if;
+                end loop
+             end {Domain}.{Class}.Tear_Down;
+             -->
+
+        <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
+
+        <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+
+        <xsl:text>procedure </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.Tear_Down is&#10;</xsl:text>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>for I in The_Container'Range loop&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>if The_Container (I) /= null then&#10;</xsl:text>
+
+        <xsl:for-each select="operation[@teardown]">
+          <xsl:sort select="name"/>
+          <xsl:call-template name="instance-teardown-call">
+            <xsl:with-param name="indent" select="$III"/>
+            <xsl:with-param name="param-name" select="'The_Container (I)'"/>
+          </xsl:call-template>
+        </xsl:for-each>
+
+        <xsl:if test="@active">
+          <xsl:value-of select="$III"/>
+          <xsl:text>if not The_Container (I).The_T'Terminated then&#10;</xsl:text>
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>abort The_Container (I).The_T.all;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>end if;&#10;</xsl:text>
+          <xsl:value-of select="$III"/>
+          <xsl:text>Free (The_Container (I).The_T);&#10;</xsl:text>
+        </xsl:if>
+
+        <xsl:value-of select="$III"/>
+        <xsl:text>Free (The_Container (I));&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+
+        <xsl:text>end </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.Tear_Down;&#10;</xsl:text>
+
+      </xsl:when>
+
       <xsl:otherwise>
-        
+
         <!--
              with Ada.Unchecked_Deallocation;
              procedure {Domain}.{Class}.Tear_Down is
@@ -279,7 +362,7 @@
         <xsl:text>end loop;&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>        
+        <xsl:text>Maps.Clear (The_Container);&#10;</xsl:text>
 
         <!-- .. Autonumber support .. -->
         <xsl:if test="count(attribute[@identifier])=1
@@ -295,7 +378,7 @@
         <xsl:text>.Tear_Down;&#10;</xsl:text>
 
       </xsl:otherwise>
-    
+
     </xsl:choose>
 
   </xsl:template>
@@ -306,7 +389,7 @@
   <!-- Called at domain to generate the spec of the Events teardown
        procedure. -->
   <xsl:template name="event-teardown-spec">
-    
+
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>
@@ -319,7 +402,7 @@
   <!-- Called at domain to generate the body of the Events teardown
        procedure. -->
   <xsl:template name="event-teardown-body">
-    
+
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
     <xsl:text>procedure </xsl:text>

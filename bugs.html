@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c2f61ef7ebf1 2003/11/05 21:10:15 simon $ -->
+<!-- $Id: bugs.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -41,12 +41,7 @@ usage which need reporting (perhaps in a separate pass?)
 
 <dd>The association support packages generated when one of the parties
 in a 1:1 association is a &#171;singleton&#187; won't work if the
-non-singleton party is marked <tt>[[source]]</tt>.
-
-<dt>0047 (raised 6.xii.01)
-
-<dd>It might be useful to be able to describe <i>array</i>
-&#171;type&#187;s.
+non-singleton party is marked <tt>{source}</tt>.
 
 <dt>0049 (raised 27.xii.01)
 
@@ -58,16 +53,11 @@ document from the domain model.
 
 <dd>The generated HTML doesn't report default parameter values.
 
-<dt>0059 (raised 16.i.02)
-
-<dd>It would be proper to use UML tagged values instead of
-<tt>[[&nbsp;]]</tt> annotations.
-
 <dt>0062 (raised 23.i.02)
 
 <dd>It would be useful to be able to specify constants.
 <br><i>Pi is specially handled, in "expression" contexts
-(initial values, <tt>[[real]]</tt> ranges).</i>
+(initial values, <tt>{real}</tt> ranges).</i>
 
 <dt>0067 (raised 5.iii.02)
 
@@ -99,11 +89,6 @@ would only make sense if they have operations, I suppose).
 
 <dd>If an enumeration type is imported or renamed, the enumeration
 literals aren't.
-
-<dt>0109 (raised 19.viii.02)
-
-<dd>The error where a state has more than one exiting transition
-triggered by the same event (or drop-through) isn't detected.
 
 <dt>0136 (raised 26.xi.02)
 
@@ -143,14 +128,13 @@ unhandled exception has been caught in the event dispatcher.
 
 <dt>0182 (raised 9.vii.03)
 
-<dd>Using the <tt><i>[[formalizes]]</i></tt> annotation on a non-class
-attribute gives an unhelpful error message.
+<dd>Using <tt><i>{formalizes}</i></tt> on a non-class attribute gives
+an unhelpful error message.
 
 <dt>0183 (raised 9.vii.03)
 
-<dd>Using the <tt><i>[[imported]]</i></tt> annotation (and possibly
-others) on a &#171;type&#187; with attributes gives an unhelpful error
-message.
+<dd>Using <tt><i>{imported}</i></tt> (and possibly others) on a
+&#171;type&#187; with attributes gives an unhelpful error message.
 
 <dt>0184 (raised 9.vii.03)
 
@@ -175,7 +159,7 @@ wasteful to allocate an <tt>Instance</tt>.
 <dd>Now that state machines support actions on transitions, what about
 guards?
 
-<dd>0197 (raised 5.ix.03)
+<dt>0197 (raised 5.ix.03)
 
 <dd>If you need an event action, you have to specify the matching
 (procedure) operation in the model. Would it be possible for the
@@ -202,11 +186,272 @@ the same event isn't detected.
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
 
-<!-- next: 0211 -->
+<dt>0215 (raised 15.xi.03)
+
+<dd>The installation instructions' notes on <a
+href="installation.html">overriding <tt>ColdFrame.Project</tt>
+source</a> are wrong for both <a
+href="installation.html#linux-override">Linux</a> and <a
+href="installation.html#windows-override">Windows</a>.
+
+<dt>0222 (raised 3.xii.03)
+
+<dd>Active class instances are torn down after the domain event queue,
+which may cause <tt>Tasking_Error</tt> if the active instance tries
+(for example) to post an event.
+
+<dt>0227 (raised 23.i.04)
+
+<dd>Bug 0170 ("If an operation of a &#171;type&#187; is a function
+returning a composite value, the generated code won't compile.") is
+still present (for both &#171;type&#187;s and &#171;class&#187;es)
+when the composite value is imported or inherited from a parent
+domain (and therefore isn't otherwise mentioned in the model).
+
+<dt>0232 (raised 10.ii.04)
+
+<dd>In the standard Event Queue's <tt>Timer_Manager</tt>, only the first
+available event is immediately processed after a delay.
+
+<dt>0233 (raised 10.ii.04)
+
+<dd>Exceptions in the standard Event Queue's <tt>Timer_Manager</tt>
+are fatal.
+
+<dt>0234 (raised 12.ii.04)
+
+<dd>It would be helpful if action routines could be inherited from a
+superclass.
+
+<dt>0235 (raised 12.ii.04)
+
+<dd>Initial states can't have entry actions.
+
+<dt>0238 (raised 25.ii.04)
+
+<dd>Would it be possible for operations named
+<tt>Is_<i>boolean-attribute-name</i></tt> returning <tt>Boolean</tt>
+to be treated as &#171;accessor&#187;s?
+
+<!-- next: 0239 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>23.ii.04</h3>
+
+<dl>
+
+<dt>0214 (raised 12.xi.03)
+
+<dd>The mechanism for dealing with multiple users of the same Event
+Queue is flawed;
+<ul>
+<li>it's up to the user to remember to call the <tt>Copy</tt> operation
+<li>the <tt>Copy</tt> operation won't accept a null parameter.
+</ul>
+<br><i>The <tt>Copy</tt> operation is obsolete.</i>
+
+</dl>
+
+<h3>22.ii.04</h3>
+
+<dl>
+
+<dt>0237 (raised 17.ii.04)
+
+<dd>It would be helpful to detect the error of deleting an instance
+from within a state machine action for that instance.
+<br><i>It's allowed to call the generated instance <tt>Delete</tt> or
+an operation stereotyped &#171;final&#187;. Deleting the instance from
+within any other operation will result in a
+<tt>Program_Error</tt> with a suitable message..</i>
+
+</dl>
+
+<h3>21.ii.04</h3>
+
+<dl>
+
+<dt>0236 (raised 17.ii.04)
+
+<dd>It would be helpful to detect the error of creating (and using) a
+Timer on the stack.
+<br><i>Detects the case when the Timer still has a held Event when it
+goes out of scope. Also invalidates the Event.</i>
+
+</dl>
+
+<h3>13.ii.04</h3>
+
+<dl>
+
+<dt>0230 (raised 2.ii.04)
+
+<dd>It would be useful to be able to specify fixed-length string
+types.
+
+</dl>
+
+<h3>10.ii.04</h3>
+
+<dl>
+
+<dt>0231 (raised 9.ii.04)
+
+<dd>An association with a &#171;public&#187; class generates bad code
+without warning.
+
+</dl>
+
+<h3>27.i.04</h3>
+
+<dl>
+
+<dt>0226 (raised 22.i.04)
+
+<dd>If a class is an &#171;active&#187; &#171;singleton&#187; and has
+&#171;class&#187; attributes with initial values, the task starts
+before the initial values are assigned.
+
+<dt>0228 (raised 23.i.04)
+
+<dd>It would be useful to assert that:
+<ul>
+<li>on registering, the procedure hasn't already been registered
+<li>on deregistering, the procedure has been registered
+</ul>
+
+<dt>0229 (raised 25.i.04)
+
+<dd>The documentation on an operation that matches an accessor profile
+isn't copied to the separate body.
+
+</dl>
+
+<h3>13.i.04</h3>
+
+<dl>
+
+<dt>0225 (raised 13.i.04)
+
+<dd>If a <i>{null}</i> type is marked <i>{serializable}</i>, the
+generated code doesn't compile.
+
+</dl>
+
+<h3>11.i.04</h3>
+
+<dl>
+
+<dt>0047 (raised 6.xii.01)
+
+<dd>It might be useful to be able to describe <i>array</i>
+&#171;type&#187;s.
+
+</dl>
+
+<h3>3.i.04</h3>
+
+<dl>
+
+<dt>0219 (raised 27.xi.03)
+
+<dd>It would be helpful if a <tt>Cant_Happen</tt> exception was
+accompanied by exception information (to make it easier to debug).
+
+</dl>
+
+<h3>13.xii.03</h3>
+
+<dl>
+
+<dt>0220 (raised 27.xi.03)
+
+<dd>Would it be possible to have &#171;type&#187;s with no contents?
+Useful for, for example, callbacks where only the event matters.
+<br><i>Use the <tt>{null}</tt> tag.</i>
+
+</dl>
+
+<h3>12.xii.03</h3>
+
+<dl>
+
+<dt>0221 (raised 2.xii.03)
+
+<dd>Using a bounded string (<tt>{string = max 15}</tt> say) in an
+identifier generates code that fails to compile.
+
+<dt>0223 (raised 11.xii.03)
+
+<dd>Tagged values of the form <tt><i>{xxxx:1234}</i></tt> generate bad
+XML in the <tt>.norm</tt> file.
+<br><i>This is now an error.</i>
+
+<dt>0224 (raised 12.xii.03)
+
+<dd>Reporting all unrecognised tags can be very annoying (especially
+where there are ubiquitous project-specific uses!)
+
+</dl>
+
+<h3>25.xi.03</h3>
+
+<dl>
+
+<dt>0217 (raised 25.xi.03)
+
+<dd>The class Delete operation for a 0..1 class doesn't null out the
+container, so it appears that there is still an instance.
+
+<dt>0218 (raised 25.xi.03)
+
+<dd>If a class with multiplicity 0..1 is the parent in an inheritance
+relationship and has a state machine, the generated code may not
+compile.
+
+</dl>
+
+<h3>21.xi.03</h3>
+
+<dl>
+
+<dt>0216 (raised 21.xi.03)
+
+<dd><tt>package body <i>Domain</i></tt> is generated even if the only
+operations are imported or renamings.
+
+</dl>
+
+<h3>14.xi.03</h3>
+
+<dl>
+
+<dt>0059 (raised 16.i.02)
+
+<dd>It would be proper to use UML tagged values instead of
+<tt>[[&nbsp;]]</tt> annotations.
+<br><i>Annotations are, of course, retained.</i>
+
+</dl>
+
+<h3>Remembrance Day 2003</h3>
+
+<dl>
+
+<dt>0211 (raised Remembrance Day 2003)
+
+<dd>There is a memory leak if an exception occurs in a callback
+routine. <a href="#bug-0191">See bug 0191</a>.
+
+<dt>0213 (raised Remembrance Day 2003)
+
+<dd>The generated separate bodies of operations of types don't include
+any documentation comments.
+
+</dl>
 
 <h3>4.xi.03</h3>
 
@@ -349,7 +594,7 @@ you'd have preferred to put on transitions in a pale colour
 
 <dl>
 
-<dt>0191 (raised 27.viii.03)
+<dt><a name="bug-0191">0191</a> (raised 27.viii.03)
 
 <dd>In &#171;callback&#187; handling, if a registered callback
 operation raises an exception during <tt>Call_Callbacks</tt>
@@ -1725,6 +1970,33 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>1.ii.04</h3>
+
+<dl>
+
+<dt>0212 (raised Remembrance Day 2003)
+
+<dd>Would it be possible for the task of an active class to have
+<tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
+Instance</tt>?
+<br><i>No, unfortunately; there's a problem with ordering the
+declarations so as to allow controlling the storage pool for
+<tt>Handle</tt>.</i>
+
+</dl>
+
+<h3>3.i.04</h3>
+
+<dl>
+
+<dt>0109 (raised 19.viii.02)
+
+<dd>The error where a state has more than one exiting transition
+triggered by the same event (or drop-through) isn't detected.
+<br><i>Partially implemented. Replaced by bug #0206</i>
+
+</dl>
 
 <h3>13.ix.03</h3>
 

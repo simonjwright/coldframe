@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 3cb5f34e6507 2004/01/17 22:58:48 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,7 +26,7 @@
      Public License.
      -->
 
-<xsl:stylesheet 
+<xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0"
   xmlns:saxon="http://icl.com/saxon"
@@ -46,14 +46,14 @@
     <xsl:param name="separate-pars" select="''"/>
 
     <xsl:for-each select="documentation/par">
-      
+
       <xsl:call-template name="comment-line">
         <xsl:with-param name="indent" select="$indent"/>
         <xsl:with-param name="line" select="normalize-space(.)"/>
       </xsl:call-template>
-      
+
       <xsl:value-of select="$separate-pars"/>
-    
+
     </xsl:for-each>
 
   </xsl:template>
@@ -89,7 +89,7 @@
           <xsl:text>--  </xsl:text>
           <xsl:value-of select="$word"/>
         </xsl:variable>
-        
+
         <xsl:value-of select="$start"/>
 
         <xsl:call-template name="comment-line">
@@ -109,7 +109,7 @@
                       + string-length($word)&gt;$fill-column">
 
         <xsl:text>&#10;</xsl:text>
-        
+
         <xsl:call-template name="comment-line">
           <xsl:with-param name="indent" select="$indent"/>
           <xsl:with-param name="line" select="$line"/>
@@ -118,7 +118,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:text> </xsl:text>
         <xsl:value-of select="$word"/>
 
@@ -130,7 +130,7 @@
         </xsl:call-template>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
   </xsl:template>
@@ -167,7 +167,7 @@
     <xsl:text>--  Domain revision: </xsl:text>
     <xsl:choose>
       <xsl:when test="/domain/revision">
-        <xsl:value-of select="/domain/revision"/>        
+        <xsl:value-of select="/domain/revision"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>unspecified</xsl:text>
@@ -208,21 +208,21 @@
       <xsl:when test="$detected-errors=1">
         <xsl:message terminate="yes">
           <xsl:text>1 error detected.</xsl:text>
-        </xsl:message>        
+        </xsl:message>
       </xsl:when>
       <xsl:when test="$detected-errors&gt;1">
         <xsl:message terminate="yes">
           <xsl:value-of select="$detected-errors"/>
           <xsl:text> errors detected.</xsl:text>
-        </xsl:message>        
+        </xsl:message>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
 
 
   <!-- Called at domain/class to compute number of instances.
-       If not, set parameter "c" to the class for which the computation
-       is required.
+       (If not at domain/class, , set parameter "c" to the class
+       for which the computation is required.)
        Outputs a number; 1000000000000 signals "unknown" (used to use
        +Inf but comparisons failed). -->
   <xsl:template name="number-of-instances">
@@ -232,7 +232,7 @@
     <xsl:variable
       name="assoc"
       select="/domain/association[associative=$name]"/>
-        
+
     <xsl:choose>
 
       <xsl:when test="$c/@max">
@@ -245,7 +245,7 @@
         <xsl:variable name="role-2" select="$assoc/role[2]"/>
 
         <xsl:choose>
-          
+
           <xsl:when test="$role-1/@multiple and $role-2/@multiple">
             <xsl:variable name="n-1">
               <xsl:call-template name="number-of-instances">
@@ -322,7 +322,7 @@
 
         <xsl:variable name="type-name" select="$c/attribute[@identifier]/type"/>
         <xsl:variable name="type" select="/domain/type[name=$type-name]"/>
-        
+
         <xsl:choose>
 
           <xsl:when test="$type/name='Boolean'">2</xsl:when>
@@ -336,7 +336,7 @@
             <xsl:value-of select="$type/integer/upper
                                   - $type/integer/lower
                                   + 1"/>
-            
+
           </xsl:when>
 
           <xsl:otherwise>
@@ -352,7 +352,57 @@
       </xsl:otherwise>
 
     </xsl:choose>
-    
+
+  </xsl:template>
+
+
+  <!-- Called at domain/class to determine whether the container for
+       the class's extent can be implemented as an array.
+       (If not at domain/class, , set parameter "c" to the class
+       for which the computation is required.)
+       Returns 'yes' or 'no'.
+       -->
+  <xsl:template name="can-use-array">
+    <xsl:param name="c" select="."/>
+
+    <xsl:choose>
+
+      <!-- There must only be one identifying attribute. -->
+      <xsl:when test="count($c/attribute/@identifier)=1">
+
+        <xsl:variable
+          name="type"
+          select="/domain/type[name=$c/attribute[@identifier]/type]"/>
+
+        <!-- and it must be of the right kind. -->
+        <xsl:choose>
+
+          <!-- Assume all enumeration types are OK. -->
+          <xsl:when test="$type/enumeration">yes</xsl:when>
+
+          <xsl:when test="$type/@hash='enumeration'">yes</xsl:when>
+
+          <!-- Bounded integer types, if small enough. -->
+          <xsl:when test="$type/integer[lower and upper]">
+            <xsl:choose>
+              <xsl:when
+                test="($type/integer/upper
+                      - $type/integer/lower)
+                      &lt; $max-hash-buckets">yes</xsl:when>
+              <xsl:otherwise>no</xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+
+          <xsl:otherwise>no</xsl:otherwise>
+
+        </xsl:choose>
+
+      </xsl:when>
+
+      <xsl:otherwise>no</xsl:otherwise>
+
+    </xsl:choose>
+
   </xsl:template>
 
 

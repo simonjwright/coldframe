@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Digital IO"
@@ -9,10 +9,14 @@
     is_loaded  	TRUE
     quid       	"3DFCF76B0011"
     documentation 	
-|This domain manages digital (discrete) input/output.
-|It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
+|Copyright (C) Simon Wright <simon@pushface.org>
 |
-|[[ revision : $Id: Digital_IO.cat,v 001fa38a3c0f 2002/12/30 18:02:08 simon $ ]]
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This domain manages digital (discrete) input/output.
+|It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
+|
+|{ revision = $Revision: 38960f8e0d9a $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -40,12 +44,14 @@
 		    result     	"Signal Name"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0)
+		    uid        	0
+		    quidu      	"3DFCFB77033C")
 		(object Operation "set state"
 		    quid       	"3DFF69A503E3"
 		    documentation 	"Set the signal's state as indicated; call Changed if it has changed."
 		    parameters 	(list Parameters
 			(object Parameter "to"
+			    quid       	"3FB663CB031F"
 			    type       	"Boolean"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -61,7 +67,8 @@
 		(object ClassAttribute "s"
 		    quid       	"3DFCF7A9029B"
 		    stereotype 	"id"
-		    type       	"Signal Name")
+		    type       	"Signal Name"
+		    quidu      	"3DFCFB77033C")
 		(object ClassAttribute "state"
 		    quid       	"3DFCF7D70048"
 		    type       	"Boolean"
@@ -103,14 +110,14 @@
 	    documentation 	
 |Provides application domains with callback facilities for input signal state changes.
 |
-|[[callback : 5 ]]
 	    
-	    stereotype 	"type"
+	    stereotype 	"callback"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "s"
 		    quid       	"3DFCF83602DA"
 		    documentation 	"The name of the signal that has changed."
-		    type       	"Signal Name")
+		    type       	"Signal Name"
+		    quidu      	"3DFCFB77033C")
 		(object ClassAttribute "state"
 		    quid       	"3DFCF84002CA"
 		    documentation 	"The state that the signal has changed to."
@@ -128,8 +135,11 @@
 		    documentation 	"Sets the specified output signal to the given state."
 		    parameters 	(list Parameters
 			(object Parameter "s"
-			    type       	"Signal Name")
+			    quid       	"3FB663CB033C"
+			    type       	"Signal Name"
+			    quidu      	"3DFCFB77033C")
 			(object Parameter "to state"
+			    quid       	"3FB663CB033D"
 			    type       	"Boolean"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -144,7 +154,9 @@
 		    documentation 	"Returns the state of the specified signal."
 		    parameters 	(list Parameters
 			(object Parameter "of signal"
-			    type       	"Signal Name"))
+			    quid       	"3FB663CB0341"
+			    type       	"Signal Name"
+			    quidu      	"3DFCFB77033C"))
 		    result     	"Boolean"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -154,8 +166,11 @@
 		    documentation 	"Sets the specified input signal to the given value."
 		    parameters 	(list Parameters
 			(object Parameter "of signal"
-			    type       	"Signal Name")
+			    quid       	"3FB663CB0345"
+			    type       	"Signal Name"
+			    quidu      	"3DFCFB77033C")
 			(object Parameter "to"
+			    quid       	"3FB663CB0346"
 			    type       	"Boolean"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -166,22 +181,34 @@
 |Names the supported digital signals.
 |The 'floor' signals are inputs, the 'lamp' signals are outputs.
 |
-|[[ enumeration:
-|floor 0,
-|floor 1,
-|floor 2,
-|floor 3,
-|lamp a,
-|lamp b,
-|lamp c,
+|{ enumeration =
+|floor 0 |
+|floor 1 |
+|floor 2 |
+|floor 3 |
+|lamp a |
+|lamp b |
+|lamp c |
 |lamp d
-|]]
+|}
 	    
 	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCF77A0261"
 	    title      	"Main"
+	    documentation 	
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|This notice is placed in a UML model designed to be automatically converted into program source code units. As a special exception, if other files instantiate generics from those units, or you link those units with other files to produce an executable, those units do not by themselves cause the resulting executable to be covered by the GNU General Public License.  This exception does not however invalidate any other reasons why the executable file might be covered by the GNU Public License.
+|
+|This domain manages digital (discrete) input/output.
+|It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
+|
+|{ revision = $Revision: 38960f8e0d9a $ }
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
@@ -194,6 +221,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(720, 1260)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(386, 1052)
@@ -209,6 +245,15 @@
 		    compartment 	(object Compartment
 			Parent_View 	@1
 			location   	(386, 1108)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -224,6 +269,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1455, 1050)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(1346, 977)
@@ -239,6 +293,15 @@
 		    compartment 	(object Compartment
 			Parent_View 	@2
 			location   	(1346, 1033)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -249,6 +312,15 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "g1" @3
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(1200, 1121)
@@ -269,6 +341,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2535, 330)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
 			location   	(2376, 254)
@@ -285,7 +366,7 @@
 			nlines     	1
 			max_width  	318
 			justify    	0
-			label      	"<<type>>")
+			label      	"<<callback>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
@@ -293,11 +374,20 @@
 		    compartment 	(object Compartment
 			Parent_View 	@4
 			location   	(2376, 310)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	322)
+			max_width  	315)
 		    width      	336
 		    height     	264
 		    annotation 	8
@@ -308,6 +398,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1455, 1545)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(1346, 1472)
@@ -323,6 +422,15 @@
 		    compartment 	(object Compartment
 			Parent_View 	@5
 			location   	(1346, 1528)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
@@ -333,6 +441,15 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "g1" @6
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
 			location   	(1200, 1445)
@@ -353,21 +470,30 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(592, 336)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(175, 282)
+			location   	(176, 282)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	834
+			max_width  	832
 			justify    	0
 			label      	"Application")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@7
-			location   	(175, 237)
+			location   	(176, 237)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	834
+			max_width  	832
 			justify    	0
 			label      	"<<public>>")
 		    icon_style 	"Label"
@@ -376,13 +502,22 @@
 		    quidu      	"3DFCFA6E0024"
 		    compartment 	(object Compartment
 			Parent_View 	@7
-			location   	(175, 338)
+			location   	(176, 338)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	837)
-		    width      	852
+			max_width  	830)
+		    width      	850
 		    height     	220
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -392,6 +527,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1600, 336)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
 			location   	(1180, 260)
@@ -416,11 +560,20 @@
 		    compartment 	(object Compartment
 			Parent_View 	@8
 			location   	(1180, 316)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	845)
+			max_width  	838)
 		    width      	858
 		    height     	264
 		    annotation 	8
@@ -431,9 +584,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2544, 784)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(2416, 758)
+			location   	(2416, 757)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	256
@@ -441,7 +603,7 @@
 			label      	"Signal Name")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@9
-			location   	(2416, 713)
+			location   	(2416, 712)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -453,11 +615,20 @@
 		    fill_color 	16777088
 		    quidu      	"3DFCFB77033C"
 		    width      	274
-		    height     	164
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object Label @10
-		    location   	(192, 2288)
+		    location   	(168, 2013)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v 001fa38a3c0f 2002/12/30 18:02:08 simon $")))))
+		    label      	"$Id: Digital_IO.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")))))

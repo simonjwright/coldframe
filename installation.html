@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v c4d674d89004 2003/03/30 19:24:41 simon $ -->
+<!-- $Id: installation.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -131,17 +131,22 @@ sections assume these settings.
 
 <tr>
 <td><tt>AUNIT</tt>
-<td>Location and version of AUnit
+<td>Directory name for AUnit
 <td><tt>aunit-<i>1.01</i></tt>
 
 <tr>
 <td><tt>BC</tt>
-<td>Location and version of the Booch Components
+<td>Directory name for the Booch Components
 <td><tt>bc-<i>20020602</i></tt>
 
 <tr>
+<td><tt>BUILD_BASE</tt>
+<td>Where your Ada library files (<tt>.ali</tt>, <tt>.o</tt>) go
+<td><tt>~/.build</i></tt>
+
+<tr>
 <td><tt>COLDFRAME</tt>
-<td>Location and version of ColdFrame
+<td>Directory name for ColdFrame
 <td><tt>cf-<i>20020921</i></tt>
 
 <tr>
@@ -153,6 +158,13 @@ sections assume these settings.
 <td><tt>TOP</tt>
 <td>The place where the software is installed
 <td><tt>/usr/local/lib</tt>
+
+<tr>
+<td><tt>ADA_PROJECT_PATH</tt>
+<td>Where your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> <tt>.gpr</tt> files are.
+<td><tt>$TOP/$COLDFRAME</tt>
 
 </table>
 
@@ -337,17 +349,22 @@ settings.
 
 <tr>
 <td><tt>AUNIT</tt>
-<td>Location and version of AUnit
+<td>Directory name for AUnit
 <td><tt>aunit-<i>1.01</i></tt>
 
 <tr>
 <td><tt>BC</tt>
-<td>Location and version of the Booch Components
+<td>Directory name for the Booch Components
 <td><tt>bc-<i>20020602</i></tt>
 
 <tr>
+<td><tt>BUILD_BASE</tt>
+<td>Where your Ada library files (<tt>.ali</tt>, <tt>.o</tt>) go
+<td><tt>C:/Temp/.build</i></tt>
+
+<tr>
 <td><tt>COLDFRAME</tt>
-<td>Location and version of ColdFrame
+<td>Directory name for ColdFrame
 <td><tt>cf-<i>20020921</i></tt>
 
 <tr>
@@ -357,8 +374,16 @@ settings.
 
 <tr>
 <td><tt>TOP</tt>
-<td>The disk drive on which the software is installed
+<td>The directory (or just disk drive) on which the software is
+installed
 <td><tt>c:</tt>
+
+<tr>
+<td><tt>ADA_PROJECT_PATH</tt>
+<td>Where your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> <tt>.gpr</tt> files are.
+<td><tt>%TOP%/%COLDFRAME%</tt>
 
 </table>
 

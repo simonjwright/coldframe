@@ -10,7 +10,8 @@
     quid       	"3E2D8741003A"
     documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
-|[[ revision : $Revision: 1ea77d0a8971 $ ]]
+|
+|{ revision = $Revision: 014b87e33ada $ }
 |
     
     exportControl 	"Public"
@@ -51,7 +52,7 @@
 	    documentation 	
 |The class of all serializable records.
 |
-|[[ renames : Serialization_Support.Base_Class ]]
+|{ renames = Serialization_Support.Base_Class }
 	    
 	    stereotype 	"type"
 	    used_nodes 	(list uses_relationship_list
@@ -64,7 +65,8 @@
 	    documentation 	
 |An IP port number.
 |
-|[[ renames : GNAT.Sockets.Port_Type ]]
+|{ renames = GNAT.Sockets.Port_Type,
+|hash = discrete }
 	    
 	    stereotype 	"type")
 	(object Class "Server"
@@ -340,7 +342,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1145
-				label      	"$Id: Serialization.cat,v 1ea77d0a8971 2003/09/13 17:22:31 simon $")))))
+				label      	"$Id: Serialization.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
 	    cardinality 	(value Cardinality "0..1"))
 	(object Class "Use Error"
 	    quid       	"3E2F09250015"
@@ -351,7 +353,7 @@
 	    documentation 	
 |An IP socket.
 |
-|[[ renames : GNAT.Sockets.Socket_Type ]]
+|{ renames = GNAT.Sockets.Socket_Type }
 	    
 	    stereotype 	"type")
 	(object Class "Stream Access"
@@ -359,7 +361,7 @@
 	    documentation 	
 |Gives access to a Stream on a Socket.
 |
-|[[ imported : GNAT.Sockets ]]
+|{ imported = GNAT.Sockets }
 	    
 	    stereotype 	"type")
 	(object Class "Serializable Base"
@@ -367,7 +369,7 @@
 	    documentation 	
 |The base type from which all serializable records are derived.
 |
-|[[ renames : Serialization_Support.Base ]]
+|{ renames = Serialization_Support.Base }
 	    
 	    stereotype 	"type")
 	(object Class "Buffer"
@@ -375,7 +377,7 @@
 	    documentation 	
 |Contains a data record while it's in the event queue.
 |
-|[[ imported : Serialization_Support  ]]
+|{ imported  = Serialization_Support  }
 	    
 	    stereotype 	"type")
 	(object Class_Category "Serialization Demo"
@@ -384,7 +386,7 @@
 |This domain is a demonstration of Serialization's facilities.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|[[ revision : $Revision: 1ea77d0a8971 $ ]]
+|{ revision = $Revision: 014b87e33ada $ }
 	    
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -429,15 +431,15 @@
 		(object Class "Name String"
 		    quid       	"3E3D0A6E0030"
 		    documentation 	
-|[[ string : max 32 ]]
+|{ string = max 32 }
 |
 		    
 		    stereotype 	"type")
 		(object Class "Real Time"
 		    quid       	"3E5533DD01B1"
 		    documentation 	
-|[[ renames : Ada.Real_Time.Time;
-|  image : Real Time Image ]]
+|{ renames = Ada.Real_Time.Time,
+|  image = Real Time Image }
 		    
 		    stereotype 	"type, serializable"
 		    operations 	(list Operations
@@ -480,6 +482,12 @@
 		(object ClassDiagram "Main"
 		    quid       	"3E2F8F97001D"
 		    title      	"Main"
+		    documentation 	
+|This domain is a demonstration of Serialization's facilities.
+|It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
+|
+|{ revision = $Revision: 014b87e33ada $ }
+		    
 		    zoom       	100
 		    max_height 	28350
 		    max_width  	21600
@@ -522,23 +530,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E2F8FA00319"
-			    compartment 	(object Compartment
-				Parent_View 	@9
-				location   	(95, 167)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	10
-				max_width  	473)
 			    width      	494
 			    height     	578
 			    annotation 	8
@@ -619,23 +610,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E5533DD01B1"
-			    compartment 	(object Compartment
-				Parent_View 	@11
-				location   	(841, 766)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	865)
 			    width      	886
 			    height     	264
 			    annotation 	8
@@ -676,23 +650,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3E553AC9035D"
-			    compartment 	(object Compartment
-				Parent_View 	@12
-				location   	(1022, 264)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	453)
 			    width      	474
 			    height     	264
 			    annotation 	8
@@ -763,7 +720,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1905
-			    label      	"$Id: Serialization.cat,v 1ea77d0a8971 2003/09/13 17:22:31 simon $")))))
+			    label      	"$Id: Serialization.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
 	(object Mechanism @17
 	    logical_models 	(list unit_reference_list
 		(object Object "client"
@@ -1014,6 +971,12 @@
 	(object ClassDiagram "Main"
 	    quid       	"3E2D876203A9"
 	    title      	"Main"
+	    documentation 	
+|This domain is a demonstration of the "serialization" features of ColdFrame.
+|
+|{ revision = $Revision: 014b87e33ada $ }
+|
+	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
@@ -1056,23 +1019,6 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3E2F068B0072"
-		    compartment 	(object Compartment
-			Parent_View 	@18
-			location   	(540, 385)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	702)
 		    width      	722
 		    height     	264
 		    annotation 	8
@@ -1162,7 +1108,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(935, 1194)
+		    location   	(936, 1193)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1174,7 +1120,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@21
-			location   	(383, 1031)
+			location   	(384, 1030)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	1104
@@ -1184,23 +1130,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E2F091700DE"
-		    compartment 	(object Compartment
-			Parent_View 	@21
-			location   	(383, 1087)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	6
-			max_width  	1102)
 		    width      	1122
 		    height     	348
 		    annotation 	8
@@ -1361,7 +1290,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1145
-		    label      	"$Id: Serialization.cat,v 1ea77d0a8971 2003/09/13 17:22:31 simon $")
+		    label      	"$Id: Serialization.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
 		(object AttachView "" @27
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -1467,7 +1396,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@31
-			location   	(1788, 874)
+			location   	(1789, 874)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1475,7 +1404,7 @@
 			label      	"posted value")
 		    stereotype 	(object SegLabel @32
 			Parent_View 	@31
-			location   	(1682, 808)
+			location   	(1683, 808)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1641,7 +1570,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3EA03A2"
 		    width      	300
-		    height     	2674
+		    height     	2704
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1685,7 +1614,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3FE0379"
 		    width      	300
-		    height     	2674
+		    height     	2704
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1729,7 +1658,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F411039E"
 		    width      	300
-		    height     	2674
+		    height     	2704
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1780,7 +1709,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F41A033D"
 		    width      	300
-		    height     	2674
+		    height     	2704
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1824,7 +1753,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F44E02BF"
 		    width      	300
-		    height     	596
+		    height     	620
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1837,7 +1766,7 @@
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @54
-			location   	(2445, 1106)
+			location   	(2445, 1109)
 			InterObjView 	@52
 			height     	60
 			y_coord    	0
@@ -1867,7 +1796,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F4E70233"
 		    width      	330
-		    height     	993
+		    height     	1017
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1880,7 +1809,7 @@
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @57
-			location   	(2767, 1324)
+			location   	(2767, 1327)
 			InterObjView 	@55
 			height     	60
 			y_coord    	0
@@ -1917,7 +1846,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F45D0004"
 		    width      	300
-		    height     	2674
+		    height     	2704
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1982,7 +1911,7 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F850015C"
 		    width      	330
-		    height     	409
+		    height     	433
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1995,7 +1924,7 @@
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @67
-			location   	(3578, 2455)
+			location   	(3578, 2458)
 			InterObjView 	@65
 			height     	60
 			y_coord    	0
@@ -2409,7 +2338,7 @@
 		    ordinal    	10)
 		(object Destruction_Marker @89
 		    Parent_View 	@55
-		    location   	(2767, 2352)
+		    location   	(2767, 2382)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object InterMessView "" @90
@@ -2454,7 +2383,7 @@
 		    ordinal    	4)
 		(object Destruction_Marker @92
 		    Parent_View 	@52
-		    location   	(2445, 1737)
+		    location   	(2445, 1767)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object InterMessView "" @93
@@ -2539,7 +2468,7 @@
 		    ordinal    	13)
 		(object Destruction_Marker @97
 		    Parent_View 	@65
-		    location   	(3578, 2899)
+		    location   	(3578, 2929)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Label @98
@@ -2555,7 +2484,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1903
-		    label      	"$Id: Serialization.cat,v 1ea77d0a8971 2003/09/13 17:22:31 simon $")
+		    label      	"$Id: Serialization.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
 		(object InterMessView "" @99
 		    location   	(0, 2128)
 		    font       	(object Font

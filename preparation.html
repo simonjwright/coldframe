@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v 85638eed8049 2003/03/29 16:11:29 simon $ -->
+<!-- $Id: preparation.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -27,10 +27,12 @@ and are specified with the <a href="target.html">target platform</a>.
 
 <p>Instances of a Class must be uniquely identifiable by some
 attribute or combination of attributes. For example, a Vehicle Excise
-Disk might be identified by the combination of Vehicle Index Mark and
-Validity Start Date. Vehicle Index Mark and Validity Start Date then
-become "identifying attributes", whereas Date Of Issue and Period Of
-Validity are just common-or-garden attributes.
+Disk (a UK thing: the circular document you display on your car's
+windscreen to show you've paid the annual road tax) might be
+identified by the combination of Vehicle Index Mark (the licence plate
+number) and Validity Start Date. Vehicle Index Mark and Validity Start
+Date then become "identifying attributes", whereas Date Of Issue and
+Period Of Validity are just common-or-garden attributes.
 
 <p>In ColdFrame, you <em>must not</em> specify identifiers for
 
@@ -147,15 +149,15 @@ where clearly there are many <em>Window</em>s but only one
 <p>ColdFrame, however, follows <a
 href="resources.html#build-object-models">Executable UML</a>; you
 usually don't need to provide referential attributes (it would be
-quite cumbersome to do so, since Rose (taking it as a typical UML
-tool) is unaware of the concept). Instead, ColdFrame automatically
-implements the relationships. Sometimes it needs a little help, for
-example for <a href="#formalizes">complex formalization</a> or <a
-href="#source">in a symmetric association</a>.
+quite cumbersome to do so, since Rose, a typical UML tool, is unaware
+of the concept). Instead, ColdFrame automatically implements the
+relationships. Sometimes it needs a little help, for example for <a
+href="#formalizes">complex formalization</a> or <a href="#source">in a
+symmetric association</a>.
 
 <h2>Use of Stereotypes</h2>
 
-<h3>Packages</h3>
+<h3>On packages</h3>
 
 <p>Normally, ColdFrame doesn't descend into UML packages inside the
 domain package. You might have classes that you don't want to generate
@@ -167,7 +169,7 @@ panel to put some classes into child packages; for example, all the
 &#171;type&#187;s. In this case, you do want to generate code for
 them; so mark the child package as <em>&#171;generate&#187;</em>.
 
-<h3>Classes</h3>
+<h3>On classes</h3>
 
 <p>Classes which represent user-defined types are marked with the
 stereotype <em>&#171;type&#187;</em>.
@@ -188,12 +190,15 @@ at present (3.i.02). <em>&#171;abstract&#187;</em> is an alternative
 to the use of the <i>Abstract</i> checkbox in the Rose <i>Class
 Specification</i> dialog (<i>Detail</i> tab).
 
-<h3>Attributes</h3>
+<h3>On attributes</h3>
 
 <p>Identifying attributes are marked with the stereotype
 <em>&#171;id&#187;</em>.
 
-<h3>Operations</h3>
+<<p>Class attributes are marked with the stereotype
+<em>&#171;class&#187;</em>.
+
+<h3>On operations</h3>
 
 <p>Dispatching operations are marked with the stereotype
 <em>&#171;abstract&#187;</em>. The operation will be implemented in a
@@ -210,6 +215,9 @@ procedure are marked with the stereotype
 <em>&#171;init&#187;</em>. This implies the stereotype
 <em>&#171;class&#187;</em>. These operations must be parameterless
 procedures.
+
+<p>If an operation used as a state machine action deletes the
+instance, if must be stereotyped <em>&#171;final&#187;</em>.
 
 <p>Operations to be called to clean up as an instance is deleted (for
 example, to tidy up associations) are marked with the stereotype
@@ -241,18 +249,24 @@ sequence diagrams.
 <h2><a name="annotation">Other annotations</a></h2>
 
 <p>It's not at all convenient to put all the extra information you
-need for code generation into stereotypes. Instead, "annotations" can
-be put into the documentation section (in Rose the bottom left pane),
-in sections delimited by <tt>[[&nbsp;]]</tt>; for example,
-<tt>[[&nbsp;mode&nbsp;:&nbsp;in&nbsp;out&nbsp;]]</tt>.
+need for code generation into stereotypes. Instead, UML tagged values
+are used, usually in the documentation section (in Rose the bottom
+left pane); for example, for your local type <i>Socket</i>,
+<tt>{&nbsp;renames&nbsp;=&nbsp;GNAT.Sockets.Socket_Type&nbsp;}</tt>.
 
-<p>Annotations supported are:
+<p>ColdFrame originally used <a
+href="annotations.html">annotations</a>, only available in the
+documentation section, in sections delimited by <tt>[[&nbsp;]]</tt>;
+for example,
+<tt>[[&nbsp;renames&nbsp;:&nbsp;GNAT.Sockets.Socket_Type&nbsp;]]</tt>.
+
+<p>Tagged values supported are:
 
 <dl>
 
 <dt>on domains<dd><ul>
 
-<li><tt>revision : <i>revision-id-string</i></tt> specifies the
+<li><tt>revision = <i>revision-id-string</i></tt> specifies the
 domain's version control ID.
 
 <p>In Rose with CVS, you'd select the domain Package in the browser
@@ -260,11 +274,12 @@ and add the line
 
 <!-- couldn't actually use the $ here! -->
 <pre>
-  [[ revision : &#36;Id&#36; ]]
+  { revision = &#36;Revision&#36; }
 </pre>
 
 to the documentation pane. Modify as required by your version control
-system.
+system, being careful to avoid commas (so, with CVS or RCS, avoid
+<tt>&#36;Id&#36;</tt> and <tt>&#36;RCSfile&#36;</tt>).
 
 </ul>
 
@@ -272,12 +287,16 @@ system.
 
 <dt>on classes<dd><ul>
 
-<li><tt>abbreviation : <i>abbrev</i></tt> specifies the class'
+<li><tt>abbreviation = <i>abbrev</i></tt> specifies the class's
 abbreviation. By default, the abbreviation is composed of the initial
 letters of the full class name; this wouldn't work for, for example,
 <i>Pet</i> and <i>Person</i>.
 
-<li><tt>max : <i>max-size</i></tt> specifies the maximum number of
+<br>Abbreviations are used where the full class name would be illegal,
+or perhaps likely to be too long: for example, as parameter names in
+packages generated to support associations).
+
+<li><tt>max = <i>max-size</i></tt> specifies the maximum number of
 instances that will coexist. This may provoke a different code
 generation strategy.
 
@@ -292,21 +311,25 @@ multiplicity, depending on the version of Rose) of
 
 <dt>on <em>&#171;type&#187;</em> classes<dd><ul>
 
-<li><tt>callback : <i>max</i></tt> specifies that <a
+<li><tt>callback</tt> specifies that <a
 href="type-mapping.png">callback support code</a> is to be
 generated. The idea here is that a (lower-level) Domain may need to
-support up to <tt><i>max</i></tt> Observers from higher-level Domains,
-and the higher-level Domains can register to be notified when
-something has changed in the lower-level Domain.
+support Observers from higher-level Domains, and the higher-level
+Domains can register to be notified when something has changed in the
+lower-level Domain.
+
+<li><tt>convention = <i>language</i></tt> indicates that the type is
+to be laid out using the conventions of <i>language</i>.
+<br>The most common use will be <tt>convention=C</tt>.
 
 <li><tt>discriminated</tt> (only relevant if the type is a record
 type, ie has attributes) causes the generation of discriminated
 records; the discriminant is an enumeration type with literals formed
 from the attribute names with <tt>_T</tt> appended.
 
-<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+<li><tt>enumeration = <i>literal-1</i> | <i>literal-2</i> | ...</tt>
 
-<li><tt>imported : <i>external-reference</i></tt> specifies that the
+<li><tt>imported = <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference. For
 Ada, this results (for a type named <tt>T</tt>) in
 <pre>
@@ -318,7 +341,7 @@ Ada, this results (for a type named <tt>T</tt>) in
 (clearly <tt><i>external-reference</i></tt> needs to correspond to a
 with-able package name).
 
-<li><tt>renames : <i>external-type</i></tt> specifies that the given
+<li><tt>renames = <i>external-type</i></tt> specifies that the given
 type is a renaming of the specified external reference. For Ada, this
 results (for a type named <tt>T</tt>, renaming
 <tt>Ada.Real_Time.Time</tt>) in
@@ -329,19 +352,12 @@ results (for a type named <tt>T</tt>, renaming
   use type T;
 </pre>
 
-<li><tt>integer : lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>
+<li><tt>integer = lower <i>low-bound</i> | upper <i>upper-bound</i></tt>
 
-<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
+<li><tt>real = digits <i>num-digits</i> | lower <i>low-bound</i> |
 upper <i>upper-bound</i></tt>
 
-<!--
-<li><tt>set : <i>class-name</i></tt> (for parameters or return values
-of operations involving more than one instance at once, eg "find all
-the outstanding Problem Reports on this Component").
--->
-
-<li><tt>string : max <i>max-length</i></tt>
+<li><tt>string = max <i>max-length</i></tt>
 
 </ul>
 
@@ -353,7 +369,7 @@ the outstanding Problem Reports on this Component").
 attribute. This is an alternative to the <em>&#171;id&#187;</em>
 stereotype.
 
-<li><a name="formalizes"><tt>formalizes :
+<li><a name="formalizes"><tt>formalizes =
 <i>association-name</i></tt></a> indicates that the attribute is a
 referential attribute.
 
@@ -363,32 +379,35 @@ analyst (normally, ColdFrame can manage references as required).
 <p>Consider R8, Licence is-issued-by Licensing Office. The identifier
 of Licence consists of the licence number and also the issuing
 Licensing Office, since the various offices don't use disjoint licence
-number ranges. In this case, we'd specify the attribute as
+number ranges. In this case, we'd specify the attributes as
 <pre>
+  &#171;id&#187; number : Positive
   &#171;id&#187; issuing office : Licensing Office
 </pre>
 
-and include the annotation
+and include the tag
 <pre>
-  [[ formalizes : r8 ]]
+  { formalizes = r8 }
+</pre>
+
+in the documentation section for <i>issuing office</i>; or,
+alternatively (and if you don't mind the diagram clutter)
+<pre>
+  &#171;id&#187; number : Positive
+  &#171;id&#187; { formalizes = r8 } issuing office : Licensing Office
 </pre>
 
 </ul>
 
 <p>
 
-<dt>on parameters<dd><ul>
+<dt>on operations<dd><ul>
 
-<li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
-<ul>
-<li><tt>in</tt>
-<li><tt>inout</tt> or <tt>in out</tt>
-<li><tt>out</tt>
-</ul>
+<li><tt>convention = <i>language</i></tt> indicates that the operation
+is to be callable using the conventions of <i>language</i>.
+<br>The most common use will be <tt>convention=C</tt>.
 
 </ul>
-
-<p>
 
 <dt>on roles<dd><ul>
 
@@ -401,10 +420,10 @@ useful for symmetrical associations <i>1:1</i>, <i>1c:1c</i>,
 
 </dl>
 
-<p>You can only have one annotation section per documentation section,
-but multiple semicolon-separated annotations are allowed
-(syntactically; ColdFrame may not check whether they make sense
-semantically).
+<p>You can have as many tagged value sections per documentation
+section as you like, and each section can contain a comma-separated
+list of tagged values (so a value can't contain a comma, hence the
+restriction on <tt>revision</tt>).
 
 <p>
 

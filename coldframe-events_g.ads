@@ -20,18 +20,22 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 3e385e7f5028 $
---  $Date: 2003/07/10 20:23:40 $
+--  $Revision: 38960f8e0d9a $
+--  $Date: 2004/02/27 06:32:50 $
 --  $Author: simon $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
+with ColdFrame.Event_Basis;
 with ColdFrame.Instances;
 with ColdFrame.Logging_Signature;
 with ColdFrame.Time_Signature;
 with System.Storage_Pools;
 
 generic
+
+   type Base_Event
+      is abstract new ColdFrame.Event_Basis.Event_Base with private;
 
    with package Logging is new Logging_Signature (<>);
 
@@ -50,6 +54,24 @@ package ColdFrame.Events_G is
    type Instance_Base is abstract new Instances.Instance_Base with private;
    --  All Instances with state machines are derived from this type.
 
+   --  Private use only
+   procedure Check_Deletable (The_Instance : access Instance_Base);
+   --  Check that the instance isn't about to delete itself from an
+   --  event action.
+
+   --  Private use only
+   procedure Finalize (The_Instance : access Instance_Base'Class);
+   --  Removes any outstanding events for the instance from the
+   --  associated queue when the instance is deleted.
+
+   --  Private use only
+   procedure Mark_Deletable (The_Instance : access Instance_Base);
+   --  Indicate, in an event handler, that it's OK for the action
+   --  routine about to be called to delete the instance..
+
+   function State_Image (This : Instance_Base) return String is abstract;
+   --  Used for debugging/logging.
+
    type Instance_Base_P is access all Instance_Base;
    --  We need to convert "access Instance_Base" to something
    --  compare-able. GNAT 3.15a (Linux) generates slightly less code
@@ -62,7 +84,7 @@ package ColdFrame.Events_G is
    --  Events  --
    --------------
 
-   type Event_Base is abstract tagged limited private;
+   type Event_Base is abstract new Base_Event with private;
    --  All Events are derived from this type.
 
    type Event_P is access all Event_Base'Class;
@@ -72,16 +94,42 @@ package ColdFrame.Events_G is
    --  Concrete Events implement this to perform the required
    --  processing.
 
+   --  Private use only
    procedure Invalidate (The_Event : access Event_Base;
                          If_For_Instance : Instance_Base_P);
+
+   --  Private use only
+   procedure Start_Handling (The_Event : access Event_Base);
+   --  No action.
+
+   --  Private use only
+   procedure Stop_Handling (The_Event : access Event_Base);
+   --  No action.
+
 
    type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
    is abstract new Event_Base with private;
    --  All Instance Events are derived from this type. For_The_Instance
    --  is the instance to which the event is directed.
 
+   --  Private use only
+   procedure Instance_Is_Deleted
+     (For_The_Event : access Instance_Event_Base'Class);
+   --  Note that the Instance has been deleted (so as to avoid
+   --  querying it in logging Queue variants).
+
+   --  Private use only
    procedure Invalidate (The_Event : access Instance_Event_Base;
                          If_For_Instance : Instance_Base_P);
+
+   --  Private use only
+   procedure Start_Handling (The_Event : access Instance_Event_Base);
+   --  Tell the Instance it's handling an event, so not to let itself
+   --  be accidentally deleted.
+
+   --  Private use only
+   procedure Stop_Handling (The_Event : access Instance_Event_Base);
+   --  Tell the Instance it's no longer handling an event.
 
 
    ---------------------
@@ -116,10 +164,17 @@ package ColdFrame.Events_G is
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
+   --  Private use only
+   procedure Add_Reference (To : Event_Queue_P);
+   --  Increments the usage count for an event queue so that teardown
+   --  of queues shared by multiple domains could be properly managed.
+
    function Copy
-     (The_Queue : access Event_Queue_Base) return Event_Queue_P is abstract;
-   --  Clones a reference to an event queue so that teardown of queues
-   --  shared by multiple domains can be properly managed.
+     (The_Queue : Event_Queue_P) return Event_Queue_P;
+   --  Used to clone a reference to an event queue so that teardown of
+   --  queues shared by multiple domains could be properly managed.
+   --  No longer needed.
+   pragma Obsolescent;
 
    procedure Start (The_Queue : access Event_Queue_Base);
    --  Raises Use_Error if the Queue is already started.
@@ -139,6 +194,10 @@ package ColdFrame.Events_G is
    --
    --  Will raise Exceptions.Use_Error if not called from an event
    --  action procedure.
+
+   --  Private use only
+   procedure Tear_Down (The_Queue : in out Event_Queue_P);
+   --  Terminates any tasks and deallocates The_Queue.
 
 
    ----------------------
@@ -174,6 +233,11 @@ package ColdFrame.Events_G is
    --  timed event request when it is no longer needed (a timeout,
    --  perhaps, when the thing being timed out has actually occurred).
 
+   --  Private use only
+   procedure Finalize (The_Timer : in out Timer);
+   --  Removes any outstanding events for the timer from the
+   --  associated queue when the instance containing the timer is
+   --  deleted.
 
    procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue_Base;
@@ -227,35 +291,6 @@ package ColdFrame.Events_G is
    --  no further.
 
 
-   ---------------------------
-   --  Implementation only  --
-   ---------------------------
-
-   --  The operations here have to be in the public part of the spec,
-   --  but aren't intended for public use (they are called by
-   --  generated code).
-
-   procedure Finalize (The_Instance : access Instance_Base'Class);
-   --  Removes any outstanding events for the instance from the
-   --  associated queue when the instance is deleted.
-
-   procedure Finalize (The_Timer : in out Timer);
-   --  Removes any outstanding events for the timer from the
-   --  associated queue when the (instance containing the) timer is
-   --  deleted.
-
-   function State_Image (This : Instance_Base) return String is abstract;
-   --  Used for debugging/logging.
-
-   procedure Instance_Is_Deleted
-     (For_The_Event : access Instance_Event_Base'Class);
-   --  Note that the Instance has been deleted (so as to avoid
-   --  querying it in logging Queue variants).
-
-   procedure Tear_Down (The_Queue : in out Event_Queue_P);
-   --  Terminates any tasks and deallocates The_Queue.
-
-
 private
 
    --  Event management (plain and timed) is fairly straightforward
@@ -283,12 +318,17 @@ private
 
    type Instance_Base is abstract new Instances.Instance_Base with record
       Events_Posted_On : Event_Queue_P;
+      In_Handler : Boolean := False;
    end record;
    --  Events_Posted_On is there for Finalize to know which queue to
    --  retract events for this instance from.
+   --
+   --  In_Handler is there so we can check for the error of deleting
+   --  an instance from an action (not named Delete or marked
+   --  <<final>>).
 
 
-   type Event_Base is abstract tagged limited record
+   type Event_Base is abstract new Base_Event with record
       Invalidated : Boolean := False;  --  set if the event is retracted
    end record;
 
@@ -396,9 +436,26 @@ private
                          If_For_Instance : Instance_Base_P);
 
 
+   type Timer_Checker (For_The_Timer : access Timer)
+      is new Ada.Finalization.Limited_Controlled with null record;
+   --  We could have implemented Timer as a new Limited_Controlled,
+   --  but that is a tagged type; so Timer would have been a tagged
+   --  type; so procedures like Set would have had to change so as not
+   --  to have two dispatching arguments.
+   --
+   --  Also, this way we can still use the visible Finalize for
+   --  Timers.
+
+   procedure Finalize (The_Checker : in out Timer_Checker);
+   --  Check that the Timer doesn't still hold an event (if it does,
+   --  the Timer may have been improperly declared on the stack).
+
+
    type Timer is limited record
+      The_Checker : Timer_Checker (Timer'Access);
       The_Entry : Event_P;   -- needs to be a Timer_Event
    end record;
+
 
 
    type Lock (The_Queue : access Event_Queue_Base'Class)
