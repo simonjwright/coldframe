@@ -1,5 +1,5 @@
 \input texinfo    @c -*-texinfo-*-
-@c $Id: use-cases.texi,v 4e172dceb026 2000/12/29 18:00:51 simon $
+@c $Id: use-cases.texi,v deaa35b3e522 2001/01/21 06:22:27 simon $
 @c %**start of header
 @setfilename use-cases.info
 @settitle Use Cases for Code Generation
@@ -8,10 +8,10 @@
 @end iftex
 @c %**end of header
 
-@ifinfo
+@ifnottex
 @node Top, Introduction, (dir), (dir)
 @top Code Generation
-@end ifinfo
+@end ifnottex
 
 @menu
 * Introduction::                
