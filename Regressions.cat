@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 38960f8e0d9a $}
+|{ revision = $Revision: 647f47dae20e $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -657,6 +657,47 @@
 		    stereotype 	"id"
 		    type       	"Fixed String"
 		    quidu      	"402E6C9303C5")))
+	(object Class "One Value Enum"
+	    quid       	"404DCB6801BB"
+	    documentation 	"{enumeration = a}"
+	    stereotype 	"type")
+	(object Class "One Value Int"
+	    quid       	"404DCB8F0167"
+	    documentation 	"{integer = lower 42 | upper 42}"
+	    stereotype 	"type")
+	(object Class "One Enum ID"
+	    quid       	"404DCBBE01B5"
+	    operations 	(list Operations
+		(object Operation "get id"
+		    quid       	"404DCBF00315"
+		    result     	"One Value Enum"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"404DCB6801BB"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"404DCBDC01F4"
+		    stereotype 	"id"
+		    type       	"One Value Enum"
+		    quidu      	"404DCB6801BB"))
+	    cardinality 	(value Cardinality "0..1"))
+	(object Class "One Int ID"
+	    quid       	"404DCC0C0334"
+	    operations 	(list Operations
+		(object Operation "get id"
+		    quid       	"404DCC22014B"
+		    result     	"One Value Int"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"404DCB8F0167"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"404DCC150052"
+		    stereotype 	"id"
+		    type       	"One Value Int"
+		    quidu      	"404DCB8F0167")))
 	(object Class_Category "Not Yet Implemented"
 	    quid       	"3FA962850010"
 	    stereotype 	"dont generate"
@@ -781,13 +822,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 38960f8e0d9a $}
+|{ revision = $Revision: 647f47dae20e $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	3822
+	    origin_y   	1006
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Regressions::Find Active" @19
 		    ShowCompartmentStereotypes 	TRUE
@@ -1078,7 +1119,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 38960f8e0d9a 2004/02/27 06:32:50 simon $")
+		    label      	"$Id: Regressions.cat,v 647f47dae20e 2004/03/09 14:55:33 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -2261,7 +2302,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	315)
+			max_width  	322)
 		    width      	336
 		    height     	218
 		    annotation 	8
@@ -2309,8 +2350,206 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	663)
+			max_width  	670)
 		    width      	684
 		    height     	258
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @60
+		    location   	(1120, 3495)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@60
+			location   	(982, 3435)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	240
+			label      	"Identifier has one value")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	300
+		    height     	132)
+		(object ClassView "Class" "Logical View::Regressions::One Value Enum" @61
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1113, 3759)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@61
+			location   	(939, 3733)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"One Value Enum")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@61
+			location   	(939, 3688)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"404DCB6801BB"
+		    width      	366
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::One Value Int" @62
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1119, 3984)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@62
+			location   	(981, 3958)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	276
+			justify    	0
+			label      	"One Value Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@62
+			location   	(981, 3913)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	276
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"404DCB8F0167"
+		    width      	294
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::One Enum ID" @63
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1113, 4228)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@63
+			location   	(847, 4133)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	532
+			justify    	0
+			label      	"One Enum ID")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"404DCBBE01B5"
+		    compartment 	(object Compartment
+			Parent_View 	@63
+			location   	(847, 4189)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	528)
+		    width      	550
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Regressions::One Int ID" @64
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1115, 4511)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@64
+			location   	(881, 4416)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	468
+			justify    	0
+			label      	"One Int ID")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"404DCC0C0334"
+		    compartment 	(object Compartment
+			Parent_View 	@64
+			location   	(881, 4472)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	465)
+		    width      	486
+		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)))))
