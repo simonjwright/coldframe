@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 3cb5f34e6507 2004/01/17 22:58:48 simon $ -->
+<!-- $Id: ada-utilities.xsl,v cd6d8cb53fe3 2004/04/21 12:22:14 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -331,7 +331,29 @@
             <xsl:value-of select="count($type/enumeration/literal)"/>
           </xsl:when>
 
-          <xsl:when test="$type/integer[lower and upper]">
+          <xsl:when test="$type/integer[lower and upper]
+                          and number($type/integer/lower)
+                          and number($type/integer/upper)">
+
+            <!-- XXX should we get normalize to compute the length? -->
+
+            <!--
+            <xsl:message>
+              <xsl:text>type </xsl:text>
+              <xsl:value-of select="$type/name"/>
+              <xsl:text>, lower </xsl:text>
+              <xsl:value-of select="$type/integer/lower"/>
+              <xsl:text> (</xsl:text>
+              <xsl:value-of select="number($type/integer/lower)"/>
+              <xsl:text>)</xsl:text>
+              <xsl:text>,  upper </xsl:text>
+              <xsl:value-of select="$type/integer/upper"/>
+              <xsl:text>, max </xsl:text>
+              <xsl:value-of select="$type/integer/upper
+                                    - $type/integer/lower
+                                    + 1"/>
+            </xsl:message>
+            -->
 
             <xsl:value-of select="$type/integer/upper
                                   - $type/integer/lower
@@ -358,7 +380,7 @@
 
   <!-- Called at domain/class to determine whether the container for
        the class's extent can be implemented as an array.
-       (If not at domain/class, , set parameter "c" to the class
+       (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
        Returns 'yes' or 'no'.
        -->
