@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v c7f0e15a51a8 2004/10/30 17:11:32 simon $ -->
+<!-- $Id: types.html,v 2a24d3132c0c 2005/02/02 06:21:34 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -59,6 +59,9 @@ domains (but see the <i>counterpart</i> stereotype/annotation below).
 <li><em>&#171;protected&#187;</em>
 </ul>
 are provided.
+
+<p>You can specify the <i>visibility</i> of a type, using the Rose
+class specification dialog.
 
 <h3><a name="tags">Type details</a></h3>
 
@@ -173,13 +176,6 @@ serialized. See <a href="serialization.html">separate information</a>.
 
 </ul>
 
-<p>Syntactically, you can specify multiple annotations using semicolon
-separators. This would be useful for, for example, marking a type
-serializable:
-<pre>
-   [[ real : lower -100.0, upper 100.0; serializable ]]
-</pre>
-
 <p>There can be as many tagged value sections as you like; so you
 could say either
 <pre>
@@ -228,8 +224,10 @@ case adjustment)
 
 </dl>
 
-<p>New types are declared in the domain package. Where appropriate,
-supporting code is generated as a child unit of the domain package.
+<p>New types are declared in the domain package, in the private part
+if they were marked <i>private</i> or <i>implementation</i> in the
+model. Where appropriate, supporting code is generated as a child unit
+of the domain package.
 
 <p>Operations of types are generated in the domain package. They have
 no implicit <tt>This</tt> parameter.
