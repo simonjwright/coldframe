@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: hierarchies-test_creations.adb,v $
---  $Revision: e6759e067874 $
---  $Date: 2003/05/10 17:14:12 $
+--  $Revision: 4985207dc8a4 $
+--  $Date: 2003/07/10 20:14:07 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -528,25 +528,6 @@ package body Hierarchies.Test_Creations is
       when ColdFrame.Exceptions.Mismatched_Instances => null;
    end Create_Third_Child_With_Bad_S3_S3;
 
-   procedure Create_Third_Child_With_Deleted
-     (R : in out AUnit.Test_Cases.Test_Case'Class);
-   procedure Create_Third_Child_With_Deleted
-     (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
-      F2_H2 : F_2.Handle;
-      F2_H3 : F_2.Handle;
-      pragma Warnings (Off, F2_H3);
-   begin
-      F2_H := F_2.Inheritance.Create_Tree (null, null, null);
-      F2_H2 := F2_H;
-      Tear_Down;
-      F2_H3 := F_2.Inheritance.Create_Tree
-        (CIH (F2_H2), CIH (F2_H2), CIH (F2_H2));
-      Assert (False, "creation succeeded");
-   exception
-      when Storage_Error => null;
-   end Create_Third_Child_With_Deleted;
-
    procedure Register_Tests (T : in out Test_Case) is
    begin
       Register_Routine
@@ -592,10 +573,6 @@ package body Hierarchies.Test_Creations is
         (T,
          Create_Third_Child_With_Bad_S3_S3'Access,
          "Create third child with mismatched R2 & R3");
-      Register_Routine
-        (T,
-         Create_Third_Child_With_Deleted'Access,
-         "Create third child with deleted handle");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
