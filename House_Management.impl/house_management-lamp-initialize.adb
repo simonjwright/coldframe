@@ -6,28 +6,45 @@ with Digital_IO.Signal_State_Callback;
 separate (House_Management.Lamp)
 procedure Initialize is
 
-   LH : Lamp.Handle;
-   BH : Button.Handle;
+   LBH, LGH, L1H, L2H : Lamp.Handle;
+   BBH, BGH, B1H, B2H : Button.Handle;
    BTLH : Button_To_Lamp.Handle;
 
 begin
 
-   --  Lamp_A is between, and is controlled by, Floor_0 and Floor_1.
-   --  Lamp_B is between, and is controlled by, Floor_1 and Floor_2.
-   --  Lamp_C is between, and is controlled by, Floor_2 and Floor_3.
-   BH := Button.Create ((Name => Floor_0));
-   LH := Lamp.Create ((Name => Lamp_A));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
-   BH := Button.Create ((Name => Floor_1));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
-   LH := Lamp.Create ((Name => Lamp_B));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
-   BH := Button.Create ((Name => Floor_2));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
-   LH := Lamp.Create ((Name => Lamp_C));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
-   BH := Button.Create ((Name => Floor_3));
-   BTLH := A1.Link (Controls => LH, Is_Controlled_By => BH);
+   --  The second floor lamp is controlled by the buttons on the first
+   --  and second floors.
+
+   --  The first floor lamp is controlled by the buttons on the
+   --  ground, first and second floors.
+
+   --  The ground floor lamp is controlled by the buttons in the
+   --  basement and on the ground and first floors.
+
+   --  The basement lamp is controlled by the basement button only.
+
+   L2H := Lamp.Create ((Name => Second_Floor));
+   L1H := Lamp.Create ((Name => First_Floor));
+   LGH := Lamp.Create ((Name => Ground_Floor));
+   LBH := Lamp.Create ((Name => Basement));
+
+   B2H := Button.Create ((Name => Second_Floor));
+   B1H := Button.Create ((Name => First_Floor));
+   BGH := Button.Create ((Name => Ground_Floor));
+   BBH := Button.Create ((Name => Basement));
+
+   BTLH := A1.Link (Controls => L2H, Is_Controlled_By => B2H);
+   BTLH := A1.Link (Controls => L2H, Is_Controlled_By => B1H);
+
+   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => B2H);
+   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => B1H);
+   BTLH := A1.Link (Controls => L1H, Is_Controlled_By => BGH);
+
+   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => B1H);
+   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => BGH);
+   BTLH := A1.Link (Controls => LGH, Is_Controlled_By => BBH);
+
+   BTLH := A1.Link (Controls => LBH, Is_Controlled_By => BBH);
 
    --  Register for button state changes.
    Digital_IO.Signal_State_Callback.Register (Button.Changed'Access);
