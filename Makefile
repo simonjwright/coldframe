@@ -163,7 +163,10 @@ SUPPORT = coldframe*.ad[bs]
 
 DEMO = Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
-Problem_Reporting.impl/problem_reporting-component-hash.adb \
+Problem_Reporting.impl/problem_reporting-component-clean.adb \
+Problem_Reporting.impl/problem_reporting-component-report.adb \
+Problem_Reporting.impl/problem_reporting-component-report_all.adb \
+Problem_Reporting.impl/problem_reporting-defect-report.adb \
 Problem_Reporting.impl/problem_reporting-interface-add_component.adb \
 Problem_Reporting.impl/problem_reporting-interface-add_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-delete_component.adb \
