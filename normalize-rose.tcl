@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d2973826d463 2003/01/22 19:55:43 simon $
+# $Id: normalize-rose.tcl,v 45f128919b9e 2003/02/15 16:18:15 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -32,10 +32,12 @@ package require Itcl
 #############
 
 # Reads case exceptions from a file or colon-separated list of files.
-# The file format is basically that used by ACT's GLIDE, but we don't
-# distinguish substring specs from whole-identifier ones.
+# The file format is that used by ACT's GLIDE; each line contains a case
+# exception. If preceded by *, any matching word in an identifier will be
+# adjusted; otherwise, the whole identifier has to match, underscores
+# included. 
 proc setCaseExceptions {files} {
-    global tcl_platform caseExceptions
+    global tcl_platform caseExceptions subCaseExceptions
 
     if {$tcl_platform(platform) == "windows"} {
 	set sep ";"
@@ -45,11 +47,16 @@ proc setCaseExceptions {files} {
 
     foreach file [split $files $sep] {
 	if [catch {open $file r} f] {
-	    Warning "can't open $file: $f"
+	    Warning "can't open case exception file $file: $f"
 	} else {
 	    while {[gets $f line] >= 0} {
 		regsub -all {[\*\t ]} $line "" res
-		set caseExceptions([string tolower $res]) $res
+		if {[string range $res 0 0] == "*"} {
+		    set res [string range $res 1 end]
+		    set subCaseExceptions([string tolower $res]) $res
+		} else {
+		    set caseExceptions([string tolower $res]) $res
+		}
 	    }
 	    close $f
 	}
@@ -58,20 +65,22 @@ proc setCaseExceptions {files} {
 
 
 # Given a string,
-# - capitalizes the first letter of each word, unless it matches a case
-#   exception in which case the exception is taken
-# - replaces each run of white space by a single underscore
-# - checks whether the whole matches a case exception, in which case the
-#   exception is taken
-# - if there are any dots in the result, reaapply the rules for each
-#   '.'-separated component
-# and returns the result
+# - split at dots into "components"
+# - for each component, split at space or underscore into words
+# - for each word, if it matches a substring case exception then apply
+#   the exception, otherwise capitalise it
+# - join the words up into components using underscore
+# - if the component matches a whole string case exception then apply
+#   the exception, otherwise capitalise it
+# - join the components up using dots
+# - return the result
 proc normalize {s} {
-    global caseExceptions
+    global caseExceptions subCaseExceptions
 
-    set tmp [string trim $s]
+    set s [string trim $s]
+
     # check for illegal characters
-    regsub -all {[A-Za-z0-9_ \t.]} $tmp "" illegal
+    regsub -all {[A-Za-z0-9_ \t.]} $s "" illegal
     if {[string length $illegal] > 0} {
 	set tag [[stack -top] -getXmlTag]
 	if {$tag == "parameter"} {
@@ -87,49 +96,49 @@ proc normalize {s} {
 	    stack -push $op
 	    stack -push $ps
 	    stack -push $p
-	    Error "illegal name \"$tmp\" in [$cls -getName].[$op -getName]"
+	    Error "illegal name \"$s\" in [$cls -getName].[$op -getName]"
 	} else {
-	    Error "illegal name \"$tmp\" in <$tag>"
+	    Error "illegal name \"$s\" in <$tag>"
 	}
     }
+
     # check for reserved words
-    if [isLanguageReservedWord $tmp] {
+    if [isLanguageReservedWord $s] {
  	set tag [[stack -top] -getXmlTag]
-	Error "reserved word \"$tmp\" in <$tag>"
+	Error "reserved word \"$s\" in <$tag>"
     }
-    # handle white space/underscore
-    regsub -all {_} "$tmp" " " tmp
-    set tmp [split $tmp]
-    set und ""
-    foreach w $tmp {
-	if [info exists caseExceptions([string tolower $w])] {
-	    set und "$und $caseExceptions([string tolower $w])"
-	} else {
-	    set und \
-	      "$und [string toupper [string index $w 0]][string range $w 1 end]"
+
+    # split at dots
+    set components [split $s .]
+    set processedComponents {}
+    foreach c $components {
+	# handle the words; convert runs of spaces/underscores to spaces
+	set c [string trim $c]
+	regsub -all {[ _]+} $c " " c
+	set words [split $c]
+	set processedWords {}
+	foreach w $words {
+	    # handle substring case exceptions
+	    if [info exists subCaseExceptions([string tolower $w])] {
+		set w $subCaseExceptions([string tolower $w])
+	    } else {
+		set w \
+		    [string toupper [string index $w 0]][string range $w 1 end]
+	    }
+	    lappend processedWords $w
 	}
-    }
-    regsub -all {[ \t]+} "[string trim $und]" "_" und
-    # try to match complete identifier for case adjustment
-    if [info exists caseExceptions([string tolower $und])] {
-	set und "$caseExceptions([string tolower $und])"
-    }
-    # handle dots, if any
-    if {[regsub -all {\.} "$und" " " tmp] == 0} {
-	return $und
-    }
-    set tmp [split $tmp]
-    set res ""
-    foreach w $tmp {
-	if [info exists caseExceptions([string tolower $w])] {
-	    set res "$res $caseExceptions([string tolower $w])"
+	set c [join $processedWords _]
+	# handle string case exceptions
+	if [info exists caseExceptions([string tolower $c])] {
+	    set c $caseExceptions([string tolower $c])
 	} else {
-	    set res \
-	      "$res [string toupper [string index $w 0]][string range $w 1 end]"
+	    set c \
+		[string toupper [string index $c 0]][string range $c 1 end]
 	}
+	lappend processedComponents $c
     }
-    regsub -all {[ \t]+} "[string trim $res]" "." res
-    return $res
+
+    return [join $processedComponents .]
 }
 
 
