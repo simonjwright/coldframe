@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 78558c644edb $
---  $Date: 2003/11/16 08:22:38 $
+--  $Revision: 26ce7c349e24 $
+--  $Date: 2003/11/16 09:59:54 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -38,7 +38,7 @@ package body ColdFrame.Logging_Event_Basis.EWS_Support is
 
    procedure Add_Section
      (For_Request : EWS.HTTP.Request_P;
-      To : in out EWS.Dynamic.Dynamic_Response) is
+      To : in out EWS.Dynamic.Dynamic_Response'Class) is
 
       pragma Warnings (Off, For_Request);
 
