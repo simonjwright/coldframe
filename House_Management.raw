@@ -5,16 +5,16 @@
 <year>2003</year>
 <month>11</month>
 <day>29</day>
-<time>18:32</time>
+<time>18:43</time>
 </date>
 <documentation>Copyright (C) Simon Wright <simon@pushface.org>
 
 This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-This domain represents an electronic houlsehold control system.
+This domain represents an electronic household control system.
 The first release only manages the stairwell lighting system.
 
-{ revision = $Revision: 6f9aa3871f90 $ }</documentation>
+{ revision = $Revision: 8b65116b8677 $ }</documentation>
 <classes>
 <class>
 <name>Lamp</name>
