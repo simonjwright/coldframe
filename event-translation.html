@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v bd144bb06a9e 2002/09/29 13:51:13 simon $ -->
+<!-- $Id: event-translation.html,v 702fe96e6d9a 2002/10/06 06:54:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -9,10 +9,11 @@
 <h2>Events</h2>
 
 <p>Each event is mapped to a distinct type, derived from
-<tt>ColdFrame.Project.Events.Event_Base</tt>. Instance events are
-derived from <tt>Instance_Event_Base</tt>, a child of
-<tt>Event_Base</tt> which is constrained by an access to the instance
-to which the event is directed.
+<tt>ColdFrame.Project.Events.Event_Base</tt>, in the package for the
+class to which the event is directed. Instance events are derived from
+<tt>Instance_Event_Base</tt>, a child of <tt>Event_Base</tt> which is
+constrained by an access to the instance to which the event is
+directed.
 
 <p>For a class event, this results in
 <pre>

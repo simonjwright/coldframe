@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: types.html,v 702fe96e6d9a 2002/10/06 06:54:00 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -54,30 +54,10 @@ from the attribute names with <tt>_T</tt> appended.
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
 <li><tt>imported : <i>external-reference</i></tt> specifies that the
-given type is to be found at the specified external reference. For
-Ada, this results (for a type named <tt>T</tt>) in
-<pre>
-   with <i>external-reference</i>;
-   ..
-   subtype T is <i>external-reference</i>.T;
-   use type T;
-</pre>
-(clearly <tt><i>external-reference</i></tt> needs to correspond to a
-with-able package name).
+given type is to be found at the specified external reference.
 
 <li><tt>renames : <i>external-type</i></tt> specifies that the given
-type is a renaming of the specified external reference. For Ada, this
-results (for a type named <tt>T</tt>, renaming
-<tt>Ada.Real_Time.Time</tt>) in
-<pre>
-   with Ada.Real_Time;
-   ..
-   subtype T is Ada.Real_Time.Time;
-   use type T;
-</pre>
-
-<li><tt>integer : lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>
+type is a renaming of the specified external reference.
 
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
 upper <i>upper-bound</i></tt>
@@ -95,6 +75,110 @@ upper <i>upper-bound</i></tt>
 <p>Types are declared in the domain package. For string types, a
 string hash function is generated as a child subprogram of the domain
 package.
+
+<h3>Annotations</h3>
+ 
+<ul>
+
+<li><tt>callback : <i>max</i></tt>
+
+<li><tt>discriminated</tt>
+
+<p>Given a model fragment as in the picture
+
+<p><a name="discriminated-record-pic"><img src="discriminated-record.png"></a>
+
+<p>where <i>Alert Level</i> is an enumeration, <i>Information</i> is a
+lengthed string, and <i>Message</i> is
+<tt>[[&nbsp;discriminated&nbsp;]]</tt>, ColdFrfame generates
+<pre>
+   type Message_Discriminant is
+     (Info_T,
+      Level_T);
+   type Message
+     (Discriminant : Message_Discriminant
+      := Message_Discriminant'First)
+   is record
+      case Discriminant is
+         when Info_T =>
+            Info : Information;
+         when Level_T =>
+            Level : Alert_Level;
+      end case;
+   end record;
+</pre>
+
+<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>:
+gives, for example (see <a href="#discriminated-record-pic">above</a>),
+<pre>
+   type Alert_Level is
+     (Low,
+      Medium,
+      High);
+</pre>
+
+<li><tt>imported : <i>external-reference</i></tt>: for a type named
+<tt>T</tt> gives
+<pre>
+   with <i>external-reference</i>;
+   ..
+   subtype T is <i>external-reference</i>.T;
+   use type T;
+</pre>
+(clearly <tt><i>external-reference</i></tt> needs to correspond to a
+with-able package name).
+
+<li><tt>renames : <i>external-type</i></tt>: for a type named
+<tt>T</tt>, renaming <tt>Ada.Real_Time.Time</tt>, gives
+<pre>
+   with Ada.Real_Time;
+   ..
+   subtype T is Ada.Real_Time.Time;
+   use type T;
+</pre>
+
+<li><tt>integer : lower <i>low-bound</i>, upper
+<i>upper-bound</i></tt>: gives
+<pre>
+   type T is range <i>low-bound</i> .. <i>upper-bound</i>;
+</pre>
+
+<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>, upper
+<i>upper-bound</i></tt>: gives a floating-point type. If
+<i>num-digits</i> is omitted or not more than 6, it's a subtype of
+<tt>Float</tt>, otherwise it's a subtype of <tt>Long_Float</tt>. If
+the lower and upper bounds are given, they translate to a constraint.
+
+<p><tt>[[ real : digits 5 ]]</tt> gives
+<pre>
+   subtype T is Float;
+</pre>
+
+<p><tt>[[ real : digits 9, lower 0.0, upper 1_000_000.0 ]]</tt> gives
+<pre>
+   subtype T is Long_Float range 0.0 .. 1_000_000.0;
+</pre>
+
+<li><tt>string : max <i>max-length</i></tt> gives an instantiation of
+<tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
+example (see <a href="#discriminated-record-pic">above</a>),
+<pre>
+   with Ada.Strings.Bounded; use Ada.Strings.Bounded;
+   package <i>Domain</i> is
+
+      package Information_Package is
+	new Generic_Bounded_Length (Max => 79);
+      subtype Information is Information_Package.Bounded_String;
+</pre>
+
+<p>and a library-level hash function
+<pre>
+   with ColdFrame.Hash.Strings.Bounded;
+   function <i>Domain</i>.Information_Hash
+   is new ColdFrame.Hash.Strings.Bounded (Information_Package);
+</pre>
+
+</ul>
 
 <h2>Use</h2>
 
