@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: f029c5d83b80 $
---  $Date: 2003/11/08 08:15:37 $
+--  $Revision: 4b8d86be924f $
+--  $Date: 2004/02/08 11:19:25 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -245,7 +245,7 @@ package body ColdFrame.Events_G is
    begin
       Ada.Exceptions.Raise_Exception
         (Exceptions.Use_Error'Identity,
-         "Tear_Down only legal with Test event queue");
+         "Tear_Down not implemented in concrete event queue");
    end Tear_Down;
 
 
