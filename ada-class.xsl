@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
+<!-- $Id: ada-class.xsl,v 00537d304fc6 2001/05/11 19:11:11 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -79,6 +79,9 @@
     <!-- .. the attribute access operations .. -->
     <xsl:apply-templates mode="attribute-set-spec"/>
     <xsl:apply-templates mode="attribute-get-spec"/>
+
+    <!-- .. any access-to-subprogram types .. -->
+    <xsl:apply-templates mode="access-to-operation"/>
 
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
@@ -402,6 +405,37 @@
   </xsl:template>
 
   <xsl:template mode="identifier-element-assignment" match="*"/>
+
+
+  <!-- Called to generate access-to-subprogram types. -->
+  <xsl:template
+    match="operation[@access]"
+    mode="access-to-operation">
+    <xsl:text>  type </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text> is access </xsl:text>
+    <xsl:choose>
+      <xsl:when test="@result">
+        <xsl:text>function</xsl:text>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="'  '"/>
+        </xsl:call-template>
+        <xsl:text>&#10;     return </xsl:text>
+        <xsl:call-template name="type-name">
+          <xsl:with-param name="type" select="@return"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>procedure</xsl:text>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="'  '"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="*" mode="access-to-operation"/>
 
 
   <!-- Called from domain/class to generate the separate hash function. -->
