@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 19556011febe 2003/01/11 17:25:20 simon $ -->
+<!-- $Id: generate-html.xsl,v 469e99332e97 2003/03/05 21:25:43 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -470,6 +470,7 @@
         </dl>
       </xsl:if>
     </dd>
+    <p/>
   </xsl:template>
 
 
