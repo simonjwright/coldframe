@@ -1,277 +1,123 @@
 <html>
-<!-- $Id: error-messages.html,v 546f1dfbc87e 2002/12/06 22:02:50 simon $ -->
+<!-- $Id: error-messages.html,v 0f7d6768955f 2002/12/10 20:09:38 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
 <body bgcolor="white">
 <h1>ColdFrame: Error messages</h1>
 
-<p>This is a list of error messages that you may see from ColdFrame.
+<p>This is a list of error and warning messages that you may see from
+ColdFrame.
 
 <h2>Bugs in ColdFrame</h2>
 
-Messages beginning "CF" indicate an internal error. Report to the
+Messages beginning "CF:" indicate an internal error. Report to the
 author. You'll need to include the extracted <tt>.raw</tt> file if you
 want anything to happen!
 
 <h2>User problems</h2>
 
+<h3>"Normalization" messages</h3>
+
 <dl>
 
-<dt>Error: illegal name "<i>name</i>" in [$cls -getName].[$op -getName]
+<dt>Error: abbreviation of <i>name</i> is reserved word <dd>For class <i>name</i>, the standard abbreviation (for names of more than one word, formed from the initial letters of the words) makes an Ada reserved word. Specify your own, using the <tt>[[abbreviation]]</tt> annotation.
 
-<dd>There's some illegal character in an operation's parameter (you
-may have used a semicolon rather than a comma to separate parameters).
+<dt>Error: attribute <i>Class.Attribute</i> used to formalize non-existent <i>Association</i> <dd>The <tt>formalizes</tt> annotation has been used naming an association that doesn't exist.
 
-<dt>Error: illegal name "<i>name</i>" in &lt;<i>tag</i>&gt;
+<dt>Error: attribute <i>Class.Name</i> marked as &#171class;&#187; and &#171;id&#187; <dd>Class attributes can't be identifying attributes as well.
 
-<dd>There's some illegal character in a &lt;tag&gt; element (eg, a
-&lt;class&gt;.
+<dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>[[source]]</tt> annotation has been specified on both ends of the named association.
 
-<dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt;
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>[[source]]</tt> in a disallowed way (on the <i>many</i> end of an association).
 
-<dd>You've used an Ada reserved word as a name.
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>[[source]]</tt> on both ends of the named association.
 
-<dt>Error: illegal lower bound 1 in cardinality "<i>cardinality</i>"
-for <i>name</i>
+<dt>Error: illegal lower bound 1 in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
-<dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's
-cardinality, otherwise it must be <tt>1</tt>, <tt>n</tt> or
-<tt>0..<i>m</i></tt>.
+<dt>Error: illegal lower bound (<i>b</i>) of multiplicity in role <i>Association.Role</i> <dd>The lower bound of a role multiplicity must be 0 or 1.
 
-<dt>Error: illegal lower bound <i>bound</i> in cardinality
-"<i>cardinality</i>" for <i>name</i>
+<dt>Error: illegal lower bound <i>bound</i> in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
-<dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's
-cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or
-<tt>0..<i>m</i></tt>.
+<dt>Error: illegal M:M association <i>Association</i> <dd>Many-to-many associations must have an association class.
 
-<dt>Error: must specify cardinality for <i>name</i> as 0..<i>bound</i>
+<dt>Error: illegal name "<i>name</i>" in [$cls -getName].[$op -getName] <dd>There's some illegal character in an operation's parameter (you may have used a semicolon rather than a comma to separate parameters).
 
-<dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's
-cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or
-<tt>0..<i>m</i></tt>.
+<dt>Error: illegal name "<i>name</i>" in &lt;<i>tag</i>&gt; <dd>There's some illegal character in a &lt;tag&gt; element (eg, a &lt;class&gt;.
 
-<dt>Error: unrecognised cardinality "<i>cardinality</i>" in <i>name</i>
+<dt>Error: <i>name</i> has no identifier <dd>Ordinary classes must have identifiers.
 
-<dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's
-cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or
-<tt>0..<i>m</i></tt>.
+<dt>Error: missing attribute name in <i>Class</i> <dd>One of the attributes of the named class has no name.
 
-<dt>Error: abbreviation of <i>name</i> is reserved word
+<dt>Error: missing attribute type for <i>Class.Attribute</i> <dd>The named attribute has no type specified.
 
-<dd>For class <i>name</i>, the standard abbreviation (for names of
-more than one word, formed from the initial letters of the words)
-makes an Ada reserved word. Specify your own, using the
-<tt>[[abbreviation]]</tt> annotation.
+<dt>Error: missing parameter name in <i>Class.Operation</i> <dd>There's a problem with one of the named operation's parameters.
 
-<dt>Error: type [$this -getName] has identifier
+<dt>Error: missing parameter type for <i>Class.Operation(Param)</i> <dd>There's a problem with the named operation parameter.
 
-<dd>
+<dt>Error: multiple parents <i>Class</i>, <i>Class</i> in <i>Inheritance</i> <dd>More than one class is the parent in the named inheritance relationship.
 
-<dt>Error: singleton [$this -getName] has identifier
+<dt>Error: must specify cardinality for <i>name</i> as 0..<i>bound</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
-<dd>
+<dt>Error: neither end of biconditional <i>name</i> is marked as source <dd>Symmetric 0..1:0..1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
-<dt>Error: [$this -getName] has no identifier
+<dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
-<dd>
+<dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
 
-<dt>Error: unrecognised parameter mode $value
+<dt>Error: singleton <i>name</i> has identifier <dd>Singleton's aren't allowed to have identifiers.
 
-<dd>
+<dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
 
-<dt>Error: missing parameter name in\
-                    [$cls -getName].[$op -getName]
+<dt>Error: unnamed association between "<i>Class</i>" and "<i>Class</i>" <dd>Missing association name.
 
-<dd>
+<dt>Error: unnamed inheritance of <i>Parent</i> by <i>Child</i> <dd>All branches of an inheritance relationship must have a name.
 
-<dt>Error: missing parameter type for\
-                    [$cls -getName].[$op -getName]($name)
+<dt>Error: unnamed role in association <i>name</i> <dd>Each end of an association must be named.
 
+<dt>Error: unrecognised cardinality "<i>cardinality</i>" in <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
-<dd>
+<dt>Error: unrecognised multiplicity "<i>string</i>" in role <i>Association.Role</i> <dd>Multiplicities should be 1, 0..1, 1..*, 0..*, * or n.
 
-<dt>Error: $cls tried to set $src as source for $name\
-                       when [$role2 -getName] already is
-
-<dd>
-
-<dt>Error: $cls tried to set $src as source for $name
-
-<dd>
-
-<dt>Error: illegal M:M association [$this -getName]
-
-<dd>
-
-<dt>Error: unnamed association between \"[$role1 -getClassname]\"\
-		    and \"[$role2 -getClassname]\"
-
-<dd>
-
-<dt>Error: unnamed role in association $name
-
-<dd>
-
-<dt>Error: both ends of $name are marked as source
-
-<dd>
-
-<dt>Error: neither end of biconditional $name\
-				is marked as source
-
-<dd>
-
-<dt>Error: neither end of unconditional $name\
-			    is marked as source
-
-<dd>
-
-<dt>Error: [$this -getName] is unformalized
-
-<dd>
-
-<dt>Error: illegal lower bound ($lower) of multiplicity in role\
-                   $rel.$name
-
-<dd>
-
-<dt>Error: unrecognised multiplicity \"$c\" in role $rel.$name
-
-<dd>
-
-<dt>Error: unnamed inheritance
-
-<dd>
-
-<dt>Error: multiple parents $parent, [$extant -getParent] in $name
-
-<dd>
-
-<dt>Error: attribute [[[$this -getOwner] -getOwner] -getName].$name\
-		    marked as <<class>> and <<id>>
-
-<dd>
-
-<dt>Error: missing attribute name in\
-                    [[[$this -getOwner] -getOwner] -getName]
-
-<dd>
-
-<dt>Error: missing attribute type for\
-                    [[[$this -getOwner] -getOwner] -getName].$name
-
-<dd>
-
-<dt>Error: attribute\
-                       [[[$this -getOwner] -getOwner] -getName].$name \
-                       used to formalize non-existent $formalizedAssociation
-
-<dd>
+<dt>Error: unrecognised parameter mode <i>mode</i> <dd>A parameter mode must be <tt>in</tt>, <tt>inout</tt> or <tt>out</tt>.
 
 </dl>
 
+
+
 <dl>
 
-<dt>Warning: can't open $file: $f        (case exception)
+<dt>Warning: annotation not handled, "<i>Entity [[annotation : value</i>" <dd>The given annotation wasn't understood.
 
-	Warning "XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
+<dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
 
-<dd>
+<dt>Warning: stereotype not handled, "<i>Entity &#171;stereotype&#187;</i>" <dd>The given stereotype wasn't understood.
 
-<dt>Warning \
-		    "annotation not handled, \
-		    \"$name \[\[$attr : [string trim $value]]]\""
-
-<dd>
-
-<dt>Warning \
-		        "stereotype not handled,\
-			\"$name <<[string tolower $n]>>\""
-
-<dd>
-
-<dt>Warning "upper bound ($upper) of multiplicity in role $rel.$name\
-                     treated as *"
-
-<dd>
-
-<dt>Warning \
-		    "annotation not handled, \
-		    \"$type \[\[$attr : [string trim $value]]]\""
-
-<dd>
+<dt>Warning: upper bound (<i>u</i>) of multiplicity in role <i>Association.Role</i> treated as * <dd>The upper bounds of associations are always treated as indefinite.
 
 </dl>
 
 
 
 
-<h2>Code generation errors</h2>
+<h3>Code generation messages</h3>
 
 
 <dl>
 
-<dt>Error: invalid use of Autonumber in </xsl:text>
-            <xsl:value-of select="name"/>
+<dt>Error: <i>Class</i>.Delete not allowed as a singleton entry action. <dd>It's not permitted to delete a singleton.
 
-<dd>
+<dt>Error: <i>Class.Operation</i> has too many parameters to be an entry action. <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
 
-<dt>Warning: </xsl:text>
-            <xsl:value-of select="../name"/>
-            <xsl:text>: no rule to hash </xsl:text>
-            <xsl:value-of select="$type-name"/>
+<dt>Error: <i>Class.Operation</i> is a function, can't be an entry action. <dd>Only procedures are allowed to be state machine entry actions.
 
+<dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type. <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
 
-<dd>
+<dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only ones).
 
-<dt>Error: no concrete operation for </xsl:text>
-                <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-                <xsl:text> in </xsl:text>
-                <xsl:value-of select="$current/name"/>
+<dt>Error: no concrete operation for <i>Parent.Operation</i> in <i>Leaf</i> <dd><tt>Operation</tt> was specified &#171;abstract&#187; in <tt>Parent</tt>, but no implementation has been found in the branch leading to the leaf class <tt>Leaf</tt>.
 
-<dd>
-
-<dt>Error: <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text> is a function, can't be an entry action.</xsl:text>
-
-<dd>
-
-<dt>Error: <xsl:value-of select="../../../name"/>
-             <xsl:text>.Delete</xsl:text>
-             <xsl:text> not allowed as a singleton entry action.</xsl:text>
-
-<dd>
-
-<dt>Error: <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text> has too many parameters to be an entry action.</xsl:text>
-
-<dd>
-
-<dt>Error: <xsl:value-of select="../../../name"/>
-               <xsl:text>.</xsl:text>
-               <xsl:value-of select="$n"/>
-               <xsl:text>'s parameter is of the wrong type.</xsl:text>
-
-          <xsl:message terminate="yes">
-            <xsl:for-each select="$missing">
-              <xsl:sort select="name"/>
-              <xsl:text>Error: couldn't generate type </xsl:text>
-              <xsl:value-of select="name"/>
-              <xsl:text>&#10;</xsl:text>
-              <xsl:for-each select="attribute/type[not($processed/name=.)]">
-                <xsl:sort select="."/>
-                <xsl:text>  undeclared type </xsl:text>
-                <xsl:value-of select="."/>
-                <xsl:text>&#10;</xsl:text>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:message>
+<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>[[imported]]</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Hash</tt>.
 
 </dl>
 
