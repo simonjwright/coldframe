@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 7a8a198e1923 2002/10/13 17:48:10 simon $ -->
+<!-- $Id: support.html,v e90faa8c4f7a 2002/10/17 21:33:47 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -15,6 +15,43 @@ user-interesting ones are
 <dt><tt>ColdFrame.Callbacks</tt>
 
 <dd>Provides callback (Observer) support.
+
+<dt><tt>ColdFrame.Events_G</tt>
+
+<dd>Standard support for <a href="events.html">Events</a>. This is a
+basic generic event management specification; the time aspects are
+provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
+
+<dl>
+
+<dt><tt>ColdFrame.Events_G.Creation_G</tt>
+
+<dd>Provides a "creation" event type, for use where there's no
+application event to cause transition from the initial state.
+
+<dt><tt>ColdFrame.Events_G.Debug_G</tt>
+
+<dd>Adds logging (to standard output) to a concrete
+<tt>ColdFrame.Events_G.Event_Queue</tt>.
+
+<dt><tt>ColdFrame.Events_G.Standard_G</tt>
+
+<dd>A straightforward event queueing and dispatching service.
+
+<dt><tt>ColdFrame.Events_G.Test_G</tt>
+
+<dd>Adds unit test support to a concrete
+<tt>ColdFrame.Events_G.Event_Queue</tt>. The additional features are
+
+<ul>
+
+<li>inspection of Timers; is a time set, when would it expire?
+
+<li>the event queue doesn't start until told.
+
+</ul>
+
+</dl>
 
 <dt><tt>ColdFrame.Exceptions</tt>
 
@@ -102,42 +139,9 @@ classes).
 and inheritance relationships) without using non-standard extensions
 such as <i>WITH TYPE</i>.
 
-<dt><tt>ColdFrame.Events_G</tt>
+<dt><tt>ColdFrame.Interrupts</tt>
 
-<dd>Standard support for <a href="events.html">Events</a>. This is a
-basic generic event management specification; the time aspects are
-provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
-
-<dl>
-
-<dt><tt>ColdFrame.Events_G.Creation_G</tt>
-
-<dd>Provides a "creation" event type, for use where there's no
-application event to cause transition from the initial state.
-
-<dt><tt>ColdFrame.Events_G.Debug_G</tt>
-
-<dd>Adds logging (to standard output) to a concrete
-<tt>ColdFrame.Events_G.Event_Queue</tt>.
-
-<dt><tt>ColdFrame.Events_G.Standard_G</tt>
-
-<dd>A straightforward event queueing and dispatching service.
-
-<dt><tt>ColdFrame.Events_G.Test_G</tt>
-
-<dd>Adds unit test support to a concrete
-<tt>ColdFrame.Events_G.Event_Queue</tt>. The additional features are
-
-<ul>
-
-<li>inspection of Timers; is a time set, when would it expire?
-
-<li>the event queue doesn't start until told.
-
-</ul>
-
-</dl>
+<dd>Provides support for (simple) interrupt handling.
 
 </dl>
 
@@ -148,8 +152,8 @@ able to provide your own version.
 
 <p>In these cases, sample implementations are provided. The support
 code above is distributed in the directory
-<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code is
-under <tt>cf-<i>yyyymmdd</i>/project</tt>.
+<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code below
+is under <tt>cf-<i>yyyymmdd</i>/project</tt>.
 
 <dl>
 
