@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 98389b0e3f6c $
---  $Date: 2002/07/07 18:32:24 $
+--  $Revision: 7f82ad0d904d $
+--  $Date: 2002/07/08 19:18:33 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -72,10 +72,12 @@ package body ColdFrame.Events_G.Standard_G is
                    To_Fire_At : Time.Time) is
       TE : Timer_Queue_Entry_P := new Timer_Event;
    begin
+
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
       TE.The_Event := The_Event;
       On.The_Timer_Manager.Append (TE);
+
    end Post;
 
 
@@ -401,11 +403,13 @@ package body ColdFrame.Events_G.Standard_G is
 
    procedure Tear_Down (The_Queue : in out Event_Queue) is
    begin
+
       --  Perhaps this could be neater, but at least doing it in this
       --  order we know that the Timer Manager can't post any more
       --  events on a dead Dispatcher.
       abort The_Queue.The_Timer_Manager;
       abort The_Queue.The_Dispatcher;
+
    end Tear_Down;
 
 
