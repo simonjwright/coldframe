@@ -238,6 +238,8 @@ coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-instances.ads \
+coldframe-interrupts.adb \
+coldframe-interrupts.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-time_signature.ads \
@@ -264,6 +266,21 @@ coldframe-project-global_storage_pool.ads-standard: \
 	cp -p $< $@
 
 DEMO = \
+Interrupt_Handling.cat Interrupt_Handling.raw \
+Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb \
+Interrupt_Handling.impl/interrupt_handling-device-initialize.adb \
+Interrupt_Handling.impl/interrupt_handling-device-report_entry.adb \
+Interrupt_Handling.impl/interrupt_handling-device-set_timeout.adb \
+Interrupt_Handling.impl/interrupt_handling-device-t.adb \
+Interrupt_Handling.impl/interrupt_handling-events-initialize.adb \
+Interrupt_Handling.impl/interrupt_handling-harness.adb \
+Interrupt_Handling.impl/interrupt_handling-harness.ads \
+Library.cat Library.raw \
+Library.impl/library-test.adb \
+Library.impl/library-test.ads \
+Library.impl/library_test_harness.adb \
+Library.impl/library-tests.adb \
+Library.impl/library-tests.ads \
 Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
 Problem_Reporting.impl/problem_reporting-component-clean.adb \
