@@ -92,7 +92,12 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Digital_IO.cat"
-		quid       	"3DFCF76B0011"))
+		quid       	"3DFCF76B0011")
+	    (object Class_Category "Stub Test Interface"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Stub_Test_Interface.cat"
+		quid       	"4229E16101EA"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3EEED5F40234"
@@ -266,7 +271,7 @@
 			    default_color 	TRUE)
 			nlines     	1
 			max_width  	1790
-			label      	"$Id: Examples.mdl,v 962a3097c08e 2003/09/01 19:00:36 simon $")
+			label      	"$Id: Examples.mdl,v 4566fdf89a00 2005/03/05 22:01:27 simon $")
 		    (object Label @8
 			location   	(479, 60)
 			font       	(object Font
@@ -337,7 +342,41 @@
 			quidu      	"3E1B0DF501D9"
 			client     	@9
 			supplier   	@10
-			line_style 	0)))))
+			line_style 	0)
+		    (object CategoryView "Logical View::Stub Test Interface" @12
+			location   	(787, 1405)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@12
+			    location   	(551, 1366)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	472
+			    justify    	0
+			    label      	"Stub Test Interface")
+			stereotype 	(object ItemLabel
+			    Parent_View 	@12
+			    location   	(551, 1321)
+			    fill_color 	13434879
+			    anchor     	10
+			    nlines     	1
+			    max_width  	472
+			    justify    	0
+			    label      	"<<include>>")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4229E16101EA"
+			width      	484
+			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"3EEED5EE013C"
 	physical_models 	(list unit_reference_list)
