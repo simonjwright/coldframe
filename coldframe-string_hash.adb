@@ -1,4 +1,4 @@
--- Copyright (c) 2001 Simon Wright <simon@pushface.org>
+-- Copyright (C) Simon Wright <simon@pushface.org>
 
 -- Algorithm due to Donald Knuth; from an implementation by Daniel
 -- Gaudry <Daniel.Gaudry@wanadoo.fr>
@@ -22,7 +22,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-string_hash.adb,v a77d4f0c0477 2001/01/07 10:09:37 simon $
+-- $Id: coldframe-string_hash.adb,v 1e50618976a0 2001/01/12 20:36:19 simon $
 
 with Ada.Numerics.Discrete_Random;
 with Ada.Text_Io;

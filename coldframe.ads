@@ -1,4 +1,4 @@
--- Copyright (c) 2001 Simon Wright <simon@pushface.org>
+-- Copyright (C) Simon Wright <simon@pushface.org>
 
 -- This package is free software; you can redistribute it and/or
 -- modify it under terms of the GNU General Public License as
@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe.ads,v a77d4f0c0477 2001/01/07 10:09:37 simon $
+-- $Id: coldframe.ads,v 1e50618976a0 2001/01/12 20:36:19 simon $
 
 package Architecture is
 end Architecture;
