@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c23f1a844592 2001/10/10 04:55:29 simon $
+# $Id: normalize-rose.tcl,v 78594c91aa1f 2001/11/03 06:50:27 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -89,8 +89,12 @@ proc normalize {s} {
     set tmp [split $tmp]
     set res ""
     foreach w $tmp {
-	set res \
-		"$res [string toupper [string index $w 0]][string range $w 1 end]"
+	if [info exists caseExceptions([string tolower $w])] {
+	    set res "$res $caseExceptions([string tolower $w])"
+	} else {
+	    set res \
+	      "$res [string toupper [string index $w 0]][string range $w 1 end]"
+	}
     }
     regsub -all {[ \t]+} "[string trim $res]" "." res
     return $res
@@ -981,8 +985,12 @@ itcl::class Operation {
     }
 
     # called via stereotype mechanism to indicate that this is
-    # expected to be generated, and is only included for completeness
+    # expected to be generated or otherwise omitted, and is only
+    # included for completeness
     method -generated {dummy} {
+	set generated 1
+    }
+    method -navigation {dummy} {
 	set generated 1
     }
 
