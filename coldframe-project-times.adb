@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.adb,v $
---  $Revision: 05c65fa0c96a $
---  $Date: 2003/03/09 16:04:01 $
+--  $Revision: 0fd36a07cf31 $
+--  $Date: 2003/03/16 12:24:05 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -34,9 +34,11 @@ package body ColdFrame.Project.Times is
 
 
    function From_Now (Period : Duration) return Time is
-      use type Ada.Calendar.Time;
+      use type Ada.Real_Time.Time;
    begin
-      return Time'(Kind => Calendar, C => Ada.Calendar.Clock + Period);
+      return Time'(Kind => Real_Time,
+                   R => Ada.Real_Time.Clock
+                     + Ada.Real_Time.To_Time_Span (Period));
    end From_Now;
 
 
