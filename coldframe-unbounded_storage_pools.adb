@@ -26,13 +26,13 @@
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
 --  $RCSfile: coldframe-unbounded_storage_pools.adb,v $
---  $Revision: ee76e810d3cc $
---  $Date: 2003/07/24 19:28:43 $
+--  $Revision: 8df251b50607 $
+--  $Date: 2003/07/24 21:01:44 $
 --  $Author: simon $
 
 with System.Memory;
 
-package body ColdFrame.Project.Unbounded_Storage_Pools is
+package body ColdFrame.Unbounded_Storage_Pools is
 
 
    procedure Allocate
@@ -105,4 +105,4 @@ package body ColdFrame.Project.Unbounded_Storage_Pools is
    end Storage_Size;
 
 
-end ColdFrame.Project.Unbounded_Storage_Pools;
+end ColdFrame.Unbounded_Storage_Pools;

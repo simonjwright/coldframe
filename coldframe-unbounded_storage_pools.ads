@@ -26,14 +26,14 @@
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
 --  $RCSfile: coldframe-unbounded_storage_pools.ads,v $
---  $Revision: cba6978c4b4a $
---  $Date: 2003/07/24 19:37:18 $
+--  $Revision: 8df251b50607 $
+--  $Date: 2003/07/24 21:01:44 $
 --  $Author: simon $
 
 with System.Storage_Elements;
 with System.Storage_Pools;
 
-package ColdFrame.Project.Unbounded_Storage_Pools is
+package ColdFrame.Unbounded_Storage_Pools is
 
    pragma Elaborate_Body;
    --  Needed to ensure that library routines can execute allocators
@@ -57,4 +57,4 @@ package ColdFrame.Project.Unbounded_Storage_Pools is
      (Pool : Unbounded_Pool)
      return System.Storage_Elements.Storage_Count;
 
-end ColdFrame.Project.Unbounded_Storage_Pools;
+end ColdFrame.Unbounded_Storage_Pools;
