@@ -1,4 +1,4 @@
-<!-- $Id: ada-inheritance.xsl,v 84add1cbef4d 2002/06/06 07:22:53 simon $ -->
+<!-- $Id: ada-inheritance.xsl,v d2df40ab4bc8 2002/06/08 05:46:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Inheritance relationships. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -296,14 +296,14 @@
 
         <!--
              if {abbrev} = null then
-                return Create;
+                return Create; - or raise Program_Error if not auto-id
              else
                 pragma Assert
                   ({abbrev}.all in Instance'Class,
                    "unexpected class found at root in Create_Tree");
-                pragma Assert
-                  (Maps.Is_Bound (The_Container, (Id => Handle ({abbrev}).Id)),
-                   "unbound handle in Create_Tree");
+                - pragma Assert
+                -   (Maps.Is_Bound (The_Container, (Id => Handle ({abbrev}).Id)),
+                -    "unbound handle in Create_Tree");
                 return Handle ({abbrev});
              end if;
              -->
@@ -312,10 +312,25 @@
         <xsl:text>if </xsl:text>
         <xsl:value-of select="abbreviation"/>
         <xsl:text> = null then&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
-        <xsl:text>return Create;&#10;</xsl:text> <!-- XXX -->
-        <xsl:value-of select="$II"/>
 
+        <xsl:choose>
+
+          <xsl:when test="count(attribute[@identifier])=1
+                          and attribute[@identifier]/type='Autonumber'">
+            <xsl:value-of select="$III"/>
+            <xsl:text>return Create;&#10;</xsl:text> <!-- XXX -->
+          </xsl:when>
+
+          <xsl:otherwise>
+             <xsl:value-of select="$III"/>
+             <xsl:text>raise Program_Error;&#10;</xsl:text>
+             <xsl:value-of select="$III"/>
+             <xsl:text>return null;&#10;</xsl:text>
+         </xsl:otherwise>
+
+        </xsl:choose>
+
+        <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
@@ -325,6 +340,8 @@
         <xsl:text>.all in Instance'Class,&#10;</xsl:text>
         <xsl:value-of select="$IIIC"/>
         <xsl:text> "unexpected class found at root in Create_Tree");&#10;</xsl:text>
+
+        <!-- XXX this is hard; we'd have to make up the identifier.
         <xsl:value-of select="$III"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIIC"/>
@@ -333,6 +350,8 @@
         <xsl:text>).Id)),&#10;</xsl:text>
         <xsl:value-of select="$IIIC"/>
         <xsl:text> "unbound handle in Create_Tree");&#10;</xsl:text>
+        -->
+
         <xsl:value-of select="$III"/>
         <xsl:text>return Handle (</xsl:text>
         <xsl:value-of select="abbreviation"/>
@@ -364,9 +383,9 @@
                   ({rp1-abbrev} = {rp2-abbrev}
                    and then {rp2-abbrev} = {rp3-abbrev},
                    "mismatched handles in Create_Tree");
-                pragma Assert
-                  (Maps.Is_Bound (The_Container, (Id => Handle ({rp1-abbrev}).Id)),
-                   "unbound handle in Create_Tree");
+                - pragma Assert
+                -   (Maps.Is_Bound (The_Container, (Id => Handle ({rp1-abbrev}).Id)),
+                -    "unbound handle in Create_Tree");
                 return Handle ({rp1-abbrev});
              end if;
              -->
@@ -480,7 +499,7 @@
 
         </xsl:if>
 
-        <!-- difficult .. need to create identifiers ..
+        <!-- XXX difficult .. need to create identifiers ..
         <xsl:value-of select="$III"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIIC"/>
