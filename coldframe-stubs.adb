@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: c9852f38f0c1 $
---  $Date: 2005/02/26 11:58:03 $
+--  $Revision: d12544923d05 $
+--  $Date: 2005/02/26 11:58:40 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -236,7 +236,6 @@ package body ColdFrame.Stubs is
                                For_Call : Positive := 1;
                                Overhead_Bytes : Natural := Storage_Overhead) is
       subtype SEO is Ada.Streams.Stream_Element_Offset;
---        use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
@@ -348,7 +347,6 @@ package body ColdFrame.Stubs is
       Overhead_Bytes : Natural := Storage_Overhead)
      return Stream_Access is
       subtype SEO is Ada.Streams.Stream_Element_Offset;
---        use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
