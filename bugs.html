@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 235a9dda6c39 2004/07/26 16:33:48 simon $ -->
+<!-- $Id: bugs.html,v da4f78194183 2004/07/28 05:13:16 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -197,13 +197,24 @@ to generate a default, non-separate, body.
 
 <dd>If a <i>private</i> operation is marked &#171;init&#187; the
 resulting code won't compile.
-<br><i>Temporarily, don't use &#171;init&#187;.</i>
+<br><i>Temporarily, don't mix &#171;init&#187; and </i>private<i>.</i>
 
-<!-- next: 0275  -->
+<!-- next: 0276  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>28.vii.04</h3>
+
+<dl>
+
+<dt>0275 (raised 27.vii.04)
+
+<dd>Integer &#171;type&#187;s used to be generated as
+<tt>subtype</tt>s, now they are <tt>type</tt>s.
+
+</dl>
 
 <h3>14.vii.04</h3>
 
