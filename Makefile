@@ -438,7 +438,9 @@ States.impl/states-monitor-setup.adb \
 States.impl/states-t.adb \
 States.impl/states-t.ads
 
-TEST = \
+TEST = Test.mdl
+
+TEST += \
 coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
@@ -470,7 +472,6 @@ Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads
 
 TEST += \
-Test.mdl \
 Hierarchies.cat Hierarchies.raw \
 Hierarchies.gpr Hierarchies_Test.gpr \
 Hierarchies.impl/hierarchies-f_2-create_new.adb \
@@ -484,6 +485,14 @@ Hierarchies.test/hierarchies-test_deletions.adb \
 Hierarchies.test/hierarchies-test_deletions.ads \
 Hierarchies.test/hierarchies-test_finds.adb \
 Hierarchies.test/hierarchies-test_finds.ads
+
+TEST += \
+Regressions.cat Regressions.raw Regressions.gpr \
+Regressions.impl/regressions-find_active_singleton-t.adb \
+Regressions.impl/regressions-find_active-t.adb \
+Regressions.impl/regressions-suite.adb \
+Regressions.impl/regressions-suite.ads \
+Regressions.impl/regression_tests.adb
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
