@@ -1,11 +1,11 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20030614t</extractor>
 <name>Performance</name>
 <date>
-<year>2002</year>
-<month>8</month>
-<day>15</day>
-<time>16:26</time>
+<year>2003</year>
+<month>6</month>
+<day>21</day>
+<time>17:23</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -29,12 +29,14 @@
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>name</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Pets</type>
 <initial></initial>
@@ -43,18 +45,21 @@
 <operations>
 <operation stereotype="abstract">
 <name>speak</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>eat</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>get name</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Pets</return>
 <parameters>
@@ -62,10 +67,11 @@
 </operation>
 <operation>
 <name>set name</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Pets</type>
 <initial></initial>
@@ -80,7 +86,7 @@
 <name>Owners</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration : Alice, Bob, Carol, Dave ]]
+<documentation>[[ enumeration : Alice, Bob, Carol, Dave, Edward, Freddie, George, Henrietta, Ian, Joan, Kenneth, Liam, Mary, Norma, Oscar, Peter, Quentin, Richard, Simon, Tania, Ursula, Victor, Willa, Xena, Yorick, Zuleika ]]
 </documentation>
 <attributes>
 </attributes>
@@ -93,7 +99,7 @@
 <name>Pets</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ enumeration : Archie, Bast, Charlie, Denny, Egbert, Fido ]]</documentation>
+<documentation>[[ enumeration : Archie, Bast, Charlie, Denny, Egbert, Fido, Geronimo, Herhert, Ishbel, Jimmy, Karl, Lolly, Muppet, Nancy, Osric, Patsy, Queenie, Rover, Spot, Tigger, Uncle, Vanya, Whisky, Xerxes, Yankee, Zara]]</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -111,6 +117,7 @@
 <operations>
 <operation>
 <name>speak</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
@@ -129,6 +136,7 @@
 <operations>
 <operation>
 <name>speak</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
@@ -157,6 +165,7 @@
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Owners</type>
 <initial></initial>
