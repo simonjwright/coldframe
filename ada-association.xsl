@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 1cc6841dd299 2001/05/06 09:11:30 simon $ -->
+<!-- $Id: ada-association.xsl,v 935c20a9443d 2001/05/06 18:03:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1138,43 +1138,100 @@
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
 
-    <xsl:text>    function Nav is new ColdFrame.Navigate_From_One_To_One_Collection&#10;</xsl:text>
+    <xsl:choose>
+
+      <xsl:when test="$role-a/@multiple">
+        
+        <xsl:text>    function Nav is new ColdFrame.Navigate_From_Many_Collection&#10;</xsl:text>
+        
+        <xsl:text>       (Many_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        
+        <xsl:text>        Many =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        
+        <xsl:text>        From =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        
+        <xsl:text>        One_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        
+        <xsl:text>        One =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        
+        <xsl:text>        Set =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Sets.Set,&#10;</xsl:text>
+        
+        <xsl:text>        Add_To_Set =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Sets.Add,&#10;</xsl:text>
+        
+        <xsl:text>        To =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        <xsl:text>        Navigate_From_Many =&gt; </xsl:text>
+        <xsl:value-of select="$role-a/name"/>
+        <xsl:text>,&#10;</xsl:text>
+        
+        <xsl:text>        Clear =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Clear,&#10;</xsl:text>
+        
+        <xsl:text>        Add_To_Result =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Append);&#10;</xsl:text>
+        
+      </xsl:when>
       
-    <xsl:text>       (First_Handle =&gt; </xsl:text>
-    <xsl:value-of select="$c"/>
-    <xsl:text>.Handle,&#10;</xsl:text>
-    
-    <xsl:text>        First =&gt; </xsl:text>
-    <xsl:value-of select="$c"/>
-    <xsl:text>.Abstract_Containers,&#10;</xsl:text>
-    
-    <xsl:text>        From =&gt; </xsl:text>
-    <xsl:value-of select="$c"/>
-    <xsl:text>.Collections.Collection,&#10;</xsl:text>
-    
-    <xsl:text>        Second_Handle =&gt; </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Handle,&#10;</xsl:text>
-    
-    <xsl:text>        Second =&gt; </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers,&#10;</xsl:text>
-    
-    <xsl:text>        To =&gt; </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Collection,&#10;</xsl:text>
-    
-    <xsl:text>        Navigate_From_First =&gt; </xsl:text>
-    <xsl:value-of select="$role-a/name"/>
-    <xsl:text>,&#10;</xsl:text>
-    
-    <xsl:text>        Clear =&gt; </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Clear,&#10;</xsl:text>
-    
-    <xsl:text>        Add_To_Result =&gt; </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Collections.Append);&#10;</xsl:text>
+      <xsl:otherwise>
+
+        <xsl:text>    function Nav is new ColdFrame.Navigate_From_One_To_One_Collection&#10;</xsl:text>
+      
+        <xsl:text>       (First_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        
+        <xsl:text>        First =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        
+        <xsl:text>        From =&gt; </xsl:text>
+        <xsl:value-of select="$c"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        
+        <xsl:text>        Second_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        
+        <xsl:text>        Second =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        
+        <xsl:text>        To =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        
+        <xsl:text>        Navigate_From_First =&gt; </xsl:text>
+        <xsl:value-of select="$role-a/name"/>
+        <xsl:text>,&#10;</xsl:text>
+        
+        <xsl:text>        Clear =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Clear,&#10;</xsl:text>
+        
+        <xsl:text>        Add_To_Result =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Append);&#10;</xsl:text>
+        
+      </xsl:otherwise>
+      
+    </xsl:choose>
 
     <xsl:text>  begin&#10;</xsl:text>
 
