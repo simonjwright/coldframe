@@ -8,50 +8,68 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3DFCF75D00CF"
+    documentation 	
+|This domain represents an electronic houlsehold control system.
+|The first release only manages the stairwell lighting system.
+|
+|[[ revision : $Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $ ]]
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Lamp"
 	    quid       	"3DFCFC1401ED"
+	    documentation 	
+|There is a lamp beween each pair of landings.
+|When the lamp is activated, it comes on for a preset period.
+|If it is activated again while it is still on, the activation period is extended by the preset period.
+	    
 	    operations 	(list Operations
 		(object Operation "initialize"
 		    quid       	"3DFEFDE3027F"
+		    documentation 	"This operation initializes the Lamps and Buttons, and connects to the Digital IO domaion."
 		    stereotype 	"init"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "button_pushed"
 		    quid       	"3DFF62C10206"
-		    documentation 	"An associated button has been pushed."
+		    documentation 	"This operation is called when an associated button has been pushed. It posts the necessary events to the instance's state machine."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "turn off"
 		    quid       	"3DFCFF8A0038"
+		    documentation 	"This state entry action turns off the associated signal via Digital IO."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "turn on"
 		    quid       	"3DFCFF8D02BE"
+		    documentation 	"This state entry action turns on the associated signal via Digital IO."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "set timeout"
 		    quid       	"3DFCFF900218"
+		    documentation 	"This state entry action sets the instance Timeout to the required activation period."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "clear timeout"
 		    quid       	"3DFCFF960036"
+		    documentation 	"This state entry action unsets the instance Timeout."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "name"
 		    quid       	"3DFCFDA40030"
+		    documentation 	"Each Lamp is uniquely identified by its name. The name corresponds to the geographical location of the lamp."
 		    stereotype 	"id"
 		    type       	"Lamp Name")
 		(object ClassAttribute "timeout"
 		    quid       	"3DFCFF9F00A7"
+		    documentation 	"This ColdFrame Timer is used to turn off the Lamp at the end of its activation period."
 		    type       	"Timer"))
 	    statemachine 	(object State_Machine "State/Activity Model"
 		quid       	"3DFCFEA50061"
@@ -69,6 +87,10 @@
 			type       	"StartState")
 		    (object State "idle"
 			quid       	"3DFCFEB10376"
+			documentation 	
+|In this state, the Lamp is off.
+|It's assumed that it's acceptable to turn the Lamp off even if it is off already.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3DFCFED6017A"
@@ -87,6 +109,7 @@
 			type       	"Normal")
 		    (object State "lit"
 			quid       	"3DFCFEBB001D"
+			documentation 	"In this state, the Lamp is lit and the Timer is set."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3DFCFEEC0009"
@@ -118,6 +141,10 @@
 			type       	"Normal")
 		    (object State "restarted"
 			quid       	"3DFCFEC30213"
+			documentation 	
+|This is an ephemeral state, which clears the instance Timeout and drops through to the Lit state, which will turn the Lamp on and reset the Timeout.
+|It's assumed that  it's acceptable to turn the Lamp on even if it is on already.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3DFCFF03023D"
@@ -328,13 +355,19 @@
 				    (1650, 950)
 				    (1469, 776))
 				line_style 	0
-				x_offset   	FALSE))))))
+				x_offset   	FALSE)
+			    (object Label @13
+				location   	(150, 1380)
+				nlines     	1
+				max_width  	1585
+				label      	"$Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $"))))))
 	(object Class "Button"
 	    quid       	"3DFCFC250129"
+	    documentation 	"There is a pushbutton on each landing. Each pushbutton controls a number of Lamps; when the button is pushed, the lamps are activated."
 	    operations 	(list Operations
 		(object Operation "changed"
 		    quid       	"3DFCFDE40258"
-		    documentation 	"Acts as receiver of state changes from Digital IO."
+		    documentation 	"Acts as receiver of state changes from Digital IO, via Signal State Callback."
 		    stereotype 	"class"
 		    parameters 	(list Parameters
 			(object Parameter "s"
@@ -351,13 +384,20 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "name"
 		    quid       	"3DFCFD8A026D"
+		    documentation 	"Each Button is uniquely identified by its name. The name corresponds to the geographical location of the button."
 		    stereotype 	"id"
 		    type       	"Button Name")))
 	(object Class "Button to Lamp"
-	    quid       	"3DFCFC830160")
+	    quid       	"3DFCFC830160"
+	    documentation 	
+|This association class is required by ColdFrame to support the many-to-many association A1 but has no functionality in the present understanding of the problem domain.
+|A possible future enhancement such as having the "on" time of the lamp depend on which button was used to switch it on might lead to a role for this class.
+	    )
 	(object Class "Lamp Name"
 	    quid       	"3DFCFD180255"
 	    documentation 	
+|There is a lamp beween each pair of landings. This type names the lamps.
+|
 |[[  enumeration :
 |lamp a,
 |lamp b,
@@ -368,6 +408,8 @@
 	(object Class "Button Name"
 	    quid       	"3DFCFD3C0008"
 	    documentation 	
+|There is a pushbutton on each landing. This type names the pushbuttons.
+|
 |[[ enumeration:
 |floor 0,
 |floor 1,
@@ -378,10 +420,17 @@
 	    stereotype 	"type")
 	(object Class "Signal State"
 	    quid       	"3DFCFE60018E"
-	    documentation 	"[[ imported : Digital IO ]]"
+	    documentation 	
+|This type is used by the supporting Digital IO domain to report switch state changes.
+|
+|[[ imported : Digital IO ]]
+	    
 	    stereotype 	"type")
 	(object Association "a1"
 	    quid       	"3DFCFC3603D7"
+	    documentation 	
+|This association represents the assignment of Button to Lamp; when a Button is pushed, all the Lamps that it "controls" are activated (by calling the Button_Pushed operation).
+	    
 	    roles      	(list role_list
 		(object Role "controls"
 		    quid       	"3DFCFC370338"
@@ -408,14 +457,14 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::House Management::Lamp" @13
+		(object ClassView "Class" "Logical View::House Management::Lamp" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(768, 1136)
 		    label      	(object ItemLabel
-			Parent_View 	@13
+			Parent_View 	@14
 			location   	(509, 905)
 			fill_color 	13434879
 			nlines     	1
@@ -427,26 +476,26 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCFC1401ED"
 		    compartment 	(object Compartment
-			Parent_View 	@13
+			Parent_View 	@14
 			location   	(509, 961)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	515)
+			max_width  	522)
 		    width      	536
 		    height     	484
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Button" @14
+		(object ClassView "Class" "Logical View::House Management::Button" @15
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(768, 384)
+		    location   	(765, 390)
 		    label      	(object ItemLabel
-			Parent_View 	@14
-			location   	(433, 266)
+			Parent_View 	@15
+			location   	(430, 272)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	670
@@ -457,22 +506,22 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCFC250129"
 		    compartment 	(object Compartment
-			Parent_View 	@14
-			location   	(433, 322)
+			Parent_View 	@15
+			location   	(430, 328)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	667)
+			max_width  	675)
 		    width      	688
 		    height     	258
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "a1" @15
-		    location   	(768, 703)
-		    label      	(object SegLabel @16
-			Parent_View 	@15
-			location   	(768, 644)
+		(object AssociationViewNew "a1" @16
+		    location   	(765, 706)
+		    label      	(object SegLabel @17
+			Parent_View 	@16
+			location   	(765, 647)
 			font       	(object Font
 			    italics    	TRUE)
 			anchor     	1
@@ -488,12 +537,12 @@
 		    line_color 	3342489
 		    quidu      	"3DFCFC3603D7"
 		    roleview_list 	(list RoleViews
-			(object RoleView "controls" @17
-			    Parent_View 	@15
-			    location   	(0, 319)
-			    label      	(object SegLabel @18
-				Parent_View 	@17
-				location   	(887, 866)
+			(object RoleView "controls" @18
+			    Parent_View 	@16
+			    location   	(-3, 322)
+			    label      	(object SegLabel @19
+				Parent_View 	@18
+				location   	(885, 867)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -506,12 +555,12 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3DFCFC370338"
-			    client     	@15
-			    supplier   	@13
+			    client     	@16
+			    supplier   	@14
 			    line_style 	0
-			    label      	(object SegLabel @19
-				Parent_View 	@17
-				location   	(711, 859)
+			    label      	(object SegLabel @20
+				Parent_View 	@18
+				location   	(709, 861)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -521,12 +570,12 @@
 				pctDist    	0.827451
 				height     	58
 				orientation 	1))
-			(object RoleView "is controlled by" @20
-			    Parent_View 	@15
-			    location   	(0, 319)
-			    label      	(object SegLabel @21
-				Parent_View 	@20
-				location   	(934, 538)
+			(object RoleView "is controlled by" @21
+			    Parent_View 	@16
+			    location   	(-3, 322)
+			    label      	(object SegLabel @22
+				Parent_View 	@21
+				location   	(931, 544)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -539,12 +588,12 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3DFCFC370342"
-			    client     	@15
-			    supplier   	@14
+			    client     	@16
+			    supplier   	@15
 			    line_style 	0
-			    label      	(object SegLabel @22
-				Parent_View 	@20
-				location   	(711, 533)
+			    label      	(object SegLabel @23
+				Parent_View 	@21
+				location   	(708, 539)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -554,14 +603,14 @@
 				pctDist    	0.897638
 				height     	58
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @23
+		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(352, 704)
 		    label      	(object ItemLabel
-			Parent_View 	@23
+			Parent_View 	@24
 			location   	(198, 658)
 			fill_color 	13434879
 			nlines     	1
@@ -576,20 +625,20 @@
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssocAttachView "" @24
+		(object AssocAttachView "" @25
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@23
-		    supplier   	@15
+		    client     	@24
+		    supplier   	@16
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::House Management::Lamp Name" @25
+		(object ClassView "Class" "Logical View::House Management::Lamp Name" @26
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 592)
 		    label      	(object ItemLabel
-			Parent_View 	@25
+			Parent_View 	@26
 			location   	(2034, 566)
 			fill_color 	13434879
 			nlines     	1
@@ -597,7 +646,7 @@
 			justify    	0
 			label      	"Lamp Name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@25
+			Parent_View 	@26
 			location   	(2034, 521)
 			fill_color 	13434879
 			anchor     	10
@@ -613,14 +662,14 @@
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Button Name" @26
+		(object ClassView "Class" "Logical View::House Management::Button Name" @27
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 416)
 		    label      	(object ItemLabel
-			Parent_View 	@26
+			Parent_View 	@27
 			location   	(2029, 390)
 			fill_color 	13434879
 			nlines     	1
@@ -628,7 +677,7 @@
 			justify    	0
 			label      	"Button Name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@26
+			Parent_View 	@27
 			location   	(2029, 345)
 			fill_color 	13434879
 			anchor     	10
@@ -644,23 +693,23 @@
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::House Management::Signal State" @27
+		(object ClassView "Class" "Logical View::House Management::Signal State" @28
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(2160, 752)
+		    location   	(2160, 768)
 		    label      	(object ItemLabel
-			Parent_View 	@27
-			location   	(2033, 726)
+			Parent_View 	@28
+			location   	(2033, 742)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	254
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@27
-			location   	(2033, 681)
+			Parent_View 	@28
+			location   	(2033, 697)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -674,4 +723,29 @@
 		    width      	272
 		    height     	164
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object Label @29
+		    location   	(144, 1856)
+		    nlines     	1
+		    max_width  	1585
+		    label      	"$Id: House_Management.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $")
+		(object NoteView @30
+		    location   	(1635, 1140)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1385, 1076)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	465
+			label      	"Statechart: Lamp / Lifecycle")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	525
+		    height     	140
+		    quidu      	"3DFCFEA5006B")
+		(object AttachView "" @31
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@30
+		    supplier   	@14
+		    line_style 	0)))))

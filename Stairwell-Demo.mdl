@@ -17,8 +17,8 @@
 	clipIconLabels 	TRUE
 	autoResize 	TRUE
 	snapToGrid 	TRUE
-	gridX      	16
-	gridY      	16
+	gridX      	15
+	gridY      	15
 	defaultFont 	(object Font
 	    size       	10
 	    face       	"Arial"
@@ -74,10 +74,10 @@
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::House Management" @1
-			location   	(480, 416)
+			location   	(480, 400)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(336, 332)
+			    location   	(336, 316)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -104,7 +104,12 @@
 			fill_color 	13434879
 			quidu      	"3DFCF76B0011"
 			width      	300
-			height     	180)))))
+			height     	180)
+		    (object Label @3
+			location   	(175, 1040)
+			nlines     	1
+			max_width  	1585
+			label      	"$Id: Stairwell-Demo.mdl,v 9bc491d989e2 2002/12/28 17:25:18 simon $")))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"3DFCF74B02E9"
 	physical_models 	(list unit_reference_list)

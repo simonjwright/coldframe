@@ -8,19 +8,26 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3DFCF76B0011"
+    documentation 	
+|This domain manages digital (discrete) input/output.
+|It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Signal"
 	    quid       	"3DFCF783026E"
+	    documentation 	"Signals may be Input (from the hardware or HCI) or Output (to the hardware or HCI)."
 	    operations 	(list Operations
 		(object Operation "initialize"
 		    quid       	"3DFEFE0B0222"
+		    documentation 	"Creates all the Signals."
 		    stereotype 	"init"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "changed"
 		    quid       	"3DFCF9A60243"
+		    documentation 	"Called when a signal has changed."
 		    stereotype 	"abstract"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -34,6 +41,7 @@
 		    uid        	0)
 		(object Operation "set state"
 		    quid       	"3DFF69A503E3"
+		    documentation 	"Set the signal's state as indicated; call Changed if it has changed."
 		    parameters 	(list Parameters
 			(object Parameter "to"
 			    type       	"Boolean"))
@@ -58,6 +66,7 @@
 		    initv      	"False")))
 	(object Class "Input"
 	    quid       	"3DFCF78D0241"
+	    documentation 	"Input Signals (from the hardware or, in this case, the HCI) support change notification via callback."
 	    superclasses 	(list inheritance_relationship_list
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F000B2"
@@ -67,11 +76,13 @@
 	    operations 	(list Operations
 		(object Operation "changed"
 		    quid       	"3DFCF9BA03AA"
+		    documentation 	"Called when the signal has changed state; notify any registered observers of Signal State."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
 	(object Class "Output"
 	    quid       	"3DFCF7950224"
+	    documentation 	"Output signals are polled by the HCI."
 	    superclasses 	(list inheritance_relationship_list
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F700B2"
@@ -81,36 +92,38 @@
 	    operations 	(list Operations
 		(object Operation "changed"
 		    quid       	"3DFCF9B40008"
+		    documentation 	"Called when the signal has changed; no action for output signals (the HCI polls)."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
 	(object Class "Signal State"
 	    quid       	"3DFCF80601AE"
-	    documentation 	"[[callback : 5 ]]"
+	    documentation 	
+|Provides application domains with callback facilities for input signal state changes.
+|
+|[[callback : 5 ]]
+	    
 	    stereotype 	"type"
-	    operations 	(list Operations
-		(object Operation "receiver"
-		    quid       	"3DFCF8DD0334"
-		    stereotype 	"access"
-		    parameters 	(list Parameters
-			(object Parameter "s"
-			    type       	"Signal State"))
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "s"
 		    quid       	"3DFCF83602DA"
+		    documentation 	"The name of the signal that has changed."
 		    type       	"Signal Name")
 		(object ClassAttribute "state"
 		    quid       	"3DFCF84002CA"
+		    documentation 	"The state that the signal has changed to."
 		    type       	"Boolean")))
 	(object Class "Application"
 	    quid       	"3DFCFA6E0024"
+	    documentation 	
+|The interface offered to support applications.
+|State changes are visible via callback on Signal State.
+	    
 	    stereotype 	"public"
 	    operations 	(list Operations
 		(object Operation "set output"
 		    quid       	"3DFCFAC002AC"
+		    documentation 	"Sets the specified output signal to the given state."
 		    parameters 	(list Parameters
 			(object Parameter "s"
 			    type       	"Signal Name")
@@ -121,10 +134,12 @@
 		    uid        	0)))
 	(object Class "HCI"
 	    quid       	"3DFCFA83024B"
+	    documentation 	"The interface offered to support HCI."
 	    stereotype 	"public"
 	    operations 	(list Operations
 		(object Operation "get state"
 		    quid       	"3DFCFB0202B1"
+		    documentation 	"Returns the state of the specified signal."
 		    parameters 	(list Parameters
 			(object Parameter "of signal"
 			    type       	"Signal Name"))
@@ -134,6 +149,7 @@
 		    uid        	0)
 		(object Operation "set input"
 		    quid       	"3DFCFB3701DB"
+		    documentation 	"Sets the specified input signal to the given value."
 		    parameters 	(list Parameters
 			(object Parameter "of signal"
 			    type       	"Signal Name")
@@ -145,6 +161,9 @@
 	(object Class "Signal Name"
 	    quid       	"3DFCFB77033C"
 	    documentation 	
+|Names the supported digital signals.
+|The 'floor' signals are inputs, the 'lamp' signals are outputs.
+|
 |[[ enumeration:
 |floor 0,
 |floor 1,
@@ -171,10 +190,10 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(720, 1264)
+		    location   	(720, 1260)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(386, 1056)
+			location   	(386, 1052)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	668
@@ -186,12 +205,12 @@
 		    quidu      	"3DFCF783026E"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(386, 1112)
+			location   	(386, 1108)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	8
-			max_width  	665)
+			max_width  	672)
 		    width      	686
 		    height     	438
 		    annotation 	8
@@ -221,7 +240,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	215)
+			max_width  	222)
 		    width      	236
 		    height     	168
 		    annotation 	8
@@ -229,7 +248,7 @@
 		(object InheritView "g1" @3
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1199, 1127)
+			location   	(1199, 1126)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -246,22 +265,22 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(2528, 336)
+		    location   	(2535, 330)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2180, 238)
+			location   	(2376, 254)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	696
+			max_width  	318
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(2180, 193)
+			location   	(2376, 209)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	696
+			max_width  	318
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
@@ -270,14 +289,14 @@
 		    quidu      	"3DFCF80601AE"
 		    compartment 	(object Compartment
 			Parent_View 	@4
-			location   	(2180, 294)
+			location   	(2376, 310)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	4
-			max_width  	700)
-		    width      	714
-		    height     	308
+			nlines     	3
+			max_width  	315)
+		    width      	336
+		    height     	264
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Digital IO::Input" @5
@@ -285,10 +304,10 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1440, 1552)
+		    location   	(1455, 1545)
 		    label      	(object ItemLabel
 			Parent_View 	@5
-			location   	(1331, 1479)
+			location   	(1346, 1472)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	218
@@ -300,7 +319,7 @@
 		    quidu      	"3DFCF78D0241"
 		    compartment 	(object Compartment
 			Parent_View 	@5
-			location   	(1331, 1535)
+			location   	(1346, 1528)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -313,7 +332,7 @@
 		(object InheritView "g1" @6
 		    label      	(object ItemLabel
 			Parent_View 	@6
-			location   	(1192, 1452)
+			location   	(1200, 1445)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -359,7 +378,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	830)
+			max_width  	837)
 		    width      	852
 		    height     	220
 		    annotation 	8
@@ -433,4 +452,9 @@
 		    width      	274
 		    height     	164
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object Label @10
+		    location   	(192, 2288)
+		    nlines     	1
+		    max_width  	1585
+		    label      	"$Id: Digital_IO.cat,v 9bc491d989e2 2002/12/28 17:25:18 simon $")))))
