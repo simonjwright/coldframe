@@ -1,1 +1,2 @@
 library-test.adb library-test
+*.gcov
