@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 5fc34b198cca $
---  $Date: 2004/04/20 16:28:41 $
+--  $Revision: 1b8a362bcae5 $
+--  $Date: 2004/04/21 14:53:46 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -65,7 +65,7 @@ package body Generated_Lines_Support is
                I : Info_Base renames Current_Item (It).all;
             begin
                if Logging then
-                  Put_Line (I.Named.all & " caught " & N);
+                  Put_Line (Standard_Error, I.Named.all & " caught " & N);
                end if;
                I.Files := I.Files + 1;
                I.Lines := I.Lines + Count_Lines (File_Named);
@@ -77,17 +77,23 @@ package body Generated_Lines_Support is
    end Count;
 
 
-   procedure Report is
+   procedure Report (For_Directory : Path_Name;
+                     With_Header : Boolean) is
       It : Abstract_Containers.Iterator'Class
         := Collections.New_Iterator (Patterns);
       use Abstract_Containers;
    begin
-      Put_Line ("Category, Files, Lines");
+      if With_Header then
+         Put_Line ("Directory, Category, Files, Lines,");
+      end if;
       while not Is_Done (It) loop
          declare
             I : Info_Base renames Current_Item (It).all;
          begin
-            Put_Line (I.Named.all & "," & I.Files'Img & "," & I.Lines'Img);
+            Put_Line (For_Directory & ","
+                        & I.Named.all & ","
+                        & I.Files'Img & ","
+                        & I.Lines'Img & ",");
          end;
          Next (It);
       end loop;

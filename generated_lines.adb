@@ -13,11 +13,10 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: 04944f26f968 $
---  $Date: 2003/06/05 20:40:56 $
+--  $Revision: 1b8a362bcae5 $
+--  $Date: 2004/04/21 14:53:46 $
 --  $Author: simon $
 
-with Ada.Text_IO; use Ada.Text_IO;
 with GNAT.Command_Line;
 with GNAT.Directory_Operations; use GNAT.Directory_Operations;
 with GNAT.OS_Lib; use GNAT.OS_Lib;
@@ -89,11 +88,15 @@ begin
 
       if Dir'Length = 0 then
 
-         Scan_Directory (Get_Current_Dir,
-                         Verbosely => Verbose,
-                         Recursively => Recursive,
-                         Logging => Logging);
-         Generated_Lines_Support.Report;
+         declare
+            D : constant String := Get_Current_Dir;
+         begin
+            Scan_Directory (D,
+                            Verbosely => Verbose,
+                            Recursively => Recursive,
+                            Logging => Logging);
+            Generated_Lines_Support.Report (D, With_Header => Verbose);
+         end;
 
       else
 
@@ -102,7 +105,7 @@ begin
             Verbosely => Verbose,
             Recursively => Recursive,
             Logging => Logging);
-         Generated_Lines_Support.Report;
+         Generated_Lines_Support.Report (Dir, With_Header => Verbose);
 
       end if;
 
