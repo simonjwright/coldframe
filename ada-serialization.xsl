@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 1e2f23e7e5f0 2003/02/02 17:23:10 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 7d57c0eb1fbb 2003/02/12 22:13:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -43,6 +43,8 @@
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>
 
+      <xsl:value-of select="$blank-line"/>
+
       <xsl:for-each select="type[@serializable]">
         <xsl:sort select="name"/>
 
@@ -66,11 +68,15 @@
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
 
+            <xsl:value-of select="$blank-line"/>
+
             <xsl:value-of select="$I"/>
             <xsl:text>function Image (S : </xsl:text>
             <xsl:value-of select="name"/>
             <xsl:text>) return String;&#10;</xsl:text>
             
+            <xsl:value-of select="$blank-line"/>
+
       </xsl:for-each>
 
       <xsl:text>end </xsl:text>
@@ -93,6 +99,8 @@
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>
       
+      <xsl:value-of select="$blank-line"/>
+
       <xsl:apply-templates
         select="type[@serializable]"
         mode="serializable-type-image-body">
