@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 24a3dd8de3f1 $
---  $Date: 2002/09/13 20:01:30 $
+--  $Revision: 75ba6902dfaa $
+--  $Date: 2002/09/21 11:11:37 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -33,7 +33,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue) is
+                   On : access Event_Queue_Base) is
    begin
       Put_Line ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
       Post (The_Event => The_Event,
@@ -42,7 +42,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Post_To_Self (The_Event : Event_P;
-                           On : access Event_Queue) is
+                           On : access Event_Queue_Base) is
    begin
       Put_Line
         ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag) & " to self");
@@ -52,7 +52,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Post (The_Event : Event_P;
-                   On : access Event_Queue;
+                   On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
    begin
       Put_Line ("posting a " &
@@ -66,7 +66,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Set (The_Timer : in out Timer;
-                  On : access Event_Queue;
+                  On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
@@ -82,7 +82,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Unset (The_Timer : in out Timer;
-                    On : access Event_Queue) is
+                    On : access Event_Queue_Base) is
 
    begin
       if The_Timer.The_Entry = null then
@@ -105,7 +105,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue) is
+                             On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
@@ -113,7 +113,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue) is
+                               On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then
@@ -132,7 +132,7 @@ package body ColdFrame.Events_G.Debug_G is
 
 
    procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue) is
+                                On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then
