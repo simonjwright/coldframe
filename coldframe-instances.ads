@@ -20,23 +20,23 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.ads,v $
---  $Revision: 6972c4943ad9 $
---  $Date: 2001/10/13 13:47:57 $
+--  $Revision: f93ee5ec8abd $
+--  $Date: 2002/01/27 11:12:50 $
 --  $Author: simon $
 
 package ColdFrame.Instances is
 
-   type Base is abstract tagged limited private;
+   type Instance_Base is abstract tagged limited private;
    --  All Instances are derived from this type.
    --
    --  The purpose is to allow mutual visibility (to support
    --  associations and inheritance relationships) without using
    --  non-standard extensions such as WITH TYPE.
 
-   type Handle is access all Base'Class;
+   type Handle is access all Instance_Base'Class;
 
 private
 
-   type Base is abstract tagged limited null record;
+   type Instance_Base is abstract tagged limited null record;
 
 end ColdFrame.Instances;
