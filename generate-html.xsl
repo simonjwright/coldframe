@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 31eebd8dff03 2002/01/08 21:06:30 simon $ -->
+<!-- $Id: generate-html.xsl,v 39999868f6dc 2002/01/20 10:39:43 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -198,9 +198,9 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
-    <xsl:if test="operation[not(@generated)]">
+    <xsl:if test="operation">
       <h4>Operations</h4>
-      <xsl:apply-templates select="operation[not(@generated)]">
+      <xsl:apply-templates select="operation">
         <xsl:sort select="."/>
       </xsl:apply-templates>
     </xsl:if>
@@ -266,30 +266,37 @@
 
   <!-- Output Operation info. -->
   <xsl:template match="operation">
-    <h5><xsl:value-of select="name"/></h5>
-    <xsl:if test="@abstract">
-      <p>This operation is abstract.</p>
-    </xsl:if>
-    <xsl:if test="@class">
-      <p>This is a class operation.</p>
-    </xsl:if>
-    <xsl:if test="@finalize">
-      <p>This is a finalization operation.</p>
-    </xsl:if>
-    <xsl:if test="@generated">
-      <p>This is an automatically-generated operation.</p>
-    </xsl:if>
-    <xsl:if test="@init">
-      <p>This is an initialization operation.</p>
-    </xsl:if>
-    <xsl:if test="@return">
-      <p>
-        <xsl:text>Returns </xsl:text>
+    <h5>
+      <xsl:value-of select="name"/>
+      <xsl:if test="@abstract">
+        <xsl:text> (abstract)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@class">
+        <xsl:text> (class)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@finalize">
+        <xsl:text> (finalization)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@suppressed='framework'">
+        <xsl:text> (automatically-generated)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@suppressed='navigation'">
+        <xsl:text> (navigation)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@suppressed='instantiation'">
+        <xsl:text> (instantiated)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@init">
+        <xsl:text> (initialization)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@return">
+        <xsl:text> returns </xsl:text>
         <xsl:call-template name="type-name-linked">
           <xsl:with-param name="type" select="@return"/>
         </xsl:call-template>
-      </p>
-    </xsl:if>
+        <xsl:text></xsl:text>
+      </xsl:if>
+    </h5>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="parameter">
       <h6>Parameters</h6>
@@ -540,19 +547,13 @@
   <!-- Utilities -->
 
   <!-- Output a type name, with a hyperlink to the definition if the
-       type is non-standard. -->
+       type is a class or non-standard. -->
   <xsl:template name="type-name-linked">
     <xsl:param name="type" select="."/>
 
-    <xsl:variable name="type-name">
-      <xsl:call-template name="type-name">
-        <xsl:with-param name="type" select="$type"/>
-      </xsl:call-template>
-    </xsl:variable>
-
     <xsl:variable
       name="defined"
-      select="/domain/type[name=$type-name]"/>
+      select="/domain/type[name=$type] | /domain/class[name=$type]"/>
 
     <xsl:choose>
       
@@ -561,11 +562,11 @@
         <xsl:choose>
 
           <xsl:when test="$defined/standard">
-            <xsl:value-of select="$type-name"/>
+            <xsl:value-of select="$type"/>
           </xsl:when>
 
           <xsl:otherwise>
-            <a href="#{$type-name}"><xsl:value-of select="$type-name"/></a>
+            <a href="#{$type}"><xsl:value-of select="$type"/></a>
           </xsl:otherwise>
           
         </xsl:choose>
@@ -573,7 +574,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:value-of select="$type-name"/>
+        <xsl:value-of select="$type"/>
       </xsl:otherwise>
 
     </xsl:choose>
