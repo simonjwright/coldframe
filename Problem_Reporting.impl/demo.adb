@@ -1,17 +1,13 @@
 with Ada.Text_Io;
 With Problem_Reporting.Interface;
--- with Problem_Reporting.Interface.Add_Component;
--- with Problem_Reporting.Interface.Add_Problem;
--- with Problem_Reporting.Interface.Delete_Component;
--- with Problem_Reporting.Interface.Note_Defect;
--- with Problem_Reporting.Interface.Reject_Problem;
--- with Problem_Reporting.Interface.Report_Problems;
 
 procedure Demo is
 
   use Problem_Reporting.Interface;
 
 begin
+
+  Problem_Reporting.Initialize;
 
   Add_Component ("foo");
   Add_Component ("bar");
