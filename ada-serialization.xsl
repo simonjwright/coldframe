@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-serialization.xsl,v f0a7698870dd 2004/04/29 05:09:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,7 +36,9 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:value-of select="$blank-line"/>
 
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:if test="type/@serializable">
       <xsl:text>with ColdFrame.Project.Serialization;&#10;</xsl:text>
     </xsl:if>
@@ -53,7 +55,7 @@
       <!--
            type {name}
            is new ColdFrame.Project.Serialization.Base with record
-           Payload : {domain}.{name};
+              Payload : {domain}.{name};
            end record;
            function Image (S : {name}) return String;
            -->
@@ -99,6 +101,9 @@
 
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
+      <xsl:value-of select="$blank-line"/>
+
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>
