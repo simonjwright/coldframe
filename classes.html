@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: classes.html,v c7f0e15a51a8 2004/10/30 17:11:32 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -31,7 +31,7 @@ discussing here:
 
 <ul>
 
-<li>you use the strereotype <em>&#171;type&#187;</em>, or one of the
+<li>you use the stereotype <em>&#171;type&#187;</em>, or one of the
 shorthand stereotypes
 <ul>
 <li><em>&#171;callback&#187;</em>,
@@ -52,7 +52,11 @@ the problem.
 
 </ul>
 
-<p>Given that, classes come in two flavours: normal and singleton.
+<p>Given that, classes come in three flavours: normal, singleton and
+utility.
+
+<p>Utility classes have no instances (you could think of them as
+representing a library of functions).
 
 <p>A singleton class (marked <em>&#171;singleton&#187;</em>) always
 has precisely one instance; you don't need to create it, and you can't
@@ -142,7 +146,7 @@ preferred, by setting the <i>Concurrency</i> attribute in the
 <i>Detail</i> tab of the Rose specification dialog box to
 <i>Active</i> (which is less immediately visible).
 
-<h3>Tags</h3>
+<h3><a name="tags">Tags</a></h3>
 
 <p><tt>{ abbreviation = <i>abbrev</i> }</tt> specifies the class's
 abbreviation. By default, the abbreviation is composed of the initial
@@ -187,7 +191,7 @@ translated as first-level children of the domain package:
       ...
    end <i>Domain.Class</i>;
 </pre>
-(<tt>private</tt> applies to all the classes bar those marked 
+(<tt>private</tt> applies to all the classes bar those marked
 <em>&#171;visible-for-test&#187;</em> and
 <em>&#171;public&#187;</em>).
 
