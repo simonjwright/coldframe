@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c840d16e9ed0 2002/11/14 20:10:23 simon $ -->
+<!-- $Id: ada-type.xsl,v c0952e88be1e 2002/11/22 17:19:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -34,7 +34,9 @@
   <xsl:template name="domain-context">
 
     <!-- Context for [[counterparts]]. -->
-    <xsl:if test="type/counterpart">
+    <xsl:if test="type/counterpart
+                  or type/operation/parameter/type='Counterpart'
+                  or type/operation/@result='Counterpart'">
       <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>      
     </xsl:if>
 
