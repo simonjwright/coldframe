@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e667d471a880 2004/04/02 10:33:39 simon $ -->
+<!-- $Id: bugs.html,v 9ccc8127331d 2004/04/04 07:03:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -31,13 +31,6 @@ provided one already.
 <dt>0019 (raised 4.ix.01)
 
 <dd>It would be good to support private operations.
-
-<dt>0031 (raised 13.x.01)
-
-<dd>&#171;finalize&#187; operations which are functions or have
-parameters (or are &#171;class&#187; operations) are silently
-<em>not</em> called at finalization. There are other instances of bad
-usage which need reporting (perhaps in a separate pass?)
 
 <dt>0035 (raised 1.xi.01)
 
@@ -243,6 +236,20 @@ compatibility.</i>
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>4.iv.04</h3>
+
+<dl>
+
+<dt>0031 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations which are functions or have
+parameters (or are &#171;class&#187; operations) are silently
+<em>not</em> called at finalization.
+<br><i>There are other instances of bad usage which need reporting
+(perhaps in a separate pass?)</i>
+
+</dl>
 
 <h3>1.iv.04</h3>
 
