@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: library-tests.adb,v f4174e313367 2001/10/13 13:09:04 simon $
+--  $Id: library-tests.adb,v 8b38f435c38b 2002/10/17 20:30:08 simon $
 
 with AUnit.Test_Cases.Registration;
 use AUnit.Test_Cases.Registration;
@@ -22,6 +22,9 @@ with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with ColdFrame.Exceptions;
 
+with Library.Initialize;
+with Library.Tear_Down;
+
 with Library.Book.All_Instances;
 with Library.Book.Collections;
 with Library.Borrower.All_Instances;
@@ -29,11 +32,9 @@ with Library.Borrower.Collections;
 with Library.Current_Loan.Collections;
 with Library.Loan_History.Collections;
 
-with Library.Authorship;
-with Library.Current;
-with Library.History;
-
-with Library.Tear_Down;
+with Library.Authorship.From_Collections;
+with Library.Current.From_Collections;
+with Library.History.From_Collections;
 
 package body Library.Tests is
 
@@ -57,6 +58,8 @@ package body Library.Tests is
       Lh : Loan_History.Handle;
 
    begin
+
+      Library.Initialize;
 
       Alice := Borrower.Create ((Name => +"Alice"));
       Bob := Borrower.Create ((Name => +"Bob"));
@@ -179,7 +182,7 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bs : Borrower.Collections.Collection;
    begin
-      Bs := Authorship.Wrote (Book.Collections.Null_Container);
+      Bs := Authorship.From_Collections.Wrote (Book.Collections.Null_Container);
       Assert (Borrower.Collections.Length (Bs) = 0,
               "Borrower.Collections.Length (Bs) = 0");
    end T6;
@@ -188,7 +191,7 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bs : Borrower.Collections.Collection;
    begin
-      Bs := Authorship.Wrote (Book.All_Instances);
+      Bs := Authorship.From_Collections.Wrote (Book.All_Instances);
       Assert (Borrower.Collections.Length (Bs) = 2,
               "Borrower.Collections.Length (Bs) = 2");
       Assert (Borrower.Collections.Location (Bs, Alice) /= 0,
@@ -205,7 +208,8 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
    begin
-      Bks := Authorship.Was_Written_By (Borrower.Collections.Null_Container);
+      Bks := Authorship.From_Collections.Was_Written_By
+        (Borrower.Collections.Null_Container);
       Assert (Book.Collections.Length (Bks) = 0,
               "Book.Collections.Length (Bks) = 0");
    end T8;
@@ -214,7 +218,8 @@ package body Library.Tests is
       pragma Warnings (Off, T);
       Bks : Book.Collections.Collection;
    begin
-      Bks := Authorship.Was_Written_By (Borrower.All_Instances);
+      Bks := Authorship.From_Collections.Was_Written_By
+        (Borrower.All_Instances);
       Assert (Book.Collections.Length (Bks) = 4,
               "Book.Collections.Length (Bks) = 4");
    end T9;
