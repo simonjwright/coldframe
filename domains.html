@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v fb0a19f30c51 2005/02/10 05:11:45 simon $ -->
+<!-- $Id: domains.html,v 1288ec1f087e 2005/02/24 06:47:57 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -51,6 +51,9 @@ visible to code generation, and vice versa.
 
 <h3><a name="tags">Tagged values</a></h3>
 
+<p><tt>init = <i>package.operation</i></tt> specifies an operation to be
+called before any other domain initialization.
+
 <p><tt>name = <i>package name</i></tt> specifies the actual package name.
 
 <p><tt>revision = <i>revision-id-string</i></tt> specifies the
@@ -98,6 +101,9 @@ children of the domain package.
 <br>Initializes the domain by
 
 <ol>
+
+<li>calling the domain initialization operation, if one was specified
+by <i>{ init = package.operation }</i>,
 
 <li>initializing the domain's Event Queue with the supplied Event
 Queue, or (if it's <tt>null</tt>) by calling
@@ -163,7 +169,9 @@ connections and also to files.
 <p>Each domain must be initialized by calling the procedure
 <tt><i>Domain</i>.Initialize</tt>, probably from your main
 program. Because it's a child unit, it must be <tt>with</tt>ed
-explicitly. <a
+explicitly.
+
+<p>For unit tests, <a
 href="#cascade-initialize"><tt><i>Domain</i>.Cascade_Initialize</tt></a>
 may save trouble.
 
