@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: client.adb,v $
---  $Revision: 141dc30870c4 $
---  $Date: 2003/02/20 20:58:51 $
+--  $Revision: 27159d7db571 $
+--  $Date: 2003/03/01 11:33:46 $
 --  $Author: simon $
 
 
@@ -26,6 +26,7 @@ with Serialization.Interface;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
+with Ada.Real_Time;
 with Ada.Strings.Unbounded;
 with ColdFrame.Project.Calendar;
 with Serialization_Demo.Serializable;
@@ -55,6 +56,20 @@ begin
                U => Ada.Strings.Unbounded.To_Unbounded_String ("unbounded"),
                N => Serialization_Demo.Name_String_Package.To_Bounded_String
                  ("bounded"))));
+      delay 0.5;
+      Put_Line ("outputting a Recordable_Real_Time record");
+      Serialization.Interface.Output
+        (Serialization_Demo.Serializable.Recordable_Real_Time'
+           (Serialization.Serializable_Base with
+              Payload =>
+              (T => Ada.Real_Time.Clock)));
+      delay 0.5;
+      Put_Line ("outputting a Real_Time record");
+      Serialization.Interface.Output
+        (Serialization_Demo.Serializable.Real_Time'
+           (Serialization.Serializable_Base with
+              Payload => Ada.Real_Time.Clock));
+
       delay 5.0;
 
    end loop;
