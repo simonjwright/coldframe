@@ -21,13 +21,13 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@ || rm -f $@
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
-	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
-	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
+	$(SAXON) $< $(CODEGEN_SCRIPT) >$@ || rm -f $@
 
 %.gen: %.ada
 	-mkdir $@
@@ -91,15 +91,16 @@ xslide-diff
 # * Makefile-winnt for inclusion in a user makefile under Windows
 # * Makefile-unix for inclusion in a user makefile under Unix.
 
+MAKEFILES = Makefile-cf Makefile-unix Makefile-winnt
+
 Makefile-cf: Makefile
 	cp -p $< $@
-Makefile-unix: Makefile-unix-proto force
+Makefile-unix: Makefile-unix-proto
 	sed -e "s;DATE;$(DATE);g" <$< >$@
-Makefile-winnt: Makefile-winnt-proto force
+Makefile-winnt: Makefile-winnt-proto
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 PROGS = COPYING \
-  Makefile-cf Makefile-unix Makefile-winnt \
   ddf.ebs \
   escape-markup.awk \
   normalize-rose.tcl \
@@ -122,7 +123,12 @@ DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
-dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS) $(SUPPORT) $(DEMO) cf-$(DATE)
+dist: $(DISTRIBUTION_FILES) \
+$(DOCS) \
+$(PROGS) \
+$(SUPPORT) \
+$(DEMO) \
+cf-$(DATE)
 	-@rm -rf dist
 	mkdir -p dist/download
 	cp -p $(DOCS) dist/
@@ -130,8 +136,10 @@ dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS) $(SUPPORT) $(DEMO) cf-$(DATE)
 
 cf-$(DATE): force
 	-rm -rf $@
+	-rm -f $(MAKEFILES)
+	$(MAKE) $(MAKEFILES)
 	mkdir $@
-	cp -p $(PROGS) $@
+	cp -p $(PROGS) $(MAKEFILES) $@
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/example
