@@ -1,19 +1,19 @@
-<!-- $Id: preparation.html,v 60d66450da0f 2002/01/16 06:42:36 simon $ -->
+<!-- $Id: preparation.html,v e7818a1e3fb2 2002/01/20 10:45:18 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Preparation of models in Rational Rose</h1>
 
-<h2>Shlaer-Mellor aspects</h2>
+<h2>Executable UML aspects</h2>
 
 <p>It's not possible here to give a detailed tutorial on the
-Shlaer-Mellor approach. <a
+Executable UML approach. <a
 href="resources.html#build-object-models">Leon Starr's book</a> is an
-excellent reference. Note also that the complete Shlaer-Mellor
-approach with Recursive Design involves full translation of the code
-of operations and actions as well as the generation of the framework
-which is all that ColdFrame attempts (this year).
+excellent reference. Note also that complete Executable UML support
+involves full translation of the code of operations and actions as
+well as the generation of the framework which is all that ColdFrame
+attempts (this year).
 
 <h3>Identifiers</h3>
 
@@ -33,7 +33,9 @@ Validity are just common-or-garden attributes.
 <li>types.
 </ul>
 
-All other classes <em>must</em> have identifiers.
+All other classes <em>must</em> have identifiers. In this, ColdFrame
+doesn't follow <a href="resources.html#build-object-models">Executable
+UML</a>; it seems risky to apply too many defaults.
 
 <h3>Associations and role names</h3>
 
@@ -42,12 +44,13 @@ or verb phrases. Each end of the association must be named; the object
 of the verb phrase is the class at the same end as the name, the
 subject is the class at the other end. So, for example, you might have
 <em>Window "appears on" Screen</em>, <em>Screen "displays"
-Window</em>. Often the role names will be inverses of each other, but
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
 sometimes things really do seem different depending on where you're
-standing. <em>[By the way, the references are far from clear whether
-this choice of end convention is in fact correct. I think it is,
-judging by the way Rose and Rhapsody show associations in the Browser
-and generate code.]</em>
+standing.
 
 <h3>Associations and multiplicity</h3>
 
@@ -78,25 +81,21 @@ mind, rather than by someone listening to the customer!)
 
 <h3>Formalising associations</h3>
 
-<p>In Shlaer-Mellor analysis, associations need to be "formalised" by
-the use of "referential attributes". Considering the <em>Window
-"appears on" Screen</em>, where clearly there are many
-<em>Window</em>s but only one <em>Screen</em>, you'd need a
-referential attribute <em>screen&nbsp;id</em> in the <em>Window</em>
-instance.
+<p>In the original Shlaer-Mellor method, associations and inheritance
+relationships needed to be "formalised" by the use of "referential
+attributes". Considering the <em>Window "appears on" Screen</em>,
+where clearly there are many <em>Window</em>s but only one
+<em>Screen</em>, you'd need a referential attribute
+<em>screen&nbsp;id</em> in the <em>Window</em> instance.
 
-<p>All parent classes in inheritance relationships are, in a sense,
-abstract: whenever an instance of the parent class exists, there
-exists precisely one related instance of one of the child
-classes. Inheritance relationships are also formalised; typically the
-child class has the same identifying attributes as the parent.
-
-<p>In spite of the above, with ColdFrame you usually don't need to
-provide referential attributes (it would be quite cumbersome to do so,
-since Rose is unaware of the concept). Instead, ColdFrame
-automatically implements the relationships. Sometimes it needs a
-little help, for example for <a href="#formalizes">complex
-formalization</a> or <a href="#source">in a symmetric association</a>.
+<p>ColdFrame, however, follows <a
+href="resources.html#build-object-models">Executable UML</a>; you
+usually don't need to provide referential attributes (it would be
+quite cumbersome to do so, since Rose (taking it as a typical UML
+tool) is unaware of the concept). Instead, ColdFrame automatically
+implements the relationships. Sometimes it needs a little help, for
+example for <a href="#formalizes">complex formalization</a> or <a
+href="#source">in a symmetric association</a>.
 
 <h3>Polymorphism and dispatching</h3>
 
