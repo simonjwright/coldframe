@@ -25,6 +25,7 @@ package body Event_Test.Test_Instance is
         := new Machine.Mark (H);
       Inf : Machine.Mark renames Machine.Mark (Ev.all);
    begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
       Inf.Payload := (Ordinal => 2000,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
 
@@ -45,10 +46,11 @@ package body Event_Test.Test_Instance is
         := new Machine.Self (H);
       Inf : Machine.Self renames Machine.Self (Ev.all);
    begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
       Inf.Payload := (Ordinal => 2001,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
-
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
 
       Assert (Machine.Get_Ordinal (H) = 2002,
