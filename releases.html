@@ -1,10 +1,26 @@
-<!-- $Id: releases.html,v 9365a733562d 2001/02/28 19:59:18 simon $ -->
+<!-- $Id: releases.html,v 451d2af28faf 2001/03/25 14:17:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
 </head>
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Releases</h1>
+
+<!-- Begin Mind It Box -->
+<form method=POST action="http://minder.netmind.com/mindit.shtml">
+<table border=0 cellpadding=5 cellspacing=0 bgcolor=#005599>
+<tr><td align=center colspan=2>
+<font face=arial,helvetica size=-1 color=#ffffff>
+<b>Receive email when this page changes</b>
+</td></tr><tr><td>
+<input type=text value="Enter email address" name="EMAIL" size=20></td><td rowspan=2>
+<input type="image" src="http://www.netmind.com/html/mindit.gif" border="0" width="76" height="28">
+<br><font face=arial,helvetica size=-2 color=#ffffff><center>
+<b>Click Here</td></tr>
+<tr valign=top><td colspan=1 align=center>
+<font face=arial,helvetica size=-2 color=#ffffff>•<b> Powered by Netmind </b>•
+</td></tr></table></form>
+<!-- End Mind It Box -->
 
 <p>Source can be downloaded <a href="download/">here</a>.
 
@@ -14,6 +30,51 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 2001.
 
 <dl>
+
+<dt>20010325
+
+<dd>Whether a class is a singleton or not is now determined by the
+&#171;singleton&#187; stereotype (or annotation).
+
+
+<p>All classes except those with the &#171;interface&#187; stereotype
+or annotation are implemented as private
+children. &#171;interface&#187; classes are automatically
+&#171;singleton&#187;s.
+
+
+<p>If a class is implemented using Bounded containers (because the
+number of instances is known), a fixed-size storage pool is used for
+the Handle access type (so that memory is only allocated from the
+heap at package elaboration). This has forced the
+<tt>Abstract_Containers</tt> package to be implemented as a child of
+the <tt><i>Domain.Class</i></tt> package.
+
+
+<p>References are implemented using the <tt>Handle</tt> of the
+referenced class. This means we have to use the GNAT "with type"
+extension.
+
+<br>I've included a <tt>pragma Extensions_Allowed (On);</tt> in each
+package that needs it, but there seems to be a GNAT problem here
+(3.13p, 3.14a) so you may need to include this in your configuration
+file (<tt>gnat.adc</tt>) or use the <tt>-gnatX</tt> flag.
+
+
+<p>The child class enumeration literals now have <tt>_T</tt> appended
+(otherwise the literals masked the class package, so you had to say
+<tt><i>Domain.Class</i>.thing</tt> rather than just
+<tt><i>Class</i>.thing</tt> in subprogram bodies).
+
+
+<p><tt>Delete</tt> operations didn't in fact free allocated memory.
+
+
+<p>You need at least Release 20010325 of the <a
+href="http://www.pushface.org/components/bc/">Booch Components</a>.
+
+
+<p>
 
 <dt>20010228
 
