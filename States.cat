@@ -8,10 +8,17 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3C4EDCDC028A"
+    documentation 	
+|This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
+|
+|[[ revision : $Id: States.cat,v 7fc4ff188d00 2002/02/24 17:16:06 simon $ ]]
+|
+    
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Monitor"
 	    quid       	"3C53D8D401BD"
+	    documentation 	"A Monitor monitors one Device. The device generates a heartbeat (tick) signal. It's deemed to have failed if the heartbeat stops for longer than 3 seconds."
 	    used_nodes 	(list uses_relationship_list
 		(object Uses_Relationship
 		    quid       	"3C75000E014B"
@@ -22,12 +29,14 @@
 	    operations 	(list Operations
 		(object Operation "setup"
 		    quid       	"3C75D5890302"
+		    documentation 	"Initializes the Monitor by creating the necessary instances for the Devices."
 		    stereotype 	"init"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "receive"
 		    quid       	"3C75D539016D"
+		    documentation 	"Receives an external message indicating that a tick has occurred for a Device. Generates a Heartbeat event for the Device concerned."
 		    stereotype 	"handler"
 		    parameters 	(list Parameters
 			(object Parameter "m"
@@ -37,39 +46,47 @@
 		    uid        	0)
 		(object Operation "set heartbeat timeout"
 		    quid       	"3C53D91F01F5"
+		    documentation 	"Sets the Heartbeat_Timer to deliver a Heartbeat_Timeout event in 3 seconds."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "set 2 second warmup timeout"
 		    quid       	"3C53D9260380"
+		    documentation 	"Sets the Warmup_Timer to deliver a Warmup_Timeout event in 2 seconds."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "set 6 second warmup timeout"
 		    quid       	"3C53D93403CC"
+		    documentation 	"Sets the Warmup_Timer to deliver a Warmup_Timeout event in 6 seconds."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "clear heartbeat timeout"
 		    quid       	"3C53D93C03DF"
+		    documentation 	"Clears the Heartbeat_Timer."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "clear warmup timeout"
 		    quid       	"3C53D945001E"
+		    documentation 	"Clears the Warmup_Timer."
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "dev"
 		    quid       	"3C75D4D401D6"
+		    documentation 	"Indicates the Device that is being monitored."
 		    stereotype 	"id"
 		    type       	"Device")
 		(object ClassAttribute "heartbeat timer"
 		    quid       	"3C53D8E9025C"
+		    documentation 	"Controls the detection of failure of the heartbeat signal."
 		    type       	"Timer")
 		(object ClassAttribute "warmup timer"
 		    quid       	"3C53D8FA016F"
+		    documentation 	"After heartbeats have been detected, a period of proper heartbeat reception must elapse before the device is considered to be working."
 		    type       	"Timer"))
 	    statemachine 	(object State_Machine "Lifecycle"
 		quid       	"3C51670A02DB"
@@ -77,6 +94,7 @@
 		states     	(list States
 		    (object State "$UNNAMED$0"
 			quid       	"3C51763B00DE"
+			documentation 	"The Initial state transitions directly to the Warmup state."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C5179650218"
@@ -87,6 +105,11 @@
 			type       	"StartState")
 		    (object State "warmup"
 			quid       	"3C5176450389"
+			documentation 	
+|The Warmup state indicates that the Monitor has started. If no Heartbeat occurs within the standard timeout, the Monitor enters the Failed state.
+|
+|Normally, a Heartbeat causes the Monitor to enter the First_Heartbeat state.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C5182FF0348"
@@ -114,6 +137,7 @@
 			type       	"Normal")
 		    (object State "warming"
 			quid       	"3C5176630342"
+			documentation 	"The Monitor is consuming Heartbeats while awaiting the end of the warmup timeout."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51768D0001"
@@ -145,6 +169,7 @@
 			type       	"Normal")
 		    (object State "failed"
 			quid       	"3C51767501F4"
+			documentation 	"In the Failed state, the monitoring process is awaiting a Heartbeat to start the recovery process by transitioning to the Recovery state."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51776D0209"
@@ -158,6 +183,13 @@
 			type       	"Normal")
 		    (object State "working"
 			quid       	"3C51768603B6"
+			documentation 	
+|The monitored device is (deemed to be) working correctly.
+|
+|While Heartbeats continue, the Monitor alternates between this state and Received_Heartbeat.
+|
+|If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51771E00C6"
@@ -180,6 +212,7 @@
 			type       	"Normal")
 		    (object State "received heartbeat"
 			quid       	"3C5177380212"
+			documentation 	"Resets the Heartbeat_Timer as each Heartbeat is received while the monitored device is (apparently) working."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51775702B2"
@@ -199,6 +232,13 @@
 			type       	"Normal")
 		    (object State "recovery"
 			quid       	"3C517765023F"
+			documentation 	
+|After there has been a failure, the Device must produce Heartbeats for 6 seconds before it's deemed to be working.
+|
+|Clearly there can be further 3-second heartbeat timeouts before recovery is achieved; if the Heartbeat which led to this state is not followed by further Heartbeats, a Heartbeat_Timeout occurs and the state transitions to Failed_Recovery.
+|
+|If a Heartbeat does occur, the state transitions to Recovering.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51783402D4"
@@ -230,6 +270,7 @@
 			type       	"Normal")
 		    (object State "recovering"
 			quid       	"3C5177F80138"
+			documentation 	"During the Recovering state, Heartbeats are consumed until either the Warmup_Timeout occurs (in which case the state transitions to Working) or the Heartbeat_Timeout occurs )in which case the state transitions to Failed_Recovery)."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C5178530293"
@@ -270,6 +311,7 @@
 			type       	"Normal")
 		    (object State "failed recovery"
 			quid       	"3C5178280399"
+			documentation 	"The purpose of the Failed_Recovery state is to clear down the outstanding Warmup_Timeout."
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51783E02FA"
@@ -285,6 +327,13 @@
 			type       	"Normal")
 		    (object State "first heartbeat"
 			quid       	"3C5182EE0220"
+			documentation 	
+|In this state, the Monitor has received one Heartbeat since starting.
+|
+|After 2 seconds, the Monitor enters the Working state.
+|
+|If a Heartbeat occurs, the Monitor enters the Warming state to consume any further Heartbeats without affecting the warmup timeout.
+			
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C518376008D"
@@ -326,7 +375,7 @@
 			zoom       	92
 			max_height 	28350
 			max_width  	21600
-			origin_x   	1684
+			origin_x   	1783
 			origin_y   	0
 			items      	(list diagram_item_list
 			    (object StateView "StartState" "$UNNAMED$0" @1
@@ -921,7 +970,11 @@
 				x_offset   	FALSE))))))
 	(object Class "Device"
 	    quid       	"3C74FFF7019E"
-	    documentation 	"[[ enumeration : input, output ]]"
+	    documentation 	
+|Represents the two devices to be monitored.
+|
+|[[ enumeration : input, output ]]
+	    
 	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
