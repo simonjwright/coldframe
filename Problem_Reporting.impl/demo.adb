@@ -32,9 +32,18 @@ begin
 
   Report_Problems;
 
-  Ada.Text_Io.Put_Line ("deleting and then adding a Component:");
+  Ada.Text_Io.New_Line;
+  Ada.Text_Io.Put_Line
+     ("deleting a simple Component, and then adding a new Component:");
   Delete_Component ("baz");
   Add_Component ("squeeg");
+
+  Report_Problems;
+
+  Ada.Text_Io.New_Line;
+  Ada.Text_Io.Put_Line
+     ("deleting a Component with defects:");
+  Delete_Component ("foo");
 
   Report_Problems;
 

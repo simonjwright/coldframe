@@ -22,7 +22,7 @@ begin
   Problem_Report.Set_Reporter (H, +Reporter);
 
   -- Indicate that it's Unallocated
-  Problem_Report.Set_Child_Class
+  Problem_Report.Set_R1_Child_Class
      (H, Problem_Report.Unallocated_Problem_Report_T);
 
   -- Create the corresponding Unallocated Problem Report

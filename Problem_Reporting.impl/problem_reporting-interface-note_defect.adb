@@ -25,7 +25,7 @@ begin
   -- Find the indicated Component.
   H := Problem_Report.Find ((Id => Problem_Number));
 
-  case Problem_Report.Get_Child_Class (H) is
+  case Problem_Report.Get_R1_Child_Class (H) is
 
     when Problem_Report.Unallocated_Problem_Report_T =>
 
@@ -35,7 +35,7 @@ begin
       Unallocated_Problem_Report.Delete ((R1_Child_Of_PR => H));
 
       -- Indicate that this Problem Report's subtype is Diagnosed.
-      Problem_Report.Set_Child_Class
+      Problem_Report.Set_R1_Child_Class
          (H, Problem_Report.Diagnosed_Problem_Report_T);
 
       -- Create the new Diagnosed Problem Report.

@@ -19,7 +19,7 @@ begin
   Unallocated_Problem_Report.Delete ((R1_Child_Of_PR => H));
 
   -- Indicate that the new subtype is Rejected.
-  Problem_Report.Set_Child_Class
+  Problem_Report.Set_R1_Child_Class
      (H, Problem_Report.Rejected_Problem_Report_T);
 
   -- Create the new Rejected Problem Report.
