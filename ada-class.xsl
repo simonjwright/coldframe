@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 1f662494ceff 2001/04/22 10:42:26 simon $ -->
+<!-- $Id: ada-class.xsl,v 90c158c500cd 2001/04/25 19:06:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -243,8 +243,10 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
-    <!-- If there are no attributes, there's no body -->
-    <xsl:if test="attribute">
+    <!-- If it's a singleton with no attributes, there's no body. -->
+    <!-- XXX If it's not a singleton and has no attributes, it doesn't
+         matter very much if it won't compile. -->
+    <xsl:if test="not(@singleton) or attribute">
 
       <!-- determine if this is a supertype (if there is an inheritance
            relationship with this class as the parent) -->
