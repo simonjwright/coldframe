@@ -62,20 +62,21 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	  <$@-t >$@
 	rm -f $@-t
 
-# Create the target directory
-# get rid of any files in it already
+# Delete the target directory & all contents
+# create the target directory
 # gnatchop the .ada file
 # remove any generated files which are also present in the implementation
 # directory (.impl)
-# write-protect the generated files
+# write-protect the generated files (careful, in case there are a lot of them!)
 %.gen: %.ada
+	-rm -rf $@
 	-mkdir $@
-	rm -f $@/*.ad[bs]
 	gnatchop $(CHOP_VERBOSE) $< $@
 	[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad?)`; do \
 	   [ ! -f $@/$$f ] || ( echo rm $@/$$f; rm $@/$$f); \
 	done
-	chmod a=r $@/*.ad[bs]
+	chmod -R a-w $@
+	chmod u+w $@
 
 .PHONY: force
 
