@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-operation.xsl,v e7ebc1824dcd 2003/09/30 05:06:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -100,12 +100,14 @@
       <xsl:text>;&#10;</xsl:text>
 
       <!-- Inline accessors of the current class. -->
+      <!--
       <xsl:if test="@accessor and ..=$current">
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Inline_Always (</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>);&#10;</xsl:text>
       </xsl:if>
+      -->
 
       <!-- Specify the Convention, if needed. -->
       <xsl:if test="@convention">

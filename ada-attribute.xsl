@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
+<!-- $Id: ada-attribute.xsl,v e7ebc1824dcd 2003/09/30 05:06:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -68,7 +68,7 @@
         <xsl:choose>
           <xsl:when test="statemachine">
             <xsl:text>type Instance is new ColdFrame.Project.Events.Instance_Base with record&#10;</xsl:text>
-            
+
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance is new ColdFrame.Instances.Instance_Base with record&#10;</xsl:text>
@@ -122,7 +122,7 @@
   </xsl:template>
 
 
-  <!-- Generate the individual components of the class identifier 
+  <!-- Generate the individual components of the class identifier
        or instance record. -->
   <xsl:template match="attribute[not(@class)]" mode="instance-record-component">
     <xsl:call-template name="single-record-component">
@@ -139,7 +139,7 @@
     mode="attribute-get-spec">
 
     <xsl:choose>
-      
+
       <xsl:when test="@refers">
 
         <!-- We need to avoid generating an accessor that the user has
@@ -156,19 +156,21 @@
           <xsl:text>--  Private use only, use navigation operations&#10;</xsl:text>
           <xsl:call-template name="attribute-get-header"/>
           <xsl:text>;&#10;</xsl:text>
+          <!--
           <xsl:value-of select="$I"/>
           <xsl:text>pragma Inline_Always (</xsl:text>
           <xsl:value-of select="$operation-name"/>
           <xsl:text>);&#10;</xsl:text>
-          <xsl:value-of select="$blank-line"/>         
+          -->
+          <xsl:value-of select="$blank-line"/>
         </xsl:if>
-        
+
       </xsl:when>
-      
+
       <xsl:when test="$generate-accessors='yes'">
         <xsl:call-template name="attribute-get-header"/>
         <xsl:text>;&#10;</xsl:text>
-        <xsl:value-of select="$blank-line"/>        
+        <xsl:value-of select="$blank-line"/>
       </xsl:when>
 
     </xsl:choose>
@@ -186,7 +188,7 @@
       <xsl:text>function Get_</xsl:text>
       <xsl:call-template name="attribute-name"/>
       <xsl:text>&#10;</xsl:text>
-      
+
       <!-- If this isn't a singleton, we need a handle parameter -->
       <xsl:choose>
         <xsl:when test="not(../@singleton)">
@@ -198,7 +200,7 @@
           <xsl:text>return </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
-      
+
       <xsl:call-template name="attribute-type"/>
 
   </xsl:template>
@@ -210,7 +212,7 @@
     mode="attribute-set-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
-      
+
       <!-- Set procedure, with comment for generated associative referential
            attributes -->
 
@@ -224,10 +226,12 @@
 
       <xsl:call-template name="attribute-set-header"/>
       <xsl:text>;&#10;</xsl:text>
+      <!--
       <xsl:value-of select="$I"/>
       <xsl:text>pragma Inline_Always (Set_</xsl:text>
       <xsl:call-template name="attribute-name"/>
       <xsl:text>);&#10;</xsl:text>
+      -->
       <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
@@ -240,14 +244,14 @@
   <!-- Called at class/attribute to generate an attribute "set"
        accessor heading (no semicolon). -->
   <xsl:template name="attribute-set-header">
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Set_</xsl:text>
     <xsl:call-template name="attribute-name"/>
     <xsl:text>&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
-    
+
     <!-- If this isn't a singleton, we need a handle parameter -->
     <xsl:if test="not(../@singleton)">
       <xsl:text>This : Handle;</xsl:text>
@@ -255,12 +259,12 @@
       <xsl:value-of select="$IC"/>
       <xsl:text> </xsl:text>
     </xsl:if>
-    
+
     <xsl:text>To_Be : </xsl:text>
     <xsl:call-template name="attribute-type"/>
-    
+
     <xsl:text>)</xsl:text>
-    
+
   </xsl:template>
 
 
@@ -270,7 +274,7 @@
     mode="attribute-get-body">
 
     <xsl:choose>
-      
+
       <xsl:when test="@refers">
 
         <!-- We need to avoid generating an accessor that the user has
@@ -285,9 +289,9 @@
         <xsl:if test="not(../operation[name=$operation-name])">
           <xsl:call-template name="attribute-get-body"/>
         </xsl:if>
-        
+
       </xsl:when>
-      
+
       <xsl:when test="$generate-accessors='yes'">
         <xsl:call-template name="attribute-get-body"/>
       </xsl:when>
@@ -320,9 +324,9 @@
   <xsl:template
     match="class/attribute[not(@identifier) and not(@class)]"
     mode="attribute-set-body">
-    
+
     <xsl:if test="@refers or $generate-accessors='yes'">
-      
+
       <!-- Set procedure -->
       <xsl:call-template name="attribute-set-header"/>
       <xsl:text> is&#10;</xsl:text>
