@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v dc1b02912301 2001/11/30 20:22:41 simon $ -->
+<!-- $Id: ada-type.xsl,v 6daa06112c88 2002/01/17 20:00:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -310,7 +310,9 @@
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is </xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>is </xsl:text>
         <xsl:value-of select="imported"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
@@ -325,7 +327,9 @@
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is </xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>is </xsl:text>
         <xsl:value-of select="renames"/>
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
