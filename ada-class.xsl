@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 131f6566eee7 2003/02/15 18:47:33 simon $ -->
+<!-- $Id: ada-class.xsl,v eda9e41e7a8a 2003/03/13 20:32:00 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -431,6 +431,8 @@
       <xsl:value-of select="$blank-line"/>
 
       <xsl:value-of select="$I"/>
+      <xsl:text>--  Private use only&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
@@ -438,6 +440,8 @@
       <xsl:text>_Child);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       
+      <xsl:value-of select="$I"/>
+      <xsl:text>--  Consider using dispatching operations&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
@@ -894,7 +898,7 @@
 
     <xsl:if test="../association/associative=current()/name">
       <xsl:value-of select="$I"/>
-      <xsl:text>--  Private use only&#10;</xsl:text>
+      <xsl:text>--  Private use only, use Link&#10;</xsl:text>
     </xsl:if>
 
     <xsl:choose>
@@ -1024,7 +1028,7 @@
     <!-- .. store the new instance .. -->
     <xsl:choose>
       
-      <xsl:when test="@max=1">
+      <xsl:when test="$max=1">
         <xsl:value-of select="$II"/>
         <xsl:text>This := Result;&#10;</xsl:text>
       </xsl:when>
@@ -1138,7 +1142,7 @@
 
     <xsl:choose>
       
-      <xsl:when test="@max=1">
+      <xsl:when test="$max=1">
 
         <!-- Check there is an instance. -->
         <xsl:value-of select="$II"/>
@@ -1485,6 +1489,11 @@
          begin
          -->
 
+    <!-- Calculate the maximum number of instances. -->
+    <xsl:variable name="max">
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:variable>
+
     <xsl:value-of select="$I"/>
     <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -1492,7 +1501,7 @@
 
     <xsl:choose>
       
-      <xsl:when test="@max=1">
+      <xsl:when test="$max=1">
 
         <!--
              if This = null then
