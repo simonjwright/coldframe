@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 46d2b71f6124 2001/04/25 19:08:03 simon $ -->
+<!-- $Id: architecture.html,v 2bfbde8d799c 2001/05/09 18:46:09 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -74,16 +74,16 @@ become "identifying attributes", whereas Date Of Issue and Period Of
 Validity are just common-or-garden attributes.
 
 <p>Role names in associations are very important, and should be verbs
-or verb phrases. Each end of the association must be named; the
-subject of the verb phrase is the class at the same end as the name,
-the object is the class at the other end. So, for example, you might
-have <em>Window "appears on" Screen</em>, <em>Screen "displays"
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
 Window</em>. Often the role names will be inverses of each other, but
 sometimes things really do seem different depending on where you're
 standing. <i>[By the way, the references are far from clear whether
-this choice of end convention is in fact correct. Judging by the way
-Rose and Rhapsody show associations in the Browser, I may in fact have
-it the wrong way round.]</i>
+this choice of end convention is in fact correct. I think it is,
+judging by the way Rose and Rhapsody show associations in the Browser
+and generate code.]</i>
 
 <p>Careful consideration of multiplicity is very important.
 Unconditional multiplicity is good; if each end of an association is
@@ -104,10 +104,12 @@ classes. Inheritance relationships are also formalised; typically (in
 ColdFrame, always) the child class has the same identifying attributes
 as the parent.
 
-<p>In spite of the above, with ColdFrame you don't need to provide
-referential attributes (it would be quite cumbersome to do so, since
-Rose is unaware of the concept). Instead, ColdFrame automatically
-inserts them using an appropriate naming convention.
+<p>In spite of the above, with ColdFrame you usually don't need to
+provide referential attributes (it would be quite cumbersome to do so,
+since Rose is unaware of the concept). Instead, ColdFrame
+automatically inserts them using an appropriate naming convention. <a
+href="#annotation">Sometimes it needs a little help</a>, for example in
+a 1c:1c association (Shlaer-Mellor notation; "1c" means "0..1".).
 
 <h3>Use of Stereotypes</h3>
 
@@ -128,7 +130,7 @@ the Domain, are marked with the stereotype
 <em>&#171;interface&#187;</em>. This implies the stereotype
 <em>&#171;singleton&#187;</em>.
 
-<h3>Other annotations</h3>
+<h3><a name="annotation">Other annotations</a></h3>
 
 <p>It's not at all convenient to put all the extra information you
 need for code generation into stereotypes. Instead, "annotations" can
@@ -147,6 +149,10 @@ abbreviation. By default, the abbreviation is composed of the initial
 letters of the full class name; this wouldn't work for, for example,
 <i>Pet</i> and <i>Person</i>.
 
+<li><tt>max : <i>max-size</i></tt> specifies the maximum number of
+instances that will coexist. This may provoke a different code
+generation strategy.
+
 </ul>
 
 <p>
@@ -155,6 +161,9 @@ letters of the full class name; this wouldn't work for, for example,
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
+<li><tt>integer : lower <i>low-bound</i>, upper
+<i>upper-bound</i></tt>
+
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
 upper <i>upper-bound</i></tt>
 
@@ -162,7 +171,7 @@ upper <i>upper-bound</i></tt>
 of operations involving more than one instance at once, eg "find all
 the outstanding Problem Reports on this Component").
 
-<li><tt>string : <i>max-length</i></tt>
+<li><tt>string : max <i>max-length</i></tt>
 
 </ul>
 
@@ -238,8 +247,9 @@ semantically).
 <h2><a name="extraction">Extraction of models from Rose</a></h2>
 
 <p>The Rose model is extracted to a raw "domain definition file" using
-a RoseScript script <tt>ddf.ebs</tt>. Eventually I'll work out how to
-run this script in a more friendly manner, but for the moment:
+a RoseScript script <tt>ddf.ebs</tt>. If you're using a version of
+Rose that loses a selection in the Browser as soon as you try to
+select anything in the menu bar:
 
 <ul>
 
@@ -252,12 +262,33 @@ browser
 
 </ul>
 
+Otherwise, it makes sense to install <tt>ddf.ebs</tt> in the Rose
+<i>Add-ins</i> menu (or whichever other one you want to use). In
+<tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
+<tt>rose.mnu</tt>:
+<blockquote>
+<pre>
+Menu Add-Ins
+{
+  Separator
+
+  option "Generate &XML..."	
+   {
+	RoseScript $ColdFrame\ddf.ebs
+   }
+
+}
+</pre>
+</blockquote>
+
 <p>The output is in a file named <tt><i>package-name</i>.raw</tt> (so
 it would be as well if <tt><i>package-name</i></tt> is a legal base
 file name! spaces may be a bad idea).
 
-<p>The output file is in the directory that <tt>ddf.ebs</tt> was
-loaded from (sorry about that).
+<p>The default output file location is the directory that
+<tt>ddf.ebs</tt> was loaded from (sorry about that). You might want to
+consider copying <tt>ddf.ebs</tt> to the directory where your model
+files are.
 
 <p>The output format is XML, using a Document Type Description (<a
 href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
@@ -307,17 +338,20 @@ GNAT.]</i>
 <h2><a name="support">Specially written support components</a></h2>
 
 <p>Specially written support components appear under the top-level
-package <tt>Architecture</tt> <i>[Should that be
-<tt>Coldframe.Architecture?]</tt></i>.
+package <tt>ColdFrame</tt>.
 
 <dl>
 
-<dt><tt>Architecture.Exceptions</tt>
+<dt><tt>ColdFrame.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<dt><tt>ColdFrame.Exceptions</tt>
 
 <dd>Provides exceptions. These are at present just renamings of <a
 href="#containers">Booch</a> exceptions.
 
-<dt><tt>Architecture.Global_Storage_Pool</tt>
+<dt><tt>ColdFrame.Global_Storage_Pool</tt>
 
 <dd>Provides a (GNAT-specific) Storage Pool type and instance, using
 the standard system <tt>malloc</tt> pool, suitable for instantiating
@@ -325,7 +359,7 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
 
-<dt><tt>Architecture.String_Hash</tt>
+<dt><tt>ColdFrame.String_Hash</tt>
 
 <dd>Provides a set of hash functions, suitable for use as hashes (or
 part of hashes) for instantiating <a href="#containers">Booch Map
@@ -353,6 +387,10 @@ instance).
 
 <dd>to hold all the instances of a class; the range of the Map is the
 class' Identifier, the domain is (pointers to) the instances.
+
+<p>Maps are implemented using a hash table, and require a hash
+function (based on the identifier of the class); some <a
+href="#support">support for hashes</a> is provided.
 
 </dl>
 
