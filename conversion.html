@@ -1,4 +1,4 @@
-<!-- $Id: conversion.html,v 1d9d9bb55821 2003/01/18 16:20:44 simon $ -->
+<!-- $Id: conversion.html,v 5e7aec4f8e70 2003/02/15 16:25:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Conversion to standard form</title>
@@ -32,23 +32,23 @@ of error and warning messages</a> that may appear.
 
 <dt><tt>--casing <i>filename</i></tt>
 
-<dd>Specifies the name of a case-exceptions file.
+<dd>Specifies the name of one or more case-exceptions files.
 
-<p>The file format is basically that used by ACT's GLIDE (Emacs
-<tt>ada-mode</tt>), except that ColdFrame doesn't distinguish
-substring specs from whole-identifier ones.
+<p>If there is more than one file, separate them using a colon
+<tt>:</tt> on Unix, a semicolon <tt>;</tt> on Windows.
+
+<p>The file format and the casing rules are as used by ACT's GLIDE
+(Emacs <tt>ada-mode</tt>).
 
 <p>Each line contains a single specification of a desired
 casing. <tt>ColdFrame</tt> means that all occurrences of the string
-<tt>coldframe</tt>, in any case, as the whole of an identifier or as a
-space- or underscore-delimited part of an identifier, will be
+<tt>coldframe</tt>, in any case, as the whole of an identifier will be
 capitalized as given.
 
-<p>GLIDE's rules require you to indicate which are "substring
-exceptions", so if you want <tt>io</tt> to be capitalized as
-<tt>IO</tt> even if it occurs in <tt>text_io</tt>, resulting in
-<tt>Text_IO</tt>, you have to write <tt>*IO</tt> in the exceptions
-file.
+<p>You have to indicate which are "substring exceptions", so if you
+want <tt>io</tt> to be capitalized as <tt>IO</tt> even if it occurs in
+<tt>text_io</tt>, resulting in <tt>Text_IO</tt>, you have to write
+<tt>*IO</tt> in the exceptions file.
 
 <p><tt>--casing</tt> can be repeated as often as required for
 multiple case exception files. If an exception occurs multiple times,
