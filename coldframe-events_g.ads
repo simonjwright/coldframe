@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: 66f57df04705 $
+--  $Date: 2004/03/13 21:02:39 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -104,6 +104,10 @@ package ColdFrame.Events_G is
 
    --  Private use only
    procedure Stop_Handling (The_Event : access Event_Base);
+   --  No action.
+
+   --  Private use only
+   procedure Tear_Down (The_Event : access Event_Base);
    --  No action.
 
 
@@ -434,6 +438,10 @@ private
 
    procedure Invalidate (The_Event : access Timer_Event;
                          If_For_Instance : Instance_Base_P);
+
+   procedure Tear_Down (The_Event : access Timer_Event);
+   --  This ensures that the Timer_Checker test isn't falsely
+   --  triggered by timer events left behind during teardown.
 
 
    type Timer_Checker (For_The_Timer : access Timer)

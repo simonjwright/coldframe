@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: fa437da9dae2 $
---  $Date: 2003/04/07 18:09:47 $
+--  $Revision: 66f57df04705 $
+--  $Date: 2004/03/13 21:02:39 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -171,6 +171,7 @@ package body ColdFrame.Project.Held_Events is
          declare
             E : Events.Event_P := Current_Item (DI).Event;
          begin
+            Events.Tear_Down (E);
             Delete (E);
          end;
          Next (DI);
@@ -185,6 +186,7 @@ package body ColdFrame.Project.Held_Events is
                declare
                   E : Events.Event_P := Current_Item (KI).Event;
                begin
+                  Events.Tear_Down (E);
                   Delete (E);
                end;
                Next (KI);
