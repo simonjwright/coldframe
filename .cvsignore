@@ -1,4 +1,7 @@
 *.ada *.ali
+*.bb *.bbg *.gcov
+cf-*.tgz cf-*.zip
 *.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 b~*.ad[bs]
-use-cases.html
+use-cases.html coldframe-architecture.html coldframe-architecture.pdf
+
