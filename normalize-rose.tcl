@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6a24130faa1c 2005/02/18 06:21:26 simon $
+# $Id: normalize-rose.tcl,v 88f155f40b0f 2005/02/18 06:29:15 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2763,11 +2763,11 @@ itcl::class Datatype {
 	    standard -
 	    defined {
 		if $atomic {
-		    Warning "$datatype type [$this -getName] can't be atomic"
+		    Warning "$dataType type $type can't be atomic"
 		    set atomic 0
 		}
 		if $volatile {
-		    Warning "$datatype type [$this -getName] can't be volatile"
+		    Warning "$dataType type $type can't be volatile"
 		    set volatile 0
 		}
 	    }
