@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 49984d1efe79 $
---  $Date: 2002/09/04 18:51:35 $
+--  $Revision: 03eeabe9a7c6 $
+--  $Date: 2002/09/12 20:59:34 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -40,9 +40,7 @@ package body ColdFrame.Events_G.Test_G is
                     On : Event_Queue) return Boolean is
       pragma Warnings (Off, On);
    begin
-
       return The_Timer.The_Entry /= null;
-
    end Is_Set;
 
 
@@ -50,24 +48,44 @@ package body ColdFrame.Events_G.Test_G is
                         On : Event_Queue) return Time.Time is
       pragma Warnings (Off, On);
    begin
-
       if The_Timer.The_Entry = null then
-
          Ada.Exceptions.Raise_Exception
            (Exceptions.Use_Error'Identity,
             "attempt to find expiry time of a timer that wasn't set");
-
       end if;
-
       return The_Timer.The_Entry.Time_To_Fire;
-
    end Expires_At;
 
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue) is
+   procedure Start (The_Queue : access Event_Queue) is
    begin
-      The_Queue.The_Event_Count.Wait_Until_Idle;
+      if The_Queue.Started then
+         Ada.Exceptions.Raise_Exception
+           (Exceptions.Use_Error'Identity,
+            "event queue already started");
+      else
+         Start_Queue (The_Queue);
+         The_Queue.Started := True;
+      end if;
+   end Start;
+
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue;
+                              Ignoring_Timers : Boolean := False) is
+   begin
+      if Ignoring_Timers then
+         The_Queue.The_Event_Count.Wait_Until_No_Timed_Events;
+      else
+         The_Queue.The_Event_Count.Wait_Until_Idle;
+      end if;
    end Wait_Until_Idle;
+
+
+   function Start_Started (The_Queue : access Event_Queue) return Boolean is
+      pragma Warnings (Off, The_Queue);
+   begin
+      return False;
+   end Start_Started;
 
 
    procedure Add_Posted_Event (On : access Event_Queue) is
@@ -94,12 +112,34 @@ package body ColdFrame.Events_G.Test_G is
    end Remove_Held_Event;
 
 
+   procedure Add_Timer_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Add_Timer_Event;
+   end Add_Timer_Event;
+
+
+   procedure Remove_Timer_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Remove_Timer_Event;
+   end Remove_Timer_Event;
+
+
    protected body Event_Count is
 
-      entry Wait_Until_Idle when Posted_Events = 0 and then Held_Events = 0 is
+      entry Wait_Until_Idle
+      when Posted_Events = 0
+        and then Held_Events = 0
+        and then Timed_Events = 0 is
       begin
          null;
       end Wait_Until_Idle;
+
+      entry Wait_Until_No_Timed_Events
+      when Posted_Events = 0
+        and then Held_Events = 0 is
+      begin
+         null;
+      end Wait_Until_No_Timed_Events;
 
       procedure Add_Posted_Event is
       begin
@@ -120,6 +160,16 @@ package body ColdFrame.Events_G.Test_G is
       begin
          Held_Events := Held_Events - 1;
       end Remove_Held_Event;
+
+      procedure Add_Timer_Event is
+      begin
+         Timed_Events := Timed_Events + 1;
+      end Add_Timer_Event;
+
+      procedure Remove_Timer_Event is
+      begin
+         Timed_Events := Timed_Events - 1;
+      end Remove_Timer_Event;
 
    end Event_Count;
 
