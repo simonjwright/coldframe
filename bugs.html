@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e72b4b1b39bd 2003/02/11 20:48:55 simon $ -->
+<!-- $Id: bugs.html,v 361d1999f6f6 2003/02/14 20:34:21 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -146,17 +146,11 @@ be specified in a model.
 parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
 of the correct actual type.
 
-<dt>0149 (raised 6.ii.03)
-
-<dd>There should be an option for an individual domain's
-<tt>Events.Initialize</tt> to be overridden when constructing a whole
-system.
-
 <dt>0150 (raised 6.ii.03)
 
 <dd>There needs to be a way to have the "held" Event Queue's entries
 be re-sorted when the basis of ordering changes (eg, between a local
-time frame and a standard time one).
+and a standard time frame).
 
 <dt>0151 (raised 11.ii.03)
 
@@ -164,11 +158,22 @@ time frame and a standard time one).
 run after an interval, the interval should refer to the time when the
 queue is eventually started.
 
-<!-- next: 0152 -->
+<!-- next: 0153 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>Valentine's Day 2003</h3>
+
+<dl>
+
+<dt>0152 (raised Valentine's Day 2003)
+
+<dd>The comments in the body of a function that returns a composite
+type are not generated properly.
+
+</dl>
 
 <h3>6.ii.03</h3>
 
