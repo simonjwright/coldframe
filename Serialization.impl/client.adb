@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: client.adb,v $
---  $Revision: d359e00b9408 $
---  $Date: 2003/09/11 19:52:17 $
+--  $Revision: 484929c83c72 $
+--  $Date: 2004/05/01 15:16:00 $
 --  $Author: simon $
 
 
@@ -43,7 +43,7 @@ begin
 
    loop
 
-      Put_Line ("outputting a Client_Support record");
+      Put_Line ("outputting a Sample_A record");
       Serialization.Interface.Output
         (Serialization_Demo.Serializable.Sample_A'
            (Serialization.Serializable_Base with
