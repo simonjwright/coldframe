@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v 529557ee2dba 2001/11/25 10:25:37 simon $ -->
+<!-- $Id: faq.html,v 957294b76472 2001/12/09 10:37:42 simon $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 </head>
@@ -14,6 +14,9 @@
 <li><a href="#aggregation">Why doesn't ColdFrame support aggregation?</a>
 
 <li><a href="#role-names">I don't understand about role names.</a>
+
+<li><a href="#unlink">Why do some <tt><i>Association</i>.Unlink</tt>
+operations do nothing?</a>
 
 </ol>
 
@@ -113,6 +116,42 @@ class "List" (<i>Threat List</i>, for instance).
 <p>
 
 <h2><a name="role-names">I don't understand about role names.</a></h2>
+
+<p><i>Watch this space ...</i>
+
+<h2><a name="unlink">Why do some <tt><i>Association</i>.Unlink</tt>
+operations do nothing?</a></h2>
+
+<p>Associations are implemented using pointers (handles) in one of the
+class instances involved in the association. Unlinking involves
+nulling out the handle variable.
+
+<p>ColdFrame doesn't enforce model integrity (at some future time, it
+may provide model validation checks), so it's left up to you to delete
+any instances you may need to. For instance, if every <i>Author</i>
+must "<i>have written</i>" at least one <i>Book</i> and you delete the
+last <i>Book</i> by a particular <i>Author</i>, you need to delete the
+<i>Author</i> too.
+
+<p>The <tt>Unlink</tt> operations that do nothing are those where the
+association concerned has an association class. In this case, the
+handle variable or variables concerned are in the association
+class. This has two consequences:
+
+<ul>
+
+<li>the variable(s) are immutable, because they're part of the
+association class' Identifier
+
+<li>deleting the association class instance, which you'd have to do to
+preserve model integrity, actually does the unlinking "by accident".
+
+</ul>
+
+It would have been possible for <tt>Unlink</tt> to <tt>Delete</tt> the
+association class instance directly, but that would rely on your
+having cleaned up any other associations between the association class
+and the rest of the model beforehand.
 
 <p>
 
