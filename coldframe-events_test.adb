@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events_test.adb,v $
---  $Revision: 665f2d8b70d9 $
---  $Date: 2002/03/28 12:12:48 $
+--  $Revision: 4a9c11a53df5 $
+--  $Date: 2002/04/17 18:27:17 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -35,13 +35,13 @@ procedure ColdFrame.Events_Test is
 begin
 
    E := new Events_Test_Support.Noisy_Ev (Noisy_Ins'Unchecked_Access);
-   Project.Events.Set (The => Events_Test_Support.T1,
+   Project.Events.Set (The_Timer => Events_Test_Support.T1,
                        On => Events_Test_Support.Noisy_Dispatcher,
                        To_Fire => E,
                        After => 2.0);
 
    E := new Events_Test_Support.Noisy_Ev (Noisy_Ins'Unchecked_Access);
-   Project.Events.Set (The => Events_Test_Support.T2,
+   Project.Events.Set (The_Timer => Events_Test_Support.T2,
                        On => Events_Test_Support.Noisy_Dispatcher,
                        To_Fire => E,
                        After => 1.0);
@@ -59,7 +59,7 @@ begin
          for J in 1 .. 1000 loop
             Ev := new Events_Test_Support.Quiet_Ev
               (Quiet_Ins'Unchecked_Access);
-            Project.Events.Post (The => Ev,
+            Project.Events.Post (The_Event => Ev,
                                  On => Events_Test_Support.Quiet_Dispatcher);
          end loop;
          delay 0.00001;

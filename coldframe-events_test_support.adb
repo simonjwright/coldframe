@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events_test_support.adb,v $
---  $Revision: 665f2d8b70d9 $
---  $Date: 2002/03/28 12:12:48 $
+--  $Revision: 4a9c11a53df5 $
+--  $Date: 2002/04/17 18:27:17 $
 --  $Author: simon $
 
 package body ColdFrame.Events_Test_Support is
@@ -38,7 +38,7 @@ package body ColdFrame.Events_Test_Support is
       pragma Warnings (Off, This);
    begin
       delay 0.5;
-      Project.Events.Unset (The => T1,
+      Project.Events.Unset (The_Timer => T1,
                             On => Noisy_Dispatcher);
    end Handler;
 
