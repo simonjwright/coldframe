@@ -1,6 +1,26 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  $RCSfile: hierarchies-test_creations.adb,v $
+--  $Revision: 59c683ce2929 $
+--  $Date: 2002/06/06 07:28:38 $
+--  $Author: simon $
+
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
+with System.Assertions;
 with ColdFrame.Instances;
 
 with Hierarchies.Initialize;
@@ -474,7 +494,7 @@ package body Hierarchies.Test_Creations is
       F2_H := F_2.Inheritance.Create_Tree (null, null, CIH (S3_H));
       Assert (False, "creation succeeded");
    exception
-      when Constraint_Error => null;
+      when System.Assertions.Assert_Failure => null;
    end Create_Third_Child_With_Bad_R2_S3;
 
    procedure Create_Third_Child_With_Bad_S3_S3
@@ -489,7 +509,7 @@ package body Hierarchies.Test_Creations is
       F2_H := F_2.Inheritance.Create_Tree (null, CIH (S3_H), CIH (S3_H2));
       Assert (False, "creation succeeded");
    exception
-      when Constraint_Error => null;
+      when System.Assertions.Assert_Failure => null;
    end Create_Third_Child_With_Bad_S3_S3;
 
    procedure Create_Third_Child_With_Deleted
