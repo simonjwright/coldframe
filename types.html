@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v dbdb39b66a27 2003/11/14 06:09:26 simon $ -->
+<!-- $Id: types.html,v f22d980d1f6b 2003/12/13 07:23:38 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -121,6 +121,12 @@ compatibility..
 <li><tt>imported = <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
 
+<li><tt>integer = lower <i>low-bound</i> | upper
+<i>upper-bound</i></tt>
+
+<li><tt>null</tt> specifies an empty record; useful for a callback
+with no actual data associated.
+
 <li><tt>protected</tt> specifies that instances of the type are
 protected against concurrent access by multiple threads of
 execution. It implies &#171;type&#187;.
@@ -128,14 +134,14 @@ execution. It implies &#171;type&#187;.
 <li><tt>renames = <i>external-type</i></tt> specifies that the given
 type is a renaming of the specified external reference.
 
-<li><b>Annotation only!</b> <tt>real : digits <i>num-digits</i>, lower
-<i>low-bound</i>, upper <i>upper-bound</i></tt>
+<li><tt>real = digits <i>num-digits</i> | lower
+<i>low-bound</i> | upper <i>upper-bound</i></tt>
 
 <li><tt>serializable</tt> specifies support for outputting values of
 the type to an external medium. See
 <a href="serialization.html">separate information</a>.
 
-<li><b>Annotation only!</b> <tt>string : max <i>max-length</i></tt>
+<li><tt>string = max <i>max-length</i></tt>
 
 <li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been
@@ -148,6 +154,17 @@ separators. This would be useful for, for example, marking a type
 serializable:
 <pre>
    [[ real : lower -100.0, upper 100.0; serializable ]]
+</pre>
+
+<p>There can be as many tagged value sections as you like; so you
+could say either
+<pre>
+   { real = lower -100.0 | upper 100.0, serializable }
+</pre>
+or
+<pre>
+   { real = lower -100.0 | upper 100.0}
+   { serializable }
 </pre>
 
 <h3>Operations</h3>
@@ -194,7 +211,7 @@ supporting code is generated as a child unit of the domain package.
 no implicit <tt>This</tt> parameter.
 
 <h3>Tags</h3>
- 
+
 <ul>
 
 <li><tt>callback</tt> (or &#171;callback&#187;)
@@ -243,7 +260,7 @@ lengthed string, and <i>Message</i> is
    end record;
 </pre>
 
-<li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>:
+<li><tt>enumeration = <i>literal-1</i> | <i>literal-2</i> | ...</tt>:
 gives, for example (see <a href="#discriminated-record-pic">above</a>),
 <pre>
    type Alert_Level is
@@ -252,7 +269,7 @@ gives, for example (see <a href="#discriminated-record-pic">above</a>),
       High);
 </pre>
 
-<li><tt>extends : <i>external-type</i></tt>: for a type named
+<li><tt>extends = <i>external-type</i></tt>: for a type named
 <tt>Derived</tt>, extending <tt><i>Other_Domain</i>.Base</tt>, gives
 <pre>
    with <i>Other_Domain</i>;
@@ -262,12 +279,12 @@ gives, for example (see <a href="#discriminated-record-pic">above</a>),
    end record;
 </pre>
 
-<li><tt>image : <i>image-operation</i></tt>: see
+<li><tt>image = <i>image-operation</i></tt>: see
 <a href="serialization.html">separate information</a>.
 
 <p>
 
-<li><tt>imported : <i>external-reference</i></tt>: for a type named
+<li><tt>imported = <i>external-reference</i></tt>: for a type named
 <tt>T</tt> gives
 <pre>
    with <i>external-reference</i>;
@@ -280,7 +297,7 @@ with-able package name).
 
 <p>
 
-<li><tt>renames : <i>external-type</i></tt>: for a type named
+<li><tt>renames = <i>external-type</i></tt>: for a type named
 <tt>T</tt>, renaming <tt>Ada.Real_Time.Time</tt>, gives
 <pre>
    with Ada.Real_Time;
@@ -289,11 +306,13 @@ with-able package name).
    use type T;
 </pre>
 
-<li><tt>integer : lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>: gives
+<li><tt>integer = lower <i>low-bound</i> | upper <i>upper-bound</i>
+</tt> gives
 <pre>
    type T is range <i>low-bound</i> .. <i>upper-bound</i>;
 </pre>
+
+<li><tt>null</tt> gives <tt>null record</tt><p>
 
 <li><tt>protected</tt> (or &#171;protected&#187;) generates a
 <tt>protected</tt> type in the domain package. Operations of the type
@@ -303,19 +322,19 @@ map to protected operations; procedure operations stereotyped
 <p>The protected type's body is generated as a <tt>separate</tt> body;
 the operations raise <tt>Program_Error</tt> if called.
 
-<li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>: gives a floating-point type. If the
+<li><tt>real = digits <i>num-digits</i> | lower <i>low-bound</i> |
+upper <i>upper-bound</i></tt>: gives a floating-point type. If the
 <i>digits</i> section is omitted, or <i>num-digits</i> is not more
 than 6, it's a subtype of <tt>Float</tt>, otherwise it's a subtype of
 <tt>Long_Float</tt>. If the lower and upper bounds are given, they
 translate to a constraint.
 
-<p><tt>[[ real : digits 5 ]]</tt> gives
+<p><tt>{ real = digits 5 }/tt> gives
 <pre>
    subtype T is Float;
 </pre>
 
-<p><tt>[[ real : digits 9, lower 0.0, upper 1_000_000.0 ]]</tt> gives
+<p><tt>{ real = digits 9 | lower 0.0 | upper 1_000_000.0 }</tt> gives
 <pre>
    subtype T is Long_Float range 0.0 .. 1_000_000.0;
 </pre>
@@ -327,7 +346,7 @@ attached, but causes a corresponding declaration in the domain's
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
       type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
-	 Payload : <i>Domain</i>.<i>T</i>;
+         Payload : <i>Domain</i>.<i>T</i>;
       end record;
       function Image (S : <i>T</i>) return String;
    end <i>Domain</i>.Serializable;
@@ -341,7 +360,7 @@ understands (it might want to add timestamp information, for example)
 
 <p>See <a href="serialization.html">separate information</a>.
 
-<li><tt>string : max <i>max-length</i></tt> gives an instantiation of
+<li><tt>string = max <i>max-length</i></tt> gives an instantiation of
 <tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
 example (see <a href="#discriminated-record-pic">above</a>),
 <pre>
@@ -349,8 +368,9 @@ example (see <a href="#discriminated-record-pic">above</a>),
    package <i>Domain</i> is
 
       package Information_Package is
-	new Generic_Bounded_Length (Max => 79);
+        new Generic_Bounded_Length (Max => 79);
       subtype Information is Information_Package.Bounded_String;
+      use type Information;
 </pre>
 
 <p>and a library-level hash function
@@ -366,9 +386,9 @@ example (see <a href="#discriminated-record-pic">above</a>),
 
 <h3>Type extension</h3>
 
-<p>The <i>extends</i> annotation is intended to support the use of
-external packages which require type extension (for example, to take
-data records). It is not meant to provide generalized support for type
+<p><i>{extends}</i> is intended to support the use of external
+packages which require type extension (for example, to take data
+records). It is not meant to provide generalized support for type
 extension. If you <i>really</i> want to use Ada tagged types, or
 indeed other features of Ada that ColdFrame doesn't use, then maybe
 you should consider translating your UML models by hand or rethinking
