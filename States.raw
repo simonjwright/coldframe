@@ -4,12 +4,12 @@
 <date>
 <year>2002</year>
 <month>2</month>
-<day>24</day>
-<time>17:14</time>
+<day>26</day>
+<time>15:57</time>
 </date>
 <documentation>This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 
-[[ revision : $Id: States.raw,v 7fc4ff188d00 2002/02/24 17:16:06 simon $ ]]
+[[ revision : $Id: States.raw,v 421216cdd6ec 2002/02/28 19:57:51 simon $ ]]
 </documentation>
 <classes>
 <class>
@@ -88,7 +88,7 @@
 </operation>
 </operations>
 <events>
-<event message="yes">
+<event stereotype="class event">
 <name>Tick</name>
 <type>Device</type>
 </event>

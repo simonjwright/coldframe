@@ -11,7 +11,7 @@
     documentation 	
 |This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 |
-|[[ revision : $Id: States.cat,v 7fc4ff188d00 2002/02/24 17:16:06 simon $ ]]
+|[[ revision : $Id: States.cat,v 421216cdd6ec 2002/02/28 19:57:51 simon $ ]]
 |
     
     exportControl 	"Public"
@@ -22,7 +22,7 @@
 	    used_nodes 	(list uses_relationship_list
 		(object Uses_Relationship
 		    quid       	"3C75000E014B"
-		    stereotype 	"message"
+		    stereotype 	"class event"
 		    label      	"Tick"
 		    supplier   	"Logical View::States::Device"
 		    quidu      	"3C74FFF7019E"))
@@ -545,7 +545,7 @@
 				quidu      	"3C517765023F"
 				compartment 	(object Compartment
 				    Parent_View 	@9
-				    location   	(3120, 703)
+				    location   	(3120, 704)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -574,7 +574,7 @@
 				quidu      	"3C5177F80138"
 				compartment 	(object Compartment
 				    Parent_View 	@10
-				    location   	(3257, 1679)
+				    location   	(3257, 1680)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -1090,7 +1090,7 @@
 			nlines     	1
 			max_width  	450
 			justify    	0
-			label      	"<<message>>"
+			label      	"<<class event>>"
 			pctDist    	0.500000
 			height     	52
 			orientation 	0)
