@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
+<!-- $Id: ada-operation.xsl,v 9d35c74e0738 2004/06/25 05:41:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -100,7 +100,7 @@
       <xsl:text>;&#10;</xsl:text>
 
       <!-- Inline accessors of the current class. -->
-      <!--
+      <!-- or not!
       <xsl:if test="@accessor and ..=$current">
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Inline_Always (</xsl:text>
@@ -123,6 +123,7 @@
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
       <xsl:value-of select="$blank-line"/>
+
     </xsl:if>
 
   </xsl:template>
@@ -130,23 +131,25 @@
   <xsl:template mode="operation-spec" match="*"/>
 
 
-  <!-- Called at domain/class to generate renaming operation specs. -->
-  <xsl:template name="renaming-operation-specs">
-    <xsl:for-each select="operation[@renames]">
-      <xsl:call-template name="subprogram-specification">
-        <xsl:with-param name="indent" select="$I"/>
-      </xsl:call-template>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text>renames </xsl:text>
-      <xsl:value-of select="@renames"/>
-      <xsl:text>;&#10;</xsl:text>
-      <xsl:call-template name="commentary">
-        <xsl:with-param name="indent" select="$I"/>
-      </xsl:call-template>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:for-each>
+  <!-- Generate renaming operation specs. -->
+  <xsl:template match="operation[@renames]" mode="renaming-operation-spec">
+
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+    </xsl:call-template>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>renames </xsl:text>
+    <xsl:value-of select="@renames"/>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="commentary">
+      <xsl:with-param name="indent" select="$I"/>
+    </xsl:call-template>
+    <xsl:value-of select="$blank-line"/>
+
   </xsl:template>
+
+  <xsl:template mode="renaming-operation-spec" match="*"/>
 
 
   <!-- Called at domain/class to generate the contribution to the

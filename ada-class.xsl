@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 98669c250f89 2004/06/12 19:45:39 simon $ -->
+<!-- $Id: ada-class.xsl,v 9d35c74e0738 2004/06/25 05:41:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -158,7 +158,9 @@
    <xsl:call-template name="operation-specs"/>
 
    <!-- .. renaming operations .. -->
-   <xsl:call-template name="renaming-operation-specs"/>
+   <xsl:apply-templates mode="renaming-operation-spec">
+     <xsl:sort select="name"/>
+   </xsl:apply-templates>
 
    <!-- .. the private part .. -->
    <xsl:text>private&#10;</xsl:text>
