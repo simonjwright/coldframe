@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 56844fb8f5c6 2003/08/13 19:45:37 simon $ -->
+<!-- $Id: serialization.html,v 23bb5ee8721e 2003/08/28 20:35:44 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -59,7 +59,7 @@ function for the nested types).
 
 <p>In the diagram,
 
-<p><img src="serialization.png">
+<p><a name="serialization.png"><img src="serialization.png"></a>
 
 <p>the buff classes are what are included in the UML model, the grey
 classes are what gets generated, and the yellow classes are supporting
@@ -123,15 +123,30 @@ should be implemented.
 <h3>User-defined <i>image</i> functions</h3>
 
 <p>For most types, ColdFrame can work out how to convert to a textual
-representation for itself. This includes fundamental types such as
-<tt>Boolean</tt>, user-defined scalars, strings and <tt>Time</tt>.
+representation for itself. This includes 
+
+<ul>
+
+<li>any standard type for which the <tt>'Image</tt> attribute is
+available (<tt>Boolean</tt>, <tt>Integer</tt>, <tt>Duration</tt>,
+<tt>Float</tt> ...)
+
+<li>user-defined scalars (<tt><i>[[enumeration]]</i></tt>,
+<tt><i>[[integer]]</i></tt>, <tt><i>[[real]]</i></tt>)
+
+<li>strings (<tt>Text</tt> and user-defined <i><tt>[[string]]</tt></i>s)
+
+<li><tt>Time</tt>
+
+</ul>
 
 <p>However, this may not be possible for types imported from other
 domains (it's OK for types which are visibly scalar, such as
 <tt>GNAT.Sockets.Port_Type</tt>). In this case, you can specify an
 image function for the type.
 
-<p>In the diagram, <i>Foreign</i> is a renaming of type
+<p><a href="#serialization.png">In the diagram</a>, <i>Foreign</i> is
+a renaming of type
 <tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
 function to use via the annotation <i><tt>[[image]]</tt></i>, in this
 case
