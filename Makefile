@@ -19,9 +19,24 @@ TEXI2HTML = texi2html
 %.html: %.texi
 	$(TEXI2HTML) -monolithic $<
 
-all:: html
+PS2PDF = ps2pdf
+%.pdf: %.ps
+	$(PS2PDF) $<
 
-html:: use-cases.html
+all:: html pdf
+
+html:: use-cases.html coldframe-architecture.html
+
+# Architecture.raw is extracted from the Rose Architecture package
+# (coldframe-architecture.cat) using ddf.ebs
+coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
+	java com.icl.saxon.StyleSheet \
+	    Architecture.raw generate-architecture-html.xsl >$@
+
+# coldframe-architecture.ps is made by printing the Rose Architecture package
+# diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
+
+pdf:: coldframe-architecture.pdf
 
 # preserve intermediate files
 .PRECIOUS:: Problem_Reporting.norm Problem_Reporting.ada
@@ -40,6 +55,8 @@ principles.html \
 releases.html \
 resources.html \
 use-cases.html use-cases.texi \
+coldframe-architecture.html coldframe-architecture.pdf \
+coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
