@@ -5,7 +5,7 @@
 
 TOP = /usr/local
 
-CF = $(TOP)/cf-20010419
+CF = $(TOP)/cf-DATE
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
@@ -34,3 +34,8 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	gnatchop $< $@
 
 .PHONY: force
+
+#;; for emacs:
+#;; Local Variables:
+#;; mode: makefile
+#;; End:
