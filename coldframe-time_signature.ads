@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-time_signature.ads,v $
---  $Revision: 7cb38e90780a $
---  $Date: 2003/03/09 16:04:21 $
+--  $Revision: ad6a76f66fea $
+--  $Date: 2003/03/16 12:25:03 $
 --  $Author: simon $
 
 generic
@@ -29,7 +29,12 @@ generic
    --  This package specifies the properties required of a Time for it
    --  to be used with event management.
 
-   type Time is private;
+   type Time_Kind is (<>);
+
+   --  One of the kinds of Time must be Real_Time, used for "delay for".
+   Real_Time : Time_Kind;
+
+   type Time (Kind : Time_Kind) is private;
 
    with function From_Now (Period : Duration) return Time;
 
