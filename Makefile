@@ -49,7 +49,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 %.gen: %.ada
 	-mkdir $@
 	rm -f $@/*.ad[bs]
-	gnatchop $< $@
+	gnatchop -gnatX $< $@
 	[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad?)`; do \
 	   [ ! -f $@/$$f ] || ( echo rm $@/$$f; rm $@/$$f); \
 	done
