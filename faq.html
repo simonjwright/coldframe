@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v 0684b6de10c9 2001/12/27 10:28:55 simon $ -->
+<!-- $Id: faq.html,v 33e4b4114965 2002/01/20 10:41:42 simon $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 </head>
@@ -17,6 +17,8 @@
 
 <li><a href="#unlink">Why do some <tt><i>Association</i>.Unlink</tt>
 operations do nothing?</a>
+
+<li><a href="#why-not-delete">.. so why can't I just call Delete?</a>
 
 </ol>
 
@@ -62,8 +64,9 @@ Hired. There's only one code object, so you have to create a new
 <i>AvailableVan</i> and remake the associations.
 
 <p>ColdFrame adopts a halfway-house approach to this, combining the <a
-href="resources.html#build-object-models">Shlaer-Mellor view of
-generalization</a> with dispatching and inherited operations.
+href="resources.html#build-object-models">Executable UML (originally
+Shlaer-Mellor) view of generalization</a> with dispatching and
+inherited operations.
 
 <p>Of course, there is a cost to dynamic classification; you have to
 decide whether increased precision in the model is worth the extra run
@@ -141,10 +144,11 @@ class. This has two consequences:
 <ul>
 
 <li>the variable(s) are immutable, because they're part of the
-association class' Identifier
+association class's Identifier
 
 <li>deleting the association class instance, which you'd have to do to
-preserve model integrity, actually does the unlinking "by accident".
+preserve model integrity, actually does all that's necessary to
+unlink.
 
 </ul>
 
@@ -155,9 +159,24 @@ and the rest of the model beforehand (or in a &#171;finalize&#187;
 operation; however, using &#171;finalize&#187; operations to maintain
 model integrity is an advanced practice!)
 
-<p>
+<h2><a name="why-not-delete">.. so why can't I just call Delete?</a></h2>
 
-<hr>
+<p>At the moment, ColdFrame implements the minimum necessary to
+support navigation. For example, a one-to-many association is
+implemented by pointers from the <i>many</i> end to the <i>one</i>
+end.
+
+<p>This means that navigating from the <i>many</i> end to the
+<i>one</i> end is much quicker than navigating in the reverse
+direction.
+
+<p>At a later stage, it may become cleverer; it might add supporting
+tables of references to speed up navigation in what is now the
+unnatural direction (you might need to tell it to do
+so). <tt>Unlink</tt> would then do what was needed to keep those
+tables consistent.
+
+<p><hr>
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>
