@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 7f82ad0d904d $
---  $Date: 2002/07/08 19:18:33 $
+--  $Revision: a6ada649a454 $
+--  $Date: 2002/07/11 19:43:10 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -33,27 +33,29 @@ with GNAT.IO;
 package body ColdFrame.Events_G.Standard_G is
 
 
-   procedure Post (The_Event : Event_P;
-                   On : access Event_Queue) is
+   --  Remember, in the instance to which this event is directed,
+   --  which event queue was used. This is so that (when the instance
+   --  terminates) we can invalidate all events that were directed to
+   --  it.
+   --
+   --  Because of this use, it's necessary that (if any events are
+   --  posted at all) they should all be to the same event queue.
+   procedure Note (The_Queue : access Event_Queue;
+                   Used_By_The_Instance_Of : Event_P);
+   procedure Note (The_Queue : access Event_Queue;
+                   Used_By_The_Instance_Of : Event_P) is
    begin
 
-      if The_Event.all in Instance_Event_Base'Class then
+      if Used_By_The_Instance_Of.all in Instance_Event_Base'Class then
 
-         --  Remember, in the instance to which this event is
-         --  directed, which event queue was used. This is so that
-         --  (when the instance terminates) we can invalidate all
-         --  events that were directed to it.
-         --
-         --  Because of this use, it's necessary that (if any events
-         --  are posted at all) they should all be to the same event
-         --  queue.
          declare
             I : Events_G.Instance_Base
-              renames Instance_Event_Base (The_Event.all).For_The_Instance.all;
+              renames Instance_Event_Base
+              (Used_By_The_Instance_Of.all).For_The_Instance.all;
          begin
             if I.Events_Posted_On = null then
-               I.Events_Posted_On := Event_Queue_P (On);
-            elsif I.Events_Posted_On /= Event_Queue_P (On) then
+               I.Events_Posted_On := Event_Queue_P (The_Queue);
+            elsif I.Events_Posted_On /= Event_Queue_P (The_Queue) then
                Ada.Exceptions.Raise_Exception
                  (Exceptions.Use_Error'Identity,
                   "attempt to post instance event on different queue");
@@ -61,6 +63,16 @@ package body ColdFrame.Events_G.Standard_G is
          end;
 
       end if;
+
+   end Note;
+
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue) is
+   begin
+
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => The_Event);
 
       On.The_Excluder.Post (The_Event);
 
@@ -72,6 +84,9 @@ package body ColdFrame.Events_G.Standard_G is
                    To_Fire_At : Time.Time) is
       TE : Timer_Queue_Entry_P := new Timer_Event;
    begin
+
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => The_Event);
 
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
@@ -85,6 +100,9 @@ package body ColdFrame.Events_G.Standard_G is
                    On : access Event_Queue;
                    To_Fire_After : Natural_Duration) is
    begin
+
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => The_Event);
 
       Post (The_Event => The_Event,
             On => On,
@@ -136,6 +154,9 @@ package body ColdFrame.Events_G.Standard_G is
                   To_Fire : Event_P;
                   At_Time : Time.Time) is
    begin
+
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => To_Fire);
 
       if The_Timer.The_Entry = null then
 
