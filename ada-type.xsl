@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 05132ba458fc 2002/01/27 11:10:52 simon $ -->
+<!-- $Id: ada-type.xsl,v 68536b08e9a8 2002/02/28 19:57:09 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -25,7 +25,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  version="1.0">
+  version="1.1">
 
   <!-- Called at /domain to generate domain context clauses. -->
   <xsl:template name="domain-context">
@@ -81,9 +81,11 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <!-- Then, sort, and output unique occurrences. The need to call
-         preceding-sibling::node() is what drives making a nodeset
-         above. -->
+    <!-- Then, sort, and output unique occurrences. -->
+    <!-- XXX Saxon 6.5.1 allows this result tree fragment to be
+         implicitly converted to a node set if the version is 1.1,
+         so I've changed this file to require 1.1.
+         Should consider saxon:node-set() or exsl:node-set(). -->
     <xsl:for-each select="$imported-renamed-withs/with">
       <xsl:sort select="."/>
       <xsl:if test="not (.=preceding-sibling::node())">

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-class.xsl,v 68536b08e9a8 2002/02/28 19:57:09 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -24,7 +24,7 @@
      -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+                version="1.1">
 
 
   <!-- Generate the class packages (specs). -->
@@ -735,7 +735,11 @@
 
         <xsl:variable name="d" select="/domain/name"/>
 
-        <!-- Sort, uniqueify and output -->
+        <!-- Sort, uniqueify and output. -->
+        <!-- XXX Saxon 6.5.1 allows this result tree fragment to be
+             implicitly converted to a node set if the version is 1.1,
+             so I've changed this file to require 1.1.
+             Should consider saxon:node-set() or exsl:node-set(). -->
         <xsl:for-each select="$withs/with">
           <xsl:sort/>
           <xsl:if test="not (.=preceding-sibling::node())">
