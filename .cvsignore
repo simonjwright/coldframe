@@ -7,4 +7,5 @@ b~*.ad[bs]
 use-cases.html coldframe-architecture.html coldframe-architecture.pdf
 Problem_Reporting Problem_Reporting.doc
 Weapon_Assignment Weapon_Assignment.doc
+Makefile-cf
 
