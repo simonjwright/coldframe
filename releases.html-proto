@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 5f121cb90e42 2004/10/27 05:32:44 simon $ -->
+<!-- $Id: releases.html-proto,v 78641b19e9b6 2004/10/27 05:43:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -36,7 +36,8 @@ exist.
 <p>If an exception gets raised in a called-back routine, an error is
 logged (rather than re-raising the exception to the supplier).
 <br><i>You need to be careful with this, because it can lead to
-elaboration circularity.</i>
+elaboration circularity if your
+<tt>ColdFrame.Project.Logging_Support</tt> uses callbacks.</i>
 
 
 <p>A callback operation can deregister itself (though the
