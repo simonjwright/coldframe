@@ -1,11 +1,11 @@
 with ColdFrame.Project.Events;
-with High_Resolution_Time;
+with ColdFrame.Project.High_Resolution_Time;
 
 package Performance.Event_Timing is
 
    Loops : constant := 100;
 
-   Done_At : High_Resolution_Time.Time;
+   Done_At : ColdFrame.Project.High_Resolution_Time.Time;
 
    type Repost is new ColdFrame.Project.Events.Event_Base with record
       Count : Natural := Loops;
