@@ -13,11 +13,16 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-button-changed.adb,v $
---  $Revision: 0f7eda971a8e $
---  $Date: 2003/02/07 05:55:57 $
+--  $Revision: 38b303ce7174 $
+--  $Date: 2004/12/24 08:52:35 $
 --  $Author: simon $
 
---  Acts as receiver of state changes from Digital IO.
+--  Acts as receiver of state changes from Digital IO, via Signal
+--  State Callback. Posts a (class) Button Event (only if the button
+--  has been pushed).
+
+with ColdFrame.Project.Events;
+with House_Management.Events;
 
 separate (House_Management.Button)
 procedure Changed
@@ -34,16 +39,28 @@ procedure Changed
 
 begin
 
-   if S.S in Floors then
+   if S.State then
 
-      if S.State then
+      if S.S in Floors then
 
-         Pushed (Find ((Name => Buttons (S.S))));
+         declare
 
+            E : constant ColdFrame.Project.Events.Event_P
+              := new Button_Event;
+            P : Button_Name renames Button_Event (E.all).Payload;
+
+         begin
+
+            P := Buttons (S.S);
+
+            ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
+
+         end;
+
+      else
+         raise Constraint_Error;
       end if;
 
-   else
-      raise Constraint_Error;
    end if;
 
 end Changed;
