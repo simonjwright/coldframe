@@ -44,6 +44,16 @@
 
     </xsl:for-each>
 
+    <xsl:for-each select="type[@callback]">
+      <xsl:sort select="name"/>
+
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Callback;&#10;</xsl:text>
+    </xsl:for-each>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
@@ -51,7 +61,7 @@
 
     <xsl:choose>
 
-      <xsl:when test="class">
+      <xsl:when test="class or type[@callback]">
         
         <xsl:for-each select="class">
           <xsl:sort select="name"/>
@@ -60,6 +70,14 @@
           <xsl:value-of select="name"/>
           <xsl:text>.Tear_Down;&#10;</xsl:text>
           
+        </xsl:for-each>
+
+        <xsl:for-each select="type[@callback]">
+          <xsl:sort select="name"/>
+
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="name"/>
+          <xsl:text>_Callback.Clear;&#10;</xsl:text>
         </xsl:for-each>
 
       </xsl:when>
