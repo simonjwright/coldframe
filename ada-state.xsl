@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 256b8fc38a8c 2003/03/15 19:51:52 simon $ -->
+<!-- $Id: ada-state.xsl,v 97b21b038a2b 2003/04/07 18:16:36 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -533,6 +533,10 @@
                <xsl:text>begin&#10;</xsl:text>
                <xsl:value-of select="$III"/>
                <xsl:text>Delete (H);&#10;</xsl:text>
+               <xsl:value-of select="$III"/>
+               <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
+               <xsl:value-of select="$IIIC"/>
+               <xsl:text>(What'Unrestricted_Access);&#10;</xsl:text>
                <xsl:value-of select="$II"/>
                <xsl:text>end;&#10;</xsl:text>
 
@@ -560,7 +564,7 @@
 
      </xsl:for-each>
 
-     <xsl:if test="not(@final)">
+     <xsl:if test="not(action/name='Delete')">
        <!-- Set the old state variable. -->
        <xsl:value-of select="$II"/>
        <xsl:text>This.Old_State_Machine_State := </xsl:text>
@@ -568,15 +572,6 @@
        <xsl:text>;&#10;</xsl:text>       
      </xsl:if>
      
-     <xsl:if test="@final and not(../../@singleton)">
-       <!-- Tell the event that it no longer needs to worry about the
-            instance. -->
-       <xsl:value-of select="$II"/>
-       <xsl:text>ColdFrame.Project.Events.Instance_Is_Deleted&#10;</xsl:text>
-       <xsl:value-of select="$IIC"/>
-       <xsl:text>(What'Unrestricted_Access);&#10;</xsl:text>
-     </xsl:if>
-
      <xsl:if test="../transition[source=$s and not(event)]">
        <xsl:value-of select="$II"/>
        <xsl:text>Enter_</xsl:text>
