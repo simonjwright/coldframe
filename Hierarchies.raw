@@ -5,9 +5,10 @@
 <year>2002</year>
 <month>5</month>
 <day>18</day>
-<time>10:53</time>
+<time>17:23</time>
 </date>
-<documentation>Support for subtype migration in deeply layered multiple inheritance hierarchies.</documentation>
+<documentation>[[ revision : $Id: Hierarchies.raw,v 13466f9cc2b8 2002/05/18 16:14:47 simon $ ]]
+Support for subtype migration in deeply layered multiple inheritance hierarchies.</documentation>
 <classes>
 <class>
 <name>R_1</name>
