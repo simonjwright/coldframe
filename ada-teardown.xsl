@@ -56,41 +56,35 @@
       <xsl:text>_Callback;&#10;</xsl:text>
     </xsl:for-each>
 
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:choose>
-
-      <xsl:when test="class or type[@callback]">
-        
-        <xsl:for-each select="class">
-          <xsl:sort select="name"/>
-          
-          <xsl:value-of select="$I"/>
-          <xsl:value-of select="name"/>
-          <xsl:text>.Tear_Down;&#10;</xsl:text>
-          
-        </xsl:for-each>
-
-        <xsl:for-each select="type[@callback]">
-          <xsl:sort select="name"/>
-
-          <xsl:value-of select="$I"/>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Callback.Clear;&#10;</xsl:text>
-        </xsl:for-each>
-
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:otherwise>
-
-    </xsl:choose>
-
+    
+    <xsl:for-each select="class">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      
+    </xsl:for-each>
+    
+    <xsl:for-each select="type[@callback]">
+      <xsl:sort select="name"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Callback.Clear;&#10;</xsl:text>
+    </xsl:for-each>
+    
+    <xsl:value-of select="$I"/>
+    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
+    
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
@@ -239,6 +233,37 @@
   </xsl:template>
 
   <xsl:template mode="class-teardown-body" match="*"/>
+
+
+  <!-- Called at domain to generate the spec of the Events teardown
+       procedure. -->
+  <xsl:template name="event-teardown-spec">
+    
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Called at domain to generate the body of the Events teardown
+       procedure. -->
+  <xsl:template name="event-teardown-body">
+    
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>null;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
+  </xsl:template>
 
 
 </xsl:stylesheet>
