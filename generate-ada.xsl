@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v fe65668a78db 2002/05/22 04:25:42 simon $ -->
+<!-- $Id: generate-ada.xsl,v be89f64b6f1c 2002/06/06 07:38:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,6 +33,7 @@
   <xsl:include href="ada-callback.xsl"/>
   <xsl:include href="ada-class.xsl"/>
   <xsl:include href="ada-collection.xsl"/>
+  <xsl:include href="ada-inheritance.xsl"/>
   <xsl:include href="ada-operation.xsl"/>
   <xsl:include href="ada-state.xsl"/>
   <xsl:include href="ada-teardown.xsl"/>
@@ -65,11 +66,13 @@
   <xsl:param name="II" select="concat($I, $I)"/>
   <xsl:param name="III" select="concat($II, $I)"/>
   <xsl:param name="IIII" select="concat($III, $I)"/>
+  <xsl:param name="IIIII" select="concat($IIII, $I)"/>
   <xsl:param name="C" select="$continuation-indent"/>
   <xsl:param name="IC" select="concat($I, $C)"/>
   <xsl:param name="IIC" select="concat($II, $C)"/>
   <xsl:param name="IIIC" select="concat($III, $C)"/>
   <xsl:param name="IIIIC" select="concat($IIII, $C)"/>
+  <xsl:param name="IIIIIC" select="concat($IIIII, $C)"/>
 
   <!-- Added blank lines -->
   <xsl:param name="blank-line">
@@ -83,6 +86,8 @@
     </xsl:choose>
   </xsl:param>
 
+  <!-- Remember the main document. -->
+  <xsl:variable name="main-document" select="/"/>
 
   <!-- Generate the top-level package for the domain, then all the
        others. -->
@@ -324,6 +329,26 @@
         select="'.. package bodies for Associations (collection navigation) ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="association" mode="association-collection-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package specs for Inheritances -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. package specs for Inheritances ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[name=../inheritance/child or name=../inheritance/parent]"
+      mode="inheritance-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Inheritances -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. package bodies for Inheritances ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[name=../inheritance/child or name=../inheritance/parent]"
+      mode="inheritance-body">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
