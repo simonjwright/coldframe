@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3eac0ecb5781 2002/09/15 18:37:43 simon $ -->
+<!-- $Id: bugs.html,v 588d929dda1b 2002/09/17 18:11:03 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -173,11 +173,21 @@ triggered by the same event (or drop-through) isn't detected.
 <dd>It would make testing easier if non-&#171;public&#187; classes
 could be generated as non-<tt>private</tt> Ada packages.
 
+<!-- next: 0120 -->
+
 </dl>
 
-<!-- next: 0119 -->
-
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>17.ix.02</h3>
+<dl>
+
+<dt>0119 (raised 16.ix.02)
+
+<dd>Entry actions would be simpler to write, in some cases, if the
+state variable contained the new state rather than the old one.
+
+</dl>
 
 <h3>15.ix.02</h3>
 <dl>
@@ -191,7 +201,7 @@ could be generated as non-<tt>private</tt> Ada packages.
 <dd>The <i>Lock</i> facility of Event Queues ought to allow "events to
 self" a higher priority than external locks.
 
-</dl>
+x</dl>
 
 <h3>12.ix.02</h3>
 <dl>
