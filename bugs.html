@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 76a884d14a9e 2002/05/14 20:05:36 simon $ -->
+<!-- $Id: bugs.html,v daea8b6b8adc 2002/05/18 21:09:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -157,12 +157,6 @@ requires you to specify the maximum number of instances.
 <tt>Find</tt> the only instance (or of course <tt>null</tt>) without
 supplying an Identifier.
 
-<dt>0075 (raised 16.iv.02)
-
-<dd>Some of the generated operations (eg, accessors for referential
-attributes) are only intended to be called by generated code. It would
-be good to indicate this somehow.
-
 <dt>0078 (raised 18.iv.02)
 
 <dd>It would be helpful if ColdFrame could detect the error of having
@@ -182,21 +176,10 @@ abstract operation declared in the other parent?
 
 <dd>Tear_Down doesn't clean up singletons (especially active ones).
 
-<dt>0083 (raised 14.v.02)
-
-<dd>&#171;access&#187; functions are generated as though they were
-procedures.
-
 <dt>0084 (raised 14.v.02)
 
 <dd>ColdFrame ought to respect the modeller's casing; if you say FOO
 it should come out as FOO.
-
-<dt>0085 (raised 14.v.02)
-
-<dd>ColdFrame generates accessors for referential attributes, but they
-aren't intended for general use. Can they be marked "private" in the
-generated code?
 
 <dt>0086 (raised 14.v.02)
 
@@ -208,6 +191,49 @@ unimplemented bodies.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>18.v.02</h3>
+
+<dl>
+
+<dt>0075 (raised 16.iv.02)
+
+<dd>Some of the generated operations (eg, accessors for referential
+attributes) are only intended to be called by generated code. It would
+be good to indicate this somehow.
+
+<dt>0083 (raised 14.v.02)
+
+<dd>&#171;access&#187; functions are generated as though they were
+procedures.
+
+<dt>0084 (raised 14.v.02)
+
+<dd>ColdFrame ought to respect the modeller's casing; if you say
+<i>FOO</i> it should come out as <tt>FOO</tt>.
+
+<i>
+<br>This change has two consequences:
+
+<ul>
+
+<li>you need to be consistent about case; the code generator is
+case-sensitive
+
+<li>you need to use the case that ColdFrame expects (for example,
+<tt>AutoNumber</tt> won't work)
+</ul>
+</i>
+
+<dt>0085 (raised 14.v.02)
+
+<dd>ColdFrame generates accessors for referential attributes, but they
+aren't intended for general use. Can they be marked "private" in the
+generated code?
+
+<br><i>See also 0075.</i>
+
+</dl>
 
 <h3>9.v.02</h3>
 
