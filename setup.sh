@@ -1,4 +1,4 @@
-# $Id: setup.sh,v cbc9b02db43f 2003/11/08 16:36:25 simon $
+# $Id: setup.sh,v 1d847b9ff4bb 2003/11/14 06:13:35 simon $
 # Sets up environment variables for development of the Stairwell demo
 # (on tiamat).
 
@@ -6,6 +6,8 @@ export ADA_PROJECT_PATH=$HOME/cf:$HOME/high_resolution_timing:$HOME/statistics
 export BC=${BC:-bc}
 export BUILD=$HOME/cf/.build
 export BUILD_DIR=/home/simon/cf/.build
+export CASE_EXCEPTIONS=$HOME/cf/emacs_case_exceptions:\
+$HOME/.emacs_case_exceptions
 export DEVEL=YES
 export TASH=tash832a
 export TCL=/usr/lib
