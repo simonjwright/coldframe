@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 5cc94e8aee6d 2002/07/16 17:37:28 simon $ -->
+<!-- $Id: releases.html,v 94a12c38f0a1 2002/07/16 17:44:52 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -29,17 +29,21 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 unit tests to use after posting test Events; the operation blocks the
 test thread of control until all event activity has terminated.
 
+
 <p>Event Queues now have a <tt>Tear_Down</tt> operation; this is
 automatically called from the domain <tt>Tear_Down</tt>. Note, this is
 also intended for unit test!
+
 
 <p>There is a new <tt>Post_To_Self</tt> operation on Event Queues, to
 be used by a state machine instance which is posting an event to
 itself to make sure that the event is processed before any
 externally-signalled events to the same instance.
 
+
 <p>Missing names/types are detected for attributes and parameters
 before code is generated (during normalization).
+
 
 <p><dt>20020706
 

@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 5cc94e8aee6d 2002/07/16 17:37:28 simon $ -->
+<!-- $Id: bugs.html,v 94a12c38f0a1 2002/07/16 17:44:52 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -187,16 +187,26 @@ changed to "must carry the same payload".
 <dd>Multiple delayed events which are required to fire at the same
 time will result in a <tt>delay&nbsp;0.0</tt> between each.
 
+<dt>0103 (raised 16.vii.02)
+
+<dd>Automatic formation of abbreviations can result in generating
+reserved words.
+
+</dl>
+
+<!-- next: 0105 -->
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>16.vii.02</h3>
+
+<dl>
+
 <dt>0102 (raised 15.vii.02)
 
 <dd>Date, Time should be translated to
 <tt>Coldframe.Projects.Calendar.Time</tt>, with a provided default
 renaming of <tt>Ada.Calendar</tt>.
-
-<dt>0103 (raised 16.vii.02)
-
-<dd>Automatic formation of abbreviations can result in generating
-reserved words.
 
 <dt>0104 (raised 16.vii.02)
 
@@ -204,10 +214,6 @@ reserved words.
 <tt>ColdFrame.Exceptions</tt>.
 
 </dl>
-
-<!-- next: 0105 -->
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>12.vii.02</h3>
 
