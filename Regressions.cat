@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: d9ea6ad38cad $}
+|{ revision = $Revision: 53be0d507aad $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -7120,7 +7120,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Private types"
 	    quid       	"417C8D2F033E"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Private Enum"
@@ -7270,7 +7270,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	428)
+				max_width  	435)
 			    width      	450
 			    height     	264
 			    annotation 	8
@@ -7327,7 +7327,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	6
-				max_width  	848)
+				max_width  	855)
 			    width      	868
 			    height     	398
 			    annotation 	8
@@ -7384,7 +7384,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	795)
+				max_width  	802)
 			    width      	816
 			    height     	264
 			    annotation 	8
@@ -7395,7 +7395,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: d9ea6ad38cad $}
+|{ revision = $Revision: 53be0d507aad $}
 	    
 	    zoom       	88
 	    max_height 	28350
@@ -7441,7 +7441,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v d9ea6ad38cad 2004/10/29 12:44:56 simon $")
+		    label      	"$Id: Regressions.cat,v 53be0d507aad 2004/12/06 10:05:13 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @193
 		    location   	(301, 318)
 		    font       	(object Font
@@ -8679,7 +8679,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@229
-			location   	(625, 2847)
+			location   	(625, 2850)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -8693,7 +8693,7 @@
 			nlines     	1
 			max_width  	288
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
