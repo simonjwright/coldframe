@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events_test.adb,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 23f14b3a7737 $
+--  $Date: 2003/11/09 12:40:22 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -23,7 +23,7 @@ with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 with ColdFrame.Events_Test_Support;
 with ColdFrame.Project.Events;
-with GNAT.IO; use GNAT.IO;
+with Ada.Text_IO. use Ada.Text_IO;
 
 procedure ColdFrame.Events_Test is
 

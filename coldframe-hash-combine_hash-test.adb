@@ -20,11 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-combine_hash-test.adb,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 23f14b3a7737 $
+--  $Date: 2003/11/09 12:40:22 $
 --  $Author: simon $
 
-with GNAT.IO; use GNAT.IO;
+with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ColdFrame.Hash.Combine_Hash.Test is
 
