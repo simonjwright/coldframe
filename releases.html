@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v f879aa1c5f98 2001/08/19 16:24:47 simon $ -->
+<!-- $Id: releases.html,v bac858b5d0a4 2001/09/04 05:11:14 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -30,6 +30,20 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 2001.
 
 <dl>
+
+<dt>2001mmdd
+
+<dd>To support testing with <a
+href="http://www.adapower.com/reuse/aunit.html">AUnit</a>, a
+<tt>Tear_Down</tt> child procedure is generated for each Class, which
+deletes all instances. This <em>won't</em> (31.viii.01) work for
+&#171;active&#187; classes.
+
+<br>A domain <tt>Tear_Down</tt> child procedure is also generated,
+which calls all the class <tt>Tear_Down</tt>s.
+
+
+<p>
 
 <dt>20010819
 
