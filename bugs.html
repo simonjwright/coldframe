@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 589b24f3b886 2005/01/19 20:44:15 simon $ -->
+<!-- $Id: bugs.html,v a995e6598318 2005/01/19 20:54:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -46,21 +46,10 @@ document from the domain model.
 <br><i>Pi is specially handled, in "expression" contexts
 (initial values, <tt>{real}</tt> ranges).</i>
 
-<dt>0068 (raised 6.iii.02)
-
-<dd>It would be useful to be able to specify subtypes (eg, of
-enumerations).
-
 <dt>0078 (raised 18.iv.02)
 
 <dd>ColdFrame doesn't detect the error of having non-unique
 abbreviations.
-
-<dt>0136 (raised 26.xi.02)
-
-<dd>The documentation gives an example of a
-&#171;class&nbsp;event&#187; without a payload, which can't actually
-be specified in a model.
 
 <dt>0141 (raised 13.xii.02)
 
@@ -77,12 +66,6 @@ using visibilty markup).
 
 <dd>The error of making an Association with a &#171;type&#187; should
 be detected (instead of generating bad code).
-
-<dt>0178 (raised 1.vii.03)
-
-<dd>There's no way for ColdFrame to inform the application that an
-unhandled exception has been caught in the event dispatcher.
-<br><i>It does log an Error, this may be enough.</i>
 
 <dt>0182 (raised 9.vii.03)
 
@@ -106,12 +89,7 @@ handwritten code. Perhaps it should be renamed.
 (mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
-
-<dt>0197 (raised 5.ix.03)
-
-<dd>If you need an event action, you have to specify the matching
-(procedure) operation in the model. Would it be possible for the
-existence of the action to imply the operation?
+<br><i>What error is that?</i>
 
 <dt>0198 (raised 11.ix.03)
 
@@ -164,11 +142,6 @@ href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a>.</i>
 
 <dd>There is no check that associations' multiplicities have been
 maintained.
-
-<dt>0273 (raised 22.vii.04)
-
-<dd>It could be helpful to have a <i>{stub}</i> tag to ask ColdFrame
-to generate a default, non-separate, body.
 
 <dt>0277 (raised 26.vii.04)
 
@@ -2433,10 +2406,28 @@ class (resulting in a circular dependency).
 
 <dl>
 
+<dt>0068 (raised 6.iii.02)
+
+<dd>It would be useful to be able to specify subtypes (eg, of
+enumerations).
+
 <dt>0105 (raised 23.vii.02)
 
 <dd>If an enumeration type is imported or renamed, the enumeration
 literals aren't.
+
+<dt>0136 (raised 26.xi.02)
+
+<dd>The documentation gives an example of a
+&#171;class&nbsp;event&#187; without a payload, which can't actually
+be specified in a model.
+
+<dt>0178 (raised 1.vii.03)
+
+<dd>There's no way for ColdFrame to inform the application that an
+unhandled exception has been caught in the event dispatcher.
+<br><i>It does log an Error, this may be enough; after all, the
+application is now unstable.</i>
 
 <dt>0196 (raised 5.ix.03)
 
@@ -2470,6 +2461,27 @@ compiler option.</i>
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>19.i.05</h3>
+
+<dl>
+
+<dt>0197 (raised 5.ix.03)
+
+<dd>If you need an event action, you have to specify the matching
+(procedure) operation in the model. Would it be possible for the
+existence of the action to imply the operation?
+<br><i>This seems like a bad idea. Very un-obvious that there's an
+operation there!</i>
+
+<dt>0273 (raised 22.vii.04)
+
+<dd>It could be helpful to have a <i>{stub}</i> tag to ask ColdFrame
+to generate a default, non-separate, body.
+<br><i>You'd then have to change the model when implementation time
+came round.</i>
+
+</dl>
 
 <h3>3.xii.04</h3>
 
