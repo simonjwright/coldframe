@@ -1,0 +1,153 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Bad Model Regressions"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3FDAA7500168"
+    documentation 	
+|Regression tests that involve errors detected during normalization.
+|
+|{ revision = $Revision: 37dd0d861637 $ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Bad Tag Name"
+	    quid       	"3FDAA7BB008F"
+	    documentation 	
+|{ bad tag, bad:tag, bad+tag, bad.tag }
+|{ good-tag, good-tag }
+|
+	    
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3FDAA7FC0039"
+		    stereotype 	"id"
+		    type       	"Autonumber"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3FDAA7B50163"
+	    title      	"Main"
+	    documentation 	
+|Regression tests that involve errors detected during normalization.
+|
+|{ revision = $Revision: 37dd0d861637 $ }
+	    
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Bad Model Regressions::Bad Tag Name" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(467, 720)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(243, 647)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"Bad Tag Name")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FDAA7BB008F"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(243, 703)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	445)
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @2
+		    location   	(465, 435)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(242, 336)
+			fill_color 	13434879
+			nlines     	4
+			max_width  	410
+			label      	"Detect illegal characters in tag name rather than letting Saxon find them.")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	470
+		    height     	210)
+		(object Label @3
+		    location   	(215, 133)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	2030
+		    label      	"$Id: Bad_Model_Regressions.cat,v 37dd0d861637 2003/12/13 05:54:20 simon $")
+		(object CategoryView "Logical View::Bad Model Regressions" @4
+		    location   	(2734, 220)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2564, 136)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Bad Model Regressions")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FDAA7500168"
+		    width      	352
+		    height     	180)))))

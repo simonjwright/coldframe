@@ -1,0 +1,39 @@
+<domain>
+<extractor>cf-20031126</extractor>
+<name>Bad Model Regressions</name>
+<date>
+<year>2003</year>
+<month>12</month>
+<day>13</day>
+<time>05:54</time>
+</date>
+<documentation>Regression tests that involve errors detected during normalization.
+
+{ revision = $Revision: 37dd0d861637 $ }</documentation>
+<classes>
+<class>
+<name>Bad Tag Name</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{ bad tag, bad:tag, bad+tag, bad.tag }
+{ good-tag, good-tag }
+</documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
