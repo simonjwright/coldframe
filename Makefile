@@ -484,8 +484,7 @@ TEST += \
 coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
-Event_Test.cat Event_Test.raw \
-Event_Test.gpr Event_Test_Test.gpr \
+Event_Test.cat Event_Test.raw Event_Test.gpr \
 Event_Test.impl/event_test-completion_transitions-a1.adb \
 Event_Test.impl/event_test-completion_transitions-a2.adb \
 Event_Test.impl/event_test-completion_transitions-a3.adb \
@@ -517,8 +516,7 @@ Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads
 
 TEST += \
-Hierarchies.cat Hierarchies.raw \
-Hierarchies.gpr Hierarchies_Test.gpr \
+Hierarchies.cat Hierarchies.raw Hierarchies.gpr \
 Hierarchies.impl/hierarchies-f_2-create_new.adb \
 Hierarchies.test/hierarchies-harness.adb \
 Hierarchies.test/hierarchies-harness.ads \
