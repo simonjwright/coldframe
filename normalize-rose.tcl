@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 281d11e491da 2002/07/27 13:05:23 simon $
+# $Id: normalize-rose.tcl,v 4ba4734cc2cd 2002/07/30 19:21:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -935,7 +935,10 @@ itcl::class Class {
 		    }
 		    "1"     {
 			switch -exact $upper {
-			    "1"     {$this -singleton dummy}
+			    "1"     {
+				$this -singleton dummy
+				$this -max 1
+			    }
 			    default {
 				Error "illegal lower bound 1 in cardinality \
 				\"$c\" for $name"
@@ -984,6 +987,7 @@ itcl::class Class {
     method -public {dummy} {
 	set public 1
 	set singleton 1
+	set max 1
     }
 
     method -interface {dummy} {
@@ -993,7 +997,10 @@ itcl::class Class {
     # true if there's one and only one instance of the class
     variable singleton 0
 
-    method -singleton {dummy} {set singleton 1}
+    method -singleton {dummy} {
+	set singleton 1
+	set max 1
+    }
 
     # an abbreviation of the name may be useful (eg, when making names
     # for referential attributes)
