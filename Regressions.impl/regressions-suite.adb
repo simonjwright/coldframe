@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 84f34428ea1f 2004/03/09 14:54:57 simon $
+--  $Id: regressions-suite.adb,v 1f92ee989fe7 2004/03/12 17:42:40 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -8,7 +8,7 @@ with AUnit.Test_Cases; use AUnit.Test_Cases;
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
-with ColdFrame.Project.Events.Standard;
+with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Project.Serialization;
 with ColdFrame.Project.Times;
 with System.Assertions;
@@ -16,6 +16,7 @@ with System.Assertions;
 with Regressions.Callback_Type_Callback;
 with Regressions.CB_Callback;
 with Regressions.Events;
+with Regressions.Event_Holder;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
@@ -673,6 +674,61 @@ package body Regressions.Suite is
    end Callback_Registration_Tests;
 
 
+   package Tearing_Down_Active_Timers_Tests is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Tearing_Down_Active_Timers_Tests;
+
+   package body Tearing_Down_Active_Timers_Tests is
+
+      procedure Instance_Exists (C : in out Test_Case'Class);
+      procedure Instance_Exists (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         EHH : constant Event_Holder.Handle := Event_Holder.Create;
+         pragma Unreferenced (EHH);
+      begin
+         delay 0.01;
+         ColdFrame.Project.Events.Start (Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle
+           (Events.Dispatcher,
+            Ignoring_Timers => True);
+      end Instance_Exists;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Tearing_Down_Active_Timers_Tests.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Instance_Exists'Access,
+            "instance exists");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Tearing_Down_Active_Timers_Tests;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -684,6 +740,8 @@ package body Regressions.Suite is
       AUnit.Test_Suites.Add_Test (Result, new Max_One_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Callback_Registration_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Tearing_Down_Active_Timers_Tests.Case_1);
       return Result;
    end Suite;
 
