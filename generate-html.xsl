@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 8600fea6e08a 2001/03/25 09:41:32 simon $ -->
+<!-- $Id: generate-html.xsl,v 3e4a1e7b7775 2001/04/01 09:58:08 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -38,7 +38,6 @@
       </head>
       <body bgcolor="#FFFFFF">
         <h1><xsl:value-of select="name"/></h1>
-        <xsl:text>&#10;</xsl:text>
         <xsl:apply-templates select="./documentation"/>
         <xsl:if test="class[@interface]">
           <h2>Interface Classes</h2>
@@ -56,6 +55,22 @@
             </xsl:apply-templates>
           </ul>
         </xsl:if>
+        <xsl:if test="association">
+          <h2>Associations</h2>
+          <ul>
+            <xsl:apply-templates select="association">
+              <xsl:sort select="name"/>
+            </xsl:apply-templates>
+          </ul>
+        </xsl:if>
+        <xsl:if test="inheritance">
+          <h2>Inheritance relationships</h2>
+          <ul>
+            <xsl:apply-templates select="inheritance">
+              <xsl:sort select="name"/>
+            </xsl:apply-templates>
+          </ul>
+        </xsl:if>
       </body>
     </html>
   </xsl:template>
@@ -65,12 +80,12 @@
     <xsl:variable name="name" select="name"/>
     <xsl:variable name="output-file-name">
       <xsl:call-template name="domain-file-name">
-        <xsl:with-param name="class-name" select="$name"/>
+        <xsl:with-param name="element-name" select="$name"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="file-name">
-      <xsl:call-template name="class-file-name">
-        <xsl:with-param name="class-name" select="$name"/>
+      <xsl:call-template name="element-file-name">
+        <xsl:with-param name="element-name" select="$name"/>
       </xsl:call-template>
     </xsl:variable>
     <li>
@@ -83,15 +98,15 @@
         </head>
         <body bgcolor="#FFFFFF">
           <h1><xsl:value-of select="$name"/></h1>
-          <xsl:text>&#10;</xsl:text>
+          <xsl:apply-templates select="documentation"/>
           <xsl:if test="../inheritance[child=$name]">
             <xsl:variable
               name="parent"
               select="../inheritance[child=$name]/parent"/>
             <xsl:variable
               name="parent-file-name">
-              <xsl:call-template name="class-file-name">
-                <xsl:with-param name="class-name" select="$parent"/>
+              <xsl:call-template name="element-file-name">
+                <xsl:with-param name="element-name" select="$parent"/>
               </xsl:call-template>
             </xsl:variable>
             <xsl:text>Subtype of </xsl:text>
@@ -100,32 +115,33 @@
             <p/>
             <xsl:text>&#10;</xsl:text>
           </xsl:if>
-          <xsl:apply-templates select="documentation"/>
           <xsl:text>&#10;</xsl:text>
-          <xsl:choose>
-            <xsl:when test="attribute">
-              <h2>Attributes</h2>
-              <dl>
-                <xsl:apply-templates select="attribute">
-                  <xsl:sort select="."/>
-                </xsl:apply-templates>
-              </dl>
-            </xsl:when>
-            <xsl:otherwise>
-              <h2>No attributes.</h2>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:choose>
-            <xsl:when test="operation">
-              <h2>Operations</h2>
-              <xsl:apply-templates select="operation">
+          <xsl:if test="attribute">
+            <h2>Attributes</h2>
+            <dl>
+              <xsl:apply-templates select="attribute">
                 <xsl:sort select="."/>
               </xsl:apply-templates>
-            </xsl:when>
-            <xsl:otherwise>
-              <h2>No operations.</h2>
-            </xsl:otherwise>
-          </xsl:choose>
+            </dl>
+          </xsl:if>
+          <xsl:if test="operation">
+            <h2>Operations</h2>
+            <xsl:apply-templates select="operation">
+              <xsl:sort select="."/>
+            </xsl:apply-templates>
+          </xsl:if>
+          <xsl:if
+            test="../association[role/classname = $name]
+                  or ../association[associative = $name]">
+            <h2>Associations</h2>
+            <ul>
+              <xsl:apply-templates
+                select="../association[role/classname = $name]
+                        | ../association[associative = $name]">
+                <xsl:sort select="."/>
+              </xsl:apply-templates>
+            </ul>
+          </xsl:if>
         </body>
       </html>
     </saxon:output>
@@ -140,16 +156,16 @@
       <a name="{../name}.at.{$name}">
         <xsl:value-of select="$name"/>
       </a>
-      <xsl:if test="@identifier"><b> (identifier)</b></xsl:if>
+      <xsl:if test="@identifier"> (identifier)</xsl:if>
       <xsl:text> : </xsl:text>
       <xsl:choose>
         <xsl:when test="@refers">
           <xsl:variable name="referred-name">
-            <xsl:call-template name="class-file-name">
-              <xsl:with-param name="class-name" select="@refers"/>
+            <xsl:call-template name="element-file-name">
+              <xsl:with-param name="element-name" select="@refers"/>
             </xsl:call-template>
           </xsl:variable>
-          <xsl:text> reference to </xsl:text>
+          <xsl:text>Reference to </xsl:text>
           <a href="{$referred-name}"><xsl:value-of select="@refers"/></a>
         </xsl:when>
         <xsl:otherwise>
@@ -158,7 +174,23 @@
       </xsl:choose>
     </dt>
     <dd>
-      <xsl:apply-templates select="documentation"/>
+      <xsl:choose>
+        <xsl:when test="@refers">
+          <p>
+            <xsl:text>Formalizes </xsl:text>
+            <xsl:variable name="file-name">
+              <xsl:call-template name="element-file-name">
+                <xsl:with-param name="element-name" select="@relation"/>
+              </xsl:call-template>
+            </xsl:variable>
+            <a href="{$file-name}"><xsl:value-of select="@relation"/></a>
+          </p>
+          <xsl:apply-templates select="documentation"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="documentation"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </dd>
   </xsl:template>
 
@@ -207,15 +239,186 @@
   </xsl:template>
 
 
-  <xsl:template name="class-file-name">
-    <xsl:param name="class-name"/>
-    <xsl:value-of select="concat($class-name, '.html')"/>
+  <xsl:template match="domain/association">
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable name="output-file-name">
+      <xsl:call-template name="domain-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="file-name">
+      <xsl:call-template name="element-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <li>
+      <a href="{$file-name}"><xsl:value-of select="name"/></a>
+    </li>
+    <saxon:output file="{$output-file-name}">
+      <html>
+        <head>
+          <title><xsl:value-of select="name"/></title>
+        </head>
+        <body bgcolor="#FFFFFF">
+          <h1><xsl:value-of select="name"/></h1>
+          <xsl:apply-templates select="documentation"/>
+          <h2>Roles</h2>
+          <xsl:apply-templates select="role"/>
+          <xsl:apply-templates select="associative"/>
+        </body>
+      </html>
+    </saxon:output>
   </xsl:template>
 
 
+  <xsl:template match="association/role">
+    <p>
+      <xsl:variable name="other-role-position" select="3 - position()"/>
+      <xsl:variable name="subject">
+        <xsl:call-template name="element-file-name">
+          <xsl:with-param
+            name="element-name"
+            select="../role[$other-role-position]/classname"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:variable name="object">
+        <xsl:call-template name="element-file-name">
+          <xsl:with-param
+            name="element-name"
+            select="classname"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <a href="{$subject}">
+        <xsl:value-of select="../role[$other-role-position]/classname"/>
+      </a>
+      <xsl:text> (</xsl:text>
+      <xsl:apply-templates
+        mode="multiplicity"
+        select="../role[$other-role-position]"/>
+      <xsl:text>) </xsl:text>
+      <i><xsl:value-of select="name"/></i>
+      <xsl:text> (</xsl:text>
+      <xsl:apply-templates mode="multiplicity" select="."/>
+      <xsl:text>) </xsl:text>
+      <a href="{$object}">
+        <xsl:value-of select="classname"/>
+      </a>
+    </p>
+  </xsl:template>
+
+
+  <xsl:template mode="multiplicity" match="association/role">
+    <xsl:choose>
+      <xsl:when test="@multiple and @conditional">
+        <xsl:text>0..n</xsl:text>
+      </xsl:when>
+      <xsl:when test="@multiple and not(@conditional)">
+        <xsl:text>1..n</xsl:text>
+      </xsl:when>
+      <xsl:when test="not(@multiple) and @conditional">
+        <xsl:text>0..1</xsl:text>
+      </xsl:when>
+      <xsl:when test="not(@multiple) and not(@conditional)">
+        <xsl:text>1</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="multiplicity" match="*"/>
+
+
+  <xsl:template match="association/associative">
+    <p>
+      <xsl:variable name="class">
+        <xsl:call-template name="element-file-name">
+          <xsl:with-param
+            name="element-name"
+            select="."/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:text>Associative: </xsl:text>
+      <a href="{$class}">
+        <xsl:value-of select="."/>
+      </a>
+    </p>
+  </xsl:template>
+
+
+  <xsl:template match="domain/inheritance">
+    <xsl:variable name="name" select="name"/>
+    <xsl:variable name="output-file-name">
+      <xsl:call-template name="domain-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="file-name">
+      <xsl:call-template name="element-file-name">
+        <xsl:with-param name="element-name" select="name"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <li>
+      <a href="{$file-name}"><xsl:value-of select="name"/></a>
+    </li>
+    <saxon:output file="{$output-file-name}">
+      <html>
+        <head>
+          <title><xsl:value-of select="name"/></title>
+        </head>
+        <body bgcolor="#FFFFFF">
+          <h1><xsl:value-of select="name"/></h1>
+          <xsl:apply-templates select="documentation"/>
+          <h2>Superclass</h2>
+          <xsl:variable name="parent-file-name">
+            <xsl:call-template name="element-file-name">
+              <xsl:with-param name="element-name" select="parent"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <p>
+            <a href="{$parent-file-name}">
+              <xsl:value-of select="parent"/>
+            </a>
+          </p>
+          <h2>Children</h2>
+          <ul>
+            <xsl:apply-templates select="child">
+              <xsl:sort select="."/>
+            </xsl:apply-templates>
+          </ul>
+        </body>
+      </html>
+    </saxon:output>
+  </xsl:template>
+
+
+  <xsl:template match="inheritance/child">
+    <xsl:variable name="file-name">
+      <xsl:call-template name="element-file-name">
+        <xsl:with-param name="element-name" select="."/>
+      </xsl:call-template>
+    </xsl:variable>
+    <li>
+      <a href="{$file-name}">
+        <xsl:value-of select="."/>
+      </a>
+    </li>
+  </xsl:template>
+
+
+  <!-- Forms the file name for the given element: the name is <Class>.html -->
+  <xsl:template name="element-file-name">
+    <xsl:param name="element-name"/>
+    <xsl:value-of select="concat($element-name, '.html')"/>
+  </xsl:template>
+
+
+  <!-- Forms the directory/file name for the given element: the name is
+       <Domain>.doc/<Class>.html -->
   <xsl:template name="domain-file-name">
-    <xsl:param name="class-name"/>
-    <xsl:value-of select="concat(/domain/name, '.doc/', $class-name, '.html')"/>
+    <xsl:param name="element-name"/>
+    <xsl:value-of
+      select="concat(/domain/name,
+              '.doc/',
+              $element-name,
+              '.html')"/>
   </xsl:template>
 
 
@@ -225,7 +428,7 @@
   <!-- Generate attribute name. Called at class/attribute -->
   <xsl:template name="attribute-name">
     <xsl:choose>
-      <xsl:when test="@refers">
+      <xsl:when test="@refers and not(name)">
         <xsl:variable name="target-class" select="@refers"/>
         <xsl:value-of select="/domain/class[name=$target-class]/abbreviation"/>
         <xsl:text>_Handle_</xsl:text>
