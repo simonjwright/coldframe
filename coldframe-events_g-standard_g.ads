@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: f20f69a7bba2 $
---  $Date: 2004/07/03 09:40:17 $
+--  $Revision: 20aee662fdc8 $
+--  $Date: 2004/07/03 12:07:30 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -141,8 +141,15 @@ private
       --  For_The_Instance as invalid, so they won't be actioned when
       --  their time arrives.
 
-      entry Tear_Down;
+      entry Stop;
       --  Only for use by domain Tear_Down.
+
+      entry Stopped;
+      --  Only for use by domain Tear_Down. Indicates readiness to be
+      --  aborted.
+
+      entry Finish;
+      --  Only for use by domain Tear_Down. End execution.
 
    end Held_Event_Manager;
 
@@ -154,19 +161,19 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-      procedure Post (The_Event : Event_P);
+      entry Post (The_Event : Event_P);
       --  Post an event.
 
-      procedure Post_To_Self (The_Event : Event_P);
+      entry Post_To_Self (The_Event : Event_P);
       --  Post an event-to-self.
 
-      entry Fetch (The_Event : out Event_P; Tearing_Down : out Boolean);
+      entry Fetch (The_Event : out Event_P; Stopping : out Boolean);
       --  Blocks until the queue is unlocked and there is an event on
       --  it; when one is found, notes that execution is in progress,
       --  removes the event from the queue and stores it
       --  in "The_Event".
       --
-      --  If the queue is being torn down, however, sets Tearing_Down
+      --  If the queue is being stopped, however, sets Stopping
       --  to True.
 
       procedure Invalidate_Events
@@ -181,7 +188,7 @@ private
       procedure Unlock;
       --  Notes that the queue is no longer locked.
 
-      procedure Tear_Down;
+      procedure Stop;
       --  Only for use by domain Tear_Down.
 
    private
@@ -203,7 +210,7 @@ private
       --  Post_To_Self is called during event processing, not by some
       --  external task.
 
-      Tearing_Down : Boolean := False;
+      Stopping : Boolean := False;
 
    end Excluder;
 
@@ -228,6 +235,8 @@ private
    procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
+
+   procedure Stop (The_Queue : in out Event_Queue_Base);
 
    procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 

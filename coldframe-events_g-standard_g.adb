@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: f20f69a7bba2 $
---  $Date: 2004/07/03 09:40:17 $
+--  $Revision: 20aee662fdc8 $
+--  $Date: 2004/07/03 12:07:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -442,7 +442,7 @@ package body ColdFrame.Events_G.Standard_G is
                      --  queue was empty, so there can't be anything to do.
 
                   or
-                     accept Tear_Down;
+                     accept Stop;
                      exit Outer;
 
                   end select;
@@ -486,7 +486,7 @@ package body ColdFrame.Events_G.Standard_G is
                      end Invalidate;
 
                   or
-                     accept Tear_Down;
+                     accept Stop;
                      exit Outer;
 
                   or
@@ -510,8 +510,18 @@ package body ColdFrame.Events_G.Standard_G is
          end;
 
          delay 0.1;
+         --  In case we end up in a tight, unstoppable loop. After
+         --  all, we should never get here at all!
 
       end loop Outer;
+
+      accept Stopped;
+      --  This makes our readiness for being torn down visible without
+      --  actually terminating; if we terminate, user tasks may fail
+      --  when trying to post held events.
+
+      accept Finish;
+      --  Wait to be told to quit..
 
    end Held_Event_Manager;
 
@@ -530,20 +540,20 @@ package body ColdFrame.Events_G.Standard_G is
       end Done;
 
 
-      entry Fetch (The_Event : out Event_P; Tearing_Down : out Boolean)
+      entry Fetch (The_Event : out Event_P; Stopping : out Boolean)
       --  If there are any events-to-self, we must have a lock already
       --  (the previous call to Done didn't release the lock, because
       --  we don't want external entities to see the intermediate
       --  states).
-      when Excluder.Tearing_Down
+      when Excluder.Stopping
         or else not Unbounded_Posted_Event_Queues.Is_Empty
                       (The_Queue.The_Self_Events)
         or else (Locks = 0
                    and then not Unbounded_Posted_Event_Queues.Is_Empty
                                   (The_Queue.The_Events)) is
       begin
-         Tearing_Down := Excluder.Tearing_Down;
-         if Tearing_Down then
+         Stopping := Excluder.Stopping;
+         if Stopping then
             return;
          end if;
          Locks := 1;
@@ -604,14 +614,14 @@ package body ColdFrame.Events_G.Standard_G is
       end Lock;
 
 
-      procedure Post (The_Event : Event_P) is
+      entry Post (The_Event : Event_P) when not Stopping is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
       end Post;
 
 
-      procedure Post_To_Self (The_Event : Event_P) is
+      entry Post_To_Self (The_Event : Event_P)  when not Stopping is
          use type Ada.Task_Identification.Task_Id;
       begin
          --  We need to be sure that only event handlers called by our
@@ -633,10 +643,10 @@ package body ColdFrame.Events_G.Standard_G is
       end Post_To_Self;
 
 
-      procedure Tear_Down is
+      procedure Stop is
       begin
-         Tearing_Down := True;
-      end Tear_Down;
+         Stopping := True;
+      end Stop;
 
 
       procedure Unlock is
@@ -691,7 +701,7 @@ package body ColdFrame.Events_G.Standard_G is
    end Invalidate_Events;
 
 
-   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+   procedure Stop (The_Queue : in out Event_Queue_Base) is
       use Abstract_Posted_Event_Containers;
    begin
 
@@ -700,15 +710,14 @@ package body ColdFrame.Events_G.Standard_G is
       --  events on a dead Dispatcher.
 
       --  Stop processing held events ..
-      The_Queue.The_Held_Event_Manager.Tear_Down;
-      --  .. waiting until the Held_Event_Manager has actually stopped.
-      while not The_Queue.The_Held_Event_Manager'Terminated loop
-         delay 0.1;
-      end loop;
+      The_Queue.The_Held_Event_Manager.Stop;
+      --  .. waiting until the Held_Event_Manager has actually stopped
+      --  (note, it's still alive).
+      The_Queue.The_Held_Event_Manager.Stopped;
 
       --  Tell the Excluder we're finishing. This makes the next Fetch
       --  report that tear-down is in progress.
-      The_Queue.The_Excluder.Tear_Down;
+      The_Queue.The_Excluder.Stop;
 
       --  If the queue wasn't started, tell the Dispatcher we're
       --  finishing.
@@ -757,6 +766,20 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  .. and all the held events.
       Held_Events.Tear_Down (The_Queue.The_Held_Events);
+
+   end Stop;
+
+
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+   begin
+
+      --  Tell the Held Event Manager to quit.
+      The_Queue.The_Held_Event_Manager.Finish;
+
+      --  Wait until the Held Event Manager has actually stopped.
+      while not The_Queue.The_Held_Event_Manager'Terminated loop
+         delay 0.1;
+      end loop;
 
    end Tear_Down;
 
