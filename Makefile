@@ -255,7 +255,8 @@ coldframe-project-global_storage_pool.ads \
 coldframe-project-times.ad[bs]
 
 
-DEMO = Problem_Reporting.cat Problem_Reporting.raw \
+DEMO = \
+Problem_Reporting.cat Problem_Reporting.raw \
 Problem_Reporting.impl/demo.adb \
 Problem_Reporting.impl/problem_reporting-component-clean.adb \
 Problem_Reporting.impl/problem_reporting-component-report.adb \
@@ -279,6 +280,33 @@ States.impl/states-monitor-setup.adb \
 States.impl/states-t.adb \
 States.impl/states-t.ads
 
+TEST = \
+Event_Test.cat Event_Test.raw \
+Event_Test.impl/debugging.ads \
+Event_Test.impl/event_test-events-initialize.adb \
+Event_Test.impl/event_test-harness.adb \
+Event_Test.impl/event_test-harness.ads \
+Event_Test.impl/event_test-machine-handle_mark.adb \
+Event_Test.impl/event_test-machine-handle_self.adb \
+Event_Test.impl/event_test-machine-send_done.adb \
+Event_Test.impl/event_test-recipient-handle_mark.adb \
+Event_Test.impl/event_test-recipient-handle_self.adb \
+Event_Test.impl/event_test-recipient-information_handler.adb \
+Event_Test.impl/event_test-recipient-init.adb \
+Event_Test.impl/event_test-recipient-send_done.adb \
+Event_Test.impl/event_test-recipient-wait_handler.adb \
+Event_Test.impl/event_test-suite.adb \
+Event_Test.impl/event_test-suite.ads \
+Event_Test.impl/event_test-test_class.adb \
+Event_Test.impl/event_test-test_class.ads \
+Event_Test.impl/event_test-test_engine.adb \
+Event_Test.impl/event_test-test_engine.ads \
+Event_Test.impl/event_test-test_instance.adb \
+Event_Test.impl/event_test-test_instance.ads \
+Event_Test.impl/event_test-test_singleton_instance.adb \
+Event_Test.impl/event_test-test_singleton_instance.ads
+
+
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
@@ -289,6 +317,7 @@ $(PROGS) \
 $(SUPPORT) \
 $(PROJECT) \
 $(DEMO) \
+$(TEST) \
 cf-$(DATE)
 	-@rm -rf dist
 	mkdir -p dist/download
@@ -305,6 +334,8 @@ cf-$(DATE): $(MAKEFILES) $(PROGS) force
 	cp -p $(PROJECT) $@/project
 	mkdir $@/example
 	tar cf - $(DEMO) | tar xf - -C $@/example
+	mkdir $@/test
+	tar cf - $(TEST) | tar xf - -C $@/test
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-rm $@
