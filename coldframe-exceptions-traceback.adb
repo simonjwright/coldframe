@@ -20,19 +20,16 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions-traceback.adb,v $
---  $Revision: 00b781796c0d $
---  $Date: 2001/11/17 06:11:54 $
+--  $Revision: a2b135afb6ab $
+--  $Date: 2002/09/04 18:54:25 $
 --  $Author: simon $
 
 with GNAT.Exception_Traces;
-with GNAT.Traceback.Symbolic;
 
 package body ColdFrame.Exceptions.Traceback is
 begin
 
    GNAT.Exception_Traces.Trace_On
      (Kind => GNAT.Exception_Traces.Unhandled_Raise);
-   GNAT.Exception_Traces.Set_Trace_Decorator
-     (Decorator => GNAT.Traceback.Symbolic.Symbolic_Traceback'Access);
 
 end ColdFrame.Exceptions.Traceback;
