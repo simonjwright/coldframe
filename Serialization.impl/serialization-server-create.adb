@@ -1,4 +1,4 @@
---  $Id: serialization-server-create.adb,v 7b585abe1423 2003/01/22 22:36:20 simon $
+--  $Id: serialization-server-create.adb,v e8866e2aa71e 2003/01/24 06:24:16 simon $
 
 separate (Serialization.Server)
 procedure Create
@@ -14,13 +14,14 @@ begin
 
    GNAT.Sockets.Create_Socket (This.Sock,
                                GNAT.Sockets.Family_Inet,
-                               GNAT.Sockets.Socket_Datagram);
+                               GNAT.Sockets.Socket_Stream);
    GNAT.Sockets.Set_Socket_Option (This.Sock,
                                    GNAT.Sockets.Socket_Level,
                                    (GNAT.Sockets.Reuse_Address, True));
    Address.Addr := GNAT.Sockets.Addresses
      (GNAT.Sockets.Get_Host_By_Name (Connecting_To_Host), 1);
    Address.Port := Using_Port;
+   GNAT.Sockets.Connect_Socket (This.Sock, Address);
    This.Channel := GNAT.Sockets.Stream (This.Sock, Address);
 
 end Create;
