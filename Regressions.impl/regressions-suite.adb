@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 6b109f7b74b0 2004/06/12 19:29:54 simon $
+--  $Id: regressions-suite.adb,v 82a19180d9d7 2004/06/18 19:11:04 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -8,6 +8,7 @@ with AUnit.Test_Cases; use AUnit.Test_Cases;
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
+with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Project.Serialization;
 with ColdFrame.Project.Times;
@@ -17,6 +18,7 @@ with Regressions.Callback_Type_Callback;
 with Regressions.CB_Callback;
 with Regressions.Events;
 with Regressions.Event_Holder;
+with Regressions.Exception_In_Event_Handler;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
@@ -758,6 +760,91 @@ package body Regressions.Suite is
    end Tearing_Down_Active_Timers_Tests;
 
 
+   package Event_Handler_Exceptions is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Event_Handler_Exceptions;
+
+   package body Event_Handler_Exceptions is
+
+      procedure Standard_Event (C : in out Test_Case'Class);
+      procedure Standard_Event (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         H : Exception_In_Event_Handler.Handle
+           := Exception_In_Event_Handler.Create;
+      begin
+         ColdFrame.Project.Events.Post
+           (On => Events.Dispatcher,
+            The_Event => new Exception_In_Event_Handler.Ev (H));
+         ColdFrame.Project.Events.Start (Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle
+           (Events.Dispatcher,
+            Ignoring_Timers => True);
+         Exception_In_Event_Handler.Delete (H);
+      exception
+         when ColdFrame.Exceptions.Use_Error =>
+            Assert (False, "failed to delete instance");
+      end Standard_Event;
+
+      procedure Timed_Event (C : in out Test_Case'Class);
+      procedure Timed_Event (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         H : Exception_In_Event_Handler.Handle
+           := Exception_In_Event_Handler.Create;
+      begin
+         ColdFrame.Project.Events.Post
+           (On => Events.Dispatcher,
+            The_Event => new Exception_In_Event_Handler.Ev (H),
+            To_Fire_After => 0.1);
+         ColdFrame.Project.Events.Start (Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle
+           (Events.Dispatcher,
+            Ignoring_Timers => False);
+         Exception_In_Event_Handler.Delete (H);
+      exception
+         when ColdFrame.Exceptions.Use_Error =>
+            Assert (False, "failed to delete instance");
+      end Timed_Event;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Event_Handler_Exceptions.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Standard_Event'Access,
+            "exception in handler for standard event");
+         Register_Routine
+           (C,
+            Timed_Event'Access,
+            "exception in handler for delayed event");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Event_Handler_Exceptions;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -771,6 +858,8 @@ package body Regressions.Suite is
                                   new Callback_Registration_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Tearing_Down_Active_Timers_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Event_Handler_Exceptions.Case_1);
       return Result;
    end Suite;
 
