@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e97d45233e9a 2002/10/25 19:07:20 simon $
+# $Id: normalize-rose.tcl,v 7e83d52d948d 2002/11/11 06:05:51 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2230,6 +2230,7 @@ itcl::class Attribute {
 	    set rels [$domain -getRelationships]
 	    if [$rels -isPresent $formalizedAssociation] {
 		set rel [$rels -atName $formalizedAssociation]
+		$rel -formalized
 		$rel -formalizingSource \
 		    [[[$this -getOwner] -getOwner] -getName] \
 		    $type
