@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v da97823607b7 2002/01/24 20:23:02 simon $ -->
+<!-- $Id: bugs.html,v 2aabd0fa0898 2002/02/28 19:58:37 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -129,12 +129,6 @@ package.
 <dd>It would be proper to use UML tagged values instead of
 <tt>[[&nbsp;]]</tt> annotations.
 
-<dt>0061 (raised 23.i.02)
-
-<dd>The supplied Windows makefile (<tt>Makefile-winnt</tt>) assumes
-software is installed on the <tt>D:</tt> drive; better if the default
-was <tt>C:</tt>.
-
 <dt>0062 (raised 23.i.02)
 
 <dd>It would be useful to be able to specify constants.
@@ -148,7 +142,13 @@ was <tt>C:</tt>.
 <dd>There's no documentation on how to set up the Makefiles, how to
 use on Linux vs Windows etc.
 
-<!-- next: 0065 -->
+<dt>0065 (raised 28.ii.02)
+
+<dd>The mechanism for handling multiple case exception files isn't
+easy to reconcile with use in Makefiles. Probably needs to use an
+environment variable.
+
+<!-- next: 0066 -->
 
 </dl>
 
@@ -229,6 +229,13 @@ fails if it's not present.<br>
 
 <dd>Model domains are extracted for all selected packages, not just
 those in the current diagram.
+
+<dt>0061 (raised 23.i.02)
+
+<dd>The supplied Windows makefile (<tt>Makefile-winnt</tt>) assumes
+software is installed on the <tt>D:</tt> drive; better if the default
+was <tt>C:</tt>. <i>The customer bug report came after the problem was
+fixed.</i>
 
 </dl>
 
