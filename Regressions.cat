@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: 6df8619783c1 $]]
+|[[revision : $Revision: 26a7ccf780c7 $]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -24,7 +24,23 @@
 		    type       	"Boolean")))
 	(object Class "Find Active Singleton"
 	    quid       	"3F56490B00A3"
-	    stereotype 	"active, singleton"))
+	    stereotype 	"active, singleton")
+	(object Class "Class With Class Variable"
+	    quid       	"3F67E8AE00D8"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3F67E8CA0179"
+		    stereotype 	"id"
+		    type       	"Autonumber")
+		(object ClassAttribute "self"
+		    quid       	"3F67E8D400D3"
+		    stereotype 	"class"
+		    type       	"Class With Class Variable"
+		    quidu      	"3F67E8AE00D8")))
+	(object Class "Expression In Bound"
+	    quid       	"3F67ED0D011E"
+	    documentation 	"[[ real : digits 15, lower - 2.0 * pi, upper 2.0 * pi ]]"
+	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
@@ -40,7 +56,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(421, 744)
+		    location   	(361, 504)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -52,7 +68,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(229, 691)
+			location   	(169, 451)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	384
@@ -60,7 +76,7 @@
 			label      	"Find Active")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(229, 646)
+			location   	(169, 406)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -73,7 +89,7 @@
 		    quidu      	"3F56123103DD"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(229, 747)
+			location   	(169, 507)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -93,7 +109,7 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object CategoryView "Logical View::Regressions" @2
-		    location   	(1006, 178)
+		    location   	(2696, 178)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -105,7 +121,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(836, 94)
+			location   	(2526, 94)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
@@ -122,7 +138,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(412, 1023)
+		    location   	(372, 783)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -134,7 +150,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(188, 997)
+			location   	(148, 757)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	448
@@ -142,7 +158,7 @@
 			label      	"Find Active Singleton")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(188, 952)
+			location   	(148, 712)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -158,7 +174,7 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object NoteView @4
-		    location   	(350, 133)
+		    location   	(372, 215)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -170,7 +186,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(132, 54)
+			location   	(154, 136)
 			fill_color 	13434879
 			nlines     	3
 			max_width  	400
@@ -178,4 +194,136 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    width      	460
-		    height     	170)))))
+		    height     	170)
+		(object NoteView @5
+		    location   	(1112, 217)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(879, 131)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	430
+			label      	"Can't have class variable of class type")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	490
+		    height     	185)
+		(object ClassView "Class" "Logical View::Regressions::Class With Class Variable" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1097, 483)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(708, 387)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	778
+			justify    	0
+			label      	"Class With Class Variable")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F67E8AE00D8"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(708, 443)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	775)
+		    width      	796
+		    height     	214
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @7
+		    location   	(1924, 217)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1714, 126)
+			fill_color 	13434879
+			nlines     	4
+			max_width  	385
+			label      	"Can't have expressions in bounds")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	445
+		    height     	195)
+		(object ClassView "Class" "Logical View::Regressions::Expression In Bound" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1907, 470)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1709, 444)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	396
+			justify    	0
+			label      	"Expression In Bound")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(1709, 399)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	396
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F67ED0D011E"
+		    width      	414
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)))))

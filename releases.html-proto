@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v edfe8209b939 2003/09/13 17:27:34 simon $ -->
+<!-- $Id: releases.html-proto,v 26a7ccf780c7 2003/09/17 05:44:52 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,7 +22,15 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>DATE
 
-<dd>Serialization supports nested (but not disctriminated!) records.
+<dd>A class variable of the class's type wouldn't compile
+("representation item appears too late").
+
+
+
+
+<p><dt>20030914
+
+<dd>Serialization supports nested (but not discriminated!) records.
 
 
 <p>The old <tt>[[image]]</tt> functionality for outputting serialized
