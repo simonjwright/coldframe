@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 992cef6b7f9c 2002/05/22 04:26:05 simon $ -->
+<!-- $Id: bugs.html,v 6b94af10f832 2002/05/29 18:59:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -19,12 +19,6 @@
 <h2><a name="outstanding">Outstanding</a></h2>
 
 <dl>
-
-<dt>0009 (raised 27.vi.01)
-
-<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
-operations of child classes checked that the given identifier (of the
-parent class's instance) isn't <tt>null</tt>.
 
 <dt>0010 (raised 27.vi.01)
 
@@ -186,6 +180,22 @@ unimplemented bodies.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>29.v.02</h3>
+
+<dl>
+
+<dt>0009 (raised 27.vi.01)
+
+<dd>It would be helpful if the <tt>Create</tt> and <tt>Find</tt>
+operations of child classes checked that the given identifier (of the
+parent class's instance) isn't <tt>null</tt>.
+
+<br>Actually, this comes down to checking in <tt>Create</tt> that no
+identifying referential attribute is <tt>null</tt>. As for
+<tt>Find</tt>, there seems no particular reason to check.
+
+</dl>
 
 <h3>20.v.02</h3>
 
