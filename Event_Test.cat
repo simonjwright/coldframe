@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 014b87e33ada $} 
+|{revision = $Revision: 0033d3c9b4cc $} 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -113,7 +113,7 @@
 		(object ClassAttribute "offset"
 		    quid       	"3CEA598401F2"
 		    type       	"Duration"))
-	    statemachine 	(object State_Machine "State/Activity Model"
+	    statemachine 	(object State_Machine "Named State Machine"
 		quid       	"3D7E11270217"
 		stereotype 	"generate"
 		states     	(list States
@@ -498,7 +498,7 @@
 		(object ClassAttribute "t"
 		    quid       	"3E931D370124"
 		    type       	"Timer"))
-	    statemachine 	(object State_Machine "State/Activity Model"
+	    statemachine 	(object State_Machine "State/Activity Model2"
 		quid       	"3D2EC70C00F0"
 		stereotype 	"generate"
 		states     	(list States
@@ -1067,7 +1067,7 @@
 	    title      	"Main"
 	    documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: 014b87e33ada $} 
+|{revision = $Revision: 0033d3c9b4cc $} 
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -1606,4 +1606,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
+		    label      	"$Id: Event_Test.cat,v 0033d3c9b4cc 2004/03/01 17:49:07 simon $")))))

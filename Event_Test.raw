@@ -2,13 +2,13 @@
 <extractor>cf-DATE</extractor>
 <name>Event Test</name>
 <date>
-<year>2003</year>
-<month>11</month>
-<day>15</day>
-<time>18:09</time>
+<year>2004</year>
+<month>3</month>
+<day>1</day>
+<time>17:49</time>
 </date>
 <documentation>This domain contains material for testing ColdFrame's event handling.
-{revision = $Revision: 3c33faafeb46 $} </documentation>
+{revision = $Revision: 0033d3c9b4cc $} </documentation>
 <classes>
 <class stereotype="singleton">
 <name>Recipient</name>
@@ -135,6 +135,7 @@
 </event>
 </events>
 <statemachine>
+<name>Named State Machine</name>
 <states>
 <state initial="yes">
 <name>initial</name>
