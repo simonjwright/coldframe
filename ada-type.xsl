@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 556e3e2ed4fd 2003/01/22 20:06:22 simon $ -->
+<!-- $Id: ada-type.xsl,v 3831cc5607be 2003/01/26 19:09:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -71,11 +71,6 @@
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
-    </xsl:if>
-
-    <!-- Context for serializable types. -->
-    <xsl:if test="type/@serializable">
-      <xsl:text>with ColdFrame.Project.Serialization;&#10;</xsl:text>
     </xsl:if>
 
     <!-- Context for imported, renamed and extending types, ensuring
@@ -322,30 +317,6 @@
             <xsl:apply-templates mode="instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
-            
-          </xsl:when>
-
-          <xsl:when test="@serializable">
-            
-            <!--
-                 type {name} is new ColdFrame.Project.Serialization.Base with record
-                   {attr-name} : {attr-type}[ := {attr-init}];
-                 end record;
-                 function Image (S : {name}) return String;
-                 -->
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>type </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text> is new ColdFrame.Project.Serialization.Base with record&#10;</xsl:text>
-            <xsl:apply-templates mode="instance-record-component"/>
-            <xsl:value-of select="$I"/>
-            <xsl:text>end record;&#10;</xsl:text>
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>function Image (S : </xsl:text>
-            <xsl:value-of select="name"/>
-            <xsl:text>) return String;&#10;</xsl:text>
             
           </xsl:when>
 
@@ -653,85 +624,6 @@
     </xsl:choose>
 
   </xsl:template>
-
-
-  <!-- Called to generate the implementation of Image for a serializable
-       type. -->
-  <xsl:template
-    match="domain/type[@serializable]"
-    mode="serializable-type-image-body">
-
-    <!--
-         function Image (S : Info) return String is
-         begin
-            return "<record name=""{domain}.{type}"">" & ASCII.LF
-              & "<field name=""{attr-name}"">"
-              & S.{attr-name}'Img
-              & "</field>" & ASCII.LF
-              & "<field name=""{time-attr-name}"">"
-              & ColdFrame.Project.Calendar.Image (S.{time-attr-name})
-              & "</field>" & ASCII.LF
-              & "</record>" & ASCII.LF;
-         end Image;
-         -->
-    
-    <xsl:value-of select="$I"/>
-    <xsl:text>function Image (S : </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>) return String is&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>return "&lt;record name=""</xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>""&gt;" &amp; ASCII.LF&#10;</xsl:text>
-
-    <xsl:for-each select="attribute">
-
-      <xsl:choose>
-
-        <xsl:when test="type='Date' or type='Time'">
-          <!-- Date and time have to be split over several lines. -->
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;"&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; </xsl:text>
-          <xsl:text>ColdFrame.Project.Calendar.Image (S.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>)&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;" &amp; </xsl:text>
-          <xsl:text>S.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>'Img &amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-
-    </xsl:for-each>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>&amp; "&lt;/record&gt;" &amp; ASCII.LF;&#10;</xsl:text>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>end Image;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-
-  </xsl:template>
-
-  <xsl:template match="*" mode="serializable-type-image-body"/>
 
 
 </xsl:stylesheet>

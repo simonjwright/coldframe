@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 556e3e2ed4fd 2003/01/22 20:06:22 simon $ -->
+<!-- $Id: generate-ada.xsl,v 3831cc5607be 2003/01/26 19:09:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -38,6 +38,7 @@
   <xsl:include href="ada-collection.xsl"/>
   <xsl:include href="ada-inheritance.xsl"/>
   <xsl:include href="ada-operation.xsl"/>
+  <xsl:include href="ada-serialization.xsl"/>
   <xsl:include href="ada-state.xsl"/>
   <xsl:include href="ada-teardown.xsl"/>
   <xsl:include href="ada-type.xsl"/>
@@ -180,8 +181,7 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/@serializable
-                  or type/operation[not(@access) and not(@suppressed)]">
+    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
 
       <xsl:call-template name="do-not-edit"/>
       
@@ -194,14 +194,6 @@
       <xsl:apply-templates
         select="type/operation[not(@access) and not(@suppressed)]"
         mode="domain-type-operation-body-stub">
-        <xsl:sort select="name"/>
-      </xsl:apply-templates>
-
-      <!-- Serializable types need an Image implementation (can't be
-           made separate). -->
-      <xsl:apply-templates
-        select="type[@serializable]"
-        mode="serializable-type-image-body">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
 
@@ -339,6 +331,16 @@
         select="'.. any support packages for specially-declared types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates select="type" mode="domain-type-support"/>
+
+    <!-- Serializable support. -->
+
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the support package for serializable types ..'"/>
+    </xsl:call-template>
+    <xsl:call-template name="serializable-type-spec"/>
+    <xsl:call-template name="serializable-type-body"/>
 
     <!-- Package specs for individual classes. -->
     <xsl:call-template name="progress-message">

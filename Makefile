@@ -50,6 +50,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-collection.xsl \
   ada-inheritance.xsl \
   ada-operation.xsl \
+  ada-serialization.xsl \
   ada-state.xsl \
   ada-type.xsl \
   ada-teardown.xsl \
@@ -145,6 +146,7 @@ associations.html \
 attributes.html \
 bugs.html \
 classes.html \
+compilation.html \
 conversion.html \
 directions.html \
 domains.html \
