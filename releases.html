@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 9809b5561727 2003/02/16 19:14:04 simon $ -->
+<!-- $Id: releases.html,v c1f86c81dd46 2003/03/01 16:55:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -25,7 +25,7 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>2003mmdd
 
-<p>Case normalization has been improved; the GLIDE rules are now
+<dd>Case normalization has been improved; the GLIDE rules are now
 followed, so that you can specify that <i>short</i> comes out as
 <tt>short</tt> while <i>short&nbsp;message</i> comes out as
 <tt>Short_Message</tt>.
@@ -43,6 +43,17 @@ automatically (but doesn't override any user-specified maximum).
 
 <p>The maximum number of instances of association classes is
 calculated.
+
+
+<p>If you have <a href="serialization.html">serialized</a> output in
+<tt><i>output</i>.xml</tt>, you can say
+<br>
+<tt>&nbsp;&nbsp;&nbsp;make -f $TOP/$COLDFRAME/Makefile-unix <i>output</i>.csv</tt>
+<br>(or, of course, <tt>Makefile-winnt</tt> if you're on Windows) to
+run a script to split the output into "comma separated variable"
+files, one per serialized type included in the input file. Comma
+separated variable format is importable into spreadsheets.
+
 
 
 <p><dt>20030207w
