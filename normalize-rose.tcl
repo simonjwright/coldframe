@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3bf5d563899f 2003/01/11 17:26:04 simon $
+# $Id: normalize-rose.tcl,v cf80e0ec571d 2003/01/15 20:37:26 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1142,6 +1142,13 @@ itcl::class Class {
     method -complete {} {
 	$this -handleStereotype
 	if {$isType && [$attributes -size] == 0} {
+	    if $discriminated {
+		Error "discriminated type [$this -getName] has no attributes"
+	    }
+	    if [info exists extends] {
+		Error "tried to extend [$this -getName],\
+                    which has no attributes"
+	    }
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
@@ -1158,12 +1165,6 @@ itcl::class Class {
 	    $dt -annotation $annotation
 	    if [info exists callback] {
 		$dt -callback $callback
-	    }
-	    if $discriminated {
-		Error "discriminated type [$this -getName] has no attributes"
-	    }
-	    if [info exists extends] {
-		Error "extending type [$this -getName] has no attributes"
 	    }
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
@@ -2072,6 +2073,16 @@ itcl::class Datatype {
     # called when the user has requested a callback.
     method -callback {max} {
 	set callback [string trim $max]
+    }
+
+    # called when the user has tried to extend a non-record type.
+    method -discriminated {dummy} {
+	Error "discriminated type $type has no attributes"
+    }
+
+    # called when the user has tried to extend a non-record type.
+    method -extends {dummy} {
+	Error "tried to extend $type, which has no attributes"
     }
 
     # Called when the type is a counterpart.
