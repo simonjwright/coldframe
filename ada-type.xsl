@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v ac6abceece47 2002/12/10 20:04:50 simon $ -->
+<!-- $Id: ada-type.xsl,v 8fdd17bad158 2003/01/11 17:31:04 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -73,7 +73,8 @@
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for imported and renamed types, ensuring uniqueness. -->
+    <!-- Context for imported, renamed and extending types, ensuring
+         uniqueness. -->
 
     <!-- First, make a nodeset containing "with" elements containing
          the package names. -->
@@ -83,7 +84,7 @@
           <xsl:value-of select="."/>
         </xsl:element>
       </xsl:for-each>
-      <xsl:for-each select="type/renames">
+      <xsl:for-each select="type/renames | type/@extends">
         <xsl:variable name="package">
           <xsl:call-template name="find-source-package">
             <xsl:with-param name="input" select="."/>
@@ -299,6 +300,26 @@
 
           </xsl:when>
 
+          <xsl:when test="@extends">
+            
+            <!--
+                 type {name} is new {base} with record
+                   {attr-name} : {attr-type}[ := {attr-init}];
+                 end record;
+                 -->
+
+            <xsl:value-of select="$I"/>
+            <xsl:text>type </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text> is new </xsl:text>
+            <xsl:value-of select="@extends"/>
+            <xsl:text> with record&#10;</xsl:text>
+            <xsl:apply-templates mode="instance-record-component"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>end record;&#10;</xsl:text>
+            
+          </xsl:when>
+
           <xsl:otherwise>
 
             <!--
@@ -495,7 +516,7 @@
   <xsl:template matc`="type/operation" mode="domain-type-operation-spec">
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
-      <xsl:with-param name="use-handle" select="'no'"/>
+      <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text>;&#10;</xsl:text>
     <xsl:call-template name="commentary">
@@ -511,7 +532,7 @@
   <xsl:template match="type/operation" mode="domain-type-operation-body-stub">
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
-      <xsl:with-param name="use-handle" select="'no'"/>
+      <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text> is separate;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
@@ -528,7 +549,7 @@
     <xsl:text>)&#10;</xsl:text>
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="''"/>
-      <xsl:with-param name="use-handle" select="'no'"/>
+      <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
