@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 0507e6778854 2001/04/13 12:42:15 simon $ -->
+<!-- $Id: ada-class.xsl,v 1f662494ceff 2001/04/22 10:42:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -362,12 +362,19 @@
   <!-- Called from domain/class to generate context clauses for package
        body. -->
   <xsl:template name="class-body-context">
+
+    <xsl:if test="attribute/@refers">
+      <!-- We're going to use the GNAT "with type" extension.
+           This pragma should only be needed on the spec, but GNAT
+           3.14a requires it here too. -->
+      <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text>
+    </xsl:if>
+
       <xsl:if test="not(@singleton)">
-        
         <!-- We'll need to free memory. -->
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
-        
       </xsl:if>
+
   </xsl:template>
 
 
