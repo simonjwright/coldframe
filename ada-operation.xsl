@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v b3b6d2e9f2ea 2001/06/21 19:27:51 simon $ -->
+<!-- $Id: ada-operation.xsl,v 76bb92682ad8 2001/06/26 18:46:59 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -91,11 +91,11 @@
   <xsl:template mode="operation-spec" match="*"/>
 
 
-  <!-- Generate subprogram context. -->
+  <!-- Generate subprogram context for specs. -->
   <!-- XXX at present, doesn't ensure there's only one of each -->
-  <xsl:template match="class/operation" mode="operation-context">
+  <xsl:template match="class/operation" mode="operation-spec-context">
 
-    <!-- The name of the current class. -->
+    <!-- The current class. -->
     <xsl:param name="current"/>
 
     <!-- Find the names of all the types involved -->
@@ -108,12 +108,31 @@
       <!-- .. only using those whose names are those of classes in
            the domain (and not the current class) .. -->
 
-      <xsl:if test="/domain/class/name=. and not(.=$current)">
-        <xsl:text>with type </xsl:text>
-        <xsl:value-of select="/domain/name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text>.Handle is access;&#10;</xsl:text>
+      <xsl:if test="/domain/class/name=. and not(.=$current/name)">
+
+        <xsl:choose>
+
+          <!-- It seems (26.vi.01) that GNAT 3.14a1 has a problem with
+               "with type" and tasks. -->
+          <xsl:when test="$current/@active">
+            <xsl:text>with </xsl:text>
+            <xsl:value-of select="/domain/name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>;&#10;</xsl:text>
+          </xsl:when>
+
+          <!-- Normally, use "with type" to minimise risk of circularities -->
+          <xsl:otherwise>
+           <xsl:text>with type </xsl:text>
+            <xsl:value-of select="/domain/name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>.Handle is access;&#10;</xsl:text>
+          </xsl:otherwise>
+
+        </xsl:choose>
+
       </xsl:if>
 
       <!-- .. or sets of classes in the domain .. -->
@@ -130,7 +149,40 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template mode="operation-context" match="*"/>
+  <xsl:template mode="operation-spec-context" match="*"/>
+
+
+  <!-- Generate subprogram context for bodies. -->
+  <!-- XXX at present, doesn't ensure there's only one of each -->
+  <xsl:template match="class/operation" mode="operation-body-context">
+
+    <!-- The current class. -->
+    <xsl:param name="current"/>
+
+    <!-- Find the names of all the types involved -->
+    <xsl:for-each select="parameter/type | @return">
+
+      <!-- .. sorted, so we can uniqueify them (when I've worked
+           out how) .. -->
+      <xsl:sort select="."/>
+
+      <!-- .. only using those whose names are those of classes in
+           the domain (and not the current class) .. -->
+
+      <xsl:if test="/domain/class/name=. and not(.=$current/name)">
+
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>;&#10;</xsl:text>
+        
+      </xsl:if>
+
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template mode="operation-body-context" match="*"/>
 
 
   <!-- called at domain/class to generate subprogram stubs for a class.
@@ -322,7 +374,7 @@
                 <xsl:text>CF: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
                 <xsl:text> in </xsl:text>
-                <xsl:value-of select="$current"/>
+                <xsl:value-of select="$current/name"/>
               </xsl:message>
             </xsl:if>
 
