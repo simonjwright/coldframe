@@ -6,6 +6,7 @@ b~*.ad[bs]
 *.norm
 use-cases.html coldframe-architecture.html coldframe-architecture.pdf
 dist
-*.gen *.doc
-Makefile-cf
-
+*.gen
+Makefile-cf Makefile-winnt Makefile-unix
+cf-[0-9]*
+coldframe-combine_hash-test
