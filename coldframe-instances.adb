@@ -20,11 +20,21 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-instances.adb,v $
---  $Revision: 5f3ee66a6da3 $
---  $Date: 2003/07/12 16:22:52 $
+--  $Revision: b96d48dad1b3 $
+--  $Date: 2003/07/13 06:33:51 $
 --  $Author: simon $
 
 package body ColdFrame.Instances is
+
+
+   function Instance_Identifier_Equality
+     (L, R : Instance_Base) return Boolean is
+      pragma Warnings (Off, L);
+      pragma Warnings (Off, R);
+   begin
+      raise Program_Error;
+      return False;
+   end Instance_Identifier_Equality;
 
 
    function Instance_Hash (Of_The_Instance : Instance_Base) return Natural is
@@ -32,6 +42,12 @@ package body ColdFrame.Instances is
    begin
       return 0;
    end Instance_Hash;
+
+
+   function Classwide_Identifier_Equality (L, R : Handle) return Boolean is
+   begin
+      return Instance_Identifier_Equality (L.all, R.all);
+   end Classwide_Identifier_Equality;
 
 
    function Classwide_Hash (Of_The_Handle : Handle) return Natural is
