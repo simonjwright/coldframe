@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c6eaa105a1c4 2001/09/14 19:33:55 simon $ -->
+<!-- $Id: bugs.html,v 00e4e13b742f 2001/09/27 18:25:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -68,19 +68,34 @@ active classes, where procedure operations turn into task entries).
 recognised (even if not implemented as specified: a warning would be
 sensible in that case).
 
-<dt>0021 (raised 4.ix.01)
+<dt>0025 (raised 26.ix.01)
 
-<dd>Identifier normalization should match GLIDE's casing rules.
+<dd>It would be a good thing if illegal characters in names were detected.
+
+<!-- next: 0026 -->
+
+</dl>
+
+<h2>Fixed</h2>
+
+<h3>26.ix.01</h3>
+<dl>
 
 <dt>0022 (raised 14.ix.01)
 
 <dd>It should be easier to iterate over Collections.
 
-<!-- next: 0023 -->
+<dt>0023 (raised 26.ix.01)
+
+<dd>It would be helpful if discriminated record types could be
+generated.
+
+<dt>0024 (raised 26.ix.01)
+
+<dd>The generated domain <tt>Tear_Down</tt> procedure has a bad body
+if there are no Classes (just Types) in the domain.
 
 </dl>
-
-<h2>Fixed</h2>
 
 <h3>14.ix.01</h3>
 <dl>
