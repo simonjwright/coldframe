@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v e4b98d1dd42f 2001/11/03 06:54:23 simon $ -->
+<!-- $Id: ada-operation.xsl,v 8726d2738da5 2001/11/17 06:06:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -44,7 +44,8 @@
       <xsl:when test="$parents">
 
         <!-- Still something to collect; call self recursively with the
-             parent node(s). -->
+             parent node(s), omitting operations we already have and
+             <<generated>> operations. -->
         <xsl:call-template name="operation-specs">
           <xsl:with-param
             name="parents"
@@ -73,14 +74,14 @@
   </xsl:template>
 
 
-  <!-- Generate subprogram specs (but not parental <<class>> operations,
-       or access-to-operations). -->
+  <!-- Generate subprogram specs (but not parental <<class>> or
+       <<finalize>> operations, or access-to-operations). -->
   <xsl:template match="class/operation[not(@access)]" mode="operation-spec">
 
     <!-- The current class. -->
     <xsl:param name="current"/>
 
-    <xsl:if test="..=$current or not(@class)">
+    <xsl:if test="..=$current or not(@class or @finalize)">
       <xsl:call-template name="subprogram-specification">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
@@ -207,9 +208,9 @@
   </xsl:template>
 
 
-  <!-- Generate the body stubs of operations (but not parental <<class>
-       operations, or access-to-operations, which are realized in the
-       Class package).
+  <!-- Generate the body stubs of operations (but not parental <<class>>
+       or <<finalize>> operations, or access-to-operations, which are
+       realized in the Class package).
        The bodies are compilable but generate Program_Error if called. -->
   <xsl:template
     match="class/operation[not(@access)]"
@@ -218,7 +219,7 @@
     <!-- The current class. -->
     <xsl:param name="current"/>
 
-    <xsl:if test="..=$current or not(@class)">
+    <xsl:if test="..=$current or not(@class or @finalize)">
       <xsl:call-template name="subprogram-specification">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
@@ -395,10 +396,10 @@
 
           </xsl:when>
 
-          <xsl:when test="not(@class)">
+          <xsl:when test="not(@class or @finalize)">
 
-            <!-- Concrete, non-<<class>> in ancestor class; we need to call
-                 the operation in our parent. -->
+            <!-- Concrete, non-<<class>>, non-<<finalize>> in ancestor class;
+                 we need to call the operation in our parent. -->
 
             <xsl:call-template name="generate-dispatch-to-parent">
               <xsl:with-param name="current" select="$current"/>
