@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: b89370ac0bb2 $ }
+|{ revision = $Revision: a25767d55521 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -213,6 +213,72 @@
 			    width      	234
 			    height     	164
 			    annotation 	8
+			    autoResize 	TRUE)))))
+	(object Class_Category "Mixed type declarations"
+	    quid       	"40EE860C015F"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Mixed"
+		    quid       	"40EE863202D6"
+		    documentation 	
+|{ renames = Ada.Text_IO.Count }
+|[[ hash : discrete ]]
+		    
+		    stereotype 	"type"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "i"
+			    quid       	"40EE864300DC"
+			    type       	"Integer"))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"40EE862F0246"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Mixed type declarations::Mixed" @6
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(750, 485)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@6
+				location   	(652, 457)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	196
+				justify    	0
+				label      	"Mixed")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@6
+				location   	(652, 412)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	193
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40EE863202D6"
+			    width      	214
+			    height     	168
+			    annotation 	8
 			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -221,7 +287,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: b89370ac0bb2 $ }
+|{ revision = $Revision: a25767d55521 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -229,7 +295,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object Label @6
+		(object Label @7
 		    location   	(215, 133)
 		    font       	(object Font
 			size       	10
@@ -242,9 +308,9 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v b89370ac0bb2 2004/04/17 17:33:15 simon $")
-		(object CategoryView "Logical View::Bad Model Regressions" @7
-		    location   	(2734, 220)
+		    label      	"$Id: Bad_Model_Regressions.cat,v a25767d55521 2004/07/14 04:25:42 simon $")
+		(object CategoryView "Logical View::Bad Model Regressions" @8
+		    location   	(2639, 233)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -255,8 +321,8 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@7
-			location   	(2564, 136)
+			Parent_View 	@8
+			location   	(2469, 149)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
@@ -268,7 +334,7 @@
 		    quidu      	"3FDAA7500168"
 		    width      	352
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @8
+		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @9
 		    location   	(495, 435)
 		    font       	(object Font
 			size       	10
@@ -280,7 +346,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@8
+			Parent_View 	@9
 			location   	(165, 396)
 			fill_color 	13434879
 			nlines     	2
@@ -288,7 +354,7 @@
 			justify    	0
 			label      	"Detect illegal characters in tag name rather than letting Saxon find them")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@8
+			Parent_View 	@9
 			location   	(165, 351)
 			fill_color 	13434879
 			anchor     	10
@@ -302,7 +368,7 @@
 		    quidu      	"408168AE0217"
 		    width      	672
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @9
+		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @10
 		    location   	(1355, 438)
 		    font       	(object Font
 			size       	10
@@ -314,7 +380,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@9
+			Parent_View 	@10
 			location   	(1087, 399)
 			fill_color 	13434879
 			nlines     	2
@@ -322,7 +388,7 @@
 			justify    	0
 			label      	"Public classes can't be active or have state machines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@9
+			Parent_View 	@10
 			location   	(1087, 354)
 			fill_color 	13434879
 			anchor     	10
@@ -335,4 +401,38 @@
 		    fill_color 	13434879
 		    quidu      	"408168F600C6"
 		    width      	548
+		    height     	180)
+		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @11
+		    location   	(2033, 433)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1889, 394)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Mixed type declarations")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@11
+			location   	(1889, 349)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40EE860C015F"
+		    width      	300
 		    height     	180)))))

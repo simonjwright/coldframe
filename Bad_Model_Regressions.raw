@@ -3,27 +3,27 @@
 <name>Bad Model Regressions</name>
 <date>
 <year>2004</year>
-<month>5</month>
-<day>1</day>
-<time>15:40</time>
+<month>7</month>
+<day>14</day>
+<time>05:23</time>
 </date>
-<documentation><![CDATA[Regression tests that involve errors detected during normalization.
+<documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: b291368dc4f8 $ }]]></documentation>
+{ revision = $Revision: a25767d55521 $ } ]]></documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[{ bad tag, bad:tag, bad+tag, bad.tag }
+<documentation><![CDATA[ { bad tag, bad:tag, bad+tag, bad.tag }
 { good-tag, good_tag }
-]]></documentation>
+ ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -38,7 +38,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -51,13 +51,13 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state final="yes">
 <name>final</name>
 <entryactions>
 </entryactions>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -66,7 +66,7 @@
 <target>final</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
@@ -76,8 +76,29 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Mixed</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ { renames = Ada.Text_IO.Count }
+[[ hash : discrete ]] ]]></documentation>
+<attributes>
+<attribute>
+<name>i</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
 </attributes>
 <operations>
 </operations>
