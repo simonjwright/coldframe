@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v a2ffaf005455 2001/05/30 18:34:34 simon $ -->
+<!-- $Id: generate-html.xsl,v 11a4ee38e116 2001/06/02 16:46:48 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -422,7 +422,7 @@
           </xsl:if>
         </ul>
       </xsl:when>
-      <xsl:when test="@record">
+      <xsl:when test="attribute">
         <p>A record type:</p>
         <xsl:if test="attribute">
           <h4>Attributes</h4>
