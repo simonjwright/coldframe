@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 562198c7b675 2002/11/21 05:56:18 simon $
+# $Id: normalize-rose.tcl,v 973922e8e158 2002/12/03 21:19:46 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1136,6 +1136,10 @@ itcl::class Class {
     }
 
     method -complete {} {
+#	if [info exists stereotype] {
+#	    puts -stderr "sterotype $stereotype"
+#	    set originalStereotype $stereotype
+#	}
 	$this -handleStereotype
 	if {$isType && [$attributes -size] == 0} {
 	    set dts [[Domain::currentDomain] -getDatatypes]
@@ -1152,6 +1156,14 @@ itcl::class Class {
 	    }
 	    $dt -documentation $documentation
 	    $dt -annotation $annotation
+	    if [info exists callback] {
+		$dt -callback $callback
+	    }
+#	    if [info exists originalStereotype] {
+#		puts -stderr "sterotype $stereotype"
+#		$dt -stereotype $originalStereotype
+#		$dt -handleStereotype
+#	    }
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
@@ -1171,9 +1183,6 @@ itcl::class Class {
 		    set dt [Datatype ::\#auto $name]
 		    $dts -add $dt $name
 		}
-#		if [info exists operations] {
-#		    $dt -operations $operations
-#		}
 		$dt -record
 	    }
 	    [stack -top] -add $this $name
@@ -2014,6 +2023,8 @@ itcl::class Datatype {
 
     variable operations
 
+    variable callback 0
+
     constructor {name} {set type $name}
 
     # process annotation.
@@ -2045,7 +2056,7 @@ itcl::class Datatype {
 
     # called when the user has (mistakenly) requested a callback.
     method -callback {max} {
-	Error  "CF: can't specify callback on type $type, must be a record"
+	set callback [string trim $max]
     }
 
     # Called when the type is a counterpart.
@@ -2111,7 +2122,11 @@ itcl::class Datatype {
 
     method -generate {domain} {
 	if {$dataType == "record"} {return}
-	puts "<type>"
+	puts -nonewline "<type"
+	if $callback {
+	    puts -nonewline " callback=\"$callback\""
+	}
+	puts ">"
 	putElement name "$type"
 	$this -generateDocumentation
 	switch $dataType {
