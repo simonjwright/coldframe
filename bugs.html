@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ce55a23e43a8 2004/04/21 14:45:47 simon $ -->
+<!-- $Id: bugs.html,v afbceb86693e 2004/04/22 04:48:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -225,19 +225,24 @@ are the default names used for initial and final states).
 <dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
 results in bad code. It should be a code generation error.
 
-<dt>0255 (raised 21.iv.04)
-
-<dd>Using an <i>{integer}</i> &#171;type&#187; with bounds expressed
-as based literals (<tt>16#ff#</tt>, for instance) as the only
-identifier of a class results in bad code.
-<br><i>21.iv.04: As a workround, legal but non-optimal code is
-generated./i>
-
 <!-- next: 0256  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>22.iv.04</h3>
+
+<dl>
+
+<dt>0255 (raised 21.iv.04)
+
+<dd>Using an <i>{integer}</i> &#171;type&#187; with bounds expressed
+as based literals (<tt>16#ff#</tt>, for instance) as the only
+identifier of a class results in bad code.
+<br><i>As a workround, legal but non-optimal code is generated./i>
+
+</dl>
 
 <h3>17.iv.04</h3>
 
