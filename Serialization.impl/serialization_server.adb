@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization_server.adb,v $
---  $Revision: 1a6cf47b8d39 $
---  $Date: 2004/05/01 15:25:09 $
+--  $Revision: 7b88fa7c83a8 $
+--  $Date: 2005/01/29 06:17:43 $
 --  $Author: simon $
 
 --  This program receives and decodes TCP packets of type
@@ -30,6 +30,7 @@ with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
 
 with Serialization_Demo.Serializable;
+pragma Warnings (Off, Serialization_Demo.Serializable);
 
 procedure Serialization_Server is
 
