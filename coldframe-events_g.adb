@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 92db5d41936e $
---  $Date: 2002/09/12 20:55:53 $
+--  $Revision: ca6a63915eeb $
+--  $Date: 2002/09/13 19:53:51 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -30,12 +30,28 @@ with ColdFrame.Exceptions;
 package body ColdFrame.Events_G is
 
 
+   procedure Instance_Is_Deleted
+     (For_The_Event : access Instance_Event_Base) is
+   begin
+      if For_The_Event.Instance_Deleted then
+         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
+                                         "instance already marked as deleted");
+      else
+         For_The_Event.Instance_Deleted := True;
+      end if;
+   end Instance_Is_Deleted;
+
+
    procedure Start (The_Queue : access Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
-      Ada.Exceptions.Raise_Exception
-        (Exceptions.Use_Error'Identity,
-         "Start only legal with Test event queue");
+      if The_Queue.Started then
+         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
+                                         "queue already started");
+      else
+         The_Queue.Started := True;
+         Start_Queue (Event_Queue_P (The_Queue)); -- need to dispatch
+      end if;
    end Start;
 
 
@@ -90,14 +106,6 @@ package body ColdFrame.Events_G is
         (Exceptions.Use_Error'Identity,
          "Tear_Down only legal with Test event queue");
    end Tear_Down;
-
-
-   function Start_Started
-     (The_Queue : access Event_Queue_Base) return Boolean is
-      pragma Warnings (Off, The_Queue);
-   begin
-      return True;
-   end Start_Started;
 
 
    procedure Start_Queue (The_Queue : access Event_Queue_Base) is

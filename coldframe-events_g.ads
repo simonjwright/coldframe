@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 92db5d41936e $
---  $Date: 2002/09/12 20:55:53 $
+--  $Revision: ca6a63915eeb $
+--  $Date: 2002/09/13 19:53:51 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -75,16 +75,20 @@ package ColdFrame.Events_G is
 
    type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
    is abstract new Event_Base with private;
-   --  All Instance Events are derived from this
-   --  type. For_The_Instance is the instance to which the event is
-   --  directed.
+   --  All Instance Events are derived from this type. For_The_Instance
+   --  is the instance to which the event is directed.
+
+   procedure Instance_Is_Deleted (For_The_Event : access Instance_Event_Base);
+   --  Note that the Instance has been deleted (so as to avoid
+   --  querying it in logging Queue variants).
 
 
    ---------------------
    --  Event queuing  --
    ---------------------
 
-   type Event_Queue_Base is abstract tagged limited private;
+   type Event_Queue_Base (Start_Started : Boolean)
+   is abstract tagged limited private;
    --  An Event Queue is intended to decouple the occurrence of an
    --  event from handling it. Normally, each Domain would have one
    --  Event Queue; events are posted to the Queue by a number of
@@ -97,8 +101,14 @@ package ColdFrame.Events_G is
    --
    --  Different Event Queue implementations can have different
    --  strategies (eg, priority queuing, logging).
+   --
+   --  if Start_Started is False, call Start to begin processing
+   --  Events (which can be Posted or Set on the Queue beforehand).
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
+
+   procedure Start (The_Queue : access Event_Queue_Base);
+   --  Raises Use_Error if the Queue is already started.
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base) is abstract;
@@ -190,8 +200,6 @@ package ColdFrame.Events_G is
    --  The implementations here raise Exceptions.Use_Error. Must only
    --  be used with an instantiation of Events_G.Test_G.
 
-   procedure Start (The_Queue : access Event_Queue_Base);
-
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
    --  Blocks the caller until there are no more events awaiting
@@ -251,10 +259,16 @@ private
 
 
    type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
-   is abstract new Event_Base with null record;
+   is abstract new Event_Base with record
+      Instance_Deleted : Boolean := False;
+   end record;
 
 
-   type Event_Queue_Base is abstract tagged limited null record;
+   type Event_Queue_Base (Start_Started : Boolean)
+   is abstract tagged limited record
+         Started : Boolean := Start_Started;
+   end record;
+
 
    --  Default private interface to invalidate events to deleted
    --  instances. The implementation here raises Program_Error if
@@ -270,10 +284,6 @@ private
    --  Operations to support test.
 
    --  Operations to support starting.
-
-   function Start_Started
-     (The_Queue : access Event_Queue_Base) return Boolean;
-   --  The standard version returns True.
 
    procedure Start_Queue (The_Queue : access Event_Queue_Base);
    --  Raises Program_Error.
