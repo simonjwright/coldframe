@@ -1,3 +1,5 @@
+with Ada.Task_Identification;
+
 with GNAT.IO; use GNAT.IO;
 with Performance.Initialize;
 with Performance.Tear_Down;
@@ -375,6 +377,6 @@ begin
 
    end;
 
-   Performance.Tear_Down;
+   Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
 
 end Performance.Harness;
