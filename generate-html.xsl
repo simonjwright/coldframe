@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 7949e00ea6f7 2004/05/29 15:48:58 simon $ -->
+<!-- $Id: generate-html.xsl,v bfa3387d3e8e 2004/07/26 09:22:26 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -23,6 +23,7 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:saxon="http://icl.com/saxon"
+  xmlns:at="http://pushface.org/coldframe/attribute"
   extension-element-prefixes="saxon"
   version="1.0">
 
@@ -411,7 +412,7 @@
   <!-- Output details of a Class's Attribute. -->
   <xsl:template match="attribute">
     <xsl:variable name="name">
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
     </xsl:variable>
     <dt>
       <xsl:value-of select="$name"/>
