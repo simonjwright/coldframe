@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 020eb3820a52 $
---  $Date: 2002/07/07 17:47:34 $
+--  $Revision: ede7ee592c82 $
+--  $Date: 2002/07/07 18:31:52 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -166,6 +166,9 @@ package ColdFrame.Events_G is
 
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base);
 
+   procedure Tear_Down (The_Queue : in out Event_Queue_P);
+   --  Terminates any tasks and deallocates The_Queue.
+
 
 private
 
@@ -221,6 +224,7 @@ private
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
 
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 
    --  Operations to support debug/logging. The implementation here
    --  is null.

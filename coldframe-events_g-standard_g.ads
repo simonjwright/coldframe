@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 264533d476de $
---  $Date: 2002/07/07 17:49:07 $
+--  $Revision: ede7ee592c82 $
+--  $Date: 2002/07/07 18:31:52 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -179,6 +179,8 @@ private
    procedure Invalidate_Events
      (On : access Event_Queue;
       For_The_Instance : access Instance_Base'Class);
+
+   procedure Tear_Down (The_Queue : in out Event_Queue);
 
 
 end ColdFrame.Events_G.Standard_G;
