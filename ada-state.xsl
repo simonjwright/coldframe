@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f6f2b02a3db4 2002/04/12 18:55:39 simon $ -->
+<!-- $Id: ada-state.xsl,v 15d48c27f298 2002/05/26 18:59:07 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -180,7 +180,7 @@
                when {source-state} =>
                   null;
                when {source-state} =>
-                  raise ColdFrame.Project.Events.Cant_Happen;
+                  raise ColdFrame.Exceptions.Cant_Happen;
             end case;
          end Handler;
          -->
@@ -195,7 +195,7 @@
                when {source-state} =>
                   null;
                when {source-state} =>
-                  raise ColdFrame.Project.Events.Cant_Happen;
+                  raise ColdFrame.Exceptions.Cant_Happen;
             end case;
          end Handler;
          -->
@@ -248,7 +248,7 @@
         
         <xsl:otherwise>
           <xsl:value-of select="$IIII"/>
-          <xsl:text>raise ColdFrame.Project.Events.Cant_Happen;&#10;</xsl:text>
+          <xsl:text>raise ColdFrame.Exceptions.Cant_Happen;&#10;</xsl:text>
         </xsl:otherwise>
         
       </xsl:choose>
