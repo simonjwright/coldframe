@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
+<!-- $Id: ada-utilities.xsl,v add4c13934aa 2002/03/23 06:30:55 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -223,6 +223,11 @@
         <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
 
+      <!-- Counterpart maps to ColdFrame.Instances.Handle. -->
+      <xsl:when test="$type='Counterpart'">
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
+      </xsl:when>
+
       <!-- Date maps to Time. -->
       <xsl:when test="$type='Date'">
         <xsl:text>Time</xsl:text>
@@ -238,7 +243,7 @@
         <xsl:text>Unbounded_String</xsl:text>
       </xsl:when>
 
-      <!-- Timer maps to Coldframe.Project.Events.Timer. -->
+      <!-- Timer maps to ColdFrame.Project.Events.Timer. -->
       <xsl:when test="$type='Timer'">
         <xsl:text>ColdFrame.Project.Events.Timer</xsl:text>
       </xsl:when>
