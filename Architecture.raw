@@ -78,7 +78,9 @@ Depending on the code generation strategy, Identified Classes may not be visible
 <name>User Type Declaration</name>
 <documentation>User Type Definitions are type definitions in the top-level Domain package.<br/>
 
-Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.</documentation>
+Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.
+
+Record types are generated after plain types; this allows record types to contain fields of plain Domain types, but <em>doesn't</em> ensure that records that contain fields of record types are generated in the correct order.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -122,7 +124,9 @@ Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.S
 
 A Type Specification is a class with the "type" stereotype.<br/>
 
-Its documentation must contain an Annotation, which is text contained in double square brackets (<tt>[[<i>annotation</i>]]</tt>).<br/>
+If the class has attributes, this is a Record Type.
+
+Otherwise, it's a Plain Type, and its documentation must contain an Annotation, which is text contained in double square brackets (<tt>[[<i>annotation</i>]]</tt>).<br/>
 
 Supported annotations are:<br/>
 
@@ -382,6 +386,110 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 
 The prime functionality supplied is iteration over Containers.
 </documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Referential Attribute</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Standard Attribute</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Association</name>
+<documentation>An Association relates two primary Classes.<br/>
+
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Simple Association</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Associative Association</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Generalization</name>
+<documentation>A Generalization is a Relationship between a Supertype and a number of Subtypes.<br/>
+
+A Supertype is always abstract.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>AssociationPackage</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Association Navigation Operation</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Relationship</name>
+<documentation>A Relationship reflects some degree of interaction between a number of Classes.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Standard Type Specification</name>
+<documentation>A Standard Type Specification is aType Specification without the <tt>[[ callback ]]</tt> annotation.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Callback Type Specification</name>
+<documentation>A Callback Type Specification is a Type Specification with the <tt>[[ callback : <i>size</i> ]]</tt> annotation.<br/>
+
+Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Callback Package</name>
+<documentation>Each Callback Type Specification maps to a Callback Package, named <tt><i>Domain.Type</i>_Callback</tt>.<br/>
+
+The number of registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -821,6 +929,135 @@ The prime functionality supplied is iteration over Containers.
 <documentation></documentation>
 </role>
 </association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<associative>Association</associative>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Associative Association</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Association</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Referential Attribute</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>AssociationPackage</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Association Navigation Operation</classname>
+<cardinality>n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Domain Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>AssociationPackage</classname>
+<cardinality>n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Callback Package</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
 <inheritance>
 <name></name>
 <documentation></documentation>
@@ -898,6 +1135,54 @@ The prime functionality supplied is iteration over Containers.
 <documentation></documentation>
 <child>Interface Class Package</child>
 <parent>Class Package</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Referential Attribute</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Standard Attribute</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Association</child>
+<parent>Relationship</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Simple Association</child>
+<parent>Association</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Associative Association</child>
+<parent>Association</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Generalization</child>
+<parent>Relationship</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Standard Type Specification</child>
+<parent>Type Specification</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Callback Type Specification</child>
+<parent>Type Specification</parent>
 </inheritance>
 </relationships>
 </domain>
