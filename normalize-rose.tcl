@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6df8619783c1 2003/09/09 04:14:58 simon $
+# $Id: normalize-rose.tcl,v 6891e7432040 2003/09/10 05:47:11 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2264,7 +2264,9 @@ itcl::class Datatype {
 
     variable hash
 
-    variable image
+    variable fieldImage
+
+    variable typeImage
 
     variable operations
 
@@ -2336,8 +2338,13 @@ itcl::class Datatype {
 	set dataDetail $vs
     }
 
-    # called to specify an image function (for serialization)
-    method -image {img} {set image [normalize $img]}
+    # called to specify a field image function (for serialization)
+    method -field-image {img} {set fieldImage [normalize $img]}
+    # support the old name for this attribute
+    method -image {img} {$this -field-image $img}
+
+    # called to specify a type image function (for serialization)
+    method -type-image {img} {set typeImage [normalize $img]}
 
     # called when the type is imported from some other domain.
     method -imported {domain} {
@@ -2394,8 +2401,11 @@ itcl::class Datatype {
 	if [info exists callback] {
 	    puts -nonewline " callback=\"$callback\""
 	}
-	if [info exists image] {
-	    puts -nonewline " image=\"$image\""
+	if [info exists fieldImage] {
+	    puts -nonewline " field-image=\"$fieldImage\""
+	}
+	if [info exists typeImage] {
+	    puts -nonewline " type-image=\"$typeImage\""
 	}
 	if $serializable {
 	    puts -nonewline " serializable=\"yes\""
