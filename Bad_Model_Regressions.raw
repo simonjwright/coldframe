@@ -3,13 +3,13 @@
 <name>Bad Model Regressions</name>
 <date>
 <year>2005</year>
-<month>1</month>
-<day>29</day>
-<time>05:54</time>
+<month>2</month>
+<day>6</day>
+<time>19:07</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
+{ revision = $Revision: 59479730a0c7 $ } ]]></documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
@@ -311,6 +311,56 @@
 <events>
 </events>
 </class>
+<class stereotype="abstract">
+<name>Bad Accessor</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="abstract,accessor">
+<name>get id</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Autonumber</return>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Bad Init</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="class,teardown">
+<name>class teardown</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
 </classes>
 <relationships>
 <association>
@@ -345,5 +395,11 @@
 <documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
+<inheritance>
+<name>bad op</name>
+<documentation><![CDATA[  ]]></documentation>
+<child>Bad Init</child>
+<parent>Bad Accessor</parent>
+</inheritance>
 </relationships>
 </domain>
