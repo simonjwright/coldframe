@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
+<!-- $Id: generate-ada.xsl,v 7fa828a65845 2001/05/09 18:51:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,6 +32,7 @@
   <xsl:import href="ada-class.xsl"/>
   <xsl:import href="ada-collection.xsl"/>
   <xsl:import href="ada-operation.xsl"/>
+  <xsl:import href="ada-type.xsl"/>
   <xsl:import href="ada-utilities.xsl"/>
 
   <xsl:strip-space elements="*"/>
@@ -52,7 +53,10 @@
     <xsl:text> is&#10;</xsl:text>
 
     <!-- .. any specially-declared types .. -->
-    <xsl:apply-templates select="type" mode="domain-type"/>
+    <xsl:apply-templates select="type" mode="domain-type">
+      <xsl:sort select="number(boolean(@record))"/>
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -86,135 +90,8 @@
   </xsl:template>
 
 
-  <!-- Generate domain context clauses. -->
-  <xsl:template mode="domain-context" match="domain/type">
-    <xsl:choose>
-
-      <xsl:when test="string/max">
-      <!-- string/max implies an instantiation of Ada.Strings.Bounded -->
-        <xsl:text>with Ada.Strings.Bounded;</xsl:text>
-        <xsl:text> use Ada.Strings.Bounded;&#10;</xsl:text>
-      </xsl:when>
-
-    </xsl:choose>
-  </xsl:template>
-
-
-  <!-- Generate domain Types entries (not for standard types). -->
-  <xsl:template mode="domain-type" match="domain/type">
-    <xsl:if test="not(standard)">
-      <xsl:choose>
-
-        <xsl:when test="enumeration">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is </xsl:text>
-          <xsl:text>&#10;    (</xsl:text>
-          <xsl:for-each select="enumeration/literal">
-            <xsl:value-of select="."/>
-            <xsl:if test="position() &lt; last()">
-              <xsl:text>,&#10;     </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:text>);&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:when test="integer">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is range </xsl:text>
-          <xsl:value-of select="integer/lower"/>
-          <xsl:text> .. </xsl:text>
-          <xsl:value-of select="integer/upper"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:when test="real">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is digits </xsl:text>
-          <xsl:value-of select="real/digits"/>
-          <xsl:text> range </xsl:text>
-          <xsl:value-of select="real/lower"/>
-          <xsl:text> .. </xsl:text>
-          <xsl:value-of select="real/upper"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
-
-        <!-- sets are implemented as class Collections; no action here -->
-        <xsl:when test="set"/>
-
-        <xsl:when test="string">
-          <xsl:text>  package </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Package is&#10;</xsl:text>
-          <xsl:text>     new Generic_Bounded_Length (Max =&gt; </xsl:text>
-          <xsl:value-of select="string/max"/>
-          <xsl:text>);&#10;</xsl:text>
-          <xsl:text>  subtype </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Package.Bounded_String;&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:text>  -- Unrecognised type category for </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-    </xsl:if>
-  </xsl:template>
-
-
-  <!-- Generate domain Types support entries (not for standard types).
-       We do these as child packages in case they're not actually 
-       needed. -->
-  <xsl:template mode="domain-type-support" match="domain/type">
-    <xsl:if test="not(standard)">
-      <xsl:choose>
-
-        <xsl:when test="enumeration"/>
-
-        <xsl:when test="integer"/>
-
-        <xsl:when test="real"/>
-
-        <xsl:when test="set"/>
-
-        <xsl:when test="string">
-          <xsl:text>with ColdFrame.String_Hash;&#10;</xsl:text>
-          <xsl:text>function </xsl:text>
-          <xsl:value-of select="../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Hash is&#10;</xsl:text>
-          <xsl:text>   new ColdFrame.String_Hash.Bounded_Hash (</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Package);&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:text>-- Unrecognised type category for </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-    </xsl:if>
-  </xsl:template>
-
-
   <!-- Catch unspecified default matches -->
   <xsl:template match="*"/>
-
-
-  <!-- Catch unspecified mode="xxx" matches -->
-  <xsl:template mode="domain-context" match="*"/>
-  <xsl:template mode="domain-type" match="*"/>
-  <xsl:template mode="domain-type-support" match="*"/>
 
 
 </xsl:stylesheet>
