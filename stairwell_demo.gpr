@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 9f7d8d3b77b8 2003/01/01 22:12:45 simon $
+--  $Id: stairwell_demo.gpr,v 4051953f178a 2003/01/04 12:26:03 simon $
 
 with "tash";
 
@@ -9,17 +9,27 @@ project Stairwell_Demo is
   Booch := external ("BC", "bc-20021230");
   Build := external ("BUILD", "c:/tmp/.build");
 
+  type Development is ("YES", "NO");
+
+  Devel : Development := external ("DEVEL", "NO");
+
   for Main use ("stairwell_demo");
 
   for Exec_Dir use ".";
 
-  for Source_Dirs use ("House_Management.impl",
-                       "House_Management.gen",
-                       "Digital_IO.impl",
-                       "Digital_IO.gen",
-                       "../project",
-                       "../lib",
-                       Top & "/" & Booch);
+  Main_Sources := ("House_Management.impl",
+                   "House_Management.gen",
+                   "Digital_IO.impl",
+                   "Digital_IO.gen",
+                   Top & "/" & Booch);
+
+  case Devel is
+     when "YES" =>
+        for Source_Dirs use Main_Sources & (".");
+     when others =>
+        for Source_Dirs use Main_Sources & ("../project",
+                                            "../lib");
+  end case;
 
   for Object_Dir use Build;
 
