@@ -163,7 +163,7 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 # coldframe-architecture.ps is made by printing the Rose Architecture package
 # diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
 
-GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
+GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
 serialization.png serialization-class-model.png serialization-sequence-t.png \
@@ -171,7 +171,8 @@ serialization-class-model-t.png serialization-state.png \
 serialization-state-t.png serialization-sequence.png \
 real_time.png recordable_real_time.png sample_a.png \
 type-mapping.png relationships-mapping.png operations-mapping.png \
-metamodel.png event-mapping.png collections-mapping.png class-mappings.png
+metamodel.png event-mapping.png collections-mapping.png class-mappings.png \
+lamp-state.png
 
 ############################
 # Distribution construction
