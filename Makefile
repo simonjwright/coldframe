@@ -274,6 +274,27 @@ coldframe-project-global_storage_pool.ads-standard: \
 	cp -p $< $@
 
 DEMO = \
+Stairwell-Demo.mdl \
+stairwelllights.tcl house-2.gif \
+Digital_IO.cat Digital_IO.raw \
+Digital_IO.impl/digital_io-application-set_output.adb \
+Digital_IO.impl/digital_io-hci-get_state.adb \
+Digital_IO.impl/digital_io-hci-set_input.adb \
+Digital_IO.impl/digital_io-input-changed.adb \
+Digital_IO.impl/digital_io-output-changed.adb \
+Digital_IO.impl/digital_io-signal-initialize.adb \
+Digital_IO.impl/digital_io-signal-set_state.adb \
+House_Management.cat House_Management.raw \
+House_Management.impl/house_management-button-changed.adb \
+House_Management.impl/house_management-button-pushed.adb \
+House_Management.impl/house_management-events-initialize.adb \
+House_Management.impl/house_management-lamp-button_pushed.adb \
+House_Management.impl/house_management-lamp-clear_timeout.adb \
+House_Management.impl/house_management-lamp-initialize.adb \
+House_Management.impl/house_management-lamp-set_timeout.adb \
+House_Management.impl/house_management-lamp-turn_off.adb \
+House_Management.impl/house_management-lamp-turn_on.adb \
+House_Management.impl/stairwell_demo.adb \
 Interrupt_Handling.cat Interrupt_Handling.raw \
 Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb \
 Interrupt_Handling.impl/interrupt_handling-device-initialize.adb \
