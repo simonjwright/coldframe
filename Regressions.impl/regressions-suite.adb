@@ -6,6 +6,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 pragma Warnings (Off, Ada.Text_IO);
 
 with Regressions.Find_Active;
+with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
 with Regressions.Tear_Down;
 
@@ -65,6 +66,24 @@ package body Regressions.Suite is
          end select;
       end Cant_Find;
 
+      procedure Find_Singleton (C : in out Test_Case'Class);
+      procedure Find_Singleton (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Found : Find_Active_Singleton.Handle;
+         use type Find_Active_Singleton.Handle;
+      begin
+         select
+            delay 0.5;
+            Assert (False,
+                    "hang during Find");
+         then abort
+            Found := Find_Active_Singleton.Find;
+            Assert (Found /= null,
+                    "didn't find the instance");
+            return;
+         end select;
+      end Find_Singleton;
+
       function Name (C : Case_1) return String_Access is
          pragma Warnings (Off, C);
       begin
@@ -81,6 +100,10 @@ package body Regressions.Suite is
            (C,
             Cant_Find'Access,
             "can fail to find a non-existent instance without hanging");
+         Register_Routine
+           (C,
+            Find_Singleton'Access,
+            "can find a singleton instance without hanging");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
