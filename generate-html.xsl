@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 2a24366a436b 2002/01/24 20:17:01 simon $ -->
+<!-- $Id: generate-html.xsl,v 95f14da7dcc8 2002/02/24 10:34:51 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -198,6 +198,28 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
+    <xsl:if test="event[@class]">
+      <h4>Messages</h4>
+      <ul>
+        <xsl:for-each select="event[@class]">
+          <xsl:sort select="name"/>
+          <xsl:call-template name="event-details"/>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
+    <xsl:if test="event[not(@class)]">
+      <h4>Events</h4>
+      <ul>
+        <xsl:for-each select="event[not(@class)]">
+          <xsl:sort select="name"/>
+          <xsl:call-template name="event-details"/>
+        </xsl:for-each>
+      </ul>
+    </xsl:if>
+    <xsl:if test="statemachine">
+      <h4>State Model</h4>
+      <xsl:call-template name="state-machine"/>
+    </xsl:if>
     <xsl:if test="operation">
       <h4>Operations</h4>
       <xsl:apply-templates select="operation">
@@ -220,7 +242,93 @@
       </ul>
     </xsl:if>
   </xsl:template>
-    
+
+
+  <!-- Output details of an Event. Called at class/event in a List context. -->
+  <xsl:template name="event-details">
+
+    <li>
+      <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
+      <xsl:if test="type">
+        <xsl:text> (payload of type </xsl:text>
+        <xsl:call-template name="type-name-linked">
+          <xsl:with-param name="type" select="type"/>
+        </xsl:call-template>
+        <xsl:text>)</xsl:text>
+      </xsl:if>
+      <xsl:apply-templates select="documentation"/>
+    </li>
+
+  </xsl:template>
+
+
+  <!-- Called at class to output a Class's state model. -->
+  <xsl:template name="state-machine">
+    <table border="1">
+      <tr>
+        <th>State</th>
+        <xsl:for-each select="statemachine/event">
+          <xsl:sort select="name"/>
+          <th><xsl:value-of select="name"/></th>
+        </xsl:for-each>
+        <th>Action</th>
+        <th>Drop-through</th>
+      </tr>
+      <xsl:for-each select="statemachine/state">
+        <xsl:sort select="not(@initial)"/>
+        <xsl:sort select="name"/>
+        <xsl:variable name="st" select="name"/>
+        <tr>
+          <td><xsl:value-of select="name"/></td>
+          <xsl:for-each select="../event">
+            <xsl:sort select="name"/>
+            <td>
+              <xsl:choose>
+                <xsl:when
+                  test="../transition[source=$st and event=current()]">
+                  <xsl:value-of
+                    select="../transition[source=$st and event=current()]
+                            /target"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <i>can't happen</i>
+                </xsl:otherwise>
+              </xsl:choose>
+            </td>
+          </xsl:for-each>
+          <td>
+            <xsl:choose>
+              <xsl:when test="action">
+                <xsl:for-each select="action">
+                  <a href="#{../../../name}.{name}">
+                    <xsl:value-of select="name"/>
+                  </a>
+                  <xsl:if test="position() &lt; last()">
+                    <br/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
+                <i>none</i>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="../transition[source=$st and not(event)]">
+                <xsl:value-of
+                  select="../transition[source=$st and not(event)]/target"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <i>none</i>
+              </xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
+
 
   <!-- Output details of a Class' Attribute. -->
   <xsl:template match="attribute">
@@ -247,19 +355,14 @@
       </xsl:choose>
     </dt>
     <dd>
-      <xsl:choose>
-        <xsl:when test="@refers">
-          <p>
-            <xsl:text>Formalizes </xsl:text>
-            <a href="#{@relation}"><xsl:value-of select="@relation"/></a>
-            <xsl:text>.</xsl:text>
-          </p>
-          <xsl:apply-templates select="documentation"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="documentation"/>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:if test="@refers">
+        <p>
+          <xsl:text>Formalizes </xsl:text>
+          <a href="#{@relation}"><xsl:value-of select="@relation"/></a>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:if>
+      <xsl:apply-templates select="documentation"/>
     </dd>
   </xsl:template>
 
@@ -267,7 +370,7 @@
   <!-- Output Operation info. -->
   <xsl:template match="operation">
     <h5>
-      <xsl:value-of select="name"/>
+      <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="@abstract">
         <xsl:text> (abstract)</xsl:text>
       </xsl:if>
@@ -288,6 +391,9 @@
       </xsl:if>
       <xsl:if test="@init">
         <xsl:text> (initialization)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@handler">
+        <xsl:text> (message handler)</xsl:text>
       </xsl:if>
       <xsl:if test="@return">
         <xsl:text> returns </xsl:text>
@@ -540,32 +646,40 @@
   <!-- Utilities -->
 
   <!-- Output a type name, with a hyperlink to the definition if the
-       type is a class or non-standard. -->
+       type is a class or non-standard or an event.
+       May be called at: attribute, operation, operation/parameter. -->
+
   <xsl:template name="type-name-linked">
     <xsl:param name="type" select="."/>
 
+    <!-- XXX Need to find if I can look up the ancestor axis to see if
+         there's an event with this name in the class; which would
+         override any <<type>> declaration. -->
+
     <xsl:variable
       name="defined"
-      select="/domain/type[name=$type] | /domain/class[name=$type]"/>
+      select="/domain/type[name=$type]
+              | /domain/class[name=$type]
+              | /domain/class/event[name=$type]"/>
 
     <xsl:choose>
-      
-      <xsl:when test="$defined">
 
-        <xsl:choose>
-
-          <xsl:when test="$defined/standard">
-            <xsl:value-of select="$type"/>
-          </xsl:when>
-
-          <xsl:otherwise>
-            <a href="#{$type}"><xsl:value-of select="$type"/></a>
-          </xsl:otherwise>
-          
-        </xsl:choose>
-
+      <xsl:when test="../../event[name=$type]">
+        <!-- an event -->
+        <a href="#{../../name}.{$type}"><xsl:value-of select="$type"/></a>
       </xsl:when>
 
+      <xsl:when test="/domain/type[name=$type]/standard">
+        <!-- a standard type -->
+        <xsl:value-of select="$type"/>
+      </xsl:when>
+      
+      <xsl:when test="/domain/type[name=$type]
+                      or /domain/class[name=$type]">
+        <!-- a class or a type -->
+        <a href="#{$type}"><xsl:value-of select="$type"/></a>            
+      </xsl:when>
+      
       <xsl:otherwise>
         <xsl:value-of select="$type"/>
       </xsl:otherwise>
