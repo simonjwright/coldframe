@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v a38df22abeee 2002/09/13 19:28:11 simon $ -->
+<!-- $Id: installation.html,v 54eafef57e1e 2002/09/20 10:22:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -159,13 +159,26 @@ you can alter where the Makefile looks for components: for example,
 
 <h4>Extracting to a different location</h4>
 
-<p>If you want to put ColdFrame's extracted (<tt>.raw</tt>) files in a
-different place, which you'd specify in Rose using the
-<tt>ColdFrameOut</tt> path variable, you can alter where ColdFrame
-looks:
+<p>The Rose extraction script needs to be told where to place the
+extracted files:
+
+<ol>
+
+<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, the files are put somewhere, at Rose's whim.
+
+</ol>
+
+The supplied Makefile uses the same variable: you can either set it up
+as an environment variable, or specify it in the Makefile:
 
 <pre>
-  <b>ColdFrameOut = ../extracted</b>
+  <b>COLDFRAMEOUT = $(HOME)/extracted</b>
   include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
 </pre>
 
@@ -175,8 +188,8 @@ after which when you say
   <i>$</i> make Foo.gen
 </pre>
 
-ColdFrame will look for <tt>../extracted/Foo.raw</tt> but will create
-<tt>./Foo.gen</tt> "here".
+ColdFrame will look for <tt>$HOME/extracted/Foo.raw</tt> but will create
+<tt>Foo.gen</tt> "here".
 
 
 
@@ -314,17 +327,34 @@ example, <tt>L:\Software\Tools</tt>.
 
 (and I <em>do</em> mean <tt>/</tt>, not <tt>\</tt>!)
 
+<p>It's possible to set <tt>TOP</tt> as an environment variable; using
+<i>My Computer / Properties / Envronment</i>, the equivalent to the
+above example would be <tt>L:\Software\Tools</tt> (with the slashes in
+the Microsoft direction, this time!)
+
 <h4>Extracting to a different location</h4>
 
-<p>If you want to put ColdFrame's extracted (<tt>.raw</tt>) files in a
-different place, which you'd specify in Rose using the
-<tt>ColdFrameOut</tt> path variable, you can alter where ColdFrame
-looks:
+<p>The Rose extraction script needs to be told where to place the
+extracted files:
+
+<ol>
+
+<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, the files are put somewhere, at Rose's whim.
+
+</ol>
+
+The supplied Makefile uses the same variable: you can either set it up
+as an environment variable, or specify it in the Makefile:
 
 <pre>
-  TOP = L:/Software/Tools
-  <b>ColdFrameOut = ../extracted</b>
-  include $(TOP)/cf-<i>yyymmdd</i>/Makefile-winnt
+  <b>COLDFRAMEOUT = $(HOME)/extracted</b>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-winnt
 </pre>
 
 after which when you say
@@ -333,8 +363,8 @@ after which when you say
   <i>$</i> make Foo.gen
 </pre>
 
-ColdFrame will look for <tt>../extracted/Foo.raw</tt> but will create
-<tt>./Foo.gen</tt> "here".
+ColdFrame will look for <tt>$HOME\extracted\Foo.raw</tt> but will create
+<tt>Foo.gen</tt> "here".
 
 
 
