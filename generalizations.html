@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v 0d237a3639d1 2002/07/05 04:57:29 simon $ -->
+<!-- $Id: generalizations.html,v 07b8d1ed3bba 2002/07/06 10:26:03 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -194,7 +194,7 @@ feature,
 
 <p><img src="hierarchies-full.png">
 
-<p>The picure shows a fairly complex.inheritance hierarchy.
+<p>The picture shows a fairly complex inheritance hierarchy.
 
 <p><img src="hierarchies.png">
 
@@ -240,6 +240,9 @@ yourself:
       R3 => null);
 </pre>
 
+<p>(if you don't, you'll get a
+<tt>ColdFrame.Exceptions.No_Default_Create</tt> exception).
+
 <p>If you already have a <i>T_2</i> (in <tt>T2_H</tt>) and want to
 create a new <i>F_2</i> with a new right hand side, you'd say
 
@@ -262,7 +265,19 @@ create a new <i>F_2</i> with a new left hand side, you'd say
 
 <p>So, the rule is that you supply the handle of the existing parent
 on the way to each root class; and, if the existing parent has two (or
-more!) root ancestors, you supply its handle for each.
+more!) root ancestors, you supply its handle for each. If you make a
+mistake here, you'll get one of two exceptions from
+<tt>ColdFrame.Exceptions</tt>:
+
+<dl>
+
+<dt>Unexpected_Class<dd>means that a supplied handle didn't match any
+class along the indicated route.
+
+<dt>Mismatched_Instances<dd>occurs if you supply different instances
+of a class with more than one ultimate ancestor.
+
+</dl>
 
 <h4>Finds</h4>
 
