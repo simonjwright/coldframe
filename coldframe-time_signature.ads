@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-time_signature.ads,v $
---  $Revision: d90454e36992 $
---  $Date: 2002/09/28 17:14:57 $
+--  $Revision: f3f58a025691 $
+--  $Date: 2003/02/16 17:34:22 $
 --  $Author: simon $
 
 with Ada.Real_Time;
@@ -42,4 +42,3 @@ generic
 
 package ColdFrame.Time_Signature is
 end ColdFrame.Time_Signature;
-
