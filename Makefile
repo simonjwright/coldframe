@@ -535,7 +535,8 @@ Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
 
 TEST += \
-Bad_Code_Regressions.cat Bad_Code_Regressions.raw
+Bad_Code_Regressions.cat Bad_Code_Regressions.raw \
+Bad_Model_Regressions.cat Bad_Model_Regressions.raw
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
