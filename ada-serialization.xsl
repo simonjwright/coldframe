@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 78a807c77ec1 2004/10/23 16:06:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -104,6 +104,9 @@
       <xsl:call-template name="ut:do-not-edit"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:call-template name="ut:identification-info"/>
+      <xsl:if test="type[@serializable]/array">
+        <xsl:text>with Ada.Strings.Fixed;&#10;</xsl:text>
+      </xsl:if>
       <xsl:text>with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;&#10;</xsl:text>
 
       <xsl:call-template name="se:there-context"/>
@@ -111,6 +114,19 @@
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.Serializable is&#10;</xsl:text>
+
+      <xsl:value-of select="$blank-line"/>
+
+      <xsl:if test="type[@serializable]/array">
+        <xsl:value-of select="$I"/>
+        <xsl:text>function Trim&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(Source : in String;&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text> Side : in Ada.Strings.Trim_End := Ada.Strings.Both) return String&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>renames Ada.Strings.Fixed.Trim;&#10;</xsl:text>
+      </xsl:if>
 
       <xsl:value-of select="$blank-line"/>
 
@@ -148,27 +164,7 @@
             R := R & S.Payload.{attr-name}'Img;
             R := R & "</field>" & ASCII.LF;
 
-            R := R & "<field name=""{type-imaged-attr-name}"">";
-            R := R & {type-image (S.Payload.{field-imaged-attr-name});
-            R := R & "</field>" & ASCII.LF;
-
-            R := R & "<field name=""{time-attr-name}"">";
-            R := R & ColdFrame.Project.Calendar.Image (S.Payload.{time-attr-name});
-            R := R & "</field>" & ASCII.LF;
-
-            R := R & "<field name=""{ustring-attr-name}"">";
-            R := R & (S.Payload.{ustring-attr-name};
-            R := R & "</field>" & ASCII.LF;
-
-            R := R & "<field name=""{bstring-attr-name}"">";
-            R := R & {type}_Package.To_String (S.Payload.{bstring-attr-name});
-            R := R & "</field>" & ASCII.LF;
-
-            R := R & "<field name=""{fstring-attr-name}"">";
-            R := R & S.Payload.{fstring-attr-name};
-            R := R & "</field>" & ASCII.LF;
-
-            R := R & {field-image} (S.Payload.{field-imaged-attr-name}, "field-imaged-attr-name") & ASCII.LF;
+            ... other conversions, see se:image-of-type
 
             R := R & "</record>";
 
@@ -293,6 +289,9 @@
     <!-- The text name to be used (eg, "X.Y" for the above). -->
     <xsl:param name="name" select="''"/>
 
+    <!-- The indentation. -->
+    <xsl:param name="indent" select="$II"/>
+
     <xsl:choose>
 
       <xsl:when test="$type/attribute">
@@ -334,6 +333,7 @@
               <xsl:with-param
                 name="name"
                 select="$print-name"/>
+              <xsl:with-param name="indent" select="$indent"/>
             </xsl:call-template>
 
           </xsl:if>
@@ -343,81 +343,102 @@
       </xsl:when>
 
       <xsl:otherwise>
-        <!-- This is a simple type. -->
+
+        <xsl:variable name="indentC" select="concat($indent,$C)"/>
+
+        <!-- This is a simple (or array) type. -->
 
         <xsl:choose>
 
           <xsl:when test="$type/@null">
             <!-- Null record. -->
-            <xsl:value-of select="$II"/>
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;null&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/name='Date' or $type/name='Time'">
-            <!-- Date/Time. -->
-            <xsl:value-of select="$II"/>
+            <!-- Date/Time.
+                 R := R & "<field name=""{attr}"">";
+                   & ColdFrame.Project.Calendar.Image (S.Payload.{attr});
+                   & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:text>ColdFrame.Project.Calendar.Image (S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>)&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/name='Text' or $type/name='Unbounded_String'">
-            <!-- Unbounded string. -->
-            <xsl:value-of select="$II"/>
+            <!-- Unbounded string.
+                 R := R & "<field name=""{attr}"">";
+                   & (S.Payload.{attr};
+                   & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:text>Ada.Strings.Unbounded.To_String (S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>)&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/string/max">
-            <!-- Bounded string. -->
-            <xsl:value-of select="$II"/>
+            <!-- Bounded string.
+                 R := R & "<field name=""{attr}"">";
+                   & {type}_Package.To_String (S.Payload.{attr});
+                   & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:value-of select="$type/name"/>
             <xsl:text>_Package.To_String (S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>)&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/string/fixed">
-            <!-- Fixed string. -->
-            <xsl:value-of select="$II"/>
+            <!-- Fixed string.
+                 R := R & "<field name=""{attr}"">";
+                 R := R & S.Payload.{attr};
+                 R := R & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/@field-image">
-            <!-- The type has a user-defined field image operation. -->
-            <xsl:value-of select="$II"/>
+            <!-- The type has a user-defined field image operation.
+                 R := R & {field-image} (S.Payload.{attr}, "attr") & ASCII.LF;
+                -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; </xsl:text>
             <xsl:value-of select="$type/@field-image"/>
             <xsl:text> (S.</xsl:text>
@@ -428,42 +449,87 @@
           </xsl:when>
 
           <xsl:when test="$type/array">
-            <!-- This is an array type without a field-image; not supported. -->
-            <xsl:call-template name="ut:log-error"/>
-            <xsl:message>
-              <xsl:text>Error: can't create image for array </xsl:text>
-              <xsl:value-of select="$type/name"/>
-            </xsl:message>
+            <!-- This is an array type without a field-image.
+                 Approximately (remember, there may be nesting),
+                 for {index}_V in {index} loop
+                    {se:image-of-type
+                     type =>  the array item type to be processed
+                     name =>  {name}.{index}
+                     field => {name} ({index})}
+                 end loop;
+                 -->
+
+            <xsl:value-of select="$indent"/>
+            <xsl:text>for </xsl:text>
+            <xsl:value-of select="$type/array/index"/>
+            <xsl:text>_V in </xsl:text>
+            <xsl:value-of select="$type/array/index"/>
+            <xsl:text> loop&#10;</xsl:text>
+
+            <xsl:call-template name="se:image-of-type">
+
+              <xsl:with-param
+                name="type"
+                select="/domain/type[name=$type/array/type]"/>
+
+              <xsl:with-param name="name">
+                <xsl:value-of select="$name"/>
+                <xsl:text>." &amp; Trim (</xsl:text>
+                <xsl:value-of select="$type/array/index"/>
+                <xsl:text>_V'Img) &amp; "</xsl:text>
+              </xsl:with-param>
+
+              <xsl:with-param name="field">
+                <xsl:value-of select="$field"/>
+                <xsl:text> (</xsl:text>
+                <xsl:value-of select="$type/array/index"/>
+                <xsl:text>_V)</xsl:text>
+              </xsl:with-param>
+
+              <xsl:with-param name="indent" select="concat($indent,$I)"/>
+
+            </xsl:call-template>
+
+            <xsl:value-of select="$indent"/>
+            <xsl:text>end loop;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:when test="$type/@type-image">
-            <!-- The type has a user-defined type image operation. -->
-            <xsl:value-of select="$II"/>
+            <!-- The type has a user-defined type image operation.
+                 R := R & "<field name=""{attr}"">";
+                   & {type-image} (S.Payload.{attr});
+                   & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:value-of select="$type/@type-image"/>
             <xsl:text> (S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>)&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>
-            <!-- Assume it's a scalar. -->
-            <xsl:value-of select="$II"/>
+            <!-- Assume it's a scalar.
+                 R := R & "<field name=""{attr}"">";
+                   & S.Payload.{attr}'Img;
+                   & "</field>" & ASCII.LF;
+                 -->
+            <xsl:value-of select="$indent"/>
             <xsl:text>R := R &amp; "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
             <xsl:text>""&gt;"&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; </xsl:text>
             <xsl:text>S.</xsl:text>
             <xsl:value-of select="$field"/>
             <xsl:text>'Img&#10;</xsl:text>
-            <xsl:value-of select="$IIC"/>
+            <xsl:value-of select="$indentC"/>
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF;&#10;</xsl:text>
           </xsl:otherwise>
 
