@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 0020c8074f22 $
---  $Date: 2002/10/01 17:46:06 $
+--  $Revision: 54196f174754 $
+--  $Date: 2003/03/09 15:59:19 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -125,7 +125,7 @@ package body ColdFrame.Events_G.Debug_G is
          Ada.Exceptions.Raise_Exception
            (Exceptions.Use_Error'Identity,
             "attempt to unset a timer that wasn't set");
-      elsif The_Timer.The_Entry.The_Event = null then
+      elsif Timer_Event (The_Timer.The_Entry.all).The_Event = null then
          Ada.Exceptions.Raise_Exception
            (Exceptions.Use_Error'Identity,
             "attempt to unset a timer from its own event handler");
@@ -133,7 +133,7 @@ package body ColdFrame.Events_G.Debug_G is
          Put_Line
            ("unsetting a Timer for a "
               & Ada.Tags.Expanded_Name
-                  (The_Timer.The_Entry.The_Event.all'Tag));
+                  (Timer_Event (The_Timer.The_Entry.all).The_Event.all'Tag));
       end if;
       Unset (The_Timer => The_Timer,
              On => Standard_Queue (On.all)'Access);

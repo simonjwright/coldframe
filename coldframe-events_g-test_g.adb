@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 850b06ce0448 $
---  $Date: 2002/09/13 19:59:49 $
+--  $Revision: 54196f174754 $
+--  $Date: 2003/03/09 15:59:19 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -53,7 +53,7 @@ package body ColdFrame.Events_G.Test_G is
            (Exceptions.Use_Error'Identity,
             "attempt to find expiry time of a timer that wasn't set");
       end if;
-      return The_Timer.The_Entry.Time_To_Fire;
+      return Timer_Event (The_Timer.The_Entry.all).Time_To_Fire;
    end Expires_At;
 
 
