@@ -1,0 +1,258 @@
+<!-- $Id: use-of-bcs.html,v f24897427f02 2001/08/16 19:25:26 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Use of Booch Components</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Use of Booch Components</h1>
+
+<ul>
+
+<li><a href="#introduction">Introduction</a>
+
+<li><a href="#containers">The Containers</a>
+
+<li><a href="#instantiations">Standard instantiations</a>
+
+<li><a href="#collections">Collections</a>
+
+<li><a href="#navigation">Navigation</a>
+
+<li><a href="#iteration">Iteration</a>
+
+</ul>
+
+<h2><a name="introduction">Introduction</a></h2>
+
+<p>The current software architecture of ColdFrame uses Ada 95 <a
+href="resources.html#booch-components">Booch Components</a> (BCs),
+which provide various ways of handling collections of things.
+
+<p>In ColdFrame, for each non-&#171;singleton&#187; Class, there's a
+private means of holding all the current Instances of the class,
+together with public interfaces allowing the creation, finding,
+accessing and eventual deletion of instances.
+
+<p>As well as this, there is public support for obtaining and handling
+collections of instances.
+
+<h2><a name="containers">The Containers</a></h2>
+
+<p>The container types used are
+<dl>
+
+<dt>Map<dd>for the internal storage of all the instances of the
+class. The Key is the class' Identifier record.
+
+<dt>Collection<dd>for normal externally-visible aggregate
+manipulation.
+
+<dt>Set<dd>to support Association operations, but also available for
+general use where warranted.
+
+</dl>
+
+<p>In all cases the actual things contained (the BC "Item") are
+Handles, ie pointers to instances of the class concerned. Allocation
+of instances is handled within the class' <tt>Create</tt> function,
+and deallocation in <tt>Delete</tt>.
+
+<h2><a name="instantiations">Standard instantiations</a></h2>
+
+<p>Given the domain <tt><i>Domain</i></tt> and the class
+<tt><i>Class</i></tt>, the standard Component instantiations are
+
+<dl>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Containers</tt>
+
+<dd>An instantiation of <tt>BC.Containers</tt> using
+<tt><i>Domain.Class</i>.Handle</tt>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Collections</tt>
+
+<dd>An instantiation of <tt>BC.Containers.Collections</tt> as a child
+of <tt><i>Domain.Class</i>.Abstract_Containers</tt>
+
+<dt><tt><i>Domain.Class</i>.Collections</tt>
+
+<dd>An instantiation of either
+<tt>BC.Containers.Collections.Bounded</tt> or
+<tt>BC.Containers.Collections.Unbounded</tt> (depending on whether the
+cardinality <tt>[[max]]</tt> was specified for <i>Class</i>) as a
+child of <tt><i>Domain.Class</i>.Abstract_Collections</tt>
+
+<dt><tt><i>Domain.Class</i>.Abstract_Sets</tt>
+
+<dd>An instantiation of <tt>BC.Containers.Sets</tt> as a child
+of <tt><i>Domain.Class</i>.Abstract_Containers</tt>
+
+<dt><tt><i>Domain.Class</i>.Sets</tt><dd>
+
+<dd>An instantiation of either <tt>BC.Containers.Sets.Bounded</tt> or
+<tt>BC.Containers.Sets.Unbounded</tt> (depending on whether the
+cardinality <tt>[[max]]</tt> was specified for <i>Class</i>) as a
+child of <tt><i>Domain.Class</i>.Abstract_Sets</tt>. A suitable hash
+function is provided (it's an instantiation of
+<tt>ColdFrame.Access_Hash</tt> for
+<tt><i>Domain.Class</i>.Handle</tt>).
+
+</dl>
+
+<h2><a name="collections">Collections</a></h2>
+
+<p>There are three utility functions for dealing with variables of
+type <tt><i>Domain.Class</i>.Collections.Collection</tt>. They are
+provided as child subprograms of <tt><i>Domain.Class</i></tt> (note,
+this means they have to be <tt>with</tt>ed individually):
+
+<dl>
+
+<dt>All_Instances
+
+<dd>returns all the current instances of <tt><i>Domain.Class</i></tt>:
+
+<pre>
+with <i>Domain.Class</i>.Collections;
+function <I>Domain.Class</I>.All_Instances
+   return <I>Domain.Class</I>.Collections.Collection;
+with <I>Domain.Class</I>.Collections;
+</pre>
+
+<dt>Filter_Function
+
+<dd>given a <tt>Collection</tt>, returns a new <tt>Collection</tt>
+containing just those instances for which <tt>Pass</tt> returns
+<tt>True</tt>:
+
+<pre>
+with <i>Domain.Class</i>.Collections;
+generic
+   with function Pass (This : Handle) return Boolean is <>;
+function <I>Domain.Class</I>.Filter_Function
+   (The_Collection : <I>Domain.Class</I>.Collections.Collection)
+   return <I>Domain.Class</I>.Collections.Collection;
+</pre>
+
+<dt>Selection_Function
+
+<dd>returns all the current instances of <tt><i>Domain.Class</i></tt>
+for which <tt>Pass</tt> returns <tt>True</tt>:
+
+<pre>
+with <I>Domain.Class</I>.Collections;
+generic
+   with function Pass (This : Handle) return Boolean is <>;
+function <I>Domain.Class</I>.Selection_Function
+   return <I>Domain.Class</I>.Collections.Collection;
+</pre>
+
+<dt>
+
+<h2><a name="navigation">Navigation</a></h2>
+
+<p>Another way of getting hold of collections is by use of navigation
+functions related to associations.
+
+<p><img src="navigation.jpg">
+
+<p>In the figure, the association <i>r3</i> is translated to the
+package <tt><i>Domain</i>.R3</tt> containing the operations
+
+<table>
+
+<tr>
+<td>
+<pre>
+procedure Link
+  (Contributes_To : Track.Handle;
+   Is_Composed_Of : Sensor_Track.Handle);
+</pre>
+
+<td>Associates a Track and a Sensor Track.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+procedure Unlink
+  (Contributes_To : Track.Handle;
+   Is_Composed_Of : Sensor_Track.Handle);
+</pre>
+
+<td>Dissociates a Track and a Sensor Track.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Contributes_To
+  (T : Track.Handle)
+  return Sensor_Track.Collections.Collection;
+</pre>
+
+<td>Given a Track, returns the <i>Collection</i> of Sensor_Tracks that
+contribute to it.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Contributes_To
+  (T : Track.Collections.Collection)
+  return Sensor_Track.Collections.Collection;
+</pre>
+
+<td>Given a <i>Collection</i> of Tracks, returns the <i>Collection</i>
+of Sensor_Tracks that contribute to them.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Is_Composed_Of
+  (ST : Sensor_Track.Handle)
+  return Track.Handle;
+</pre>
+
+<td>Given a Sensor Track, return the Track that is composed of
+it. Other Sensor Tracks may also be contributing.
+
+</tr>
+
+<tr>
+<td>
+<pre>
+function Is_Composed_Of
+  (ST : Sensor_Track.Collections.Collection)
+  return Track.Collections.Collection;
+</pre>
+
+<td>Given a <i>Collection</i> of Sensor Tracks, return a
+<i>Collection</i> of all the Tracks composed of these (and possibly
+other) Sensor Tracks.
+
+</tr>
+
+</table>
+
+<h2><a name="iteration">Iteration</a></h2>
+
+<p>
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
