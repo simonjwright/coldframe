@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 63ce5bac33ea 2003/02/07 05:56:33 simon $ -->
+<!-- $Id: bugs.html,v e72b4b1b39bd 2003/02/11 20:48:55 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -158,7 +158,13 @@ system.
 be re-sorted when the basis of ordering changes (eg, between a local
 time frame and a standard time one).
 
-<!-- next: 0151 -->
+<dt>0151 (raised 11.ii.03)
+
+<dd>If events are posted to an event queue which hasn't yet started to
+run after an interval, the interval should refer to the time when the
+queue is eventually started.
+
+<!-- next: 0152 -->
 
 </dl>
 
