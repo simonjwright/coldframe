@@ -1,14 +1,25 @@
-<!-- $Id: support.html,v e90faa8c4f7a 2002/10/17 21:33:47 simon $ -->
+<!-- $Id: support.html,v dc5aab23ad48 2002/11/14 20:10:03 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
 </head>
-<body bgcolor="#ffffff">
+<body bgcolor="white">
 <h1>ColdFrame: Specially written support components</h1>
 
+<ul>
+
+<li><a href="#library">Library components</a>
+
+<li><a href="#project">Supplied Project components</a>
+
+<li><a href="#signatures">Signature packages</a>
+
+</ul>
+
+<h2><a name="library">Library components</a></h2>
+
 <p>Specially written support components appear under the top-level
-package <tt>ColdFrame</tt>. Some exist to support navigation; the more
-user-interesting ones are
+package <tt>ColdFrame</tt>. The more user-interesting ones are
 
 <dl>
 
@@ -145,6 +156,8 @@ such as <i>WITH TYPE</i>.
 
 </dl>
 
+<h2><a name="project">Supplied Project components</a></h2>
+
 <p>For some purposes, ColdFrame generates code expecting certain
 services to be provided by specific packages (under
 <tt>ColdFrame.Project</tt>), where you would probably prefer to be
@@ -200,6 +213,25 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 <a href="use-of-bcs.html">Booch Containers</a>.
 
 <br>You may find <tt>GNAT.Debug_Pools</tt> useful!
+
+</dl>
+
+<h2><a name="signatures">Signature packages</a></h2>
+
+<p>To help make sure that the packages you supply provide all the
+facilities needed, there are <a
+href="http://www.adapower.com/rationale/rat95-p2-12.html">signature
+packages</a>:
+
+<dl>
+
+<dt><tt>ColdFrame.Logging_Signature</tt>
+
+<dd>Specifies how error reports are logged.
+
+<dt><tt>ColdFrame.Time_Signature</tt>
+
+<dd>Specifies how time behaves.
 
 </dl>
 
