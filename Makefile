@@ -151,7 +151,9 @@ pdf:: $(PDFS)
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
-  serialization.png
+ serialization.png serialization-class-model.png serialization-sequence-t.png \
+ serialization-class-model-t.png serialization-state.png \
+ serialization-state-t.png serialization-sequence.png
 
 ############################
 # Distribution construction
@@ -189,6 +191,7 @@ releases.html \
 reserved-names.html \
 resources.html \
 serialization.html \
+serialization-model.html \
 strategy.html \
 support.html \
 target.html \
@@ -201,6 +204,9 @@ $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
+
+serialization-model.html: Serialization.html
+	cp -p $< $@
 
 # Makefile-cf is the published makefile for development of ColdFrame itself.
 # Other makefiles are
