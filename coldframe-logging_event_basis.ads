@@ -20,13 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.ads,v $
---  $Revision: 7af0bcf0d4e0 $
---  $Date: 2003/11/11 21:25:05 $
+--  $Revision: 94e55c27c108 $
+--  $Date: 2003/11/15 14:10:21 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
-with BC.Containers;
+with BC.Containers.Collections.Unmanaged;
 with BC.Support.Statistics;
 with ColdFrame.Event_Basis;
 with ColdFrame.Project.High_Resolution_Time;
@@ -62,6 +62,11 @@ package ColdFrame.Logging_Event_Basis is
 
    function Results return Abstract_Datum_Containers.Container'Class;
 
+   --  Implements a shell sort on the data, according to your
+   --  comparison function.
+   generic
+      with function "<" (L, R : Datum) return Boolean;
+   procedure Sort (Data : in out Abstract_Datum_Containers.Container'Class);
 
 private
 
@@ -73,5 +78,11 @@ private
       --  no need for Finished, it's the time when Log is called at
       --  phase Finished.
    end record;
+
+   package Abstract_Datum_Collections
+   is new Abstract_Datum_Containers.Collections;
+
+   package Datum_Collections
+   is new Abstract_Datum_Collections.Unmanaged;
 
 end ColdFrame.Logging_Event_Basis;
