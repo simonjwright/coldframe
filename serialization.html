@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 23bb5ee8721e 2003/08/28 20:35:44 simon $ -->
+<!-- $Id: serialization.html,v 6a3ede8623fb 2003/08/28 21:26:12 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -29,8 +29,9 @@ processing.
 
 <h2>Modelling</h2>
 
-<p>To indicate that a &#171;type&#187; needs serialization support,
-annotate it <tt>[[serializable]]</tt> (as usual, you can stereotype as
+<p>To indicate that a <i>&#171;type&#187;</i> needs serialization
+support, annotate it <tt>[[serializable]]</tt> (as usual, you can
+stereotype as
 <em>&#171;type,&nbsp;serializable&#187;</em>).
 
 <p>ColdFrame generates code which outputs <a
@@ -47,13 +48,14 @@ for which you specify a conversion function using
 <tt>[[image&nbsp;:&nbsp;<i>conversion-function</i>]]</tt> in the
 documentation section for the type.
 
-<li>records where each attribute is either of a basic type or one with
-a specified conversion function.
+<li>simple (non-<i>&#171;discriminated&#187;</i>) records where each
+attribute is either of a basic type or one with a specified conversion
+function.
 
 </ol>
 
-<p>Note, this rules out nested records (unless you supply a conversion
-function for the nested types).
+<p>Note, <b>this rules out nested records</b> (unless you supply a
+conversion function for the nested types).
 
 <h2>Translation</h2>
 
