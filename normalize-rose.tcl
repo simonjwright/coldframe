@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e8f6552257b0 2003/12/13 06:52:28 simon $
+# $Id: normalize-rose.tcl,v 5aa07f59a41e 2003/12/17 14:15:26 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -419,7 +419,7 @@ itcl::class String {
                     set val true
                 }
                 set tag [string trim $tag]
-                if [regexp "\[^-_a-zA-Z\]" $tag] {
+                if [regexp "\[^-_a-zA-Z0-9\]" $tag] {
                     Error "illegal tag name in {[string trim $t]}"
                 } else {
                     [stack -top] -tag $tag [string trim $val]
@@ -630,11 +630,6 @@ itcl::class Element {
     }
 
     method -complete {} {
-#        if [info exists tags] {
-#            foreach w [array names tags] {
-#                puts stderr "$xmlTag $name: $w=$tags($w)"
-#            }
-#        }
         $this -handleStereotype
         if [catch {[stack -top] -add $this} msg] {
             Error "CF: error \"$msg\" adding a [$this -getXmlTag]\
