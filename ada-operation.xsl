@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v fe65668a78db 2002/05/22 04:25:42 simon $ -->
+<!-- $Id: ada-operation.xsl,v aee2644dc371 2002/05/28 04:06:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -849,7 +849,6 @@
       <xsl:text>)&#10;</xsl:text>
       <xsl:call-template name="subprogram-specification"/>
       <xsl:text> is&#10;</xsl:text>
-      <xsl:text>begin&#10;</xsl:text>
     </xsl:variable>
 
     <xsl:choose>
@@ -861,6 +860,7 @@
                       and $att-to-set/type=parameter/type">
         <xsl:call-template name="should-not-edit"/>
         <xsl:value-of select="$heading"/>
+        <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>This.</xsl:text>
         <xsl:value-of select="$att-to-set/name"/>
@@ -876,6 +876,7 @@
                       and $att-to-get/type=@return">
         <xsl:call-template name="should-not-edit"/>
         <xsl:value-of select="$heading"/>
+        <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>return This.</xsl:text>
         <xsl:value-of select="$att-to-get/name"/>
@@ -883,10 +884,13 @@
       </xsl:when>
       
       <!-- If it's a function, we have to supply a return statement
-           after raising the exception for it to compile.-->
-      <xsl:when test="@return">
+           after raising the exception for it to compile.
+           There are two styles: this is for non-composite types .. -->
+      <xsl:when test="@return
+                      and not(/domain/type[name=current()/@return]/attribute)">
         <xsl:call-template name="should-edit"/>
         <xsl:value-of select="$heading"/>
+        <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Program_Error;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -896,10 +900,29 @@
         </xsl:call-template>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
+
+      <!-- .. and this is for composite types (records). -->
+      <xsl:when test="@return">
+        <xsl:value-of select="$heading"/>
+        <xsl:value-of select="$I"/>
+        <xsl:text>Dummy : </xsl:text>
+        <xsl:value-of select="@return"/>
+        <xsl:text>;&#10;</xsl:text>
+        <!--
+        <xsl:value-of select="$I"/>
+        <xsl:text>pragma Warnings (Off, Dummy);&#10;</xsl:text>
+        -->
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>raise Program_Error;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>return Dummy;&#10;</xsl:text>
+      </xsl:when>
       
       <xsl:otherwise>
         <xsl:call-template name="should-edit"/>
         <xsl:value-of select="$heading"/>
+        <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Program_Error;&#10;</xsl:text>
       </xsl:otherwise>
