@@ -31,7 +31,7 @@ package body Event_Test.Test_Instance is
 --        use type Seawolf_High_Resolution_Time.Time;
    begin
       Inf.Payload := (Ordinal => 2000,
-                      Expected_At => Clock);
+                      Expected_At => ColdFrame.Project.Calendar.Clock);
 
 --        Start := Seawolf_High_Resolution_Time.Clock;
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
@@ -57,7 +57,7 @@ package body Event_Test.Test_Instance is
 --        use type Seawolf_High_Resolution_Time.Time;
    begin
       Inf.Payload := (Ordinal => 2001,
-                      Expected_At => Clock);
+                      Expected_At => ColdFrame.Project.Calendar.Clock);
 
 --        Start := Seawolf_High_Resolution_Time.Clock;
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);

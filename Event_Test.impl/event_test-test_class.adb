@@ -25,7 +25,7 @@ package body Event_Test.Test_Class is
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
    begin
       Inf.Payload := (Ordinal => 1000,
-                      Expected_At => Clock);
+                      Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1000,
@@ -44,9 +44,10 @@ package body Event_Test.Test_Class is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf.Payload := (Ordinal => 1001,
-                      Expected_At => Clock + 2.2);
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Post (Ev,
                                      On => Events.Dispatcher,
                                      To_Fire_After => 2.2);
@@ -67,9 +68,10 @@ package body Event_Test.Test_Class is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf.Payload := (Ordinal => 1002,
-                      Expected_At => Clock + 2.2);
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Post
         (Ev,
          On => Events.Dispatcher,
@@ -95,14 +97,15 @@ package body Event_Test.Test_Class is
       Ev2 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf2 : Recipient.Information renames Recipient.Information (Ev2.all);
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf1.Payload := (Ordinal => 1003,
-                       Expected_At => Clock + 2.2);
+                       Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Post (Ev1,
                                      On => Events.Dispatcher,
                                      To_Fire_After => 2.2);
       Inf2.Payload := (Ordinal => 1004,
-                       Expected_At => Clock);
+                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev2,
                                      On => Events.Dispatcher);
       delay 1.2;
@@ -129,14 +132,15 @@ package body Event_Test.Test_Class is
       Ev2 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf2 : Recipient.Information renames Recipient.Information (Ev2.all);
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf1.Payload := (Ordinal => 1005,
-                       Expected_At => Clock + 2.2);
+                       Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Post (Ev1,
                                      On => Events.Dispatcher,
                                      To_Fire_After => 2.2);
       Inf2.Payload := (Ordinal => 1006,
-                       Expected_At => Clock + 1.1);
+                       Expected_At => ColdFrame.Project.Calendar.Clock + 1.1);
       ColdFrame.Project.Events.Post (Ev2,
                                      On => Events.Dispatcher,
                                      To_Fire_After => 1.1);
@@ -163,9 +167,10 @@ package body Event_Test.Test_Class is
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
       T : ColdFrame.Project.Events.Timer;
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf.Payload := (Ordinal => 1007,
-                      Expected_At => Clock + 2.2);
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Set (T,
                                     On => Events.Dispatcher,
                                     To_Fire => Ev,
@@ -192,10 +197,11 @@ package body Event_Test.Test_Class is
         := new Recipient.Wait;
       Inf2 : Recipient.Wait renames Recipient.Wait (Ev2.all);
       T : ColdFrame.Project.Events.Timer;
+      use type ColdFrame.Project.Calendar.Time;
    begin
       --  Ev1 will fire after 2.2 seconds.
       Inf1.Payload := (Ordinal => 1008,
-                       Expected_At => Clock + 2.2);
+                       Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Set (T,
                                     On => Events.Dispatcher,
                                     To_Fire => Ev1,
@@ -233,16 +239,18 @@ package body Event_Test.Test_Class is
         := new Recipient.Information;
       Inf2 : Recipient.Information renames Recipient.Information (Ev2.all);
       T : ColdFrame.Project.Events.Timer;
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf1.Payload := (Ordinal => 1009,
-                       Expected_At => Clock + 2.2);
+                       Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Set (T,
                                     On => Events.Dispatcher,
                                     To_Fire => Ev1,
                                     After => 2.2);
       begin
-         Inf2.Payload := (Ordinal => 1010,
-                          Expected_At => Clock + 2.2);
+         Inf2.Payload :=
+           (Ordinal => 1010,
+            Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
          ColdFrame.Project.Events.Set (T,
                                        On => Events.Dispatcher,
                                        To_Fire => Ev2,
@@ -288,9 +296,10 @@ package body Event_Test.Test_Class is
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
       T : ColdFrame.Project.Events.Timer;
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf.Payload := (Ordinal => 1011,
-                      Expected_At => Clock + 2.2);
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       ColdFrame.Project.Events.Set (T,
                                     On => Events.Dispatcher,
                                     To_Fire => Ev,
@@ -322,9 +331,10 @@ package body Event_Test.Test_Class is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
+      use type ColdFrame.Project.Calendar.Time;
    begin
       Inf.Payload := (Ordinal => 1012,
-                      Expected_At => Clock + 2.2);
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 2.2);
       declare
          T : ColdFrame.Project.Events.Timer;
       begin
