@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 80c72631d5e3 2003/08/31 08:25:18 simon $ -->
+<!-- $Id: bugs.html,v 3c4f4bde0c1a 2003/09/02 19:01:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -165,11 +165,23 @@ handwritten code. Perhaps it should be renamed.
 zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
 used instead of <tt>Natural_Duration</tt>?
 
-<!-- next: 0192 -->
+<!-- next: 0193 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>2.ix.03</h3>
+
+<dl>
+
+<dt>0192 (raised 2.ix.03)
+
+<dd>During a cascade teardown, it is possible for an event dispatcher
+to be torn-down twice (resulting in a constraint error when updating
+the access count).
+
+</dl>
 
 <h3>31.viii.03</h3>
 

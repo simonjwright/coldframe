@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 80c72631d5e3 2003/08/31 08:25:18 simon $ -->
+<!-- $Id: releases.html-proto,v 3c4f4bde0c1a 2003/09/02 19:01:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -25,9 +25,16 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 <dd>The old <tt>Hash</tt> function has been replaced by
 <tt>Instance_Hash</tt> (because the arguments are different).
 
+
 <p>Code generation doesn't stop on the first error.
 
+
 <p>State machines support actions on transitions.
+
+
+<p>It was possible, especially with <tt>Cascade_Teardown</tt>s, for a
+shared event queue to be torn down more than once, leading to
+<tt>Constraint_Error</tt>s.
 
 
 <p><dt>20030815
