@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
+<!-- $Id: ada-association.xsl,v 3a2cc75437ac 2001/07/13 18:43:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -290,8 +290,6 @@
 
           <xsl:otherwise>
             <!-- Neither end multiple -->
-
-            <xsl:message>A 1-(1:1) association!</xsl:message>
 
             <xsl:variable name="source-role" select="role[@source]"/>
             <xsl:variable name="non-source-role" select="role[not(@source)]"/>
