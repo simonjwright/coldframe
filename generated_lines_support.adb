@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 69029d01397b $
---  $Date: 2002/09/18 20:24:21 $
+--  $Revision: 933babd8c36a $
+--  $Date: 2002/09/18 20:32:51 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -28,7 +28,6 @@ package body Generated_Lines_Support is
    type Name is access constant String;
 
    type Info_Base (Named : Name; For_Pattern : Pattern) is record
-      Log : Boolean := False;
       Files : Natural := 0;
       Lines : Natural := 0;
    end record;
@@ -41,11 +40,13 @@ package body Generated_Lines_Support is
 
    Patterns : Collections.Collection;
 
-   procedure Setup (Pattern, Named : String; Logging : Boolean := False);
+   procedure Setup (Pattern, Named : String);
    function Count_Lines (In_File_Named : Path_Name) return Natural;
 
 
-   procedure Count (File_Named : Path_Name; Verbosely : Boolean) is
+   procedure Count (File_Named : Path_Name;
+                    Verbosely : Boolean;
+                    Logging : Boolean) is
       N : constant Path_Name := File_Name (File_Named);
       It : Abstract_Containers.Iterator'Class
         := Collections.New_Iterator (Patterns);
@@ -63,7 +64,7 @@ package body Generated_Lines_Support is
             declare
                I : Info_Base renames Current_Item (It).all;
             begin
-               if I.Log then
+               if Logging then
                   Put_Line (I.Named.all & " caught " & N);
                end if;
                I.Files := I.Files + 1;
@@ -93,14 +94,13 @@ package body Generated_Lines_Support is
    end Report;
 
 
-   procedure Setup (Pattern, Named : String; Logging : Boolean := False) is
+   procedure Setup (Pattern, Named : String) is
    begin
       Collections.Append
         (Patterns,
          new Info_Base'
            (Named => new String'(Named),
             For_Pattern => new Pattern_Matcher'(Compile (Pattern & "$")),
-            Log => Logging,
             Files => 0,
             Lines => 0));
    end Setup;
@@ -136,20 +136,20 @@ package body Generated_Lines_Support is
 
 begin
 
-   Setup ("initialize\.ad[bs]", "initialization", True);
-   Setup ("-tear_down\.ad[bs]", "test", True);
-   Setup ("^[^-]*-events(-initialize)?.ad[bs]", "events", True);
-   Setup ("-inheritance\.ad[bs]", "advanced inheritance", True);
-   Setup ("-(filter|selection)_function\.ad[bs]", "selection", True);
-   Setup ("-iterate\.ad[bs]", "iteration", True);
-   Setup ("-(handle_)?hash\.ad[bs]", "hashing", True);
-   Setup ("-(abstract_)?(containers|collections).ad[bs]", "containers", True);
-   Setup ("-(abstract_)?sets.ad[bs]", "advanced containers", True);
-   Setup ("-from_collections\.ad[bs]", "navigation from collections", True);
-   Setup ("-all_instances\.ad[bs]", "all instances", True);
+   Setup ("initialize\.ad[bs]", "initialization");
+   Setup ("-tear_down\.ad[bs]", "test");
+   Setup ("^[^-]*-events(-initialize)?.ad[bs]", "events");
+   Setup ("-inheritance\.ad[bs]", "advanced inheritance");
+   Setup ("-(filter|selection)_function\.ad[bs]", "selection");
+   Setup ("-iterate\.ad[bs]", "iteration");
+   Setup ("-(handle_)?hash\.ad[bs]", "hashing");
+   Setup ("-(abstract_)?(containers|collections).ad[bs]", "containers");
+   Setup ("-(abstract_)?sets.ad[bs]", "advanced containers");
+   Setup ("-from_collections\.ad[bs]", "navigation from collections");
+   Setup ("-all_instances\.ad[bs]", "all instances");
 
-   Setup ("^.*-.*-.*\.adb", "operations", True);
+   Setup ("^.*-.*-.*\.adb", "operations");
 
-   Setup ("\.ad[bs]", "classes/associations", True);
+   Setup ("\.ad[bs]", "classes/associations");
 
 end Generated_Lines_Support;
