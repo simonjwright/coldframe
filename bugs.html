@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 66e3c236b7a1 2003/02/27 20:58:22 simon $ -->
+<!-- $Id: bugs.html,v 663b74b9c57c 2003/03/09 16:27:39 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -141,12 +141,6 @@ of the correct actual type.
 be re-sorted when the basis of ordering changes (eg, between a local
 and a standard time frame).
 
-<dt>0151 (raised 11.ii.03)
-
-<dd>If events are posted to an event queue which hasn't yet started to
-run after an interval, the interval should refer to the time when the
-queue is eventually started.
-
 <dt>0153 (raised 21.ii.03)
 
 <dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
@@ -162,11 +156,32 @@ dialog aren't seen as such.
 <dd>Attributes marked <i>class</i> in the class specification dialog
 aren't seen as such.
 
-<!-- next: 0157 -->
+<dt>0157 (raised 9.iii.03)
+
+<dd>In the UML, the syntax of <i>parameter</i> is
+<br>kind name : type-expression = default-value
+<br>where kind is <i>in</i>, <i>out</i>, or <i>inout</i>, with the
+default <i>in</i> if absent.
+<br>This doesn't easily map to the way ColdFrame handles names, but
+some attempt should be made.
+
+<!-- next: 0158 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>9.iii.03</h3>
+
+<dl>
+
+<dt>0151 (raised 11.ii.03)
+
+<dd>If events are posted to an event queue which hasn't yet started to
+run after an interval, the interval should refer to the time when the
+queue is eventually started.
+
+</dl>
 
 <h3>16.ii.03</h3>
 
