@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d712d284004a 2001/03/22 20:23:00 simon $
+# $Id: normalize-rose.tcl,v 31378fa7581f 2001/04/01 10:06:17 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -234,6 +234,11 @@ itcl::class Element {
     # space trimmed, paragraphs separated by a single newline).
     method -documentation {d} {
 	set documentation $d
+	$this -handleDocumentation
+    }
+    # actually does the work; allows -documentation to be overridden
+    method -handleDocumentation {} {
+	set d $documentation
 	regexp {\[\[(.*)\]\]} $d wh annotation
 	$this -handleAnnotationWhenRead
 	regsub -all {\[\[(.*)\]\]} $d "" tmp
@@ -622,22 +627,6 @@ itcl::class Class {
     method -addFormalizingAttributesTo {obj relation identifier} {
 	set attr [ReferentialAttribute ::#auto $this $relation $identifier]
 	$obj -addReferentialAttribute $attr
-	return
-	foreach a [$attributes -getMembers] {
-	    if [$a -getIdentifier] {
-		if [$relation isa Inheritance] {
-		    set attr [$a -makeInheritanceIdentifierClone]
-		} else {
-		    set relName [$relation -getName]
-		    set attr [$a -makeReferentialClone \
-			        [$this -getAbbreviation] $relName]
-		}
-		if $identifier {
-		    $attr -identifier
-		}
-		$obj -addReferentialAttribute $attr
-	    }
-	}
     }
 
     method -addReferentialAttribute {a} {
@@ -780,14 +769,6 @@ itcl::class Relationship {
 
     method -needsFormalizing {} {return [expr !$formalized]}
 
-    method -getNumber {} {
-	set name [$this -getName]
-	if [expr [regexp -nocase {^r([0-9]+)} $name wh number] == 1] {
-	    return $number
-	} else {
-	    error "bad relationship name \"$name\""
-	}
-    }
 }
 
 itcl::class Association {
@@ -848,7 +829,6 @@ itcl::class Association {
 	    puts stderr "$name already formalized"
 	    return
 	}
-	set n [$this -getNumber]
 	set os [$domain -getClasses]
 	set type [$this -relationshipType]
 	set cl1 [$os -atName [$role1 -getClassname]]
@@ -917,6 +897,7 @@ itcl::class Association {
 	    set os [$domain -getClasses]
 	    putElement associative [[$os -atName $associative] -getName]
 	}
+	$this -generateDocumentation
 	puts "</association>"
     }
 }
@@ -1019,17 +1000,25 @@ itcl::class Inheritance {
 
     method -relationshipType {} {return "Super/Sub"}
 
+    # Override inherited method, to collect all the documentation
+    # fragments together. No ordering as yet.
+    method -documentation {d} {
+	set documentation "$documentation\n\n$d"
+    }
+
     method -complete {} {
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
 	    set extant [$inheritances -atName $name]
 	    $extant -addChild $child
+	    $extant -documentation $documentation
 	} else {
 	    $inheritances -add $this $name
 	}
     }
 
     method -evaluate {domain} {
+	$this -handleDocumentation
 	if [expr ![$this -needsFormalizing]] {
 	    puts stderr "$name already formalized"
 	    return
@@ -1065,6 +1054,7 @@ itcl::class Inheritance {
 	    set c [$os -atName $ch]
 	    putElement child "[$c -getName]"
 	}
+	$this -generateDocumentation
 	puts "</inheritance>"
     }
 }
@@ -1212,13 +1202,6 @@ itcl::class Attribute {
     # indicates whether this attribute is an identifier
     variable identifier 0
 
-    # indicates whether this attribute is defined referentially
-    variable referential 0
-
-    # a list of the roles (relationship ends) for which this attribute
-    # is the source for a referential attribute at the other end
-#    variable roles {}
-
     method -type {t} {set type $t}
 
     method -initial {i} {set initial $i}
@@ -1235,31 +1218,15 @@ itcl::class Attribute {
 	return [[$this -getOwner] -getOwner]
     }
 
-    private method -referential {} {
-	puts stderr "$name -referential called!"
-	set referential 1
-    }
+    # indicates whether this attribute formalizes an association,
+    # where the analyst needs to mark what would otherwise be a
+    # non-identifying referential attribute
+    variable formalizedAssociation
 
-    # called from a child class which needs to formalize an inheritance
-    # relationship by use of a matching attribute
-    method -makeInheritanceIdentifierClone {} {
-	puts stderr "$name -makeInheritanceIdentifierClone called!"
-	set res [Attribute ::#auto]
-	$res -name $name
-	$res -type $type
-	$res -referential
-	return $res
-    }
-
-    # called from a class which needs to formalize a relationship by
-    # use of a matching attribute
-    method -makeReferentialClone {abbrev relName} {
-	puts stderr "$name -makeReferentialClone called!"
-	set res [Attribute ::#auto]
-	$res -name $abbrev\_$name\_$relName
-	$res -type $type
-	$res -referential
-	return $res
+    # used via stereotype processing to indicate that this attribute
+    # formalizes an association
+    method -formalizes {assoc} {
+	set formalizedAssociation [normalize $assoc]
     }
 
     method -evaluate {domain} {
@@ -1271,12 +1238,21 @@ itcl::class Attribute {
 	} else {
 	    set datatype [$datatypes -atName $type]
 	}
+	if [info exists formalizedAssociation] {
+	    # we rely on Relationships being evaluated after Classes
+	    # (and Attributes are evaluated because they're in Classes).
+	    set rels [$domain -getRelationships]
+	    [$rels -atName $formalizedAssociation] -formalized
+	}
     }
 
     method -generate {domain} {
 	puts -nonewline "<attribute"
 	if $identifier {puts -nonewline " identifier=\"yes\""}
-	if $referential {puts -nonewline " referential=\"yes\""}
+	if [info exists formalizedAssociation] {
+	    puts -nonewline " refers=\"$type\""
+	    puts -nonewline " relation=\"$formalizedAssociation\""
+	}
 	puts ">"
 	putElement name "$name"
 	putElement type "$type"
