@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c4a010d40187 2002/12/24 11:44:48 simon $ -->
+<!-- $Id: ada-class.xsl,v 925ebcbb62a4 2003/01/26 18:30:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1558,12 +1558,14 @@
     mode="class-initialization"
     match="class[attribute[@class and initial] or @singleton]">
 
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Class_Initialize;&#10;</xsl:text>
 
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
