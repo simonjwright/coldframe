@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 7d11c4c2121f 2002/11/14 21:26:18 simon $ -->
+<!-- $Id: types.html,v 89f152890adc 2002/12/24 11:43:31 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -84,6 +84,12 @@ records; the discriminant is an enumeration type with literals formed
 from the attribute names with <tt>_T</tt> appended.
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
+
+<li><tt>hash : <i>style</i></tt> specifies how a type (presumably
+<tt><i>imported</i></tt> or <tt><i>renames</i></tt>) is to be
+hashed. Currently the only supported <i>style</i> is
+<tt>discrete</tt>, which will work for imported enumerations or
+integer ranges but not for private or access types.
 
 <li><tt>imported : <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
