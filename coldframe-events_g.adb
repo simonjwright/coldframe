@@ -20,11 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 73e19b026186 $
---  $Date: 2004/03/13 21:02:23 $
+--  $Revision: 068516a20411 $
+--  $Date: 2004/05/21 08:21:56 $
 --  $Author: simon $
 
 with Ada.Exceptions;
+with Ada.Tags;
 with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G is
@@ -97,17 +98,18 @@ package body ColdFrame.Events_G is
    begin
       if The_Timer.The_Entry /= null then
 
-         Finalize (The_Timer);
-
          --  Tell the user there's been an error (maybe the Timer was
          --  declared on the stack?)
          --
-         --  Because this will be raised during finalization, it'll
-         --  appear as Program_Error. Still, if it's caught in the
-         --  debugger this should be slightly more helpful.
-         Ada.Exceptions.Raise_Exception
-           (ColdFrame.Exceptions.Use_Error'Identity,
-            "timer still has held event");
+         --  Because this occurs during finalization, it's not really
+         --  sensible to raise an exception.
+         Logging.Log
+           (Severity => Logging.Error,
+            Message => "A Timer has been destroyed while holding a " &
+              Ada.Tags.Expanded_Name (The_Timer.The_Entry.all'Tag) &
+              ", may have been declared on the stack");
+
+         Finalize (The_Timer);
 
       end if;
    end Finalize;
