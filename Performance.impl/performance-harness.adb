@@ -1,4 +1,4 @@
---  $Id: performance-harness.adb,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  $Id: performance-harness.adb,v 1e01fbb89e76 2005/01/20 05:16:58 simon $
 
 with Performance.Initialize;
 with Performance.Tear_Down;
@@ -387,53 +387,53 @@ begin
 
    end;
 
-   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
-   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
+--     ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
+--     ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
 
-   declare
-      package LE renames ColdFrame.Logging_Event_Basis;
-      package DC
-        renames ColdFrame.Logging_Event_Basis.Abstract_Datum_Containers;
-      package MS renames BC.Support.Memory_Streams;
-      package ST renames BC.Support.Statistics;
-      S : aliased MS.Stream_Type (10_000);
-   begin
-      DC.Container'Class'Output (S'Access, LE.Results);
-      Put_Line ("stream size is" & MS.Length (S)'Img);
-      declare
-         Data : constant DC.Container'Class
-           := DC.Container'Class'Input (S'Access);
-         It : DC.Iterator'Class
-           := DC.New_Iterator (Data);
-      begin
-         while not DC.Is_Done (It) loop
-            declare
-               D : constant LE.Datum := DC.Current_Item (It);
-            begin
-               Put (To_String (D.Event));
-               Put (',');
-               Put (Integer'Image (ST.Count (D.Queueing)));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Mean (D.Queueing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Min (D.Queueing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Max (D.Queueing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Sigma (D.Queueing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Mean (D.Executing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Min (D.Executing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Max (D.Executing))));
-               Put (',');
-               Put (Duration'Image (Duration (ST.Sigma (D.Executing))));
-               New_Line;
-            end;
-            DC.Next (It);
-         end loop;
-      end;
-   end;
+--     declare
+--        package LE renames ColdFrame.Logging_Event_Basis;
+--        package DC
+--          renames ColdFrame.Logging_Event_Basis.Abstract_Datum_Containers;
+--        package MS renames BC.Support.Memory_Streams;
+--        package ST renames BC.Support.Statistics;
+--        S : aliased MS.Stream_Type (10_000);
+--     begin
+--        DC.Container'Class'Output (S'Access, LE.Results);
+--        Put_Line ("stream size is" & MS.Length (S)'Img);
+--        declare
+--           Data : constant DC.Container'Class
+--             := DC.Container'Class'Input (S'Access);
+--           It : DC.Iterator'Class
+--             := DC.New_Iterator (Data);
+--        begin
+--           while not DC.Is_Done (It) loop
+--              declare
+--                 D : constant LE.Datum := DC.Current_Item (It);
+--              begin
+--                 Put (To_String (D.Event));
+--                 Put (',');
+--                 Put (Integer'Image (ST.Count (D.Queueing)));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Mean (D.Queueing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Min (D.Queueing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Max (D.Queueing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Sigma (D.Queueing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Mean (D.Executing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Min (D.Executing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Max (D.Executing))));
+--                 Put (',');
+--                 Put (Duration'Image (Duration (ST.Sigma (D.Executing))));
+--                 New_Line;
+--              end;
+--              DC.Next (It);
+--           end loop;
+--        end;
+--     end;
 
 end Performance.Harness;
