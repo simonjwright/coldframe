@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v a24965851d47 2004/12/27 19:03:54 simon $ -->
+<!-- $Id: event-use.html,v 84510294d56e 2005/01/01 14:53:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -17,11 +17,17 @@ three relevant kinds of task:
 
 <li>the task associated with an instance of an &#171;active&#187; class,
 
-<li>the <i>dispatcher</i> task associated with an event queue.
+<li>the <i>dispatcher</i> task associated with an event queue,
 
 </ul>
 
-<p>A common pattern is shown in the sequence diagram:
+<p>and you must make sure that a domain's data is manipulated in a way
+that's safe from concurrent access by more than one of these tasks.
+
+<p>A common pattern, which might be called <em>"access domain data
+from domain events"</em>, is shown in the sequence diagram below. In
+it, the only task which accesses a domain's data is the
+<i>dispatcher</i> task associated with its event queue.
 
 <p><img src="house-management-operation.png">
 
@@ -34,7 +40,7 @@ context of Digital IO's event queue.
 <p><em>Operation 1.1</em> is the callback of the registered operation
 <tt>Button.Changed</tt>, still in Digital IO's context. This creates a
 new <tt>Button Event</tt>, whose payload is the pushed button's name
-(<em>Operation 1.1.1</em>) and posts it onto House Management's event
+(<em>Operation 1.1.1</em>), and posts it onto House Management's event
 queue (<em>Operation 1.1.2</em>):
 <pre>
    declare
@@ -75,6 +81,17 @@ creates a <tt>Button Push</tt> event for the Lamp concerned
 
 <p>which corresponds to <em>Operation 2.1.2.1</em> and <em>Operation
 2.1.2.2</em> and completes the processing.
+
+<h3>Limitations</h3>
+
+<p>This style of event processing, which could be called
+<i>synchronous</i>, is subject to one limitation: if an action needs
+to create an event, the event must be posted rather than being
+processed synchronously. There's no logical difference between the
+synchronous and posting styles; posting is more consistent, while
+synchronous is more efficient (it saves a memory allocation/freeing
+and a couple of context switches, saving perhaps 20 to 30
+microseconds).
 
 
 <h2>Posting an event</h2>
@@ -129,6 +146,13 @@ it would be
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
    end;
 </pre>
+
+<p>Of course, if you don't need a payload, it's much simpler:
+<pre>
+   ColdFrame.Project.Events.Post (new Class.Done (H),
+                                  On => Events.Dispatcher);
+</pre>
+
 
 <h2><a name="locking">Locking</a></h2>
 

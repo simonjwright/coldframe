@@ -4,8 +4,8 @@
 <date>
 <year>2004</year>
 <month>12</month>
-<day>24</day>
-<time>08:51</time>
+<day>27</day>
+<time>19:04</time>
 </date>
 <documentation><![CDATA[ Copyright (C) Simon Wright <simon@pushface.org>
 
@@ -14,7 +14,7 @@ This package is free software; you can redistribute it and/or modify it under te
 This domain represents an electronic household control system.
 The first release only manages the stairwell lighting system.
 
-{ revision = $Revision: e582817104ee $ } ]]></documentation>
+{ revision = $Revision: 84510294d56e $ } ]]></documentation>
 <classes>
 <class>
 <name>Lamp</name>
