@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: associations.html,v 29b642712ce1 2003/01/19 19:40:28 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -108,6 +108,12 @@ navigation from collections of instances
 association, with its associative class).
 
 </ul>
+
+<p>For associations with an associative class, a <tt>Find</tt>
+operation is generated in <tt><i>Domain.Association</i></tt> which,
+given the handles of two potentially associated instances, returns the
+corresponding associative instance's handle (or <tt>null</tt>, of
+course).
 
 <p>The implementing referential attrubute, and its assciated "get",
 "set" operations are in the public part of the class package but
