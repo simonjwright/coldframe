@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: test_bounded_storage_pools.adb,v $
---  $Revision: 6f003919140c $
---  $Date: 2003/07/24 19:53:31 $
+--  $Revision: d515d80b9067 $
+--  $Date: 2003/08/23 07:41:22 $
 --  $Author: simon $
 
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
@@ -24,7 +24,7 @@ with System.Storage_Elements;
 
 procedure Test_Bounded_Storage_Pools is
 
-   type T is new System.Storage_Elements.Storage_Array (1 .. 16);
+   type T is new System.Storage_Elements.Storage_Array (1 .. 17);
 
    T_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
      (Pool_Size => 1024,
@@ -33,7 +33,7 @@ procedure Test_Bounded_Storage_Pools is
    pragma Warnings (Off, T_Pool);
 
    type T_P is access T;
---     for T_P'Storage_Pool use ColdFrame.Project.Storage_Pools.Pool;
+   --     for T_P'Storage_Pool use ColdFrame.Project.Storage_Pools.Pool;
    for T_P'Storage_Pool use T_Pool;
 
    P : T_P;
