@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6a4a554ed351 2004/11/11 14:44:25 simon $ -->
+<!-- $Id: bugs.html,v b98c61f21645 2004/11/12 09:35:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -214,19 +214,6 @@ generation of the test support classes.</i>
 considered when checking whether the operation is allowable as an
 action.
 
-<dt>0286 (raised 9.xi.04)
-
-<dd>The element type for an <i>{array}</i> isn't translated properly
-(so, for example, <i>Text</i> isn't converted to
-<tt>Unbounded_String</tt>).
-<br><i>If the element type isn't fundamental, eg <tt>Integer</tt>,
-declare it as a &#171;type&#187; in its own right.</i>
-
-<dt>0287 (raised 9.xi.04)
-
-<dd>The new <i>{access}</i> tag's value needs to be hand-normalized
-(you have to put in your own underscores and capitalization).
-
 <dt>0288 (raised 11.xi.04)
 
 <dd>The <a href="generalizations.html">information on generalization
@@ -238,6 +225,24 @@ operations and attributes.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>12.xi.04</h3>
+
+<dl>
+
+<dt>0286 (raised 9.xi.04)
+
+<dd>The element type for an <i>{array}</i> isn't translated properly
+(so, for example, <i>Text</i> isn't converted to
+<tt>Unbounded_String</tt>).
+
+<dt>0287 (raised 9.xi.04)
+
+<dd>The new <i>{access}</i> tag's value needs to be hand-normalized
+(you have to put in your own underscores and capitalization).
+<br><i>This only happened for types without attributes.</i>
+
+</dl>
 
 <h3>25.x.04</h3>
 
