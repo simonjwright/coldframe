@@ -1,0 +1,60 @@
+<domain>
+<extractor>cf-20030123a</extractor>
+<name>Serialization Demo</name>
+<date>
+<year>2003</year>
+<month>1</month>
+<day>23</day>
+<time>10:54</time>
+</date>
+<documentation>This domain is a demonstration of Serialization's faclilities.
+It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
+
+[[ revision : $Id: Serialization_Demo.raw,v f63562e2babd 2003/01/26 16:46:40 simon $ ]]</documentation>
+<classes>
+<class stereotype="type, serializable">
+<name>Sample A</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute>
+<name>i</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>f</name>
+<documentation></documentation>
+<type>Float</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<documentation></documentation>
+<type>Boolean</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>d</name>
+<documentation></documentation>
+<type>Duration</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>t</name>
+<documentation></documentation>
+<type>Time</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
