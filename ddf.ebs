@@ -1,9 +1,9 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v c57a40ecfe2b 2001/01/17 20:17:08 simon $
+'$Id: ddf.ebs,v cde198955996 2001/01/17 20:18:18 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
-'	processing by the Object Oriented Model Compiler.
+'	processing by ColdFrame's normalize-rose.tcl.
 '
 ' Copyright (C) Simon Wright <simon@pushface.org>
 '
