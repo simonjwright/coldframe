@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 02254531ef24 2004/11/11 15:09:09 simon $
+# $Id: normalize-rose.tcl,v 9cad6d28ccc2 2004/11/12 09:34:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2418,6 +2418,8 @@ itcl::class Datatype {
 
     inherit Element
 
+    variable access
+
     variable arrayOf
 
     variable arrayIndexBy
@@ -2492,6 +2494,11 @@ itcl::class Datatype {
 
     method -operations {ops} {
         set operations $ops
+    }
+
+    # called to indicate that this needs an access type
+    method -access {a} {
+        set access [normalize $a]
     }
 
     # called when the user has requested an array
@@ -2698,6 +2705,9 @@ itcl::class Datatype {
             return
         }
         $this -putElementStart "type"
+        if [info exists access] {
+	    puts -nonewline " access=\"$access\""
+	}
         if [info exists callback] {
             puts -nonewline " callback=\"true\""
         }
