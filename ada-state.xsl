@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 4ce235178c30 2002/02/21 05:52:51 simon $ -->
+<!-- $Id: ada-state.xsl,v 8b1e233f2816 2002/02/23 13:35:32 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,35 +31,58 @@
   <!-- Called at domain/class to generate event types. -->
   <xsl:template name="event-type-specs">
 
-    <!--
+    <!-- class:
+         type {name} is new ColdFrame.Events.Event_Base with record
+           The : {type};
+         end record;
+         -->
+
+    <!-- non-class:
          type {name} (For_The_Instance : access Instance)
-         is new ColdFrame.Events.Event_Base (For_The_Instance) with record
-           {argument-name} : {argument-type};
+         is new ColdFrame.Events.Instance_Event_Base (For_The_Instance)
+         with record
+           The : {type};
          end record;
          -->
 
     <xsl:for-each
-      select="statemachine/event">
+      select="event">
       <xsl:sort select="name"/>
 
-      <xsl:value-of select="$I"/>
-      <xsl:text>type </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text> (For_The_Instance : access Instance)&#10;</xsl:text>
-      <xsl:value-of select="$I"/>
-      <xsl:text>is new ColdFrame.Events.Event_Base (For_The_Instance) with </xsl:text>
+      <xsl:choose>
+        
+        <xsl:when test="@class">
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>type </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text> is new ColdFrame.Events.Event_Base with </xsl:text>
+
+        </xsl:when>
+
+        <xsl:otherwise>
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>type </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text> (For_The_Instance : access Instance)&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>is new ColdFrame.Events.Instance_Event_Base (For_The_Instance)&#10;</xsl:text>
+          <xsl:value-of select="$I"/>
+          <xsl:text>with </xsl:text>
+
+        </xsl:otherwise>
+
+      </xsl:choose>
       
       <xsl:choose>
         
-        <xsl:when test="argument">
+        <xsl:when test="type">
           <xsl:text>record&#10;</xsl:text>
-          <xsl:for-each select="argument">
-            <xsl:value-of select="$II"/>
-            <xsl:value-of select="name"/>
-            <xsl:text> : </xsl:text>
-            <xsl:value-of select="type"/>
-            <xsl:text>;&#10;</xsl:text>
-          </xsl:for-each>
+          <xsl:value-of select="$II"/>
+          <xsl:text>The : </xsl:text>
+          <xsl:value-of select="type"/>
+          <xsl:text>;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>end record;&#10;</xsl:text>
         </xsl:when>
@@ -128,10 +151,10 @@
 
 
   <!-- Generate event handler specs. -->
-  <xsl:template match="statemachine/event" mode="event-handler-specs">
+  <xsl:template match="event" mode="event-handler-specs">
 
     <!--
-         procedure Process (This : {event});
+         procedure Handler (This : {event});
          -->
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Handler (This : </xsl:text>
@@ -144,7 +167,7 @@
   <xsl:template match="*" mode="event-handler-specs"/>
 
 
-  <!-- Generate event handler bodies. -->
+  <!-- Generate event handler bodies for <<event>>s. -->
   <xsl:template match="statemachine/event" mode="event-handler-bodies">
 
     <!-- non-singleton
@@ -232,7 +255,41 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="event-handler-specs"/>
+
+  <!-- Generate event handler bodies for <<message>>s. -->
+  <xsl:template match="event[@class]" mode="event-handler-bodies">
+
+    <!-- 
+         procedure Handler (This : {event}) is
+         begin
+            {receiver} (This);
+         end Handler;
+         -->
+
+    <xsl:variable name="e" select="name"/>
+    <xsl:variable
+      name="op"
+      select="../operation[@handler and parameter/type=$e]"/>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Handler (This : </xsl:text>
+    <xsl:value-of select="$e"/>
+    <xsl:text>) is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:value-of select="$op/name"/>
+    <xsl:text> (This);&#10;</xsl:text>              
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>end Handler;&#10;</xsl:text>
+
+    <xsl:value-of select="$blank-line"/>
+
+  </xsl:template>
+
+  <xsl:template match="*" mode="event-handler-bodies"/>
 
 
   <!-- Called at domain/class to generate any class body "with"s. -->
@@ -343,7 +400,47 @@
      <xsl:for-each select="action">
 
        <xsl:variable name="n" select="."/>
-       <xsl:variable name="params" select="../../operation[name=$n]/parameter"/>
+       <xsl:variable
+         name="params"
+         select="../../../operation[name=$n]/parameter"/>
+
+       <xsl:choose>
+
+         <xsl:when test="../../../operation[name=$n]/@return">
+           <xsl:message terminate="yes">
+             <xsl:value-of select="../../../name"/>
+             <xsl:text>.</xsl:text>
+             <xsl:value-of select="$n"/>
+             <xsl:text> is a function, can't be an event handler.</xsl:text>
+           </xsl:message>           
+         </xsl:when>
+         
+         <xsl:when test="count($params)&gt;1">
+           <xsl:message terminate="yes">
+             <xsl:value-of select="../../../name"/>
+             <xsl:text>.</xsl:text>
+             <xsl:value-of select="$n"/>
+             <xsl:text> has too many parameters to be an event handler.</xsl:text>
+           </xsl:message>
+         </xsl:when>
+
+         <xsl:when test="count($params)=1">
+           <xsl:if test="not(../../event/name=$params/type)">
+             <xsl:message terminate="yes">
+               <xsl:value-of select="../../../name"/>
+             <xsl:text>.</xsl:text>
+             <xsl:value-of select="$n"/>
+             <xsl:text>'s parameter isn't an Event.</xsl:text>
+             </xsl:message>
+           </xsl:if>
+         </xsl:when>
+
+         <!-- XXX what if there is an operation with a parameter for a state
+              with more than one event type leading to it?
+              Find the number of events leading to this state with type /=
+              the operations's parameter type? -->
+
+       </xsl:choose>
 
        <xsl:value-of select="$II"/>
        <xsl:value-of select="$n"/>

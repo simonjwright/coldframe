@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 2f31d98e1978 2002/02/21 05:51:10 simon $ -->
+<!-- $Id: ada-class.xsl,v 8b1e233f2816 2002/02/23 13:35:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -131,11 +131,11 @@
     <xsl:apply-templates mode="attribute-set-spec"/>
     <xsl:apply-templates mode="attribute-get-spec"/>
 
-    <!-- .. operations .. -->
-    <xsl:call-template name="operation-specs"/>
-
     <!-- .. state machine: event types .. -->
     <xsl:call-template name="event-type-specs"/>
+
+    <!-- .. operations .. -->
+    <xsl:call-template name="operation-specs"/>
 
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
@@ -261,7 +261,7 @@
     </xsl:if>
 
     <!-- .. event handlers .. -->
-    <xsl:apply-templates mode="event-handler-specs" select="statemachine/event">
+    <xsl:apply-templates mode="event-handler-specs" select="event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -605,9 +605,15 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
-    <!-- .. event handlers .. -->
+    <!-- .. <<message>> event handler bodies .. -->
+    <xsl:apply-templates mode="event-handler-bodies" select="event[@class]">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- .. <<event>> event handler bodies .. -->
     <xsl:apply-templates
-      mode="event-handler-bodies" select="statemachine/event">
+      mode="event-handler-bodies"
+      select="statemachine/event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
