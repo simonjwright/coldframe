@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v dd5fd6bb47e4 2004/11/24 20:20:53 simon $ -->
+<!-- $Id: event-modelling.html,v c2d1f5b5afdf 2004/12/09 05:45:52 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -89,9 +89,15 @@ occurs, and the state model transitions back to the <i>idle</i> state
 (step 2), where the lamp is turned off.
 
 <li>If on the other hand the user pushes the button again, the state
-model transitions to the current (<i>lit</i>) state, calling the
-<i>clear timeout</i> transition action which cancels the timeout set
-in step 4; re-enter this sequence at step 4.
+model transitions to the current (<i>lit</i>) state, by indivisibly
+<ul>
+
+<li>calling the <i>clear timeout</i> transition action which cancels
+the timeout set in step 4, and
+
+<li>re-entering this sequence at step 4.
+
+</ul>
 
 </ol>
 
@@ -258,6 +264,10 @@ Timer variable for each.
 <p>In addition, the class diagram shows
 <i>&#171;class&nbsp;event&#187;</i> support.
 
+<p>Instance events are about state machines; class events are mainly
+intended for use where you have <a
+href="event-motivation.html">communication between domains</a>.
+
 <p>There is a <i>Lamp</i> class event <i>creation&nbsp;event</i>,
 which carries a payload of type <i>Location</i>.
 
@@ -274,7 +284,7 @@ type.
 </ol>
 
 <p>Class events can be <i>set</i> on Timers; you'll probably want to
-make the Timer a <em>&#171;class&#187;</em> attribute.
+make the Timer concerned a <em>&#171;class&#187;</em> attribute.
 
 
 <p><hr>
