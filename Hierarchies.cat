@@ -9,7 +9,7 @@
     is_loaded  	TRUE
     quid       	"3CDD01290395"
     documentation 	
-|[[ revision : $Id: Hierarchies.cat,v f3f3ab99534f 2002/05/18 16:09:35 simon $ ]]
+|[[ revision : $Id: Hierarchies.cat,v d1fd493bc851 2002/06/06 21:46:56 simon $ ]]
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
     
     exportControl 	"Public"
@@ -254,6 +254,10 @@
 		    stereotype 	"generated"
 		    parameters 	(list Parameters
 			(object Parameter "r1"
+			    type       	"CIH")
+			(object Parameter "r2"
+			    type       	"CIH")
+			(object Parameter "r3"
 			    type       	"CIH"))
 		    result     	"F_2"
 		    concurrency 	"Sequential"
@@ -390,7 +394,7 @@
 		    quidu      	"3CDD01A70240"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(263, 109)
+			location   	(263, 108)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -420,7 +424,7 @@
 		    quidu      	"3CDD01D90002"
 		    compartment 	(object Compartment
 			Parent_View 	@4
-			location   	(1223, 110)
+			location   	(1223, 109)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -450,7 +454,7 @@
 		    quidu      	"3CDD01E0011D"
 		    compartment 	(object Compartment
 			Parent_View 	@5
-			location   	(2087, 110)
+			location   	(2087, 109)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -480,7 +484,7 @@
 		    quidu      	"3CDD01F202A9"
 		    compartment 	(object Compartment
 			Parent_View 	@6
-			location   	(263, 685)
+			location   	(263, 684)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -525,7 +529,7 @@
 		    quidu      	"3CDD021503D9"
 		    compartment 	(object Compartment
 			Parent_View 	@8
-			location   	(263, 1189)
+			location   	(263, 1188)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -555,13 +559,13 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(656, 1904)
+		    location   	(660, 1905)
 		    label      	(object ItemLabel
 			Parent_View 	@10
-			location   	(265, 1659)
+			location   	(124, 1664)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	782
+			max_width  	1072
 			justify    	0
 			label      	"F_2")
 		    icon_style 	"Label"
@@ -570,14 +574,14 @@
 		    quidu      	"3CDD022701A7"
 		    compartment 	(object Compartment
 			Parent_View 	@10
-			location   	(265, 1718)
+			location   	(124, 1722)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	779)
-		    width      	800
-		    height     	514
+			max_width  	1070)
+		    width      	1090
+		    height     	504
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Hierarchies::S_3" @11
@@ -600,7 +604,7 @@
 		    quidu      	"3CDD01F703C5"
 		    compartment 	(object Compartment
 			Parent_View 	@11
-			location   	(1515, 661)
+			location   	(1515, 660)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -643,7 +647,7 @@
 		(object InheritView "f" @14
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(656, 1544)
+			location   	(658, 1547)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -658,7 +662,7 @@
 		(object InheritView "e" @15
 		    label      	(object ItemLabel
 			Parent_View 	@15
-			location   	(1561, 1385)
+			location   	(1580, 1374)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -670,7 +674,7 @@
 		    client     	@10
 		    supplier   	@11
 		    vertices   	(list Points
-			(1056, 1672)
+			(1096, 1652)
 			(1631, 1345)
 			(1885, 914))
 		    line_style 	0)
@@ -682,7 +686,7 @@
 		    location   	(1792, 1936)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(1709, 1910)
+			location   	(1709, 1906)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -690,7 +694,7 @@
 			label      	"CIH")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@16
-			location   	(1709, 1860)
+			location   	(1709, 1859)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
