@@ -1,12 +1,15 @@
-with Problem_Reporting.Component.Add_Component;
-with Problem_Reporting.Problem_Report.Add_Problem;
-with Problem_Reporting.Problem_Report.Note_Defect;
-with Problem_Reporting.Problem_Report.Reject_Problem;
-with Problem_Reporting.Component.Report_Problems;
+with Ada.Text_Io;
+With Problem_Reporting.Interface;
+with Problem_Reporting.Interface.Add_Component;
+with Problem_Reporting.Interface.Add_Problem;
+with Problem_Reporting.Interface.Delete_Component;
+with Problem_Reporting.Interface.Note_Defect;
+with Problem_Reporting.Interface.Reject_Problem;
+with Problem_Reporting.Interface.Report_Problems;
+
 procedure Demo is
 
-  use Problem_Reporting.Component;
-  use Problem_Reporting.Problem_Report;
+  use Problem_Reporting.Interface;
 
 begin
 
@@ -26,6 +29,12 @@ begin
   Note_Defect (2, "foo", "very tedious");
 
   Reject_Problem (4, "just right");
+
+  Report_Problems;
+
+  Ada.Text_Io.Put_Line ("deleting and then adding a Component:");
+  Delete_Component ("baz");
+  Add_Component ("squeeg");
 
   Report_Problems;
 
