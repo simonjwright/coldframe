@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 6627c72e6a98 2002/02/23 13:38:15 simon $
+'$Id: ddf.ebs,v 60e5a62ab2c3 2002/02/24 10:27:46 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -118,7 +118,6 @@ Sub DumpAction(a As Action)
 	Print #1, "<action>"
 	Print #1, "<name>" & a.Name & "</name>"
 '	Print #1, "<target>" & a.Target & "</target>"
-	Print #1, "<arguments>" & a.Arguments & "</arguments>"
 	Print #1, "</action>"
 End Sub
 
@@ -136,9 +135,6 @@ Sub DumpEvent(e As Event)
 	'NB we don't do Guard Conditions or Actions.
 	Print #1, "<event>"
 	Print #1, "<name>" + e.Name + "</name>"
-	If Len(e.Arguments)	> 0 Then
- 		Print #1, "<arguments>" + e.Arguments + "</arguments>"
-	End If
 	Print #1, "</event>"
 End Sub
 
