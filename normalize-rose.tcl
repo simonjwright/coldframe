@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 509b34faa342 2001/09/08 05:16:47 simon $
+# $Id: normalize-rose.tcl,v 71c3fa04882f 2001/09/14 19:34:14 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -918,6 +918,9 @@ itcl::class Operation {
     # is this an initialize operation?
     variable init 0
 
+    # is this a finalize operation?
+    variable final 0
+
     # the return type, if any
     variable ret ""
 
@@ -948,6 +951,12 @@ itcl::class Operation {
 	set init 1
     }
 
+    # called via stereotype mechanism to indicate that this is an
+    # instance finalization operation.
+    method -finalize {dummy} {
+	set final 1
+    }
+
     method -return {r} {set ret $r}
 
     method -parameters {pl} {set parameters $pl}
@@ -958,6 +967,7 @@ itcl::class Operation {
 	if $acc {puts -nonewline " access=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
+	if $final {puts -nonewline " finalize=\"yes\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
