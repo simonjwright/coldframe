@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 0e485d25f56f 2001/06/02 16:46:02 simon $ -->
+<!-- $Id: generate-ada.xsl,v ce3bfea5e888 2001/06/09 04:35:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -72,12 +72,6 @@
 
     <!-- Collection support packages. -->
     <xsl:apply-templates select="class" mode="collection-support"/>
-
-    <!-- Child subprogram specs for individual operations. -->
-    <xsl:apply-templates select="class/operation" mode="operation-spec"/>
-
-    <!-- Child subprogram bodies for individual operations. -->
-    <xsl:apply-templates select="class/operation" mode="operation-body"/>
 
     <!-- Package specs for Associations -->
     <xsl:apply-templates select="association" mode="association-spec"/>

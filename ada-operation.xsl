@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 8072e75d7a82 2001/05/11 19:13:07 simon $ -->
+<!-- $Id: ada-operation.xsl,v ce3bfea5e888 2001/06/09 04:35:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,11 +26,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
-  <!-- Generate child subprogram specs (but not access-to-operations,
-       which are realized in the Class package). -->
+  <!-- Generate child subprogram specs (but not access-to-operations). -->
   <xsl:template match="class/operation[not(@access)]" mode="operation-spec">
-    <xsl:apply-templates select="." mode="operation-context"/>
-    <xsl:call-template name="subprogram-specification"/>
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="'  '"/>
+    </xsl:call-template>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
@@ -75,11 +75,38 @@
   <xsl:template mode="operation-context" match="*"/>
 
 
-  <!-- Generate the bodies of child operations (but not access-to-operations,
-       which are realized in the Class package). The bodies are
-       compilable but generate Program_Error if called. -->
-  <xsl:template match="class/operation[not(@access)]" mode="operation-body">
+  <!-- Generate the body stubs of child operations (but not
+       access-to-operations, which are realized in the Class package).
+       The bodies are compilable but generate Program_Error if called. -->
+  <xsl:template
+    match="class/operation[not(@access)]"
+    mode="operation-body-stub">
 
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="'  '"/>
+    </xsl:call-template>
+    <xsl:text> is separate;&#10;</xsl:text>
+
+  </xsl:template>
+
+  <xsl:template mode="operation-body-stub" match="*"/>
+
+
+  <!-- Generate the separate bodies of child operations (but not
+       access-to-operations, which are realized in the Class package,
+       or procedure operations of active classes, which generate a
+       call to the corresponding entry).
+       The bodies are compilable but generate Program_Error if called. -->
+  <xsl:template
+    mode="operation-body"
+    match="class[not(@active)]/operation[not(@access)]
+           | class[@active]/operation[@return and not(@access)]">
+
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>)&#10;</xsl:text>
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
@@ -104,10 +131,49 @@
     </xsl:choose>
 
     <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
+
+  <!-- Generate the separate bodies of procedure operations of active classes,
+       with a call to the corresponding entry). -->
+  <xsl:template
+    mode="operation-body"
+    match="class[@active]/operation[not(@return) and not(@access)]">
+
+    <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:text>  This.The_T.</xsl:text>
+    <xsl:value-of select="name"/>
+
+    <xsl:if test="parameter">
+
+      <xsl:text>&#10;    (</xsl:text>
+
+      <xsl:for-each select="parameter">
+        <xsl:value-of select="name"/>
+        <xsl:text> =&gt; </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:if test="position() &lt; last()">
+          <xsl:text>,&#10;     </xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+
+      <xsl:text>)</xsl:text>
+
+    </xsl:if>
+
+    <xsl:text>;&#10;</xsl:text>
+
+    <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
 
@@ -119,18 +185,21 @@
   <!-- Called from class/operation to generate a subprogram specification.
        Ends without the closing ";" or " is". -->
   <xsl:template name="subprogram-specification">
+    <xsl:param name="indent"/>
+
     <xsl:choose>
 
       <!-- If there's a return attribute, it's a function. -->
       <xsl:when test="@return">
+        <xsl:value-of select="$indent"/>
         <xsl:text>function </xsl:text>
-        <xsl:value-of select="../../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:call-template name="parameter-list"/>
-        <xsl:text>&#10;   return </xsl:text>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="concat($indent,'  ')"/>
+        </xsl:call-template>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$indent"/>
+        <xsl:text>   return </xsl:text>
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
         </xsl:call-template>
@@ -138,13 +207,12 @@
 
       <!-- If there's no return attribute, it's a procedure. -->
       <xsl:otherwise>
+        <xsl:value-of select="$indent"/>
         <xsl:text>procedure </xsl:text>
-        <xsl:value-of select="../../name"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="../name"/>
-        <xsl:text>.</xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:call-template name="parameter-list"/>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="concat($indent,'  ')"/>
+        </xsl:call-template>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -159,17 +227,17 @@
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
          the Class is a singleton, all operations are class operations,
-         otherwise it depends on the class attribute. -->
+         otherwise it depends on the @class attribute. -->
     <xsl:if
       test="parameter or (not(../@singleton) and not(@class='yes'))">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
-      <xsl:text>  (</xsl:text>
+      <xsl:text>(</xsl:text>
       <xsl:if test="not(../@singleton) and not(@class='yes')">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
-          <xsl:text>;&#10;   </xsl:text>
+          <xsl:text>;&#10; </xsl:text>
           <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:if>
@@ -211,7 +279,7 @@
     <xsl:if test="position() &lt; last()">
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
-      <xsl:text>   </xsl:text>
+      <xsl:text> </xsl:text>
     </xsl:if>
 
   </xsl:template>
