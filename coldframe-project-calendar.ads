@@ -10,10 +10,14 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-calendar.ads,v $
---  $Revision: 314b8fd194f4 $
---  $Date: 2002/07/16 20:34:03 $
+--  $Revision: 4e85dd895d14 $
+--  $Date: 2002/08/17 16:35:22 $
 --  $Author: simon $
 
 with Ada.Calendar;
 
-package ColdFrame.Project.Calendar renames Ada.Calendar;
+package ColdFrame.Project.Calendar is
+
+   subtype Time is Ada.Calendar.Time;
+
+end ColdFrame.Project.Calendar;
