@@ -1,6 +1,10 @@
 <domain>
 <name>Architecture</name>
-<documentation>This package describes the underlying model of the model assumed by ColdFrame (the metamodel) and one possible mapping to code.</documentation>
+<documentation>This package describes the underlying model of the model assumed by ColdFrame (the metamodel) and one possible mapping to code.<br/>
+
+A note on names: Ada is case-insensitive, but the convention is that words in names are separated by an underscore, and the first letter of each word is capitalized. ColdFrame normalizes names to this convention.<br/>
+
+In the diagram, buff classes are part of the metamodel, grey classes show  how they are mapped to Ada 95 code.</documentation>
 <objects>
 <object stereotype="">
 <name>Domain</name>
@@ -12,7 +16,9 @@
 </object>
 <object stereotype="">
 <name>Class</name>
-<documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.</documentation>
+<documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.<br/>
+
+You can specify the maximum number of Instances using the documentation annotation <tt>[[ max: <i>number</i> ]]</tt>. This will be ignored for Singleton Classes.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -32,7 +38,7 @@ The notation <tt><i>metaclass name</i></tt> means "the normalized name of the me
 <name>Class Operation</name>
 <documentation>A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
 
-All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class".</documentation>
+All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class" or by the documentation annotation <tt>[[class]]</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -40,7 +46,11 @@ All Operations of Singleton Classes are Class Operations; Class Operations of Id
 </object>
 <object stereotype="">
 <name>Operation</name>
-<documentation>An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).</documentation>
+<documentation>An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).<br/>
+
+Operations may have return values.
+
+</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -110,7 +120,7 @@ Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.S
 
 A Type Specification is a class with the "type" stereotype.<br/>
 
-Its documentation must contain an Annotation, which is text contained in double square brackets.<br/>
+Its documentation must contain an Annotation, which is text contained in double square brackets (<tt>[[<i>annotation</i>]]</tt>).<br/>
 
 Supported annotations are:<br/>
 
@@ -147,7 +157,11 @@ Supported annotations are:<br/>
 <name>Operation Unit</name>
 <documentation>An Operation maps to an Operation Unit.<br/>
 
-An Operation Unit is implemented as a child subprogram unit of the Class package.</documentation>
+An Operation Unit is implemented as a child subprogram unit of the Class package.<br/>
+
+When the Operation has a return value, the Operation Unit is implemented as a function; otherwise as a procedure.<br/>
+
+A default compilable body is generated, which if called will raise <tt>Program_Error</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -199,7 +213,9 @@ Referential attributes (those which formalise relationships) are automatically i
 </object>
 <object stereotype="">
 <name>Identifying Attribute</name>
-<documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.</documentation>
+<documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.<br/>
+
+An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -233,6 +249,33 @@ Referential attributes (those which formalise relationships) are automatically i
 <object stereotype="">
 <name>Handle</name>
 <documentation>The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Parameter</name>
+<documentation>An Operation may have Parameters. Each Parameter
+has:<br/>
+
+a <b>Name</b><br/>
+
+a <b>Type</b> (either standard, such as <tt>Integer</tt>, or as defined in one of this Domain's Type Specifications)<br/>
+
+optionally, a <b>Mode</b>, specified in a documentation annotation <tt>[[mode: <i>mode-spec</i>]]</tt>, where <tt><i>mode-spec</i></tt> is <tt>in</tt> (the default), <tt>out</tt>, or <tt>inout</tt><br/>
+
+optionally, a <b>Default</b> value.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Param</name>
+<documentation>A Parameter maps to a Param.<br/>
+
+The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents. Note that no semantic checks are made; it's the user's responsibility not to specify <tt>out</tt> or <tt>in out</tt> Modes for any parameter of a function, or a Default for a non-<tt>in</tt> Parameter.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -493,6 +536,54 @@ Referential attributes (those which formalise relationships) are automatically i
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Operation</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Parameter</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Operation Unit</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Parameter</classname>
+<cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Operation Unit</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Param</classname>
+<cardinality>0..n</cardinality>
 <exportcontrol>PublicAccess</exportcontrol>
 </role>
 </association>
