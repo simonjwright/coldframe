@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v f0dcec96f6b9 2003/11/19 05:28:30 simon $
+--  $Id: regressions-suite.adb,v 9b3fd38f35fc 2003/11/25 21:31:55 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -17,8 +17,12 @@ with Regressions.Events;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
-with Regressions.Tear_Down;
+with Regressions.Max_More;
+with Regressions.Max_One;
+with Regressions.Max_More_C;
+with Regressions.Max_One_C;
 with Regressions.Serializable;
+with Regressions.Tear_Down;
 
 pragma Warnings (Off, Ada.Text_IO);
 
@@ -487,6 +491,75 @@ package body Regressions.Suite is
    end Null_Event_Tests;
 
 
+   package Max_One_Tests is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Max_One_Tests;
+
+   package body Max_One_Tests is
+
+      procedure Delete_With_Identifier (C : in out Test_Case'Class);
+      procedure Delete_With_Identifier (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         MOH : Max_One.Handle;
+         pragma Warnings (Off, MOH);
+         use type Max_One.Handle;
+      begin
+         MOH := Max_One.Create ((Id => 42));
+         Max_One.Delete ((Id => 42));
+         pragma Assert (Max_One.Find = null, "instance still present");
+      end Delete_With_Identifier;
+
+      procedure Delete_With_Handle (C : in out Test_Case'Class);
+      procedure Delete_With_Handle (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         MOH : Max_One.Handle;
+         use type Max_One.Handle;
+      begin
+         MOH := Max_One.Create ((Id => 42));
+         Max_One.Delete (MOH);
+         pragma Assert (MOH = null, "handle not null");
+         pragma Assert (Max_One.Find = null, "instance still present");
+      end Delete_With_Handle;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Max_One_Tests.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Delete_With_Identifier'Access,
+            "delete by identifier");
+         Register_Routine
+           (C,
+            Delete_With_Handle'Access,
+            "delete by handle");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize;
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Max_One_Tests;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -495,6 +568,7 @@ package body Regressions.Suite is
       AUnit.Test_Suites.Add_Test (Result, new Serialization_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Callback_Tests.Case_1);
       AUnit.Test_Suites.Add_Test (Result, new Null_Event_Tests.Case_1);
+      AUnit.Test_Suites.Add_Test (Result, new Max_One_Tests.Case_1);
       return Result;
    end Suite;
 
