@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 45ccf2fd7121 2004/03/14 11:33:26 simon $ -->
+<!-- $Id: releases.html-proto,v ca6e34b5a231 2004/05/20 15:11:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,18 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>A callback operation can deregister itself (though the
+register/deregister oprations aren't task-safe).
+
+
+<p>The ColdFrame-supplied storage pools, as well as filling
+newly-allocated memory with an obviously bad pattern
+(<tt>16#deadbeef#</tt>), now refill just-freed memory with the same
+pattern.
+
+
+<p><dt>20040319
 
 <dd>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
 reported. Instead, they are included in the <i>normalized</i>
