@@ -9,90 +9,24 @@
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
-<documentation>Id is an integer allocated uniquely to identify Problem Reports.</documentation>
+<documentation>An integer allocated uniquely to identify Problem Reports.</documentation>
 <type>integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>details</name>
-<documentation>Details holds the text of the Problem Report.</documentation>
+<documentation>The text of the Problem Report.</documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>reporter</name>
-<documentation>Reporter holds the email address of the person who originally raised the Problem Report.</documentation>
+<documentation>The email address of the person who originally raised the Problem Report.</documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 </attributes>
 <operations>
-<operation stereotype="class">
-<name>add problem</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>number</name>
-<documentation></documentation>
-<type>Integer</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>reporter</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>details</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation stereotype="class">
-<name>reject problem</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>number</name>
-<documentation></documentation>
-<type>Integer</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>reason</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation stereotype="class">
-<name>note defect</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>problem</name>
-<documentation></documentation>
-<type>Integer</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>component</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>description</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
 </operations>
 </class>
 <class>
@@ -115,25 +49,16 @@
 <attributes>
 </attributes>
 <operations>
-<operation>
-<name>related components</name>
-<documentation>[[class]]
-</documentation>
-<return>components</return>
-<parameters>
-<parameter>
-<name>simons arg</name>
-<documentation></documentation>
-<type>Summary String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
 </operations>
 </class>
 <class>
 <name>Component</name>
-<documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.</documentation>
+<documentation>A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
+
+Purely for demonstration purposes, the maximum number of Components is limited to 4.
+
+[[max: 4]]
+</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
@@ -143,24 +68,6 @@
 </attribute>
 </attributes>
 <operations>
-<operation stereotype="class">
-<name>add component</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>named</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation stereotype="class">
-<name>report problems</name>
-<documentation></documentation>
-<parameters>
-</parameters>
-</operation>
 </operations>
 </class>
 <class>
@@ -180,7 +87,7 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 </class>
 <class>
 <name>Defect</name>
-<documentation>A Defect denotes something that is wrong witha Component.
+<documentation>A Defect denotes something that is wrong with a Component.
 
 It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
 
@@ -188,7 +95,7 @@ It should address one logical error (which may correspond to several necessary c
 <attributes>
 <attribute>
 <name>problem</name>
-<documentation>Problem contains a description of the Defect.</documentation>
+<documentation>Contains a description of the Defect.</documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -207,22 +114,108 @@ It should address one logical error (which may correspond to several necessary c
 <operations>
 </operations>
 </class>
-<class stereotype="type">
-<name>Components</name>
-<documentation>[[set : component]]
-</documentation>
+<class stereotype="Interface">
+<name>Interface</name>
+<documentation>Provides the public interface to the Problem Reporting domain.</documentation>
 <attributes>
 </attributes>
 <operations>
-</operations>
-</class>
-<class stereotype="type">
-<name>Diagnosed Problem Reports</name>
-<documentation>[[set : diagnosed problem report]]
-</documentation>
-<attributes>
-</attributes>
-<operations>
+<operation>
+<name>add component</name>
+<documentation>Add a Component to the set of Components known to the System.</documentation>
+<parameters>
+<parameter>
+<name>named</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>add problem</name>
+<documentation>Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated.</documentation>
+<parameters>
+<parameter>
+<name>number</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>reporter</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>details</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>delete component</name>
+<documentation>Deletes the named Component.</documentation>
+<parameters>
+<parameter>
+<name>component name</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>note defect</name>
+<documentation>A Defect has been discovered in the given Component, related to the given Problem Report.</documentation>
+<parameters>
+<parameter>
+<name>problem</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>component</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>description</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>reject problem</name>
+<documentation>The indicated Problem has been determined not to be valid: reject it.</documentation>
+<parameters>
+<parameter>
+<name>number</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>reason</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>report problems</name>
+<documentation>Generate a report on each Component known to the system, detailing any related Problem Reports and the associated Defects.</documentation>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 </classes>
@@ -231,13 +224,13 @@ It should address one logical error (which may correspond to several necessary c
 <name>r100</name>
 <documentation></documentation>
 <role><end>1</end>
-<name>is affected by</name>
+<name>affects</name>
 <classname>Component</classname>
 <cardinality>1..n</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name>affects</name>
+<name>is affected by</name>
 <classname>Diagnosed Problem Report</classname>
 <cardinality>0..n</cardinality>
 <documentation></documentation>
