@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.adb,v $
---  $Revision: 39651b1cec4b $
---  $Date: 2003/11/11 06:42:10 $
+--  $Revision: 7af0bcf0d4e0 $
+--  $Date: 2003/11/11 21:25:05 $
 --  $Author: simon $
 
 with Ada.Tags;
@@ -83,7 +83,7 @@ package body ColdFrame.Logging_Event_Basis is
    procedure Log (The_Event : access Event_Base;
                   At_Phase : Event_Basis.Event_Processing_Phase) is
       use type Event_Basis.Event_Processing_Phase;
-      use type High_Resolution_Time.Time;
+      use type Project.High_Resolution_Time.Time;
    begin
       case At_Phase is
          when Event_Basis.Initial =>
@@ -92,18 +92,18 @@ package body ColdFrame.Logging_Event_Basis is
             pragma Assert (The_Event.Last_Phase = Event_Basis.Initial,
                           "loggable event at wrong phase");
             The_Event.Last_Phase := Event_Basis.Posting;
-            The_Event.Posted := High_Resolution_Time.Clock;
+            The_Event.Posted := Project.High_Resolution_Time.Clock;
          when Event_Basis.Dispatching =>
             pragma Assert (The_Event.Last_Phase = Event_Basis.Posting,
                           "loggable event at wrong phase");
             The_Event.Last_Phase := Event_Basis.Dispatching;
-            The_Event.Dispatched := High_Resolution_Time.Clock;
+            The_Event.Dispatched := Project.High_Resolution_Time.Clock;
          when Event_Basis.Finishing =>
             pragma Assert (The_Event.Last_Phase /= Event_Basis.Finishing,
                            "loggable event at wrong phase");
             declare
-               Now : constant High_Resolution_Time.Time
-                 := High_Resolution_Time.Clock;
+               Now : constant Project.High_Resolution_Time.Time
+                 := Project.High_Resolution_Time.Clock;
                Tag : constant Ada.Tags.Tag
                  := Event_Base'Class (The_Event.all)'Tag;
                Inf : Info_P;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.ads,v $
---  $Revision: 6469ed193604 $
---  $Date: 2003/11/11 06:28:08 $
+--  $Revision: 7af0bcf0d4e0 $
+--  $Date: 2003/11/11 21:25:05 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -29,7 +29,7 @@ with Ada.Text_IO;
 with BC.Containers;
 with BC.Support.Statistics;
 with ColdFrame.Event_Basis;
-with High_Resolution_Time;
+with ColdFrame.Project.High_Resolution_Time;
 
 package ColdFrame.Logging_Event_Basis is
 
@@ -68,8 +68,8 @@ private
    type Event_Base is abstract new Event_Basis.Event_Base with record
       Last_Phase : Event_Basis.Event_Processing_Phase
         := Event_Basis.Event_Processing_Phase'First;
-      Posted : High_Resolution_Time.Time;
-      Dispatched : High_Resolution_Time.Time;
+      Posted : Project.High_Resolution_Time.Time;
+      Dispatched : Project.High_Resolution_Time.Time;
       --  no need for Finished, it's the time when Log is called at
       --  phase Finished.
    end record;
