@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0f2606b3eb2b 2003/09/11 19:56:02 simon $ -->
+<!-- $Id: releases.html-proto,v edfe8209b939 2003/09/13 17:27:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -22,7 +22,14 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p><dt>DATE
 
-<dd>Serialization supports nested records.
+<dd>Serialization supports nested (but not disctriminated!) records.
+
+
+<p>The old <tt>[[image]]</tt> functionality for outputting serialized
+data was clumsy for unstructured types (such as an imported Time). A
+new <tt>type-image</tt> annotation is provided.
+<br>The old <tt>[[image]]</tt> functionality is retained but
+deprecated; use <tt>[[field-image]]</tt> instead.
 
 
 <p><dt>20030906
