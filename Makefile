@@ -199,7 +199,7 @@ TOOL_SRC = generated_lines.adb \
   generated_lines_support.ad[bs]
 
 PROGS = COPYING \
-  extractor.ebs \
+  extractor-trampoline.ebs extractor.ebs \
   escape-markup.awk \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
