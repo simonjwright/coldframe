@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e8a33f1f0582 2003/07/10 20:20:34 simon $ -->
+<!-- $Id: bugs.html,v 012165facc0c 2003/07/30 19:20:47 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -114,25 +114,10 @@ be specified in a model.
 <dd>Ada doesn't allow functions to have <tt>in out</tt> or
 <tt>out</tt> parameters; ColdFrame should check.
 
-<dt>0153 (raised 21.ii.03)
-
-<dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
-recognised as an error.
-
-<br><i>Since <tt>[[callback]]</tt>, or &#171;callback&#187;, don't
-need &#171;type&#187;, putting &#171;callback&#187; on something you
-didn't mean to be a &#171;type&#187; converts it to one
-automatically.</i>
-
 <dt>0167 (raised 25.iv.03)
 
 <dd>It is easy to forget to initialize a domain. Could something be
 included to give early and specific warning that this has occurred?
-
-<dt>0170 (raised 29.iv.03)
-
-<dd>If an operation of a &#171;type&#187; is a function returning a
-composite value, the generated code won't compile.
 
 <dt>0172 (raised 6.vi.03)
 
@@ -176,6 +161,17 @@ handwritten code. Perhaps it should be renamed.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>30.vii.03</h3>
+
+<dl>
+
+<dt>0170 (raised 29.iv.03)
+
+<dd>If an operation of a &#171;type&#187; is a function returning a
+composite value, the generated code won't compile.
+
+</dl>
 
 <h3>4.vii.03</h3>
 
@@ -1494,6 +1490,22 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>30.vii.03</h3>
+
+<dl>
+
+<dt>0153 (raised 21.ii.03)
+
+<dd>Putting <tt>[[callback]]</tt> on a non-&#171;type&#187; isn't
+recognised as an error.
+
+<br><i>Since <tt>[[callback]]</tt>, or &#171;callback&#187;, don't
+need &#171;type&#187;, putting &#171;callback&#187; on something you
+didn't mean to be a &#171;type&#187; converts it to one
+automatically.</i>
+
+</dl>
 
 <h3>3.vii.03</h3>
 
