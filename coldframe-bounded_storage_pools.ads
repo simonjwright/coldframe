@@ -29,17 +29,42 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.ads,v $
---  $Revision: 806f4ed2e617 $
---  $Date: 2003/08/23 07:33:37 $
+--  $Revision: 1052131b5d41 $
+--  $Date: 2003/08/24 18:36:32 $
 --  $Author: simon $
 
 with System.Pool_Size;
 with System.Storage_Elements;
+with System.Storage_Pools;
 
 package ColdFrame.Bounded_Storage_Pools is
 
    pragma Elaborate_Body;
    --  Needed to ensure that library routines can execute allocators
+
+   type Bounded_Pool
+     (Pool_Size : System.Storage_Elements.Storage_Count;
+      Elmt_Size : System.Storage_Elements.Storage_Count;
+      Alignment : System.Storage_Elements.Storage_Count)
+   is new System.Storage_Pools.Root_Storage_Pool with private;
+
+   procedure Allocate
+     (Pool         : in out Bounded_Pool;
+      Address      : out System.Address;
+      Storage_Size : System.Storage_Elements.Storage_Count;
+      Alignment    : System.Storage_Elements.Storage_Count);
+
+   procedure Deallocate
+     (Pool         : in out Bounded_Pool;
+      Address      : System.Address;
+      Storage_Size : System.Storage_Elements.Storage_Count;
+      Alignment    : System.Storage_Elements.Storage_Count);
+
+   function Storage_Size
+     (Pool : Bounded_Pool)
+     return System.Storage_Elements.Storage_Count;
+
+private
 
    protected type Mutex is
       entry Seize;
@@ -58,21 +83,5 @@ package ColdFrame.Bounded_Storage_Pools is
    with record
       Excluder : Mutex;
    end record;
-
-   procedure Allocate
-     (Pool         : in out Bounded_Pool;
-      Address      : out System.Address;
-      Storage_Size : System.Storage_Elements.Storage_Count;
-      Alignment    : System.Storage_Elements.Storage_Count);
-
-   procedure Deallocate
-     (Pool         : in out Bounded_Pool;
-      Address      : System.Address;
-      Storage_Size : System.Storage_Elements.Storage_Count;
-      Alignment    : System.Storage_Elements.Storage_Count);
-
-   function Storage_Size
-     (Pool : Bounded_Pool)
-     return System.Storage_Elements.Storage_Count;
 
 end ColdFrame.Bounded_Storage_Pools;
