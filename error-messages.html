@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 53d98851fe1c 2005/02/06 18:50:46 simon $ -->
+<!-- $Id: error-messages.html,v 18d602f4da16 2005/02/18 06:34:16 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -104,6 +104,10 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: type <i>name</i> can't be active <dd>Types may not be active.
 
+<dt>Error: type <i>name</i> can't be atomic <dd>Record and protected types may not be atomic.
+
+<dt>Error: type <i>name</i> can't be volatile <dd>Record and protected types may not be volatile.
+
 <dt>Error: type <i>name</i> has a state machine <dd>Types may not have state machines.
 
 <dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
@@ -139,6 +143,10 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Warning: annotation not handled, "<i>entity</i> [[<i>annotation</i> : <i>value</i>]]" <dd>The given annotation wasn't understood.
 
 <dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
+
+<dt>Warning: <i>datatype</i> type <i>Name</i> can't be atomic <dd>Marking the type <i>{atomic}</i> isn't supported.
+
+<dt>Warning: <i>datatype</i> type <i>Name</i> can't be volatile <dd>Marking the type <i>{volatile}</i> isn't supported.
 
 <dt>Warning: &lt;&lt;init&gt;&gt; operation <i>Class.Name</i> was marked 'private' <dd>The operation needs to be visible for domain initialization to work, and has been made so.
 
