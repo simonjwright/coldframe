@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 1a28ff9af4ee 2002/02/23 13:37:11 simon $
+# $Id: normalize-rose.tcl,v 5580076fd72f 2002/02/24 10:34:10 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -498,10 +498,6 @@ itcl::class Container {
 # String classes
 
 itcl::class Abstract {
-    inherit String
-}
-
-itcl::class Arguments {
     inherit String
 }
 
@@ -1517,74 +1513,10 @@ itcl::class Inheritance {
 itcl::class Action {
     inherit Element
 
-    variable arguments
-    method -arguments {a} {set arguments $a}
-
-    variable args {}
-
-    method -complete {} {
-	if [info exists arguments] {
-	    foreach arg [split $arguments ","] {
-		lappend args [Argument::parse $arg]
-	    }
-	}
-	[stack -top] -add $this
-    }
-
-    method -evaluate {domain} {
-	foreach arg $args {
-	    $arg -evaluate $domain
-	}
-    }
-
     method -generate {domain} {
 	puts "<action>"
 	putElement name $name
-	foreach arg $args {
-	    $arg -generate $domain
-	}
 	puts "</action>"
-    }
-
-}
-
-itcl::class Argument {
-    variable name
-    variable type
-
-    # arg is of the form "name : type"
-    proc parse {arg} {
-	set spl [split $arg ":"]
-	if [expr [llength $spl] != 2] {
-	    Error "invalid argument \"$arg\""
-	}
-	set n [normalize [lindex $spl 0]]
-	set t [normalize [lindex $spl 1]]
-	return [Argument ::#auto $n $t]
-    }
-
-    constructor {n t} {
-	set name $n
-	set type $t
-	return $this
-    }
-
-    method -evaluate {domain} {
-	# cf Attribute
-	set datatypes [$domain -getDatatypes]
-	if [$datatypes -isMissing $type] {
-	    set datatype [Datatype ::#auto $type]
-	    $datatypes -add $datatype $type
-	} else {
-#	    set datatype [$datatypes -atName $type]
-	}
-    }
-
-    method -generate {domain} {
-	puts "<argument>"
-	putElement name $name
-	putElement type $type
-	puts "</argument>"
     }
 
 }
@@ -1595,42 +1527,22 @@ itcl::class Event {
     variable type
     method -type {t} { set type $t}
 
-    variable arguments
-    method -arguments {a} {set arguments $a}
-
     # Dependencies stereotyped <<event>> produce instance (state machine)
     # events. Dependencies stereotyped <<message>> produce class events.
     variable cls 0
     method -message {dummy} {set cls 1}
 
-    variable args {}
-
-
     method -complete {} {
-	if [info exists arguments] {
-	    foreach arg [split $arguments ","] {
-		lappend args [Argument::parse $arg]
-	    }
-	}
 	[stack -top] -event $this
     }
 
-    method -evaluate {domain} {
-	foreach arg $args {
-	    $arg -evaluate $domain
-	}
-    }
-
     method -generate {domain} {
-	puts "<event"
-	if $cls {puts -nonewline "class=\"yes\""}
+	puts -nonewline "<event"
+	if $cls {puts -nonewline " class=\"yes\""}
 	puts ">"
 	putElement name $name
 	if [info exists type] {
 	    putElement type $type
-	}
-	foreach arg $args {
-	    $arg -generate $domain
 	}
 	puts "</event>"
     }
@@ -1650,16 +1562,6 @@ itcl::class State {
     method -initial {dummy} {set initial 1}
 
     method -evaluate {domain} {
-#	if [expr [string length $name] == 0] {
-#	    if $initial {
-#		set name "Initial"
-#	    } elseif $final {
-#		set name "Final"
-#	    } else {
-#		# how can I identify this more clearly?
-#		Error "unnamed state"
-#	    }
-#	}
 	if [info exists entryactions] {
 	    $entryactions -evaluate $domain
 	}
@@ -2108,7 +2010,6 @@ proc elementFactory {xmlTag} {
     switch $xmlTag {
 	abstract          {return [Abstract #auto]}
 	action            {return [Action #auto]}
-	arguments         {return [Arguments #auto]}
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
