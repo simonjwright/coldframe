@@ -2,7 +2,7 @@
 
 Copyright Simon Wright <simon@pushface.org>.
 
-$Id: BuildTool.py,v b107bf195a03 2005/03/25 14:34:06 simon $
+$Id: BuildTool.py,v 659e7a8845e4 2005/03/25 14:36:10 simon $
 
 """
 
@@ -324,6 +324,6 @@ class Application(Frame):
 
 
 app = Application()
-app.master.title('ColdFrame domain manager')
-app.master.iconname('CF domain manager')
+app.master.title('ColdFrame build tool')
+app.master.iconname('CF build tool')
 app.mainloop()
