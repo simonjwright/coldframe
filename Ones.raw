@@ -3,9 +3,9 @@
 <name>Ones</name>
 <date>
 <year>2002</year>
-<month>7</month>
-<day>30</day>
-<time>21:16</time>
+<month>8</month>
+<day>17</day>
+<time>17:50</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -93,13 +93,13 @@
 <name>a1</name>
 <documentation></documentation>
 <role><end>1</end>
-<name>the s of</name>
+<name>follows</name>
 <classname>O</classname>
 <cardinality>0..1</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name>the o of</name>
+<name>precedes</name>
 <classname>S</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
