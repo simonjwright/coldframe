@@ -1,0 +1,52 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "L2"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3D986ACA03D9"
+    stereotype 	"generate"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Deep"
+	    quid       	"3D986AD600DE"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3D986CD9008E"
+		    label      	"g2"
+		    supplier   	"Logical View::Nesting::L1::Depth"
+		    quidu      	"3D986C9B0085"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3D986AD100C2"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Nesting::L1::L2::Deep" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(750, 510)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(669, 464)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Deep")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D986AD600DE"
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)))))

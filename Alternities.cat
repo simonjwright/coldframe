@@ -1,0 +1,1069 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Alternities"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3C10B8BD01E4"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class_Category "Radar Proxy"
+	    quid       	"3C10B8D902BB"
+	    visible_categories 	(list visibility_relationship_list
+		(object Visibility_Relationship
+		    quid       	"3C10B91B027F"
+		    supplier   	"Logical View::Alternities::Real Source"
+		    quidu      	"3C10B8F102D7")
+		(object Visibility_Relationship
+		    quid       	"3C10B9A5028D"
+		    supplier   	"Logical View::Alternities::Source"
+		    quidu      	"3C10B90F0085"))
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Track"
+		    quid       	"3C10BBFA0103"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"3C10BCA701E2"
+			    supplier   	"Logical View::Alternities::Radar Proxy::Track Report"
+			    quidu      	"3C10BC690135"))
+		    operations 	(list Operations
+			(object Operation "initialize"
+			    quid       	"3C10BC1601FB"
+			    stereotype 	"init"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "receive update"
+			    quid       	"3C10BC1F0373"
+			    stereotype 	"class"
+			    parameters 	(list Parameters
+				(object Parameter "report"
+				    type       	"Track Report"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "tn"
+			    quid       	"3C10BE57023A"
+			    stereotype 	"id"
+			    type       	"Integer")))
+		(object Class "Track Report"
+		    quid       	"3C10BC690135"
+		    documentation 	"[[ imported : Source ]]"
+		    stereotype 	"type"))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"3C10BBF4021A"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Alternities::Radar Proxy::Track" @1
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1184, 512)
+			    label      	(object ItemLabel
+				Parent_View 	@1
+				location   	(725, 381)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	918
+				justify    	0
+				label      	"Track")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"3C10BBFA0103"
+			    compartment 	(object Compartment
+				Parent_View 	@1
+				location   	(725, 442)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	4
+				max_width  	925
+				compartmentItems 	(list Compartment
+				    "<<init>> + initialize()"
+				    "<<class>> + receive update(report : Track Report)"
+				    "<<id>> - tn : Integer"))
+			    width      	936
+			    height     	286
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Radar Proxy::Track Report" @2
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(272, 1040)
+			    label      	(object ItemLabel
+				Parent_View 	@2
+				location   	(116, 1011)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	312
+				justify    	0
+				label      	"Track Report")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@2
+				location   	(116, 961)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	312
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BC690135"
+			    width      	330
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object UsesView "" @3
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BCA701E2"
+			    client     	@1
+			    supplier   	@2
+			    line_style 	0)
+			(object NoteView @4
+			    location   	(1344, 1200)
+			    label      	(object ItemLabel
+				Parent_View 	@4
+				location   	(1009, 1094)
+				fill_color 	13434879
+				nlines     	4
+				max_width  	634
+				label      	"This class is here to demonstrate receipt of track reports; there's no code to actually do anything with them, they just get printed out.")
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	694
+			    height     	225)
+			(object AttachView "" @5
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@4
+			    supplier   	@1
+			    line_style 	0)))))
+	(object Class_Category "Real Source"
+	    quid       	"3C10B8F102D7"
+	    visible_categories 	(list visibility_relationship_list
+		(object Visibility_Relationship
+		    quid       	"3C10B9200255"
+		    supplier   	"Logical View::Alternities::Source"
+		    quidu      	"3C10B90F0085"))
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Actual Reporter"
+		    quid       	"3C10BD1E014E"
+		    stereotype 	"singleton"
+		    operations 	(list Operations
+			(object Operation "initialize"
+			    quid       	"3C10C52B0042"
+			    stereotype 	"init"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "start"
+			    quid       	"3C10C6130026"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    concurrency 	"Active")
+		(object Class "Interface"
+		    quid       	"3C10CCF503BC"
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "name"
+			    quid       	"3C10CD1100AF"
+			    result     	"String"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"3C10BD1A00F8"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Alternities::Real Source::Actual Reporter" @6
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(960, 880)
+			    label      	(object ItemLabel
+				Parent_View 	@6
+				location   	(765, 796)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	390
+				justify    	0
+				label      	"Actual Reporter")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@6
+				location   	(765, 746)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	390
+				justify    	0
+				label      	"<<singleton>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"3C10BD1E014E"
+			    compartment 	(object Compartment
+				Parent_View 	@6
+				location   	(765, 857)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	388
+				compartmentItems 	(list Compartment
+				    "<<init>> + initialize()"
+				    "+ start()"))
+			    width      	408
+			    height     	292
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Real Source::Interface" @7
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(400, 336)
+			    label      	(object ItemLabel
+				Parent_View 	@7
+				location   	(239, 277)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"Interface")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@7
+				location   	(239, 227)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"3C10CCF503BC"
+			    compartment 	(object Compartment
+				Parent_View 	@7
+				location   	(239, 338)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	319
+				compartmentItems 	(list Compartment
+				    "+ name() : String"))
+			    width      	340
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object NoteView @8
+			    location   	(1584, 304)
+			    label      	(object ItemLabel
+				Parent_View 	@8
+				location   	(1118, 185)
+				fill_color 	13434879
+				nlines     	4
+				max_width  	896
+				label      	"If this domain is linked, it reports real tracks using the Track Report callback facilities of the domain Source and responds to calls on Interface as appropriate.")
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	956
+			    height     	250)
+			(object NoteView @9
+			    location   	(1440, 1280)
+			    label      	(object ItemLabel
+				Parent_View 	@9
+				location   	(1093, 1220)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	658
+				label      	"Reports Track Updates for TN 73.")
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	718
+			    height     	132)
+			(object AttachView "" @10
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@9
+			    supplier   	@6
+			    line_style 	0)
+			(object NoteView @11
+			    location   	(304, 688)
+			    label      	(object ItemLabel
+				Parent_View 	@11
+				location   	(66, 622)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	440
+				label      	
+|name() returns "real source".
+				)
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	500
+			    height     	144)
+			(object AttachView "" @12
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@11
+			    supplier   	@7
+			    line_style 	0)))))
+	(object Class_Category "Simulated Source"
+	    quid       	"3C10B8FC00BA"
+	    visible_categories 	(list visibility_relationship_list
+		(object Visibility_Relationship
+		    quid       	"3C10B924022E"
+		    supplier   	"Logical View::Alternities::Real Source"
+		    quidu      	"3C10B8F102D7")
+		(object Visibility_Relationship
+		    quid       	"3C10B9A201A9"
+		    supplier   	"Logical View::Alternities::Source"
+		    quidu      	"3C10B90F0085"))
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Simulated Reporter"
+		    quid       	"3C10BCD10183"
+		    stereotype 	"singleton"
+		    operations 	(list Operations
+			(object Operation "initialize"
+			    quid       	"3C10C544012A"
+			    stereotype 	"init"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "start"
+			    quid       	"3C10C6220211"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))
+		    concurrency 	"Active")
+		(object Class "Interface"
+		    quid       	"3C10CD450233"
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "name"
+			    quid       	"3C10CD6200E8"
+			    result     	"String"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"3C10BCC3015E"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Alternities::Simulated Source::Simulated Reporter" @13
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(896, 768)
+			    label      	(object ItemLabel
+				Parent_View 	@13
+				location   	(682, 684)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	428
+				justify    	0
+				label      	"Simulated Reporter")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@13
+				location   	(682, 634)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	428
+				justify    	0
+				label      	"<<singleton>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"3C10BCD10183"
+			    compartment 	(object Compartment
+				Parent_View 	@13
+				location   	(682, 745)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	396
+				compartmentItems 	(list Compartment
+				    "<<init>> + initialize()"
+				    "+ start()"))
+			    width      	446
+			    height     	292
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Simulated Source::Interface" @14
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(384, 256)
+			    label      	(object ItemLabel
+				Parent_View 	@14
+				location   	(223, 197)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"Interface")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@14
+				location   	(223, 147)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"3C10CD450233"
+			    compartment 	(object Compartment
+				Parent_View 	@14
+				location   	(223, 258)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	328
+				compartmentItems 	(list Compartment
+				    "+ name() : String"))
+			    width      	340
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object NoteView @15
+			    location   	(1712, 256)
+			    label      	(object ItemLabel
+				Parent_View 	@15
+				location   	(1315, 128)
+				fill_color 	13434879
+				nlines     	5
+				max_width  	759
+				label      	"If this domain is linked, it reports simulated tracks using the Track Report callback facilities of the domain Source and responds to calls on Interface as appropriate.")
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	819
+			    height     	269)
+			(object NoteView @16
+			    location   	(1488, 1168)
+			    label      	(object ItemLabel
+				Parent_View 	@16
+				location   	(1147, 1103)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	646
+				label      	"Reports Track Updates for TN 42.")
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	706
+			    height     	143)
+			(object AttachView "" @17
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@16
+			    supplier   	@13
+			    line_style 	0)
+			(object NoteView @18
+			    location   	(288, 672)
+			    label      	(object ItemLabel
+				Parent_View 	@18
+				location   	(69, 612)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	403
+				label      	
+|name() returns "simulated source".
+				)
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	463
+			    height     	132)
+			(object AttachView "" @19
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@18
+			    supplier   	@14
+			    line_style 	0)))))
+	(object Class_Category "Source"
+	    quid       	"3C10B90F0085"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Metres"
+		    quid       	"3C10BA4900C9"
+		    documentation 	
+|[[ real : digits 9 ]]
+|
+		    
+		    stereotype 	"type")
+		(object Class "Track Number"
+		    quid       	"3C10BA86038A"
+		    documentation 	"[[ integer : lower 0, upper 1023 ]]"
+		    stereotype 	"type")
+		(object Class "Track Update"
+		    quid       	"3C10BAA80268"
+		    stereotype 	"type"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"3C10BBA602D3"
+			    supplier   	"Logical View::Alternities::Source::Track Number"
+			    quidu      	"3C10BA86038A")
+			(object Uses_Relationship
+			    quid       	"3C10BBA90346"
+			    supplier   	"Logical View::Alternities::Source::Metres"
+			    quidu      	"3C10BA4900C9"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "tn"
+			    quid       	"3C10BAC40251"
+			    type       	"Track Number")
+			(object ClassAttribute "x"
+			    quid       	"3C10BAD00359"
+			    type       	"Metres")
+			(object ClassAttribute "y"
+			    quid       	"3C10BADC02DE"
+			    type       	"Metres")
+			(object ClassAttribute "time valid"
+			    quid       	"3C10BAE100CC"
+			    type       	"Time")))
+		(object Class "Track Creation"
+		    quid       	"3C10BB060013"
+		    stereotype 	"type"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"3C10BBAE00AE"
+			    supplier   	"Logical View::Alternities::Source::Track Number"
+			    quidu      	"3C10BA86038A"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "tn"
+			    quid       	"3C10BB1F01C8"
+			    type       	"Track Number")))
+		(object Class "Track Deletion"
+		    quid       	"3C10BB2B0265"
+		    stereotype 	"type"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"3C10BBB300BC"
+			    supplier   	"Logical View::Alternities::Source::Track Number"
+			    quidu      	"3C10BA86038A"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "tn"
+			    quid       	"3C10BB3C02FE"
+			    type       	"Track Number")))
+		(object Class "Track Report"
+		    quid       	"3C10BB5601ED"
+		    documentation 	"[[ discriminated; callback : 2 ]]"
+		    stereotype 	"type"
+		    used_nodes 	(list uses_relationship_list
+			(object Uses_Relationship
+			    quid       	"3C10BBB80173"
+			    supplier   	"Logical View::Alternities::Source::Track Creation"
+			    quidu      	"3C10BB060013")
+			(object Uses_Relationship
+			    quid       	"3C3433F302B5"
+			    supplier   	"Logical View::Alternities::Source::Track Update"
+			    quidu      	"3C10BAA80268")
+			(object Uses_Relationship
+			    quid       	"3C3433F800C9"
+			    supplier   	"Logical View::Alternities::Source::Track Deletion"
+			    quidu      	"3C10BB2B0265"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "creation"
+			    quid       	"3C10BB7F031A"
+			    type       	"Track Creation")
+			(object ClassAttribute "update"
+			    quid       	"3C10BB8C00C7"
+			    type       	"Track Update")
+			(object ClassAttribute "deletion"
+			    quid       	"3C10BB930328"
+			    type       	"Track Deletion")))
+		(object Class "Interface"
+		    quid       	"3C10CC90031F"
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "name"
+			    quid       	"3C10CC9C0384"
+			    result     	"String"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"3C10BA3F015F"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Alternities::Source::Metres" @20
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(272, 1120)
+			    label      	(object ItemLabel
+				Parent_View 	@20
+				location   	(182, 1091)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	180
+				justify    	0
+				label      	"Metres")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@20
+				location   	(182, 1041)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	180
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BA4900C9"
+			    width      	198
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Source::Track Number" @21
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(304, 624)
+			    label      	(object ItemLabel
+				Parent_View 	@21
+				location   	(154, 595)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	300
+				justify    	0
+				label      	"Track Number")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@21
+				location   	(154, 545)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	300
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BA86038A"
+			    width      	318
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Source::Track Update" @22
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(944, 528)
+			    label      	(object ItemLabel
+				Parent_View 	@22
+				location   	(755, 394)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"Track Update")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@22
+				location   	(755, 344)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BAA80268"
+			    compartment 	(object Compartment
+				Parent_View 	@22
+				location   	(755, 455)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	5
+				max_width  	384
+				compartmentItems 	(list Compartment
+				    "- tn : Track Number"
+				    "- x : Metres"
+				    "- y : Metres"
+				    "- time valid : Time"))
+			    width      	396
+			    height     	392
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Source::Track Creation" @23
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(960, 1104)
+			    label      	(object ItemLabel
+				Parent_View 	@23
+				location   	(771, 1045)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"Track Creation")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@23
+				location   	(771, 995)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BB060013"
+			    compartment 	(object Compartment
+				Parent_View 	@23
+				location   	(771, 1106)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	384
+				compartmentItems 	(list Compartment
+				    "- tn : Track Number"))
+			    width      	396
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Source::Track Deletion" @24
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(976, 1600)
+			    label      	(object ItemLabel
+				Parent_View 	@24
+				location   	(787, 1541)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"Track Deletion")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@24
+				location   	(787, 1491)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	378
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BB2B0265"
+			    compartment 	(object Compartment
+				Parent_View 	@24
+				location   	(787, 1602)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	384
+				compartmentItems 	(list Compartment
+				    "- tn : Track Number"))
+			    width      	396
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Alternities::Source::Track Report" @25
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1744, 1104)
+			    label      	(object ItemLabel
+				Parent_View 	@25
+				location   	(1496, 995)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	496
+				justify    	0
+				label      	"Track Report")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@25
+				location   	(1496, 945)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	496
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"3C10BB5601ED"
+			    compartment 	(object Compartment
+				Parent_View 	@25
+				location   	(1496, 1056)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	4
+				max_width  	503
+				compartmentItems 	(list Compartment
+				    "- creation : Track Creation"
+				    "- update : Track Update"
+				    "- deletion : Track Deletion"))
+			    width      	514
+			    height     	342
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object UsesView "" @26
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BBA602D3"
+			    client     	@22
+			    supplier   	@21
+			    line_style 	0)
+			(object UsesView "" @27
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BBA90346"
+			    client     	@22
+			    supplier   	@20
+			    line_style 	0)
+			(object UsesView "" @28
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BBAE00AE"
+			    client     	@23
+			    supplier   	@21
+			    line_style 	0)
+			(object UsesView "" @29
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BBB300BC"
+			    client     	@24
+			    supplier   	@21
+			    line_style 	0)
+			(object UsesView "" @30
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C10BBB80173"
+			    client     	@25
+			    supplier   	@23
+			    line_style 	0)
+			(object NoteView @31
+			    location   	(1744, 512)
+			    label      	(object ItemLabel
+				Parent_View 	@31
+				location   	(1397, 318)
+				fill_color 	13434879
+				nlines     	7
+				max_width  	658
+				label      	
+|This domain exists to forward track reports to users via callbacks on Track Report.
+|
+|Reports are received from the real or simulated source, depending on which is built into the system.
+				)
+			    line_color 	3342489
+			    fill_color 	13434879
+			    width      	718
+			    height     	400)
+			(object AttachView "" @32
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    client     	@31
+			    supplier   	@25
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::Alternities::Source::Interface" @33
+			    ShowCompartmentStereotypes 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(256, 208)
+			    label      	(object ItemLabel
+				Parent_View 	@33
+				location   	(95, 149)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"Interface")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@33
+				location   	(95, 99)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	322
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Label"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"3C10CC90031F"
+			    compartment 	(object Compartment
+				Parent_View 	@33
+				location   	(95, 210)
+				icon_style 	"Label"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	328
+				compartmentItems 	(list Compartment
+				    "+ name() : String"))
+			    width      	340
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object UsesView "" @34
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C3433F302B5"
+			    client     	@25
+			    supplier   	@22
+			    line_style 	0)
+			(object UsesView "" @35
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C3433F800C9"
+			    client     	@25
+			    supplier   	@24
+			    line_style 	0))))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3C10B8D40302"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object CategoryView "Logical View::Alternities::Radar Proxy" @36
+		    location   	(512, 304)
+		    label      	(object ItemLabel
+			Parent_View 	@36
+			location   	(368, 220)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Radar Proxy")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C10B8D902BB"
+		    width      	300
+		    height     	180)
+		(object CategoryView "Logical View::Alternities::Real Source" @37
+		    location   	(272, 1008)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(128, 924)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Real Source")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C10B8F102D7"
+		    width      	300
+		    height     	180)
+		(object CategoryView "Logical View::Alternities::Simulated Source" @38
+		    location   	(1088, 992)
+		    label      	(object ItemLabel
+			Parent_View 	@38
+			location   	(944, 908)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Simulated Source")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C10B8FC00BA"
+		    width      	300
+		    height     	180)
+		(object CategoryView "Logical View::Alternities::Source" @39
+		    location   	(624, 640)
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(480, 556)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Source")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C10B90F0085"
+		    width      	300
+		    height     	180)
+		(object ImportView "" @40
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C10B9200255"
+		    client     	@37
+		    supplier   	@39
+		    line_style 	0)
+		(object ImportView "" @41
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C10B9A201A9"
+		    client     	@38
+		    supplier   	@39
+		    line_style 	0)
+		(object ImportView "" @42
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C10B9A5028D"
+		    client     	@36
+		    supplier   	@39
+		    line_style 	0)
+		(object NoteView @43
+		    location   	(1792, 672)
+		    label      	(object ItemLabel
+			Parent_View 	@43
+			location   	(1470, 66)
+			fill_color 	13434879
+			nlines     	24
+			max_width  	608
+			label      	
+|Radar Proxy receives Source information via callbacks and is also able to make requests of Source.
+|
+|In a Simulated build, the callbacks come from Simulated Source and the requests are forwarded to Simulated Source.
+|
+|In a Real build, the callbacks come from Real Source and the requests are forwarded to Real Source.
+|
+|It's not possible for both Real and Simulated Source to be in the same build (though it would be possible to have a Real sonar Source and a Simulated radar Source; of course the package names here, Real Source and Simulated Source, would have to be more specific!).
+			)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	668
+		    height     	1225)))))

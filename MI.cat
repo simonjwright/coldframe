@@ -1,0 +1,299 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "MI"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3B409A4802E7"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "GP1"
+	    quid       	"3B409A5E0140"
+	    operations 	(list Operations
+		(object Operation "a"
+		    quid       	"3B409B8A0340"
+		    stereotype 	"abstract"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3B409A6703DE"
+		    stereotype 	"id"
+		    type       	"autonumber")))
+	(object Class "GP2"
+	    quid       	"3B409A7500E9"
+	    operations 	(list Operations
+		(object Operation "b"
+		    quid       	"3B409B9200F1"
+		    stereotype 	"abstract"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3B409A7B02BC"
+		    stereotype 	"id"
+		    type       	"autonumber")))
+	(object Class "P"
+	    quid       	"3B409AA50318"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3B409AD1016E"
+		    label      	"r1"
+		    supplier   	"Logical View::MI::GP1"
+		    quidu      	"3B409A5E0140")
+		(object Inheritance_Relationship
+		    quid       	"3B409AD402FB"
+		    label      	"r2"
+		    supplier   	"Logical View::MI::GP2"
+		    quidu      	"3B409A7500E9"))
+	    operations 	(list Operations
+		(object Operation "a"
+		    quid       	"3B409BA700B6"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "C1"
+	    quid       	"3B409AE10008"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3B409B00033A"
+		    label      	"r3"
+		    supplier   	"Logical View::MI::P"
+		    quidu      	"3B409AA50318"))
+	    operations 	(list Operations
+		(object Operation "b"
+		    quid       	"3B409BAB035B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "C2"
+	    quid       	"3B409AF300E4"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3B409B0402F0"
+		    label      	"r3"
+		    supplier   	"Logical View::MI::P"
+		    quidu      	"3B409AA50318"))
+	    operations 	(list Operations
+		(object Operation "b"
+		    quid       	"3B409BB301B6"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3B409A56030D"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::MI::GP1" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(800, 304)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(561, 198)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	478
+			justify    	0
+			label      	"GP1")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B409A5E0140"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(561, 259)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	475)
+		    width      	496
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MI::GP2" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1760, 304)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1521, 198)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	478
+			justify    	0
+			label      	"GP2")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B409A7500E9"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1521, 259)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	475)
+		    width      	496
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MI::P" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1248, 944)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1167, 863)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"P")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B409AA50318"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1167, 924)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	97)
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MI::C1" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(816, 1632)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(735, 1551)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"C1")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B409AE10008"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(735, 1612)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	97)
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::MI::C2" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1680, 1632)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1599, 1551)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"C2")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B409AF300E4"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(1599, 1612)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	97)
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "r3" @6
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(1031, 1287)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r3")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3B409B00033A"
+		    client     	@4
+		    supplier   	@3
+		    line_style 	0)
+		(object InheritView "r3" @7
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1463, 1287)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r3")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3B409B0402F0"
+		    client     	@5
+		    supplier   	@3
+		    line_style 	0)
+		(object InheritView "r1" @8
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1033, 636)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3B409AD1016E"
+		    client     	@3
+		    supplier   	@1
+		    line_style 	0)
+		(object InheritView "r2" @9
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(1494, 636)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r2")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3B409AD402FB"
+		    client     	@3
+		    supplier   	@2
+		    line_style 	0)))))

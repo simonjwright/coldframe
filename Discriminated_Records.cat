@@ -1,0 +1,214 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Discriminated Records"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3BB1E7EA00B6"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Position"
+	    quid       	"3BB1E80002E5"
+	    documentation 	"[[ enumeration : fore, aft ]]"
+	    stereotype 	"type")
+	(object Class "Rate"
+	    quid       	"3BB1E82D023E"
+	    documentation 	"[[ real : digits 9 ]]"
+	    stereotype 	"type")
+	(object Class "Velocity"
+	    quid       	"3BB1E850006B"
+	    stereotype 	"type"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3BB1E8B803D1"
+		    supplier   	"Logical View::Discriminated Records::Rate"
+		    quidu      	"3BB1E82D023E"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "xdot"
+		    quid       	"3BB1E85A0271"
+		    type       	"Rate")
+		(object ClassAttribute "ydot"
+		    quid       	"3BB1E86C007A"
+		    type       	"Rate")))
+	(object Class "Output"
+	    quid       	"3BB1E87E03A1"
+	    documentation 	"[[ discriminated; callback : 3 ]]"
+	    stereotype 	"type"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"3BB1E8B300FF"
+		    supplier   	"Logical View::Discriminated Records::Position"
+		    quidu      	"3BB1E80002E5")
+		(object Uses_Relationship
+		    quid       	"3BB1E8B60099"
+		    supplier   	"Logical View::Discriminated Records::Velocity"
+		    quidu      	"3BB1E850006B"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "pos"
+		    quid       	"3BB1E8980328"
+		    type       	"Position"
+		    initv      	"Aft")
+		(object ClassAttribute "vel"
+		    quid       	"3BB1E8A3027A"
+		    type       	"Velocity")
+		(object ClassAttribute "acquire"
+		    quid       	"3BB1EE3301B6"
+		    type       	"Boolean"
+		    initv      	"True"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3BB1E7F90220"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Discriminated Records::Position" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1600, 480)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1510, 451)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"Position")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(1510, 401)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"3BB1E80002E5"
+		    width      	198
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Discriminated Records::Rate" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2112, 1104)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(2022, 1075)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"Rate")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(2022, 1025)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"3BB1E82D023E"
+		    width      	198
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Discriminated Records::Velocity" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1616, 1104)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1490, 1020)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	252
+			justify    	0
+			label      	"Velocity")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(1490, 970)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	252
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"3BB1E850006B"
+		    width      	270
+		    height     	292
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Discriminated Records::Output" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(736, 688)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(487, 579)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	498
+			justify    	0
+			label      	"Output")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(487, 529)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	498
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"3BB1E87E03A1"
+		    width      	516
+		    height     	342
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "" @5
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB1E8B300FF"
+		    client     	@4
+		    supplier   	@1
+		    line_style 	0)
+		(object UsesView "" @6
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB1E8B60099"
+		    client     	@4
+		    supplier   	@3
+		    line_style 	0)
+		(object UsesView "" @7
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB1E8B803D1"
+		    client     	@3
+		    supplier   	@2
+		    line_style 	0)))))

@@ -1,0 +1,424 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "XML Management"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CE91C5F03D1"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Element"
+	    quid       	"3CE91C91026A"
+	    operations 	(list Operations
+		(object Operation "process"
+		    quid       	"3CE91D550110"
+		    stereotype 	"abstract"
+		    parameters 	(list Parameters
+			(object Parameter "n"
+			    type       	"DOM_Node"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3CE91D24026A"
+		    stereotype 	"id"
+		    type       	"Autonumber")
+		(object ClassAttribute "name"
+		    quid       	"3CE91D3A0206"
+		    type       	"Text")
+		(object ClassAttribute "current"
+		    quid       	"3CE91DA40396"
+		    type       	"DOM Node")))
+	(object Class "Leaf"
+	    quid       	"3CE91CA50032"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CE91CCA00D6"
+		    label      	"g1"
+		    supplier   	"Logical View::XML Management::Element"
+		    quidu      	"3CE91C91026A"))
+	    operations 	(list Operations
+		(object Operation "process"
+		    quid       	"3CE91DB100C7"
+		    parameters 	(list Parameters
+			(object Parameter "n"
+			    type       	"DOM Node"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "processed by"
+		    quid       	"3CE91DE80162"
+		    type       	"Processor")))
+	(object Class "Non Leaf"
+	    quid       	"3CE91CAC0088"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CE91CC60289"
+		    label      	"g1"
+		    supplier   	"Logical View::XML Management::Element"
+		    quidu      	"3CE91C91026A"))
+	    operations 	(list Operations
+		(object Operation "process"
+		    quid       	"3CE91D84033C"
+		    parameters 	(list Parameters
+			(object Parameter "n"
+			    type       	"DOM Node"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "DOM Node"
+	    quid       	"3CE91E0501C4"
+	    documentation 	"[[ renames : DOM.Core.Node ]]"
+	    stereotype 	"type"
+	    operations 	(list Operations
+		(object Operation "processor"
+		    quid       	"3CE9F44000D0"
+		    stereotype 	"access"
+		    parameters 	(list Parameters
+			(object Parameter "n"
+			    type       	"DOM Node"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Interface"
+	    quid       	"3CE91E360132"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "register"
+		    quid       	"3CE91F10031E"
+		    parameters 	(list Parameters
+			(object Parameter "p"
+			    type       	"Processor")
+			(object Parameter "for path"
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "process"
+		    quid       	"3CE91F37024B"
+		    parameters 	(list Parameters
+			(object Parameter "file named"
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Association "a1"
+	    quid       	"3CE91CBA010D"
+	    roles      	(list role_list
+		(object Role "descends from"
+		    quid       	"3CE91CBD036E"
+		    label      	"descends from"
+		    supplier   	"Logical View::XML Management::Non Leaf"
+		    quidu      	"3CE91CAC0088"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "is parent of"
+		    quid       	"3CE91CBD038C"
+		    label      	"is parent of"
+		    supplier   	"Logical View::XML Management::Element"
+		    quidu      	"3CE91C91026A"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CE91C890179"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::XML Management::Leaf" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(784, 912)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(525, 806)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	518
+			justify    	0
+			label      	"Leaf")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CE91CA50032"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(525, 867)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	515)
+		    width      	536
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::XML Management::Element" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1216, 352)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(841, 196)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	750
+			justify    	0
+			label      	"Element")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CE91C91026A"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(841, 257)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	747)
+		    width      	768
+		    height     	336
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::XML Management::Non Leaf" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1920, 912)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1680, 831)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	480
+			justify    	0
+			label      	"Non Leaf")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CE91CAC0088"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1680, 892)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	478)
+		    width      	498
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @4
+		    location   	(1918, 425)
+		    label      	(object SegLabel @5
+			Parent_View 	@4
+			location   	(1918, 366)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CE91CBA010D"
+		    roleview_list 	(list RoleViews
+			(object RoleView "descends from" @6
+			    Parent_View 	@4
+			    location   	(398, 9)
+			    label      	(object SegLabel @7
+				Parent_View 	@6
+				location   	(2088, 728)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	314
+				justify    	0
+				label      	"+descends from"
+				pctDist    	0.772088
+				height     	169
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CE91CBD036E"
+			    client     	@4
+			    supplier   	@3
+			    line_style 	0
+			    label      	(object SegLabel @8
+				Parent_View 	@6
+				location   	(1969, 775)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.890910
+				height     	50
+				orientation 	0))
+			(object RoleView "is parent of" @9
+			    Parent_View 	@4
+			    location   	(398, 9)
+			    label      	(object SegLabel @10
+				Parent_View 	@9
+				location   	(1734, 309)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	239
+				justify    	0
+				label      	"+is parent of"
+				pctDist    	0.659033
+				height     	41
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CE91CBD038C"
+			    client     	@4
+			    supplier   	@2
+			    vertices   	(list Points
+				(1918, 425)
+				(1918, 350)
+				(1600, 350))
+			    line_style 	0
+			    label      	(object SegLabel @11
+				Parent_View 	@9
+				location   	(1647, 387)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.843854
+				height     	37
+				orientation 	0))))
+		(object InheritView "g1" @12
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(980, 656)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CE91CCA00D6"
+		    client     	@1
+		    supplier   	@2
+		    line_style 	0)
+		(object InheritView "g1" @13
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1615, 669)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CE91CC60289"
+		    client     	@3
+		    supplier   	@2
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::XML Management::DOM Node" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1856, 1616)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(1477, 1557)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	758
+			justify    	0
+			label      	"DOM Node")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@14
+			location   	(1477, 1507)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	758
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CE91E0501C4"
+		    compartment 	(object Compartment
+			Parent_View 	@14
+			location   	(1477, 1618)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	756)
+		    width      	776
+		    height     	242
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::XML Management::Interface" @15
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(736, 1584)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(356, 1500)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	760
+			justify    	0
+			label      	"Interface")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@15
+			location   	(356, 1450)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	760
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CE91E360132"
+		    compartment 	(object Compartment
+			Parent_View 	@15
+			location   	(356, 1561)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	756)
+		    width      	778
+		    height     	292
+		    annotation 	8
+		    autoResize 	TRUE)))))

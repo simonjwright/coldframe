@@ -1,0 +1,1464 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Autohash"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3BB22DA80147"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Int"
+	    quid       	"3BB22DBE020F"
+	    documentation 	
+|[[ integer : lower 5, upper 10 ]]
+|
+	    
+	    stereotype 	"type")
+	(object Class "Enum"
+	    quid       	"3BB22DC8025E"
+	    documentation 	"[[ enumeration : a, b, c ]]"
+	    stereotype 	"type")
+	(object Class "Int No Lower"
+	    quid       	"3BB22DD001C1"
+	    documentation 	"[[ integer : upper 10 ]]"
+	    stereotype 	"type")
+	(object Class "Int No Upper"
+	    quid       	"3BB22DDF0138"
+	    documentation 	"[[ integer : lower 5 ]]"
+	    stereotype 	"type")
+	(object Class "Id Is Enum"
+	    quid       	"3BB22E6B03CD"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22E880362"
+		    stereotype 	"id"
+		    type       	"Enum")))
+	(object Class "Id Is Int"
+	    quid       	"3BB22E9A0325"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22EA40262"
+		    stereotype 	"id"
+		    type       	"Int")))
+	(object Class "Id Is Int No Upper"
+	    quid       	"3BB22EB50166"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22EC00354"
+		    stereotype 	"id"
+		    type       	"Int No Upper")))
+	(object Class "Id Is Int No Lower"
+	    quid       	"3BB22ED501E0"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22EDF023B"
+		    stereotype 	"id"
+		    type       	"Int No Lower")))
+	(object Class "Id Is Integer"
+	    quid       	"3BB22EF202B3"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22EF903B4"
+		    stereotype 	"id"
+		    type       	"Integer")))
+	(object Class "Two Ids"
+	    quid       	"3BB22F080390"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id1"
+		    quid       	"3BB22F1502DD"
+		    stereotype 	"id"
+		    type       	"Enum")
+		(object ClassAttribute "id2"
+		    quid       	"3BB22F1F01BC"
+		    stereotype 	"id"
+		    type       	"Int")))
+	(object Class "Id Is Integer With Max"
+	    quid       	"3BB22F3F02B6"
+	    documentation 	"[[ max : 18 ]]"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3BB22F4D036B"
+		    stereotype 	"id"
+		    type       	"Integer")))
+	(object Class "Assoc R1"
+	    quid       	"3BB2320A03C5")
+	(object Class "Assoc R2"
+	    quid       	"3BB2326503B1")
+	(object Class "Assoc R3"
+	    quid       	"3BB23CD00364")
+	(object Class "Assoc R4"
+	    quid       	"3BB23CE6030B")
+	(object Class "Assoc R5"
+	    quid       	"3BB23FF002FE")
+	(object Class "Assoc R6"
+	    quid       	"3BB23FFE0255")
+	(object Class "Assoc R7"
+	    quid       	"3BB2407D018E")
+	(object Class "Assoc R8"
+	    quid       	"3BB2408B033C")
+	(object Association "r1"
+	    quid       	"3BB231FB0137"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB231FC02DE"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Int"
+		    quidu      	"3BB22E9A0325"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB231FC02F2"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Enum"
+		    quidu      	"3BB22E6B03CD"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R1")
+	(object Association "r2"
+	    quid       	"3BB2325800E3"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB2325900DB"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Int"
+		    quidu      	"3BB22E9A0325"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB232590117"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Enum"
+		    quidu      	"3BB22E6B03CD"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R2")
+	(object Association "r3"
+	    quid       	"3BB23C680253"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB23C680254"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Integer With Max"
+		    quidu      	"3BB22F3F02B6"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB23C680255"
+		    documentation 	"[[ source ]]"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Int"
+		    quidu      	"3BB22E9A0325"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R3")
+	(object Association "r4"
+	    quid       	"3BB23C73030A"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB23C73030B"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Integer With Max"
+		    quidu      	"3BB22F3F02B6"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB23C73030C"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Int"
+		    quidu      	"3BB22E9A0325"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R4")
+	(object Association "r5"
+	    quid       	"3BB23F85026D"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB23F86014C"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Two Ids"
+		    quidu      	"3BB22F080390"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB23F86017F"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Enum"
+		    quidu      	"3BB22E6B03CD"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R5")
+	(object Association "r6"
+	    quid       	"3BB23FBB0180"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB23FBC011A"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Two Ids"
+		    quidu      	"3BB22F080390"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB23FBC017E"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Enum"
+		    quidu      	"3BB22E6B03CD"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R6")
+	(object Association "r7"
+	    quid       	"3BB24014030C"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB240150278"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Integer"
+		    quidu      	"3BB22EF202B3"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB240150296"
+		    documentation 	"[[ source ]]"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Integer With Max"
+		    quidu      	"3BB22F3F02B6"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R7")
+	(object Association "r8"
+	    quid       	"3BB2402302BE"
+	    roles      	(list role_list
+		(object Role "rb"
+		    quid       	"3BB2402403B0"
+		    label      	"rb"
+		    supplier   	"Logical View::Autohash::Id Is Integer"
+		    quidu      	"3BB22EF202B3"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "ra"
+		    quid       	"3BB24025002C"
+		    label      	"ra"
+		    supplier   	"Logical View::Autohash::Id Is Integer With Max"
+		    quidu      	"3BB22F3F02B6"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Autohash::Assoc R8"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3BB22DB801AE"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Autohash::Int" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2096, 384)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(2006, 355)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(2006, 305)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22DBE020F"
+		    width      	198
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Enum" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2112, 640)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(2022, 611)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"Enum")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(2022, 561)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	180
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22DC8025E"
+		    width      	198
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Int No Lower" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2160, 1216)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(2031, 1187)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"Int No Lower")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(2031, 1137)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22DD001C1"
+		    width      	276
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Int No Upper" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2160, 912)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2031, 883)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"Int No Upper")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(2031, 833)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22DDF0138"
+		    width      	276
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Int No Upper" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1568, 752)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1348, 671)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	440
+			justify    	0
+			label      	"Id Is Int No Upper")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22EB50166"
+		    width      	458
+		    height     	186
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Int No Lower" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1600, 1136)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(1380, 1055)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	440
+			justify    	0
+			label      	"Id Is Int No Lower")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22ED501E0"
+		    width      	458
+		    height     	186
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R1" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(144, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(41, 653)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB2320A03C5"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R2" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(816, 704)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(713, 653)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB2326503B1"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R3" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(112, 1296)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(9, 1245)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB23CD00364"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R4" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(864, 1312)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(761, 1261)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R4")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB23CE6030B"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Two Ids" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1552, 272)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1380, 166)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	344
+			justify    	0
+			label      	"Two Ids")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22F080390"
+		    width      	362
+		    height     	236
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R5" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(592, 64)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(489, 13)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R5")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB23FF002FE"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R6" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1152, 608)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1049, 557)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R6")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB23FFE0255"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Enum" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(448, 304)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(287, 223)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	322
+			justify    	0
+			label      	"Id Is Enum")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22E6B03CD"
+		    width      	340
+		    height     	186
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r5" @15
+		    location   	(949, 143)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(949, 84)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r5"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB23F85026D"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @17
+			    Parent_View 	@15
+			    location   	(501, -161)
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(1294, 158)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23F86014C"
+			    client     	@15
+			    supplier   	@11
+			    vertices   	(list Points
+				(949, 143)
+				(1006, 125)
+				(1370, 221))
+			    line_style 	0
+			    label      	(object SegLabel @19
+				Parent_View 	@17
+				location   	(1282, 106)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.745269
+				height     	90
+				orientation 	0))
+			(object RoleView "ra" @20
+			    Parent_View 	@15
+			    location   	(501, -161)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(660, 187)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.840016
+				height     	46
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23F86017F"
+			    client     	@15
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(724, 179)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.660386
+				height     	35
+				orientation 	1))))
+		(object AssocAttachView "" @23
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@12
+		    supplier   	@15
+		    line_style 	0)
+		(object AssociationViewNew "r6" @24
+		    location   	(948, 432)
+		    label      	(object SegLabel @25
+			Parent_View 	@24
+			location   	(1056, 470)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r6"
+			pctDist    	2.316667
+			height     	38
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB23FBB0180"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @26
+			    Parent_View 	@24
+			    location   	(500, 128)
+			    label      	(object SegLabel @27
+				Parent_View 	@26
+				location   	(1275, 316)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23FBC011A"
+			    client     	@24
+			    supplier   	@11
+			    vertices   	(list Points
+				(948, 432)
+				(1006, 447)
+				(1370, 328))
+			    line_style 	0
+			    label      	(object SegLabel @28
+				Parent_View 	@26
+				location   	(1345, 393)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "ra" @29
+			    Parent_View 	@24
+			    location   	(500, 128)
+			    label      	(object SegLabel @30
+				Parent_View 	@29
+				location   	(693, 323)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23FBC017E"
+			    client     	@24
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @31
+				Parent_View 	@29
+				location   	(688, 411)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.751978
+				height     	45
+				orientation 	0))))
+		(object AssocAttachView "" @32
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@13
+		    supplier   	@24
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Int" @33
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(448, 1104)
+		    label      	(object ItemLabel
+			Parent_View 	@33
+			location   	(318, 1023)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	260
+			justify    	0
+			label      	"Id Is Int")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22E9A0325"
+		    width      	278
+		    height     	186
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r1" @34
+		    location   	(309, 647)
+		    label      	(object SegLabel @35
+			Parent_View 	@34
+			location   	(309, 588)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB231FB0137"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @36
+			    Parent_View 	@34
+			    location   	(-139, 343)
+			    label      	(object SegLabel @37
+				Parent_View 	@36
+				location   	(348, 968)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB231FC02DE"
+			    client     	@34
+			    supplier   	@33
+			    vertices   	(list Points
+				(309, 647)
+				(287, 703)
+				(409, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @38
+				Parent_View 	@36
+				location   	(320, 913)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.684924
+				height     	47
+				orientation 	1))
+			(object RoleView "ra" @39
+			    Parent_View 	@34
+			    location   	(-139, 343)
+			    label      	(object SegLabel @40
+				Parent_View 	@39
+				location   	(362, 425)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.840196
+				height     	32
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB231FC02F2"
+			    client     	@34
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @41
+				Parent_View 	@39
+				location   	(349, 463)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.691000
+				height     	30
+				orientation 	0))))
+		(object AssocAttachView "" @42
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@7
+		    supplier   	@34
+		    line_style 	0)
+		(object AssociationViewNew "r2" @43
+		    location   	(585, 663)
+		    label      	(object SegLabel @44
+			Parent_View 	@43
+			location   	(585, 604)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB2325800E3"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @45
+			    Parent_View 	@43
+			    location   	(137, 359)
+			    label      	(object SegLabel @46
+				Parent_View 	@45
+				location   	(556, 978)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.848588
+				height     	53
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB2325900DB"
+			    client     	@43
+			    supplier   	@33
+			    vertices   	(list Points
+				(585, 663)
+				(606, 719)
+				(485, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @47
+				Parent_View 	@45
+				location   	(565, 916)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.686791
+				height     	38
+				orientation 	0))
+			(object RoleView "ra" @48
+			    Parent_View 	@43
+			    location   	(137, 359)
+			    label      	(object SegLabel @49
+				Parent_View 	@48
+				location   	(547, 434)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.798300
+				height     	46
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB232590117"
+			    client     	@43
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @50
+				Parent_View 	@48
+				location   	(559, 500)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.566905
+				height     	34
+				orientation 	1))))
+		(object AssocAttachView "" @51
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@8
+		    supplier   	@43
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Integer" @52
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1600, 1552)
+		    label      	(object ItemLabel
+			Parent_View 	@52
+			location   	(1431, 1471)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	338
+			justify    	0
+			label      	"Id Is Integer")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22EF202B3"
+		    width      	356
+		    height     	186
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Id Is Integer With Max" @53
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(448, 1856)
+		    label      	(object ItemLabel
+			Parent_View 	@53
+			location   	(231, 1775)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"Id Is Integer With Max")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22F3F02B6"
+		    width      	452
+		    height     	186
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r3" @54
+		    location   	(272, 1428)
+		    label      	(object SegLabel @55
+			Parent_View 	@54
+			location   	(272, 1369)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r3"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB23C680253"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @56
+			    Parent_View 	@54
+			    location   	(-176, 324)
+			    label      	(object SegLabel @57
+				Parent_View 	@56
+				location   	(325, 1716)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23C680254"
+			    client     	@54
+			    supplier   	@53
+			    vertices   	(list Points
+				(272, 1428)
+				(244, 1481)
+				(397, 1762))
+			    line_style 	0
+			    label      	(object SegLabel @58
+				Parent_View 	@56
+				location   	(298, 1672)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.667361
+				height     	44
+				orientation 	1))
+			(object RoleView "ra" @59
+			    Parent_View 	@54
+			    location   	(-176, 324)
+			    label      	(object SegLabel @60
+				Parent_View 	@59
+				location   	(336, 1223)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23C680255"
+			    client     	@54
+			    supplier   	@33
+			    line_style 	0
+			    label      	(object SegLabel @61
+				Parent_View 	@59
+				location   	(318, 1263)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.635854
+				height     	38
+				orientation 	0))))
+		(object AssocAttachView "" @62
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@9
+		    supplier   	@54
+		    line_style 	0)
+		(object AssociationViewNew "r4" @63
+		    location   	(619, 1428)
+		    label      	(object SegLabel @64
+			Parent_View 	@63
+			location   	(619, 1369)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r4"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB23C73030A"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @65
+			    Parent_View 	@63
+			    location   	(171, 324)
+			    label      	(object SegLabel @66
+				Parent_View 	@65
+				location   	(578, 1722)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.805964
+				height     	52
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23C73030B"
+			    client     	@63
+			    supplier   	@53
+			    vertices   	(list Points
+				(619, 1428)
+				(647, 1481)
+				(497, 1762))
+			    line_style 	0
+			    label      	(object SegLabel @67
+				Parent_View 	@65
+				location   	(625, 1672)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.630925
+				height     	70
+				orientation 	0))
+			(object RoleView "ra" @68
+			    Parent_View 	@63
+			    location   	(171, 324)
+			    label      	(object SegLabel @69
+				Parent_View 	@68
+				location   	(565, 1232)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.761410
+				height     	45
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB23C73030C"
+			    client     	@63
+			    supplier   	@33
+			    line_style 	0
+			    label      	(object SegLabel @70
+				Parent_View 	@68
+				location   	(589, 1275)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.569908
+				height     	45
+				orientation 	1))))
+		(object AssocAttachView "" @71
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@10
+		    supplier   	@63
+		    line_style 	0)
+		(object AssociationViewNew "r7" @72
+		    location   	(1025, 1598)
+		    label      	(object SegLabel @73
+			Parent_View 	@72
+			location   	(1025, 1539)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r7"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB24014030C"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @74
+			    Parent_View 	@72
+			    location   	(577, -258)
+			    label      	(object SegLabel @75
+				Parent_View 	@74
+				location   	(1340, 1510)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB240150278"
+			    client     	@72
+			    supplier   	@52
+			    vertices   	(list Points
+				(1025, 1598)
+				(1134, 1550)
+				(1421, 1551))
+			    line_style 	0
+			    label      	(object SegLabel @76
+				Parent_View 	@74
+				location   	(1380, 1572)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.899196
+				height     	21
+				orientation 	1))
+			(object RoleView "ra" @77
+			    Parent_View 	@72
+			    location   	(577, -258)
+			    label      	(object SegLabel @78
+				Parent_View 	@77
+				location   	(728, 1706)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.777327
+				height     	21
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB240150296"
+			    client     	@72
+			    supplier   	@53
+			    line_style 	0
+			    label      	(object SegLabel @79
+				Parent_View 	@77
+				location   	(730, 1778)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.844582
+				height     	45
+				orientation 	0))))
+		(object AssociationViewNew "r8" @80
+		    location   	(1069, 1838)
+		    label      	(object SegLabel @81
+			Parent_View 	@80
+			location   	(1069, 1779)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r8"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3BB2402302BE"
+		    roleview_list 	(list RoleViews
+			(object RoleView "rb" @82
+			    Parent_View 	@80
+			    location   	(621, -18)
+			    label      	(object SegLabel @83
+				Parent_View 	@82
+				location   	(1335, 1648)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+rb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB2402403B0"
+			    client     	@80
+			    supplier   	@52
+			    line_style 	0
+			    label      	(object SegLabel @84
+				Parent_View 	@82
+				location   	(1415, 1712)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "ra" @85
+			    Parent_View 	@80
+			    location   	(621, -18)
+			    label      	(object SegLabel @86
+				Parent_View 	@85
+				location   	(772, 1838)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	60
+				justify    	0
+				label      	"+ra"
+				pctDist    	0.759433
+				height     	27
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3BB24025002C"
+			    client     	@80
+			    supplier   	@53
+			    vertices   	(list Points
+				(1069, 1838)
+				(1006, 1872)
+				(674, 1862))
+			    line_style 	0
+			    label      	(object SegLabel @87
+				Parent_View 	@85
+				location   	(729, 1900)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.863627
+				height     	36
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Autohash::Assoc R7" @88
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1200, 1408)
+		    label      	(object ItemLabel
+			Parent_View 	@88
+			location   	(1097, 1357)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R7")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB2407D018E"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @89
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@88
+		    supplier   	@72
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Autohash::Assoc R8" @90
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1184, 1968)
+		    label      	(object ItemLabel
+			Parent_View 	@90
+			location   	(1081, 1917)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	206
+			justify    	0
+			label      	"Assoc R8")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB2408B033C"
+		    width      	224
+		    height     	126
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @91
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@90
+		    supplier   	@80
+		    line_style 	0)))))

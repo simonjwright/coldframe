@@ -1,0 +1,160 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Association Errors"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3E1EDFF8021C"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "A"
+	    quid       	"3E1EE00D0063"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3E1EE01A001C"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "B"
+	    quid       	"3E1EE0130225"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3E1EE02303D6"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Association "a1"
+	    quid       	"3E1EE61C02E4"
+	    roles      	(list role_list
+		(object Role "theB"
+		    quid       	"3E1EE61D0386"
+		    label      	"theB"
+		    supplier   	"Logical View::Association Errors::B"
+		    quidu      	"3E1EE0130225"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$0"
+		    quid       	"3E1EE61D0390"
+		    supplier   	"Logical View::Association Errors::A"
+		    quidu      	"3E1EE00D0063"
+		    is_navigable 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3E1EE00803A5"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Association Errors::A" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(782, 449)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(558, 376)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"A")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E1EE00D0063"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(558, 432)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	452)
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Association Errors::B" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1767, 445)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1543, 372)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"B")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E1EE0130225"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1543, 428)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	452)
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @3
+		    location   	(1274, 446)
+		    label      	(object SegLabel @4
+			Parent_View 	@3
+			location   	(1274, 387)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3E1EE61C02E4"
+		    roleview_list 	(list RoleViews
+			(object RoleView "theB" @5
+			    Parent_View 	@3
+			    location   	(492, -3)
+			    label      	(object SegLabel @6
+				Parent_View 	@5
+				location   	(1480, 404)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	118
+				justify    	0
+				label      	"+theB"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3E1EE61D0386"
+			    client     	@3
+			    supplier   	@2
+			    line_style 	0)
+			(object RoleView "$UNNAMED$0" @7
+			    Parent_View 	@3
+			    location   	(492, -3)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3E1EE61D0390"
+			    client     	@3
+			    supplier   	@1
+			    line_style 	0)))))))

@@ -1,0 +1,298 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Inheritance"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CBCFA500089"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "P"
+	    quid       	"3CBCFAC603BE"
+	    operations 	(list Operations
+		(object Operation "a"
+		    quid       	"3CBCFAE60310"
+		    stereotype 	"abstract"
+		    parameters 	(list Parameters
+			(object Parameter "that"
+			    type       	"P"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3CBCFAD101E3"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "C"
+	    quid       	"3CBCFB140294"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CBCFB91006D"
+		    label      	"i1"
+		    supplier   	"Logical View::Inheritance::P"
+		    quidu      	"3CBCFAC603BE"))
+	    operations 	(list Operations
+		(object Operation "b"
+		    quid       	"3CBCFB550229"
+		    parameters 	(list Parameters
+			(object Parameter "that"
+			    type       	"C"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "G"
+	    quid       	"3CBCFB220063"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CBCFB9A02DC"
+		    label      	"i2"
+		    supplier   	"Logical View::Inheritance::C"
+		    quidu      	"3CBCFB140294"))
+	    operations 	(list Operations
+		(object Operation "a"
+		    quid       	"3CBCFB74007F"
+		    parameters 	(list Parameters
+			(object Parameter "that"
+			    type       	"G"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "GG"
+	    quid       	"3CBD533D0185"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CBD5351033C"
+		    label      	"i3"
+		    supplier   	"Logical View::Inheritance::G"
+		    quidu      	"3CBCFB220063"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CBCFAAF0180"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Inheritance::P" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(528, 320)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(281, 214)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	494
+			justify    	0
+			label      	"P")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CBCFAC603BE"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(281, 275)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	490)
+		    width      	512
+		    height     	236
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Inheritance::C" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(528, 928)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(411, 847)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	234
+			justify    	0
+			label      	"C")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CBCFB140294"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(411, 908)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	231)
+		    width      	252
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Inheritance::G" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(528, 1456)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(410, 1375)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	236
+			justify    	0
+			label      	"G")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CBCFB220063"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(410, 1436)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	234)
+		    width      	254
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "i1" @4
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(528, 636)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"i1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CBCFB91006D"
+		    client     	@2
+		    supplier   	@1
+		    line_style 	0)
+		(object InheritView "i2" @5
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(528, 1192)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"i2")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CBCFB9A02DC"
+		    client     	@3
+		    supplier   	@2
+		    line_style 	0)
+		(object NoteView @6
+		    location   	(1440, 1456)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(1102, 1353)
+			fill_color 	13434879
+			nlines     	4
+			max_width  	640
+			label      	
+|G inherits the operation b(that : G).
+|
+|The operation a(that : G) implements P:a(that : P).
+			)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	700
+		    height     	219)
+		(object NoteView @7
+		    location   	(1408, 320)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1117, 254)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	546
+			label      	"P:a(that : P) dispatches to C:a(that : C).")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	606
+		    height     	144)
+		(object NoteView @8
+		    location   	(1424, 928)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1108, 856)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	596
+			label      	"C:a(that : C) dispatches to G:a(that : G).")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	656
+		    height     	157)
+		(object AttachView "" @9
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@1
+		    supplier   	@7
+		    line_style 	0)
+		(object AttachView "" @10
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@2
+		    supplier   	@8
+		    line_style 	0)
+		(object AttachView "" @11
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@3
+		    supplier   	@6
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Inheritance::GG" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(528, 1936)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(447, 1885)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"GG")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CBD533D0185"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "i3" @13
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(528, 1710)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"i3")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CBD5351033C"
+		    client     	@12
+		    supplier   	@3
+		    line_style 	0)))))

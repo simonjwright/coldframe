@@ -1,0 +1,225 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Singleton"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3B32080C012E"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Single"
+	    quid       	"3B32081D02B7"
+	    stereotype 	"singleton")
+	(object Class "Thing"
+	    quid       	"3B3208480068"
+	    documentation 	"[[ max : 1 ]]"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3B32086600AC"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "Assoc"
+	    quid       	"3B321A93013D")
+	(object Association "rel"
+	    quid       	"3B320858025E"
+	    roles      	(list role_list
+		(object Role "contains"
+		    quid       	"3B320859025F"
+		    label      	"contains"
+		    supplier   	"Logical View::Singleton::Thing"
+		    quidu      	"3B3208480068"
+		    client_cardinality 	(value cardinality "0..n")
+		    Containment 	"By Reference")
+		(object Role "is in"
+		    quid       	"3B3208590269"
+		    label      	"is in"
+		    supplier   	"Logical View::Singleton::Single"
+		    quidu      	"3B32081D02B7"
+		    client_cardinality 	(value cardinality "0..1")
+		    Containment 	"By Reference"
+		    is_aggregate 	TRUE))
+	    AssociationClass 	"Logical View::Singleton::Assoc"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3B32081202C9"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Singleton::Thing" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1504, 448)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1262, 367)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"Thing")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B3208480068"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(1262, 423)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	481)
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Singleton::Single" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(432, 448)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(300, 413)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"Single")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(300, 368)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B32081D02B7"
+		    width      	282
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "rel" @3
+		    location   	(912, 448)
+		    label      	(object SegLabel @4
+			Parent_View 	@3
+			location   	(912, 389)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"rel"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3B320858025E"
+		    roleview_list 	(list RoleViews
+			(object RoleView "contains" @5
+			    Parent_View 	@3
+			    location   	(480, 0)
+			    label      	(object SegLabel @6
+				Parent_View 	@5
+				location   	(1137, 406)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	184
+				justify    	0
+				label      	"+contains"
+				pctDist    	0.661765
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3B320859025F"
+			    client     	@3
+			    supplier   	@1
+			    line_style 	0
+			    label      	(object SegLabel @7
+				Parent_View 	@5
+				location   	(1217, 502)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "is in" @8
+			    Parent_View 	@3
+			    location   	(480, 0)
+			    label      	(object SegLabel @9
+				Parent_View 	@8
+				location   	(641, 407)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	108
+				justify    	0
+				label      	"+is in"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3B3208590269"
+			    client     	@3
+			    supplier   	@2
+			    line_style 	0
+			    label      	(object SegLabel @10
+				Parent_View 	@8
+				location   	(606, 502)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Singleton::Assoc" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(912, 928)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(831, 877)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Assoc")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3B321A93013D"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @12
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@11
+		    supplier   	@3
+		    line_style 	0)))))

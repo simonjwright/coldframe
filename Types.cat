@@ -1,0 +1,172 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Types"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3DF4F75A0139"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "T"
+	    quid       	"3DF4F7840003"
+	    documentation 	"[[ serializable ]]"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "x"
+		    quid       	"3DF4F78D0363"
+		    type       	"Foo")
+		(object ClassAttribute "y"
+		    quid       	"3DF4F7930018"
+		    type       	"Bar")))
+	(object Class "Z"
+	    quid       	"3E077EFF004B"
+	    documentation 	
+|[[
+|renames : P.Q;
+|hash : discrete;
+|serializable
+|]]
+	    
+	    stereotype 	"type"
+	    operations 	(list Operations
+		(object Operation "op"
+		    quid       	"3E26BCDF0385"
+		    documentation 	"[[ convention : c ]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "W"
+	    quid       	"3E078465020B"
+	    operations 	(list Operations
+		(object Operation "op"
+		    quid       	"3E26BCC10024"
+		    documentation 	"[[ convention : c ]]"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3E07846C025B"
+		    stereotype 	"id"
+		    type       	"Z"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3DF4F7670079"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Types::T" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(588, 530)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(505, 454)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"T")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(505, 409)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DF4F7840003"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(505, 510)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	165)
+		    width      	184
+		    height     	264
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Types::Z" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1435, 545)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1352, 492)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"Z")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(1352, 447)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E077EFF004B"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(1352, 548)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	117)
+		    width      	184
+		    height     	218
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Types::W" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1525, 1268)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1394, 1173)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"W")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E078465020B"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1394, 1229)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	265)
+		    width      	280
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)))))

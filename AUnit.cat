@@ -1,0 +1,434 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "AUnit"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3CDFC80103E7"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Test Suite"
+	    quid       	"3CDFC836011D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDFC87A0377"
+		    supplier   	"Logical View::AUnit::Test"
+		    quidu      	"3CDFC84F03BC")))
+	(object Class "Test Harness"
+	    quid       	"3CDFC84800A6")
+	(object Class "Test"
+	    quid       	"3CDFC84F03BC"
+	    abstract   	TRUE)
+	(object Class "Test Case"
+	    quid       	"3CDFC8590039"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3CDFC87E00B2"
+		    supplier   	"Logical View::AUnit::Test"
+		    quidu      	"3CDFC84F03BC")))
+	(object Class "Test Procedure"
+	    quid       	"3CDFC85F003A")
+	(object Association "$UNNAMED$0"
+	    quid       	"3CDFC88602EB"
+	    roles      	(list role_list
+		(object Role "calls"
+		    quid       	"3CDFC88702CA"
+		    label      	"calls"
+		    supplier   	"Logical View::AUnit::Test Procedure"
+		    quidu      	"3CDFC85F003A"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE)
+		(object Role "is called by"
+		    quid       	"3CDFC88702DE"
+		    label      	"is called by"
+		    supplier   	"Logical View::AUnit::Test Case"
+		    quidu      	"3CDFC8590039"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$1"
+	    quid       	"3CDFC8AB0359"
+	    roles      	(list role_list
+		(object Role "is executed by"
+		    quid       	"3CDFC8AC0148"
+		    label      	"is executed by"
+		    supplier   	"Logical View::AUnit::Test Harness"
+		    quidu      	"3CDFC84800A6"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "executes"
+		    quid       	"3CDFC8AC0152"
+		    label      	"executes"
+		    supplier   	"Logical View::AUnit::Test Suite"
+		    quidu      	"3CDFC836011D"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "$UNNAMED$2"
+	    quid       	"3CDFC8E902DF"
+	    roles      	(list role_list
+		(object Role "invokes"
+		    quid       	"3CDFC8EE00AF"
+		    label      	"invokes"
+		    supplier   	"Logical View::AUnit::Test"
+		    quidu      	"3CDFC84F03BC"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE)
+		(object Role "is added to"
+		    quid       	"3CDFC8EE00B9"
+		    label      	"is added to"
+		    supplier   	"Logical View::AUnit::Test Suite"
+		    quidu      	"3CDFC836011D"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3CDFC80703BC"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::AUnit::Test Case" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1056, 576)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(939, 535)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	234
+			justify    	0
+			label      	"Test Case")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDFC8590039"
+		    width      	252
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::AUnit::Test Procedure" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(1760, 576)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1594, 535)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	332
+			justify    	0
+			label      	"Test Procedure")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDFC85F003A"
+		    width      	350
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$0" @3
+		    location   	(1383, 576)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDFC88602EB"
+		    roleview_list 	(list RoleViews
+			(object RoleView "calls" @4
+			    Parent_View 	@3
+			    location   	(151, -48)
+			    label      	(object SegLabel @5
+				Parent_View 	@4
+				location   	(1525, 537)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	116
+				justify    	0
+				label      	"+calls"
+				pctDist    	0.733032
+				height     	40
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC88702CA"
+			    client     	@3
+			    supplier   	@2
+			    line_style 	0
+			    label      	(object SegLabel @6
+				Parent_View 	@4
+				location   	(1547, 615)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.828054
+				height     	39
+				orientation 	1))
+			(object RoleView "is called by" @7
+			    Parent_View 	@3
+			    location   	(151, -48)
+			    label      	(object SegLabel @8
+				Parent_View 	@7
+				location   	(1295, 618)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	249
+				justify    	0
+				label      	"+is called by"
+				pctDist    	0.434389
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC88702DE"
+			    client     	@3
+			    supplier   	@1
+			    line_style 	0
+			    label      	(object SegLabel @9
+				Parent_View 	@7
+				location   	(1203, 550)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.904977
+				height     	27
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::AUnit::Test Harness" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(320, 80)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(171, 39)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	298
+			justify    	0
+			label      	"Test Harness")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDFC84800A6"
+		    width      	316
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::AUnit::Test Suite" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(320, 576)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(203, 535)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	234
+			justify    	0
+			label      	"Test Suite")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDFC836011D"
+		    width      	252
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$1" @12
+		    location   	(320, 327)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDFC8AB0359"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is executed by" @13
+			    Parent_View 	@12
+			    location   	(-464, -297)
+			    label      	(object SegLabel @14
+				Parent_View 	@13
+				location   	(168, 222)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	289
+				justify    	0
+				label      	"+is executed by"
+				pctDist    	0.546392
+				height     	153
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC8AC0148"
+			    client     	@12
+			    supplier   	@10
+			    line_style 	0
+			    label      	(object SegLabel @15
+				Parent_View 	@13
+				location   	(279, 168)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.819588
+				height     	42
+				orientation 	0))
+			(object RoleView "executes" @16
+			    Parent_View 	@12
+			    location   	(-464, -297)
+			    label      	(object SegLabel @17
+				Parent_View 	@16
+				location   	(197, 453)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	207
+				justify    	0
+				label      	"+executes"
+				pctDist    	0.641026
+				height     	124
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC8AC0152"
+			    client     	@12
+			    supplier   	@11
+			    line_style 	0
+			    label      	(object SegLabel @18
+				Parent_View 	@16
+				location   	(292, 503)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.897436
+				height     	29
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::AUnit::Test" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    location   	(848, 1136)
+		    font       	(object Font
+			italics    	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(767, 1095)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Test")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CDFC84F03BC"
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "" @20
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDFC87A0377"
+		    client     	@11
+		    supplier   	@19
+		    line_style 	0)
+		(object InheritView "" @21
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDFC87E00B2"
+		    client     	@1
+		    supplier   	@19
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$2" @22
+		    location   	(318, 1073)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3CDFC8E902DF"
+		    roleview_list 	(list RoleViews
+			(object RoleView "invokes" @23
+			    Parent_View 	@22
+			    location   	(-466, 449)
+			    label      	(object SegLabel @24
+				Parent_View 	@23
+				location   	(658, 1174)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	158
+				justify    	0
+				label      	"+invokes"
+				pctDist    	0.801963
+				height     	39
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC8EE00AF"
+			    client     	@22
+			    supplier   	@19
+			    vertices   	(list Points
+				(318, 1073)
+				(318, 1133)
+				(757, 1135))
+			    line_style 	0
+			    label      	(object SegLabel @25
+				Parent_View 	@23
+				location   	(705, 1109)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.897551
+				height     	27
+				orientation 	0))
+			(object RoleView "is added to" @26
+			    Parent_View 	@22
+			    location   	(-466, 449)
+			    label      	(object SegLabel @27
+				Parent_View 	@26
+				location   	(196, 702)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	236
+				justify    	0
+				label      	"+is added to"
+				pctDist    	0.834957
+				height     	124
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3CDFC8EE00B9"
+			    client     	@22
+			    supplier   	@11
+			    line_style 	0
+			    label      	(object SegLabel @28
+				Parent_View 	@26
+				location   	(281, 658)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.934487
+				height     	39
+				orientation 	0))))))))
