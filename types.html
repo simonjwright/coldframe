@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 1d33fb2fae10 2003/09/13 17:20:32 simon $ -->
+<!-- $Id: types.html,v 04aec9d906e3 2003/10/27 21:00:20 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -301,10 +301,11 @@ map to protected operations; procedure operations stereotyped
 the operations raise <tt>Program_Error</tt> if called.
 
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>, upper
-<i>upper-bound</i></tt>: gives a floating-point type. If
-<i>num-digits</i> is omitted or not more than 6, it's a subtype of
-<tt>Float</tt>, otherwise it's a subtype of <tt>Long_Float</tt>. If
-the lower and upper bounds are given, they translate to a constraint.
+<i>upper-bound</i></tt>: gives a floating-point type. If the
+<i>digits</i> section is omitted, or <i>num-digits</i> is not more
+than 6, it's a subtype of <tt>Float</tt>, otherwise it's a subtype of
+<tt>Long_Float</tt>. If the lower and upper bounds are given, they
+translate to a constraint.
 
 <p><tt>[[ real : digits 5 ]]</tt> gives
 <pre>
