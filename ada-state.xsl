@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 9ffb57dc69ff 2002/09/10 18:44:37 simon $ -->
+<!-- $Id: ada-state.xsl,v c8f3834cc5bd 2002/09/11 20:30:26 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -539,7 +539,7 @@
     
     <!-- standard: if there is an unguarded transition from the initial state
          declare
-            Creation : aliased ColdFrame.Project.Events.Creation.Event (Result);
+            Creation : ColdFrame.Project.Events.Creation.Event (Result);
          begin
             Enter_{next-state} (Result, Creation);
          end;
@@ -547,7 +547,7 @@
 
     <!-- singleton: if there is an unguarded transition from the initial state
          declare
-            Creation : aliased ColdFrame.Project.Events.Creation.Event (Result);
+            Creation : ColdFrame.Project.Events.Creation.Event (Result);
          begin
             Enter_{next-state} (Creation);
          end;
@@ -563,7 +563,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>declare&#10;</xsl:text>
       <xsl:value-of select="$III"/>
-      <xsl:text>Creation : aliased ColdFrame.Project.Events.Creation.Event (Result);&#10;</xsl:text>
+      <xsl:text>Creation : ColdFrame.Project.Events.Creation.Event (Result);&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>begin&#10;</xsl:text>
 
