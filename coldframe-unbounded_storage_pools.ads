@@ -26,8 +26,8 @@
 --  * allocations are initialized to an improbable value (16#deadbeef#)
 
 --  $RCSfile: coldframe-unbounded_storage_pools.ads,v $
---  $Revision: ee76e810d3cc $
---  $Date: 2003/07/24 19:28:43 $
+--  $Revision: cba6978c4b4a $
+--  $Date: 2003/07/24 19:37:18 $
 --  $Author: simon $
 
 with System.Storage_Elements;
@@ -56,10 +56,5 @@ package ColdFrame.Project.Unbounded_Storage_Pools is
    function Storage_Size
      (Pool : Unbounded_Pool)
      return System.Storage_Elements.Storage_Count;
-
-   Pool_Object : Unbounded_Pool;
-
-   Pool : System.Storage_Pools.Root_Storage_Pool'Class
-     renames System.Storage_Pools.Root_Storage_Pool'Class (Pool_Object);
 
 end ColdFrame.Project.Unbounded_Storage_Pools;
