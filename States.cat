@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "States"
@@ -11,7 +11,7 @@
     documentation 	
 |This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 |
-|[[ revision : $Id: States.cat,v 281d11e491da 2002/07/27 13:05:23 simon $ ]]
+|[[ revision : $Id: States.cat,v 2010f7872423 2004/05/12 21:53:39 simon $ ]]
 |
     
     exportControl 	"Public"
@@ -40,6 +40,7 @@
 		    stereotype 	"handler"
 		    parameters 	(list Parameters
 			(object Parameter "m"
+			    quid       	"40A283100198"
 			    type       	"Tick"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -79,7 +80,8 @@
 		    quid       	"3C75D4D401D6"
 		    documentation 	"Indicates the Device that is being monitored."
 		    stereotype 	"id"
-		    type       	"Device")
+		    type       	"Device"
+		    quidu      	"3C74FFF7019E")
 		(object ClassAttribute "heartbeat timer"
 		    quid       	"3C53D8E9025C"
 		    documentation 	"Controls the detection of failure of the heartbeat signal."
@@ -368,6 +370,7 @@
 				    when       	"Entry")))
 			type       	"Normal"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object State_Diagram "Lifecycle"
 			quid       	"3C51670A02F9"
@@ -375,11 +378,20 @@
 			zoom       	92
 			max_height 	28350
 			max_width  	21600
-			origin_x   	1783
+			origin_x   	2435
 			origin_y   	0
 			items      	(list diagram_item_list
 			    (object StateView "StartState" "$UNNAMED$0" @1
 				location   	(1504, 384)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@1
 				    location   	(1546, 354)
@@ -388,11 +400,19 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3C51763B00DE"
 				autoResize 	TRUE)
 			    (object StateView "Normal" "warmup" @2
 				location   	(1504, 704)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
 				    location   	(1504, 636)
@@ -408,7 +428,16 @@
 				quidu      	"3C5176450389"
 				compartment 	(object Compartment
 				    Parent_View 	@2
-				    location   	(1185, 677)
+				    location   	(1185, 675)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -421,6 +450,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "warming" @3
 				location   	(1520, 1680)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
 				    location   	(1520, 1639)
@@ -436,7 +474,16 @@
 				quidu      	"3C5176630342"
 				compartment 	(object Compartment
 				    Parent_View 	@3
-				    location   	(1305, 1680)
+				    location   	(1305, 1678)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -450,6 +497,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "failed" @4
 				location   	(2512, 480)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@4
 				    location   	(2512, 470)
@@ -466,6 +522,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "working" @5
 				location   	(2512, 1680)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@5
 				    location   	(2512, 1670)
@@ -482,9 +547,27 @@
 				autoResize 	TRUE)
 			    (object SelfTransView "" @6
 				location   	(1520, 1432)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @7
 				    Parent_View 	@6
 				    location   	(1583, 1468)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -498,9 +581,18 @@
 				quidu      	"3C5176C30357"
 				client     	@3
 				supplier   	@3
-				line_style 	0)
+				line_style 	4)
 			    (object StateView "Normal" "received heartbeat" @8
 				location   	(2528, 2160)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@8
 				    location   	(2528, 2117)
@@ -516,7 +608,16 @@
 				quidu      	"3C5177380212"
 				compartment 	(object Compartment
 				    Parent_View 	@8
-				    location   	(2313, 2158)
+				    location   	(2313, 2156)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -530,6 +631,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "recovery" @9
 				location   	(3440, 704)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@9
 				    location   	(3440, 663)
@@ -545,7 +655,16 @@
 				quidu      	"3C517765023F"
 				compartment 	(object Compartment
 				    Parent_View 	@9
-				    location   	(3120, 704)
+				    location   	(3120, 702)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -559,6 +678,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "recovering" @10
 				location   	(3472, 1680)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@10
 				    location   	(3472, 1639)
@@ -574,7 +702,16 @@
 				quidu      	"3C5177F80138"
 				compartment 	(object Compartment
 				    Parent_View 	@10
-				    location   	(3257, 1680)
+				    location   	(3257, 1678)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -588,6 +725,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "failed recovery" @11
 				location   	(3056, 1152)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@11
 				    location   	(3056, 1123)
@@ -603,7 +749,16 @@
 				quidu      	"3C5178280399"
 				compartment 	(object Compartment
 				    Parent_View 	@11
-				    location   	(2809, 1164)
+				    location   	(2809, 1162)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -624,9 +779,27 @@
 				x_offset   	FALSE)
 			    (object SelfTransView "" @13
 				location   	(3472, 1432)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @14
 				    Parent_View 	@13
 				    location   	(3532, 1485)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -640,11 +813,29 @@
 				quidu      	"3C5178530293"
 				client     	@10
 				supplier   	@10
-				line_style 	0)
+				line_style 	4)
 			    (object TransView "" @15
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @16
 				    Parent_View 	@15
 				    location   	(2910, 1691)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	340
@@ -661,9 +852,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @17
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @18
 				    Parent_View 	@17
 				    location   	(3246, 1393)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	349
@@ -680,9 +889,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @19
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @20
 				    Parent_View 	@19
 				    location   	(1549, 496)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    hidden     	TRUE
 				    anchor_loc 	1
 				    nlines     	1
@@ -700,9 +927,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @21
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @22
 				    Parent_View 	@21
 				    location   	(2872, 521)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -731,9 +976,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @24
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @25
 				    Parent_View 	@24
 				    location   	(2531, 986)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	349
@@ -750,9 +1013,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @26
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @27
 				    Parent_View 	@26
 				    location   	(2330, 1866)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -773,9 +1054,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @28
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @29
 				    Parent_View 	@28
 				    location   	(2077, 1636)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	340
@@ -793,6 +1092,15 @@
 				x_offset   	FALSE)
 			    (object NoteView @30
 				location   	(752, 1440)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@30
 				    location   	(522, 1310)
@@ -812,6 +1120,15 @@
 				line_style 	0)
 			    (object StateView "Normal" "first heartbeat" @32
 				location   	(1504, 1184)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@32
 				    location   	(1504, 1116)
@@ -827,7 +1144,16 @@
 				quidu      	"3C5182EE0220"
 				compartment 	(object Compartment
 				    Parent_View 	@32
-				    location   	(1185, 1157)
+				    location   	(1185, 1155)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    fill_color 	13434879
 				    anchor     	2
@@ -841,9 +1167,27 @@
 				height     	251
 				autoResize 	TRUE)
 			    (object TransView "" @33
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @34
 				    Parent_View 	@33
 				    location   	(1549, 944)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -860,9 +1204,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @35
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @36
 				    Parent_View 	@35
 				    location   	(2104, 557)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	393
@@ -879,9 +1241,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @37
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @38
 				    Parent_View 	@37
 				    location   	(1195, 1465)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -902,9 +1282,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @39
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @40
 				    Parent_View 	@39
 				    location   	(2054, 1451)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	340
@@ -927,9 +1325,27 @@
 				supplier   	@32
 				line_style 	0)
 			    (object TransView "" @42
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @43
 				    Parent_View 	@42
 				    location   	(3275, 924)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	393
@@ -946,9 +1362,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @44
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @45
 				    Parent_View 	@44
 				    location   	(3814, 1199)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	177
@@ -992,6 +1426,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 480)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@46
 			location   	(222, 174)
@@ -1006,7 +1449,16 @@
 		    quidu      	"3C53D8D401BD"
 		    compartment 	(object Compartment
 			Parent_View 	@46
-			location   	(222, 235)
+			location   	(222, 230)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -1026,6 +1478,15 @@
 		    autoResize 	TRUE)
 		(object NoteView @47
 		    location   	(528, 1152)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@47
 			location   	(184, 1093)
@@ -1048,9 +1509,18 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1936, 480)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@49
-			location   	(1845, 450)
+			location   	(1845, 444)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	182
@@ -1058,7 +1528,7 @@
 			label      	"Device")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@49
-			location   	(1845, 400)
+			location   	(1845, 399)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1074,6 +1544,15 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object UsesView "Tick" @50
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@50
 			location   	(1339, 480)
@@ -1085,6 +1564,15 @@
 		    stereotype 	(object SegLabel @51
 			Parent_View 	@50
 			location   	(1339, 429)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	10
 			anchor_loc 	1
 			nlines     	1
@@ -1101,6 +1589,15 @@
 		    line_style 	0)
 		(object NoteView @52
 		    location   	(1936, 896)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@52
 			location   	(1798, 836)
