@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 9f3a96052286 $
---  $Date: 2002/03/06 05:03:55 $
+--  $Revision: 0d91c35b0d85 $
+--  $Date: 2002/03/09 09:53:49 $
 --  $Author: simon $
 
 with GNAT.IO; use GNAT.IO;
@@ -29,13 +29,11 @@ with GNAT.IO; use GNAT.IO;
 package body ColdFrame.Events is
 
 
-   procedure Finalize (The_Terminator : in out Terminator) is
+   procedure Finalize (The_Terminator : in out Instance_Terminator) is
    begin
-      Put_Line ("a Terminator has just died.");
-      --  Needs to visit the Timer queue to kill off any events there,
-      --  then the Event queue. We'll just mark the events as "don't
-      --  dispatch me! I want to die", rather than deleting them from
-      --  the queue now.
+      Put_Line ("an Instance_Terminator has just died.");
+      --  We'll just mark the events as "don't dispatch me! I want to
+      --  die", rather than deleting them from the queue now.
    end Finalize;
 
 
@@ -66,10 +64,13 @@ package body ColdFrame.Events is
    end Log_Post_Dispatch;
 
 
-   procedure Finalize (T : in out Timer) is
+   procedure Finalize (The_Terminator : in out Timer_Terminator) is
    begin
-      if T.The_Event /= null then
-         T.The_Event.Invalidated := True;
+      Put_Line ("a Timer_Terminator has just died.");
+      --  XXX need to do _something_ about this timer still being on the
+      --  queue!
+      if The_Terminator.For_The_Timer.The_Event /= null then
+         The_Terminator.For_The_Timer.The_Event.Invalidated := True;
       end if;
    end Finalize;
 

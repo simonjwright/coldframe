@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer-debug.adb,v $
---  $Revision: 9c871bd7f3f6 $
---  $Date: 2002/03/06 05:07:41 $
+--  $Revision: 0d91c35b0d85 $
+--  $Date: 2002/03/09 09:53:49 $
 --  $Author: simon $
 
 with Ada.Tags;
@@ -41,7 +41,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
    end Post;
 
 
-   procedure Set (The : in out Timer'Class;
+   procedure Set (The : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
@@ -60,7 +60,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
    end Set;
 
 
-   procedure Unset (The : in out Timer'Class;
+   procedure Unset (The : in out Timer;
                     On : access Event_Queue) is
 
    begin

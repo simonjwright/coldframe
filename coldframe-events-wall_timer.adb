@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.adb,v $
---  $Revision: 9c871bd7f3f6 $
---  $Date: 2002/03/06 05:07:41 $
+--  $Revision: 0d91c35b0d85 $
+--  $Date: 2002/03/09 09:53:49 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -64,7 +64,7 @@ package body ColdFrame.Events.Wall_Timer is
    end Dispatcher;
 
 
-   procedure Set (The : in out Timer'Class;
+   procedure Set (The : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
@@ -89,7 +89,7 @@ package body ColdFrame.Events.Wall_Timer is
    end Set;
 
 
-   procedure Unset (The : in out Timer'Class;
+   procedure Unset (The : in out Timer;
                     On : access Event_Queue) is
 
       procedure Delete
@@ -201,8 +201,8 @@ package body ColdFrame.Events.Wall_Timer is
                   T : constant Timer_P
                     := Timed_Event_Queues.Front (The_Events);
                begin
-                  Post (T.The_Event, The_Queue);
                   T.Status := Fired;
+                  Post (T.The_Event, The_Queue);
                   Timed_Event_Queues.Pop (The_Events);
                end;
 

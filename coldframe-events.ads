@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: aa606f14d4da $
---  $Date: 2002/03/06 05:02:59 $
+--  $Revision: 0d91c35b0d85 $
+--  $Date: 2002/03/09 09:53:49 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -82,26 +82,26 @@ package ColdFrame.Events is
    --  Different Event Queue implementations can have different
    --  strategies (eg, priority queuing, logging).
 
-   type Event_Queue_P is access all Event_Queue_Base'Class;
+   type Event_Queue_P is access Event_Queue_Base'Class;
 
    procedure Post (The : Event_P;
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
 
-   type Timer is tagged limited private;
+   type Timer is limited private;
    --  Users declare these, in particular so that they can unset a
    --  timed event request when it is no longer needed (a timeout,
    --  perhaps, when the thing being timed out has actually occurred).
 
    subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
-   procedure Set (The : in out Timer'Class;
+   procedure Set (The : in out Timer;
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is abstract;
    --  May raise Use_Error (if the Timer is already set)
 
-   procedure Unset (The : in out Timer'Class;
+   procedure Unset (The : in out Timer;
                     On : access Event_Queue_Base) is abstract;
    --  May raise Use_Error (if the Timer is already unset)
 
@@ -120,20 +120,20 @@ package ColdFrame.Events is
 
 private
 
-   --  A Terminator is a component of an Instance_Base which is used
-   --  to cause removal of any outstanding events for that instance
-   --  from the scheduler when the instance is deleted.
-   type Terminator (For_The_Instance : access Instance_Base)
+   --  An Instance_Terminator is a component of an Instance_Base which
+   --  is used to cause removal of any outstanding events for that
+   --  instance from the scheduler when the instance is deleted.
+   type Instance_Terminator (For_The_Instance : access Instance_Base)
    is new Ada.Finalization.Limited_Controlled with null record;
 
-   procedure Finalize (The_Terminator : in out Terminator);
+   procedure Finalize (The_Terminator : in out Instance_Terminator);
 
 
    type Instance_Base is abstract new Instances.Instance_Base with record
-      The_Terminator : Terminator (Instance_Base'Access);
+      The_Terminator : Instance_Terminator (Instance_Base'Access);
       Events_Posted_On : Event_Queue_P;
    end record;
-   --  Events_Posted_On is there for the Terminator to know which
+   --  Events_Posted_On is there for the Instance_Terminator to know which
    --  queue to retract events for this instance from.
 
 
@@ -176,9 +176,19 @@ private
    --  still be on the event queue, because we're in the context of an
    --  event action dispatched from that same queue).
 
+   --  A Timer_Terminator is a component of a Timer which
+   --  is used to cause removal of any outstanding events for that
+   --  timer from the scheduler when the timer is deleted.
+   type Timer_Terminator (For_The_Timer : access Timer)
+   is new Ada.Finalization.Limited_Controlled with null record;
+
+   procedure Finalize (The_Terminator : in out Timer_Terminator);
+
+
    type State is (Initial, Set, Fired);
 
-   type Timer is new Ada.Finalization.Limited_Controlled with record
+   type Timer is limited record
+      The_Terminator : Timer_Terminator (Timer'Access);
       The_Event : Event_P;
       Status : State := Initial;
       Real_Time_To_Fire : Ada.Real_Time.Time;
@@ -187,8 +197,6 @@ private
    --  The time at which the Timer is to fire may need to be
    --  Calendar.Time or Real_Time.Time, depending on the actual
    --  Timer_Queue; we supply both slots, Timer_Queue to choose.
-
-   procedure Finalize (T : in out Timer);
 
 
 end ColdFrame.Events;
