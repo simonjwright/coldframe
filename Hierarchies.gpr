@@ -12,18 +12,26 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Hierarchies.gpr,v 6277b8085f46 2003/06/18 19:54:43 simon $
+--  $Id: Hierarchies.gpr,v a328f6c62935 2004/05/01 15:53:13 simon $
 
 with "Options";
 with "ColdFrame";
+with "AUnit";
 with "BC";
 
 project Hierarchies is
 
-  for Source_Dirs use ("Hierarchies.impl",
-                       "Hierarchies.gen");
+  for Main use ("hierarchies-harness");
+  for Exec_Dir use ".";
 
-  for Object_Dir use Options'Object_Dir;
+  for Source_Dirs use
+    (
+     "Hierarchies.impl",
+     "Hierarchies.gen",
+     "Hierarchies.test"
+    );
+
+  for Object_Dir use Options'Object_Dir & "/main";
   package Ide renames Options.Ide;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
