@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 59a716f28458 $}
+|{ revision = $Revision: 57c1e4c14fed $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1333,40 +1333,28 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"412DFB5000C0"
-			    compartment 	(object Compartment
-				Parent_View 	@28
-				location   	(519, 217)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	450)
 			    width      	464
 			    height     	354
 			    annotation 	8
-			    autoResize 	TRUE))))))
+			    autoResize 	TRUE)))))
+	(object Class_Category "Access operations of protected types"
+	    is_unit    	TRUE
+	    is_loaded  	FALSE
+	    file_name  	"E:\\cf\\Access operations of protected types.cat"
+	    quid       	"412DF662006B"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 59a716f28458 $}
+|{ revision = $Revision: 57c1e4c14fed $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	2426
+	    origin_y   	2425
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Regressions" @29
 		    location   	(2490, 193)
@@ -1406,7 +1394,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 59a716f28458 2004/09/09 13:29:11 simon $")
+		    label      	"$Id: Regressions.cat,v 57c1e4c14fed 2004/09/14 11:19:30 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @31
 		    location   	(301, 318)
 		    font       	(object Font
@@ -1884,7 +1872,7 @@
 		    width      	406
 		    height     	180)
 		(object CategoryView "Logical View::Regressions::Ordering for protected types" @45
-		    location   	(1413, 1758)
+		    location   	(329, 1808)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1896,7 +1884,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@45
-			location   	(1259, 1719)
+			location   	(175, 1775)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	308
@@ -1904,7 +1892,7 @@
 			label      	"Ordering for protected types")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@45
-			location   	(1259, 1674)
+			location   	(175, 1724)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1916,4 +1904,38 @@
 		    fill_color 	13434879
 		    quidu      	"412DFAB60322"
 		    width      	320
+		    height     	180)
+		(object CategoryView "Logical View::Regressions::Access operations of protected types" @46
+		    location   	(812, 1810)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(576, 1771)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	472
+			justify    	0
+			label      	"Access operations of protected types")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@46
+			location   	(576, 1726)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	472
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"412DF662006B"
+		    width      	485
 		    height     	180)))))
