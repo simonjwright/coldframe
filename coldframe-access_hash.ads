@@ -19,9 +19,9 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-access_hash.ads,v c98aee53a2b4 2001/04/27 19:05:02 simon $
+-- $Id: coldframe-access_hash.ads,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 generic
   type T (<>) is limited private;
   type Access_T is access T;
-function Architecture.Access_Hash (The_Access_Value : Access_T) return Natural;
+function ColdFrame.Access_Hash (The_Access_Value : Access_T) return Natural;

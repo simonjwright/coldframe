@@ -19,11 +19,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.adb,v 492d29c34da0 2001/04/29 10:41:27 simon $
+-- $Id: coldframe-navigate_from_many_collection.adb,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 with BC.Copy;
 
-function Architecture.Navigate_From_Many_Collection (Input : From) return To is
+function ColdFrame.Navigate_From_Many_Collection (Input : From) return To is
 
 
   -- Adds the result of navigating from a single instance at the 'many'
@@ -64,4 +64,4 @@ begin
   Generate_Result_Set (It);
   Convert (Result_Set, Result);
   return Result;
-end Architecture.Navigate_From_Many_Collection;
+end ColdFrame.Navigate_From_Many_Collection;

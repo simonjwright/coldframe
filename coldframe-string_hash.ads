@@ -19,27 +19,27 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-string_hash.ads,v 24a93487f94e 2001/01/12 20:33:21 simon $
+-- $Id: coldframe-string_hash.ads,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;
 
-package Architecture.String_Hash is
-  
+package ColdFrame.String_Hash is
+
   pragma Elaborate_Body;
-  
+
   function Hash (S : String;
                  Hash_Table_Size : in Integer := 43)
                 return Integer;
-  
+
   generic
     with package Bounded is new Ada.Strings.Bounded.Generic_Bounded_Length (<>);
   function Bounded_Hash (S : Bounded.Bounded_String;
-			 Hash_Table_Size : in Integer := 43)
-			return Integer;
+                         Hash_Table_Size : in Integer := 43)
+                        return Integer;
 
   function Hash (S : Ada.Strings.Unbounded.Unbounded_String;
                  Hash_Table_Size : in Integer := 43)
                 return Integer;
 
-end Architecture.String_Hash;
+end ColdFrame.String_Hash;

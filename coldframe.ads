@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe.ads,v 1e50618976a0 2001/01/12 20:36:19 simon $
+-- $Id: coldframe.ads,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
-package Architecture is
-end Architecture;
+package ColdFrame is
+end ColdFrame;

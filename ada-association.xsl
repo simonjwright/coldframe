@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 095b965e2d9e 2001/05/02 19:09:00 simon $ -->
+<!-- $Id: ada-association.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -146,9 +146,9 @@
   <xsl:template name="association-body-context">
 
     <xsl:if test="role/@multiple">
-      <xsl:text>with Architecture.Navigate_From_Many_Collection;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.Navigate_From_Many_Collection;&#10;</xsl:text>
     </xsl:if>
-    <xsl:text>with Architecture.Navigate_From_One_Collection;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Navigate_From_One_Collection;&#10;</xsl:text>
 
     <xsl:for-each select="role/classname | associative">
       <xsl:sort select="."/>
@@ -619,7 +619,7 @@
         <xsl:choose>
 
           <xsl:when test="$role-a/@multiple">
-            <xsl:text>    function Nav is new Architecture.Navigate_From_Many_Collection&#10;</xsl:text>
+            <xsl:text>    function Nav is new ColdFrame.Navigate_From_Many_Collection&#10;</xsl:text>
 
             <xsl:text>       (Many_Handle =&gt; </xsl:text>
             <xsl:value-of select="$a"/>
@@ -666,7 +666,7 @@
           </xsl:when>
           
           <xsl:otherwise>
-           <xsl:text>    function Nav is new Architecture.Navigate_From_One_Collection&#10;</xsl:text>
+           <xsl:text>    function Nav is new ColdFrame.Navigate_From_One_Collection&#10;</xsl:text>
 
             <xsl:text>       (One_Handle =&gt; </xsl:text>
             <xsl:value-of select="$a"/>

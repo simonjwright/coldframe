@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 1e6e1365bde4 2001/04/23 05:23:16 simon $ -->
+<!-- $Id: generate-ada.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -185,13 +185,13 @@
         <xsl:when test="set"/>
 
         <xsl:when test="string">
-          <xsl:text>with Architecture.String_Hash;&#10;</xsl:text>
+          <xsl:text>with ColdFrame.String_Hash;&#10;</xsl:text>
           <xsl:text>function </xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Hash is&#10;</xsl:text>
-          <xsl:text>   new Architecture.String_Hash.Bounded_Hash (</xsl:text>
+          <xsl:text>   new ColdFrame.String_Hash.Bounded_Hash (</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>

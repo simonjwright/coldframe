@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 0e78e822bff9 2001/04/27 19:08:10 simon $ -->
+<!-- $Id: ada-collection.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -104,18 +104,18 @@
         <xsl:value-of select="$class"/>
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>   is new Abstract_Collections.Unbounded&#10;</xsl:text>
-        <xsl:text>     (Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>     (Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>      Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
 
     <!-- Hash function for Handles -->
-    <xsl:text>with Architecture.Access_Hash;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash&#10;</xsl:text>
-    <xsl:text>is new Architecture.Access_Hash&#10;</xsl:text>
+    <xsl:text>is new ColdFrame.Access_Hash&#10;</xsl:text>
     <xsl:text>  (T =&gt; Instance,&#10;</xsl:text>
     <xsl:text>   Access_T =&gt; Handle);&#10;</xsl:text>
 
@@ -163,8 +163,8 @@
         <xsl:text>   Buckets =&gt; </xsl:text>
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
-        <xsl:text>   Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:text>   Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>   Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>   Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>

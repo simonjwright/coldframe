@@ -19,11 +19,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_one_collection.adb,v 2de0813a6b57 2001/04/29 10:42:34 simon $
+-- $Id: coldframe-navigate_from_one_collection.adb,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 with BC.Copy;
 
-function Architecture.Navigate_From_One_Collection (Input : From) return To is
+function ColdFrame.Navigate_From_One_Collection (Input : From) return To is
 
 
   -- Used instead of a real Clear in an instantiation of BC.Copy to
@@ -73,4 +73,4 @@ function Architecture.Navigate_From_One_Collection (Input : From) return To is
 begin
   Generate_Result (It);
   return Result;
-end Architecture.Navigate_From_One_Collection;
+end ColdFrame.Navigate_From_One_Collection;

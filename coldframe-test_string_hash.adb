@@ -12,20 +12,20 @@
 -- the Free Software Foundation, 59 Temple Place - Suite 330, Boston,
 -- MA 02111-1307, USA.
 
--- $Id: coldframe-test_string_hash.adb,v bf8a0244a396 2001/01/12 20:35:01 simon $
+-- $Id: coldframe-test_string_hash.adb,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;
 with Ada.Text_Io;
-with Architecture.String_Hash;
+with ColdFrame.String_Hash;
 
-procedure Architecture.Test_String_Hash is
+procedure ColdFrame.Test_String_Hash is
 
   package S128 is new Ada.Strings.Bounded.Generic_Bounded_Length (128);
-  function S128_Hash is new Architecture.String_Hash.Bounded_Hash (S128);
+  function S128_Hash is new ColdFrame.String_Hash.Bounded_Hash (S128);
 
   procedure T (S : String) is
-    use Architecture.String_Hash;
+    use ColdFrame.String_Hash;
     use S128;
     use Ada.Strings.Unbounded;
   begin
@@ -57,4 +57,4 @@ begin
   T ("now is the time for all good men to come to the aid of the part");
   T ("Now is the time for all good men to come to the aid of the party");
   T ("now is the time for all good men to come to the aid of the Party");
-end Architecture.Test_String_Hash;
+end ColdFrame.Test_String_Hash;

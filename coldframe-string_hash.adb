@@ -22,11 +22,11 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-string_hash.adb,v 0c39e5850919 2001/03/20 05:39:04 simon $
+-- $Id: coldframe-string_hash.adb,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 with Ada.Numerics.Discrete_Random;
 
-package body Architecture.String_Hash is
+package body ColdFrame.String_Hash is
 
 
   type Special_Integer is mod 2 ** 32;
@@ -106,4 +106,4 @@ begin
 
   Init;
 
-end Architecture.String_Hash;
+end ColdFrame.String_Hash;

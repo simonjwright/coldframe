@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.ads,v 492d29c34da0 2001/04/29 10:41:27 simon $
+-- $Id: coldframe-navigate_from_many_collection.ads,v e15478df6eb7 2001/05/02 19:33:40 simon $
 
 -- This package supports navigation of a many-to-one association from
 -- a set of instances of the 'many' end to the set of instances at the
@@ -68,4 +68,4 @@ generic
     (To_The_Container : in out To; I : One_Handle);
   -- Operation to add a result to the result Collection
 
-function Architecture.Navigate_From_Many_Collection (Input : From) return To;
+function ColdFrame.Navigate_From_Many_Collection (Input : From) return To;

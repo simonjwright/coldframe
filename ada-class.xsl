@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6f97d323c6f9 2001/04/29 10:39:02 simon $ -->
+<!-- $Id: ada-class.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -134,8 +134,8 @@
             <xsl:text>      Buckets =&gt; </xsl:text>
             <xsl:call-template name="hash-buckets"/>
             <xsl:text>,&#10;</xsl:text>
-            <xsl:text>      Storage_Manager =&gt; Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-            <xsl:text>      Storage =&gt; Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+            <xsl:text>      Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+            <xsl:text>      Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
           </xsl:otherwise>
 
         </xsl:choose>
@@ -205,7 +205,7 @@
         <xsl:otherwise>
           <!-- Use the Unbounded version -->
           <!-- We need access to the standard heap storage pool. -->
-          <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
+          <xsl:text>with ColdFrame.Global_Storage_Pool;&#10;</xsl:text>
           <xsl:text>with BC.Containers.Maps.Unbounded;&#10;</xsl:text>
         </xsl:otherwise>
 
@@ -408,7 +408,7 @@
   <xsl:template name="hash-function">
     <xsl:if test="attribute/type/@identifier/..='Unbounded_String'
                   or attribute/type/@identifier/..='Text'">
-      <xsl:text>with Architecture.String_Hash;&#10;</xsl:text>
+      <xsl:text>with ColdFrame.String_Hash;&#10;</xsl:text>
     </xsl:if>
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
