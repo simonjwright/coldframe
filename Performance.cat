@@ -12,15 +12,14 @@
     logical_models 	(list unit_reference_list
 	(object Class "Owner"
 	    quid       	"3D36DB0E00FC"
-	    documentation 	"[[ max : 4 ]]"
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "name"
-		    quid       	"3D36DC0402B8"
-		    stereotype 	"id"
-		    type       	"Owners")))
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3D5B9B180302"
+		    label      	"g1"
+		    supplier   	"Logical View::Performance::Person"
+		    quidu      	"3D5B9B0400F1")))
 	(object Class "Pet"
 	    quid       	"3D36DB1500E8"
-	    documentation 	"[[ max : 6 ]]"
 	    operations 	(list Operations
 		(object Operation "speak"
 		    quid       	"3D386CE500BE"
@@ -64,15 +63,14 @@
 	    stereotype 	"type")
 	(object Class "Pets"
 	    quid       	"3D36DB980154"
-	    documentation 	"[[ enumeration : Bast, Felix, Fido, Rover, Spot, Tibbles ]]"
+	    documentation 	"[[ enumeration : Archie, Bast, Charlie, Denny, Egbert, Fido ]]"
 	    stereotype 	"type")
 	(object Class "Cat"
 	    quid       	"3D36DC7E03C2"
-	    documentation 	"[[ max : 6 ]]"
 	    superclasses 	(list inheritance_relationship_list
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9100A8"
-		    label      	"g1"
+		    label      	"g2"
 		    supplier   	"Logical View::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
@@ -83,11 +81,10 @@
 		    uid        	0)))
 	(object Class "Dog"
 	    quid       	"3D36DC8501B9"
-	    documentation 	"[[ max : 6 ]]"
 	    superclasses 	(list inheritance_relationship_list
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9500EA"
-		    label      	"g1"
+		    label      	"g2"
 		    supplier   	"Logical View::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
@@ -96,8 +93,19 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
+	(object Class "House"
+	    quid       	"3D5B97DE038C")
+	(object Class "Person"
+	    quid       	"3D5B9B0400F1"
+	    documentation 	"[[ max : 4 ]]"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "name"
+		    quid       	"3D5B9B1103C0"
+		    stereotype 	"id"
+		    type       	"Owners")))
 	(object Association "a1"
 	    quid       	"3D36DB1E02A3"
+	    documentation 	"The purpose of this association is to time operations of normal one-to-many associations."
 	    roles      	(list role_list
 		(object Role "owns"
 		    quid       	"3D36DB1F011E"
@@ -112,7 +120,26 @@
 		    supplier   	"Logical View::Performance::Owner"
 		    quidu      	"3D36DB0E00FC"
 		    client_cardinality 	(value cardinality "1")
-		    is_navigable 	TRUE))))
+		    is_navigable 	TRUE)))
+	(object Association "a2"
+	    quid       	"3D5B9B400133"
+	    documentation 	"The purpose of this association is to time operations of associative associations."
+	    roles      	(list role_list
+		(object Role "feeds"
+		    quid       	"3D5B9B4301F6"
+		    label      	"feeds"
+		    supplier   	"Logical View::Performance::Pet"
+		    quidu      	"3D36DB1500E8"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "lives with"
+		    quid       	"3D5B9B430228"
+		    label      	"lives with"
+		    supplier   	"Logical View::Performance::Person"
+		    quidu      	"3D5B9B0400F1"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Performance::House"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3D36DA000338"
@@ -123,15 +150,224 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Performance::Pet" @1
+		(object ClassView "Class" "Logical View::Performance::Owners" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1890, 660)
+		    location   	(900, 1785)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(1666, 475)
+			location   	(817, 1759)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"Owners")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(817, 1714)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D36DB8B0079"
+		    width      	184
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::Pets" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(900, 1995)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(817, 1969)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"Pets")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(817, 1924)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D36DB980154"
+		    width      	184
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::Cat" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2355, 1650)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(2267, 1577)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	176
+			justify    	0
+			label      	"Cat")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D36DC7E03C2"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(2267, 1633)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	180)
+		    width      	194
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::Dog" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2745, 1650)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2657, 1577)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	176
+			justify    	0
+			label      	"Dog")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D36DC8501B9"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(2657, 1633)
+			icon_style 	"Label"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	180)
+		    width      	194
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::Owner" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1200, 1080)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1119, 1034)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"Owner")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D36DB0E00FC"
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::House" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2460, 270)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(2379, 224)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"House")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D5B97DE038C"
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Performance::Person" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1200, 525)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(982, 452)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	436
+			justify    	0
+			label      	"Person")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D5B9B0400F1"
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(982, 508)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	439)
+		    width      	454
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @8
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1200, 816)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3D5B9B180302"
+		    client     	@5
+		    supplier   	@7
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Performance::Pet" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2565, 1080)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(2341, 895)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	448
@@ -142,8 +378,8 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB1500E8"
 		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1666, 531)
+			Parent_View 	@9
+			location   	(2341, 951)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
@@ -153,41 +389,11 @@
 		    height     	392
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Owner" @2
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(540, 660)
-		    label      	(object ItemLabel
-			Parent_View 	@2
-			location   	(323, 587)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	434
-			justify    	0
-			label      	"Owner")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3D36DB0E00FC"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(323, 643)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	439)
-		    width      	452
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object AssociationViewNew "a1" @3
-		    location   	(1211, 660)
-		    label      	(object SegLabel @4
-			Parent_View 	@3
-			location   	(1211, 601)
+		(object AssociationViewNew "a1" @10
+		    location   	(1810, 1080)
+		    label      	(object SegLabel @11
+			Parent_View 	@10
+			location   	(1810, 1021)
 			font       	(object Font
 			    italics    	TRUE)
 			anchor     	1
@@ -203,12 +409,12 @@
 		    line_color 	3342489
 		    quidu      	"3D36DB1E02A3"
 		    roleview_list 	(list RoleViews
-			(object RoleView "owns" @5
-			    Parent_View 	@3
-			    location   	(671, 0)
-			    label      	(object SegLabel @6
-				Parent_View 	@5
-				location   	(1567, 619)
+			(object RoleView "owns" @12
+			    Parent_View 	@10
+			    location   	(1270, 420)
+			    label      	(object SegLabel @13
+				Parent_View 	@12
+				location   	(2226, 1039)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -221,12 +427,12 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3D36DB1F011E"
-			    client     	@3
-			    supplier   	@1
+			    client     	@10
+			    supplier   	@9
 			    line_style 	0
-			    label      	(object SegLabel @7
-				Parent_View 	@5
-				location   	(1613, 699)
+			    label      	(object SegLabel @14
+				Parent_View 	@12
+				location   	(2280, 1119)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -236,188 +442,162 @@
 				pctDist    	0.903409
 				height     	39
 				orientation 	1))
-			(object RoleView "is owned by" @8
-			    Parent_View 	@3
-			    location   	(671, 0)
-			    label      	(object SegLabel @9
-				Parent_View 	@8
-				location   	(929, 620)
+			(object RoleView "is owned by" @15
+			    Parent_View 	@10
+			    location   	(1270, 420)
+			    label      	(object SegLabel @16
+				Parent_View 	@15
+				location   	(1441, 1038)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
 				max_width  	253
 				justify    	0
 				label      	"+is owned by"
-				pctDist    	0.636364
-				height     	41
+				pctDist    	0.710112
+				height     	43
 				orientation 	1)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3D36DB1F011F"
-			    client     	@3
-			    supplier   	@2
+			    client     	@10
+			    supplier   	@5
 			    line_style 	0
-			    label      	(object SegLabel @10
-				Parent_View 	@8
-				location   	(809, 699)
+			    label      	(object SegLabel @17
+				Parent_View 	@15
+				location   	(1379, 1108)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
 				label      	"1"
-				pctDist    	0.903409
-				height     	39
+				pctDist    	0.827937
+				height     	28
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::Performance::Owners" @11
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(225, 1365)
+		(object InheritView "g2" @18
 		    label      	(object ItemLabel
-			Parent_View 	@11
-			location   	(142, 1339)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	166
-			justify    	0
-			label      	"Owners")
-		    stereotype 	(object ItemLabel
-			Parent_View 	@11
-			location   	(142, 1294)
-			fill_color 	13434879
-			anchor     	10
-			nlines     	1
-			max_width  	166
-			justify    	0
-			label      	"<<type>>")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3D36DB8B0079"
-		    width      	184
-		    height     	164
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Pets" @12
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(225, 1575)
-		    label      	(object ItemLabel
-			Parent_View 	@12
-			location   	(142, 1549)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	166
-			justify    	0
-			label      	"Pets")
-		    stereotype 	(object ItemLabel
-			Parent_View 	@12
-			location   	(142, 1504)
-			fill_color 	13434879
-			anchor     	10
-			nlines     	1
-			max_width  	166
-			justify    	0
-			label      	"<<type>>")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3D36DB980154"
-		    width      	184
-		    height     	164
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Cat" @13
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1680, 1230)
-		    label      	(object ItemLabel
-			Parent_View 	@13
-			location   	(1592, 1157)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	176
-			justify    	0
-			label      	"Cat")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3D36DC7E03C2"
-		    compartment 	(object Compartment
-			Parent_View 	@13
-			location   	(1592, 1213)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	180)
-		    width      	194
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Dog" @14
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(2070, 1230)
-		    label      	(object ItemLabel
-			Parent_View 	@14
-			location   	(1982, 1157)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	176
-			justify    	0
-			label      	"Dog")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3D36DC8501B9"
-		    compartment 	(object Compartment
-			Parent_View 	@14
-			location   	(1982, 1213)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	180)
-		    width      	194
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object InheritView "g1" @15
-		    label      	(object ItemLabel
-			Parent_View 	@15
-			location   	(1762, 1001)
+			Parent_View 	@18
+			location   	(2437, 1421)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
-			label      	"g1")
+			label      	"g2")
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3D36DC9100A8"
-		    client     	@13
-		    supplier   	@1
+		    client     	@3
+		    supplier   	@9
 		    line_style 	0)
-		(object InheritView "g1" @16
+		(object InheritView "g2" @19
 		    label      	(object ItemLabel
-			Parent_View 	@16
-			location   	(1997, 1001)
+			Parent_View 	@19
+			location   	(2672, 1421)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
-			label      	"g1")
+			label      	"g2")
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3D36DC9500EA"
-		    client     	@14
-		    supplier   	@1
+		    client     	@4
+		    supplier   	@9
+		    line_style 	0)
+		(object AssociationViewNew "a2" @20
+		    location   	(2175, 525)
+		    label      	(object SegLabel @21
+			Parent_View 	@20
+			location   	(2175, 466)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3D5B9B400133"
+		    roleview_list 	(list RoleViews
+			(object RoleView "feeds" @22
+			    Parent_View 	@20
+			    location   	(975, 0)
+			    label      	(object SegLabel @23
+				Parent_View 	@22
+				location   	(2479, 809)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	123
+				justify    	0
+				label      	"+feeds"
+				pctDist    	0.901070
+				height     	86
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D5B9B4301F6"
+			    client     	@20
+			    supplier   	@9
+			    vertices   	(list Points
+				(2175, 525)
+				(2565, 525)
+				(2565, 883))
+			    line_style 	0
+			    label      	(object SegLabel @24
+				Parent_View 	@22
+				location   	(2619, 809)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))
+			(object RoleView "lives with" @25
+			    Parent_View 	@20
+			    location   	(975, 0)
+			    label      	(object SegLabel @26
+				Parent_View 	@25
+				location   	(1577, 484)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	200
+				justify    	0
+				label      	"+lives with"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D5B9B430228"
+			    client     	@20
+			    supplier   	@7
+			    line_style 	0
+			    label      	(object SegLabel @27
+				Parent_View 	@25
+				location   	(1501, 579)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object AssocAttachView "" @28
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@6
+		    supplier   	@20
 		    line_style 	0)))))
