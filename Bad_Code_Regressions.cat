@@ -1,0 +1,669 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Bad Code Regressions"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3F6738F4023A"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Child With Function"
+	    quid       	"3F6738A20083"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"3F6738A901A6"
+		    label      	"g1"
+		    supplier   	"Logical View::Bad Code Regressions::Parent With Procedure"
+		    quidu      	"3F6738750314"))
+	    operations 	(list Operations
+		(object Operation "op"
+		    quid       	"3F67399B03AC"
+		    result     	"Boolean"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "Parent With Procedure"
+	    quid       	"3F6738750314"
+	    operations 	(list Operations
+		(object Operation "op"
+		    quid       	"3F6738930096"
+		    stereotype 	"abstract"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3F6738830197"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "Multiple Transitions"
+	    quid       	"3F752FE0006F"
+	    stereotype 	"singleton"
+	    statemachine 	(object State_Machine "State/Activity Model"
+		quid       	"3F75300900DD"
+		stereotype 	"generate"
+		states     	(list States
+		    (object State "$UNNAMED$0"
+			quid       	"3F75302400BD"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3F75305C00C8"
+				supplier   	"A"
+				quidu      	"3F75302601F7"
+				sendEvent  	(object sendEvent
+				    quid       	"3F75305C00CB")))
+			type       	"StartState")
+		    (object State "A"
+			quid       	"3F75302601F7"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3F7530410390"
+				label      	""
+				supplier   	"B"
+				quidu      	"3F75302E02AC"
+				Event      	(object Event "E"
+				    quid       	"3F7530410391")
+				sendEvent  	(object sendEvent
+				    quid       	"3F7530410393"))
+			    (object State_Transition
+				quid       	"3F75305003B0"
+				label      	""
+				supplier   	"B"
+				quidu      	"3F75302E02AC"
+				Event      	(object Event "E"
+				    quid       	"3F75305003B1")
+				sendEvent  	(object sendEvent
+				    quid       	"3F75305003B3")))
+			type       	"Normal")
+		    (object State "B"
+			quid       	"3F75302E02AC"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3F7530600313"
+				supplier   	"C"
+				quidu      	"3F7530380275"
+				sendEvent  	(object sendEvent
+				    quid       	"3F7530600316"))
+			    (object State_Transition
+				quid       	"3F75306502DE"
+				supplier   	"C"
+				quidu      	"3F7530380275"
+				sendEvent  	(object sendEvent
+				    quid       	"3F75306502E1")))
+			actions    	(list action_list
+			    (object action "Delete"
+				quid       	"3F75380203BC"
+				ActionTime 	(object ActionTime
+				    when       	"Entry")))
+			type       	"Normal")
+		    (object State "C"
+			quid       	"3F7530380275"
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3F75308A00D8"
+				supplier   	"D"
+				quidu      	"3F75308203DA"
+				sendEvent  	(object sendEvent
+				    quid       	"3F75308A00DB"))
+			    (object State_Transition
+				quid       	"3F7530910010"
+				label      	""
+				supplier   	"D"
+				quidu      	"3F75308203DA"
+				Event      	(object Event "F"
+				    quid       	"3F7530910011")
+				sendEvent  	(object sendEvent
+				    quid       	"3F7530910013")))
+			type       	"Normal")
+		    (object State "D"
+			quid       	"3F75308203DA"
+			type       	"Normal"))
+		partitions 	(list Partitions)
+		objects    	(list Objects)
+		statediagrams 	(list StateDiagrams
+		    (object State_Diagram "Lifecycle"
+			quid       	"3F753009010F"
+			title      	"Lifecycle"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object StateView "StartState" "$UNNAMED$0" @1
+				location   	(400, 393)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@1
+				    location   	(442, 363)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"3F75302400BD"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "A" @2
+				location   	(1215, 543)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@2
+				    location   	(1215, 527)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"A")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3F75302601F7"
+				autoResize 	TRUE)
+			    (object StateView "Normal" "B" @3
+				location   	(1819, 987)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@3
+				    location   	(1819, 962)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	244
+				    justify    	0
+				    label      	"B")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3F75302E02AC"
+				compartment 	(object Compartment
+				    Parent_View 	@3
+				    location   	(1706, 1000)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	1
+				    max_width  	225
+				    compartmentItems 	(list Compartment
+					"entry/ Delete"))
+				width      	341
+				height     	152
+				autoResize 	TRUE)
+			    (object StateView "Normal" "C" @4
+				location   	(2260, 1568)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@4
+				    location   	(2260, 1552)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"C")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3F7530380275"
+				autoResize 	TRUE)
+			    (object TransView "" @5
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @6
+				    Parent_View 	@5
+				    location   	(1775, 514)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"E"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F7530410390"
+				client     	@2
+				supplier   	@3
+				vertices   	(list Points
+				    (1365, 547)
+				    (1805, 560)
+				    (1816, 910))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @7
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @8
+				    Parent_View 	@7
+				    location   	(1345, 879)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"E"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F75305003B0"
+				client     	@2
+				supplier   	@3
+				vertices   	(list Points
+				    (1222, 609)
+				    (1255, 915)
+				    (1649, 965))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @9
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F7530600313"
+				client     	@3
+				supplier   	@4
+				vertices   	(list Points
+				    (1989, 1044)
+				    (2230, 1125)
+				    (2255, 1500))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @10
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @11
+				    Parent_View 	@10
+				    location   	(1862, 1324)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    hidden     	TRUE
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	450
+				    justify    	0
+				    label      	""
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F75306502DE"
+				client     	@3
+				supplier   	@4
+				vertices   	(list Points
+				    (1820, 1063)
+				    (1825, 1355)
+				    (2123, 1500))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @12
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F75305C00C8"
+				client     	@1
+				supplier   	@2
+				line_style 	0
+				x_offset   	FALSE)
+			    (object StateView "Normal" "D" @13
+				location   	(2695, 2113)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@13
+				    location   	(2695, 2097)
+				    fill_color 	13434879
+				    anchor_loc 	1
+				    nlines     	2
+				    max_width  	204
+				    justify    	0
+				    label      	"D")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"3F75308203DA"
+				autoResize 	TRUE)
+			    (object TransView "" @14
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F75308A00D8"
+				client     	@4
+				supplier   	@13
+				vertices   	(list Points
+				    (2262, 1634)
+				    (2275, 1968)
+				    (2545, 2061))
+				line_style 	0
+				x_offset   	FALSE)
+			    (object TransView "" @15
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @16
+				    Parent_View 	@15
+				    location   	(2703, 1709)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"F"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F7530910010"
+				client     	@4
+				supplier   	@13
+				vertices   	(list Points
+				    (2410, 1587)
+				    (2650, 1620)
+				    (2688, 2045))
+				line_style 	0
+				x_offset   	FALSE)))))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"3F67398900D6"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Parent With Procedure" @17
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(680, 276)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@17
+			location   	(447, 181)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	466
+			justify    	0
+			label      	"Parent With Procedure")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F6738750314"
+		    compartment 	(object Compartment
+			Parent_View 	@17
+			location   	(447, 237)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	452)
+		    width      	484
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Child With Function" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(688, 695)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(544, 600)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Child With Function")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F6738A20083"
+		    compartment 	(object Compartment
+			Parent_View 	@18
+			location   	(544, 701)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	292)
+		    width      	306
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @19
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(684, 485)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3F6738A901A6"
+		    client     	@18
+		    supplier   	@17
+		    line_style 	0)
+		(object CategoryView "Logical View::Bad Code Regressions" @20
+		    location   	(2083, 285)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(1913, 201)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Bad Code Regressions")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F6738F4023A"
+		    width      	352
+		    height     	180)
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Multiple Transitions" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1568, 835)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(1378, 809)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	380
+			justify    	0
+			label      	"Multiple Transitions")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@21
+			location   	(1378, 764)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	380
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F752FE0006F"
+		    width      	398
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)))))
