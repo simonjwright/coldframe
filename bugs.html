@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d7f2120ce4d5 2004/06/17 08:58:05 simon $ -->
+<!-- $Id: bugs.html,v 08673ba00061 2004/06/18 19:54:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -211,6 +211,22 @@ href="ColdFrame.xsd">ColdFrame.xsd</a>.</i>
 <dd>There is no check that associations' multiplicities have been
 maintained.
 
+<dt>0269 (raised 17.vi.04)
+
+<dd>Some of the <i>Event Test</i> tests have slightly too tight time
+limits, so that tests can fail the first time they're run.
+<br><i>This may be because the tests use a tracing Event Queue.</i>
+
+<!-- next: 0270  -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>18.vi.04</h3>
+
+<dl>
+
 <dt>0267 (raised 14.vi.04)
 
 <dd>If an event handler throws an exception, the instance can't be
@@ -221,16 +237,7 @@ deleted (probably until an event is successfully handled).
 <dd>The test procedure names (reported by the <tt>-v</tt> AUnit
 option) aren't all as clear as they could be.
 
-<dt>0269 (raised 17.vi.04)
-
-<dd>Some of the <i>Event Test</i> tests have slightly too tight time
-limits, so that tests can fail the first time they're run.
-
-<!-- next: 0270  -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>10.vi.04</h3>
 

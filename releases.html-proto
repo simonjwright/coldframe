@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v bc50afe92c32 2004/06/17 08:58:42 simon $ -->
+<!-- $Id: releases.html-proto,v 08673ba00061 2004/06/18 19:54:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -64,10 +64,6 @@ generation extensions.
 <p>Tagged values with names containing illegal characters are treated
 as errors. (Legal characters are alphanumerics, hyphen and
 underscore).
-
-
-<p>Using a bounded string (<tt>{string = max 15}</tt> say) in an
-identifier is allowed.
 
 
 <p>You can specify an empty type using the tag <i>{null}</i>.
