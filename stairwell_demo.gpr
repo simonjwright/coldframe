@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 4051953f178a 2003/01/04 12:26:03 simon $
+--  $Id: stairwell_demo.gpr,v ccd776158e49 2003/01/07 20:57:54 simon $
 
 with "tash";
 
@@ -41,7 +41,7 @@ project Stairwell_Demo is
   end Builder;
 
   package Compiler is
-     for Default_Switches ("Ada") use ("-gnatqQaf",
+     for Default_Switches ("Ada") use ("-gnatqQafy",
                                        "-gnatwaL",
                                        "-O2");
   end Compiler;
