@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: house_management-events-initialize.adb,v $
---  $Revision: 0f7eda971a8e $
---  $Date: 2003/02/07 05:55:57 $
+--  $Revision: cd6fd803b821 $
+--  $Date: 2003/11/15 13:57:33 $
 --  $Author: simon $
 
 --  Set up a standard Event Queue.
@@ -25,6 +25,6 @@ separate (House_Management.Events)
 procedure Initialize is
 begin
 
-   Dispatcher := new ColdFrame.Project.Events.Standard.Event_Queue;
+   Dispatcher := new ColdFrame.Project.Events.Standard.Debug.Event_Queue;
 
 end Initialize;
