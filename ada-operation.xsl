@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
+<!-- $Id: ada-operation.xsl,v 5df898a16c90 2003/01/11 17:30:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -353,11 +353,11 @@
   <xsl:template mode="operation-body" match="*"/>
 
 
-  <!-- Called from class/operation to generate a subprogram specification.
+  <!-- Called from operation to generate a subprogram specification.
        Ends without the closing ";" or " is". -->
   <xsl:template name="subprogram-specification">
     <xsl:param name="indent"/>
-    <xsl:param name="use-handle" select="'yes'"/>
+    <xsl:param name="is-class" select="'yes'"/>
 
     <xsl:variable name="cont" select="concat($indent, $C)"/>
 
@@ -370,7 +370,7 @@
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$cont"/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$cont"/>
@@ -378,7 +378,7 @@
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
           <xsl:with-param name="class" select=".."/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
       </xsl:when>
 
@@ -389,7 +389,7 @@
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$cont"/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
          </xsl:call-template>
       </xsl:otherwise>
 
@@ -397,32 +397,24 @@
   </xsl:template>
 
 
-  <!-- Called from class/operation to generate a subprogram parameter list -->
+  <!-- Called from operation to generate a subprogram parameter list -->
   <xsl:template name="parameter-list">
     <xsl:param name="indent" select="''"/>
-    <xsl:param name="use-handle" select="'yes'"/>
+    <xsl:param name="is-class" select="'yes'"/>
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
-         the Class is a singleton, all operations are class operations,
-         otherwise it depends on the @class attribute. -->
-    <xsl:if
-      test="parameter or (not(../@singleton) and not(@class))">
+         the Class is a singleton (or a Type), all operations are 
+         class operations, otherwise it depends on the @class attribute. -->
+    <xsl:if test="parameter or
+                  ($is-class='yes' and not(../@singleton) and not(@class))">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
-      <xsl:if test="not(../@singleton) and not(@class)">
-        <xsl:choose>
-          <xsl:when test="$use-handle='yes'">
-            <xsl:text>This : Handle</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>This : </xsl:text>
-            <xsl:value-of select="../name"/>
-          </xsl:otherwise>
-        </xsl:choose>
+      <xsl:if test="$is-class='yes' and not(../@singleton) and not(@class)">
+        <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10; </xsl:text>
           <xsl:value-of select="$indent"/>
@@ -430,7 +422,7 @@
       </xsl:if>
       <xsl:apply-templates mode="parameter">
         <xsl:with-param name="indent" select="$indent"/>
-        <xsl:with-param name="use-handle" select="$use-handle"/>
+        <xsl:with-param name="is-class" select="$is-class"/>
       </xsl:apply-templates>
       <xsl:text>)</xsl:text>
 
@@ -439,10 +431,10 @@
   </xsl:template>
 
 
-  <!-- Called from class/operation to generate a subprogram parameter -->
+  <!-- Called from operation to generate a subprogram parameter -->
   <xsl:template match="operation/parameter" mode="parameter">
     <xsl:param name="indent" select="''"/>
-    <xsl:param name="use-handle" select="'yes'"/>
+    <xsl:param name="is-class" select="'yes'"/>
 
     <xsl:value-of select="name"/>
     <xsl:text> : </xsl:text>
@@ -459,7 +451,7 @@
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
       <xsl:with-param name="class" select="../.."/>
-      <xsl:with-param name="use-handle" select="$use-handle"/>
+      <xsl:with-param name="is-class" select="$is-class"/>
     </xsl:call-template>
 
     <xsl:if test="initial">
@@ -478,7 +470,7 @@
   <xsl:template mode="parameter" match="*"/>
 
 
-  <!-- Called from class/operation to generate a default value.
+  <!-- Called from operation to generate a default value.
        Used for default return value for function bodies,
        defaults in initializers. -->
   <xsl:template name="default-value">
@@ -931,7 +923,7 @@
   <xsl:template
     match="operation[@access]"
     mode="access-to-operation">
-    <xsl:param name="use-handle" select="'yes'"/>
+    <xsl:param name="is-class" select="'yes'"/>
     <xsl:value-of select="$I"/>
     <xsl:text>type </xsl:text>
     <xsl:value-of select="name"/>
@@ -941,7 +933,7 @@
         <xsl:text>function</xsl:text>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$I"/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -949,14 +941,14 @@
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
           <xsl:with-param name="class" select=".."/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>procedure</xsl:text>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$IC"/>
-          <xsl:with-param name="use-handle" select="$use-handle"/>
+          <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
