@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v c9ddb46499a4 2003/09/13 16:29:09 simon $ -->
+<!-- $Id: serialization.html,v 424840497357 2003/09/13 17:20:53 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -164,21 +164,31 @@ available (<tt>Boolean</tt>, <tt>Integer</tt>, <tt>Duration</tt>,
 
 <li>strings (<tt>Text</tt> and user-defined <i><tt>[[string]]</tt></i>s)
 
-<li><tt>Time</tt>
+<li><tt>Time</tt> (note, <em>not</em> <tt>Ada.Calendar.Time</tt>, just
+plain <tt>Time</tt>, which ColdFrame translates to
+<tt>ColdFrame.Project.Calendar.Time</tt>
 
 </ul>
 
 <p>However, this may not be possible for types imported from other
-domains (it's OK for types which are visibly scalar, such as
-<tt>GNAT.Sockets.Port_Type</tt>). In this case, you can specify an
-image function for the type.
+domains or your own hand-written packages (it's OK for types which are
+visibly scalar, such as <tt>GNAT.Sockets.Port_Type</tt>). In this
+case, you can specify an image function for the type.
 
-<p><a href="#serialization.png">In the diagram</a>, <i>Foreign</i> is
-a renaming of type
+<p>The simplest type is a <tt>[[type-image]]</tt> function; if for a
+&#171;type&#187; <i>T</i> you specify
+<tt>[[type-image&nbsp;:&nbsp;f]</tt>, ColdFrame expects you to provide
+<pre>
+   function F (V : T) return String;
+</pre>
+
+<p>You can manage more complex imported types if required (for
+example, arrays). <a href="#serialization.png">In the diagram</a>,
+<i>Foreign</i> is a renaming of type
 <tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
-function to use via the annotation <i><tt>[[image]]</tt></i>, in this
-case
-<tt>[[image&nbsp;:&nbsp;<i>Other_Domain</i>.Image_Of_Exported]]</tt>.
+function to use via the annotation <i><tt>[[field-image]]</tt></i>, in
+this case
+<tt>[[field-image&nbsp;:&nbsp;<i>Other_Domain</i>.Image_Of_Exported]]</tt>.
 ColdFrame then expects to be able to call
 <pre>
    function <i>[Other_Domain.]</i>Image_Of_Exported
@@ -320,16 +330,24 @@ is
    end Real_Time_Image;
 </pre>
 
-<p>If the "field name" parameter <tt>N</tt> is empty, the image
-function has been called for recording of a plain type, as in this
-case, so we make up a field name. Otherwise, it's the name of the
-field of this type in a record (see the next section), so it's output
-verbatim.
+<p>If the "field name" parameter <tt>N</tt> is empty, we make up a
+field name. Otherwise, it's
+
+<ul>
+
+<li>the name of the type, for a plain type like <tt>Real_Time</tt>; or
+
+<li>the name of the field of this type in a record (see the next
+section),
+
+</ul>
+
+so it's output verbatim.
 
 <p>A typical result of calling <tt>Serializable.Image </tt> is
 <pre>
    &lt;record name="Serialization_Demo.Real_Time"&gt;
-   &lt;field name="Payload"&gt;-8176441673.395873810&lt;/field&gt;
+   &lt;field name="Real_Time"&gt;-8176441673.395873810&lt;/field&gt;
    &lt;/record&gt;
 </pre>
 
