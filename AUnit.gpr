@@ -1,5 +1,7 @@
 --  Project file (GCC-3, GNAT-3.15) for AUnit
---  $Id: AUnit.gpr,v 106c9e0d7db0 2002/12/04 21:49:18 simon $
+--  $Id: AUnit.gpr,v 4f14ccaefd87 2003/02/01 13:48:47 simon $
+
+with "Options";
 
 project AUnit is
 
@@ -9,8 +11,15 @@ project AUnit is
 
   for Object_Dir use ".build";
 
+  for Object_Dir use Options'Object_Dir;
+  package Ide renames Options.Ide;
+  package Builder renames Options.Builder;
+
   package Compiler is
      for Default_Switches ("Ada") use ("-gnatqQaf", "-gnatwaL", "-O2");
   end Compiler;
+
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
 
 end AUnit;
