@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 2f07bc790ec0 $}
+|{ revision = $Revision: 59a716f28458 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -165,23 +165,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3FA962050323"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(479, 437)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	430)
 			    width      	450
 			    height     	218
 			    annotation 	8
@@ -222,23 +205,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3FA962440233"
-			    compartment 	(object Compartment
-				Parent_View 	@2
-				location   	(551, 812)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	265)
 			    width      	286
 			    height     	218
 			    annotation 	8
@@ -1145,9 +1111,231 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4051E8C000A8"
+			    width      	466
+			    height     	308
+			    annotation 	8
+			    autoResize 	TRUE)))))
+	(object Class_Category "Ordering for protected types"
+	    quid       	"412DFAB60322"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "B Ordinary Type"
+		    quid       	"412DFAEC00DB"
+		    documentation 	"{integer = lower 0 | upper 1}"
+		    stereotype 	"type")
+		(object Class "C Ordinary Type"
+		    quid       	"412DFB1203E2"
+		    documentation 	"{integer = lower 0 | upper 1}"
+		    stereotype 	"type")
+		(object Class "D Ordinary Type"
+		    quid       	"412DFB34000C"
+		    documentation 	"{integer = lower 0 | upper 1}"
+		    stereotype 	"type")
+		(object Class "A Protected Type"
+		    quid       	"412DFB5000C0"
+		    stereotype 	"protected"
+		    operations 	(list Operations
+			(object Operation "p1"
+			    quid       	"412DFB74000E"
+			    parameters 	(list Parameters
+				(object Parameter "b"
+				    quid       	"412DFC1B0004"
+				    type       	"B Ordinary Type"
+				    quidu      	"412DFAEC00DB"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "p2"
+			    quid       	"412DFB8A010A"
+			    parameters 	(list Parameters
+				(object Parameter "c"
+				    quid       	"412DFB9D01C5"
+				    type       	"C Ordinary Type"
+				    quidu      	"412DFB1203E2"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "f1"
+			    quid       	"412DFB9D01B1"
+			    result     	"D Ordinary Type"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0
+			    quidu      	"412DFB34000C"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "i"
+			    quid       	"412DFB6A0064"
+			    type       	"Integer"))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"412DFAE50329"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::B Ordinary Type" @25
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(740, 697)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@25
+				location   	(567, 671)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"B Ordinary Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@25
+				location   	(567, 626)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"412DFAEC00DB"
+			    width      	364
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::C Ordinary Type" @26
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(737, 1010)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@26
+				location   	(564, 984)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"C Ordinary Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@26
+				location   	(564, 939)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"412DFB1203E2"
+			    width      	364
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::D Ordinary Type" @27
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(757, 1385)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@27
+				location   	(584, 1359)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"D Ordinary Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@27
+				location   	(584, 1314)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"412DFB34000C"
+			    width      	364
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::A Protected Type" @28
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(742, 282)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@28
+				location   	(519, 161)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	446
+				justify    	0
+				label      	"A Protected Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@28
+				location   	(519, 116)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	446
+				justify    	0
+				label      	"<<protected>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"412DFB5000C0"
 			    compartment 	(object Compartment
-				Parent_View 	@24
-				location   	(541, 308)
+				Parent_View 	@28
+				location   	(519, 217)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1158,12 +1346,12 @@
 				    color      	0
 				    default_color 	TRUE)
 				icon_style 	"Icon"
-				fill_color 	13434879
+				fill_color 	16777215
 				anchor     	2
-				nlines     	4
-				max_width  	445)
-			    width      	466
-			    height     	308
+				nlines     	5
+				max_width  	450)
+			    width      	464
+			    height     	354
 			    annotation 	8
 			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
@@ -1172,15 +1360,15 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 2f07bc790ec0 $}
+|{ revision = $Revision: 59a716f28458 $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	2425
+	    origin_y   	2426
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Regressions" @25
+		(object CategoryView "Logical View::Regressions" @29
 		    location   	(2490, 193)
 		    font       	(object Font
 			size       	10
@@ -1192,7 +1380,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@25
+			Parent_View 	@29
 			location   	(2320, 109)
 			fill_color 	13434879
 			nlines     	2
@@ -1205,7 +1393,7 @@
 		    quidu      	"3F5611DF02F9"
 		    width      	352
 		    height     	180)
-		(object Label @26
+		(object Label @30
 		    location   	(127, 38)
 		    font       	(object Font
 			size       	10
@@ -1218,8 +1406,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 2f07bc790ec0 2004/03/12 17:43:23 simon $")
-		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @27
+		    label      	"$Id: Regressions.cat,v 59a716f28458 2004/09/09 13:29:11 simon $")
+		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @31
 		    location   	(301, 318)
 		    font       	(object Font
 			size       	10
@@ -1231,7 +1419,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@27
+			Parent_View 	@31
 			location   	(141, 279)
 			fill_color 	13434879
 			nlines     	2
@@ -1239,7 +1427,7 @@
 			justify    	0
 			label      	"Find hangs for active classes")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@27
+			Parent_View 	@31
 			location   	(141, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -1253,7 +1441,7 @@
 		    quidu      	"4051E4F90039"
 		    width      	332
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @28
+		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @32
 		    location   	(715, 320)
 		    font       	(object Font
 			size       	10
@@ -1265,7 +1453,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@28
+			Parent_View 	@32
 			location   	(523, 281)
 			fill_color 	13434879
 			nlines     	2
@@ -1273,7 +1461,7 @@
 			justify    	0
 			label      	"Can't have class variable of class type")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@28
+			Parent_View 	@32
 			location   	(523, 236)
 			fill_color 	13434879
 			anchor     	10
@@ -1287,7 +1475,7 @@
 		    quidu      	"4051E5420337"
 		    width      	396
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @29
+		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @33
 		    location   	(1202, 318)
 		    font       	(object Font
 			size       	10
@@ -1299,7 +1487,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@29
+			Parent_View 	@33
 			location   	(966, 279)
 			fill_color 	13434879
 			nlines     	2
@@ -1307,7 +1495,7 @@
 			justify    	0
 			label      	"Can't have expressions in bounds")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@29
+			Parent_View 	@33
 			location   	(966, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -1321,7 +1509,7 @@
 		    quidu      	"4051E57F02C7"
 		    width      	484
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @30
+		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @34
 		    location   	(1711, 310)
 		    font       	(object Font
 			size       	10
@@ -1333,7 +1521,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@30
+			Parent_View 	@34
 			location   	(1521, 271)
 			fill_color 	13434879
 			nlines     	2
@@ -1341,7 +1529,7 @@
 			justify    	0
 			label      	"Serialization Image outputs record name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@30
+			Parent_View 	@34
 			location   	(1521, 226)
 			fill_color 	13434879
 			anchor     	10
@@ -1355,7 +1543,7 @@
 		    quidu      	"4051E5B00169"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have an <access> parameter on <type>" @31
+		(object CategoryView "Logical View::Regressions::Can't have an <access> parameter on <type>" @35
 		    location   	(2547, 535)
 		    font       	(object Font
 			size       	10
@@ -1367,7 +1555,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@31
+			Parent_View 	@35
 			location   	(2292, 496)
 			fill_color 	13434879
 			nlines     	2
@@ -1375,7 +1563,7 @@
 			justify    	0
 			label      	"Can't have an <access> parameter on <type>")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@31
+			Parent_View 	@35
 			location   	(2292, 451)
 			fill_color 	13434879
 			anchor     	10
@@ -1389,7 +1577,7 @@
 		    quidu      	"4051E604035E"
 		    width      	522
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @32
+		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @36
 		    location   	(288, 603)
 		    font       	(object Font
 			size       	10
@@ -1401,7 +1589,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@32
+			Parent_View 	@36
 			location   	(144, 564)
 			fill_color 	13434879
 			nlines     	2
@@ -1409,7 +1597,7 @@
 			justify    	0
 			label      	"Exceptions in callbacks")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@32
+			Parent_View 	@36
 			location   	(144, 519)
 			fill_color 	13434879
 			anchor     	10
@@ -1423,7 +1611,7 @@
 		    quidu      	"4051E6AE01E6"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @33
+		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @37
 		    location   	(810, 608)
 		    font       	(object Font
 			size       	10
@@ -1435,7 +1623,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@33
+			Parent_View 	@37
 			location   	(538, 569)
 			fill_color 	13434879
 			nlines     	2
@@ -1443,7 +1631,7 @@
 			justify    	0
 			label      	"Class delete for 0..1 classes doesn't null the container")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@33
+			Parent_View 	@37
 			location   	(538, 524)
 			fill_color 	13434879
 			anchor     	10
@@ -1457,7 +1645,7 @@
 		    quidu      	"4051E6DC000B"
 		    width      	556
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @34
+		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @38
 		    location   	(1452, 617)
 		    font       	(object Font
 			size       	10
@@ -1469,7 +1657,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@34
+			Parent_View 	@38
 			location   	(1305, 578)
 			fill_color 	13434879
 			nlines     	2
@@ -1477,7 +1665,7 @@
 			justify    	0
 			label      	"Allow bounded string identifiers")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@34
+			Parent_View 	@38
 			location   	(1305, 533)
 			fill_color 	13434879
 			anchor     	10
@@ -1491,7 +1679,7 @@
 		    quidu      	"4051E74D000E"
 		    width      	306
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow null records" @35
+		(object CategoryView "Logical View::Regressions::Allow null records" @39
 		    location   	(312, 902)
 		    font       	(object Font
 			size       	10
@@ -1503,7 +1691,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@35
+			Parent_View 	@39
 			location   	(168, 863)
 			fill_color 	13434879
 			nlines     	2
@@ -1511,7 +1699,7 @@
 			justify    	0
 			label      	"Allow null records")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@35
+			Parent_View 	@39
 			location   	(168, 818)
 			fill_color 	13434879
 			anchor     	10
@@ -1525,7 +1713,7 @@
 		    quidu      	"4051E7820082"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Array types" @36
+		(object CategoryView "Logical View::Regressions::Array types" @40
 		    location   	(732, 910)
 		    font       	(object Font
 			size       	10
@@ -1537,7 +1725,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@36
+			Parent_View 	@40
 			location   	(588, 871)
 			fill_color 	13434879
 			nlines     	2
@@ -1545,7 +1733,7 @@
 			justify    	0
 			label      	"Array types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@36
+			Parent_View 	@40
 			location   	(588, 826)
 			fill_color 	13434879
 			anchor     	10
@@ -1559,7 +1747,7 @@
 		    quidu      	"4051E7A40370"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @37
+		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @41
 		    location   	(1319, 920)
 		    font       	(object Font
 			size       	10
@@ -1571,7 +1759,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@37
+			Parent_View 	@41
 			location   	(1003, 881)
 			fill_color 	13434879
 			nlines     	2
@@ -1579,7 +1767,7 @@
 			justify    	0
 			label      	"Callback registration/deregistration assertions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@37
+			Parent_View 	@41
 			location   	(1003, 836)
 			fill_color 	13434879
 			anchor     	10
@@ -1593,7 +1781,7 @@
 		    quidu      	"4051E7EC0161"
 		    width      	644
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Fixed strings" @38
+		(object CategoryView "Logical View::Regressions::Fixed strings" @42
 		    location   	(322, 1200)
 		    font       	(object Font
 			size       	10
@@ -1605,7 +1793,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@38
+			Parent_View 	@42
 			location   	(178, 1161)
 			fill_color 	13434879
 			nlines     	2
@@ -1613,7 +1801,7 @@
 			justify    	0
 			label      	"Fixed strings")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@38
+			Parent_View 	@42
 			location   	(178, 1116)
 			fill_color 	13434879
 			anchor     	10
@@ -1627,7 +1815,7 @@
 		    quidu      	"4051E82F006D"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Identifier has one value" @39
+		(object CategoryView "Logical View::Regressions::Identifier has one value" @43
 		    location   	(742, 1205)
 		    font       	(object Font
 			size       	10
@@ -1639,7 +1827,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@39
+			Parent_View 	@43
 			location   	(598, 1166)
 			fill_color 	13434879
 			nlines     	2
@@ -1647,7 +1835,7 @@
 			justify    	0
 			label      	"Identifier has one value")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@39
+			Parent_View 	@43
 			location   	(598, 1121)
 			fill_color 	13434879
 			anchor     	10
@@ -1661,7 +1849,7 @@
 		    quidu      	"4051E84F02CC"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @40
+		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @44
 		    location   	(1415, 1213)
 		    font       	(object Font
 			size       	10
@@ -1673,7 +1861,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@40
+			Parent_View 	@44
 			location   	(1218, 1174)
 			fill_color 	13434879
 			nlines     	2
@@ -1681,7 +1869,7 @@
 			justify    	0
 			label      	"Can't tear down active class with timer")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@40
+			Parent_View 	@44
 			location   	(1218, 1129)
 			fill_color 	13434879
 			anchor     	10
@@ -1694,4 +1882,38 @@
 		    fill_color 	13434879
 		    quidu      	"4051E899023C"
 		    width      	406
+		    height     	180)
+		(object CategoryView "Logical View::Regressions::Ordering for protected types" @45
+		    location   	(1413, 1758)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(1259, 1719)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	308
+			justify    	0
+			label      	"Ordering for protected types")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@45
+			location   	(1259, 1674)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	308
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"412DFAB60322"
+		    width      	320
 		    height     	180)))))
