@@ -7,12 +7,12 @@
 
 --  This package supports tracing of code involving events.
 --
---  This is provided to retain the obsloete interface of Release
+--  This is provided to retain the obsolete interface of Release
 --  20040319 and earlier.
 
 --  $RCSfile: coldframe-project-events-standard-debug.ads,v $
---  $Revision: b72a3ecb25af $
---  $Date: 2004/06/17 07:12:06 $
+--  $Revision: 3716c34b60bf $
+--  $Date: 2004/06/17 07:12:07 $
 --  $Author: simon $
 
 with ColdFrame.Project.Events.Standard.Trace;
