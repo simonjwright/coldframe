@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 6380a446b5a6 2000/04/08 07:30:56 simon $
+# $Id: ddf.tcl,v 133bbd382db2 2000/04/10 05:31:09 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -13,9 +13,21 @@ lappend auto_path ~/TclXML-1.2
 package require xml
 package require Itcl
 
-###################
-# Utility classes #
-###################
+#############
+# Utilities #
+#############
+
+proc normalize {s} {
+    set tmp [string tolower [string trim $s]]
+    regsub -all {_} "$tmp" " " tmp
+    set tmp [split $tmp]
+    set res ""
+    foreach w $tmp {
+	set res "$res [string toupper [string index $w 0]][string range $w 1 end]"
+    }
+    regsub -all {[ \t]+} "[string trim $res]" "_" res
+    return $res
+}
 
 itcl::class Stack {
     variable s {}
@@ -76,11 +88,19 @@ itcl::class String {
     method -report {} {puts "$tag $text"}
 }
 
+itcl::class IdentifierString {
+    inherit String
+    method -complete {} {
+	stack -pop
+	[stack -top] -$tag [normalize $text]
+    }
+}
+
 itcl::class Element {
     inherit Base
     variable name "unnamed"
     variable stereotype
-    method -name {n} {set name $n}
+    method -name {n} {set name [normalize $n]}
     method -getName {} {return $name}
     method -stereotype {s} {
 	set stereotype $s
@@ -154,7 +174,7 @@ itcl::class Container {
 
     # Derived classes should override -className to return their own
     # name (in lower case).
-    method -className {} {return "Container"}
+    method -className {} {return "container"}
 
     # Return the number of contained elements.
     method -size {} {return [array size byName]}
@@ -246,11 +266,11 @@ itcl::class Content {
 # String classes
 
 itcl::class Name {
-    inherit String
+    inherit IdentifierString
 }
 
 itcl::class Type {
-    inherit String
+    inherit IdentifierString
 }
 
 itcl::class Protection {
@@ -281,11 +301,11 @@ itcl::class End {
 }
 
 itcl::class Associative {
-    inherit String
+    inherit IdentifierString
 }
 
 itcl::class Classname {
-    inherit String
+    inherit IdentifierString
 }
 
 itcl::class Cardinality {
@@ -293,11 +313,11 @@ itcl::class Cardinality {
 }
 
 itcl::class Parent {
-    inherit String
+    inherit IdentifierString
 }
 
 itcl::class Child {
-    inherit String
+    inherit IdentifierString
 }
 
 # Element classes
@@ -374,7 +394,7 @@ itcl::class Object {
     inherit Element
     variable key
     variable number
-    variable objectrelations
+    variable relations {}
     variable tags
     variable attributes
     method -stereotypePattern {} {
@@ -383,7 +403,11 @@ itcl::class Object {
     method -key {k} {set key $k}
     method -number {n} {set number $n}
     method -getNumber {} {return $number}
-    method -relations {l} {set objectrelations $l}
+    method -addRelation {n} {
+	if [expr [lsearch $relations $n] < 0] {
+	    lappend relations $n
+	}
+    }
     method -tags {l} {set tags $l}
     method -attributes {l} {set attributes $l}
     method -complete {} {
@@ -393,12 +417,11 @@ itcl::class Object {
     }
     method -report {} {
 	$this Element::-report
-	$objectrelations -report
+	#$objectrelations -report
 	$tags -report
 	$attributes -report
     }
     method -evaluate {domain} {
-#	$objectrelations -evaluate $domain
 #	$tags -evaluate $domain
 	$attributes -evaluate $domain
     }
@@ -406,11 +429,12 @@ itcl::class Object {
 	puts "$name"
 	puts "$key"
 	puts "$number"
-	# objectrelations
-	#$objectrelations -generate $domain
-	puts 0
-	# withs
-	puts 0
+	puts "[llength $relations]"
+	foreach r [lsort -integer $relations] {
+	    puts "$r"
+	}
+	# withs (-1 means all kinds of relationships)
+	puts -1
 	# stt index
 	puts -1
 	$tags -generate $domain
@@ -439,7 +463,6 @@ itcl::class Association {
     method -associative {a} {set associative $a}
     method -role {role} {
 	set role[$role -getEnd] $role
-	puts "adding role [$role -getName] to [$this -getName]"
     }
     method -complete {} {
 	stack -pop
@@ -449,10 +472,58 @@ itcl::class Association {
 	$this Element::-report
     }
     method -evaluate {domain} {
-	puts "evaluating [$this -getName], number [$this -getNumber]"
+	set n [$this -getNumber]
+	set os [$domain -getObjects]
+	set cl [$os -atName [$role1 -getClassname]]
+	$cl -addRelation $n
+	set cl [$os -atName [$role2 -getClassname]]
+	$cl -addRelation $n
+	if [info exists associative] {
+	    set cl [$os -atName $associative]
+	    $cl -addRelation $n
+	}
     }
     method -generate {domain} {
-	puts "generating association [$this -getName], number [$this -getNumber]"
+	set type "[$role1 -getCardinality]:[$role2 -getCardinality]"
+	switch $type {
+	    "1:1" -
+	    "1:M" -
+	    "M:M" {}
+	    "M:1" {
+		set tmp $role1
+		set role1 $role2
+		set role2 $tmp
+	    }
+	}
+	if [info exists associative] {
+	    set type "1-($type)"
+	}
+	if [string match "M:M" $type] {
+	    error "illegal M:M association [$this -getName]"
+	}
+	puts [$this -getNumber]
+	puts $type
+	$role1 -generate $domain
+	$role2 -generate $domain
+	if [info exists associative] {
+	    set os [$domain -getObjects]
+	    set cl [$os -atName $associative]
+	    puts "1"
+	    puts "[$cl -getName]"
+	    puts "[$cl -getNumber]"
+	    # associative object's cardinality is none
+	    puts "2"
+	    # associative object is unconditional
+	    puts "0"
+	    # associative object has no role
+	    puts "0"
+	    # "end" is C
+	    puts "2"
+	} else {
+	    puts "0"
+	}
+	# tag info
+	puts "0"
     }
 }
 
@@ -461,12 +532,24 @@ itcl::class Role {
     variable classname
     variable cardinality
     variable end
+    variable conditional
     method -classname {n} {set classname $n}
-    method -cardinality {c} {set cardinality $c}
+    method -getClassname {} {return $classname}
+    method -cardinality {c} {
+	switch $c {
+	    "1"     {set conditional 0; set cardinality "1"}
+	    "1..n"  -
+	    "n"     {set conditional 0; set cardinality "M"}
+	    "0..1"  {set conditional 1; set cardinality "1"}
+	    "0..n"  {set conditional 1; set cardinality "M"}
+	    default {error "unrecognised multiplicity $c"}
+	}
+    }
+    method -getCardinality {} {return $cardinality}
+    method -getConditionality {} {return $conditional}
     method -end {e} {set end $e}
     method -getEnd {} {return $end}
     method -complete {} {
-	puts "Role [$this -getName], class $classname, cardinality $cardinality, end $end"
 	stack -pop
 	[stack -top] -role $this
     }
@@ -474,15 +557,34 @@ itcl::class Role {
 	$this Element::-report
     }
     method -evaluate {domain} {
-	puts "evaluating [$this -getName]"
+    }
+    method -generate {domain} {
+	set os [$domain -getObjects]
+	set cl [$os -atName $classname]
+	puts "[$cl -getName]"
+	puts "[$cl -getNumber]"
+	switch $cardinality {
+	    "1" {puts "0"}
+	    "M" {puts "1"}
+	}
+	puts "$conditional"
+	set r [normalize [$this -getName]]
+	set l [string length $r]
+	puts "$l"
+	if [expr $l > 0] {
+	    puts "$r"
+	}
+	puts "[expr $end - 1]"
     }
 }
 
 itcl::class Inheritance {
     inherit Relationship
+    # parent is a string contains the name of the supertype object
     variable parent
     # child is the lazy way of not handing the list head ..
     variable child
+    # children is a List of the names of the subtype objects
     variable children
     constructor {} {set children [List ::#auto]}
     method -parent {p} {set parent $p}
@@ -497,11 +599,9 @@ itcl::class Inheritance {
 	$this Element::-report
     }
     method -complete {} {
-	puts "Inheritance [$this -getName], parent $parent, child $child"
 	stack -pop
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
-	    puts "$name already present"
 	    set extant [$inheritances -atName $name]
 	    $extant -addChild $child
 	} else {
@@ -509,7 +609,13 @@ itcl::class Inheritance {
 	}
     }
     method -evaluate {domain} {
-	puts "evaluating [$this -getName]"
+	set os [$domain -getObjects]
+	set p [$os -atName $parent]
+	$p -addRelation [$this -getNumber]
+	foreach ch [$children -getMembers] {
+	    set c [$os -atName $ch]
+	    $c -addRelation [$this -getNumber]
+	}
     }
     method -generate {domain} {
 	puts [$this -getNumber]
@@ -524,6 +630,8 @@ itcl::class Inheritance {
 	    puts "[$c -getName]"
 	    puts "[$c -getNumber]"
 	}
+	# tag info
+	puts 0
     }
 }
 
@@ -589,17 +697,6 @@ itcl::class Terminator {
     }
 }
 
-itcl::class ObjectRelation {
-    inherit Element
-    method -complete {} {
-	$this -name $text
-	$this Element::-complete
-    }
-    method -report {} {
-	$this Element::-report
-    }
-}
-
 itcl::class Tag {
     inherit Element
     method -report {} {
@@ -621,7 +718,6 @@ itcl::class Attribute {
 	set datatypes [$domain -getDatatypes]
 	if [$datatypes -isMissing $type] {
 	    set datatype [Datatype ::#auto $type]
-	    puts "new datatype of type $type"
 	    $datatypes -add $datatype $type
 	}
     }
@@ -683,29 +779,22 @@ itcl::class Inheritances {
     method -className {} {return "inheritances"}
 }
 
-itcl::class ObjectRelations {
-    inherit List
-    method -generate {domain} {
-	set size [$this -size]
-	puts "$size"
-	if {$size > 0} {	    
-	    set rels [$domain -getRelationships]
-	    foreach r $members {
-		puts -nonewline "rel [$r -getName] at [$rels -index [$r -getName]] "
-	    }
-	    puts ""
-	}
-	# XXX fake the "withs" by selecting all possibilities
-	puts "-1"
-    }
-}
-
 itcl::class Objects {
     inherit Container
     method -className {} {return "objects"}
     method -generate {domain} {
+	puts "objects"
 	puts "[$this -size]"
-	$this Container::-generate $domain
+	# for reasons that ain't obvious, we need to dump the objects in
+	# object number order so a bsearch can be done later
+	set size [$this -size]
+	set os {}
+	for {set i 0} {$i < $size} {incr i 1} {
+	    lappend os [$this -atIndex $i]
+	}
+	proc cmp {o1 o2} {return [expr [$o1 -getNumber] - [$o2 -getNumber]]}
+	set os [lsort -command cmp $os]
+	foreach o $os {$o -generate $domain}
     }
 }
 
@@ -715,7 +804,16 @@ itcl::class Relationships {
     method -generate {domain} {
 	puts "relationships"
 	puts "[$this -size]"
-	Container::-generate $domain
+	# for reasons that ain't obvious, we need to dump the relations in
+	# relation number order so a bsearch can be done later
+	set size [$this -size]
+	set rs {}
+	for {set i 0} {$i < $size} {incr i 1} {
+	    lappend rs [$this -atIndex $i]
+	}
+	proc cmp {r1 r2} {return [expr [$r1 -getNumber] - [$r2 -getNumber]]}
+	set rs [lsort -command cmp $rs]
+	foreach r $rs {$r -generate $domain}
     }
 }
 
@@ -761,8 +859,6 @@ proc elementFactory {tag} {
 	objects           {return [[Domain::currentDomain] -getObjects]}
 	parent            {return [Parent #auto]}
 	protection        {return [Protection #auto]}
-	relation          {return [ObjectRelation #auto]}
-	relations         {return [ObjectRelations #auto]}
 	relationship      {return [Relationship #auto]}
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	role              {return [Role #auto]}
