@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 99c86c09631d 2003/02/15 16:26:59 simon $ -->
+<!-- $Id: generate-ada.xsl,v 461d647ca274 2003/03/13 20:40:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -371,6 +371,104 @@
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
+
+    <!-- The domain Cascade_Initialize procedure .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Cascade_Initialize procedure ..'"/>
+    </xsl:call-template>
+
+    <!--
+         with ColdFrame.Project.Events;
+         procedure {domain}.Cascade_Initialize
+           (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);
+         -->
+
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Initialize&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null);&#10;</xsl:text>
+
+    <!-- .. the domain Cascade_Initialize procedure body .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Cascade_Initialize procedure body ..'"/>
+    </xsl:call-template>
+
+    <!--
+         with {domain}.Initialize;
+         procedure {domain}.Cascade_Initialize
+           (Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null) is
+         begin
+            Initialize (Dispatcher);
+         end {domain}.Cascade_Initialize;
+         -->
+
+    <xsl:call-template name="could-edit"/>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Initialize;&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Initialize&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Dispatcher : ColdFrame.Project.Events.Event_Queue_P := null) is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>Initialize (Dispatcher);&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Initialize;&#10;</xsl:text>
+
+    <!-- The domain Cascade_Tear_Down procedure .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Cascade_Tear_Down procedure ..'"/>
+    </xsl:call-template>
+
+    <!--
+         procedure {domain}.Cascade_Tear_Down;
+         -->
+
+    <xsl:call-template name="do-not-edit"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
+
+    <!-- .. the domain Cascade_Tear_Down procedure body .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain Cascade_Tear_Down procedure body ..'"/>
+    </xsl:call-template>
+
+    <!--
+         with {domain}.Tear_Down;
+         procedure {domain}.Cascade_Tear_Down is
+         begin
+            Tear_Down;
+         end {domain}.Cascade_Tear_Down;
+         -->
+
+    <xsl:call-template name="could-edit"/>
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Tear_Down;&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Tear_Down is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>Tear_Down;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
     <xsl:call-template name="progress-message">
