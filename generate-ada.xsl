@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v ff693960a624 2001/01/15 05:54:31 simon $ -->
+<!-- $Id: generate-ada.xsl,v 544d00ab9697 2001/01/16 05:40:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -551,10 +551,36 @@
   </xsl:template>
 
 
-  <!-- Generate child subprogram specs -->
+  <!-- Generate child subprogram specs. -->
   <xsl:template match="object/operation" mode="operation-spec">
+    <xsl:apply-templates select="." mode="operation-context"/>
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Generate child subprogram context. -->
+  <!-- XXX at present, doesn't ensure there's only one of each -->
+  <xsl:template match="object/operation" mode="operation-context">
+
+    <!-- Find the names of all the types involved -->
+    <xsl:for-each select="parameter/type | @return">
+
+      <!-- .. sorted, so we can uniqueify them (when I've worked
+           out how) .. -->
+      <xsl:sort select="."/>
+
+      <!-- .. only using those whose names are those of classes in
+           the domain. -->
+      <xsl:if test="/domain/object/name=.">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+
+    </xsl:for-each>
   </xsl:template>
 
 
@@ -818,7 +844,7 @@
     <xsl:param name="type"/>
     <xsl:choose>
 
-      <!-- Ordinary striing -->
+      <!-- Ordinary string -->
       <xsl:when test="$type='String'">
         <xsl:text>""</xsl:text>
       </xsl:when>
@@ -836,6 +862,11 @@
           <xsl:when test="$the-type/string/max">
             <xsl:value-of select="$type"/>
             <xsl:text>_Package.Null_Bounded_String</xsl:text>
+          </xsl:when>
+
+          <!-- Class -->
+          <xsl:when test="../../object/name=$type">
+            <xsl:text>null</xsl:text>
           </xsl:when>
 
           <!-- Default: assume scalar -->
@@ -937,6 +968,14 @@
         <xsl:text>Unbounded_String</xsl:text>
       </xsl:when>
 
+      <!-- Class -->
+      <xsl:when test="/domain/object/name=$type">
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="$type"/>
+        <xsl:text>.Handle</xsl:text>
+      </xsl:when>
+
       <xsl:otherwise>
         <xsl:value-of select="$type"/>
       </xsl:otherwise>
@@ -965,6 +1004,7 @@
   <xsl:template mode="object-spec" match="*"/>
   <xsl:template mode="object-body" match="*"/>
   <xsl:template mode="operation-body" match="*"/>
+  <xsl:template mode="operation-context" match="*"/>
   <xsl:template mode="operation-spec" match="*"/>
   <xsl:template mode="parameter" match="*"/>
 
