@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 1e37f117d995 2001/09/08 05:12:20 simon $ -->
+<!-- $Id: generate-ada.xsl,v 788a10f1a061 2001/10/08 18:54:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,6 +61,7 @@
   <xsl:param name="IC" select="concat($I, $C)"/>
   <xsl:param name="IIC" select="concat($II, $C)"/>
   <xsl:param name="IIIC" select="concat($III, $C)"/>
+  <xsl:param name="IIIIC" select="concat($IIII, $C)"/>
 
 
   <!-- Generate the top-level package for the domain, then all the
