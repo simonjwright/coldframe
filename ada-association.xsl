@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 576d6c18c8d9 2001/05/20 17:19:11 simon $ -->
+<!-- $Id: ada-association.xsl,v 75c0795c544e 2001/06/06 19:25:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -201,8 +201,12 @@
         <xsl:choose>
 
           <xsl:when test="role[1]/@multiple and role[2]/@multiple">
+            <!-- Both ends multiple; the associative class' identifier
+                 references both ends. -->
+
             <xsl:variable name="r1" select="role[1]"/>
             <xsl:variable name="r2" select="role[2]"/>
+
             <xsl:call-template name="attribute-name">
               <xsl:with-param
                 name="a"
@@ -212,6 +216,7 @@
             <xsl:text> => </xsl:text>
             <xsl:value-of select="role[1]/name"/>
             <xsl:text>,&#10;</xsl:text>
+
             <xsl:text>         </xsl:text>
             <xsl:call-template name="attribute-name">
               <xsl:with-param
@@ -221,12 +226,19 @@
             </xsl:call-template>
             <xsl:text> => </xsl:text>
             <xsl:value-of select="role[2]/name"/>
+
             <xsl:text>));&#10;</xsl:text>
+
           </xsl:when>
 
-          <xsl:otherwise>
+          <xsl:when test="role[@multiple]">
+            <!-- One end multiple; the associative class' identifier
+                 references the multiple end, the other end is
+                 referenced by a plain attribute. -->
+
             <xsl:variable name="multiple-role" select="role[@multiple]"/>
             <xsl:variable name="single-role" select="role[not(@multiple)]"/>
+
             <xsl:call-template name="attribute-name">
               <xsl:with-param
                 name="a"
@@ -240,6 +252,7 @@
             <xsl:text> => </xsl:text>
             <xsl:value-of select="$multiple-role/name"/>
             <xsl:text>));&#10;</xsl:text>
+
             <xsl:text>    </xsl:text>
             <xsl:value-of select="associative"/>
             <xsl:text>.Set_</xsl:text>
@@ -252,9 +265,49 @@
             <xsl:text> (Result, </xsl:text>
             <xsl:value-of select="role[1]/name"/>
             <xsl:text>);&#10;</xsl:text>
-          </xsl:otherwise>
 
-          <!-- XXX what about 1-1:1? -->
+          </xsl:when>
+
+          <xsl:otherwise>
+            <!-- Neither end multiple; -->
+
+            <xsl:message>A 1-(1:1) association!</xsl:message>
+
+            <!-- XXX copy-n-paste warning here! -->
+            <xsl:variable name="source-role" select="role[@source]"/>
+            <xsl:variable name="non-source-role" select="role[not(@source)]"/>
+
+            <xsl:call-template name="attribute-name">
+              <!-- <xsl:with-param
+                name="a"
+                select="/domain/class/attribute
+                        [@relation=$n
+                        and @refers=$source-role/classname
+                        and @identifier]"/> -->
+              <xsl:with-param
+                name="a"
+                select="/domain/class/attribute
+                        [@relation=$n
+                        and @identifier]"/>
+            </xsl:call-template>
+            <xsl:text> => </xsl:text>
+            <xsl:value-of select="$source-role/name"/>
+            <xsl:text>));&#10;</xsl:text>
+
+            <xsl:text>    </xsl:text>
+            <xsl:value-of select="associative"/>
+            <xsl:text>.Set_</xsl:text>
+            <xsl:call-template name="attribute-name">
+              <xsl:with-param
+                name="a"
+                select="/domain/class/attribute
+                        [@relation=$n and @refers=$non-source-role/classname]"/>
+            </xsl:call-template>
+            <xsl:text> (Result, </xsl:text>
+            <xsl:value-of select="role[1]/name"/>
+            <xsl:text>);&#10;</xsl:text>
+
+          </xsl:otherwise>
 
         </xsl:choose>
 

@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a0fd59569c0c 2001/06/02 16:49:58 simon $
+# $Id: normalize-rose.tcl,v 75c0795c544e 2001/06/06 19:25:50 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -972,7 +972,35 @@ itcl::class Association {
 		$role2 -setSourceEnd 0
 		$cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 	    }
-	    "1-(1:1)" {error "CF: oops! 1-(1:1) not yet implemented!"}
+	    "1-(1:1)" {
+		# ensure that one and only one of the roles is marked
+		# as the source end
+		if [$role2 -getSourceEnd] {
+		    if [$role1 -getSourceEnd] {
+			error "both ends of $name are marked as source"
+		    }
+		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 0
+		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 1
+		} elseif [$role1 -getSourceEnd] {
+		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 1
+		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 0
+		} elseif [$role1 -getConditionality] {
+		    if [$role2 -getConditionality] {
+			error "neither end of biconditional $name\
+				is marked as source"
+		    }
+		    $role2 -setSourceEnd 1
+		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 0
+		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 1
+		} elseif [$role2 -getConditionality] {
+		    $role1 -setSourceEnd 1
+		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 1
+		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 0
+		} else {
+		    error "neither end of unconditional $name\
+			    is marked as source"
+		}
+	    }
 	    "1-(1:M)" {
 		# The identifying attributes in both roles are used as
 		# referential attributes in the associative class.
