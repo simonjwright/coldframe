@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 2eaea72d9b8f 2003/12/13 06:15:37 simon $
+--  $Id: regressions-suite.adb,v 00f21012d60a 2004/01/13 12:31:41 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -199,6 +199,23 @@ package body Regressions.Suite is
                  "expecting '" & Expected & "', got '" & Image & "'");
       end S_Record;
 
+      procedure Null_Record (C : in out Test_Case'Class);
+      procedure Null_Record (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Expected : constant String
+           := "<record name=""Regressions.Null_Record"">" & ASCII.LF
+           & "<field name=""Null_Record"">null</field>" & ASCII.LF
+           & "</record>";
+         Value : constant Serializable.Null_Record
+           := (ColdFrame.Project.Serialization.Base with
+                 Payload => (null record));
+         Image : constant String
+           := Serializable.Image (Value);
+      begin
+         Assert (Image = Expected,
+                 "expecting '" & Expected & "', got '" & Image & "'");
+      end Null_Record;
+
       function Name (C : Case_1) return String_Access is
          pragma Warnings (Off, C);
       begin
@@ -215,6 +232,10 @@ package body Regressions.Suite is
            (C,
             S_Record'Access,
             "can image a record");
+         Register_Routine
+           (C,
+            Null_Record'Access,
+            "can image a null record");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
