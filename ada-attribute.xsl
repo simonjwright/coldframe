@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: ada-attribute.xsl,v ee817f60b6d4 2002/09/17 18:10:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -95,6 +95,10 @@
 
         <!-- state machine status -->
         <xsl:if test="statemachine">
+          <xsl:value-of select="$II"/>
+          <xsl:text>Old_State_Machine_State : State_Machine_State_T := </xsl:text>
+          <xsl:value-of select="statemachine/state[@initial]/name"/>
+          <xsl:text>;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>State_Machine_State : State_Machine_State_T := </xsl:text>
           <xsl:value-of select="statemachine/state[@initial]/name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 27fbbed03065 2002/09/15 10:28:55 simon $ -->
+<!-- $Id: ada-state.xsl,v ee817f60b6d4 2002/09/17 18:10:47 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -370,9 +370,10 @@
             What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
+            This.State_Machine_State := {state};
             {entry-action} (This, {event} (What).Payload);  -  if has parameter
             {entry-action} (This);                          -  if no parameter
-            This.State_Machine_State := {state};
+            This.Old_State_Machine_State := {state};
             Enter_{next-state} (This, What);                -  if unguarded exit
          end Enter_{state};
          -->
@@ -382,9 +383,10 @@
            (What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
+            This.State_Machine_State := {state};
             {entry-action} ({event} (What).Payload);        -  if has parameter
             {entry-action};                                 -  if no parameter
-            This.State_Machine_State := {state};
+            This.Old_State_Machine_State := {state};
             Enter_{next-state} (Wnat);                      -  if unguarded exit
          end Enter_{state};
          -->
@@ -415,6 +417,11 @@
 
      <xsl:value-of select="$I"/>
      <xsl:text>begin&#10;</xsl:text>
+
+     <xsl:value-of select="$II"/>
+     <xsl:text>This.State_Machine_State := </xsl:text>
+     <xsl:value-of select="$s"/>
+     <xsl:text>;&#10;</xsl:text>       
 
      <xsl:for-each select="action">
 
@@ -555,7 +562,7 @@
 
      <xsl:if test="not(action='Delete')">
        <xsl:value-of select="$II"/>
-       <xsl:text>This.State_Machine_State := </xsl:text>
+       <xsl:text>This.Old_State_Machine_State := </xsl:text>
        <xsl:value-of select="$s"/>
        <xsl:text>;&#10;</xsl:text>       
      </xsl:if>
