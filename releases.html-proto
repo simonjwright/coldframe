@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d501bed0217e 2004/09/09 13:31:33 simon $ -->
+<!-- $Id: releases.html-proto,v 4c62142ad45a 2004/09/14 11:24:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -37,8 +37,12 @@ the stack, tearing down a Timer would falsely raise a
 <tt>Program_Error</tt>. Now, an error is logged.
 
 
-<p>Operation parameters and result types weren't accounted for while
-working out the order in which to declare types.
+<p>&#171;protected&#187; operation parameters and result types weren't
+accounted for while working out the order in which to declare types.
+
+
+<p>&#171;protected&#187; types didn't allow the declaration of
+&#171;access&#187; operations.
 
 
 <p><dt>20040319
