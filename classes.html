@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 4dda638407db 2003/05/10 19:15:56 simon $ -->
+<!-- $Id: classes.html,v 8dfefd1ed754 2003/07/26 19:09:37 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -158,7 +158,16 @@ generation strategy.
 <br>You can get the same effect by specifying a cardinality (or
 multiplicity, depending on the version of Rose) of
 <tt>0..<i>max-size</i></tt> under the Rose Class Specification
-<i>Detail</i> tab.
+<i>Detail</i> tab. <tt>1..1</tt> is allowed as a shorthand for
+&#171;singleton&#187;; <tt>1..n</tt> isn't allowed.
+
+<p><tt>[[ priority : <i>priority</i> ]]</tt> allows you to specdify
+the priority of each instance of an active class, relative to the
+system's default priority (larger numbers mean highr priority).
+
+<p><tt>[[ stack : <i>stack-size</i> ]]</tt> allows you to specify a
+non-default stack size for each instance if an active class
+
 
 <h2>Translation</h2>
 
@@ -367,7 +376,11 @@ with that identifier).
 
 <h3><a name="internals">Package internals</a></h3>
 
+<p><i>more to come</i>
+
 <h3><a name="active-classes">Active classes</a></h3>
+
+<p><i>more to come</i>
 
 <h2>Use</h2>
 
