@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 99ec6dc54c76 2003/03/30 19:35:50 simon $
+# $Id: normalize-rose.tcl,v bb697eefb8f0 2003/04/25 18:23:50 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1114,15 +1114,19 @@ itcl::class Class {
     # <<type>> class
     method -type {dummy} {set isType 1}
 
-    # called (via annotation mechanism) to indicate that this is used
-    # in a callback
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is used in a callback
     method -callback {size} {
+	$this -type 1
 	set callback [string trim $size]
     }
 
-    # called (via annotation mechanism) to indicate that this is a
-    # discriminated (record) type
-    method -discriminated {dummy} {set discriminated 1}
+    # called (via annotation  or stereotype mechanism) to indicate that this
+    # is a discriminated (record) type
+    method -discriminated {dummy} {
+	$this -type 1
+	set discriminated 1
+    }
 
     # called (via annotation mechanism) to indicate that this type
     # extends an (imported) base type
