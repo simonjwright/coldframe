@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 933babd8c36a $
---  $Date: 2002/09/18 20:32:51 $
+--  $Revision: 4ef67f74f9ea $
+--  $Date: 2003/01/26 19:14:55 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -147,6 +147,7 @@ begin
    Setup ("-(abstract_)?sets.ad[bs]", "advanced containers");
    Setup ("-from_collections\.ad[bs]", "navigation from collections");
    Setup ("-all_instances\.ad[bs]", "all instances");
+   Setup ("-serializable\.ad[bs]", "serialization");
 
    Setup ("^.*-.*-.*\.adb", "operations");
 
