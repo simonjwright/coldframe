@@ -1,0 +1,269 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Deletion</name>
+<date>
+<year>2001</year>
+<month>11</month>
+<day>16</day>
+<time>06:41</time>
+</date>
+<documentation>This package demonstrates advanced techniques using Inheritance.</documentation>
+<classes>
+<class>
+<name>Track</name>
+<documentation>A Track is reported by a sensor.
+
+[[ abbreviation : TR ]]
+</documentation>
+<cardinality>13</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>delete threat</name>
+<documentation>This operation deletes the Track and any associated Threat.
+
+It's a class operation (hence the explicit This parameter) because of the clash with Threat's similarly-named operation which would occur in the child classes if this operation were inherited.
+
+It first calls Delete_Track_And_Threat, then Delete. Delete_Track_And_Threat, which is implemented by the child classes, may delete our child; otherwise the call to Delete will.</documentation>
+<parameters>
+<parameter>
+<name>this</name>
+<documentation></documentation>
+<type>Track</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="abstract">
+<name>delete track and threat</name>
+<documentation>This abstract operation is implemented appropriately in the child classes.
+
+It deletes the Threat, if any, found via R2.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>dont dispatch 1</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Threat</name>
+<documentation>A Threat poses a risk to the system.
+
+[[ abbreviation : THR ]]
+</documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>delete threat</name>
+<documentation>This operation deletes the Threat by calling Delete.
+
+Delete is not inherited, so we need an operation which is inherited to remove the need for the child classes to navigate explicitly.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>New Threat</name>
+<documentation>A New Threat is a threatening Track which has been recently detected.
+
+[[ abbreviation : NTHR ]]
+</documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>delete track and threat</name>
+<documentation>This operation deletes the parent Threat by calling Delete_Threat (inherited from Threat).</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Old Threat</name>
+<documentation>An OId Threat is a threatening Track which has been known to the system for some time.
+
+[[ abbreviation : OTHR ]]
+</documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>delete track and threat</name>
+<documentation>This operation deletes the parent Threat by calling Delete_Threat (inherited from Threat).</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Not Threat</name>
+<documentation>A Not Threat is a Track which is not threatening.
+
+[[ abbreviation : NOTHR ]]
+</documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>delete track and threat</name>
+<documentation>This is a null operation.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+<class>
+<name>Command Threat</name>
+<documentation>A Command Threat is manually designated; it doesn't correspond to a Track.
+
+[[ abbreviation : CT ]]
+</documentation>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="finalize">
+<name>log deletion</name>
+<documentation>Prints a message when the instance is deleted.</documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>delete</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+</class>
+</classes>
+<relationships>
+<inheritance>
+<name>r1</name>
+<documentation>This relationship models the classification of Tracks into threatening and non-threatening, and the further subdivision of threatening Tracks into recent and older.</documentation>
+<child>New Threat</child>
+<parent>Track</parent>
+</inheritance>
+<inheritance>
+<name>r2</name>
+<documentation>This relationship models the different kinds of Threat that may have to be handled.</documentation>
+<child>New Threat</child>
+<parent>Threat</parent>
+</inheritance>
+<inheritance>
+<name>r1</name>
+<documentation></documentation>
+<child>Old Threat</child>
+<parent>Track</parent>
+</inheritance>
+<inheritance>
+<name>r2</name>
+<documentation></documentation>
+<child>Old Threat</child>
+<parent>Threat</parent>
+</inheritance>
+<inheritance>
+<name>r1</name>
+<documentation></documentation>
+<child>Not Threat</child>
+<parent>Track</parent>
+</inheritance>
+<inheritance>
+<name>r2</name>
+<documentation></documentation>
+<child>Command Threat</child>
+<parent>Threat</parent>
+</inheritance>
+</relationships>
+</domain>
