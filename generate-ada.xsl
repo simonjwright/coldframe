@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 6e5c476abc77 2002/02/17 11:29:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v f2ba918c362d 2002/02/20 06:44:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -88,6 +88,8 @@
        others. -->
   <xsl:template match="domain">
 
+    <xsl:call-template name="do-not-edit"/>
+
     <!-- Identification info -->
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'Generating identification info ..'"/>
@@ -126,6 +128,7 @@
         name="m"
         select="'.. the domain Initialize procedure ..'"/>
     </xsl:call-template>
+    <xsl:call-template name="do-not-edit"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
@@ -136,6 +139,8 @@
         name="m"
         select="'.. the domain Initialize procedure body ..'"/>
     </xsl:call-template>
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:variable
       name="initialize-procedures"
