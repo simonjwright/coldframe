@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v f0afcb24a18c 2004/10/25 05:57:29 simon $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 085cd3db82d0 2004/11/13 17:29:53 simon $ -->
 
 <!-- 
 
@@ -107,6 +107,7 @@
       <xsd:attribute name="standard"/>
       <xsd:attribute name="type-image"/>
       <xsd:attribute name="unconstrained"/>
+      <xsd:attribute name="visibility"/>
     </xsd:complexType>
   </xsd:element>
 
