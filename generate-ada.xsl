@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: generate-ada.xsl,v 98669c250f89 2004/06/12 19:45:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -360,7 +360,9 @@
 
     <xsl:variable
       name="class-initializations"
-      select="class[attribute[@class and initial] or @singleton]"/>
+      select="class[attribute[@class and initial]
+              or @singleton
+              or (@public and attribute)]"/>
 
     <xsl:variable
       name="initialize-procedures"
@@ -620,7 +622,9 @@
         select="'.. class initializations ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="class[attribute[@class and initial] or @singleton]"
+      select="class[attribute[@class and initial]
+              or @singleton
+              or (@public and attribute)]"
       mode="class-initialization">
       <xsl:sort select="name"/>
     </xsl:apply-templates>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
+<!-- $Id: ada-class.xsl,v 98669c250f89 2004/06/12 19:45:39 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -2015,7 +2015,9 @@
   <!-- Generates class initializations. -->
   <xsl:template
     mode="class-initialization"
-    match="class[attribute[@class and initial] or @singleton]">
+    match="class[attribute[@class and initial]
+           or @singleton
+           or (@public and attribute)]">
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
@@ -2035,7 +2037,7 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Class_Initialize is&#10;</xsl:text>
 
-    <xsl:if test="@singleton">
+    <xsl:if test="@singleton or @public">
       <xsl:value-of select="$I"/>
       <xsl:text>H : Handle;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -2054,7 +2056,7 @@
 
     </xsl:for-each>
 
-     <xsl:if test="@singleton">
+     <xsl:if test="@singleton or @public">
       <xsl:value-of select="$I"/>
       <xsl:text>H := Create;&#10;</xsl:text>
     </xsl:if>
