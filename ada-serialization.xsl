@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v d08b44927a8f 2003/03/27 20:49:55 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 48b16f3f9282 2003/04/01 17:52:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -183,7 +183,6 @@
           <xsl:choose>
             
             <xsl:when test="type='Date' or type='Time'">
-              <!-- Date and time have to be split over several lines. -->
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; "&lt;field name=""</xsl:text>
               <xsl:value-of select="name"/>
@@ -198,7 +197,6 @@
             </xsl:when>
             
             <xsl:when test="type='Text' or type='Unbounded_String'">
-              <!-- Unbounded Strings have to be split over several lines. -->
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; "&lt;field name=""</xsl:text>
               <xsl:value-of select="name"/>
@@ -213,7 +211,6 @@
             </xsl:when>
             
             <xsl:when test="/domain/type[name=current()/type]/string">
-              <!-- Bounded Strings have to be split over several lines. -->
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; "&lt;field name=""</xsl:text>
               <xsl:value-of select="name"/>
@@ -244,10 +241,14 @@
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; "&lt;field name=""</xsl:text>
               <xsl:value-of select="name"/>
-              <xsl:text>""&gt;" &amp; </xsl:text>
+              <xsl:text>""&gt;"&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; </xsl:text>
               <xsl:text>S.Payload.</xsl:text>
               <xsl:value-of select="name"/>
-              <xsl:text>'Img &amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+              <xsl:text>'Img&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
             </xsl:otherwise>
             
           </xsl:choose>
