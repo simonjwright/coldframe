@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: c38b96e3d858 $
---  $Date: 2002/05/22 04:36:45 $
+--  $Revision: f09ccc075042 $
+--  $Date: 2002/05/22 19:42:58 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -72,7 +72,7 @@ package body ColdFrame.Events_G.Standard_G is
    begin
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
-      TE.The_Event := Event_P (The_Event);
+      TE.The_Event := The_Event;
       On.The_Timer_Manager.Append (TE);
    end Post;
 
@@ -125,7 +125,7 @@ package body ColdFrame.Events_G.Standard_G is
          The_Timer.The_Entry := new Timer_Event;
          The_Timer.The_Entry.On := Event_Queue_P (On);
          The_Timer.The_Entry.Time_To_Fire := At_Time;
-         The_Timer.The_Entry.The_Event := Event_P (To_Fire);
+         The_Timer.The_Entry.The_Event := To_Fire;
          The_Timer.The_Entry.The_Timer := The_Timer'Unrestricted_Access;
          On.The_Timer_Manager.Append (The_Timer.The_Entry);
 
