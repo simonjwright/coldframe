@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v cee29f091e91 2001/09/08 05:09:47 simon $ -->
+<!-- $Id: ada-operation.xsl,v 2a96db10cfbd 2001/09/14 19:40:21 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -616,7 +616,7 @@
          case This.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {return} {child-1}.{operation}
-               (This => This.{relation}_Current_Child.The_{child-1}{,
+               (This => This.{relation}_Current_Child.{child-1-abbrev}{,
                 other-parameter-assignments});
            when Null_T =>
              raise Constraint_Error;
@@ -632,6 +632,7 @@
       select="/domain/inheritance[parent=$current/name]"/>
     
     <xsl:for-each select="$rel/child">
+      <xsl:sort select="."/>
       <xsl:text>with </xsl:text>
       <xsl:value-of select="/domain/name"/>
       <xsl:text>.</xsl:text>
@@ -655,6 +656,7 @@
     <xsl:text>_Current_Child.Current is&#10;</xsl:text>
     
     <xsl:for-each select="$rel/child">
+      <xsl:sort select="."/>
 
       <xsl:variable name="child" select="."/>
       
