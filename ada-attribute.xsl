@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 29d3ecb7e905 2002/05/18 21:10:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -133,7 +133,17 @@
 
     <xsl:if test="@refers or $generate-accessors='yes'">
 
-      <!-- Get function -->
+      <!-- Get function, with comment for generated associative referential
+           attributes -->
+
+      <xsl:if test="@refers">
+        <xsl:variable name="rel" select="@relation"/>
+        <xsl:if test="/domain/association/name=$rel and not(name)">
+          <xsl:value-of select="$I"/>
+          <xsl:text>--  Private use only&#10;</xsl:text>
+        </xsl:if>
+      </xsl:if>
+
       <xsl:call-template name="attribute-get-header"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -178,7 +188,17 @@
 
     <xsl:if test="@refers or $generate-accessors='yes'">
       
-      <!-- Set procedure -->
+      <!-- Set procedure, with comment for generated associative referential
+           attributes -->
+
+      <xsl:if test="@refers">
+        <xsl:variable name="rel" select="@relation"/>
+        <xsl:if test="/domain/association/name=$rel and not(name)">
+          <xsl:value-of select="$I"/>
+          <xsl:text>--  Private use only&#10;</xsl:text>
+        </xsl:if>
+      </xsl:if>
+
       <xsl:call-template name="attribute-set-header"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
