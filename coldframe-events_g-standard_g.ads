@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 850b06ce0448 $
---  $Date: 2002/09/13 19:59:49 $
+--  $Revision: ba7d0c73ff45 $
+--  $Date: 2002/09/15 10:32:40 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -146,9 +146,6 @@ private
       --  removes the event from the queue and stores it
       --  in"The_Event".
 
-      procedure Done;
-      --  Notes that execution is no longer in progress.
-
       procedure Invalidate_Events
         (For_The_Instance : access Instance_Base'Class);
       --  Marks all the events on the queue which are for
@@ -163,10 +160,22 @@ private
 
    private
 
+      procedure Done;
+      --  Notes that execution is no longer in progress.
+
       entry Waiting_For_Lock;
+      --  Requeued by Lock if the calling task isn't already the
+      --  Owner.
 
       Locks : Natural := 0;
+      --  Set to 1 while handling an event or a first lock has been taken.
+      --  Incremented past 1 when a task which already has the lock takes it
+      --  again (POSIX "recursive mutex" behaviour).
+
       Owner : Ada.Task_Identification.Task_Id;
+      --  Supports "recursive mutex" behaviour, and checks that
+      --  Post_To_Self is called during event processing, not by some
+      --  external task.
 
    end Excluder;
 
@@ -178,6 +187,7 @@ private
       The_Excluder : Excluder (Event_Queue_Base'Access);
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Events : Unbounded_Posted_Event_Queues.Queue;
+      The_Timed_Events : Timed_Event_Queues.Queue;
       The_Dispatcher : Dispatcher (Event_Queue_Base'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue_Base'Access);
    end record;
