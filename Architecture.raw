@@ -100,7 +100,7 @@ Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.S
 </object>
 <object stereotype="">
 <name>Hash Function</name>
-<documentation>A Hash Function is required for each Identifier Record. It is implemented as  a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
+<documentation>A Hash Function is required for each Identifier Record. It is implemented as a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -139,7 +139,8 @@ Supported annotations are:<br/>
 </object>
 <object stereotype="">
 <name>Identified Class Package</name>
-<documentation>Each Identified Class is mapped to an Identified Class Package.</documentation>
+<documentation>Each Identified Class is mapped to an Identified Class Package.
+</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -276,6 +277,70 @@ optionally, a <b>Default</b> value.</documentation>
 <documentation>A Parameter maps to a Param.<br/>
 
 The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents. Note that no semantic checks are made; it's the user's responsibility not to specify <tt>out</tt> or <tt>in out</tt> Modes for any parameter of a function, or a Default for a non-<tt>in</tt> Parameter.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Collections Package</name>
+<documentation>Each Identified Class Package has a Collections Package (<tt><i>Domain.Class</i>.Collections</tt>) which can be used to hold references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
+
+A particular collection is only a snapshot; the validity of a <tt>Handle</tt> depends only on whether it is still current within the Identified Class Package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Contents Function</name>
+<documentation>Each Identified Class Package has a Contents Function (<tt><i>Domain.Class</i>.All_Instances</tt>) which returns a Collection of references (<tt>Handle</tt>s) to all of the current Instances.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Selection Function</name>
+<documentation>Each Identified Class Package has a generic Selection Function (<tt><i>Domain.Class</i>.Selection_Function</tt>) which returns a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances.<br/>
+
+The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Filter Function</name>
+<documentation>Each Identified Class Package has a generic Filter Function (<tt><i>Domain.Class</i>.Filter_Function</tt>) which, given  a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances, returns a Collection of those that match some criterion.<br/>
+
+The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Create Function</name>
+<documentation>Each Identified Class Package contains a <tt>Create</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the newly created  Instance record.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Find Function</name>
+<documentation>Each Identified Class Package contains a <tt>Find</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the corresponding Instance record or <tt>null</tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</object>
+<object stereotype="">
+<name>Delete Procedure</name>
+<documentation>Each Identified Class Package contains two <tt>Delete</tt> procedures.<br/>
+
+One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -536,7 +601,7 @@ The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents.
 <name></name>
 <classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
-<exportcontrol>PublicAccess</exportcontrol>
+<exportcontrol>ImplementationAccess</exportcontrol>
 </role>
 </association>
 <association>
@@ -584,6 +649,118 @@ The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents.
 <name></name>
 <classname>Param</classname>
 <cardinality>0..n</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Collections Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Contents Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Selection Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Filter Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Create Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Find Function</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<exportcontrol>PublicAccess</exportcontrol>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Delete Procedure</classname>
+<cardinality>1</cardinality>
 <exportcontrol>PublicAccess</exportcontrol>
 </role>
 </association>
