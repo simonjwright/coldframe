@@ -10,19 +10,21 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: ff9d7d111850 $]]
+|[[revision : $Revision: eac714f192c7 $]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Find Active"
 	    quid       	"3F56123103DD"
-	    documentation 	"Find hangs for an active class."
 	    stereotype 	"active"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"3F56127202C8"
 		    stereotype 	"id"
-		    type       	"Boolean"))))
+		    type       	"Boolean")))
+	(object Class "Find Active Singleton"
+	    quid       	"3F56490B00A3"
+	    stereotype 	"active, singleton"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
@@ -38,7 +40,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(428, 358)
+		    location   	(421, 744)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -50,7 +52,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(236, 305)
+			location   	(229, 691)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	384
@@ -58,7 +60,7 @@
 			label      	"Find Active")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(236, 260)
+			location   	(229, 646)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -71,7 +73,7 @@
 		    quidu      	"3F56123103DD"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(236, 361)
+			location   	(229, 747)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -91,7 +93,7 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object CategoryView "Logical View::Regressions" @2
-		    location   	(2650, 228)
+		    location   	(1006, 178)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -103,7 +105,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(2480, 144)
+			location   	(836, 94)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
@@ -114,4 +116,66 @@
 		    fill_color 	13434879
 		    quidu      	"3F5611DF02F9"
 		    width      	352
-		    height     	180)))))
+		    height     	180)
+		(object ClassView "Class" "Logical View::Regressions::Find Active Singleton" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(412, 1023)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(188, 997)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"Find Active Singleton")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(188, 952)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"<<active, singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3F56490B00A3"
+		    width      	466
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @4
+		    location   	(350, 133)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(132, 54)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	400
+			label      	"Find hangs for active classes.")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	460
+		    height     	170)))))
