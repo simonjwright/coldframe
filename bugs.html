@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 1a50feb6142c 2002/01/04 06:37:16 simon $ -->
+<!-- $Id: bugs.html,v efed40fb5c48 2002/01/08 21:06:57 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -118,7 +118,25 @@ document from the domain model.
 class was calculated automatically (where the multiplicity of each
 associated class is specified).
 
-<!-- next: 0054 -->
+<dt>0054 (raised 8.i.02)
+
+<dd>Attribute, parameter and result types in the generated HTML should
+be hyperlinked to their definitions (unless they're standard).
+
+<dt>0055 (raised 8.i.02)
+
+<dd>To create an instance of a child class (or any class that has a
+reference to another class in its identifier), you have to type
+convert the <tt>Handle</tt> to
+<tt>ColdFrame.Instances.Handle</tt>.<br> This could be avoided by
+making (all?) <tt>Create</tt> operations children of the class
+package.
+
+<dt>0056 (raised 8.i.02)
+
+<dd>The generated HTML doesn't report default parameter values..
+
+<!-- next: 0057 -->
 
 </dl>
 
