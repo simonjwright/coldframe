@@ -185,6 +185,7 @@ house-digital-io.png \
 house-management.png \
 lamp.png \
 lamp-state.png\
+lamp-state-resetting.png\
 metamodel.png \
 operations-mapping.png \
 real_time.png \
@@ -412,7 +413,6 @@ House_Management.cat House_Management.raw \
 House_Management.impl/house_management-button-changed.adb \
 House_Management.impl/house_management-button-pushed.adb \
 House_Management.impl/house_management-events-initialize.adb \
-House_Management.impl/house_management-lamp-button_pushed.adb \
 House_Management.impl/house_management-lamp-clear_timeout.adb \
 House_Management.impl/house_management-lamp-initialize.adb \
 House_Management.impl/house_management-lamp-set_timeout.adb \
