@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 62344aeaa0e6 2003/09/17 19:07:36 simon $
+# $Id: normalize-rose.tcl,v 3230e4b0578f 2003/09/27 16:59:42 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -31,7 +31,8 @@ package require Itcl
 # Utilities #
 #############
 
-# Reads case exceptions from a file or colon-separated list of files.
+# Reads case exceptions from a file or colon-separated list of files
+# (semicolon-separated on Windows).
 # The file format is that used by ACT's GLIDE; each line contains a case
 # exception. If preceded by *, any matching word in an identifier will be
 # adjusted; otherwise, the whole identifier has to match, underscores
