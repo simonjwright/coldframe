@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 9a07ec640caa 2004/11/12 06:37:48 simon $ -->
+<!-- $Id: ada-type.xsl,v f33fae5b6535 2004/11/12 06:50:25 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -639,7 +639,7 @@
   <!-- Generate domain Types support entries (not for standard types).
        We do these as child units in case they're not actually
        needed. -->
-  <xsl:template mode="domain-type-support" match="domain/type">
+  <xsl:template mode="ty:domain-type-support" match="domain/type">
     <xsl:if test="not(@standard)">
       <xsl:choose>
 
@@ -688,11 +688,11 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template mode="domain-type-support" match="*"/>
+  <xsl:template mode="ty:domain-type-support" match="*"/>
 
 
   <!-- Called to generate operation specifications for types. -->
-  <xsl:template match="type/operation" mode="domain-type-operation-spec">
+  <xsl:template match="type/operation" mode="ty:domain-type-operation-spec">
 
     <xsl:call-template name="op:subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
@@ -724,7 +724,7 @@
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
-  <xsl:template mode="domain-type-operation-spec" match="*"/>
+  <xsl:template mode="ty:domain-type-operation-spec" match="*"/>
 
 
   <!-- Called to generate operation body stubs for types. -->
@@ -904,7 +904,7 @@
 
 
   <!-- Called to generate protected type bodies. -->
-  <xsl:template match="type[@protected]" mode="protected-type-body">
+  <xsl:template match="type[@protected]" mode="ty:protected-type-body">
 
     <xsl:call-template name="ut:should-edit"/>
     <xsl:call-template name="ut:identification-info"/>
@@ -995,7 +995,7 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="protected-type-body"/>
+  <xsl:template match="*" mode="ty:protected-type-body"/>
 
 
 
