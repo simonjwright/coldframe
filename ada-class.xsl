@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 00537d304fc6 2001/05/11 19:11:11 simon $ -->
+<!-- $Id: ada-class.xsl,v a37e9fec477b 2001/05/27 05:25:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -30,13 +30,6 @@
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
 
-    <!-- determine if this is a supertype (if there is an inheritance
-         relationship with this class as the parent) -->
-    <xsl:variable name="name" select="name"/>
-    <xsl:variable
-      name="is-supertype"
-      select="boolean(../inheritance[parent=$name])"/>
-
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
 
@@ -55,8 +48,8 @@
       <xsl:call-template name="identifier-record"/>
 
       <!-- .. the Instance record (indefinite, so it can't be
-           allocated) .. -->
-      <xsl:text>  type Instance (&lt;&gt;) is private;&#10;</xsl:text>
+           allocated; limited, so people can't assign it) .. -->
+      <xsl:text>  type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
 
       <!-- .. the Handle .. -->
       <xsl:text>  type Handle is access Instance;&#10;</xsl:text>
@@ -68,11 +61,7 @@
       <xsl:text>  procedure Delete (This : in out Handle);&#10;</xsl:text>
 
       <!-- .. subtype enumeration support, if required .. -->
-      <xsl:if test="$is-supertype">
-        <xsl:call-template name="subtype-enumeration"/>
-        <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class);&#10;</xsl:text>
-        <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class;&#10;</xsl:text>
-      </xsl:if>
+      <xsl:call-template name="supertype-specs"/>
 
     </xsl:if>
 
@@ -92,9 +81,7 @@
       <xsl:when test="not(@singleton)">
 
         <!-- .. the Instance record .. -->
-        <xsl:call-template name="instance-record">
-          <xsl:with-param name="is-supertype" select="$is-supertype"/>
-        </xsl:call-template>
+        <xsl:call-template name="instance-record"/>
 
         <!-- Use a fixed (effectively, static) storage pool if this is
              a bounded class.
@@ -234,13 +221,82 @@
   </xsl:template>
 
 
-  <!-- Called from a supertype domain/class to output the subtype enumeration
+  <!-- Called at domain/class to generate any required supertype spec
+       information -->
+  <xsl:template name="supertype-specs">
+
+    <xsl:variable name="parent-name" select="name"/>
+
+    <xsl:for-each select="../inheritance[parent=$parent-name]">
+      <xsl:sort select="name"/>
+
+      <xsl:call-template name="subtype-enumeration"/>
+
+      <xsl:text>  procedure Set_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child_Class);&#10;</xsl:text>
+      
+      <xsl:text>  function Get_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child_Class (This : Handle) return </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Child_Class;&#10;</xsl:text>
+
+    </xsl:for-each>
+
+  </xsl:template>
+
+
+  <!-- Called at domain/class to generate any required supertype body
+       information -->
+  <xsl:template name="supertype-bodies">
+
+    <xsl:variable name="parent-name" select="name"/>
+
+    <xsl:for-each select="../inheritance[parent=$parent-name]">
+      <xsl:sort select="name"/>
+
+        <xsl:text>  procedure Set_</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class) is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    This.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Current_Child := To_Be;&#10;</xsl:text>
+        <xsl:text>  end Set_</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class;&#10;</xsl:text>
+
+        <xsl:text>  function Get_</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class (This : Handle) return </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class is&#10;</xsl:text>
+        <xsl:text>  begin&#10;</xsl:text>
+        <xsl:text>    return This.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Current_Child;&#10;</xsl:text>
+        <xsl:text>  end Get_</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Child_Class;&#10;</xsl:text>
+
+    </xsl:for-each>
+
+  </xsl:template>
+
+
+  <!-- Called from domain/inheritance to output the subtype enumeration
        type (sorted) -->
   <xsl:template name="subtype-enumeration">
-    <xsl:variable name="name" select="name"/>
-    <xsl:text>  type Child_Class is&#10;</xsl:text>
+    <xsl:text>  type </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>_Child_Class is&#10;</xsl:text>
     <xsl:text>     (</xsl:text>
-    <xsl:for-each select="../inheritance[parent=$name]/child">
+    <xsl:for-each select="child">
       <xsl:sort select="."/>
       <xsl:value-of select="."/>
       <xsl:text>_T</xsl:text>
@@ -260,13 +316,6 @@
          matter very much if it won't compile. -->
     <xsl:if test="not(@singleton) or attribute">
 
-      <!-- determine if this is a supertype (if there is an inheritance
-           relationship with this class as the parent) -->
-      <xsl:variable name="name" select="name"/>
-      <xsl:variable
-        name="is-supertype"
-        select="boolean(../inheritance[parent=$name])"/>
-      
       <!-- Any context clauses needed for the class body .. -->
       <xsl:call-template name="class-body-context"/>
       
@@ -330,16 +379,7 @@
         <xsl:text>  end Delete;&#10;</xsl:text>
         
         <!-- .. subtype enumeration support, if required .. -->
-        <xsl:if test="$is-supertype">
-          <xsl:text>  procedure Set_Child_Class (This : Handle; To_Be : Child_Class) is&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <xsl:text>    This.Current_Child := To_Be;&#10;</xsl:text>
-          <xsl:text>  end Set_Child_Class;&#10;</xsl:text>
-          <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class is&#10;</xsl:text>
-          <xsl:text>  begin&#10;</xsl:text>
-          <xsl:text>    return This.Current_Child;&#10;</xsl:text>
-          <xsl:text>  end Get_Child_Class;&#10;</xsl:text>
-        </xsl:if>
+        <xsl:call-template name="supertype-bodies"/>
         
       </xsl:if>
       
@@ -377,17 +417,10 @@
        body. -->
   <xsl:template name="class-body-context">
 
-    <xsl:if test="attribute/@refers">
-      <!-- We're going to use the GNAT "with type" extension.
-           This pragma should only be needed on the spec, but GNAT
-           3.14a requires it here too. -->
-      <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text>
+    <xsl:if test="not(@singleton)">
+      <!-- We'll need to free memory. -->
+      <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
     </xsl:if>
-
-      <xsl:if test="not(@singleton)">
-        <!-- We'll need to free memory. -->
-        <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
-      </xsl:if>
 
   </xsl:template>
 
