@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 5e3de09e7318 2001/10/13 16:37:01 simon $ -->
+<!-- $Id: ada-attribute.xsl,v d792e9cf27f0 2002/01/27 11:05:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -58,11 +58,19 @@
 
     <xsl:choose>
 
-      <xsl:when test="attribute or @active">
+      <xsl:when test="attribute or @active or statemachine">
         <!-- There are attributes; output them all. -->
 
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance is new ColdFrame.Instances.Base with record&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="statemachine">
+            <xsl:text>type Instance is new ColdFrame.States.Instance_Base with record&#10;</xsl:text>
+            
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>type Instance is new ColdFrame.Instances.Instance_Base with record&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
 
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
@@ -84,6 +92,14 @@
           <xsl:value-of select="name"/>
           <xsl:text>_Child;&#10;</xsl:text>
         </xsl:for-each>
+
+        <!-- state machine status -->
+        <xsl:if test="statemachine">
+          <xsl:value-of select="$II"/>
+          <xsl:text>State_Machine_State : State_Machine_State_T := </xsl:text>
+          <xsl:value-of select="statemachine/state[@initial]/name"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:if>
 
         <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
