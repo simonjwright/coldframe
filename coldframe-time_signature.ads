@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-time_signature.ads,v $
---  $Revision: ad6a76f66fea $
---  $Date: 2003/03/16 12:25:03 $
+--  $Revision: 92e3bf5831c2 $
+--  $Date: 2004/10/29 05:04:37 $
 --  $Author: simon $
 
 generic
@@ -42,4 +42,9 @@ generic
    --  Used in logging versions of Event Queues.
 
 package ColdFrame.Time_Signature is
+private
+   --  Turn off GNAT's warnings (5.02a1)
+   pragma Warnings (Off, Real_Time);
+   pragma Warnings (Off, From_Now);
+   pragma Warnings (Off, Image);
 end ColdFrame.Time_Signature;

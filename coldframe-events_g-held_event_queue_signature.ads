@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-held_event_queue_signature.ads,v $
---  $Revision: c1e2d532a451 $
---  $Date: 2003/03/09 16:09:24 $
+--  $Revision: 92e3bf5831c2 $
+--  $Date: 2004/10/29 05:04:37 $
 --  $Author: simon $
 
 --  Specifies the properties required of a Queue to contain Events
@@ -57,7 +57,7 @@ generic
                                    On : in out Queue);
 
    with procedure Start_Processing_After_Events (On : in out Queue);
-   --  After events will not be visible until this procedure has been
+   --  After events need not be visible until this procedure has been
    --  called.
 
    with procedure Invalidate_Events (On : Queue;
@@ -66,4 +66,14 @@ generic
    with procedure Tear_Down (Q : in out Queue);
 
 package ColdFrame.Events_G.Held_Event_Queue_Signature is
+private
+   --  Turn off GNAT's warnings (5.02a1)
+   pragma Warnings (Off, Is_Empty);
+   pragma Warnings (Off, Next_Event_Time);
+   pragma Warnings (Off, Pop);
+   pragma Warnings (Off, Add_At_Event);
+   pragma Warnings (Off, Add_After_Event);
+   pragma Warnings (Off, Start_Processing_After_Events);
+   pragma Warnings (Off, Invalidate_Events);
+   pragma Warnings (Off, Tear_Down);
 end ColdFrame.Events_G.Held_Event_Queue_Signature;
