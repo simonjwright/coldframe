@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 49ed454da746 $}
+|{ revision = $Revision: 7af8ba9b4108 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -610,6 +610,10 @@
 	    quid       	"4001967F01B4"
 	    documentation 	"{enumeration = l | m | n}"
 	    stereotype 	"type")
+	(object Class "Callback Type"
+	    quid       	"401D6EA9006E"
+	    documentation 	"{null}"
+	    stereotype 	"callback")
 	(object Class_Category "Not Yet Implemented"
 	    quid       	"3FA962850010"
 	    stereotype 	"dont generate"
@@ -734,13 +738,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 49ed454da746 $}
+|{ revision = $Revision: 7af8ba9b4108 $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
-	    origin_y   	1770
+	    origin_x   	460
+	    origin_y   	693
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Regressions::Find Active" @19
 		    ShowCompartmentStereotypes 	TRUE
@@ -1031,7 +1035,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 49ed454da746 2004/01/20 14:05:31 simon $")
+		    label      	"$Id: Regressions.cat,v 7af8ba9b4108 2004/02/01 21:26:35 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -2031,6 +2035,72 @@
 		    fill_color 	13434879
 		    quidu      	"4001967F01B4"
 		    width      	250
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @54
+		    location   	(2507, 2332)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@54
+			location   	(2172, 2211)
+			fill_color 	13434879
+			nlines     	5
+			max_width  	635
+			label      	
+|It would be useful to assert that:
+|* on registering, the procedure hasn't already been registered
+|* on deregistering, the procedure has been registered
+			)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	695
+		    height     	255)
+		(object ClassView "Class" "Logical View::Regressions::Callback Type" @55
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2453, 2628)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(2309, 2602)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"Callback Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@55
+			location   	(2309, 2557)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"<<callback>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"401D6EA9006E"
+		    width      	306
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)))))
