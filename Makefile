@@ -413,6 +413,6 @@ cf-$(DATE).tgz: cf-$(DATE)
 
 cf-$(DATE).zip: cf-$(DATE)
 	-rm $@
-	zip -lr $@ $</*
+	zip -r $@ $</*
 
 .PHONY: force
