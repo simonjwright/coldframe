@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
+<!-- $Id: bugs.html,v 76a884d14a9e 2002/05/14 20:05:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -182,7 +182,28 @@ abstract operation declared in the other parent?
 
 <dd>Tear_Down doesn't clean up singletons (especially active ones).
 
-<!-- next: 0083 -->
+<dt>0083 (raised 14.v.02)
+
+<dd>&#171;access&#187; functions are generated as though they were
+procedures.
+
+<dt>0084 (raised 14.v.02)
+
+<dd>ColdFrame ought to respect the modeller's casing; if you say FOO
+it should come out as FOO.
+
+<dt>0085 (raised 14.v.02)
+
+<dd>ColdFrame generates accessors for referential attributes, but they
+aren't intended for general use. Can they be marked "private" in the
+generated code?
+
+<dt>0086 (raised 14.v.02)
+
+<dd>It would be helpful if the build process could report
+unimplemented bodies.
+
+<!-- next: 0087 -->
 
 </dl>
 
