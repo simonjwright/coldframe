@@ -1,8 +1,8 @@
-<!-- $Id: classes.html,v 22a5aa8b333e 2002/11/07 05:41:29 simon $ -->
+<!-- $Id: classes.html,v 7f24d9a92e82 2002/11/14 21:14:13 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
-<body bgcolor="#ffffff">
+<body bgcolor="white">
 <h1>ColdFrame: Classes</h1>
 
 <h2>Motivation</h2>
@@ -54,13 +54,25 @@ be created, and may be deleted.
 attributes. The identifying attributes, like any other attributes,
 ought to be of non-composite types.
 
-<p>For example, a Vehicle Excise Disk (the round paper certificate, to
-be displayed on the vehicle's windscreen, that shows you've paid the
-UK road tax for the year) might be identified by the combination of
-Vehicle Index Mark (the string of letters and digits on the
-numberplate) and Validity Start Date. Vehicle Index Mark and Validity
-Start Date then become "identifying attributes", whereas Date Of Issue
-and Period Of Validity are just common-or-garden attributes.
+<p>For example, a <i>Book Edition</i> is uniquely identified by its
+<i>ISBN</i>. This is an example of a <i>naming attribute</i>: <a
+href="resources.html#build-object-models">Leon Starr</a> says
+
+<blockquote>
+[A naming attribute exists] not so much to describe, but to identify,
+instances. [...] A naming attribute may or may not be sufficient to
+uniquely identify instiances of a class. For example, the attribute
+<i>Employee Name</i> is a naming attribute, but it is possible to have
+two employees with the same name.
+</blockquote>
+
+<p>In another example, a Vehicle Excise Disk (the round paper
+certificate, to be displayed on the vehicle's windscreen, that shows
+you've paid the UK road tax for the year) might be identified by the
+combination of Vehicle Index Mark (the string of letters and digits on
+the numberplate) and Validity Start Date. Vehicle Index Mark and
+Validity Start Date then become "identifying attributes", whereas Date
+Of Issue and Period Of Validity are just common-or-garden attributes.
 
 <p>In ColdFrame, you <em>must not</em> specify identifiers for
 
