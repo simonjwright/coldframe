@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: da2b89e104bc $
---  $Date: 2003/03/09 15:58:56 $
+--  $Revision: 066fc08a0d6c $
+--  $Date: 2003/03/09 19:40:35 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -162,6 +162,11 @@ package body ColdFrame.Events_G.Standard_G is
       if not The_Queue.Started then
          accept Start;
       end if;
+
+      --  Start processing events set or posted to run after a delay
+      --  (rather than at a time) as soon as we have started
+      --  ourselves
+      Held_Events.Start_Processing_After_Events (The_Queue.The_Held_Events);
 
       loop
 
@@ -577,7 +582,6 @@ package body ColdFrame.Events_G.Standard_G is
       --  The base implementation of Start checks first and doesn't
       --  make the call if it would be wrong to do so.
       The_Queue.The_Dispatcher.Start;
-      Held_Events.Start_Processing_After_Events (The_Queue.The_Held_Events);
       The_Queue.The_Timer_Manager.Rethink;
    end Start_Queue;
 
