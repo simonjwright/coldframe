@@ -22,13 +22,16 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
 %.norm: %.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@ || rm -f $@
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	  --version cf-DATE \
+	  >$@ || rm -f $@
 
 %.html: %.norm
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm
 	$(SAXON) $< $(CODEGEN_SCRIPT) >$@  \
+	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) >$@  \
 	  || (echo "Generation problem." && rm -f $@)
 
