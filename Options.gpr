@@ -1,16 +1,17 @@
---  $Id: Options.gpr,v ff9a15b0874f 2003/11/02 19:28:48 simon $
+--  $Id: Options.gpr,v c21bae2082a1 2003/11/29 13:22:29 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
 project Options is
 
-  --  This project has no associated sources
+  --  This project has no associated sources.
   for Source_Files use ();
 
-  --  Determine the build directory using the BUILD_DIR environment
-  --  variable, if any
-  Build_Dir := external ("BUILD_DIR", "");
-  for Object_Dir use Build_Dir;
+  --  Determine the build directory using the BUILD_BASE environment
+  --  variable, if any.
+  --  See the script make-build-dirs.
+  Build_Base := external ("BUILD_BASE", "");
+  for Object_Dir use Build_Base;
 
   --  GLIDE configuration (these are the defaults). Available in
   --  gnat-3.13p and gcc-3.3+; comment out if using earlier gcc-3
@@ -22,7 +23,7 @@ project Options is
 
   end Ide;
 
-  --  GNATMAKE configuration options
+  --  GNATMAKE configuration options.
   package Builder is
 
      for Default_Switches ("ada") use
@@ -34,7 +35,7 @@ project Options is
 
   end Builder;
 
-  --  GCC configuration options
+  --  GCC configuration options.
   package Compiler is
 
      for Default_Switches ("ada") use
@@ -48,14 +49,14 @@ project Options is
 
   end Compiler;
 
-  -- GNATBIND configuration options
+  -- GNATBIND configuration options.
   package Binder is
 
      for Default_Switches ("ada") use ("-E");
 
   end Binder;
 
-  --  GNATLINK configuration options
+  --  GNATLINK configuration options.
   package Linker is
 
   end Linker;
