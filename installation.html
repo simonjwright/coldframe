@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 935448a06702 2003/03/07 06:00:45 simon $ -->
+<!-- $Id: installation.html,v 47277c8433d9 2003/03/22 18:43:43 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -13,11 +13,13 @@
 <ul>
 <li><a href="#linux-environment">environment</a>
 <li><a href="#linux-makefile"><tt>Makefile</tt></a>
+<li><a href="#linux-override">Overriding <tt>ColdFrame.Project</tt> source</a>
 </ul>
 <li><a href="#windows">under Windows</a>
 <ul>
 <li><a href="#windows-environment">environment</a>
 <li><a href="#windows-makefile"><tt>Makefile</tt></a>
+<li><a href="#windows-override">Overriding <tt>ColdFrame.Project</tt> source</a>
 </ul>
 </ul>
 
@@ -206,6 +208,42 @@ etc, after which you only need to say
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
+<h3><a name="linux-override">Overriding <tt>ColdFrame.Project</tt>
+source</a></h3>
+
+<p>If you need to override some of the Ada source code in the
+<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, you can't just extend
+the supplied <tt>ColdFrame_Defaults.gpr</tt> project file to include a
+new directory containing your overriding source. Instead, your
+extending project (<tt>ColdFrame.gpr</tt> would be a good name) must
+include a complete set of <tt>ColdFrame.Project</tt> sources.
+
+<p>Suppose your overriding source is in
+<tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
+<tt>~/Base/Build/ColdFrameProject</tt> and say
+<pre>
+   $ make -f $TOP/$COLDFRAME/Makefile-unix install
+</pre>
+
+<p>This will place those of ColdFrame's files that you haven't
+ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
+
+<p>Now create a file
+ <tt>~/Base/Build/ColdFrameProject/ColdFrame.gpr</tt>, containing
+<pre>
+   with "Options";
+
+   project ColdFrame Extends "ColdFrame_Defaults" is
+
+     for Source_Dirs use ("project", "inherited");
+
+     for Object_Dir use Options'Object_Dir;
+
+   end ColdFrame;
+</pre>
+
+<p>and put this on your <tt>ADA_PROJECT_PATH</tt>.
+
 
 <p><hr>
 
@@ -380,6 +418,42 @@ etc, after which you only need to say
 </pre>
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
+
+<h3><a name="windows-override">Overriding <tt>ColdFrame.Project</tt>
+source</a></h3>
+
+<p>If you need to override some of the Ada source code in the
+<tt>$(TOP)/$(COLDFRAME)/project</tt> directory, you can't just extend
+the supplied <tt>ColdFrame_Defaults.gpr</tt> project file to include a
+new directory containing your overriding source. Instead, your
+extending project (<tt>ColdFrame.gpr</tt> would be a good name) must
+include a complete set of <tt>ColdFrame.Project</tt> sources.
+
+<p>Suppose your overriding source is in
+<tt>C:\Base\Build\ColdFrameProject\project</tt>; change directory to
+<tt> C:\Base\Build\ColdFrameProject</tt> and say
+<pre>
+   $ make -f $TOP/$COLDFRAME/Makefile-winnt install
+</pre>
+
+<p>This will place those of ColdFrame's files that you haven't
+ overridden in <tt>C:\Base\Build\ColdFrameProject\inherited</tt>.
+
+ <p>Now create a file
+ <tt>C:\Base\Build\ColdFrameProject\ColdFrame.gpr</tt>, containing
+<pre>
+   with "Options";
+
+   project ColdFrame Extends "ColdFrame_Defaults" is
+
+     for Source_Dirs use ("project", "inherited");
+
+     for Object_Dir use Options'Object_Dir;
+
+   end ColdFrame;
+</pre>
+
+<p>and put this on your <tt>ADA_PROJECT_PATH</tt>.
 
 <p><hr>
 <i>
