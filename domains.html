@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 1288ec1f087e 2005/02/24 06:47:57 simon $ -->
+<!-- $Id: domains.html,v 744b16466baa 2005/03/01 06:30:14 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -96,7 +96,7 @@ children of the domain package.
 <dt><tt><i>Domain</i>.Events</tt>
 <dd>Provides <a href="events.html">Event</a> queueing and dispatching.
 
-<dt><tt><i>Domain</i>.Initialize</tt>
+<dt><a name="initialize"><tt><i>Domain</i>.Initialize</a></tt>
 <dd>Takes an Event Queue parameter, defaulting to <tt>null</tt>.
 <br>Initializes the domain by
 
@@ -119,7 +119,7 @@ Queue, or (if it's <tt>null</tt>) by calling
 
 The calls are in alphabetical order by class and then by operation.
 
-<dt><tt><i>Domain</i>.Tear_Down</tt>
+<dt><a name="teardown"><tt><i>Domain</i>.Tear_Down</a></tt>
 <dd>For <a href="resources.html#testing">testing</a> purposes; returns
 the domain to its initial state by
 <ol>
@@ -155,7 +155,7 @@ Event Queue.
 
 </ol>
 
-<dt><tt><i>Domain</i>.Cascade_Tear_Down</tt>
+<dt><a name="cascade-teardown"><tt><i>Domain</i>.Cascade_Tear_Down</a></tt>
 <dd>The inverse of <tt>Cascade_Initialize</tt>.
 
 <dt><tt><i>Domain</i>.Serializable</tt>
