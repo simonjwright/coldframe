@@ -239,6 +239,7 @@ PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
   escape-markup.awk \
   normalize-rose.tcl \
+  cf-banner.el \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS) \
   $(OTHER_SCRIPTS) \
