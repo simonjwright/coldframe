@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 131f6566eee7 2003/02/15 18:47:33 simon $ -->
+<!-- $Id: ada-collection.xsl,v e21819b3d8de 2003/05/01 05:25:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -213,7 +213,8 @@
             with function Pass (This : Handle) return Boolean is <>;
          function {domain}.{class}.Selection_Function
          return {domain}.{class}.Collections.Collection;
-         pragma Elaborate_Body ({domain}.{class}.Selection_Function);
+         pragma Elaborate_Body
+            ({domain}.{class}.Selection_Function);
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
@@ -229,7 +230,9 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
-    <xsl:text>pragma Elaborate_Body (</xsl:text>
+    <xsl:text>pragma Elaborate_Body&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(</xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Selection_Function);&#10;</xsl:text>
 
@@ -241,7 +244,8 @@
          function {domain}.{class}.Filter_Function
             (The_Collection : {domain}.{class}.Collections.Collection)
          return {domain}.{class}.Collections.Collection;
-         pragma Elaborate_Body ({domain}.{class}.Filter_Function);
+         pragma Elaborate_Body
+            ({domain}.{class}.Filter_Function);
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
@@ -261,7 +265,9 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
-    <xsl:text>pragma Elaborate_Body (</xsl:text>
+    <xsl:text>pragma Elaborate_Body&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(</xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function);&#10;</xsl:text>
 
@@ -272,7 +278,8 @@
            with procedure Process (H : Handle);
          procedure {domain}.{class}.Iterate
             (Over : {domain}.{class}.Collections.Collection);
-         pragma Elaborate_Body ({domain}.{class}.Iterate);
+         pragma Elaborate_Body
+            ({domain}.{class}.Iterate);
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with </xsl:text>
@@ -288,7 +295,9 @@
     <xsl:text>(Over : </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection);&#10;</xsl:text>
-    <xsl:text>pragma Elaborate_Body (</xsl:text>
+    <xsl:text>pragma Elaborate_Body&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(</xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Iterate);&#10;</xsl:text>
 
