@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 9a26e7a40b0f 2001/06/16 16:29:02 simon $ -->
+<!-- $Id: generate-ada.xsl,v 6f79ea96d061 2001/06/19 18:48:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,6 +40,7 @@
 
   <xsl:output method="text"/>
 
+  <xsl:param name="generate-accessors"/>
 
   <!-- Generate the top-level package for the domain, then all the
        others. -->
