@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 28c19d82f370 2003/03/01 12:24:03 simon $ -->
+<!-- $Id: error-messages.html,v 2b39e2d2269a 2003/06/06 10:31:49 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -34,6 +34,8 @@ want anything to happen!
 <dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>[[source]]</tt> on both ends of the named association.
 
 <dt>Error: discriminated type <i>type</i> has no attributes <dd>Discriminated types must have attributes.
+
+<dt>Error: function <i>name</i> can't be an entry <dd>An entry operation can't be a function.
 
 <dt>Error: illegal lower bound 1 in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
