@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v e4ae9e524e68 2002/03/02 08:39:00 simon $ -->
+<!-- $Id: installation.html,v d11881751cde 2002/03/05 06:02:39 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -41,8 +41,108 @@ Components</a>; release 20020117 or later
 
 </ul>
 
+<p>The following installation notes match what's provided in the
+supplied <tt>Makefile-unix</tt>. If you install software elsewhere,
+you'll need to adjust the Makefile (it has hooks for you to use
+environment or command line variables).
+
+<h3>[incr Tcl]</h3>
+
+<p>This one is a bit puzzling. I'd thought that you needed to build
+[incr Tcl] over your Tcl/Tk installation, but it seems that recent
+releases of Tcl/Tk have included [incr Tcl] in the baseline.
+
+<h3>TclXML</h3>
+
+<p>The archive should contain path information, so unpack it at
+<tt>/usr/local/lib</tt>. The Makefile assumes
+<tt>/usr/local/lib/tclxml-2.1theta</tt>.
+
+<h3>Saxon</h3>
+
+<p>The archive doesn't contain path information. A possible
+installation route (for Saxon 6.5.1) is
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> mkdir saxon-6.5.1
+  <i>#</i> ln -sf saxon-6.5.1 saxon
+  <i>#</i> cd saxon
+  <i>#</i> unzip <i>/your/download/directory</i>/saxon6_5_1.zip
+</pre>
+
+<h3>GNAT</h3>
+
+<p>The supplied Makefile assumes only that <tt>gnatchop</tt> is on
+your <tt>PATH</tt>.
+
+<p>You may find it useful to use <a
+href="http://www.pushface.org/gnatfe"><tt>gnatfe</tt></a> to manage
+installing GNAT while retaining your standard <tt>gcc</tt>
+compiler. If you do this, customize <tt>ada-prj-default-comp-cmd</tt>
+so that the compiler is <tt><b>gnat</b>gcc</tt>.
+
+<h3>Booch Components</h3>
+
+<p>Install under <tt>/usr/local/lib</tt>:
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> tar zxvf <i>/your/download/directory</i>/bc-<i>yyymmdd</i>.tgz
+</pre>
+
+<p>installs the BCs in <tt>/usr/local/lib/bc-<i>yyymmdd</i></tt>.
+
+<h3>ColdFrame</h3>
+
+<p>Install under <tt>/usr/local/lib</tt>:
+
+<pre>
+  <i>#</i> cd /usr/local/lib
+  <i>#</i> tar zxvf <i>/your/download/directory</i>/cf-<i>yyymmdd</i>.tgz
+</pre>
+
+<p>installs ColdFrame in <tt>/usr/local/lib/cf-<i>yyymmdd</i></tt>
+(Ada source is in the <tt>lib</tt> subdirectory).
+
+<h3>Your Makefile</h3>
+
+<p>Create a <tt>Makefile</tt> in the directory where your extracted
+<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
+up the Makefile that ColdFrame provides.
+
+<p>It should contain at least
+
+<pre>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+</pre>
+
+which means you need to type
+
+<pre>
+  <i>$</i> make <i>Domain</i>.gen
+</pre>
+
+If you want to make life even easier, you can change your Makefile to
+
+<pre>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>all:: <i>Domain_1</i>.gen</b>
+  <b>all:: <i>Domain_2</i>.gen</b>
+</pre>
+
+etc, after which you only need to say
+
+<pre>
+  <i>$</i> make
+</pre>
+
+(until, of course, you find you need to add <tt>Domain_3</tt>).
 
 
+
+<p><hr>
 
 <h2><a name="windows">Installation under Windows</a></h2>
 
