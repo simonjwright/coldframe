@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6dfdb95ed63f 2003/07/13 06:36:14 simon $ -->
+<!-- $Id: ada-class.xsl,v d4fbb3517cec 2003/07/23 19:00:41 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -177,16 +177,6 @@
       <xsl:call-template name="state-image-spec"/>
     </xsl:if>
 
-    <!-- .. if the maximum number of instances isn't too large, fix the
-         storage pool for Handle .. -->
-    <xsl:if test="$max &lt;= $max-bounded-container">
-      <xsl:value-of select="$I"/>
-      <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
-      <xsl:value-of select="$max"/>
-      <xsl:text>;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:if>
- 
     <!-- .. any <<class>> attributes .. -->
     <xsl:if test="attribute/@class">
       <xsl:for-each select="attribute[@class]">
@@ -213,6 +203,16 @@
         <xsl:text>function Instance_Hash (I : Instance) return Natural;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
+        <!-- .. if the maximum number of instances isn't too large, fix the
+             storage pool for Handle .. -->
+        <xsl:if test="$max &lt;= $max-bounded-container">
+          <xsl:value-of select="$I"/>
+          <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
+          <xsl:value-of select="$max"/>
+          <xsl:text>;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+        </xsl:if>
+ 
         <!-- .. the instance container .. -->
         <xsl:choose>
           
@@ -255,7 +255,13 @@
 
       <!-- Only one possible instance .. -->      
       <xsl:otherwise>
-        <!-- .. use a simple pointer .. -->
+        <!-- .. fix the storage pool for Handle .. -->
+        <xsl:value-of select="$I"/>
+        <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
+        <xsl:value-of select="$max"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+         <!-- .. use a simple pointer .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>This : Handle;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
@@ -1689,11 +1695,14 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:for-each select="$identifiers">
+      <xsl:variable name="name">
+        <xsl:call-template name="attribute-name"/>
+      </xsl:variable>
       <xsl:value-of select="$II"/>
       <xsl:text>if L.</xsl:text>
-      <xsl:value-of select="name"/>
+      <xsl:value-of select="$name"/>
       <xsl:text> /= R.</xsl:text>
-      <xsl:value-of select="name"/>
+      <xsl:value-of select="$name"/>
       <xsl:text> then&#10;</xsl:text>
       <xsl:value-of select="$III"/>
       <xsl:text>return False;&#10;</xsl:text>
