@@ -412,20 +412,19 @@ House_Management.impl/stairwell_demo.adb
 
 DEMO += \
 Serialization.cat Serialization.raw Serialization_Demo.raw \
-Serialization.html \
-Serialization.impl/Serialization.gpr \
-Serialization.impl/client.adb \
+Serialization.html Serialization.gpr \
+Serialization.impl/serialization_client.adb \
 Serialization.impl/serialization-events-initialize.adb \
 Serialization.impl/serialization-interface-open.adb \
 Serialization.impl/serialization-interface-output.adb \
 Serialization.impl/serialization-server-create.adb \
 Serialization.impl/serialization-server-post.adb \
 Serialization.impl/serialization_support.ads \
-Serialization.impl/server.adb \
+Serialization.impl/serialization_server.adb \
 Serialization_Demo.impl/serialization_demo-real_time_image.adb
 
 DEMO += \
-Interrupt_Handling.cat Interrupt_Handling.raw \
+Interrupt_Handling.cat Interrupt_Handling.raw Interrupt_Handling.gpr \
 Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb \
 Interrupt_Handling.impl/interrupt_handling-device-initialize.adb \
 Interrupt_Handling.impl/interrupt_handling-device-report_entry.adb \
@@ -436,7 +435,7 @@ Interrupt_Handling.impl/interrupt_handling-harness.adb \
 Interrupt_Handling.impl/interrupt_handling-harness.ads
 
 DEMO += \
-Library.cat Library.raw \
+Library.cat Library.raw Library.gpr \
 Library.impl/library-test.adb \
 Library.impl/library-test.ads \
 Library.impl/library_test_harness.adb \
@@ -453,8 +452,8 @@ Performance.impl/performance-harness.ads \
 Performance.impl/performance-pet-eat.adb
 
 DEMO += \
-Problem_Reporting.cat Problem_Reporting.raw \
-Problem_Reporting.impl/demo.adb \
+Problem_Reporting.cat Problem_Reporting.raw Problem_Reporting.gpr \
+Problem_Reporting.impl/problem_reporting_harness.adb \
 Problem_Reporting.impl/problem_reporting-component-clean.adb \
 Problem_Reporting.impl/problem_reporting-component-report.adb \
 Problem_Reporting.impl/problem_reporting-component-report_all.adb \
@@ -467,7 +466,7 @@ Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
 
 DEMO += \
-States.gpr States.cat States.raw \
+States.cat States.raw States.gpr \
 States.impl/states-events-initialize.adb \
 States.impl/states-monitor-clear_heartbeat_timeout.adb \
 States.impl/states-monitor-clear_warmup_timeout.adb \
