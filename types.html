@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 5758dd97a999 2003/05/09 05:38:09 simon $ -->
+<!-- $Id: types.html,v 993021b49d21 2003/06/15 11:25:54 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -56,6 +56,7 @@ domains (but see the <i>counterpart</i> stereotype/annotation below).
 <li><em>&#171;callback&#187;</em>,
 <li><em>&#171;counterpart&#187;</em>,
 <li><em>&#171;discriminated&#187;</em>
+<li><em>&#171;protected&#187;</em>
 </ul>
 are provided.
 
@@ -112,6 +113,9 @@ be used to print values of the type when it has been serialized. See
 <li><tt>imported : <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
 
+<li><tt>protected</tt> specifies that instances of the type are
+protected against concurrent access by multiple threads of execution.
+
 <li><tt>renames : <i>external-type</i></tt> specifies that the given
 type is a renaming of the specified external reference.
 
@@ -137,13 +141,18 @@ serializable:
 
 <p>Types can have operations.
 
+<p>In the case of <tt>protected</tt> types, operations (without return
+values) can be stereotyped <em>&#171;entry&#187;</em>, with <a
+href="http://www.adaic.org/standards/95lrm/html/RM-9-5-2.html">Ada
+semantics</a>.
+
 <h2>Translation</h2>
 
 <p>Implicity-declared types are translated as follows:
 
 <dl>
 
-<dt><i>Date</i>, <i>Time</i><dd><tt>ColdFrame.Calendar.Time</tt>
+<dt><i>Date</i>, <i>Time</i><dd><tt>ColdFrame.Project.Calendar.Time</tt>
 
 <dt><i>Real</i><dd><tt>Float</tt>
 
@@ -273,6 +282,14 @@ with-able package name).
    type T is range <i>low-bound</i> .. <i>upper-bound</i>;
 </pre>
 
+<li><tt>protected</tt> (or &#171;protected&#187;) generates a
+<tt>protected</tt> type in the domain package. Operations of the type
+map to protected operations; procedure operations stereotyped
+&#171;entry&#187; map to protected entries.
+
+<p>The protected type's body is generated as a <tt>separate</tt> body;
+the operations raise <tt>Program_Error</tt> if called.
+
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>, upper
 <i>upper-bound</i></tt>: gives a floating-point type. If
 <i>num-digits</i> is omitted or not more than 6, it's a subtype of
@@ -291,7 +308,7 @@ the lower and upper bounds are given, they translate to a constraint.
 
 <li><tt>serializable</tt> has no effect on the type to which it's
 attached, but causes a corresponding declaration in the domain's
-<tt>Serialization</tt> child package: for a type T,
+<tt>Serializable</tt> child package: for a type T,
 <pre>
    with ColdFrame.Project.Serialization;
    package <i>Domain</i>.Serializable is
