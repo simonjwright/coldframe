@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v dce844360306 2004/06/04 14:22:45 simon $ -->
+<!-- $Id: bugs.html,v e63a7ff4f8be 2004/06/04 14:47:01 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -216,6 +216,21 @@ href="ColdFrame.xsd">ColdFrame.xsd</a>.</i>
 
 <dd>Extraction can fail silently.
 
+<dt>0265 (raised 26.v.04)
+
+<dd>There is no check that associations' multiplicities have been
+maintained.
+
+<!-- next: 0267  -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>4.vi.04</h3>
+
+<dl>
+
 <dt>0264 (raised 20.v.04)
 
 <dd>A race condition where tear-down involving a Timer can result in
@@ -224,21 +239,12 @@ result of the cure for bug <a href="#bug-0236">0236</a>.
 <br><i>Instead of raising an exception, ColdFrame now logs an
 error. Some sort of traceback would clearly be helpful, though.</i>
 
-<dt>0265 (raised 26.v.04)
-
-<dd>There is no check that associations' multiplicities have been
-maintained.
-
 <dt>0266 (raised 4.vi.04)
 
 <dd>Leading and trailing spaces in Domain package names get translated
 into underscores; they should be stripped.
 
-<!-- next: 0267  -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>20.v.04</h3>
 
