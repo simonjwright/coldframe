@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 539c29d63af3 2001/01/30 19:48:27 simon $
+'$Id: ddf.ebs,v 941f3120406c 2001/02/01 20:02:29 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -43,6 +43,7 @@ Sub DumpAttributes (o As Class)
 		Print #1, "<name>" & a.Name & "</name>"
 		Print #1, "<documentation>" & a.Documentation & "</documentation>"
 		Print #1, "<type>" &  a.Type & "</type>"
+		Print #1, "<initial>" & a.InitValue & "</initial>"
 		Print #1, "</attribute>"
 	Next attid
 	Print #1, "</attributes>"
@@ -66,7 +67,6 @@ Sub DumpParameters(op As Operation)
 		Print #1, "<documentation>" & p.Documentation & "</documentation>"
 		Print #1, "<type>" & p.Type & "</type>"
 		Print #1, "<initial>" & p.InitValue & "</initial>"
-		Print #1, "<documentation>" & p.Documentation & "</documentation>"
 		Print #1, "</parameter>"
 	Next parid
 	Print #1, "</parameters>"
@@ -125,6 +125,7 @@ Sub DumpAssociation (assoc As Association)
 	Print "    association"
 	Print #1, "<association>"
 	Print #1, "<name>" & assoc.Name & "</name>"
+	Print #1, "<documentation>" & assoc.Documentation & "</documentation>"
 	Print #1, "<role><end>1</end>"
 	Print #1, "<name>" & assoc.Role1.Name & "</name>"
 	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
@@ -150,6 +151,7 @@ Sub DumpInheritance (o As class)
 		Print "    inheritance"
 		Print #1, "<inheritance>"
 		Print #1, "<name>" & irels.GetAt(r).Name & "</name>"
+		Print #1, "<documentation>" & irels.GetAt(r).Documentation & "</documentation>"
 		Print #1, "<child>" & o.Name & "</child>"
 		Print #1, "<parent>" & irels.GetAt(r).GetSupplierClass().Name & "</parent>" 
 		Print #1, "</inheritance>"
@@ -197,6 +199,7 @@ Sub DumpDomainData (domain As Category)
 	'domain name
 	Print #1, "<name>" + domain.Name + "</name>"
 	'get date in external processing (must be a way!)
+	Print #1, "<documentation>" + domain.Documentation + "</documentation>"
 	DumpClasses (domain)
 	DumpRelationships (domain)
 	Print #1, "</domain>"
