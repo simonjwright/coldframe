@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 5bb7bd09a990 2001/03/22 20:33:54 simon $ -->
+<!-- $Id: generate-html.xsl,v 8600fea6e08a 2001/03/25 09:41:32 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -105,9 +105,11 @@
           <xsl:choose>
             <xsl:when test="attribute">
               <h2>Attributes</h2>
-              <xsl:apply-templates select="attribute">
-                <xsl:sort select="."/>
-              </xsl:apply-templates>
+              <dl>
+                <xsl:apply-templates select="attribute">
+                  <xsl:sort select="."/>
+                </xsl:apply-templates>
+              </dl>
             </xsl:when>
             <xsl:otherwise>
               <h2>No attributes.</h2>
@@ -134,7 +136,7 @@
     <xsl:variable name="name">
       <xsl:call-template name="attribute-name"/>
     </xsl:variable>
-    <h3>
+    <dt>
       <a name="{../name}.at.{$name}">
         <xsl:value-of select="$name"/>
       </a>
@@ -154,8 +156,10 @@
           <xsl:call-template name="attribute-type"/>
         </xsl:otherwise>
       </xsl:choose>
-    </h3>
-    <xsl:apply-templates select="documentation"/>
+    </dt>
+    <dd>
+      <xsl:apply-templates select="documentation"/>
+    </dd>
   </xsl:template>
 
 
@@ -166,6 +170,40 @@
        </a>
     </h3>
     <xsl:apply-templates select="documentation"/>
+    <xsl:if test="@result">
+      <xsl:apply-templates select="@result"/>
+    </xsl:if>
+    <xsl:if test="parameter">
+      <h4>Parameters</h4>
+      <dl>
+        <xsl:apply-templates select="parameter">
+          <xsl:sort select="name"/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template match="operation/@result">
+    <h4>Result</h4>
+    <p>
+      <xsl:value-of select="."/>
+    </p>
+    <xsl:apply-templates select="documentation"/>
+  </xsl:template>
+
+
+  <xsl:template match="operation/parameter">
+    <dt>
+      <xsl:value-of select="name"/>
+      <xsl:text> : </xsl:text>
+      <xsl:call-template name="type-name">
+        <xsl:with-param name="type" select="type"/>
+      </xsl:call-template>
+    </dt>
+    <dd>
+      <xsl:apply-templates select="documentation"/>
+    </dd>
   </xsl:template>
 
 
