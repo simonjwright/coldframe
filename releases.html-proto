@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 80ff6d1e009f 2005/02/10 05:16:34 simon $ -->
+<!-- $Id: releases.html-proto,v 23a5403e8db3 2005/02/10 05:35:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -76,7 +76,7 @@ renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
 could lead to <tt>Tasking_Error</tt>.
 
 
-<p>ColdFrame now recognises <i>class utilities</i> ("classes" with no
+<p>ColdFrame now recognises <i>utility classes</i> ("classes" with no
 instances, only operations).
 
 
@@ -131,7 +131,7 @@ previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
 using <i>{ name = New Name }</i>.
 
 
-<p>You can use attributes in values (initial values, bounds).
+<p>You can use Ada attributes in values (initial values, bounds).
 
 
 <p><dt>20040319
