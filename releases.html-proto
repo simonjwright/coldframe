@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 48391274e274 2004/04/23 14:16:24 simon $ -->
+<!-- $Id: releases.html-proto,v 62f95d84c025 2004/04/26 12:03:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -27,6 +27,10 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <p>ColdFrame checks that operations corresponding to actions actually
 exist.
+
+
+<p>If an exception gets raised in a called-back routine, an error is
+logged (rather than re-raising the exception to the supplier).
 
 
 <p><dt>20040319
