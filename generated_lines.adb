@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: 79a018bc7fbd $
---  $Date: 2002/07/27 12:46:55 $
+--  $Revision: 1d6b72facc1b $
+--  $Date: 2002/09/18 20:22:57 $
 --  $Author: simon $
 
-with Ada.Command_Line; use Ada.Command_Line;
 with Ada.Text_IO; use Ada.Text_IO;
+with GNAT.Command_Line;
 with GNAT.Directory_Operations; use GNAT.Directory_Operations;
 with GNAT.OS_Lib; use GNAT.OS_Lib;
 
@@ -26,9 +26,12 @@ with Generated_Lines_Support;
 
 procedure Generated_Lines is
 
-   procedure Scan_Directory (Named : Dir_Name_Str);
-
-   procedure Scan_Directory (Named : Dir_Name_Str) is
+   procedure Scan_Directory (Named : Dir_Name_Str;
+                             Verbosely : Boolean;
+                             Recursively : Boolean);
+   procedure Scan_Directory (Named : Dir_Name_Str;
+                             Verbosely : Boolean;
+                             Recursively : Boolean) is
       Wd : Dir_Type;
    begin
       Open (Dir => Wd,
@@ -43,11 +46,15 @@ procedure Generated_Lines is
                   Last => Last);
             exit when Last = 0;
             if Str (1 .. Last) /= "." and Str (1 .. Last) /= ".." then
-               if Is_Directory (Named & Str (1 .. Last)) then
+               if Is_Directory (Named & Str (1 .. Last))
+                 and then Recursively then
                   Scan_Directory
-                    (Named & Str (1 .. Last) & Directory_Separator);
+                    (Named & Str (1 .. Last) & Directory_Separator,
+                     Verbosely,
+                     Recursively);
                else
-                  Generated_Lines_Support.Count (Named & Str (1 .. Last));
+                  Generated_Lines_Support.Count (Named & Str (1 .. Last),
+                                                 Verbosely);
                end if;
             end if;
          end loop;
@@ -55,25 +62,42 @@ procedure Generated_Lines is
       Close (Dir => Wd);
    end Scan_Directory;
 
+   --  Option flags
+   Verbose : Boolean := False;
+   Recursive : Boolean := False;
+
 begin
 
-   if Argument_Count = 0 then
+   loop
+      case GNAT.Command_Line.Getopt ("r v") is
+         when ASCII.NUL => exit;
+         when 'r' => Recursive := True;
+         when 'v' => Verbose := True;
+            when others => raise Program_Error;
+      end case;
+   end loop;
 
-      Scan_Directory (Get_Current_Dir);
-      Generated_Lines_Support.Report;
+   declare
+      Dir : constant String := GNAT.Command_Line.Get_Argument;
+   begin
 
-   elsif Argument_Count = 1 then
+      if Dir'Length = 0 then
 
-      Scan_Directory
-        (GNAT.OS_Lib.Normalize_Pathname (Argument (1)
-                                                       & Dir_Separator));
-      Generated_Lines_Support.Report;
+         Scan_Directory (Get_Current_Dir,
+                         Verbosely => Verbose,
+                         Recursively => Recursive);
+         Generated_Lines_Support.Report;
 
-   else
+      else
 
-      Put_Line (Standard_Error, "format: generated_lines [directory]");
-      Set_Exit_Status (Failure);
+         Scan_Directory
+           (GNAT.OS_Lib.Normalize_Pathname (Dir & Dir_Separator),
+            Verbosely => Verbose,
+            Recursively => Recursive);
+         Generated_Lines_Support.Report;
 
-   end if;
+      end if;
+
+   end;
 
 end Generated_Lines;
