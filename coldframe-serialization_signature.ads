@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization_signature.ads,v $
---  $Revision: b5a1f4ce42f2 $
---  $Date: 2003/01/26 16:35:10 $
+--  $Revision: 4080adc3eb93 $
+--  $Date: 2003/02/02 19:05:25 $
 --  $Author: simon $
 
 --  This package specifies the characteristics required to support the
@@ -34,13 +34,28 @@
 generic
 
    type Actual_Base is abstract tagged private;
+   --  The basis for all serialized values. It should have a primitive
+   --  function
+   --
+   --     function Image (S : Actual_Base) return String;
+   --
+   --  since such a function is generated in Domain.Serialization.
 
-   with function Actual_Image (B : Actual_Base'Class) return String;
+   with function Actual_Class_Image (B : Actual_Base'Class) return String;
+   --  This function must dispatch to the generated Image function (there
+   --  is no way to invoke the primitive Image directly).
+   --
+   --  A satisfactory implementation is
+   --
+   --     function Class_Image (S : Actual_Base'Class) return String is
+   --     begin
+   --        return Image (S);
+   --     end Class_Image;
 
 package ColdFrame.Serialization_Signature is
 
    subtype Base is Actual_Base;
 
-   function Image (B : Base'Class) return String renames Actual_Image;
+   function Class_Image (B : Base'Class) return String renames Actual_Image;
 
 end ColdFrame.Serialization_Signature;
