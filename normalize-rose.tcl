@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 1a56c27c4ccd 2003/06/29 17:21:16 simon $
+# $Id: normalize-rose.tcl,v a5017c1a186e 2003/07/03 19:30:32 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1515,6 +1515,10 @@ itcl::class Operation {
     method -parameters {pl} {set parameters $pl}
 
     method -evaluate {domain} {
+	if {$abstr && $accessor} {
+	    set c [[[$this -getOwner] -getOwner] -getName]
+	    Error "operation $c.$name can't be abstract and an accessor"
+	}
 	$parameters -evaluate {domain}
     }
 
