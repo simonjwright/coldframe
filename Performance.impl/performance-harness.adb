@@ -10,7 +10,11 @@ with Performance.A1;
 with Performance.A2;
 with Performance.House.All_Instances;
 with Performance.House.Collections;
+with Performance.Event_Timing;
+
 with ColdFrame.Instances;
+with ColdFrame.Project.Events;
+
 with Seawolf_High_Resolution_Time; use Seawolf_High_Resolution_Time;
 
 procedure Performance.Harness is
@@ -306,5 +310,24 @@ begin
       Performance.Tear_Down;
 
    end;
+
+   begin
+
+      T := Clock;
+
+      for I in 1 .. 10 loop
+         declare
+            L : ColdFrame.Project.Events.Lock (Event_Timing.Dispatcher);
+            pragma Warnings (Off, L);
+         begin
+            null;
+         end;
+      end loop;
+      D := Clock - T;
+      Put_Line ("average lock claim time:"
+                  & Duration'Image (D / 10));
+
+   end;
+
 
 end Performance.Harness;
