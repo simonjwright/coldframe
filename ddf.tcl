@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v 253fdaa94914 2000/03/26 18:25:32 simon $
+# $Id: ddf.tcl,v e7b2ecaccc7d 2000/04/03 12:21:26 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -63,6 +63,7 @@ itcl::class Base {
     }
     # I expect iterator, output stuff here
     method -report {} {puts "aBase"}
+    method -evaluate {domain} {}
     method -generate {domain} {error "Undefined $tag method -generate"}
 }
 
@@ -175,6 +176,12 @@ itcl::class Container {
 	    [$this -atIndex $i] -report
 	}
     }
+    method -evaluate {domain} {
+	set size [$this -size]
+	for {set i 0} {$i < $size} {incr i 1} {
+	    [$this -atIndex $i] -evaluate $domain
+	}
+    }
     method -generate {domain} {
 	puts "[$this -className]"
 	set size [$this -size]
@@ -227,6 +234,30 @@ itcl::class Number {
 }
 
 itcl::class Version {
+    inherit String
+}
+
+itcl::class End {
+    inherit String
+}
+
+itcl::class Associative {
+    inherit String
+}
+
+itcl::class Classname {
+    inherit String
+}
+
+itcl::class Cardinality {
+    inherit String
+}
+
+itcl::class Parent {
+    inherit String
+}
+
+itcl::class Child {
     inherit String
 }
 
@@ -285,6 +316,12 @@ itcl::class Domain {
 	puts "$number"
 	puts "$version"
 	puts "today"
+	$objects -evaluate $this
+	$relationships -evaluate $this
+	$datatypes -evaluate $this
+	$typesfiles -evaluate $this
+	$transitiontables -evaluate $this
+	$terminators -evaluate $this
 	$objects -generate $this
 	$relationships -generate $this
 	$datatypes -generate $this
@@ -334,10 +371,72 @@ itcl::class Object {
 
 itcl::class Relationship {
     inherit Element Content
-    variable name
-    constructor {name} {set name $name}
     method -report {} {
 	$this Element::-report
+    }
+    method -complete {} {error oops}
+    method -evaluate {domain} {
+	puts "evaluating [$this -getName]"
+    }
+    method -generate {domain} {
+	puts "generating [$this -getName]"
+    }
+}
+
+itcl::class Association {
+    inherit Element
+    variable role1
+    variable role2
+    variable associative
+    method -associative {a} {set associative $a}
+    method -role {role} {
+	set role[$role -getEnd] $role
+	puts "adding role [$role -getName] to [$this -getName]"
+    }
+    method -report {} {
+	$this Element::-report
+    }
+    method -evaluate {domain} {
+	puts "evaluating [$this -getName]"
+    }
+}
+
+itcl::class Role {
+    inherit Element
+    variable classname
+    variable cardinality
+    variable end
+    method -classname {n} {set classname $n}
+    method -cardinality {c} {set cardinality $c}
+    method -end {e} {set end $e}
+    method -getEnd {} {return $end}
+    method -complete {} {
+	puts "Role [$this -getName], class $classname, cardinality $cardinality, end $end"
+	stack -pop
+	[stack -top] -role $this
+    }
+    method -report {} {
+	$this Element::-report
+    }
+    method -evaluate {domain} {
+	puts "evaluating [$this -getName]"
+    }
+}
+
+itcl::class Inheritance {
+    inherit Element
+    variable parent
+    variable child
+    method -parent {p} {set parent $p}
+    method -child {c} {set child $c}
+    method -report {} {
+	$this Element::-report
+    }
+    method -complete {} {
+	puts "Inheritance [$this -getName], parent $parent, child $child"
+	Element::-complete
+#	stack -pop
+#	[stack -top] -inheritance $this
     }
 }
 
@@ -515,31 +614,40 @@ itcl::class Attributes {
 proc elementFactory {tag} {
     # XXX should this perhaps be an operation of Domain?
     switch $tag {
-	name              {return [Name #auto]}
-	type              {return [Type #auto]}
-	protection        {return [Protection #auto]}
-	key               {return [Key #auto]}
-	number            {return [Number #auto]}
-	version           {return [Version #auto]}
-	domain            {return [Domain #auto]}
-	objects           {return [[Domain::currentDomain] -getObjects]}
-	object            {return [Object #auto]}
-	relationships     {return [[Domain::currentDomain] -getRelationships]}
-	relationship      {return [Relationship #auto]}
-	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
-	datatype          {return [Datatype #auto]}
-	typesfiles        {return [Typesfiles #auto]}
-	typesfile         {return [Typesfile #auto]}
-	transitiontables  {return [Transitiontables #auto]}
-	transitiontable   {return [Transitiontable #auto]}
-	terminators       {return [Terminators #auto]}
-	terminator        {return [Terminator #auto]}
-	relations         {return [ObjectRelations #auto]}
-	relation          {return [ObjectRelation #auto]}
-	tags              {return [Tags #auto]}
-	tag               {return [Tag #auto]}
-	attributes        {return [Attributes #auto]}
 	attribute         {return [Attribute #auto]}
+	attributes        {return [Attributes #auto]}
+	association       {return [Association #auto]}
+	associative       {return [Associative #auto]}
+	cardinality       {return [Cardinality #auto]}
+	child             {return [Child #auto]}
+	classname         {return [Classname #auto]}
+	datatype          {return [Datatype #auto]}
+	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
+	domain            {return [Domain #auto]}
+	end               {return [End #auto]}
+	inheritance       {return [Inheritance #auto]}
+	key               {return [Key #auto]}
+	name              {return [Name #auto]}
+	number            {return [Number #auto]}
+	object            {return [Object #auto]}
+	objects           {return [[Domain::currentDomain] -getObjects]}
+	parent            {return [Parent #auto]}
+	protection        {return [Protection #auto]}
+	relation          {return [ObjectRelation #auto]}
+	relations         {return [ObjectRelations #auto]}
+	relationship      {return [Relationship #auto]}
+	relationships     {return [[Domain::currentDomain] -getRelationships]}
+	role              {return [Role #auto]}
+	tag               {return [Tag #auto]}
+	tags              {return [Tags #auto]}
+	terminator        {return [Terminator #auto]}
+	terminators       {return [Terminators #auto]}
+	transitiontable   {return [Transitiontable #auto]}
+	transitiontables  {return [Transitiontables #auto]}
+	type              {return [Type #auto]}
+	typesfile         {return [Typesfile #auto]}
+	typesfiles        {return [Typesfiles #auto]}
+	version           {return [Version #auto]}
 	default           {return [Element #auto]}
     }
 }
@@ -556,10 +664,6 @@ proc startTag {tag attrs} {
     $el -tag $tag
     if [expr [array size attr] > 0] {$el -xmlattributes attr}
     stack -push $el
-#    puts "the top of the stack is a [[stack -top] cget -tag]"
-#    foreach i [array names attr] {
-#	puts "<$i -> $attr($i)>"
-#    }
 }
 
 proc textInTag {str} {
