@@ -20,10 +20,19 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions-traceback.ads,v $
---  $Revision: 00b781796c0d $
---  $Date: 2001/11/17 06:11:54 $
+--  $Revision: 68b9712ff19f $
+--  $Date: 2001/11/17 06:15:52 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions.Traceback is
+
+   --  This package enables GNAT's exception traceback facility, which
+   --  is set up to report unhandled exceptions both in the main
+   --  program and in tasks. To use it, you must
+   --
+   --  (a) "with" this package,
+   --  (b) give the switch -E to the binder.
+
    pragma Elaborate_Body;
+
 end ColdFrame.Exceptions.Traceback;
