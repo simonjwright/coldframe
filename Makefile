@@ -533,6 +533,7 @@ Hierarchies.test/hierarchies-test_finds.ads
 
 TEST += \
 Regressions.cat Regressions.raw Regressions.gpr \
+Regressions.impl/regressions-event_holder-set_timer.adb \
 Regressions.impl/regressions-find_active_singleton-t.adb \
 Regressions.impl/regressions-find_active-t.adb \
 Regressions.impl/regressions-max_more-f.adb \
