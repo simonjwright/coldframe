@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ce620f0125ed 2002/08/17 15:18:40 simon $
+# $Id: normalize-rose.tcl,v 6f079bdc6f9e 2002/09/10 18:40:35 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1612,6 +1612,22 @@ itcl::class Role {
     variable sourceEnd 0
 
     method -cardinality {c} {
+	proc badUpperMultiplicity {upper name} {
+	    global stack
+	    set this [stack -pop]
+	    set rel [[stack -top] -getName]
+	    stack -push $this
+	    Warning "upper bound ($upper) of multiplicity in role $rel.$name\
+                     treated as *"
+	}
+	proc badLowerMultiplicity {lower name} {
+	    global stack
+	    set this [stack -pop]
+	    set rel [[stack -top] -getName]
+	    stack -push $this
+	    Error "illegal lower bound ($lower) of multiplicity in role\
+                   $rel.$name"
+	}
 	set c [string trim $c]
 	if [regexp {^(([0-9]+) *\.\. *)?([1-9][0-9]*|n|\*)$} $c \
 		whole b1 lower upper] {
@@ -1623,8 +1639,7 @@ itcl::class Role {
 			    "n"     -
 			    "*"     {set conditional 1; set cardinality "M"}
 			    default {
-				Warning "explicit size $upper in role $name\
-                                         ignored"
+				badUpperMultiplicity $upper $name
 				set conditional 1; set cardinality "M"
 			    }
 			}
@@ -1635,14 +1650,13 @@ itcl::class Role {
 			    "n"     -
 			    "*"     {set conditional 0; set cardinality "M"}
 			    default {
-				Warning "explicit size $upper in role $name\
-                                         ignored"
+				badUpperMultiplicity $upper $name
 				set conditional 0; set cardinality "M"
 			    }
 			}
 		    }
 		    default {
-			Error "illegal lower bound $lower in role $name"
+			badLowerMultiplicity $lower $name
 			# set some values to allow further processing
 			set conditional 0; set cardinality "1"
 		    }
@@ -1653,13 +1667,13 @@ itcl::class Role {
 		    "n"     -
 		    "*"     {set conditional 1; set cardinality "M"}
 		    default {
-			Warning "explicit size $upper in role $name ignored"
+			badUpperMultiplicity $upper $name
 			set conditional 0; set cardinality "M"
 		    }
 		}
 	    }
 	} else {
-	    Error "unrecognised multiplicity \"$c\" in role $name"
+	    Error "unrecognised multiplicity \"$c\" in role $rel.$name"
 	}
     }
 
