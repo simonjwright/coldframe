@@ -4,8 +4,14 @@
 BLANK_LINES = yes
 CASE_EXCEPTIONS = ~/.emacs_case_exceptions
 GENERATE_ACCESSORS = defined
-STACK_DUMP = --stack-dump
+STACK_DUMP = yes
 VERBOSE = no
+
+ifeq ($(STACK_DUMP), yes)
+  NORM_STACK_DUMP = --stack-dump
+else
+  NORM_STACK_DUMP =
+endif
 
 ifeq ($(VERBOSE), yes)
   NORM_VERBOSE = --verbose
@@ -40,7 +46,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \
-	  $(STACK_DUMP) \
+	  $(NORM_STACK_DUMP) \
 	  $(NORM_VERBOSE) \
 	  --version cf-DATE \
 	  >$@ || rm -f $@
