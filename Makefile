@@ -115,7 +115,7 @@ OTHER_SCRIPTS = create-build-directories \
 # create the target directory
 # gnatchop the .ada file
 # remove any generated files which are also present in the implementation
-# directory (.impl)
+# directories (.impl and .test)
 # write-protect the generated files (careful, in case there are a lot of them!)
 # make the target directory itself writable (so users can delete files in it)
 # report unimplemented bodies
@@ -124,13 +124,16 @@ OTHER_SCRIPTS = create-build-directories \
 	@-rm -rf $@
 	@-mkdir $@
 	@gnatchop $(CHOP_VERBOSE) $< $@
-	@[ ! -d $*.impl ] || \
-	  for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
-	   if [ -f $@/$$f ]; then \
-	      echo "    removing $@/$$f"; rm $@/$$f; \
-	   else \
-	      echo "  extra source file $$f in .impl"; \
-	   fi \
+	@for s in impl test; do \
+	  echo "checking $*.$$s ..."; \
+	  [ ! -d $*.$$s ] || \
+	    for f in `(cd $*.$$s; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	      if [ -f $@/$$f ]; then \
+		echo "    removing $@/$$f"; rm $@/$$f; \
+	      else \
+		echo "  extra source file $$f in .$$s"; \
+	      fi \
+	    done \
 	done
 	@chmod -R a-w $@
 	@chmod u+w $@
