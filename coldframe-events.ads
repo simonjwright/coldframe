@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: 048faee9af8e $
---  $Date: 2002/02/23 13:38:59 $
+--  $Revision: aa606f14d4da $
+--  $Date: 2002/03/06 05:02:59 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -88,20 +88,20 @@ package ColdFrame.Events is
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
 
-   type Timer is limited private;
+   type Timer is tagged limited private;
    --  Users declare these, in particular so that they can unset a
    --  timed event request when it is no longer needed (a timeout,
    --  perhaps, when the thing being timed out has actually occurred).
 
    subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
-   procedure Set (The : in out Timer;
+   procedure Set (The : in out Timer'Class;
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is abstract;
    --  May raise Use_Error (if the Timer is already set)
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The : in out Timer'Class;
                     On : access Event_Queue_Base) is abstract;
    --  May raise Use_Error (if the Timer is already unset)
 
@@ -133,9 +133,8 @@ private
       The_Terminator : Terminator (Instance_Base'Access);
       Events_Posted_On : Event_Queue_P;
    end record;
-   --  XXX Events_Posted_On is there for the Terminator to know which
-   --  queue to retract events for this instance from. I guess it
-   --  should be a constraint.
+   --  Events_Posted_On is there for the Terminator to know which
+   --  queue to retract events for this instance from.
 
 
    type Event_Base is abstract tagged limited record
@@ -179,7 +178,7 @@ private
 
    type State is (Initial, Set, Fired);
 
-   type Timer is limited record
+   type Timer is new Ada.Finalization.Limited_Controlled with record
       The_Event : Event_P;
       Status : State := Initial;
       Real_Time_To_Fire : Ada.Real_Time.Time;
@@ -188,6 +187,8 @@ private
    --  The time at which the Timer is to fire may need to be
    --  Calendar.Time or Real_Time.Time, depending on the actual
    --  Timer_Queue; we supply both slots, Timer_Queue to choose.
+
+   procedure Finalize (T : in out Timer);
 
 
 end ColdFrame.Events;
