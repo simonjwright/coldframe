@@ -1,15 +1,15 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20050210t</extractor>
 <name>Problem_Reporting</name>
 <date>
-<year>2004</year>
-<month>11</month>
-<day>11</day>
-<time>15:06</time>
+<year>2005</year>
+<month>4</month>
+<day>4</day>
+<time>17:54</time>
 </date>
 <documentation><![CDATA[ Classes for Problem Reporting.
 
-{ revision = $Revision: eb9ac40af0f9 $ } ]]></documentation>
+{ revision = $Revision: a34d01c4f0ad $ } ]]></documentation>
 <classes>
 <class>
 <name>Problem Report</name>
@@ -434,6 +434,7 @@ In the case that the diagnosis is that a new Component is needed (some additiona
 <cardinality>0..n</cardinality>
 <documentation><![CDATA[  ]]></documentation>
 </role>
+<associative>Defect</associative>
 </association>
 <inheritance>
 <name>r1</name>
