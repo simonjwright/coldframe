@@ -12,13 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Hierarchies_Test.gpr,v 0f7eda971a8e 2003/02/07 05:55:57 simon $
+--  $Id: Hierarchies_Test.gpr,v 6e98f0bf2250 2003/02/16 17:23:48 simon $
 
 with "Options";
-with "Hierarchies";
 with "AUnit";
 
-project Hierarchies_Test is
+project Hierarchies_Test extends "Hierarchies" is
 
   for Main use ("hierarchies-harness");
   for Exec_Dir use ".";
