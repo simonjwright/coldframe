@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v f8be4a48e859 2001/04/01 10:01:46 simon $
+'$Id: ddf.ebs,v 56e5d73fbb60 2001/05/05 09:45:02 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -180,19 +180,12 @@ Sub DumpRelationships (domain As Category)
 End Sub
 
 Sub DumpDomainData (domain As Category)
-'    Begin Dialog UserDialog 113,40,159,60,"Browse for Folder"
-'    	Text 5,5,120,16,"Select the folder where you want to begin the search."
-'    	OKButton 4,48,37,11
-'    	CancelButton 120,48,37,11
-'    	TextBox 12,28,128,12,.TextBox1
-'    End Dialog
-'	Dim d As UserDialog
-'	d.TextBox1 = "e:\ooa\rose\"
-'	result = Dialog(d)
-'	If result = 0 Then Exit Sub
-'	Print d.TextBox1
-'	Open (d.TextBox1 + domain.Name + ".raw") For Output Access Write As #1
-	Open (domain.Name + ".raw") For Output Access Write As #1
+	Dim rawName As String
+	rawName = SaveFileName$ ("Choose a file for extraction", "Extracted data:*.raw")
+	If Len(rawName) = 0 Then
+	  	End
+	End If 
+	Open (rawName$) For Output Access Write As #1
 	Print "domain "	& domain.Name
 	Dim s As String
 	s = domain.Stereotype
@@ -215,9 +208,17 @@ Sub Main
 	'S-M OOA Domains are mapped onto Packages. Output data for the
 	'(only) selected Package (Category?!)
 	Dim cats As CategoryCollection
-	'ordinary Print output goes to this window
-	Viewport.Open
+	'ordinary Print output goes to this window, if it's open.
+'	Viewport.Open
 	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
+	If cats.Count = 0 Then
+		MsgBox "Must select a Package"
+		End
+	End If
+	If cats.Count > 1 Then
+		MsgBox "Must select only one Package"
+		End
+	End If
 	For cid = 1 To cats.Count
 		Dim cat As Category
 		Set cat = cats.GetAt(cid)
