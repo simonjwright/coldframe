@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 79d50da9d66e 2004/01/17 23:01:58 simon $ -->
+<!-- $Id: ada-collection.xsl,v 89dc3e8e5f71 2004/01/18 18:00:21 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -372,7 +372,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if test="$max &gt; 1">
+    <xsl:if test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
       <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -384,6 +384,21 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
+
+      <xsl:when test="$array = 'yes'">
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>for H in The_Container'Range loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if The_Container (H) /= null then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Collections.Append (Result, The_Container (H));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max &gt; 1">
 
@@ -450,7 +465,7 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
 
-    <xsl:if  test="$max &gt; 1">
+    <xsl:if  test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
       <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -462,6 +477,23 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:choose>
+
+      <xsl:when test="$array = 'yes'">
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>for H in The_Container'Range loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>if The_Container (H) /= null&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text>and then Pass (The_Container (H)) then&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Collections.Append (Result, The_Container (H));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end if;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max &gt; 1">
 
