@@ -39,12 +39,14 @@ package body Hierarchies.F_2.Inheritance is
 
    function Find_R2_Parent (This : Handle) return R_2.Handle is
    begin
-      return null;
+      return S_3.Inheritance.Find_R2_Parent
+        (Find_S3_Parent (This));
    end Find_R2_Parent;
 
    function Find_R3_Parent (This : Handle) return R_3.Handle is
    begin
-      return null;
+      return S_3.Inheritance.Find_R3_Parent
+        (Find_S3_Parent (This));
    end Find_R3_Parent;
 
    function Find_S2_Parent (This : Handle) return S_2.Handle is
