@@ -10,7 +10,7 @@
     quid       	"3E2D8741003A"
     documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
-|[[ revision : $Revision: 5571b4dbbf6c $ ]]
+|[[ revision : $Revision: 416b624e51f1 $ ]]
 |
     
     exportControl 	"Public"
@@ -340,7 +340,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1145
-				label      	"$Id: Serialization.cat,v 5571b4dbbf6c 2003/03/01 18:26:18 simon $")))))
+				label      	"$Id: Serialization.cat,v 416b624e51f1 2003/03/05 20:27:11 simon $")))))
 	    cardinality 	(value Cardinality "0..1"))
 	(object Class "Use Error"
 	    quid       	"3E2F09250015"
@@ -384,7 +384,7 @@
 |This domain is a demonstration of Serialization's facilities.
 |It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 |
-|[[ revision : $Id: Serialization.cat,v 5571b4dbbf6c 2003/03/01 18:26:18 simon $ ]]
+|[[ revision : $Id: Serialization.cat,v 416b624e51f1 2003/03/05 20:27:11 simon $ ]]
 	    
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -534,7 +534,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	9
-				max_width  	453)
+				max_width  	460)
 			    width      	474
 			    height     	534
 			    annotation 	8
@@ -631,7 +631,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	865)
+				max_width  	872)
 			    width      	886
 			    height     	264
 			    annotation 	8
@@ -688,7 +688,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	453)
+				max_width  	460)
 			    width      	474
 			    height     	264
 			    annotation 	8
@@ -759,7 +759,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1905
-			    label      	"$Id: Serialization.cat,v 5571b4dbbf6c 2003/03/01 18:26:18 simon $")))))
+			    label      	"$Id: Serialization.cat,v 416b624e51f1 2003/03/05 20:27:11 simon $")))))
 	(object Mechanism @17
 	    logical_models 	(list unit_reference_list
 		(object Object "client"
@@ -872,7 +872,7 @@
 				    ordinal    	3
 				    quidu      	"000000000000"
 				    creation   	FALSE)
-				(object Message "//write"
+				(object Message "// write"
 				    quid       	"3E60F5D102E4"
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
@@ -898,17 +898,7 @@
 			(object Link
 			    quid       	"3E60F5F703E3"
 			    supplier   	"$UNNAMED$4"
-			    quidu      	"3E60F4E70233"
-			    messages   	(list Messages
-				(object Message "// deallocate"
-				    quid       	"3E60F5F703E4"
-				    frequency  	"Aperiodic"
-				    synchronization 	"Simple"
-				    dir        	"FromClientToSupplier"
-				    sequence   	"5.1.2"
-				    ordinal    	11
-				    quidu      	"000000000000"
-				    creation   	FALSE))))
+			    quidu      	"3E60F4E70233"))
 		    class      	"Logical View::Serialization::Server"
 		    quidu      	"3E2F091700DE"
 		    persistence 	"Transient"
@@ -929,6 +919,20 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"5"
 				    ordinal    	8
+				    quidu      	"000000000000"
+				    creation   	FALSE)))
+			(object Link
+			    quid       	"3E651DD60347"
+			    supplier   	"$UNNAMED$4"
+			    quidu      	"3E60F4E70233"
+			    messages   	(list Messages
+				(object Message "// deallocate"
+				    quid       	"3E651DD60348"
+				    frequency  	"Aperiodic"
+				    synchronization 	"Simple"
+				    dir        	"FromClientToSupplier"
+				    sequence   	"6"
+				    ordinal    	11
 				    quidu      	"000000000000"
 				    creation   	FALSE))))
 		    persistence 	"Transient"
@@ -972,7 +976,7 @@
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
 				    dir        	"FromClientToSupplier"
-				    sequence   	"6"
+				    sequence   	"7"
 				    ordinal    	12
 				    quidu      	"000000000000"
 				    creation   	TRUE)
@@ -981,7 +985,7 @@
 				    frequency  	"Aperiodic"
 				    synchronization 	"Simple"
 				    dir        	"FromClientToSupplier"
-				    sequence   	"7"
+				    sequence   	"8"
 				    ordinal    	13
 				    quidu      	"3E60F9190089"
 				    creation   	FALSE))))
@@ -1010,7 +1014,7 @@
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	1947
-	    origin_y   	1537
+	    origin_y   	104
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Serialization::Interface" @18
 		    ShowCompartmentStereotypes 	TRUE
@@ -1064,7 +1068,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	702)
+			max_width  	709)
 		    width      	724
 		    height     	264
 		    annotation 	8
@@ -1353,7 +1357,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1145
-		    label      	"$Id: Serialization.cat,v 5571b4dbbf6c 2003/03/01 18:26:18 simon $")
+		    label      	"$Id: Serialization.cat,v 416b624e51f1 2003/03/05 20:27:11 simon $")
 		(object AttachView "" @27
 		    stereotype 	TRUE
 		    line_color 	3342489
@@ -1602,11 +1606,11 @@
 	    mechanism_ref 	@17
 	    quid       	"3E60F3D802AC"
 	    title      	"Operation"
-	    zoom       	93
+	    zoom       	77
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	790
+	    origin_y   	208
 	    items      	(list diagram_item_list
 		(object InterObjView "client" @39
 		    location   	(1097, 225)
@@ -1639,14 +1643,14 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @40
-			location   	(450, 542)
+			location   	(1097, 594)
 			line_color 	3342489
 			InterObjView 	@39
-			height     	317
-			y_coord    	257
+			height     	370
+			y_coord    	310
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @41
-			location   	(445, 1051)
+			location   	(1097, 1051)
 			line_color 	3342489
 			InterObjView 	@39
 			height     	535
@@ -1683,14 +1687,14 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @43
-			location   	(780, 542)
+			location   	(1437, 594)
 			line_color 	3342489
 			InterObjView 	@42
-			height     	257
-			y_coord    	197
+			height     	310
+			y_coord    	250
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @44
-			location   	(780, 1217)
+			location   	(1437, 1217)
 			line_color 	3342489
 			InterObjView 	@42
 			height     	309
@@ -1727,25 +1731,25 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @46
-			location   	(1110, 572)
+			location   	(1762, 677)
 			line_color 	3342489
 			InterObjView 	@45
 			height     	167
 			y_coord    	107
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @47
-			location   	(1110, 1775)
+			location   	(1762, 1775)
 			line_color 	3342489
 			InterObjView 	@45
-			height     	450
-			y_coord    	390
+			height     	335
+			y_coord    	275
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @48
-			location   	(1110, 1850)
+			location   	(1762, 1850)
 			line_color 	3342489
 			InterObjView 	@45
-			height     	315
-			y_coord    	255
+			height     	200
+			y_coord    	140
 			Nested     	TRUE))
 		(object InterObjView "event queue" @49
 		    location   	(2092, 225)
@@ -1778,18 +1782,18 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @50
-			location   	(1440, 1406)
+			location   	(2092, 1406)
 			line_color 	3342489
 			InterObjView 	@49
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @51
-			location   	(1440, 1775)
+			location   	(2092, 1775)
 			line_color 	3342489
 			InterObjView 	@49
-			height     	510
-			y_coord    	450
+			height     	473
+			y_coord    	413
 			Nested     	FALSE))
 		(object InterObjView "$UNNAMED$2" @52
 		    location   	(2445, 1051)
@@ -1816,13 +1820,13 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F44E02BF"
 		    width      	300
-		    height     	476
+		    height     	506
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @53
-			location   	(1793, 1051)
+			location   	(2445, 1051)
 			line_color 	3342489
 			InterObjView 	@52
 			height     	60
@@ -1830,7 +1834,6 @@
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @54
 			location   	(2445, 1106)
-			line_color 	3342489
 			InterObjView 	@52
 			height     	60
 			y_coord    	0
@@ -1860,13 +1863,13 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F4E70233"
 		    width      	330
-		    height     	873
+		    height     	903
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @56
-			location   	(2425, 1269)
+			location   	(2767, 1269)
 			line_color 	3342489
 			InterObjView 	@55
 			height     	60
@@ -1874,13 +1877,12 @@
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @57
 			location   	(2767, 1324)
-			line_color 	3342489
 			InterObjView 	@55
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @58
-			location   	(2425, 2045)
+			location   	(2767, 2128)
 			line_color 	3342489
 			InterObjView 	@55
 			height     	60
@@ -1917,35 +1919,35 @@
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @60
-			location   	(2100, 407)
+			location   	(3073, 407)
 			line_color 	3342489
 			InterObjView 	@59
 			height     	120
 			y_coord    	60
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @61
-			location   	(2100, 407)
+			location   	(3073, 407)
 			line_color 	3342489
 			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	TRUE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @62
-			location   	(2100, 619)
+			location   	(3073, 724)
 			line_color 	3342489
 			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @63
-			location   	(2100, 1930)
+			location   	(3073, 1930)
 			line_color 	3342489
 			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @64
-			location   	(2421, 2400)
+			location   	(3073, 2400)
 			line_color 	3342489
 			InterObjView 	@59
 			height     	346
@@ -1976,13 +1978,13 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F850015C"
 		    width      	330
-		    height     	289
+		    height     	319
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
 		    Focus_Of_Control 	(object Focus_Of_Control "" @66
-			location   	(2751, 2400)
+			location   	(3578, 2400)
 			line_color 	3342489
 			InterObjView 	@65
 			height     	60
@@ -1990,13 +1992,12 @@
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @67
 			location   	(3578, 2455)
-			line_color 	3342489
 			InterObjView 	@65
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
 		    Focus_Of_Control 	(object Focus_Of_Control "" @68
-			location   	(2926, 2626)
+			location   	(3578, 2626)
 			line_color 	3342489
 			InterObjView 	@65
 			height     	60
@@ -2043,7 +2044,7 @@
 		    terminus   	(3254, 407)
 		    ordinal    	0)
 		(object InterMessView "" @71
-		    location   	(0, 542)
+		    location   	(1266, 594)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2055,7 +2056,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @72
 			Parent_View 	@71
-			location   	(1266, 498)
+			location   	(1266, 550)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2068,7 +2069,7 @@
 			quidu      	"3E60F47F03BB"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	317
+			max_width  	331
 			justify    	0
 			label      	"open(String, Port)"
 			pctDist    	0.500000
@@ -2079,11 +2080,11 @@
 		    supplier   	@42
 		    Focus_Src  	@40
 		    Focus_Entry 	@43
-		    origin     	(1112, 542)
-		    terminus   	(1421, 542)
+		    origin     	(1112, 594)
+		    terminus   	(1421, 594)
 		    ordinal    	1)
 		(object InterMessView "" @73
-		    location   	(0, 572)
+		    location   	(0, 677)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2095,7 +2096,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @74
 			Parent_View 	@73
-			location   	(1599, 528)
+			location   	(1599, 633)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2108,7 +2109,7 @@
 			quidu      	"3E60F48D0393"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	340
+			max_width  	357
 			justify    	0
 			label      	"create(String, Port)"
 			pctDist    	0.500000
@@ -2119,11 +2120,11 @@
 		    supplier   	@45
 		    Focus_Src  	@43
 		    Focus_Entry 	@46
-		    origin     	(1452, 572)
-		    terminus   	(1746, 572)
+		    origin     	(1452, 677)
+		    terminus   	(1746, 677)
 		    ordinal    	2)
 		(object InterMessView "" @75
-		    location   	(0, 619)
+		    location   	(0, 724)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2135,7 +2136,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @76
 			Parent_View 	@75
-			location   	(2417, 575)
+			location   	(2417, 680)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -2159,8 +2160,8 @@
 		    supplier   	@59
 		    Focus_Src  	@46
 		    Focus_Entry 	@62
-		    origin     	(1777, 619)
-		    terminus   	(3057, 619)
+		    origin     	(1777, 724)
+		    terminus   	(3057, 724)
 		    ordinal    	3)
 		(object InterMessView "" @77
 		    location   	(622, 1217)
@@ -2188,7 +2189,7 @@
 			quidu      	"3E60F4FC02A2"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	345
+			max_width  	360
 			justify    	0
 			label      	"output(Serializable)"
 			pctDist    	0.500000
@@ -2228,7 +2229,7 @@
 			quidu      	"3E60F50C00E3"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	535
+			max_width  	585
 			justify    	0
 			label      	"// allocate and stream data into"
 			pctDist    	0.500000
@@ -2268,7 +2269,7 @@
 			quidu      	"3E60F54F03BA"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	291
+			max_width  	305
 			justify    	0
 			label      	"// post the buffer"
 			pctDist    	0.500000
@@ -2308,7 +2309,7 @@
 			quidu      	"3E60F5740115"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	158
+			max_width  	162
 			justify    	0
 			label      	"// handle"
 			pctDist    	0.500000
@@ -2348,7 +2349,7 @@
 			quidu      	"3E60F5840370"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	213
+			max_width  	221
 			justify    	0
 			label      	"post(Buffer)"
 			pctDist    	0.500000
@@ -2388,9 +2389,9 @@
 			quidu      	"3E60F5D102E4"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	114
+			max_width  	138
 			justify    	0
-			label      	"//write"
+			label      	"// write"
 			pctDist    	0.500000
 			height     	45
 			orientation 	0)
@@ -2402,52 +2403,12 @@
 		    origin     	(1792, 1930)
 		    terminus   	(3057, 1930)
 		    ordinal    	10)
-		(object InterMessView "" @89
-		    location   	(1780, 2045)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object SegLabel @90
-			Parent_View 	@89
-			location   	(2271, 2001)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			quidu      	"3E60F5F703E4"
-			anchor_loc 	1
-			nlines     	1
-			max_width  	211
-			justify    	0
-			label      	"// deallocate"
-			pctDist    	0.500000
-			height     	45
-			orientation 	0)
-		    line_color 	3342489
-		    client     	@45
-		    supplier   	@55
-		    Focus_Src  	@48
-		    Focus_Entry 	@58
-		    origin     	(1792, 2045)
-		    terminus   	(2751, 2045)
-		    ordinal    	11)
-		(object Destruction_Marker @91
+		(object Destruction_Marker @89
 		    Parent_View 	@55
-		    location   	(2767, 2232)
+		    location   	(2767, 2262)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object InterMessView "" @92
+		(object InterMessView "" @90
 		    location   	(0, 1051)
 		    font       	(object Font
 			size       	10
@@ -2458,8 +2419,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @93
-			Parent_View 	@92
+		    label      	(object SegLabel @91
+			Parent_View 	@90
 			location   	(1703, 1007)
 			font       	(object Font
 			    size       	10
@@ -2473,7 +2434,7 @@
 			quidu      	"3E60F7D802F4"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	342
+			max_width  	357
 			justify    	0
 			label      	"// create (on stack)"
 			pctDist    	0.500000
@@ -2487,12 +2448,12 @@
 		    origin     	(1112, 1051)
 		    terminus   	(2295, 1051)
 		    ordinal    	4)
-		(object Destruction_Marker @94
+		(object Destruction_Marker @92
 		    Parent_View 	@52
-		    location   	(2445, 1617)
+		    location   	(2445, 1647)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object InterMessView "" @95
+		(object InterMessView "" @93
 		    location   	(0, 2400)
 		    font       	(object Font
 			size       	10
@@ -2503,8 +2464,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @96
-			Parent_View 	@95
+		    label      	(object SegLabel @94
+			Parent_View 	@93
 			location   	(3250, 2356)
 			font       	(object Font
 			    size       	10
@@ -2518,7 +2479,7 @@
 			quidu      	"3E60F86B0206"
 			anchor_loc 	1
 			nlines     	1
-			max_width  	300
+			max_width  	322
 			justify    	0
 			label      	"// read (on stack)"
 			pctDist    	0.500000
@@ -2532,7 +2493,7 @@
 		    origin     	(3088, 2400)
 		    terminus   	(3413, 2400)
 		    ordinal    	12)
-		(object InterMessView "" @97
+		(object InterMessView "" @95
 		    location   	(0, 2626)
 		    font       	(object Font
 			size       	10
@@ -2543,8 +2504,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @98
-			Parent_View 	@97
+		    label      	(object SegLabel @96
+			Parent_View 	@95
 			location   	(3325, 2582)
 			font       	(object Font
 			    size       	10
@@ -2572,13 +2533,13 @@
 		    origin     	(3088, 2626)
 		    terminus   	(3562, 2626)
 		    ordinal    	13)
-		(object Destruction_Marker @99
+		(object Destruction_Marker @97
 		    Parent_View 	@65
-		    location   	(3578, 2779)
+		    location   	(3578, 2809)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object Label @100
-		    location   	(229, 2982)
+		(object Label @98
+		    location   	(114, 2966)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -2590,4 +2551,154 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1903
-		    label      	"$Id: Serialization.cat,v 5571b4dbbf6c 2003/03/01 18:26:18 simon $")))))
+		    label      	"$Id: Serialization.cat,v 416b624e51f1 2003/03/05 20:27:11 simon $")
+		(object InterMessView "" @99
+		    location   	(0, 2128)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @100
+			Parent_View 	@99
+			location   	(2429, 2084)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			quidu      	"3E651DD60348"
+			anchor_loc 	1
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"// deallocate"
+			pctDist    	0.500000
+			height     	45
+			orientation 	0)
+		    line_color 	3342489
+		    client     	@49
+		    supplier   	@55
+		    Focus_Src  	@51
+		    Focus_Entry 	@58
+		    origin     	(2107, 2128)
+		    terminus   	(2751, 2128)
+		    ordinal    	11)
+		(object NoteView @101
+		    location   	(493, 428)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@101
+			location   	(109, 366)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	733
+			label      	"The remote server initializes")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	793
+		    height     	137)
+		(object NoteView @102
+		    location   	(493, 743)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@102
+			location   	(109, 558)
+			fill_color 	13434879
+			nlines     	7
+			max_width  	733
+			label      	"The client calls Serialization to open the connection to the remote server")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	793
+		    height     	383)
+		(object NoteView @103
+		    location   	(494, 1286)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@103
+			location   	(113, 1006)
+			fill_color 	13434879
+			nlines     	10
+			max_width  	726
+			label      	"The client creates a Sample_A to be output and passes it to Serialization. The value is streamed into an allocated buffer, which is posted to Serialization's event dispatcher as the payload of a Posted Value event")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	786
+		    height     	572)
+		(object NoteView @104
+		    location   	(494, 1971)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@104
+			location   	(113, 1718)
+			fill_color 	13434879
+			nlines     	9
+			max_width  	726
+			label      	"In due course, the Posted Value event is handled and its payload written to the connection to the remote server")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	786
+		    height     	519)
+		(object NoteView @105
+		    location   	(500, 2602)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@105
+			location   	(122, 2384)
+			fill_color 	13434879
+			nlines     	8
+			max_width  	720
+			label      	"The remote server reads the value from the connection and perfroms a dispatching call to its Image operation, which generates an XML representation of the data.")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	780
+		    height     	448)))))
