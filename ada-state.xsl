@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 171b4c7fc507 2003/08/30 19:47:37 simon $ -->
+<!-- $Id: ada-state.xsl,v 95a98294b272 2003/08/30 19:49:50 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -336,24 +336,12 @@
     <!-- Indentation. -->
     <xsl:param name="indent"/>
 
-    <xsl:message>
-      <xsl:text>state </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>, transition from </xsl:text>
-      <xsl:value-of select="$tr/source"/>
-      <xsl:text>&#10;event </xsl:text>
-      <xsl:value-of select="$tr/event"/>
-      <xsl:text>&#10;to </xsl:text>
-      <xsl:value-of select="$tr/target"/>
-    </xsl:message>
-
     <xsl:value-of select="$indent"/>
     <xsl:text>This.State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/target"/>
     <xsl:text>;&#10;</xsl:text>
     
     <xsl:if test="$tr/action">
-      <xsl:message>transition</xsl:message>
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
@@ -363,10 +351,6 @@
     </xsl:if>
 
     <xsl:for-each select="../state[name=$tr/target]/action">
-      <xsl:message>
-        <xsl:text>entry </xsl:text>
-        <xsl:value-of select="."/>
-      </xsl:message>
       <xsl:call-template name="call-action">
         <xsl:with-param name="class" select="../../.."/>
         <xsl:with-param name="event" select="$tr/event"/>
@@ -419,13 +403,6 @@
         
         <xsl:otherwise>
           
-          <xsl:message>
-            <xsl:text>need drop-through to </xsl:text>
-            <xsl:value-of select="$tr/source"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$drop-through/target"/>
-          </xsl:message>
-
           <!-- Need to change context to call perform-transition from the
                current target state. -->
 
@@ -441,7 +418,6 @@
       </xsl:choose>
 
     </xsl:if>
-    <xsl:message/>
 
   </xsl:template>
 
@@ -466,15 +442,6 @@
     <xsl:variable name="op" select="$class/operation[name=$operation]"/>
     <xsl:variable name="params" select="$op/parameter"/>
 
-    <xsl:message>
-      <xsl:text>action </xsl:text>
-      <xsl:value-of select="$class/name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="$op/name"/>
-      <xsl:text> for </xsl:text>
-      <xsl:value-of select="$event"/>
-    </xsl:message>
-  
     <!-- Check for errors. -->
     <xsl:choose>
       
