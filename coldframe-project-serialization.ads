@@ -5,31 +5,18 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+--  ColdFrame expects this package to exist to support serialization.
+--
+--  This is ColdFrame's default implementation.
+
 --  $RCSfile: coldframe-project-serialization.ads,v $
---  $Revision: d9e98b17dad2 $
---  $Date: 2003/01/24 07:03:28 $
+--  $Revision: 4214c4b8ed81 $
+--  $Date: 2003/01/26 16:32:24 $
 --  $Author: simon $
 
+with ColdFrame.Serialization_Signature;
 with ColdFrame.Serialization;
-
-package ColdFrame.Project.Serialization is
-
-   pragma Elaborate_Body;
-
-   --  This package provides off-the-shelf support for {serializable}
-   --  <<type>> classes.
-   --
-   --  The Ada translation of <<type, serializable>> Foo (which must
-   --  be a record type, ie have attributes) is
-   --
-   --     type Foo is new ColdFrame.Project.Serialization.Base with record
-   --        ..
-   --     end record;
-
-   subtype Base is ColdFrame.Serialization.Base;
-
-   function Image (S : Base'Class) return String;
-   --  This function dispatches to the generated Image function (there
-   --  is no way to rename the primitive Image).
-
-end ColdFrame.Project.Serialization;
+package ColdFrame.Project.Serialization
+is new ColdFrame.Serialization_Signature
+  (Actual_Base => ColdFrame.Serialization.Base,
+   Actual_Image => ColdFrame.Serialization.Class_Image);
