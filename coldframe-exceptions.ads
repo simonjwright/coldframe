@@ -20,40 +20,25 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 618b5dae72b1 $
---  $Date: 2002/09/04 18:53:45 $
+--  $Revision: 18a99c7fc527 $
+--  $Date: 2003/05/25 17:54:19 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
+
+   Cant_Happen : exception;
+   --  An unexpected Event has occurred.
 
    Duplicate : exception;
    --  Attempt to Create an object with an identifier that belongs to
    --  an object that already exists.
 
-   Not_Found : exception;
-   --  Attempt to access an object by identifier when no such object
-   --  exists.
-
    Existing_Child : exception;
    --  Attempt to replace a non-null child in an inheritance
    --  relationship.
 
-   Cant_Happen : exception;
-   --  An unexpected Event has occurred.
-
-   Use_Error : exception;
-   --  Misuse of facilities (eg, attempting to post Events for the
-   --  same Instance to more than one Queue; attempting to set a Timer
-   --  that's already set).
-
-   No_Default_Create : exception;
-   --  Raised in Inheritance.Create_Tree if a root instance needs to
-   --  be created but the Create operation requires an identifier (ie,
-   --  the identifier isn't Autonumber).
-
-   Unexpected_Class : exception;
-   --  Raised in Inheritance.Create_Tree if an instance handle was
-   --  provided but didn't match any class along the indicated route.
+   Initialization_Error : exception;
+   --  An exception occurred during domain initialization.
 
    Mismatched_Instances : exception;
    --  Raised in Inheritance.Create_Tree if a non-root class with
@@ -61,5 +46,23 @@ package ColdFrame.Exceptions is
    --  it (ie, the programmer is trying to designate an instance of
    --  this class as the required parent) and the handles are not all
    --  the same.
+
+   No_Default_Create : exception;
+   --  Raised in Inheritance.Create_Tree if a root instance needs to
+   --  be created but the Create operation requires an identifier (ie,
+   --  the identifier isn't Autonumber).
+
+   Not_Found : exception;
+   --  Attempt to access an object by identifier when no such object
+   --  exists.
+
+   Unexpected_Class : exception;
+   --  Raised in Inheritance.Create_Tree if an instance handle was
+   --  provided but didn't match any class along the indicated route.
+
+   Use_Error : exception;
+   --  Misuse of facilities (eg, attempting to post Events for the
+   --  same Instance to more than one Queue; attempting to set a Timer
+   --  that's already set).
 
 end ColdFrame.Exceptions;
