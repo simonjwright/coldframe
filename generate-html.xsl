@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: generate-html.xsl,v 19556011febe 2003/01/11 17:25:20 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -670,7 +670,18 @@
         </p>
       </xsl:when>
       <xsl:when test="attribute">
-        <p>A record type:</p>
+        <xsl:choose>
+          <xsl:when test="@extends">
+            <p>
+              <xsl:text>A record type, extending </xsl:text>
+              <xsl:value-of select="@extends"/>
+              <xsl:text>:</xsl:text>
+            </p>
+          </xsl:when>
+          <xsl:otherwise>
+            <p>A record type:</p>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:if test="attribute">
           <h4>Attributes</h4>
           <dl>
