@@ -71,8 +71,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 OTHER_SCRIPTS = serialized-to-csv.xsl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
-	echo $(COLDFRAMEOUT) $< $*
-	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
+	@echo generating $@ ...
+	@$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \
 	  $(NORM_STACK_DUMP) \
@@ -81,19 +81,21 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 	  >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
-	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || (rm -f $@; exit 1)
+	@echo generating $@ ...
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || (rm -f $@; exit 1)
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
-	$(SAXON) $< $(CODEGEN_SCRIPT) \
+	@echo generating $@ ...
+	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
 	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)
-	sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
+	@sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
-	rm -f $@-t
+	@rm -f $@-t
 
 # Delete the target directory & all contents
 # create the target directory
@@ -103,14 +105,19 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 # write-protect the generated files (careful, in case there are a lot of them!)
 # report unimplemented bodies
 %.gen: %.ada
-	-rm -rf $@
-	-mkdir $@
-	gnatchop $(CHOP_VERBOSE) $< $@
-	[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad?)`; do \
-	   [ ! -f $@/$$f ] || ( echo rm $@/$$f; rm $@/$$f); \
+	@echo generating $@ ...
+	@-rm -rf $@
+	@-mkdir $@
+	@gnatchop $(CHOP_VERBOSE) $< $@
+	@[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad[bs])`; do \
+	   if [ -f $@/$$f ]; then \
+	      echo rm $@/$$f; rm $@/$$f; \
+	   else \
+	      echo extra source file $$f in .impl; \
+	   fi \
 	done
-	chmod -R a-w $@
-	chmod u+w $@
+	@chmod -R a-w $@
+	@chmod u+w $@
 	@echo "checking for unimplemented bodies .."
 	@grep -rl 'edit this' $@ || echo ".. none."
 
