@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 500ef3ab1950 2001/07/07 15:01:12 simon $ -->
+<!-- $Id: generate-ada.xsl,v 27e067a835e9 2001/07/13 18:44:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -81,23 +81,54 @@
 
     <!-- The separate Initialize procedure body. -->
     <xsl:message>.. the separate Initialize procedure body ..</xsl:message>
-    <xsl:for-each select="class">
+
+    <xsl:variable
+      name="initialize-procedures"
+      select="class/operation[@initialize]"/>
+
+    <xsl:for-each select="$initialize-procedures[parameter or @return]">
+      <xsl:sort select="../name"/>
+      <xsl:sort select="name"/>
+      <xsl:message>
+        <xsl:text>CF: bad "initialize" operation </xsl:text>
+        <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      </xsl:message>
+    </xsl:for-each>
+
+    <xsl:for-each select="$initialize-procedures">
+      <xsl:sort select="../name"/>
       <xsl:sort select="name"/>
       <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:value-of select="../../name"/>.<xsl:value-of select="../name"/>
       <xsl:text>;&#10;</xsl:text>
     </xsl:for-each>
+
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>)&#10;</xsl:text>
     <xsl:text>procedure Initialize is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
-    <xsl:for-each select="class">
-      <xsl:sort select="name"/>
-      <xsl:text>  </xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>.Initialize;&#10;</xsl:text>
-    </xsl:for-each>
+
+    <xsl:choose>
+      
+      <xsl:when test="$initialize-procedures">
+        <xsl:for-each select="$initialize-procedures">
+          <xsl:sort select="../name"/>
+          <xsl:sort select="name"/>
+          <xsl:text>  </xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:for-each>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:text>  null;&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
+
     <xsl:text>end Initialize;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
