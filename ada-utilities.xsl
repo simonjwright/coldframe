@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 36a4d02691cd 2002/01/27 11:11:50 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 8cf1cef7639e 2002/01/27 11:29:24 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -220,7 +220,7 @@
 
       <!-- Timer maps to Coldframe.States.Timers.Timer. -->
       <xsl:when test="$type='Timer'">
-        <xsl:text>Coldframe.States.Timers.Timer</xsl:text>
+        <xsl:text>ColdFrame.States.Timers.Timer</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
