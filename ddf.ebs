@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v c0d5c075f882 2000/12/10 12:39:01 simon $
+'$Id: ddf.ebs,v 6e8842199da3 2000/12/16 14:54:00 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -35,7 +35,7 @@ End Sub
 
 Sub DumpStatusAttribute (o As Class)
 	'the Status attribute is an extra attribute, needed if there's an STT.
-	'I expect it will be auto-generated when I get rount to STTs.
+	'I expect it will be auto-generated when I get round to STTs.
 End Sub
 
 Sub DumpAttributes (o As Class)
@@ -63,6 +63,46 @@ Sub DumpAttributes (o As Class)
 	Print #1, "</attributes>"
 End Sub
 
+Sub DumpParameters(op As Operation)
+	Dim pars As ParameterCollection
+	Set pars = op.Parameters
+	Print #1, "<parameters>"
+	For parid = 1 To pars.Count
+		Dim p As Parameter
+		Set p = pars.GetAt(parid)
+		If Len(p.Const) > 0 Then
+			Print #1, "<parameter const=" & Chr(34) & "yes" & Chr(34) & ">"
+		Else
+			Print #1, "<parameter>"
+		End If
+		Print #1, "<name>" & p.Name & "</name>"
+		Print #1, "<type>" & p.Type & "</type>"
+		Print #1, "<initial>" & p.InitValue & "</initial>"
+		Print #1, "<documentation>" & p.Documentation & "</documentation>"
+		Print #1, "</parameter>"
+	Next parid
+	Print #1, "</parameters>"
+End Sub
+
+Sub DumpOperations (o As Class)
+	Dim ops As OperationCollection
+	Set ops = o.Operations
+	Print "    operations"
+	Print #1, "<operations>"
+	For opid = 1 To ops.Count
+		Dim op As Operation
+		Set op = ops.GetAt(opid)
+		Print #1, "<operation>"
+		Print #1, "<name>" & op.Name & "</name>"
+		If Len(op.ReturnType) > 0 Then
+			Print #1, "<return>" &  op.ReturnType & "</return>"
+		End If
+		DumpParameters (op)
+		Print #1, "</operation>"
+	Next opid
+	Print #1, "</operations>"
+End Sub
+
 Sub DumpClass (o As Class)
 	Print "  object " & o.Name
 	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
@@ -70,6 +110,7 @@ Sub DumpClass (o As Class)
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	DumpTagInfo (o)
 	DumpAttributes (o)
+	DumpOperations (o)
 	Print #1, "</object>"
 End Sub
 
