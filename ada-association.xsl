@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 4f060e425539 2003/11/16 18:22:03 simon $ -->
+<!-- $Id: ada-association.xsl,v dfdc95cc24cc 2003/11/16 18:23:29 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -627,14 +627,7 @@
       <xsl:value-of select="$IIC"/>
       <xsl:text>((</xsl:text>
 
-
-
-
-
-
       <xsl:choose>
-
-
 
         <xsl:when test="role[1]/@multiple and role[2]/@multiple">
           <!-- Both ends multiple; the associative class' identifier
@@ -673,9 +666,6 @@
 
         </xsl:when>
 
-
-
-
         <xsl:when test="role[@multiple]">
           <!-- One end multiple; the associative class' identifier
                references the multiple end, the other end is
@@ -704,9 +694,6 @@
 
         </xsl:when>
 
-
-
-
         <xsl:otherwise>
           <!-- Neither end multiple -->
 
@@ -730,21 +717,7 @@
 
         </xsl:otherwise>
 
-
-
-
-
-
       </xsl:choose>
-
-
-
-
-
-
-
-
-
 
       <!--
            end Find;
