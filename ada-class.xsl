@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 5062a96e7d37 2004/03/09 15:37:51 simon $ -->
+<!-- $Id: ada-class.xsl,v 7b725a212f7e 2004/04/04 06:41:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1777,18 +1777,29 @@
   <xsl:template name="perform-finalization">
     <xsl:param name="handle" select="'This'"/>
 
-    <xsl:for-each select="operation[@finalize
-                          and not(@abstract)
-                          and not(@return)
-                          and not(@class)
-                          and not(parameter)]">
+    <xsl:for-each select="operation[@finalize]">
       <xsl:sort select="name"/>
 
-      <xsl:value-of select="$II"/>
-      <xsl:value-of select="name"/>
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select="$handle"/>
-      <xsl:text>);&#10;</xsl:text>
+      <xsl:choose>
+
+        <xsl:when test="@abstract or @return or @class or parameter">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
+            <xsl:text>Error: illegal &gt;finalize&lt; operation </xsl:text>
+            <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+          </xsl:message>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:value-of select="$II"/>
+          <xsl:value-of select="name"/>
+          <xsl:text> (</xsl:text>
+          <xsl:value-of select="$handle"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:otherwise>
+
+      </xsl:choose>
+
     </xsl:for-each>
 
   </xsl:template>
