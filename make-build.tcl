@@ -2,77 +2,117 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: make-build.tcl,v 3499a5c7948d 2003/09/27 16:58:17 simon $
+# $Id: make-build.tcl,v 8019a42d2d9d 2003/09/29 20:45:12 simon $
 
-# A handy representation to hold the location-to-domain mapping
-
-set locations {
-    {Applications {
-        House_Management
-    }}
-    {Common {
-        Digital_IO
-    }}
-    {Facilities {
-        Problem_Reporting
-    }}
-}
-
-# Convert the representation to a lookup from domain to location
-foreach l $locations {
-    foreach d [lindex $l 1] {
-        set lookup($d) [lindex $l 0]
-    }
-}
-
-proc output {project main} {
-    global lookup
-
-    # Output the standard "with"ed Projects
-    foreach p {Options ColdFrame BC Library XMLAda} {
-        puts "with \"$p\";"
-    }
-
-    # Output the main Project
-    puts "project $project is"
-
-    # The main program
-    puts "   for Main use (\"[string tolower $main]\");"
-
-    # Where to put the executable
-    puts "   for Exec_Dir use \".\";"
-
-    if [catch {open $project.domains r} f] {
-        Error "can't open $project.domains"
+proc readDomains {domainFile} {
+    if [catch {open $domainFile r} f] {
+        Error "can't open $domainFile"
     } else {
-        puts "   for Source_Dirs use"
-        puts "      ("
-        set continuation 0
+        global lookup generateOnly
         while {[gets $f line] >= 0} {
-            set d [string trim $line]
-            if [info exists lookup($d)] {
-                set loc $lookup($d)/$d
-                if $continuation {puts ","}
-                puts "       \"$loc.impl\","
-                puts -nonewline "       \"$loc.gen\""
-                set continuation 1
-            } else {
-                Warning "domain $d not included"
+            regsub -all "," $line " " inf
+            set lookup([lindex $inf 1]) [lindex $inf 0]
+            switch -exact [lindex $inf 2] {
+                g       {
+                    set generateOnly([lindex $inf 1]) 1
+                }
+                default {}
             }
         }
-        puts "\n      );"
         close $f
     }
+}
 
-    # The standard compiler settings
-    puts "   for Object_Dir use Options'Object_Dir;"
-    foreach c {Ide Builder Compiler Binder Linker} {
-        puts "   package $c renames Options.$c;"
+
+proc outputGPR {project main base} {
+    global env lookup generateOnly
+
+    if [catch {open $project.gpr w} o] {
+        Error "can't open $project.gpr"
+    } else {
+
+        # Output the standard "with"ed Projects
+        foreach p {Options ColdFrame BC} {
+            puts $o "with \"$p\";"
+        }
+
+        # Output the main Project
+        puts $o "project $project is"
+
+        # The main program
+        puts $o "   for Main use (\"[string tolower $main]\");"
+
+        # Where to put the executable
+        puts $o "   for Exec_Dir use \".\";"
+
+        if [catch {open $env(COLDFRAMEOUT)/$project.domains r} f] {
+            Error "can't open $env(COLDFRAMEOUT)/$project.domains"
+        } else {
+            puts $o "   for Source_Dirs use"
+            puts $o "      ("
+            puts -nonewline $o "       \".\""
+            while {[gets $f line] >= 0} {
+                set d [string trim $line]
+                if [info exists lookup($d)] {
+                    set loc $base$lookup($d)/$d
+                    puts $o ","
+                    if ![info exists generateOnly($d)] {
+                        puts $o "       \"$loc.impl\","
+                    }
+                    puts -nonewline $o "       \"$loc.gen\""
+                    set continuation 1
+                } else {
+                    Warning "domain $d not included"
+                }
+            }
+            puts $o "\n      );"
+            close $f
+        }
+
+        # The standard compiler settings
+        puts $o "   for Object_Dir use Options'Object_Dir & \"/main\";"
+        foreach c {Ide Builder Compiler Binder Linker} {
+            puts $o "   package $c renames Options.$c;"
+        }
+
+        # Close the nain Project
+        puts $o "end $project;"
+
+        # And finish
+
+        close $o
+
     }
+}
 
-    # Close the nain Project
-    puts "end $project;"
 
+proc outputMake {project base} {
+    global env lookup
+
+    if [catch {open $project.mk w} o] {
+        Error "can't open $project.mk"
+    } else {
+
+        if [catch {open $env(COLDFRAMEOUT)/$project.domains r} f] {
+            Error "can't open $env(COLDFRAMEOUT)/$project.domains"
+        } else {
+            while {[gets $f line] >= 0} {
+                set d [string trim $line]
+                if [info exists lookup($d)] {
+                    puts $o "cd $base$lookup($d)"
+                    puts $o "make -f $env(TOP)/$env(COLDFRAME)/Makefile-winnt $d.gen"
+                } else {
+                    Warning "domain $d not included"
+                }
+            }
+            close $f
+        }
+
+        # And finish
+
+        close $o
+
+    }
 }
 
 
@@ -107,8 +147,16 @@ proc Error {str} {
 # Main program #
 ################
 
+if [info exists env(BASE)] {
+    set base $env(BASE)/
+} else {
+    set base ""
+}
+
 # process command line:
 # flags
+#   --base code-base-directory
+#   --domains domain-mapping-file
 #   --main main-program
 #   --project project-file-name
 
@@ -117,10 +165,20 @@ foreach arg $argv {
     switch -- $argState {
         expectingFlag {
             switch -- $arg {
-                --main  {set argState expectingMain}
+                --base     {set argState expectingBase}
+                --domains  {set argState expectingDomains}
+                --main     {set argState expectingMain}
                 --project  {set argState expectingProject}
                  default   {error "unknown flag $arg"}
             }
+        }
+        expectingBase {
+            set base $arg/
+            set argState expectingFlag
+        }
+        expectingDomains {
+            readDomains $arg
+            set argState expectingFlag
         }
         expectingMain {
             set main $arg
@@ -134,7 +192,9 @@ foreach arg $argv {
 }
 
 if [info exists main] {
-    output $project $main
+    outputGPR $project $main $base
 } else {
-    output $project $project
+    outputGPR $project $project $base
 }
+
+outputMake $project $base
