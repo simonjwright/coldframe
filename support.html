@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: support.html,v 7a8a198e1923 2002/10/13 17:48:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -26,12 +26,27 @@ user-interesting ones are
 
 <dd>Provides exception reporting (to standard output).
 
-<dt><tt>ColdFrame.Exceptions.Traceback</tt>
+<dt><tt>ColdFrame.Exceptions.Symbolic_Traceback</tt>
 
 <dd>Enables GNAT's exception traceback facility, which is set up to
 report unhandled exceptions both in the main program and in tasks. To
 use it (only in host-is-target environments; won't work in VxWorks),
 you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+<dt><tt>ColdFrame.Exceptions.Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks.
+
+<br>This version produces the traceback in hexadecimal form; use
+<tt>addr2line</tt> to convert to a readable form.
+
+<br>To use it, you must
 
 <ol>
 <li><tt>with</tt> this package,
@@ -100,14 +115,27 @@ provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
 <dd>Provides a "creation" event type, for use where there's no
 application event to cause transition from the initial state.
 
+<dt><tt>ColdFrame.Events_G.Debug_G</tt>
+
+<dd>Adds logging (to standard output) to a concrete
+<tt>ColdFrame.Events_G.Event_Queue</tt>.
+
 <dt><tt>ColdFrame.Events_G.Standard_G</tt>
 
 <dd>A straightforward event queueing and dispatching service.
 
-<dt><tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>
+<dt><tt>ColdFrame.Events_G.Test_G</tt>
 
-<dd>An event queueing and dispatching service which outputs a log to
-standard output.
+<dd>Adds unit test support to a concrete
+<tt>ColdFrame.Events_G.Event_Queue</tt>. The additional features are
+
+<ul>
+
+<li>inspection of Timers; is a time set, when would it expire?
+
+<li>the event queue doesn't start until told.
+
+</ul>
 
 </dl>
 
@@ -130,12 +158,14 @@ under <tt>cf-<i>yyyymmdd</i>/project</tt>.
 <dd><tt>ColdFrame.Project.Calendar.Time</tt> is used as the
 translation for <i>Date</i>, <i>Time</i> attributes.
 
-<br>The provided default is a renaming of <tt>Ada.Calendar</tt>.
+<br>The provided default contains renamings of
+<tt>Ada.Calendar.Time</tt>, <tt>Ada.Calendar.Clock</tt>
 
 <dt><tt>ColdFrame.Project.Events</tt>
 
 <dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with time
-support from <tt>Ada.Calendar</tt>.
+support from <tt>ColdFrame.Project.Times</tt> and logging from
+<tt>ColdFrame.Project.Logging_Support</tt>.
 
 <dt><tt>ColdFrame.Project.Events.Creation</tt>
 
@@ -150,7 +180,14 @@ support from <tt>Ada.Calendar</tt>.
 <dt><tt>ColdFrame.Project.Events.Standard.Debug</tt>
 
 <dd>A standard instantiation of
-<tt>ColdFrame.Events_G.Standard_G.Debug_G</tt>.
+<tt>ColdFrame.Events_G.Debug_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard</tt>.
+
+<dt><tt>ColdFrame.Project.Events.Standard.Test</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard</tt>.
 
 <dt><tt>ColdFrame.Project.Global_Storage_Pool</tt>
 
