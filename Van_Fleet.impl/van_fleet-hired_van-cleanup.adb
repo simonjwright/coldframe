@@ -12,7 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-hired_van-cleanup.adb,v a88ba45be8ba 2004/05/08 13:54:26 simon $
+--  $RCSfile: van_fleet-hired_van-cleanup.adb,v $
+--  $Revision: af9296feed72 $
+--  $Date: 2004/05/08 18:58:13 $
+--  $Author: simon $
 
 with Van_Fleet.A2;
 

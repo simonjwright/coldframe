@@ -1,5 +1,3 @@
-with Van_Fleet.A2;
-with Van_Fleet.Customer;
 --  Copyright (C) Simon Wright <simon@pushface.org>
 
 --  This package is free software; you can redistribute it and/or
@@ -14,8 +12,13 @@ with Van_Fleet.Customer;
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-van-lend.adb,v a88ba45be8ba 2004/05/08 13:54:26 simon $
+--  $RCSfile: van_fleet-van-lend.adb,v $
+--  $Revision: af9296feed72 $
+--  $Date: 2004/05/08 18:58:13 $
+--  $Author: simon $
 
+with Van_Fleet.A2;
+with Van_Fleet.Customer;
 with Van_Fleet.Hired_Van.Inheritance;
 with Van_Fleet.Pool_Van.All_Instances;
 with Van_Fleet.Pool_Van.Collections;
