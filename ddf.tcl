@@ -3,7 +3,7 @@
 exec itclsh "$0" "$@"
 
 # ddf.tcl
-# $Id: ddf.tcl,v e7b2ecaccc7d 2000/04/03 12:21:26 simon $
+# $Id: ddf.tcl,v 49a34b52c5ce 2000/04/03 16:54:21 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into the form expected by the Object Oriented Model
@@ -118,7 +118,6 @@ itcl::class List {
     variable members {}
     method -add {elem} {lappend members $elem}
     method -size {} {return [llength $members]}
-    method -members {} {return $members}
     method -complete {} {
 	stack -pop
 	[stack -top] -$tag $this
@@ -127,47 +126,85 @@ itcl::class List {
 	puts "list $tag [$this -formatxmlattributes]"
 	foreach el $members {$el -report}
     }
+    method -evaluate {domain} {
+	foreach el $members {$el -evaluate $domain}
+    }
     method -generate {domain} {
 	foreach el $members {$el -generate $domain}
     }
 }
 
 itcl::class Container {
+
     # Containers are for singleton (per-Domain, per-Object) containment,
     # particularly where members need to be revisited.
     # byName is indexed by name and holds the index number in byNumber
-    # byNumber is indexed by number and holds the Content
+    # byNumber is indexed by number and holds the content.
+
+    inherit Base
     private variable byName
     private variable byNumber
+
     constructor {} {
 	array set byName {}
 	array set byNumber {}
 	return $this
     }
+
+    # Derived classes should override -className to return their own
+    # name (in lower case).
     method -className {} {return "Container"}
-    method -contentClass {} {
-	error "[$this -className] -contentClass not overriden"
-    }
+
+    # Return the number of contained elements.
     method -size {} {return [array size byName]}
-    method -add {name} {$this -index $name}
-    method -index {name} {
-	if [info exists byName($name)] {return $byName($name)}
+
+    # Indicate whether the name doesn't denote an object in the Container.
+    method -isMissing {name} {
+	return [expr ![info exists byName($name)]]
+    }
+
+    # Indicate whether the name denotes an object in the Container.
+    method -isPresent {name} {
+	return [info exists byName($name)]
+    }
+
+    # Add the given object to the container at entry "name".
+    method -add {object name} {
+	if [info exists byName($name)] {
+	    error "[$this -className] already holds an element named $name"
+	}
 	set newIndex [$this -size]
 	set byName($name) $newIndex
-	set byNumber($newIndex) [[$this -contentClass] #auto $name]
-	return $newIndex
+	set byNumber($newIndex) $object
     }
+
+    # Find the index of a named element in the Container.
+    method -index {name} {
+	if [info exists byName($name)] {return $byName($name)}
+	error "[$this -className] item $name not found\
+		([$this -size] entries)"
+    }
+
+    # Return the indexed element from the Container.
     method -atIndex {index} {
 	if {$index < [$this -size]} {
 	    return $byNumber($index)
 	}
 	error "[$this -className] index $index out of range\
 		([$this -size] entries)"
-    } 
+    }
+ 
+    # Return the named element from the Container.
+    method -atName {name} {
+	set index [$this -index $name]
+	return [$this -atIndex $index]
+    }
+ 
     method -complete {} {
 	stack -pop
 	[stack -top] -[$this -className] $this
     }
+
     method -report {} {
 	puts "[$this -className]"
 	set size [$this -size]
@@ -176,16 +213,16 @@ itcl::class Container {
 	    [$this -atIndex $i] -report
 	}
     }
+
     method -evaluate {domain} {
 	set size [$this -size]
 	for {set i 0} {$i < $size} {incr i 1} {
 	    [$this -atIndex $i] -evaluate $domain
 	}
     }
+
     method -generate {domain} {
-	puts "[$this -className]"
 	set size [$this -size]
-	puts "$size"
 	for {set i 0} {$i < $size} {incr i 1} {
 	    [$this -atIndex $i] -generate $domain
 	}
@@ -195,6 +232,7 @@ itcl::class Container {
 itcl::class Content {
     # Concrete classes need constructor {name}
     method -className {} {return "Content"}
+    method -evaluate {domain} {}
     method -generate {domain} {
 	error "[$this -className] -generate not overridden"
     }
@@ -352,6 +390,11 @@ itcl::class Object {
 	$tags -report
 	$attributes -report
     }
+    method -evaluate {domain} {
+#	$objectrelations -evaluate $domain
+#	$tags -evaluate $domain
+	$attributes -evaluate $domain
+    }
     method -generate {domain} {
 	puts "$name"
 	puts "$key"
@@ -393,11 +436,18 @@ itcl::class Association {
 	set role[$role -getEnd] $role
 	puts "adding role [$role -getName] to [$this -getName]"
     }
+    method -complete {} {
+	stack -pop
+	[stack -top] -add $this $name
+    }
     method -report {} {
 	$this Element::-report
     }
     method -evaluate {domain} {
 	puts "evaluating [$this -getName]"
+    }
+    method -generate {domain} {
+	puts "generating association $name"
     }
 }
 
@@ -426,17 +476,38 @@ itcl::class Role {
 itcl::class Inheritance {
     inherit Element
     variable parent
+    # child is the lazy way of not handing the list head ..
     variable child
+    variable children
+    constructor {} {set children [List ::#auto]}
     method -parent {p} {set parent $p}
-    method -child {c} {set child $c}
+    method -child {c} {
+	set child $c
+	$children -add $c
+    }
+    method -addChild {c} {
+	$children -add $child
+    }
     method -report {} {
 	$this Element::-report
     }
     method -complete {} {
 	puts "Inheritance [$this -getName], parent $parent, child $child"
-	Element::-complete
-#	stack -pop
-#	[stack -top] -inheritance $this
+	stack -pop
+	set inheritances [stack -top]
+	if [$inheritances -isPresent $name] {
+	    puts "$name already present"
+	    set extant [$inheritances -atName $name]
+	    $extant -addChild $child
+	} else {
+	    $inheritances -add $this $name
+	}
+    }
+    method -evaluate {domain} {
+	puts "evaluating [$this -getName]"
+    }
+    method -generate {domain} {
+	puts "generating inheritance $name"
     }
 }
 
@@ -453,6 +524,14 @@ itcl::class Datatype {
     variable tags
     constructor {name} {set type $name}
     method -className {} {return "datatype"}
+    method -complete {} {
+	stack -pop
+	if [[stack -top] -isPresent $type] {
+	    puts "$name already present"
+	} else {
+	    [stack -top] -add $this $$type
+	}
+    }
     method -generate {domain} {
 	puts "$type"
 	puts "SomePackage"
@@ -522,6 +601,14 @@ itcl::class Attribute {
 	if $identifier {puts -nonewline "* "} else {puts -nonewline "  "}
 	puts "$tag $name : $type [$this -formatxmlattributes]"
     }
+    method -evaluate {domain} {
+	set datatypes [$domain -getDatatypes]
+	if [$datatypes -isMissing $type] {
+	    set datatype [Datatype ::#auto $type]
+	    puts "new datatype of type $type"
+	    $datatypes -add $datatype $type
+	}
+    }
     method -generate {domain} {
 	puts "$name"
 	puts "$identifier"
@@ -536,7 +623,7 @@ itcl::class Attribute {
     }
 }
 
-# List classes
+# Aggregate classes
 
 itcl::class CountedList {
     # when generating, outputs its size and then generates its contents.
@@ -556,32 +643,28 @@ itcl::class OuterList {
     }
 }
 
-itcl::class Objects {
-    inherit OuterList
+itcl::class Attributes {
+    inherit CountedList
 }
 
-itcl::class Relationships {
-    inherit Container List
-    method -className {} {return "relationships"}
-    method -contentClass {} {return Relationship}
+itcl::class Associations {
+    inherit Container
+    method -className {} {return "associations"}
 }
 
 itcl::class Datatypes {
-    inherit Container List
+    inherit Container
     method -className {} {return "datatypes"}
-    method -contentClass {} {return Datatype}
+    method -generate {domain} {
+	puts "datatypes"
+	puts "[$this -size]"
+	Container::-generate $domain
+    }
 }
 
-itcl::class Typesfiles {
-    inherit OuterList
-}
-
-itcl::class Transitiontables {
-    inherit OuterList
-}
-
-itcl::class Terminators {
-    inherit OuterList
+itcl::class Inheritances {
+    inherit Container
+    method -className {} {return "inheritances"}
 }
 
 itcl::class ObjectRelations {
@@ -601,12 +684,43 @@ itcl::class ObjectRelations {
     }
 }
 
+itcl::class Objects {
+    inherit OuterList
+}
+
+itcl::class Relationships {
+    inherit Container
+    variable associations
+    variable inheritances
+    method -className {} {return "relationships"}
+    method -associations {a} {set associations $a}
+    method -inheritances {r} {set inheritances $r}
+    method -evaluate {domain} {
+	$associations -evaluate $domain
+	$inheritances -evaluate $domain
+    }
+    method -generate {domain} {
+	puts "relationships"
+	puts "[expr [$associations -size] + [$inheritances -size]]"
+	$associations -generate $domain
+	$inheritances -generate $domain
+    }
+}
+
 itcl::class Tags {
     inherit CountedList
 }
 
-itcl::class Attributes {
-    inherit CountedList
+itcl::class Terminators {
+    inherit OuterList
+}
+
+itcl::class Transitiontables {
+    inherit OuterList
+}
+
+itcl::class Typesfiles {
+    inherit OuterList
 }
 
 # Convert XML tag name to element of appropriate type
@@ -617,6 +731,7 @@ proc elementFactory {tag} {
 	attribute         {return [Attribute #auto]}
 	attributes        {return [Attributes #auto]}
 	association       {return [Association #auto]}
+	associations      {return [Associations #auto]}
 	associative       {return [Associative #auto]}
 	cardinality       {return [Cardinality #auto]}
 	child             {return [Child #auto]}
@@ -626,6 +741,7 @@ proc elementFactory {tag} {
 	domain            {return [Domain #auto]}
 	end               {return [End #auto]}
 	inheritance       {return [Inheritance #auto]}
+	inheritances      {return [Inheritances #auto]}
 	key               {return [Key #auto]}
 	name              {return [Name #auto]}
 	number            {return [Number #auto]}
