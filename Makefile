@@ -39,7 +39,7 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	  --casing ~/.emacs_case_exceptions \
+	  --casing $(CASE_EXCEPTIONS) \
 	  $(STACK_DUMP) \
 	  $(NORM_VERBOSE) \
 	  --version cf-DATE \
