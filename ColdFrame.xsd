@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame.xsd,v 4f3e8da9126f 2004/06/04 14:48:19 simon $ -->
+<!-- $Id: ColdFrame.xsd,v e8b44a42fc46 2004/06/12 11:13:05 simon $ -->
+
+<!-- 
+
+     This schema describes the format of .norm files, used as input to
+     ColdFrame's XSLT-based code generator.
+
+     Note that any unrecognised tagged values will be output to the
+     .norm file as attributes.
+
+     -->
 
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -12,6 +22,7 @@
        I don't know why we have to have a default namespace here!
        The examples in Professional XML 2nd Edition don't show it .. 
        but, if it's left out, the "ref"s don't work.
+       Could be an XSV feature.
        -->
 
   <xsd:element name="domain">
