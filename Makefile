@@ -218,6 +218,7 @@ architecture.html \
 associations.html \
 attributes.html \
 bugs.html \
+callbacks.html \
 classes.html \
 compilation.html \
 conversion.html \
