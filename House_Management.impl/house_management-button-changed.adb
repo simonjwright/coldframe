@@ -8,10 +8,10 @@ procedure Changed
      range Digital_IO.Floor_0 .. Digital_IO.Floor_3;
 
    Buttons : constant array (Floors) of Button_Name
-     := (Digital_IO.Floor_0 => Floor_0,
-         Digital_IO.Floor_1 => Floor_1,
-         Digital_IO.Floor_2 => Floor_2,
-         Digital_IO.Floor_3 => Floor_3);
+     := (Digital_IO.Floor_0 => Second_Floor,
+         Digital_IO.Floor_1 => First_Floor,
+         Digital_IO.Floor_2 => Ground_Floor,
+         Digital_IO.Floor_3 => Basement);
 
 begin
 
