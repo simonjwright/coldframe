@@ -76,7 +76,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
 %.norm: $(COLDFRAMEOUT)/%.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
-	  --casing $(CASE_EXCEPTIONS) \
+	  --casing '$(CASE_EXCEPTIONS)' \
 	  $(NORM_STACK_DUMP) \
 	  $(NORM_VERBOSE) \
 	  --version cf-DATE \
