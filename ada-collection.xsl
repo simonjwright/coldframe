@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 24c31bb81f5e 2002/04/16 18:42:26 simon $ -->
+<!-- $Id: ada-collection.xsl,v 797368abe53c 2002/05/19 18:51:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -302,6 +302,25 @@
     </xsl:variable>
 
     <!-- Function to return a Collection of all the Instances -->
+    <!--
+         with BC.Copy;
+         with {dom}.{class}.Abstract_Containers;
+         function {dom}.{class}.All_Instances
+           return {dom}.{class}.Collections.Collection is
+            procedure Copy_Instances is new BC.Copy
+              (Item => Handle,
+               Source => Abstract_Map_Containers,
+               From => Maps.Map,
+               Target => Abstract_Containers,
+               To => Collections.Collection,
+               Clear => Collections.Clear,
+               Add => Collections.Append);
+            Result : Collections.Collection;
+         begin
+            Copy_Instances (The_Container, Result);
+            return Result;
+         end {dom}.{class}.All_Instances;
+         -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Copy;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
@@ -315,10 +334,6 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
     <xsl:text>procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
@@ -329,13 +344,13 @@
     <xsl:value-of select="$IC"/>
     <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Collection;&#10;</xsl:text>
+    <xsl:text>Result : Collections.Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>Copy_Instances (The_Container, Result);&#10;</xsl:text>
@@ -347,6 +362,26 @@
 
     <!-- Generic filter function to return a Collection of selected
          Instances -->
+    <!--
+         with BC.Filter;
+         with {dom}.{class}.Abstract_Containers;
+         function {dom}.{class}.Selection_Function
+           return {dom}.{class}.Collections.Collection is
+            procedure Filter is new BC.Filter
+              (Item => Handle,
+               Source => Abstract_Map_Containers,
+               From => Maps.Map,
+               Target => Abstract_Containers,
+               To => Collection,
+               Pass => Pass,
+               Clear => Collections.Clear,
+               Add => Collections.Append);
+            Result : Collection;
+         begin
+            Filter (The_Container, Result);
+            return Result;
+         end {dom}.{class}.Selection_Function;
+         -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Filter;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
@@ -360,10 +395,6 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
     <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
@@ -374,7 +405,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
@@ -382,7 +413,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text> Add =&gt; Collections.Append);&#10;4/xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Collection;&#10;</xsl:text>
+    <xsl:text>Result : Collections.Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>Filter (The_Container, Result);&#10;</xsl:text>
@@ -393,6 +424,27 @@
     <xsl:text>.Selection_Function;&#10;</xsl:text>
 
     <!-- Generic filter function for collections of Instances -->
+    <!--
+         with BC.Filter;
+         with {dom}.{class}.Abstract_Containers;
+         function {dom}.{class}.Filter_Function
+           (The_Collection : {dom}.{class}.Collections.Collection)
+           return {dom}.{class}.Collections.Collection is
+            procedure Filter is new BC.Filter
+              (Item => Handle,
+               Source => Abstract_Containers,
+               From => Collections.Collection,
+               Target => Abstract_Containers,
+               To => Collections.Collection,
+               Pass => Pass,
+               Clear => Collections.Clear,
+               Add => Collections.Append);
+            Result : Collections.Collection;
+         begin
+            Filter (The_Collection, Result);
+            return Result;
+         end {dom}.{class}.Filter_Function;
+         -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:text>with BC.Filter;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
@@ -410,21 +462,17 @@
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$class"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
     <xsl:text>procedure Filter is new BC.Filter&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Source =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text> From =&gt; Collection,&#10;</xsl:text>
+    <xsl:text> From =&gt; Collections.Collection,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
-    <xsl:text> To =&gt; Collection,&#10;</xsl:text>
+    <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text> Pass =&gt; Pass,&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
@@ -432,7 +480,7 @@
     <xsl:value-of select="$IC"/>
     <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>Result : Collection;&#10;</xsl:text>
+    <xsl:text>Result : Collections.Collection;&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>Filter (The_Collection, Result);&#10;</xsl:text>
