@@ -1,5 +1,5 @@
---  Project file (GCC-3.1, GNAT-3.15) for ColdFrame performance tests.
---  $Id: Performance.gpr,v 79a018bc7fbd 2002/07/27 12:46:55 simon $
+--  Project file (GCC-3, GNAT-3.15) for ColdFrame performance tests.
+--  $Id: Performance.gpr,v 2ad1744128ee 2002/09/07 17:29:30 simon $
 
 with "bc";
 with "coldframe";
