@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e53eadb740ad 2003/07/30 19:18:50 simon $
+# $Id: normalize-rose.tcl,v 355ad804a5db 2003/08/12 20:29:47 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -50,7 +50,7 @@ proc setCaseExceptions {files} {
 	    Warning "can't open case exception file $file: $f"
 	} else {
 	    while {[gets $f line] >= 0} {
-		regsub -all {[\*\t ]} $line "" res
+		regsub -all {[\t ].*$} $line "" res
 		if {[string range $res 0 0] == "*"} {
 		    set res [string range $res 1 end]
 		    set subCaseExceptions([string tolower $res]) $res
