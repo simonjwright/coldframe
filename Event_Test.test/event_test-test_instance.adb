@@ -56,6 +56,25 @@ package body Event_Test.Test_Instance is
    end Delete_As_Action;
 
 
+   --  Delete as an action with running timer
+   procedure Delete_As_Action_With_Timer
+      (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delete_As_Action_With_Timer
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Machine.Kill (H);
+   begin
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+      Machine.Set_Timer (H, 2.5);
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+              Machine.Collections.Length (Machine.All_Instances)'Img &
+              " instance(s) remaining");
+   end Delete_As_Action_With_Timer;
+
+
    --  Delete as an action with held events
    procedure Delete_As_Action_With_Held
       (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -127,6 +146,10 @@ package body Event_Test.Test_Instance is
         (T, Post_To_Self'Access, "Illegal posting to self");
       Register_Routine
         (T, Delete_As_Action'Access, "Delete as an action");
+      Register_Routine
+        (T,
+         Delete_As_Action_With_Timer'Access,
+         "Delete as an action (timeout event)");
       Register_Routine
         (T,
          Delete_As_Action_With_Held'Access,
