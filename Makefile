@@ -68,6 +68,9 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-type.xsl \
   ada-teardown.xsl \
   ada-utilities.xsl
+C_CODEGEN_SCRIPT = generate-c.xsl
+C_CODEGEN_SCRIPTS = $(C_CODEGEN_SCRIPT) \
+  c-utilities.xsl
 OTHER_SCRIPTS = serialized-to-csv.xsl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
@@ -96,6 +99,16 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 	@sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
 	@rm -f $@-t
+
+%.h: %.norm $(C_CODEGEN_SCRIPTS)
+	@echo generating $@ ...
+	@$(SAXON) $< $(C_CODEGEN_SCRIPT) \
+	  add-blank-lines=$(BLANK_LINES) \
+	  coldframe-version=cf-DATE \
+	  generate-accessors=$(GENERATE_ACCESSORS) \
+	  verbose=$(VERBOSE) \
+	  >$@ \
+	  || (echo "Generation problem."; rm -f $@; exit 1)
 
 # Delete the target directory & all contents
 # create the target directory
