@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v d41f21dea32a 2002/01/04 06:38:39 simon $
+'$Id: ddf.ebs,v d86cfe7b7e8d 2002/01/16 06:41:41 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -209,13 +209,21 @@ Sub DumpClass (o As Class)
 End Sub
 
 Sub DumpClasses (domain As Category)
+	Print "classes in " & domain.Name
 	Dim classes As ClassCollection
 	Set classes = domain.Classes
-	Print #1, "<classes>"
 	For clid = 1 To classes.Count
 		DumpClass (classes.GetAt (clid))
 	Next clid
-	Print #1, "</classes>"
+	Dim children As CategoryCollection
+	Set children = domain.Categories
+	For chid = 1 To children.Count
+		Dim child As Category
+		Set child = children.getAt (chid)
+		If child.Stereotype = "generate" Then
+			DumpClasses (child)
+		End If
+	Next chid
 End Sub
 
 Sub DumpAssociation (assoc As Association)
@@ -258,8 +266,7 @@ Sub DumpInheritance (o As class)
 End Sub
 
 Sub DumpRelationships (domain As Category)
-	Print "  relationships"
-	Print #1, "<relationships>"
+	Print "  relationships in "	& domain.Name
 	Dim assocs As AssociationCollection
 	Set assocs = domain.Associations
 	For associd = 1 To assocs.Count
@@ -270,7 +277,15 @@ Sub DumpRelationships (domain As Category)
 	For clid = 1 To classes.Count
 		DumpInheritance (classes.GetAt(clid))
 	Next clid
-	Print #1, "</relationships>"
+	Dim children As CategoryCollection
+	Set children = domain.Categories
+	For chid = 1 To children.Count
+		Dim child As Category
+		Set child = children.getAt (chid)
+		If child.Stereotype = "generate" Then
+			DumpRelationships (child)
+		End If
+	Next chid
 End Sub
 
 Sub DumpDomainData (domain As Category, dirName As String)
@@ -305,8 +320,12 @@ Sub DumpDomainData (domain As Category, dirName As String)
 	Print #1, "<time>" & format (time, "Short Time") & "</time>"
 	Print #1, "</date>"
 	Print #1, "<documentation>" + domain.Documentation + "</documentation>"
+	Print #1, "<classes>"
 	DumpClasses (domain)
+	Print #1, "</classes>"
+	Print #1, "<relationships>"
 	DumpRelationships (domain)
+	Print #1, "</relationships>"
 	Print #1, "</domain>"
 	Close #1
 End Sub
