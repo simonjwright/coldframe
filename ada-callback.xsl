@@ -1,4 +1,4 @@
-<!-- $Id: ada-callback.xsl,v 20191470bc99 2002/12/01 12:09:10 simon $ -->
+<!-- $Id: ada-callback.xsl,v 2e17a0652133 2003/02/02 18:33:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacks. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -35,8 +35,7 @@
          with ColdFrame.Callbacks;
          package {domain}.{type}_Callback
          is new ColdFrame.Callbacks
-            (T => {type},
-             Maximum_Size => 5);
+            (T => {type});
          -->
 
     <xsl:call-template name="do-not-edit"/>
@@ -49,10 +48,6 @@
     <xsl:value-of select="$C"/>
     <xsl:text>(T =&gt; </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>,&#10;</xsl:text>
-    <xsl:value-of select="$C"/>
-    <xsl:text> Maximum_Size =&gt; </xsl:text>
-    <xsl:value-of select="@callback"/>
     <xsl:text>);&#10;</xsl:text>
 
   </xsl:template>
