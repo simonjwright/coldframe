@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 25b1b7872449 2003/05/17 07:48:17 simon $
+# $Id: normalize-rose.tcl,v aa6acbf4fa48 2003/05/17 07:49:33 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -65,6 +65,7 @@ proc setCaseExceptions {files} {
 
 
 # Given a string,
+# - if it's a reserved word, report an error
 # - split at dots into "components"
 # - for each component, split at space or underscore into words
 # - for each word, if it matches a substring case exception then apply
