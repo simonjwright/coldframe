@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: event-modelling.html,v 423e63f40424 2004/07/22 19:48:36 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -24,9 +24,9 @@ browser:
 
 <p>Note also that ColdFrame requires that the <i>name</i> of the
 State/Activity Model be either literally <tt>State/Activity Model</tt>
-or a name that can be translated into a simple Ada name. If Rose
-decides to call it <tt>State/Activity Model<b>2</b></tt>, you must
-edit it.
+(with a possible trailing number, eg <tt>State/Activity
+Model<b>2</b></tt>) or a name that can be translated into a simple Ada
+name.
 
 <h3>Restrictions</h3>
 
@@ -178,7 +178,7 @@ payload, but it doesn't have to be a special
 <em>&#171;type&#187;</em>. Also, you can use the same
 <em>&#171;type&#187;</em> as the payload for several different events.
 
-<p>You still need instance events to manage state machines, even if
+<p>You always need instance events to manage state machines, even if
 the class concerned is a <em>&#171;singleton&#187;</em>.
 
 <h3>Transitions</h3>
