@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 16e3e96d7569 2004/04/04 14:50:12 simon $ -->
+<!-- $Id: ada-class.xsl,v 91355f2ca1ee 2004/04/04 19:12:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1127,6 +1127,18 @@
       </xsl:otherwise>
 
     </xsl:choose>
+
+    <!-- .. check for domain initialization, for non-singletons .. -->
+    <xsl:if test="not(@singleton)">
+      <xsl:value-of select="$II"/>
+      <xsl:text>pragma Assert&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(Domain_Initialized,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> "</xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text> not initialized");&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. the result .. -->
     <xsl:value-of select="$II"/>
