@@ -9,7 +9,7 @@
     is_loaded  	TRUE
     quid       	"3CDD01290395"
     documentation 	
-|[[ revision : $Id: Hierarchies.cat,v 89a739b25f0e 2002/06/08 05:52:17 simon $ ]]
+|[[ revision : $Id: Hierarchies.cat,v fc73c458f9d7 2002/06/09 19:10:43 simon $ ]]
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
     
     exportControl 	"Public"
@@ -119,7 +119,7 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r1_parent"
+		(object Operation "find_r_1_parent"
 		    quid       	"3CDF79810393"
 		    stereotype 	"generated"
 		    result     	"R_1"
@@ -158,14 +158,14 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r2_parent"
+		(object Operation "find_r_2_parent"
 		    quid       	"3CDF7AED02B7"
 		    stereotype 	"generated"
 		    result     	"R_2"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r3_parent"
+		(object Operation "find_r_3_parent"
 		    quid       	"3CDF7B090131"
 		    stereotype 	"generated"
 		    result     	"R_3"
@@ -213,14 +213,14 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r1_parent"
+		(object Operation "find_r_1_parent"
 		    quid       	"3CDF7918013B"
 		    stereotype 	"generated"
 		    result     	"R_1"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_s2_parent"
+		(object Operation "find_s_2_parent"
 		    quid       	"3CDF792E0254"
 		    stereotype 	"generated"
 		    result     	"S_2"
@@ -263,42 +263,42 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r1_parent"
+		(object Operation "find_r_1_parent"
 		    quid       	"3CDF781901F0"
 		    stereotype 	"generated"
 		    result     	"R_1"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r2_parent"
+		(object Operation "find_r_2_parent"
 		    quid       	"3CDF783C027B"
 		    stereotype 	"generated"
 		    result     	"R_2"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_r3_parent"
+		(object Operation "find_r_3_parent"
 		    quid       	"3CDF785A00FF"
 		    stereotype 	"generated"
 		    result     	"R_3"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_s2_parent"
+		(object Operation "find_s_2_parent"
 		    quid       	"3CDF788C01E5"
 		    stereotype 	"generated"
 		    result     	"S_2"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_s3_parent"
+		(object Operation "find_s_3_parent"
 		    quid       	"3CDF789B03A7"
 		    stereotype 	"generated"
 		    result     	"S_3"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
-		(object Operation "find_t2_parent"
+		(object Operation "find_t_2_parent"
 		    quid       	"3CDF78AD005F"
 		    stereotype 	"generated"
 		    result     	"T_2"
@@ -352,10 +352,10 @@
 		    height     	132
 		    quidu      	"3CDD017D02DB")
 		(object NoteView @2
-		    location   	(496, 384)
+		    location   	(495, 390)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(211, 318)
+			location   	(210, 324)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	534
