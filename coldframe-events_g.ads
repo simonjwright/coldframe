@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: d5b17c98acfd $
+--  $Date: 2002/08/22 18:57:31 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -251,6 +251,8 @@ private
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
 
+   --  Default private interface to tear down an event queue.  The
+   --  implementation here raises Program_Error if called.
    procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 
    --  Operations to support debug/logging. The implementation here
@@ -288,8 +290,10 @@ private
 
    procedure Handler (This : Timer_Event);
 
+
    type Timer_Queue_Entry_P is access Timer_Event;
    for Timer_Queue_Entry_P'Storage_Pool use Event_Storage;
+
 
    --  A Timer_Terminator is a component of a Timer which is used to
    --  cause removal of any outstanding events for that timer from the
@@ -297,6 +301,7 @@ private
    --
    --  We have to avoid making Timer tagged so as to avoid trying to
    --  dispatch on more than one parameter.
+
    type Timer_Terminator (For_The_Timer : access Timer)
    is new Ada.Finalization.Limited_Controlled with null record;
 
@@ -316,5 +321,6 @@ private
 
    procedure Initialize (The_Lock : in out Lock);
    procedure Finalize (The_Lock : in out Lock);
+
 
 end ColdFrame.Events_G;
