@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 715c326b6745 2001/08/08 18:00:38 simon $
+'$Id: ddf.ebs,v 45e01afb32e7 2001/08/12 05:50:31 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -270,13 +270,17 @@ Sub DumpRelationships (domain As Category)
 	Print #1, "</relationships>"
 End Sub
 
-Sub DumpDomainData (domain As Category)
+Sub DumpDomainData (domain As Category, dirName As String)
 	Dim rawName As String
-	rawName = SaveFileName$ ("Choose a file for extraction", "Extracted data:*.raw")
-	If Len(rawName) = 0 Then
-	  	End
-	End If 
-	Open (rawName$) For Output Access Write As #1
+	rawName = domain.Name
+	For i = 1 To Len(rawName)
+		If Mid(rawName, i, 1) = " " Then
+			Mid(rawName, i, 1) = "_"
+		End If
+	Next i
+	rawName = dirName + rawName + ".raw"
+	Print "file chosen: " & rawName
+	Open (rawName) For Output Access Write As #1
 	Print "domain "	& domain.Name
 	Dim s As String
 	s = domain.Stereotype
@@ -285,7 +289,8 @@ Sub DumpDomainData (domain As Category)
 	Else
 		Print #1, "<domain stereotype=" & chr(34) & s & chr(34) & ">"
 	End If
-	'the following line is edited by the Makefile
+	'the following line is edited by the Makefile when generating
+	'extractor.ebs from ddf.ebs
 	Print #1, "<extractor>cf-DATE</extractor>"
 	'domain name
 	Print #1, "<name>" + domain.Name + "</name>"
@@ -304,23 +309,62 @@ Sub DumpDomainData (domain As Category)
 End Sub
 
 Sub Main
-	'S-M OOA Domains are mapped onto Packages. Output data for the
-	'(only) selected Package (Category?!)
-	Dim cats As CategoryCollection
+
 	'ordinary Print output goes to this window, if it's open.
-'	Viewport.Open
+	'Viewport.Open
+
+	Dim directory As String
+	If RoseApp.PathMap.HasEntry("ColdFrameOut") Then
+		directory = RoseApp.PathMap.GetActualPath("$ColdFrameOut") & "\"
+	Else
+		directory = ""
+	End If
+
+	'S-M OOA Domains are mapped onto Packages.
+
+	Dim cats As CategoryCollection
 	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
+
 	If cats.Count = 0 Then
-		MsgBox "Must select a Package"
+
+		'there are no selected packages, check for a diagram
+		Dim diag As Diagram
+		Set diag = RoseApp.CurrentModel.GetActiveDiagram()
+		If diag Is Nothing Then
+			MsgBox "Whatever is active, it's not a Class Diagram"
+			End
+		End If
+		Print diag.Name
+		Dim items As ItemCollection
+		Set items = diag.Items
+		If items Is Nothing Then
+			MsgBox "There is nothing relevant on this diagram"
+		Else
+			Dim packages As Integer
+			packages = 0
+			For i = 1 To items.Count
+				Dim it As Element
+				Set it = items.GetAt(i)
+				If it.IsClass("Category") Then
+					packages = packages + 1
+					Dim c As Category
+					Set c = it.TypeCast(c)
+					Call DumpDomainData(c, directory)
+				End If
+			Next i
+			If packages = 0 Then
+				MsgBox "There are no Packages on this diagram"
+			End If
+		End If
+		
 		End
+
+	Else
+				
+		For i = 1 To cats.Count
+			Call DumpDomainData (cats.GetAt(i), directory)
+		Next i
+
 	End If
-	If cats.Count > 1 Then
-		MsgBox "Must select only one Package"
-		End
-	End If
-	For cid = 1 To cats.Count
-		Dim cat As Category
-		Set cat = cats.GetAt(cid)
-		DumpDomainData (cat)
-	Next cid   
+
 End Sub
