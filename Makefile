@@ -243,6 +243,7 @@ types.html \
 use.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
+xml-schemas.html States-check.xsv States-check.html \
 coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
