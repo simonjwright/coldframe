@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
+--  $Revision: 330d8901b975 $
+--  $Date: 2005/01/20 05:20:08 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -521,7 +521,9 @@ package body ColdFrame.Events_G.Standard_G is
       --  when trying to post held events.
 
       accept Finish;
-      --  Wait to be told to quit..
+      --  Wait to be told to quit ... there may be tasks (eg, in other
+      --  event queues) still alive, and we don't want them to get
+      --  Tasking_Error.
 
    end Held_Event_Manager;
 
