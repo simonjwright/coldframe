@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: installation.html,v 0245ce731454 2003/03/07 05:45:45 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -156,11 +156,26 @@ sections assume these settings.
 
 <h3><a name="linux-makefile">Your Makefile</a></h3>
 
-<h4>Standard</h4>
+<p>The Rose extraction script needs to be told where to place the
+extracted files:
 
-<p>Create a <tt>Makefile</tt> in the directory where your extracted
-<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
-up the Makefile that ColdFrame provides.
+<ol>
+
+<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory (<font
+color="green"><b>strongly recommended</b></font>)
+
+<li>Otherwise, the files are put somewhere, at Rose's whim.
+
+</ol>
+
+<p>Create a <tt>Makefile</tt> in the directory where your generated
+<tt><i>Domain</i>.gen/</tt> files (will) live (next to your
+implementation <tt><i>Domain</i>.impl/</tt> files). Its purpose is to
+call up the Makefile that ColdFrame provides.
 
 <p>It should contain at least
 
@@ -190,42 +205,6 @@ etc, after which you only need to say
 </pre>
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
-
-
-<h4>Extracting to a different location</h4>
-
-<p>The Rose extraction script needs to be told where to place the
-extracted files:
-
-<ol>
-
-<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory
-
-<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory
-
-<li>Otherwise, the files are put somewhere, at Rose's whim.
-
-</ol>
-
-The supplied Makefile uses the same variable: you can either set it up
-as an environment variable, or specify it in the Makefile:
-
-<pre>
-  <b>COLDFRAMEOUT = $(HOME)/extracted</b>
-  include $(TOP)/$(COLDFRAME)/Makefile-unix
-</pre>
-
-after which when you say
-
-<pre>
-  <i>$</i> make Foo.gen
-</pre>
-
-ColdFrame will look for <tt>$HOME/extracted/Foo.raw</tt> but will create
-<tt>Foo.gen</tt> "here".
-
 
 
 <p><hr>
@@ -347,11 +326,26 @@ settings.
 
 <h3><a name="windows-makefile">Your Makefile</a></h3>
 
-<h4>Standard</h4>
+<p>The Rose extraction script needs to be told where to place the
+extracted files:
 
-<p>Create a <tt>Makefile</tt> in the directory where your extracted
-<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
-up the Makefile that ColdFrame provides.
+<ol>
+
+<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory
+
+<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
+the files are placed in the named directory (<font
+color="green"><b>strongly recommended</b></font>)
+
+<li>Otherwise, the files are put somewhere, at Rose's whim.
+
+</ol>
+
+<p>Create a <tt>Makefile</tt> in the directory where your generated
+<tt><i>Domain</i>.gen/</tt> files (will) live (next to your
+implementation <tt><i>Domain</i>.impl/</tt> files). Its purpose is to
+call up the Makefile that ColdFrame provides.
 
 <p>It should contain at least
 
@@ -381,40 +375,6 @@ etc, after which you only need to say
 </pre>
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
-
-<h4>Extracting to a different location</h4>
-
-<p>The Rose extraction script needs to be told where to place the
-extracted files:
-
-<ol>
-
-<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory
-
-<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory
-
-<li>Otherwise, the files are put somewhere, at Rose's whim.
-
-</ol>
-
-The supplied Makefile uses the same variable: you can either set it up
-as an environment variable, or specify it in the Makefile:
-
-<pre>
-  <b>COLDFRAMEOUT = $(HOME)/extracted</b>
-  include $(TOP)/$(COLDFRAME)/Makefile-winnt
-</pre>
-
-after which when you say
-
-<pre>
-  <i>$</i> make Foo.gen
-</pre>
-
-ColdFrame will look for <tt>$HOME\extracted\Foo.raw</tt> but will create
-<tt>Foo.gen</tt> "here".
 
 <p><hr>
 <i>
