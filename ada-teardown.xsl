@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 40031b1845af 2004/07/03 11:57:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -46,9 +46,11 @@
     <xsl:call-template name="identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
+    <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
+
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+    <xsl:text>.Events;&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
@@ -77,7 +79,7 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
-    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
+    <xsl:text>ColdFrame.Project.Events.Stop (Events.Dispatcher);&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
@@ -95,6 +97,9 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Callback.Clear;&#10;</xsl:text>
     </xsl:for-each>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
@@ -140,7 +145,7 @@
     <xsl:choose>
 
       <xsl:when test="$max=0">
-        
+
         <!--
              procedure {Domain}.{Class}.Tear_Down is
              begin
@@ -451,42 +456,6 @@
   </xsl:template>
 
   <xsl:template mode="class-teardown-body" match="*"/>
-
-
-  <!-- Called at domain to generate the spec of the Events teardown
-       procedure. -->
-  <xsl:template name="event-teardown-spec">
-
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
-
-  </xsl:template>
-
-
-  <!-- Called at domain to generate the body of the Events teardown
-       procedure. -->
-  <xsl:template name="event-teardown-body">
-
-    <xsl:call-template name="do-not-edit"/>
-    <xsl:call-template name="identification-info"/>
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-
-    <xsl:text>procedure </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>ColdFrame.Project.Events.Tear_Down (Dispatcher);&#10;</xsl:text>
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
-
-  </xsl:template>
 
 
   <!-- Called at class/operation to generate an instance teardown
