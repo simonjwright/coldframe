@@ -1,4 +1,4 @@
-<!-- $Id: callbacks.html,v 2093cbad1d4a 2005/01/20 06:15:23 simon $ -->
+<!-- $Id: callbacks.html,v 673c76b8704b 2005/01/28 06:18:14 simon $ -->
 <head>
 <title>ColdFrame: Callbacks</title>
 </head>
@@ -22,6 +22,9 @@ particular event occurs; when it does occur, the lower-level domain
 <i>calls the callbacks</i>, which notifies the registered higher-level
 domains (clients) without needing to know anything about them.
 
+<p>A domain can <i>deregister</i> from a callback, though it would be
+more normal to connect at initialization and stay connected.
+
 <h2>Modelling</h2>
 
 <h3>Server-side</h3>
@@ -38,7 +41,7 @@ corresponding to the event that clients need notifying about.
 <li>Using <em>&#171;type, callback&#187;</em>. This is rather clunky.
 
 <li>Using <em>&#171;type&#187;</em> and including the tag
-<tt>{callback}</tt>.
+<i>{callback}</i>.
 
 </ul>
 
@@ -46,20 +49,39 @@ corresponding to the event that clients need notifying about.
 important it is to know that this is a callback type just from the
 diagram. Since callbacks are an important part of the domain's
 interface, it's probably best to use the first. You could use a colour
-convention (callback types are purple ...)
+convention (callback types are <font color='purple'>mauve</font> ...)
 
 <h3>Client-side</h3>
 
-<p>Create a <em>&#171;type&#187;</em>, imported from the server domain
-(<tt>{ imported = Server }</tt>).
+<p>If it's not a basic type (such as <i>Boolean</i>), import the
+callback <em>&#171;type&#187;</em> from the server domain
+(<i>{imported = Server}</i).
 
 <p>In an appropriate class, create a <em>&#171;class&#187;</em>
-operation, taking a single (<tt>in</tt>) parameter of the imported
-callback type, to act as the receiver.
+operation, taking a single (<tt>in</tt>) parameter of the callback
+type, to act as the receiver.
 
 <h2>Translation</h2>
 
+For a callback type <i>CB</i>, ColdFrame generates an instantiation:
+<pre>
+   package <i>Domain</i>.CB_Callback
+   is new ColdFrame.Callbacks
+     (T => <i>Domain</i>.CB);
+</pre>
+
 <h2>Use</h2>
+
+<p><a href="event-use.html">Here's an example of mixing callbacks and
+events</a>.
+
+<p>If all you want to say is that something has happened, mark your
+<em>&#171;callback&#187;</em> type <i>{null}</i>. ColdFrame generates
+a <tt>null record</tt> declaration. To create an instance of a null
+record (to call the callbacks with), say <tt>(null record)</tt>.
+
+<p>Don't bother to deregister for callbacks during AUnit test
+teardown; ColdFrame automatically does this for you.
 
 <!--
 
