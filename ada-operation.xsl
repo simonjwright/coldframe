@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-operation.xsl,v a618cffed681 2005/02/26 13:23:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -362,7 +362,8 @@
 
   <!-- Generate the separate bodies of operations. If recognised as
        accessors (but not marked as such) they will contain real
-       implementations, otherwise they'll Program_Error if called. -->
+       implementations; if stubs are required, they'll contain stubs;
+       otherwise they'll Program_Error if called. -->
   <xsl:template
     mode="op:operation-separate-body"
     match="class/operation[not(@access)]">
@@ -996,6 +997,89 @@
         </xsl:if>
         <xsl:value-of select="$att-to-get/name"/>
         <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:when test="$generate-stubs='yes'">
+
+        <xsl:variable name="subprogram-name">
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="name"/>          
+        </xsl:variable>
+        
+        <xsl:call-template name="ut:should-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="ut:commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+
+        <xsl:value-of select="$heading"/>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>Call : constant Positive := ColdFrame.Stubs.Note_Entry&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(&quot;</xsl:text>
+        <xsl:value-of select="$subprogram-name"/>
+        <xsl:text>&quot;);&#10;</xsl:text>
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:for-each select="parameter[not(@mode) or @mode='inout']">
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="type"/>
+          <xsl:text>'Output&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Input_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>&quot;, Call, </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>'Size));&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:value-of select="$I"/>
+        <xsl:text>ColdFrame.Stubs.Check_For_Exception&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(&quot;</xsl:text>
+        <xsl:value-of select="$subprogram-name"/>
+        <xsl:text>&quot;, Call);&#10;</xsl:text>
+        <xsl:for-each select="parameter[@mode='inout' or @mode='out']">
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="name"/>
+          <xsl:text> := </xsl:text>
+          <xsl:value-of select="type"/>
+          <xsl:text>'Input&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>&quot;, Call));&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:if test="@return">
+          <xsl:value-of select="$I"/>
+          <xsl:text>return </xsl:text>
+          <xsl:value-of select="@return"/>
+          <xsl:text>'Input&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;return&quot;, Call));&#10;</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <!-- If it's a function, we have to supply a return statement

@@ -16,6 +16,7 @@
 
 BLANK_LINES = yes
 GENERATE_ACCESSORS = defined
+GENERATE_STUBS = no
 STACK_DUMP = yes
 VERBOSE = no
 
@@ -94,6 +95,7 @@ OTHER_SCRIPTS = create-build-directories \
 	  add-blank-lines=$(BLANK_LINES) \
 	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
+	  generate-stubs=$(GENERATE_STUBS) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
 	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)

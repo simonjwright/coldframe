@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d7196b167977 2005/02/24 06:31:23 simon $ -->
+<!-- $Id: generate-ada.xsl,v a618cffed681 2005/02/26 13:23:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -66,6 +66,9 @@
 
   <!-- Controls when attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors" select="defined"/>
+
+  <!-- Controls when stub implementations are generated. -->
+  <xsl:param name="generate-stubs" select="no"/>
 
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'   '"/>
