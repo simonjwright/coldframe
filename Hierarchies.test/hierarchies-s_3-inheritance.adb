@@ -16,27 +16,20 @@ package body Hierarchies.S_3.Inheritance is
       use type ColdFrame.Instances.Handle;
    begin
       if R2 = null
-        or else R3 = null then
+        or else R3 = null
+        or else not (R2.all in Instance'Class)
+        or else not (R3.all in Instance'Class) then
          R2_H := R_2.Inheritance.Create_Tree (R2);
          R3_H := R_3.Inheritance.Create_Tree (R3);
          return Create
            ((B_Parent => ColdFrame.Instances.Handle (R2_H),
              C_Parent => ColdFrame.Instances.Handle (R3_H)));
-      elsif (R2.all in Instance'Class)
-        and then (R3.all in Instance'Class) then
-         if R2 = R3 then
-            return Handle (R2);
-         else
-            Ada.Exceptions.Raise_Exception
-              (Constraint_Error'Identity,
-               "mismatched handles in Create_Tree");
-         end if;
+      elsif R2 = R3 then
+         return Handle (R2);
       else
-         R2_H := R_2.Inheritance.Create_Tree (R2);
-         R3_H := R_3.Inheritance.Create_Tree (R3);
-         return Create
-           ((B_Parent => ColdFrame.Instances.Handle (R2_H),
-             C_Parent => ColdFrame.Instances.Handle (R3_H)));
+         Ada.Exceptions.Raise_Exception
+           (Constraint_Error'Identity,
+            "mismatched handles in Create_Tree");
       end if;
    end Create_Tree;
 
