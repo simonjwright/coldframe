@@ -6,10 +6,10 @@ with ColdFrame.Instances;
 with Hierarchies.Initialize;
 with Hierarchies.Tear_Down;
 
-with Hierarchies.R_1.Inheritance;
+with Hierarchies.R_1;
 with Hierarchies.R_1.All_Instances;
 with Hierarchies.R_1.Collections;
-with Hierarchies.R_2.Inheritance;
+with Hierarchies.R_2;
 with Hierarchies.R_2.All_Instances;
 with Hierarchies.R_2.Collections;
 with Hierarchies.R_3.Inheritance;
