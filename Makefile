@@ -2,13 +2,19 @@
 # $Id$
 
 BLANK_LINES = yes
-CASE_EXCEPTIONS = ~/.emacs_case_exceptions
 GENERATE_ACCESSORS = defined
 STACK_DUMP = yes
 VERBOSE = no
 
-ifeq ($(ColdFrameOut), )
-  ColdFrameOut = .
+# Define these variables in an including Makefile (before the actual
+# include) or in the environment
+
+ifeq ($(CASE_EXCEPTIONS), )
+  CASE_EXCEPTIONS = ~/.emacs_case_exceptions
+endif
+
+ifeq ($(COLDFRAMEOUT), )
+  COLDFRAMEOUT = .
 endif
 
 ifeq ($(STACK_DUMP), yes)
@@ -49,8 +55,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-teardown.xsl \
   ada-utilities.xsl
 
-%.norm: $(ColdFrameOut)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
-	echo $(ColdFrameOut) $< $*
+%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+	echo $(COLDFRAMEOUT) $< $*
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \
@@ -161,7 +167,6 @@ strategy.html \
 support.html \
 target.html \
 translation-rules.html \
-type-callbacks.html \
 types.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
