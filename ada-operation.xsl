@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 0e9e15b2a2a9 2003/02/14 20:31:52 simon $ -->
+<!-- $Id: ada-operation.xsl,v 04c68642ec49 2003/04/29 18:56:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -503,6 +503,11 @@
         <xsl:text>Null_Unbounded_String</xsl:text>
       </xsl:when>
 
+      <!-- Class -->
+      <xsl:when test="../../class/name=$type">
+        <xsl:text>null</xsl:text>
+      </xsl:when>
+      
       <xsl:otherwise>
         <xsl:variable name="the-type" select="../../type[name=$type]"/>
         <xsl:choose>
@@ -513,8 +518,8 @@
             <xsl:text>_Package.Null_Bounded_String</xsl:text>
           </xsl:when>
 
-          <!-- Class -->
-          <xsl:when test="../../class/name=$type">
+          <!-- Counterpart -->
+          <xsl:when test="$the-type/counterpart">            
             <xsl:text>null</xsl:text>
           </xsl:when>
 
