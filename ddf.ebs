@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 353a731cf30c 2002/01/03 06:14:10 simon $
+'$Id: ddf.ebs,v d41f21dea32a 2002/01/04 06:38:39 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -325,49 +325,47 @@ Sub Main
 
 	'S-M OOA Domains are mapped onto Packages.
 
-	Dim cats As CategoryCollection
-	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
-
-	If cats.Count = 0 Then
-
-		'there are no selected packages, check for a diagram
-		Dim diag As Diagram
-		Set diag = RoseApp.CurrentModel.GetActiveDiagram()
-		If diag Is Nothing Then
-			MsgBox "Whatever is active, it's not a Class Diagram"
-			End
-		End If
-		Print diag.Name
-		Dim items As ItemCollection
+	Dim diag As Diagram
+	Set diag = RoseApp.CurrentModel.GetActiveDiagram()
+	If diag Is Nothing Then
+		MsgBox "Whatever is active, it's not a Class Diagram"
+		End
+	End If
+	Print "Diagram " & diag.Name
+	Dim items As ItemCollection
+	Set items = diag.GetSelectedItems()
+	If items.Count = 0 Then
 		Set items = diag.Items
 		If items Is Nothing Then
 			MsgBox "There is nothing relevant on this diagram"
-		Else
-			Dim packages As Integer
-			packages = 0
-			For i = 1 To items.Count
-				Dim it As Element
-				Set it = items.GetAt(i)
-				If it.IsClass("Category") Then
-					packages = packages + 1
-					Dim c As Category
-					Set c = it.TypeCast(c)
-					Call DumpDomainData(c, directory)
-				End If
-			Next i
-			If packages = 0 Then
-				MsgBox "There are no Packages on this diagram"
-			End If
+			End
 		End If
-		
-		End
-
-	Else
-				
-		For i = 1 To cats.Count
-			Call DumpDomainData (cats.GetAt(i), directory)
-		Next i
-
 	End If
+
+	Dim packages As Integer
+	packages = 0
+	Dim result As String
+	result = "Domains processed:"
+	For i = 1 To items.Count
+		Dim it As Element
+		Set it = items.GetAt(i)
+		If it.IsClass("Category") Then
+			packages = packages + 1
+			Dim c As Category
+			Set c = it.TypeCast(c)
+			Print "Domain " & c.Name
+			result = result & Chr(10) & "  " & c.Name
+			Call DumpDomainData(c, directory)
+		End If
+	Next i
+
+	If packages = 0 Then
+		MsgBox "There are no Packages on this diagram"
+		End
+	Else
+		MsgBox result
+	End If
+	
+	End
 
 End Sub
