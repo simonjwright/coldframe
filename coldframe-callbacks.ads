@@ -20,15 +20,12 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.ads,v $
---  $Revision: 9feefc4d8de6 $
---  $Date: 2002/10/11 05:34:54 $
+--  $Revision: 108edf00e8c7 $
+--  $Date: 2003/02/02 18:34:39 $
 --  $Author: simon $
 
-with BC.Containers.Collections.Bounded;
-
 generic
-   type T is limited private;
-   Maximum_Size : Positive;
+   type T (<>) is limited private;
 package ColdFrame.Callbacks is
 
    pragma Elaborate_Body;
@@ -48,9 +45,4 @@ package ColdFrame.Callbacks is
    --  Clear all registered callbacks
    procedure Clear;
 
-private
-   package Abstract_Containers is new BC.Containers (Callback);
-   package Abstract_Collections is new Abstract_Containers.Collections;
-   package Collections is new Abstract_Collections.Bounded
-     (Maximum_Size => Maximum_Size);
 end ColdFrame.Callbacks;
