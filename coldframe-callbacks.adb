@@ -20,12 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.adb,v $
---  $Revision: 897b7c01d5eb $
---  $Date: 2004/05/19 16:24:53 $
+--  $Revision: 760905489da1 $
+--  $Date: 2004/05/20 14:56:42 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Unchecked_Deallocation;
+with ColdFrame.Project.Storage_Pools;
 
 package body ColdFrame.Callbacks is
 
@@ -33,6 +34,7 @@ package body ColdFrame.Callbacks is
    type Cell;
 
    type Cell_P is access all Cell;
+   for Cell_P'Storage_Pool use Project.Storage_Pools.Pool;
 
    type Cell is record
       Next : Cell_P;
