@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v f9b58c84b0c5 2001/09/22 05:55:32 simon $ -->
+<!-- $Id: generate-html.xsl,v e890fd33e276 2001/10/04 19:13:48 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -207,6 +207,9 @@
           <xsl:text>Reference to </xsl:text>
           <a href="#{@refers}"><xsl:value-of select="@refers"/></a>
         </xsl:when>
+        <xsl:when test="type='Autonumber'">
+          <xsl:text>Integer (autonumbering)</xsl:text>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="type-name">
             <xsl:with-param name="type" select="type"/>
@@ -220,6 +223,7 @@
           <p>
             <xsl:text>Formalizes </xsl:text>
             <a href="#{@relation}"><xsl:value-of select="@relation"/></a>
+            <xsl:text>.</xsl:text>
           </p>
           <xsl:apply-templates select="documentation"/>
         </xsl:when>
@@ -233,7 +237,10 @@
 
   <!-- Output Operation info. -->
   <xsl:template match="operation[not(generated)]">
-     <h5><xsl:value-of select="name"/></h5>
+    <h5><xsl:value-of select="name"/></h5>
+    <xsl:if test="@abstract">
+      <p>This operation is abstract.</p>
+    </xsl:if>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@result">
       <xsl:apply-templates select="@result"/>
@@ -481,44 +488,6 @@
 
 
   <!-- Utilities -->
-
-  <!-- Forms the file name for the given element: the name is <Class>.html -->
-  <xsl:template name="element-file-name">
-    <xsl:param name="element-name"/>
-    <xsl:value-of select="concat($element-name, '.html')"/>
-  </xsl:template>
-
-
-  <!-- Forms the directory/file name for the given element: the name is
-       <Domain>.doc/<Class>.html -->
-  <xsl:template name="domain-file-name">
-    <xsl:param name="element-name"/>
-    <xsl:value-of
-      select="concat(/domain/name,
-              '.doc/',
-              $element-name,
-              '.html')"/>
-  </xsl:template>
-
-
-  <!-- Supporting templates (probably should be included! since shared with
-       generate-ada.xsl) -->
-
-  <!-- Generate attribute name. Called at class/attribute -->
-  <xsl:template name="attribute-name-not">
-    <xsl:choose>
-      <xsl:when test="@refers and not(name)">
-        <xsl:variable name="target-class" select="@refers"/>
-        <xsl:value-of select="/domain/class[name=$target-class]/abbreviation"/>
-        <xsl:text>_Handle_</xsl:text>
-        <xsl:value-of select="@relation"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="name"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
 
   <!-- Templates to support HTML markup. -->
 
