@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 08cefee75af3 2004/07/03 11:55:25 simon $ -->
+<!-- $Id: generate-ada.xsl,v 28ef9ba672ff 2004/07/17 17:06:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -102,9 +102,16 @@
   <!-- Remember the main document. -->
   <xsl:variable name="main-document" select="/"/>
 
+
+  <!-- The overridable main template. -->
+  <xsl:template match="domain">
+    <xsl:apply-templates select="." mode="coldframe"/>
+  </xsl:template>
+
+
   <!-- Generate the top-level package for the domain, then all the
        others. -->
-  <xsl:template match="domain">
+  <xsl:template match="domain" mode="coldframe">
 
     <xsl:call-template name="do-not-edit"/>
 
