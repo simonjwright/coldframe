@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 41f2b91ff4ae 2003/09/23 20:06:04 simon $ -->
+<!-- $Id: bugs.html,v 2ed53578411c 2003/09/27 06:44:32 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,7 +192,17 @@ ColdFrame doesn't check that the operation profiles match (for
 example, that both are procedures or both functions). This can lead to
 compilation errors in generated code.
 
-<!-- next: 0205 -->
+<dt>0205 (raised 27.ix.03)
+
+<dd>Although ColdFrfame detects multiple drop-through transitions from
+a state, it reports them as being from another state.
+
+<dt>0206 (raised 27.ix.03)
+
+<dd>The error of having multiple transitions from a state triggered by
+the same event isn't detected.
+
+<!-- next: 0207 -->
 
 </dl>
 
