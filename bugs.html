@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 9aa20a9aa169 2004/05/01 17:19:30 simon $ -->
+<!-- $Id: bugs.html,v b3a76b9196e9 2004/05/05 20:32:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -204,11 +204,6 @@ same name is not detected as such (this can be particularly confusing
 if you name one of your states <i>initial</i> or <i>final</i>, which
 are the default names used for initial and final states).
 
-<dt>0254 (raised 21.iv.04)
-
-<dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
-results in bad code. It should be a code generation error.
-
 <dt>0256 (raised 22.iv.04)
 
 <dd>Naming an event <i>Ev</i> results in bad code.
@@ -219,15 +214,32 @@ results in bad code. It should be a code generation error.
 through into the normalized file, it would be a Good Idea to use XML
 namespaces to distinguish ColdFrame's elements and attributes from
 others.
-<br>Extracted documentation should be in CDATA sections (to ensure
-that the <tt>.raw</tt> file is valid XML).
-<br>Providing a DTD (schema?) would be good too.
 
-<!-- next: 0260  -->
+<dt>0261 (raised 29.iv.04)
+
+<dd>The DTDs should be brought up-to-date.
+
+<!-- next: 0262  -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>5.v.04</h3>
+
+<dl>
+
+<dt>0254 (raised 21.iv.04)
+
+<dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
+results in bad code. It should be a code generation error.
+
+<dt>0260 (raised 29.iv.04)
+
+<dd>Extracted documentation should be in CDATA sections (to ensure
+that the <tt>.raw</tt> file is valid XML).
+
+</dl>
 
 <h3>29.iv.04</h3>
 
