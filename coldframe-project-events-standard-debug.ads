@@ -9,12 +9,12 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events-standard-debug.ads,v $
---  $Revision: de928f3543dc $
---  $Date: 2002/08/17 15:19:41 $
+--  $Revision: b0e71732bd8c $
+--  $Date: 2002/09/13 19:49:49 $
 --  $Author: simon $
 
 with ColdFrame.Events_G.Debug_G;
 with ColdFrame.Project.Events.Standard;
 
 package ColdFrame.Project.Events.Standard.Debug
-is new Events.Debug_G (Standard_Queue => Standard.Event_Queue);
+is new Events.Debug_G (Standard_Queue => Standard.Event_Queue_Base);
