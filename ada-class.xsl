@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6ea75e6307f7 2001/09/28 05:54:55 simon $ -->
+<!-- $Id: ada-class.xsl,v f14fb0352793 2001/09/28 18:42:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1104,13 +1104,26 @@
     <!-- collect all the identifying attributes -->
     <xsl:variable name="identifiers" select="attribute[@identifier]"/>
 
-    <xsl:if test="$identifiers/type='Unbounded_String'
-                  or $identifiers/type='Text'">
-      <xsl:text>with ColdFrame.Hash.Strings.Unbounded;&#10;</xsl:text>
-    </xsl:if>
+    <xsl:variable
+      name="bounded-string-types"
+      select="/domain/type[string and name=$identifiers/type]"/>
+
+    <xsl:for-each select="$bounded-string-types">
+      <xsl:sort select="name"/>
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>_Hash;&#10;</xsl:text>
+    </xsl:for-each>
 
     <xsl:if test="$identifiers/@refers">
       <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:if test="$identifiers/type='Unbounded_String'
+                  or $identifiers/type='Text'">
+      <xsl:text>with ColdFrame.Hash.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:text>separate (</xsl:text>
@@ -1137,11 +1150,18 @@
       <xsl:choose>
         
         <xsl:when test="$type/enumeration or type='Boolean'">
-          <!-- XXX GNAT extension -->
+
+          <!--
+               Result := Result xor {type-name}'Pos (Id.{name});
+               -->
+
           <xsl:value-of select="$I"/>
-          <xsl:text>Result := Result xor Id.</xsl:text>
+          <xsl:text>Result := Result xor </xsl:text>
+          <xsl:value-of select="$type-name"/>
+          <xsl:text>'Pos (Id.</xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>'Enum_Rep;&#10;</xsl:text>
+          <xsl:text>);&#10;</xsl:text>
+
         </xsl:when>
 
         <xsl:when test="$type/integer or type='Integer' or type='Autonumber'">
@@ -1149,6 +1169,27 @@
           <xsl:text>Result := Result xor M (Id.</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>);&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:when test="$type/string">
+          
+          <!-- A Bounded_String. We specify the domain name because GNAT
+               wants it ..
+               Result := Result xor
+                 M ({domain-name}.{type-name}_Hash (Id.{name}));
+               -->
+
+          <xsl:value-of select="$I"/>
+          <xsl:text>Result := Result xor&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>M (</xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$type-name"/>
+          <xsl:text>_Hash (Id.</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>));&#10;</xsl:text>
+
         </xsl:when>
 
         <xsl:when test="type='Unbounded_String' or type='Text'">
@@ -1202,7 +1243,10 @@
         </xsl:when>
 
         <xsl:otherwise>
-          <!-- XXX should this be a Program_Error? -->
+          <xsl:message>
+            <xsl:text>    .. no rule to hash </xsl:text>
+            <xsl:value-of select="$type-name"/>
+          </xsl:message>
         </xsl:otherwise>
 
       </xsl:choose>
