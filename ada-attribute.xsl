@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 97b56c2a6f11 2001/10/13 13:15:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -62,7 +62,7 @@
         <!-- There are attributes; output them all. -->
 
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance is limited record&#10;</xsl:text>
+        <xsl:text>type Instance is new ColdFrame.Instances.Base with record&#10;</xsl:text>
 
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
@@ -92,7 +92,7 @@
 
       <xsl:otherwise>
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance is limited null record;&#10;</xsl:text>
+        <xsl:text>type Instance is new ColdFrame.Instances.Base with null record&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>

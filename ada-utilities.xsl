@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v f566de1841bd 2001/10/10 04:48:00 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 97b56c2a6f11 2001/10/13 13:15:40 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -197,10 +197,10 @@
         <xsl:text>Handle</xsl:text>
       </xsl:when>
 
-      <!-- A Class (not the current class) maps to {class}.Handle. -->
+      <!-- A Class (not the current class) maps to
+           ColdFrame.Instances.Handle. -->
       <xsl:when test="/domain/class/name=$type">
-        <xsl:value-of select="$type"/>
-        <xsl:text>.Handle</xsl:text>
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
 
       <!-- Date maps to Time. -->
