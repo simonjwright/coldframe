@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-logging_support.adb,v $
---  $Revision: e78eddd28392 $
---  $Date: 2003/10/04 06:36:26 $
+--  $Revision: cbfc1e36c26c $
+--  $Date: 2003/10/09 18:41:13 $
 --  $Author: simon $
 
 with Ada.Text_IO;
@@ -32,7 +32,7 @@ package body ColdFrame.Project.Logging_Support is
    begin
       Ada.Text_IO.Put_Line ("ColdFrame: " & Severity'Img & ": " & Message);
       Ada.Text_IO.Flush;
-      -- to be sure not to lose anything in case of later exception
+      --  to be sure not to lose anything in case of later exception
       --  (particularly in the debugger).
    end Log;
 
