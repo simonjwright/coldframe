@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v be89f64b6f1c 2002/06/06 07:38:18 simon $ -->
+<!-- $Id: generate-ada.xsl,v 0262f83ca1df 2002/06/25 18:37:44 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -127,13 +127,13 @@
       <xsl:with-param name="m" select="'.. any operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="type/operation[@access]"
+      select="type/operation[@access and not(@suppressed)]"
       mode="access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="use-handle" select="'no'"/>
     </xsl:apply-templates>
     <xsl:apply-templates
-      select="type/operation[not(@access)]"
+      select="type/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
@@ -144,7 +144,7 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/operation[not(@access)]">
+    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
 
       <xsl:call-template name="do-not-edit"/>
       
@@ -154,7 +154,7 @@
       <xsl:value-of select="$blank-line"/>
 
       <xsl:apply-templates
-        select="type/operation[not(@access)]"
+        select="type/operation[not(@access) and not(@suppressed)]"
         mode="domain-type-operation-body-stub">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
