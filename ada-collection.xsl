@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: ada-collection.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -55,6 +55,7 @@
     <!-- Abstract Containers package -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with BC.Containers;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
@@ -64,6 +65,7 @@
     <!-- Abstract Collections package -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -77,6 +79,7 @@
     <!-- Abstract Sets package -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -94,6 +97,7 @@
         <!-- Wnen the size isn't too large, use the Bounded version -->
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -110,6 +114,7 @@
         <!-- Use the Unbounded version -->
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
         <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
@@ -128,6 +133,7 @@
     <!-- Hash function for Handles -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -141,6 +147,7 @@
     <!-- Concrete Sets package -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash;&#10;</xsl:text>
@@ -206,6 +213,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -235,6 +243,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -267,6 +276,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -302,6 +312,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -363,6 +374,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -456,6 +468,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -568,6 +581,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -641,6 +655,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>

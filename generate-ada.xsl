@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 3a8e11ed15ce 2004/04/29 05:04:59 simon $ -->
+<!-- $Id: generate-ada.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -227,9 +227,8 @@
 
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
-      <xsl:value-of select="$blank-line"/>
-      
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
@@ -311,6 +310,8 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
@@ -355,6 +356,7 @@
          -->
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:variable
       name="class-initializations"
@@ -481,6 +483,8 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
@@ -506,6 +510,7 @@
 
     <xsl:call-template name="could-edit"/>
     <xsl:call-template name="identification-info"/>
+
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
@@ -534,6 +539,7 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>
@@ -555,6 +561,7 @@
 
     <xsl:call-template name="could-edit"/>
     <xsl:call-template name="identification-info"/>
+
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>

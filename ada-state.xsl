@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 554d8ed956b1 2004/05/12 20:37:28 simon $ -->
+<!-- $Id: ada-state.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -813,6 +813,7 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
@@ -845,6 +846,7 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <!-- Leave out style check suppression here .. -->
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 476915a2c8fd 2004/05/29 17:42:39 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,8 +36,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-    <xsl:value-of select="$blank-line"/>
-
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:if test="type/@serializable">
@@ -102,8 +100,6 @@
 
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
-      <xsl:value-of select="$blank-line"/>
-
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 162e84d854c5 2004/04/29 05:23:12 simon $ -->
+<!-- $Id: ada-type.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -554,7 +554,7 @@
 
 
   <!-- Generate domain Types support entries (not for standard types).
-       We do these as child packages in case they're not actually
+       We do these as child units in case they're not actually
        needed. -->
   <xsl:template mode="domain-type-support" match="domain/type">
     <xsl:if test="not(@standard)">
@@ -581,6 +581,9 @@
         <xsl:when test="string/fixed"/>
 
         <xsl:when test="string/max">
+          <xsl:call-template name="do-not-edit"/>
+          <xsl:call-template name="identification-info"/>
+          <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>
           <xsl:text>function </xsl:text>
           <xsl:value-of select="../name"/>

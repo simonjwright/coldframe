@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 53bb78281f4f 2004/05/05 20:37:44 simon $ -->
+<!-- $Id: ada-class.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1995,6 +1995,7 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -2003,6 +2004,7 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>

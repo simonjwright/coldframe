@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 2f817b813a7b 2004/05/29 17:43:49 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -36,8 +36,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
@@ -46,8 +44,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
@@ -117,8 +113,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
@@ -168,8 +162,6 @@
 
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
-
-        <!-- Suppress style checks. -->
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
@@ -253,6 +245,7 @@
 
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -345,6 +338,7 @@
 
         <xsl:call-template name="do-not-edit"/>
         <xsl:call-template name="identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -433,8 +427,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>
@@ -450,8 +442,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <xsl:text>procedure </xsl:text>

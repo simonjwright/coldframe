@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v de849678fc54 2004/05/29 17:36:58 simon $ -->
+<!-- $Id: ada-association.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -215,8 +215,6 @@
 
     <xsl:call-template name="do-not-edit"/>
     <xsl:call-template name="identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Context clauses. -->
