@@ -20,11 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-time_signature.ads,v $
---  $Revision: f3f58a025691 $
---  $Date: 2003/02/16 17:34:22 $
+--  $Revision: 7cb38e90780a $
+--  $Date: 2003/03/09 16:04:21 $
 --  $Author: simon $
-
-with Ada.Real_Time;
 
 generic
 
@@ -32,8 +30,6 @@ generic
    --  to be used with event management.
 
    type Time is private;
-
-   with function Equivalent (Of_Time : Time) return Ada.Real_Time.Time;
 
    with function From_Now (Period : Duration) return Time;
 

@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-event_support.ads,v $
---  $Revision: b720f64f3037 $
---  $Date: 2002/09/28 17:13:37 $
+--  $Revision: 7cb38e90780a $
+--  $Date: 2003/03/09 16:04:21 $
 --  $Author: simon $
 
 with ColdFrame.Time_Signature;
@@ -21,7 +21,6 @@ package ColdFrame.Project.Event_Support is
 
    package Signature is new ColdFrame.Time_Signature
      (Time => Times.Time,
-      Equivalent => Times.Equivalent,
       From_Now => Times.From_Now,
       Image => Times.Image);
 
