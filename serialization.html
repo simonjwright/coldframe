@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 71ebf33a93de 2003/03/01 17:21:43 simon $ -->
+<!-- $Id: serialization.html,v 6d305cf39400 2003/03/05 21:36:06 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -110,8 +110,9 @@ case
 <tt>[[image:<i>Other_Domain</i>.Image_Of_Exported]]</tt>. ColdFrame
 then expects to be able to call
 <pre>
-   function Image_Of_Exported (Name : String;
-                               Value : Exported) return String;
+   function <i>[Other_Domain.]</i>Image_Of_Exported
+     (Name : String;
+      Value : Exported) return String;
 </pre>
 
 <p>where <tt>Name</tt> is the field name and <tt>Value</tt> is the
@@ -121,7 +122,29 @@ value to be converted to text.
 
 <p><h2>Use</h2>
 
+<h3>Demonstration</h3>
 
+<p>A demonstration of serialization is provided in the <a
+href="serialization-model.html">Serialization model</a> in the
+examples subdirectory of the distribution.
+
+<p><table>
+
+<tr><td>The class model:
+<td><a href="serialization-class-model.png"><img
+src="serialization-class-model-t.png" border=1></a>
+
+<tr><td>The state model for the Server:
+<td><a href="serialization-state.png"><img
+src="serialization-state-t.png" border=1></a>
+
+<tr><td>A sequence diagram:
+<td><a href="serialization-sequence.png"><img
+src="serialization-sequence-t.png" border=1></a>
+
+</table>
+
+<p>
 
 <p><hr>
 <i>
