@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 4ef67f74f9ea $
---  $Date: 2003/01/26 19:14:55 $
+--  $Revision: 5fc34b198cca $
+--  $Date: 2004/04/20 16:28:41 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -142,7 +142,7 @@ begin
    Setup ("-inheritance\.ad[bs]", "advanced inheritance");
    Setup ("-(filter|selection)_function\.ad[bs]", "selection");
    Setup ("-iterate\.ad[bs]", "iteration");
-   Setup ("-(handle_)?hash\.ad[bs]", "hashing");
+   Setup ("-(handle|instance)_hash\.ad[bs]", "hashing");
    Setup ("-(abstract_)?(containers|collections).ad[bs]", "containers");
    Setup ("-(abstract_)?sets.ad[bs]", "advanced containers");
    Setup ("-from_collections\.ad[bs]", "navigation from collections");
