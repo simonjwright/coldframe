@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v 5fd6790fa4c2 2002/04/21 14:03:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -125,22 +125,26 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="role[1]/classname"/>
-    <xsl:text>.Sets;&#10;</xsl:text>
+    <xsl:if test="not(associative and role[1]/@multiple)">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="role[1]/classname"/>
+      <xsl:text>.Sets;&#10;</xsl:text>      
+    </xsl:if>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="role[2]/classname"/>
-    <xsl:text>.Sets;&#10;</xsl:text>
+    <xsl:if test="not(associative and role[2]/@multiple)">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="role[2]/classname"/>
+      <xsl:text>.Sets;&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:if test="associative">
       <xsl:text>with </xsl:text>
