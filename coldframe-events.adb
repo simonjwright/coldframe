@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.adb,v $
---  $Revision: 7c33bf090766 $
---  $Date: 2002/01/28 06:43:45 $
+--  $Revision: 75b1b7979fd5 $
+--  $Date: 2002/02/01 20:42:42 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -62,6 +62,10 @@ package body ColdFrame.States is
    procedure Finalize (The_Terminator : in out Terminator) is
    begin
       Put_Line ("a Terminator has just died.");
+      --  Needs to visit the Timer queue to kill off any events there,
+      --  then the Event queue. We'll just mark the events as "don't
+      --  dispatch me! I want to die", rather than deleting them from
+      --  the queue now.
    end Finalize;
 
 
