@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 281d11e491da 2002/07/27 13:05:23 simon $
+'$Id: ddf.ebs,v 607b808a4fb8 2002/09/20 10:15:16 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -367,8 +367,10 @@ Sub Main
 	'Viewport.Open
 
 	Dim directory As String
-	If RoseApp.PathMap.HasEntry("ColdFrameOut") Then
-		directory = RoseApp.PathMap.GetActualPath("$ColdFrameOut") & "\"
+	If RoseApp.PathMap.HasEntry("COLDFRAMEOUT") Then
+		directory = RoseApp.PathMap.GetActualPath("$COLDFRAMEOUT") & "\"
+	ElseIf Len(Environ("COLDFRAMEOUT")) > 0 Then
+		directory = Environ("COLDFRAMEOUT") & "\"
 	Else
 		directory = ""
 	End If
@@ -401,10 +403,27 @@ Sub Main
 		Set it = items.GetAt(i)
 		If it.IsClass("Category") Then
 			packages = packages + 1
+			Dim u As ControllableUnit
+			Set u = it.TypeCast(u)
+			Dim wasLoaded As Boolean
+			' need to check first, or Rose gets confused about
+			' whether already-loaded units have been modified
+			wasLoaded = u.IsLoaded()
+			If Not wasLoaded Then
+				Dim dummy As Boolean
+				dummy = u.Load()
+			End If
 			Dim c As Category
 			Set c = it.TypeCast(c)
-			Print "Domain " & c.Name
+			If wasLoaded Then
+				Print "Domain " & c.Name
+			Else
+				Print "Domain " & c.Name & " (loaded)"
+			End If
 			result = result & Chr(10) & "  " & c.Name
+			If Not wasLoaded Then
+				result = result & " (loaded)"
+			End If
 			Call DumpDomainData(c, directory)
 		End If
 	Next i
