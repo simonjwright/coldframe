@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.ads,v $
---  $Revision: f8620372b3d6 $
---  $Date: 2003/01/19 17:12:55 $
+--  $Revision: 26fcdcb7c51b $
+--  $Date: 2003/01/26 16:31:01 $
 --  $Author: simon $
 
 package ColdFrame.Serialization is
@@ -43,6 +43,10 @@ package ColdFrame.Serialization is
    --
    --  The default implementation generates a contentless XML element
    --  "<COLDFRAME.SERIALIZATION.BASE/>".
+
+   function Class_Image (S : Base'Class) return String;
+   --  This function dispatches to the generated Image function (there
+   --  is no way to invoke the primitive Image directly).
 
 private
 

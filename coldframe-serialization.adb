@@ -20,9 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.adb,v $
---  $Revision: dddec39b07b5 $
---  $Date: 2003/01/22 19:56:38 $
+--  $Revision: 26fcdcb7c51b $
+--  $Date: 2003/01/26 16:31:01 $
 --  $Author: simon $
+
+--  This is ColdFrame's default implementation of serialization support.
 
 package body ColdFrame.Serialization is
 
@@ -32,6 +34,13 @@ package body ColdFrame.Serialization is
    begin
       return "<" & Base'External_Tag & "/>";
    end Image;
+
+
+   function Class_Image (S : Base'Class) return String is
+   begin
+      --  force the dispatch
+      return Image (S);
+   end Class_Image;
 
 
 end ColdFrame.Serialization;
