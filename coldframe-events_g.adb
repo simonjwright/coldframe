@@ -20,19 +20,33 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 2a4992703a01 $
---  $Date: 2002/09/10 18:39:49 $
+--  $Revision: 92db5d41936e $
+--  $Date: 2002/09/12 20:55:53 $
 --  $Author: simon $
 
+with Ada.Exceptions;
 with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G is
 
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base) is
+   procedure Start (The_Queue : access Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
-      raise Exceptions.Use_Error;
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Start only legal with Test event queue");
+   end Start;
+
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+                              Ignoring_Timers : Boolean := False) is
+      pragma Warnings (Off, The_Queue);
+      pragma Warnings (Off, Ignoring_Timers);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Wait_Until_Idle only legal with Test event queue");
    end Wait_Until_Idle;
 
 
@@ -72,8 +86,25 @@ package body ColdFrame.Events_G is
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
-      raise Exceptions.Use_Error;
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Tear_Down only legal with Test event queue");
    end Tear_Down;
+
+
+   function Start_Started
+     (The_Queue : access Event_Queue_Base) return Boolean is
+      pragma Warnings (Off, The_Queue);
+   begin
+      return True;
+   end Start_Started;
+
+
+   procedure Start_Queue (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Start_Queue;
 
 
    procedure Add_Posted_Event (On : access Event_Queue_Base) is
@@ -102,6 +133,20 @@ package body ColdFrame.Events_G is
    begin
       null;
    end Remove_Held_Event;
+
+
+   procedure Add_Timer_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Add_Timer_Event;
+
+
+   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Remove_Timer_Event;
 
 
    procedure Log_Retraction (The_Event : Event_P;
@@ -149,8 +194,8 @@ package body ColdFrame.Events_G is
       The_Event : Event_P := This.The_Event;
    begin
 
-      --  First, provided that the Timer hasn't already been deleted,
-      --  indicate to it that it's now unset.
+      --  First, provided that the Timer (still) exists, indicate to
+      --  it that it's now unset.
       if This.The_Timer /= null then
          This.The_Timer.The_Entry := null;
       end if;
@@ -158,7 +203,7 @@ package body ColdFrame.Events_G is
       --  Handle the held event, unless it's been invalidated.
       if not The_Event.Invalidated then
          Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
-         Handler (The_Event.all);
+         Handler (The_Event.all);   --  XXX what about exceptions here?
          Log_Post_Dispatch (The_Event => The_Event, On => This.On);
       end if;
 
@@ -172,6 +217,8 @@ package body ColdFrame.Events_G is
    procedure Finalize (The_Terminator : in out Timer_Terminator) is
    begin
 
+      --  XXX is there a race condition here?
+
       if The_Terminator.For_The_Timer.The_Entry /= null then
 
          --  The Timer is set. Tell the timer event that the timer has
@@ -180,6 +227,9 @@ package body ColdFrame.Events_G is
 
          --  Invalidate the held event.
          The_Terminator.For_The_Timer.The_Entry.The_Event.Invalidated := True;
+
+         --  Decrement the count of timer events
+         Remove_Timer_Event (The_Terminator.For_The_Timer.The_Entry.On);
 
       end if;
 

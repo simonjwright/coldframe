@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 5da579479986 $
---  $Date: 2002/09/04 18:53:16 $
+--  $Revision: 92db5d41936e $
+--  $Date: 2002/09/12 20:55:53 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -190,9 +190,16 @@ package ColdFrame.Events_G is
    --  The implementations here raise Exceptions.Use_Error. Must only
    --  be used with an instantiation of Events_G.Test_G.
 
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base);
+   procedure Start (The_Queue : access Event_Queue_Base);
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+                              Ignoring_Timers : Boolean := False);
    --  Blocks the caller until there are no more events awaiting
    --  processing.
+   --  If Ignoring_Timers is True, ignores events held on Timers; this
+   --  feature is intended for the case where a unit test has driven
+   --  the state machine to a point where a timer is set, but need go
+   --  no further.
 
    procedure Tear_Down (The_Queue : in out Event_Queue_P);
    --  Terminates any tasks and deallocates The_Queue.
@@ -260,8 +267,19 @@ private
    --  implementation here raises Exceptions.Use_Error if called.
    procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 
-   --  Operations to support test (particularly Wait_Until_Idle).
-   --  The implementations here are null.
+   --  Operations to support test.
+
+   --  Operations to support starting.
+
+   function Start_Started
+     (The_Queue : access Event_Queue_Base) return Boolean;
+   --  The standard version returns True.
+
+   procedure Start_Queue (The_Queue : access Event_Queue_Base);
+   --  Raises Program_Error.
+
+   --  Operations to support Wait_Until_Idle. The implementations here
+   --  are null.
 
    procedure Add_Posted_Event (On : access Event_Queue_Base);
 
@@ -270,6 +288,10 @@ private
    procedure Add_Held_Event (On : access Event_Queue_Base);
 
    procedure Remove_Held_Event (On : access Event_Queue_Base);
+
+   procedure Add_Timer_Event (On : access Event_Queue_Base);
+
+   procedure Remove_Timer_Event (On : access Event_Queue_Base);
 
    --  Operations to support debug/logging. The implementations here
    --  are null.
@@ -301,7 +323,7 @@ private
       On : Event_Queue_P;
       Time_To_Fire : Time.Time;
       The_Event : Event_P;
-      The_Timer : Timer_P;  -- null if the Timer has been deleted
+      The_Timer : Timer_P;  -- null if the Timer has been deleted, or no Timer
    end record;
 
    procedure Handler (This : Timer_Event);
