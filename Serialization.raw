@@ -1,0 +1,269 @@
+<domain>
+<extractor>cf-20030122b</extractor>
+<name>Serialization</name>
+<date>
+<year>2003</year>
+<month>1</month>
+<day>22</day>
+<time>22:30</time>
+</date>
+<documentation>This domain is a demonstration of the "serialization" features of ColdFrame.
+[[ revision : $Id: Serialization.raw,v 7b585abe1423 2003/01/22 22:36:20 simon $ ]]
+</documentation>
+<classes>
+<class stereotype="public">
+<name>Interface</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>output</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>v</name>
+<documentation></documentation>
+<type>Serializable</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>open</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>on host</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>using port</name>
+<documentation></documentation>
+<type>Port</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Serializable</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The class of all serializable records.
+
+[[ renames : Serialization_Support.Base_Class ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Port</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An IP port number.
+
+[[ renames : GNAT.Sockets.Port_Type ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Server</name>
+<cardinality>0..1</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>sock</name>
+<documentation></documentation>
+<type>Socket</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>channel</name>
+<documentation></documentation>
+<type>Stream Access</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>create</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>connecting to host</name>
+<documentation></documentation>
+<type>String</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>using port</name>
+<documentation></documentation>
+<type>Port</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>post</name>
+<documentation>This instance event handler posts its parameter's value to the output stream. It then frees the value.</documentation>
+<parameters>
+<parameter>
+<name>v</name>
+<documentation></documentation>
+<type>Serializable Access</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+<event stereotype="instance event">
+<name>posted value</name>
+<type>Serializable Access</type>
+</event>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>running</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>outputting</name>
+<entryactions>
+<action>
+<name>post</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>running</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>running</source>
+<target>outputting</target>
+<event>
+<name>posted value</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>outputting</source>
+<target>running</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="exception">
+<name>Use Error</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Raised if (for example) an attempt is made to open the domain when it's already open.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Socket</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An IP socket.
+[[ renames : GNAT.Sockets.Socket_Type ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Stream Access</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Gives access to a Stream on the socket.
+
+[[ imported : GNAT.Sockets ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Serializable Access</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>This type is a pointer-to-Serializable.
+Care must be taken to free the payload when it has been posted to the output stream.
+[[ renames : Serialization_Support.Base_Class_P ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Serializable Base</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The base type from which all serializable records are derived.
+
+[[ renames : Serialization_Support.Base ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
