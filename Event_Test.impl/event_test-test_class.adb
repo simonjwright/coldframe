@@ -353,7 +353,9 @@ package body Event_Test.Test_Class is
                                        On => Events.Dispatcher,
                                        To_Fire => Ev,
                                        After => 2.2);
+
          delay 1.1;
+         ColdFrame.Project.Events.Finalize (T);
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 0,
