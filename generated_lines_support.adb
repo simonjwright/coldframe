@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 1b8a362bcae5 $
---  $Date: 2004/04/21 14:53:46 $
+--  $Revision: 82c90d721e25 $
+--  $Date: 2004/04/21 15:16:53 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -90,7 +90,9 @@ package body Generated_Lines_Support is
          declare
             I : Info_Base renames Current_Item (It).all;
          begin
-            Put_Line (For_Directory & ","
+            Put_Line (Base_Name (For_Directory
+                                   (For_Directory'First
+                                      .. For_Directory'Last - 1)) & ","
                         & I.Named.all & ","
                         & I.Files'Img & ","
                         & I.Lines'Img & ",");
