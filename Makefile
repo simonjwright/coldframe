@@ -111,15 +111,15 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 	@gnatchop $(CHOP_VERBOSE) $< $@
 	@[ ! -d $*.impl ] || for f in `(cd $*.impl; ls *.ad[bs])`; do \
 	   if [ -f $@/$$f ]; then \
-	      echo rm $@/$$f; rm $@/$$f; \
+	      echo "    removing $@/$$f"; rm $@/$$f; \
 	   else \
-	      echo extra source file $$f in .impl; \
+	      echo "  extra source file $$f in .impl"; \
 	   fi \
 	done
 	@chmod -R a-w $@
 	@chmod u+w $@
-	@echo "checking for unimplemented bodies .."
-	@grep -rl 'edit this' $@ || echo ".. none."
+	@echo "checking for unimplemented bodies ..."
+	@grep -rl 'edit this' $@ || echo "... none."
 
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
