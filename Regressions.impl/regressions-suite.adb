@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v f21998251d32 2004/10/23 16:05:45 simon $
+--  $Id: regressions-suite.adb,v 398f5bb53c19 2005/03/15 08:16:01 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -37,6 +37,7 @@ with Regressions.Class_Timer_In_Class;
 with Regressions.Class_Timer_In_Max_One;
 with Regressions.Class_Timer_In_Public;
 with Regressions.Class_Timer_In_Singleton;
+with Regressions.Class_With_Private_Operations;
 with Regressions.Fixed_String_Class;
 with Regressions.Identified_Class;
 with Regressions.Max_More;
@@ -66,6 +67,7 @@ pragma Warnings (Off, Regressions.Class_Timer_In_Class);
 pragma Warnings (Off, Regressions.Class_Timer_In_Max_One);
 pragma Warnings (Off, Regressions.Class_Timer_In_Public);
 pragma Warnings (Off, Regressions.Class_Timer_In_Singleton);
+pragma Warnings (Off, Regressions.Class_With_Private_Operations);
 pragma Warnings (Off, Regressions.Fixed_String_Class);
 pragma Warnings (Off, Regressions.Identified_Class);
 pragma Warnings (Off, Regressions.Max_More);
