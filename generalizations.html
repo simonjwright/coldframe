@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v cfa778febf51 2002/06/08 05:43:50 simon $ -->
+<!-- $Id: generalizations.html,v 5e7966da10b1 2002/06/09 18:48:48 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -47,6 +47,13 @@ because this is an identifying attribute).
 
 </ul>
 
+<p>The <tt>Create</tt> operation in a child class fixes up the
+<tt><i>G</i>_Child</tt> record in the parent.
+
+<p>The <tt>Delete</tt> operation in a parent class deletes the current
+child, if any, recursively; the <tt>Delete</tt> operation in a child
+class nulls out the <tt><i>G</i>_Child</tt> record in the parent.
+
 <h4>Multiple inheritance</h4>
 
 <p>There's no difference between multiple and single inheritance from
@@ -76,6 +83,85 @@ feature,
 <tt>ColdFrame.Instances.Handle</tt> - at any rate for "finds".
 
 </ul>
+
+<img src="hierarchies.png">
+
+<p>The picture shows part of a fairly complex inheritance hierarchy,
+with all the generated operations (in
+<tt><i>Domain.Class</i>.Inheritance</tt>).
+
+<h4>Creation</h4>
+
+<p>All of the classes have a <tt>Create_Tree</tt> function. This
+function has as many parameters as there are "ultimate" or "root"
+ancestors; so classes which are in fact roots classes themselves have
+only the one parameter. The parameters' names are the abbreviations of
+the ultimate ancestor classes, and the types are all
+<tt>ColdFrame.Instances.Handle</tt>.
+
+<p>As you'd expect from the name, the operation creates complete
+trees. The simple example is where you don't already have any
+instances and just want to create the tree all the way to the root(s):
+so, say you wanted a new <i>F_2</i>, you'd write
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree (null, null, null);
+</pre>
+
+<p>which results in new instances of <i>R_1</i>, <i>R_2</i>,
+<i>R_3</i>, <i>S_2</i>, <i>S_3</i>, <i>T_2</i> and <i>F_2</i>, all
+properly linked.
+
+<p><em>Note, this can only work where the root classes have
+<tt>Autonumber</tt> identifiers.</em> If you have a root class with a
+user-supplied identifier, ie with a <tt>Create</tt> function that
+takes parameters, you'll need to do the root creation for this class
+yourself:
+
+<pre>
+   R1_H := R_1.Create ((Name => +"Foo"));
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => ColdFrame.Instances.Handle (R1_H),
+      R2 => null,
+      R3 => null);
+</pre>
+
+<p>If you already have a <i>T_2</i> (in <tt>T2_H</tt>) and want to
+create a new <i>F_2</i> with a new right hand side, you'd say
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => ColdFrame.Instances.Handle (T2_H),
+      R2 => null,
+      R3 => null);
+</pre>
+
+<p>If you already have an <i>S_2</i> (in <tt>S2_H</tt>) and want to
+create a new <i>F_2</i> with a new left hand side, you'd say
+
+<pre>
+   F2_H := F_2.Inheritance.Create_Tree
+     (R1 => null,
+      R2 => ColdFrame.Instances.Handle (S2_H),
+      R3 => ColdFrame.Instances.Handle (S2_H));
+</pre>
+
+<p>So, the rule is that you supply the handle of the existing parent
+on the way to each root class; and, if the existing parent has two (or
+more!) root ancestors, you supply its handle for each.
+
+<h4>Deletion</h4>
+
+<p>All classes that have children (ie, not <i>F_2</i> in the diagram)
+have a <tt>Delete_Child</tt> operation. This deletes the entire
+subtree beneath.
+
+<h4>Finds</h4>
+
+<p>Each child class has an operation
+<tt><i>Domain.Class</i>.Inheritance.Find_<i>parent-class</i>_Parent</tt>
+for each parental class, returning
+<tt><i>parent-class</i>.Handle</tt>.
 
 <h2>Use</h2>
 
