@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 20f1f34020db 2003/07/26 15:41:51 simon $ -->
+<!-- $Id: error-messages.html,v 2d2f73c78b8f 2003/08/31 08:25:35 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -130,11 +130,23 @@ value]]</i>" <dd>The given annotation wasn't understood.
 
 <dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type. <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
 
+<dt>Error: drop-through transition after Delete in state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
+
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only ones).
+
+<dt>Error: more than one drop-through transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
+
+<dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
 
 <dt>Error: no concrete operation for <i>Parent.Operation</i> in <i>Leaf</i> <dd><tt>Operation</tt> was specified &#171;abstract&#187; in <tt>Parent</tt>, but no implementation has been found in the branch leading to the leaf class <tt>Leaf</tt>.
 
-<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>[[imported]]</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Hash</tt>.
+<dt>Error: no handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
+
+</dl>
+
+<dl>
+
+<dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>[[imported]]</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Instance_Hash</tt>.
 
 </dl>
 
