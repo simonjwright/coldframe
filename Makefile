@@ -1,11 +1,13 @@
 # Copyright (c) 2001 Simon Wright <simon@pushface.org>
 # $Id$
 
+AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
 TCLXML = $(HOME)/TclXML-1.2
 
 SAXON = java com.icl.saxon.StyleSheet
 
+ESCAPE_MARKUP_SCRIPT = escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
@@ -17,8 +19,9 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-operation.xsl \
   ada-utilities.xsl
 
-%.norm: %.raw $(NORMALIZE_ROSE_SCRIPT)
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+%.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@

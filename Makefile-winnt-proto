@@ -7,17 +7,20 @@ TOP = d:
 
 CF = $(TOP)/cf-20010419
 
+AWK = awk
 ITCLSH = $(TOP)/Tcl/bin/itclsh31
 TCLXML = $(TOP)/TclXML-1.2
 
 SAXON = $(TOP)/Saxon/saxon
 
+ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
 %.norm: %.raw
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@
 
 %.html: %.norm
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@

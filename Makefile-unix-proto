@@ -7,17 +7,20 @@ TOP = /usr/local
 
 CF = $(TOP)/cf-20010419
 
+AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
 TCLXML = ~/TclXML-1.2
 
 SAXON = java com.icl.saxon.StyleSheet
 
+ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
 %.norm: %.raw
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) <$< >$@
+	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@
 
 %.html: %.norm
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
