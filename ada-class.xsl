@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 666b4b300428 2001/10/08 18:53:47 simon $ -->
+<!-- $Id: ada-class.xsl,v af1f91f97d0f 2001/10/10 04:49:01 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -30,10 +30,12 @@
   <!-- Generate the class packages (specs). -->
   <xsl:template match="domain/class" mode="class-spec">
 
-    <xsl:message>
-      <xsl:text>  .. </xsl:text>
-      <xsl:value-of select="name"/>
-    </xsl:message>
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m">
+        <xsl:text>  .. </xsl:text>
+        <xsl:value-of select="name"/>
+      </xsl:with-param>
+    </xsl:call-template>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
@@ -46,6 +48,7 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
 
     <xsl:choose>
 
@@ -53,6 +56,7 @@
 
         <!-- .. the Identifier record .. -->
         <xsl:call-template name="identifier-record"/>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
@@ -62,15 +66,23 @@
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:call-template name="create-function-spec"/>
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:value-of select="$I"/>
         <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (With_Identifier : Identifier);&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Delete (This : in out Handle);&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. subtype enumeration support, if required .. -->
         <xsl:call-template name="supertype-specs"/>
@@ -87,10 +99,12 @@
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. the find operation .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
 
       </xsl:when>
 
@@ -108,10 +122,12 @@
 
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
  
     <xsl:if test="@public">
       <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
     <xsl:if test="@active">
@@ -120,6 +136,7 @@
     
     <!-- .. the Instance record .. -->
     <xsl:call-template name="instance-record"/>
+    <xsl:value-of select="$blank-line"/>
 
     <xsl:choose>
 
@@ -136,19 +153,23 @@
           <xsl:text>for Handle'Storage_Size use Instance'Object_Size / 8 * </xsl:text>
           <xsl:value-of select="@max"/>
           <xsl:text>;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
         </xsl:if>
         
         <!-- .. basic Container instantiation for Maps -->
         <xsl:value-of select="$I"/>
         <xsl:text>package Abstract_Map_Containers is new BC.Containers (Handle);&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. the Hash function spec .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. Container instantiations .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>package Abstract_Maps is new Abstract_Map_Containers.Maps (Identifier);&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
         <xsl:choose>
           
@@ -166,6 +187,7 @@
             <xsl:text> Maximum_Size =&gt; </xsl:text>
             <xsl:value-of select="./@max"/>
             <xsl:text>);&#10;</xsl:text>
+            <xsl:value-of select="$blank-line"/>
           </xsl:when>
           
           <xsl:otherwise>
@@ -180,6 +202,7 @@
             <xsl:text>,&#10;</xsl:text>
             <xsl:value-of select="$IC"/>
             <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+            <xsl:value-of select="$blank-line"/>
           </xsl:otherwise>
           
         </xsl:choose>
@@ -187,12 +210,14 @@
         <!-- .. the instance container .. -->
         <xsl:value-of select="$I"/>
         <xsl:text>The_Container : Maps.Map;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         
       </xsl:when>
       
       <xsl:when test="@singleton">
         <xsl:value-of select="$I"/>
         <xsl:text>This : aliased Instance;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
       </xsl:when>
       
     </xsl:choose>
@@ -400,7 +425,10 @@
       <xsl:sort select="name"/>
 
       <xsl:call-template name="subtype-enumeration"/>
+      <xsl:value-of select="$blank-line"/>
+
       <xsl:call-template name="subtype-selection"/>
+      <xsl:value-of select="$blank-line"/>
 
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
@@ -408,6 +436,7 @@
       <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child);&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
@@ -415,6 +444,7 @@
       <xsl:text>_Child (This : Handle) return </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:for-each>
 
@@ -446,6 +476,7 @@
       <xsl:text>end Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
@@ -463,6 +494,7 @@
       <xsl:text>end Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>_Child;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
 
     </xsl:for-each>
 
@@ -525,10 +557,12 @@
   <!-- Generate the class packages (bodies). -->
   <xsl:template match="domain/class" mode="class-body">
 
-    <xsl:message>
-      <xsl:text>  .. </xsl:text>
-      <xsl:value-of select="name"/>
-    </xsl:message>
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m">
+        <xsl:text>  .. </xsl:text>
+        <xsl:value-of select="name"/>        
+      </xsl:with-param>
+    </xsl:call-template>
 
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="class-body-context"/>
@@ -537,10 +571,12 @@
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
     
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
       <xsl:text>task body T is separate;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
     </xsl:if>
     
     <xsl:choose>
@@ -549,13 +585,20 @@
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:call-template name="create-function-body"/>
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:call-template name="find-function-body"/>
+        <xsl:value-of select="$blank-line"/>
         
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
 
         <xsl:call-template name="class-delete-procedure-body"/>     
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:call-template name="delete-procedure-body"/>     
+        <xsl:value-of select="$blank-line"/>
         
         <!-- .. subtype enumeration support, if required .. -->
         <xsl:call-template name="supertype-bodies"/>
@@ -587,6 +630,7 @@
       <!-- .. the hash function stub .. -->
       <xsl:value-of select="$I"/>
       <xsl:text>function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
       
     </xsl:if>
     
@@ -740,6 +784,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
   <xsl:template match="*" mode="access-to-operation"/>
@@ -776,9 +821,13 @@
 
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
+
         <xsl:variable name="id" select="attribute[@identifier]/name"/>
+
         <xsl:value-of select="$I"/>
         <xsl:text>Next_Identifier : Integer := 0;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -1253,7 +1302,9 @@
 
         <xsl:otherwise>
           <xsl:message>
-            <xsl:text>    .. no rule to hash </xsl:text>
+            <xsl:text>CF: </xsl:text>
+            <xsl:value-of select="../name"/>
+            <xsl:text>: no rule to hash </xsl:text>
             <xsl:value-of select="$type-name"/>
           </xsl:message>
         </xsl:otherwise>
@@ -1316,6 +1367,7 @@
     <xsl:apply-templates mode="task-entry" select="operation"/>
     <xsl:value-of select="$I"/>
     <xsl:text>end T;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
 
@@ -1333,7 +1385,7 @@
                   or not(count(parameter)=1)
                   or not($att-to-set/type=parameter/type)">
       
-      <xsl:value-of select="$I"/>
+      <xsl:value-of select="$II"/>
       <xsl:text>entry </xsl:text>
       <xsl:value-of select="name"/>
       <xsl:call-template name="entry-parameter-list">
