@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fe6d6aa04ace 2003/01/11 15:58:03 simon $
+# $Id: normalize-rose.tcl,v 3bf5d563899f 2003/01/11 17:26:04 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -396,7 +396,7 @@ itcl::class IdentifierString {
 
 
 # The base class for all XML elements which represent values; stores
-# eg " hELLO   world " as "Hello_World".
+# eg " hello   world " as "Hello_World".
 itcl::class ValueString {
     inherit String
 
@@ -1067,11 +1067,11 @@ itcl::class Class {
 
     variable isType 0
 
-    variable typeInfo
-
     variable callback
 
     variable discriminated 0
+
+    variable extends
 
     # called (via stereotype mechanism) to indicate that this is a
     # <<type>> class
@@ -1086,6 +1086,10 @@ itcl::class Class {
     # called (via annotation mechanism) to indicate that this is a
     # discriminated (record) type
     method -discriminated {dummy} {set discriminated 1}
+
+    # called (via annotation mechanism) to indicate that this type
+    # extends an (imported) base type
+    method -extends {base} {set extends [normalize $base]}
 
     #
     # variables and methods related to <<exception>> classes
@@ -1136,10 +1140,6 @@ itcl::class Class {
     }
 
     method -complete {} {
-#	if [info exists stereotype] {
-#	    puts -stderr "sterotype $stereotype"
-#	    set originalStereotype $stereotype
-#	}
 	$this -handleStereotype
 	if {$isType && [$attributes -size] == 0} {
 	    set dts [[Domain::currentDomain] -getDatatypes]
@@ -1159,11 +1159,12 @@ itcl::class Class {
 	    if [info exists callback] {
 		$dt -callback $callback
 	    }
-#	    if [info exists originalStereotype] {
-#		puts -stderr "sterotype $stereotype"
-#		$dt -stereotype $originalStereotype
-#		$dt -handleStereotype
-#	    }
+	    if $discriminated {
+		Error "discriminated type [$this -getName] has no attributes"
+	    }
+	    if [info exists extends] {
+		Error "extending type [$this -getName] has no attributes"
+	    }
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
@@ -1212,6 +1213,9 @@ itcl::class Class {
 	    }
 	    if $discriminated {
 		puts -nonewline " discriminated=\"yes\""
+	    }
+	    if [info exists extends] {
+		puts -nonewline " extends=\"$extends\""
 	    }
 	    puts ">"
 	    putElement name "$name"
@@ -2065,7 +2069,7 @@ itcl::class Datatype {
 	set operations $ops
     }
 
-    # called when the user has (mistakenly) requested a callback.
+    # called when the user has requested a callback.
     method -callback {max} {
 	set callback [string trim $max]
     }
