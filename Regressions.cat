@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: ce371dda29b9 $}
+|{ revision = $Revision: 663dea6a1b85 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -6756,23 +6756,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"414954380259"
-			    compartment 	(object Compartment
-				Parent_View 	@179
-				location   	(921, 393)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	622)
 			    width      	636
 			    height     	308
 			    annotation 	8
@@ -6813,23 +6796,6 @@
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"4149544A02EB"
-			    compartment 	(object Compartment
-				Parent_View 	@180
-				location   	(1784, 416)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	447)
 			    width      	460
 			    height     	308
 			    annotation 	8
@@ -6861,23 +6827,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"414954CA0209"
-			    compartment 	(object Compartment
-				Parent_View 	@181
-				location   	(239, 392)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	420)
 			    width      	440
 			    height     	214
 			    annotation 	8
@@ -7414,7 +7363,7 @@
 		    quid       	"420FAF4700C3"
 		    documentation 	
 |{ integer = lower 0 | upper 16#ffff#,
-|   atomic }
+|   volatile }
 		    
 		    stereotype 	"type")
 		(object Class "Volatile Array"
@@ -7423,7 +7372,7 @@
 |{ array = Volatile Int,
 |   index = Integer,
 |   unconstrained,
-|   atomic }
+|   volatile }
 		    
 		    stereotype 	"type")
 		(object Class "Rec With Atomic  and Volatile Component"
@@ -7433,7 +7382,7 @@
 			(object ClassAttribute "{atomic} a"
 			    quid       	"420FAFBE0255"
 			    type       	"Integer")
-			(object ClassAttribute "{atomic} f"
+			(object ClassAttribute "{volatile} f"
 			    quid       	"420FAFF40339"
 			    type       	"Float")))
 		(object Class "Cls With Atomic and Volatile Component"
@@ -7445,6 +7394,14 @@
 			    type       	"Integer")
 			(object ClassAttribute "{volatile} f"
 			    quid       	"420FB031008E"
+			    type       	"Float")
+			(object ClassAttribute "{atomic}c a"
+			    quid       	"4215848E004E"
+			    stereotype 	"class"
+			    type       	"Integer")
+			(object ClassAttribute "{volatile}c f"
+			    quid       	"421584A20291"
+			    stereotype 	"class"
 			    type       	"Float"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
@@ -7690,7 +7647,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@196
-				location   	(536, 756)
+				location   	(536, 711)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	738
@@ -7698,7 +7655,7 @@
 				label      	"Cls With Atomic and Volatile Component")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@196
-				location   	(536, 711)
+				location   	(536, 666)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -7711,7 +7668,7 @@
 			    quidu      	"420FB0050185"
 			    compartment 	(object Compartment
 				Parent_View 	@196
-				location   	(536, 812)
+				location   	(536, 767)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -7724,10 +7681,10 @@
 				icon_style 	"Icon"
 				fill_color 	13434879
 				anchor     	2
-				nlines     	3
-				max_width  	363)
+				nlines     	5
+				max_width  	573)
 			    width      	756
-			    height     	264
+			    height     	354
 			    annotation 	8
 			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
@@ -7736,7 +7693,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: ce371dda29b9 $}
+|{ revision = $Revision: 663dea6a1b85 $}
 	    
 	    zoom       	88
 	    max_height 	28350
@@ -7782,7 +7739,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v ce371dda29b9 2005/02/13 20:14:55 simon $")
+		    label      	"$Id: Regressions.cat,v 663dea6a1b85 2005/02/18 06:03:52 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @199
 		    location   	(301, 318)
 		    font       	(object Font
@@ -9054,7 +9011,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@236
-			location   	(1119, 2870)
+			location   	(1119, 2867)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
