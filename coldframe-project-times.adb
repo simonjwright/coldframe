@@ -9,12 +9,13 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.adb,v $
---  $Revision: 253a6ad430b0 $
---  $Date: 2002/07/25 05:03:12 $
+--  $Revision: d42ce27b2297 $
+--  $Date: 2002/09/21 11:36:54 $
 --  $Author: simon $
 
 with Ada.Calendar;
 with Ada.Real_Time;
+with GNAT.Calendar.Time_IO;
 
 package body ColdFrame.Project.Times is
 
@@ -55,6 +56,20 @@ package body ColdFrame.Project.Times is
    begin
       return Time'(Kind => Calendar, C => Ada.Calendar.Clock + Period);
    end From_Now;
+
+
+   function Image (Of_Time : Time) return String is
+      use type Ada.Real_Time.Time;
+   begin
+      case Of_Time.Kind is
+         when Calendar =>
+            return GNAT.Calendar.Time_IO.Image (Of_Time.C, "%T");
+         when Real_Time =>
+            return Duration'Image
+              (Ada.Real_Time.To_Duration
+                 (Of_Time.R - Ada.Real_Time.Time_First));
+      end case;
+   end Image;
 
 
 end ColdFrame.Project.Times;

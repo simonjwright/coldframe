@@ -9,8 +9,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.ads,v $
---  $Revision: 253a6ad430b0 $
---  $Date: 2002/07/25 05:03:12 $
+--  $Revision: d42ce27b2297 $
+--  $Date: 2002/09/21 11:36:54 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -27,6 +27,8 @@ package ColdFrame.Project.Times is
    function Equivalent (Of_Time : Time) return Ada.Real_Time.Time;
 
    function From_Now (Period : Duration) return Time;
+
+   function Image (Of_Time : Time) return String;
 
 private
 
