@@ -20,13 +20,13 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
 %.norm: %.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) >$@ || rm -f $@
 
 %.html: %.norm
-	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm
-	$(SAXON) $< $(CODEGEN_SCRIPT) >$@
+	$(SAXON) $< $(CODEGEN_SCRIPT) >$@ || rm -f $@
 
 %.gen: %.ada
 	-mkdir $@
