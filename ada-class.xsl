@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 9d35c74e0738 2004/06/25 05:41:42 simon $ -->
+<!-- $Id: ada-class.xsl,v 4422478aaf89 2004/07/01 21:05:47 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -154,17 +154,37 @@
    <!-- .. state machine: event types .. -->
    <xsl:call-template name="event-type-specs"/>
 
-   <!-- .. operations .. -->
-   <xsl:call-template name="operation-specs"/>
+   <!-- .. visible operations .. -->
+   <xsl:call-template name="visible-operation-specs"/>
 
-   <!-- .. renaming operations .. -->
-   <xsl:apply-templates mode="renaming-operation-spec">
+   <!-- .. visible renaming operations .. -->
+   <xsl:apply-templates
+     mode="renaming-operation-spec"
+     select="operation[@renames and not(@visibility='private')]">
      <xsl:sort select="name"/>
    </xsl:apply-templates>
 
    <!-- .. the private part .. -->
    <xsl:text>private&#10;</xsl:text>
    <xsl:value-of select="$blank-line"/>
+
+   <!-- .. private operations .. -->
+   <xsl:apply-templates
+     select="operation[@visibility='private'
+                       and not(@suppressed)
+                       and not(@entry)
+                       and not(@renames)]"
+     mode="operation-spec">
+     <xsl:sort select="name"/>
+     <xsl:with-param name="current" select="."/>
+   </xsl:apply-templates>
+
+   <!-- .. private renaming operations .. -->
+   <xsl:apply-templates
+     mode="renaming-operation-spec"
+     select="operation[@renames and @visibility='private']">
+     <xsl:sort select="name"/>
+   </xsl:apply-templates>
 
    <xsl:if test="@public and $max &gt; 0">
      <xsl:value-of select="$I"/>
