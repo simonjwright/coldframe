@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 05f9964ddd14 2003/11/25 21:31:14 simon $ -->
+<!-- $Id: ada-class.xsl,v 1d4e21a55deb 2004/01/09 15:04:24 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1890,7 +1890,7 @@
         <xsl:when test="$type/enumeration or type='Boolean'
                         or $type/integer or type='Integer'
                         or type='Natural' or type='Positive'
-                        or $type/hash='discrete'">
+                        or $type/@hash">
 
           <!--
                Result := Result xor {type-name}'Pos (I.{name});
