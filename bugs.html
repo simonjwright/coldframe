@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 147958c8fe0b 2003/09/13 16:47:14 simon $ -->
+<!-- $Id: bugs.html,v 3da09734c9c2 2003/09/17 04:56:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -185,7 +185,25 @@ existence of the action to imply the operation?
 
 <dd>Would it be possible to specify that operations should be inlined?
 
-<!-- next: 0201 -->
+<dt>0201 (raised 16.ix.03)
+
+<dd>If you use an expression for an upper or lower bound, it mustn't
+have spaces (so write <tt><i>lower&nbsp;-2.0*Pi</i></tt>). Initial
+values are OK.
+
+<dt>0202 (raised 16.ix.03)
+
+<dd>A class variable of the class's type doesn't compile
+("representation item appears too late").
+
+<dt>0203 (raised 16.ix.03)
+
+<dd>When checking whether an abstract operation has been implemented,
+ColdFrame doesn't check that the operation profiles match (for
+example, that both are procedures or both functions). This can lead to
+compilation errors in generated code.
+
+<!-- next: 0204 -->
 
 </dl>
 
