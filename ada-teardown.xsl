@@ -49,14 +49,27 @@
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:for-each select="class">
-      <xsl:sort select="name"/>
+    <xsl:choose>
 
-      <xsl:value-of select="$I"/>
-      <xsl:value-of select="name"/>
-      <xsl:text>.Tear_Down;&#10;</xsl:text>
+      <xsl:when test="class">
+        
+        <xsl:for-each select="class">
+          <xsl:sort select="name"/>
+          
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="name"/>
+          <xsl:text>.Tear_Down;&#10;</xsl:text>
+          
+        </xsl:for-each>
 
-    </xsl:for-each>
+      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:value-of select="$I"/>
+        <xsl:text>null;&#10;</xsl:text>
+      </xsl:otherwise>
+
+    </xsl:choose>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
