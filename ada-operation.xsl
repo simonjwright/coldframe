@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 48eb83c8f3d3 2004/01/27 06:22:55 simon $ -->
+<!-- $Id: ada-operation.xsl,v 1dcc1516b4e7 2004/02/11 11:06:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -909,8 +909,9 @@
       <xsl:otherwise>
         <xsl:call-template name="log-error"/>
         <xsl:message>
-          <xsl:text>Error: invalid &lt;&lt;accessor&gt;&gt; on </xsl:text>
+          <xsl:text>Error: </xsl:text>
           <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+          <xsl:text> is wrongly stereotyped as an accessor</xsl:text>
         </xsl:message>
       </xsl:otherwise>
 
