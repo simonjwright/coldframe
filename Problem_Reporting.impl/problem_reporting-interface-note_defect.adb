@@ -7,8 +7,8 @@ with Problem_Reporting.Diagnosed_Problem_Report;
 with Problem_Reporting.Problem_Report;
 with Problem_Reporting.Unallocated_Problem_Report;
 procedure Problem_Reporting.Interface.Note_Defect
-  (Problem : Integer;
-   Component : String;
+  (Problem_Number : Integer;
+   Component_Name : String;
    Description : String) is
 
   function "+" (Source : String) return Unbounded_String
@@ -22,7 +22,7 @@ procedure Problem_Reporting.Interface.Note_Defect
 begin
 
   -- Find the indicated Component.
-  H := Problem_Report.Find ((Id => Problem));
+  H := Problem_Report.Find ((Id => Problem_Number));
 
   case Problem_Report.Get_Child_Class (H) is
 
@@ -35,7 +35,7 @@ begin
 
       -- Indicate that this Problem Report's subtype is Diagnosed.
       Problem_Report.Set_Child_Class
-	 (H, Problem_Report.Diagnosed_Problem_Report_T);
+         (H, Problem_Report.Diagnosed_Problem_Report_T);
 
       -- Create the new Diagnosed Problem Report.
       D := Diagnosed_Problem_Report.Create ((PR_Handle_R1 => H));
@@ -57,7 +57,7 @@ begin
   end case;
 
   -- Find the indicated Component.
-  C := Problem_Reporting.Component.Find ((Id => +Component));
+  C := Problem_Reporting.Component.Find ((Id => +Component_Name));
 
   -- Create a new Defect.
   Def := Defect.Create ((C_Handle_R100 => C,
