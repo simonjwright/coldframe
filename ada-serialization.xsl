@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 7b7c981e3b8d 2004/01/13 12:40:27 simon $ -->
+<!-- $Id: ada-serialization.xsl,v c8daa47c154b 2004/02/08 19:34:03 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -217,6 +217,17 @@
     <xsl:param name="name" select="''"/>
 
     <xsl:choose>
+
+      <xsl:when test="$type/array">
+        <!-- This is an array type; not supported.. -->
+
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
+          <xsl:text>Error: can't create image for array </xsl:text>
+          <xsl:value-of select="$type/name"/>
+        </xsl:message>
+
+      </xsl:when>
 
       <xsl:when test="$type/attribute">
         <!-- This is a composite type. -->
