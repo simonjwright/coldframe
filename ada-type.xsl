@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c0952e88be1e 2002/11/22 17:19:24 simon $ -->
+<!-- $Id: ada-type.xsl,v ec7023df1d68 2002/12/03 21:15:34 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,19 +33,22 @@
   <!-- Called at /domain to generate domain context clauses. -->
   <xsl:template name="domain-context">
 
-    <!-- Context for [[counterparts]]. -->
+    <!-- Context for [[counterpart]] and Counterpart. -->
     <xsl:if test="type/counterpart
+                  or type/attribute/type='Counterpart'
                   or type/operation/parameter/type='Counterpart'
                   or type/operation/@result='Counterpart'">
       <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>      
     </xsl:if>
-
-    <!-- Context for time (in record components). -->
-
+    
+    <!-- Context for time. -->
+    
     <xsl:if test="type/attribute/type='Date'
                   or type/operation/parameter/type='Date'
+                  or type/operation/@result='Date'
                   or type/attribute/type='Time'
-                  or type/operation/parameter/type='Time'">
+                  or type/operation/parameter/type='Time'
+                  or type/operation/@result='Time'">
       <!-- The above imply use of ColdFrame.Project.Calendar.Time -->
       <xsl:text>with ColdFrame.Project.Calendar;&#10;</xsl:text>
     </xsl:if>
@@ -61,8 +64,10 @@
 
     <xsl:if test="type/attribute/type='Unbounded_String'
                   or type/operation/parameter/type='Unbounded_String'
+                  or type/operation/@result='Unbounded_String'
                   or type/attribute/type='Text'
-                  or type/operation/parameter/type='Text'">
+                  or type/operation/parameter/type='Text'
+                  or type/operation/@result='Text'">
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
@@ -447,6 +452,8 @@
       <xsl:choose>
 
         <xsl:when test="attribute"/>
+        
+        <xsl:when test="counterpart"/>
         
         <xsl:when test="enumeration"/>
         
