@@ -11,6 +11,7 @@ In the diagram, buff classes are part of the metamodel, grey classes show  how t
 <documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).<br/>
 
 At present, only model objects (Classes, Relationships) that exist in the Domain Package are extracted by the Rose extractor <tt>def.ebs</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -21,6 +22,7 @@ At present, only model objects (Classes, Relationships) that exist in the Domain
 <documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.<br/>
 
 You can specify the maximum number of Instances using the documentation annotation <tt>[[ max: <i>number</i> ]]</tt>. This will be ignored for Singleton Classes.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -31,6 +33,7 @@ You can specify the maximum number of Instances using the documentation annotati
 <documentation>Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
 
 The notation <tt><i>metaclass name</i></tt> means "the normalized name of the metaclass in this model"; so, if the Domain were named "Problem Reporting", <tt><i>Domain</i></tt> would be <tt>Problem_Reporting</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -41,6 +44,7 @@ The notation <tt><i>metaclass name</i></tt> means "the normalized name of the me
 <documentation>A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
 
 All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class" or by the documentation annotation <tt>[[class]]</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -53,6 +57,7 @@ All Operations of Singleton Classes are Class Operations; Class Operations of Id
 Operations may have return values.
 
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -61,6 +66,7 @@ Operations may have return values.
 <class>
 <name>Handle Parameter</name>
 <documentation>An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -71,6 +77,7 @@ Operations may have return values.
 <documentation>An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier.<br/>
 
 Depending on the code generation strategy, Identified Classes may not be visible outside the Domain.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -83,6 +90,7 @@ Depending on the code generation strategy, Identified Classes may not be visible
 Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.
 
 Record types are generated after plain types; this allows record types to contain fields of plain Domain types, but <em>doesn't</em> ensure that records that contain fields of record types are generated in the correct order.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -91,6 +99,7 @@ Record types are generated after plain types; this allows record types to contai
 <class>
 <name>Singleton Class</name>
 <documentation>A Singleton Class is one of which there is always precisely one instance.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -99,6 +108,7 @@ Record types are generated after plain types; this allows record types to contai
 <class>
 <name>Instance Operation</name>
 <documentation>An Instance Operation of a Class is an Operation that applies to a specific instance of the Class.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -107,6 +117,7 @@ Record types are generated after plain types; this allows record types to contai
 <class>
 <name>Hash Function</name>
 <documentation>A Hash Function is required for each Identifier Record. It is implemented as a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -115,6 +126,7 @@ Record types are generated after plain types; this allows record types to contai
 <class>
 <name>Class Package</name>
 <documentation>Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -140,6 +152,7 @@ Supported annotations are:<br/>
 
 <tt>string: max <i>80</i></tt>; defines a bounded string.
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -148,6 +161,7 @@ Supported annotations are:<br/>
 <class>
 <name>Identified Class Package</name>
 <documentation>An Identified Class is implemented as a private child of the Domain package.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -156,6 +170,7 @@ Supported annotations are:<br/>
 <class>
 <name>Singleton Class Package</name>
 <documentation>An Internal Singleton Class is implemented as a private child of the Domain package.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -170,6 +185,7 @@ An Operation Unit is implemented as a child subprogram unit of the Class package
 When the Operation has a return value, the Operation Unit is implemented as a function; otherwise as a procedure.<br/>
 
 A default compilable body is generated, which if called will raise <tt>Program_Error</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -178,6 +194,7 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 <class>
 <name>Instance Operation Unit</name>
 <documentation>An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -186,6 +203,7 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 <class>
 <name>Class Operation Unit</name>
 <documentation>A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -194,6 +212,7 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 <class>
 <name>Identifier</name>
 <documentation>The Identifier of a Class (an Identified Class) uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -202,6 +221,7 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 <class>
 <name>Identifier Record</name>
 <documentation>An Identified Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -216,6 +236,7 @@ Attributes may be Plain or Identifying.<br/>
 Considering Relationships, Attributes may alternately be classified as Standard or Referential.<br/>
 
 These classifications are independent (a referential attribute may be plain or identifying, etc).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -228,6 +249,7 @@ These classifications are independent (a referential attribute may be plain or i
 An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.<br/>
 
 An (automatically-generated) referential attribute may also be identifying (eg, in an inheritance relationship).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -236,6 +258,7 @@ An (automatically-generated) referential attribute may also be identifying (eg, 
 <class>
 <name>Plain Attribute</name>
 <documentation>A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -244,6 +267,7 @@ An (automatically-generated) referential attribute may also be identifying (eg, 
 <class>
 <name>Get Accessor</name>
 <documentation>A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -253,6 +277,7 @@ An (automatically-generated) referential attribute may also be identifying (eg, 
 <name>Set Accessor</name>
 <documentation>A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
 <tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -261,6 +286,7 @@ An (automatically-generated) referential attribute may also be identifying (eg, 
 <class>
 <name>Handle</name>
 <documentation>The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -278,6 +304,7 @@ a <b>Type</b> (either standard, such as <tt>Integer</tt>, or as defined in one o
 optionally, a <b>Mode</b>, specified in a documentation annotation <tt>[[mode: <i>mode-spec</i>]]</tt>, where <tt><i>mode-spec</i></tt> is <tt>in</tt> (the default), <tt>out</tt>, or <tt>inout</tt><br/>
 
 optionally, a <b>Default</b> value.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -288,6 +315,7 @@ optionally, a <b>Default</b> value.</documentation>
 <documentation>A Parameter maps to a Param.<br/>
 
 The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents. Note that no semantic checks are made; it's the user's responsibility not to specify <tt>out</tt> or <tt>in out</tt> Modes for any parameter of a function, or a Default for a non-<tt>in</tt> Parameter.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -301,6 +329,7 @@ A particular collection is only a snapshot; the validity of a <tt>Handle</tt> de
 
 The Collections Package is an instantiation of the Abstract Containers Package.
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -309,6 +338,7 @@ The Collections Package is an instantiation of the Abstract Containers Package.
 <class>
 <name>Contents Function</name>
 <documentation>Each Identified Class Package has a Contents Function (<tt><i>Domain.Class</i>.All_Instances</tt>) which returns a Collection of references (<tt>Handle</tt>s) to all of the current Instances.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -319,6 +349,7 @@ The Collections Package is an instantiation of the Abstract Containers Package.
 <documentation>Each Identified Class Package has a generic Selection Function (<tt><i>Domain.Class</i>.Selection_Function</tt>) which returns a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances.<br/>
 
 The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -329,6 +360,7 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 <documentation>Each Identified Class Package has a generic Filter Function (<tt><i>Domain.Class</i>.Filter_Function</tt>) which, given  a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances, returns a Collection of those that match some criterion.<br/>
 
 The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -337,6 +369,7 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 <class>
 <name>Create Function</name>
 <documentation>Each Identified Class Package contains a <tt>Create</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the newly created  Instance record.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -345,6 +378,7 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 <class>
 <name>Find Function</name>
 <documentation>Each Identified Class Package contains a <tt>Find</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the corresponding Instance record or <tt>null</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -355,6 +389,7 @@ The generic parameter is a function which, given a <tt>Handle</tt>, determines w
 <documentation>Each Identified Class Package contains two <tt>Delete</tt> procedures.<br/>
 
 One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -363,6 +398,7 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <class>
 <name>Interface Class</name>
 <documentation>An Interface Class is one that provides functionality to external users (other Domains).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -371,6 +407,7 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <class>
 <name>Internal Singleton Class</name>
 <documentation>An Internal Singleton Class is a Singleton that (depending on the code generation strategy) isn't visible outside the Domain.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -379,6 +416,7 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 <class>
 <name>Interface Class Package</name>
 <documentation>An Interface Class is implemented as a publicly-visible child of the Domain package.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -390,6 +428,7 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 
 The prime functionality supplied is iteration over Containers.
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -406,8 +445,11 @@ The translation strategy for referential attributes is determined at code genera
 <li>implement the relationship in some third class.</li>
 </ul>
 
+ColdFrame's Ada generator inserts a pointer to the source Class (<tt><i>Domain.Class</i>.Handle</tt>).
+
 
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -416,6 +458,7 @@ The translation strategy for referential attributes is determined at code genera
 <class>
 <name>Standard Attribute</name>
 <documentation>A Standard Attribute does not assist in formalizing any Relationship.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -426,6 +469,7 @@ The translation strategy for referential attributes is determined at code genera
 <documentation>An Association relates two primary Classes.<br/>
 
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -434,6 +478,7 @@ The translation strategy for referential attributes is determined at code genera
 <class>
 <name>Simple Association</name>
 <documentation>A Simple Association has no Associative Class.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -445,7 +490,7 @@ The translation strategy for referential attributes is determined at code genera
 
 Often this is necessary to implement a many-to-many association, though it is also appropriate when there is imformation that only applies when the primary association exists; for example, even though Driver owns Vehicle is one-to-many, Excise Licence might be appropriate as an associative class for the association (since Date Of Issue has nowhere else to live).<br/>
 
-A convenient notation for associative associations is <i>desc-c-(desc-a:desc-b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
+A convenient notation for associative associations is <i>desc_c-(desc_a:desc_b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
 
 At present (12 May 2001) the following are <b>not</b> supported:<br/>
 
@@ -453,6 +498,7 @@ At present (12 May 2001) the following are <b>not</b> supported:<br/>
 1-(1:1c)<br/>
 1-(1c:1c)<br/>
 m-(anything)</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -465,16 +511,18 @@ m-(anything)</documentation>
 Often, specialization is used when different subtypes have different relationships.<br/>
 
 Normally, for each instance of a parent class, there is a corresponding instance of one of the child classes (so that, in a sense, the parent is abstract). A possible optimization is to omit code for child classes that don't have any attributes of their own, or which don't participate in any relationships of their own.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
 </class>
 <class>
-<name>AssociationPackage</name>
+<name>Association Package</name>
 <documentation>Each Association maps to an Association Package with the name <tt><i>Domain</i>.<i>Association</i></tt>.<br/>
 
 The package is private.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -491,6 +539,7 @@ The result, or result set, may be respectively null, or empty, depending on the 
 For an Association with an Associative Class, Navigation is also provided between either end of the Association and the Associative Class.<br/>
 
 Each Associative Navigation Operation comes in two overloadings, one from single instances and one from sets of instances. In the latter case, the result is a true set (each destination instance appears only once).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -499,6 +548,7 @@ Each Associative Navigation Operation comes in two overloadings, one from single
 <class>
 <name>Relationship</name>
 <documentation>A Relationship reflects some degree of interaction between a number of Classes.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -506,7 +556,8 @@ Each Associative Navigation Operation comes in two overloadings, one from single
 </class>
 <class>
 <name>Standard Type Specification</name>
-<documentation>A Standard Type Specification is aType Specification without the <tt>[[ callback ]]</tt> annotation.</documentation>
+<documentation>A Standard Type Specification is a Type Specification without the <tt>[[ callback ]]</tt> annotation.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -517,6 +568,7 @@ Each Associative Navigation Operation comes in two overloadings, one from single
 <documentation>A Callback Type Specification is a Type Specification with the <tt>[[ callback : <i>size</i> ]]</tt> annotation.<br/>
 
 Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -527,6 +579,7 @@ Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation
 <documentation>Each Callback Type Specification maps to a Callback Package, named <tt><i>Domain.Type</i>_Callback</tt>.<br/>
 
 The maximum number of concurrently registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -535,6 +588,7 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <class>
 <name>Associative Referential Attribute</name>
 <documentation></documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -543,6 +597,52 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <class>
 <name>Specialization Referential Attribute</name>
 <documentation>A Specialization Referential Attribute formalizes a Specialization. It always appears in the child class, and is the Identifier for that class (or, in the case of multiple inheritance, part of the identifier).</documentation>
+<cardinality>n</cardinality>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Forward Navigation Operation</name>
+<documentation></documentation>
+<cardinality>n</cardinality>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Reverse Navigation Operation</name>
+<documentation></documentation>
+<cardinality>n</cardinality>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Forward Associative Navigation Operation</name>
+<documentation></documentation>
+<cardinality>n</cardinality>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Reverse Associative Navigation Operation</name>
+<documentation></documentation>
+<cardinality>n</cardinality>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Association Collective Navigation Operation</name>
+<documentation></documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -983,24 +1083,7 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 </role>
 </association>
 <association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<associative>Association</associative>
-</association>
-<association>
-<name></name>
+<name>role c</name>
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
@@ -1011,7 +1094,7 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <role><end>2</end>
 <name>is associative class for</name>
 <classname>Associative Association</classname>
-<cardinality>1</cardinality>
+<cardinality>0..n</cardinality>
 <documentation></documentation>
 </role>
 </association>
@@ -1052,29 +1135,13 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
-<classname>AssociationPackage</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Association Navigation Operation</classname>
-<cardinality>n</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
 <classname>Domain Package</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
-<classname>AssociationPackage</classname>
+<classname>Association Package</classname>
 <cardinality>n</cardinality>
 <documentation></documentation>
 </role>
@@ -1112,92 +1179,156 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 </role>
 <associative>Specialization</associative>
 </association>
-<inheritance>
+<association>
+<name>role a</name>
+<documentation></documentation>
+<role><end>1</end>
 <name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Association</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name>role b</name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Association</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Association Collective Navigation Operation</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Association Navigation Operation</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Association Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Association Navigation Operation</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<inheritance>
+<name>operation kind</name>
 <documentation></documentation>
 <child>Class Operation</child>
 <parent>Operation</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>class kind</name>
 <documentation></documentation>
 <child>Identified Class</child>
 <parent>Class</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>class kind</name>
 <documentation></documentation>
 <child>Singleton Class</child>
 <parent>Class</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>operation kind</name>
 <documentation></documentation>
 <child>Instance Operation</child>
 <parent>Operation</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>class package kind</name>
 <documentation></documentation>
 <child>Identified Class Package</child>
 <parent>Class Package</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>class package kind</name>
 <documentation></documentation>
 <child>Singleton Class Package</child>
 <parent>Class Package</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>operation unit kind</name>
 <documentation></documentation>
 <child>Instance Operation Unit</child>
 <parent>Operation Unit</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>operation unit kind</name>
 <documentation></documentation>
 <child>Class Operation Unit</child>
 <parent>Operation Unit</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>attribute kind</name>
 <documentation></documentation>
 <child>Identifying Attribute</child>
 <parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>attribute kind</name>
 <documentation></documentation>
 <child>Plain Attribute</child>
 <parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>singleton kind</name>
 <documentation></documentation>
 <child>Interface Class</child>
 <parent>Singleton Class</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>singleton kind</name>
 <documentation></documentation>
 <child>Internal Singleton Class</child>
 <parent>Singleton Class</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>class package kind</name>
 <documentation></documentation>
 <child>Interface Class Package</child>
 <parent>Class Package</parent>
 </inheritance>
 <inheritance>
-<name>refer</name>
+<name>attribute kind</name>
 <documentation></documentation>
 <child>Referential Attribute</child>
 <parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name>refer</name>
+<name>attribute kind</name>
 <documentation></documentation>
 <child>Standard Attribute</child>
 <parent>Attribute</parent>
@@ -1227,13 +1358,13 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <parent>Relationship</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>type specification kind</name>
 <documentation></documentation>
 <child>Standard Type Specification</child>
 <parent>Type Specification</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>type specification kind</name>
 <documentation></documentation>
 <child>Callback Type Specification</child>
 <parent>Type Specification</parent>
@@ -1249,6 +1380,30 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 <child>Specialization Referential Attribute</child>
 <parent>Referential Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Forward Navigation Operation</child>
+<parent>Association Navigation Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Reverse Navigation Operation</child>
+<parent>Association Navigation Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Forward Associative Navigation Operation</child>
+<parent>Association Navigation Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Reverse Associative Navigation Operation</child>
+<parent>Association Navigation Operation</parent>
 </inheritance>
 </relationships>
 </domain>
