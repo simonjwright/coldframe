@@ -20,14 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-creation.ads,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: e447b4015a27 $
+--  $Date: 2002/02/23 13:39:27 $
 --  $Author: simon $
 
 package ColdFrame.Events.Creation is
 
    type Event (For_The_Instance : access Instance_Base'Class)
-   is new Event_Base with private;
+   is new Instance_Event_Base with private;
    --  Used to pass to the Initial state's Entry procedure. For other
    --  states, there's always an Event of some sort; whether it's the
    --  right sort of event for any entry Actions is another matter.
@@ -35,7 +35,7 @@ package ColdFrame.Events.Creation is
 private
 
    type Event (For_The_Instance : access Instance_Base'Class)
-   is new Event_Base (For_The_Instance) with null record;
+   is new Instance_Event_Base (For_The_Instance) with null record;
 
    procedure Handler (This : Event);
 
