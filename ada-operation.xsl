@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v ce3bfea5e888 2001/06/09 04:35:12 simon $ -->
+<!-- $Id: ada-operation.xsl,v eb942875673e 2001/06/19 18:44:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,7 +26,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
-  <!-- Generate child subprogram specs (but not access-to-operations). -->
+  <!-- Generate subprogram specs (but not access-to-operations). -->
   <xsl:template match="class/operation[not(@access)]" mode="operation-spec">
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="'  '"/>
@@ -37,7 +37,7 @@
   <xsl:template mode="operation-spec" match="*"/>
 
 
-  <!-- Generate child subprogram context. -->
+  <!-- Generate subprogram context. -->
   <!-- XXX at present, doesn't ensure there's only one of each -->
   <xsl:template match="class/operation" mode="operation-context">
 
@@ -75,7 +75,7 @@
   <xsl:template mode="operation-context" match="*"/>
 
 
-  <!-- Generate the body stubs of child operations (but not
+  <!-- Generate the body stubs of operations (but not
        access-to-operations, which are realized in the Class package).
        The bodies are compilable but generate Program_Error if called. -->
   <xsl:template
@@ -92,7 +92,7 @@
   <xsl:template mode="operation-body-stub" match="*"/>
 
 
-  <!-- Generate the separate bodies of child operations (but not
+  <!-- Generate the separate bodies of operations (but not
        access-to-operations, which are realized in the Class package,
        or procedure operations of active classes, which generate a
        call to the corresponding entry).
@@ -293,6 +293,11 @@
   <xsl:template name="default-value">
     <xsl:param name="type"/>
     <xsl:choose>
+
+      <!-- Date or Time -->
+      <xsl:when test="$type='Date' or $type='Time'">
+        <xsl:text>Clock</xsl:text>
+      </xsl:when>
 
       <!-- Ordinary string -->
       <xsl:when test="$type='String'">
