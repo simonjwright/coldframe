@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -30,11 +30,11 @@ with Ada.Real_Time;
 package body ColdFrame.Events_G.Standard_G is
 
 
-   procedure Post (The : Event_P;
+   procedure Post (The_Event : Event_P;
                    On : access Event_Queue) is
    begin
 
-      if The.all in Instance_Event_Base'Class then
+      if The_Event.all in Instance_Event_Base'Class then
 
          --  Remember, in the instance to which this event is
          --  directed, which event queue was used. This is so that
@@ -46,7 +46,7 @@ package body ColdFrame.Events_G.Standard_G is
          --  queue.
          declare
             I : Events_G.Instance_Base
-              renames Instance_Event_Base (The.all).For_The_Instance.all;
+              renames Instance_Event_Base (The_Event.all).For_The_Instance.all;
          begin
             if I.Events_Posted_On = null then
                I.Events_Posted_On := Event_Queue_P (On);
@@ -59,7 +59,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       end if;
 
-      On.The_Excluder.Post (The);
+      On.The_Excluder.Post (The_Event);
 
    end Post;
 
@@ -76,9 +76,9 @@ package body ColdFrame.Events_G.Standard_G is
 
          if not E.Invalidated then
 
-            Log_Pre_Dispatch (The => E, On => The_Queue);
+            Log_Pre_Dispatch (The_Event => E, On => The_Queue);
             Handler (E.all);
-            Log_Post_Dispatch (The => E, On => The_Queue);
+            Log_Post_Dispatch (The_Event => E, On => The_Queue);
 
          end if;
 
@@ -89,20 +89,20 @@ package body ColdFrame.Events_G.Standard_G is
    end Dispatcher;
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   At_Time : Time.Time) is
    begin
 
-      if The.The_Entry = null then
+      if The_Timer.The_Entry = null then
 
-         The.The_Entry := new Timer_Event;
-         The.The_Entry.On := Event_Queue_P (On);
-         The.The_Entry.Time_To_Fire := At_Time;
-         The.The_Entry.The_Event := Event_P (To_Fire);
-         The.The_Entry.The_Timer := The'Unrestricted_Access;
-         On.The_Timer_Manager.Append (The.The_Entry);
+         The_Timer.The_Entry := new Timer_Event;
+         The_Timer.The_Entry.On := Event_Queue_P (On);
+         The_Timer.The_Entry.Time_To_Fire := At_Time;
+         The_Timer.The_Entry.The_Event := Event_P (To_Fire);
+         The_Timer.The_Entry.The_Timer := The_Timer'Unrestricted_Access;
+         On.The_Timer_Manager.Append (The_Timer.The_Entry);
 
       else
 
@@ -116,13 +116,13 @@ package body ColdFrame.Events_G.Standard_G is
    end Set;
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
 
-      Set (The => The,
+      Set (The_Timer => The_Timer,
            On => On,
            To_Fire => To_Fire,
            At_Time => Time.From_Now (After));
@@ -130,12 +130,12 @@ package body ColdFrame.Events_G.Standard_G is
    end Set;
 
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue) is
       pragma Warnings (Off, On);
    begin
 
-      if The.The_Entry = null then
+      if The_Timer.The_Entry = null then
 
          Ada.Exceptions.Raise_Exception
            (Use_Error'Identity,
@@ -144,13 +144,13 @@ package body ColdFrame.Events_G.Standard_G is
       else
 
          --  Cancel the Event
-         The.The_Entry.The_Event.Invalidated := True;
+         The_Timer.The_Entry.The_Event.Invalidated := True;
 
          --  Indicate the Timer's already unset
-         The.The_Entry.The_Timer := null;
+         The_Timer.The_Entry.The_Timer := null;
 
          --  Unset the Timer
-         The.The_Entry := null;
+         The_Timer.The_Entry := null;
 
       end if;
 
@@ -171,15 +171,15 @@ package body ColdFrame.Events_G.Standard_G is
 
          if Timed_Event_Queues.Is_Empty (The_Events) then
 
-            accept Append (The : Timer_Queue_Entry_P) do
-               Timed_Event_Queues.Append (The_Events, The);
+            accept Append (The_Entry : Timer_Queue_Entry_P) do
+               Timed_Event_Queues.Append (The_Events, The_Entry);
             end Append;
 
          else
 
             select
-               accept Append (The : Timer_Queue_Entry_P) do
-                  Timed_Event_Queues.Append (The_Events, The);
+               accept Append (The_Entry : Timer_Queue_Entry_P) do
+                  Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
             or
@@ -243,19 +243,22 @@ package body ColdFrame.Events_G.Standard_G is
 
    protected body Excluder is
 
-      procedure Post (The : Event_P) is
+      procedure Post (The_Event : Event_P) is
       begin
-         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events, The);
+         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
+                                               The_Event);
       end Post;
 
-      entry Fetch (The : out Event_P)
+      entry Fetch (The_Event : out Event_P)
       when not Unbounded_Posted_Event_Queues.Is_Empty (The_Queue.The_Events) is
       begin
-         The := Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
+         The_Event :=
+           Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
          Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
       end Fetch;
 
-      procedure Invalidate (For_The_Instance : access Instance_Base'Class) is
+      procedure Invalidate_Events
+        (For_The_Instance : access Instance_Base'Class) is
          It : Abstract_Posted_Event_Containers.Iterator'Class
            := Unbounded_Posted_Event_Queues.New_Iterator
                 (The_Queue.The_Events);
@@ -275,12 +278,12 @@ package body ColdFrame.Events_G.Standard_G is
             end if;
             Next (It);
          end loop;
-      end Invalidate;
+      end Invalidate_Events;
 
    end Excluder;
 
 
-   procedure Invalidate
+   procedure Invalidate_Events
      (On : access Event_Queue;
       For_The_Instance : access Instance_Base'Class) is
    begin
@@ -296,9 +299,9 @@ package body ColdFrame.Events_G.Standard_G is
       --  processed in another entry of the Timer_Manager task).
 
       --  Next, tell the Excluder the same.
-      On.The_Excluder.Invalidate (For_The_Instance);
+      On.The_Excluder.Invalidate_Events (For_The_Instance);
 
-   end Invalidate;
+   end Invalidate_Events;
 
 
 end ColdFrame.Events_G.Standard_G;

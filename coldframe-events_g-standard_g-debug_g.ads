@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-debug_g.ads,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 generic
@@ -35,28 +35,28 @@ package ColdFrame.Events_G.Standard_G.Debug_G is
 
    type Event_Queue is new Standard_G.Event_Queue with private;
 
-   procedure Post (The : Event_P;
+   procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration);
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue);
 
 private
 
    type Event_Queue is new Standard_G.Event_Queue with null record;
 
-   procedure Log_Retraction (The : Event_P;
+   procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue);
 
-   procedure Log_Pre_Dispatch (The : Event_P;
+   procedure Log_Pre_Dispatch (The_Event : Event_P;
                                On : access Event_Queue);
 
-   procedure Log_Post_Dispatch (The : Event_P;
+   procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue);
 
 end ColdFrame.Events_G.Standard_G.Debug_G;

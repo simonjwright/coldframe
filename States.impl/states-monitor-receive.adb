@@ -5,5 +5,5 @@ procedure Receive
    E : ColdFrame.Project.Events.Event_P
      := new Monitor.Heartbeat (Find ((Dev => M.Payload)));
 begin
-   ColdFrame.Project.Events.Post (The => E, On => Events.Dispatcher);
+   ColdFrame.Project.Events.Post (The_Event => E, On => Events.Dispatcher);
 end Receive;

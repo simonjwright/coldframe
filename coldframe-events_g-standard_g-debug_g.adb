@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-debug_g.adb,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -31,18 +31,18 @@ with GNAT.IO; use GNAT.IO;
 package body ColdFrame.Events_G.Standard_G.Debug_G is
 
 
-   procedure Post (The : Event_P;
+   procedure Post (The_Event : Event_P;
                    On : access Event_Queue) is
    begin
 
-      Put_Line ("posting a " & Ada.Tags.Expanded_Name (The'Tag));
-      Standard_G.Post (The => The,
+      Put_Line ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
+      Standard_G.Post (The_Event => The_Event,
                        On => Standard_G.Event_Queue (On.all)'Access);
 
    end Post;
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
@@ -53,7 +53,7 @@ package body ColdFrame.Events_G.Standard_G.Debug_G is
                   & Ada.Tags.Expanded_Name (To_Fire.all'Tag)
                 & ", delay"
                   & After'Img);
-      Standard_G.Set (The => The,
+      Standard_G.Set (The_Timer => The_Timer,
                       On => Standard_G.Event_Queue (On.all)'Access,
                       To_Fire => To_Fire,
                       After => After);
@@ -61,67 +61,68 @@ package body ColdFrame.Events_G.Standard_G.Debug_G is
    end Set;
 
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue) is
 
    begin
 
-      if The.The_Entry = null then
+      if The_Timer.The_Entry = null then
          Ada.Exceptions.Raise_Exception
            (Use_Error'Identity,
             "attempt to unset a timer that wasn't set");
-      elsif The.The_Entry.The_Event = null then
+      elsif The_Timer.The_Entry.The_Event = null then
          Ada.Exceptions.Raise_Exception
            (Use_Error'Identity,
             "attempt to unset a timer from its own event handler");
       else
          Put_Line
            ("unsetting a Timer for a "
-              & Ada.Tags.Expanded_Name (The.The_Entry.The_Event.all'Tag));
+              & Ada.Tags.Expanded_Name
+                  (The_Timer.The_Entry.The_Event.all'Tag));
       end if;
 
-      Standard_G.Unset (The => The,
+      Standard_G.Unset (The_Timer => The_Timer,
                         On => Standard_G.Event_Queue (On.all)'Access);
 
    end Unset;
 
 
-   procedure Log_Retraction (The : Event_P;
+   procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue) is
       pragma Warnings (Off, On);
    begin
-      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The'Tag));
+      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
    end Log_Retraction;
 
 
-   procedure Log_Pre_Dispatch (The : Event_P;
+   procedure Log_Pre_Dispatch (The_Event : Event_P;
                                On : access Event_Queue) is
       pragma Warnings (Off, On);
    begin
-      if The.all in Instance_Event_Base'Class then
+      if The_Event.all in Instance_Event_Base'Class then
          Put_Line
            ("dispatching a "
-              & Ada.Tags.Expanded_Name (The'Tag)
+              & Ada.Tags.Expanded_Name (The_Event'Tag)
             & ": state "
               & State_Image
-              (Instance_Event_Base (The.all).For_The_Instance.all));
+              (Instance_Event_Base (The_Event.all).For_The_Instance.all));
       else
          Put_Line
            ("dispatching a "
-              & Ada.Tags.Expanded_Name (The'Tag));
+              & Ada.Tags.Expanded_Name (The_Event'Tag));
       end if;
    end Log_Pre_Dispatch;
 
 
-   procedure Log_Post_Dispatch (The : Event_P;
+   procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue) is
       pragma Warnings (Off, On);
    begin
-      if The.all in Instance_Event_Base'Class then
+      if The_Event.all in Instance_Event_Base'Class then
          Put_Line
            (".. new state "
               & State_Image
-              (Instance_Event_Base (The.all).For_The_Instance.all));
+              (Instance_Event_Base (The_Event.all).For_The_Instance.all));
       end if;
    end Log_Post_Dispatch;
 

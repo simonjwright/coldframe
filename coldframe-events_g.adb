@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -33,43 +33,44 @@ package body ColdFrame.Events_G is
    begin
       if The_Terminator.For_The_Instance.Events_Posted_On /= null then
          --  Some events have been posted on a Queue
-         Invalidate (On => The_Terminator.For_The_Instance.Events_Posted_On,
-                     For_The_Instance => The_Terminator.For_The_Instance);
+         Invalidate_Events
+           (On => The_Terminator.For_The_Instance.Events_Posted_On,
+            For_The_Instance => The_Terminator.For_The_Instance);
       end if;
    end Finalize;
 
 
-   procedure Invalidate
+   procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class) is
       pragma Warnings (Off, On);
       pragma Warnings (Off, For_The_Instance);
    begin
-      null;
-   end Invalidate;
+      raise Program_Error;
+   end Invalidate_Events;
 
 
-   procedure Log_Retraction (The : Event_P;
+   procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue_Base) is
-      pragma Warnings (Off, The);
+      pragma Warnings (Off, The_Event);
       pragma Warnings (Off, On);
    begin
       null;
    end Log_Retraction;
 
 
-   procedure Log_Pre_Dispatch (The : Event_P;
+   procedure Log_Pre_Dispatch (The_Event : Event_P;
                                On : access Event_Queue_Base) is
-      pragma Warnings (Off, The);
+      pragma Warnings (Off, The_Event);
       pragma Warnings (Off, On);
    begin
       null;
    end Log_Pre_Dispatch;
 
 
-   procedure Log_Post_Dispatch (The : Event_P;
+   procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue_Base) is
-      pragma Warnings (Off, The);
+      pragma Warnings (Off, The_Event);
       pragma Warnings (Off, On);
    begin
       null;
@@ -88,9 +89,9 @@ package body ColdFrame.Events_G is
 
       --  Handle the held event, unless it's been invalidated.
       if not The_Event.Invalidated then
-         Log_Pre_Dispatch (The => The_Event, On => This.On);
+         Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
          Handler (The_Event.all);
-         Log_Post_Dispatch (The => The_Event, On => This.On);
+         Log_Post_Dispatch (The_Event => The_Event, On => This.On);
       end if;
 
       --  Free the referenced memory (the outer dispatcher will free

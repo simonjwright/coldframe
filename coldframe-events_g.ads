@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -113,7 +113,7 @@ package ColdFrame.Events_G is
 
    type Event_Queue_P is access all Event_Queue_Base'Class;
 
-   procedure Post (The : Event_P;
+   procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
    --
@@ -132,7 +132,7 @@ package ColdFrame.Events_G is
    --  perhaps, when the thing being timed out has actually occurred).
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   At_Time : Time.Time) is abstract;
@@ -141,13 +141,13 @@ package ColdFrame.Events_G is
 
    subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is abstract;
    --  May raise Use_Error (if the Timer is already set)
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue_Base) is abstract;
    --  May raise Use_Error (if the Timer is already unset)
 
@@ -202,7 +202,7 @@ private
 
    type Event_Queue_Base is abstract tagged limited null record;
 
-   procedure Invalidate
+   procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
 
@@ -210,13 +210,13 @@ private
    --  Operations to support debug/logging. The implementation here
    --  is null.
 
-   procedure Log_Retraction (The : Event_P;
+   procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue_Base);
 
-   procedure Log_Pre_Dispatch (The : Event_P;
+   procedure Log_Pre_Dispatch (The_Event : Event_P;
                                On : access Event_Queue_Base);
 
-   procedure Log_Post_Dispatch (The : Event_P;
+   procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue_Base);
 
 

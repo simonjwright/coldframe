@@ -14,7 +14,7 @@ begin
       E := new Monitor.Tick;
       Monitor.Tick (E.all).Payload := Input;
       Put_Line ("generating input Tick");
-      ColdFrame.Project.Events.Post (The => E, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Post (The_Event => E, On => Events.Dispatcher);
    end loop;
    Put_Line ("4 second gap in input Tick");
    delay 4.0;
@@ -23,7 +23,7 @@ begin
       E := new Monitor.Tick;
       Monitor.Tick (E.all).Payload := Input;
       Put_Line ("generating input Tick");
-      ColdFrame.Project.Events.Post (The => E, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Post (The_Event => E, On => Events.Dispatcher);
    end loop;
    Put_Line ("stopping input Tick");
 end States.T;

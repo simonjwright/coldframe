@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: cc2d36d988d5 $
---  $Date: 2002/03/22 05:57:51 $
+--  $Revision: 39232e97cf74 $
+--  $Date: 2002/04/12 18:59:39 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -38,20 +38,20 @@ package ColdFrame.Events_G.Standard_G is
 
    type Event_Queue is new Event_Queue_Base with private;
 
-   procedure Post (The : Event_P;
+   procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   At_Time : Time.Time);
 
-   procedure Set (The : in out Timer;
+   procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration);
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue);
 
 
@@ -84,8 +84,6 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-      pragma Priority (16);
-
    end Dispatcher;
 
 
@@ -95,7 +93,7 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-      entry Append (The : Timer_Queue_Entry_P);
+      entry Append (The_Entry : Timer_Queue_Entry_P);
 
       entry Invalidate (For_The_Instance : Instance_Base_P);
       --  Marks all the events on the queue which are for
@@ -112,14 +110,15 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-      procedure Post (The : Event_P);
+      procedure Post (The_Event : Event_P);
       --  Post an event.
 
-      entry Fetch (The : out Event_P);
+      entry Fetch (The_Event : out Event_P);
       --  Blocks until there is an event on the queue; when one is found,
       --  removes it from the queue and sets "The".
 
-      procedure Invalidate (For_The_Instance : access Instance_Base'Class);
+      procedure Invalidate_Events
+        (For_The_Instance : access Instance_Base'Class);
       --  Marks all the events on the queue which are for
       --  For_The_Instance as invalid, so they won't be actioned when
       --  Fetched.
@@ -134,7 +133,7 @@ private
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);
    end record;
 
-   procedure Invalidate
+   procedure Invalidate_Events
      (On : access Event_Queue;
       For_The_Instance : access Instance_Base'Class);
 
