@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v a41454a91c12 2001/01/30 19:44:36 simon $ -->
+<!-- $Id: generate-ada.xsl,v e370accd7e2e 2001/02/01 20:04:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -212,13 +212,7 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
 
-    <!-- .. the class Key Letter ..
-    <xsl:text>  Key : constant String := &quot;</xsl:text>
-    <xsl:value-of select="key"/>
-    <xsl:text>&quot;;&#10;</xsl:text>
-    -->
-
-    <xsl:if test="attribute">
+    <xsl:if test="attribute/@identifier">
 
       <!-- .. the Identifier record .. -->
       <xsl:call-template name="identifier-record"/>
@@ -247,37 +241,48 @@
         <xsl:text>  function Get_Child_Class (This : Handle) return Child_Class;&#10;</xsl:text>
       </xsl:if>
 
-      <!-- .. the attribute access operations .. -->
-      <xsl:apply-templates mode="attribute-set-spec"/>
-      <xsl:apply-templates mode="attribute-get-spec"/>
-
     </xsl:if>
 
-    <xsl:if test="attribute">
+    <!-- .. the attribute access operations .. -->
+    <xsl:apply-templates mode="attribute-set-spec"/>
+    <xsl:apply-templates mode="attribute-get-spec"/>
 
-      <!-- .. the private part .. -->
-      <xsl:text>private&#10;</xsl:text>
+    <!-- .. the private part .. -->
+    <xsl:text>private&#10;</xsl:text>
+    
+    <xsl:choose>    
+ 
+      <!-- if there is an identifier, there can be multiple instances -->
+      <xsl:when test="attribute/@identifier">
 
-      <!-- .. the Instance record .. -->
-      <xsl:call-template name="instance-record">
-        <xsl:with-param name="is-supertype" select="$is-supertype"/>
-      </xsl:call-template>
+        <!-- .. the Instance record .. -->
+        <xsl:call-template name="instance-record">
+          <xsl:with-param name="is-supertype" select="$is-supertype"/>
+        </xsl:call-template>
+        
+        <!-- .. the Hash function spec .. -->
+        <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
+        
+        <!-- .. Container instantiations .. -->
+        <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Identifier);&#10;</xsl:text>
+        <xsl:text>  package Maps is new Abstract_Maps.Dynamic&#10;</xsl:text>
+        <xsl:text>     (Hash => Hash,&#10;</xsl:text>
+        <xsl:text>      Buckets => 43,&#10;</xsl:text>
+        <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
+        <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        
+        <!-- .. the instance container .. -->
+        <xsl:text>  The_Container : Maps.Map;&#10;</xsl:text>
+        
+      </xsl:when>
 
-      <!-- .. the Hash function spec .. -->
-      <xsl:text>  function Hash (Id : Identifier) return Natural;&#10;</xsl:text>
+      <!-- if there is no identifier, there can only be one instance -->
+      <xsl:when test="attribute">
+        <xsl:call-template name="instance-record"/>
+        <xsl:text>  This : Instance;&#10;</xsl:text>
+      </xsl:when>
 
-      <!-- .. Container instantiations .. -->
-      <xsl:text>  package Abstract_Maps is new Abstract_Containers.Maps (Identifier);&#10;</xsl:text>
-      <xsl:text>  package Maps is new Abstract_Maps.Dynamic&#10;</xsl:text>
-      <xsl:text>     (Hash => Hash,&#10;</xsl:text>
-      <xsl:text>      Buckets => 43,&#10;</xsl:text>
-      <xsl:text>      Storage_Manager => Architecture.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-      <xsl:text>      Storage => Architecture.Global_Storage_Pool.Pool);&#10;</xsl:text>
-
-      <!-- .. the instance container .. -->
-      <xsl:text>  The_Container : Maps.Map;&#10;</xsl:text>
-
-    </xsl:if>
+    </xsl:choose>
 
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
@@ -300,7 +305,7 @@
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:if test="attribute">
+    <xsl:if test="attribute/@identifier">
 
       <!-- We need access to the standard heap storage pool. This is
            a GNAT special. -->
@@ -339,7 +344,14 @@
     <!-- Get function -->
     <xsl:text>  function Get_</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text> (This : Handle) return </xsl:text>
+
+    <!-- If there's an Identifier, this isn't a singleton, so we need a
+         handle parameter -->
+    <xsl:if test="../attribute/@identifier">
+      <xsl:text> (This : Handle)</xsl:text>
+    </xsl:if>
+
+    <xsl:text> return </xsl:text>
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
@@ -357,7 +369,15 @@
     <!-- Set procedure -->
     <xsl:text>  procedure Set_</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text> (This : Handle; To_Be : </xsl:text>
+    <xsl:text> (</xsl:text>
+
+    <!-- If there's an Identifier, this isn't a singleton, so we need a
+         handle parameter -->
+    <xsl:if test="../attribute/@identifier">
+      <xsl:text>This : Handle; </xsl:text>
+    </xsl:if>
+
+    <xsl:text>To_Be : </xsl:text>
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
@@ -387,7 +407,7 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
       
-      <xsl:if test="attribute">
+      <xsl:if test="attribute/@identifier">
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
@@ -397,7 +417,6 @@
         <xsl:apply-templates
           select="attribute[@identifier='yes']"
           mode="identifier-element-assignment"/>
-        <xsl:text>    -- need to initialize Result?&#10;</xsl:text>
         <xsl:text>    Maps.Bind (The_Container, With_Identifier, Result);&#10;</xsl:text>
         <xsl:text>    return Result;&#10;</xsl:text>
         <xsl:text>  end Create;&#10;</xsl:text>
@@ -444,13 +463,13 @@
           <xsl:text>  end Get_Child_Class;&#10;</xsl:text>
         </xsl:if>
         
-        <!-- .. attribute accessors .. -->
-        <xsl:apply-templates mode="attribute-set-body"/>
-        <xsl:apply-templates mode="attribute-get-body"/>
-        
       </xsl:if>
       
-      <xsl:if test="attribute">
+      <!-- .. attribute accessors .. -->
+      <xsl:apply-templates mode="attribute-set-body"/>
+      <xsl:apply-templates mode="attribute-get-body"/>
+        
+      <xsl:if test="attribute/@identifier">
         
         <!-- .. the hash function stub .. -->
         <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
@@ -462,7 +481,7 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
 
-      <xsl:if test="attribute">
+      <xsl:if test="attribute/@identifier">
         
         <!-- Output the separate hash function body. -->
         <xsl:call-template name="hash-function"/>
@@ -501,7 +520,14 @@
     <!-- Get function -->
     <xsl:text>  function Get_</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text> (This : Handle) return </xsl:text>
+
+    <!-- If there's an Identifier, this isn't a singleton, so we need a
+         handle parameter -->
+    <xsl:if test="../attribute/@identifier">
+      <xsl:text> (This : Handle)</xsl:text>
+    </xsl:if>
+
+    <xsl:text> return </xsl:text>
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
@@ -526,7 +552,15 @@
     <!-- Set procedure -->
     <xsl:text>  procedure Set_</xsl:text>
     <xsl:value-of select="name"/>
-    <xsl:text> (This : Handle; To_Be : </xsl:text>
+    <xsl:text> (</xsl:text>
+
+    <!-- If there's an Identifier, this isn't a singleton, so we need a
+         handle parameter -->
+    <xsl:if test="../attribute/@identifier">
+      <xsl:text>This : Handle; </xsl:text>
+    </xsl:if>
+
+    <xsl:text>To_Be : </xsl:text>
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
@@ -642,8 +676,8 @@
 
 
   <!-- Called to generate Collection support packages (only for
-       classes with at least one Attribute). -->
-  <xsl:template match="object[attribute]" mode="collection-support">
+       classes with at least one Identifying Attribute). -->
+  <xsl:template match="object[attribute/@identifier]" mode="collection-support">
     <xsl:apply-templates select="." mode="collection-support-spec"/>
     <xsl:apply-templates select="." mode="collection-support-body"/>
   </xsl:template>
@@ -810,13 +844,14 @@
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
-         the Class has no attributes, all operations are class
-         operations, otherwise it depends on the class attribute. -->
-    <xsl:if test="parameter or (../attributes and not(@class='yes'))">
+         the Class has no Identifier attributes, all operations are
+         class operations, otherwise it depends on the class attribute. -->
+    <xsl:if
+      test="parameter or (../attribute/@identifier and not(@class='yes'))">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:text>  (</xsl:text>
-      <xsl:if test="../attribute and not(@class='yes')">
+      <xsl:if test="../attribute/@identifier and not(@class='yes')">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10;   </xsl:text>
@@ -968,6 +1003,10 @@
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
     </xsl:call-template>
+    <xsl:if test="initial">
+      <xsl:text> := </xsl:text>
+      <xsl:value-of select="initial"/>
+    </xsl:if>
     <xsl:text>;</xsl:text>
     <xsl:if test="@identifier or @referential">
       <xsl:text>  --</xsl:text>
