@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 4f6749da1de1 $
---  $Date: 2005/02/26 11:34:00 $
+--  $Revision: c9852f38f0c1 $
+--  $Date: 2005/02/26 11:58:03 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -70,7 +70,7 @@ package body ColdFrame.Stubs is
 
 
    --  For Inputs, we need plain collections of Memory Streams (there
-   --  will be an input for each occurrence).
+   --  will be an input for each call).
    package Abstract_Stream_Pointer_Containers
    is new BC.Containers (Item => Stream_Pointers.Pointer,
                          "=" => Stream_Pointers."=");
@@ -233,13 +233,14 @@ package body ColdFrame.Stubs is
    procedure Set_Output_Value (For_Subprogram_Named : String;
                                For_Parameter_Named : String;
                                To : T;
-                               For_Occurrence : Positive := 1) is
-      use type Ada.Streams.Stream_Element_Offset;
+                               For_Call : Positive := 1;
+                               Overhead_Bytes : Natural := Storage_Overhead) is
+      subtype SEO is Ada.Streams.Stream_Element_Offset;
+--        use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
-      Size : constant Ada.Streams.Stream_Element_Offset
-        := (To'Size + 7) / 8 + 64;  --  the 64 is a guess for constraints.
+      Size : constant SEO := SEO ((To'Size + 7) / 8 + Overhead_Bytes);
       Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type (Size));
@@ -254,7 +255,7 @@ package body ColdFrame.Stubs is
       end if;
       Sparse_Stream_Pointer_Collections.Append
         (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all,
-         Output_Cell'(Ordinal => For_Occurrence,
+         Output_Cell'(Ordinal => For_Call,
                       Stream => Str,
                       Copy => Stream_Pointers.Create
                         (new BC.Support.Memory_Streams.Stream_Type (Size))));
@@ -264,7 +265,7 @@ package body ColdFrame.Stubs is
 
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
-                            For_Occurrence : Positive := 1) is
+                            For_Call : Positive := 1) is
       SEU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       Coll : Sparse_Exception_Collection_Pointers.Pointer;
@@ -278,14 +279,22 @@ package body ColdFrame.Stubs is
       end if;
       Sparse_Exception_Collections.Append
         (Sparse_Exception_Collection_Pointers.Value (Coll).all,
-         (Ordinal => For_Occurrence,
+         (Ordinal => For_Call,
           E => E));
    end Set_Exception;
 
 
+   function Number_Of_Calls (For_Subprogram_Named : String) return Natural is
+      S : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
+   begin
+      return Unbounded_String_Bags.Count (Entries, S);
+   end Number_Of_Calls;
+
+
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
-                             For_Occurrence : Positive := 1) return T is
+                             For_Call : Positive := 1) return T is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
@@ -307,7 +316,7 @@ package body ColdFrame.Stubs is
          Str : BSMS.Stream_Type
            renames BSMS.Stream_Type (Stream_Pointers.Value
                                        (Stream_Pointer_Collections.Item_At
-                                          (Pointers, For_Occurrence)).all);
+                                          (Pointers, For_Call)).all);
          Copy : aliased BSMS.Stream_Type
            (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
       begin
@@ -334,16 +343,17 @@ package body ColdFrame.Stubs is
    function Get_Input_Value_Stream
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
-      For_Occurrence : Positive;
-      Size_In_Bits : Natural)
+      For_Call : Positive;
+      Size_In_Bits : Natural;
+      Overhead_Bytes : Natural := Storage_Overhead)
      return Stream_Access is
-      use type Ada.Streams.Stream_Element_Offset;
+      subtype SEO is Ada.Streams.Stream_Element_Offset;
+--        use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
-      Size : constant Ada.Streams.Stream_Element_Offset
-        := (Ada.Streams.Stream_Element_Offset (Size_In_Bits) + 7) / 8 + 64;
-      --  the 64 is a guess for constraints.
+      Size : constant SEO
+        := SEO ((Size_In_Bits + 7) / 8 + Overhead_Bytes);
       Str : Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type (Size));
@@ -357,10 +367,10 @@ package body ColdFrame.Stubs is
          Coll := Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU);
       end if;
       pragma Assert
-        (For_Occurrence =
+        (For_Call =
          Stream_Pointer_Collections.Length
          (Stream_Pointer_Collection_Pointers.Value (Coll).all) + 1,
-         "mismatch in number of occurrences");
+         "mismatch in number of calls");
       Stream_Pointer_Collections.Append
         (Stream_Pointer_Collection_Pointers.Value (Coll).all, Str);
       return Stream_Pointers.Value (Str);
@@ -368,7 +378,7 @@ package body ColdFrame.Stubs is
 
 
    procedure Check_For_Exception (For_Subprogram_Named : String;
-                                  For_Occurrence : Positive) is
+                                  For_Call : Positive) is
       SEU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
    begin
@@ -385,7 +395,7 @@ package body ColdFrame.Stubs is
       begin
          while not Is_Done (It)
          loop
-            if Current_Item (It).Ordinal <= For_Occurrence then
+            if Current_Item (It).Ordinal <= For_Call then
                Ada.Exceptions.Raise_Exception
                  (Current_Item (It).E, "from stub");
                exit;  --  in case it was a null exception
@@ -399,7 +409,7 @@ package body ColdFrame.Stubs is
    function Get_Output_Value_Stream
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
-      For_Occurrence : Positive)
+      For_Call : Positive)
      return Stream_Access is
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
@@ -420,7 +430,7 @@ package body ColdFrame.Stubs is
       begin
          while not Is_Done (It)
          loop
-            if Current_Item (It).Ordinal <= For_Occurrence then
+            if Current_Item (It).Ordinal <= For_Call then
                --  We have to give the user a copy of the memory
                --  stream to get the result from, otherwise she'll get
                --  an End_Error if she reads it more than once.

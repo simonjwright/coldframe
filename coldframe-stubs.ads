@@ -20,14 +20,23 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 4f6749da1de1 $
---  $Date: 2005/02/26 11:34:00 $
+--  $Revision: c9852f38f0c1 $
+--  $Date: 2005/02/26 11:58:03 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Streams;
 
 package ColdFrame.Stubs is
+
+
+   --  Values are stored using Streams. For most uses, the space
+   --  required for the streamed representation will be less than that
+   --  for the in-store representation; however, for indefinite types,
+   --  there is an additional overhead required to specify the actual
+   --  object's constraints. This value should be enough for all but
+   --  extreme cases.
+   Storage_Overhead : constant := 128;
 
 
    -------------------------------
@@ -55,22 +64,26 @@ package ColdFrame.Stubs is
    --
    --  Normally the named parameter will be an "out" (perhaps "in
    --  out") parameter. The specified "To" value will be returned on
-   --  the "For_Occurrence"th call, and all subsequent calls until
-   --  another "Set_Output_Value" call for the same parameter; if you
-   --  want to have the first 4 calls to Domain.Class.Operation to set
-   --  Output to 4, and any later ones to set it to 42, you'd say
+   --  the "For_Call"th call, and all subsequent calls until another
+   --  "Set_Output_Value" call for the same parameter; if you want to
+   --  have the first 4 calls to Domain.Class.Operation to set Output
+   --  to 4, and any later ones to set it to 42, you'd say
    --
    --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
    --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
    --
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
+   --
+   --  Overhead_Bytes is the additional space reserved for the
+   --  streamed representation.
    generic
       type T (<>) is private;
    procedure Set_Output_Value (For_Subprogram_Named : String;
                                For_Parameter_Named : String;
                                To : T;
-                               For_Occurrence : Positive := 1);
+                               For_Call : Positive := 1;
+                               Overhead_Bytes : Natural := Storage_Overhead);
 
 
    --  Specify that a call to a stubbed operation is to raise an
@@ -80,12 +93,16 @@ package ColdFrame.Stubs is
    --  name of the subprogram (eg, if dealing with procedure
    --  Domain.Class.Operation, "Domain.Class.Operation").
    --
-   --  Normally the exception will be raised for the named occurrence
-   --  and all later occurrences; to stop this, use
-   --  Ada.Exceptions.Null_Id.
+   --  Normally the exception will be raised for the specified call
+   --  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
-                            For_Occurrence : Positive := 1);
+                            For_Call : Positive := 1);
+
+
+   --  Retrieve the number of calls made to the named subprogram.
+   function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
+
 
    --  Retrieve values passed to stubbed operations for the type T.
    --
@@ -102,7 +119,7 @@ package ColdFrame.Stubs is
       type T (<>) is private;
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
-                             For_Occurrence : Positive := 1) return T;
+                             For_Call : Positive := 1) return T;
 
 
    -----------------------------------------------------------------
@@ -119,24 +136,26 @@ package ColdFrame.Stubs is
    --  For_Subprogram_Named is the case-insensitive fully-qualified
    --  name of the subprogram.
    --
-   --  Returns the occurrence number (the number of times the
-   --  subprogram has been called since the last Tear_Down, including
-   --  this call).
+   --  Returns the call number (the number of times the subprogram has
+   --  been called since the last Tear_Down, including this call).
    function Note_Entry (For_Subprogram_Named : String) return Positive;
 
 
-   --  Called to get the stream into which the For_Occurrence'th input
-   --  value of For_Parameter_Named for the subprogram
-   --  For_Subprogram_Named is to be stored, using type-name'Output.
+   --  Called to get the stream into which the For_Call'th input value
+   --  of For_Parameter_Named for the subprogram For_Subprogram_Named
+   --  is to be stored, using type-name'Output.
    --
-   --  Max_Size_In_Storage_Elements is the size of stream required; as
-   --  hinted by the name, the attribute 'Max_Size_In_Storage_Elements
+   --  Size_In_Bits is the size of the object to be streamed; 'Size
    --  will do.
+   --
+   --  Overhead_Bytes is the additional space reserved for the
+   --  streamed representation.
    function Get_Input_Value_Stream
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
-      For_Occurrence : Positive;
-      Size_In_Bits : Natural)
+      For_Call : Positive;
+      Size_In_Bits : Natural;
+      Overhead_Bytes : Natural := Storage_Overhead)
      return Stream_Access;
 
 
@@ -146,11 +165,11 @@ package ColdFrame.Stubs is
    --  Exceptions are to be stored by using Set_Output_Value with an
    --  Exception_ID and the special parameter name "exception".
    procedure Check_For_Exception (For_Subprogram_Named : String;
-                                  For_Occurrence : Positive);
+                                  For_Call : Positive);
 
 
    --  Called (after all input values have been saved and exceptions
-   --  checked for) to get the stream from which the For_Occurrence'th
+   --  checked for) to get the stream from which the For_Call'th
    --  output value of For_Parameter_Named for the subprogram
    --  For_Subprogram_Named is to be retrieved, using type-name'Input.
    --
@@ -159,7 +178,7 @@ package ColdFrame.Stubs is
    --  "return".
    function Get_Output_Value_Stream (For_Subprogram_Named : String;
                                      For_Parameter_Named : String;
-                                     For_Occurrence : Positive)
+                                     For_Call : Positive)
                                     return Stream_Access;
 
 
