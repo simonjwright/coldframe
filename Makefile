@@ -50,7 +50,6 @@ TCLXML = /usr/local/lib/tclxml-2.1theta
 
 SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
-ESCAPE_MARKUP_SCRIPT = escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
@@ -76,15 +75,14 @@ OTHER_SCRIPTS = create-build-directories \
   split-csv.tcl \
   make-build.tcl
 
-%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@echo generating $@ ...
-	@$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
-	  TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
+	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing $(CASE_EXCEPTIONS) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
 	    --version cf-DATE \
-	    >$@ || (rm -f $@; exit 1)
+	    <$< >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
 	@echo generating $@ ...
@@ -280,7 +278,6 @@ TOOL_SRC = generated_lines.adb \
 
 PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
-  escape-markup.awk \
   normalize-rose.tcl \
   cf-banner.el \
   $(HTMLGEN_SCRIPT) \
