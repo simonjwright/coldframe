@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: b7357f963756 $
---  $Date: 2003/03/09 19:41:10 $
+--  $Revision: 8d2de5ca6a52 $
+--  $Date: 2003/03/16 12:19:08 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -371,9 +371,11 @@ private
    --
    --  This is so that we can tell when the event is actually dispatched,
    --  in case the user Unsets the Timer.
-   type Timer_Event (On_Timer : Boolean) is new Event_Base with record
+   type Timer_Event (Kind : Time.Time_Kind;
+                     On_Timer : Boolean)
+   is new Event_Base with record
       On : Event_Queue_P;
-      Time_To_Fire : Time.Time;
+      Time_To_Fire : Time.Time (Kind => Kind);
       The_Event : Event_P;
       The_Timer : Timer_P;  -- null if the Timer has been deleted, or no Timer
    end record;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 32c27bda109e $
---  $Date: 2003/03/15 19:58:31 $
+--  $Revision: 8d2de5ca6a52 $
+--  $Date: 2003/03/16 12:19:08 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -109,7 +109,8 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TEP : constant Event_P := new Timer_Event (On_Timer => False);
+      TEP : constant Event_P := new Timer_Event (Kind => To_Fire_At.Kind,
+                                                 On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
@@ -131,7 +132,8 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
-      TEP : constant Event_P := new Timer_Event (On_Timer => False);
+      TEP : constant Event_P := new Timer_Event (Kind => Time.Real_Time,
+                                                 On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
@@ -216,7 +218,8 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Add_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (On_Timer => True);
+         The_Timer.The_Entry := new Timer_Event (Kind => At_Time.Kind,
+                                                 On_Timer => True);
          declare
             TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
          begin
@@ -254,7 +257,8 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Add_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (On_Timer => True);
+         The_Timer.The_Entry := new Timer_Event (Kind => Time.Real_Time,
+                                                 On_Timer => True);
          declare
             TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
          begin
