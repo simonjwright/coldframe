@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 423e63f40424 2004/07/22 19:48:36 simon $ -->
+<!-- $Id: event-modelling.html,v 27223cbed5e6 2004/10/27 05:28:31 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -218,10 +218,13 @@ concerned, and the actual payload will be passed at run time. This
 means that if you use this feature, all the events that cause entry to
 the state must carry the same payload type.
 
-<p>You can use <tt>Delete</tt> as an entry action (ColdFrame doesn't
-check that it's in a <i>final</i> state). Of course, it needs to be
-the <em>last</em> action. <em>Don't</em> delete the instance in any
-other action.
+<p>You can use the implicitly-generated <tt>Delete</tt> operation as
+an entry action (ColdFrame doesn't check that it's in a <i>final</i>
+state). Of course, it needs to be the <em>last</em> action.
+
+<p>If you need to delete the instance in any other action operation,
+you must mark the operation <em>&#171;final&#187;</em>. A
+&#171;final&#187; operation <em>must</em> delete the instance.
 
 <p>The instance attribute <i>timeout</i>, of the ColdFrame-special
 type <i>Timer</i>, is used to hold timeouts. The concept of operation
