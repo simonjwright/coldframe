@@ -4,12 +4,12 @@
 <date>
 <year>2004</year>
 <month>5</month>
-<day>1</day>
-<time>15:40</time>
+<day>5</day>
+<time>21:35</time>
 </date>
 <documentation><![CDATA[Regression tests that involve detecting errors.
 
-{ revision = $Revision: b291368dc4f8 $ }]]></documentation>
+{ revision = $Revision: 79de18bf3d90 $ }]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -571,6 +571,26 @@
 </operation>
 <operation stereotype="finalize, abstract">
 <name>is abstract</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Bad Singleton Finalization</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[]]></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="finalize">
+<name>f</name>
 <visibility>PublicAccess</visibility>
 <documentation><![CDATA[]]></documentation>
 <parameters>

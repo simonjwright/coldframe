@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve detecting errors.
 |
-|{ revision = $Revision: 34bfcc5a90d4 $ }
+|{ revision = $Revision: 79de18bf3d90 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -576,7 +576,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1275
-					label      	"$Id: Bad_Code_Regressions.cat,v 34bfcc5a90d4 2004/04/24 20:27:40 simon $"))))))
+					label      	"$Id: Bad_Code_Regressions.cat,v 79de18bf3d90 2004/05/05 20:35:33 simon $"))))))
 		(object Class "Instance Deletion"
 		    quid       	"4038F01403C7"
 		    operations 	(list Operations
@@ -930,7 +930,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1420
-					label      	"$Id: Bad_Code_Regressions.cat,v 34bfcc5a90d4 2004/04/24 20:27:40 simon $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 79de18bf3d90 2004/05/05 20:35:33 simon $")
 				    (object TransView "" @27
 					stereotype 	TRUE
 					line_color 	3342489
@@ -2353,7 +2353,17 @@
 			(object ClassAttribute "id"
 			    quid       	"40701E120052"
 			    stereotype 	"id"
-			    type       	"Autonumber"))))
+			    type       	"Autonumber")))
+		(object Class "Bad Singleton Finalization"
+		    quid       	"40994E01020D"
+		    stereotype 	"singleton"
+		    operations 	(list Operations
+			(object Operation "f"
+			    quid       	"40994E1A005B"
+			    stereotype 	"finalize"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"40701D7703A2"
@@ -2391,8 +2401,82 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40701DFA010C"
+			    compartment 	(object Compartment
+				Parent_View 	@75
+				location   	(199, 322)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	723)
 			    width      	744
 			    height     	348
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegal finalize operations::Bad Singleton Finalization" @76
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(513, 1005)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@76
+				location   	(242, 952)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	542
+				justify    	0
+				label      	"Bad Singleton Finalization")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@76
+				location   	(242, 907)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	542
+				justify    	0
+				label      	"<<singleton>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"40994E01020D"
+			    compartment 	(object Compartment
+				Parent_View 	@76
+				location   	(242, 1008)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	295)
+			    width      	560
+			    height     	218
 			    annotation 	8
 			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
@@ -2402,7 +2486,7 @@
 	    documentation 	
 |Regression tests that involve detecting errors at the code generation stage..
 |
-|{ revision = $Revision: 34bfcc5a90d4 $ }
+|{ revision = $Revision: 79de18bf3d90 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2410,7 +2494,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Bad Code Regressions" @76
+		(object CategoryView "Logical View::Bad Code Regressions" @77
 		    location   	(2721, 228)
 		    font       	(object Font
 			size       	10
@@ -2422,7 +2506,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@76
+			Parent_View 	@77
 			location   	(2551, 144)
 			fill_color 	13434879
 			nlines     	2
@@ -2435,7 +2519,7 @@
 		    quidu      	"3F6738F4023A"
 		    width      	352
 		    height     	180)
-		(object Label @77
+		(object Label @78
 		    location   	(162, 93)
 		    font       	(object Font
 			size       	10
@@ -2448,8 +2532,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1425
-		    label      	"$Id: Bad_Code_Regressions.cat,v 34bfcc5a90d4 2004/04/24 20:27:40 simon $")
-		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @78
+		    label      	"$Id: Bad_Code_Regressions.cat,v 79de18bf3d90 2004/05/05 20:35:33 simon $")
+		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @79
 		    location   	(453, 410)
 		    font       	(object Font
 			size       	10
@@ -2461,7 +2545,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@78
+			Parent_View 	@79
 			location   	(97, 371)
 			fill_color 	13434879
 			nlines     	2
@@ -2469,7 +2553,7 @@
 			justify    	0
 			label      	"The parent and the child have specified an operation with different profiles")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@78
+			Parent_View 	@79
 			location   	(97, 326)
 			fill_color 	13434879
 			anchor     	10
@@ -2483,7 +2567,7 @@
 		    quidu      	"40561368026C"
 		    width      	724
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @79
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @80
 		    location   	(317, 713)
 		    font       	(object Font
 			size       	10
@@ -2495,7 +2579,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@79
+			Parent_View 	@80
 			location   	(103, 674)
 			fill_color 	13434879
 			nlines     	2
@@ -2503,7 +2587,7 @@
 			justify    	0
 			label      	"Various illegalities in a state machine")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@79
+			Parent_View 	@80
 			location   	(103, 629)
 			fill_color 	13434879
 			anchor     	10
@@ -2517,7 +2601,7 @@
 		    quidu      	"405613970115"
 		    width      	440
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @80
+		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @81
 		    location   	(298, 995)
 		    font       	(object Font
 			size       	10
@@ -2529,7 +2613,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@80
+			Parent_View 	@81
 			location   	(108, 956)
 			fill_color 	13434879
 			nlines     	2
@@ -2537,7 +2621,7 @@
 			justify    	0
 			label      	"Detect association with a public class")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@80
+			Parent_View 	@81
 			location   	(108, 911)
 			fill_color 	13434879
 			anchor     	10
@@ -2551,7 +2635,7 @@
 		    quidu      	"405613C402B5"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @81
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @82
 		    location   	(314, 1300)
 		    font       	(object Font
 			size       	10
@@ -2563,7 +2647,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@81
+			Parent_View 	@82
 			location   	(113, 1261)
 			fill_color 	13434879
 			nlines     	2
@@ -2571,7 +2655,7 @@
 			justify    	0
 			label      	"Various illegal finalize operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@81
+			Parent_View 	@82
 			location   	(113, 1216)
 			fill_color 	13434879
 			anchor     	10
