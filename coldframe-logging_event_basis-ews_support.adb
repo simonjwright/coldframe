@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 7870a424cc45 $
---  $Date: 2003/11/15 18:37:23 $
+--  $Revision: 78558c644edb $
+--  $Date: 2003/11/16 08:22:38 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -29,118 +29,140 @@ with Ada.Characters.Latin_1;
 with EWS.Types;
 with GNAT.Calendar.Time_IO;
 
-function ColdFrame.Logging_Event_Basis.EWS_Page
-  (From_Request : EWS.HTTP.Request_P)
-  return EWS.Dynamic.Dynamic_Response'Class is
+package body ColdFrame.Logging_Event_Basis.EWS_Support is
 
-   function Less_Than (L, R : Datum) return Boolean;
-
-   procedure Sort
-   is new ColdFrame.Logging_Event_Basis.Sort ("<" => Less_Than);
-
-   function Less_Than (L, R : Datum) return Boolean is
-   begin
-      return Ada.Strings.Unbounded."<" (L.Event, R.Event);
-   end Less_Than;
-
-   Result : EWS.Dynamic.Dynamic_Response (From_Request);
-
-   Data : Abstract_Datum_Containers.Container'Class
-     := Logging_Event_Basis.Results;
-
-   It : Abstract_Datum_Containers.Iterator'Class
-     := Abstract_Datum_Containers.New_Iterator (Data);
 
    use Ada.Characters.Latin_1;
    CRLF : constant String := CR & LF;
 
-begin
 
-   EWS.Dynamic.Set_Content_Type (Result, To => EWS.Types.HTML);
+   procedure Add_Section
+     (For_Request : EWS.HTTP.Request_P;
+      To : in out EWS.Dynamic.Dynamic_Response) is
 
-   EWS.Dynamic.Set_Content
-     (Result,
-      "<html><head><title>ColdFrame event statistics</title></head>"
-        & CRLF
-        & "<body bgcolor=""white"">"
-        & CRLF);
+      pragma Warnings (Off, For_Request);
 
-   EWS.Dynamic.Append
-     (Result, Adding => "The time is <b>");
-   EWS.Dynamic.Append
-     (Result,
-      Adding => GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock,
-                                             "%c"));
-   EWS.Dynamic.Append
-     (Result, Adding => "</b>" & CRLF);
+      function Less_Than (L, R : Datum) return Boolean;
 
-   EWS.Dynamic.Append
-     (Result,
-      Adding =>
-        "<p>"
-        & CRLF
-        & "<table border=1>"
-        & CRLF
-        & "<tr>"
-        & "<th bgcolor=""#eeeeee"">Event"
-        & "<th>No"
-        & "<th bgcolor=""#eeeeee"">Q mean"
-        & "<th bgcolor=""#eeeeee"">sd"
-        & "<th bgcolor=""#eeeeee"">min"
-        & "<th bgcolor=""#eeeeee"">max"
-        & "<th>D mean"
-        & "<th>sd"
-        & "<th>min"
-        & "<th>max"
-        & CRLF);
+      procedure Sort
+      is new ColdFrame.Logging_Event_Basis.Sort ("<" => Less_Than);
 
-   Sort (Data);
-   Abstract_Datum_Containers.Reset (It);
-
-   while not Abstract_Datum_Containers.Is_Done (It) loop
-      declare
-         D : constant Datum := Abstract_Datum_Containers.Current_Item (It);
-         use BC.Support;
+      function Less_Than (L, R : Datum) return Boolean is
       begin
-         EWS.Dynamic.Append
-           (Result,
-            Adding =>
-              "<tr>"
-              & "<td bgcolor=""#eeeeee"">"
-              & Ada.Strings.Unbounded.To_String (D.Event)
-              & "<td>"
-              & Statistics.Count (D.Queueing)'Img
-              & "<td bgcolor=""#eeeeee"">"
-              & Duration (Statistics.Mean (D.Queueing))'Img
-              & "<td bgcolor=""#eeeeee"">"
-              & Duration (Statistics.Sigma (D.Queueing))'Img
-              & "<td bgcolor=""#eeeeee"">"
-              & Duration (Statistics.Min (D.Queueing))'Img
-              & "<td bgcolor=""#eeeeee"">"
-              & Duration (Statistics.Max (D.Queueing))'Img
-              & "<td>"
-              & Duration (Statistics.Mean (D.Executing))'Img
-              & "<td>"
-              & Duration (Statistics.Sigma (D.Executing))'Img
-              & "<td>"
-              & Duration (Statistics.Min (D.Executing))'Img
-              & "<td>"
-              & Duration (Statistics.Max (D.Executing))'Img
-              & CRLF);
-      end;
-      Abstract_Datum_Containers.Next (It);
-   end loop;
+         return Ada.Strings.Unbounded."<" (L.Event, R.Event);
+      end Less_Than;
 
-   EWS.Dynamic.Append (Result, Adding => "</table>" & CRLF);
+      Data : Abstract_Datum_Containers.Container'Class
+        := Logging_Event_Basis.Results;
 
-   EWS.Dynamic.Append
-     (Result,
-      Adding =>
-        "</body>"
-        & CRLF
-        & "</html>"
-        & CRLF);
+      It : Abstract_Datum_Containers.Iterator'Class
+        := Abstract_Datum_Containers.New_Iterator (Data);
 
-   return Result;
+   begin
 
-end ColdFrame.Logging_Event_Basis.EWS_Page;
+      EWS.Dynamic.Append
+        (To,
+         Adding =>
+           "<p>"
+           & CRLF
+           & "<table border=1>"
+           & CRLF
+           & "<tr>"
+           & "<th bgcolor=""#eeeeee"">Event"
+           & "<th>No"
+           & "<th bgcolor=""#eeeeee"">Q mean"
+           & "<th bgcolor=""#eeeeee"">sd"
+           & "<th bgcolor=""#eeeeee"">min"
+           & "<th bgcolor=""#eeeeee"">max"
+           & "<th>D mean"
+           & "<th>sd"
+           & "<th>min"
+           & "<th>max"
+           & CRLF);
+
+      Sort (Data);
+      Abstract_Datum_Containers.Reset (It);
+
+      while not Abstract_Datum_Containers.Is_Done (It) loop
+         declare
+            D : constant Datum := Abstract_Datum_Containers.Current_Item (It);
+            use BC.Support;
+         begin
+            EWS.Dynamic.Append
+              (To,
+               Adding =>
+                 "<tr>"
+                 & "<td bgcolor=""#eeeeee"">"
+                 & Ada.Strings.Unbounded.To_String (D.Event)
+                 & "<td>"
+                 & Statistics.Count (D.Queueing)'Img
+                 & "<td bgcolor=""#eeeeee"">"
+                 & Duration (Statistics.Mean (D.Queueing))'Img
+                 & "<td bgcolor=""#eeeeee"">"
+                 & Duration (Statistics.Sigma (D.Queueing))'Img
+                 & "<td bgcolor=""#eeeeee"">"
+                 & Duration (Statistics.Min (D.Queueing))'Img
+                 & "<td bgcolor=""#eeeeee"">"
+                 & Duration (Statistics.Max (D.Queueing))'Img
+                 & "<td>"
+                 & Duration (Statistics.Mean (D.Executing))'Img
+                 & "<td>"
+                 & Duration (Statistics.Sigma (D.Executing))'Img
+                 & "<td>"
+                 & Duration (Statistics.Min (D.Executing))'Img
+                 & "<td>"
+                 & Duration (Statistics.Max (D.Executing))'Img
+                 & CRLF);
+         end;
+         Abstract_Datum_Containers.Next (It);
+      end loop;
+
+      EWS.Dynamic.Append (To, Adding => "</table>" & CRLF);
+
+   end Add_Section;
+
+
+   function Whole_Page
+     (From_Request : EWS.HTTP.Request_P)
+     return EWS.Dynamic.Dynamic_Response'Class is
+
+      Result : EWS.Dynamic.Dynamic_Response (From_Request);
+
+   begin
+
+      EWS.Dynamic.Set_Content_Type (Result, To => EWS.Types.HTML);
+
+      EWS.Dynamic.Set_Content
+        (Result,
+         "<html><head><title>ColdFrame event statistics</title></head>"
+           & CRLF
+           & "<body bgcolor=""white"">"
+           & CRLF);
+
+      EWS.Dynamic.Append
+        (Result, Adding => "The time is <b>");
+      EWS.Dynamic.Append
+        (Result,
+         Adding => GNAT.Calendar.Time_IO.Image (Ada.Calendar.Clock,
+                                                "%c"));
+
+      Add_Section (For_Request => From_Request,
+                   To => Result);
+
+      EWS.Dynamic.Append
+        (Result, Adding => "</b>" & CRLF);
+
+      EWS.Dynamic.Append
+        (Result,
+         Adding =>
+           "</body>"
+           & CRLF
+           & "</html>"
+           & CRLF);
+
+      return Result;
+
+   end Whole_Page;
+
+
+end ColdFrame.Logging_Event_Basis.EWS_Support;

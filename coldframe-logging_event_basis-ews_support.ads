@@ -19,17 +19,25 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  This unit is to be used with EWS to generate a web page showing
---  current event statistics.
+--  This unit is to be used with EWS to help generate web pages
+--  showing current event statistics.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.ads,v $
---  $Revision: a398ed08aee5 $
---  $Date: 2003/11/15 14:00:05 $
+--  $Revision: 78558c644edb $
+--  $Date: 2003/11/16 08:22:38 $
 --  $Author: simon $
 
 with EWS.Dynamic;
 with EWS.HTTP;
 
-function ColdFrame.Logging_Event_Basis.EWS_Page
-  (From_Request : EWS.HTTP.Request_P)
-  return EWS.Dynamic.Dynamic_Response'Class;
+package ColdFrame.Logging_Event_Basis.EWS_Support is
+
+   procedure Add_Section
+     (For_Request : EWS.HTTP.Request_P;
+      To : in out EWS.Dynamic.Dynamic_Response);
+
+   function Whole_Page
+     (From_Request : EWS.HTTP.Request_P)
+     return EWS.Dynamic.Dynamic_Response'Class;
+
+end ColdFrame.Logging_Event_Basis.EWS_Support;
