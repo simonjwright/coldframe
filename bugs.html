@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 1e6d1aa612b2 2002/11/21 05:55:13 simon $ -->
+<!-- $Id: bugs.html,v a0aefc30b4aa 2002/11/26 20:00:01 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -157,12 +157,26 @@ imported/renamed types.
 <dd><tt>[[ callback ]]</tt> types tend to be unnoticeable; could a
 &#171;callback&#187; stereotype be used instead?
 
-<br><i>It's already possible to use a stereotype like <tt>&#171;type,
-callback=42&#187;</tt>.</i>
+<br><i>It's already possible to use a stereotype like <em>&#171;type,
+callback=42&#187;</em>.</i>
 
-<dt>
+<dt>0135 (raised 26.xi.02)
 
-<!-- next: 0135 -->
+<dd>The documentation refers to transitions from a state which need no
+event to trigger them as "unguarded". In fact they are "completion
+transitions" (UML 1.3, section 2.12).
+
+<dt>0136 (raised 26.xi.02)
+
+<dd>The documentation gives an example of a
+&#171;class&nbsp;event&#187; without a payload, which can't actually
+be specified in a model.
+
+<dt>0137 (raised 26.xi.02)
+
+<dd>Timed events can cause exceptions in the Event Queue.
+
+<!-- next: 0137 -->
 
 </dl>
 
@@ -184,8 +198,8 @@ unimplemented bodies.
 <br><i>This is deliberate; finalization is about keeping the model
 consistent, while teardown is much more brutal. However, the case in
 point involved closing a socket, which <em>does</em> need to happen at
-teardown. Perhaps an additional stereotype &#171;teardown&#187; is
-needed.</i>
+teardown.
+<br>An additional stereotype &#171;teardown&#187; is provided.</i>
 
 </dl>
 
