@@ -89,6 +89,16 @@
 			    quidu      	"4229E1FA029E"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Process String"
+		    quid       	"422BF1720030"
+		    parameters 	(list Parameters
+			(object Parameter "S"
+			    quid       	"422BF18B028F"
+			    type       	"String"))
+		    result     	"String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
 		    uid        	0)))
 	(object Class "Exception Type"
 	    quid       	"4229E31B01E6"
@@ -116,7 +126,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1895
-		    label      	"$Id: Stub_Test_Interface.cat,v 6d3460479f13 2005/03/05 18:19:33 simon $")
+		    label      	"$Id: Stub_Test_Interface.cat,v 8a745ef5c81b 2005/03/07 06:58:11 simon $")
 		(object ClassView "Class" "Logical View::Stub Test Interface::Record Type" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -226,7 +236,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	985)
+			max_width  	992)
 		    width      	1006
 		    height     	308
 		    annotation 	8
@@ -248,7 +258,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(299, 118)
+			location   	(299, 96)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	812
@@ -256,7 +266,7 @@
 			label      	"Public")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(299, 73)
+			location   	(299, 51)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -269,7 +279,7 @@
 		    quidu      	"4229E27F00A1"
 		    compartment 	(object Compartment
 			Parent_View 	@4
-			location   	(299, 174)
+			location   	(299, 152)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -282,10 +292,10 @@
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	5
+			nlines     	6
 			max_width  	810)
 		    width      	830
-		    height     	354
+		    height     	398
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Stub Test Interface::Exception Type" @5
@@ -361,4 +371,4 @@
 		    fill_color 	8454016
 		    quidu      	"4229E16101EA"
 		    width      	350
-		    height     	193)))))
+		    height     	192)))))
