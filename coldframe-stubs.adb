@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 42f362448f7d $
---  $Date: 2005/03/01 06:31:19 $
+--  $Revision: b292d97c9e9d $
+--  $Date: 2005/03/05 18:20:09 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -300,8 +300,8 @@ package body ColdFrame.Stubs is
    begin
       if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
          Ada.Exceptions.Raise_Exception
-           (Constraint_Error'Identity,
-            "Input " & SP & " not found");
+           (No_Value'Identity,
+            "input " & SP & " not found");
       end if;
       --  We have to get the result from a copy of the memory stream,
       --  otherwise the user will get an End_Error if she reads it
