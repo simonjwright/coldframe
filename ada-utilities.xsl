@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v cd6d8cb53fe3 2004/04/21 12:22:14 simon $ -->
+<!-- $Id: ada-utilities.xsl,v e0aa6308b3c9 2004/04/21 12:23:41 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -336,24 +336,6 @@
                           and number($type/integer/upper)">
 
             <!-- XXX should we get normalize to compute the length? -->
-
-            <!--
-            <xsl:message>
-              <xsl:text>type </xsl:text>
-              <xsl:value-of select="$type/name"/>
-              <xsl:text>, lower </xsl:text>
-              <xsl:value-of select="$type/integer/lower"/>
-              <xsl:text> (</xsl:text>
-              <xsl:value-of select="number($type/integer/lower)"/>
-              <xsl:text>)</xsl:text>
-              <xsl:text>,  upper </xsl:text>
-              <xsl:value-of select="$type/integer/upper"/>
-              <xsl:text>, max </xsl:text>
-              <xsl:value-of select="$type/integer/upper
-                                    - $type/integer/lower
-                                    + 1"/>
-            </xsl:message>
-            -->
 
             <xsl:value-of select="$type/integer/upper
                                   - $type/integer/lower
