@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>ColdFrame: Reserved names</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Reserved names</h1>
+
+ColdFrame uses some names to build the framework for you. It will at
+best cause confusion of you use these names in your models.
+
+<p>The table below shows the names and the circumstances in which it
+is sensible to use them (on the whole, the names aren't actually ones
+you would want to use in practice!)
+
+<p>The heading "Class/type?" indicates use as a class or
+&#171;type&#187;. The heading "Attr/opn?" indicates use as an
+attribute or operation.
+
+<p><table border="1">
+
+<tr><th>Name <th>Class/type? <th>Attr/opn? <th>Use
+
+<tr><td>Abstract_Collections<td>ok<td>no<td>part of Booch Component
+instantiation for visible collections
+
+<tr><td>Abstract_Containers<td>ok<td>no<td>part of Booch Component
+instantiation for visible collections, sets
+
+<tr><td>Abstract_Map_Containers<td>ok<td>no<td>part of Booch
+Component instantiation for internal use
+
+<tr><td>Abstract_Maps<td>ok<td>no<td>part of Booch Component
+instantiation for internal use
+
+<tr><td>Abstract_Sets<td>ok<td>no<td>part of Booch Component
+instantiation for visible sets
+
+<tr><td>All_Instances<td>ok<td>no<td>utility operation to obtain all
+current instances of a class
+
+<tr><td>Collections<td>ok<td>no<td>Booch Component
+instantiation for visible collections
+
+<tr><td>Create<td>ok<td>no<td>instance creation operation
+
+<tr><td>Delete<td>ok<td>no<td>instance deletion operation
+
+<tr><td>Events<td>no<td>ok<td>domain event support
+
+<tr><td>Filter_Function<td>ok<td>no<td>generic, to select some
+instances of a collection of instances
+
+<tr><td>Find<td>ok<td>no<td>instance location operation
+
+<tr><td>Handle<td>ok<td>no<td>type used to access instances
+
+<tr><td>Handle_Hash<td>ok<td>no<td>operation to support hashing
+access types
+
+<tr><td>Hash<td>ok<td>no<td>operation to support Booch Maps, Sets
+
+<tr><td>Identifier<td>ok<td>no<td>type used to identify instances
+
+<tr><td>Initialize<td>no<td>ok<td>domain initialization operation
+
+<tr><td>Instance<td>ok<td>no<td>type to hold instance data
+
+<tr><td>Iterate<td>ok<td>no<td>generic, to iterate over a collection
+of instances
+
+<tr><td>Maps<td>ok<td>no<td>Booch Component instantiation for
+internal use
+
+<tr><td>Next_Identifier<td>ok<td>no<td>class variable to support
+Autonumber
+
+<tr><td>Selection_Function<td>ok<td>no<td>generic, to select some of
+the current instances of a class
+
+<tr><td>Sets<td>ok<td>no<td>Booch Component instantiation for visible
+sets
+
+<tr><td>State_Image<td>ok<td>no<td>operation to return a string
+describing the state of an instance's state machine
+
+<tr><td>State_Machine_State<td>ok<td>no<td>attribute to contain the
+state of an instance's state machine
+
+<tr><td>State_Machine_State_T<td>ok<td>no<td>type to describe the
+state of an instance's state machine
+
+<tr><td>Tear_Down<td>no<td>no<td>operation to return the domain/class
+to its initial state
+
+<tr><td>The_Container<td>ok<td>no<td>class variable to contain all
+the instances (will be a Map)
+
+<tr><td>This<td>ok<td>no<td>parameter (or, for singletons, class
+variable) to hold the (current) instance
+
+<tr><td>Timer<td>ok<td>no<td>type of an attribute to hold delayed
+events
+
+</table>
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>ColdFrame: Installation</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Installation</h1>
+
+<hr>
+
+<ul>
+<li><a href="#linux">under Linux</a>
+<li><a href="#windows">under Windows</a> 
+</ul>
+
+<hr>
+
+<h2><a name="linux">Installation under Linux</a></h2>
+
+<p>You need
+
+<ul>
+
+<li><a href="http://www.sourceforge.net/projects/tcl/">Tcl/Tk</a>, <a
+href="http://www.sourceforge.net/projects/incrtcl/">[incr Tcl]</a>
+
+<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+(version 2.1theta recommended)
+
+<li>a Java runtime; the <a
+href="http://www.blackdown.org/">Blackdown</a> 1.3.0 version works
+fine
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a>
+(6.<i>n</i>; you need the full version)
+
+<li><a href="ftp://cs.nyu.edu/pub/gnat/">GNAT</a> (at least 3.13p)
+
+<li>The <a href="http://www.pushface.org/components/bc/">Booch
+Components</a>; release 20020117 or later
+
+</ul>
+
+
+
+
+<h2><a name="windows">Installation under Windows</a></h2>
+
+<p>You need
+
+<ul>
+
+<li><a href="http://www.cygwin.com/">Cygwin</a>
+
+<li><a href="http://www.Sensus.org/tcl/win32/itcl82.exe">[incr Tcl]</a>
+([incr Tcl] 3.1, over Tcl 8.2)
+
+<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+(version 2.1theta recommended)
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a>
+(6.<i>n</i>; you'll probably find the <i>instantsaxon</i> version
+easiest)
+
+<li><a href="ftp://cs.nyu.edu/pub/gnat/">GNAT</a> (at least 3.13p)
+
+<li>The <a href="http://www.pushface.org/components/bc/">Booch
+Components</a>; release 20020117 or later
+
+</ul>
+
+<h3>Drive</h3>
+
+<p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
+ColdFrame are installed on the same drive, at the same level.
+
+<h3>Cygwin</h3>
+
+<p>This is required to allow you to use Make. At some stage I may look
+into a Tk-based build process.
+
+<p>There are no special installation requirements.
+
+<h3>[incr Tcl]</h3>
+
+<p>This needs installing into <tt>C:\Tcl</tt> (not the default
+<i>Program Files</i> location).
+
+<p>You need to select a full installation to get the <i>[incr Tcl]</i>
+components.
+
+<h3>TclXML</h3>
+
+<p>This archive already contains a directory name;
+<tt>C:\tclxml-2.1theta</tt> is what the Makefile assumes.
+
+<h3>Saxon</h3>
+
+<p>This needs unpacking into <tt>C:\Saxon</tt>.
+
+<h3>GNAT</h3>
+
+<p>There are no special installation requirements. However, unless you
+are strongly wedded to the student AdaGIDE environment, I'd recommend
+using <a href="ftp://ftp.gnu.org/gnu/windows/emacs/">Emacs</a> (I know
+20.7 needs some minor tweaks, 21.1 should be OK) and <a
+href="http://libre.act-europe.fr/adamode/">ada-mode</a> (3.6).
+
+<p>If you do use AdaGIDE, you'll probably need to use the
+<tt>ADA_INCLUDE_PATH</tt> environment variable.
+
+<h3>Booch Components</h3>
+
+<p>This needs unpacking into <tt>C:\bc-<i>yyyymmdd</i></tt>.
+
+<h3>ColdFrame</h3>
+
+<p>This needs unpacking into <tt>C:\cf-<i>yyyymmdd</i></tt>.
+
+<h3>Your Makefile</h3>
+
+<p>Create a <tt>Makefile</tt> in the directory where your extracted
+<tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
+up the Makefile that ColdFrame provides.
+
+<p>It should contain at least
+
+<pre>
+  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+</pre>
+
+(you really do need a forward slash here) which means you need to type
+
+<pre>
+  <i>$</i> make <i>Domain</i>.gen
+</pre>
+
+If you want to make life even easier, you can change your Makefile to
+
+<pre>
+  include C:/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>all:: <i>Domain_1</i>.gen</b>
+  <b>all:: <i>Domain_2</i>.gen</b>
+</pre>
+
+etc, after which you only need to say
+
+<pre>
+  <i>$</i> make
+</pre>
+
+(until, of course, you find you need to add <tt>Domain_3</tt>).
+
+<p>If you had to install your software in <tt>D:\Software</tt>, you'd
+change your Makefile to
+
+<pre>
+  include <b>D:/Software</b>/cf-<i>yyymmdd</i>/Makefile-winnt
+
+  <b>TOP = D:/Software</b>
+
+  all:: <i>Domain_1</i>.gen
+  all:: <i>Domain_2</i>.gen
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
