@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization.ads,v $
---  $Revision: 26fcdcb7c51b $
---  $Date: 2003/01/26 16:31:01 $
+--  $Revision: a99727fe9421 $
+--  $Date: 2003/02/16 19:32:01 $
 --  $Author: simon $
 
 package ColdFrame.Serialization is
@@ -42,7 +42,7 @@ package ColdFrame.Serialization is
    --  Provides a string representation of S.
    --
    --  The default implementation generates a contentless XML element
-   --  "<COLDFRAME.SERIALIZATION.BASE/>".
+   --  containing the external tag of the actual type.
 
    function Class_Image (S : Base'Class) return String;
    --  This function dispatches to the generated Image function (there
