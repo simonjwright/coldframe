@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-real_timer.adb,v $
---  $Revision: 7e75f67fa869 $
---  $Date: 2002/02/06 20:06:51 $
+--  $Revision: 82446a9d6129 $
+--  $Date: 2002/02/06 20:49:33 $
 --  $Author: simon $
 
 with Ada.Real_Time;
@@ -35,44 +35,7 @@ package body ColdFrame.States.Real_Timer is
                    On : access Event_Queue) is
    begin
       On.The_Excluder.Post (The);
---        Posted_Event_Queues.Append (On.The_Events, The);
    end Post;
-
-
-   procedure Retract (The : Event_P;
-                      On : access Event_Queue;
-                      Success : out Boolean) is
-
-      --  We make two distinct accesses to the synchronized event
-      --  queue, so you might think that another task could get in and
-      --  alter the queue between our working out where our event is
-      --  in it (if indeed it is) and our removing it. However, this
-      --  procedure is called by an action, which is in the context of
-      --  our Dispatcher, so (since it's not a priority queue) the
-      --  only possible alteration is the addition of another (timer)
-      --  event after this one. We certainly won't have taken anything
-      --  off the front.
-      --
-      --  Ideally, we'd add a single Synchronized_Queue operation to
-      --  remove (the first occurrence of) an Item from a Queue.
-
-      Loc : constant Natural
-        := Posted_Event_Queues.Location (On.The_Events, The);
-      Q : Event_Queue'Class renames Event_Queue'Class (On.all);
-      --  we need a classwide object to force dispatching in the call
-      --  to Log_Retraction
-
-   begin
-
-      if Loc = 0 then
-         Success := False;
-      else
-         Log_Retraction (The => The, On => Q'Access);
-         Posted_Event_Queues.Remove (On.The_Events, Loc);
-         Success := True;
-      end if;
-
-   end Retract;
 
 
    task body Dispatcher is
@@ -153,7 +116,7 @@ package body ColdFrame.States.Real_Timer is
                declare
                   Success : Boolean;
                begin
-                  Retract (The.The_Event, On, Success);
+                  On.The_Excluder.Retract (The.The_Event, Success);
                   if not Success then
                      raise Program_Error;
                   end if;
@@ -169,7 +132,7 @@ package body ColdFrame.States.Real_Timer is
             declare
                Success : Boolean;
             begin
-               Retract (The.The_Event, On, Success);
+               On.The_Excluder.Retract (The.The_Event, Success);
                if not Success then
                   raise Use_Error;
                end if;
@@ -226,7 +189,9 @@ package body ColdFrame.States.Real_Timer is
                      Pos : constant Natural
                        := Timed_Event_Queues.Location (The_Events, The);
                   begin
-                     Timed_Event_Queues.Remove (The_Events, Pos);
+                     if Pos > 0 then
+                        Timed_Event_Queues.Remove (The_Events, Pos);
+                     end if;
                   end;
                end Remove;
 
@@ -272,9 +237,18 @@ package body ColdFrame.States.Real_Timer is
          Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
       end Fetch;
 
-      procedure Retract (The : Event_P) is
+      procedure Retract (The : Event_P; Success : out Boolean) is
+         Loc : constant Natural :=
+           Unbounded_Posted_Event_Queues.Location
+            (The_Queue.The_Events, The);
       begin
-         null;
+         if Loc = 0 then
+            Success := False;
+         else
+            Log_Retraction (The => The, On => The_Queue);
+            Unbounded_Posted_Event_Queues.Remove (The_Queue.The_Events, Loc);
+            Success := True;
+         end if;
       end Retract;
 
    end Excluder;

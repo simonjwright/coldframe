@@ -20,13 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.ads,v $
---  $Revision: 79da22ff2fb8 $
---  $Date: 2002/02/06 20:06:21 $
+--  $Revision: 82446a9d6129 $
+--  $Date: 2002/02/06 20:49:33 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
-with BC.Containers.Queues.Synchronized;
-with BC.Support.Synchronization;
 with ColdFrame.Global_Storage_Pool;
 
 package ColdFrame.States.Wall_Timer is
@@ -52,21 +50,13 @@ package ColdFrame.States.Wall_Timer is
 
 private
 
-   --  We're going to use a Synchronized Queue because there are two
-   --  tasks interested in updating it: our Dispatcher, and the timer
-   --  manager.
-
    package Abstract_Posted_Event_Containers
    is new BC.Containers (Event_P);
    package Abstract_Posted_Event_Queues
    is new Abstract_Posted_Event_Containers.Queues;
-
    package Unbounded_Posted_Event_Queues
    is new Abstract_Posted_Event_Queues.Unbounded
      (Storage => ColdFrame.Global_Storage_Pool.Pool);
-   package Posted_Event_Queues is new Abstract_Posted_Event_Queues.Synchronized
-     (Queue_Base => Unbounded_Posted_Event_Queues.Queue,
-      Monitor => BC.Support.Synchronization.Single_Monitor);
 
    task type Dispatcher (The_Queue : access Event_Queue'Class) is
       pragma Priority (16);
@@ -87,15 +77,21 @@ private
    --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
 
+   --  Mutual exclusion between posters and the Dispatcher.
+   protected type Excluder (The_Queue : access Event_Queue'Class) is
+      procedure Post (The : Event_P);
+      entry Fetch (The : out Event_P);
+      procedure Retract (The : Event_P; Success : out Boolean);
+   end Excluder;
+
+
+   --  The actual Event Queue.
    type Event_Queue is new Event_Queue_Base with record
-      The_Events : Posted_Event_Queues.Queue;
+      The_Excluder : Excluder (Event_Queue'Access);
+      The_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Dispatcher : Dispatcher (Event_Queue'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);
    end record;
-
-   procedure Retract (The : Event_P;
-                      On : access Event_Queue;
-                      Success : out Boolean);
 
 
 end ColdFrame.States.Wall_Timer;
