@@ -1,4 +1,4 @@
---  $Id: Options.gpr,v ed22f3c39b46 2003/11/01 17:57:54 simon $
+--  $Id: Options.gpr,v ff9a15b0874f 2003/11/02 19:28:48 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -25,7 +25,12 @@ project Options is
   --  GNATMAKE configuration options
   package Builder is
 
-     for Default_Switches ("ada") use ("-g", "-m");
+     for Default_Switches ("ada") use
+       (
+        "-g",
+        "-j2",
+        "-m"
+       );
 
   end Builder;
 
