@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v bfce7f4d4d6f 2001/02/01 20:01:27 simon $
+# $Id: normalize-rose.tcl,v 571a76238b99 2001/02/25 10:04:22 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -566,11 +566,14 @@ itcl::class Object {
     # for referential attributes)
     variable abbreviation
 
-    variable tags
-
+    # contains the attributes
     variable attributes
 
+    # contains the operations
     variable operations
+
+    # specifies the maximum number of instances (optional)
+    variable max
 
     method -abbreviation {a} {
 	set abbreviation [string toupper [string trim $a]]
@@ -588,11 +591,11 @@ itcl::class Object {
 	    }
 	}
 	return $abbreviation
-   }
-
-    method -tags {l} {set tags $l}
+    }
 
     method -operations {l} {set operations $l}
+
+    method -max {s} {set max [string trim $s]}
 
     #
     # variables & methods related to <<control>> objects (XXX needed?)
@@ -686,12 +689,13 @@ itcl::class Object {
     }
 
     method -evaluate {domain} {
-#	$tags -evaluate $domain
 	$attributes -evaluate $domain
     }
 
     method -generate {domain} {
-	puts "<object>"
+	puts -nonewline "<object"
+	if [info exists max] {puts -nonewline " max=\"$max\""}
+	puts ">"
 	putElement name "$name"
 	putElement abbreviation [$this -getAbbreviation]
 	$this -generateDocumentation
