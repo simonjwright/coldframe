@@ -1,5 +1,12 @@
 <domain>
+<extractor>cf-DATE</extractor>
 <name>Architecture</name>
+<date>
+<year>2002</year>
+<month>6</month>
+<day>6</day>
+<time>21:33</time>
+</date>
 <documentation>This package describes the underlying model of the model assumed by ColdFrame (the metamodel) and one possible mapping to code.<br/>
 
 A note on names: Ada is case-insensitive, but the convention is that words in names are separated by an underscore, and the first letter of each word is capitalized. ColdFrame normalizes names to this convention.<br/>
@@ -7,133 +14,302 @@ A note on names: Ada is case-insensitive, but the convention is that words in na
 In the diagram, buff classes are part of the metamodel, grey classes show  how they are mapped to Ada 95 code.</documentation>
 <classes>
 <class>
-<name>Domain</name>
-<documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).<br/>
-
-At present, only model objects (Classes, Relationships) that exist in the Domain Package are extracted by the Rose extractor <tt>def.ebs</tt>.</documentation>
+<name>Associable Class</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>It is permitted to form Associations between Associable Classes, which are all classes except Public Classes.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
+</class>
+<class>
+<name>Public Class</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Public Class is one that provides functionality to external users (other Domains).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Private Singleton Class</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Private Singleton Class is a Singleton that (depending on the code generation strategy) isn't visible outside the Domain.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Specialization</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Specialization is a Relationship between a Supertype (the parent) and a number of Subtypes (children).<br/>
+
+Multiple Inheritance is supported.<br/>
+
+Often, specialization is used when different subtypes have different relationships.<br/>
+
+Normally, for each instance of a parent class, there is a corresponding instance of one of the child classes (so that, in a sense, the parent is abstract). A possible optimization is to omit code for child classes that don't have any attributes of their own, or which don't participate in any relationships of their own.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Association</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Association relates two primary Classes.<br/>
+
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Simple Association</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Simple Association has no Associative Class.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Callback Type Specification</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Callback Type Specification is a Type Specification with the <tt>[[ callback : <i>size</i> ]]</tt> annotation.<br/>
+
+Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Associative Association</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Associative Association implements its parent Association using a third class, the Association Class.<br/>
+
+Often this is necessary to implement a many-to-many association, though it is also appropriate when there is imformation that only applies when the primary association exists; for example, even though Driver owns Vehicle is one-to-many, Excise Licence might be appropriate as an associative class for the association (since Date Of Issue has nowhere else to live).<br/>
+
+A convenient notation for associative associations is <i>desc_c-(desc_a:desc_b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
+
+At present (6 June 2001) the following are <b>not</b> supported:<br/>
+
+m-(anything)</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Relationship</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Relationship reflects some degree of interaction between a number of Classes.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Standard Type Specification</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Standard Type Specification is a Type Specification without the <tt>[[ callback ]]</tt> annotation.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Parameter</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Operation may have Parameters. Each Parameter
+has:<br/>
+
+a <b>Name</b><br/>
+
+a <b>Type</b> (either standard, such as <tt>Integer</tt>, or as defined in one of this Domain's Type Specifications)<br/>
+
+optionally, a <b>Mode</b>, specified in a documentation annotation <tt>[[mode: <i>mode-spec</i>]]</tt>, where <tt><i>mode-spec</i></tt> is <tt>in</tt> (the default), <tt>out</tt>, or <tt>inout</tt><br/>
+
+optionally, a <b>Default</b> value.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Plain Attribute</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Domain</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).<br/>
+
+At present, only model objects (Classes, Relationships) that exist in the Domain Package are extracted by the Rose extractor <tt>extractor.ebs</tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
 </class>
 <class>
 <name>Class</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Class denotes a set of objects in the Domain that have common properties and behaviour.<br/>
 
 You can specify the maximum number of Instances using the documentation annotation <tt>[[ max: <i>number</i> ]]</tt>. This will be ignored for Singleton Classes.</documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</class>
-<class>
-<name>Domain Package</name>
-<documentation>Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
-
-The notation <tt><i>metaclass name</i></tt> means "the normalized name of the metaclass in this model"; so, if the Domain were named "Problem Reporting", <tt><i>Domain</i></tt> would be <tt>Problem_Reporting</tt>.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
+<events>
+</events>
 </class>
 <class>
 <name>Class Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>A Class Operation is one that applies to the set of all instances of the Class (for example, the count of the current number of instances).<br/>
 
-All Operations of Singleton Classes are Class Operations; Class Operations of Identified Classes are denoted by the stereotype "class" or by the documentation annotation <tt>[[class]]</tt>.</documentation>
-<cardinality>n</cardinality>
+Class Operations are denoted by the stereotype "class" or by the documentation annotation <tt>[[class]]</tt>.<br/>
+
+All operations of Public Classes are class operations. The same is, in a sense, true of Singleton classes, but here there is a useful distinction to be made (eg, Class operations don't correspond to Entries of active Classes).</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>An Operation is an encapsulated aspect of the behaviour of a Class, or an instance of a Class (typically corresponding to a method or subprogram).<br/>
 
 Operations may have return values.
 
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Handle Parameter</name>
-<documentation>An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.</documentation>
+<name>Identifier</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The Identifier of a Normal Class uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Identified Class</name>
-<documentation>An Identified Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier.<br/>
+<name>Attribute</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Attributes are described by a Name and a Type.<br/></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Identifying Attribute</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.<br/>
 
-Depending on the code generation strategy, Identified Classes may not be visible outside the Domain.</documentation>
-<cardinality>n</cardinality>
+An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</class>
-<class>
-<name>User Type Declaration</name>
-<documentation>User Type Definitions are type definitions in the top-level Domain package.<br/>
-
-Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.
-
-Record types are generated after plain types; this allows record types to contain fields of plain Domain types, but <em>doesn't</em> ensure that records that contain fields of record types are generated in the correct order.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Singleton Class</name>
-<documentation>A Singleton Class is one of which there is always precisely one instance.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
+<events>
+</events>
 </class>
 <class>
 <name>Instance Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>An Instance Operation of a Class is an Operation that applies to a specific instance of the Class.</documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Hash Function</name>
-<documentation>A Hash Function is required for each Identifier Record. It is implemented as a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a hash of 0; a user-supplied implementation should return a hash value modulo some prime number (10009, perhaps).</documentation>
+<name>Singleton Class</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Singleton Class is one of which there is always precisely one instance.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</class>
-<class>
-<name>Class Package</name>
-<documentation>Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
+<events>
+</events>
 </class>
 <class>
 <name>Type Specification</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>The Domain can contain a number of domain-specific type definitions.<br/>
 
 A Type Specification is a class with the "type" stereotype.<br/>
@@ -151,33 +327,466 @@ Supported annotations are:<br/>
 <tt>set: <i>class-name</i></tt>; defines a set of instances of the class class-name.<br/>
 
 <tt>string: max <i>80</i></tt>; defines a bounded string.
+
+<tt>imported : <i>GNAT.Sockets</i></tt>; states that the given type is found in the stated Ada package.
+
+<tt>renames : <i>GNAT.Sockets.Port_Type</i></tt>; states that the given type is a renaming  of the stated Ada type.
+
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Identified Class Package</name>
-<documentation>An Identified Class is implemented as a private child of the Domain package.</documentation>
+<name>Child Class</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Child Class is one which may have any number of instances, and which is a child in one or more inheritance (specialisation) relationships</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Singleton Class Package</name>
-<documentation>An Internal Singleton Class is implemented as a private child of the Domain package.</documentation>
+<name>Normal Class</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Normal Class is one which may have any number of instances, each uniquely distingusihed by the Class' Identifier, which is specified by the Analyst.<br/>
+
+All Multiple Class instances will in fact have identifying record components, but ColdFrame inserts them automatically in the case of Child or Association Classes.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
+</class>
+<class>
+<name>Association Class</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Association Class is one which may have any number of instances, and which implementes an Associative Association.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Event Type</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Events are always attached to Classes. They may be directed to specific instances (in which case it's assumed that they are intended to drive a state machine) or to the Class, in which case they probably correspond to external events.<br/>
+They may carry a Payload (corresponding to a particular Type Specification).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Instance Event Type</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Instance Events are sent to particular instances of the Class they are associated with.It's not possible to specify handler operations (instance events are used only by state machines)..</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class Event Type</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Class Events are handled by a Class Operation of their associated Class.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Referential Component</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Referential Component is a kind of Attribute that formalizes a Relationship. They are automatically inserted by <tt>normalize-rose.tcl</tt>.<br/>
+
+The translation strategy for referential components is determined at code generation. For example, it might be proper to
+<ul>
+<li>insert a copy of each of the source Class' Identifying Attributes,</li>
+<li>insert a pointer to the source Class, or </li>
+<li>implement the relationship in some third class.</li>
+</ul>
+
+ColdFrame's Ada generator inserts a pointer to the source Class (<tt>ColdFrame.Instances.Handle</tt>).
+
+
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Specialization Referential Component</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Specialization Referential Component formalizes a Specialization. It always appears in the child class, and is the Identifier for that class (or, in the case of multiple inheritance, part of the identifier).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Associative Referential Component</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Standard Component</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Standard Component does not assist in formalizing any Relationship.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Association Collective Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Associative Navigation Operation comes in two overloadings, one from single instances and one from sets of instances. In the latter case, the result is a true set (each destination instance appears only once).</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Reverse Associative Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Forward Associative Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Reverse Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Forward Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Callback Package</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Callback Type Specification maps to a Callback Package, named <tt><i>Domain.Type</i>_Callback</tt>.<br/>
+
+The maximum number of concurrently registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Association Navigation Operation</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Given an instance of the Class at one end of a Association, Navigation finds the instance or set of instances of the Class at the other end of the Association.<br/>
+
+Whether a single instance or a set is returned depends on the cardinality of the Association.<br/>
+
+The result, or result set, may be respectively null, or empty, depending on the conditionality of the Association.<br/>
+
+For an Association with an Associative Class, Navigation is also provided between either end of the Association and the Associative Class.
+
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Association Package</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Association maps to an Association Package with the name <tt><i>Domain</i>.<i>Association</i></tt>.<br/>
+
+The package is private.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Abstract Containers Package</name>
+<abstract/>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package has an Abstract Containers Package (<tt><i>Domain.Class</i>.Abstract_Containers</tt>) which can be instantiated as Containers for references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
+
+The prime functionality supplied is iteration over Containers.
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Delete Procedure</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package contains two <tt>Delete</tt> procedures.<br/>
+
+One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Public Class Package</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Public Class is implemented as a publicly-visible child of the Domain package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Find Function</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package contains a <tt>Find</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the corresponding Instance record or <tt>null</tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Create Function</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package contains a <tt>Create</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the newly created  Instance record.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Filter Function</name>
+<abstract/>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package has a generic Filter Function (<tt><i>Domain.Class</i>.Filter_Function</tt>) which, given  a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances, returns a Collection of those that match some criterion.<br/>
+
+The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Selection Function</name>
+<abstract/>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package has a generic Selection Function (<tt><i>Domain.Class</i>.Selection_Function</tt>) which returns a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances.<br/>
+
+The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>All Instances Function</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package has an All Instances Function (<tt><i>Domain.Class</i>.All_Instances</tt>) which returns a Collection of references (<tt>Handle</tt>s) to all of the current Instances.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Collections Package</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Identified Class Package has a Collections Package (<tt><i>Domain.Class</i>.Collections</tt>) which can be used to hold references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
+
+A particular collection is only a snapshot; the validity of a <tt>Handle</tt> depends only on whether it is still current within the Identified Class Package.<br/>
+
+The Collections Package is an instantiation of the Abstract Containers Package.
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Param</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Parameter maps to a Param.<br/>
+
+The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents. Note that no semantic checks are made; it's the user's responsibility not to specify <tt>out</tt> or <tt>in out</tt> Modes for any parameter of a function, or a Default for a non-<tt>in</tt> Parameter.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Handle</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The Private Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Set Accessor</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
+<tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Get Accessor</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class Operation Unit</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Instance Operation Unit</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
 </class>
 <class>
 <name>Operation Unit</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
 <documentation>An Operation maps to an Operation Unit.<br/>
 
 An Operation Unit is implemented as a child subprogram unit of the Class package.<br/>
@@ -185,465 +794,341 @@ An Operation Unit is implemented as a child subprogram unit of the Class package
 When the Operation has a return value, the Operation Unit is implemented as a function; otherwise as a procedure.<br/>
 
 A default compilable body is generated, which if called will raise <tt>Program_Error</tt>.</documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Instance Operation Unit</name>
-<documentation>An Instance Operation maps to an Instance Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<name>Singleton Class Package</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Private Singleton Class is implemented as a private child of the Domain package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Class Operation Unit</name>
-<documentation>A Class Operation maps to a Class Operation Unit, which is a child subprogram unit of the Class package.</documentation>
+<name>Identified Class Package</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Identified Class is implemented as a private child of the Domain package.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Identifier</name>
-<documentation>The Identifier of a Class (an Identified Class) uniquely distinguishes one instance of the Class from another, No two instances may have the same Identifier (at the same time). The identifier of an instance cannot change.</documentation>
+<name>Class Package</name>
+<abstract/>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Class in the Domain is implemented as a child package of the Domain Package; the package name is <tt><i>Domain.Class</i></tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Identifier Record</name>
-<documentation>An Identified Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute.</documentation>
+<name>Hash Function</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Hash Function is required for each Identifier Record Type. It is implemented as a separate function of the Class Package, named <tt><i>Domain.Class</i>.Hash</tt>. The default implementation returns a usable, but perhaps not optimal, hash value.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Attribute</name>
-<documentation>Attributes are described by a Name and a Type.<br/>
+<name>User Type Declaration</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>User Type Definitions are type definitions in the top-level Domain package.<br/>
 
-Attributes may be Plain or Identifying.<br/>
+Most are obvious; bounded strings are implemented as instantiations of <tt>Ada.Strings.Bounded.Generic_Bounded_Length</tt>, and a hash function <tt><i>Domain.Type Specification</i>_Hash</tt> is created as a child of the Domain package in case Attributes of the type are used in Identifiers.
 
-Considering Relationships, Attributes may alternately be classified as Standard or Referential.<br/>
-
-These classifications are independent (a referential attribute may be plain or identifying, etc).</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Identifying Attribute</name>
-<documentation>An Identifying Attribute is one that is part of the Class' Identifier. Any initial value is ignored.<br/>
-
-An Identifying Attribute is marked as such by the stereotype "id" or the documentation annotation <tt>[[id]]</tt>.<br/>
-
-An (automatically-generated) referential attribute may also be identifying (eg, in an inheritance relationship).</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Plain Attribute</name>
-<documentation>A Plain Attribute is an Attribute that isn't an Identifying Attribute. It may have an initial value.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Get Accessor</name>
-<documentation>A Get Accessor is implemented for each Attribute. It's a function in the Class Package, named <tt><i>Domain.Class</i>.Get_<i>Attribute</i></tt>.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Set Accessor</name>
-<documentation>A Set Accessor is implemented for each Plain Attribute. It's a procedure in the Class Package, named 
-<tt><i>Domain.Class</i>.Set_<i>Attribute</i></tt>.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Handle</name>
-<documentation>The Identified Class Package provides a <tt>Handle</tt> type, which is an access type for the private <tt>Instance</tt> record.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Parameter</name>
-<documentation>An Operation may have Parameters. Each Parameter
-has:<br/>
-
-a <b>Name</b><br/>
-
-a <b>Type</b> (either standard, such as <tt>Integer</tt>, or as defined in one of this Domain's Type Specifications)<br/>
-
-optionally, a <b>Mode</b>, specified in a documentation annotation <tt>[[mode: <i>mode-spec</i>]]</tt>, where <tt><i>mode-spec</i></tt> is <tt>in</tt> (the default), <tt>out</tt>, or <tt>inout</tt><br/>
-
-optionally, a <b>Default</b> value.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Param</name>
-<documentation>A Parameter maps to a Param.<br/>
-
-The Parameter's Name, Type, Mode and Default map to the natural Ada equivalents. Note that no semantic checks are made; it's the user's responsibility not to specify <tt>out</tt> or <tt>in out</tt> Modes for any parameter of a function, or a Default for a non-<tt>in</tt> Parameter.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Collections Package</name>
-<documentation>Each Identified Class Package has a Collections Package (<tt><i>Domain.Class</i>.Collections</tt>) which can be used to hold references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
-
-A particular collection is only a snapshot; the validity of a <tt>Handle</tt> depends only on whether it is still current within the Identified Class Package.<br/>
-
-The Collections Package is an instantiation of the Abstract Containers Package.
+Types are generated in an appropriate order, so that record types can contain components of other types (including record types).
 </documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Contents Function</name>
-<documentation>Each Identified Class Package has a Contents Function (<tt><i>Domain.Class</i>.All_Instances</tt>) which returns a Collection of references (<tt>Handle</tt>s) to all of the current Instances.</documentation>
+<name>Handle Parameter</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>An Instance Operation Unit subprogram has a parameter <tt>This : Handle</tt> which denotes the Instance.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Selection Function</name>
-<documentation>Each Identified Class Package has a generic Selection Function (<tt><i>Domain.Class</i>.Selection_Function</tt>) which returns a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances.<br/>
+<name>Domain Package</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Each Domain maps to a single top-level package, with the name <tt><i>Domain</i></tt>.<br/>
 
-The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
-<cardinality>n</cardinality>
+The notation <tt><i>metaclass name</i></tt> means "the normalized name of the metaclass in this model"; so, if the Domain were named "Problem Reporting", <tt><i>Domain</i></tt> would be <tt>Problem_Reporting</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Filter Function</name>
-<documentation>Each Identified Class Package has a generic Filter Function (<tt><i>Domain.Class</i>.Filter_Function</tt>) which, given  a Collection of references (<tt>Handle</tt>s) to a subset of the current Instances, returns a Collection of those that match some criterion.<br/>
-
-The generic parameter is a function which, given a <tt>Handle</tt>, determines whether the designated Instance is to be included in the result.</documentation>
+<name>Instance Record Type</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Class attributes (and relationship formalizations) are held in a private Instance record type.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Create Function</name>
-<documentation>Each Identified Class Package contains a <tt>Create</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the newly created  Instance record.</documentation>
+<name>Identifier Record Component</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>If there is an Identifier Record Type, its components are selected from the Instance Record Components.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Find Function</name>
-<documentation>Each Identified Class Package contains a <tt>Find</tt> function which, given an Identifier Record, returns a <tt>Handle</tt> for the corresponding Instance record or <tt>null</tt>.</documentation>
+<name>Instance Record Component</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>The Instance Record Type contains record components.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Delete Procedure</name>
-<documentation>Each Identified Class Package contains two <tt>Delete</tt> procedures.<br/>
-
-One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.</documentation>
+<name>Analysis Component</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Analysis components correspond directly to Attributes in the model.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Interface Class</name>
-<documentation>An Interface Class is one that provides functionality to external users (other Domains).</documentation>
+<name>Identifier Record Type</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>A Multiple Class' Identifier maps to an Identifier Record type declared in the Identified Class Package (named <tt>Identifier</tt>) containing one component for each Identifying Attribute.<br/>
+
+All Multiple Class instances will in fact have identifying record components, but ColdFrame inserts them automatically in the case of Child or Association Classes.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Internal Singleton Class</name>
-<documentation>An Internal Singleton Class is a Singleton that (depending on the code generation strategy) isn't visible outside the Domain.</documentation>
+<name>Private Class Package</name>
+<abstract/>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>Private classes are implemented with a Handle, allowing access to the Instance Record.<br/>
+
+This allows associations to be formalized.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Interface Class Package</name>
-<documentation>An Interface Class is implemented as a publicly-visible child of the Domain package.</documentation>
+<name>Abstract Collections Package</name>
+<abstract/>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>This package is part of the Booch Components mechanism, and of no interest to users.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Abstract Container Package</name>
-<documentation>Each Identified Class Package has an Abstract Containers Package (<tt><i>Domain.Class</i>.Abstract_Containers</tt>) which can be instantiated as Containers for references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
-
-The prime functionality supplied is iteration over Containers.
-</documentation>
+<name>Abstract Sets Package</name>
+<abstract/>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>This package is part of the Booch Components mechanism, and of no interest to users.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Referential Attribute</name>
-<documentation>A Referential attribute formalizes a Relationship. They are usually automatically inserted by <tt>normalize-rose.tcl</tt>.<br/>
-
-The translation strategy for referential attributes is determined at code generation. For example, it might be proper to
-<ul>
-<li>insert a copy of each of the source Class' Identifying Attributes,</li>
-<li>insert a pointer to the source Class, or </li>
-<li>implement the relationship in some third class.</li>
-</ul>
-
-ColdFrame's Ada generator inserts a pointer to the source Class (<tt><i>Domain.Class</i>.Handle</tt>).
-
-
-</documentation>
+<name>Sets Package</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentatiof>Each Identified Class Package has a Sets Package (<tt><i>Domain.Class</i>.Sets</tt>) which can be used to hold mathematical sets of references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
+
+The Sets are used in Association Navigations.</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Standard Attribute</name>
-<documentation>A Standard Attribute does not assist in formalizing any Relationship.</documentation>
+<name>Event</name>
 <cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Association</name>
-<documentation>An Association relates two primary Classes.<br/>
-
-</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Simple Association</name>
-<documentation>A Simple Association has no Associative Class.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Associative Association</name>
-<documentation>An Associative Association implements its parent Association using a third class, the Associative Class.<br/>
-
-Often this is necessary to implement a many-to-many association, though it is also appropriate when there is imformation that only applies when the primary association exists; for example, even though Driver owns Vehicle is one-to-many, Excise Licence might be appropriate as an associative class for the association (since Date Of Issue has nowhere else to live).<br/>
-
-A convenient notation for associative associations is <i>desc_c-(desc_a:desc_b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
-
-At present (6 June 2001) the following are <b>not</b> supported:<br/>
-
-m-(anything)</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Specialization</name>
-<documentation>A Specialization is a Relationship between a Supertype (the parent) and a number of Subtypes (children).<br/>
-
-Often, specialization is used when different subtypes have different relationships.<br/>
-
-Normally, for each instance of a parent class, there is a corresponding instance of one of the child classes (so that, in a sense, the parent is abstract). A possible optimization is to omit code for child classes that don't have any attributes of their own, or which don't participate in any relationships of their own.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Association Package</name>
-<documentation>Each Association maps to an Association Package with the name <tt><i>Domain</i>.<i>Association</i></tt>.<br/>
-
-The package is private.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Association Navigation Operation</name>
-<documentation>Given an instance of the Class at one end of a Association, Navigation finds the instance or set of instances of the Class at the other end of the Association.<br/>
-
-Whether a single instance or a set is returned depends on the cardinality of the Association.<br/>
-
-The result, or result set, may be respectively null, or empty, depending on the conditionality of the Association.<br/>
-
-For an Association with an Associative Class, Navigation is also provided between either end of the Association and the Associative Class.<br/>
-
-Each Associative Navigation Operation comes in two overloadings, one from single instances and one from sets of instances. In the latter case, the result is a true set (each destination instance appears only once).</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Relationship</name>
-<documentation>A Relationship reflects some degree of interaction between a number of Classes.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Standard Type Specification</name>
-<documentation>A Standard Type Specification is a Type Specification without the <tt>[[ callback ]]</tt> annotation.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Callback Type Specification</name>
-<documentation>A Callback Type Specification is a Type Specification with the <tt>[[ callback : <i>size</i> ]]</tt> annotation.<br/>
-
-Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Callback Package</name>
-<documentation>Each Callback Type Specification maps to a Callback Package, named <tt><i>Domain.Type</i>_Callback</tt>.<br/>
-
-The maximum number of concurrently registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
-<cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Associative Referential Attribute</name>
+<concurrency>Sequential</concurrency>
 <documentation></documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Specialization Referential Attribute</name>
-<documentation>A Specialization Referential Attribute formalizes a Specialization. It always appears in the child class, and is the Identifier for that class (or, in the case of multiple inheritance, part of the identifier).</documentation>
+<name>Instance Event</name>
 <cardinality>n</cardinality>
-<attributes>
-</attributes>
-<operations>
-</operations>
-</class>
-<class>
-<name>Forward Navigation Operation</name>
+<concurrency>Sequential</concurrency>
 <documentation></documentation>
-<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Reverse Navigation Operation</name>
-<documentation></documentation>
+<name>Class Event</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Forward Associative Navigation Operation</name>
-<documentation></documentation>
+<name>Queued Event</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Reverse Associative Navigation Operation</name>
-<documentation></documentation>
+<name>Held Event</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
-<name>Association Collective Navigation Operation</name>
-<documentation></documentation>
+<name>Dispatcher</name>
 <cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
+</class>
+<class>
+<name>Instance</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Timer</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Irrevocable Event</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Revokable Event</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
 </class>
 </classes>
 <relationships>
@@ -659,7 +1144,7 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <role><end>2</end>
 <name></name>
 <classname>Class</classname>
-<cardinality>1..n</cardinality>
+<cardinality>0..n</cardinality>
 <documentation></documentation>
 </role>
 </association>
@@ -675,38 +1160,6 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <role><end>2</end>
 <name></name>
 <classname>Class Package</classname>
-<cardinality>1..n</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Operation</classname>
-<cardinality>0..n</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Singleton Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Class Operation</classname>
 <cardinality>0..n</cardinality>
 <documentation></documentation>
 </role>
@@ -739,22 +1192,6 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <role><end>2</end>
 <name></name>
 <classname>Handle Parameter</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identifier</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Identified Class</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
@@ -844,38 +1281,6 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
-<classname>Identifier Record</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Identified Class Package</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identifier Record</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Hash Function</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
 <classname>Type Specification</classname>
 <cardinality>0..n</cardinality>
 <documentation></documentation>
@@ -883,22 +1288,6 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <role><end>2</end>
 <name></name>
 <classname>Domain</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Handle</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Identified Class Package</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
@@ -978,7 +1367,7 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 </role>
 <role><end>2</end>
 <name></name>
-<classname>Contents Function</classname>
+<classname>All Instances Function</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
@@ -1068,45 +1457,13 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
-<classname>Abstract Container Package</classname>
+<classname>Abstract Containers Package</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
 <name></name>
 <classname>Identified Class Package</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name>role c</name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name>is associative class for</name>
-<classname>Associative Association</classname>
-<cardinality>0..n</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1..n</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Domain</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
@@ -1164,55 +1521,6 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name>is child of</name>
-<classname>Identified Class</classname>
-<cardinality>1..n</cardinality>
-<documentation></documentation>
-</role>
-<associative>Specialization</associative>
-</association>
-<association>
-<name>role a</name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Association</classname>
-<cardinality>0..n</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name>role b</name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Identified Class</classname>
-<cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Association</classname>
-<cardinality>0..n</cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
 <classname>Association Collective Navigation Operation</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
@@ -1240,95 +1548,190 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <documentation></documentation>
 </role>
 </association>
-<inheritance>
-<name>operation kind</name>
+<association>
+<name>role a</name>
 <documentation></documentation>
-<child>Class Operation</child>
-<parent>Operation</parent>
-</inheritance>
-<inheritance>
-<name>class kind</name>
+<role><end>1</end>
+<name></name>
+<classname>Association</classname>
+<cardinality></cardinality>
 <documentation></documentation>
-<child>Identified Class</child>
-<parent>Class</parent>
-</inheritance>
-<inheritance>
-<name>class kind</name>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Associable Class</classname>
+<cardinality></cardinality>
 <documentation></documentation>
-<child>Singleton Class</child>
-<parent>Class</parent>
-</inheritance>
-<inheritance>
-<name>operation kind</name>
+</role>
+</association>
+<association>
+<name>role b</name>
 <documentation></documentation>
-<child>Instance Operation</child>
-<parent>Operation</parent>
-</inheritance>
-<inheritance>
-<name>class package kind</name>
+<role><end>1</end>
+<name></name>
+<classname>Association</classname>
+<cardinality>0..n</cardinality>
 <documentation></documentation>
-<child>Identified Class Package</child>
-<parent>Class Package</parent>
-</inheritance>
-<inheritance>
-<name>class package kind</name>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Associable Class</classname>
+<cardinality>1</cardinality>
 <documentation></documentation>
-<child>Singleton Class Package</child>
-<parent>Class Package</parent>
-</inheritance>
-<inheritance>
-<name>operation unit kind</name>
+</role>
+</association>
+<association>
+<name>role a</name>
 <documentation></documentation>
-<child>Instance Operation Unit</child>
-<parent>Operation Unit</parent>
-</inheritance>
-<inheritance>
-<name>operation unit kind</name>
+<role><end>1</end>
+<name></name>
+<classname>Association</classname>
+<cardinality>0..n</cardinality>
 <documentation></documentation>
-<child>Class Operation Unit</child>
-<parent>Operation Unit</parent>
-</inheritance>
-<inheritance>
-<name>attribute kind</name>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Associable Class</classname>
+<cardinality>1</cardinality>
 <documentation></documentation>
-<child>Identifying Attribute</child>
-<parent>Attribute</parent>
-</inheritance>
-<inheritance>
-<name>attribute kind</name>
+</role>
+</association>
+<association>
+<name></name>
 <documentation></documentation>
-<child>Plain Attribute</child>
-<parent>Attribute</parent>
-</inheritance>
+<role><end>1</end>
+<name></name>
+<classname>Normal Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identifier</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name>role c</name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Association Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Associative Association</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name>inheritance</name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>MultipleClass</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Child Class</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<associative>Specialization</associative>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Operation</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Event Type</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Type Specification</classname>
+<cardinality>0..1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Event Type</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Class Operation</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Event Type</classname>
+<cardinality>0..1</cardinality>
+<documentation></documentation>
+</role>
+</association>
 <inheritance>
 <name>singleton kind</name>
 <documentation></documentation>
-<child>Interface Class</child>
+<child>Public Class</child>
 <parent>Singleton Class</parent>
 </inheritance>
 <inheritance>
 <name>singleton kind</name>
 <documentation></documentation>
-<child>Internal Singleton Class</child>
+<child>Private Singleton Class</child>
 <parent>Singleton Class</parent>
 </inheritance>
 <inheritance>
-<name>class package kind</name>
+<name>associable kind</name>
 <documentation></documentation>
-<child>Interface Class Package</child>
-<parent>Class Package</parent>
+<child>Private Singleton Class</child>
+<parent>Associable Class</parent>
 </inheritance>
 <inheritance>
-<name>attribute kind</name>
+<name>relationship kind</name>
 <documentation></documentation>
-<child>Referential Attribute</child>
-<parent>Attribute</parent>
-</inheritance>
-<inheritance>
-<name>attribute kind</name>
-<documentation></documentation>
-<child>Standard Attribute</child>
-<parent>Attribute</parent>
+<child>Specialization</child>
+<parent>Relationship</parent>
 </inheritance>
 <inheritance>
 <name>relationship kind</name>
@@ -1343,16 +1746,16 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <parent>Association</parent>
 </inheritance>
 <inheritance>
+<name>type specification kind</name>
+<documentation></documentation>
+<child>Callback Type Specification</child>
+<parent>Type Specification</parent>
+</inheritance>
+<inheritance>
 <name>assoc kind</name>
 <documentation></documentation>
 <child>Associative Association</child>
 <parent>Association</parent>
-</inheritance>
-<inheritance>
-<name>relationship kind</name>
-<documentation></documentation>
-<child>Specialization</child>
-<parent>Relationship</parent>
 </inheritance>
 <inheritance>
 <name>type specification kind</name>
@@ -1361,33 +1764,419 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <parent>Type Specification</parent>
 </inheritance>
 <inheritance>
-<name>type specification kind</name>
+<name>attribute kind</name>
 <documentation></documentation>
-<child>Callback Type Specification</child>
-<parent>Type Specification</parent>
+<child>Plain Attribute</child>
+<parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name>reference kind</name>
+<name>operation kind</name>
 <documentation></documentation>
-<child>Associative Referential Attribute</child>
-<parent>Referential Attribute</parent>
+<child>Class Operation</child>
+<parent>Operation</parent>
 </inheritance>
 <inheritance>
-<name>reference kind</name>
+<name>attribute kind</name>
 <documentation></documentation>
-<child>Specialization Referential Attribute</child>
-<parent>Referential Attribute</parent>
+<child>Identifying Attribute</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name>operation kind</name>
+<documentation></documentation>
+<child>Instance Operation</child>
+<parent>Operation</parent>
+</inheritance>
+<inheritance>
+<name>cardinality</name>
+<documentation></documentation>
+<child>Singleton Class</child>
+<parent>Class</parent>
+</inheritance>
+<inheritance>
+<name>class kind</name>
+<documentation></documentation>
+<child>Child Class</child>
+<parent>MultipleClass</parent>
+</inheritance>
+<inheritance>
+<name>class kind</name>
+<documentation></documentation>
+<child>Normal Class</child>
+<parent>MultipleClass</parent>
+</inheritance>
+<inheritance>
+<name>class kind</name>
+<documentation></documentation>
+<child>Association Class</child>
+<parent>MultipleClass</parent>
 </inheritance>
 <inheritance>
 <name></name>
 <documentation></documentation>
-<child>Forward Navigation Operation</child>
-<parent>Association Navigation Operation</parent>
+<child>Instance Event Type</child>
+<parent>Event Type</parent>
 </inheritance>
 <inheritance>
 <name></name>
 <documentation></documentation>
-<child>Reverse Navigation Operation</child>
+<child>Class Event Type</child>
+<parent>Event Type</parent>
+</inheritance>
+<inheritance>
+<name>component kind</name>
+<documentation></documentation>
+<child>Referential Component</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name>component kind</name>
+<documentation></documentation>
+<child>Referential Component</child>
+<parent>Instance Record Component</parent>
+</inheritance>
+<inheritance>
+<name>reference kind</name>
+<documentation></documentation>
+<child>Specialization Referential Component</child>
+<parent>Referential Component</parent>
+</inheritance>
+<inheritance>
+<name>reference kind</name>
+<documentation></documentation>
+<child>Associative Referential Component</child>
+<parent>Referential Component</parent>
+</inheritance>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Instance Record Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Package</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Instance Record Component</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Instance Record Type</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifier Record Component</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identifier Record Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Handle</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Private Class Package</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identifier Record Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Hash Function</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Abstract Collections Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Abstract Sets Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Sets Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Identified Class Package</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Event</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Event Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name>is posted on</name>
+<classname>Dispatcher</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Queued Event</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name>is held on</name>
+<classname>Dispatcher</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Held Event</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Timer</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Instance</classname>
+<cardinality></cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Instance</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name>is directed to</name>
+<classname>Instance</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Instance Event</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Domain</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Dispatcher</classname>
+<cardinality>0..1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Dispatcher</classname>
+<cardinality>0..1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Domain</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Instance Event</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Instance Event Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Class Event</classname>
+<cardinality>0..n</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Class Event Type</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Revokable Event</classname>
+<cardinality>0..1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name></name>
+<classname>Timer</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+</association>
+<inheritance>
+<name>component kind</name>
+<documentation></documentation>
+<child>Standard Component</child>
+<parent>Attribute</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Reverse Associative Navigation Operation</child>
 <parent>Association Navigation Operation</parent>
 </inheritance>
 <inheritance>
@@ -1399,8 +2188,98 @@ The maximum number of concurrently registered callbacks is specified in the <tt>
 <inheritance>
 <name></name>
 <documentation></documentation>
-<child>Reverse Associative Navigation Operation</child>
+<child>Reverse Navigation Operation</child>
 <parent>Association Navigation Operation</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Forward Navigation Operation</child>
+<parent>Association Navigation Operation</parent>
+</inheritance>
+<inheritance>
+<name>class package kind</name>
+<documentation></documentation>
+<child>Public Class Package</child>
+<parent>Class Package</parent>
+</inheritance>
+<inheritance>
+<name>operation unit kind</name>
+<documentation></documentation>
+<child>Class Operation Unit</child>
+<parent>Operation Unit</parent>
+</inheritance>
+<inheritance>
+<name>operation unit kind</name>
+<documentation></documentation>
+<child>Instance Operation Unit</child>
+<parent>Operation Unit</parent>
+</inheritance>
+<inheritance>
+<name>private package kind</name>
+<documentation></documentation>
+<child>Singleton Class Package</child>
+<parent>Private Class Package</parent>
+</inheritance>
+<inheritance>
+<name>private  package kind</name>
+<documentation></documentation>
+<child>Identified Class Package</child>
+<parent>Private Class Package</parent>
+</inheritance>
+<inheritance>
+<name>ident</name>
+<documentation></documentation>
+<child>Identifier Record Component</child>
+<parent>Instance Record Component</parent>
+</inheritance>
+<inheritance>
+<name>component kind</name>
+<documentation></documentation>
+<child>Analysis Component</child>
+<parent>Instance Record Component</parent>
+</inheritance>
+<inheritance>
+<name>class package kind</name>
+<documentation></documentation>
+<child>Private Class Package</child>
+<parent>Class Package</parent>
+</inheritance>
+<inheritance>
+<name>kind</name>
+<documentation></documentation>
+<child>Instance Event</child>
+<parent>Event</parent>
+</inheritance>
+<inheritance>
+<name>kind</name>
+<documentation></documentation>
+<child>Class Event</child>
+<parent>Event</parent>
+</inheritance>
+<inheritance>
+<name>timing</name>
+<documentation></documentation>
+<child>Queued Event</child>
+<parent>Event</parent>
+</inheritance>
+<inheritance>
+<name>timing</name>
+<documentation></documentation>
+<child>Held Event</child>
+<parent>Event</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Irrevocable Event</child>
+<parent>Held Event</parent>
+</inheritance>
+<inheritance>
+<name></name>
+<documentation></documentation>
+<child>Revokable Event</child>
+<parent>Held Event</parent>
 </inheritance>
 </relationships>
 </domain>
