@@ -5,26 +5,27 @@
 --  PARTICULAR PURPOSE.
 
 --  ColdFrame expects this package to exist to provide the storage
---  pool used to support classes whose multiplicity isn't specified.
+--  pool used to support
+--
+--   o  classes whose multiplicity isn't specified
+--   o  event queues.
 --
 --  This is ColdFrame's default implementation.
+--
+--  See also coldframe-project-global_storage_pool.ads-debug for an
+--  alternative using GNAT Debug Pools.
 
 --  $RCSfile: coldframe-project-global_storage_pool.ads,v $
---  $Revision: 40a8bb9abf83 $
---  $Date: 2002/09/15 10:42:29 $
+--  $Revision: 9e2e73db7b59 $
+--  $Date: 2002/09/21 10:46:04 $
 --  $Author: simon $
 
---  with BC.Support.Standard_Storage;
-with GNAT.Debug_Pools;
+with BC.Support.Standard_Storage;
 with System.Storage_Pools;
 
 package ColdFrame.Project.Global_Storage_Pool is
 
---     Pool : System.Storage_Pools.Root_Storage_Pool'Class
---       renames BC.Support.Standard_Storage.Pool;
-
-   The_Pool : GNAT.Debug_Pools.Debug_Pool;
    Pool : System.Storage_Pools.Root_Storage_Pool'Class
-     renames System.Storage_Pools.Root_Storage_Pool'Class (The_Pool);
+     renames BC.Support.Standard_Storage.Pool;
 
 end ColdFrame.Project.Global_Storage_Pool;
