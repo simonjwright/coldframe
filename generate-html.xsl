@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v cd67a609e0af 2004/03/18 12:42:51 simon $ -->
+<!-- $Id: generate-html.xsl,v 539d2ebec8dd 2004/03/18 14:09:15 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -459,6 +459,11 @@
       </xsl:if>
       <xsl:if test="@class">
         <xsl:text> (class)</xsl:text>
+      </xsl:if>
+      <xsl:if test="@convention">
+        <xsl:text> (convention </xsl:text>
+        <xsl:value-of select="@convention"/>
+        <xsl:text>)</xsl:text>
       </xsl:if>
       <xsl:if test="@accessor">
         <xsl:text> (accessor)</xsl:text>
