@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 79bd42cbf746 2003/05/17 16:43:59 simon $ -->
+<!-- $Id: releases.html,v 01b3ee6c24a5 2003/05/17 21:16:55 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -23,6 +23,19 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 values for attributes, and default values for parameters. <i>Pi</i> is
 specially recognised (it translates to a domain constant equal to
 <tt>Ada.Numerics.Pi</tt>).
+
+
+<p>Code for &#171;accessor&#187;s, and for supporting inheritance and
+&#171;abstract&#187; operations, is generated in the package body
+rather than in <tt>separate</tt>s.
+
+
+<p>The Makefiles are much quieter.
+
+
+<p>The Makefiles report any code in the <tt>.impl</tt> directory that
+doesn't correspond to generated code.
+
 
 <p><dt>20030513
 
