@@ -13,44 +13,50 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-signal-initialize.adb,v $
---  $Revision: e52e2300d52d $
---  $Date: 2003/08/30 20:32:01 $
+--  $Revision: 42a0dc129c12 $
+--  $Date: 2004/04/25 17:01:45 $
 --  $Author: simon $
 
 --  Creates all the Signals.
 
-with Digital_IO.Input;
-with Digital_IO.Output;
+with Digital_IO.Input.Inheritance;
+with Digital_IO.Output.Inheritance;
 
 separate (Digital_IO.Signal)
 procedure Initialize is
 
-   SH : Signal.Handle;
-   IH : Input.Handle;
-   pragma Warnings (Off, IH);
-   OH : Output.Handle;
-   pragma Warnings (Off, OH);
-
-   subtype CIH is ColdFrame.Instances.Handle;
+   procedure Create (S : Signal_Name; As_Input : Boolean);
+   procedure Create (S : Signal_Name; As_Input : Boolean) is
+      SH : constant ColdFrame.Instances.Handle
+        := ColdFrame.Instances.Handle  (Signal.Create ((S => S)));
+   begin
+      if As_Input then
+         declare
+            IH : constant Input.Handle
+              := Input.Inheritance.Create_Tree (SH);
+            pragma Warnings (Off, IH);
+         begin
+            null;
+         end;
+      else
+         declare
+            OH : constant Output.Handle
+              := Output.Inheritance.Create_Tree (SH);
+            pragma Warnings (Off, OH);
+         begin
+            null;
+         end;
+      end if;
+   end Create;
 
 begin
 
-   SH := Signal.Create ((S => Floor_0));
-   IH := Input.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Floor_1));
-   IH := Input.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Floor_2));
-   IH := Input.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Floor_3));
-   IH := Input.Create ((G1_Parent => CIH (SH)));
+   for I in Floor_0 .. Floor_3 loop
+      Create (I, As_Input => True);
+   end loop;
 
-   SH := Signal.Create ((S => Lamp_A));
-   OH := Output.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Lamp_B));
-   OH := Output.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Lamp_C));
-   OH := Output.Create ((G1_Parent => CIH (SH)));
-   SH := Signal.Create ((S => Lamp_D));
-   OH := Output.Create ((G1_Parent => CIH (SH)));
+   for O in Lamp_A .. Lamp_D loop
+      Create (O, As_Input => False);
+   end loop;
 
 end Initialize;
