@@ -20,21 +20,48 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.ads,v $
---  $Revision: b0bc86a27bfe $
---  $Date: 2003/11/08 17:13:15 $
+--  $Revision: 6469ed193604 $
+--  $Date: 2003/11/11 06:28:08 $
 --  $Author: simon $
 
+with Ada.Strings.Unbounded;
+with Ada.Text_IO;
+with BC.Containers;
+with BC.Support.Statistics;
 with ColdFrame.Event_Basis;
 with High_Resolution_Time;
 
 package ColdFrame.Logging_Event_Basis is
+
+
+   --  A basis for Events that log the time used.
 
    type Event_Base is abstract new Event_Basis.Event_Base with private;
 
    procedure Log (The_Event : access Event_Base;
                   At_Phase : Event_Basis.Event_Processing_Phase);
 
-   procedure Print;
+
+   --  Simple printing of statistics.
+
+   procedure Print
+     (To_File : Ada.Text_IO.File_Type := Ada.Text_IO.Standard_Output);
+
+
+   --  A means of extracting the statistics, so that (for example)
+   --  they can be transmitted over the network to a logging machine.
+
+   type Datum is record
+      Event : Ada.Strings.Unbounded.Unbounded_String;
+      Queueing : BC.Support.Statistics.Instance;
+      Executing : BC.Support.Statistics.Instance;
+   end record;
+
+   package Abstract_Datum_Containers
+   is new BC.Containers (Datum);
+
+   function Results return Abstract_Datum_Containers.Container'Class;
+
 
 private
 
