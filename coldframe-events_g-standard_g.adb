@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: f029c5d83b80 $
---  $Date: 2003/11/08 08:15:37 $
+--  $Revision: f07ca6886d01 $
+--  $Date: 2003/11/19 05:31:12 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -78,6 +78,11 @@ package body ColdFrame.Events_G.Standard_G is
                    On : access Event_Queue_Base) is
    begin
 
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event");
+      end if;
+
       Log (The_Event, Event_Basis.Posting);
 
       Note (The_Queue => On,
@@ -95,6 +100,11 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (self)");
+      end if;
 
       Log (The_Event, Event_Basis.Posting);
 
@@ -118,6 +128,11 @@ package body ColdFrame.Events_G.Standard_G is
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (at)");
+      end if;
+
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
@@ -140,6 +155,11 @@ package body ColdFrame.Events_G.Standard_G is
                                                  On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
+
+      if The_Event = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "posting null event (after)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
@@ -238,6 +258,11 @@ package body ColdFrame.Events_G.Standard_G is
                   At_Time : Time.Time) is
    begin
 
+      if To_Fire = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "setting null event (at)");
+      end if;
+
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);
 
@@ -276,6 +301,11 @@ package body ColdFrame.Events_G.Standard_G is
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
+
+      if To_Fire = null then
+         Ada.Exceptions.Raise_Exception (Constraint_Error'Identity,
+                                         "setting null event (after)");
+      end if;
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => To_Fire);
