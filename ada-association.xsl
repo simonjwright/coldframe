@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-association.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -155,6 +155,11 @@
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+
+    <!-- Suppress warnings. -->
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Warnings (Off);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
     <!-- Linking subprogram .. -->
@@ -528,6 +533,14 @@
         <xsl:text> is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Warnings (Off, </xsl:text>
+        <xsl:value-of select="role[1]/name"/>
+        <xsl:text>);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Warnings (Off, </xsl:text>
+        <xsl:value-of select="role[2]/name"/>
+        <xsl:text>);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>null;&#10;</xsl:text>
         <xsl:value-of select="$I"/>

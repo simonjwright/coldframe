@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v bcd46b1579f2 2002/03/05 05:59:36 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -64,7 +64,7 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance is new ColdFrame.Events.Instance_Base with record&#10;</xsl:text>
+            <xsl:text>type Instance is new ColdFrame.Project.Events.Instance_Base with record&#10;</xsl:text>
             
           </xsl:when>
           <xsl:otherwise>

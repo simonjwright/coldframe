@@ -2,8 +2,8 @@ with States.Events;
 separate (States.Monitor)
 procedure Receive
   (M : Tick) is
-   E : ColdFrame.Events.Event_P
+   E : ColdFrame.Project.Events.Event_P
      := new Monitor.Heartbeat (Find ((Dev => M.Payload)));
 begin
-   ColdFrame.Events.Post (The => E, On => Events.Dispatcher);
+   ColdFrame.Project.Events.Post (The => E, On => Events.Dispatcher);
 end Receive;

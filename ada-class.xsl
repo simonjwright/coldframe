@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 58bbaf4ecabb 2002/03/09 09:46:42 simon $ -->
+<!-- $Id: ada-class.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -65,7 +65,9 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Events.Instance_Base with private;&#10;</xsl:text>
+            <xsl:text>type Instance (&lt;&gt;)&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
@@ -105,7 +107,7 @@
         <xsl:value-of select="$I"/>
         <xsl:choose>
           <xsl:when test="statemachine">
-            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Events.Instance_Base with private;&#10;</xsl:text>
+            <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Project.Events.Instance_Base with private;&#10;</xsl:text>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Instance_Base with private;&#10;</xsl:text>
@@ -366,7 +368,7 @@
              If it has a state machine, that's it; otherwise, need support
              for standard Instances as well. -->
         <xsl:if test="event">
-          <xsl:text>with ColdFrame.Events;&#10;</xsl:text>          
+          <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>          
         </xsl:if>
         <xsl:if test="not(statemachine)">
           <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>

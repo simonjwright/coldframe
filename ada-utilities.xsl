@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 2581986f7139 2002/02/23 14:32:51 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 44956688a4fa 2002/03/22 05:42:17 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -238,9 +238,9 @@
         <xsl:text>Unbounded_String</xsl:text>
       </xsl:when>
 
-      <!-- Timer maps to Coldframe.Events.Timer. -->
+      <!-- Timer maps to Coldframe.Project.Events.Timer. -->
       <xsl:when test="$type='Timer'">
-        <xsl:text>ColdFrame.Events.Timer</xsl:text>
+        <xsl:text>ColdFrame.Project.Events.Timer</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
