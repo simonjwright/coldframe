@@ -3,6 +3,8 @@
 
 # Makefile for use under Linux (or other Unixes, of course).
 
+GENERATE_ACCESSORS = no
+
 TOP = /usr/local
 
 CF = $(TOP)/cf-DATE
@@ -26,8 +28,9 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm
-	$(SAXON) $< $(CODEGEN_SCRIPT) >$@  \
-	  || (echo "Generation problem." && || rm -f $@)
+	$(SAXON) $< $(CODEGEN_SCRIPT) \
+	  generate-accessors=$(GENERATE_ACCESSORS) >$@  \
+	  || (echo "Generation problem." && rm -f $@)
 
 %.gen: %.ada
 	-mkdir $@
