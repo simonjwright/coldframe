@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v e890fd33e276 2001/10/04 19:13:48 simon $ -->
+<!-- $Id: generate-html.xsl,v cd3a9adeb66f 2001/11/03 06:55:05 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -41,6 +41,12 @@
   <xsl:param name="standard-indent" select="'   '"/>
   <xsl:param name="continuation-indent" select="'  '"/>
 
+  <!-- Control added blank lines: no or yes.. -->
+  <xsl:param name="add-blank-lines" select="'yes'"/>
+
+  <!-- Control verbosity: no or yes. -->
+  <xsl:param name="verbose" select="'no'"/>
+
 
   <!-- Global shorthands for indentation. -->
   <xsl:param name="I" select="$standard-indent"/>
@@ -51,6 +57,19 @@
   <xsl:param name="IC" select="concat($I, $C)"/>
   <xsl:param name="IIC" select="concat($II, $C)"/>
   <xsl:param name="IIIC" select="concat($III, $C)"/>
+  <xsl:param name="IIIIC" select="concat($IIII, $C)"/>
+
+  <!-- Added blank lines -->
+  <xsl:param name="blank-line">
+    <xsl:choose>
+      <xsl:when test="$add-blank-lines='yes'">
+        <xsl:text>&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
 
 
   <xsl:template match="domain">
