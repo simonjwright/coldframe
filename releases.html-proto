@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8d9e6285ba28 2003/11/11 20:10:38 simon $ -->
+<!-- $Id: releases.html-proto,v eec30c09fedf 2003/11/14 06:13:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -28,6 +28,10 @@ routine.
 
 <p>The generated separate bodies of operations of types didn't include
 any documentation comments.
+
+
+<p>UML <i>tagged values</i> are supported as well as ColdFrame's
+original <tt>[[annotations]]</tt>.
 
 
 <p><dt>20031102
