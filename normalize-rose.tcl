@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a5017c1a186e 2003/07/03 19:30:32 simon $
+# $Id: normalize-rose.tcl,v e8416ee1e3bf 2003/07/10 20:19:59 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1077,7 +1077,7 @@ itcl::class Class {
     }
 
     # Specifies kind of class
-    variable kind
+    variable kind NormalClass
     method -kind {k} {
 	set kind $k
 	switch $k {
