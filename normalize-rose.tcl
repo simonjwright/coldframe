@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fa951df1071c 2004/05/01 16:51:33 simon $
+# $Id: normalize-rose.tcl,v 06b1675afce7 2004/05/29 17:20:00 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1705,7 +1705,6 @@ itcl::class Parameter {
         putElement name $name
         putElement type $type
         if {[string length $initial] > 0} {putElement initial $initial}
-        if {[string length $modeInfo] > 0} {putElement mode $modeInfo}
         $this -generateDocumentation
         puts "</parameter>"
     }
