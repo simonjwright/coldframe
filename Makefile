@@ -29,12 +29,14 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
-	$(SAXON) $< $(CODEGEN_SCRIPT) >$@ || rm -f $@
+	$(SAXON) $< $(CODEGEN_SCRIPT) generate-accessors=yes >$@ \
+	  || (echo "Generation problem." && rm -f $@)
 
 %.gen: %.ada
 	-mkdir $@
 	rm -f $@/*.ad[bs]
 	gnatchop $< $@
+	chmod a=r $@/*.ad[bs]
 
 TG = $(HOME)/bin/tg
 %.adb: %.ts
