@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: generate-ada.xsl,v c2d840e4c8d8 2004/09/14 11:00:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -191,7 +191,7 @@
 
     <!-- .. access-to-operation .. -->
     <xsl:apply-templates
-      select="type[not(@protected)]/operation[@access and not(@suppressed)]"
+      select="type/operation[@access]"
       mode="access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
