@@ -1,6 +1,5 @@
-with Ada.Task_Identification;
+--  $Id: performance-harness.adb,v 44a17870c8ca 2003/11/11 06:44:51 simon $
 
-with GNAT.IO; use GNAT.IO;
 with Performance.Initialize;
 with Performance.Tear_Down;
 with Performance.Person.All_Instances;
@@ -14,7 +13,12 @@ with Performance.House.All_Instances;
 with Performance.House.Collections;
 with Performance.Event_Timing;
 
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Task_Identification;
+with Ada.Text_IO; use Ada.Text_IO;
+with BC.Support.Statistics;
 with ColdFrame.Instances;
+with ColdFrame.Logging_Event_Basis;
 with ColdFrame.Project.Events;
 with ColdFrame.Exceptions.Traceback;
 pragma Warnings (Off, ColdFrame.Exceptions.Traceback);
@@ -380,6 +384,44 @@ begin
       Put_Line ("timer firing (same dispatcher):"
                   & Duration'Image (D / Event_Timing.Loops));
 
+   end;
+
+   ColdFrame.Logging_Event_Basis.Print;
+
+   declare
+      use ColdFrame.Logging_Event_Basis;
+      Data : constant Abstract_Datum_Containers.Container'Class := Results;
+      It : Abstract_Datum_Containers.Iterator'Class
+        := Abstract_Datum_Containers.New_Iterator (Data);
+   begin
+      while not Abstract_Datum_Containers.Is_Done (It) loop
+         declare
+            D : constant Datum := Abstract_Datum_Containers.Current_Item (It);
+            use BC.Support;  -- for Statistics
+         begin
+            Put (To_String (D.Event));
+            Put (',');
+            Put (Integer'Image (Statistics.Count (D.Queueing)));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Mean (D.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Min (D.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Max (D.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Sigma (D.Queueing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Mean (D.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Min (D.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Max (D.Executing))));
+            Put (',');
+            Put (Duration'Image (Duration (Statistics.Sigma (D.Executing))));
+            New_Line;
+         end;
+         Abstract_Datum_Containers.Next (It);
+      end loop;
    end;
 
    Ada.Task_Identification.Abort_Task (Ada.Task_Identification.Current_Task);
