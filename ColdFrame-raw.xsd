@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-raw.xsd,v 3c47c5b18a23 2005/01/29 19:54:41 simon $ -->
+<!-- $Id: ColdFrame-raw.xsd,v ac58b68c20dd 2005/01/31 16:33:46 simon $ -->
 
 <!-- 
 
      This schema describes the format of .raw files, output by
      extractor.ebs from Rose.
-
-     Note that any unrecognised tagged values will be output to the
-     .norm file as attributes.
 
      -->
 
