@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c41d90950c52 2003/07/26 16:43:14 simon $
+# $Id: normalize-rose.tcl,v 62e01b9f80ca 2003/07/26 16:55:12 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -196,13 +196,13 @@ proc normalizeValue {s} {
 				    }
 				    lappend minl $term
 				}
-				lappend plusl [join $minl "-"]
+				lappend plusl [join $minl " - "]
 			    }
-			    lappend divl [join $plusl "+"]
+			    lappend divl [join $plusl " + "]
 			}
-			lappend starl [join $divl "/"]
+			lappend starl [join $divl " / "]
 		    }
-		    lappend rpl [join $starl "*"]
+		    lappend rpl [join $starl " * "]
 		}
 		lappend lpl [join $rpl ")"] 
 	    }
