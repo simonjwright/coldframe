@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 36b9991a5ebf 2001/11/03 06:56:36 simon $ -->
+<!-- $Id: bugs.html,v 8642f4f4e2cb 2001/11/17 06:04:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -83,10 +83,6 @@ detect missing types (or names).
 <dd>The WITH TYPE extension seems to trigger a lot of instability in
 GNAT. An alternative would be better.
 
-<dt>0030 (raised 13.x.01)
-
-<dd>&#171;finalize&#187; operations shouldn't be inherited.
-
 <dt>0031 (raised 13.x.01)
 
 <dd>&#171;finalize&#187; operations which are functions or have
@@ -101,23 +97,52 @@ reporting (perhaps in a separate pass?)
 is <tt>ColdFrame.Instances.Handle</tt>; should be just
 <tt>Handle</tt>.
 
-<dt>0034 (raised 1.xi.01)
-
-<dd>&#171;finalize&#187; operations of active classes shouldn't be
-mapped to task entries. Come to that, would it be better only to
-generate task entries when there's an &#171;entry&#187; stereotype?
-
 <dt>0035 (raised 1.xi.01)
 
 <dd>The association support packages generated when one of the parties
 in a 1:1 association is a &#171;singleton&#187; won't work if the
 non-singleton party is marked <tt>[[source]]</tt>.
 
-<!-- next: 0036 -->
+<dt>0036 (raised 16.xi.01)
+
+<dd>The domain <tt>Initialize</tt> procedure should be a child
+unit. As it is, a <tt>with</tt> of the domain package, probably for
+its types, calls in all the class packages that have &#171;init&#187;
+operations.
+
+<dt>0037 (raised 16.xi.01)
+
+<dd>Would it be better only to generate task entries when there's an
+&#171;entry&#187; stereotype?
+
+<dt>0038 (raised 16.xi.01)
+
+<dd>Parameterless &#171;abstract&#187; operations of active classes
+generate task entries. They probably shouldn't.
+
+<!-- next: 0040 -->
 
 </dl>
 
 <h2>Fixed</h2>
+
+<h3>16.xi.01</h3>
+<dl>
+
+<dt>0030 (raised 13.x.01)
+
+<dd>&#171;finalize&#187; operations shouldn't be inherited.
+
+<dt>0034 (raised 1.xi.01)
+
+<dd>&#171;finalize&#187; operations of active classes shouldn't be
+mapped to task entries.
+
+<dt>0039 (raised 16.xi.01)
+
+<dd><tt>Tear_Down</tt> should clear out any registered Callbacks.
+
+</dl>
 
 <h3>29.x.01</h3>
 <dl>
