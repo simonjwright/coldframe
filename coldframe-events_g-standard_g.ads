@@ -20,10 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 5de600c66408 $
+--  $Date: 2002/09/04 18:50:26 $
 --  $Author: simon $
 
+with Ada.Task_Identification;
 with BC.Containers.Queues.Unbounded;
 with BC.Containers.Queues.Ordered.Unbounded;
 
@@ -72,12 +73,6 @@ package ColdFrame.Events_G.Standard_G is
 
    procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue);
-
-   -------------------------
-   --  Unit test support  --
-   -------------------------
-
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue);
 
 private
 
@@ -163,30 +158,12 @@ private
 
    private
 
-      Locked : Boolean := False;
-      Executing : Boolean := False;
+      entry Waiting_For_Lock;
+
+      Locks : Natural := 0;
+      Owner : Ada.Task_Identification.Task_Id;
 
    end Excluder;
-
-
-   --  Determining whether there are any events left (if not, unit test can
-   --  stop).
-   protected type Event_Count is
-
-      entry Wait_Until_Idle;
-      --  Blocks until there are no events pending or held.
-
-      procedure Add_Posted_Event;
-      procedure Remove_Posted_Event;
-      procedure Add_Held_Event;
-      procedure Remove_Held_Event;
-
-   private
-
-      Posted_Events : Natural := 0;
-      Held_Events : Natural := 0;
-
-   end Event_Count;
 
 
    --  The actual Event Queue.
@@ -196,7 +173,6 @@ private
       The_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Dispatcher : Dispatcher (Event_Queue'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue'Access);
-      The_Event_Count : Event_Count;
    end record;
 
    procedure Invalidate_Events

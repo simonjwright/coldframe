@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 5de600c66408 $
+--  $Date: 2002/09/04 18:50:26 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -154,7 +154,7 @@ package body ColdFrame.Events_G.Standard_G is
          end if;
 
          Delete (E);
-         The_Queue.The_Event_Count.Remove_Posted_Event;
+         Remove_Posted_Event (The_Queue);
          The_Queue.The_Excluder.Done;
 
       end loop;
@@ -233,16 +233,6 @@ package body ColdFrame.Events_G.Standard_G is
    end Unset;
 
 
-   -------------------------
-   --  Unit test support  --
-   -------------------------
-
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue) is
-   begin
-      The_Queue.The_Event_Count.Wait_Until_Idle;
-   end Wait_Until_Idle;
-
-
    ------------------------------
    --  Timed event management  --
    ------------------------------
@@ -259,7 +249,7 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  The_Queue.The_Event_Count.Add_Held_Event;
+                  Add_Held_Event (The_Queue);
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -277,7 +267,7 @@ package body ColdFrame.Events_G.Standard_G is
 
             select
                accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  The_Queue.The_Event_Count.Add_Held_Event;
+                  Add_Held_Event (The_Queue);
                   Timed_Event_Queues.Append (The_Events, The_Entry);
                end Append;
 
@@ -322,7 +312,7 @@ package body ColdFrame.Events_G.Standard_G is
                      Delete (T.The_Event);
                   end if;
                end;
-               The_Queue.The_Event_Count.Remove_Held_Event;
+               Remove_Held_Event (The_Queue);
 
             end select;
 
@@ -348,7 +338,7 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
                                                The_Event);
-         The_Queue.The_Event_Count.Add_Posted_Event;
+         Add_Posted_Event (The_Queue);
       end Post;
 
 
@@ -356,18 +346,19 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
                                                The_Event);
-         The_Queue.The_Event_Count.Add_Posted_Event;
+         Add_Posted_Event (The_Queue);
       end Post_To_Self;
 
 
       entry Fetch (The_Event : out Event_P)
-      when not Locked
+      when Locks = 0
         and then (not Unbounded_Posted_Event_Queues.Is_Empty
                     (The_Queue.The_Self_Events)
                   or else not Unbounded_Posted_Event_Queues.Is_Empty
                     (The_Queue.The_Events)) is
-         pragma Assert (not Executing, "already executing");
       begin
+         Locks := 1;
+         Owner := Fetch'Caller;
          if not Unbounded_Posted_Event_Queues.Is_Empty
            (The_Queue.The_Self_Events) then
             The_Event :=
@@ -378,14 +369,12 @@ package body ColdFrame.Events_G.Standard_G is
               Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
             Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
          end if;
-         Executing := True;
       end Fetch;
 
 
       procedure Done is
-         pragma Assert (Executing, "not already executing");
       begin
-         Executing := False;
+         Locks := Locks - 1;
       end Done;
 
 
@@ -393,18 +382,16 @@ package body ColdFrame.Events_G.Standard_G is
         (For_The_Instance : access Instance_Base'Class) is
 
          procedure Invalidate_Events
-           (Using : Abstract_Posted_Event_Containers.Iterator'Class);
+           (Using : in out Abstract_Posted_Event_Containers.Iterator'Class);
          procedure Invalidate_Events
-           (Using : Abstract_Posted_Event_Containers.Iterator'Class) is
+           (Using : in out Abstract_Posted_Event_Containers.Iterator'Class) is
             use Abstract_Posted_Event_Containers;
-            It : Abstract_Posted_Event_Containers.Iterator'Class := Using;
-            --  We need a variable here
          begin
-            while not Is_Done (It) loop
-               if Current_Item (It).all in Instance_Event_Base'Class then
+            while not Is_Done (Using) loop
+               if Current_Item (Using).all in Instance_Event_Base'Class then
                   declare
                      E : Instance_Event_Base
-                       renames Instance_Event_Base (Current_Item (It).all);
+                       renames Instance_Event_Base (Current_Item (Using).all);
                   begin
                      if Instance_Base_P (E.For_The_Instance)
                        = Instance_Base_P (For_The_Instance) then
@@ -412,64 +399,48 @@ package body ColdFrame.Events_G.Standard_G is
                      end if;
                   end;
                end if;
-               Next (It);
+               Next (Using);
             end loop;
          end Invalidate_Events;
 
+         Self_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
+           Unbounded_Posted_Event_Queues.New_Iterator
+           (The_Queue.The_Self_Events);
+         Normal_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
+           Unbounded_Posted_Event_Queues.New_Iterator
+           (The_Queue.The_Events);
+
       begin
-         Invalidate_Events
-           (Unbounded_Posted_Event_Queues.New_Iterator
-              (The_Queue.The_Self_Events));
-         Invalidate_Events
-           (Unbounded_Posted_Event_Queues.New_Iterator
-              (The_Queue.The_Events));
+         Invalidate_Events (Self_Iterator);
+         Invalidate_Events (Normal_Iterator);
       end Invalidate_Events;
 
 
-      entry Lock when not Locked and then not Executing is
+      entry Lock when True is
+         use type Ada.Task_Identification.Task_Id;
       begin
-         Locked := True;
+         if Lock'Caller = Owner then
+            Locks := Locks + 1;
+         else
+            requeue Waiting_For_Lock with abort;
+         end if;
       end Lock;
 
 
       procedure Unlock is
-         pragma Assert (Locked, "not already locked");
       begin
-         Locked := False;
+         Locks := Locks - 1;
       end Unlock;
 
 
+      entry Waiting_For_Lock when Locks = 0 is
+      begin
+         Locks := 1;
+         Owner := Waiting_For_Lock'Caller;
+      end Waiting_For_Lock;
+
+
    end Excluder;
-
-
-   protected body Event_Count is
-
-      entry Wait_Until_Idle when Posted_Events = 0 and then Held_Events = 0 is
-      begin
-         null;
-      end Wait_Until_Idle;
-
-      procedure Add_Posted_Event is
-      begin
-         Posted_Events := Posted_Events + 1;
-      end Add_Posted_Event;
-
-      procedure Remove_Posted_Event is
-      begin
-         Posted_Events := Posted_Events - 1;
-      end Remove_Posted_Event;
-
-      procedure Add_Held_Event is
-      begin
-         Held_Events := Held_Events + 1;
-      end Add_Held_Event;
-
-      procedure Remove_Held_Event is
-      begin
-         Held_Events := Held_Events - 1;
-      end Remove_Held_Event;
-
-   end Event_Count;
 
 
    procedure Invalidate_Events
