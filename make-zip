@@ -1,5 +1,0 @@
-#! /bin/sh
-# Make zip of CF
-
-rm -f cf.zip
-cd ./dist && zip -r ../cf.zip .
