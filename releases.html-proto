@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 27d20e63288b 2004/03/02 06:46:38 simon $ -->
+<!-- $Id: releases.html-proto,v 0a4c3f184113 2004/03/03 15:42:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -80,8 +80,9 @@ href="resources.html#booch-components">Booch Components</a>
 </ul>
 
 
-<p>Making an association with a &#171;public&#187; class isn't
-supported; doing so results in an error during code generation.
+<p>Making an association with a &#171;public&#187; class was never
+meant to be supported; doing so results in a "strong warning" during
+code generation, and will result in an error in a future release.
 
 
 <p>Fixed-length strings are supported (say <tt>{string = fixed
