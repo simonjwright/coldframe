@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: d47f3f64c562 $
---  $Date: 2005/02/26 11:33:34 $
+--  $Revision: 73a1bb044ead $
+--  $Date: 2005/02/26 11:55:32 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -70,13 +70,21 @@ begin
       Set_Output_Integer ("foo.bar.quux", "result", 44, 3);
       Set_Output_Integer ("foo.bar.quux", "result", 45, 4);
 
+      --  Check number of calls
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
+      New_Line;
+
       --  First call
       Generated_Stub_Procedure ("first: input 24, result 42", 24, Result);
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 1));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 1)'Img);
       Put_Line ("result => " & Result'Img);
+      New_Line;
 
       --  Second call
       begin
@@ -86,28 +94,37 @@ begin
             Put_Line ("exception => " &
                         Ada.Exceptions.Exception_Information (E));
       end;
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 2));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 2)'Img);
+      New_Line;
 
       --  Third call
       Generated_Stub_Procedure ("third: input 26, result 44", 26, Result);
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 3));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 3)'Img);
       Put_Line ("result => " & Result'Img);
+      New_Line;
 
       --  Fourth call
       Generated_Stub_Procedure ("fourth and last: input 27, result 45",
                                 27,
                                 Result);
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
       Put_Line ("message => " & Get_Input_String
                   ("foo.bar.quux", "message", 4));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 4)'Img);
       Put_Line ("result => " & Result'Img);
+      New_Line;
 
    end;
 
