@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 618b5dae72b1 $
+--  $Date: 2002/09/04 18:53:45 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
@@ -39,7 +39,7 @@ package ColdFrame.Exceptions is
    --  relationship.
 
    Cant_Happen : exception;
-   --  An unexpected Event has occured.
+   --  An unexpected Event has occurred.
 
    Use_Error : exception;
    --  Misuse of facilities (eg, attempting to post Events for the
