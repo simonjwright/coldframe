@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 7cb2e41267d3 2003/10/26 17:51:32 simon $ -->
+<!-- $Id: ada-collection.xsl,v f0d38f4904e9 2003/12/18 15:24:27 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -183,7 +183,7 @@
         <xsl:text>.Sets&#10;</xsl:text>
         <xsl:text>is new Abstract_Sets.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> (Hash =&gt; </xsl:text>
+        <xsl:text>(Hash =&gt; </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
