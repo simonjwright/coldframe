@@ -112,6 +112,8 @@ PDFS = coldframe-architecture.pdf \
   coldframe-relationships.pdf
 pdf:: $(PDFS)
 
+GIFS = States.gif States-Monitor.gif
+
 ############################
 # Distribution construction
 
@@ -131,7 +133,7 @@ use-of-bcs.html \
 navigation.jpg \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
-$(PDFS) \
+$(GIFS) $(PDFS) \
 coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
@@ -173,7 +175,15 @@ Problem_Reporting.impl/problem_reporting-interface-add_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-delete_component.adb \
 Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
 Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
-Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
+Problem_Reporting.impl/problem_reporting-interface-report_problems.adb \
+States.cat States.raw \
+States.impl/states-monitor-clear_heartbeat_timeout.adb \
+States.impl/states-monitor-clear_warmup_timeout.adb \
+States.impl/states-monitor-set_2_second_warmup_timeout.adb \
+States.impl/states-monitor-set_6_second_warmup_timeout.adb \
+States.impl/states-monitor-set_heartbeat_timeout.adb \
+States.impl/states-t.adb \
+States.impl/states-t.ads
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
@@ -197,7 +207,7 @@ cf-$(DATE): $(MAKEFILES) $(PROGS) force
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/example
-	cp -p $(DEMO) $@/example
+	tar cf - $(DEMO) | tar xf - -C $@/example
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-rm $@
