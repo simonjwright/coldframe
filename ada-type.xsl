@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 3500fefad0d1 2005/02/02 05:29:11 simon $ -->
+<!-- $Id: ada-type.xsl,v ff48eb33c84c 2005/02/14 09:06:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -534,36 +534,38 @@
         <xsl:value-of select="name"/>
         <xsl:text> is </xsl:text>
         <xsl:value-of select="$base"/>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="$IC"/>
-        <xsl:text>range </xsl:text>
-        <xsl:choose>
-          <xsl:when test="real/lower">
-            <xsl:value-of select="real/lower"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>
-              <xsl:text>Warning: lower bound not specified for </xsl:text>
-               <xsl:value-of select="name"/>
-            </xsl:message>
-            <xsl:value-of select="$base"/>
-            <xsl:text>'First</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>  .. </xsl:text>
-        <xsl:choose>
-          <xsl:when test="real/upper">
-            <xsl:value-of select="real/upper"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>
-              <xsl:text>Warning: upper bound not specified for </xsl:text>
-               <xsl:value-of select="name"/>
-            </xsl:message>
-            <xsl:value-of select="$base"/>
-            <xsl:text>'Last</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:if test="real/lower or real/upper">
+          <xsl:text>&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>range </xsl:text>
+          <xsl:choose>
+            <xsl:when test="real/lower">
+              <xsl:value-of select="real/lower"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>
+                <xsl:text>Warning: lower bound not specified for </xsl:text>
+                <xsl:value-of select="name"/>
+              </xsl:message>
+              <xsl:value-of select="$base"/>
+              <xsl:text>'First</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>  .. </xsl:text>
+          <xsl:choose>
+            <xsl:when test="real/upper">
+              <xsl:value-of select="real/upper"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>
+                <xsl:text>Warning: upper bound not specified for </xsl:text>
+                <xsl:value-of select="name"/>
+              </xsl:message>
+              <xsl:value-of select="$base"/>
+              <xsl:text>'Last</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
         <xsl:text>;&#10;</xsl:text>
 
       </xsl:when>
