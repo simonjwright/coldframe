@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v fe00ae03610e 2001/05/16 05:35:28 simon $ -->
+<!-- $Id: ada-type.xsl,v 19553bd80dbf 2001/06/02 16:44:21 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -70,92 +70,190 @@
   <xsl:template mode="domain-context" match="*"/>
 
 
-  <!-- Generate domain Types entries (not for standard types). -->
-  <xsl:template mode="domain-type" match="domain/type">
-    <xsl:if test="not(standard)">
-      <xsl:choose>
+  <!-- Called at domain to generate domain Types entries (not for
+       standard types). -->
+  <xsl:template name="domain-types">
+    <xsl:call-template name="sorted-domain-types">
+      <xsl:with-param name="nodes" select="/.."/>
+      <xsl:with-param name="finished" select="type[standard]"/>
+    </xsl:call-template>
+  </xsl:template>
 
-        <xsl:when test="@record">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is record&#10;</xsl:text>
-          <xsl:apply-templates mode="instance-record-component"/>
-          <xsl:text>  end record;&#10;</xsl:text>
-        </xsl:when>
 
-        <xsl:when test="enumeration">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is </xsl:text>
-          <xsl:text>&#10;    (</xsl:text>
-          <xsl:for-each select="enumeration/literal">
-            <xsl:value-of select="."/>
-            <xsl:if test="position() &lt; last()">
-              <xsl:text>,&#10;     </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:text>);&#10;</xsl:text>
-        </xsl:when>
+  <!-- Called at domain to output the type declarations sorted
+       in dependency order. -->
+  <xsl:template name="sorted-domain-types">
 
-        <xsl:when test="imported">
-          <xsl:text>  subtype </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is </xsl:text>
-          <xsl:value-of select="imported"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
+    <!-- The types which are to be output in this pass -->
+    <xsl:param name="nodes"/>
 
-        <xsl:when test="integer">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is range </xsl:text>
-          <xsl:value-of select="integer/lower"/>
-          <xsl:text> .. </xsl:text>
-          <xsl:value-of select="integer/upper"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
+    <!-- The types which have already been output -->
+    <xsl:param name="finished"/>
 
-        <xsl:when test="real">
-          <xsl:text>  type </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is digits </xsl:text>
-          <xsl:value-of select="real/digits"/>
-          <xsl:if test="real/lower and real/upper">
-            <xsl:text> range </xsl:text>
-            <xsl:value-of select="real/lower"/>
-            <xsl:text> .. </xsl:text>
-            <xsl:value-of select="real/upper"/>
+    <!-- Saxon-5.5 needs this, or it goes into an infinite loop, -->
+    <!-- <xsl:message>
+      <xsl:text>domain-types: nodes </xsl:text>
+      <xsl:value-of select="count($nodes)"/>
+      <xsl:text>, finished </xsl:text>
+      <xsl:value-of select="count($finished)"/>
+      <xsl:text>, total </xsl:text>
+      <xsl:value-of select="count(type)"/>
+    </xsl:message> -->
+
+    <!-- Output the types for this pass -->
+    <xsl:for-each select="$nodes">
+      <xsl:sort select="name"/>
+      <xsl:call-template name="domain-type"/>
+    </xsl:for-each>
+
+    <!-- The set of types output so far -->
+    <xsl:variable name="processed" select="$finished | $nodes"/>
+
+    <!-- <xsl:for-each select="$processed">
+      <xsl:message>
+        <xsl:text>we have processed </xsl:text>
+        <xsl:value-of select="name"/>
+      </xsl:message>
+    </xsl:for-each> -->
+
+    <!-- The set of types not yet output and dependent only on types
+         that have been output already -->
+    <xsl:variable
+      name="next"
+      select="type[not($processed/name=name)
+              and not(attribute/type[not($processed/name=.)])]"/>
+
+    <xsl:choose>
+
+      <xsl:when test="$next">
+
+        <!-- More types to be output, so make the recursive call -->
+        <xsl:call-template name="sorted-domain-types">
+          <xsl:with-param name="nodes" select="$next"/>
+          <xsl:with-param name="finished" select="$processed"/>
+        </xsl:call-template>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+
+        <!-- No more types able to be output, check we haven't missed any.
+             These should only be records with attributes of undeclared
+             type. -->
+
+        <xsl:variable name="missing" select="type[not($processed/name=name)]"/>
+
+        <xsl:if test="$missing">
+
+          <xsl:message terminate="yes">
+            <xsl:for-each select="$missing">
+              <xsl:sort select="name"/>
+              <xsl:text>Couldn't generate type </xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>&#10;</xsl:text>
+              <xsl:for-each select="attribute/type[not($processed/name=.)]">
+                <xsl:sort select="."/>
+                <xsl:text>  undeclared type </xsl:text>
+                <xsl:value-of select="."/>
+                <xsl:text>&#10;</xsl:text>
+              </xsl:for-each>
+            </xsl:for-each>
+          </xsl:message>
+
+        </xsl:if>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
+
+  </xsl:template>
+
+
+  <!-- Called at domain/type to generate a single domain Type entry
+       (not for standard types). -->
+  <xsl:template name="domain-type">
+    <xsl:choose>
+
+      <xsl:when test="attribute">
+        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is record&#10;</xsl:text>
+        <xsl:apply-templates mode="instance-record-component"/>
+        <xsl:text>  end record;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="enumeration">
+        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is </xsl:text>
+        <xsl:text>&#10;    (</xsl:text>
+        <xsl:for-each select="enumeration/literal">
+          <xsl:value-of select="."/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,&#10;     </xsl:text>
           </xsl:if>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
-
-        <!-- sets are implemented as class Collections; no action here -->
-        <xsl:when test="set"/>
-
-        <xsl:when test="string">
-          <xsl:text>  package </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Package is&#10;</xsl:text>
-          <xsl:text>     new Generic_Bounded_Length (Max =&gt; </xsl:text>
-          <xsl:value-of select="string/max"/>
-          <xsl:text>);&#10;</xsl:text>
-          <xsl:text>  subtype </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text> is </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>_Package.Bounded_String;&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:text>  -- Unrecognised type category for </xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-    </xsl:if>
+        </xsl:for-each>
+        <xsl:text>);&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="imported">
+        <xsl:text>  subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is </xsl:text>
+        <xsl:value-of select="imported"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="integer">
+        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is range </xsl:text>
+        <xsl:value-of select="integer/lower"/>
+        <xsl:text> .. </xsl:text>
+        <xsl:value-of select="integer/upper"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:when test="real">
+        <xsl:text>  type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is digits </xsl:text>
+        <xsl:value-of select="real/digits"/>
+        <xsl:if test="real/lower and real/upper">
+          <xsl:text> range </xsl:text>
+          <xsl:value-of select="real/lower"/>
+          <xsl:text> .. </xsl:text>
+          <xsl:value-of select="real/upper"/>
+        </xsl:if>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <!-- sets are implemented as class Collections; no action here -->
+      <xsl:when test="set"/>
+        
+      <xsl:when test="string">
+        <xsl:text>  package </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Package is&#10;</xsl:text>
+        <xsl:text>     new Generic_Bounded_Length (Max =&gt; </xsl:text>
+        <xsl:value-of select="string/max"/>
+        <xsl:text>);&#10;</xsl:text>
+        <xsl:text>  subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_Package.Bounded_String;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:otherwise>
+        <xsl:text>  -- Unrecognised type category for </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>&#10;</xsl:text>
+      </xsl:otherwise>
+      
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template mode="domain-type" match="*"/>
@@ -168,7 +266,7 @@
     <xsl:if test="not(standard)">
       <xsl:choose>
 
-        <xsl:when test="@record"/>
+        <xsl:when test="attribute"/>
         
         <xsl:when test="enumeration"/>
         
