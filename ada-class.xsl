@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 89dc3e8e5f71 2004/01/18 18:00:21 simon $ -->
+<!-- $Id: ada-class.xsl,v 17c78350d556 2004/01/18 21:17:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -486,9 +486,10 @@
           <xsl:text> use type ColdFrame.Project.Calendar.Time;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- If this class has any events at all, or any Timers, include
+        <!-- If this class has any events at all, or a statemachine 
+             (presumably without events!), or any Timers, include 
              event support. -->
-        <xsl:if test="event or attribute/type='Timer'">
+        <xsl:if test="event or statemachine or attribute/type='Timer'">
           <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
         </xsl:if>
 
