@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 6df8619783c1 $
---  $Date: 2003/09/09 04:14:58 $
+--  $Revision: afff70e1b5c1 $
+--  $Date: 2003/11/01 08:26:56 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -565,7 +565,7 @@ package body ColdFrame.Events_G.Standard_G is
          --  We need to be sure that only event handlers called by our
          --  Dispatcher post events-to-self.
          if Owner /=
-           Standard_G.Event_Queue_Base (The_Queue.all). The_Dispatcher'Identity
+           Standard_G.Event_Queue_Base (The_Queue.all).The_Dispatcher'Identity
          then
             Ada.Exceptions.Raise_Exception
               (Exceptions.Use_Error'Identity,
