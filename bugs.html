@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d73d169e9954 2001/07/01 10:57:22 simon $ -->
+<!-- $Id: bugs.html,v 9610039ff343 2001/07/13 18:41:19 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -32,14 +32,41 @@ parent class's instance) isn't <tt>null</tt>.
 <dd>It would be helpful if active tasks' procedures (which call the
 corresponding entries) trapped and reported exceptions.
 
+<dt>0012 (raised 12.vii.01)
+
+<dd>It would be helpful if exception handlers could be automatically
+generated in stub subprograms.
+
+<dt>0014 (raised 13.vii.01)
+
+<dd>No code is generated for operations of &#171;type&#187;s.
+
+<!-- next: 0015 -->
+
+</dl>
+
+<h2>Fixed</h2>
+
+<h3>13.vii.01</h3>
+<dl>
+
+<dt>0013 (raised 12.vii.01)
+
+<dd><tt>Initialize</tt> procedures should only be generated (and
+called by the Domain <tt>Initialize</tt>) where the Model specifies a
+parameterless &#171;class&#187; procedure <tt>Initialize</tt>.
+
+</dl>
+
+<h3>7.vii.01</h3>
+<dl>
+
 <dt>0011 (raised 27.vi.01)
 
 <dd><tt>Unlink</tt> operations on simple associations should null out
 referential attributes.
 
 </dl>
-
-<h2>Fixed</h2>
 
 <h3>28.vi.01</h3>
 <dl>
