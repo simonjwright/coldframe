@@ -530,6 +530,10 @@ TEST += \
 Regressions.cat Regressions.raw Regressions.gpr \
 Regressions.impl/regressions-find_active_singleton-t.adb \
 Regressions.impl/regressions-find_active-t.adb \
+Regressions.impl/regressions-max_more-f.adb \
+Regressions.impl/regressions-max_more-t.adb \
+Regressions.impl/regressions-max_one-f.adb \
+Regressions.impl/regressions-max_one-t.adb \
 Regressions.impl/regressions-suite.adb \
 Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
