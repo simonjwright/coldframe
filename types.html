@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 3d0c064b3ec7 2003/03/01 09:58:45 simon $ -->
+<!-- $Id: types.html,v 6e87a37529c4 2003/03/01 12:41:34 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -95,7 +95,8 @@ hashed. Currently the only supported <i>style</i> is
 integer ranges but not for private or access types.
 
 <li><tt>image : <i>image-operation</i></tt> specifies the operation to
-be used to print values of the type when it has been serialized..
+be used to print values of the type when it has been serialized. See
+<a href="serialization.html">separate information</a>.
 
 <li><tt>imported : <i>external-reference</i></tt> specifies that the
 given type is to be found at the specified external reference.
@@ -107,7 +108,8 @@ type is a renaming of the specified external reference.
 upper <i>upper-bound</i></tt>
 
 <li><tt>serializable</tt> specifies support for outputting values of
-the type (which must have attributes) to an external medium.
+the type to an external medium. See
+<a href="serialization.html">separate information</a>.
 
 <li><tt>string : max <i>max-length</i></tt>
 
@@ -299,7 +301,7 @@ function.
 
 </ul>
 
-<p>
+<p>See <a href="serialization.html">separate information</a>.
 
 <li><tt>string : max <i>max-length</i></tt> gives an instantiation of
 <tt>Ada.Strings.Bounded</tt>'s <tt>Generic_Bounded_Length</tt>; for
