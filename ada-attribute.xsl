@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 255195d5634a 2001/04/29 10:38:41 simon $ -->
+<!-- $Id: ada-attribute.xsl,v bb81aa3d4d7f 2001/05/27 05:27:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -52,19 +52,32 @@
   <!-- Called from domain/class to generate the actual instance
        record for the class. -->
   <xsl:template name="instance-record">
-    <xsl:param name="is-supertype"/>
+
     <xsl:choose>
 
       <!-- Output all attributes. -->
       <xsl:when test="count(attribute) &gt; 0">
+
         <xsl:text>  type Instance is record&#10;</xsl:text>
+
+        <!-- The non-supertype attributes -->
         <xsl:apply-templates
           mode="instance-record-component"
           select="attribute"/>
-        <xsl:if test="$is-supertype">
-          <xsl:text>    Current_Child : Child_Class;&#10;</xsl:text>
-        </xsl:if>
+        <xsl:variable name="parent-name" select="name"/>
+
+        <!-- supertype attributes -->
+        <xsl:for-each select="../inheritance[parent=$parent-name]">
+          <xsl:sort select="name"/>
+          <xsl:text>    </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>_Current_Child : </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>_Child_Class;&#10;</xsl:text>
+        </xsl:for-each>
+
         <xsl:text>  end record;&#10;</xsl:text>
+
       </xsl:when>
 
       <xsl:otherwise>
