@@ -20,12 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 39232e97cf74 $
---  $Date: 2002/04/12 18:59:39 $
+--  $Revision: c38b96e3d858 $
+--  $Date: 2002/05/22 04:36:45 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
+with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G.Standard_G is
 
@@ -52,7 +53,7 @@ package body ColdFrame.Events_G.Standard_G is
                I.Events_Posted_On := Event_Queue_P (On);
             elsif I.Events_Posted_On /= Event_Queue_P (On) then
                Ada.Exceptions.Raise_Exception
-                 (Use_Error'Identity,
+                 (Exceptions.Use_Error'Identity,
                   "attempt to post instance event on different queue");
             end if;
          end;
@@ -60,6 +61,30 @@ package body ColdFrame.Events_G.Standard_G is
       end if;
 
       On.The_Excluder.Post (The_Event);
+
+   end Post;
+
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue;
+                   To_Fire_At : Time.Time) is
+      TE : Timer_Queue_Entry_P := new Timer_Event;
+   begin
+      TE.On := Event_Queue_P (On);
+      TE.Time_To_Fire := To_Fire_At;
+      TE.The_Event := Event_P (The_Event);
+      On.The_Timer_Manager.Append (TE);
+   end Post;
+
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue;
+                   To_Fire_After : Natural_Duration) is
+   begin
+
+      Post (The_Event => The_Event,
+            On => On,
+            To_Fire_At => Time.From_Now (To_Fire_After));
 
    end Post;
 
@@ -108,7 +133,7 @@ package body ColdFrame.Events_G.Standard_G is
 
          --  XXX may not be all ...
          Ada.Exceptions.Raise_Exception
-           (Use_Error'Identity,
+           (Exceptions.Use_Error'Identity,
             "attempt to set an already-set timer");
 
       end if;
@@ -138,7 +163,7 @@ package body ColdFrame.Events_G.Standard_G is
       if The_Timer.The_Entry = null then
 
          Ada.Exceptions.Raise_Exception
-           (Use_Error'Identity,
+           (Exceptions.Use_Error'Identity,
             "attempt to unset a timer that wasn't set");
 
       else
