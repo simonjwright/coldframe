@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
+<!-- $Id: ada-type.xsl,v 47cb74c6e5ad 2001/10/29 05:46:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -384,9 +384,8 @@
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>_Hash is&#10;</xsl:text>
-          <xsl:value-of select="$C"/>
-          <xsl:text>new ColdFrame.Hash.Strings.Bounded (</xsl:text>
+          <xsl:text>_Hash&#10;</xsl:text>
+          <xsl:text>is new ColdFrame.Hash.Strings.Bounded (</xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>
