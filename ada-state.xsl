@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 95a98294b272 2003/08/30 19:49:50 simon $ -->
+<!-- $Id: ada-state.xsl,v f98e63e20a9c 2003/08/30 20:10:18 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -385,7 +385,7 @@
           <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:text>Error: more than one drop-through transition from state </xsl:text>
-            <xsl:value-of select="$tr/source"/>
+            <xsl:value-of select="../../name"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="name"/>
           </xsl:message>
@@ -395,7 +395,7 @@
           <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
-            <xsl:value-of select="$tr/source"/>
+            <xsl:value-of select="../../name"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="name"/>
           </xsl:message>
