@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a708c87c1e88 2002/02/20 20:25:04 simon $ -->
+<!-- $Id: ada-class.xsl,v 2f31d98e1978 2002/02/21 05:51:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1060,6 +1060,10 @@
     </xsl:call-template>
     <xsl:value-of select="$II"/>
     <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort H.The_T;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -1107,6 +1111,10 @@
       </xsl:if>
     </xsl:for-each>
     <xsl:text>));&#10;</xsl:text>
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>abort This.The_T;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (This);&#10;</xsl:text>
     <xsl:value-of select="$I"/>
@@ -1440,9 +1448,9 @@
   <!-- Called from domain/class to generate a task spec. -->
   <xsl:template name="task-spec">
     <!--
-         task type t (this : access instance) is
-           entry e (parameters);
-         end t;
+         task type T (This : access Instance) is
+           entry {e} ({parameters});
+         end T;
          -->
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
