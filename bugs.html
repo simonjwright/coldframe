@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v b57234803f1f 2002/12/24 11:47:04 simon $ -->
+<!-- $Id: bugs.html,v d988370b650b 2003/01/09 21:02:15 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -150,7 +150,23 @@ tear-down unit test support won't work properly.
 <dd>Ada doesn't allow functions to have <tt>in out</tt> or
 <tt>out</tt> parameters; ColdFrame should check.
 
-<!-- next: 0142 -->
+<dt>0142 (raised 9.i.03)
+
+<dd>The navigation package for an association could usefully have a
+Find operation to locate the association class instance given the
+associated instances' handles.
+
+<dt>0143 (raised 9.i.03)
+
+<dd>The Create operation could usefully check that referential
+parameters (which are of type <tt>ColdFrame.Instances.Handle</tt>) are
+of the correct actial type.
+
+<dt>0144 (raised 9.i.03)
+
+<dd>The distribution should contain the HTML documentation.
+
+<!-- next: 0145 -->
 
 </dl>
 
