@@ -1,10 +1,17 @@
-<!-- $Id: event-use.html,v 675e746dbde3 2002/09/07 17:32:27 simon $ -->
+<!-- $Id: event-use.html,v bd144bb06a9e 2002/09/29 13:51:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
 </head>
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Event use</h1>
+
+<h2>Event queues</h2>
+
+<p>All code is executed in the context of some Ada task.
+
+
+<h2>Posting an event</h2>
 
 The typical code for posting an event <tt>Ev</tt> is
 <pre>
@@ -33,9 +40,12 @@ it would be
 </pre>
 
 <p>(<tt>Ev.all</tt> is of type
-<tt>ColdFrame.Project.Events.Event_Base'Class</tt>, <tt>Class.Info
-(Ev.all)</tt> is a view conversion to <tt>Class.Info</tt>), after
-which you can set up the payload before posting the event.
+<tt>ColdFrame.Project.Events.Event_Base'Class</tt>,
+
+<br><tt>Class.Info (Ev.all)</tt> is a view conversion to
+<tt>Class.Info</tt>,
+
+<br>after which you can set up the payload before posting the event.)
 
 <p>In total,
 <pre>
@@ -48,6 +58,56 @@ which you can set up the payload before posting the event.
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
    end;
 </pre>
+
+<h2>Locking</h2>
+
+<p>If the task executing <a
+href="event-translation.html#is_on"><tt>Is_On</tt></a> isn't the same
+one as that executing the <a
+href="event-modelling.html#example-model">state machine</a>, there is
+a possibility that <tt>Is_On</tt> may catch the instance in an
+intermediate state (in this case, the state <tt>Resetting</tt>). There
+are two approaches to this problem.
+
+<p>In the simpler, it's clear that <tt>Resetting</tt> is an
+intermediate state; the <a
+href="event-modelling.html#example-model">state machine</a> bounces
+immediately back to <tt>On</tt> via an unguarded transition, so
+<tt>Is_On</tt> could be coded
+<pre>
+   function Is_On (This : Handle) return Boolean is
+   begin
+      return This.State_Machine_State = On
+               or else This.State_Machine_State = Resetting;
+   end Is_On;
+</pre>
+
+<p>If the simple approach isn't good enough, it's possible to
+<i>lock</i> the domain's event queue:
+<pre>
+   function Is_On (This : Handle) return Boolean is
+      L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+      pragma Warnings (Off, L);
+   begin
+      return This.State_Machine_State = On;
+   end Is_On;
+</pre>
+
+<p>After the <tt>Lock</tt> <tt>L</tt> has been elaborated,
+ColdFrame guarantees that
+
+<ul>
+
+<li>there are no outstanding self events on <tt>Dispatcher</tt>
+
+<li>no further events will be dispatched by <tt>Dispatcher</tt> until
+<tt>L</tt> is destroyed (by going out of scope).
+
+</ul>
+
+<p>Note that there's no guarantee about the relative timing of events
+and locks; you could post an event and then take a lock, but the event
+may or may not have been handled when the lock is achieved.
 
 <hr>
 <i>

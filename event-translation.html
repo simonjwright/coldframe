@@ -1,4 +1,4 @@
-<!-- $Id: event-translation.html,v 675e746dbde3 2002/09/07 17:32:27 simon $ -->
+<!-- $Id: event-translation.html,v bd144bb06a9e 2002/09/29 13:51:13 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event translation</title>
@@ -61,11 +61,45 @@ the type would be
 class. Instead, it's expected that you'll test it within operations
 and return an appropriate result:
 <pre>
-   function Is_On (This : Handle) return Boolean is
+   function <a name="is_on">Is_On</a> (This : Handle) return Boolean is
    begin
       return This.State_Machine_State = On;
    end Is_On;
 </pre>
+
+<h2>Transitions</h2>
+
+<p>When an event is dispatched to a state machine, there are three
+possible outcomes, depending on what the state model says about the
+event occuring in the current state:
+
+<ul>
+
+<li>If the transition is marked <em>&#171;ignore&#187;</em>, the
+event is thrown away.
+
+<li>If the transition isn't in the model, the exception
+<tt>ColdFrame.Exceptions.Cant_Happen</tt> is raised.
+
+<li>Otherwise, it's a legal transition.
+
+<ol>
+
+<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
+current state,
+
+<li>the instance variable <tt>State_Machine_State</tt> is set to the
+target state,
+
+<li>the entry actions are executed in order.
+
+</ol>
+
+</ul>
+
+<p>It is legal to use the instance <tt>Delete</tt> operation as an
+entry action (ColdFrame doesn't check that it's in a <i>final</i>
+state). Of course, it needs to be the <em>last</em> action!
 
 <hr>
 <i>
