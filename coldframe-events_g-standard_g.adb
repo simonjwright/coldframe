@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 8d2de5ca6a52 $
---  $Date: 2003/03/16 12:19:08 $
+--  $Revision: 620f4cb2f23b $
+--  $Date: 2003/03/16 16:16:56 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -162,13 +162,21 @@ package body ColdFrame.Events_G.Standard_G is
 
       --  Wait to be told when to start, if not immediately
       if not The_Queue.Started then
-         accept Start;
+         accept Start do
+            --  Start processing events set or posted to run after a
+            --  delay (rather than at a time) only after we have
+            --  started ourselves; but don't return until we've done
+            --  so, so that our caller can tell the Timer manager to
+            --  rethink after we're ready
+            Held_Events.Start_Processing_After_Events
+              (The_Queue.The_Held_Events);
+         end Start;
+      else
+            --  Start processing events set or posted to run after a
+            --  delay (rather than at a time) immediately
+            Held_Events.Start_Processing_After_Events
+              (The_Queue.The_Held_Events);
       end if;
-
-      --  Start processing events set or posted to run after a delay
-      --  (rather than at a time) as soon as we have started
-      --  ourselves
-      Held_Events.Start_Processing_After_Events (The_Queue.The_Held_Events);
 
       loop
 
