@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 416bac71f85a 2001/06/21 19:29:47 simon $ -->
+<!-- $Id: ada-class.xsl,v 6594fd7ac00e 2001/06/26 18:48:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -266,26 +266,47 @@
           
         </xsl:if>
         
-        <!-- Include "with type" for referential attributes (that
-             refer to other classes). -->
+        <!-- Include necessary "with" or "with type" for referential
+             attributes (that refer to other classes). -->
         <!--XXX why doesn't this work always?<xsl:for-each
              select="attribute[@refers
              and not(@refers=preceding::attribute/@refers)]">-->
-        <xsl:for-each
-          select="attribute[@refers and not(@refers=../name)]">
-          <xsl:sort select="@refers"/>
-          <xsl:text>with type </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="@refers"/>
-          <xsl:text>.Handle is access;&#10;</xsl:text>
-        </xsl:for-each>
+        <xsl:choose>
+
+          <!-- It seems (26.vi.01) that GNAT 3.14a1 has a problem with
+               "with type" and tasks. -->
+          <xsl:when test="@active">
+            <xsl:for-each
+              select="attribute[@refers and not(@refers=../name)]">
+              <xsl:sort select="@refers"/>
+              <xsl:text>with </xsl:text>
+              <xsl:value-of select="../../name"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="@refers"/>
+              <xsl:text>;&#10;</xsl:text>
+            </xsl:for-each>
+          </xsl:when>
+
+          <!-- Normally, use "with type" to minimise risk of circularities -->
+          <xsl:otherwise>
+            <xsl:for-each
+              select="attribute[@refers and not(@refers=../name)]">
+              <xsl:sort select="@refers"/>
+              <xsl:text>with type </xsl:text>
+              <xsl:value-of select="../../name"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="@refers"/>
+              <xsl:text>.Handle is access;&#10;</xsl:text>
+            </xsl:for-each>
+
+          </xsl:otherwise>
+      </xsl:choose>
         
         <!-- Handle subprograms. -->
         <xsl:apply-templates
-          mode="operation-context"
+          mode="operation-spec-context"
           select="$ancestors/operation">
-          <xsl:with-param name="current" select="name"/>
+          <xsl:with-param name="current" select="."/>
         </xsl:apply-templates>
 
       </xsl:otherwise>
@@ -517,13 +538,64 @@
 
 
   <!-- Called from domain/class to generate context clauses for package
-       body. -->
+       body.
+       There is (GNAT 3.14a1) an issue with "with type", so we include
+       corresponding "with"'s for the packages involved. -->
   <xsl:template name="class-body-context">
 
-    <xsl:if test="not(@singleton)">
-      <!-- We'll need to free memory. -->
-      <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
-    </xsl:if>
+    <!-- The classes to be processed this time. The default is the
+         current class. -->
+    <xsl:param name="parents" select="."/>
+
+    <!-- The ancestors so far. The default value is "null". -->
+    <xsl:param name="ancestors" select="/.."/>
+
+    <xsl:choose>
+
+      <xsl:when test="$parents">
+
+        <!-- Still something to collect; call self recursively with the
+             parent node(s). -->
+        <xsl:call-template name="class-body-context">
+          <xsl:with-param
+            name="parents"
+            select="../class[name=../inheritance[child=$parents/name]/parent]"/>
+          <xsl:with-param name="ancestors" select="$parents | $ancestors"/>
+        </xsl:call-template>
+
+      </xsl:when>
+
+      <xsl:otherwise>
+
+        <!-- $ancestors contains all the nodes to be processed. -->
+
+        <xsl:if test="not(@singleton)">
+          <!-- We'll need to free memory. -->
+          <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- Withs for attributes of the current class -->
+        <xsl:for-each
+          select="attribute[@refers and not(@refers=../name)]">
+          <xsl:sort select="@refers"/>
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="@refers"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:for-each>
+
+        <!-- Withs for subprograms of this and ancestor classes -->
+
+        <xsl:apply-templates
+          mode="operation-body-context"
+          select="$ancestors/operation">
+          <xsl:with-param name="current" select="."/>
+        </xsl:apply-templates>
+
+      </xsl:otherwise>
+
+    </xsl:choose>
 
   </xsl:template>
 
