@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 9b7e9ee5c7f3 2003/07/04 19:34:38 simon $ -->
+<!-- $Id: ada-state.xsl,v 5d3da25ab8ab 2003/07/24 19:55:36 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -533,7 +533,6 @@
                <!--
                     declare
                        H : Handle := This;
-                    
                     begin
                        Delete (H);
                        ColdFrame.Project.Events.Instance_Is_Deleted
