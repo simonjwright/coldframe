@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 5633a5782e52 2002/01/03 06:13:06 simon $ -->
+<!-- $Id: bugs.html,v 01f6a3dd4265 2002/01/03 06:22:27 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -123,7 +123,7 @@ document from the domain model.
 class was calculated automatically (where the multiplicity of each
 associated class is specified).
 
-<!-- next: 0052 -->
+<!-- next: 0053 -->
 
 </dl>
 
@@ -137,6 +137,11 @@ associated class is specified).
 
 <dd>In inheritance trees, the parents may not have been processed when
 the grandchildren are processed, resulting in failed normalization.
+
+<dt>0052 (raised 2.i.02)
+
+<dd>The Makefiles expect a Case Exception File, and normalization
+fails if it's not present.
 
 </dl>
 
