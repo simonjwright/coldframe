@@ -23,7 +23,7 @@ endif
 
 AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
-TCLXML = $(HOME)/TclXML-1.2
+TCLXML = $(HOME)/tclxml-2.1theta
 
 SAXON = java com.icl.saxon.StyleSheet
 
