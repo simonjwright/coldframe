@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 060b7471e788 $
---  $Date: 2002/09/15 11:19:20 $
+--  $Revision: bd84b0e0df4a $
+--  $Date: 2002/09/15 18:21:35 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -64,36 +64,32 @@ package body ColdFrame.Events_G is
    end Finalize;
 
 
-   procedure Finalize (The_Terminator : in out Instance_Terminator) is
+   procedure Finalize (The_Instance : access Instance_Base'Class) is
    begin
-      if The_Terminator.For_The_Instance.Events_Posted_On /= null then
+      if The_Instance.Events_Posted_On /= null then
          --  Some events have been posted on a Queue
          Invalidate_Events
-           (On => The_Terminator.For_The_Instance.Events_Posted_On,
-            For_The_Instance => The_Terminator.For_The_Instance);
+           (On => The_Instance.Events_Posted_On,
+            For_The_Instance => The_Instance);
       end if;
    end Finalize;
 
 
-   procedure Finalize (The_Terminator : in out Timer_Terminator) is
+   procedure Finalize (The_Timer : in out Timer) is
    begin
-
-      --  XXX is there a race condition here?
-
-      if The_Terminator.For_The_Timer.The_Entry /= null then
+      if The_Timer.The_Entry /= null then
 
          --  The Timer is set. Tell the timer event that the timer has
          --  been deleted.
-         The_Terminator.For_The_Timer.The_Entry.The_Timer := null;
+         The_Timer.The_Entry.The_Timer := null;
 
          --  Invalidate the held event.
-         The_Terminator.For_The_Timer.The_Entry.The_Event.Invalidated := True;
+         The_Timer.The_Entry.The_Event.Invalidated := True;
 
          --  Decrement the count of timer events
-         Remove_Timer_Event (The_Terminator.For_The_Timer.The_Entry.On);
+         Remove_Timer_Event (The_Timer.The_Entry.On);
 
       end if;
-
    end Finalize;
 
 

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 2e70ccfd970c $
---  $Date: 2002/09/15 11:20:59 $
+--  $Revision: bd84b0e0df4a $
+--  $Date: 2002/09/15 18:21:35 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -213,6 +213,15 @@ package ColdFrame.Events_G is
    --  but aren't intended for public use (they are called by
    --  generated code).
 
+   procedure Finalize (The_Instance : access Instance_Base'Class);
+   --  Removes any outstanding events for the instance from the
+   --  associated queue when the instance is deleted.
+
+   procedure Finalize (The_Timer : in out Timer);
+   --  Removes any outstanding events for the timer from the
+   --  associated queue when the (instance containing) the timer is
+   --  deleted.
+
    function State_Image (This : Instance_Base) return String is abstract;
    --  Used for debugging/logging.
 
@@ -243,23 +252,18 @@ private
    --  If a timer is unset the held event must not be actioned.
    --
    --  Memory must be freed when finished with.
-
-
-   --  An Instance_Terminator is a component of an Instance_Base which
-   --  is used to cause removal of any outstanding events for that
-   --  instance from the scheduler when the instance is deleted.
-   type Instance_Terminator (For_The_Instance : access Instance_Base)
-   is new Ada.Finalization.Limited_Controlled with null record;
-
-   procedure Finalize (The_Terminator : in out Instance_Terminator);
+   --
+   --
+   --  The above considerations used to be managed by using controlled
+   --  types. Now, the generated code calls the appropriate Finalize
+   --  explicitly.
 
 
    type Instance_Base is abstract new Instances.Instance_Base with record
-      The_Terminator : Instance_Terminator (Instance_Base'Access);
       Events_Posted_On : Event_Queue_P;
    end record;
-   --  Events_Posted_On is there for the Instance_Terminator to know which
-   --  queue to retract events for this instance from.
+   --  Events_Posted_On is there for Finalize to know which queue to
+   --  retract events for this instance from.
 
 
    type Event_Base is abstract tagged limited record
@@ -358,21 +362,7 @@ private
    for Timer_Queue_Entry_P'Storage_Pool use Event_Storage;
 
 
-   --  A Timer_Terminator is a component of a Timer which is used to
-   --  cause removal of any outstanding events for that timer from the
-   --  scheduler when the (instance containing) the timer is deleted.
-   --
-   --  We have to avoid making Timer tagged so as to avoid trying to
-   --  dispatch on more than one parameter.
-
-   type Timer_Terminator (For_The_Timer : access Timer)
-   is new Ada.Finalization.Limited_Controlled with null record;
-
-   procedure Finalize (The_Terminator : in out Timer_Terminator);
-
-
    type Timer is limited record
-      The_Terminator : Timer_Terminator (Timer'Access);
       The_Entry : Timer_Queue_Entry_P;
    end record;
 
