@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v c0b68025ef97 2004/01/11 19:28:15 simon $ -->
+<!-- $Id: types.html,v 9466994bb66d 2004/01/18 08:00:08 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -86,6 +86,10 @@ Domains can register to be notified when something has changed in the
 lower-level Domain.
 <br>As a shorthand, you can use the stereotype
 <em>&#171;callback&#187;</em>, which implies &#171;type&#187;.
+
+<li><tt>convention = <i>language</i></tt> specifies that the type is
+to be laid out using the conventions of the specified programming
+language (typically C).
 
 <li><tt>counterpart</tt> is used for references to instances in other
 domains.
@@ -234,6 +238,13 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
    package <i>Domain</i>.<i>Typ</i>_Callback
    is new ColdFrame.Callbacks
      (T => <i>Domain</i>.<i>Typ</i>);
+</pre>
+
+<li><tt>convention = <i>language</i></tt>
+
+<p>For a type <tt>Typ</tt>, generates
+<pre>
+   pragma Convention (<i>Typ</i>, <i>language</i>);
 </pre>
 
 <li><tt>counterpart</tt> (or &#171;counterpart&#187;)
