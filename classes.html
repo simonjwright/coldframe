@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 8dfefd1ed754 2003/07/26 19:09:37 simon $ -->
+<!-- $Id: classes.html,v eaf8073d30a8 2003/11/14 05:46:06 simon $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -142,16 +142,16 @@ run-time thread or task) may be marked with the stereotype
 specification dialog box to <i>Active</i> (which is less immediately
 visible).
 
-<h3>Annotations</h3>
+<h3>Tags</h3>
 
-<p><tt>[[ abbreviation : <i>abbrev</i> ]]</tt> specifies the class's
+<p><tt>{ abbreviation = <i>abbrev</i> }</tt> specifies the class's
 abbreviation. By default, the abbreviation is composed of the initial
 letters of the full class name or, if the name is a single word, the
 name prefixed with <tt>A_</tt> or <tt>An_</tt> as appropriate. This
 rule wouldn't work for, for example, <i>New Threat</i> and <i>Non
 Threat</i>.
 
-<p><tt>[[ max : <i>max-size</i> ]]</tt> specifies the maximum number
+<p><tt>{ max = <i>max-size</i> }</tt> specifies the maximum number
 of instances that will coexist. This may provoke a different code
 generation strategy.
 
@@ -161,11 +161,11 @@ multiplicity, depending on the version of Rose) of
 <i>Detail</i> tab. <tt>1..1</tt> is allowed as a shorthand for
 &#171;singleton&#187;; <tt>1..n</tt> isn't allowed.
 
-<p><tt>[[ priority : <i>priority</i> ]]</tt> allows you to specdify
+<p><tt>{ priority = <i>priority</i> }</tt> allows you to specify
 the priority of each instance of an active class, relative to the
-system's default priority (larger numbers mean highr priority).
+system's default priority (larger numbers mean higher priority).
 
-<p><tt>[[ stack : <i>stack-size</i> ]]</tt> allows you to specify a
+<p><tt>{ stack = <i>stack-size</i> }</tt> allows you to specify a
 non-default stack size for each instance if an active class
 
 
