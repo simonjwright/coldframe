@@ -1,12 +1,6 @@
-with ColdFrame.Project.Events.Standard;
+with ColdFrame.Project.Events.Standard.Debug;
 
 package body Performance.Event_Timing is
-
-
-   procedure Handler (Ev : No_Action) is
-   begin
-      null;
-   end Handler;
 
 
    procedure Handler (Ev : Repost) is
@@ -17,14 +11,49 @@ package body Performance.Event_Timing is
          begin
             Repost (Next.all).Count := Ev.Count - 1;
             ColdFrame.Project.Events.Post (Next,
-                                           On => Dispatcher);
+                                           On => Dispatcher_A);
          end;
+      else
+         Done_At := Seawolf_High_Resolution_Time.Clock;
+      end if;
+   end Handler;
+
+
+   procedure Handler (Ev : Ping) is
+   begin
+      if Ev.Count > 0 then
+         declare
+            Next : ColdFrame.Project.Events.Event_P := new Pong;
+         begin
+            Pong (Next.all).Count := Ev.Count - 1;
+            ColdFrame.Project.Events.Post (Next,
+                                           On => Dispatcher_B);
+         end;
+      else
+         Done_At := Seawolf_High_Resolution_Time.Clock;
+      end if;
+   end Handler;
+
+
+   procedure Handler (Ev : Pong) is
+   begin
+      if Ev.Count > 0 then
+         declare
+            Next : ColdFrame.Project.Events.Event_P := new Ping;
+         begin
+            Ping (Next.all).Count := Ev.Count - 1;
+            ColdFrame.Project.Events.Post (Next,
+                                           On => Dispatcher_A);
+         end;
+      else
+         Done_At := Seawolf_High_Resolution_Time.Clock;
       end if;
    end Handler;
 
 
 begin
 
-   Dispatcher := new ColdFrame.Project.Events.Standard.Event_Queue;
+   Dispatcher_A := new ColdFrame.Project.Events.Standard.Event_Queue;
+   Dispatcher_B := new ColdFrame.Project.Events.Standard.Event_Queue;
 
 end Performance.Event_Timing;

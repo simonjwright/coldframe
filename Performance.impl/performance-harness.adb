@@ -317,7 +317,7 @@ begin
 
       for I in 1 .. 10 loop
          declare
-            L : ColdFrame.Project.Events.Lock (Event_Timing.Dispatcher);
+            L : ColdFrame.Project.Events.Lock (Event_Timing.Dispatcher_A);
             pragma Warnings (Off, L);
          begin
             null;
@@ -326,6 +326,30 @@ begin
       D := Clock - T;
       Put_Line ("average lock claim time:"
                   & Duration'Image (D / 10));
+
+   end;
+
+   begin
+
+      T := Clock;
+      ColdFrame.Project.Events.Post (new Event_Timing.Repost,
+                                     On => Event_Timing.Dispatcher_A);
+      delay 1.0;
+      D := Event_Timing.Done_At - T;
+      Put_Line ("average event dispatch (same domain):"
+                  & Duration'Image (D / Event_Timing.Loops));
+
+   end;
+
+   begin
+
+      T := Clock;
+      ColdFrame.Project.Events.Post (new Event_Timing.Ping,
+                                     On => Event_Timing.Dispatcher_A);
+      delay 1.0;
+      D := Event_Timing.Done_At - T;
+      Put_Line ("average event dispatch (other domain):"
+                  & Duration'Image (D / Event_Timing.Loops));
 
    end;
 

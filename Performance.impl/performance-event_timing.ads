@@ -1,17 +1,28 @@
 with ColdFrame.Project.Events;
+with Seawolf_High_Resolution_Time;
 
 package Performance.Event_Timing is
 
-   type No_Action is new ColdFrame.Project.Events.Event_Base with null record;
+   Loops : constant := 100;
 
-   procedure Handler (Ev : No_Action);
+   Done_At : Seawolf_High_Resolution_Time.Time;
 
    type Repost is new ColdFrame.Project.Events.Event_Base with record
-      Count : Natural := 0;
+      Count : Natural := Loops;
    end record;
-
    procedure Handler (Ev : Repost);
 
-   Dispatcher : ColdFrame.Project.Events.Event_Queue_P;
+   type Ping is new ColdFrame.Project.Events.Event_Base with record
+      Count : Natural := Loops;
+   end record;
+   procedure Handler (Ev : Ping);
+
+   type Pong is new ColdFrame.Project.Events.Event_Base with record
+      Count : Natural := Loops;
+   end record;
+   procedure Handler (Ev : Pong);
+
+   Dispatcher_A : ColdFrame.Project.Events.Event_Queue_P;
+   Dispatcher_B : ColdFrame.Project.Events.Event_Queue_P;
 
 end Performance.Event_Timing;
