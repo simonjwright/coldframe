@@ -17,4 +17,4 @@ coldframe-combine_hash-test
 extractor.ebs
 *.domains
 project lib
-stairwell-*demo
+stairwell_demo stairwell_logging_demo
