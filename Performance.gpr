@@ -1,10 +1,11 @@
 --  Project file (GCC-3, GNAT-3.15) for ColdFrame performance tests.
---  $Id: Performance.gpr,v 5ade5c8ce219 2003/11/08 16:48:17 simon $
+--  $Id: Performance.gpr,v 354ea5bd3cc4 2003/11/08 17:14:20 simon $
 
 with "Options";
 with "BC";
 with "ColdFrame";
 with "High_Resolution_Timing";
+with "Statistics";
 
 project Performance is
 
