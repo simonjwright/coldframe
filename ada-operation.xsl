@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 4e7855ed1c2f 2002/01/24 20:15:57 simon $ -->
+<!-- $Id: ada-operation.xsl,v cf429dcd1865 2002/02/06 20:03:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -353,7 +353,7 @@
                  downward (if there's anywhere to go). -->
 
             <xsl:if test="not(/domain/inheritance[parent=$current/name])">
-              <xsl:message>
+              <xsl:message terminate="yes">
                 <xsl:text>CF: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
                 <xsl:text> in </xsl:text>
