@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v aa941448005d 2003/02/14 20:30:33 simon $ -->
+<!-- $Id: ada-class.xsl,v 2f238dbf5f56 2003/02/15 16:31:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -168,6 +168,14 @@
     <xsl:if test="statemachine">
       <xsl:call-template name="state-image-spec"/>
     </xsl:if>
+
+    <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+    <xsl:message>
+      <xsl:text>Number of instances for </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> is </xsl:text>
+      <xsl:call-template name="number-of-instances"/>
+    </xsl:message>
 
     <!-- .. if the maximum number of instances is fixed, fix the storage
          pool for Handle .. -->
@@ -1769,30 +1777,20 @@
       <xsl:when test="@max">
         <xsl:variable name="max" select="@max"/>
         <xsl:choose>
-          <xsl:when test="$max &lt; 11">
-            <xsl:text>1</xsl:text>
-          </xsl:when>
-          <xsl:when test="$max &lt; 51">
-            <xsl:text>5</xsl:text>
-          </xsl:when>
-          <xsl:when test="$max &lt; 101">
-            <xsl:text>11</xsl:text>
-          </xsl:when>
-          <xsl:when test="$max &lt; 501">
-            <xsl:text>29</xsl:text>
+          <xsl:when test="$max &lt; $max-hash-buckets">
+            <xsl:value-of select="$max"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>43</xsl:text>
+            <xsl:value-of select="$max-hash-buckets"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
 
       <xsl:otherwise>
-        <xsl:text>19</xsl:text>
+        <xsl:value-of select="$max-hash-buckets"/>
       </xsl:otherwise>
 
     </xsl:choose>
-
   </xsl:template>
 
 
