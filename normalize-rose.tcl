@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 75c0795c544e 2001/06/06 19:25:50 simon $
+# $Id: normalize-rose.tcl,v 1187d3d6f63c 2001/06/09 04:36:16 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -465,6 +465,10 @@ itcl::class Classname {
     inherit IdentifierString
 }
 
+itcl::class Concurrency {
+    inherit String
+}
+
 itcl::class End {
     inherit String
 }
@@ -550,7 +554,11 @@ itcl::class Domain {
 
 	puts "<domain>"
 	putElement name "$name"
-	putElement date "[exec date]"
+	if [catch {set date [exec date]}] {
+	    puts stderr "CF: problem with the \"date\" command"
+	} else {
+	    putElement date "$date"
+	}
 	$this -generateDocumentation
 
 	$classes -generate $this
@@ -596,6 +604,17 @@ itcl::class Class {
 		}
 		$this -max $c
 	    }
+	}
+    }
+
+    # specifies if this is an active class
+    variable active 0
+
+    method -concurrency {conc} {
+	set c [string trim $conc]
+	switch $c {
+	    Active  {set active 1}
+	    default {}
 	}
     }
 
@@ -762,6 +781,7 @@ itcl::class Class {
 	    puts "</type>"
 	} else {
 	    puts -nonewline "<class"
+	    if $active {puts -nonewline " active=\"yes\""}
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
 	    if $singleton {puts -nonewline " singleton=\"yes\""}
 	    if $interface {puts -nonewline " interface=\"yes\""}
@@ -1747,6 +1767,7 @@ proc elementFactory {tag} {
 	"class"           {return [Class #auto]}
 	classes           {return [[Domain::currentDomain] -getClasses]}
 	classname         {return [Classname #auto]}
+	concurrency       {return [Concurrency #auto]}
 	datatype          {return [Datatype #auto]}
 	datatypes         {return [[Domain::currentDomain] -getDatatypes]}
 	documentation     {return [Documentation #auto]}
