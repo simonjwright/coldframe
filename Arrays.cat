@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Arrays"
@@ -10,10 +10,129 @@
     quid       	"3D7CC2550197"
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
-	(object Class "T"
-	    quid       	"3D7CC27C00E9"
-	    documentation 	"[[ array: element integer, lower 0, upper 6 ]]"
-	    stereotype 	"type"))
+	(object Class "My Boolean"
+	    quid       	"400998390150"
+	    documentation 	
+|{renames = boolean,
+| hash = enumeration}
+	    
+	    stereotype 	"type")
+	(object Class "Enum"
+	    quid       	"4009986D0295"
+	    documentation 	
+|{enumeration = a|b|c}
+|
+	    
+	    stereotype 	"type")
+	(object Class "Int"
+	    quid       	"4009988D0164"
+	    documentation 	
+|{integer = lower 3 | upper 9}
+|
+	    
+	    stereotype 	"type")
+	(object Class "My Boolean Class"
+	    quid       	"400998B300D3"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998C90305"
+		    stereotype 	"id"
+		    type       	"My Boolean"
+		    quidu      	"400998390150")
+		(object ClassAttribute "b"
+		    quid       	"40099D350295"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")))
+	(object Class "Enum Class"
+	    quid       	"400998D80285"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998E00150"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")
+		(object ClassAttribute "b"
+		    quid       	"40099D3F03B2"
+		    type       	"Int")))
+	(object Class "Int Class"
+	    quid       	"400998EF009D"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"400998F7008A"
+		    stereotype 	"id"
+		    type       	"Int")
+		(object ClassAttribute "b"
+		    quid       	"40099D480120"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD")))
+	(object Class "Large Int"
+	    quid       	"40099C2F00AD"
+	    documentation 	
+|{integer = lower 0 | upper 1000}
+|
+	    
+	    stereotype 	"type")
+	(object Class "Large Int Class"
+	    quid       	"40099C4B0270"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099C550379"
+		    stereotype 	"id"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD")
+		(object ClassAttribute "b"
+		    quid       	"40099D4E039F"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")))
+	(object Class "Integer Class"
+	    quid       	"40099CB90048"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099CC5001D"
+		    stereotype 	"id"
+		    type       	"Integer")
+		(object ClassAttribute "b"
+		    quid       	"40099D5501AA"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")))
+	(object Class "My Boolean Class B"
+	    quid       	"40099D030365"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099E740384"
+		    stereotype 	"id"
+		    type       	"My Boolean"
+		    quidu      	"400998390150")
+		(object ClassAttribute "b"
+		    quid       	"40099E7D0296"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")))
+	(object Class "Enum Class B"
+	    quid       	"40099E5702E2"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099E90013F"
+		    stereotype 	"id"
+		    type       	"Enum"
+		    quidu      	"4009986D0295")
+		(object ClassAttribute "b"
+		    quid       	"40099E980336"
+		    stereotype 	"id"
+		    type       	"Int")))
+	(object Class "Int Class B"
+	    quid       	"40099E650075"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "a"
+		    quid       	"40099EA7039B"
+		    stereotype 	"id"
+		    type       	"Int"
+		    quidu      	"4009988D0164")
+		(object ClassAttribute "b"
+		    quid       	"40099EB00073"
+		    stereotype 	"id"
+		    type       	"Large Int"
+		    quidu      	"40099C2F00AD"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3D7CC26D00AC"
@@ -24,34 +143,572 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Arrays::T" @1
+		(object ClassView "Class" "Logical View::Arrays::My Boolean" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(640, 624)
+		    location   	(1188, 245)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(557, 597)
+			location   	(1053, 219)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	270
+			justify    	0
+			label      	"My Boolean")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(1053, 174)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	270
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998390150"
+		    width      	288
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1191, 507)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1108, 481)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
 			justify    	0
-			label      	"T")
+			label      	"Enum")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@1
-			location   	(557, 552)
+			Parent_View 	@2
+			location   	(1108, 436)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	163
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4009986D0295"
+		    width      	184
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Int" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1202, 770)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1119, 744)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(1119, 699)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
 			max_width  	166
 			justify    	0
 			label      	"<<type>>")
-		    icon_style 	"Label"
+		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
-		    quidu      	"3D7CC27C00E9"
+		    quidu      	"4009988D0164"
 		    width      	184
-		    height     	166
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Boolean Class" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(480, 254)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(263, 159)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"My Boolean Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998B300D3"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(263, 215)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	430)
+		    width      	452
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum Class" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(479, 514)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(315, 419)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	328
+			justify    	0
+			label      	"Enum Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998D80285"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(315, 475)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	325)
+		    width      	346
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Int Class" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(472, 775)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(339, 680)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	266
+			justify    	0
+			label      	"Int Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"400998EF009D"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(339, 736)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	262)
+		    width      	284
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Arrays" @7
+		    location   	(2831, 230)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(2662, 146)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	338
+			justify    	0
+			label      	"Arrays")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D7CC2550197"
+		    width      	350
+		    height     	180)
+		(object ClassView "Class" "Logical View::Arrays::Large Int" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1211, 1017)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1114, 991)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	194
+			justify    	0
+			label      	"Large Int")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(1114, 946)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	194
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099C2F00AD"
+		    width      	212
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Large Int Class" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(481, 1026)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(292, 931)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"Large Int Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099C4B0270"
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(292, 987)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	375)
+		    width      	396
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Integer Class" @10
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(488, 1270)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(315, 1175)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	346
+			justify    	0
+			label      	"Integer Class")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099CB90048"
+		    compartment 	(object Compartment
+			Parent_View 	@10
+			location   	(315, 1231)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	342)
+		    width      	364
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::My Boolean Class B" @11
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(488, 1515)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(271, 1419)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"My Boolean Class B")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099D030365"
+		    compartment 	(object Compartment
+			Parent_View 	@11
+			location   	(271, 1475)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	430)
+		    width      	452
+		    height     	214
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Enum Class B" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(482, 1769)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(318, 1673)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	328
+			justify    	0
+			label      	"Enum Class B")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099E5702E2"
+		    compartment 	(object Compartment
+			Parent_View 	@12
+			location   	(318, 1729)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	325)
+		    width      	346
+		    height     	214
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Arrays::Int Class B" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(484, 2028)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(295, 1933)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	378
+			justify    	0
+			label      	"Int Class B")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"40099E650075"
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(295, 1989)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	382)
+		    width      	396
+		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)))))

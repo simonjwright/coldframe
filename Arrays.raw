@@ -1,0 +1,287 @@
+<domain>
+<extractor>cf-DATE</extractor>
+<name>Arrays</name>
+<date>
+<year>2004</year>
+<month>1</month>
+<day>17</day>
+<time>20:45</time>
+</date>
+<documentation></documentation>
+<classes>
+<class stereotype="type">
+<name>My Boolean</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{renames = boolean,
+ hash = enumeration}</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Enum</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{enumeration = a|b|c}
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Int</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{integer = lower 3 | upper 9}
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>My Boolean Class</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>My Boolean</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Enum Class</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Int</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Int Class</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Int</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Large Int</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Large Int</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{integer = lower 0 | upper 1000}
+</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Large Int Class</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Large Int</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Integer Class</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>My Boolean Class B</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>My Boolean</type>
+<initial></initial>
+</attribute>
+<attribute stereotype="id">
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Enum Class B</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Enum</type>
+<initial></initial>
+</attribute>
+<attribute stereotype="id">
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Int</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Int Class B</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>a</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Int</type>
+<initial></initial>
+</attribute>
+<attribute stereotype="id">
+<name>b</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Large Int</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
