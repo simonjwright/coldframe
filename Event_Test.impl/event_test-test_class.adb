@@ -27,11 +27,11 @@ package body Event_Test.Test_Class is
       Inf.Payload := (Ordinal => 1000,
                       Expected_At => Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
-      delay 0.1;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1000,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
    end Immediate_Event;
 
    --  A class event can be created and queued to its class, to arrive
@@ -50,11 +50,11 @@ package body Event_Test.Test_Class is
       ColdFrame.Project.Events.Post (Ev,
                                      On => Events.Dispatcher,
                                      To_Fire_After => 2.2);
-      delay 2.3;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1001,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_After;
 
    --  A class event can be created and queued to its class, to arrive
@@ -74,11 +74,11 @@ package body Event_Test.Test_Class is
         (Ev,
          On => Events.Dispatcher,
          To_Fire_At => ColdFrame.Project.Event_Support.From_Now (2.2));
-      delay 2.3;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1002,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_At;
 
    --  Events queued for delayed delivery will not inhibit events
@@ -106,14 +106,14 @@ package body Event_Test.Test_Class is
                                      On => Events.Dispatcher);
       delay 1.2;
       Assert (Recipient.Get_Ordinal = 1004,
-              "wrong ordinal (a)");
+              "wrong ordinal (a)" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time (a)");
-      delay 1.2;
+              "wrong time (a)" & Recipient.Get_Offset'Img);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1003,
-              "wrong ordinal (b)");
+              "wrong ordinal (b)" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
-              "wrong time (b)");
+              "wrong time (b)" & Recipient.Get_Offset'Img);
    end Delayed_Event_Preceded;
 
    --  Events will be delivered in order even if posted out of order.
@@ -141,14 +141,14 @@ package body Event_Test.Test_Class is
                                      To_Fire_After => 1.1);
       delay 1.2;
       Assert (Recipient.Get_Ordinal = 1006,
-              "wrong ordinal (a)");
+              "wrong ordinal (a)" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time (a)");
-      delay 1.2;
+              "wrong time (a)" & Recipient.Get_Offset'Img);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1005,
-              "wrong ordinal (b)");
+              "wrong ordinal (b)" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
-              "wrong time (b)");
+              "wrong time (b)" & Recipient.Get_Offset'Img);
    end Delayed_Events_In_Order;
 
    --  A Timer type will be provided, to allow delayed events to be
@@ -169,11 +169,11 @@ package body Event_Test.Test_Class is
                                     On => Events.Dispatcher,
                                     To_Fire => Ev,
                                     After => 2.2);
-      delay 2.3;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1007,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
    end Timer_Event;
 
    --  An event can be retracted (by unsetting the timer that holds
@@ -213,10 +213,10 @@ package body Event_Test.Test_Class is
                                       On => Events.Dispatcher);
       --  After another 1.5 seconds, Ev2's handler exits, so Ev1
       --  should be dispatched if it's still there.
-      delay 3.0;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       --  Check it isn't.
       Assert (Recipient.Get_Ordinal = 0,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Retract_Timer_Event;
 
    --  Only one event can be held in a timer at once.
@@ -253,11 +253,11 @@ package body Event_Test.Test_Class is
          when others =>
             Assert (False, "wrong exception raised");
       end;
-      delay 2.3;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1009,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
    end Multiple_Timer_Event;
 
    --  It is illegal to unset a timer that is not holding an event.
@@ -296,9 +296,9 @@ package body Event_Test.Test_Class is
                                     After => 2.2);
       delay 2.3;
       Assert (Recipient.Get_Ordinal = 1011,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
       Assert (abs Recipient.Get_Offset < 0.02,
-              "wrong time");
+              "wrong time" & Recipient.Get_Offset'Img);
       begin
          ColdFrame.Project.Events.Unset (T,
                                          On => Events.Dispatcher);
@@ -333,9 +333,9 @@ package body Event_Test.Test_Class is
                                        After => 2.2);
          delay 1.1;
       end;
-      delay 3.0;
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 0,
-              "wrong ordinal");
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Delete_Timer;
 
    procedure Register_Tests (T : in out Test_Case) is
