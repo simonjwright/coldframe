@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-type.xsl,v dfbc8976a2d7 2004/06/12 19:19:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -610,6 +610,7 @@
 
   <!-- Called to generate operation specifications for types. -->
   <xsl:template matc`="type/operation" mode="domain-type-operation-spec">
+
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
