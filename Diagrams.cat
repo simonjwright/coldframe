@@ -488,6 +488,26 @@
 		    quid       	"3CA18F9D003B"
 		    stereotype 	"id"
 		    type       	"Location")))
+	(object Class "Strategy"
+	    quid       	"3D1AD27D039C"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3D1AD28C03E4"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "Book"
+	    quid       	"3D1B18E40379"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "<id>>title"
+		    quid       	"3D1B18F501E3"
+		    type       	"Text")))
+	(object Class "Borrower"
+	    quid       	"3D1B190B02CB"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "name"
+		    quid       	"3D1B191400B1"
+		    stereotype 	"id"
+		    type       	"Text")))
 	(object Association "r3"
 	    quid       	"3B7BC2990184"
 	    roles      	(list role_list
@@ -570,6 +590,41 @@
 		    supplier   	"Logical View::Diagrams::Button"
 		    quidu      	"3CA18F8C01EF"
 		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE)))
+	(object Association "a1"
+	    quid       	"3D1AD29E038F"
+	    roles      	(list role_list
+		(object Role "falls back to"
+		    quid       	"3D1AD2A90074"
+		    documentation 	"[[source]]"
+		    label      	"falls back to"
+		    supplier   	"Logical View::Diagrams::Strategy"
+		    quidu      	"3D1AD27D039C"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "is fallback for"
+		    quid       	"3D1AD2A90075"
+		    label      	"is fallback for"
+		    supplier   	"Logical View::Diagrams::Strategy"
+		    quidu      	"3D1AD27D039C"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "a2"
+	    quid       	"3D1B192402BC"
+	    roles      	(list role_list
+		(object Role "is on loan to"
+		    quid       	"3D1B1925014B"
+		    label      	"is on loan to"
+		    supplier   	"Logical View::Diagrams::Borrower"
+		    quidu      	"3D1B190B02CB"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "is borrowing"
+		    quid       	"3D1B19250155"
+		    label      	"is borrowing"
+		    supplier   	"Logical View::Diagrams::Book"
+		    quidu      	"3D1B18E40379"
+		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -650,7 +705,21 @@
 		    fill_color 	13434879
 		    width      	412
 		    height     	256
-		    quidu      	"3CA063DF029D")))
+		    quidu      	"3CA063DF029D")
+		(object NoteView @18
+		    location   	(465, 1830)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(275, 1706)
+			fill_color 	13434879
+			nlines     	5
+			max_width  	345
+			label      	"Class Diagram: Diagrams / Associations")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	405
+		    height     	260
+		    quidu      	"3D1B30D30333")))
 	(object ClassDiagram "Navigation"
 	    quid       	"3B7BC25A03A2"
 	    title      	"Navigation"
@@ -660,14 +729,14 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Diagrams::Track" @18
+		(object ClassView "Class" "Logical View::Diagrams::Track" @19
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1504, 832)
 		    label      	(object ItemLabel
-			Parent_View 	@18
+			Parent_View 	@19
 			location   	(1423, 781)
 			fill_color 	13434879
 			nlines     	1
@@ -681,14 +750,14 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Sensor Track" @19
+		(object ClassView "Class" "Logical View::Diagrams::Sensor Track" @20
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 832)
 		    label      	(object ItemLabel
-			Parent_View 	@19
+			Parent_View 	@20
 			location   	(380, 781)
 			fill_color 	13434879
 			nlines     	1
@@ -703,10 +772,10 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "r3" @20
+		(object AssociationViewNew "r3" @21
 		    location   	(1049, 832)
-		    label      	(object SegLabel @21
-			Parent_View 	@20
+		    label      	(object SegLabel @22
+			Parent_View 	@21
 			location   	(1050, 869)
 			font       	(object Font
 			    italics    	TRUE)
@@ -723,11 +792,11 @@
 		    line_color 	3342489
 		    quidu      	"3B7BC2990184"
 		    roleview_list 	(list RoleViews
-			(object RoleView "contributes to" @22
-			    Parent_View 	@20
+			(object RoleView "contributes to" @23
+			    Parent_View 	@21
 			    location   	(521, 0)
-			    label      	(object SegLabel @23
-				Parent_View 	@22
+			    label      	(object SegLabel @24
+				Parent_View 	@23
 				location   	(1245, 791)
 				anchor     	1
 				anchor_loc 	1
@@ -741,11 +810,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3B7BC29A0185"
-			    client     	@20
-			    supplier   	@18
+			    client     	@21
+			    supplier   	@19
 			    line_style 	0
-			    label      	(object SegLabel @24
-				Parent_View 	@22
+			    label      	(object SegLabel @25
+				Parent_View 	@23
 				location   	(1377, 886)
 				anchor     	2
 				anchor_loc 	1
@@ -756,11 +825,11 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "is composed of" @25
-			    Parent_View 	@20
+			(object RoleView "is composed of" @26
+			    Parent_View 	@21
 			    location   	(521, 0)
-			    label      	(object SegLabel @26
-				Parent_View 	@25
+			    label      	(object SegLabel @27
+				Parent_View 	@26
 				location   	(853, 791)
 				anchor     	1
 				anchor_loc 	1
@@ -774,11 +843,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3B7BC29A018F"
-			    client     	@20
-			    supplier   	@19
+			    client     	@21
+			    supplier   	@20
 			    line_style 	0
-			    label      	(object SegLabel @27
-				Parent_View 	@25
+			    label      	(object SegLabel @28
+				Parent_View 	@26
 				location   	(721, 886)
 				anchor     	2
 				anchor_loc 	1
@@ -798,14 +867,14 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Diagrams::Car" @28
+		(object ClassView "Class" "Logical View::Diagrams::Car" @29
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(320, 192)
 		    label      	(object ItemLabel
-			Parent_View 	@28
+			Parent_View 	@29
 			location   	(101, 61)
 			fill_color 	13434879
 			nlines     	1
@@ -816,26 +885,18 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3B7F7A9E02B8"
-		    compartment 	(object Compartment
-			Parent_View 	@28
-			location   	(101, 122)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	4
-			max_width  	443)
 		    width      	456
 		    height     	286
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Fleet" @29
+		(object ClassView "Class" "Logical View::Diagrams::Fleet" @30
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1104, 192)
 		    label      	(object ItemLabel
-			Parent_View 	@29
+			Parent_View 	@30
 			location   	(1023, 141)
 			fill_color 	13434879
 			nlines     	1
@@ -849,23 +910,23 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "$UNNAMED$1" @30
+		(object AssociationViewNew "$UNNAMED$1" @31
 		    location   	(780, 192)
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3B7F7ABF005E"
 		    roleview_list 	(list RoleViews
-			(object RoleView "$UNNAMED$2" @31
-			    Parent_View 	@30
+			(object RoleView "$UNNAMED$2" @32
+			    Parent_View 	@31
 			    location   	(-628, -640)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3B7F7AC0002E"
-			    client     	@30
-			    supplier   	@28
+			    client     	@31
+			    supplier   	@29
 			    line_style 	0
-			    label      	(object SegLabel @32
-				Parent_View 	@31
+			    label      	(object SegLabel @33
+				Parent_View 	@32
 				location   	(586, 232)
 				anchor     	2
 				anchor_loc 	1
@@ -876,17 +937,17 @@
 				pctDist    	0.841155
 				height     	40
 				orientation 	0))
-			(object RoleView "$UNNAMED$3" @33
-			    Parent_View 	@30
+			(object RoleView "$UNNAMED$3" @34
+			    Parent_View 	@31
 			    location   	(-628, -640)
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3B7F7AC0004C"
-			    client     	@30
-			    supplier   	@29
+			    client     	@31
+			    supplier   	@30
 			    line_style 	0
-			    label      	(object SegLabel @34
-				Parent_View 	@33
+			    label      	(object SegLabel @35
+				Parent_View 	@34
 				location   	(990, 246)
 				anchor     	2
 				anchor_loc 	1
@@ -906,12 +967,12 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Diagrams::Abstract Container" @35
+		(object ClassView "Class" "Logical View::Diagrams::Abstract Container" @36
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1056, 160)
 		    label      	(object ItemLabel
-			Parent_View 	@35
+			Parent_View 	@36
 			location   	(854, 109)
 			fill_color 	13434879
 			nlines     	1
@@ -926,10 +987,10 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object NoteView @36
+		(object NoteView @37
 		    location   	(2016, 160)
 		    label      	(object ItemLabel
-			Parent_View 	@36
+			Parent_View 	@37
 			location   	(1875, 101)
 			fill_color 	13434879
 			nlines     	2
@@ -939,18 +1000,18 @@
 		    fill_color 	13434879
 		    width      	306
 		    height     	131)
-		(object AttachView "" @37
+		(object AttachView "" @38
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@36
-		    supplier   	@35
+		    client     	@37
+		    supplier   	@36
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Diagrams::Abstract Kind" @38
+		(object ClassView "Class" "Logical View::Diagrams::Abstract Kind" @39
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1056, 400)
 		    label      	(object ItemLabel
-			Parent_View 	@38
+			Parent_View 	@39
 			location   	(906, 349)
 			fill_color 	13434879
 			nlines     	1
@@ -965,17 +1026,17 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "" @39
+		(object InheritView "" @40
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C40AC9A0044"
-		    client     	@38
-		    supplier   	@35
+		    client     	@39
+		    supplier   	@36
 		    line_style 	0)
-		(object NoteView @40
+		(object NoteView @41
 		    location   	(2048, 400)
 		    label      	(object ItemLabel
-			Parent_View 	@40
+			Parent_View 	@41
 			location   	(1870, 331)
 			fill_color 	13434879
 			nlines     	2
@@ -985,18 +1046,18 @@
 		    fill_color 	13434879
 		    width      	381
 		    height     	150)
-		(object AttachView "" @41
+		(object AttachView "" @42
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@40
-		    supplier   	@38
+		    client     	@41
+		    supplier   	@39
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Diagrams::Bounded" @42
+		(object ClassView "Class" "Logical View::Diagrams::Bounded" @43
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(432, 752)
 		    label      	(object ItemLabel
-			Parent_View 	@42
+			Parent_View 	@43
 			location   	(336, 701)
 			fill_color 	13434879
 			nlines     	1
@@ -1011,12 +1072,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Dynamic" @43
+		(object ClassView "Class" "Logical View::Diagrams::Dynamic" @44
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1056, 752)
 		    label      	(object ItemLabel
-			Parent_View 	@43
+			Parent_View 	@44
 			location   	(961, 701)
 			fill_color 	13434879
 			nlines     	1
@@ -1031,12 +1092,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Unbounded" @44
+		(object ClassView "Class" "Logical View::Diagrams::Unbounded" @45
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1696, 752)
 		    label      	(object ItemLabel
-			Parent_View 	@44
+			Parent_View 	@45
 			location   	(1580, 701)
 			fill_color 	13434879
 			nlines     	1
@@ -1051,33 +1112,33 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "" @45
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    quidu      	"3C40ACEB01CA"
-		    client     	@42
-		    supplier   	@38
-		    line_style 	0)
 		(object InheritView "" @46
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40ACF000B3"
+		    quidu      	"3C40ACEB01CA"
 		    client     	@43
-		    supplier   	@38
+		    supplier   	@39
 		    line_style 	0)
 		(object InheritView "" @47
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40ACF40267"
+		    quidu      	"3C40ACF000B3"
 		    client     	@44
-		    supplier   	@38
+		    supplier   	@39
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Diagrams::Synchronized Bounded" @48
+		(object InheritView "" @48
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C40ACF40267"
+		    client     	@45
+		    supplier   	@39
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Diagrams::Synchronized Bounded" @49
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(288, 1072)
 		    label      	(object ItemLabel
-			Parent_View 	@48
+			Parent_View 	@49
 			location   	(51, 1021)
 			fill_color 	13434879
 			nlines     	1
@@ -1092,12 +1153,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "ParameterizedClass" "Logical View::Diagrams::Guarded" @49
+		(object ClassView "ParameterizedClass" "Logical View::Diagrams::Guarded" @50
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1072, 1616)
 		    label      	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@50
 			location   	(979, 1603)
 			fill_color 	13434879
 			nlines     	1
@@ -1112,12 +1173,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Synchronized Dynamic" @50
+		(object ClassView "Class" "Logical View::Diagrams::Synchronized Dynamic" @51
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(912, 1072)
 		    label      	(object ItemLabel
-			Parent_View 	@50
+			Parent_View 	@51
 			location   	(677, 1021)
 			fill_color 	13434879
 			nlines     	1
@@ -1132,12 +1193,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Synchronized Unbounded" @51
+		(object ClassView "Class" "Logical View::Diagrams::Synchronized Unbounded" @52
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1568, 1072)
 		    label      	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@52
 			location   	(1299, 1021)
 			fill_color 	13434879
 			nlines     	1
@@ -1152,33 +1213,33 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "" @52
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    quidu      	"3C40AD6501AE"
-		    client     	@48
-		    supplier   	@42
-		    line_style 	0)
 		(object InheritView "" @53
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40AD6902EA"
-		    client     	@50
+		    quidu      	"3C40AD6501AE"
+		    client     	@49
 		    supplier   	@43
 		    line_style 	0)
 		(object InheritView "" @54
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40AD6D02C0"
+		    quidu      	"3C40AD6902EA"
 		    client     	@51
 		    supplier   	@44
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Diagrams::Guarded Bounded" @55
+		(object InheritView "" @55
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C40AD6D02C0"
+		    client     	@52
+		    supplier   	@45
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Diagrams::Guarded Bounded" @56
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(688, 1296)
 		    label      	(object ItemLabel
-			Parent_View 	@55
+			Parent_View 	@56
 			location   	(496, 1245)
 			fill_color 	13434879
 			nlines     	1
@@ -1193,12 +1254,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Guarded Dynamic" @56
+		(object ClassView "Class" "Logical View::Diagrams::Guarded Dynamic" @57
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1312, 1296)
 		    label      	(object ItemLabel
-			Parent_View 	@56
+			Parent_View 	@57
 			location   	(1114, 1245)
 			fill_color 	13434879
 			nlines     	1
@@ -1213,12 +1274,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Guarded Unbounded" @57
+		(object ClassView "Class" "Logical View::Diagrams::Guarded Unbounded" @58
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2048, 1296)
 		    label      	(object ItemLabel
-			Parent_View 	@57
+			Parent_View 	@58
 			location   	(1828, 1244)
 			fill_color 	13434879
 			nlines     	1
@@ -1233,31 +1294,31 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "" @58
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    quidu      	"3C40AD9E020D"
-		    client     	@55
-		    supplier   	@42
-		    line_style 	0)
 		(object InheritView "" @59
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40ADA3001A"
+		    quidu      	"3C40AD9E020D"
 		    client     	@56
 		    supplier   	@43
 		    line_style 	0)
 		(object InheritView "" @60
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3C40ADA80021"
+		    quidu      	"3C40ADA3001A"
 		    client     	@57
 		    supplier   	@44
 		    line_style 	0)
-		(object NoteView @61
+		(object InheritView "" @61
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C40ADA80021"
+		    client     	@58
+		    supplier   	@45
+		    line_style 	0)
+		(object NoteView @62
 		    location   	(240, 432)
 		    label      	(object ItemLabel
-			Parent_View 	@61
+			Parent_View 	@62
 			location   	(96, 373)
 			fill_color 	13434879
 			nlines     	2
@@ -1267,52 +1328,52 @@
 		    fill_color 	13434879
 		    width      	312
 		    height     	131)
-		(object AttachView "" @62
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    client     	@61
-		    supplier   	@42
-		    line_style 	0)
 		(object AttachView "" @63
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@61
+		    client     	@62
 		    supplier   	@43
 		    line_style 	0)
 		(object AttachView "" @64
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@61
+		    client     	@62
 		    supplier   	@44
 		    line_style 	0)
-		(object UsesView "" @65
+		(object AttachView "" @65
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@62
+		    supplier   	@45
+		    line_style 	0)
+		(object UsesView "" @66
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C40ADB100EE"
-		    client     	@55
-		    supplier   	@49
+		    client     	@56
+		    supplier   	@50
 		    vertices   	(list Points
 			(718, 1359)
 			(816, 1566)
 			(969, 1595))
 		    line_style 	0)
-		(object UsesView "" @66
+		(object UsesView "" @67
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C40ADBA0255"
-		    client     	@57
-		    supplier   	@49
+		    client     	@58
+		    supplier   	@50
 		    vertices   	(list Points
 			(1948, 1359)
 			(1580, 1600)
 			(1174, 1612))
 		    line_style 	0)
-		(object UsesView "" @67
+		(object UsesView "" @68
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C40ADB500A1"
-		    client     	@56
-		    supplier   	@49
+		    client     	@57
+		    supplier   	@50
 		    vertices   	(list Points
 			(1212, 1359)
 			(1088, 1438)
@@ -1327,12 +1388,12 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Diagrams::Service" @68
+		(object ClassView "Class" "Logical View::Diagrams::Service" @69
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1488, 304)
 		    label      	(object ItemLabel
-			Parent_View 	@68
+			Parent_View 	@69
 			location   	(1403, 253)
 			fill_color 	13434879
 			nlines     	1
@@ -1347,12 +1408,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Van" @69
+		(object ClassView "Class" "Logical View::Diagrams::Van" @70
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(480, 304)
 		    label      	(object ItemLabel
-			Parent_View 	@69
+			Parent_View 	@70
 			location   	(399, 253)
 			fill_color 	13434879
 			nlines     	1
@@ -1366,10 +1427,10 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "r1" @70
+		(object AssociationViewNew "r1" @71
 		    location   	(981, 304)
-		    label      	(object SegLabel @71
-			Parent_View 	@70
+		    label      	(object SegLabel @72
+			Parent_View 	@71
 			location   	(979, 341)
 			font       	(object Font
 			    italics    	TRUE)
@@ -1386,11 +1447,11 @@
 		    line_color 	3342489
 		    quidu      	"3C5C24690272"
 		    roleview_list 	(list RoleViews
-			(object RoleView "was serviced at" @72
-			    Parent_View 	@70
+			(object RoleView "was serviced at" @73
+			    Parent_View 	@71
 			    location   	(501, 0)
-			    label      	(object SegLabel @73
-				Parent_View 	@72
+			    label      	(object SegLabel @74
+				Parent_View 	@73
 				location   	(1217, 279)
 				anchor     	1
 				anchor_loc 	1
@@ -1404,11 +1465,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3C5C246A0269"
-			    client     	@70
-			    supplier   	@68
+			    client     	@71
+			    supplier   	@69
 			    line_style 	0
-			    label      	(object SegLabel @74
-				Parent_View 	@72
+			    label      	(object SegLabel @75
+				Parent_View 	@73
 				location   	(1362, 328)
 				anchor     	2
 				anchor_loc 	1
@@ -1419,11 +1480,11 @@
 				pctDist    	0.901899
 				height     	24
 				orientation 	1))
-			(object RoleView "was service of" @75
-			    Parent_View 	@70
+			(object RoleView "was service of" @76
+			    Parent_View 	@71
 			    location   	(501, 0)
-			    label      	(object SegLabel @76
-				Parent_View 	@75
+			    label      	(object SegLabel @77
+				Parent_View 	@76
 				location   	(744, 279)
 				anchor     	1
 				anchor_loc 	1
@@ -1437,11 +1498,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3C5C246A0273"
-			    client     	@70
-			    supplier   	@69
+			    client     	@71
+			    supplier   	@70
 			    line_style 	0
-			    label      	(object SegLabel @77
-				Parent_View 	@75
+			    label      	(object SegLabel @78
+				Parent_View 	@76
 				location   	(592, 328)
 				anchor     	2
 				anchor_loc 	1
@@ -1452,12 +1513,12 @@
 				pctDist    	0.926984
 				height     	24
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::Diagrams::Pool Van" @78
+		(object ClassView "Class" "Logical View::Diagrams::Pool Van" @79
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(704, 608)
 		    label      	(object ItemLabel
-			Parent_View 	@78
+			Parent_View 	@79
 			location   	(590, 557)
 			fill_color 	13434879
 			nlines     	1
@@ -1472,12 +1533,12 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Hired Van" @79
+		(object ClassView "Class" "Logical View::Diagrams::Hired Van" @80
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(304, 608)
 		    label      	(object ItemLabel
-			Parent_View 	@79
+			Parent_View 	@80
 			location   	(117, 527)
 			fill_color 	13434879
 			nlines     	1
@@ -1489,7 +1550,7 @@
 		    fill_color 	13434879
 		    quidu      	"3C5C245C0096"
 		    compartment 	(object Compartment
-			Parent_View 	@79
+			Parent_View 	@80
 			location   	(117, 588)
 			icon_style 	"Label"
 			fill_color 	13434879
@@ -1502,12 +1563,12 @@
 		    height     	186
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Customer" @80
+		(object ClassView "Class" "Logical View::Diagrams::Customer" @81
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(304, 944)
 		    label      	(object ItemLabel
-			Parent_View 	@80
+			Parent_View 	@81
 			location   	(203, 893)
 			fill_color 	13434879
 			nlines     	1
@@ -1522,10 +1583,10 @@
 		    height     	126
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "r3" @81
+		(object AssociationViewNew "r3" @82
 		    location   	(304, 790)
-		    label      	(object SegLabel @82
-			Parent_View 	@81
+		    label      	(object SegLabel @83
+			Parent_View 	@82
 			location   	(268, 793)
 			font       	(object Font
 			    italics    	TRUE)
@@ -1542,11 +1603,11 @@
 		    line_color 	3342489
 		    quidu      	"3C5C24F700BE"
 		    roleview_list 	(list RoleViews
-			(object RoleView "is borrowing" @83
-			    Parent_View 	@81
+			(object RoleView "is borrowing" @84
+			    Parent_View 	@82
 			    location   	(0, -154)
-			    label      	(object SegLabel @84
-				Parent_View 	@83
+			    label      	(object SegLabel @85
+				Parent_View 	@84
 				location   	(442, 722)
 				anchor     	1
 				anchor_loc 	1
@@ -1560,11 +1621,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3C5C24F703D6"
-			    client     	@81
-			    supplier   	@79
+			    client     	@82
+			    supplier   	@80
 			    line_style 	0
-			    label      	(object SegLabel @85
-				Parent_View 	@83
+			    label      	(object SegLabel @86
+				Parent_View 	@84
 				location   	(262, 727)
 				anchor     	2
 				anchor_loc 	1
@@ -1575,11 +1636,11 @@
 				pctDist    	0.750000
 				height     	43
 				orientation 	0))
-			(object RoleView "is on loan to" @86
-			    Parent_View 	@81
+			(object RoleView "is on loan to" @87
+			    Parent_View 	@82
 			    location   	(0, -154)
-			    label      	(object SegLabel @87
-				Parent_View 	@86
+			    label      	(object SegLabel @88
+				Parent_View 	@87
 				location   	(437, 860)
 				anchor     	1
 				anchor_loc 	1
@@ -1593,11 +1654,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3C5C24F80002"
-			    client     	@81
-			    supplier   	@80
+			    client     	@82
+			    supplier   	@81
 			    line_style 	0
-			    label      	(object SegLabel @88
-				Parent_View 	@86
+			    label      	(object SegLabel @89
+				Parent_View 	@87
 				location   	(281, 854)
 				anchor     	2
 				anchor_loc 	1
@@ -1608,9 +1669,9 @@
 				pctDist    	0.742857
 				height     	24
 				orientation 	1))))
-		(object InheritView "r2" @89
+		(object InheritView "r2" @90
 		    label      	(object ItemLabel
-			Parent_View 	@89
+			Parent_View 	@90
 			location   	(400, 440)
 			anchor_loc 	1
 			nlines     	1
@@ -1620,12 +1681,12 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C5C248203D5"
-		    client     	@79
-		    supplier   	@69
+		    client     	@80
+		    supplier   	@70
 		    line_style 	0)
-		(object InheritView "r2" @90
+		(object InheritView "r2" @91
 		    label      	(object ItemLabel
-			Parent_View 	@90
+			Parent_View 	@91
 			location   	(592, 455)
 			anchor_loc 	1
 			nlines     	1
@@ -1635,8 +1696,8 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3C5C2486007E"
-		    client     	@78
-		    supplier   	@69
+		    client     	@79
+		    supplier   	@70
 		    line_style 	0)))
 	(object ClassDiagram "Lamps"
 	    quid       	"3CA063DF029D"
@@ -1647,10 +1708,10 @@
 	    origin_x   	182
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object NoteView @91
+		(object NoteView @92
 		    location   	(608, 1184)
 		    label      	(object ItemLabel
-			Parent_View 	@91
+			Parent_View 	@92
 			location   	(386, 1119)
 			fill_color 	13434879
 			nlines     	2
@@ -1661,23 +1722,23 @@
 		    width      	468
 		    height     	143
 		    quidu      	"3CA06448021C")
-		(object ClassView "Class" "Logical View::Diagrams::Location" @92
+		(object ClassView "Class" "Logical View::Diagrams::Location" @93
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1632, 752)
 		    label      	(object ItemLabel
-			Parent_View 	@92
-			location   	(1531, 668)
+			Parent_View 	@93
+			location   	(1531, 662)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	202
 			justify    	0
 			label      	"Location")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@92
-			location   	(1531, 618)
+			Parent_View 	@93
+			location   	(1531, 617)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1688,46 +1749,8 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CA18C5200C5"
-		    compartment 	(object Compartment
-			Parent_View 	@92
-			location   	(1531, 729)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	200)
 		    width      	220
 		    height     	292
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Diagrams::Button" @93
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(608, 112)
-		    label      	(object ItemLabel
-			Parent_View 	@93
-			location   	(388, 31)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	440
-			justify    	0
-			label      	"Button")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3CA18F8C01EF"
-		    compartment 	(object Compartment
-			Parent_View 	@93
-			location   	(388, 92)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	446)
-		    width      	458
-		    height     	186
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Diagrams::Lamp" @94
@@ -1748,14 +1771,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CA0642C0190"
-		    compartment 	(object Compartment
-			Parent_View 	@94
-			location   	(207, 557)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	9
-			max_width  	800)
 		    width      	820
 		    height     	536
 		    annotation 	8
@@ -1763,7 +1778,7 @@
 		(object AttachView "" @95
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@91
+		    client     	@92
 		    supplier   	@94
 		    line_style 	0)
 		(object UsesView "creation event" @96
@@ -1790,12 +1805,34 @@
 		    line_color 	3342489
 		    quidu      	"3CA18C980379"
 		    client     	@94
-		    supplier   	@92
+		    supplier   	@93
 		    line_style 	0)
-		(object AssociationViewNew "a1" @98
-		    location   	(608, 344)
-		    label      	(object SegLabel @99
+		(object ClassView "Class" "Logical View::Diagrams::Button" @98
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(608, 112)
+		    label      	(object ItemLabel
 			Parent_View 	@98
+			location   	(388, 31)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	440
+			justify    	0
+			label      	"Button")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3CA18F8C01EF"
+		    width      	458
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @99
+		    location   	(608, 344)
+		    label      	(object SegLabel @100
+			Parent_View 	@99
 			location   	(606, 335)
 			font       	(object Font
 			    italics    	TRUE)
@@ -1812,11 +1849,11 @@
 		    line_color 	3342489
 		    quidu      	"3CA18FC8039A"
 		    roleview_list 	(list RoleViews
-			(object RoleView "controls" @100
-			    Parent_View 	@98
+			(object RoleView "controls" @101
+			    Parent_View 	@99
 			    location   	(-496, 40)
-			    label      	(object SegLabel @101
-				Parent_View 	@100
+			    label      	(object SegLabel @102
+				Parent_View 	@101
 				location   	(505, 459)
 				anchor     	1
 				anchor_loc 	1
@@ -1830,11 +1867,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3CA18FCA018A"
-			    client     	@98
+			    client     	@99
 			    supplier   	@94
 			    line_style 	0
-			    label      	(object SegLabel @102
-				Parent_View 	@100
+			    label      	(object SegLabel @103
+				Parent_View 	@101
 				location   	(662, 460)
 				anchor     	2
 				anchor_loc 	1
@@ -1845,11 +1882,11 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))
-			(object RoleView "is controlled by" @103
-			    Parent_View 	@98
+			(object RoleView "is controlled by" @104
+			    Parent_View 	@99
 			    location   	(-496, 40)
-			    label      	(object SegLabel @104
-				Parent_View 	@103
+			    label      	(object SegLabel @105
+				Parent_View 	@104
 				location   	(439, 238)
 				anchor     	1
 				anchor_loc 	1
@@ -1863,11 +1900,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3CA18FCA01DB"
-			    client     	@98
-			    supplier   	@93
+			    client     	@99
+			    supplier   	@98
 			    line_style 	0
-			    label      	(object SegLabel @105
-				Parent_View 	@103
+			    label      	(object SegLabel @106
+				Parent_View 	@104
 				location   	(662, 228)
 				anchor     	2
 				anchor_loc 	1
@@ -1877,4 +1914,284 @@
 				label      	"1..*"
 				pctDist    	0.900000
 				height     	54
+				orientation 	1))))))
+	(object ClassDiagram "Associations"
+	    quid       	"3D1B30D30333"
+	    title      	"Associations"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Diagrams::Strategy" @107
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(450, 435)
+		    label      	(object ItemLabel
+			Parent_View 	@107
+			location   	(226, 362)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"Strategy")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D1AD27D039C"
+		    compartment 	(object Compartment
+			Parent_View 	@107
+			location   	(226, 418)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	445)
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @108
+		    location   	(991, 690)
+		    label      	(object SegLabel @109
+			Parent_View 	@108
+			location   	(1021, 646)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	600
+			justify    	0
+			label      	"a1"
+			pctDist    	1.000000
+			height     	44
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3D1AD29E038F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "falls back to" @110
+			    Parent_View 	@108
+			    location   	(-29, 240)
+			    label      	(object SegLabel @111
+				Parent_View 	@110
+				location   	(320, 557)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	241
+				justify    	0
+				label      	"+falls back to"
+				pctDist    	0.955865
+				height     	131
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D1AD2A90074"
+			    client     	@108
+			    supplier   	@107
+			    vertices   	(list Points
+				(991, 690)
+				(450, 690)
+				(450, 519))
+			    line_style 	0
+			    label      	(object SegLabel @112
+				Parent_View 	@110
+				location   	(504, 552)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "is fallback for" @113
+			    Parent_View 	@108
+			    location   	(-29, 240)
+			    label      	(object SegLabel @114
+				Parent_View 	@113
+				location   	(826, 469)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	265
+				justify    	0
+				label      	"+is fallback for"
+				pctDist    	0.834107
+				height     	34
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D1AD2A90075"
+			    client     	@108
+			    supplier   	@107
+			    vertices   	(list Points
+				(991, 690)
+				(1065, 690)
+				(1065, 435)
+				(683, 435))
+			    line_style 	0
+			    label      	(object SegLabel @115
+				Parent_View 	@113
+				location   	(730, 398)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.945476
+				height     	38
+				orientation 	1))))
+		(object ClassView "Class" "Logical View::Diagrams::Borrower" @116
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1680, 1350)
+		    label      	(object ItemLabel
+			Parent_View 	@116
+			location   	(1492, 1277)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	376
+			justify    	0
+			label      	"Borrower")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D1B190B02CB"
+		    compartment 	(object Compartment
+			Parent_View 	@116
+			location   	(1492, 1333)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	373)
+		    width      	394
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Diagrams::Book" @117
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(360, 1350)
+		    label      	(object ItemLabel
+			Parent_View 	@117
+			location   	(207, 1277)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	306
+			justify    	0
+			label      	"Book")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3D1B18E40379"
+		    compartment 	(object Compartment
+			Parent_View 	@117
+			location   	(207, 1333)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	303)
+		    width      	324
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a2" @118
+		    location   	(1002, 1350)
+		    label      	(object SegLabel @119
+			Parent_View 	@118
+			location   	(1002, 1291)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	600
+			justify    	0
+			label      	"a2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3D1B192402BC"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is borrowing" @120
+			    Parent_View 	@118
+			    location   	(-618, -15)
+			    label      	(object SegLabel @121
+				Parent_View 	@120
+				location   	(665, 1309)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	239
+				justify    	0
+				label      	"+is borrowing"
+				pctDist    	0.702083
+				height     	41
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D1B19250155"
+			    client     	@118
+			    supplier   	@117
+			    line_style 	0
+			    label      	(object SegLabel @122
+				Parent_View 	@120
+				location   	(565, 1389)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.910417
+				height     	39
+				orientation 	0))
+			(object RoleView "is on loan to" @123
+			    Parent_View 	@118
+			    location   	(-618, -15)
+			    label      	(object SegLabel @124
+				Parent_View 	@123
+				location   	(1339, 1309)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	254
+				justify    	0
+				label      	"+is on loan to"
+				pctDist    	0.702083
+				height     	41
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3D1B1925014B"
+			    client     	@118
+			    supplier   	@116
+			    line_style 	0
+			    label      	(object SegLabel @125
+				Parent_View 	@123
+				location   	(1425, 1389)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.881250
+				height     	39
 				orientation 	1))))))))
