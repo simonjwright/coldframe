@@ -251,6 +251,7 @@ serialization-model.html \
 strategy.html \
 support.html \
 target.html \
+testing.html \
 translation-rules.html \
 types.html \
 use.html \
@@ -261,7 +262,8 @@ coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ColdFrame-raw.xsd ColdFrame-norm.xsd \
-xslide-diff
+xslide-diff \
+House_Management.html Digital_IO.html
 
 serialization-model.html: Serialization.html
 	cp -p $< $@
