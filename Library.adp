@@ -1,8 +1,8 @@
 comp_opt=-gnatq -gnatQ -gnatX -gnatwu -g -O
-gnatmake_opt=-g -m
+gnatmake_opt=-g -m -j2
 main=${current}
 main_unit=${current}
-build_dir=/home/simon/ooa/rose/.build
+build_dir=/home/simon/ooa/rose/.build/
 check_cmd=${cross_prefix}gnatgcc -c ${comp_opt} -gnats
 make_cmd=cd ${build_dir}
 make_cmd=${cross_prefix}gnatmake -o ${main} ${main_unit} ${gnatmake_opt} -cargs ${comp_opt} -bargs ${bind_opt} -largs ${link_opt}
@@ -14,7 +14,7 @@ casing=~/.emacs_case_exceptions/
 src_dir=../
 src_dir=../Library.impl/
 src_dir=../Library.gen/
-src_dir=~/bc/
+src_dir=/home/simon/bc/
 obj_dir=./
-
-
+debug_pre_cmd=cd ${build_dir}
+debug_post_cmd=
