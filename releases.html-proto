@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b5efde9d7fee 2003/12/17 14:15:53 simon $ -->
+<!-- $Id: releases.html-proto,v e0e49d5bfadd 2004/01/03 17:53:05 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -36,6 +36,10 @@ identifier is allowed.
 
 
 <p>You can specify an empty type using the tag <i>{null}</i>.
+
+
+<p><tt>Cant_Happen</tt> exceptions are accompanied by exception
+information (to make them easier to debug).
 
 
 <p><dt>20031126
