@@ -314,8 +314,6 @@ coldframe-interrupts.adb \
 coldframe-interrupts.ads \
 coldframe-logging_event_basis.adb \
 coldframe-logging_event_basis.ads \
-coldframe-logging_event_basis-ews_page.adb \
-coldframe-logging_event_basis-ews_page.ads \
 coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
@@ -353,6 +351,10 @@ coldframe-project-times.ads
 
 coldframe-project-events.ads-standard: coldframe-project-events.ads
 	cp -p $< $@
+
+EXTRAS = \
+coldframe-logging_event_basis-ews_support.adb \
+coldframe-logging_event_basis-ews_support.ads
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
@@ -521,8 +523,8 @@ dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	cd dist && zip download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
-cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(DEMO) \
-$(TEST) force
+cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
+$(DEMO) $(TEST) force
 	-rm -rf $@
 	mkdir $@
 	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
@@ -530,6 +532,8 @@ $(TEST) force
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/project
 	cp -p $(PROJECT) $@/project
+	mkdir $@/extras
+	cp -p $(EXTRAS) $@/extras
 	mkdir $@/example
 	tar cf - $(DEMO) | tar xf - -C $@/example
 	mkdir $@/test
