@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 75ba6902dfaa $
---  $Date: 2002/09/21 11:11:37 $
+--  $Revision: 0d9e9f2fbd8b $
+--  $Date: 2002/09/21 11:35:59 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -53,6 +53,20 @@ package body ColdFrame.Events_G.Debug_G is
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
+                   To_Fire_At : Time.Time) is
+   begin
+      Put_Line ("posting a " &
+                  Ada.Tags.Expanded_Name (The_Event'Tag) &
+                  ", to fire at " &
+                  Time.Image (To_Fire_At));
+      Post (The_Event => The_Event,
+            On => Standard_Queue (On.all)'Access,
+            To_Fire_At => To_Fire_At);
+   end Post;
+
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
    begin
       Put_Line ("posting a " &
@@ -63,6 +77,22 @@ package body ColdFrame.Events_G.Debug_G is
             On => Standard_Queue (On.all)'Access,
             To_Fire_After => To_Fire_After);
    end Post;
+
+
+   procedure Set (The_Timer : in out Timer;
+                  On : access Event_Queue_Base;
+                  To_Fire : Event_P;
+                  At_Time : Time.Time) is
+   begin
+      Put_Line ("setting a Timer for a " &
+                  Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
+                  ", to fire at " &
+                  Time.Image (At_Time));
+      Set (The_Timer => The_Timer,
+           On => Standard_Queue (On.all)'Access,
+           To_Fire => To_Fire,
+           At_Time => At_Time);
+   end Set;
 
 
    procedure Set (The_Timer : in out Timer;
