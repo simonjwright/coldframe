@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 68536b08e9a8 2002/02/28 19:57:09 simon $ -->
+<!-- $Id: ada-class.xsl,v cd837602c17d 2002/03/02 08:27:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -352,16 +352,15 @@
           
         </xsl:if>
         
-        <!-- If this class has a state machine, include support for that;
-             otherwise, just support for standard Instances. -->
-        <xsl:choose>
-          <xsl:when test="statemachine">
-            <xsl:text>with ColdFrame.Events;&#10;</xsl:text>          
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <!-- If this class has any events at all, include event support.
+             If it has a state machine, that's it; otherwise, need support
+             for standard Instances as well. -->
+        <xsl:if test="event">
+          <xsl:text>with ColdFrame.Events;&#10;</xsl:text>          
+        </xsl:if>
+        <xsl:if test="not(statemachine)">
+          <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+        </xsl:if>
 
       </xsl:otherwise>
 
