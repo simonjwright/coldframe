@@ -20,13 +20,15 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 264533d476de $
---  $Date: 2002/07/07 17:49:07 $
+--  $Revision: 98389b0e3f6c $
+--  $Date: 2002/07/07 18:32:24 $
 --  $Author: simon $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
+with Ada.Tags;
 with ColdFrame.Exceptions;
+with GNAT.IO;
 
 package body ColdFrame.Events_G.Standard_G is
 
@@ -102,7 +104,19 @@ package body ColdFrame.Events_G.Standard_G is
          if not E.Invalidated then
 
             Log_Pre_Dispatch (The_Event => E, On => The_Queue);
-            Handler (E.all);
+
+            begin
+               Handler (E.all);
+            exception
+               when Ex : others =>
+                  GNAT.IO.Put_Line
+                    ("exception " &
+                       Ada.Exceptions.Exception_Information (Ex) &
+                       " in Dispatcher (event " &
+                       Ada.Tags.Expanded_Name (E.all'Tag) &
+                       ")");
+            end;
+
             Log_Post_Dispatch (The_Event => E, On => The_Queue);
 
          end if;
@@ -383,6 +397,16 @@ package body ColdFrame.Events_G.Standard_G is
       On.The_Excluder.Invalidate_Events (For_The_Instance);
 
    end Invalidate_Events;
+
+
+   procedure Tear_Down (The_Queue : in out Event_Queue) is
+   begin
+      --  Perhaps this could be neater, but at least doing it in this
+      --  order we know that the Timer Manager can't post any more
+      --  events on a dead Dispatcher.
+      abort The_Queue.The_Timer_Manager;
+      abort The_Queue.The_Dispatcher;
+   end Tear_Down;
 
 
 end ColdFrame.Events_G.Standard_G;
