@@ -5,7 +5,7 @@
 <year>2002</year>
 <month>2</month>
 <day>23</day>
-<time>13:39</time>
+<time>18:31</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -103,7 +103,6 @@
 <entryactions>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -112,11 +111,9 @@
 <entryactions>
 <action>
 <name>clear heartbeat timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -135,11 +132,9 @@
 <entryactions>
 <action>
 <name>clear heartbeat timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -148,11 +143,9 @@
 <entryactions>
 <action>
 <name>set 6 second warmup timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -161,11 +154,9 @@
 <entryactions>
 <action>
 <name>clear heartbeat timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -174,7 +165,6 @@
 <entryactions>
 <action>
 <name>clear warmup timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
@@ -183,15 +173,12 @@
 <entryactions>
 <action>
 <name>clear heartbeat timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set heartbeat timeout</name>
-<arguments></arguments>
 </action>
 <action>
 <name>set 2 second warmup timeout</name>
-<arguments></arguments>
 </action>
 </entryactions>
 </state>
