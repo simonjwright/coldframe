@@ -1,4 +1,17 @@
-# Copyright (c) 2001-2002 Simon Wright <simon@pushface.org>
+#  Copyright (C) Simon Wright <simon@pushface.org>
+
+#  This package is free software; you can redistribute it and/or
+#  modify it under terms of the GNU General Public License as
+#  published by the Free Software Foundation; either version 2, or
+#  (at your option) any later version. This package is distributed in
+#  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+#  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+#  PARTICULAR PURPOSE. See the GNU General Public License for more
+#  details. You should have received a copy of the GNU General Public
+#  License distributed with this package; see file COPYING.  If not,
+#  write to the Free Software Foundation, 59 Temple Place - Suite
+#  330, Boston, MA 02111-1307, USA.
+
 # $Id$
 
 BLANK_LINES = yes
@@ -374,6 +387,7 @@ coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
 Event_Test.cat Event_Test.raw \
+Event_Test.gpr \
 Event_Test.impl/debugging.ads \
 Event_Test.impl/event_test-events-initialize.adb \
 Event_Test.impl/event_test-harness.adb \
@@ -400,6 +414,7 @@ Event_Test.impl/event_test-test_singleton_instance.ads
 
 TEST += \
 Hierarchies.cat Hierarchies.raw \
+Hierarchies.gpr Hierarchies_Test.gpr \
 Hierarchies.impl/hierarchies-f_2-create_new.adb \
 Hierarchies.test/hierarchies-harness.adb \
 Hierarchies.test/hierarchies-harness.ads \
