@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v babc192bb945 2004/06/25 04:54:24 simon $
+# $Id: normalize-rose.tcl,v 6b5148938701 2004/06/25 04:58:10 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1492,8 +1492,9 @@ itcl::class Operation {
     # used in Rose to indicate visibility
     method -visibility {a} {
         switch $a {
-            PublicAccess  {set visibility public}
-            default       {set visibility private}
+            PublicAccess     {set visibility public}
+            ProtectedAccess  {set visibility protected}
+            default          {set visibility private}
         }
     }
 
