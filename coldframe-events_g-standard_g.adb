@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 99fa5207efe9 $
---  $Date: 2004/06/18 19:28:13 $
+--  $Revision: f20f69a7bba2 $
+--  $Date: 2004/07/03 09:40:17 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -135,7 +135,7 @@ package body ColdFrame.Events_G.Standard_G is
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
       TE.The_Event := The_Event;
-      On.The_Timer_Manager.Add_At_Event (TEP, To_Fire_At);
+      On.The_Held_Event_Manager.Add_At_Event (TEP, To_Fire_At);
 
    end Post;
 
@@ -164,7 +164,7 @@ package body ColdFrame.Events_G.Standard_G is
       TE.Time_To_Fire := Time.From_Now (To_Fire_After);
       --  NB, this will be wrong if the queue isn't yet started.
       TE.The_Event := The_Event;
-      On.The_Timer_Manager.Add_After_Event (TEP, To_Fire_After);
+      On.The_Held_Event_Manager.Add_After_Event (TEP, To_Fire_After);
 
    end Post;
 
@@ -184,7 +184,7 @@ package body ColdFrame.Events_G.Standard_G is
                --  Start processing events set or posted to run after a
                --  delay (rather than at a time) only after we have
                --  started ourselves; but don't return until we've done
-               --  so, so that our caller can tell the Timer_Manager to
+               --  so, so that our caller can tell the Held_Event_Manager to
                --  rethink *after* we're ready
                Held_Events.Start_Processing_After_Events
                  (The_Queue.The_Held_Events);
@@ -277,7 +277,7 @@ package body ColdFrame.Events_G.Standard_G is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Timer_Manager.Add_At_Event (The_Timer.The_Entry, At_Time);
+         On.The_Held_Event_Manager.Add_At_Event (The_Timer.The_Entry, At_Time);
 
       else
 
@@ -322,7 +322,8 @@ package body ColdFrame.Events_G.Standard_G is
             TE.The_Event := To_Fire;
             TE.The_Timer := The_Timer'Unrestricted_Access;
          end;
-         On.The_Timer_Manager.Add_After_Event (The_Timer.The_Entry, After);
+         On.The_Held_Event_Manager.Add_After_Event (The_Timer.The_Entry,
+                                                    After);
 
       else
 
@@ -373,7 +374,7 @@ package body ColdFrame.Events_G.Standard_G is
    --  Timed event management  --
    ------------------------------
 
-   task body Timer_Manager is
+   task body Held_Event_Manager is
 
       The_Events : Held_Events.Queue renames The_Queue.The_Held_Events;
 
@@ -504,7 +505,7 @@ package body ColdFrame.Events_G.Standard_G is
                  (Severity => Logging.Error,
                   Message =>
                     Ada.Exceptions.Exception_Information (E) &
-                    " in Timer_Manager");
+                    " in Held_Event_Manager");
 
          end;
 
@@ -512,7 +513,7 @@ package body ColdFrame.Events_G.Standard_G is
 
       end loop Outer;
 
-   end Timer_Manager;
+   end Held_Event_Manager;
 
 
    protected body Excluder is
@@ -664,7 +665,7 @@ package body ColdFrame.Events_G.Standard_G is
       --  The base implementation of Start checks first and doesn't
       --  make the call if it would be wrong to do so.
       The_Queue.The_Dispatcher.Start;
-      The_Queue.The_Timer_Manager.Rethink;
+      The_Queue.The_Held_Event_Manager.Rethink;
    end Start_Queue;
 
 
@@ -676,12 +677,13 @@ package body ColdFrame.Events_G.Standard_G is
       --  Called to mark all events for For_The_Instance as
       --  invalidated, so that they won't be dispatched.
 
-      --  First, tell the Timer_Manager to mark all its held events
+      --  First, tell the Held_Event_Manager to mark all its held events
       --  that reference the departing instance;
-      On.The_Timer_Manager.Invalidate (Instance_Base_P (For_The_Instance));
+      On.The_Held_Event_Manager.Invalidate
+        (Instance_Base_P (For_The_Instance));
       --  after which there can't be any more left (even one that was
       --  in the process of being posted must have gone, because it's
-      --  processed elsewhere in the Timer_Manager task).
+      --  processed elsewhere in the Held_Event_Manager task).
 
       --  Next, tell the Excluder the same.
       On.The_Excluder.Invalidate_Events (For_The_Instance);
@@ -698,9 +700,9 @@ package body ColdFrame.Events_G.Standard_G is
       --  events on a dead Dispatcher.
 
       --  Stop processing held events ..
-      The_Queue.The_Timer_Manager.Tear_Down;
-      --  .. waiting until the Timer_Manager has actually stopped.
-      while not The_Queue.The_Timer_Manager'Terminated loop
+      The_Queue.The_Held_Event_Manager.Tear_Down;
+      --  .. waiting until the Held_Event_Manager has actually stopped.
+      while not The_Queue.The_Held_Event_Manager'Terminated loop
          delay 0.1;
       end loop;
 

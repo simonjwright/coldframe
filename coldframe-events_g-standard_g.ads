@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: afff1d12dda5 $
---  $Date: 2004/02/23 17:22:27 $
+--  $Revision: f20f69a7bba2 $
+--  $Date: 2004/07/03 09:40:17 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -114,7 +114,7 @@ private
    end Dispatcher;
 
 
-   task type Timer_Manager (The_Queue : access Event_Queue_Base'Class) is
+   task type Held_Event_Manager (The_Queue : access Event_Queue_Base'Class) is
 
       pragma Task_Name ("aTimerManager");
       --  No need to specify priority (because we only deal with timed
@@ -144,7 +144,7 @@ private
       entry Tear_Down;
       --  Only for use by domain Tear_Down.
 
-   end Timer_Manager;
+   end Held_Event_Manager;
 
 
    --  Mutual exclusion between posters and the Dispatcher.
@@ -220,7 +220,7 @@ private
       The_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Held_Events : aliased Held_Events.Queue;
       The_Dispatcher : Dispatcher (Event_Queue_Base'Access);
-      The_Timer_Manager : Timer_Manager (Event_Queue_Base'Access);
+      The_Held_Event_Manager : Held_Event_Manager (Event_Queue_Base'Access);
    end record;
 
    procedure Start_Queue (The_Queue : access Event_Queue_Base);
