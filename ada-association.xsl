@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 75c0795c544e 2001/06/06 19:25:50 simon $ -->
+<!-- $Id: ada-association.xsl,v b97f4ddf8ae0 2001/06/21 19:26:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -62,10 +62,27 @@
     <!-- XXX Could be more picky about Sets, since we don't always
          need both (1:1 or 1-(1:1)) -->
     <xsl:for-each select="role/classname | associative">
+
       <xsl:sort select="."/>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-      <xsl:text>.Collections;&#10;</xsl:text>
+
+      <xsl:variable name="n" select="."/>
+
+      <xsl:choose>
+
+        <xsl:when test="/domain/class[name=$n]/@singleton">
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:text>with </xsl:text>
+          <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
+          <xsl:text>.Collections;&#10;</xsl:text>
+        </xsl:otherwise>
+
+      </xsl:choose>
+
     </xsl:for-each>
 
   </xsl:template>
@@ -156,16 +173,23 @@
 
     <!-- XXX not all of these are required in all circumstances. -->
     <xsl:for-each select="role/classname | associative">
+
       <xsl:sort select="."/>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-      <xsl:text>.Selection_Function;&#10;</xsl:text>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
-      <xsl:text>.Sets;&#10;</xsl:text>
+
+      <xsl:variable name="n" select="."/>
+
+      <xsl:if test="not(/domain/class[name=$n]/@singleton)">
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
+        <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
+        <xsl:text>.Selection_Function;&#10;</xsl:text>
+        <xsl:text>with </xsl:text>
+        <xsl:value-of select="/domain/name"/>.<xsl:value-of select="."/>
+        <xsl:text>.Sets;&#10;</xsl:text>
+      </xsl:if>
+
     </xsl:for-each>
 
   </xsl:template>
@@ -392,6 +416,17 @@
        specs. -->
   <xsl:template name="navigation-specs">
 
+    <xsl:variable name="role-1" select="role[1]"/>
+    <xsl:variable
+      name="singleton-1"
+      select="/domain/class[name=$role-1/classname]/@singleton"/>
+    <xsl:variable name="role-2" select="role[2]"/>
+    <xsl:variable
+      name="singleton-2"
+      select="/domain/class[name=$role-2/classname]/@singleton"/>
+
+    <!-- First direction: from one -->
+
     <xsl:call-template name="navigation-specification">
       <xsl:with-param name="role-a" select="role[1]"/>
       <xsl:with-param name="role-b" select="role[2]"/>
@@ -416,31 +451,41 @@
 
     </xsl:if>
 
-    <xsl:call-template name="navigation-collection-specification">
-      <xsl:with-param name="role-a" select="role[1]"/>
-      <xsl:with-param name="role-b" select="role[2]"/>
-    </xsl:call-template>
-    <xsl:text>;&#10;</xsl:text>
+    <!-- First direction : from collection -->
 
+    <xsl:if test="not($singleton-1) and not($singleton-2)">
+      <xsl:call-template name="navigation-collection-specification">
+        <xsl:with-param name="role-a" select="role[1]"/>
+        <xsl:with-param name="role-b" select="role[2]"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+    
     <xsl:if test="associative">
 
-      <xsl:call-template
-        name="navigation-collection-to-associative-specification">
-        <xsl:with-param name="role-a" select="role[1]"/>
-        <xsl:with-param name="role-b" select="role[2]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-      <xsl:text>;&#10;</xsl:text>
-
-      <xsl:call-template
-        name="navigation-collection-from-associative-specification">
-        <xsl:with-param name="role-a" select="role[1]"/>
-        <xsl:with-param name="role-b" select="role[2]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-      <xsl:text>;&#10;</xsl:text>
-
+      <xsl:if test="not($singleton-1)">
+        <xsl:call-template
+          name="navigation-collection-to-associative-specification">
+          <xsl:with-param name="role-a" select="role[1]"/>
+          <xsl:with-param name="role-b" select="role[2]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+      
+      <xsl:if test="not($singleton-2)">
+        <xsl:call-template
+          name="navigation-collection-from-associative-specification">
+          <xsl:with-param name="role-a" select="role[1]"/>
+          <xsl:with-param name="role-b" select="role[2]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+      
     </xsl:if>
+    
+    <!-- Second direction: from one -->
 
     <xsl:call-template name="navigation-specification">
       <xsl:with-param name="role-a" select="role[2]"/>
@@ -466,30 +511,38 @@
 
     </xsl:if>
 
-    <xsl:call-template name="navigation-collection-specification">
-      <xsl:with-param name="role-a" select="role[2]"/>
-      <xsl:with-param name="role-b" select="role[1]"/>
-    </xsl:call-template>
-    <xsl:text>;&#10;</xsl:text>
-
+    <!-- Second direction: from collection -->
+    
+    <xsl:if test="not($singleton-1) and not($singleton-2)">
+      <xsl:call-template name="navigation-collection-specification">
+        <xsl:with-param name="role-a" select="role[2]"/>
+        <xsl:with-param name="role-b" select="role[1]"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+    
     <xsl:if test="associative">
-
-      <xsl:call-template
-        name="navigation-collection-to-associative-specification">
-        <xsl:with-param name="role-a" select="role[2]"/>
-        <xsl:with-param name="role-b" select="role[1]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-      <xsl:text>;&#10;</xsl:text>
-
-      <xsl:call-template
-        name="navigation-collection-from-associative-specification">
-        <xsl:with-param name="role-a" select="role[2]"/>
-        <xsl:with-param name="role-b" select="role[1]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-      <xsl:text>;&#10;</xsl:text>
-
+      
+      <xsl:if test="not($singleton-2)">
+        <xsl:call-template
+          name="navigation-collection-to-associative-specification">
+          <xsl:with-param name="role-a" select="role[2]"/>
+          <xsl:with-param name="role-b" select="role[1]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+       
+      <xsl:if test="not($singleton-1)">
+        <xsl:call-template
+          name="navigation-collection-from-associative-specification">
+          <xsl:with-param name="role-a" select="role[2]"/>
+          <xsl:with-param name="role-b" select="role[1]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
+        
     </xsl:if>
 
   </xsl:template>
@@ -498,6 +551,15 @@
   <!-- Called at domain/association to generate the navigation function
        bodies. -->
   <xsl:template name="navigation-bodies">
+
+    <xsl:variable name="role-1" select="role[1]"/>
+    <xsl:variable
+      name="singleton-1"
+      select="/domain/class[name=$role-1/classname]/@singleton"/>
+    <xsl:variable name="role-2" select="role[2]"/>
+    <xsl:variable
+      name="singleton-2"
+      select="/domain/class[name=$role-2/classname]/@singleton"/>
 
     <!-- First direction: from one -->
 
@@ -523,26 +585,32 @@
     </xsl:if>
 
     <!-- First direction : from collection -->
-
-    <xsl:call-template name="navigation-collection-body">
-      <xsl:with-param name="role-a" select="role[1]"/>
-      <xsl:with-param name="role-b" select="role[2]"/>
-    </xsl:call-template>
-
+      
+    <xsl:if test="not($singleton-1) and not($singleton-2)">
+      <xsl:call-template name="navigation-collection-body">
+        <xsl:with-param name="role-a" select="role[1]"/>
+        <xsl:with-param name="role-b" select="role[2]"/>
+      </xsl:call-template>
+    </xsl:if>
+    
     <xsl:if test="associative">
+      
+      <xsl:if test="not($singleton-1)">
+        <xsl:call-template name="navigation-collection-to-associative-body">
+          <xsl:with-param name="role-a" select="role[1]"/>
+          <xsl:with-param name="role-b" select="role[2]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+      </xsl:if>
 
-      <xsl:call-template name="navigation-collection-to-associative-body">
-        <xsl:with-param name="role-a" select="role[1]"/>
-        <xsl:with-param name="role-b" select="role[2]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-
-      <xsl:call-template name="navigation-collection-from-associative-body">
-        <xsl:with-param name="role-a" select="role[1]"/>
-        <xsl:with-param name="role-b" select="role[2]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-
+      <xsl:if test="not($singleton-2)">
+        <xsl:call-template name="navigation-collection-from-associative-body">
+          <xsl:with-param name="role-a" select="role[1]"/>
+          <xsl:with-param name="role-b" select="role[2]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+      </xsl:if>
+        
     </xsl:if>
 
     <!-- Second direction: from one -->
@@ -569,25 +637,31 @@
     </xsl:if>
 
     <!-- Second direction: from collection -->
-
-    <xsl:call-template name="navigation-collection-body">
-      <xsl:with-param name="role-a" select="role[2]"/>
-      <xsl:with-param name="role-b" select="role[1]"/>
-    </xsl:call-template>
-
+      
+    <xsl:if test="not($singleton-1) and not($singleton-2)">
+      <xsl:call-template name="navigation-collection-body">
+        <xsl:with-param name="role-a" select="role[2]"/>
+        <xsl:with-param name="role-b" select="role[1]"/>
+      </xsl:call-template>
+    </xsl:if>
+      
     <xsl:if test="associative">
-
-      <xsl:call-template name="navigation-collection-to-associative-body">
-        <xsl:with-param name="role-a" select="role[2]"/>
-        <xsl:with-param name="role-b" select="role[1]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
-
-      <xsl:call-template name="navigation-collection-from-associative-body">
-        <xsl:with-param name="role-a" select="role[2]"/>
-        <xsl:with-param name="role-b" select="role[1]"/>
-        <xsl:with-param name="assoc" select="associative"/>
-      </xsl:call-template>
+        
+      <xsl:if test="not($singleton-2)">
+        <xsl:call-template name="navigation-collection-to-associative-body">
+          <xsl:with-param name="role-a" select="role[2]"/>
+          <xsl:with-param name="role-b" select="role[1]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+      </xsl:if>
+        
+      <xsl:if test="not($singleton-1)">
+        <xsl:call-template name="navigation-collection-from-associative-body">
+          <xsl:with-param name="role-a" select="role[2]"/>
+          <xsl:with-param name="role-b" select="role[1]"/>
+          <xsl:with-param name="assoc" select="associative"/>
+        </xsl:call-template>
+      </xsl:if>
 
     </xsl:if>
 
