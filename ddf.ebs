@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v cc58508ab120 2000/03/26 09:09:38 simon $
+'$Id: ddf.ebs,v c1242fdc8174 2000/04/03 12:22:01 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -9,7 +9,8 @@
 '--------------------------------------------------------------------------------
 
 Sub DumpObjectRelationInfo (o As Class)
-	'number of relations for this class
+	'doesn't handle the supertype end of super/sub relationships
+	'XXX I think this needs just to dump the _names_ of the relations ???
 	Print "    relations"
 	Print #1, "<relations>"
 	Dim assocs As AssociationCollection
@@ -21,12 +22,12 @@ Sub DumpObjectRelationInfo (o As Class)
 	Set irels = o.GetInheritRelations()
 	For r = 1 To irels.Count
 		Print #1, "<relation>" & irels.GetAt(r).Name & "</relation>"
+		Print "relation " & irels.GetAt(r).Name & ", supplier "	& irels.GetAt(r).GetSupplierClass().name
 	Next r
 	Print #1, "</relations>"
-	End Sub	
+End Sub	
 
 Sub DumpTagInfo (o As Class)
-	'number of tags
 	Print "    tags"
 	Print #1, "<tags>"
 	Print #1, "</tags>"
@@ -34,14 +35,11 @@ End Sub
 
 Sub DumpStatusAttribute (o As Class)
 	'the Status attribute is an extra attribute, needed if there's an STT
-'	Print 0
-'	Print #1, 0
 End Sub
 
 Sub DumpAttributes (o As Class)
 	Dim atts As AttributeCollection
 	Set atts = o.Attributes
-	'number of attributes (add 1 if Status needed)
 	Print "    attributes"					
 	Print #1, "<attributes>"
 	For attid = 1 To atts.Count
@@ -68,7 +66,7 @@ Sub DumpClass (o As Class)
 	Print "  object " & o.Name
 	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
 	Print #1, "<name>" & o.Name & "</name>"
-	DumpObjectRelationInfo (o)
+	'DumpObjectRelationInfo (o)
 	DumpTagInfo (o)
 	DumpAttributes (o)
 	Print #1, "</object>"
@@ -84,27 +82,53 @@ Sub DumpClasses (domain As Category)
 	Print #1, "</objects>"
 End Sub
 
-Sub DumpRelationship (assoc As Association)
-	Print "    relationship"
-'	Print #1, "<relationship>"
-	Print "relationship name " & assoc.Name & " derived " & assoc.Derived
+Sub DumpAssociation (assoc As Association)
+	'NB the role names are given the KC semantic, ie swapped from UML convention
+	Print "    association"
+	Print #1, "<association>"
+	Print #1, "<name>" & assoc.Name & "</name>"
+	Print #1, "<role><end>1</end>"
+	Print #1, "<name>" & assoc.Role2.Name & "</name>"
+	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
+	Print #1, "<cardinality>" & assoc.Role1.Cardinality & "</cardinality>"
+	Print #1, "</role>"
+	Print #1, "<role><end>2</end>"
+	Print #1, "<name>" & assoc.Role1.Name & "</name>"
+	Print #1, "<classname>" & assoc.Role2.Class.Name & "</classname>"
+	Print #1, "<cardinality>" & assoc.Role2.Cardinality & "</cardinality>"
+	Print #1, "</role>"
 	If Not assoc.LinkClass Is Nothing Then
-		Print "associative object " & assoc.LinkClass.Name
+		Print #1, "<associative>" & assoc.LinkClass.Name & "</associative>"
 	End If
-	Print "role1 " & assoc.Role1.Name & " role2 " & assoc.Role2.Name
-	Print "role1 " & assoc.Role1.Class.Name & " role2 " & assoc.Role2.Class.Name
-	Print "role1 " & assoc.Role1.Cardinality & " role2 " & assoc.Role2.Cardinality
-'	Print #1, "</relationship>"
+	Print #1, "</association>"
+End Sub
+
+Sub DumpInheritance (o As class)
+	Dim irels As InheritRelationCollection
+	Set irels = o.GetInheritRelations()
+	For r = 1 To irels.Count
+		Print "    inheritance"
+		Print #1, "<inheritance>"
+		Print #1, "<name>" & irels.GetAt(r).Name & "</name>"
+		Print #1, "<child>" & o.Name & "</child>"
+		Print #1, "<parent>" & irels.GetAt(r).GetSupplierClass().Name & "</parent>" 
+		Print #1, "</inheritance>"
+	Next r
 End Sub
 
 Sub DumpRelationships (domain As Category)
 	Print "  relationships"
 	Print #1, "<relationships>"
-		Dim assocs As AssociationCollection
-		Set assocs = domain.Associations
-		For associd = 1 To assocs.Count
-			DumpRelationship (assocs.getAt (associd))
-		Next associd
+	Dim assocs As AssociationCollection
+	Set assocs = domain.Associations
+	For associd = 1 To assocs.Count
+		DumpAssociation (assocs.getAt (associd))
+	Next associd
+	Dim classes As ClassCollection
+	Set classes = domain.Classes
+	For clid = 1 To classes.Count
+		DumpInheritance (classes.GetAt(clid))
+	Next clid
 	Print #1, "</relationships>"
 End Sub
 
