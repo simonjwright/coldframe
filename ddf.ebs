@@ -1,6 +1,6 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 6e8842199da3 2000/12/16 14:54:00 simon $
+'$Id: ddf.ebs,v 3b2270a072d4 2001/01/12 20:44:59 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
@@ -70,8 +70,10 @@ Sub DumpParameters(op As Operation)
 	For parid = 1 To pars.Count
 		Dim p As Parameter
 		Set p = pars.GetAt(parid)
-		If Len(p.Const) > 0 Then
-			Print #1, "<parameter const=" & Chr(34) & "yes" & Chr(34) & ">"
+		Dim s As String
+		s = p.Stereotype
+		If Len(s) > 0 Then
+			Print #1, "<parameter " & "stereotype=" & Chr(34) & s & Chr(34) & ">"
 		Else
 			Print #1, "<parameter>"
 		End If
@@ -92,10 +94,16 @@ Sub DumpOperations (o As Class)
 	For opid = 1 To ops.Count
 		Dim op As Operation
 		Set op = ops.GetAt(opid)
-		Print #1, "<operation>"
+		Dim s As String
+		s = op.Stereotype
+		If Len(s) > 0 Then
+			Print #1, "<operation " & "stereotype=" & Chr(34) & s & Chr(34) & ">"
+		Else
+			Print #1, "<operation>"
+		End If
 		Print #1, "<name>" & op.Name & "</name>"
 		If Len(op.ReturnType) > 0 Then
-			Print #1, "<return>" &  op.ReturnType & "</return>"
+ 			Print #1, "<return>" &  op.ReturnType & "</return>"
 		End If
 		DumpParameters (op)
 		Print #1, "</operation>"
