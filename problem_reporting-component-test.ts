@@ -1,10 +1,10 @@
--- $Id: problem_reporting-component-test.ts,v e496bbe2447e 2001/04/22 10:49:46 simon $
+-- $Id: problem_reporting-component-test.ts,v 55934d95a45d 2001/05/27 05:24:11 simon $
 
 error_handling continue
 
 context with Ada.Text_IO; use Ada.Text_IO;
 	with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-        with Architecture.Exceptions;
+        with ColdFrame.Exceptions;
 	with Problem_Reporting.Component; use Problem_Reporting.Component;
 
 ***** (1) Create
@@ -19,7 +19,7 @@ define 	H : Problem_Reporting.Component.Handle;
 	N : Unbounded_String := To_Unbounded_String ("first");
 test	H := Problem_Reporting.Component.Create ((Id => N));
 	H := Problem_Reporting.Component.Create ((Id => N));
-pass	exception Architecture.Exceptions.Duplicate
+pass	exception ColdFrame.Exceptions.Duplicate
 cleanup Problem_Reporting.Component.Delete (H);
 
 ***** (3) Find
@@ -67,5 +67,5 @@ define  H : Problem_Reporting.Component.Handle;
 	N2 : Unbounded_String := To_Unbounded_String ("second");
 test	H := Problem_Reporting.Component.Create ((Id => N1));
         Problem_Reporting.Component.Delete ((Id => N2));
-pass	exception Architecture.Exceptions.Not_Found
+pass	exception ColdFrame.Exceptions.Not_Found
 cleanup Problem_Reporting.Component.Delete (H);
