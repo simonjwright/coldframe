@@ -23,5 +23,5 @@ all:: html
 
 html:: use-cases.html
 
-.PRECIOUS:: Problem_Reporting.norm
-.PRECIOUS:: Weapon_Assignment.norm
+.PRECIOUS:: Problem_Reporting.norm Problem_Reporting.ada
+.PRECIOUS:: Weapon_Assignment.norm  Weapon_Assignment.ada
