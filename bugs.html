@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8642f4f4e2cb 2001/11/17 06:04:04 simon $ -->
+<!-- $Id: bugs.html,v 92bc8a050b4a 2001/11/25 10:22:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -103,13 +103,6 @@ is <tt>ColdFrame.Instances.Handle</tt>; should be just
 in a 1:1 association is a &#171;singleton&#187; won't work if the
 non-singleton party is marked <tt>[[source]]</tt>.
 
-<dt>0036 (raised 16.xi.01)
-
-<dd>The domain <tt>Initialize</tt> procedure should be a child
-unit. As it is, a <tt>with</tt> of the domain package, probably for
-its types, calls in all the class packages that have &#171;init&#187;
-operations.
-
 <dt>0037 (raised 16.xi.01)
 
 <dd>Would it be better only to generate task entries when there's an
@@ -117,14 +110,41 @@ operations.
 
 <dt>0038 (raised 16.xi.01)
 
-<dd>Parameterless &#171;abstract&#187; operations of active classes
+<dd>&#171;abstract&#187; procedure operations of active classes
 generate task entries. They probably shouldn't.
 
-<!-- next: 0040 -->
+<!-- next: 0042 -->
 
 </dl>
 
 <h2>Fixed</h2>
+
+<h3>19.xi.01</h3>
+<dl>
+
+<dt>0041 (raised 19.xi.01)
+
+<dd><tt>[[callback]]</tt> doesn't work on plain types, you need to use
+a record.
+
+</dl>
+
+<h3>17.xi.01</h3>
+<dl>
+
+<dt>0036 (raised 16.xi.01)
+
+<dd>The domain <tt>Initialize</tt> procedure should be a child
+unit. As it is, a <tt>with</tt> of the domain package, probably for
+its types, calls in all the class packages that have &#171;init&#187;
+operations.
+
+<dt>0040 (raised 17.xi.01)
+
+<dd>&#171;generated&#187; and &#171;navigation&#187; procedure
+operations of active classes generate task entries.
+
+</dl>
 
 <h3>16.xi.01</h3>
 <dl>

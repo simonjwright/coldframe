@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v e4a560336f6d 2001/11/03 06:58:02 simon $ -->
+<!-- $Id: releases.html,v 92bc8a050b4a 2001/11/25 10:22:54 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -33,10 +33,30 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dt>2001mmdd
 
-<dd>In multiple inheritance, an inherited operation is called in the
+<dd>There's a new scheme for mutual visibility of Class package specs,
+<em>not</em> involving the GNAT <i>WITH TYPE</i> extension.
+
+
+<p>In multiple inheritance, an inherited operation is called in the
 correct parent.
 
+
 <p>&#171;finalize&#187; operations don't map to task entries.
+
+
+<p>A new operation stereotype &#171;navigation&#187; is like
+&#171;generated&#187; (but is intended to mark operations that are in
+fact provided in an association package).
+
+
+<p>&#171;finalize&#187; operations aren't inherited.
+
+
+<p>The domain <tt>Tear_Down</tt> clears all registered Callbacks.
+
+
+<p>A proper error message is given when a <tt>[[callback]]</tt>
+annotation is given on a non-record type (a type without attributes).
 
 
 <p><dt>20011011
