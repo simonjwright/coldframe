@@ -3,11 +3,11 @@
 <name>Hierarchies</name>
 <date>
 <year>2002</year>
-<month>5</month>
-<day>18</day>
-<time>17:23</time>
+<month>9</month>
+<day>19</day>
+<time>15:42</time>
 </date>
-<documentation>[[ revision : $Id: Hierarchies.raw,v 281d11e491da 2002/07/27 13:05:23 simon $ ]]
+<documentation>[[ revision : $Id: Hierarchies.raw,v cf0ab7673380 2002/09/20 10:07:51 simon $ ]]
 Support for subtype migration in deeply layered multiple inheritance hierarchies.</documentation>
 <classes>
 <class>
@@ -155,15 +155,15 @@ Support for subtype migration in deeply layered multiple inheritance hierarchies
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r1_parent</name>
+<name>delete_child</name>
 <documentation></documentation>
-<return>R_1</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>delete_child</name>
+<name>find_r_1_parent</name>
 <documentation></documentation>
+<return>R_1</return>
 <parameters>
 </parameters>
 </operation>
@@ -199,22 +199,22 @@ Support for subtype migration in deeply layered multiple inheritance hierarchies
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r2_parent</name>
+<name>delete_child</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>find_r_2_parent</name>
 <documentation></documentation>
 <return>R_2</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r3_parent</name>
+<name>find_r_3_parent</name>
 <documentation></documentation>
 <return>R_3</return>
-<parameters>
-</parameters>
-</operation>
-<operation stereotype="generated">
-<name>delete_child</name>
-<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -268,22 +268,22 @@ Support for subtype migration in deeply layered multiple inheritance hierarchies
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r1_parent</name>
+<name>delete_child</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="generated">
+<name>find_r_1_parent</name>
 <documentation></documentation>
 <return>R_1</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_s2_parent</name>
+<name>find_s_2_parent</name>
 <documentation></documentation>
 <return>S_2</return>
-<parameters>
-</parameters>
-</operation>
-<operation stereotype="generated">
-<name>delete_child</name>
-<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -322,45 +322,57 @@ Support for subtype migration in deeply layered multiple inheritance hierarchies
 <type>CIH</type>
 <initial></initial>
 </parameter>
+<parameter>
+<name>r2</name>
+<documentation></documentation>
+<type>CIH</type>
+<initial></initial>
+</parameter>
+<parameter>
+<name>r3</name>
+<documentation></documentation>
+<type>CIH</type>
+<initial></initial>
+</parameter>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r1_parent</name>
+<name>find_r_1_parent</name>
 <documentation></documentation>
 <return>R_1</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r2_parent</name>
+<name>find_r_2_parent</name>
 <documentation></documentation>
 <return>R_2</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_r3_parent</name>
+<name>find_r_3_parent</name>
 <documentation></documentation>
 <return>R_3</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_s2_parent</name>
+<name>find_s_2_parent</name>
 <documentation></documentation>
 <return>S_2</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_s3_parent</name>
+<name>find_s_3_parent</name>
 <documentation></documentation>
 <return>S_3</return>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
-<name>find_t2_parent</name>
+<name>find_t_2_parent</name>
 <documentation></documentation>
 <return>T_2</return>
 <parameters>
