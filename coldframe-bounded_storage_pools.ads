@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.ads,v $
---  $Revision: 1b78a6578c9f $
---  $Date: 2003/07/24 21:01:00 $
+--  $Revision: 806f4ed2e617 $
+--  $Date: 2003/08/23 07:33:37 $
 --  $Author: simon $
 
 with System.Pool_Size;
@@ -56,7 +56,6 @@ package ColdFrame.Bounded_Storage_Pools is
                                                Elmt_Size => Elmt_Size,
                                                Alignment => Alignment)
    with record
-      Initialized : Boolean := False;
       Excluder : Mutex;
    end record;
 

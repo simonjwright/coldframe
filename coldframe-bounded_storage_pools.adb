@@ -29,8 +29,8 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: 0dd8850f8c54 $
---  $Date: 2003/07/25 20:47:26 $
+--  $Revision: 806f4ed2e617 $
+--  $Date: 2003/08/23 07:33:37 $
 --  $Author: simon $
 
 package body ColdFrame.Bounded_Storage_Pools is
@@ -60,13 +60,6 @@ package body ColdFrame.Bounded_Storage_Pools is
 
       --  seize the pool
       Pool.Excluder.Seize;
-
-      --  initialize if necessary
-      if not Pool.Initialized then
-         Pool.Initialized := True;
-         System.Pool_Size.Initialize
-           (System.Pool_Size.Stack_Bounded_Pool (Pool));
-      end if;
 
       --  allocate the required storage
       System.Pool_Size.Allocate
