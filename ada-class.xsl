@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-class.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -57,6 +57,7 @@
     </xsl:call-template>
 
     <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
 
     <!-- Commentary. -->
@@ -64,9 +65,6 @@
     <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-
-    <!-- Suppress style checks. -->
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="cl:class-spec-context"/>
@@ -800,10 +798,8 @@
     </xsl:variable>
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
-
-    <!-- Suppress style checks. -->
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="cl:class-body-context"/>
@@ -2024,8 +2020,8 @@
            or (@public and attribute)]">
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
@@ -2033,8 +2029,8 @@
     <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>

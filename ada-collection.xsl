@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-collection.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -60,8 +60,8 @@
 
     <!-- Abstract Containers package -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with BC.Containers;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="$class"/>
@@ -70,8 +70,8 @@
 
     <!-- Abstract Collections package -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with BC.Containers.Collections;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -84,8 +84,8 @@
 
     <!-- Abstract Sets package -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with BC.Containers.Sets;&#10;</xsl:text>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -102,8 +102,8 @@
       <xsl:when test="$max &lt;= $max-bounded-container">
         <!-- Wnen the size isn't too large, use the Bounded version -->
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>with BC.Containers.Collections.Bounded;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
@@ -119,8 +119,8 @@
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
         <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
@@ -138,8 +138,8 @@
 
     <!-- Hash function for Handles -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with ColdFrame.Hash.Access_Hash;&#10;</xsl:text>
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -152,8 +152,8 @@
 
     <!-- Concrete Sets package -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Handle_Hash;&#10;</xsl:text>
@@ -218,8 +218,8 @@
             ({domain}.{class}.All_Instances);
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -248,8 +248,8 @@
             ({domain}.{class}.Selection_Function);
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -317,8 +317,8 @@
             ({domain}.{class}.Iterate);
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections;&#10;</xsl:text>
@@ -379,8 +379,8 @@
          end {dom}.{class}.All_Instances;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -473,8 +473,8 @@
          end {dom}.{class}.Selection_Function;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -586,8 +586,8 @@
          end {dom}.{class}.Filter_Function;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
@@ -660,8 +660,8 @@
          end {domain}.{class}.Iterate;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>with </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>

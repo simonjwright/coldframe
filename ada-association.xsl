@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-association.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -39,6 +39,7 @@
     <xsl:call-template name="as:check-association-validity"/>
 
     <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
 
     <!-- Commentary. -->
@@ -46,9 +47,6 @@
     <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-
-    <!-- Suppress style checks. -->
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Context clauses. -->
     <xsl:call-template name="as:association-spec-context"/>
@@ -218,8 +216,8 @@
   <xsl:template match="domain/association" mode="as:association-body">
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <!-- Context clauses. -->
     <xsl:call-template name="as:association-body-context"/>

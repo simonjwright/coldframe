@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -43,8 +43,8 @@
     <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
 
       <xsl:call-template name="ut:do-not-edit"/>
-      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+      <xsl:call-template name="ut:identification-info"/>
 
       <!-- Context clauses. -->
       <xsl:call-template name="ac:association-collection-spec-context"/>
@@ -104,8 +104,8 @@
     <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
 
       <xsl:call-template name="ut:do-not-edit"/>
-      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+      <xsl:call-template name="ut:identification-info"/>
 
       <!-- Context clauses. -->
       <xsl:call-template name="ac:association-collection-body-context"/>

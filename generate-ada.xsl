@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: generate-ada.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -127,6 +127,7 @@
   <xsl:template match="domain" mode="coldframe">
 
     <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Identification info -->
     <xsl:call-template name="ut:identification-info"/>
@@ -138,9 +139,6 @@
     <xsl:call-template name="ut:commentary">
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-
-    <!-- Suppress style checks. -->
-    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
 
     <!-- Any context clauses needed for top-level package .. -->
     <xsl:call-template name="ut:progress-message">
@@ -247,8 +245,8 @@
                   and not(@renames)]">
 
       <xsl:call-template name="ut:do-not-edit"/>
-      <xsl:call-template name="ut:identification-info"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+      <xsl:call-template name="ut:identification-info"/>
 
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
@@ -330,8 +328,8 @@
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
@@ -376,8 +374,8 @@
          end {domain}.Initialize;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:variable
       name="class-initializations"
@@ -505,8 +503,8 @@
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
     <xsl:text>procedure </xsl:text>
@@ -561,8 +559,8 @@
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Cascade_Tear_Down;&#10;</xsl:text>

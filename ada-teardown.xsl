@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-teardown.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -38,16 +38,16 @@
   <xsl:template name="td:domain-teardown">
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
 
@@ -120,8 +120,8 @@
   <xsl:template mode="td:class-teardown-spec" match="domain/class">
 
     <xsl:call-template name="ut:do-not-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="../name"/>
@@ -158,8 +158,8 @@
              -->
 
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>procedure </xsl:text>
         <xsl:value-of select="../name"/>
@@ -205,8 +205,8 @@
              -->
 
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -290,8 +290,8 @@
              -->
 
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 
@@ -386,8 +386,8 @@
              -->
 
         <xsl:call-template name="ut:do-not-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:call-template name="ut:identification-info"/>
 
         <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
 

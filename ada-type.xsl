@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-type.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -651,8 +651,8 @@
 
         <xsl:when test="string/max">
           <xsl:call-template name="ut:do-not-edit"/>
-          <xsl:call-template name="ut:identification-info"/>
           <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+          <xsl:call-template name="ut:identification-info"/>
           <xsl:text>with ColdFrame.Hash.Strings.Bounded;&#10;</xsl:text>
           <xsl:text>function </xsl:text>
           <xsl:value-of select="../name"/>
