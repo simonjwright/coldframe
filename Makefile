@@ -76,11 +76,21 @@ xslide-diff
 PROGS = COPYING Makefile ddf.ebs normalize-rose.tcl generate-ada.xsl
 SUPPORT = architecture*.ad[bs]
 
+DEMO = Problem_Reporting.cat Problem_Reporting.raw \
+Problem_Reporting.impl/demo.adb \
+Problem_Reporting.impl/problem_reporting-component-hash.adb \
+Problem_Reporting.impl/problem_reporting-interface-add_component.adb \
+Problem_Reporting.impl/problem_reporting-interface-add_problem.adb \
+Problem_Reporting.impl/problem_reporting-interface-delete_component.adb \
+Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
+Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
+Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
+
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
-dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS) $(SUPPORT) cf-$(DATE)
+dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS) $(SUPPORT) $(DEMO) cf-$(DATE)
 	-@rm -rf dist
 	mkdir -p dist/download
 	cp -p $(DOCS) dist/
@@ -92,6 +102,8 @@ cf-$(DATE): force
 	cp -p $(PROGS) $@
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
+	mkdir $@/example
+	cp -p $(DEMO) $@/example
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-rm $@
