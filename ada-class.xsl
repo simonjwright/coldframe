@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v d520ec4d9a87 2004/04/04 06:52:54 simon $ -->
+<!-- $Id: ada-class.xsl,v 16e3e96d7569 2004/04/04 14:50:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1529,6 +1529,7 @@
     </xsl:call-template>
     <xsl:call-template name="perform-finalization">
       <xsl:with-param name="handle" select="'This'"/>
+      <xsl:with-param name="report" select="1"/>
     </xsl:call-template>
     <xsl:call-template name="clear-parent-child-info">
       <xsl:with-param name="handle" select="'This'"/>
@@ -1776,13 +1777,16 @@
        call any finalization procedures. -->
   <xsl:template name="perform-finalization">
     <xsl:param name="handle" select="'This'"/>
+    <xsl:param name="report" select="/.."/>
+    <!-- non-null for error message output. -->
 
     <xsl:for-each select="operation[@finalize]">
       <xsl:sort select="name"/>
 
       <xsl:choose>
 
-        <xsl:when test="@abstract or @return or @class or parameter">
+        <xsl:when test="$report
+                        and (@abstract or @return or @class or parameter)">
           <xsl:call-template name="log-error"/>
           <xsl:message>
             <xsl:text>Error: illegal finalize operation </xsl:text>
