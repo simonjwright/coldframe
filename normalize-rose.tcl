@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 5da76aef1c3d 2002/10/11 05:39:48 simon $
+# $Id: normalize-rose.tcl,v cba9f9c66d45 2002/10/13 17:16:44 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1272,6 +1272,12 @@ itcl::class Operation {
 	set handler 1
     }
 
+    # is this a task entry?
+    variable entry 0
+    # called via stereotype mechanism to indicate that the operation
+    # is a task entry
+    method -entry {dummy} {set entry 1}
+
     # is this operation one that we expect to be generated?
     # may be unset, "framework", "navigation", "instantiation".
     variable suppressed
@@ -1306,9 +1312,10 @@ itcl::class Operation {
 	if $acc {puts -nonewline " access=\"yes\""}
 	if $accessor {puts -nonewline " accessor=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
-	if $init {puts -nonewline " initialize=\"yes\""}
+	if $entry {puts -nonewline " entry=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
 	if $handler {puts -nonewline " handler=\"yes\""}
+	if $init {puts -nonewline " initialize=\"yes\""}
 	if [info exists suppressed] {
 	    puts -nonewline " suppressed=\"$suppressed\""
 	}
