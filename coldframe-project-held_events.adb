@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: 853a89e85ecf $
---  $Date: 2003/03/16 12:23:30 $
+--  $Revision: fa437da9dae2 $
+--  $Date: 2003/04/07 18:09:47 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -147,9 +147,11 @@ package body ColdFrame.Project.Held_Events is
             KI : Abstract_Time_Containers.Iterator'Class
               := Time_Collections.New_Iterator (On.Queues (K));
          begin
-            Events.Invalidate (Current_Item (KI).Event,
-                               If_For_Instance => For_The_Instance);
-            Next (KI);
+            while not Is_Done (KI) loop
+               Events.Invalidate (Current_Item (KI).Event,
+                                  If_For_Instance => For_The_Instance);
+               Next (KI);
+            end loop;
          end;
       end loop;
    end Invalidate_Events;
