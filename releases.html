@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v a61acc012ab4 2002/10/17 20:30:35 simon $ -->
+<!-- $Id: releases.html,v bba57e3ec263 2002/10/25 19:08:09 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -53,6 +53,11 @@ variants of device support domains).
 
 
 <p>Added <i>Interrupt_Handling</i>, <i>Library</i> demos.
+
+
+<p>The environment variable <tt>CASE_EXCEPTIONS</tt> specifies one or
+more case exception files. If there's more than one, the separator is
+; on Windows, : on Unix.
 
 
 <p><dt>20020921
@@ -134,7 +139,7 @@ is now reserved).
 
 
 <p>If a state entry action procedure has a parameter, it's of the
-type of the corresponding event's payload rather than the vent
+type of the corresponding event's payload rather than the event
 itself. This allows different events to cause transitions to the same
 state, so long as they all have the same payload type.
 
@@ -239,7 +244,7 @@ the <a href="installation.html">installation notes</a>).
 
 
 <p>Added special processing where an dispatching or inherited
-operation has a parmeter of the same type as its class; the parameter
+operation has a parameter of the same type as its class; the parameter
 is converted to the same type as the implicit <tt>This</tt> parameter.
 
 <br>This may be what's called <i>covariance</i> in Eiffel.
