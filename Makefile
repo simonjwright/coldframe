@@ -232,7 +232,7 @@ TOOL_SRC = generated_lines.adb \
   generated_lines_support.ad[bs]
 
 PROGS = COPYING \
-  extractor-trampoline.ebs extractor.ebs \
+  extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
   escape-markup.awk \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
