@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v ea707bd33aee 2001/11/30 20:17:51 simon $ -->
+<!-- $Id: preparation.html,v 749c1e65d764 2002/01/04 06:31:47 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -10,10 +10,10 @@
 <p>It's not possible here to give a detailed tutorial on the
 Shlaer-Mellor approach. <a
 href="resources.html#build-object-models">Leon Starr's book</a> is an
-excellent reference.. Note also that the full Shlaer-Mellor approach
-involves full translation of the code of operations and actions as
-well as the generation of the framework which is all that ColdFrame
-attempts (this year).
+excellent reference. Note also that the complete Shlaer-Mellor
+approach with Recursive Design involves full translation of the code
+of operations and actions as well as the generation of the framework
+which is all that ColdFrame attempts (this year).
 
 <h3>Identifiers</h3>
 
@@ -118,8 +118,8 @@ implementations of all normal concrete parental instance operations.
 <p>Classes which represent user-defined types are marked with the
 stereotype <em>&#171;type&#187;</em>.
 
-<p>Classes of which there is only ever one instance are marked with
-the stereotype <em>&#171;singleton&#187;</em>.
+<p>Classes of which there is always precisely one instance are marked
+with the stereotype <em>&#171;singleton&#187;</em>.
 
 <p>Public classes, which are the only classes visible from outside the
 Domain, are marked with the stereotype
@@ -127,13 +127,24 @@ Domain, are marked with the stereotype
 <em>&#171;singleton&#187;</em>. Public classes can't take part in
 relationships.
 
+<p>Abstract classes (which must be parents in inheritance
+relationships) may be marked with the stereotype
+<em>&#171;abstract&#187;</em>. This has no effect on code generation
+at present (3.i.02). <em>&#171;abstract&#187;</em> is an alternative
+to the use of the <i>Abstract</i> checkbox in the Rose <i>Class
+Specification</i> dialog (<i>Detail</i> tab).
+
 <h3>Operations</h3>
 
 <p>Dispatching operations are marked with the stereotype
-<em>&#171;abstract&#187;</em>.
+<em>&#171;abstract&#187;</em>. The operation will be implemented in a
+child class.
 
-<p>Class operations are marked with the stereotype
-<em>&#171;class&#187;</em>.
+<p><em>&#171;access&#187;</em> indicates that the operation is in fact
+an access type (pointer-to-subprogram with the indicated profile).
+
+<p>Class operations (no <tt>This</tt> parameter will be generated) are
+marked with the stereotype <em>&#171;class&#187;</em>.
 
 <p>Operations to be called from the Domain <tt>Initialize</tt>
 procedure are marked with the stereotype
@@ -155,8 +166,11 @@ diagrams (eg, <tt>Find</tt>, <tt>Delete</tt>, <tt>All_Instances</tt>)
 are marked with the stereotype <em>&#171;generated&#187;</em>. This
 effectively means "ignore this".
 
-<p><em>&#171;navigation&#187;</em> is similar to &#171;generated&#187;;
-the intention is that it be used for navigating associations.
+<p><em>&#171;navigation&#187;</em> is similar to
+&#171;generated&#187;; the intention is that it be used for navigating
+associations. You might use a naming convention like <tt>r2.appears
+on</tt> (an operation of <i>Screen</i> that returns a collection of
+<i>Window</i>s)
 
 <h2><a name="annotation">Other annotations</a></h2>
 
@@ -254,9 +268,11 @@ results (for a type named <tt>T</tt>, renaming
 <li><tt>real : digits <i>num-digits</i>, lower <i>low-bound</i>,
 upper <i>upper-bound</i></tt>
 
+<!--
 <li><tt>set : <i>class-name</i></tt> (for parameters or return values
 of operations involving more than one instance at once, eg "find all
 the outstanding Problem Reports on this Component").
+-->
 
 <li><tt>string : max <i>max-length</i></tt>
 
@@ -289,20 +305,6 @@ and include the annotation
 <pre>
   [[ formalizes : r8 ]]
 </pre>
-
-</ul>
-
-<dt>on operations<dd><ul>
-
-<li><tt>abstract</tt> indicates that the operation will be implemented
-in a child class.
-
-<li><tt>access</tt> indicates that the operation is in fact an access
-type (pointer-to-subprogram with the indicated profile).
-
-<li><tt>class</tt> indicates that the operation is a class operation
-(no <tt>This</tt> parameter will be generated). This is an
-alternative to the <em>&#171;class&#187;</em> stereotype.
 
 </ul>
 
