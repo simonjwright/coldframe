@@ -319,6 +319,11 @@ coldframe-project-global_storage_pool.ads-standard: \
 
 DEMO = \
 Makefile-demo-unix Makefile-demo-winnt \
+ColdFrame.gpr
+
+DEMO += \
+stairwell_demo.adp stairwell_demo.gpr tash.gpr \
+stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
 Digital_IO.cat Digital_IO.raw \
 Digital_IO.impl/digital_io-application-set_output.adb \
@@ -328,8 +333,6 @@ Digital_IO.impl/digital_io-input-changed.adb \
 Digital_IO.impl/digital_io-output-changed.adb \
 Digital_IO.impl/digital_io-signal-initialize.adb \
 Digital_IO.impl/digital_io-signal-set_state.adb \
-stairwell_demo.adp stairwell_demo.gpr tash.gpr \
-stairwelllights.tcl house-2.gif \
 House_Management.cat House_Management.raw \
 House_Management.impl/house_management-button-changed.adb \
 House_Management.impl/house_management-button-pushed.adb \
@@ -390,7 +393,7 @@ Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
 
 DEMO += \
-States.cat States.raw \
+States.gpr States.cat States.raw \
 States.impl/states-events-initialize.adb \
 States.impl/states-monitor-clear_heartbeat_timeout.adb \
 States.impl/states-monitor-clear_warmup_timeout.adb \
