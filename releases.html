@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v e77aafc462b4 2003/02/15 16:37:20 simon $ -->
+<!-- $Id: releases.html,v 9809b5561727 2003/02/16 19:14:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -29,6 +29,20 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 followed, so that you can specify that <i>short</i> comes out as
 <tt>short</tt> while <i>short&nbsp;message</i> comes out as
 <tt>Short_Message</tt>.
+
+
+<p>The way in which Booch Maps are used has been changed; now, the
+number of hash buckets is the maximum number of instances, up to a
+value which can be changed in the Makefile but is defaulted to 49.
+
+
+<p>If a class has a single-attribute identifier that is an enumeration
+or an integer range, the maximum number of instances is calculated
+automatically (but doesn't override any user-specified maximum).
+
+
+<p>The maximum number of instances of association classes is
+calculated.
 
 
 <p><dt>20030207w

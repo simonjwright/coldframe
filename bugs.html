@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 361d1999f6f6 2003/02/14 20:34:21 simon $ -->
+<!-- $Id: bugs.html,v 9809b5561727 2003/02/16 19:14:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -25,11 +25,6 @@
 <dd>It would be helpful if an association class could be automatically
 generated for many-to-many associations where the analyst hasn't
 provided one already.
-
-<dt>0018 (raised 4.ix.01)
-
-<dd>For efficiency, classes whose identifier has a limited range (eg,
-Forward/Aft or 1..10) should be implemented with array-like behaviour.
 
 <dt>0019 (raised 4.ix.01)
 
@@ -60,12 +55,6 @@ non-singleton party is marked <tt>[[source]]</tt>.
 <dd>It would be a good thing if project-specific configuration
 information (such as multiplicities) could be supplied in a separate
 document from the domain model.
-
-<dt>0050 (raised 27.xii.01)
-
-<dd>It would be a good thing if the multiplicity of an association
-class was calculated automatically (where the multiplicity of each
-associated class is specified).
 
 <dt>0056 (raised 8.i.02)
 
@@ -127,7 +116,7 @@ triggered by the same event (or drop-through) isn't detected.
 &#171;callback&#187; stereotype be used instead?
 
 <br><i>It's already possible to use a stereotype like <em>&#171;type,
-callback=42&#187;</em>.</i>
+callback=42&#187;</em>, or even <em>&#171;type, callback&#187;</em>.</i>
 
 <dt>0136 (raised 26.xi.02)
 
@@ -163,6 +152,23 @@ queue is eventually started.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>16.ii.03</h3>
+
+<dl>
+
+<dt>0018 (raised 4.ix.01)
+
+<dd>For efficiency, classes whose identifier has a limited range (eg,
+Forward/Aft or 1..10) should be implemented with array-like behaviour.
+
+<dt>0050 (raised 27.xii.01)
+
+<dd>It would be a good thing if the multiplicity of an association
+class was calculated automatically (where the multiplicity of each
+associated class is specified).
+
+</dl>
 
 <h3>Valentine's Day 2003</h3>
 
