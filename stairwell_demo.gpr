@@ -1,54 +1,27 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v ccd776158e49 2003/01/07 20:57:54 simon $
+--  $Id: stairwell_demo.gpr,v 81cb0edf656f 2003/01/26 18:15:27 simon $
 
+with "Options";
+with "ColdFrame_Defaults";
 with "tash";
 
 project Stairwell_Demo is
-
-  Top := external ("TOP", "c:");
-  Booch := external ("BC", "bc-20021230");
-  Build := external ("BUILD", "c:/tmp/.build");
-
-  type Development is ("YES", "NO");
-
-  Devel : Development := external ("DEVEL", "NO");
 
   for Main use ("stairwell_demo");
 
   for Exec_Dir use ".";
 
-  Main_Sources := ("House_Management.impl",
-                   "House_Management.gen",
-                   "Digital_IO.impl",
-                   "Digital_IO.gen",
-                   Top & "/" & Booch);
+  for Source_Dirs use ("House_Management.impl",
+                       "House_Management.gen",
+                       "Digital_IO.impl",
+                       "Digital_IO.gen");
 
-  case Devel is
-     when "YES" =>
-        for Source_Dirs use Main_Sources & (".");
-     when others =>
-        for Source_Dirs use Main_Sources & ("../project",
-                                            "../lib");
-  end case;
+  for Object_Dir use Options'Object_Dir;
 
-  for Object_Dir use Build;
-
-  package Builder is
-     for Default_Switches ("Ada") use ("-g",
-                                       "-j2",
-                                       "-k",
-                                       "-m");
-  end Builder;
-
-  package Compiler is
-     for Default_Switches ("Ada") use ("-gnatqQafy",
-                                       "-gnatwaL",
-                                       "-O2");
-  end Compiler;
-
-  package Binder is
-     for Default_Switches ("Ada") use ("-E");
-  end Binder;
+  package Ide renames Options.Ide;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
 
   package Linker is
      for Default_Switches ("Ada") use Tash.Objects & Tash.Options;
