@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 825c35ec1bfa 2001/04/22 10:43:32 simon $ -->
+<!-- $Id: generate-ada.xsl,v 1e6e1365bde4 2001/04/23 05:23:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -27,11 +27,11 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
 
+  <xsl:import href="ada-association.xsl"/>
   <xsl:import href="ada-attribute.xsl"/>
   <xsl:import href="ada-class.xsl"/>
   <xsl:import href="ada-collection.xsl"/>
   <xsl:import href="ada-operation.xsl"/>
-  <xsl:import href="ada-relation.xsl"/>
   <xsl:import href="ada-utilities.xsl"/>
 
   <xsl:strip-space elements="*"/>

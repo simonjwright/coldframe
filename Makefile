@@ -10,11 +10,11 @@ NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
 CODEGEN_SCRIPT = generate-ada.xsl
 CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
+  ada-association.xsl \
   ada-attribute.xsl \
   ada-class.xsl \
   ada-collection.xsl \
   ada-operation.xsl \
-  ada-relation.xsl \
   ada-utilities.xsl
 
 %.norm: %.raw $(NORMALIZE_ROSE_SCRIPT)
