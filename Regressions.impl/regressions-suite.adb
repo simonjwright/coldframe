@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 12943a14cdde 2004/02/01 21:20:30 simon $
+--  $Id: regressions-suite.adb,v d21317f6fa2a 2004/02/11 07:03:11 simon $
 --
 --  Regression tests for ColdFrame.
 
@@ -618,22 +618,20 @@ package body Regressions.Suite is
          pragma Warnings (Off, C);
       begin
          Callback_Type_Callback.Register (Callback'Unrestricted_Access);
-         begin
-            Callback_Type_Callback.Register (Callback'Unrestricted_Access);
-         exception
-            when System.Assertions.Assert_Failure => null;
-         end;
+         Callback_Type_Callback.Register (Callback'Unrestricted_Access);
+         Assert (False, "re-registration should have failed");
+      exception
+         when System.Assertions.Assert_Failure => null;
       end Multiple_Registrations;
 
       procedure Deregistration (C : in out Test_Case'Class);
       procedure Deregistration (C : in out Test_Case'Class) is
          pragma Warnings (Off, C);
       begin
-         begin
-            Callback_Type_Callback.Deregister (Callback'Unrestricted_Access);
-         exception
-            when System.Assertions.Assert_Failure => null;
-         end;
+         Callback_Type_Callback.Deregister (Callback'Unrestricted_Access);
+         Assert (False, "deregistration of unregistered should have failed");
+      exception
+         when System.Assertions.Assert_Failure => null;
       end Deregistration;
 
       function Name (C : Case_1) return String_Access is
