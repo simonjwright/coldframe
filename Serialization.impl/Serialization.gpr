@@ -1,0 +1,23 @@
+--  $Id: Serialization.gpr,v a0dd9b0241b6 2003/01/26 17:20:52 simon $
+
+with "Options";
+with "ColdFrame_Defaults";
+
+project Serialization is
+
+  for Source_Dirs use (".",
+                       "../Serialization.gen",
+                       "../Serialization_Demo.gen");
+
+  for Main use ("client", "server");
+
+  for Exec_Dir use ".";
+
+  for Object_Dir use Options'Object_Dir;
+  package Ide renames Options.Ide;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+  package Linker renames Options.Linker;
+
+end Serialization;
