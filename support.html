@@ -1,0 +1,110 @@
+<!-- $Id: support.html,v 3daa7f1e04bd 2002/02/03 10:26:21 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Specially written support components</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Specially written support components</h1>
+
+<p>Specially written support components appear under the top-level
+package <tt>ColdFrame</tt>. Some exist to support navigation; the more
+user-interesting ones are
+
+<dl>
+
+<dt><tt>ColdFrame.Callbacks</tt>
+
+<dd>Provides callback (Observer) support.
+
+<dt><tt>ColdFrame.Exceptions</tt>
+
+<dd>Provides exceptions. These are at present just renamings of <a
+href="use-of-bcs.html">Booch</a> exceptions.
+
+<dl>
+
+<dt><tt>ColdFrame.Exceptions.Message</tt>
+
+<dd>Provides exception reporting (to standard output).
+
+<dt><tt>ColdFrame.Exceptions.Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks. To
+use it, you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+</dl>
+
+<dt><tt>ColdFrame.Hash</tt>
+
+<dd>A family of hash functions, suitable for use as hashes (or part of
+hashes) for instantiating <a href="use-of-bcs.html">Booch Map
+containers</a>.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
+
+<dd>A hash function for access-to-instance values (useful for child
+classes).
+
+<dt><tt>ColdFrame.Hash.Strings</tt>
+
+<dd>A family of hash functions for strings.
+
+<dl>
+
+<dt><tt>ColdFrame.Hash.Strings.Bounded</tt>
+
+<dd>A hash function for Bounded Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Standard</tt>
+
+<dd>A hash function for standard Strings.
+
+<dt><tt>ColdFrame.Hash.Strings.Unbounded</tt>
+
+<dd>A hash function for Unbounded Strings.
+
+</dl>
+
+</dl>
+
+<dt><tt>ColdFrame.Global_Storage_Pool</tt>
+
+<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
+the standard system <tt>malloc</tt> pool, suitable for instantiating
+<a href="use-of-bcs.html">Booch Containers</a>.
+
+<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
+
+<dt><tt>ColdFrame.Instances</tt>
+
+<dd>Provides a type from which all Instances are derived.
+
+<br>The purpose is to allow mutual visibility (to support associations
+and inheritance relationships) without using non-standard extensions
+such as <i>WITH TYPE</i>.
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
