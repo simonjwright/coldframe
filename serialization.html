@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v ab518c835b4c 2003/03/01 09:59:03 simon $ -->
+<!-- $Id: serialization.html,v 71ebf33a93de 2003/03/01 17:21:43 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -47,9 +47,81 @@ documentation section for the type.
 
 <p><img src="serialization.png">
 
-<p>there are many wondrous things ..
+<p>the buff classes are what are included in the UML model, the grey
+classes are what gets generated, and the yellow classes are supporting
+code.
 
-<h2>Use</h2>
+<h3>Basics</h3>
+
+<p>The basic type is <i>T</i>, in the domain <i>Domain</i>, which is a
+record type and is marked <em>&#171;serializable&#187;</em>.
+
+<p>The generated Ada package <tt><i>Domain</i></tt> contains the type
+<tt>T</tt>, which is the same as it would be without the
+&#171;serializable&#187; marking.
+
+<p>Because there is a &#171;serializable&#187; type, a child package
+<tt><i>Domain</i>.Serializable</tt> is generated as well. For each
+&#171;serializable&#187; type, a type and a subprogram are generated:
+<pre>
+   with ColdFrame.Project.Serialization;
+   package <i>Domain</i>.Serializable is
+      type <i>T</i> is new ColdFrame.Project.Serialization.Base with record
+	 Payload : <i>Domain</i>.<i>T</i>;
+      end record;
+      function Image (S : <i>T</i>) return String;
+   end <i>Domain</i>.Serializable;
+</pre>
+
+<p><tt>Image</tt> produces an XML rendition of the recorded value.
+
+<p><tt>ColdFrame.Project.Serialization</tt> is expected to be an
+instantiation of <tt>ColdFrame.Serialization_Signature</tt>, giving
+
+<ul>
+
+<li><tt>Base</tt> is a tagged type, which the Project output package
+understands (it might want to add timestamp information, for example).
+
+<li><tt>Class_Image</tt> dispatches to the generated <tt>Image</tt>
+function (this is necessary to meet Ada requirements).
+
+</ul>
+
+<p>The provided <tt>ColdFrame.Project.Serialization</tt> is an
+instantiation of <tt>ColdFrame.Serialization</tt>, which provides the
+minimum needed (the <tt><i>Base</i></tt> type adds no functionality).
+
+<h3>User-defined <i>image</i> functions</h3>
+
+<p>For most types, ColdFrame can work out how to convert to a textual
+representation for itself. This includes fundamental types such as
+<tt>Boolean</tt>, user-defined scalars, strings and <tt>Time</tt>.
+
+<p>However, this may not be possible for types imported from other
+domains (it's OK for types which are visibly scalar, such as
+<tt>GNAT.Sockets.Port_Type</tt>). In this case, you can specify an
+image function for the type.
+
+<p>In the diagram, <i>Foreign</i> is a renaming of type
+<tt><i>Other.Domain</i>.Exported</tt>. You tell ColdFrame what image
+function to use via the annotation <i><tt>[[image]]</tt></i>, in this
+case
+<tt>[[image:<i>Other_Domain</i>.Image_Of_Exported]]</tt>. ColdFrame
+then expects to be able to call
+<pre>
+   function Image_Of_Exported (Name : String;
+                               Value : Exported) return String;
+</pre>
+
+<p>where <tt>Name</tt> is the field name and <tt>Value</tt> is the
+value to be converted to text.
+
+<p>The output expected is discussed below.
+
+<p><h2>Use</h2>
+
+
 
 <p><hr>
 <i>
