@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: 4740bc252c95 $
---  $Date: 2005/02/24 20:54:32 $
+--  $Revision: 5e59d443dff6 $
+--  $Date: 2005/02/24 21:16:39 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -55,8 +55,6 @@ begin
       Set_Output_Integer ("foo.bar.quux", "result", 42, 1);
       ColdFrame.Test_Stub_Support.Set_Exception
         ("foo.bar.quux", Foo_Exception'Identity, 2);
-      ColdFrame.Test_Stub_Support.Set_Exception
-        ("foo.bar.quux", Ada.Exceptions.Null_Id, 3);
       Set_Output_Integer ("foo.bar.quux", "result", 44, 3);
 
       Generated_Stub_Procedure (24, Result);
