@@ -43,27 +43,32 @@ use-cases.html \
 ddf.dtd coldframe.dtd \
 xslide-diff
 
-PROGS = Makefile ddf.ebs normalize-rose.tcl generate-ada.xsl
+PROGS = COPYING Makefile ddf.ebs normalize-rose.tcl generate-ada.xsl
+SUPPORT = architecture*.ad[bs]
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
-dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS)
+dist: $(DISTRIBUTION_FILES) $(DOCS) $(PROGS) $(SUPPORT) cf-$(DATE)
 	-@rm -rf dist
 	mkdir -p dist/download
-	cp -p $(DOCS) $(PROGS) dist/
+	cp -p $(DOCS) dist/
 	cp $(DISTRIBUTION_FILES) dist/download/
 
 cf-$(DATE): force
 	-rm -rf $@
 	mkdir $@
-	cp -p $(DOCS) $@
+	cp -p $(PROGS) $@
+	mkdir $@/lib
+	cp -p $(SUPPORT) $@/lib
 
 cf-$(DATE).tgz: cf-$(DATE)
+	-rm $@
 	tar zcvf $@ $</
 
 cf-$(DATE).zip: cf-$(DATE)
+	-rm $@
 	zip -lr $@ $</*
 
 .PHONY: force
