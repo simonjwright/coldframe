@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v b6e95bcd48b6 2001/08/08 18:01:30 simon $ -->
+<!-- $Id: generate-html.xsl,v d7ebfff2c6ac 2001/09/17 18:34:11 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -32,6 +32,25 @@
   <xsl:strip-space elements="*"/>
 
   <xsl:output method="html"/>
+
+
+  <!-- Controls how attribute accessor functions are generated. -->
+  <xsl:param name="generate-accessors"/>
+
+  <!-- Control indentation. -->
+  <xsl:param name="standard-indent" select="'   '"/>
+  <xsl:param name="continuation-indent" select="'  '"/>
+
+
+  <!-- Global shorthands for indentation. -->
+  <xsl:param name="I" select="$standard-indent"/>
+  <xsl:param name="II" select="concat($I, $I)"/>
+  <xsl:param name="III" select="concat($II, $I)"/>
+  <xsl:param name="IIII" select="concat($III, $I)"/>
+  <xsl:param name="C" select="$continuation-indent"/>
+  <xsl:param name="IC" select="concat($I, $C)"/>
+  <xsl:param name="IIC" select="concat($II, $C)"/>
+  <xsl:param name="IIIC" select="concat($III, $C)"/>
 
 
   <xsl:template match="domain">
