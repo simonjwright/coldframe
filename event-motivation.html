@@ -1,4 +1,4 @@
-<!-- $Id: event-motivation.html,v c2d1f5b5afdf 2004/12/09 05:45:52 simon $ -->
+<!-- $Id: event-motivation.html,v dc4db772d51e 2005/01/20 06:01:20 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event motivation</title>
@@ -25,11 +25,11 @@ href="active-classes.html">need to have tasks</a> to help them support
 the devices, probably on at least a "one task per device" basis.
 
 <p>When you're designing a higher-level domain, you'll probably want
-to use the <tt>{callback}</tt> facility (ColdFrame's version of the
-Observer pattern) to isolate yourself from the workings of the device
-domains. However, if you're using more than one device, your callbacks
-will be being called from more than one thread of execution, which you
-must provide protection against.
+to use the <tt>{<a href="callbacks.html">callback</a>}</tt> facility
+(ColdFrame's version of the Observer pattern) to isolate yourself from
+the workings of the device domains. However, if you're using more than
+one device, your callbacks will be being called from more than one
+thread of execution, which you must provide protection against.
 
 <p>ColdFrame's Event support allows you to do this by converting the
 callback message into a <i>class event</i> (with a data payload) to be
