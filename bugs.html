@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3fda6a7311c8 2003/12/12 22:11:27 simon $ -->
+<!-- $Id: bugs.html,v 3870fcc85805 2003/12/12 22:44:04 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -229,11 +229,6 @@ accompanied by exception information (to make it easier to debug).
 <dd>Would it be possible to have &#171;type&#187;s with no contents?
 Useful for, for example, callbacks where only the event matters.
 
-<dt>0221 (raised 2.xii.03)
-
-<dd>Using a bounded string (<tt>{string = max 15}</tt> say) in an
-identifier generates code that fails to compile.
-
 <dt>0222 (raised 3.xii.03)
 
 <dd>Active class instances are torn down after the domain event queue,
@@ -249,6 +244,11 @@ which may cause <tt>Tasking_Error</tt> if the active instance tries
 <h3>12.xii.03</h3>
 
 <dl>
+
+<dt>0221 (raised 2.xii.03)
+
+<dd>Using a bounded string (<tt>{string = max 15}</tt> say) in an
+identifier generates code that fails to compile.
 
 <dt>0223 (raised 11.xii.03)
 
