@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 264ea01036a9 2003/02/20 21:02:30 simon $
+# $Id: normalize-rose.tcl,v 0e5790fdd78b 2003/03/01 11:32:11 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1164,10 +1164,6 @@ itcl::class Class {
 		Error "tried to extend [$this -getName],\
                     which has no attributes"
 	    }
-	    if $serializable {
-		Error "tried to make type [$this -getName],\
-                    which has no attributes, serializable"
-	    }
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
@@ -1184,6 +1180,9 @@ itcl::class Class {
 	    $dt -annotation $annotation
 	    if [info exists callback] {
 		$dt -callback $callback
+	    }
+	    if $serializable {
+		$dt -serializable 1
 	    }
 	} elseif $isControl {
 	    Warning "<<control>> not yet handled properly"
@@ -2072,6 +2071,8 @@ itcl::class Datatype {
 
     variable operations
 
+    variable serializable 0
+
     variable type
 
     constructor {name} {set type $name}
@@ -2118,11 +2119,9 @@ itcl::class Datatype {
 	Error "tried to extend $type, which has no attributes"
     }
 
-    # called when the user has tried to mark a non-record type as
+    # called when the user has marked a non-record type as
     # serializable.
-    method -serializable {dummy} {
-	Error "tried to make $type, which has no attributes, serializable"
-    }
+    method -serializable {dummy} {set serializable 1}
 
     # Called when the type is a counterpart.
     method -counterpart {dummy} {
@@ -2200,6 +2199,9 @@ itcl::class Datatype {
 	}
 	if [info exists image] {
 	    puts -nonewline " image=\"$image\""
+	}
+	if $serializable {
+	    puts -nonewline " serializable=\"yes\""
 	}
 	puts ">"
 	putElement name "$type"
