@@ -5,9 +5,8 @@
 <class>
 <name>Problem Report</name>
 <documentation>A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
-
-[[ max : 10100 ]]
 </documentation>
+<cardinality>10100</cardinality>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
@@ -34,6 +33,7 @@
 <class>
 <name>Rejected Problem Report</name>
 <documentation>A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 <attribute>
 <name>rejection reason</name>
@@ -48,6 +48,7 @@
 <class>
 <name>Diagnosed Problem Report</name>
 <documentation>A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -61,6 +62,7 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 
 [[max: 4]]
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
@@ -82,6 +84,7 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 
 [[ abbreviation : UPR ]]
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -94,6 +97,7 @@ If it is really a problem, it will become a Diagnosed Problem Report.
 It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
 
 It should address one logical error (which may correspond to several necessary changes in the affected Component).</documentation>
+<cardinality>n</cardinality>
 <attributes>
 <attribute>
 <name>problem</name>
@@ -111,6 +115,7 @@ It should address one logical error (which may correspond to several necessary c
 
 [[string: max 80]]
 </documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -119,6 +124,7 @@ It should address one logical error (which may correspond to several necessary c
 <class stereotype="Interface">
 <name>Interface</name>
 <documentation>Provides the public interface to the Problem Reporting domain.</documentation>
+<cardinality>n</cardinality>
 <attributes>
 </attributes>
 <operations>
@@ -233,13 +239,13 @@ A Component may be associated with one or more Diagnosed Problem Reports.
 The actual problem with the Component is held in the associated Defect.
 
 In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.</documentation>
-<role><end>2</end>
+<role><end>1</end>
 <name>affects</name>
 <classname>Component</classname>
 <cardinality>1..n</cardinality>
 <documentation></documentation>
 </role>
-<role><end>1</end>
+<role><end>2</end>
 <name>is affected by</name>
 <classname>Diagnosed Problem Report</classname>
 <cardinality>0..n</cardinality>
