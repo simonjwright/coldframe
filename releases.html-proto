@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 08673ba00061 2004/06/18 19:54:41 simon $ -->
+<!-- $Id: releases.html-proto,v 7b811c64f0d2 2004/06/24 05:02:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -44,7 +44,7 @@ pattern.
 
 
 <p>An <a href="http://xml.coverpages.org/schemas.html">XML Schema</a>
-is now <a href="ColdFrame.xsd">supplied</a> for ColdFrame's
+is now <a href="ColdFrame-norm.xsd">supplied</a> for ColdFrame's
 "normalized" XML.
 
 

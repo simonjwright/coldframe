@@ -1,4 +1,4 @@
-<!-- $Id: xml-schemas.html,v e8b44a42fc46 2004/06/12 11:13:05 simon $ -->
+<!-- $Id: xml-schemas.html,v 7b811c64f0d2 2004/06/24 05:02:56 simon $ -->
 <head>
 <title>ColdFrame: XML Schemas</title>
 </head>
@@ -14,7 +14,7 @@ yet written.
 
 <li>the <tt>.norm</tt> format used as input to the XSLT stylesheets
 for code generation, schema in <a
-href="ColdFrame.xsd">ColdFrame.xsd</a>.
+href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a>.
 
 </ul>
 
@@ -75,7 +75,7 @@ whole <tt>xmlschema</tt> by
 <tt>commandLine.py</tt> executable; so to validate say
 <tt>States.norm</tt> say
 <pre>
-   $ PYTHONPATH=~/xmlschema python ~/xmlschema/XSV/commandLine.py States.norm ColdFrame.xsd
+   $ PYTHONPATH=~/xmlschema python ~/xmlschema/XSV/commandLine.py States.norm ColdFrame-norm.xsd
 </pre>
 
 <p>The rather inscrutable output of a successful validation is like <a
@@ -84,7 +84,7 @@ href="States-check.xsv">this</a>.
 <p>To convert the output to HTML, you need to process the above output
 (which is to standard error):
 <pre>
-   $ PYTHONPATH=~/xmlschema python ~/xmlschema/XSV/commandLine.py States.norm ColdFrame.xsd \
+   $ PYTHONPATH=~/xmlschema python ~/xmlschema/XSV/commandLine.py States.norm ColdFrame-norm.xsd \
      2>work.xsv
    $ java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet \
      work.xsv ~/xmlschema/xsv.xsl >States-check.html
