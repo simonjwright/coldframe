@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 04c68642ec49 2003/04/29 18:56:22 simon $ -->
+<!-- $Id: ada-operation.xsl,v 3120000f13a1 2003/05/13 20:09:57 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -87,6 +87,12 @@
     <xsl:param name="current"/>
 
     <xsl:if test="..=$current or not(@class or @finalize)">
+
+      <xsl:if test="@accessor">
+        <xsl:value-of select="$I"/>
+        <xsl:text>--  Accessor&#10;</xsl:text>
+      </xsl:if>
+
       <xsl:call-template name="subprogram-specification">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
