@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 1790a635e7a3 2002/08/20 18:34:13 simon $ -->
+<!-- $Id: ada-state.xsl,v 9ffb57dc69ff 2002/09/10 18:44:37 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -307,13 +307,11 @@
   <xsl:template name="state-body-context">
 
     <!-- The initial state automatically enters the next state if there's an
-         unguarded transtion.
-         No support here for singletons. -->
+         unguarded transtion. -->
     
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
 
-    <xsl:if test="not(@singleton)
-      and statemachine/transition[source=$init and not (event)]">
+    <xsl:if test="statemachine/transition[source=$init and not (event)]">
       <xsl:text>with ColdFrame.Project.Events.Creation;&#10;</xsl:text>
     </xsl:if>
     
@@ -547,8 +545,6 @@
          end;
          -->
 
-    <!-- XXX I know the next bit is stupid! still, the logic may be needed
-         later. -->
     <!-- singleton: if there is an unguarded transition from the initial state
          declare
             Creation : aliased ColdFrame.Project.Events.Creation.Event (Result);
