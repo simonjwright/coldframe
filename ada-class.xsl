@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 97709492bc1b 2002/07/13 18:25:51 simon $ -->
+<!-- $Id: ada-class.xsl,v e75b169efc0c 2002/07/16 17:34:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -341,15 +341,15 @@
           <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
         </xsl:if>
         
-        <!-- Check for Ada.Calendar. -->
+        <!-- Check for Calendar. -->
         <xsl:if test="attribute/type='Date'
                       or $ancestors/operation/parameter/type='Date'
                       or $ancestors/operation/@return='Date'
                       or attribute/type='Time'
                       or $ancestors/operation/parameter/type='Time'
                       or $ancestors/operation/@return='Time'">
-          <xsl:text>with Ada.Calendar;</xsl:text>
-          <xsl:text> use Ada.Calendar;&#10;</xsl:text>
+          <xsl:text>with ColdFrame.Project.Calendar;</xsl:text>
+          <xsl:text> use ColdFrame.Project.Calendar;&#10;</xsl:text>
         </xsl:if>
         
         <!-- Choose the appropriate Map (unless this is a singleton). -->

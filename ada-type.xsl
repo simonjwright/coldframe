@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 1cb00891fd2a 2002/06/25 18:34:19 simon $ -->
+<!-- $Id: ada-type.xsl,v e75b169efc0c 2002/07/16 17:34:32 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,8 +36,8 @@
                   or type/operation/parameter/type='Date'
                   or type/attribute/type='Time'
                   or type/operation/parameter/type='Time'">
-      <!-- The above imply use of Ada.Calendar. -->
-      <xsl:text>with Ada.Calendar; use Ada.Calendar;&#10;</xsl:text>
+      <!-- The above imply use of Calendar. -->
+      <xsl:text>with ColdFrame.Project.Calendar; use ColdFrame.Project.Calendar;&#10;</xsl:text>
     </xsl:if>
 
     <!-- Context for bounded strings -->
