@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 75cf66479544 2002/04/17 18:30:34 simon $ -->
+<!-- $Id: ada-operation.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -393,6 +393,7 @@
        Ends without the closing ";" or " is". -->
   <xsl:template name="subprogram-specification">
     <xsl:param name="indent"/>
+    <xsl:param name="use-handle" select="'yes'"/>
 
     <xsl:variable name="cont" select="concat($indent, $C)"/>
 
@@ -405,6 +406,7 @@
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$cont"/>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$cont"/>
@@ -412,6 +414,7 @@
         <xsl:call-template name="type-name">
           <xsl:with-param name="type" select="@return"/>
           <xsl:with-param name="class" select=".."/>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
         </xsl:call-template>
       </xsl:when>
 
@@ -422,7 +425,8 @@
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$cont"/>
-        </xsl:call-template>
+          <xsl:with-param name="use-handle" select="$use-handle"/>
+         </xsl:call-template>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -432,6 +436,7 @@
   <!-- Called from class/operation to generate a subprogram parameter list -->
   <xsl:template name="parameter-list">
     <xsl:param name="indent" select="''"/>
+    <xsl:param name="use-handle" select="'yes'"/>
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
@@ -445,7 +450,15 @@
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
       <xsl:if test="not(../@singleton) and not(@class)">
-        <xsl:text>This : Handle</xsl:text>
+        <xsl:choose>
+          <xsl:when test="$use-handle='yes'">
+            <xsl:text>This : Handle</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>This : </xsl:text>
+            <xsl:value-of select="../name"/>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:if test="parameter">
           <xsl:text>;&#10; </xsl:text>
           <xsl:value-of select="$indent"/>
@@ -453,6 +466,7 @@
       </xsl:if>
       <xsl:apply-templates mode="parameter">
         <xsl:with-param name="indent" select="$indent"/>
+        <xsl:with-param name="use-handle" select="$use-handle"/>
       </xsl:apply-templates>
       <xsl:text>)</xsl:text>
 
@@ -464,6 +478,7 @@
   <!-- Called from class/operation to generate a subprogram parameter -->
   <xsl:template match="operation/parameter" mode="parameter">
     <xsl:param name="indent" select="''"/>
+    <xsl:param name="use-handle" select="'yes'"/>
 
     <xsl:value-of select="name"/>
     <xsl:text> : </xsl:text>
@@ -480,6 +495,7 @@
     <xsl:call-template name="type-name">
       <xsl:with-param name="type" select="type"/>
       <xsl:with-param name="class" select="../.."/>
+      <xsl:with-param name="use-handle" select="$use-handle"/>
     </xsl:call-template>
 
     <xsl:if test="initial">
@@ -947,5 +963,42 @@
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
+
+
+  <!-- Called to generate access-to-subprogram types. -->
+  <xsl:template
+    match="operation[@access]"
+    mode="access-to-operation">
+    <xsl:value-of select="$I"/>
+    <xsl:text>type </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text> is access </xsl:text>
+    <xsl:choose>
+      <xsl:when test="@return">
+        <xsl:text>function</xsl:text>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="$I"/>
+        </xsl:call-template>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>return </xsl:text>
+        <xsl:call-template name="type-name">
+          <xsl:with-param name="type" select="@return"/>
+          <xsl:with-param name="class" select=".."/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>procedure</xsl:text>
+        <xsl:call-template name="parameter-list">
+          <xsl:with-param name="indent" select="$IC"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="access-to-operation"/>
+
 
 </xsl:stylesheet>

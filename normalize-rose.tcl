@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a636e30b8bd7 2002/05/14 20:09:10 simon $
+# $Id: normalize-rose.tcl,v 0e29cc16167e 2002/05/20 22:33:20 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -934,7 +934,7 @@ itcl::class Class {
 
     method -complete {} {
 	$this -handleStereotype
-	if [expr $isType && [$attributes -size] == 0] {
+	if {$isType && [$attributes -size] == 0} {
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
@@ -942,8 +942,11 @@ itcl::class Class {
 		set dt [Datatype ::#auto $name]
 		$dts -add $dt $name
 	    }
-	    # transfer the documentation and the (already-extracted) annotation
-	    # to the new Datatype.
+	    # transfer the operations, the documentation and the
+	    # already-extracted annotation to the new Datatype.
+	    if [info exists operations] {
+		$dt -operations $operations
+	    }
 	    $dt -documentation $documentation
 	    $dt -annotation $annotation
 	} elseif $isControl {
@@ -960,6 +963,9 @@ itcl::class Class {
 		    set dt [Datatype ::#auto $name]
 		    $dts -add $dt $name
 		}
+#		if [info exists operations] {
+#		    $dt -operations $operations
+#		}
 		$dt -record
 	    }
 	    [stack -top] -add $this $name
@@ -1737,6 +1743,8 @@ itcl::class Datatype {
 
     variable dataDetail
 
+    variable operations
+
     constructor {name} {set type $name}
 
     # process annotation.
@@ -1761,6 +1769,10 @@ itcl::class Datatype {
     }
 
     method -className {} {return "datatype"}
+
+    method -operations {ops} {
+	set operations $ops
+    }
 
     # called when the user has (mistakenly) requested a callback.
     method -callback {max} {
@@ -1855,6 +1867,9 @@ itcl::class Datatype {
 	    default {
 		Error "CF: unhandled dataType \"$dataType\""
 	    }
+	}
+	if [info exists operations] {
+	    $operations -generate $domain
 	}
 	puts "</type>"
     }

@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d95a39027fce 2002/03/09 09:51:16 simon $ -->
+<!-- $Id: generate-ada.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -117,10 +117,60 @@
     </xsl:call-template>
     <xsl:call-template name="domain-types"/>
 
+    <!-- .. any type operations .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param name="m" select="'.. any operations of types ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="type/operation[@access]"
+      mode="access-to-operation">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+    <xsl:apply-templates
+      select="type/operation[not(@access)]"
+      mode="domain-type-operation-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
+
+    <!-- .. the domain package body, if needed .. -->
+    <xsl:if test="type/operation[not(@access)]">
+
+      <xsl:call-template name="do-not-edit"/>
+      
+      <xsl:text>package body </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> is&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
+      <xsl:apply-templates
+        select="type/operation[not(@access)]"
+        mode="domain-type-operation-body-stub">
+        <xsl:sort select="name"/>
+      </xsl:apply-templates>
+
+      <!-- .. and close. -->
+      <xsl:text>end </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+
+    </xsl:if>
+
+    <!-- .. domain type operations .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. operations of types ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="type/operation[not(@access)]"
+      mode="domain-type-operation-body">
+    </xsl:apply-templates>
+
 
     <!-- .. the domain event manager .. -->
     <xsl:call-template name="progress-message">

@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v add4c13934aa 2002/03/23 06:30:55 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -205,6 +205,9 @@
     <!-- The current class. -->
     <xsl:param name="class" select="/.."/>
 
+    <!-- Does the current class map to Handle? -->
+    <xsl:param name="use-handle" select="'yes'"/>
+
     <xsl:choose>
 
       <!-- Autonumber maps to Long Integer. -->
@@ -213,7 +216,7 @@
       </xsl:when>
 
       <!-- The current Class maps to just Handle. -->
-      <xsl:when test="$type=$class/name">
+      <xsl:when test="$type=$class/name and $use-handle='yes'">
         <xsl:text>Handle</xsl:text>
       </xsl:when>
 

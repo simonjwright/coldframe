@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 56c2e95ba65e 2002/03/09 09:50:36 simon $ -->
+<!-- $Id: ada-type.xsl,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -461,6 +461,62 @@
   </xsl:template>
 
   <xsl:template mode="domain-type-support" match="*"/>
+
+
+  <!-- Called to generate operation specifications for types. -->
+  <xsl:template match="type/operation" mode="domain-type-operation-spec">
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text>;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-spec" match="*"/>
+
+
+  <!-- Called to generate operation body stubs for types. -->
+  <xsl:template match="type/operation" mode="domain-type-operation-body-stub">
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="$I"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text> is separate;&#10;</xsl:text>
+    <xsl:value-of select="$blank-line"/>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
+
+
+  <!-- Called to generate operation bodies for types. -->
+  <xsl:template match="type/operation" mode="domain-type-operation-body">
+    <xsl:call-template name="should-edit"/>
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification">
+      <xsl:with-param name="indent" select="''"/>
+      <xsl:with-param name="use-handle" select="'no'"/>
+    </xsl:call-template>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>raise Program_Error;&#10;</xsl:text>
+    <xsl:if test="@return">
+      <xsl:value-of select="$I"/>
+      <xsl:text>return </xsl:text>
+      <xsl:call-template name="default-value">
+        <xsl:with-param name="type" select="@return"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template mode="domain-type-operation-body-stub" match="*"/>
 
 
   <!-- Called to extract the package name from a (possibly) qualified
