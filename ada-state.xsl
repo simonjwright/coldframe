@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 01e4bde18fe5 2002/02/23 14:33:52 simon $ -->
+<!-- $Id: ada-state.xsl,v 89080936581b 2002/02/28 20:02:30 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -178,6 +178,8 @@
                when {source-state} =>
                   Enter_{target-state} (That, This);
                when {source-state} =>
+                  null;
+               when {source-state} =>
                   raise ColdFrame.Events.Cant_Happen;
             end case;
          end Handler;
@@ -190,6 +192,8 @@
             case That.State_Machine_State is
                when {source-state} =>
                   Enter_{target-state} (This);
+               when {source-state} =>
+                  null;
                when {source-state} =>
                   raise ColdFrame.Events.Cant_Happen;
             end case;
@@ -222,6 +226,11 @@
       <xsl:text> =&gt;&#10;</xsl:text>
 
       <xsl:choose>
+
+        <xsl:when test="../transition[event=$e and source=$s]/@ignore">
+          <xsl:value-of select="$IIII"/>
+          <xsl:text>null;&#10;</xsl:text>          
+        </xsl:when>
         
         <xsl:when test="../transition[event=$e and source=$s]">
           <xsl:value-of select="$IIII"/>
