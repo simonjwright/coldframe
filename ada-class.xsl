@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c3e54f5545a7 2001/09/04 05:04:42 simon $ -->
+<!-- $Id: ada-class.xsl,v 9b54f4213cc7 2001/09/08 05:08:35 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -504,11 +504,13 @@
     <xsl:text>case Current is&#10;</xsl:text>
     <xsl:for-each select="child">
       <xsl:sort select="."/>
+      <xsl:variable name="child" select="."/>
       <xsl:value-of select="$III"/>
       <xsl:text>when </xsl:text>
       <xsl:value-of select="."/>
-      <xsl:text>_T =&gt; The_</xsl:text>
-      <xsl:value-of select="."/>
+      <xsl:text>_T =&gt;&#10;</xsl:text>
+      <xsl:value-of select="$IIII"/>
+      <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
       <xsl:text> : </xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>.Handle;&#10;</xsl:text>
