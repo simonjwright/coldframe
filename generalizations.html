@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v 5cf5aba72a8b 2002/06/11 19:00:36 simon $ -->
+<!-- $Id: generalizations.html,v 2e045b5ef511 2002/07/04 04:54:23 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -7,10 +7,10 @@
 
 <h2>Motivation</h2>
 
-<p>The thinking behind ColdFrame is that you should be making analysis
-models rather than code models. <a
-href="resources.html#analysis-patterns">Martin Fowler</a> discusses
-this in his Appendix A.
+<p>The thinking behind ColdFrame is that instead of making code models
+you should be making you should be making what <a
+href="resources.html#analysis-patterns">Martin Fowler</a>, in Appendix
+A1.1, calls "implicit specification models".
 
 <p>One way of looking at it is that modelling ought to be, as far as
 reasonable, independent of the software architecture (both the
@@ -31,14 +31,15 @@ classification (subtyping Animal as Pig, Goat, Cow for example).
 
 <p><a name="rentawreck"><img src="inheritance.gif"></a>
 
-<p>However, a very useful analysis technique is dynamic
-classification. Rent-a-Wreck has a fleet of vans, which are sometimes
-on hire. We might want to model this as <i>Customer hires Van</i>,
-which is biconditional (a known Customer may not have any Van on hire
-at the moment; a Van may not be hired to anyone at the moment). The
-model can be made less vague by subtyping Van into Hired Van and Pool
-Van; now all Hired Vans have a Customer, so the code doesn't need to
-check whether there's a Customer or not.
+<p>However, a very useful analysis technique is dynamic classification
+(<a href="resources.html#analysis-patterns">Fowler</a>
+A1.3). Rent-a-Wreck has a fleet of vans, which are sometimes on
+hire. We might want to model this as <i>Customer hires Van</i>, which
+is biconditional (a known Customer may not have any Van on hire at the
+moment; a Van may not be hired to anyone at the moment). The model can
+be made less vague by subtyping Van into Hired Van and Pool Van; now
+all Hired Vans have a Customer, so the code doesn't need to check
+whether there's a Customer or not.
 
 <p>The attribute <i>termination</i> only has meaning if the van is on
 hire (it's the date when it's due back), so we shouldn't leave it
@@ -97,7 +98,7 @@ name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>).
 
 <h2>Translation</h2>
 
-<h3>Basic</h3>
+<h3>Basic mapping</h3>
 
 <h4>Single inheritance</h4>
 
@@ -172,7 +173,7 @@ inheritance trees, which in any case aren't really related to
 for each parent. Note particularly that this means you get an
 identifier with one identifying attribute for each parent.
 
-<h3>Extended</h3>
+<h3>Extended mapping</h3>
 
 <p>There's additional support, particularly for dynamic classification
 (subtype migration). It's in child packages
@@ -191,11 +192,17 @@ feature,
 
 </ul>
 
-<img src="hierarchies.png">
+<p><img src="hierarchies-full.png">
 
-<p>The picture shows part of a fairly complex inheritance hierarchy,
-with all the generated operations (in
-<tt><i>Domain.Class</i>.Inheritance</tt>).
+<p>The picure shows a fairly complex.inheritance hierarchy.
+
+<p><img src="hierarchies.png">
+
+<p>This picture shows a subset of the hierarchy, with all the
+generated operations (in
+<tt><i>Domain.Class</i>.Inheritance</tt>). The operation <tt>create
+new()</tt> was included to show that an operation of a class can
+invoke operations declared in child packages of the class.
 
 <h4>Creation</h4>
 
@@ -243,25 +250,19 @@ create a new <i>F_2</i> with a new right hand side, you'd say
       R3 => null);
 </pre>
 
-<p>If you already have an <i>S_2</i> (in <tt>S2_H</tt>) and want to
+<p>If you already have an <i>S_3</i> (in <tt>S3_H</tt>) and want to
 create a new <i>F_2</i> with a new left hand side, you'd say
 
 <pre>
    F2_H := F_2.Inheritance.Create_Tree
      (R1 => null,
-      R2 => ColdFrame.Instances.Handle (S2_H),
-      R3 => ColdFrame.Instances.Handle (S2_H));
+      R2 => ColdFrame.Instances.Handle (S3_H),
+      R3 => ColdFrame.Instances.Handle (S3_H));
 </pre>
 
 <p>So, the rule is that you supply the handle of the existing parent
 on the way to each root class; and, if the existing parent has two (or
 more!) root ancestors, you supply its handle for each.
-
-<h4>Deletion</h4>
-
-<p>All classes that have children (ie, not <i>F_2</i> in the diagram)
-have a <tt>Delete_Child</tt> operation. This deletes the entire
-subtree beneath.
 
 <h4>Finds</h4>
 
@@ -269,6 +270,12 @@ subtree beneath.
 <tt><i>Domain.Class</i>.Inheritance.Find_<i>parent-class</i>_Parent</tt>
 for each parental class, returning
 <tt><i>parent-class</i>.Handle</tt>.
+
+<h4>Deletion</h4>
+
+<p>All classes that have children (ie, not <i>F_2</i> in the diagram)
+have a <tt>Delete_Child</tt> operation. This deletes the entire
+subtree beneath.
 
 <h2>Use</h2>
 
