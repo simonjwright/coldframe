@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: hierarchies-test_creations.adb,v $
---  $Revision: eab9ea82a5f1 $
---  $Date: 2002/10/11 05:41:39 $
+--  $Revision: e6759e067874 $
+--  $Date: 2003/05/10 17:14:12 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -535,6 +535,7 @@ package body Hierarchies.Test_Creations is
       pragma Warnings (Off, R);
       F2_H2 : F_2.Handle;
       F2_H3 : F_2.Handle;
+      pragma Warnings (Off, F2_H3);
    begin
       F2_H := F_2.Inheritance.Create_Tree (null, null, null);
       F2_H2 := F2_H;
