@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v aa0f52a6fa1a 2003/07/26 16:52:27 simon $ -->
+<!-- $Id: ada-class.xsl,v 8ab684b9b07a 2003/07/26 18:58:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -428,8 +428,7 @@
           <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>          
         </xsl:if>
 
-        <!--
-             If the maximum numer of instances is more than 1 (so that a
+        <!-- If the maximum numer of instances is more than 1 (so that a
              Map is needed), or if there are attributes/operations involving 
              _other_ classes, or the special Counterpart, need support for 
              standard Instances as well. -->
@@ -448,6 +447,11 @@
                       or operation/parameter[type=$other-classes]
                       or operation[@return=$other-classes]">
           <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+        </xsl:if>
+
+        <!-- If the (active) class has a priority specified, need System. -->
+        <xsl:if test="@priority">
+          <xsl:text>with System;&#10;</xsl:text>
         </xsl:if>
 
       </xsl:otherwise>
@@ -1967,19 +1971,24 @@
   <!-- Called from domain/class to generate a task spec. -->
   <xsl:template name="task-spec">
     <!--
+         use type System.Priority;
          task type T (This : access Instance) is
-           pragma Priority ({priority});
+           pragma Priority (System.Default_Priority + ({priority}));
            pragma Storgae_Size ({stack});
            entry {e} ({parameters});
          end T;
          -->
+    <xsl:if test="@priority">
+      <xsl:value-of select="$I"/>
+      <xsl:text>use type System.Priority;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
     <xsl:if test="@priority">
       <xsl:value-of select="$II"/>
-      <xsl:text>pragma Priority (</xsl:text>
+      <xsl:text>pragma Priority (System.Default_Priority + (</xsl:text>
       <xsl:value-of select="@priority"/>
-      <xsl:text>);&#10;</xsl:text>
+      <xsl:text>));&#10;</xsl:text>
     </xsl:if>
     <xsl:if test="@stack">
       <xsl:value-of select="$II"/>
