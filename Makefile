@@ -22,7 +22,7 @@ else
 endif
 
 AWK = awk
-ITCLSH = /usr/bin/itclsh3.1
+ITCLSH = tclsh
 TCLXML = /usr/local/lib/tclxml-2.1theta
 
 SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
