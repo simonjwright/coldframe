@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
+<!-- $Id: ada-type.xsl,v ac6abceece47 2002/12/10 20:04:50 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -181,6 +181,7 @@
         <!-- No more types able to be output, check we haven't missed any.
              These should only be records with attributes of undeclared
              type. -->
+        <!-- XXX I don't think this can happen. -->
 
         <xsl:variable name="missing" select="type[not($processed/name=name)]"/>
 
