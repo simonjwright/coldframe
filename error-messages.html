@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v db4044727db0 2004/02/09 09:58:32 simon $ -->
+<!-- $Id: error-messages.html,v a12e45792d8d 2004/02/09 12:35:17 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -99,7 +99,7 @@ want anything to happen!
 
 <dt>Error: utility <i>name</i> is active <dd>Utility classes may not be active.
 
-<dt>Error: utility <i>name</i> has attributes/associations <dd>Utility classes may not have parameters or take part in associations..
+<dt>Error: utility <i>name</i> has attributes/associations <dd>Utility classes may not have parameters or take part in associations.
 
 </dl>
 
@@ -149,7 +149,9 @@ want anything to happen!
 
 <dt>Error: drop-through transition after Delete in state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
 
-<dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only ones).
+<dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
+
+<dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 
 <dt>Error: more than one drop-through transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
 
