@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 901e9c21a0f3 2005/01/29 05:45:58 simon $
+# $Id: normalize-rose.tcl,v 228141d0ab93 2005/02/06 19:09:05 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1681,6 +1681,10 @@ itcl::class Operation {
             set c [[[$this -getOwner] -getOwner] -getName]
             Error "operation $c.$name can't be abstract and an accessor"
         }
+	if {$teardown && $cls} {
+            set c [[[$this -getOwner] -getOwner] -getName]
+	    Error "operation $c.$name can't be class and teardown"
+	}
         switch $visibility {
             "private" {
                 if {$init} {
