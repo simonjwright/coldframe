@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v a02a8a2a1a70 2002/01/13 10:27:22 simon $ -->
+<!-- $Id: generate-ada.xsl,v 7e186a1c4ec2 2002/01/24 20:16:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -96,7 +96,7 @@
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. domain context ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates mode="domain-context"/>
+    <xsl:call-template name="domain-context"/>
 
     <!-- .. the top-level package spec .. -->
     <xsl:call-template name="progress-message">
@@ -127,22 +127,6 @@
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Initialize;&#10;</xsl:text>
-
-    <!-- The top-level package body. -->
-    <!--
-    <xsl:call-template name="progress-message">
-      <xsl:with-param name="m" select="'.. the top-level package body ..'"/>
-    </xsl:call-template>
-    <xsl:text>package body </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text> -->
 
     <!-- The domain Initialize procedure body. -->
     <xsl:call-template name="progress-message">
