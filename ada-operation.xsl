@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
+<!-- $Id: ada-operation.xsl,v 6fbf7a868481 2003/06/26 05:01:54 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -58,6 +58,7 @@
             select="$parents/operation
                       [not(@suppressed)
                        and not(@entry)
+                       and not(@renames)
                        and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
@@ -127,6 +128,25 @@
   <xsl:template mode="operation-spec" match="*"/>
 
 
+  <!-- Called at domain/class to generate renaming operation specs. -->
+  <xsl:template name="renaming-operation-specs">
+    <xsl:for-each select="operation[@renames]">
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="$I"/>
+      </xsl:call-template>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>renames </xsl:text>
+      <xsl:value-of select="@renames"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:call-template name="commentary">
+        <xsl:with-param name="indent" select="$I"/>
+      </xsl:call-template>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:for-each>
+  </xsl:template>
+
+
   <!-- Called at domain/class to generate the contribution to the
        package body's context required by the operations. -->
   <xsl:template name="operation-body-context">
@@ -193,6 +213,7 @@
             select="$parents/operation
                       [not(@suppressed)
                        and not(@entry)
+                       and not(@renames)
                        and not(name=$operations/name)]
                     | $operations"/>
         </xsl:call-template>
@@ -225,21 +246,6 @@
 
     <!-- The current class. -->
     <xsl:param name="current"/>
-
-    <!--
-    <xsl:if test="..=$current or not(@class or @finalize)">
-      <xsl:call-template name="subprogram-specification">
-        <xsl:with-param name="indent" select="$I"/>
-      </xsl:call-template>
-      <xsl:text> is separate;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
-    </xsl:if>
-    -->
-
-
-
-
-
 
     <xsl:choose>
 
@@ -323,15 +329,6 @@
 
     </xsl:choose>
 
-
-
-
-
-
-
-
-
-
   </xsl:template>
 
   <xsl:template mode="operation-body-in-body" match="*"/>
@@ -398,7 +395,10 @@
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <xsl:if test="$current=.. and not(@abstract) and not (@accessor)">
+    <xsl:if test="$current=..
+                  and not(@abstract)
+                  and not(@accessor)
+                  and not(@renames)">
       
       <!-- Concrete in current class. -->
       
