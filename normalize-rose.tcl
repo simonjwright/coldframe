@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 890e1d92cabf 2002/12/24 11:45:31 simon $
+# $Id: normalize-rose.tcl,v fe6d6aa04ace 2003/01/11 15:58:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1716,7 +1716,13 @@ itcl::class Role {
 		}
 	    }
 	} else {
+	    global stack
+	    set me [stack -pop]
+	    set rel [[stack -top] -getName]
+	    stack -push $me
 	    Error "unrecognised multiplicity \"$c\" in role $rel.$name"
+	    # set some values to allow further processing
+	    set conditional 0; set cardinality "*"
 	}
     }
 
@@ -2598,6 +2604,7 @@ if $stackDump {
 } else {
     if [catch {$parser parse [read stdin]} msg] {
 	puts stderr "CF: internal error: $msg"
+	exit 1
     }
 }
 
