@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v 3e8fd3f3b75a 2002/05/09 20:45:06 simon $ -->
+<!-- $Id: associations.html,v 4ecf668e9327 2002/06/27 18:29:21 simon $ -->
 <head>
 <title>ColdFrame: Associations</title>
 </head>
@@ -64,7 +64,70 @@ href="#source">in a symmetric association</a>.
 
 <h2>Translation</h2>
 
+<p>Each Association maps into
+
+<ul>
+
+<li>a package
+<tt><i>Domain.Association</i></tt>, which deals with linking,
+unlinking and navigation from single instances
+
+<li>a package
+<tt><i>Domain.Association</i>.From_Collections</tt>, which deals with
+navigation from collections of instances.
+
+</ul>
+
 <h2>Use</h2>
+
+<p>It can be difficult to work out which of the navigation operations
+you need to use.
+
+<p><img src="simple-association.png">
+
+<p>In the diagram, <tt><i>Domain</i>.A2</tt> has two navigation
+operations:
+
+<ul>
+
+<li><tt>Is_Borrowing</tt> takes a <i>Book</i> (<tt>Book.Handle</tt>)
+parameter and returns a <i>Borrower</i> (<tt>Borrower.Handle</tt>),
+which may be <tt>null</tt>.
+
+<li><tt>Is_On_Loan_To</tt> takes a <i>Borrower</i> and returns a
+collection of <i>Books</i> (<tt>Book.Collections.Collection</tt>).
+
+</ul>
+
+<p>This is as though <i>is&nbsp;borrowing()</i> were an operation of
+<i>Book</i> and <i>is&nbsp;on&nbsp;loan&nbsp;to()</i> were an
+operation of <i>Borrower</i>.
+
+<p>It may help to ask yourself, as you write the assignment
+<pre>
+   Borrower_H := A2.<i>what goes here</i> (Book_H);
+</pre>
+
+<blockquote>
+"what is the <i>result</i> that <i>role</i> this <i>starting
+instance</i>?"
+</blockquote>
+
+<p>which in this case is "what is the <i>Borrower</i> that <i>is
+borrowing</i> this <i>Book</i>?"
+
+<p><img src="reflexive.png">
+
+<p>It's more difficult with reflexive associations, and if you get it
+wrong the compiler won't be able to help you. The litte mnemonic above
+needs adjustment;
+
+<blockquote>
+"what is the <b>other</b> <i>Strategy</i> that
+<i>role</i> this <i>Strategy</i>"
+</blockquote>
+
+<p>and the answer is probably "<i>is fallback for</i>".
 
 <p><hr>
 <i>
