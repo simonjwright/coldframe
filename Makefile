@@ -306,6 +306,8 @@ coldframe-events_g-standard_g.adb \
 coldframe-events_g-standard_g.ads \
 coldframe-events_g-test_g.adb \
 coldframe-events_g-test_g.ads \
+coldframe-events_g-trace_g.adb \
+coldframe-events_g-trace_g.ads \
 coldframe-events_g.adb \
 coldframe-events_g.ads \
 coldframe-exceptions-message.adb \
@@ -355,7 +357,9 @@ coldframe-project-events-creation.ads \
 coldframe-project-events-standard.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
+coldframe-project-events-standard-trace.ads \
 coldframe-project-events-standard-test_debug.ads \
+coldframe-project-events-standard-test_trace.ads \
 coldframe-project-events.ads \
 coldframe-project-events.ads-standard \
 coldframe-project-events.ads-logging \
