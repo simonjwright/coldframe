@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6ea040caff18 2004/10/09 10:37:13 simon $
+# $Id: normalize-rose.tcl,v f43a7032c5cb 2004/10/25 05:45:40 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1260,9 +1260,14 @@ itcl::class Class {
         set discriminated 1
     }
 
-    variable protected 0
+    variable private 0
     # called (via annotation or stereotype mechanism) to indicate that this
-    # is a protected type
+    # is a private type
+    method -private {dummy} {
+        set private 1
+    }
+
+    variable protected 0
     method -protected {dummy} {
         $this -type 1
         set protected 1
@@ -1336,8 +1341,7 @@ itcl::class Class {
                 Error "protected type [$this -getName] has no attributes"
             }
             if [info exists extends] {
-                Error "tried to extend [$this -getName],\
-                    which has no attributes"
+                Error "extending type  [$this -getName] has no attributes"
             }
             set dts [[Domain::currentDomain] -getDatatypes]
             if [$dts -isPresent $name] {
@@ -1365,6 +1369,9 @@ itcl::class Class {
             }
             if $counterpart {
                 $dt -counterpart 1
+            }
+            if $private {
+                $dt -private 1
             }
             if $serializable {
                 $dt -serializable 1
@@ -1471,6 +1478,9 @@ itcl::class Class {
             }
             if [info exists extends] {
                 puts -nonewline " extends=\"$extends\""
+            }
+            if $private {
+                puts -nonewline " private=\"true\""
             }
             if $serializable {
                 puts -nonewline " serializable=\"true\""
@@ -2381,6 +2391,9 @@ itcl::class Transition {
 }
 
 itcl::class Datatype {
+
+    # Datatypes are non-record <<type>> classes.
+
     inherit Element
 
     variable arrayOf
@@ -2404,6 +2417,8 @@ itcl::class Datatype {
     variable null 0
 
     variable operations
+
+    variable private 0
 
     variable serializable 0
 
@@ -2523,6 +2538,11 @@ itcl::class Datatype {
     method -imported {domain} {
         set dataType "imported"
         set dataDetail [normalize $domain]
+    }
+
+    # called when the type is private (stereotype on Class, or tag)
+    method -private {dummy} {
+        set private 1
     }
 
     # called when the type renames some other type.
@@ -2667,6 +2687,9 @@ itcl::class Datatype {
         }
         if [info exists typeImage] {
             puts -nonewline " type-image=\"$typeImage\""
+        }
+        if $private {
+            puts -nonewline " private=\"true\""
         }
         if $serializable {
             puts -nonewline " serializable=\"true\""
@@ -3241,8 +3264,3 @@ if $errors {
     }
     exit 1
 }
-
-#;; for emacs:
-#;; Local Variables:
-#;; tcl-default-application: "itclsh"
-#;; End:
