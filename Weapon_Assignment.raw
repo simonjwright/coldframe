@@ -235,19 +235,29 @@
 <operations>
 </operations>
 </class>
+<class stereotype="type">
+<name>Targets</name>
+<documentation>This type represents a collection of different Targets.
+
+[[ set : Target ]]</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
 </classes>
 <relationships>
 <association>
 <name>r9</name>
 <documentation>an association</documentation>
 <role><end>1</end>
-<name>is target for</name>
+<name>is aimed at</name>
 <classname>Target</classname>
 <cardinality>0..1</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name>is aimed at</name>
+<name>is target for</name>
 <classname>Weapon</classname>
 <cardinality>1..n</cardinality>
 <documentation></documentation>
@@ -258,13 +268,13 @@
 <name>r12</name>
 <documentation></documentation>
 <role><end>1</end>
-<name>is loaded in</name>
+<name>can fire</name>
 <classname>Missile</classname>
 <cardinality>0..n</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name>can fire</name>
+<name>is loaded in</name>
 <classname>Weapon</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
@@ -274,13 +284,13 @@
 <name>r13</name>
 <documentation></documentation>
 <role><end>1</end>
-<name>is a threat in</name>
+<name>contains</name>
 <classname>Track</classname>
 <cardinality>0..n</cardinality>
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name>contains</name>
+<name>is a threat in</name>
 <classname>Threat List</classname>
 <cardinality>0..1</cardinality>
 <documentation></documentation>
