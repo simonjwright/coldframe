@@ -3,9 +3,9 @@
 <name>Event Test</name>
 <date>
 <year>2002</year>
-<month>5</month>
-<day>21</day>
-<time>18:33</time>
+<month>7</month>
+<day>12</day>
+<time>15:33</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -47,18 +47,6 @@
 </parameter>
 </parameters>
 </operation>
-<operation stereotype="handler">
-<name>wait handler</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>w</name>
-<documentation></documentation>
-<type>Wait</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
 <operation>
 <name>get ordinal</name>
 <documentation></documentation>
@@ -73,6 +61,18 @@
 <parameters>
 </parameters>
 </operation>
+<operation stereotype="handler">
+<name>wait handler</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>w</name>
+<documentation></documentation>
+<type>Wait</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
 </operations>
 <events>
 <event stereotype="class event">
@@ -80,8 +80,8 @@
 <type>Content</type>
 </event>
 <event stereotype="class event">
-<name>wait</name>
-<type>Delayer</type>
+<name>Wait</name>
+<type>Waiting</type>
 </event>
 </events>
 </class>
@@ -89,7 +89,7 @@
 <name>Content</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation>[[ callback : 2 ]]</documentation>
 <attributes>
 <attribute>
 <name>ordinal</name>
@@ -110,7 +110,7 @@
 </events>
 </class>
 <class stereotype="type">
-<name>Delayer</name>
+<name>Waiting</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
@@ -126,6 +126,167 @@
 </operations>
 <events>
 </events>
+</class>
+<class>
+<name>Machine</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>ordinal</name>
+<documentation></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>offset</name>
+<documentation></documentation>
+<type>Duration</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>get ordinal</name>
+<documentation></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>get offset</name>
+<documentation></documentation>
+<return>Duration</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>handle self</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>ev</name>
+<documentation></documentation>
+<type>Self</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>handle mark</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>ev</name>
+<documentation></documentation>
+<type>Mark</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>send done</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+<event stereotype="instance event">
+<name>Self</name>
+<type>Content</type>
+</event>
+<event stereotype="instance event">
+<name>Mark</name>
+<type>Content</type>
+</event>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>idle</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>handling self</name>
+<entryactions>
+<action>
+<name>handle self</name>
+</action>
+<action>
+<name>send done</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>handling mark</name>
+<entryactions>
+<action>
+<name>handle mark</name>
+</action>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>handling mark</target>
+<event>
+<name>mark</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>idle</source>
+<target>handling self</target>
+<event>
+<name>self</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>handling self</source>
+<target>idle</target>
+<event>
+<name>done</name>
+</event>
+<documentation></documentation>
+</transition>
+<transition>
+<source>handling mark</source>
+<target>idle</target>
+<event>
+<name></name>
+</event>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
 </class>
 </classes>
 <relationships>
