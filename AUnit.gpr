@@ -12,15 +12,16 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: AUnit.gpr,v 0f7eda971a8e 2003/02/07 05:55:57 simon $
+--  $Id: AUnit.gpr,v 8a7bdb12a221 2003/03/22 16:28:40 simon $
 
 with "Options";
 
 project AUnit is
 
-  Home := external ("HOME");
+  Top := external ("TOP");
+  AUnit := external ("AUNIT", "aunit-1.01");
 
-  for Source_Dirs use (Home & "/aunit-1.01/aunit/**");
+  for Source_Dirs use (Top & "/" & AUnit & "/aunit/**");
 
   for Object_Dir use ".build";
 
