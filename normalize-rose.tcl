@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ff29748803a5 2002/01/20 10:42:30 simon $
+# $Id: normalize-rose.tcl,v 4319959c01ba 2002/01/24 20:18:01 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -654,8 +654,6 @@ itcl::class Domain {
     method -datatypes {l} {set datatypes $l}
 
     method -getDatatypes {} {return $datatypes}
-
-#    method -transitiontables {l} {set transitiontables $l}
 
     method -complete {} {
 	$this -generate
@@ -1373,9 +1371,6 @@ itcl::class Role {
 	[stack -top] -role $this
     }
 
-    method -evaluate {domain} {
-    }
-
     method -generate {domain} {
 	puts -nonewline "<role"
 	if $conditional {puts -nonewline " conditional=\"yes\""}
@@ -1760,13 +1755,6 @@ itcl::class Datatype {
     # called when the type is actually a record (a Class with isType set)
     method -record {} {set dataType "record"}
 
-    # called when the type is a set of instances of a class. cls
-    # is the name of the class, which has not been normalized.
-    method -set {cls} {
-	set dataType "set"
-	set dataDetail [normalize $cls]
-    }
-
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful key is max (max length).
@@ -1779,9 +1767,6 @@ itcl::class Datatype {
 	if [expr ![[stack -top] -isPresent $type]] {
 	    [stack -top] -add $this $type
 	}
-    }
-
-    method -evaluate {domain} {
     }
 
     method -generate {domain} {
@@ -1810,14 +1795,11 @@ itcl::class Datatype {
 	    renames {
 		putElement renames $dataDetail
 	    }
-	    set {
-		putElement set $dataDetail
-	    }
 	    standard {
 		putElement standard $type
 	    }
 	    default {
-		Error "CF: oops! dataType \"$dataType\""
+		Error "CF: unhandled dataType \"$dataType\""
 	    }
 	}
 	puts "</type>"
@@ -2129,12 +2111,12 @@ proc Message {str} {
 }
 
 proc Warning {str} {
-    puts stderr $str
+    puts stderr "Warning: $str"
 }
 
 proc Error {str} {
     global errors
-    puts stderr $str
+    puts stderr "Error: $str"
     incr errors
 }
 
