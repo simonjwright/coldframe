@@ -220,6 +220,7 @@ event-modelling.html \
 event-motivation.html \
 event-translation.html \
 event-use.html \
+extending.html \
 extraction.html \
 faq.html \
 generalizations.html \
