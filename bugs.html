@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a49f850147cb 2003/12/03 08:35:47 simon $ -->
+<!-- $Id: bugs.html,v 62843b87b36d 2003/12/03 15:39:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -234,7 +234,13 @@ Useful for, for example, callbacks where only the event matters.
 <dd>Using a bounded string (<tt>{string = max 15}</tt> say) in an
 identifier generates code that fails to compile.
 
-<!-- next: 0222 -->
+<dt>0222 (raised 3.xii.03)
+
+<dd>Active class instances are torn down after the domain event queue,
+which may cause <tt>Tasking_Error</tt> if the active instance tries
+(for example) to post an event.
+
+<!-- next: 0223 -->
 
 </dl>
 
