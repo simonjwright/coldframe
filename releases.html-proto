@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: releases.html-proto,v 0f2606b3eb2b 2003/09/11 19:56:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,11 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Serialization supports nested records.
+
+
+<p><dt>20030906
 
 <dd>The old <tt>Hash</tt> function has been replaced by
 <tt>Instance_Hash</tt> (because the arguments are different).
