@@ -5,11 +5,11 @@
 <year>2005</year>
 <month>1</month>
 <day>29</day>
-<time>06:06</time>
+<time>07:10</time>
 </date>
 <documentation><![CDATA[ This domain is a demonstration of the "serialization" features of ColdFrame.
 
-{ revision = $Revision: 4d71b82a8caf $ }
+{ revision = $Revision: 18cff6ec23b8 $ }
  ]]></documentation>
 <classes>
 <class stereotype="public">

@@ -2,18 +2,19 @@
 <extractor>cf-DATE</extractor>
 <name>Serialization Demo Other</name>
 <date>
-<year>2004</year>
-<month>7</month>
-<day>24</day>
-<time>18:12</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>07:10</time>
 </date>
 <documentation><![CDATA[ This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-{ revision = $Revision: dfc3f1731115 $ } ]]></documentation>
+{ revision = $Revision: 18cff6ec23b8 $ } ]]></documentation>
 <classes>
 <class stereotype="type">
 <name>Record Type 1</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -34,6 +35,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Record Type 2</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>

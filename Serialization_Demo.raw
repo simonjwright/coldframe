@@ -5,12 +5,12 @@
 <year>2005</year>
 <month>1</month>
 <day>29</day>
-<time>06:06</time>
+<time>07:10</time>
 </date>
 <documentation><![CDATA[ This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
+{ revision = $Revision: 18cff6ec23b8 $ } ]]></documentation>
 <classes>
 <class stereotype="type">
 <name>Sample A</name>
@@ -88,6 +88,13 @@ It is to be extracted separately from the main Serialization package (that's why
 <visibility>PrivateAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <type>Record Type A</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>c</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Characters</type>
 <initial></initial>
 </attribute>
 </attributes>
@@ -226,6 +233,22 @@ It is to be extracted separately from the main Serialization package (that's why
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation><![CDATA[ { imported = Interfaces,
+  serializable } ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Characters</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ { array = Character,
+  index = Boolean,
   serializable } ]]></documentation>
 <attributes>
 </attributes>
