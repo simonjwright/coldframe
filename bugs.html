@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e6c4e71f2457 2002/10/01 17:44:13 simon $ -->
+<!-- $Id: bugs.html,v 031aae1cd4c7 2002/10/11 05:34:06 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -173,11 +173,43 @@ triggered by the same event (or drop-through) isn't detected.
 <dd>It would make testing easier if non-&#171;public&#187; classes
 could be generated as non-<tt>private</tt> Ada packages.
 
-<!-- next: 0125 -->
+<dt>0128 (raised 8.x.02)
+
+<dd>It would be helpful to be able to specify how to hash
+imported/renamed types.
+
+<dt>0129 (raised 8.x.02)
+
+<dd><tt>[[ callback ]]</tt> types tend to be unnoticeable; could a
+&#171;callback&#187; stereotype be used instead?
+
+<br><i>It's already possible to use a stereotype like &#171;type,
+callback=4&#187;.</i>
+
+<!-- next: 0130 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>9.x.02</h3>
+
+<dl>
+
+<dt>0125 (raised 7.x.02)
+
+<dd>Layout of generated exception declarations is incorrect.
+
+<dt>0126 (raised 8.x.02)
+
+<dd>It's difficult to delete a child instance <em>and its parent</em> in
+a state machine.
+
+<dt>0127 (raised 8.x.02)
+
+<dd>Incorrectly reusing an inheritance relationship name isn't detected.
+
+</dl>
 
 <h3>1.x.02</h3>
 
