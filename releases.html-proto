@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d4ac944171f6 2004/01/27 06:45:35 simon $ -->
+<!-- $Id: releases.html-proto,v 3728a23b5038 2004/02/09 09:50:02 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -49,7 +49,10 @@ indefinite (<a
 href="http://www.adaic.org/standards/95lrm/html/RM-3-3.html#I1396">ARM
 3.3(23)</a>, <a
 href="http://www.adaic.org/standards/95lrm/html/RM-3-7.html#I1869">3.7(26)</a>),
-you can't use them as attributes, but they can be used as parameters.
+you can't use them as attributes, but they can be used as parameters
+or as function return values.
+<br>If you want to <a href="serialization.html">serialize</a> array
+types, you must supply your own field-image operation.
 
 
 <p>For increased performance, if a class has a single identifier of
@@ -57,7 +60,7 @@ type
 <ul>
 <li><tt>Boolean</tt>
 <li>an <tt>{imported}</tt> or <tt>{renames}</tt> &#171;type&#187;
-markedt <tt>{hash=enumeration}</tt>
+marked <tt>{hash=enumeration}</tt>
 <li>an <tt>{integer}</tt> or <tt>{enumerated}</tt> &#171;type&#187; of
 small enough range (currently 49)
 </ul>
