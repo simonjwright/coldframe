@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v f2ba918c362d 2002/02/20 06:44:32 simon $ -->
+<!-- $Id: generate-ada.xsl,v d5fb5a649b82 2002/02/21 05:50:09 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -122,7 +122,16 @@
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
 
-    <!-- .. the Initialize procedure .. -->
+    <!-- .. the domain event manager .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. the domain event manager ..'"/>
+    </xsl:call-template>
+    <xsl:call-template name="event-manager-spec"/>
+    <xsl:call-template name="event-manager-body"/>
+
+    <!-- .. the domain Initialize procedure .. -->
     <xsl:call-template name="progress-message">
       <xsl:with-param
         name="m"
@@ -155,6 +164,11 @@
       </xsl:message>
     </xsl:for-each>
 
+    <!-- .. withs, starting with the Events package .. -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events;&#10;</xsl:text>
+
     <xsl:for-each select="$initialize-procedures">
       <xsl:sort select="../name"/>
       <xsl:sort select="name"/>
@@ -168,26 +182,21 @@
     <xsl:text>.Initialize is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:choose>
-      
-      <xsl:when test="$initialize-procedures">
-        <xsl:for-each select="$initialize-procedures">
-          <xsl:sort select="../name"/>
-          <xsl:sort select="name"/>
-          <xsl:value-of select="$I"/>
-          <xsl:value-of select="../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:for-each>
-      </xsl:when>
+    <!-- .. the Events package initialization .. -->
+    <xsl:value-of select="$I"/>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Initialize;&#10;</xsl:text>
 
-      <xsl:otherwise>
-        <xsl:value-of select="$I"/>
-        <xsl:text>null;&#10;</xsl:text>
-      </xsl:otherwise>
-
-    </xsl:choose>
+    <!-- .. <<init>> operations .. -->
+    <xsl:for-each select="$initialize-procedures">
+      <xsl:sort select="../name"/>
+      <xsl:sort select="name"/>
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:for-each>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
