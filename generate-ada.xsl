@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 39483b477b88 2001/08/26 14:40:19 simon $ -->
+<!-- $Id: generate-ada.xsl,v 1e37f117d995 2001/09/08 05:12:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,6 +56,7 @@
   <xsl:param name="I" select="$standard-indent"/>
   <xsl:param name="II" select="concat($I, $I)"/>
   <xsl:param name="III" select="concat($II, $I)"/>
+  <xsl:param name="IIII" select="concat($III, $I)"/>
   <xsl:param name="C" select="$continuation-indent"/>
   <xsl:param name="IC" select="concat($I, $C)"/>
   <xsl:param name="IIC" select="concat($II, $C)"/>
