@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 2dc87542fbe5 2004/12/06 17:54:40 simon $ -->
+<!-- $Id: domains.html,v fb0a19f30c51 2005/02/10 05:11:45 simon $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -51,6 +51,8 @@ visible to code generation, and vice versa.
 
 <h3><a name="tags">Tagged values</a></h3>
 
+<p><tt>name = <i>package name</i></tt> specifies the actual package name.
+
 <p><tt>revision = <i>revision-id-string</i></tt> specifies the
 domain's version control ID.
 
@@ -69,7 +71,8 @@ system, being careful to avoid commas (so, with CVS or RCS, avoid
 <h2>Translation</h2>
 
 <p>A domain is translated as a top-level Ada package, with the name
-derived from the package name using the usual name conversion rules.
+derived from the package name using the usual name conversion rules
+(it can be overridden using the <tt>{name=<i>new-name</i>}</tt> tag).
 
 <p>Child UML packages are included (recursively) if they are marked
 <em>&#171;generate&#187;</em>. The child UML package structure is
