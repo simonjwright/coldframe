@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-operation.xsl,v 1b3977115b24 2002/10/11 05:31:04 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -583,7 +583,8 @@
          case This.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {return} {child-1}.{operation}
-               (This => {child-1}.Handle (This.{relation}_Current_Child.{child-1-abbrev}){,
+               (This => {child-1}.Handle
+                  (This.{relation}_Current_Child.{child-1-abbrev}){,
                 other-parameter-assignments});
            when Null_T =>
              raise Constraint_Error;
@@ -644,7 +645,9 @@
       <xsl:value-of select="$IIIC"/>
       <xsl:text>(This =&gt; </xsl:text>
       <xsl:value-of select="$child"/>
-      <xsl:text>.Handle (This.</xsl:text>
+      <xsl:text>.Handle&#10;</xsl:text>
+      <xsl:value-of select="$IIIC"/>
+      <xsl:text>   (This.</xsl:text>
       <xsl:value-of select="$rel/name"/>
       <xsl:text>_Current_Child.</xsl:text>
       <xsl:value-of select="/domain/class[name=$child]/abbreviation"/>
