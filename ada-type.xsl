@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v a2be55a7c0f6 2005/02/18 06:08:54 simon $ -->
+<!-- $Id: ada-type.xsl,v d492d06f383a 2005/02/28 20:25:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -804,72 +804,181 @@
   <xsl:template
     match="type/operation[not(@renames)]"
     mode="ty:domain-type-operation-body">
-    <xsl:call-template name="ut:should-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
 
-    <xsl:value-of select="$blank-line"/>
-    <xsl:call-template name="ut:commentary">
-      <xsl:with-param name="indent" select="''"/>
-      <xsl:with-param name="separate-pars" select="$blank-line"/>
-    </xsl:call-template>
+    <xsl:choose>
+      
+      <xsl:when test="$generate-stubs='yes'">
+        
+        <xsl:variable name="subprogram-name">
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="name"/>          
+        </xsl:variable>
+        
+        <xsl:call-template name="ut:should-not-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
 
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="op:subprogram-specification">
-      <xsl:with-param name="indent" select="''"/>
-      <xsl:with-param name="is-class" select="'no'"/>
-    </xsl:call-template>
-    <xsl:text> is&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="ut:commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
 
-    <!-- If it's a function, we may have to organize a return value. -->
-    <xsl:variable
-      name="return-type"
-      select="/domain/type[name=current()/@return]"/>
-    <xsl:variable
-      name="simple-return"
-      select="$return-type
-              and not($return-type/imported)
-              and not($return-type/renames)
-              and not($return-type/attribute)"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
 
-    <xsl:if test="@return and not($simple-return)">
-      <xsl:value-of select="$I"/>
-      <xsl:text>Dummy : </xsl:text>
-      <xsl:value-of select="@return"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
+        <xsl:text>separate (</xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>)&#10;</xsl:text>
+        <xsl:call-template name="op:subprogram-specification">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="is-class" select="'no'"/>
+        </xsl:call-template>
+        <xsl:text> is&#10;</xsl:text>
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>Call : constant Positive := ColdFrame.Stubs.Note_Entry&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(&quot;</xsl:text>
+        <xsl:value-of select="$subprogram-name"/>
+        <xsl:text>&quot;);&#10;</xsl:text>
+        <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:text>begin&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
-    <xsl:text>raise Program_Error;&#10;</xsl:text>
+        <xsl:for-each select="parameter[not(@mode) or @mode='inout']">
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="type"/>
+          <xsl:text>'Output&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Input_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>&quot;, Call, </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>'Size),&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> </xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:value-of select="$I"/>
+        <xsl:text>ColdFrame.Stubs.Check_For_Exception&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(&quot;</xsl:text>
+        <xsl:value-of select="$subprogram-name"/>
+        <xsl:text>&quot;, Call);&#10;</xsl:text>
+        <xsl:for-each select="parameter[@mode='inout' or @mode='out']">
+          <xsl:value-of select="$I"/>
+          <xsl:value-of select="name"/>
+          <xsl:text> := </xsl:text>
+          <xsl:value-of select="type"/>
+          <xsl:text>'Input&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>&quot;, Call));&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:if test="@return">
+          <xsl:value-of select="$I"/>
+          <xsl:text>return </xsl:text>
+          <xsl:value-of select="@return"/>
+          <xsl:text>'Input&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(&quot;</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>&quot;, &quot;return&quot;, Call));&#10;</xsl:text>
+        </xsl:if>
 
-    <xsl:if test="@return">
+        <xsl:text>end </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+        
+      </xsl:when>
 
-      <xsl:value-of select="$I"/>
-      <xsl:text>return </xsl:text>
+      <xsl:otherwise>
+        
+        <xsl:call-template name="ut:should-edit"/>
+        <xsl:call-template name="ut:identification-info"/>
+        
+        <xsl:value-of select="$blank-line"/>
+        <xsl:call-template name="ut:commentary">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="separate-pars" select="$blank-line"/>
+        </xsl:call-template>
+        
+        <xsl:text>separate (</xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>)&#10;</xsl:text>
+        <xsl:call-template name="op:subprogram-specification">
+          <xsl:with-param name="indent" select="''"/>
+          <xsl:with-param name="is-class" select="'no'"/>
+        </xsl:call-template>
+        <xsl:text> is&#10;</xsl:text>
+        
+        <!-- If it's a function, we may have to organize a return value. -->
+        <xsl:variable
+          name="return-type"
+          select="/domain/type[name=current()/@return]"/>
+        <xsl:variable
+          name="simple-return"
+          select="$return-type
+                  and not($return-type/imported)
+                  and not($return-type/renames)
+                  and not($return-type/attribute)"/>
+        
+        <xsl:if test="@return and not($simple-return)">
+          <xsl:value-of select="$I"/>
+          <xsl:text>Dummy : </xsl:text>
+          <xsl:value-of select="@return"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:if>
+        
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>raise Program_Error;&#10;</xsl:text>
+        
+        <xsl:if test="@return">
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>return </xsl:text>
+          
+          <xsl:choose>
+            
+            <xsl:when test="not($simple-return)">
+              <xsl:text>Dummy</xsl:text>
+            </xsl:when>
+            
+            <xsl:otherwise>
+              <xsl:call-template name="op:default-value">
+                <xsl:with-param name="type" select="@return"/>
+              </xsl:call-template>
+            </xsl:otherwise>
+            
+          </xsl:choose>
+          
+          <xsl:text>;&#10;</xsl:text>
+          
+        </xsl:if>
+        
+        <xsl:text>end </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+        
+      </xsl:otherwise>
+      
+    </xsl:choose>
 
-      <xsl:choose>
-
-        <xsl:when test="not($simple-return)">
-          <xsl:text>Dummy</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:call-template name="op:default-value">
-            <xsl:with-param name="type" select="@return"/>
-          </xsl:call-template>
-        </xsl:otherwise>
-
-      </xsl:choose>
-
-      <xsl:text>;&#10;</xsl:text>
-
-    </xsl:if>
-
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template mode="ty:domain-type-operation-body" match="*"/>
