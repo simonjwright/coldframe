@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 3e385e7f5028 $
---  $Date: 2003/07/10 20:23:40 $
+--  $Revision: acb2cc29bb74 $
+--  $Date: 2003/07/24 19:50:30 $
 --  $Author: simon $
 
 generic
@@ -99,7 +99,8 @@ private
                           Storage_Size : Positive)
    is new Standard_Queue (Start_Started => Start_Started,
                           Priority => Priority,
-                          Storage_Size => Storage_Size) with record
+                          Storage_Size => Storage_Size)
+   with record
       The_Event_Count : Event_Count;
    end record;
 
