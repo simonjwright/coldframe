@@ -4,12 +4,12 @@
 <date>
 <year>2004</year>
 <month>5</month>
-<day>5</day>
-<time>21:35</time>
+<day>12</day>
+<time>22:55</time>
 </date>
 <documentation><![CDATA[Regression tests that involve detecting errors.
 
-{ revision = $Revision: 79de18bf3d90 $ }]]></documentation>
+{ revision = $Revision: ee19a199f405 $ }]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
