@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_many_collection.adb,v e15478df6eb7 2001/05/02 19:33:40 simon $
+-- $Id: coldframe-navigate_from_many_collection.adb,v 9c4e1857d998 2001/05/20 17:12:17 simon $
 
 with BC.Copy;
 
@@ -54,10 +54,13 @@ function ColdFrame.Navigate_From_Many_Collection (Input : From) return To is
 
 
   procedure Add_Single_Navigation (This : Many_Handle; OK: out Boolean) is
+    Intermediate : constant One_Handle := Navigate_From_Many (This);
     Dummy : Boolean;
   begin
     OK := True;
-    Add_To_Set (Result_Set, Navigate_From_Many (This), Dummy);
+    if Intermediate /= null then
+      Add_To_Set (Result_Set, Intermediate, Dummy);
+    end if;
   end Add_Single_Navigation;
 
 begin
