@@ -120,7 +120,20 @@
 			type       	"Normal")
 		    (object State "D"
 			quid       	"3F75308203DA"
-			type       	"Normal"))
+			transitions 	(list transition_list
+			    (object State_Transition
+				quid       	"3F784E540067"
+				label      	""
+				supplier   	"$UNNAMED$1"
+				quidu      	"3F784E4B03A3"
+				Event      	(object Event "F"
+				    quid       	"3F784E540068")
+				sendEvent  	(object sendEvent
+				    quid       	"3F784E540072")))
+			type       	"Normal")
+		    (object State "$UNNAMED$1"
+			quid       	"3F784E4B03A3"
+			type       	"EndState"))
 		partitions 	(list Partitions)
 		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
@@ -471,6 +484,64 @@
 				    (2650, 1620)
 				    (2688, 2045))
 				line_style 	0
+				x_offset   	FALSE)
+			    (object StateView "EndState" "$UNNAMED$1" @17
+				location   	(2883, 2483)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@17
+				    location   	(2937, 2441)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"3F784E4B03A3"
+				autoResize 	TRUE)
+			    (object TransView "" @18
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @19
+				    Parent_View 	@18
+				    location   	(2835, 2290)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"F"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"3F784E540067"
+				client     	@13
+				supplier   	@17
+				line_style 	0
 				x_offset   	FALSE)))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -482,7 +553,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Parent With Procedure" @17
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Parent With Procedure" @20
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -498,7 +569,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@17
+			Parent_View 	@20
 			location   	(447, 181)
 			fill_color 	13434879
 			nlines     	1
@@ -510,7 +581,7 @@
 		    fill_color 	13434879
 		    quidu      	"3F6738750314"
 		    compartment 	(object Compartment
-			Parent_View 	@17
+			Parent_View 	@20
 			location   	(447, 237)
 			font       	(object Font
 			    size       	10
@@ -530,7 +601,7 @@
 		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Child With Function" @18
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Child With Function" @21
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -546,7 +617,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@18
+			Parent_View 	@21
 			location   	(544, 600)
 			fill_color 	13434879
 			nlines     	2
@@ -558,7 +629,7 @@
 		    fill_color 	13434879
 		    quidu      	"3F6738A20083"
 		    compartment 	(object Compartment
-			Parent_View 	@18
+			Parent_View 	@21
 			location   	(544, 701)
 			font       	(object Font
 			    size       	10
@@ -578,7 +649,7 @@
 		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "g1" @19
+		(object InheritView "g1" @22
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -589,7 +660,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@19
+			Parent_View 	@22
 			location   	(684, 485)
 			anchor_loc 	1
 			nlines     	1
@@ -599,10 +670,10 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3F6738A901A6"
-		    client     	@18
-		    supplier   	@17
+		    client     	@21
+		    supplier   	@20
 		    line_style 	0)
-		(object CategoryView "Logical View::Bad Code Regressions" @20
+		(object CategoryView "Logical View::Bad Code Regressions" @23
 		    location   	(2083, 285)
 		    font       	(object Font
 			size       	10
@@ -614,7 +685,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@20
+			Parent_View 	@23
 			location   	(1913, 201)
 			fill_color 	13434879
 			nlines     	2
@@ -627,7 +698,7 @@
 		    quidu      	"3F6738F4023A"
 		    width      	352
 		    height     	180)
-		(object ClassView "Class" "Logical View::Bad Code Regressions::Multiple Transitions" @21
+		(object ClassView "Class" "Logical View::Bad Code Regressions::Multiple Transitions" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -643,7 +714,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@21
+			Parent_View 	@24
 			location   	(1378, 809)
 			fill_color 	13434879
 			nlines     	1
@@ -651,7 +722,7 @@
 			justify    	0
 			label      	"Multiple Transitions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@21
+			Parent_View 	@24
 			location   	(1378, 764)
 			fill_color 	13434879
 			anchor     	10
