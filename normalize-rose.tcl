@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cf80e0ec571d 2003/01/15 20:37:26 simon $
+# $Id: normalize-rose.tcl,v eceba6426551 2003/01/18 16:03:52 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1276,6 +1276,12 @@ itcl::class Operation {
     # operation
     method -class {dummy} {set cls 1}
 
+    # does this have a calling convention?
+    variable convention
+    # called via stereotype mechanism to indicate that this has a
+    # calling convention
+    method -convention {conv} {set convention [normalize $conv]}
+
     # is this an initialize operation?
     variable init 0
     # called via stereotype mechanism to indicate that this is an
@@ -1350,6 +1356,9 @@ itcl::class Operation {
 	if $acc {puts -nonewline " access=\"yes\""}
 	if $accessor {puts -nonewline " accessor=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
+	if [info exists convention] {
+	    puts -nonewline " convention=\"$convention\""
+	}
 	if $entry {puts -nonewline " entry=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
 	if $teardown {puts -nonewline " teardown=\"yes\""}

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 8fdd17bad158 2003/01/11 17:31:04 simon $ -->
+<!-- $Id: ada-type.xsl,v eceba6426551 2003/01/18 16:03:52 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -519,6 +519,17 @@
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:call-template>
     <xsl:text>;&#10;</xsl:text>
+
+    <!-- Specify the Convention, if needed. -->
+    <xsl:if test="@convention">
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Convention (</xsl:text>
+      <xsl:value-of select="@convention"/>
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:call-template name="commentary">
       <xsl:with-param name="indent" select="$I"/>
     </xsl:call-template>
