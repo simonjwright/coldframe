@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v b3a78855955c 2001/07/07 14:12:52 simon $ -->
+<!-- $Id: ada-class.xsl,v 0112fd4186d1 2001/07/13 18:42:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -46,8 +46,6 @@
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
-
-    <xsl:text>  procedure Initialize;&#10;</xsl:text>
 
     <xsl:choose>
 
@@ -424,8 +422,6 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
     
-    <xsl:text>  procedure Initialize is separate;&#10;</xsl:text>
-    
     <xsl:if test="@active">
       <xsl:text>  task body T is separate;&#10;</xsl:text>
     </xsl:if>
@@ -513,15 +509,6 @@
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
     
-    <!-- The separate Initialize body. -->
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:text>procedure Initialize is&#10;</xsl:text>
-    <xsl:text>begin &#10;</xsl:text>
-    <xsl:text>  null;&#10;</xsl:text>
-    <xsl:text>end Initialize;&#10;</xsl:text>
-
     <xsl:if test="not(@singleton)">
       
       <!-- Output the separate hash function body. -->
