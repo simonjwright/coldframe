@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 01f6a3dd4265 2002/01/03 06:22:27 simon $ -->
+<!-- $Id: bugs.html,v 1a50feb6142c 2002/01/04 06:37:16 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -101,11 +101,6 @@ non-singleton party is marked <tt>[[source]]</tt>.
 <dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
 targeted to specific instances of a particular class.
 
-<dt>0046 (raised 28.xi.01)
-
-<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
-clear.
-
 <dt>0047 (raised 6.xii.01)
 
 <dd>It might be useful to be able to describe <i>array</i>
@@ -123,7 +118,7 @@ document from the domain model.
 class was calculated automatically (where the multiplicity of each
 associated class is specified).
 
-<!-- next: 0053 -->
+<!-- next: 0054 -->
 
 </dl>
 
@@ -143,11 +138,21 @@ the grandchildren are processed, resulting in failed normalization.
 <dd>The Makefiles expect a Case Exception File, and normalization
 fails if it's not present.
 
+<dt>0053 (raised 2.i.02)
+
+<dd>Model domains are extracted for all selected packages, not just
+those in the current diagram.
+
 </dl>
 
 <h3>11.xii.01</h3>
 
 <dl>
+
+<dt>0046 (raised 28.xi.01)
+
+<dd>The intended use of <tt><i>Association</i>.Unlink</tt> isn't
+clear.
 
 <dt>0048 (raised 11.xii.01)
 
