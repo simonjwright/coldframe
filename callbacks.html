@@ -1,4 +1,4 @@
-<!-- $Id: callbacks.html,v e49cacda13e5 2005/01/19 20:38:26 simon $ -->
+<!-- $Id: callbacks.html,v 2093cbad1d4a 2005/01/20 06:15:23 simon $ -->
 <head>
 <title>ColdFrame: Callbacks</title>
 </head>
@@ -7,11 +7,67 @@
 
 <h2>Motivation</h2>
 
+<p>Many systems use the Layered approach to architecture, and it's
+likely that a ColdFrame-based system will do the same. In any case,
+there has to be support for interactions between different Domains
+(subject matters).
+
+<p>To avoid awkward dependencies, both at the design level and in the
+translated code, ColdFrame supports <i>callbacks</i>. Another name for
+this concept is the <i>Observer</i> pattern.
+
+<p>With callbacks, the lower-level domain provides a facility so that
+higher-level domains can <i>register</i> to be informed when a
+particular event occurs; when it does occur, the lower-level domain
+<i>calls the callbacks</i>, which notifies the registered higher-level
+domains (clients) without needing to know anything about them.
+
 <h2>Modelling</h2>
+
+<h3>Server-side</h3>
+
+<p>In the lower-level domain, create a <em>&#171;type&#187;</em>
+corresponding to the event that clients need notifying about.
+
+<p>Mark it as a callback type by
+
+<ul>
+
+<li>Using <em>&#171;callback&#187;</em>. This is a shorthand for
+
+<li>Using <em>&#171;type, callback&#187;</em>. This is rather clunky.
+
+<li>Using <em>&#171;type&#187;</em> and including the tag
+<tt>{callback}</tt>.
+
+</ul>
+
+<p>Either the first or third is neat; which to use depends on how
+important it is to know that this is a callback type just from the
+diagram. Since callbacks are an important part of the domain's
+interface, it's probably best to use the first. You could use a colour
+convention (callback types are purple ...)
+
+<h3>Client-side</h3>
+
+<p>Create a <em>&#171;type&#187;</em>, imported from the server domain
+(<tt>{ imported = Server }</tt>).
+
+<p>In an appropriate class, create a <em>&#171;class&#187;</em>
+operation, taking a single (<tt>in</tt>) parameter of the imported
+callback type, to act as the receiver.
 
 <h2>Translation</h2>
 
 <h2>Use</h2>
+
+<!--
+
+cool example code
+null record
+exceptions
+
+-->
 
 <p><hr>
 <i>
