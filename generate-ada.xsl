@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 7c1ec4080466 2001/01/25 06:11:18 simon $ -->
+<!-- $Id: generate-ada.xsl,v a41454a91c12 2001/01/30 19:44:36 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -315,12 +315,13 @@
 
 
   <!-- Called from a supertype domain/object to output the subtype enumeration
-       type -->
+       type (sorted) -->
   <xsl:template name="subtype-enumeration">
     <xsl:variable name="name" select="name"/>
     <xsl:text>  type Child_Class is&#10;</xsl:text>
     <xsl:text>     (</xsl:text>
     <xsl:for-each select="../inheritance[parent=$name]/child">
+      <xsl:sort select="."/>
       <xsl:value-of select="."/>
       <xsl:if test="position() &lt; last()">
         <xsl:text>,&#10;      </xsl:text>
