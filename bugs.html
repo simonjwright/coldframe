@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 39dce0898768 2004/01/11 19:25:45 simon $ -->
+<!-- $Id: bugs.html,v 616b8d3a961f 2004/01/13 12:41:29 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -215,11 +215,22 @@ href="installation.html#windows-override">Windows</a>.
 which may cause <tt>Tasking_Error</tt> if the active instance tries
 (for example) to post an event.
 
-<!-- next: 0225 -->
+<!-- next: 0226 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.i.03</h3>
+
+<dl>
+
+<dt>0225 (raised 13.i.04)
+
+<dd>If a <i>{null}</i> type is marked <i>{serializable}</i>, the
+generated code doesn't compile.
+
+</dl>
 
 <h3>11.i.04</h3>
 
