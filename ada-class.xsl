@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v af1f91f97d0f 2001/10/10 04:49:01 simon $ -->
+<!-- $Id: ada-class.xsl,v 801e33fc4c61 2001/10/13 13:31:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,6 +40,12 @@
     <!-- Any context clauses needed for the class package .. -->
     <xsl:call-template name="class-spec-context"/>
 
+    <!-- Include the basis for all instance types if this isn't a
+         singleton, or if it has referential attributes. -->
+    <xsl:if test="not(@singleton) or attribute/@refers">
+      <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
+    </xsl:if>
+
     <!-- .. the class package .. -->
     <xsl:if test="not(@public)">
       <!-- only public packages are externally visible -->
@@ -61,11 +67,11 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Base with private;&#10;</xsl:text>
         
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
         <!-- .. the creation, simple find, and deletion operations .. -->
@@ -94,11 +100,11 @@
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Instance (&lt;&gt;) is limited private;&#10;</xsl:text>
+        <xsl:text>type Instance (&lt;&gt;) is new ColdFrame.Instances.Base with private;&#10;</xsl:text>
         
         <!-- .. the Handle .. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>type Handle is access Instance;&#10;</xsl:text>
+        <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
         
         <!-- .. the find operation .. -->
@@ -264,15 +270,6 @@
 
         <!-- $ancestors contains all the nodes to be processed. -->
 
-        <xsl:if test="attribute[@refers and not(@refers=../name)]">
-          <!-- We have an attribute which refers to another class, so
-               w're going to use the GNAT "with type" extension. -->
-          <!-- XXX what about operations that take parameters of, or
-               return, another class? Why bother saying this when we need
-               -gnatX anyway? (GNAT 3.14a1) -->
-          <!-- <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text> -->
-        </xsl:if>
-        
         <!-- Check for Unbounded_Strings. -->
         <xsl:if test="attribute/type='Unbounded_String'
                       or $ancestors/operation/parameter/type='Unbounded_String'
@@ -316,44 +313,6 @@
           
         </xsl:if>
         
-        <!-- Include necessary "with" or "with type" for referential
-             attributes (that refer to other classes). -->
-        <!--XXX why doesn't this work always?<xsl:for-each
-             select="attribute[@refers
-             and not(@refers=preceding::attribute/@refers)]">-->
-        <xsl:choose>
-
-          <!-- It seems (26.vi.01) that GNAT 3.14a1 has a problem with
-               "with type" and tasks. -->
-          <xsl:when test="@active">
-            <xsl:for-each
-              select="attribute[@refers and not(@refers=../name)]">
-              <xsl:sort select="@refers"/>
-              <xsl:text>with </xsl:text>
-              <xsl:value-of select="../../name"/>
-              <xsl:text>.</xsl:text>
-              <xsl:value-of select="@refers"/>
-              <xsl:text>;&#10;</xsl:text>
-            </xsl:for-each>
-          </xsl:when>
-
-          <!-- Normally, use "with type" to minimise risk of circularities. -->
-          <xsl:otherwise>
-            <xsl:for-each
-              select="attribute[@refers and not(@refers=../name)]">
-              <xsl:sort select="@refers"/>
-
-              <xsl:text>with type </xsl:text>
-              <xsl:value-of select="../../name"/>
-              <xsl:text>.</xsl:text>
-              <xsl:value-of select="@refers"/>
-              <xsl:text>.Handle is access;&#10;</xsl:text>
-
-            </xsl:for-each>
-
-          </xsl:otherwise>
-        </xsl:choose>
-        
         <!-- Handle subprograms. -->
         <xsl:apply-templates
           mode="operation-spec-context"
@@ -361,38 +320,12 @@
           <xsl:with-param name="current" select="."/>
         </xsl:apply-templates>
 
-        <!-- Subtype handles are needed for the subtype selection
-             record. -->
-        <xsl:call-template name="supertype-spec-context"/>
-
       </xsl:otherwise>
 
     </xsl:choose>
 
   </xsl:template>
 
-
-  <!-- Called at domain/class to generate any required supertype spec context
-       information. -->
-  <xsl:template name="supertype-spec-context">
-    
-    <xsl:variable name="parent-name" select="name"/>
-
-    <xsl:for-each select="../inheritance[parent=$parent-name]/child">
-      <xsl:sort select="name"/>
-
-      <!-- XXX may need to take special action not to use "with type" for
-           active classes (but only til the GNAT 3.14a1 bug is fixed). -->
-
-      <xsl:text>with type </xsl:text>
-      <xsl:value-of select="../../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="."/>
-      <xsl:text>.Handle is access;&#10;</xsl:text>
-
-    </xsl:for-each>
-
-  </xsl:template>
 
   <!-- Called at domain/class to generate any required supertype body context
        information. -->

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 9436b01bef46 2001/10/10 04:47:33 simon $ -->
+<!-- $Id: ada-operation.xsl,v 801e33fc4c61 2001/10/13 13:31:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -107,37 +107,11 @@
            out how) .. -->
       <xsl:sort select="."/>
 
-      <!-- .. only using those whose names are those of classes in
-           the domain (and not the current class) .. -->
-
-      <xsl:if test="/domain/class/name=. and not(.=$current/name)">
-
-        <xsl:choose>
-
-          <!-- It seems (26.vi.01) that GNAT 3.14a1 has a problem with
-               "with type" and tasks. -->
-          <xsl:when test="$current/@active">
-            <xsl:text>with </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="."/>
-            <xsl:text>;&#10;</xsl:text>
-          </xsl:when>
-
-          <!-- Normally, use "with type" to minimise risk of circularities -->
-          <xsl:otherwise>
-           <xsl:text>with type </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="."/>
-            <xsl:text>.Handle is access;&#10;</xsl:text>
-          </xsl:otherwise>
-
-        </xsl:choose>
-
-      </xsl:if>
-
       <!-- .. or sets of classes in the domain .. -->
+      <!-- XXX we'll need to make sure this doesn't include the
+           current class; like
+           test="/domain/class/name=. and not(.=$current/name)"
+           -->
       <xsl:variable name="type" select="."/>
       <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
       <xsl:if test="$type-name/set">
