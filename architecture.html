@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 2bfbde8d799c 2001/05/09 18:46:09 simon $ -->
+<!-- $Id: architecture.html,v 41018ff24a1a 2001/05/20 17:26:35 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -91,6 +91,15 @@ conditional (0..1, 0..n), maybe you should think more carefully about
 it. Perhaps there's some super/subtype (inheritance) relationship
 lurking in there.
 
+<p>Resist the temptation to put containers in the model. In <em>Window
+"appears on" Screen</em>, the association itself models the user
+concept of "each screen displays a list of windows" (actually,
+thinking about it, I'm not at all sure that the actual user ever had
+the concept "list" in mind at all. She's much more likely to have said
+"each screen displays a <i>number</i> of windows". I think this "list"
+was implanted there by some ex-programmer with a solution in mind,
+rather than by someone listening to the customer!)
+
 <p>Associations need to be "formalised" by the use of "referential
 attributes". Considering the <em>Window "appears on" Screen</em>,
 where clearly there are many <em>Window</em>s but only one
@@ -103,6 +112,13 @@ exists precisely one related instance of one of the child
 classes. Inheritance relationships are also formalised; typically (in
 ColdFrame, always) the child class has the same identifying attributes
 as the parent.
+
+<p>ColdFrame doesn't support polymorphism. Clearly it could (to a
+degree, perhaps by providing operations paralleling the parent's and,
+by default. delegating to them). Of course, the analyst can put the
+operations in if required! My personal view is that polymorphism
+doesn't actually happen all that often in domains close to the user
+(higher-level ones), as against low-level implementation domains.
 
 <p>In spite of the above, with ColdFrame you usually don't need to
 provide referential attributes (it would be quite cumbersome to do so,
@@ -159,6 +175,13 @@ generation strategy.
 
 <dt>on <em>&#171;type&#187;</em> classes<dd><ul>
 
+<li><tt>callback : <i>max</i></tt> specifies that <a
+href="coldframe-callback.pdf">callback support code</a> is to be
+generated. The idea here is that a (lower-level) Domain may need to
+support Observers from higher-level Domains, and the higher-level
+Domains can register to be notified when something has changed in the
+lower-level Domain.
+ 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
 <li><tt>integer : lower <i>low-bound</i>, upper
@@ -206,6 +229,9 @@ and include the annotation
 </ul>
 
 <dt>on operations<dd><ul>
+
+<li><tt>access</tt> indicates that the operation is in fact an access
+type (pointer-to-subprogram with the indicated profile).
 
 <li><tt>class</tt> indicates that the operation is a class operation
 (no <tt>This</tt> parameter will be generated). This is an
@@ -281,14 +307,13 @@ Menu Add-Ins
 </pre>
 </blockquote>
 
-<p>The output is in a file named <tt><i>package-name</i>.raw</tt> (so
-it would be as well if <tt><i>package-name</i></tt> is a legal base
-file name! spaces may be a bad idea).
+<p>The output is in a <tt>.raw</tt> file.
 
 <p>The default output file location is the directory that
 <tt>ddf.ebs</tt> was loaded from (sorry about that). You might want to
 consider copying <tt>ddf.ebs</tt> to the directory where your model
-files are.
+files are. Alternatively, using the "recent documents" facility of
+Windows seems to open Rose with the correct default directory.
 
 <p>The output format is XML, using a Document Type Description (<a
 href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
@@ -345,6 +370,10 @@ package <tt>ColdFrame</tt>.
 <dt><tt>ColdFrame.Access_Hash</tt>
 
 <dd>A hash function for access values (useful for associative classes).
+
+<dt><tt>ColdFrame.Callbacks</tt>
+
+<dd>Provides callback (Observer) support.
 
 <dt><tt>ColdFrame.Exceptions</tt>
 
