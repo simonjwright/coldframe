@@ -1,0 +1,58 @@
+<!-- $Id: serialization.html,v bfd8dfcd3404 2003/02/27 21:44:21 simon $ -->
+<head>
+<title>ColdFrame: Serialization</title>
+</head>
+<body bgcolor="white">
+<h1>ColdFrame: Serialization</h1>
+
+<h2>Motivation</h2>
+
+<p>The intention of this feature is to help cope with the transfer of
+data, both via network connections and also to files.
+
+<p>Both Ada and Java include language support for serialization; Ada
+in the form of <i>streams</i> (<a
+href="http://adaic.org/standards/95lrm/html/RM-13-13.html">ARM95
+Chapter 13</a>), Java using <tt>implements&nbsp;Serializable</tt>. So
+why provide extra support?
+
+<p>The main motivation is twofold:
+<ul>
+
+<li>a requirement to impose structure on the output data stream
+(perhaps each item needs a defined header), and
+
+<li>the need to present the transferred information ready for further
+processing.
+
+</ul>
+
+<h2>Modelling</h2>
+
+<p>To indicate that a &#171;type&#187; needs serialization support,
+annotate it <tt>[[serializable]]</tt> (as usual, you can stereotype as
+<em>&#171;type,&nbsp;serializable&#187;</em>).
+
+<p>ColdFrame can output <a href="resources.html#xml">XML</a>
+represntations of the serialized information, but it needs to be able
+to convert the data values to text. This is provided for basic types
+(scalars, strings, and time); for other types, you can specify a
+conversion function for a &#171;type&#187; using
+<tt>[[image&nbsp;:&nbsp;<i>conversion-function</i>]]</tt> in the
+documentation section for the type.
+
+<h2>Translation</h2>
+
+<h2>Use</h2>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
