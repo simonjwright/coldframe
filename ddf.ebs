@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 45e01afb32e7 2001/08/12 05:50:31 simon $
+'$Id: ddf.ebs,v 353a731cf30c 2002/01/03 06:14:10 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -196,9 +196,12 @@ Sub DumpClass (o As Class)
 		Print #1, "<class>"
 	End If	
 	Print #1, "<name>" & o.Name & "</name>"
-	Print #1, "<documentation>" & o.Documentation & "</documentation>"
+	If o.Abstract then
+		Print #1, "<abstract/>"
+	End If
 	Print #1, "<cardinality>" & o.Cardinality & "</cardinality>"
 	Print #1, "<concurrency>" & o.Concurrency & "</concurrency>"
+	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	DumpAttributes (o)
 	DumpOperations (o)
 	DumpStates (o)
