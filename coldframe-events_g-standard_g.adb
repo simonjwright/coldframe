@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 850b06ce0448 $
---  $Date: 2002/09/13 19:59:49 $
+--  $Revision: a5ae3891ae78 $
+--  $Date: 2002/09/15 10:34:23 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -151,11 +151,10 @@ package body ColdFrame.Events_G.Standard_G is
          The_Queue.The_Excluder.Fetch (E); -- blocks until there's an event
 
          if not E.Invalidated then
-
-            Log_Pre_Dispatch (The_Event => E, On => The_Queue);
-
             begin
+               Log_Pre_Dispatch (The_Event => E, On => The_Queue);
                Handler (E.all);
+               Log_Post_Dispatch (The_Event => E, On => The_Queue);
             exception
                when Ex : others =>
                   GNAT.IO.Put_Line
@@ -164,9 +163,6 @@ package body ColdFrame.Events_G.Standard_G is
                        Ada.Tags.Expanded_Name (E.all'Tag) &
                        ")");
             end;
-
-            Log_Post_Dispatch (The_Event => E, On => The_Queue);
-
          end if;
 
          Delete (E);
@@ -261,7 +257,7 @@ package body ColdFrame.Events_G.Standard_G is
 
    task body Timer_Manager is
 
-      The_Events : Timed_Event_Queues.Queue;
+      The_Events : Timed_Event_Queues.Queue renames The_Queue.The_Timed_Events;
 
    begin
 
@@ -324,17 +320,14 @@ package body ColdFrame.Events_G.Standard_G is
                declare
                   T : constant Timer_Queue_Entry_P
                     := Timed_Event_Queues.Front (The_Events);
+                  Held : constant Boolean := T.The_Timer = null;
                begin
                   Timed_Event_Queues.Pop (The_Events);
-                  if not T.The_Event.Invalidated then
-                     Post (Event_P (T), The_Queue);
-                     if T.The_Timer /= null then
-                        Remove_Timer_Event (The_Queue);
-                     else
-                        Remove_Held_Event (The_Queue);
-                     end if;
+                  Post (Event_P (T), The_Queue);
+                  if Held then
+                     Remove_Held_Event (The_Queue);
                   else
-                     Delete (T.The_Event);
+                     Remove_Timer_Event (The_Queue);
                   end if;
                end;
 
@@ -366,23 +359,37 @@ package body ColdFrame.Events_G.Standard_G is
 
 
       procedure Post_To_Self (The_Event : Event_P) is
+         use type Ada.Task_Identification.Task_Id;
       begin
-         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
-                                               The_Event);
+         --  We need to be sure that only event handlers called by our
+         --  Dispatcher post events-to-self.
+         if Owner /= Standard_G.Event_Queue_Base (The_Queue.all).
+                        The_Dispatcher'Identity then
+            Ada.Exceptions.Raise_Exception
+              (Exceptions.Use_Error'Identity,
+               "posting to self outside event handler");
+         else
+            Unbounded_Posted_Event_Queues.Append (The_Queue.The_Self_Events,
+                                                  The_Event);
+         end if;
       end Post_To_Self;
 
 
       entry Fetch (The_Event : out Event_P)
-      when Locks = 0
-        and then (not Unbounded_Posted_Event_Queues.Is_Empty
-                    (The_Queue.The_Self_Events)
-                  or else not Unbounded_Posted_Event_Queues.Is_Empty
-                    (The_Queue.The_Events)) is
+      --  If there are any events-to-self, we must have a lock already
+      --  (the previous call to Done didn't release the lock, because
+      --  we don't want external entities to see the intermediate
+      --  states).
+      when not Unbounded_Posted_Event_Queues.Is_Empty
+                 (The_Queue.The_Self_Events)
+        or else (Locks = 0
+                   and then not Unbounded_Posted_Event_Queues.Is_Empty
+                                  (The_Queue.The_Events)) is
       begin
          Locks := 1;
          Owner := Fetch'Caller;
          if not Unbounded_Posted_Event_Queues.Is_Empty
-           (The_Queue.The_Self_Events) then
+                  (The_Queue.The_Self_Events) then
             The_Event :=
               Unbounded_Posted_Event_Queues.Front (The_Queue.The_Self_Events);
             Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Self_Events);
@@ -397,8 +404,13 @@ package body ColdFrame.Events_G.Standard_G is
 
 
       procedure Done is
+         use type Ada.Task_Identification.Task_Id;
       begin
-         Locks := Locks - 1;
+         if Unbounded_Posted_Event_Queues.Is_Empty
+           (The_Queue.The_Self_Events) then
+            Locks := 0;
+            Owner := Ada.Task_Identification.Null_Task_Id;
+         end if;
       end Done;
 
 
@@ -454,6 +466,9 @@ package body ColdFrame.Events_G.Standard_G is
       procedure Unlock is
       begin
          Locks := Locks - 1;
+         if Locks = 0 then
+            Owner := Ada.Task_Identification.Null_Task_Id;
+         end if;
       end Unlock;
 
 
@@ -498,6 +513,8 @@ package body ColdFrame.Events_G.Standard_G is
 
 
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+      use Abstract_Posted_Event_Containers;
+      use Abstract_Timed_Event_Containers;
    begin
 
       --  Perhaps this could be neater, but at least doing it in this
@@ -505,6 +522,48 @@ package body ColdFrame.Events_G.Standard_G is
       --  events on a dead Dispatcher.
       abort The_Queue.The_Timer_Manager;
       abort The_Queue.The_Dispatcher;
+
+      declare
+         It : Abstract_Posted_Event_Containers.Iterator'Class
+           := Unbounded_Posted_Event_Queues.New_Iterator
+           (The_Queue.The_Self_Events);
+      begin
+         while not Is_Done (It) loop
+            declare
+               E : Event_P := Current_Item (It);
+            begin
+               Delete (E);
+            end;
+         end loop;
+      end;
+
+      declare
+         It : Abstract_Posted_Event_Containers.Iterator'Class
+           := Unbounded_Posted_Event_Queues.New_Iterator
+           (The_Queue.The_Events);
+      begin
+         while not Is_Done (It) loop
+            declare
+               E : Event_P := Current_Item (It);
+            begin
+               Delete (E);
+            end;
+         end loop;
+      end;
+
+--        declare
+--           It : Abstract_Timed_Event_Containers.Iterator'Class
+--             := Timed_Event_Queues.New_Iterator
+--                  (The_Queue.The_Timed_Events);
+--        begin
+--           while not Is_Done (It) loop
+--              declare
+--                 E : Event_P := Event_P (Current_Item (It));
+--              begin
+--                 Delete (E);
+--              end;
+--           end loop;
+--        end;
 
    end Tear_Down;
 
