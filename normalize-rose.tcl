@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v b115890bbf37 2003/06/29 16:52:12 simon $
+# $Id: normalize-rose.tcl,v 1a56c27c4ccd 2003/06/29 17:21:16 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1377,6 +1377,7 @@ itcl::class Class {
 	    puts "</type>"
 	} else {
 	    puts -nonewline "<class"
+	    if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
 	    if $abstr {puts -nonewline " abstract=\"yes\""}
 	    if $active {puts -nonewline " active=\"yes\""}
 	    if [info exists max] {puts -nonewline " max=\"$max\""}
