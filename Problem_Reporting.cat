@@ -11,7 +11,7 @@
     documentation 	
 |Classes for Problem Reporting.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 2a8329ac8558 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -341,7 +341,7 @@
 	    documentation 	
 |Classes for Problem Reporting.
 |
-|{ revision = $Revision: 014b87e33ada $ }
+|{ revision = $Revision: 2a8329ac8558 $ }
 	    
 	    zoom       	82
 	    max_height 	28350
@@ -527,7 +527,7 @@
 			nlines     	1
 			max_width  	450
 			justify    	0
-			label      	"r1"!
+			label      	"r1")
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"38EB4E8B0163"
@@ -956,7 +956,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1732
-		    label      	"$Id: Problem_Reporting.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")
+		    label      	"$Id: Problem_Reporting.cat,v 2a8329ac8558 2004/11/11 15:02:08 simon $")
 		(object AssocAttachView "" @22
 		    stereotype 	TRUE
 		    line_color 	3342489
