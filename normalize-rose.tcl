@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c66b7313371a 2001/04/29 10:37:07 simon $
+# $Id: normalize-rose.tcl,v 9b38f4543499 2001/05/09 18:47:12 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -654,7 +654,7 @@ itcl::class Class {
 
     method -complete {} {
 	$this -handleStereotype
-	if $isType {
+	if [expr $isType && [$attributes -size] == 0] {
 	    set dts [[Domain::currentDomain] -getDatatypes]
 	    if [$dts -isPresent $name] {
 		set dt [$dts -atName $name]
@@ -680,21 +680,30 @@ itcl::class Class {
 
     method -generate {domain} {
 	if [expr $singleton && [$this -hasIdentifier]] {
-	    puts stderr "singleton [$this -getName] has identifier(s)"
+	    puts stderr "singleton [$this -getName] has identifier"
 	} elseif [expr !$singleton && ![$this -hasIdentifier]] {
-	    puts stderr "[$this -getName] has no identifier(s)"
+	    puts stderr "[$this -getName] has no identifier"
 	}
-	puts -nonewline "<class"
-	if [info exists max] {puts -nonewline " max=\"$max\""}
-	if $singleton {puts -nonewline " singleton=\"yes\""}
-	if $interface {puts -nonewline " interface=\"yes\""}
-	puts ">"
-	putElement name "$name"
-	putElement abbreviation [$this -getAbbreviation]
-	$this -generateDocumentation
-	$attributes -generate $domain
-	$operations -generate $domain
-	puts "</class>"
+	if $isType {
+	    puts "<type record=\"yes\">"
+	    putElement name "$name"
+	    $this -generateDocumentation
+	    $attributes -generate $domain
+	    $operations -generate $domain
+	    puts "</type>"
+	} else {
+	    puts -nonewline "<class"
+	    if [info exists max] {puts -nonewline " max=\"$max\""}
+	    if $singleton {puts -nonewline " singleton=\"yes\""}
+	    if $interface {puts -nonewline " interface=\"yes\""}
+	    puts ">"
+	    putElement name "$name"
+	    putElement abbreviation [$this -getAbbreviation]
+	    $this -generateDocumentation
+	    $attributes -generate $domain
+	    $operations -generate $domain
+	    puts "</class>"
+	}
     }
 }
 
