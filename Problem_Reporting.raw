@@ -4,8 +4,8 @@
 <date>
 <year>2002</year>
 <month>1</month>
-<day>16</day>
-<time>13:43</time>
+<day>19</day>
+<time>14:28</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -85,19 +85,21 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 <operations>
 <operation>
 <name>report</name>
-<documentation></documentation>
+<documentation>Generate a report on the Component and each associated Defect (if any).</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="class">
 <name>report all</name>
-<documentation></documentation>
+<documentation>Generate a report on all the Components.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="finalize">
 <name>clean</name>
-<documentation></documentation>
+<documentation>Maintain referential integrity when the Component is deleted, by removing any associated Defects.
+
+Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).</documentation>
 <parameters>
 </parameters>
 </operation>
@@ -140,7 +142,7 @@ It should address one logical error (which may correspond to several necessary c
 <operations>
 <operation>
 <name>report</name>
-<documentation></documentation>
+<documentation>Report details of this Defect.</documentation>
 <parameters>
 </parameters>
 </operation>
