@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d39ff68738d2 2004/04/16 15:41:54 simon $ -->
+<!-- $Id: bugs.html,v 57fded4eb685 2004/04/17 17:40:28 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -202,16 +202,6 @@ attributes and no type-specifying tags (<i>{real}</i> etc) into a
 <dd>Handling final states only works properly if the state is a UML
 final state in Rose (a black blob in a circle).
 
-<dt>0245 (raised 19.iii.04)
-
-<dd>There seems to be a problem tearing down instances of
-&#171;active&#187; classes.
-
-<dt>0247 (raised 27.iii.04)
-
-<dd>It's not obvious what the test models <i>Bad Model
-Regressions</i>, <i>Bad Code Regressions</i> are testing <em>for</em>.
-
 <dt>0249 (raised 2.iv.04)
 
 <dd>The <em>&#171;generate&#187;</em> stereotype on nested packages is
@@ -222,6 +212,19 @@ compatibility.</i>
 <dt>0250 (raised 4.iv.04)
 
 <dd>Unsigned types should be supported.
+
+<!-- next: 0253  -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>17.iv.04</h3>
+
+<dt>0247 (raised 27.iii.04)
+
+<dd>It's not obvious what the test models <i>Bad Model
+Regressions</i>, <i>Bad Code Regressions</i> are testing <em>for</em>.
 
 <dt>0251 (raised 15.iv.04)
 
@@ -234,11 +237,9 @@ compatibility.</i>
 should be explicitly forbidden, rather than letting them generate
 non-compiling code.
 
-<!-- next: 0253  -->
+<dl>
 
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>4.iv.04</h3>
 
@@ -2082,6 +2083,19 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="feature">Features</a></h2>
+
+<h3>17.iv.04</h3>
+
+<dl>
+
+<dt>0245 (raised 19.iii.04)
+
+<dd>There seems to be a problem tearing down instances of
+&#171;active&#187; classes.
+<br><i>This seems to be a problem with the <tt>-fstack-check</tt>
+compiler option.</i>
+
+</dl>
 
 <h3>19.iii.04</h3>
 
