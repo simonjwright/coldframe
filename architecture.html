@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v a16d71a333ce 2001/07/05 18:43:11 simon $ -->
+<!-- $Id: architecture.html,v 65af79906813 2001/07/13 18:40:46 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -109,16 +109,15 @@ where clearly there are many <em>Window</em>s but only one
 <p>All parent classes in inheritance relationships are, in a sense,
 abstract: whenever an instance of the parent class exists, there
 exists precisely one related instance of one of the child
-classes. Inheritance relationships are also formalised; typically (in
-ColdFrame, always) the child class has the same identifying attributes
-as the parent.
+classes. Inheritance relationships are also formalised; typically the
+child class has the same identifying attributes as the parent, but in
+ColdFrame the formalization is a reference to the parent.
 
-<p>ColdFrame doesn't support polymorphism. Clearly it could (to a
-degree, perhaps by providing operations paralleling the parent's and,
-by default. delegating to them). Of course, the analyst can put the
-operations in if required! My personal view is that polymorphism
-doesn't actually happen all that often in domains close to the user
-(higher-level ones), as against low-level implementation domains.
+<p>ColdFrame supports polymorphism. Instance operations marked
+&#171;abstract&#187; are dispatched to the current child (skipping
+down the inheritance tree until a concrete implementation is found),
+while a child class receives upward-dispatching implementations of all
+concrete parental instance operations.
 
 <p>In spite of the above, with ColdFrame you usually don't need to
 provide referential attributes (it would be quite cumbersome to do so,
@@ -129,11 +128,12 @@ a 1c:1c association (Shlaer-Mellor notation; "1c" means "0..1".).
 
 <h3>Use of Stereotypes</h3>
 
+<h4>Attributes</h4>
+
 <p>Identifying attributes are marked with the stereotype
 <em>&#171;id&#187;</em>.
 
-<p>Class operations are marked with the stereotype
-<em>&#171;class&#187;</em>.
+<h4>Classes</h4>
 
 <p>Classes which represent user-defined types are marked with the
 stereotype <em>&#171;type&#187;</em>.
@@ -145,6 +145,20 @@ the stereotype <em>&#171;singleton&#187;</em>.
 the Domain, are marked with the stereotype
 <em>&#171;interface&#187;</em>. This implies the stereotype
 <em>&#171;singleton&#187;</em>.
+
+<h4>Operations</h4>
+
+<p>Dispatching operations are marked with the stereotype
+<em>&#171;abstract&#187;</em>.
+
+<p>Class operations are marked with the stereotype
+<em>&#171;class&#187;</em>.
+
+<p>Operations to be called from the Domain <tt>Initialize</tt>
+procedure are marked with the stereotype
+<em>&#171;init&#187;</em>. This implies the stereotype
+<em>&#171;class&#187;</em>. These operations must be parameterless
+procedures.
 
 <h3><a name="annotation">Other annotations</a></h3>
 
