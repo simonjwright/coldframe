@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a263a5471a9c 2001/10/08 18:53:03 simon $
+# $Id: normalize-rose.tcl,v c23f1a844592 2001/10/10 04:55:29 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -162,12 +162,9 @@ itcl::class Base {
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
 	    if [catch {$this -$i "$a($i)"}] {
-		puts stderr \
+		Warning \
 			"XML attribute <$tag $i=\"$a($i)\"> not handled"
 	    }
-#	    if [expr [string compare "stereotype" $i] == 0] {
-#		$this -stereotype "$a($i)"
-#	    }
 	}
     }
 
@@ -200,7 +197,7 @@ itcl::class Base {
 
     # called when the outermost closing </tag> is read to do the second
     # pass of processing
-    method -generate {outermost} {error "CF: undefined $tag method -generate"}
+    method -generate {outermost} {Error "CF: undefined $tag method -generate"}
 }
 
 
@@ -266,7 +263,7 @@ itcl::class Element {
 		$pattern \
 		$a wh attr dummy value]} {} {
 	    if [catch {$this -[string tolower $attr] $value}] {
-		puts stderr \
+		Warning \
 		    "annotation not handled, \"$name -[string tolower $attr] $value\""
 	    }
 	    regexp -nocase -indices $pattern $a wh
@@ -345,7 +342,7 @@ itcl::class Element {
 	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
 		# n is the tag name, v the tag value if any
 		if [catch {$this -[string tolower $n] "$v"}] {
-		    puts stderr \
+		    Warning \
 		        "stereotype not handled, \"$name -[string tolower $n] $v\""
 		}
 		regexp -nocase -indices $p $s wh
@@ -358,8 +355,8 @@ itcl::class Element {
     method -complete {} {
 	$this -handleStereotype
 	if [catch {[stack -top] -add $this} msg] {
-	    puts "error adding a [$this -getTag] to a [[stack -top] -getTag]"
-	    error $msg
+	    Error \
+		    "error \"$msg\" adding a [$this -getTag] to a [[stack -top] -getTag]"
 	}
     }
 }
@@ -428,7 +425,7 @@ itcl::class Container {
     # Add the given object to the container at entry "name"
     method -add {object name} {
 	if [info exists byName($name)] {
-	    error "CF: [$this -className] already holds an element named $name"
+	    Error "CF: [$this -className] already holds an element named $name"
 	}
 	set newIndex [$this -size]
 	set byName($name) $newIndex
@@ -438,7 +435,7 @@ itcl::class Container {
     # Find the index of a named element in the Container
     method -index {name} {
 	if [info exists byName($name)] {return $byName($name)}
-	error "CF: [$this -className] item $name not found\
+	Error "CF: [$this -className] item $name not found\
 		([$this -size] entries, [array names byName])"
     }
 
@@ -447,7 +444,7 @@ itcl::class Container {
 	if {$index < [$this -size]} {
 	    return $byNumber($index)
 	}
-	error "CF: [$this -className] index $index out of range\
+	Error "CF: [$this -className] index $index out of range\
 		([$this -size] entries)"
     }
  
@@ -709,12 +706,12 @@ itcl::class Class {
 	    "1..n" {}
 	    "0..0" -
 	    "0..1" {
-		puts stderr "cardinality $c ignored for $name"
+		Warning "cardinality $c ignored for $name"
 	    }
 	    "1..1" {$this -singleton dummy}
 	    default {
 		if ![regexp {^[0-9]+$} $c] {
-		    error "bad cardinality $c for $name"
+		    Error "bad cardinality $c for $name"
 		}
 		$this -max $c
 	    }
@@ -829,7 +826,7 @@ itcl::class Class {
     }
 
     method -addReferentialAttribute {a} {
-	puts stderr "referential attribute [$a -getName] added to $name"
+	Message "referential attribute [$a -getName] added to $name"
 	$a -owner $attributes
 	$attributes -add $a
     }
@@ -858,7 +855,7 @@ itcl::class Class {
 	    $dt -documentation $documentation
 	    $dt -annotation $annotation
 	} elseif $isControl {
-	    puts stderr "<<control>> not yet handled properly"
+	    Warning "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
 	} else {
 	    if $isType {
@@ -886,11 +883,11 @@ itcl::class Class {
 
     method -generate {domain} {
 	if [expr $isType && [$this -hasIdentifier]] {
-	    puts stderr "type [$this -getName] has identifier"
+	    Error "type [$this -getName] has identifier"
 	} elseif [expr $singleton && [$this -hasIdentifier]] {
-	    puts stderr "singleton [$this -getName] has identifier"
+	    Error "singleton [$this -getName] has identifier"
 	} elseif [expr !($singleton || $isType) && ![$this -hasIdentifier]] {
-	    puts stderr "[$this -getName] has no identifier"
+	    Error "[$this -getName] has no identifier"
 	}
 	if $isType {
 	    puts -nonewline "<type"
@@ -1032,7 +1029,7 @@ itcl::class Parameter {
 	    inout    {set modeInfo inout}
 	    out      {set modeInfo out}
 	    default  {
-		error "unrecognised parameter mode $value"
+		Error "unrecognised parameter mode $value"
 	    }
 	}
     }
@@ -1102,7 +1099,7 @@ itcl::class Association {
 	}
 	# XXX could just check for ^M here?
 	if [string match "M:M" $type] {
-	    error "illegal M:M association [$this -getName]"
+	    Error "illegal M:M association [$this -getName]"
 	}
 	return $type
     }
@@ -1111,13 +1108,13 @@ itcl::class Association {
 	# -relationshipType may swap the roles over! Must be called before
 	# anything else is done.
 	if {[string length $name] == 0} {
-	    error "unnamed association"
+	    Error "unnamed association"
 	}
 	if {[string length [$role1 -getName]] == 0} {
-	    error "unnamed role in association $name"
+	    Error "unnamed role in association $name"
 	}
 	if {[string length [$role2 -getName]] == 0} {
-	    error "unnamed role in association $name"
+	    Error "unnamed role in association $name"
 	}
 	$this -relationshipType
 	[stack -top] -add $this $name
@@ -1142,14 +1139,14 @@ itcl::class Association {
 		# as the source end
 		if [$role2 -getSourceEnd] {
 		    if [$role1 -getSourceEnd] {
-			error "both ends of $name are marked as source"
+			Error "both ends of $name are marked as source"
 		    }
 		    $cl2 -addFormalizingAttributesTo $cl1 $this $role2 0
 		} elseif [$role1 -getSourceEnd] {
 		    $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
-			error "neither end of biconditional $name\
+			Error "neither end of biconditional $name\
 				is marked as source"
 		    }
 		    $role2 -setSourceEnd 1
@@ -1158,7 +1155,7 @@ itcl::class Association {
 		    $role1 -setSourceEnd 1
 		    $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
 		} else {
-		    error "neither end of unconditional $name\
+		    Error "neither end of unconditional $name\
 			    is marked as source"
 		}
 	    }
@@ -1174,7 +1171,7 @@ itcl::class Association {
 		# as the source end
 		if [$role2 -getSourceEnd] {
 		    if [$role1 -getSourceEnd] {
-			error "both ends of $name are marked as source"
+			Error "both ends of $name are marked as source"
 		    }
 		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 0
 		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 1
@@ -1183,7 +1180,7 @@ itcl::class Association {
 		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 0
 		} elseif [$role1 -getConditionality] {
 		    if [$role2 -getConditionality] {
-			error "neither end of biconditional $name\
+			Error "neither end of biconditional $name\
 				is marked as source"
 		    }
 		    $role2 -setSourceEnd 1
@@ -1194,7 +1191,7 @@ itcl::class Association {
 		    $cl1 -addFormalizingAttributesTo $assoc $this $role1 1
 		    $cl2 -addFormalizingAttributesTo $assoc $this $role2 0
 		} else {
-		    error "neither end of unconditional $name\
+		    Error "neither end of unconditional $name\
 			    is marked as source"
 		}
 	    }
@@ -1222,7 +1219,7 @@ itcl::class Association {
 
     method -generate {domain} {
 	if [$this -needsFormalizing] {
-	    error "[$this -getName] is unformalized"
+	    Error "[$this -getName] is unformalized"
 	}
 	puts "<association>"
 	putElement name $name
@@ -1269,7 +1266,7 @@ itcl::class Role {
 	    "n"     {set conditional 0; set cardinality "M"}
 	    "0..1"  {set conditional 1; set cardinality "1"}
 	    "0..n"  {set conditional 1; set cardinality "M"}
-	    default {error "unrecognised multiplicity \"$c\" in role \"$name\""}
+	    default {Error "unrecognised multiplicity \"$c\" in role \"$name\""}
 	}
     }
 
@@ -1346,7 +1343,7 @@ itcl::class Inheritance {
 
     method -complete {} {
 	if {[string length $name] == 0} {
-	    error "unnamed inheritance"
+	    Error "unnamed inheritance"
 	}
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
@@ -1384,7 +1381,7 @@ itcl::class Inheritance {
 
     method -generate {domain} {
 	if [$this -needsFormalizing] {
-	    error "[$this -getName] is unformalized"
+	    Error "[$this -getName] is unformalized"
 	}
 	puts "<inheritance>"
 	putElement name $name
@@ -1442,7 +1439,7 @@ itcl::class Argument {
     proc parse {arg} {
 	set spl [split $arg ":"]
 	if [expr [llength $spl] != 2] {
-	    error "invalid argument \"$arg\""
+	    Error "invalid argument \"$arg\""
 	}
 	set n [normalize [lindex $spl 0]]
 	set t [normalize [lindex $spl 1]]
@@ -1529,7 +1526,7 @@ itcl::class State {
 #		set name "Final"
 #	    } else {
 #		# how can I identify this more clearly?
-#		error "unnamed state"
+#		Error "unnamed state"
 #	    }
 #	}
 	if [info exists entryactions] {
@@ -1722,7 +1719,7 @@ itcl::class Datatype {
 		putElement standard $type
 	    }
 	    default {
-		error "CF: oops! dataType \"$dataType\""
+		Error "CF: oops! dataType \"$dataType\""
 	    }
 	}
 	puts "</type>"
@@ -2017,6 +2014,30 @@ proc endTag {tag} {
 ###########
 
 Stack stack
+set verbose 0
+set errors 0
+set stackDump 0
+
+#############
+# Utilities #
+#############
+
+proc Message {str} {
+    global verbose
+    if $verbose {
+	puts stderr $str
+    }
+}
+
+proc Warning {str} {
+    puts stderr $str
+}
+
+proc Error {str} {
+    global errors
+    puts stderr $str
+    incr errors
+}
 
 ################
 # Main program #
@@ -2024,16 +2045,20 @@ Stack stack
 
 # process command line:
 # flags
-#   --version cf-20010607
 #   --casing filename
+#   --stack-dump
+#   --verbose
+#   --version cf-20010607
 
 set argState expectingFlag
 foreach arg $argv {
     switch -- $argState {
 	expectingFlag {
 	    switch -- $arg {
-		--version {set argState expectingVersion}
 		--casing  {set argState expectingCaseExceptionFile}
+		--stack-dump {set stackDump 1}
+		--verbose {set verbose 1}
+		--version {set argState expectingVersion}
 		default   {error "unknown flag $arg"}
 	    }
 	}
@@ -2054,11 +2079,16 @@ $parser configure \
 	-elementendcommand endTag \
 	-characterdatacommand textInTag
 
-$parser parse [read stdin]
-exit 0
+if $stackDump {
+    $parser parse [read stdin]
+} else {
+    if [catch {$parser parse [read stdin]} msg] {
+	puts stderr "CF: internal error: $msg"
+    }
+}
 
-if [catch {$parser parse [read stdin]} msg] {
-    puts stderr "error: $msg"
+if $errors {
+    puts stderr "$errors errors detected."
     exit 1
 }
 
