@@ -12,7 +12,7 @@ begin
    GNAT.Exception_Traces.Trace_On
      (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
-   Ada.Text_IO.Put_Line ("This test suite takes approximately 35 seconds.");
+   Ada.Text_IO.Put_Line ("This test suite takes approximately 40 seconds.");
 
    Run;
 
