@@ -19,7 +19,7 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_one_to_one_collection.adb,v 0c24f384ffae 2001/05/05 09:38:43 simon $
+-- $Id: coldframe-navigate_from_one_to_one_collection.adb,v 56db6b11fe4a 2001/05/06 11:18:06 simon $
 
 function ColdFrame.Navigate_From_One_To_One_Collection
    (Input : From) return To is
@@ -36,7 +36,6 @@ function ColdFrame.Navigate_From_One_To_One_Collection
   procedure Generate_Result is new First.Visit (Add_Single_Navigation);
 
 
-  It : First.Iterator'Class := New_Iterator (Input);
   Result : To;
 
 
@@ -46,11 +45,8 @@ function ColdFrame.Navigate_From_One_To_One_Collection
     Add_To_Result (Result, Navigate_From_First (This));
   end Add_Single_Navigation;
 
-  procedure Null_Clear (T : in out To) is
-    pragma Warnings (Off, T);
-  begin
-    null;
-  end Null_Clear;
+
+  It : First.Iterator'Class := New_Iterator (Input);
 
 begin
   Generate_Result (It);
