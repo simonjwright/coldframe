@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 44937df70349 2002/02/17 18:10:37 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v 43f04e24c9b4 2002/02/18 06:18:11 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,11 +32,8 @@
   <!-- Generate specs for Association packages. -->
   <xsl:template match="domain/association" mode="association-collection-spec">
 
-    <xsl:variable name="class-1" select="role[1]/classname"/>
-    <xsl:variable name="class-2" select="role[2]/classname"/>
+    <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
 
-    <xsl:if test="not(/domain/class[name=$class-1 or name=$class-2]/@singleton)">
-      
       <!-- Context clauses. -->
       <xsl:call-template name="association-collection-spec-context"/>
       
@@ -90,10 +87,7 @@
   <!-- Generate bodies for Association packages. -->
   <xsl:template match="domain/association" mode="association-collection-body">
 
-    <xsl:variable name="class-1" select="role[1]/classname"/>
-    <xsl:variable name="class-2" select="role[2]/classname"/>
-
-    <xsl:if test="not(/domain/class[name=$class-1 or name=$class-2]/@singleton)">
+    <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
       
       <!-- Context clauses. -->
       <xsl:call-template name="association-collection-body-context"/>
@@ -500,7 +494,16 @@
     <xsl:choose>
 
       <xsl:when test="$role-a/@multiple">
-        
+
+        <xsl:call-template name="navigation-collection-many-to-one-body">
+          
+          <xsl:with-param name="a" select="$c"/>
+          <xsl:with-param name="b" select="$b"/>
+          <xsl:with-param name="role-a" select="$role-a"/>
+
+        </xsl:call-template>
+
+        <!--
         <xsl:value-of select="$II"/>
         <xsl:text>function Nav is new ColdFrame.Navigate_From_Many_Collection&#10;</xsl:text>
         
@@ -582,6 +585,7 @@
         <xsl:value-of select="$role-a/name"/>
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
+        -->
 
       </xsl:when>
       
@@ -750,7 +754,7 @@
     <!-- from one to one
             In_It : {a}.Abstract_Containers.Iterator'Class
               := {a}.Collections.New_Iterator ({a-abbrev});
-            T : B.Handle;
+            T : {b}.Handle;
             Result : {b}.Collections.Collection;
             use {a}.Abstract_Containers;
             use {b};
@@ -853,17 +857,22 @@
     <!-- from many to one
             In_It : {a}.Abstract_Containers.Iterator'Class
               := {a}.Collections.New_Iterator ({a-abbrev});
+            T : {b}.Handle;
             Tmp : {b}.Sets.Set;
             Tmp_It : {b}.Abstract_Containers.Iterator'Class
               := {b}.Sets.New_Iterator (Tmp);
             Result : {b}.Collections.Collection;
             use {a}.Abstract_Containers;
+            use {b};
             use {b}.Abstract_Containers;
-            use {b}.Sets;
             use {b}.Collections;
+            use {b}.Sets;
          begin
             while not Is_Done (In_It) loop
-               Add (Tmp, {role-a} (Current_Item (In_It)));
+               T := {role-a} (Current_Item (In_It));
+               if T /= null then
+                   Add (Tmp, T);
+               end if;
                Next (In_It);
             end loop;
             Reset (Tmp_It);
@@ -886,6 +895,11 @@
     <xsl:text>.Collections.New_Iterator (</xsl:text>
     <xsl:value-of select="../class[name=$a]/abbreviation"/>
     <xsl:text>);&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>T : </xsl:text>
+    <xsl:value-of select="$b"/>
+    <xsl:text>.Handle;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>Tmp : </xsl:text>
@@ -915,17 +929,22 @@
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
+    <xsl:text>;&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>use </xsl:text>
+    <xsl:value-of select="$b"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Sets;&#10;</xsl:text>
+    <xsl:text>.Collections;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
-    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>.Sets;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
@@ -934,9 +953,18 @@
     <xsl:text>while not Is_Done (In_It) loop&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
-    <xsl:text>Add (Tmp, </xsl:text>
+    <xsl:text>T := </xsl:text>
     <xsl:value-of select="$role-a/name"/>
-    <xsl:text> (Current_Item (In_It)));&#10;</xsl:text>
+    <xsl:text> (Current_Item (In_It));&#10;</xsl:text>
+
+    <xsl:value-of select="$III"/>
+    <xsl:text>if T /= null then&#10;</xsl:text>
+
+    <xsl:value-of select="$IIII"/>
+    <xsl:text>Add (Tmp, T);&#10;</xsl:text>
+
+    <xsl:value-of select="$III"/>
+    <xsl:text>end if;&#10;</xsl:text>
 
     <xsl:value-of select="$III"/>
     <xsl:text>Next (In_It);&#10;</xsl:text>
