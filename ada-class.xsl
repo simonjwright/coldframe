@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 171b4c7fc507 2003/08/30 19:47:37 simon $ -->
+<!-- $Id: ada-class.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -449,9 +449,16 @@
           <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- If the (active) class has a priority specified, need System. -->
-        <xsl:if test="@priority">
-          <xsl:text>with System;&#10;</xsl:text>
+        <xsl:if test="@active">
+
+          <!-- Need Ada.Unchecked_Deallocation. -->
+          <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+          
+          <!-- If the (active) class has a priority specified, need System. -->
+          <xsl:if test="@priority">
+            <xsl:text>with System;&#10;</xsl:text>
+          </xsl:if>
+
         </xsl:if>
 
       </xsl:otherwise>
@@ -1113,6 +1120,12 @@
 
     </xsl:choose>
 
+    <xsl:if test="@active">
+      <!-- .. allocate the task .. -->
+      <xsl:value-of select="$II"/>
+      <xsl:text>Result.The_T := new T (Result);&#10;</xsl:text>
+    </xsl:if>
+
     <!-- .. initialize state machine .. -->
     <!-- (after we've stored the new instance, in case it's a singleton,
          which means that Enter_{next-state} requires This to be set up) -->
@@ -1285,7 +1298,9 @@
 
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
-      <xsl:text>abort H.The_T;&#10;</xsl:text>
+      <xsl:text>abort H.The_T.all;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>Free (H.The_T);&#10;</xsl:text>
     </xsl:if>
 
     <!-- Finalize any Timers. -->
@@ -1352,7 +1367,9 @@
 
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
-      <xsl:text>abort This.The_T;&#10;</xsl:text>
+      <xsl:text>abort This.The_T.all;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
     <!-- Finalize any Timers. -->
@@ -1964,6 +1981,8 @@
            pragma Storage_Size ({stack});
            entry {e} ({parameters});
          end T;
+         type T_P is access T;
+         procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
          -->
     <xsl:if test="@priority">
       <xsl:value-of select="$I"/>
@@ -1992,6 +2011,10 @@
     </xsl:apply-templates>
     <xsl:value-of select="$I"/>
     <xsl:text>end T;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>type T_P is access T;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 6dfdb95ed63f 2003/07/13 06:36:14 simon $ -->
+<!-- $Id: ada-teardown.xsl,v dd318091d39b 2003/09/03 20:16:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -136,8 +136,9 @@
                 if This /= null then
                    {teardown} {(This)};                - if any
                    if not This.The_T'Terminated then   - if active
-                      abort This.The_T;
+                      abort This.The_T.all;
                    end if;
+                   Free (This.The_T);
                    Free (This);
                 end if;
              end {Domain}.{Class}.Tear_Down;
@@ -173,13 +174,16 @@
           <xsl:value-of select="$II"/>
           <xsl:text>if not This.The_T'Terminated then&#10;</xsl:text>
           <xsl:value-of select="$III"/>
-          <xsl:text>abort This.The_T;&#10;</xsl:text>
+          <xsl:text>abort This.The_T.all;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>end if;&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>Free (This.The_T);&#10;</xsl:text>
         </xsl:if>
         
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
+
         
         <xsl:value-of select="$I"/>
         <xsl:text>end if;&#10;</xsl:text>
@@ -206,8 +210,9 @@
                    H := Handle (Current_Item (It));
                    {teardown} (H);                     - if any
                    if not H.The_T'Terminated then      - if active
-                      abort H.The_T;
+                      abort H.The_T.all;
                    end if;
+                   Free (H.The_T);
                    Free (H);
                    Next (It);
                 end loop;
@@ -254,9 +259,11 @@
           <xsl:value-of select="$II"/>
           <xsl:text>if not H.The_T'Terminated then&#10;</xsl:text>
           <xsl:value-of select="$III"/>
-          <xsl:text>abort H.The_T;&#10;</xsl:text>
+          <xsl:text>abort H.The_T.all;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>end if;&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>Free (H.The_T);&#10;</xsl:text>
         </xsl:if>
 
         <xsl:value-of select="$II"/>
