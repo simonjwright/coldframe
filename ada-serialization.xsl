@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 2004325cb9c1 2003/02/20 20:54:03 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 34d5259cabe9 2003/03/01 11:42:05 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -132,16 +132,19 @@
          begin
             return "<record name=""" & Name & """>" & ASCII.LF
               & "<field name=""{attr-name}"">"
-              & S.{attr-name}'Img
+              & S.Payload.{attr-name}'Img
               & "</field>" & ASCII.LF
               & "<field name=""{time-attr-name}"">"
-              & ColdFrame.Project.Calendar.Image (S.{time-attr-name})
+              & ColdFrame.Project.Calendar.Image (S.Payload.{time-attr-name})
               & "</field>" & ASCII.LF
-              & "<field name=""{time-attr-name}"">"
-              & Ada.Strings.Unbounded.To_String (S.{time-attr-name})
+              & "<field name=""{ustring-attr-name}"">"
+              & Ada.Strings.Unbounded.To_String (S.Payload.{ustring-attr-name})
               & "</field>" & ASCII.LF
-              & "<field name=""{time-attr-name}"">"
-              & {type}_Package.To_String (S.{time-attr-name})
+              & "<field name=""{bstring-attr-name}"">"
+              & {type}_Package.To_String (S.Payload.{bstring-attr-name})
+              & "</field>" & ASCII.LF
+              & "<field name=""{imaged-attr-name}"">"
+              & {image} (S.Payload.{imaged-attr-name})
               & "</field>" & ASCII.LF
               & "</record>";
          end Image;
@@ -165,85 +168,155 @@
     <xsl:value-of select="$II"/>
     <xsl:text>return "&lt;record name=""" &amp; Name &amp; """&gt;" &amp; ASCII.LF&#10;</xsl:text>
 
-    <xsl:for-each select="attribute">
+    <!-- XXX we really need a procedure for this! -->
 
-      <xsl:choose>
+    <xsl:choose>
+      
+      <xsl:when test="attribute">
+        
+        <xsl:for-each select="attribute">
 
-        <xsl:when test="type='Date' or type='Time'">
-          <!-- Date and time have to be split over several lines. -->
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;"&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; </xsl:text>
-          <xsl:text>ColdFrame.Project.Calendar.Image (S.Payload.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>)&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:when>
+          <xsl:choose>
+            
+            <xsl:when test="type='Date' or type='Time'">
+              <!-- Date and time have to be split over several lines. -->
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;field name=""</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>""&gt;"&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; </xsl:text>
+              <xsl:text>ColdFrame.Project.Calendar.Image (S.Payload.</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>)&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="type='Text' or type='Unbounded_String'">
+              <!-- Unbounded Strings have to be split over several lines. -->
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;field name=""</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>""&gt;"&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; </xsl:text>
+              <xsl:text>Ada.Strings.Unbounded.To_String (S.Payload.</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>)&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="/domain/type[name=current()/type]/string">
+              <!-- Bounded Strings have to be split over several lines. -->
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;field name=""</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>""&gt;"&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; </xsl:text>
+              <xsl:value-of select="type"/>
+              <xsl:text>_Package.To_String (S.Payload.</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>)&#10;</xsl:text>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="/domain/type[name=current()/type]/@image">
+              <!-- The type has a user-defined image operation. -->
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; </xsl:text>
+              <xsl:value-of select="/domain/type[name=current()/type]/@image"/>
+              <xsl:text> ("</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>.", S.Payload.</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>) &amp; ASCII.LF&#10;</xsl:text>
+            </xsl:when>
+            
+            <xsl:otherwise>
+              <xsl:value-of select="$IIC"/>
+              <xsl:text>&amp; "&lt;field name=""</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>""&gt;" &amp; </xsl:text>
+              <xsl:text>S.Payload.</xsl:text>
+              <xsl:value-of select="name"/>
+              <xsl:text>'Img &amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+            </xsl:otherwise>
+            
+          </xsl:choose>
+          
+        </xsl:for-each>
+        
+      </xsl:when>
 
-        <xsl:when test="type='Text' or type='Unbounded_String'">
-          <!-- Unbounded Strings have to be split over several lines. -->
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;"&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; </xsl:text>
-          <xsl:text>Ada.Strings.Unbounded.To_String (S.Payload.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>)&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:when>
+      <xsl:otherwise>
+        
+        <xsl:choose>
 
-        <xsl:when test="/domain/type[name=current()/type]/string">
-          <!-- Bounded Strings have to be split over several lines. -->
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;"&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; </xsl:text>
-          <xsl:value-of select="type"/>
-          <xsl:text>_Package.To_String (S.Payload.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>)&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:when>
+          <xsl:when test="type='Date' or type='Time'">
+            <!-- Date and time have to be split over several lines. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:text>ColdFrame.Project.Calendar.Image (S.Payload)&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:when test="type='Text' or type='Unbounded_String'">
+            <!-- Unbounded Strings have to be split over several lines. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:text>Ada.Strings.Unbounded.To_String (S.Payload)&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:when test="/domain/type[name=current()/type]/string">
+            <!-- Bounded Strings have to be split over several lines. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:value-of select="type"/>
+            <xsl:text>_Package.To_String (S.Payload)&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:when test="@image">
+            <!-- The type has a user-defined image operation. -->
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; </xsl:text>
+            <xsl:value-of select="@image"/>
+            <xsl:text> ("", S.Payload) &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:when>
+          
+          <xsl:otherwise>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>&amp; "&lt;field name=""</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>""&gt;" &amp; </xsl:text>
+            <xsl:text>S.Payload'Img &amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
+          </xsl:otherwise>
+          
+        </xsl:choose>
+        
+      </xsl:otherwise>
 
-        <xsl:when test="/domain/type[name=current()/type]/@image">
-          <!-- The type ha a user-defined image operation. -->
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;"&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; </xsl:text>
-          <xsl:value-of select="/domain/type[name=current()/type]/@image"/>
-          <xsl:text> (S.Payload.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>)&#10;</xsl:text>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:value-of select="$IIC"/>
-          <xsl:text>&amp; "&lt;field name=""</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>""&gt;" &amp; </xsl:text>
-          <xsl:text>S.Payload.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>'Img &amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
-        </xsl:otherwise>
-
-      </xsl:choose>
-
-    </xsl:for-each>
+    </xsl:choose>
 
     <xsl:value-of select="$IIC"/>
     <xsl:text>&amp; "&lt;/record&gt;";&#10;</xsl:text>
