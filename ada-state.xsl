@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f9b89e0f1a6a 2002/10/11 05:31:50 simon $ -->
+<!-- $Id: ada-state.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -437,6 +437,7 @@
 
          <xsl:when test="../../../operation[name=$n]/@return">
            <xsl:message terminate="yes">
+             <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
              <xsl:value-of select="$n"/>
@@ -446,15 +447,15 @@
 
          <xsl:when test="$n='Delete' and $singleton">
            <xsl:message terminate="yes">
+             <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text> not allowed as a singleton entry action.</xsl:text>
+             <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
            </xsl:message>           
          </xsl:when>
          
          <xsl:when test="count($params)&gt;1">
            <xsl:message terminate="yes">
+             <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
              <xsl:value-of select="$n"/>

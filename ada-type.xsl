@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v ec7023df1d68 2002/12/03 21:15:34 simon $ -->
+<!-- $Id: ada-type.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -189,7 +189,7 @@
           <xsl:message terminate="yes">
             <xsl:for-each select="$missing">
               <xsl:sort select="name"/>
-              <xsl:text>Couldn't generate type </xsl:text>
+              <xsl:text>Error: couldn't generate type </xsl:text>
               <xsl:value-of select="name"/>
               <xsl:text>&#10;</xsl:text>
               <xsl:for-each select="attribute/type[not($processed/name=.)]">

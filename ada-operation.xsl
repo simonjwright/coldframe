@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 694c73190bad 2002/12/03 21:13:02 simon $ -->
+<!-- $Id: ada-operation.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -274,10 +274,6 @@
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <!-- <xsl:message>
-      <xsl:value-of select="$current/name"/>.<xsl:value-of select="name"/>
-    </xsl:message> -->
-
     <xsl:choose>
 
       <xsl:when test="$current=..">
@@ -322,7 +318,7 @@
 
             <xsl:if test="not(/domain/inheritance[parent=$current/name])">
               <xsl:message terminate="yes">
-                <xsl:text>CF: no concrete operation for </xsl:text>
+                <xsl:text>Error: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
                 <xsl:text> in </xsl:text>
                 <xsl:value-of select="$current/name"/>

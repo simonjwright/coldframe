@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v cc6e1c4832b5 2002/11/22 18:10:48 simon $ -->
+<!-- $Id: ada-class.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -892,7 +892,7 @@
       <xsl:otherwise>
         <xsl:if test="attribute/type='Autonumber'">
           <xsl:message terminate="yes">
-            <xsl:text>CF: invalid use of Autonumber in </xsl:text>
+            <xsl:text>Error: invalid use of Autonumber in </xsl:text>
             <xsl:value-of select="name"/>
           </xsl:message>
         </xsl:if>
@@ -1746,7 +1746,7 @@
 
         <xsl:otherwise>
           <xsl:message>
-            <xsl:text>CF: </xsl:text>
+            <xsl:text>Warning: </xsl:text>
             <xsl:value-of select="../name"/>
             <xsl:text>: no rule to hash </xsl:text>
             <xsl:value-of select="$type-name"/>
