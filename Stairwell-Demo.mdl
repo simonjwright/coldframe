@@ -56,12 +56,12 @@
 	    (object Class_Category "House Management"
 		is_unit    	TRUE
 		is_loaded  	FALSE
-		file_name  	"$ColdFrame\\House_Management.cat"
+		file_name  	"$CURDIR\\House_Management.cat"
 		quid       	"3DFCF75D00CF")
 	    (object Class_Category "Digital IO"
 		is_unit    	TRUE
 		is_loaded  	FALSE
-		file_name  	"$ColdFrame\\Digital_IO.cat"
+		file_name  	"$CURDIR\\Digital_IO.cat"
 		quid       	"3DFCF76B0011"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
@@ -74,10 +74,10 @@
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::House Management" @1
-			location   	(480, 400)
+			location   	(480, 405)
 			label      	(object ItemLabel
 			    Parent_View 	@1
-			    location   	(336, 316)
+			    location   	(336, 321)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -90,10 +90,10 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Digital IO" @2
-			location   	(1424, 400)
+			location   	(1425, 405)
 			label      	(object ItemLabel
 			    Parent_View 	@2
-			    location   	(1280, 316)
+			    location   	(1281, 321)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -109,7 +109,7 @@
 			location   	(175, 1040)
 			nlines     	1
 			max_width  	1585
-			label      	"$Id: Stairwell-Demo.mdl,v 9bc491d989e2 2002/12/28 17:25:18 simon $")))))
+			label      	"$Id: Stairwell-Demo.mdl,v 9f30493aa17c 2003/01/04 11:40:49 simon $")))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"3DFCF74B02E9"
 	physical_models 	(list unit_reference_list)
