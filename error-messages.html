@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 0f7d6768955f 2002/12/10 20:09:38 simon $ -->
+<!-- $Id: error-messages.html,v aba9e0948243 2003/01/18 16:16:03 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -33,6 +33,8 @@ want anything to happen!
 
 <dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>[[source]]</tt> on both ends of the named association.
 
+<dt>Error: discriminated type <i>type</i> has no attributes <dd>Discriminated types must have attributes.
+
 <dt>Error: illegal lower bound 1 in cardinality "<i>cardinality</i>" for <i>name</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
 <dt>Error: illegal lower bound (<i>b</i>) of multiplicity in role <i>Association.Role</i> <dd>The lower bound of a role multiplicity must be 0 or 1.
@@ -44,8 +46,6 @@ want anything to happen!
 <dt>Error: illegal name "<i>name</i>" in [$cls -getName].[$op -getName] <dd>There's some illegal character in an operation's parameter (you may have used a semicolon rather than a comma to separate parameters).
 
 <dt>Error: illegal name "<i>name</i>" in &lt;<i>tag</i>&gt; <dd>There's some illegal character in a &lt;tag&gt; element (eg, a &lt;class&gt;.
-
-<dt>Error: <i>name</i> has no identifier <dd>Ordinary classes must have identifiers.
 
 <dt>Error: missing attribute name in <i>Class</i> <dd>One of the attributes of the named class has no name.
 
@@ -59,6 +59,8 @@ want anything to happen!
 
 <dt>Error: must specify cardinality for <i>name</i> as 0..<i>bound</i> <dd>In class <i>name</i>, <tt>1..1</tt> is legal for a class's cardinality, otherwise it must be <tt>1</tt>, the literal <tt>n</tt> or <tt>0..<i>m</i></tt>.
 
+<dt>Error: <i>name</i> has no identifier <dd>Ordinary classes must have identifiers.
+
 <dt>Error: neither end of biconditional <i>name</i> is marked as source <dd>Symmetric 0..1:0..1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
 
 <dt>Error: neither end of unconditional <i>name</i> is marked as source <dd>Symmetric 1:1 associations must have the source end marked. Place <tt>[[source]]</tt> on the end you want it to be most efficient to navigate <i>to</i>.
@@ -66,6 +68,8 @@ want anything to happen!
 <dt>Error: reserved word "<i>word</i>" in &lt;<i>tag</i>&gt; <dd>You've used an Ada reserved word as a name.
 
 <dt>Error: singleton <i>name</i> has identifier <dd>Singleton's aren't allowed to have identifiers.
+
+<dt>Error: tried to extend <i>type</i>,  which has no attributes <dd>If a type is to be extended, it must have attributes.
 
 <dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
 
@@ -87,7 +91,8 @@ want anything to happen!
 
 <dl>
 
-<dt>Warning: annotation not handled, "<i>Entity [[annotation : value</i>" <dd>The given annotation wasn't understood.
+<dt>Warning: annotation not handled, "<i>Entity [[annotation :
+value]]</i>" <dd>The given annotation wasn't understood.
 
 <dt>Warning: can't open <i>file</i>: <i>reason</i> <dd>Unable to open case exception file.
 
