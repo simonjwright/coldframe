@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 8b1f4adb2077 2003/03/06 21:31:58 simon $ -->
+<!-- $Id: serialization.html,v 95dc3f146594 2003/03/13 20:43:26 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -89,8 +89,20 @@ function (this is necessary to meet Ada requirements).
 </ul>
 
 <p>The provided <tt>ColdFrame.Project.Serialization</tt> is an
-instantiation of <tt>ColdFrame.Serialization</tt>, which provides the
-minimum needed (the <tt><i>Base</i></tt> type adds no functionality).
+instantiation of <tt>ColdFrame.Serialization_Signature</tt> with
+<tt>ColdFrame.Serialization</tt>, which provides the minimum needed
+(the <tt><i>Base</i></tt> type adds no functionality).
+
+<h3>Providing project serialization suport</h3>
+
+<p>ColdFrame provides very simple support for serialization in the
+package <tt>ColdFrame.Serialization</tt>. To provide your own, you
+need to provide your own version of
+<tt>ColdFrame.Project.Serialization</tt> by instantiating
+<tt>ColdFrame.Serialization_Signature</tt> with your own support code.
+
+<!-- XXX example here, after checking whether Class_Image is really
+necessary! -->
 
 <h3>User-defined <i>image</i> functions</h3>
 
