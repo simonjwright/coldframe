@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: ba7d0c73ff45 $
---  $Date: 2002/09/15 10:32:40 $
+--  $Revision: c69a43734b8e $
+--  $Date: 2002/09/20 10:17:47 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -124,6 +124,9 @@ private
       --  For_The_Instance as invalid, so they won't be actioned when
       --  Fetched.
 
+      entry Tear_Down;
+      --  Only for use by domain Tear_Down.
+
    end Timer_Manager;
 
 
@@ -140,11 +143,14 @@ private
       procedure Post_To_Self (The_Event : Event_P);
       --  Post an event-to-self.
 
-      entry Fetch (The_Event : out Event_P);
+      entry Fetch (The_Event : out Event_P; Tearing_Down : out Boolean);
       --  Blocks until the queue is unlocked and there is an event on
       --  it; when one is found, notes that execution is in progress,
       --  removes the event from the queue and stores it
-      --  in"The_Event".
+      --  in "The_Event".
+      --
+      --  If the queue is being torn down, however, sets Tearing_Down
+      --  to True.
 
       procedure Invalidate_Events
         (For_The_Instance : access Instance_Base'Class);
@@ -157,6 +163,9 @@ private
 
       procedure Unlock;
       --  Notes that the queue is no longer locked.
+
+      procedure Tear_Down;
+      --  Only for use by domain Tear_Down.
 
    private
 
@@ -176,6 +185,8 @@ private
       --  Supports "recursive mutex" behaviour, and checks that
       --  Post_To_Self is called during event processing, not by some
       --  external task.
+
+      Tearing_Down : Boolean := False;
 
    end Excluder;
 
