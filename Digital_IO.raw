@@ -1,31 +1,34 @@
 <domain>
-<extractor>cf-20030104a</extractor>
+<extractor>cf-DATE</extractor>
 <name>Digital IO</name>
 <date>
 <year>2003</year>
-<month>1</month>
-<day>7</day>
-<time>17:28</time>
+<month>8</month>
+<day>30</day>
+<time>21:13</time>
 </date>
 <documentation>This domain manages digital (discrete) input/output.
 It is intended for simulations only, so there is no actual digital I/.O, only support for an HCI.
 
-[[ revision : $Id: Digital_IO.raw,v 4158b05247ca 2003/01/07 20:06:32 simon $ ]]</documentation>
+[[ revision : $Id: Digital_IO.raw,v 32126f26ff20 2003/08/30 20:46:34 simon $ ]]</documentation>
 <classes>
 <class>
 <name>Signal</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Signals may be Input (from the hardware or HCI) or Output (to the hardware or HCI).</documentation>
 <attributes>
 <attribute stereotype="id">
 <name>s</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Signal Name</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>state</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Boolean</type>
 <initial>False</initial>
@@ -34,18 +37,21 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 <operations>
 <operation stereotype="init">
 <name>initialize</name>
+<visibility>PublicAccess</visibility>
 <documentation>Creates all the Signals.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="abstract">
 <name>changed</name>
+<visibility>PublicAccess</visibility>
 <documentation>Called when a signal has changed.</documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="accessor">
 <name>get s</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Signal Name</return>
 <parameters>
@@ -53,10 +59,11 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </operation>
 <operation>
 <name>set state</name>
+<visibility>PublicAccess</visibility>
 <documentation>Set the signal's state as indicated; call Changed if it has changed.</documentation>
 <parameters>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Boolean</type>
 <initial></initial>
@@ -65,6 +72,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </operation>
 <operation stereotype="accessor">
 <name>get state</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Boolean</return>
 <parameters>
@@ -76,6 +84,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </class>
 <class>
 <name>Input</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Input Signals (from the hardware or, in this case, the HCI) support change notification via callback.</documentation>
@@ -84,6 +93,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 <operations>
 <operation>
 <name>changed</name>
+<visibility>PublicAccess</visibility>
 <documentation>Called when the signal has changed state; notify any registered observers of Signal State.</documentation>
 <parameters>
 </parameters>
@@ -94,6 +104,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </class>
 <class>
 <name>Output</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Output signals are polled by the HCI.</documentation>
@@ -102,6 +113,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 <operations>
 <operation>
 <name>changed</name>
+<visibility>PublicAccess</visibility>
 <documentation>Called when the signal has changed; no action for output signals (the HCI polls).</documentation>
 <parameters>
 </parameters>
@@ -112,6 +124,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </class>
 <class stereotype="type">
 <name>Signal State</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Provides application domains with callback facilities for input signal state changes.
@@ -120,12 +133,14 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 <attributes>
 <attribute>
 <name>s</name>
+<visibility>PrivateAccess</visibility>
 <documentation>The name of the signal that has changed.</documentation>
 <type>Signal Name</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>state</name>
+<visibility>PrivateAccess</visibility>
 <documentation>The state that the signal has changed to.</documentation>
 <type>Boolean</type>
 <initial></initial>
@@ -138,6 +153,7 @@ It is intended for simulations only, so there is no actual digital I/.O, only su
 </class>
 <class stereotype="public">
 <name>Application</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>The interface offered to support applications.
@@ -147,16 +163,17 @@ State changes are visible via callback on Signal State.</documentation>
 <operations>
 <operation>
 <name>set output</name>
+<visibility>PublicAccess</visibility>
 <documentation>Sets the specified output signal to the given state.</documentation>
 <parameters>
 <parameter>
-<name>s</name>
+<parametername>s</parametername>
 <documentation></documentation>
 <type>Signal Name</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>to state</name>
+<parametername>to state</parametername>
 <documentation></documentation>
 <type>Boolean</type>
 <initial></initial>
@@ -169,6 +186,7 @@ State changes are visible via callback on Signal State.</documentation>
 </class>
 <class stereotype="public">
 <name>HCI</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>The interface offered to support HCI.</documentation>
@@ -177,11 +195,12 @@ State changes are visible via callback on Signal State.</documentation>
 <operations>
 <operation>
 <name>get state</name>
+<visibility>PublicAccess</visibility>
 <documentation>Returns the state of the specified signal.</documentation>
 <return>Boolean</return>
 <parameters>
 <parameter>
-<name>of signal</name>
+<parametername>of signal</parametername>
 <documentation></documentation>
 <type>Signal Name</type>
 <initial></initial>
@@ -190,16 +209,17 @@ State changes are visible via callback on Signal State.</documentation>
 </operation>
 <operation>
 <name>set input</name>
+<visibility>PublicAccess</visibility>
 <documentation>Sets the specified input signal to the given value.</documentation>
 <parameters>
 <parameter>
-<name>of signal</name>
+<parametername>of signal</parametername>
 <documentation></documentation>
 <type>Signal Name</type>
 <initial></initial>
 </parameter>
 <parameter>
-<name>to</name>
+<parametername>to</parametername>
 <documentation></documentation>
 <type>Boolean</type>
 <initial></initial>
@@ -212,6 +232,7 @@ State changes are visible via callback on Signal State.</documentation>
 </class>
 <class stereotype="type">
 <name>Signal Name</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>Names the supported digital signals.
