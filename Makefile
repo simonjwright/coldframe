@@ -114,9 +114,13 @@ OTHER_SCRIPTS = serialized-to-csv.xsl
 	@echo "checking for unimplemented bodies .."
 	@grep -rl 'edit this' $@ || echo ".. none."
 
-TG = $(HOME)/bin/tg
-%.adb: %.ts
-	$(TG) $<
+# Split serialized XML files into CSV format, one per serialized type found.
+%.csv: %.xml
+	echo "<recording>" >$<-t
+	cat $< >>$<-t
+	echo "</recording>" >>$<-t
+	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl
+	rm -f $<-t
 
 TEXI2HTML = texi2html
 %.html: %.texi
