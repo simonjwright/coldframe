@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v fbac8d15cde7 2001/06/26 18:55:34 simon $ -->
+<!-- $Id: releases.html,v 8e51df50fd1a 2001/07/05 18:43:37 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -43,6 +43,18 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 be matched with a plain <tt>with</tt> in the body).
 
 
+<p>If the Saxon command line parameter <tt>generate-accessors</tt> is
+set to <tt>defined</tt>, attribute accessor subprograms will be
+generated if they were specified in the Rose model. Corresponding task
+entries for active classes are suppressed.<br>
+
+For an attribute <tt><i>Attr</i></tt>, an operation is a "set"
+accessor if it is a non-&#171;class&#187; procedure named
+<tt>Set_<i>Attr</i></tt> with a single parameter of the same type as
+<tt><i>Attr</i></tt>, and an operation is a "get" accessor if it is a
+non-&#171;class&#187; function named <tt>Get_<i>Attr</i></tt> with no
+parameters returning a value of the same type as <tt><i>Attr</i></tt>.
+
 <p>
 
 <dt>20010623
@@ -76,7 +88,9 @@ child subprogram units.
 
 <p>Active classes (in Rose, go to the Class/Detail tab and select
 Active) are generated with a task for each instance. The task body is
-"separate".
+"separate". Each non-&#171;class&#187; procedure operation has a
+matching entry; the generated (separate) procedure body calls the task
+entry.
 
 
 <p>Singleton (but not Interface) classes now provide a <tt>Handle</tt>
