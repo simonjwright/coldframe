@@ -1,2 +1,4 @@
-*.ali
+*.ada *.ali
+*.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 b~*.ad[bs]
+use-cases.html
