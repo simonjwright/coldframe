@@ -1,5 +1,5 @@
---  Project file (GCC-3.1, GNAT-3.15) for ColdFrame
---  $Id: cf.gpr,v 79a018bc7fbd 2002/07/27 12:46:55 simon $
+--  Project file (GCC-3, GNAT-3.15) for ColdFrame
+--  $Id: cf.gpr,v c9c41b6cf788 2002/12/04 21:46:33 simon $
 
 with "bc";
 
@@ -8,6 +8,8 @@ project CF is
   for Source_Dirs use (".");
 
   for Object_Dir use ".build";
+
+  for Exec_Dir use ".";
 
   package Builder is
      for Default_Switches ("Ada") use ("-m", "-g");
