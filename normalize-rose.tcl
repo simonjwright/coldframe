@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+# $Id: normalize-rose.tcl,v c14ab35650bd 2004/04/01 19:18:16 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -168,45 +168,51 @@ proc normalizeValue {s} {
         default    {
             # handle expressions.
             # XXX no doubt this could be done better!
+            regsub -all {\*\*} $tmp "^" tmp
             set lps [split $tmp "("]
             set lpl {}
             foreach lp $lps {
                 set rps [split $lp ")"]
                 set rpl {}
                 foreach rp $rps {
-                    set stars [split $rp "*"]
-                    set starl {}
-                    foreach star $stars {
-                        set divs [split $star "/"]
-                        set divl {}
-                        foreach div $divs {
-                            set pluss [split $div "+"]
-                            set plusl {}
-                            foreach plus $pluss {
-                                set mins [split $plus "-"]
-                                set minl {}
-                                foreach min $mins {
-                                    set term [normalize $min]
-                                    switch -- [string tolower $term] {
-                                        pi      {
-                                            [Domain::currentDomain] \
-                                                -references pi
+                    set exps [split $rp "^"]
+                    set expl {}
+                    foreach exp $exps {
+                        set stars [split $exp "*"]
+                        set starl {}
+                        foreach star $stars {
+                            set divs [split $star "/"]
+                            set divl {}
+                            foreach div $divs {
+                                set pluss [split $div "+"]
+                                set plusl {}
+                                foreach plus $pluss {
+                                    set mins [split $plus "-"]
+                                    set minl {}
+                                    foreach min $mins {
+                                        set term [normalize $min]
+                                        switch -- [string tolower $term] {
+                                            pi      {
+                                                [Domain::currentDomain] \
+                                                    -references pi
+                                            }
+                                            default {}
                                         }
-                                        default {}
+                                        lappend minl $term
                                     }
-                                    lappend minl $term
+                                    set minl [join $minl " - "]
+                                    regsub {^ - ([^(])} $minl {-\1} minl
+                                    lappend plusl $minl
                                 }
-                                set minl [join $minl " - "]
-                                regsub {^ - ([^(])} $minl {-\1} minl
-                                lappend plusl $minl
-                            }
-                            set plusl [join $plusl " + "]
+                                set plusl [join $plusl " + "]
                                 regsub {^ \+ ([^(])} $plusl {+\1} plusl
-                            lappend divl $plusl
+                                lappend divl $plusl
+                            }
+                            lappend starl [join $divl " / "]
                         }
-                        lappend starl [join $divl " / "]
+                        lappend expl [join $starl " * "]
                     }
-                    lappend rpl [join $starl " * "]
+                    lappend rpl [join $expl " ** "]
                 }
                 lappend lpl [join $rpl ")"]
             }
