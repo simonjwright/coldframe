@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-debug_g.adb,v $
---  $Revision: 39232e97cf74 $
---  $Date: 2002/04/12 18:59:39 $
+--  $Revision: d80f63ed78ce $
+--  $Date: 2002/05/22 04:38:19 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -42,6 +42,22 @@ package body ColdFrame.Events_G.Standard_G.Debug_G is
    end Post;
 
 
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue;
+                   To_Fire_After : Natural_Duration) is
+   begin
+
+      Put_Line ("posting a " &
+                  Ada.Tags.Expanded_Name (The_Event'Tag) &
+                  ", delay" &
+                  To_Fire_After'Img);
+      Standard_G.Post (The_Event => The_Event,
+                       On => Standard_G.Event_Queue (On.all)'Access,
+                       To_Fire_After => To_Fire_After);
+
+   end Post;
+
+
    procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
                   To_Fire : Event_P;
@@ -49,10 +65,10 @@ package body ColdFrame.Events_G.Standard_G.Debug_G is
 
    begin
 
-      Put_Line ("setting a Timer for a "
-                  & Ada.Tags.Expanded_Name (To_Fire.all'Tag)
-                & ", delay"
-                  & After'Img);
+      Put_Line ("setting a Timer for a " &
+                  Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
+                  ", delay" &
+                  After'Img);
       Standard_G.Set (The_Timer => The_Timer,
                       On => Standard_G.Event_Queue (On.all)'Access,
                       To_Fire => To_Fire,
