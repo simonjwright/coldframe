@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v ce3bfea5e888 2001/06/09 04:35:12 simon $ -->
+<!-- $Id: generate-ada.xsl,v 9a26e7a40b0f 2001/06/16 16:29:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,10 +56,42 @@
     <!-- .. any specially-declared types .. -->
     <xsl:call-template name="domain-types"/>
 
+    <!-- .. the Initialize procedure .. -->
+    <xsl:text>  procedure Initialize;&#10;</xsl:text>
+
     <!-- .. and close. -->
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
+
+    <!-- The top-level package body. -->
+    <xsl:text>package body </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>  procedure Initialize is separate;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+    <!-- The separate Initialize procedure body. -->
+    <xsl:for-each select="class">
+      <xsl:sort select="name"/>
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:text>procedure Initialize is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:for-each select="class">
+      <xsl:sort select="name"/>
+      <xsl:text>  </xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text>.Initialize;&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>end Initialize;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
     <xsl:apply-templates select="type" mode="domain-type-support"/>
