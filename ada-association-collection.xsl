@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 5fd6790fa4c2 2002/04/21 14:03:26 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v 7e4b9e524bdf 2002/05/10 05:06:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -125,7 +125,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[1]/classname"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:if test="not(associative and role[1]/@multiple)">
+    <xsl:if test="role[2]/@multiple">
       <xsl:text>with </xsl:text>
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
@@ -138,7 +138,7 @@
     <xsl:text>.</xsl:text>
     <xsl:value-of select="role[2]/classname"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-    <xsl:if test="not(associative and role[2]/@multiple)">
+    <xsl:if test="role[1]/@multiple">
       <xsl:text>with </xsl:text>
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
@@ -1021,28 +1021,19 @@
             T : {b}.Collections.Collection;
             T_It : {b}.Abstract_Containers.Iterator'Class
               := {b}.Collections.New_Iterator (T);
-            Tmp : {b}.Sets.Set;
-            Tmp_It : {b}.Abstract_Containers.Iterator'Class
-              := {b}.Sets.New_Iterator (Tmp);
             Result : {b}.Collections.Collection;
             use {a}.Abstract_Containers;
             use {b}.Abstract_Containers;
-            use {b}.Sets;
             use {b}.Collections;
          begin
             while not Is_Done (In_It) loop
                T := {role-a} (Current_Item (In_It));
                Reset (T_It);
                while not Is_Done (T_It) loop
-                  Add (Tmp, Current_Item (T_It));
+                  Append (Result, Current_Item (T_It));
                   Next (T_It);
                end loop;
                Next (In_It);
-            end loop;
-            Reset (Tmp_It);
-            while not Is_Done (Tmp_It) loop
-               Append (Result, Current_Item (Tmp_It));
-               Next (Tmp_It);
             end loop;
             return Result;
          end {role-a};
@@ -1076,21 +1067,6 @@
     <xsl:text>.Collections.New_Iterator (T);&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>Tmp : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets.Set;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>Tmp_It : </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Abstract_Containers.Iterator'Class&#10;</xsl:text>
-
-    <xsl:value-of select="$IIC"/>
-    <xsl:text>:= </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets.New_Iterator (Tmp);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
     <xsl:text>Result : </xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
@@ -1104,11 +1080,6 @@
     <xsl:text>use </xsl:text>
     <xsl:value-of select="$b"/>
     <xsl:text>.Abstract_Containers;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>use </xsl:text>
-    <xsl:value-of select="$b"/>
-    <xsl:text>.Sets;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
     <xsl:text>use </xsl:text>
@@ -1133,7 +1104,7 @@
     <xsl:text>while not Is_Done (T_It) loop&#10;</xsl:text>
 
     <xsl:value-of select="$IIII"/>
-    <xsl:text>Add (Tmp, Current_Item (T_It));&#10;</xsl:text>
+    <xsl:text>Append (Result, Current_Item (T_It));&#10;</xsl:text>
 
     <xsl:value-of select="$IIII"/>
     <xsl:text>Next (T_It);&#10;</xsl:text>
@@ -1148,23 +1119,7 @@
     <xsl:text>end loop;&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
-    <xsl:text>Reset (Tmp_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>while not Is_Done (Tmp_It) loop&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>Append (Result, Current_Item (Tmp_It));&#10;</xsl:text>
-
-    <xsl:value-of select="$III"/>
-    <xsl:text>Next (Tmp_It);&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
-    <xsl:text>end loop;&#10;</xsl:text>
-
-    <xsl:value-of select="$II"/>
     <xsl:text>return Result;&#10;</xsl:text>
-
 
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
