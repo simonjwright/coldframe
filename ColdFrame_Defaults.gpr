@@ -1,4 +1,4 @@
---  $Id: ColdFrame_Defaults.gpr,v 88ea099206aa 2003/01/22 20:07:22 simon $
+--  $Id: ColdFrame_Defaults.gpr,v bea4f4383eef 2003/01/26 17:05:52 simon $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
@@ -9,7 +9,7 @@
 with "Options";
 with "BC";
 
-project Coldframe_ is
+project Coldframe_Defaults is
 
   for Source_Dirs use ("lib", "project");
 
@@ -25,4 +25,4 @@ project Coldframe_ is
 
   package Linker renames Options.Linker;
 
-end Coldframe_;
+end Coldframe_Defaults;
