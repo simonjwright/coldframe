@@ -170,7 +170,7 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 	$(SAXON) \
 	    Architecture.raw generate-architecture-html.xsl >$@
 
-GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif
+GIFS = States.gif States-Monitor.gif inheritance.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = \
 browse-state-model.png \
@@ -183,6 +183,7 @@ hierarchies-full.png \
 hierarchies.png \
 house-digital-io.png \
 house-management.png \
+lamp.png \
 lamp-state.png\
 metamodel.png \
 operations-mapping.png \
