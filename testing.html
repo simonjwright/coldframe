@@ -1,0 +1,74 @@
+<!-- $Id: testing.html,v d1334ebd2d9c 2005/03/01 06:28:04 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Testing</title>
+</head>
+<body bgcolor="white">
+<h1>ColdFrame: Testing</h1>
+
+
+<h2><a href="http://libre.act-europe.fr/aunit/">AUnit</a></h2>
+
+<p>AUnit has the concept <i>test case</i>; for each test case there is
+a <i>fixture</i>, which corresponds to the standard setup that each
+test procedure in the test case expects.
+
+<p>The fixture is implemented using the test case operations
+<tt>Set_Up</tt> and <tt>Tear_Down</tt>.
+
+<p>ColdFrame supports <tt>Set_Up</tt> using its standard
+<a href="domains.html#initialize"><tt><i>Domain</i>.Initialize</tt></a> and
+<a
+href="domains.html#cascade-initialize"><tt>Cascade_Initialize</tt></a>
+procedures.
+
+<p>ColdFrame supports <tt>Tear_Down</tt> by providing 
+<a href="domains.html#teardown"><tt><i>Domain</i>.Tear_Down</tt></a>
+and
+<a
+href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>
+procedures.
+
+
+<h2><a name="stubs">Stubs</a></h2>
+
+<img src="house-digital-io.png">
+
+<p>Most systems are composed of numerous domains, some of which
+provide resources and capabilities to others. In the diagram, the
+application-level <a href="House_Management.html">House Management</a>
+domain uses the services of the device-level <a
+href="Digital_IO.html">Digital IO</a> domain.
+
+<p>While unit-testing House Management, it's a Bad Idea to use the
+real Digital IO, for various reasons:
+
+<ul>
+
+<li>it may only run on target hardware
+
+<li>it may not have been developed yet
+
+<li>it may be hard to make it behave in the way your test plans need
+
+<li>it may be hard to check that you made the correct calls to it
+
+<li>...
+
+</ul>
+
+
+
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
