@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 88f155f40b0f 2005/02/18 06:29:15 simon $
+# $Id: normalize-rose.tcl,v cc5757bdf55f 2005/02/18 06:36:55 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1521,7 +1521,7 @@ itcl::class Class {
                 puts -nonewline " access=\"$access\""
             }
 	    if $atomic {
-                Warning "type [$this -getName] can't be atomic"
+                Error "type [$this -getName] can't be atomic"
 	    }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
@@ -1540,7 +1540,7 @@ itcl::class Class {
             }
             puts -nonewline " visibility=\"$visibility\""
 	    if $volatile {
-		Warning "type [$this -getName] can't be volatile"
+		Error "type [$this -getName] can't be volatile"
 	    }
             puts ">"
             putElement name "$name"
