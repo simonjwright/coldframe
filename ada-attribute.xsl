@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
+<!-- $Id: ada-attribute.xsl,v f3b5455761d7 2001/09/04 04:59:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -82,7 +82,7 @@
           <xsl:value-of select="name"/>
           <xsl:text>_Current_Child : </xsl:text>
           <xsl:value-of select="name"/>
-          <xsl:text>_Child_Class;&#10;</xsl:text>
+          <xsl:text>_Child;&#10;</xsl:text>
         </xsl:for-each>
 
         <xsl:value-of select="$I"/>

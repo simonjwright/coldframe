@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v d93fca753e5c 2001/08/19 16:17:20 simon $ -->
+<!-- $Id: ada-association.xsl,v f3b5455761d7 2001/09/04 04:59:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -635,7 +635,7 @@
     </xsl:if>
 
     <!-- First direction : from collection -->
-      
+
     <xsl:if test="not($singleton-1) and not($singleton-2)">
       <xsl:call-template name="navigation-collection-body">
         <xsl:with-param name="role-a" select="role[1]"/>
@@ -687,7 +687,7 @@
     </xsl:if>
 
     <!-- Second direction: from collection -->
-      
+
     <xsl:if test="not($singleton-1) and not($singleton-2)">
       <xsl:call-template name="navigation-collection-body">
         <xsl:with-param name="role-a" select="role[2]"/>
