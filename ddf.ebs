@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 040156014b89 2004/12/06 10:06:55 simon $
+'$Id: ddf.ebs,v 2fb719b3fb2f 2005/03/28 17:44:37 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -355,6 +355,7 @@ Sub DumpDomainData (domain As Category, dirName As String)
 		End If
 	Next i
 	Print #2, rawName
+	Print #3, "<domain>" + rawName + "</domain>"
 	rawName = dirName + rawName + ".raw"
 	Print "file chosen: " & rawName
 	Open (rawName) For Output Access Write As #1
@@ -453,6 +454,8 @@ Sub Main
 
 	'Output file 2, in $COLDFRAMEOUT\diagram-name.domains, will contain a list
 	' of the domains that have been generated.
+	'Output file 3, in $COLDFRAMEOUT\diagram-name.domains.xml, will contain a list
+	' of the domains that have been generated, in XML form.
 	Dim diagName As String
 	diagName = diag.Name
 	For i = 1 To Len(diagName)
@@ -463,6 +466,8 @@ Sub Main
 
 	On Error GoTo OpenFileError
 	Open (directory & "\" & diagName & ".domains") For Output Access Write As #2
+	Open (directory & "\" & diagName & ".domains.xml") For Output Access Write As #3
+	Print #3, "<domains>"
 	On Error GoTo 0
 
 	Dim packages As Integer
@@ -483,6 +488,8 @@ Sub Main
 	Next i
 
 	Close #2
+	Print #3, "</domains>"
+	Close #3
 
 	If packages = 0 Then
 		MsgBox "There are no packages on this diagram, or something is selected which isn't a package"
