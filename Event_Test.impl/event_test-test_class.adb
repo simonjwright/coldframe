@@ -349,6 +349,46 @@ package body Event_Test.Test_Class is
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Delete_Timer;
 
+   --  An event will be delivered to its instance.
+   procedure Simple_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Simple_Event
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Recipient.Mark (Recipient.Find);
+      Inf : Recipient.Mark renames Recipient.Mark (Ev.all);
+   begin
+      Inf.Payload := (Ordinal => 2000,
+                      Expected_At => ColdFrame.Project.Calendar.Clock);
+
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+
+      Assert (Recipient.Get_Ordinal = 2000,
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
+   end Simple_Event;
+
+   --  An event to self will be processed before other events.
+   procedure Event_To_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Event_To_Self
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Recipient.Self (Recipient.Find);
+      Inf : Recipient.Self renames Recipient.Self (Ev.all);
+   begin
+      Inf.Payload := (Ordinal => 2001,
+                      Expected_At => ColdFrame.Project.Calendar.Clock);
+
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+
+      Assert (Recipient.Get_Ordinal = 2002,
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
+   end Event_To_Self;
+
    procedure Register_Tests (T : in out Test_Case) is
    begin
       Register_Routine
@@ -373,6 +413,10 @@ package body Event_Test.Test_Class is
         (T, Unset_Used_Timer'Access, "Unset used timer");
       Register_Routine
         (T, Delete_Timer'Access, "Delete set timer");
+      Register_Routine
+        (T, Simple_Event'Access, "Simple event");
+      Register_Routine
+        (T, Event_To_Self'Access, "Event to self");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
