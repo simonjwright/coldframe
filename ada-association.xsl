@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v e15478df6eb7 2001/05/02 19:33:40 simon $ -->
+<!-- $Id: ada-association.xsl,v 0469e34f273b 2001/05/03 04:52:19 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -187,6 +187,8 @@
         <xsl:text>  begin&#10;</xsl:text>
 
         <xsl:text>    Result := </xsl:text>
+        <xsl:value-of select="/domain/name"/>
+        <xsl:text>.</xsl:text>
         <xsl:value-of select="associative"/>
         <xsl:text>.Create&#10;</xsl:text>
         <xsl:text>       ((</xsl:text>
