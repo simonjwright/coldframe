@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 0338df9043e8 2002/06/06 22:15:24 simon $ -->
+<!-- $Id: event-modelling.html,v 96e1d0317569 2002/06/15 15:14:57 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -84,11 +84,41 @@ there is no guard, the model immediately transitions back to state
 
 </ol>
 
-<p>Note that ColdFrame requires you to cancel (unset) timers before
-setting them again, and will also insist that a timer is in fact set
-before you can unset it. To make up for this, it guarantees that you
-can unset a timer which has in fact fired at any point before the
-corresponding event has actually been handled.
+<h3>Timed events</h3>
+
+<p>The Lamp statechart involves a timeout, which is a special case of
+a delayed event.
+
+<p>Given an event, there are five things you can do with it:
+
+<ol type="alpha">
+
+<li><i>Post</i> it, to be handled as soon as possible (in order),
+
+<li><i>Post</i> it, to be handled at a specific time in the future,
+
+<li><i>Post</i> it, to be handled after at least a specified interval,
+
+<li><i>Set</i> it on a <i>Timer</i>, to he handled at a specific time
+in the future,
+
+<li><i>Set</i> it on a <i>Timer</i>, to he handled after at least a
+specified interval.
+
+</ol>
+
+<p>The difference between <i>Posting</i> and <i>Setting on a Timer</i>
+is that <i>Posted</i> events are "fire and forget", whereas <i>Set</i>
+events can be retracted. <i>Set</i> events are the kind to use for
+timeouts (indeed, in state machines in general, with perhaps odd
+exceptions).
+
+<p>Note that ColdFrame requires you to cancel (<i>Unset</i>) unfired
+timers before setting them again, and will also insist that a timer is
+in fact <i>Set</i> before you can <i>Unset</i> it. To make up for
+this, it guarantees that you can <i>Unset</i> a timer which has in
+fact fired at any point before the corresponding event has actually
+been handled, and the event won't be delivered.
 
 <h3>Event kinds and payloads</h3>
 
@@ -104,12 +134,17 @@ to <a href="#lamp-state.gif">show it on a statechart</a>.
 <p>To model an event with a payload, show a dependency, named with the
 event name and stereotyped <em>&#171;instance&nbsp;event&#187;</em> or
 <em>&#171;class&nbsp;event&#187;</em> as appropriate, from the class
-to the &#171;type&#187; involved; this is shown in <a
+to the <em>&#171;type&#187;</em> involved; this is shown in <a
 href="#lamp.gif">the diagram below</a>.
 
 <p>It's best if the payload doesn't contain allocated data, because it
 may lead to memory leaks (this depends on the way the support software
 works).
+
+<p>You need a <em>&#171;type&#187;</em> to model an event with a
+payload, but it doesn't have to be a special
+<em>&#171;type&#187;</em>. Also, you can use the same
+<em>&#171;type&#187;</em> as the payload for several different events.
 
 <h3>Transitions</h3>
 
@@ -164,6 +199,9 @@ for timeouts is:
 <p>The timer can be <i>unset</i> between the time when it's set and
 the time when the event is handled; if you do this, the event won't be
 delivered.
+
+<p>If you need to have more than one concurrent timeout, allocate a
+Timer variable for each.
 
 <h4>Class events</h4>
 
