@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 9aa1533e8028 2001/02/15 06:22:15 simon $ -->
+<!-- $Id: architecture.html,v ad3062ca79ee 2001/03/20 05:40:53 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -145,6 +145,22 @@ the outstanding Problem Reports on this Component").
 
 </ul>
 
+<dt>on attributes<dd><ul>
+
+<li><tt>id</tt> indicates that the attribute is an identifying
+attribute. This is an alternative to the <em>&#171;id&#187;</em>
+stereotype.
+
+</ul>
+
+<dt>on operations<dd><ul>
+
+<li><tt>class</tt> indicates that the operation is a class operation
+(no <tt>This</tt> parameter will the generated). This is an
+alternative to the <em>&#171;class&#187;</em> stereotype.
+
+</ul>
+
 <dt>on parameters<dd><ul>
 
 <li><tt>mode : <i>mode-string</i></tt>, where <tt><i>mode-string</i></tt> is
@@ -153,6 +169,15 @@ the outstanding Problem Reports on this Component").
 <li><tt>inout</tt> or <tt>in out</tt>
 <li><tt>out</tt>
 </ul>
+
+</ul>
+
+<dt>on roles<dd><ul>
+
+<li><tt>source</tt> indicates that the class at this end is the source
+of formalising (referential) attributes for the association: only
+useful for symmetrical associations <i>1:1</i>, <i>1c:1c</i>,
+<i>1-(1:1)</i> or <i>1-(1c:1c)</i>.
 
 </ul>
 
