@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v f2b6973524d3 2001/07/07 14:12:11 simon $ -->
+<!-- $Id: generate-ada.xsl,v 500ef3ab1950 2001/07/07 15:01:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -106,27 +106,39 @@
 
     <!-- Package specs for individual classes. -->
     <xsl:message>.. package specs for individual classes ..</xsl:message>
-    <xsl:apply-templates select="class" mode="class-spec"/>
+    <xsl:apply-templates select="class" mode="class-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- Package bodies for individual classes. -->
     <xsl:message>.. package bodies for individual classes ..</xsl:message>
-    <xsl:apply-templates select="class" mode="class-body"/>
+    <xsl:apply-templates select="class" mode="class-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- Collection support packages. -->
     <xsl:message>.. Collection support packages ..</xsl:message>
-    <xsl:apply-templates select="class" mode="collection-support"/>
+    <xsl:apply-templates select="class" mode="collection-support">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- Package specs for Associations -->
     <xsl:message>.. package specs for Associations ..</xsl:message>
-    <xsl:apply-templates select="association" mode="association-spec"/>
+    <xsl:apply-templates select="association" mode="association-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- Package bodies for Associations -->
     <xsl:message>.. package bodies for Associations ..</xsl:message>
-    <xsl:apply-templates select="association" mode="association-body"/>
+    <xsl:apply-templates select="association" mode="association-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
 
     <!-- Package specs for callbacks. -->
     <xsl:message>.. package bodies for Callbacks ..</xsl:message>
-    <xsl:apply-templates select="type[@callback]" mode="callback-spec"/>
+    <xsl:apply-templates select="type[@callback]" mode="callback-spec">
+       <xsl:sort select="name"/>
+   </xsl:apply-templates>
 
     <xsl:message>.. done.</xsl:message>
 
