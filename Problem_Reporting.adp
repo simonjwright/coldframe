@@ -1,7 +1,7 @@
-comp_opt=-gnatqQfy -gnatwlu -O2 -g
+comp_opt=-gnatqQfy -gnatwlu -O2
 bind_opt=-E
-gnatmake_opt=-g -m -j2
-main=demo
+gnatmake_opt=-g -j2 -m -k
+main=${HOME}/cf/Problem_Reporting.impl/demo
 main_unit=demo
 build_dir=/home/simon/cf/.build/
 check_cmd=${cross_prefix}gnatgcc -c ${comp_opt} -gnats ${full_current}
