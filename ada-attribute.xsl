@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 29d3ecb7e905 2002/05/18 21:10:12 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 501e89f50168 2002/06/08 05:48:05 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -336,10 +336,7 @@
   <xsl:template name="attribute-type">
     <xsl:choose>
       <xsl:when test="@refers">
-        <xsl:call-template name="type-name">
-          <xsl:with-param name="type" select="@refers"/>
-          <xsl:with-param name="class" select=".."/>
-        </xsl:call-template>
+        <xsl:text>ColdFrame.Instances.Handle</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="type-name">
