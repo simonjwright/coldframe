@@ -20,12 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-instance_access_hash.ads,v $
---  $Revision: 2b3438611cc7 $
---  $Date: 2001/10/14 18:54:26 $
+--  $Revision: 26912bda90ee $
+--  $Date: 2002/01/28 06:14:35 $
 --  $Author: simon $
 
 with ColdFrame.Instances;
 with ColdFrame.Hash.Access_Hash;
 function ColdFrame.Hash.Instance_Access_Hash
-is new ColdFrame.Hash.Access_Hash (T => ColdFrame.Instances.Base'Class,
-                                   Access_T => ColdFrame.Instances.Handle);
+is new ColdFrame.Hash.Access_Hash
+  (T => ColdFrame.Instances.Instance_Base'Class,
+   Access_T => ColdFrame.Instances.Handle);
