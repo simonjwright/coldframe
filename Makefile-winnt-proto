@@ -23,13 +23,13 @@ else
   CHOP_VERBOSE = -q
 endif
 
-TOP = d:
+TOP = c:
 
 CF = $(TOP)/cf-DATE
 
 AWK = awk
 ITCLSH = $(TOP)/Tcl/bin/itclsh31
-TCLXML = $(TOP)/TclXML-1.2
+TCLXML = $(TOP)/tclxml-2.1theta
 
 SAXON = $(TOP)/Saxon/saxon
 
