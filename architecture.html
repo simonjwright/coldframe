@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 07c16f79b67f 2001/08/26 14:38:58 simon $ -->
+<!-- $Id: architecture.html,v 2d3538fc7ce3 2001/09/17 18:36:10 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -50,6 +50,11 @@ software architect decides how analysis models are to be translated
 into code, and a mechanical process (applied either by a programmer or
 by a program) applies the rules.
 
+<p>That isn't to say that you can be slapdash about your models. Often
+people will treat the modelling phase as if it were a sketchy
+whiteboard activity; you can't do that if the model is going to be
+translated directly into code (not that that was ever a good idea!)
+
 <p>Examples of commercial products which take this approach are
 Software through Pictures from <a
 href="http://www.aonix.com/">Aonix</a> and <a
@@ -74,8 +79,9 @@ Rose</a></h2>
 Shlaer-Mellor approach. An excellent book is "How to Build
 Shlaer-Mellor Object Models", Leon Starr, Prentice-Hall 1996, ISBN
 0-13-207663-2. Note also that the full Shlaer-Mellor approach involves
-full translation of operation code as well as the generation of the
-framework which is all that ColdFrame attempts (this year).
+full translation of the code of operations and actions as well as the
+generation of the framework which is all that ColdFrame attempts (this
+year).
 
 <p>Instances of a Class must be uniquely identifiable by some
 attribute or combination of attributes. For example, a Vehicle Excise
@@ -84,6 +90,17 @@ Validity Start Date. Vehicle Index Mark and Validity Start Date then
 become "identifying attributes", whereas Date Of Issue and Period Of
 Validity are just common-or-garden attributes.
 
+<p>In ColdFrame, you must <em>not</em> specify identifiers for
+
+<ul>
+<li>child classes in inheritance relationships,
+<li>associative classes,
+<li>singletons, or
+<li>types.
+</ul>
+
+All other classes must have identifiers.
+
 <p>Role names in associations are very important, and should be verbs
 or verb phrases. Each end of the association must be named; the object
 of the verb phrase is the class at the same end as the name, the
@@ -91,25 +108,33 @@ subject is the class at the other end. So, for example, you might have
 <em>Window "appears on" Screen</em>, <em>Screen "displays"
 Window</em>. Often the role names will be inverses of each other, but
 sometimes things really do seem different depending on where you're
-standing. <i>[By the way, the references are far from clear whether
+standing. <em>[By the way, the references are far from clear whether
 this choice of end convention is in fact correct. I think it is,
 judging by the way Rose and Rhapsody show associations in the Browser
-and generate code.]</i>
+and generate code.]</em>
 
-<p>Careful consideration of multiplicity is very important.
-Unconditional multiplicity is good; if each end of an association is
-conditional (0..1, 0..n), maybe you should think more carefully about
-it. Perhaps there's some super/subtype (inheritance) relationship
-lurking in there.
+<p>Careful consideration of the multiplicity of associations is very
+important. Clearly each <em>Screen</em> <em>"displays"</em> a number
+of <em>Window</em>s, but can a <em>Window</em> <em>"appear on"</em>
+more than one <em>Screen</em>? (perhaps, if you have multi-headed
+display capability). Can you have a <em>Window</em> which <em>"appears
+on"</em> no <em>Screen</em>s? (well, no, not if your display
+technology is X--in which case <em>"appears on"</em> may not be quite
+right either, since the application could be iconised).
+
+<p>Unconditional multiplicity is good; if each end of an association
+is conditional (0..1, 0..n), maybe you should think more carefully
+about it. Perhaps there's some super/subtype (inheritance)
+relationship lurking in there.
 
 <p>Resist the temptation to put containers in the model. In <em>Window
 "appears on" Screen</em>, the association itself models the user
 concept of "each screen displays a list of windows" (actually,
 thinking about it, I'm not at all sure that the actual user ever had
 the concept "list" in mind at all. She's much more likely to have said
-"each screen displays a <i>number</i> of windows". I think this "list"
-was implanted there by some ex-programmer with a solution in mind,
-rather than by someone listening to the customer!)
+"each screen displays a <em>number</em> of windows". I think this
+"list" was implanted there by some ex-programmer with a solution in
+mind, rather than by someone listening to the customer!)
 
 <p>Associations need to be "formalised" by the use of "referential
 attributes". Considering the <em>Window "appears on" Screen</em>,
@@ -125,16 +150,16 @@ child class has the same identifying attributes as the parent, but in
 ColdFrame the formalization is a reference to the parent.
 
 <p>ColdFrame supports polymorphism. Instance operations marked
-&#171;abstract&#187; are dispatched to the current child (skipping
-down the inheritance tree until a concrete implementation is found),
-while a child class receives upward-dispatching implementations of all
-concrete parental instance operations.
+<em>&#171;abstract&#187;</em> are dispatched to the current child
+(skipping down the inheritance tree until a concrete implementation is
+found), while a child class receives upward-dispatching
+implementations of all concrete parental instance operations.
 
 <p>In spite of the above, with ColdFrame you usually don't need to
 provide referential attributes (it would be quite cumbersome to do so,
 since Rose is unaware of the concept). Instead, ColdFrame
 automatically inserts them using an appropriate naming
-convention. Sometimes it needs a little help, for example <a
+convention. Sometimes it needs a little help, for example for <a
 href="#formalizes">complex formalization</a> or <a href="#source">in a
 symmetric association</a>.
 
@@ -171,6 +196,13 @@ procedure are marked with the stereotype
 <em>&#171;init&#187;</em>. This implies the stereotype
 <em>&#171;class&#187;</em>. These operations must be parameterless
 procedures.
+
+<p>Operations to be called to clean up as an instance is deleted (for
+example, to tidy up associations) are marked with the stereotype
+<em>&#171;finalize&#187;</em>. (It would be possible in theory to use
+Ada's controlled types, but (a) that depends on your target language
+being Ada, and (b) GNAT (3.14) has a problem in the interaction of the
+<tt>with type</tt> facility and controlled types).
 
 <h3><a name="annotation">Other annotations</a></h3>
 
@@ -224,9 +256,9 @@ generation strategy.
 <li><tt>callback : <i>max</i></tt> specifies that <a
 href="coldframe-callback.pdf">callback support code</a> is to be
 generated. The idea here is that a (lower-level) Domain may need to
-support Observers from higher-level Domains, and the higher-level
-Domains can register to be notified when something has changed in the
-lower-level Domain.
+support up to <tt><i>max</i></tt> Observers from higher-level Domains,
+and the higher-level Domains can register to be notified when
+something has changed in the lower-level Domain.
 
 <li><tt>enumeration : <i>literal-1</i>, <i>literal-2</i>, ...</tt>
 
@@ -320,7 +352,8 @@ alternative to the <em>&#171;class&#187;</em> stereotype.
 <li><a name="source"><tt>source</tt></a> indicates that the class at
 this end is the source of formalising (referential) attributes for the
 association: only useful for symmetrical associations <i>1:1</i>,
-<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>.
+<i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, for which it is
+required.
 
 </ul>
 
@@ -356,9 +389,9 @@ Menu Add-Ins
 </pre>
 </blockquote>
 
-<p>This means, of course, that you must specify the Rose Path Map
-variable <tt>ColdFrame</tt> to the directory where ColdFrame is
-installed (eg, <tt>d:\cf-20010707</tt>).
+<p>This means, of course, that you must set the Rose Path Map variable
+<tt>ColdFrame</tt> to the directory where ColdFrame is installed (eg,
+<tt>d:\cf-20010707</tt>).
 
 <p>The Extractor extracts data for the selected Domain packages or, if
 none are selected, for all the packages on the current active class
@@ -366,8 +399,8 @@ diagram (if any). A recommended approach is to have a diagram (called
 <i>Code Generation</i>, perhaps) and drag all the Domain packages in
 your model onto it.
 
-<p>You can select packages to be extracted either in the broswer or in
-the Code Generation diagram.
+<p>You can select packages to be extracted either in the broswer
+(<em>not</em> with Rose 98i) or in the Code Generation diagram.
 
 <p>The extracted domain definition file name is the domain name with
 underscores substituted for spaces.
