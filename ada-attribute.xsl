@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v ee817f60b6d4 2002/09/17 18:10:47 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -18,9 +18,12 @@
      Foundation, Inc., 59 Temple Place - Suite 330,
      Boston, MA 02111-1307, USA.
 
-     As a special exception, when portions of this file are copied by a
-     stylesheet processor into an output file, you may use that output
-     file without restriction.
+     As a special exception, when portions of this file are copied by
+     a stylesheet processor into an output file, this file does not by
+     itself cause the resulting file to be covered by the GNU General
+     Public License.  This exception does not however invalidate any
+     other reasons why the output file might be covered by the GNU
+     Public License.
      -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
