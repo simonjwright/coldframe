@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d4ac944171f6 2004/01/27 06:45:35 simon $ -->
+<!-- $Id: bugs.html,v d25620fda6f7 2004/02/01 21:20:49 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -186,12 +186,6 @@ the same event isn't detected.
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
 
-<dt>0212 (raised Remembrance Day 2003)
-x
-<dd>Would it be possible for the task of an active class to have
-<tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
-Instance</tt>?
-
 <dt>0214 (raised 12.xi.03)
 
 <dd>The mechanism for dealing with multiple users of the same Event
@@ -221,7 +215,7 @@ which may cause <tt>Tasking_Error</tt> if the active instance tries
 returning a composite value, the generated code won't compile.") is
 still present (for both &#171;type&#187;s and &#171;class&#187;es)
 when the composite value is imported or inherited from a parent
-package (and therefore isn't otherwise mentioned in the model)..
+package (and therefore isn't otherwise mentioned in the model).
 
 <!-- next: 0230 -->
 
@@ -1894,6 +1888,21 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>1.ii.04</h3>
+
+<dl>
+
+<dt>0212 (raised Remembrance Day 2003)
+
+<dd>Would it be possible for the task of an active class to have
+<tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
+Instance</tt>?
+<br><i>No, unfortunately; there's a problem with ordering the
+declarations so as to allow controlling the storage pool for
+<tt>Handle</tt>.</i>
+
+</dl>
 
 <h3>3.i.04</h3>
 
