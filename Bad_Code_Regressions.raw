@@ -1,15 +1,15 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20040319p2c</extractor>
 <name>Bad Code Regressions</name>
 <date>
 <year>2004</year>
-<month>3</month>
-<day>15</day>
-<time>20:58</time>
+<month>9</month>
+<day>18</day>
+<time>13:34</time>
 </date>
 <documentation>Regression tests that involve detecting errors.
 
-{ revision = $Revision: 7620f24adfba $ }</documentation>
+{ revision = $Revision: 0270a2d805dd $ }</documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>

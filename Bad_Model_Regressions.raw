@@ -1,15 +1,15 @@
 <domain>
-<extractor>cf-20031126</extractor>
+<extractor>cf-20040319p2c</extractor>
 <name>Bad Model Regressions</name>
 <date>
-<year>2003</year>
-<month>12</month>
-<day>13</day>
-<time>05:54</time>
+<year>2004</year>
+<month>9</month>
+<day>18</day>
+<time>13:34</time>
 </date>
 <documentation>Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 37dd0d861637 $ }</documentation>
+{ revision = $Revision: 0270a2d805dd $ }</documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
