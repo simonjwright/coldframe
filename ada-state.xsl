@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 159f6735a2b6 2004/04/22 22:10:26 simon $ -->
+<!-- $Id: ada-state.xsl,v 2cf2e75278f5 2004/04/23 14:18:47 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -530,7 +530,7 @@
     <!-- Check for errors. -->
     <xsl:choose>
 
-      <xsl:when test="not($op)">
+      <xsl:when test="not($op or $operation='Delete')">
         <xsl:call-template name="log-error"/>
         <xsl:message>
           <xsl:text>Error: no operation for </xsl:text>
