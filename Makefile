@@ -25,8 +25,7 @@ AWK = awk
 ITCLSH = /usr/bin/itclsh3.1
 TCLXML = /usr/local/lib/tclxml-2.1theta
 
-# the following assumes that CLASSPATH includes saxon.jar
-SAXON = java com.icl.saxon.StyleSheet
+SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 ESCAPE_MARKUP_SCRIPT = escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
