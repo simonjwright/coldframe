@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0349c6ba8f5a 2005/02/10 05:13:06 simon $
+# $Id: normalize-rose.tcl,v ab239e4d0d94 2005/02/13 20:14:24 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1268,6 +1268,13 @@ itcl::class Class {
         set access [normalize $a]
     }
 
+    variable atomic 0
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is an atomic type
+    method -atomic {a} {
+        set atomic 1
+    }
+
     variable callback
     # called (via annotation or stereotype mechanism) to indicate that this
     # is used in a callback
@@ -1318,6 +1325,14 @@ itcl::class Class {
             default {set visibility private}
         }
     }
+
+    variable volatile 0
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is a volatile type
+    method -volatile {a} {
+        set volatile 1
+    }
+
     #
     # variables and methods related to <<exception>> classes
     #
@@ -1505,6 +1520,9 @@ itcl::class Class {
             if [info exists access] {
                 puts -nonewline " access=\"$access\""
             }
+	    if $atomic {
+                puts -nonewline " atomic=\"true\""
+	    }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
             }
@@ -1521,6 +1539,9 @@ itcl::class Class {
                 puts -nonewline " serializable=\"true\""
             }
             puts -nonewline " visibility=\"$visibility\""
+	    if $volatile {
+		puts -nonewline " volatile=\"true\""
+	    }
             puts ">"
             putElement name "$name"
             $this -generateDocumentation
@@ -2439,6 +2460,8 @@ itcl::class Datatype {
 
     variable access
 
+    variable atomic 0
+
     variable arrayOf
 
     variable arrayIndexBy
@@ -2466,6 +2489,8 @@ itcl::class Datatype {
     variable type
 
     variable visibility "public"
+
+    variable volatile 0
 
     constructor {name} {set type $name}
 
@@ -2520,7 +2545,12 @@ itcl::class Datatype {
         set access [normalize $a]
     }
 
-    # called when the user has requested an array
+    # called to indicate that this is an atomic type
+    method -atomic {a} {
+        set atomic 1
+    }
+
+     # called when the user has requested an array
     method -array {of} {
         set dataType "array"
         set arrayOf [normalize $of]
@@ -2665,6 +2695,11 @@ itcl::class Datatype {
         set visibility $v
     }
 
+    # called to indicate that this is a volatile type
+    method -volatile {a} {
+        set volatile 1
+    }
+
     # utility to check the constraints (held in dataDetail).
     # 'required' contains constraints of which only one must be present.
     # 'legal' contains optional constraints.
@@ -2727,6 +2762,9 @@ itcl::class Datatype {
         if [info exists access] {
 	    puts -nonewline " access=\"$access\""
 	}
+	if $atomic {
+	    puts -nonewline " atomic=\"true\""
+	}
         if [info exists callback] {
             puts -nonewline " callback=\"true\""
         }
@@ -2765,6 +2803,9 @@ itcl::class Datatype {
             default {}
         }
         puts -nonewline " visibility=\"$visibility\""
+	if $volatile {
+	    puts -nonewline " volatile=\"true\""
+	}
         puts ">"
         putElement name "$type"
         $this -generateDocumentation
@@ -2877,20 +2918,26 @@ itcl::class XmlTag {
 itcl::class Attribute {
     inherit Element
 
-    # access control
-    variable visibility "private"
+    # indicates whether this is atomic
+    variable atomic 0
 
-    # the type name
-    variable type
-
-    # the initial value
-    variable initial ""
+    # indicates whether this is a class attribute
+    variable cls 0
 
     # indicates whether this attribute is an identifier
     variable identifier 0
 
-    # indicates whether this is a class attribute
-    variable cls 0
+    # the initial value
+    variable initial ""
+
+    # the type name
+    variable type
+
+    # access control
+    variable visibility "private"
+
+    # indicates whether this is volatile
+    variable volatile 0
 
     # indicates whether this attribute formalizes an association,
     # where the analyst needs the attribute to help form the identifier
@@ -2972,6 +3019,9 @@ itcl::class Attribute {
 
     method -generate {domain} {
         $this -putElementStart "attribute"
+	if $atomic {
+	    puts -nonewline " atomic=\"true\""
+	}
         if $identifier {puts -nonewline " identifier=\"true\""}
         if $cls {puts -nonewline " class=\"true\""}
         if [info exists formalizedAssociation] {
@@ -2979,6 +3029,9 @@ itcl::class Attribute {
             puts -nonewline " relation=\"$formalizedAssociation\""
         }
         puts -nonewline " visibility=\"$visibility\""
+	if $volatile {
+	    puts -nonewline " volatile=\"true\""
+	}
         puts ">"
         putElement name "$name"
         putElement type "$type"
