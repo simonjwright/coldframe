@@ -2,76 +2,76 @@
 <extractor>cf-DATE</extractor>
 <name>Serialization Demo</name>
 <date>
-<year>2003</year>
-<month>11</month>
-<day>15</day>
-<time>18:10</time>
+<year>2004</year>
+<month>5</month>
+<day>1</day>
+<time>16:20</time>
 </date>
-<documentation>This domain is a demonstration of Serialization's facilities.
+<documentation><![CDATA[This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-{ revision = $Revision: 3c33faafeb46 $ }</documentation>
+{ revision = $Revision: b291368dc4f8 $ }]]></documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <attributes>
 <attribute>
 <name>i</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>f</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Float</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>b</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Boolean</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>d</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Duration</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Time</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>u</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>n</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Name String</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>r</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Recordable Real Time</type>
 <initial></initial>
 </attribute>
@@ -80,7 +80,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <operation stereotype="generated">
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation>This operation is generated in the Serializable child package.</documentation>
+<documentation><![CDATA[This operation is generated in the Serializable child package.]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -93,8 +93,8 @@ It is to be extracted separately from the main Serialization package (that's why
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>{ string = max 32 }
-</documentation>
+<documentation><![CDATA[{ string = max 32 }
+]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -107,26 +107,26 @@ It is to be extracted separately from the main Serialization package (that's why
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>{ renames = Ada.Real_Time.Time,
-  image = Real Time Image }</documentation>
+<documentation><![CDATA[{ renames = Ada.Real_Time.Time,
+  field-image = Real Time Image }]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>real time image</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <return>String</return>
 <parameters>
 <parameter>
 <parametername>v</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Real Time</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>n</parametername>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>String</type>
 <initial></initial>
 </parameter>
@@ -135,7 +135,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <operation stereotype="generated">
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -148,12 +148,12 @@ It is to be extracted separately from the main Serialization package (that's why
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <attributes>
 <attribute>
 <name>t</name>
 <visibility>PrivateAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <type>Real Time</type>
 <initial></initial>
 </attribute>
@@ -162,7 +162,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <operation stereotype="generated">
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation></documentation>
+<documentation><![CDATA[]]></documentation>
 <parameters>
 </parameters>
 </operation>

@@ -2,37 +2,41 @@
 <extractor>cf-DATE</extractor>
 <name>States</name>
 <date>
-<year>2002</year>
-<month>2</month>
-<day>26</day>
+<year>2004</year>
+<month>5</month>
+<day>1</day>
 <time>15:57</time>
 </date>
-<documentation>This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
+<documentation><![CDATA[This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 
-[[ revision : $Id: States.raw,v 281d11e491da 2002/07/27 13:05:23 simon $ ]]
-</documentation>
+[[ revision : $Id: States.raw,v b291368dc4f8 2004/05/01 16:53:50 simon $ ]]
+]]></documentation>
 <classes>
 <class>
 <name>Monitor</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>A Monitor monitors one Device. The device generates a heartbeat (tick) signal. It's deemed to have failed if the heartbeat stops for longer than 3 seconds.</documentation>
+<documentation><![CDATA[A Monitor monitors one Device. The device generates a heartbeat (tick) signal. It's deemed to have failed if the heartbeat stops for longer than 3 seconds.]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>dev</name>
-<documentation>Indicates the Device that is being monitored.</documentation>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[Indicates the Device that is being monitored.]]></documentation>
 <type>Device</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>heartbeat timer</name>
-<documentation>Controls the detection of failure of the heartbeat signal.</documentation>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[Controls the detection of failure of the heartbeat signal.]]></documentation>
 <type>Timer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>warmup timer</name>
-<documentation>After heartbeats have been detected, a period of proper heartbeat reception must elapse before the device is considered to be working.</documentation>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[After heartbeats have been detected, a period of proper heartbeat reception must elapse before the device is considered to be working.]]></documentation>
 <type>Timer</type>
 <initial></initial>
 </attribute>
@@ -40,17 +44,19 @@
 <operations>
 <operation stereotype="init">
 <name>setup</name>
-<documentation>Initializes the Monitor by creating the necessary instances for the Devices.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Initializes the Monitor by creating the necessary instances for the Devices.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="handler">
 <name>receive</name>
-<documentation>Receives an external message indicating that a tick has occurred for a Device. Generates a Heartbeat event for the Device concerned.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Receives an external message indicating that a tick has occurred for a Device. Generates a Heartbeat event for the Device concerned.]]></documentation>
 <parameters>
 <parameter>
-<name>m</name>
-<documentation></documentation>
+<parametername>m</parametername>
+<documentation><![CDATA[]]></documentation>
 <type>Tick</type>
 <initial></initial>
 </parameter>
@@ -58,31 +64,36 @@
 </operation>
 <operation>
 <name>set heartbeat timeout</name>
-<documentation>Sets the Heartbeat_Timer to deliver a Heartbeat_Timeout event in 3 seconds.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Sets the Heartbeat_Timer to deliver a Heartbeat_Timeout event in 3 seconds.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set 2 second warmup timeout</name>
-<documentation>Sets the Warmup_Timer to deliver a Warmup_Timeout event in 2 seconds.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Sets the Warmup_Timer to deliver a Warmup_Timeout event in 2 seconds.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set 6 second warmup timeout</name>
-<documentation>Sets the Warmup_Timer to deliver a Warmup_Timeout event in 6 seconds.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Sets the Warmup_Timer to deliver a Warmup_Timeout event in 6 seconds.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear heartbeat timeout</name>
-<documentation>Clears the Heartbeat_Timer.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Clears the Heartbeat_Timer.]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear warmup timeout</name>
-<documentation>Clears the Warmup_Timer.</documentation>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[Clears the Warmup_Timer.]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -100,263 +111,221 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation>The Initial state transitions directly to the Warmup state.</documentation>
+<documentation><![CDATA[The Initial state transitions directly to the Warmup state.]]></documentation>
 </state>
 <state>
 <name>warmup</name>
 <entryactions>
-<action>
-<name>set heartbeat timeout</name>
-</action>
+<entryaction><name>set heartbeat timeout</name></entryaction>
 </entryactions>
-<documentation>The Warmup state indicates that the Monitor has started. If no Heartbeat occurs within the standard timeout, the Monitor enters the Failed state.
+<documentation><![CDATA[The Warmup state indicates that the Monitor has started. If no Heartbeat occurs within the standard timeout, the Monitor enters the Failed state.
 
-Normally, a Heartbeat causes the Monitor to enter the First_Heartbeat state.</documentation>
+Normally, a Heartbeat causes the Monitor to enter the First_Heartbeat state.]]></documentation>
 </state>
 <state>
 <name>warming</name>
 <entryactions>
-<action>
-<name>clear heartbeat timeout</name>
-</action>
-<action>
-<name>set heartbeat timeout</name>
-</action>
+<entryaction><name>clear heartbeat timeout</name></entryaction>
+<entryaction><name>set heartbeat timeout</name></entryaction>
 </entryactions>
-<documentation>The Monitor is consuming Heartbeats while awaiting the end of the warmup timeout.</documentation>
+<documentation><![CDATA[The Monitor is consuming Heartbeats while awaiting the end of the warmup timeout.]]></documentation>
 </state>
 <state>
 <name>failed</name>
 <entryactions>
 </entryactions>
-<documentation>In the Failed state, the monitoring process is awaiting a Heartbeat to start the recovery process by transitioning to the Recovery state.</documentation>
+<documentation><![CDATA[In the Failed state, the monitoring process is awaiting a Heartbeat to start the recovery process by transitioning to the Recovery state.]]></documentation>
 </state>
 <state>
 <name>working</name>
 <entryactions>
 </entryactions>
-<documentation>The monitored device is (deemed to be) working correctly.
+<documentation><![CDATA[The monitored device is (deemed to be) working correctly.
 
 While Heartbeats continue, the Monitor alternates between this state and Received_Heartbeat.
 
-If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.</documentation>
+If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.]]></documentation>
 </state>
 <state>
 <name>received heartbeat</name>
 <entryactions>
-<action>
-<name>clear heartbeat timeout</name>
-</action>
-<action>
-<name>set heartbeat timeout</name>
-</action>
+<entryaction><name>clear heartbeat timeout</name></entryaction>
+<entryaction><name>set heartbeat timeout</name></entryaction>
 </entryactions>
-<documentation>Resets the Heartbeat_Timer as each Heartbeat is received while the monitored device is (apparently) working.</documentation>
+<documentation><![CDATA[Resets the Heartbeat_Timer as each Heartbeat is received while the monitored device is (apparently) working.]]></documentation>
 </state>
 <state>
 <name>recovery</name>
 <entryactions>
-<action>
-<name>set 6 second warmup timeout</name>
-</action>
-<action>
-<name>set heartbeat timeout</name>
-</action>
+<entryaction><name>set 6 second warmup timeout</name></entryaction>
+<entryaction><name>set heartbeat timeout</name></entryaction>
 </entryactions>
-<documentation>After there has been a failure, the Device must produce Heartbeats for 6 seconds before it's deemed to be working.
+<documentation><![CDATA[After there has been a failure, the Device must produce Heartbeats for 6 seconds before it's deemed to be working.
 
 Clearly there can be further 3-second heartbeat timeouts before recovery is achieved; if the Heartbeat which led to this state is not followed by further Heartbeats, a Heartbeat_Timeout occurs and the state transitions to Failed_Recovery.
 
-If a Heartbeat does occur, the state transitions to Recovering.</documentation>
+If a Heartbeat does occur, the state transitions to Recovering.]]></documentation>
 </state>
 <state>
 <name>recovering</name>
 <entryactions>
-<action>
-<name>clear heartbeat timeout</name>
-</action>
-<action>
-<name>set heartbeat timeout</name>
-</action>
+<entryaction><name>clear heartbeat timeout</name></entryaction>
+<entryaction><name>set heartbeat timeout</name></entryaction>
 </entryactions>
-<documentation>During the Recovering state, Heartbeats are consumed until either the Warmup_Timeout occurs (in which case the state transitions to Working) or the Heartbeat_Timeout occurs )in which case the state transitions to Failed_Recovery).</documentation>
+<documentation><![CDATA[During the Recovering state, Heartbeats are consumed until either the Warmup_Timeout occurs (in which case the state transitions to Working) or the Heartbeat_Timeout occurs )in which case the state transitions to Failed_Recovery).]]></documentation>
 </state>
 <state>
 <name>failed recovery</name>
 <entryactions>
-<action>
-<name>clear warmup timeout</name>
-</action>
+<entryaction><name>clear warmup timeout</name></entryaction>
 </entryactions>
-<documentation>The purpose of the Failed_Recovery state is to clear down the outstanding Warmup_Timeout.</documentation>
+<documentation><![CDATA[The purpose of the Failed_Recovery state is to clear down the outstanding Warmup_Timeout.]]></documentation>
 </state>
 <state>
 <name>first heartbeat</name>
 <entryactions>
-<action>
-<name>clear heartbeat timeout</name>
-</action>
-<action>
-<name>set heartbeat timeout</name>
-</action>
-<action>
-<name>set 2 second warmup timeout</name>
-</action>
+<entryaction><name>clear heartbeat timeout</name></entryaction>
+<entryaction><name>set heartbeat timeout</name></entryaction>
+<entryaction><name>set 2 second warmup timeout</name></entryaction>
 </entryactions>
-<documentation>In this state, the Monitor has received one Heartbeat since starting.
+<documentation><![CDATA[In this state, the Monitor has received one Heartbeat since starting.
 
 After 2 seconds, the Monitor enters the Working state.
 
-If a Heartbeat occurs, the Monitor enters the Warming state to consume any further Heartbeats without affecting the warmup timeout.</documentation>
+If a Heartbeat occurs, the Monitor enters the Warming state to consume any further Heartbeats without affecting the warmup timeout.]]></documentation>
 </state>
 </states>
 <transitions>
 <transition>
 <source>initial</source>
 <target>warmup</target>
-<event>
-<name></name>
-</event>
-<documentation></documentation>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>warmup</source>
 <target>first heartbeat</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>warmup</source>
 <target>failed</target>
-<event>
-<name>heartbeat timeout</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>warming</source>
 <target>working</target>
-<event>
-<name>warmup timeout</name>
-</event>
-<documentation></documentation>
+<event><name>warmup timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>warming</source>
 <target>warming</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>failed</source>
 <target>recovery</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>working</source>
 <target>failed</target>
-<event>
-<name>heartbeat timeout</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>working</source>
 <target>received heartbeat</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>received heartbeat</source>
 <target>working</target>
-<event>
-<name></name>
-</event>
-<documentation></documentation>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>recovery</source>
 <target>failed recovery</target>
-<event>
-<name>heartbeat timeout</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>recovery</source>
 <target>recovering</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>recovering</source>
 <target>recovering</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>recovering</source>
 <target>working</target>
-<event>
-<name>warmup timeout</name>
-</event>
-<documentation></documentation>
+<event><name>warmup timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>recovering</source>
 <target>failed recovery</target>
-<event>
-<name>heartbeat timeout</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>failed recovery</source>
 <target>failed</target>
-<event>
-<name></name>
-</event>
-<documentation></documentation>
+<event><name></name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>first heartbeat</source>
 <target>warming</target>
-<event>
-<name>heartbeat</name>
-</event>
-<documentation></documentation>
+<event><name>heartbeat</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 <transition>
 <source>first heartbeat</source>
 <target>working</target>
-<event>
-<name>warmup timeout</name>
-</event>
-<documentation></documentation>
+<event><name>warmup timeout</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[]]></documentation>
 </transition>
 </transitions>
 </statemachine>
 </class>
 <class stereotype="type">
 <name>Device</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>Represents the two devices to be monitored.
+<documentation><![CDATA[Represents the two devices to be monitored.
 
-[[ enumeration : input, output ]]</documentation>
+[[ enumeration : input, output ]]]]></documentation>
 <attributes>
 </attributes>
 <operations>
