@@ -15,6 +15,22 @@ package body Event_Test.Test_Engine is
    Waiting : Boolean := False;
    Result : Integer := 0;
 
+   ---------------------
+   --  Test instance  --
+   ---------------------
+
+   type Instance
+      is new ColdFrame.Project.Events.Instance_Base with null record;
+
+   function State_Image (This : Instance) return String;
+
+   function State_Image (This : Instance) return String is
+      pragma Warnings (Off, This);
+   begin
+      return "*none*";
+   end State_Image;
+
+   The_Instance : aliased Instance;
 
    -------------------
    --  Test events  --
@@ -36,7 +52,9 @@ package body Event_Test.Test_Engine is
 
 
    --  This event stores its Payload in Result.
-   type Store is new ColdFrame.Project.Events.Event_Base with record
+   type Store (For_The_Instance : access Instance)
+      is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+   with record
       Payload : Integer;
    end record;
 
@@ -61,7 +79,7 @@ package body Event_Test.Test_Engine is
 
    procedure Handler (For_The_Event : Post) is
       Ev : constant ColdFrame.Project.Events.Event_P
-        := new Store;
+        := new Store (The_Instance'Access);
       S : Store renames Store (Ev.all);
    begin
       delay For_The_Event.Interval;
@@ -103,9 +121,9 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
       Store_1 : constant ColdFrame.Project.Events.Event_P
-        := new Store;
+        := new Store (The_Instance'Access);
       Store_2 : constant ColdFrame.Project.Events.Event_P
-        := new Store;
+        := new Store (The_Instance'Access);
       S1 : Store renames Store (Store_1.all);
       S2 : Store renames Store (Store_2.all);
    begin
