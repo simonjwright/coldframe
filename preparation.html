@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: preparation.html,v 27d20e63288b 2004/03/02 06:46:38 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -254,6 +254,10 @@ are used, usually in the documentation section (in Rose the bottom
 left pane); for example, for your local type <i>Socket</i>,
 <tt>{&nbsp;renames&nbsp;=&nbsp;GNAT.Sockets.Socket_Type&nbsp;}</tt>.
 
+<p>Any unrecognised tagged values are included in the normalized XML
+as attributes, so that you can add your own post-processing (for
+example, special code generation methods).
+
 <p>ColdFrame originally used <a
 href="annotations.html">annotations</a>, only available in the
 documentation section, in sections delimited by <tt>[[&nbsp;]]</tt>;
@@ -311,6 +315,13 @@ multiplicity, depending on the version of Rose) of
 
 <dt>on <em>&#171;type&#187;</em> classes<dd><ul>
 
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i>[,
+unconstrained]</tt> specifies an array type with the specified index
+type (usually an <i><tt>{enumeration}</tt></i> or
+<i><tt>{integer}</tt></i>, but possibly <i><tt>{imported}</tt></i> or
+<i><tt>{renames}</tt></i>). The optional <tt>unconstrained</tt> maps
+directly to the Ada equivalent.
+
 <li><tt>callback</tt> specifies that <a
 href="type-mapping.png">callback support code</a> is to be
 generated. The idea here is that a (lower-level) Domain may need to
@@ -357,7 +368,11 @@ results (for a type named <tt>T</tt>, renaming
 <li><tt>real = digits <i>num-digits</i> | lower <i>low-bound</i> |
 upper <i>upper-bound</i></tt>
 
-<li><tt>string = max <i>max-length</i></tt>
+<li><tt>string = fixed <i>fixed-length</i></tt> specifies a fixed
+length string
+
+<li><tt>string = max <i>max-length</i></tt> specifies a variable
+length string, up to the length sepcified.
 
 </ul>
 

@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: releases.html-proto,v 27d20e63288b 2004/03/02 06:46:38 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -23,7 +23,9 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 <p><dt>DATE
 
 <dd>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
-reported.
+reported. Instead, they are included in the <i>normalized</i>
+intermediate file, so that, for example, you can add your own code
+generation extensions.
 
 
 <p>Tagged values with names containing illegal characters are treated
