@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 3b010735e777 $
---  $Date: 2004/03/13 21:01:00 $
+--  $Revision: 2684f855980b $
+--  $Date: 2004/06/10 19:59:49 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -398,99 +398,119 @@ package body ColdFrame.Events_G.Standard_G is
 
       loop
 
-         if Held_Events.Is_Empty (The_Events) then
+         --  This loop encloses an exception-catching block, so that
+         --  the whole event queue doesn't just die. Of course, the
+         --  system will be fragile after any uncaught exception here
+         --  (there is no user-written code here, but they might
+         --  corrupt timers).
 
-            select
-               accept Add_At_Event (The_Entry : Event_P;
-                                    To_Run_At : Time.Time) do
-                  Held_Events.Add_At_Event (The_Entry,
-                                            To_Run_At,
-                                            On => The_Events);
-               end Add_At_Event;
-
-            or
-               accept Add_After_Event (The_Entry : Event_P;
-                                       To_Run_After : Duration) do
-                  Held_Events.Add_After_Event (The_Entry,
-                                               To_Run_After,
-                                               On => The_Events);
-               end Add_After_Event;
-
-            or
-               accept Rethink;
-
-            or
-               accept Invalidate
-                 (For_The_Instance : Instance_Base_P);
-               --  Invalidate is called "just in case" (the Instance
-               --  being deleted can't tell whether there are any
-               --  outstanding held Events). But if we get here, the
-               --  queue was empty, so there can't be anything to do.
-
-            or
-               accept Tear_Down;
-               exit;
-
-            end select;
-
-         elsif Held_Events.Next_Event_Time (The_Events)
-           <= Ada.Real_Time.Clock then
+         begin
 
             loop
-               Process_First_Event;
-               exit when Held_Events.Is_Empty (The_Events);
-               exit when Held_Events.Next_Event_Time (The_Events)
-                 > Ada.Real_Time.Clock;
+
+               --  This is the main loop.
+
+               if Held_Events.Is_Empty (The_Events) then
+
+                  select
+                     accept Add_At_Event (The_Entry : Event_P;
+                                          To_Run_At : Time.Time) do
+                        Held_Events.Add_At_Event (The_Entry,
+                                                  To_Run_At,
+                                                  On => The_Events);
+                     end Add_At_Event;
+
+                  or
+                     accept Add_After_Event (The_Entry : Event_P;
+                                             To_Run_After : Duration) do
+                        Held_Events.Add_After_Event (The_Entry,
+                                                     To_Run_After,
+                                                     On => The_Events);
+                     end Add_After_Event;
+
+                  or
+                     accept Rethink;
+
+                  or
+                     accept Invalidate
+                       (For_The_Instance : Instance_Base_P);
+                     --  Invalidate is called "just in case" (the Instance
+                     --  being deleted can't tell whether there are any
+                     --  outstanding held Events). But if we get here, the
+                     --  queue was empty, so there can't be anything to do.
+
+                  or
+                     accept Tear_Down;
+                     exit;
+
+                  end select;
+
+               elsif Held_Events.Next_Event_Time (The_Events)
+                 <= Ada.Real_Time.Clock then
+
+                  loop
+                     Process_First_Event;
+                     exit when Held_Events.Is_Empty (The_Events);
+                     exit when Held_Events.Next_Event_Time (The_Events)
+                       > Ada.Real_Time.Clock;
+                  end loop;
+
+               else
+
+                  select
+                     accept Add_At_Event (The_Entry : Event_P;
+                                          To_Run_At : Time.Time) do
+                        Held_Events.Add_At_Event (The_Entry,
+                                                  To_Run_At,
+                                                  On => The_Events);
+                     end Add_At_Event;
+
+                  or
+                     accept Add_After_Event (The_Entry : Event_P;
+                                             To_Run_After : Duration) do
+                        Held_Events.Add_After_Event (The_Entry,
+                                                     To_Run_After,
+                                                     On => The_Events);
+                     end Add_After_Event;
+
+                  or
+                     accept Rethink;
+
+                  or
+                     accept Invalidate
+                       (For_The_Instance : Instance_Base_P) do
+                        Held_Events.Invalidate_Events
+                          (The_Events, For_The_Instance);
+                     end Invalidate;
+
+                  or
+                     accept Tear_Down;
+                     exit;
+
+                  or
+                     delay until Held_Events.Next_Event_Time (The_Events);
+                     Process_First_Event;
+
+                  end select;
+
+               end if;
+
             end loop;
 
-         else
+         exception
+            when E : others =>
+               Logging.Log
+                 (Severity => Logging.Error,
+                  Message =>
+                    Ada.Exceptions.Exception_Information (E) &
+                    " in Timer_Manager");
 
-            select
-               accept Add_At_Event (The_Entry : Event_P;
-                                    To_Run_At : Time.Time) do
-                  Held_Events.Add_At_Event (The_Entry,
-                                            To_Run_At,
-                                            On => The_Events);
-               end Add_At_Event;
+         end;
 
-            or
-               accept Add_After_Event (The_Entry : Event_P;
-                                       To_Run_After : Duration) do
-                  Held_Events.Add_After_Event (The_Entry,
-                                               To_Run_After,
-                                               On => The_Events);
-               end Add_After_Event;
-
-            or
-               accept Rethink;
-
-            or
-               accept Invalidate
-                 (For_The_Instance : Instance_Base_P) do
-                  Held_Events.Invalidate_Events (The_Events, For_The_Instance);
-               end Invalidate;
-
-            or
-               accept Tear_Down;
-               exit;
-
-            or
-               delay until Held_Events.Next_Event_Time (The_Events);
-               Process_First_Event;
-
-            end select;
-
-         end if;
+         delay 0.1;
 
       end loop;
 
-   exception
-      when E : others =>
-         Logging.Log
-           (Severity => Logging.Error,
-            Message =>
-              Ada.Exceptions.Exception_Information (E) &
-              " in Timer_Manager");
    end Timer_Manager;
 
 
