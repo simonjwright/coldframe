@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 635f59658623 2003/08/22 19:29:48 simon $ -->
+<!-- $Id: generate-html.xsl,v 107783527788 2003/08/22 19:37:31 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -310,11 +310,11 @@
     <table border="1">
       <tr>
         <th>State</th>
+        <th>Entry Action(s)</th>
         <xsl:for-each select="statemachine/event">
           <xsl:sort select="name"/>
           <th><xsl:value-of select="name"/></th>
         </xsl:for-each>
-        <th>Action</th>
         <th>Drop-through</th>
       </tr>
       <xsl:for-each select="statemachine/state">
@@ -326,6 +326,23 @@
             <a href="#{../../name}.{name}">
               <xsl:value-of select="name"/>
             </a>
+          </td>
+          <td>
+            <xsl:choose>
+              <xsl:when test="action">
+                <xsl:for-each select="action">
+                  <a href="#{../../../name}.{name}">
+                    <xsl:value-of select="name"/>
+                  </a>
+                  <xsl:if test="position() &lt; last()">
+                    <br/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
+                <i>none</i>
+              </xsl:otherwise>
+            </xsl:choose>
           </td>
           <xsl:for-each select="../event">
             <xsl:sort select="name"/>
@@ -349,23 +366,6 @@
               </xsl:choose>
             </td>
           </xsl:for-each>
-          <td>
-            <xsl:choose>
-              <xsl:when test="action">
-                <xsl:for-each select="action">
-                  <a href="#{../../../name}.{name}">
-                    <xsl:value-of select="name"/>
-                  </a>
-                  <xsl:if test="position() &lt; last()">
-                    <br/>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:when>
-              <xsl:otherwise>
-                <i>none</i>
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
           <td>
             <xsl:choose>
               <xsl:when test="../transition[source=$st and not(event)]">
@@ -599,9 +599,7 @@
   <xsl:template match="domain/type">
     <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
     <xsl:if test="@callback">
-      <p>
-        <xsl:text>Callback support is provided.</xsl:text>
-      </p>
+      <p><xsl:text>Callback support is provided.</xsl:text></p>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="enumeration">
