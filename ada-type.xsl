@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 18694fa50b82 2004/10/29 13:49:44 simon $ -->
+<!-- $Id: ada-type.xsl,v 57552ab0afc7 2004/10/29 14:38:49 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -875,7 +875,6 @@
                                     and not(@suppressed)
                                     and @visibility='private']">
       <xsl:sort select="name"/>
-      </xsl:if>-->
       <xsl:call-template name="op:subprogram-specification">
         <xsl:with-param name="indent" select="$II"/>
         <xsl:with-param name="is-class" select="'no'"/>
