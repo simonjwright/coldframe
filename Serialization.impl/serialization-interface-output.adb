@@ -1,4 +1,4 @@
---  $Id: serialization-interface-output.adb,v 7b585abe1423 2003/01/22 22:36:20 simon $
+--  $Id: serialization-interface-output.adb,v fbe698e22b63 2003/01/24 06:25:15 simon $
 
 with ColdFrame.Project.Events;
 with Serialization.Events;
@@ -21,7 +21,8 @@ begin
    end if;
 
    Ev := new Server.Posted_Value (SH);
-   Server.Posted_Value (Ev.all).Payload := new Serializable'(V);
+   Serializable'Output
+     (Server.Posted_Value (Ev.all).Payload'Unrestricted_Access, V);
    ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
 
 end Output;

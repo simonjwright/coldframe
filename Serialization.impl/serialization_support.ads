@@ -1,17 +1,17 @@
---  $Id: serialization_support.ads,v 7b585abe1423 2003/01/22 22:36:20 simon $
+--  $Id: serialization_support.ads,v fbe698e22b63 2003/01/24 06:25:15 simon $
 
-with Ada.Unchecked_Deallocation;
+with BC.Support.Memory_Streams;
 with ColdFrame.Serialization;
 
 package Serialization_Support is
+
+   Maximum_Record_Size : constant := 1024;
 
    subtype Base is ColdFrame.Serialization.Base;
 
    subtype Base_Class is Base'Class;
 
-   type Base_Class_P is access Base_Class;
-
-   procedure Free is new Ada.Unchecked_Deallocation
-     (Base_Class, Base_Class_P);
+   subtype Buffer
+      is BC.Support.Memory_Streams.Stream_Type (Maximum_Record_Size);
 
 end Serialization_Support;
