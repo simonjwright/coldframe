@@ -29,14 +29,14 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.ads,v $
---  $Revision: a4e3f0019f4b $
---  $Date: 2003/07/24 19:33:42 $
+--  $Revision: 1b78a6578c9f $
+--  $Date: 2003/07/24 21:01:00 $
 --  $Author: simon $
 
 with System.Pool_Size;
 with System.Storage_Elements;
 
-package ColdFrame.Project.Bounded_Storage_Pools is
+package ColdFrame.Bounded_Storage_Pools is
 
    pragma Elaborate_Body;
    --  Needed to ensure that library routines can execute allocators
@@ -76,4 +76,4 @@ package ColdFrame.Project.Bounded_Storage_Pools is
      (Pool : Bounded_Pool)
      return System.Storage_Elements.Storage_Count;
 
-end ColdFrame.Project.Bounded_Storage_Pools;
+end ColdFrame.Bounded_Storage_Pools;

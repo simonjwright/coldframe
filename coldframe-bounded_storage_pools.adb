@@ -29,11 +29,11 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: a4e3f0019f4b $
---  $Date: 2003/07/24 19:33:42 $
+--  $Revision: 1b78a6578c9f $
+--  $Date: 2003/07/24 21:01:00 $
 --  $Author: simon $
 
-package body ColdFrame.Project.Bounded_Storage_Pools is
+package body ColdFrame.Bounded_Storage_Pools is
 
 
    protected body Mutex is
@@ -144,4 +144,4 @@ package body ColdFrame.Project.Bounded_Storage_Pools is
    end Storage_Size;
 
 
-end ColdFrame.Project.Bounded_Storage_Pools;
+end ColdFrame.Bounded_Storage_Pools;
