@@ -306,6 +306,19 @@ Event_Test.impl/event_test-test_instance.ads \
 Event_Test.impl/event_test-test_singleton_instance.adb \
 Event_Test.impl/event_test-test_singleton_instance.ads
 
+TEST += \
+Hierarchies.cat Hierarchies.raw \
+Hierarchies.impl/hierarchies-f_2-create_new.adb \
+Hierarchies.test/hierarchies-harness.adb \
+Hierarchies.test/hierarchies-harness.ads \
+Hierarchies.test/hierarchies-suite.adb \
+Hierarchies.test/hierarchies-suite.ads \
+Hierarchies.test/hierarchies-test_creations.adb \
+Hierarchies.test/hierarchies-test_creations.ads \
+Hierarchies.test/hierarchies-test_deletions.adb \
+Hierarchies.test/hierarchies-test_deletions.ads \
+Hierarchies.test/hierarchies-test_finds.adb \
+Hierarchies.test/hierarchies-test_finds.ads
 
 DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
