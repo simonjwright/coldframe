@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v f22d980d1f6b 2003/12/13 07:23:38 simon $ -->
+<!-- $Id: types.html,v c0b68025ef97 2004/01/11 19:28:15 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -76,6 +76,8 @@ for example,
 <p>The tags supported for <em>&#171;type&#187;</em>s are:
 
 <ul>
+
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
 
 <li><tt>callback</tt> specifies that callback support code is to be
 generated. The idea here is that a (lower-level) Domain may need to
@@ -214,6 +216,15 @@ no implicit <tt>This</tt> parameter.
 
 <ul>
 
+<li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
+
+<p>Generates
+<pre>
+   type <i>Typ</i> is
+     array (<i>index-type</i>)
+     of <i>element-type</i>;
+</pre>
+
 <li><tt>callback</tt> (or &#171;callback&#187;)
 
 <p>For a type <tt>Typ</tt>, with <tt>{callback}</tt>, the
@@ -329,7 +340,7 @@ than 6, it's a subtype of <tt>Float</tt>, otherwise it's a subtype of
 <tt>Long_Float</tt>. If the lower and upper bounds are given, they
 translate to a constraint.
 
-<p><tt>{ real = digits 5 }/tt> gives
+<p><tt>{ real = digits 5 }</tt> gives
 <pre>
    subtype T is Float;
 </pre>

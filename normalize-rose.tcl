@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0daddb37391d 2004/01/09 15:03:28 simon $
+# $Id: normalize-rose.tcl,v c0b68025ef97 2004/01/11 19:28:15 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2289,6 +2289,10 @@ itcl::class Transition {
 itcl::class Datatype {
     inherit Element
 
+    variable arrayOf
+
+    variable arrayIndexBy
+
     variable callback
 
     variable dataDetail
@@ -2348,6 +2352,17 @@ itcl::class Datatype {
 
     method -operations {ops} {
         set operations $ops
+    }
+
+    # called when the user has requested an array
+    method -array {of} {
+        set dataType "array"
+        set arrayOf [normalize $of]
+    }
+
+    # called when the user has specified an (array) index
+    method -index {by} {
+        set arrayIndexBy [normalize $by]
     }
 
     # called when the user has requested a callback.
@@ -2453,14 +2468,14 @@ itcl::class Datatype {
     # called to specify the hash mechanism (probably only relevant
     # for imported/renamed types)
     method -hash {as} {
-	set hash [string tolower $as]
-	switch $hash {
-	    discrete -
-	    enumeration {}
-	    default {
-		Warning "unrecognised hash mechanism \"$hash\" for $type"
-	    }
-	}
+        set hash [string tolower $as]
+        switch $hash {
+            discrete -
+            enumeration {}
+            default {
+                Warning "unrecognised hash mechanism \"$hash\" for $type"
+            }
+        }
     }
 
     method -complete {} {
@@ -2477,9 +2492,9 @@ itcl::class Datatype {
         if [info exists callback] {
             puts -nonewline " callback=\"$callback\""
         }
-	if [info exists hash] {
+        if [info exists hash] {
             puts -nonewline " hash=\"$hash\""
-	}
+        }
         if [info exists fieldImage] {
             puts -nonewline " field-image=\"$fieldImage\""
         }
@@ -2498,8 +2513,15 @@ itcl::class Datatype {
         putElement name "$type"
         $this -generateDocumentation
         switch $dataType {
-            null {
-                puts "<null/>"
+            array {
+                puts "<array>"
+                putElement type $arrayOf
+                if [info exists arrayIndexBy] {
+                    putElement index $arrayIndexBy
+                } else {
+                    Error "no index type for array type $type"
+                }
+                puts "</array>"
             }
             counterpart {
                 puts "<counterpart/>"
@@ -2520,6 +2542,9 @@ itcl::class Datatype {
             }
             imported {
                 putElement imported $dataDetail
+            }
+            null {
+                puts "<null/>"
             }
             renames {
                 putElement renames $dataDetail
