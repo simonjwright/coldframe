@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v 957294b76472 2001/12/09 10:37:42 simon $ -->
+<!-- $Id: faq.html,v 0684b6de10c9 2001/12/27 10:28:55 simon $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 </head>
@@ -151,7 +151,9 @@ preserve model integrity, actually does the unlinking "by accident".
 It would have been possible for <tt>Unlink</tt> to <tt>Delete</tt> the
 association class instance directly, but that would rely on your
 having cleaned up any other associations between the association class
-and the rest of the model beforehand.
+and the rest of the model beforehand (or in a &#171;finalize&#187;
+operation; however, using &#171;finalize&#187; operations to maintain
+model integrity is an advanced practice!)
 
 <p>
 
