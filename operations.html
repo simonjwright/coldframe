@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v 64882bf122c5 2005/01/19 20:34:59 simon $ -->
+<!-- $Id: operations.html,v b97368034971 2005/02/06 18:44:42 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -31,7 +31,8 @@ of the domain.
 <li><a href="event-modelling.html#class-event-handlers">to process
 class (non-state machine) events</a>,
 
-<li>to process callbacks from other domains,
+<li><a href="callbacks.html">to process callbacks from other
+domains</a>,
 
 <li><a href="#type">to define access-to-subprogram types</a>,
 
@@ -103,11 +104,12 @@ operation.
 
 <h3><a name="unit">Unit test support</a></h3>
 
-<p>Operations to be called during teardown (in unit test) are marked
-with the stereotype <em>&#171;teardown&#187;</em>. It's possible to
-have more than one &#171;teardown&#187; operation. These are intended
-to clean up resources such as file descriptors; don't try to tidy up
-associations, they're in an indeterminate state during teardown.
+<p>Instance operations to be called during teardown (in unit test) are
+marked with the stereotype <em>&#171;teardown&#187;</em>. It's
+possible to have more than one &#171;teardown&#187; operation; they'll
+be called in alphabetical order. These are intended to clean up
+resources such as file descriptors; don't try to tidy up associations,
+they're in an indeterminate state during teardown.
 
 <p>&#171;finalize&#187; operations can call &#171;teardown&#187;s,
 but &#171;teardown&#187; operations should <em>not</em> call
