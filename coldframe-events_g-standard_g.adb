@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: f66057bc31b6 $
---  $Date: 2003/01/19 18:26:24 $
+--  $Revision: 16159608c696 $
+--  $Date: 2003/02/11 20:49:32 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -540,8 +540,9 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Start_Queue (The_Queue : access Event_Queue_Base) is
    begin
       --  This will block indefinitely if called for a started Queue.
-      --  But, the only way it's supposed to be called is via Start,
-      --  which (at this level) doesn't in fact do so.
+      --  But, the only way it's supposed to be called is via Start.
+      --  The base implementation of Start checks first and doesn't
+      --  make the call if it would be wrong to do so.
       The_Queue.The_Dispatcher.Start;
    end Start_Queue;
 
