@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v b57b6a6aab7d 2003/12/13 17:25:06 simon $ -->
+<!-- $Id: operations.html,v e782f3c76bbc 2004/01/18 07:55:04 simon $ -->
 <head>
 <title>ColdFrame: Operations</title>
 </head>
@@ -39,6 +39,9 @@ of the domain.
 <li><a href="#seq">to support sequence diagrams</a>.
 
 </ul>
+
+<p>You can specify the <a href="#convention">programming language
+convention</a> to be used.
 
 <p><a href="#renaming">Renamings</a> are provided to allow a form of
 overloading.
@@ -149,12 +152,18 @@ want to show local-to-operation instantiations of generics provided by
 ColdFrame (eg, <tt><i>Domain.Class</i>.Selection_Function</tt>) on
 sequence diagrams.
 
+<h3><a name="convention"></a>Convention</h3>
+
+<p>You can use the <i>convention</i> tag to specify the calling
+convention to be supported by the operation.
+
+<p>The form is <tt>{ convention = <i>language</i>}</tt>.
+
 <h3><a name="renaming">Renaming</a></h3>
 
-<p>You can use the <tt><i>renames</i></tt> tag to specify a
-form of overloading (ColdFrame's translation approach rules out actual
-overloading). Ada semantics apply (for example, you can change
-parameter defaults).
+<p>You can use the <i>renames</i> tag to specify a form of overloading
+(ColdFrame's translation approach rules out actual overloading). Ada
+semantics apply (for example, you can change parameter defaults).
 
 <p>The form is <tt>{ renames = <i>other-operation</i> }</tt>.
 
@@ -167,6 +176,12 @@ diagrams</a> generate no code.
 declarations in the domain package specification (for those declared
 in &#171;type&#187;s) or the class package specification (for those
 declared in classes).
+
+<p>Operations tagged with a <a href="#convention">convention</a>
+(<i>C</i>, probably) will have
+<pre>
+   pragma Convention (<i>operation</i>, <i>language</i>);
+</pre>
 
 <p><a href="#task-entry">Task entries</a> map to <tt>entry</tt>
 specifications in the class's task specification.
