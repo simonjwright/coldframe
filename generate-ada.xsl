@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 9b324703e077 2001/03/22 20:27:21 simon $ -->
+<!-- $Id: generate-ada.xsl,v 74a961401ce7 2001/03/25 09:39:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -501,8 +501,14 @@
         
         <xsl:text>  procedure Delete (This : in out Handle) is&#10;</xsl:text>
         <xsl:text>  begin&#10;</xsl:text>
-        <xsl:text>    Delete&#10;</xsl:text>
-        <xsl:text>      ((</xsl:text>
+        <!-- This check is because of what seems to be a GNAT error for
+             fixed-size storage pools. -->
+        <xsl:text>    if This = null then&#10;</xsl:text>
+        <xsl:text>      raise Constraint_Error;&#10;</xsl:text>
+        <xsl:text>    end if;&#10;</xsl:text>
+        <xsl:text>    Maps.Unbind&#10;</xsl:text>
+        <xsl:text>      (The_Container,&#10;</xsl:text>
+        <xsl:text>       (</xsl:text>
         <xsl:for-each select="attribute[@identifier='yes']">
           <xsl:call-template name="attribute-name"/>
           <xsl:text> =&gt; This.</xsl:text>
