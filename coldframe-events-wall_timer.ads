@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.ads,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 9c871bd7f3f6 $
+--  $Date: 2002/03/06 05:07:41 $
 --  $Author: simon $
 
 with BC.Containers.Queues.Unbounded;
@@ -40,12 +40,12 @@ package ColdFrame.Events.Wall_Timer is
    procedure Post (The : Event_P;
                    On : access Event_Queue);
 
-   procedure Set (The : in out Timer;
+   procedure Set (The : in out Timer'Class;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration);
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The : in out Timer'Class;
                     On : access Event_Queue);
 
 private

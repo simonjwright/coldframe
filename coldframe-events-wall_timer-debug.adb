@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer-debug.adb,v $
---  $Revision: 29450fc20619 $
---  $Date: 2002/02/23 13:41:49 $
+--  $Revision: 9c871bd7f3f6 $
+--  $Date: 2002/03/06 05:07:41 $
 --  $Author: simon $
 
 with Ada.Tags;
@@ -41,7 +41,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
    end Post;
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The : in out Timer'Class;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
@@ -60,7 +60,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
    end Set;
 
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The : in out Timer'Class;
                     On : access Event_Queue) is
 
    begin
@@ -75,6 +75,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
 
    procedure Log_Retraction (The : Event_P;
                              On : access Event_Queue) is
+      pragma Warnings (Off, On);
    begin
       Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The'Tag));
    end Log_Retraction;
@@ -82,6 +83,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
 
    procedure Log_Pre_Dispatch (The : Event_P;
                                On : access Event_Queue) is
+      pragma Warnings (Off, On);
    begin
       if The.all in Instance_Event_Base'Class then
          Put_Line
@@ -100,6 +102,7 @@ package body ColdFrame.Events.Wall_Timer.Debug is
 
    procedure Log_Post_Dispatch (The : Event_P;
                                 On : access Event_Queue) is
+      pragma Warnings (Off, On);
    begin
       if The.all in Instance_Event_Base'Class then
          Put_Line

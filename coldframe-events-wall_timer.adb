@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events-wall_timer.adb,v $
---  $Revision: 8036534a3bf3 $
---  $Date: 2002/02/26 06:20:46 $
+--  $Revision: 9c871bd7f3f6 $
+--  $Date: 2002/03/06 05:07:41 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -64,7 +64,7 @@ package body ColdFrame.Events.Wall_Timer is
    end Dispatcher;
 
 
-   procedure Set (The : in out Timer;
+   procedure Set (The : in out Timer'Class;
                   On : access Event_Queue;
                   To_Fire : Event_P;
                   After : Natural_Duration) is
@@ -79,7 +79,7 @@ package body ColdFrame.Events.Wall_Timer is
             The.The_Event := Event_P (To_Fire);
             The.Wall_Time_To_Fire := Ada.Calendar.Clock + After;
             The.Status := Set;
-            On.The_Timer_Manager.Append (The'Unrestricted_Access);
+            On.The_Timer_Manager.Append (Timer (The)'Unrestricted_Access);
 
          when Set =>
             raise Use_Error;
@@ -89,7 +89,7 @@ package body ColdFrame.Events.Wall_Timer is
    end Set;
 
 
-   procedure Unset (The : in out Timer;
+   procedure Unset (The : in out Timer'Class;
                     On : access Event_Queue) is
 
       procedure Delete
@@ -103,7 +103,7 @@ package body ColdFrame.Events.Wall_Timer is
             raise Use_Error;
 
          when Set =>
-            On.The_Timer_Manager.Remove (The'Unrestricted_Access);
+            On.The_Timer_Manager.Remove (Timer (The)'Unrestricted_Access);
             if The.Status = Fired then
                --  On.The_Timer_Manager got in first, need to retract
                --  the event.
