@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: types.html,v cc9f958c160e 2004/09/18 12:09:00 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -76,6 +76,13 @@ for example,
 <p>The tags supported for <em>&#171;type&#187;</em>s are:
 
 <ul>
+
+<li><tt>access = <i>access-type-name</i></tt> specifies that you need
+a type which provides access to objects of the type (ie, a pointer
+type). It's probably a good idea to adopt a naming convention:
+ColdFrame's precedent would be to append <tt>_P</tt> to the type name,
+your project might prefer something more obvious like
+<tt>_Access</tt>.
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
 and optionally <tt>unconstrained</tt>.
@@ -227,6 +234,18 @@ no implicit <tt>This</tt> parameter.
 <h3>Tags</h3>
 
 <ul>
+
+<li><tt>access = <i>access-type-name</i></tt>
+
+<p>for a type <tt>Typ</tt>, after the declaration of the type,
+generates
+<pre>
+   type <i>access-type-name</i> is access all <i>Typ</i>;
+   for <i>access-type-name</i>'Storage_Size use 0;
+</pre>
+
+<p>Any instances of <tt>Typ</tt> are declared <tt>aliased</tt>, to
+allow <tt>'Access</tt> to be used.
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i>[,
 unconstrained]</tt>
@@ -427,6 +446,12 @@ example (see <a href="#discriminated-record-pic">above</a>),
 </ul>
 
 <h2>Use</h2>
+
+<h3>Access types</h3>
+
+<p>Normally you should only use these where you have to give access to
+an attribute to another class; perhaps the attribute is of a
+&#171;protected&#187; (and therefore <i>limited</i>) type.
 
 <h3>Type extension</h3>
 

@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 4c62142ad45a 2004/09/14 11:24:54 simon $ -->
+<!-- $Id: releases.html-proto,v cc9f958c160e 2004/09/18 12:09:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -43,6 +43,9 @@ accounted for while working out the order in which to declare types.
 
 <p>&#171;protected&#187; types didn't allow the declaration of
 &#171;access&#187; operations.
+
+
+<p>You can make ColdFrame generate access types for your own types.
 
 
 <p><dt>20040319

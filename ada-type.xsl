@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v d501bed0217e 2004/09/09 13:31:33 simon $ -->
+<!-- $Id: ada-type.xsl,v cc9f958c160e 2004/09/18 12:09:00 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -524,6 +524,22 @@
       </xsl:otherwise>
 
     </xsl:choose>
+
+    <!-- Generate access types (if required) immediately after the type
+         they access. -->
+    <xsl:if test="@access">
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
+        <xsl:value-of select="@access"/>
+        <xsl:text> is access all </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>for </xsl:text>
+        <xsl:value-of select="@access"/>
+        <xsl:text>'Storage_Size use 0;&#10;</xsl:text>
+    </xsl:if>
+
   </xsl:template>
 
 
@@ -580,7 +596,7 @@
 
 
   <!-- Called to generate operation specifications for types. -->
-  <xsl:template matc`="type/operation" mode="domain-type-operation-spec">
+  <xsl:template match="type/operation" mode="domain-type-operation-spec">
     <xsl:call-template name="subprogram-specification">
       <xsl:with-param name="indent" select="$I"/>
       <xsl:with-param name="is-class" select="'no'"/>
