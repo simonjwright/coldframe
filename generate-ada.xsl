@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
+<!-- $Id: generate-ada.xsl,v e7c7746af93f 2003/06/14 12:54:54 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -242,6 +242,18 @@
     <xsl:apply-templates
       select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-body">
+    </xsl:apply-templates>
+    
+    
+    <!-- .. protected type bodies .. -->
+    <xsl:call-template name="progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. protected bodies ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="type[@protected]"
+      mode="protected-type-body">
     </xsl:apply-templates>
     
     
