@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 38960f8e0d9a 2004/02/27 06:32:50 simon $ -->
+<!-- $Id: error-messages.html,v 65555c5a7a38 2004/03/15 17:59:09 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -137,15 +137,15 @@ want anything to happen!
 
 <dt>Error: can't create image for array <i>Array_Type</i> <dd>Not supported.
 
+<dt>Error: <i>Class.Event</i>'s payload is of the wrong type (<i>Type</i>: <i>Operation</i> expects <i>Type</i> <dd>If an entry action has a parameter, it must be of the type of the associated event's payload.
+
+<dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
+
 <dt>Error: <i>Class</i>.<i>State</i>, a singleton entry action may not delete the instance <dd>It's not permitted to delete a singleton.
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> has too many parameters to be an entry action <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
-
-<dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
-
-<dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
 
 <dt>Error: drop-through and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
