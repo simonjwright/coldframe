@@ -1,0 +1,55 @@
+<!-- $Id: event-motivation.html,v a51b39c2872a 2002/03/28 12:03:35 simon $ -->
+<html>
+<head>
+<title>ColdFrame: Event motivation</title>
+</head>
+<body bgcolor="#ffffff">
+<h1>ColdFrame: Event motivation</h1>
+
+In ColdFrame, events are used for two purposes:
+
+<ul>
+<li>to isolate domains
+<li>to support state modelling.
+</ul>
+
+<h3>Domain isolation</h3>
+
+<p>Many systems use the Layered approach to architecture, and it's
+likely that a ColdFrame-based system will do the same. In any case,
+there has to be support for interactions between different Domains
+(subject matters).
+
+<p>Domains near the system's devices will need to have tasks to help
+them support the devices, probably on at least a "one task per device"
+basis.
+
+<p>When you're designing a higher-level domain, you'll probably want
+to use the <tt>[[callback]]</tt> facility (ColdFrame's version of the
+Observer pattern) to isolate yourself from the workings of the device
+domains. However, if you're using more than one device, your callbacks
+will be being called from more than one thread of execution, which you
+must provide protection against.
+
+<p>ColdFrame's Event support allows you to do this by converting the
+callback message into an event (with a data payload) to be handled
+later in the context of a thread in your domain.
+
+<h3>State modelling</h3>
+
+<p>State modelling is a very useful technique when objects have
+lifecycles, and especially when they react differently depending on the
+state they've reached. Another indicator is when times and intervals
+are involved.
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>
