@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v cd837602c17d 2002/03/02 08:27:14 simon $ -->
+<!-- $Id: ada-class.xsl,v a36cb872678f 2002/03/05 06:00:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -143,6 +143,16 @@
     <xsl:text>private&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
  
+    <!-- .. any <<class>> attributes .. -->
+    <xsl:if test="attribute/@class">
+      <xsl:for-each select="attribute[@class]">
+        <xsl:call-template name="single-record-component">
+          <xsl:with-param name="indent" select="$I"/>
+        </xsl:call-template>
+      </xsl:for-each>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
     <xsl:if test="@public">
       <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
