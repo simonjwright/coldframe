@@ -20,9 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: 5da579479986 $
+--  $Date: 2002/09/04 18:53:16 $
 --  $Author: simon $
+
+with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G is
 
@@ -30,7 +32,7 @@ package body ColdFrame.Events_G is
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
-      null;
+      raise Exceptions.Use_Error;
    end Wait_Until_Idle;
 
 
@@ -70,8 +72,32 @@ package body ColdFrame.Events_G is
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
-      raise Program_Error;
+      raise Exceptions.Use_Error;
    end Tear_Down;
+
+
+   procedure Add_Posted_Event (On : access Event_Queue_Base) is
+   begin
+      null;
+   end Add_Posted_Event;
+
+
+   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
+   begin
+      null;
+   end Remove_Posted_Event;
+
+
+   procedure Add_Held_Event (On : access Event_Queue_Base) is
+   begin
+      null;
+   end Add_Held_Event;
+
+
+   procedure Remove_Held_Event (On : access Event_Queue_Base) is
+   begin
+      null;
+   end Remove_Held_Event;
 
 
    procedure Log_Retraction (The_Event : Event_P;

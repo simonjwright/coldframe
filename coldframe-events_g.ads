@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: d5b17c98acfd $
---  $Date: 2002/08/22 18:57:31 $
+--  $Revision: 5da579479986 $
+--  $Date: 2002/09/04 18:53:16 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -104,9 +104,9 @@ package ColdFrame.Events_G is
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
    --
-   --  May raise Use_Error if the Event is an Instance_Event and
-   --  Instance_Events for this Instance have previously been posted
-   --  to a different Queue.
+   --  May raise Exceptions.Use_Error if the Event is an
+   --  Instance_Event and Instance_Events for this Instance have
+   --  previously been posted to a different Queue.
 
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is abstract;
@@ -152,17 +152,17 @@ package ColdFrame.Events_G is
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   At_Time : Time.Time) is abstract;
-   --  May raise Use_Error (if the Timer is already set)
+   --  May raise Exceptions.Use_Error (if the Timer is already set)
 
    procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue_Base;
                   To_Fire : Event_P;
                   After : Natural_Duration) is abstract;
-   --  May raise Use_Error (if the Timer is already set)
+   --  May raise Exceptions.Use_Error (if the Timer is already set)
 
    procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue_Base) is abstract;
-   --  May raise Use_Error (if the Timer is already unset)
+   --  May raise Exceptions.Use_Error (if the Timer is already unset)
 
 
    ---------------
@@ -187,7 +187,12 @@ package ColdFrame.Events_G is
    --  Unit test support  --
    -------------------------
 
+   --  The implementations here raise Exceptions.Use_Error. Must only
+   --  be used with an instantiation of Events_G.Test_G.
+
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base);
+   --  Blocks the caller until there are no more events awaiting
+   --  processing.
 
    procedure Tear_Down (The_Queue : in out Event_Queue_P);
    --  Terminates any tasks and deallocates The_Queue.
@@ -252,11 +257,22 @@ private
       For_The_Instance : access Instance_Base'Class);
 
    --  Default private interface to tear down an event queue.  The
-   --  implementation here raises Program_Error if called.
+   --  implementation here raises Exceptions.Use_Error if called.
    procedure Tear_Down (The_Queue : in out Event_Queue_Base);
 
-   --  Operations to support debug/logging. The implementation here
-   --  is null.
+   --  Operations to support test (particularly Wait_Until_Idle).
+   --  The implementations here are null.
+
+   procedure Add_Posted_Event (On : access Event_Queue_Base);
+
+   procedure Remove_Posted_Event (On : access Event_Queue_Base);
+
+   procedure Add_Held_Event (On : access Event_Queue_Base);
+
+   procedure Remove_Held_Event (On : access Event_Queue_Base);
+
+   --  Operations to support debug/logging. The implementations here
+   --  are null.
 
    procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue_Base);
@@ -267,7 +283,7 @@ private
    procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue_Base);
 
-   --  Operations to support Locking. The implementation here raises
+   --  Operations to support Locking. The implementations here raise
    --  Program_Error if called.
 
    procedure Locker (The_Queue : access Event_Queue_Base);
