@@ -13,15 +13,17 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.ads,v $
---  $Revision: 1243ef613c9e $
---  $Date: 2002/09/18 20:23:26 $
+--  $Revision: 0d4e03da8422 $
+--  $Date: 2002/09/18 20:25:03 $
 --  $Author: simon $
 
 with GNAT.Directory_Operations; use GNAT.Directory_Operations;
 
 package Generated_Lines_Support is
 
-   procedure Count (File_Named : Path_Name; Verbosely : Boolean);
+   procedure Count (File_Named : Path_Name;
+                    Verbosely : Boolean;
+                    Logging : Boolean);
 
    procedure Report;
 
