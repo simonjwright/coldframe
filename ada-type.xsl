@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v dab255fe9caf 2004/11/15 17:12:43 simon $ -->
+<!-- $Id: ada-type.xsl,v 3500fefad0d1 2005/02/02 05:29:11 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -828,16 +828,7 @@
   <!-- Called at domain/type[@protected] to generate protected type specs. -->
   <xsl:template name="ty:protected-type-spec">
 
-    <!-- Not reachable (detected in normalization)
-    <xsl:if test="count(attribute) = 0">
-      <xsl:message>
-        <xsl:call-template name="ut:log-error"/>
-        <xsl:text>Error: protected type </xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text> has no attributes</xsl:text>
-      </xsl:message>
-    </xsl:if>
-    -->
+    <!-- The error of having no attributes is detected in normalization. -->
     <xsl:if test="count(operation) = 0">
       <xsl:message>
         <xsl:call-template name="ut:log-error"/>
