@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v c4049088a74e 2005/02/02 05:49:04 simon $ -->
+<!-- $Id: ada-attribute.xsl,v a2be55a7c0f6 2005/02/18 06:08:54 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -380,6 +380,18 @@
       <xsl:value-of select="initial"/>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
+    <xsl:if test="@atomic">
+      <xsl:value-of select="$indent"/>
+      <xsl:text>pragma Atomic (</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
+    <xsl:if test="@volatile">
+      <xsl:value-of select="$indent"/>
+      <xsl:text>pragma Volatile (</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:if>
     <xsl:call-template name="ut:commentary">
       <xsl:with-param name="indent" select="$indent"/>
     </xsl:call-template>

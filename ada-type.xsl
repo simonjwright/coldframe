@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v ff48eb33c84c 2005/02/14 09:06:40 simon $ -->
+<!-- $Id: ada-type.xsl,v a2be55a7c0f6 2005/02/18 06:08:54 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -335,7 +335,7 @@
             <xsl:text>end case;&#10;</xsl:text>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
-
+            
           </xsl:when>
 
           <xsl:when test="@protected">
@@ -406,6 +406,18 @@
           <xsl:with-param name="is-class" select="'no'"/>
         </xsl:call-template>
         <xsl:text>;&#10;</xsl:text>
+        <xsl:if test="@atomic">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Atomic_Components (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="@volatile">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Volatile_Components (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <xsl:when test="counterpart">
@@ -432,6 +444,18 @@
           </xsl:if>
         </xsl:for-each>
         <xsl:text>);&#10;</xsl:text>
+        <xsl:if test="@atomic">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Atomic (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="@volatile">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Volatile (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <xsl:when test="imported">
@@ -509,6 +533,18 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
+        <xsl:if test="@atomic">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Atomic (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="@volatile">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Volatile (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <xsl:when test="real">
@@ -612,6 +648,18 @@
         <xsl:text> is mod </xsl:text>
         <xsl:value-of select="unsigned/mod"/>
         <xsl:text>;&#10;</xsl:text>
+        <xsl:if test="@atomic">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Atomic (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
+        <xsl:if test="@volatile">
+          <xsl:value-of select="$I"/>
+          <xsl:text>pragma Volatile (</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>);&#10;</xsl:text>
+        </xsl:if>
       </xsl:when>
 
       <xsl:otherwise>
