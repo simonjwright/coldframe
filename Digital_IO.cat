@@ -16,7 +16,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: fb15fbf96993 $ }
+|{ revision = $Revision: a4da467e594c $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -105,79 +105,47 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
-	(object Class "Signal State"
-	    quid       	"3DFCF80601AE"
+	(object Class_Category "Digital IO Interface"
+	    quid       	"42262C8F005E"
 	    documentation 	
-|Provides application domains with callback facilities for input signal state changes.
+|Copyright (C) Simon Wright <simon@pushface.org>
 |
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|Provides the interface to the Digital IO domain, which 
+|manages digital (discrete) input/output.
+|
+|{ name = Digital IO }
+|{ revision = $Revision: a4da467e594c $ }
 	    
-	    stereotype 	"callback"
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "s"
-		    quid       	"3DFCF83602DA"
-		    documentation 	"The name of the signal that has changed."
-		    type       	"Signal Name"
-		    quidu      	"3DFCFB77033C")
-		(object ClassAttribute "state"
-		    quid       	"3DFCF84002CA"
-		    documentation 	"The state that the signal has changed to."
-		    type       	"Boolean")))
-	(object Class "Application"
-	    quid       	"3DFCFA6E0024"
-	    documentation 	
+	    stereotype 	"include"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Application"
+		    quid       	"3DFCFA6E0024"
+		    documentation 	
 |The interface offered to support applications.
 |State changes are visible via callback on Signal State.
-	    
-	    stereotype 	"public"
-	    operations 	(list Operations
-		(object Operation "set output"
-		    quid       	"3DFCFAC002AC"
-		    documentation 	"Sets the specified output signal to the given state."
-		    parameters 	(list Parameters
-			(object Parameter "s"
-			    quid       	"3FB663CB033C"
-			    type       	"Signal Name"
-			    quidu      	"3DFCFB77033C")
-			(object Parameter "to state"
-			    quid       	"3FB663CB033D"
-			    type       	"Boolean"))
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)))
-	(object Class "HCI"
-	    quid       	"3DFCFA83024B"
-	    documentation 	"The interface offered to support HCI."
-	    stereotype 	"public"
-	    operations 	(list Operations
-		(object Operation "get state"
-		    quid       	"3DFCFB0202B1"
-		    documentation 	"Returns the state of the specified signal."
-		    parameters 	(list Parameters
-			(object Parameter "of signal"
-			    quid       	"3FB663CB0341"
-			    type       	"Signal Name"
-			    quidu      	"3DFCFB77033C"))
-		    result     	"Boolean"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "set input"
-		    quid       	"3DFCFB3701DB"
-		    documentation 	"Sets the specified input signal to the given value."
-		    parameters 	(list Parameters
-			(object Parameter "of signal"
-			    quid       	"3FB663CB0345"
-			    type       	"Signal Name"
-			    quidu      	"3DFCFB77033C")
-			(object Parameter "to"
-			    quid       	"3FB663CB0346"
-			    type       	"Boolean"))
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)))
-	(object Class "Signal Name"
-	    quid       	"3DFCFB77033C"
-	    documentation 	
+		    
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "set output"
+			    quid       	"3DFCFAC002AC"
+			    documentation 	"Sets the specified output signal to the given state."
+			    parameters 	(list Parameters
+				(object Parameter "s"
+				    quid       	"3FB663CB033C"
+				    type       	"Signal Name"
+				    quidu      	"3DFCFB77033C")
+				(object Parameter "to state"
+				    quid       	"3FB663CB033D"
+				    type       	"Boolean"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)))
+		(object Class "Signal Name"
+		    quid       	"3DFCFB77033C"
+		    documentation 	
 |Names the supported digital signals.
 |The 'floor' signals are inputs, the 'lamp' signals are outputs.
 |
@@ -191,8 +159,299 @@
 |lamp c |
 |lamp d
 |}
-	    
-	    stereotype 	"type"))
+		    
+		    stereotype 	"type")
+		(object Class "HCI"
+		    quid       	"3DFCFA83024B"
+		    documentation 	"The interface offered to support HCI."
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "get state"
+			    quid       	"3DFCFB0202B1"
+			    documentation 	"Returns the state of the specified signal."
+			    parameters 	(list Parameters
+				(object Parameter "of signal"
+				    quid       	"3FB663CB0341"
+				    type       	"Signal Name"
+				    quidu      	"3DFCFB77033C"))
+			    result     	"Boolean"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "set input"
+			    quid       	"3DFCFB3701DB"
+			    documentation 	"Sets the specified input signal to the given value."
+			    parameters 	(list Parameters
+				(object Parameter "of signal"
+				    quid       	"3FB663CB0345"
+				    type       	"Signal Name"
+				    quidu      	"3DFCFB77033C")
+				(object Parameter "to"
+				    quid       	"3FB663CB0346"
+				    type       	"Boolean"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)))
+		(object Class "Signal State"
+		    quid       	"3DFCF80601AE"
+		    documentation 	
+|Provides application domains with callback facilities for input signal state changes.
+|
+		    
+		    stereotype 	"callback"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "s"
+			    quid       	"3DFCF83602DA"
+			    documentation 	"The name of the signal that has changed."
+			    type       	"Signal Name"
+			    quidu      	"3DFCFB77033C")
+			(object ClassAttribute "state"
+			    quid       	"3DFCF84002CA"
+			    documentation 	"The state that the signal has changed to."
+			    type       	"Boolean"))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"42262D790322"
+		    title      	"Main"
+		    documentation 	
+|Copyright (C) Simon Wright <simon@pushface.org>
+|
+|This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+|
+|Provides the interface to the Digital IO domain, which 
+|manages digital (discrete) input/output.
+		    
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	728
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Application" @1
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(628, 356)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@1
+				location   	(212, 303)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	832
+				justify    	0
+				label      	"Application")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@1
+				location   	(212, 258)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	832
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"3DFCFA6E0024"
+			    compartment 	(object Compartment
+				Parent_View 	@1
+				location   	(212, 359)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	830)
+			    width      	850
+			    height     	218
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal Name" @2
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1654, 720)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@2
+				location   	(1526, 694)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	256
+				justify    	0
+				label      	"Signal Name")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@2
+				location   	(1526, 649)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	256
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	16777088
+			    quidu      	"3DFCFB77033C"
+			    width      	274
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::HCI" @3
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1666, 357)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@3
+				location   	(1246, 281)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	840
+				justify    	0
+				label      	"HCI")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@3
+				location   	(1246, 236)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	840
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"3DFCFA83024B"
+			    compartment 	(object Compartment
+				Parent_View 	@3
+				location   	(1246, 337)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	838)
+			    width      	858
+			    height     	264
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal State" @4
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(655, 732)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@4
+				location   	(496, 656)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	318
+				justify    	0
+				label      	"Signal State")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@4
+				location   	(496, 611)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	318
+				justify    	0
+				label      	"<<callback>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	16777088
+			    quidu      	"3DFCF80601AE"
+			    compartment 	(object Compartment
+				Parent_View 	@4
+				location   	(496, 712)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	315)
+			    width      	336
+			    height     	264
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object Label @5
+			    location   	(233, 1120)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    nlines     	1
+			    max_width  	1585
+			    label      	"$Id: Digital_IO.cat,v a4da467e594c 2005/03/02 21:22:41 simon $"))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCF77A0261"
@@ -207,7 +466,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: fb15fbf96993 $ }
+|{ revision = $Revision: a4da467e594c $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -215,7 +474,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Digital IO::Signal" @1
+		(object ClassView "Class" "Logical View::Digital IO::Signal" @6
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -231,7 +490,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@1
+			Parent_View 	@6
 			location   	(386, 1052)
 			fill_color 	13434879
 			nlines     	1
@@ -243,7 +502,7 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCF783026E"
 		    compartment 	(object Compartment
-			Parent_View 	@1
+			Parent_View 	@6
 			location   	(386, 1108)
 			font       	(object Font
 			    size       	10
@@ -263,7 +522,7 @@
 		    height     	438
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Output" @2
+		(object ClassView "Class" "Logical View::Digital IO::Output" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -279,7 +538,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@2
+			Parent_View 	@7
 			location   	(1346, 977)
 			fill_color 	13434879
 			nlines     	1
@@ -291,7 +550,7 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCF7950224"
 		    compartment 	(object Compartment
-			Parent_View 	@2
+			Parent_View 	@7
 			location   	(1346, 1033)
 			font       	(object Font
 			    size       	10
@@ -311,7 +570,7 @@
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "g1" @3
+		(object InheritView "g1" @8
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -322,7 +581,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@3
+			Parent_View 	@8
 			location   	(1200, 1121)
 			anchor_loc 	1
 			nlines     	1
@@ -332,10 +591,10 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3DFCF7F700B2"
-		    client     	@2
-		    supplier   	@1
+		    client     	@7
+		    supplier   	@6
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Digital IO::Signal State" @4
+		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal State" @9
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -351,20 +610,20 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@4
-			location   	(2376, 254)
+			Parent_View 	@9
+			location   	(2355, 231)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	318
+			max_width  	360
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@4
-			location   	(2376, 209)
+			Parent_View 	@9
+			location   	(2355, 186)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	318
+			max_width  	360
 			justify    	0
 			label      	"<<callback>>")
 		    icon_style 	"Label"
@@ -372,8 +631,8 @@
 		    fill_color 	16777088
 		    quidu      	"3DFCF80601AE"
 		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(2376, 310)
+			Parent_View 	@9
+			location   	(2355, 331)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -387,12 +646,12 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	322)
-		    width      	336
-		    height     	264
+			max_width  	315)
+		    width      	378
+		    height     	310
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Input" @5
+		(object ClassView "Class" "Logical View::Digital IO::Input" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -408,7 +667,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@5
+			Parent_View 	@10
 			location   	(1346, 1472)
 			fill_color 	13434879
 			nlines     	1
@@ -420,7 +679,7 @@
 		    fill_color 	13434879
 		    quidu      	"3DFCF78D0241"
 		    compartment 	(object Compartment
-			Parent_View 	@5
+			Parent_View 	@10
 			location   	(1346, 1528)
 			font       	(object Font
 			    size       	10
@@ -440,7 +699,7 @@
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "g1" @6
+		(object InheritView "g1" @11
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -451,7 +710,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@6
+			Parent_View 	@11
 			location   	(1200, 1445)
 			anchor_loc 	1
 			nlines     	1
@@ -461,10 +720,10 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3DFCF7F000B2"
-		    client     	@5
-		    supplier   	@1
+		    client     	@10
+		    supplier   	@6
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Digital IO::Application" @7
+		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Application" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -480,16 +739,16 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@7
-			location   	(176, 282)
+			Parent_View 	@12
+			location   	(176, 260)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	832
 			justify    	0
 			label      	"Application")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@7
-			location   	(176, 237)
+			Parent_View 	@12
+			location   	(176, 215)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -501,8 +760,8 @@
 		    fill_color 	8454016
 		    quidu      	"3DFCFA6E0024"
 		    compartment 	(object Compartment
-			Parent_View 	@7
-			location   	(176, 338)
+			Parent_View 	@12
+			location   	(176, 360)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -516,12 +775,12 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	2
-			max_width  	837)
+			max_width  	830)
 		    width      	850
-		    height     	220
+		    height     	264
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::HCI" @8
+		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::HCI" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -537,16 +796,16 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@8
-			location   	(1180, 260)
+			Parent_View 	@13
+			location   	(1180, 237)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	840
 			justify    	0
 			label      	"HCI")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@8
-			location   	(1180, 215)
+			Parent_View 	@13
+			location   	(1180, 192)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -558,8 +817,8 @@
 		    fill_color 	8454016
 		    quidu      	"3DFCFA83024B"
 		    compartment 	(object Compartment
-			Parent_View 	@8
-			location   	(1180, 316)
+			Parent_View 	@13
+			location   	(1180, 337)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -573,12 +832,12 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	3
-			max_width  	845)
+			max_width  	838)
 		    width      	858
-		    height     	264
+		    height     	310
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Signal Name" @9
+		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal Name" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -594,31 +853,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@9
-			location   	(2416, 757)
+			Parent_View 	@14
+			location   	(2364, 735)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	256
+			max_width  	360
 			justify    	0
 			label      	"Signal Name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@9
-			location   	(2416, 712)
+			Parent_View 	@14
+			location   	(2364, 690)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	256
+			max_width  	360
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFB77033C"
-		    width      	274
-		    height     	166
+		    width      	378
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object Label @10
+		(object Label @15
 		    location   	(168, 2013)
 		    font       	(object Font
 			size       	10
@@ -631,4 +890,38 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v fb15fbf96993 2004/11/11 15:06:28 simon $")))))
+		    label      	"$Id: Digital_IO.cat,v a4da467e594c 2005/03/02 21:22:41 simon $")
+		(object CategoryView "Logical View::Digital IO::Digital IO Interface" @16
+		    location   	(2566, 1561)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(2422, 1522)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	288
+			justify    	0
+			label      	"Digital IO Interface")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@16
+			location   	(2422, 1477)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"<<include>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"42262C8F005E"
+		    width      	300
+		    height     	180)))))
