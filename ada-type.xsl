@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
+<!-- $Id: ada-type.xsl,v ad77a063fdbd 2004/07/28 05:11:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -451,30 +451,42 @@
       </xsl:when>
 
       <xsl:when test="integer">
+
         <!--
-             subtype {type} is
-               Integer[ range {lower} .. {upper}];
+             type {type} is new Integer
+               range {lower} .. {upper};
              -->
 
         <xsl:value-of select="$I"/>
-        <xsl:text>subtype </xsl:text>
+        <xsl:text>type </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is&#10;</xsl:text>
+        <xsl:text> is new Integer&#10;</xsl:text>
         <xsl:value-of select="$IC"/>
-        <xsl:text>Integer</xsl:text>
+        <xsl:text>range </xsl:text>
         <xsl:choose>
-          <xsl:when test="integer/lower and integer/upper">
-            <xsl:text> range </xsl:text>
+          <xsl:when test="integer/lower">
             <xsl:value-of select="integer/lower"/>
-            <xsl:text> .. </xsl:text>
-            <xsl:value-of select="integer/upper"/>
           </xsl:when>
-          <xsl:when test="integer/lower or integer/upper">
+          <xsl:otherwise>
             <xsl:message>
-              <xsl:text>Warning: upper or lower bound not specified for </xsl:text>
+              <xsl:text>Warning: lower bound not specified for </xsl:text>
                <xsl:value-of select="name"/>
             </xsl:message>
+            <xsl:text>Integer'First</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>  .. </xsl:text>
+        <xsl:choose>
+          <xsl:when test="integer/upper">
+            <xsl:value-of select="integer/upper"/>
           </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>
+              <xsl:text>Warning: upper bound not specified for </xsl:text>
+               <xsl:value-of select="name"/>
+            </xsl:message>
+            <xsl:text>Integer'Last</xsl:text>
+          </xsl:otherwise>
         </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
@@ -482,36 +494,55 @@
       <xsl:when test="real">
 
         <!--
-             subtype {type} is
-               [Long_]Float[ range {lower} .. {upper}];
+             subtype {type} is [Long_]Float
+               range {lower} .. {upper};
              -->
+
+        <xsl:variable name="base">
+          <xsl:choose>
+            <xsl:when test="real/digits &gt; 6">
+              <xsl:text>Long_Float</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>Float</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
 
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is&#10;</xsl:text>
+        <xsl:text> is </xsl:text>
+        <xsl:value-of select="$base"/>
+        <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$IC"/>
+        <xsl:text>range </xsl:text>
         <xsl:choose>
-          <xsl:when test="real/digits &gt; 6">
-            <xsl:text>Long_Float</xsl:text>
+          <xsl:when test="real/lower">
+            <xsl:value-of select="real/lower"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>Float</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:choose>
-          <xsl:when test="real/lower and real/upper">
-            <xsl:text> range </xsl:text>
-            <xsl:value-of select="real/lower"/>
-            <xsl:text> .. </xsl:text>
-            <xsl:value-of select="real/upper"/>
-          </xsl:when>
-          <xsl:when test="real/lower or real/upper">
             <xsl:message>
-              <xsl:text>Warning: upper or lower bound not specified for </xsl:text>
+              <xsl:text>Warning: lower bound not specified for </xsl:text>
                <xsl:value-of select="name"/>
             </xsl:message>
+            <xsl:value-of select="$base"/>
+            <xsl:text>'First</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>  .. </xsl:text>
+        <xsl:choose>
+          <xsl:when test="real/upper">
+            <xsl:value-of select="real/upper"/>
           </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>
+              <xsl:text>Warning: upper bound not specified for </xsl:text>
+               <xsl:value-of select="name"/>
+            </xsl:message>
+            <xsl:value-of select="$base"/>
+            <xsl:text>'Last</xsl:text>
+          </xsl:otherwise>
         </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
 
