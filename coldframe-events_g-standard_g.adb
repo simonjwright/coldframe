@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 20aee662fdc8 $
---  $Date: 2004/07/03 12:07:30 $
+--  $Revision: 159ee3829455 $
+--  $Date: 2004/07/03 12:28:39 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -115,9 +115,9 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TEP : constant Event_P := new Timer_Event (Kind => To_Fire_At.Kind,
-                                                 On_Timer => False);
-      TE : Timer_Event renames Timer_Event (TEP.all);
+      TEP : constant Event_P := new Held_Event (Kind => To_Fire_At.Kind,
+                                                On_Timer => False);
+      TE : Held_Event renames Held_Event (TEP.all);
    begin
 
       if The_Event = null then
@@ -143,9 +143,9 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
-      TEP : constant Event_P := new Timer_Event (Kind => Time.Real_Time,
-                                                 On_Timer => False);
-      TE : Timer_Event renames Timer_Event (TEP.all);
+      TEP : constant Event_P := new Held_Event (Kind => Time.Real_Time,
+                                                On_Timer => False);
+      TE : Held_Event renames Held_Event (TEP.all);
    begin
 
       if The_Event = null then
@@ -267,10 +267,10 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (Kind => At_Time.Kind,
-                                                 On_Timer => True);
+         The_Timer.The_Entry := new Held_Event (Kind => At_Time.Kind,
+                                                On_Timer => True);
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
             TE.On := Event_Queue_P (On);
             TE.Time_To_Fire := At_Time;
@@ -311,10 +311,10 @@ package body ColdFrame.Events_G.Standard_G is
          --  a derived type.
          Note_Addition_Of_Timer_Event (Event_Queue_P (On));
 
-         The_Timer.The_Entry := new Timer_Event (Kind => Time.Real_Time,
-                                                 On_Timer => True);
+         The_Timer.The_Entry := new Held_Event (Kind => Time.Real_Time,
+                                                On_Timer => True);
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
             TE.On := Event_Queue_P (On);
             TE.Time_To_Fire := Time.From_Now (After);
@@ -351,7 +351,7 @@ package body ColdFrame.Events_G.Standard_G is
       else
 
          declare
-            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+            TE : Held_Event renames Held_Event (The_Timer.The_Entry.all);
          begin
 
             --  Cancel the Event
@@ -385,7 +385,7 @@ package body ColdFrame.Events_G.Standard_G is
          Held : Boolean;
       begin
          Held_Events.Pop (The_Events, E);
-         Held := not Timer_Event (E.all).On_Timer;
+         Held := not Held_Event (E.all).On_Timer;
          Post (E, The_Queue);
          if Held then
             Note_Removal_Of_Held_Event (The_Queue);

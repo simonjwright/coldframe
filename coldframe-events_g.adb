@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: f716ac03f157 $
---  $Date: 2004/07/03 12:05:47 $
+--  $Revision: 159ee3829455 $
+--  $Date: 2004/07/03 12:28:39 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -82,10 +82,10 @@ package body ColdFrame.Events_G is
 
          --  The Timer is set. Tell the timer event that the timer has
          --  been deleted.
-         Timer_Event (The_Timer.The_Entry.all).The_Timer := null;
+         Held_Event (The_Timer.The_Entry.all).The_Timer := null;
 
          --  Invalidate the held event.
-         Timer_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
+         Held_Event (The_Timer.The_Entry.all).The_Event.Invalidated := True;
 
          The_Timer.The_Entry := null;
 
@@ -115,7 +115,7 @@ package body ColdFrame.Events_G is
    end Finalize;
 
 
-   procedure Handler (This : Timer_Event) is
+   procedure Handler (This : Held_Event) is
       The_Event : Event_P := This.The_Event;
    begin
 
@@ -139,7 +139,7 @@ package body ColdFrame.Events_G is
                  (Severity => Logging.Error,
                   Message =>
                     Ada.Exceptions.Exception_Information (Ex) &
-                    " in Timer_Event handler (event " &
+                    " in Held_Event handler (event " &
                     Ada.Tags.Expanded_Name (The_Event.all'Tag) &
                     ")");
          end;
@@ -186,7 +186,7 @@ package body ColdFrame.Events_G is
    end Invalidate;
 
 
-   procedure Invalidate (The_Event : access Timer_Event;
+   procedure Invalidate (The_Event : access Held_Event;
                          If_For_Instance : Instance_Base_P) is
    begin
       Invalidate (The_Event.The_Event, If_For_Instance);
@@ -388,7 +388,7 @@ package body ColdFrame.Events_G is
    end Tear_Down;
 
 
-   procedure Tear_Down (The_Event : access Timer_Event) is
+   procedure Tear_Down (The_Event : access Held_Event) is
    begin
       if The_Event.The_Timer /= null then
          --  Clear the Timer's pointer to this event, so it doesn't
