@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-class.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -77,12 +77,13 @@
     <xsl:value-of select="$blank-line"/>
 
     <!--  .. the Identifier record .. -->
-    <xsl:if test="not(@singleton)">
+    <xsl:if test="$max &gt; 1 or not(@public or @singleton or @utility)">
+      <!-- the complication is to cope with 0..1 classes. -->
         <xsl:call-template name="identifier-record"/>
         <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <xsl:if test="not(@public)">
+    <xsl:if test="not(@public or @utility)">
 
       <!-- .. the Instance record (indefinite, so it can't be
            allocated; limited, so people can't assign it) .. -->
@@ -107,7 +108,7 @@
    </xsl:if>
 
    <!-- .. the public creation and deletion operations .. -->
-   <xsl:if test="not(@singleton)">
+   <xsl:if test="not(@singleton or @public or @utility)">
 
      <xsl:call-template name="create-function-spec"/>
      <xsl:value-of select="$blank-line"/>
@@ -122,24 +123,26 @@
 
    </xsl:if>
 
-   <!-- .. the non-public singleton find operation .. -->
-   <xsl:if test="@max=1 and not(@public)">
-     <xsl:value-of select="$I"/>
-     <xsl:text>function Find return Handle;&#10;</xsl:text>
-     <xsl:value-of select="$blank-line"/>
+   <xsl:if test="not(@public or @utility)">
+
+     <!-- .. the non-public, not-utility singleton find operation .. -->
+     <xsl:if test="$max=1">
+       <xsl:value-of select="$I"/>
+       <xsl:text>function Find return Handle;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+     </xsl:if>
+
+     <!-- .. the standard find operation .. -->
+     <xsl:if test="not(@singleton)">
+       <xsl:value-of select="$I"/>
+       <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
+       <xsl:value-of select="$blank-line"/>
+     </xsl:if>
+
    </xsl:if>
 
-   <!-- .. the non-singleton find operation .. -->
-   <xsl:if test="not(@singleton)">
-     <xsl:value-of select="$I"/>
-     <xsl:text>function Find (With_Identifier : Identifier) return Handle;&#10;</xsl:text>
-     <xsl:value-of select="$blank-line"/>
-   </xsl:if>
-
-   <!-- .. subtype enumeration support, if required .. -->
-   <xsl:if test="not(@singleton)">
-     <xsl:call-template name="supertype-specs"/>
-   </xsl:if>
+   <!-- .. subtype enumeration support .. -->
+   <xsl:call-template name="supertype-specs"/>
 
    <!-- .. any access-to-subprogram types (before possible accessors) .. -->
    <xsl:apply-templates mode="access-to-operation"/>
@@ -161,7 +164,7 @@
    <xsl:text>private&#10;</xsl:text>
    <xsl:value-of select="$blank-line"/>
 
-   <xsl:if test="@public">
+   <xsl:if test="@public and $max &gt; 0">
      <xsl:value-of select="$I"/>
      <xsl:text>type Instance;&#10;</xsl:text>
      <xsl:value-of select="$I"/>
@@ -178,8 +181,10 @@
    </xsl:if>
 
    <!-- .. the Instance record .. -->
-   <xsl:call-template name="instance-record"/>
-   <xsl:value-of select="$blank-line"/>
+   <xsl:if test="$max &gt; 0">
+     <xsl:call-template name="instance-record"/>
+     <xsl:value-of select="$blank-line"/>
+   </xsl:if>
 
    <!-- .. the State_Image function spec .. -->
    <xsl:if test="statemachine">
@@ -188,6 +193,10 @@
 
    <!-- .. the actual container .. -->
    <xsl:choose>
+
+     <xsl:when test="$max = 0">
+       <!-- There is no actual container. -->
+     </xsl:when>
 
      <xsl:when test="$max = 1">
        <!-- Only one possible instance .. -->
@@ -372,7 +381,7 @@
    </xsl:choose>
 
    <!-- .. private Create, Delete operations for singletons ..-->
-   <xsl:if test="@singleton">
+   <xsl:if test="@singleton or (@public and $max &gt; 0)">
 
      <xsl:call-template name="create-function-spec"/>
      <xsl:value-of select="$blank-line"/>
@@ -458,11 +467,16 @@
           <xsl:call-template name="can-use-array"/>
         </xsl:variable>
 
-        <!-- Always need storage management. -->
-        <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
-        <!-- Need storage offset arithmetic for bounded classes. -->
-        <xsl:if test="$max &lt;= $max-bounded-container">
-          <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+        <!-- Need storage management if there are any instances. -->
+        <xsl:if test="$max &gt; 0">
+
+          <xsl:text>with ColdFrame.Project.Storage_Pools;&#10;</xsl:text>
+
+          <!-- Need storage offset arithmetic for bounded classes. -->
+          <xsl:if test="$max &lt;= $max-bounded-container">
+            <xsl:text>with System.Storage_Elements;&#10;</xsl:text>
+          </xsl:if>
+
         </xsl:if>
 
         <!-- Check for Unbounded_Strings. -->
@@ -508,7 +522,7 @@
           select="$counterpart/name
                   | /domain/class[name != current()/name]/name"/>
         <xsl:if test="($max &gt; 1 and $array = 'no')
-                      or not(statemachine)
+                      or ($max &gt; 0 and not(statemachine))
                       or attribute[type=$other-classes]
                       or attribute[@refers=$other-classes]
                       or operation/parameter[type=$other-classes]
@@ -783,41 +797,45 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <!-- .. the set-the-identifier operation .. -->
-    <!-- XXX what's the logic here? -->
-    <xsl:if test="not(@singleton) and
-                  ($max &gt; 1 or
-                   count(attribute[@identifier]) &gt; 1 or
-                   not (attribute[@identifier]/type = 'Autonumber'))">
-      <xsl:call-template name="set-identifier-procedure"/>
+    <xsl:if test="$max &gt; 0">
+
+      <!-- .. the set-the-identifier operation .. -->
+      <!-- XXX what's the logic here? -->
+      <xsl:if test="not(@singleton or @public) and
+                    ($max &gt; 1 or
+                     count(attribute[@identifier]) &gt; 1 or
+                     not (attribute[@identifier]/type = 'Autonumber'))">
+        <xsl:call-template name="set-identifier-procedure"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
+      <!-- .. the creation and deletion operations .. -->
+      <xsl:call-template name="create-function-body"/>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-    <!-- .. the creation and deletion operations .. -->
-    <xsl:call-template name="create-function-body"/>
-    <xsl:value-of select="$blank-line"/>
-
-    <xsl:value-of select="$I"/>
-    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
-    <xsl:value-of select="$blank-line"/>
-
-    <xsl:if test="not(@singleton)">
-      <xsl:call-template name="class-delete-procedure-body"/>
+      <xsl:value-of select="$I"/>
+      <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-    <xsl:call-template name="delete-procedure-body"/>
-    <xsl:value-of select="$blank-line"/>
+      <xsl:if test="not(@singleton or @public)">
+        <xsl:call-template name="class-delete-procedure-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
 
-    <!-- .. the find operations .. -->
-    <xsl:if test="@max=1 and not(@public)">
-      <xsl:call-template name="find-single-instance-function-body"/>
+      <xsl:call-template name="delete-procedure-body"/>
       <xsl:value-of select="$blank-line"/>
-    </xsl:if>
 
-   <xsl:if test="not(@singleton)">
-      <xsl:call-template name="find-function-body"/>
-      <xsl:value-of select="$blank-line"/>
+      <!-- .. the find operations .. -->
+      <xsl:if test="$max=1 and not(@public)">
+        <xsl:call-template name="find-single-instance-function-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
+      <xsl:if test="not(@singleton or @public)">
+        <xsl:call-template name="find-function-body"/>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+
     </xsl:if>
 
     <!-- .. subtype enumeration support, if required .. -->
@@ -944,15 +962,20 @@
           <xsl:call-template name="can-use-array"/>
         </xsl:variable>
 
-        <!-- We'll need to free memory. -->
-        <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        <!-- We'll need to free memory, unless we have no instances. -->
+        <xsl:if test="$max &gt; 0">
+          <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+        </xsl:if>
 
-        <!-- We always need Coldframe exceptions.
-             We need BC exceptions if we're using a Map. -->
+        <!-- We need BC exceptions if we're using a Map. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
           <xsl:text>with BC;&#10;</xsl:text>
         </xsl:if>
-        <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+
+        <!-- We need Coldframe exceptions if we have any instances. -->
+        <xsl:if test="$max &gt; 0">
+          <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
+        </xsl:if>
 
         <!-- Any additions to the context for state machines. -->
         <xsl:call-template name="state-body-context"/>
@@ -1081,7 +1104,7 @@
 
     <xsl:choose>
 
-      <xsl:when test="@singleton">
+      <xsl:when test="@singleton or @public">
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle;&#10;</xsl:text>
       </xsl:when>
@@ -1124,7 +1147,7 @@
     <!-- The heading .. -->
     <xsl:choose>
 
-      <xsl:when test="@singleton">
+      <xsl:when test="@singleton or @public">
         <xsl:value-of select="$I"/>
         <xsl:text>function Create return Handle is&#10;</xsl:text>
       </xsl:when>
@@ -1142,8 +1165,9 @@
 
     </xsl:choose>
 
-    <!-- .. check for domain initialization, for non-singletons .. -->
-    <xsl:if test="not(@singleton)">
+    <!-- .. check for domain initialization, unless the class's only
+         instance is created during initialization .. -->
+    <xsl:if test="not(@singleton or @public)">
       <xsl:value-of select="$II"/>
       <xsl:text>pragma Assert&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
@@ -1205,7 +1229,7 @@
     <!-- .. set up identifying attributes .. -->
     <xsl:choose>
 
-      <xsl:when test="@singleton"/>
+      <xsl:when test="@singleton or @public"/>
 
       <xsl:when test="count(attribute[@identifier])=1
                       and attribute[@identifier]/type='Autonumber'">
@@ -1353,7 +1377,7 @@
 
   <!-- Called from domain/class to create the class delete
        procedure body.
-       Will never be called for singletons. -->
+       Will never be called for singletons or publics. -->
   <xsl:template name="class-delete-procedure-body">
 
     <!-- Calculate the maximum number of instances. -->
@@ -1812,7 +1836,7 @@
       <xsl:choose>
 
         <xsl:when test="$report
-                        and (../@singleton 
+                        and (../@singleton
                              or @abstract or @return or @class or parameter)">
           <xsl:call-template name="log-error"/>
           <xsl:message>

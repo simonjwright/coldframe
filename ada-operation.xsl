@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 547c6ddc37be 2004/04/22 16:41:01 simon $ -->
+<!-- $Id: ada-operation.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -489,15 +489,22 @@
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
-         the Class is a singleton (or a Type), all operations are
-         class operations, otherwise it depends on the @class attribute. -->
-    <xsl:if test="parameter or
-                  ($is-class='yes' and not(../@singleton) and not(@class))">
+         the Class is public, a singleton, a utility, or a Type, all
+         operations are class operations, otherwise it depends on the
+         @class attribute. -->
+
+    <xsl:variable
+      name="no-this"
+      select="$is-class='no'
+              or ../@public or ../@singleton or ../@utility
+              or @class"/>
+
+    <xsl:if test="parameter or not($no-this)">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$indent"/>
       <xsl:text>(</xsl:text>
-      <xsl:if test="$is-class='yes' and not(../@singleton) and not(@class)">
+      <xsl:if test="not($no-this)">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10; </xsl:text>

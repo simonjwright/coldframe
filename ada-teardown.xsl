@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 2d076122e3d3 2004/06/03 05:23:06 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -138,6 +138,38 @@
     </xsl:variable>
 
     <xsl:choose>
+
+      <xsl:when test="$max=0">
+        
+        <!--
+             procedure {Domain}.{Class}.Tear_Down is
+             begin
+                null;
+             end {Domain}.{Class}.Tear_Down;
+             -->
+
+        <xsl:call-template name="do-not-edit"/>
+        <xsl:call-template name="identification-info"/>
+        <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
+        <xsl:text>procedure </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.Tear_Down is&#10;</xsl:text>
+
+        <xsl:text>begin&#10;</xsl:text>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>null;&#10;</xsl:text>
+
+        <xsl:text>end </xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.Tear_Down;&#10;</xsl:text>
+
+      </xsl:when>
 
       <xsl:when test="$max=1">
 

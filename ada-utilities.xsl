@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v e0aa6308b3c9 2004/04/21 12:23:41 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 8d75c7ec7b87 2004/06/12 19:19:30 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -221,7 +221,7 @@
 
 
   <!-- Called at domain/class to compute number of instances.
-       (If not at domain/class, , set parameter "c" to the class
+       (If not at domain/class, set parameter "c" to the class
        for which the computation is required.)
        Outputs a number; 1000000000000 signals "unknown" (used to use
        +Inf but comparisons failed). -->
@@ -234,6 +234,22 @@
       select="/domain/association[associative=$name]"/>
 
     <xsl:choose>
+
+      <xsl:when test="$c/@singleton">
+        <xsl:value-of select="1"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@public and count($c/attribute)=0">
+        <xsl:value-of select="0"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@public">
+        <xsl:value-of select="1"/>
+      </xsl:when>
+
+      <xsl:when test="$c/@utility">
+        <xsl:value-of select="0"/>
+      </xsl:when>
 
       <xsl:when test="$c/@max">
         <xsl:value-of select="$c/@max"/>
