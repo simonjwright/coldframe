@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v bd7565917e65 2003/07/26 17:16:45 simon $
+# $Id: normalize-rose.tcl,v ba731c58f8fc 2003/07/26 17:55:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -150,7 +150,6 @@ proc normalize {s} {
 # Given a string,
 # - trims leading and trailing white space
 # - handles "strings" and 'c'haracters directly
-# - handles signed entities by recursion
 # - handles based literals directly (Ada syntax, eg 2#010101#)
 # - handles null directly
 # otherwise,
@@ -450,7 +449,7 @@ itcl::class IdentifierString {
 
 # The base class for all XML elements which represent values; stores
 # eg " hello   world " as "Hello_World", and "+ (2.0 * name)" as
-# "+(2.0*Name)".
+# "+(2.0 * Name)".
 itcl::class ValueString {
     inherit String
 
@@ -460,7 +459,7 @@ itcl::class ValueString {
     # containing object needs to offer a -name method)
     method -complete {} {
 #	$this -processTags
-	[stack -top] -$xmlTag [normalizeValue $text]
+	[stack -top] -$xmlTag $text
     }
 }
 
@@ -823,20 +822,12 @@ itcl::class Parent {
     inherit IdentifierString
 }
 
-itcl::class Priority {
-    inherit ValueString
-}
-
 itcl::class Return {
     inherit IdentifierString
 }
 
 itcl::class Revision {
     inherit String
-}
-
-itcl::class StackSize {
-    inherit ValueString
 }
 
 itcl::class Static {
@@ -1109,11 +1100,11 @@ itcl::class Class {
 
     # specifies stack size (for active classes)
     variable stack
-    method -stack {s} {set stack $s}
+    method -stack {s} {set stack [normalizeValue $s]}
 
     # specifies priority (for active classes)
     variable priority
-    method -priority {p} {set priority $p}
+    method -priority {p} {set priority [normalizeValue $p]}
 
     # specifies if this is a public class
     variable public 0
@@ -2771,14 +2762,12 @@ proc elementFactory {xmlTag} {
 	parametername     {return [ParameterName #auto]}
 	parameters        {return [Parameters #auto]}
 	parent            {return [Parent #auto]}
-	priority          {return [Priority #auto]}
 	relationship      {return [Relationship #auto]}
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
 	revision          {return [Revision #auto]}
 	role              {return [Role #auto]}
 	source            {return [Source #auto]}
-	stack             {return [StackSize #auto]}
 	state             {return [State #auto]}
 	statemachine      {return [StateMachine #auto]}
 	states            {return [States #auto]}
