@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3a6664fab0d7 2003/04/25 18:24:22 simon $ -->
+<!-- $Id: bugs.html,v 2770bb1a7207 2003/04/29 18:55:06 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -160,11 +160,38 @@ implemented body will override the generated dispatching body.
 <dd>It is easy to forget to initialize a domain. Could something be
 included to give early and specific warning that this has occurred?
 
-<!-- next: 0168 -->
+<dt>0170 (raised 29.iv.03)
+
+<dd>If an operation of a &#171;type&#187; is a function returning a
+composite value, the generated code won't compile.
+
+<!-- next: 0171 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>29.iv.03</h3>
+
+<dl>
+
+<dt>0169 (raised 29.iv.03)
+
+<dd>The generated code for functions returning &#171;counterpart&#187;
+types won't compile.
+
+</dl>
+
+<h3>25.iv.03</h3>
+
+<dl>
+
+<dt>0168 (raised 25.iv.03)
+
+<dd>The script to split serialized XML files into CSV format isn't
+included in the distribution.
+
+</dl>
 
 <h3>8.iv.03</h3>
 
