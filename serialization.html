@@ -1,4 +1,4 @@
-<!-- $Id: serialization.html,v 6d305cf39400 2003/03/05 21:36:06 simon $ -->
+<!-- $Id: serialization.html,v b8cd02abbffd 2003/03/06 20:53:26 simon $ -->
 <head>
 <title>ColdFrame: Serialization</title>
 </head>
@@ -111,8 +111,8 @@ case
 then expects to be able to call
 <pre>
    function <i>[Other_Domain.]</i>Image_Of_Exported
-     (Name : String;
-      Value : Exported) return String;
+     (Value : Exported;
+      Name : String) return String;
 </pre>
 
 <p>where <tt>Name</tt> is the field name and <tt>Value</tt> is the
@@ -144,7 +144,159 @@ src="serialization-sequence-t.png" border=1></a>
 
 </table>
 
-<p>
+<p>The serializable data for the demonstration (domain
+<i>Serialization Demo</i>) consists of three types.
+
+<h4>Sample A</h4>
+
+<p><img src="sample_a.png">
+
+<p><i>Sample A</i> shows standard types, which can be translated "as
+is". The code generated in the domain package spec is
+<pre>
+   type Sample_A is record
+      I : Integer;
+      F : Float;
+      B : Boolean;
+      D : Duration;
+      T : ColdFrame.Project.Calendar.Time;
+      U : Unbounded_String;
+      N : Name_String;
+   end record;
+</pre>
+
+<p>(<i>Name String</i> is a bounded string, <tt>[[string:max 32]]</tt>).
+
+<p>The code generated in the <tt>Serializable</tt> child package spec
+is
+<pre>
+   type Sample_A
+   is new ColdFrame.Project.Serialization.Base with record
+      Payload : Serialization_Demo.Sample_A;
+   end record;
+
+   function Image (S : Sample_A) return String;
+</pre>
+
+<p>A typical result of calling Image is
+<pre>
+   &lt;record name="Serialization_Demo.Sample_A"&gt;
+   &lt;field name="I"&gt; 42&lt;/field&gt;
+   &lt;field name="F"&gt; 1.23450E-01&lt;/field&gt;
+   &lt;field name="B"&gt;FALSE&lt;/field&gt;
+   &lt;field name="D"&gt; 1.234500000&lt;/field&gt;
+   &lt;field name="T"&gt; 1046534734.051916000&lt;/field&gt;
+   &lt;field name="U"&gt;unbounded&lt;/field&gt;
+   &lt;field name="N"&gt;bounded&lt;/field&gt;
+   &lt;/record&gt;
+</pre>
+
+<p>(the <i>Time</i> is represented using
+<tt>ColdFrame.Project.Calendar.Image</tt>; the provided version shows
+the number of seconds since the POSIX epoch, 1 January 1970 00:00).
+
+<h4>Real Time</h4>
+
+<p><img src="real_time.png">
+
+<p><i>Real Time</i> is a renaming of
+<tt>Ada.Real_Time.Time</tt>. Because there is no <tt>'Img</tt>
+function for <tt>Ada.Real_Time.Time</tt>, we have to provide our own;
+this is the function <i>real time image()</i>. We tell ColdFrame that
+this is the image function by
+<tt>[[image&nbsp;:&nbsp;Real_Time_Image]]</tt>.
+
+<p>The code generated in the domain package spec is
+<pre>
+   subtype Real_Time
+   is Ada.Real_Time.Time;
+   use type Real_Time;
+
+   function Real_Time_Image
+     (V : Real_Time;
+      N : String)
+     return String;
+</pre>
+
+<p>The code generated in the <tt>Serializable</tt> child package spec
+is
+<pre>
+   type Real_Time
+   is new ColdFrame.Project.Serialization.Base with record
+      Payload : Serialization_Demo.Real_Time;
+   end record;
+
+   function Image (S : Real_Time) return String;
+</pre>
+
+<p>The handwritten proper body of <tt>Real_Time_Image</tt> is
+<pre>
+   separate (Serialization_Demo)
+   function Real_Time_Image
+     (V : Real_Time;
+      N : String)
+     return String is
+      use type Ada.Real_Time.Time;
+      use type Ada.Real_Time.Time_Span;
+      Img : constant String :=
+	Duration'Image (Ada.Real_Time.To_Duration (V - Ada.Real_Time.Time_First));
+   begin
+      if N'Length &gt; 0 then
+	 return "&lt;field name=""" & N & """&gt;" & Img & "&lt;/field&gt;";
+      else
+	 return "&lt;field name=""Payload""&gt;" & Img & "&lt;/field&gt;";
+      end if;
+   end Real_Time_Image;
+</pre>
+
+<p>If the "field name" parameter <tt>N</tt> is empty, the image
+function has been called for recording of a plain type, as in this
+case, so we make up a field name. Otherwise, it's the name of the
+field of this type in a record (see the next section), so it's output
+verbatim.
+
+<p>A typical result of calling <tt>Serializable.Image </tt> is
+<pre>
+   &lt;record name="Serialization_Demo.Real_Time"&gt;
+   &lt;field name="Payload"&gt;-8176441673.395873810&lt;/field&gt;
+   &lt;/record&gt;
+</pre>
+
+<h4>Recordable Real Time</h4>
+
+<p><img src="recordable_real_time.png">
+
+<p><i>Recordable Real Time</i> is a record with a component of a type
+with an <tt>[[image]]</tt> function.
+
+<p>The code generated in the domain package spec is
+<pre>
+   type Recordable_Real_Time is record
+      T : Real_Time;
+   end record;
+</pre>
+
+<p>The code generated in the <tt>Serializable</tt> child package spec
+is
+<pre>
+   type Recordable_Real_Time
+   is new ColdFrame.Project.Serialization.Base with record
+      Payload : Serialization_Demo.Recordable_Real_Time;
+   end record;
+
+   function Image (S : Recordable_Real_Time) return String;
+</pre>
+
+<p>A typical result of calling Image is
+<pre>
+   &lt;record name="Serialization_Demo.Recordable_Real_Time"&gt;
+   &lt;field name="T"&gt;-8176441673.905397810&lt;/field&gt;
+   &lt;/record&gt;
+</pre>
+
+<p>Note that this time the <tt>Real_Time_Image</tt> was called with
+the field name parameter set to <tt>"T"</tt>.
+
 
 <p><hr>
 <i>
