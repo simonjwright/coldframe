@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: ada-utilities.xsl,v d9f5636c8ffe 2004/11/11 15:08:22 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -137,26 +137,34 @@
   </xsl:template>
 
 
+  <!-- User-overridable banner for each file. -->
+  <xsl:template name="user-banner"/>
+
+
   <!-- "Could/Don't/Shouldn't/Should edit" banners. -->
   <xsl:template name="ut:could-edit">
+    <xsl:call-template name="user-banner"/>
     <xsl:text>-------------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: may need editing  --&#10;</xsl:text>
     <xsl:text>-------------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template name="ut:do-not-edit">
+    <xsl:call-template name="user-banner"/>
     <xsl:text>--------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: do not edit  --&#10;</xsl:text>
     <xsl:text>--------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template name="ut:should-not-edit">
+    <xsl:call-template name="user-banner"/>
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: should not need editing  --&#10;</xsl:text>
     <xsl:text>--------------------------------------------------------&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template name="ut:should-edit">
+    <xsl:call-template name="user-banner"/>
     <xsl:text>-------------------------------------------&#10;</xsl:text>
     <xsl:text>--  Automatically generated: edit this!  --&#10;</xsl:text>
     <xsl:text>-------------------------------------------&#10;</xsl:text>
