@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 6a20de9439b0 2003/05/01 05:15:47 simon $ -->
+<!-- $Id: types.html,v d4ec9a6fc693 2003/05/01 05:21:07 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -175,19 +175,18 @@ no <tt>This</tt> parameter.
  
 <ul>
 
-<li><tt>callback : <i>max</i></tt>
+<li><tt>callback</tt> (or &#171;callback&#187;)
 
-<p>For a type <tt>Typ</tt>, with <tt>[[ callback : 4 ]]</tt>, the
+<p>For a type <tt>Typ</tt>, with <tt>[[ callback ]]</tt>, the
 generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
 <pre>
    with ColdFrame.Callbacks;
    package <i>Domain</i>.<i>Typ</i>_Callback
    is new ColdFrame.Callbacks
-     (T => <i>Domain</i>.<i>Typ</i>,
-      Maximum_Size => 4);
+     (T => <i>Domain</i>.<i>Typ</i>);
 </pre>
 
-<li><tt>counterpart</tt>
+<li><tt>counterpart</tt> (or &#171;counterpart&#187;)
 
 <p>For a type named <tt>T_Handle</tt>, gives
 <pre>
@@ -196,7 +195,7 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
    subtype T_Handle is ColdFrame.Instances.Handle;
 </pre>
 
-<li><tt>discriminated</tt>
+<li><tt>discriminated</tt> (or &#171;discriminated&#187;)
 
 <p>Given a model fragment as in the picture
 

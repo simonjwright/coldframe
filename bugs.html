@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 2770bb1a7207 2003/04/29 18:55:06 simon $ -->
+<!-- $Id: bugs.html,v d4ec9a6fc693 2003/05/01 05:21:07 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -87,8 +87,8 @@ in type range specifications.
 
 <dt>0078 (raised 18.iv.02)
 
-<dd>It would be helpful if ColdFrame could detect the error of having
-non-unique abbreviations.
+<dd>ColdFrame doesn't detect the error of having non-unique
+abbreviations.
 
 <dt>0088 (raised 7.vi.02)
 
@@ -109,14 +109,6 @@ literals aren't.
 
 <dd>The error where a state has more than one exiting transition
 triggered by the same event (or drop-through) isn't detected.
-
-<dt>0129 (raised 8.x.02)
-
-<dd><tt>[[ callback ]]</tt> types tend to be unnoticeable; could a
-&#171;callback&#187; stereotype be used instead?
-
-<br><i>It's already possible to use a stereotype like <em>&#171;type,
-callback=42&#187;</em>, or even <em>&#171;type, callback&#187;</em>.</i>
 
 <dt>0136 (raised 26.xi.02)
 
@@ -170,6 +162,20 @@ composite value, the generated code won't compile.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>1.v.03</h3>
+
+<dl>
+
+<dt>0129 (raised 8.x.02)
+
+<dd><tt>[[ callback ]]</tt> types tend to be unnoticeable; could a
+&#171;callback&#187; stereotype be used instead?
+
+<br><i>It's already possible to use a stereotype like <em>&#171;type,
+callback=42&#187;</em>, or even <em>&#171;type, callback&#187;</em>.</i>
+
+</dl>
 
 <h3>29.iv.03</h3>
 
