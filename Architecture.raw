@@ -2027,7 +2027,7 @@ The package also contains a <em>separate</em> <tt>Initialize</tt> procedure; the
 </role>
 <role><end>2</end>
 <name></name>
-<classname>Identified Class Package</classfame>
+<classname>Identified Class Package</classname>
 <cardinality></cardinality>
 <documentation></documentation>
 </role>
