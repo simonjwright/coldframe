@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 068516a20411 $
---  $Date: 2004/05/21 08:21:56 $
+--  $Revision: 99fa5207efe9 $
+--  $Date: 2004/06/18 19:28:13 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -131,7 +131,18 @@ package body ColdFrame.Events_G is
          Log (The_Event, Event_Basis.Dispatching);
          Log_Pre_Dispatch (The_Event => The_Event, On => This.On);
          Start_Handling (The_Event);
-         Handler (The_Event.all);   --  XXX what about exceptions here?
+         begin
+            Handler (The_Event.all);
+         exception
+            when Ex : others =>
+               Logging.Log
+                 (Severity => Logging.Error,
+                  Message =>
+                    Ada.Exceptions.Exception_Information (Ex) &
+                    " in Dispatcher (event " &
+                    Ada.Tags.Expanded_Name (The_Event.all'Tag) &
+                    ")");
+         end;
          Stop_Handling (The_Event);
          Log_Post_Dispatch (The_Event => The_Event, On => This.On);
          Log (The_Event, Event_Basis.Finishing);

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 0ed71a11452c $
---  $Date: 2004/06/10 20:23:12 $
+--  $Revision: 99fa5207efe9 $
+--  $Date: 2004/06/18 19:28:13 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -215,13 +215,11 @@ package body ColdFrame.Events_G.Standard_G is
             exit when Tearing_Down;
 
             if not E.Invalidated then
+               Log (E, Event_Basis.Dispatching);
+               Log_Pre_Dispatch (The_Event => E, On => The_Queue);
+               Start_Handling (E);
                begin
-                  Log (E, Event_Basis.Dispatching);
-                  Log_Pre_Dispatch (The_Event => E, On => The_Queue);
-                  Start_Handling (E);
                   Handler (E.all);
-                  Stop_Handling (E);
-                  Log_Post_Dispatch (The_Event => E, On => The_Queue);
                exception
                   when Ex : others =>
                      Logging.Log
@@ -232,8 +230,11 @@ package body ColdFrame.Events_G.Standard_G is
                           Ada.Tags.Expanded_Name (E.all'Tag) &
                           ")");
                end;
+               Stop_Handling (E);
+               Log_Post_Dispatch (The_Event => E, On => The_Queue);
             end if;
 
+            Stop_Handling (E);
             Log (E, Event_Basis.Finishing);
             Delete (E);
             Note_Removal_Of_Posted_Event (The_Queue);
