@@ -1,0 +1,3547 @@
+
+(object Petal
+    version    	43
+    _written   	"Rose 6.1.9113.5"
+    charSet    	0)
+
+(object Class_Category "Associations"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"3C6551F30079"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "ss"
+	    quid       	"3C65521902C6"
+	    stereotype 	"singleton")
+	(object Class "bb"
+	    quid       	"3C65522D0310"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3C6552390020"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "aa"
+	    quid       	"3C69F291030E"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"3C69F2970071"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "abcc1"
+	    quid       	"3C6B4F6F032E"
+	    documentation 	
+|[[ abbreviation : abcc_1 ]]
+|
+	    )
+	(object Class "abcc2"
+	    quid       	"3C6B4FDD039D"
+	    documentation 	
+|[[ abbreviation : abcc_2 ]]
+|
+	    )
+	(object Class "abcc3"
+	    quid       	"3C6B501B0035"
+	    documentation 	
+|[[ abbreviation : abcc_3 ]]
+|
+	    )
+	(object Class "abcc4"
+	    quid       	"3C6B506E00E8"
+	    documentation 	
+|[[ abbreviation : abcc_4 ]]
+|
+	    )
+	(object Class "abcc5"
+	    quid       	"3C6B50B10106"
+	    documentation 	
+|[[ abbreviation : abcc_5 ]]
+|
+	    )
+	(object Class "abcc6"
+	    quid       	"3C6B511903BD"
+	    documentation 	
+|[[ abbreviation : abcc_6 ]]
+|
+	    )
+	(object Class "abcc7"
+	    quid       	"3C6B51860381"
+	    documentation 	
+|[[ abbreviation : abcc_7 ]]
+|
+	    )
+	(object Class "sbcc1"
+	    quid       	"3C6C96830097"
+	    documentation 	
+|[[ abbreviation : sbcc_1 ]]
+|
+	    )
+	(object Class "sbcc2"
+	    quid       	"3C6C968B0373"
+	    documentation 	"[[ abbreviation : sbcc_2 ]]")
+	(object Class "sbcc3"
+	    quid       	"3C6C969702AC"
+	    documentation 	"[[ abbreviation : sbcc_3 ]]")
+	(object Class "sbcc4"
+	    quid       	"3C6C96A20087"
+	    documentation 	"[[ abbreviation : sbcc_4 ]]")
+	(object Class "sbcc5"
+	    quid       	"3C6C96AC039E"
+	    documentation 	"[[ abbreviation : sbcc_5 ]]")
+	(object Class "sbcc6"
+	    quid       	"3C6C96B700E4"
+	    documentation 	"[[ abbreviation : sbcc_6 ]]")
+	(object Association "sbp1"
+	    quid       	"3C69F1ED0342"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F1ED0343"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F1ED0344"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "sbp2"
+	    quid       	"3C69F1F201EB"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F1F201EC"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F1F201ED"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "sbp3"
+	    quid       	"3C69F1F7032F"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F1F70330"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F1F70331"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "sbp4"
+	    quid       	"3C69F1FE033F"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F1FE0340"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F1FE0341"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "sbp5"
+	    quid       	"3C69F20302B0"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F20302B1"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F20302B2"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "sbp6"
+	    quid       	"3C69F20E024E"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F20E024F"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C69F20E0250"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "abp1"
+	    quid       	"3C69F38D01E4"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F3940344"
+		    documentation 	"[[source]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F3950074"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "abp2"
+	    quid       	"3C69F3D30044"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F3D902DA"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F3DA001E"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "abp3"
+	    quid       	"3C69F40E008E"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F41401B1"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F4140310"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "abp4"
+	    quid       	"3C69F43D01FE"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F44403BB"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F4450195"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "abp5"
+	    quid       	"3C69F47F026F"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F4840298"
+		    documentation 	"[[source]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F485007D"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "abp6"
+	    quid       	"3C69F4BA000D"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C69F4C1017F"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C69F4C103CE"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)))
+	(object Association "abc1"
+	    quid       	"3C6B4F230140"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B4F2903E7"
+		    documentation 	"[[source]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B4F2A01EA"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc1")
+	(object Association "abc2"
+	    quid       	"3C6B4FA7017C"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B4FAB03AD"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B4FAC01E2"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc2")
+	(object Association "abc3"
+	    quid       	"3C6B4FEE011E"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B4FF20257"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B4FF300F0"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc3")
+	(object Association "abc4"
+	    quid       	"3C6B503703B1"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B503D0330"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B503E0270"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc4")
+	(object Association "abc5"
+	    quid       	"3C6B507D0163"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B5082029C"
+		    documentation 	"[[source]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B508301EE"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc5")
+	(object Association "abc6"
+	    quid       	"3C6B50DF034A"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B50E900E8"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B50E9037D"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc6")
+	(object Association "abc7"
+	    quid       	"3C6B51390034"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6B514100A9"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "theaa"
+		    quid       	"3C6B51420014"
+		    label      	"theaa"
+		    supplier   	"Logical View::Associations::aa"
+		    quidu      	"3C69F291030E"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::abcc7")
+	(object Association "sbc1"
+	    quid       	"3C6C95CB02EA"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C95D90051"
+		    documentation 	"[[ source ]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C95D90336"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc1")
+	(object Association "sbc2"
+	    quid       	"3C6C95FA0253"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C9602019D"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C960300C2"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc2")
+	(object Association "sbc3"
+	    quid       	"3C6C96110087"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C96150048"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C9615037D"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc3")
+	(object Association "sbc4"
+	    quid       	"3C6C961F0188"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C96270046"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C96270385"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc4")
+	(object Association "sbc5"
+	    quid       	"3C6C962F0221"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C96360251"
+		    documentation 	"[[ source ]]"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C963701E4"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc5")
+	(object Association "sbc6"
+	    quid       	"3C6C96480240"
+	    roles      	(list role_list
+		(object Role "thebb"
+		    quid       	"3C6C96530174"
+		    label      	"thebb"
+		    supplier   	"Logical View::Associations::bb"
+		    quidu      	"3C65522D0310"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE)
+		(object Role "thess"
+		    quid       	"3C6C96540112"
+		    label      	"thess"
+		    supplier   	"Logical View::Associations::ss"
+		    quidu      	"3C65521902C6"
+		    client_cardinality 	(value cardinality "0..1")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Associations::sbcc6"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "main"
+	    quid       	"3C6B4E4600A2"
+	    title      	"main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object NoteView @1
+		    location   	(480, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(105, 113)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	715
+			label      	"Class Diagram: Associations / normal plain")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	775
+		    height     	138
+		    quidu      	"3C69F26A025D")
+		(object NoteView @2
+		    location   	(480, 336)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(99, 277)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	727
+			label      	"Class Diagram: Associations / singleton plain")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	787
+		    height     	131
+		    quidu      	"3C6552160106")
+		(object NoteView @3
+		    location   	(480, 496)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(105, 433)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	715
+			label      	"Class Diagram: Associations / normal associative")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	775
+		    height     	138
+		    quidu      	"3C6B4EBB02CD")
+		(object NoteView @4
+		    location   	(480, 656)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(108, 591)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	708
+			label      	"Class Diagram: Associations / singleton associative")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	768
+		    height     	143
+		    quidu      	"3C6C956501D9")))
+	(object ClassDiagram "normal plain"
+	    quid       	"3C69F26A025D"
+	    title      	"normal plain"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Associations::bb" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1840, 848)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1598, 767)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"bb")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65522D0310"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(1598, 828)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490)
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::aa" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(416, 848)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(174, 767)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"aa")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C69F291030E"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(174, 828)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490
+			compartmentItems 	(list Compartment
+			    "<<id>> - id : Autonumber"))
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "abp1" @7
+		    location   	(1112, 197)
+		    label      	(object SegLabel @8
+			Parent_View 	@7
+			location   	(1112, 138)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F38D01E4"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @9
+			    Parent_View 	@7
+			    location   	(696, -651)
+			    label      	(object SegLabel @10
+				Parent_View 	@9
+				location   	(1632, 338)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.575418
+				height     	9
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F3940344"
+			    client     	@7
+			    supplier   	@5
+			    vertices   	(list Points
+				(1112, 197)
+				(1562, 197)
+				(1799, 754))
+			    line_style 	0
+			    label      	(object SegLabel @11
+				Parent_View 	@9
+				location   	(1679, 400)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.646898
+				height     	28
+				orientation 	0))
+			(object RoleView "theaa" @12
+			    Parent_View 	@7
+			    location   	(696, -651)
+			    label      	(object SegLabel @13
+				Parent_View 	@12
+				location   	(609, 338)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.577237
+				height     	9
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F3950074"
+			    client     	@7
+			    supplier   	@6
+			    vertices   	(list Points
+				(1112, 197)
+				(650, 197)
+				(448, 754))
+			    line_style 	0
+			    label      	(object SegLabel @14
+				Parent_View 	@12
+				location   	(615, 416)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.644809
+				height     	41
+				orientation 	0))))
+		(object AssociationViewNew "abp2" @15
+		    location   	(1114, 516)
+		    label      	(object SegLabel @16
+			Parent_View 	@15
+			location   	(1114, 457)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F3D30044"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @17
+			    Parent_View 	@15
+			    location   	(698, -332)
+			    label      	(object SegLabel @18
+				Parent_View 	@17
+				location   	(1577, 600)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.687912
+				height     	10
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F3D902DA"
+			    client     	@15
+			    supplier   	@5
+			    vertices   	(list Points
+				(1114, 516)
+				(1506, 516)
+				(1745, 754))
+			    line_style 	0
+			    label      	(object SegLabel @19
+				Parent_View 	@17
+				location   	(1585, 666)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.759509
+				height     	51
+				orientation 	1))
+			(object RoleView "theaa" @20
+			    Parent_View 	@15
+			    location   	(698, -332)
+			    label      	(object SegLabel @21
+				Parent_View 	@20
+				location   	(606, 616)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.756956
+				height     	6
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F3DA001E"
+			    client     	@15
+			    supplier   	@6
+			    vertices   	(list Points
+				(1114, 516)
+				(700, 516)
+				(495, 754))
+			    line_style 	0
+			    label      	(object SegLabel @22
+				Parent_View 	@20
+				location   	(615, 672)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.807153
+				height     	37
+				orientation 	0))))
+		(object AssociationViewNew "abp3" @23
+		    location   	(1131, 675)
+		    label      	(object SegLabel @24
+			Parent_View 	@23
+			location   	(1131, 616)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp3"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F40E008E"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @25
+			    Parent_View 	@23
+			    location   	(715, -173)
+			    label      	(object SegLabel @26
+				Parent_View 	@25
+				location   	(1452, 688)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.632874
+				height     	11
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F41401B1"
+			    client     	@23
+			    supplier   	@5
+			    vertices   	(list Points
+				(1131, 675)
+				(1449, 675)
+				(1630, 754))
+			    line_style 	0
+			    label      	(object SegLabel @27
+				Parent_View 	@25
+				location   	(1537, 747)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.829481
+				height     	30
+				orientation 	1))
+			(object RoleView "theaa" @28
+			    Parent_View 	@23
+			    location   	(715, -173)
+			    label      	(object SegLabel @29
+				Parent_View 	@28
+				location   	(713, 677)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F4140310"
+			    client     	@23
+			    supplier   	@6
+			    vertices   	(list Points
+				(1131, 675)
+				(825, 675)
+				(633, 754))
+			    line_style 	0
+			    label      	(object SegLabel @30
+				Parent_View 	@28
+				location   	(732, 753)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.820811
+				height     	37
+				orientation 	0))))
+		(object AssociationViewNew "abp4" @31
+		    location   	(1130, 1034)
+		    label      	(object SegLabel @32
+			Parent_View 	@31
+			location   	(1130, 975)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp4"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F43D01FE"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @33
+			    Parent_View 	@31
+			    location   	(714, 186)
+			    label      	(object SegLabel @34
+				Parent_View 	@33
+				location   	(1532, 951)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F44403BB"
+			    client     	@31
+			    supplier   	@5
+			    vertices   	(list Points
+				(1130, 1034)
+				(1453, 1034)
+				(1646, 941))
+			    line_style 	0
+			    label      	(object SegLabel @35
+				Parent_View 	@33
+				location   	(1570, 1000)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.825004
+				height     	20
+				orientation 	1))
+			(object RoleView "theaa" @36
+			    Parent_View 	@31
+			    location   	(714, 186)
+			    label      	(object SegLabel @37
+				Parent_View 	@36
+				location   	(741, 964)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.767388
+				height     	33
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F4450195"
+			    client     	@31
+			    supplier   	@6
+			    vertices   	(list Points
+				(1130, 1034)
+				(815, 1034)
+				(615, 941))
+			    line_style 	0
+			    label      	(object SegLabel @38
+				Parent_View 	@36
+				location   	(717, 1013)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.770354
+				height     	22
+				orientation 	0))))
+		(object AssociationViewNew "abp5" @39
+		    location   	(1124, 1181)
+		    label      	(object SegLabel @40
+			Parent_View 	@39
+			location   	(1124, 1122)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp5"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F47F026F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @41
+			    Parent_View 	@39
+			    location   	(708, 333)
+			    label      	(object SegLabel @42
+				Parent_View 	@41
+				location   	(1585, 1131)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.655465
+				height     	16
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F4840298"
+			    client     	@39
+			    supplier   	@5
+			    vertices   	(list Points
+				(1124, 1181)
+				(1565, 1181)
+				(1762, 941))
+			    line_style 	0
+			    label      	(object SegLabel @43
+				Parent_View 	@41
+				location   	(1579, 1197)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	1.031746
+				height     	16
+				orientation 	0))
+			(object RoleView "theaa" @44
+			    Parent_View 	@39
+			    location   	(708, 333)
+			    label      	(object SegLabel @45
+				Parent_View 	@44
+				location   	(628, 1119)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.699757
+				height     	1
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F485007D"
+			    client     	@39
+			    supplier   	@6
+			    vertices   	(list Points
+				(1124, 1181)
+				(678, 1181)
+				(489, 941))
+			    line_style 	0
+			    label      	(object SegLabel @46
+				Parent_View 	@44
+				location   	(664, 1175)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.611657
+				height     	8
+				orientation 	0))))
+		(object AssociationViewNew "abp6" @47
+		    location   	(1102, 1472)
+		    label      	(object SegLabel @48
+			Parent_View 	@47
+			location   	(1102, 1413)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"abp6"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F4BA000D"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @49
+			    Parent_View 	@47
+			    location   	(686, 624)
+			    label      	(object SegLabel @50
+				Parent_View 	@49
+				location   	(1646, 1311)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.643435
+				height     	15
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F4C1017F"
+			    client     	@47
+			    supplier   	@5
+			    vertices   	(list Points
+				(1102, 1472)
+				(1599, 1472)
+				(1802, 941))
+			    line_style 	0
+			    label      	(object SegLabel @51
+				Parent_View 	@49
+				location   	(1639, 1354)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.585113
+				height     	6
+				orientation 	0))
+			(object RoleView "theaa" @52
+			    Parent_View 	@47
+			    location   	(686, 624)
+			    label      	(object SegLabel @53
+				Parent_View 	@52
+				location   	(541, 1328)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.643381
+				height     	9
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F4C103CE"
+			    client     	@47
+			    supplier   	@6
+			    vertices   	(list Points
+				(1102, 1472)
+				(590, 1472)
+				(440, 941))
+			    line_style 	0
+			    label      	(object SegLabel @54
+				Parent_View 	@52
+				location   	(553, 1369)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.584909
+				height     	8
+				orientation 	0))))))
+	(object ClassDiagram "singleton plain"
+	    quid       	"3C6552160106"
+	    title      	"singleton plain"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Associations::bb" @55
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1824, 960)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(1582, 879)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"bb")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65522D0310"
+		    compartment 	(object Compartment
+			Parent_View 	@55
+			location   	(1582, 940)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490
+			compartmentItems 	(list Compartment
+			    "<<id>> - id : Autonumber"))
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::ss" @56
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(464, 960)
+		    label      	(object ItemLabel
+			Parent_View 	@56
+			location   	(332, 931)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"ss")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@56
+			location   	(332, 881)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65521902C6"
+		    width      	282
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "sbp1" @57
+		    location   	(1091, 159)
+		    label      	(object SegLabel @58
+			Parent_View 	@57
+			location   	(1091, 100)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"sbp1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F1ED0342"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @59
+			    Parent_View 	@57
+			    location   	(707, -161)
+			    label      	(object SegLabel @60
+				Parent_View 	@59
+				location   	(1758, 570)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.756482
+				height     	98
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1ED0343"
+			    client     	@57
+			    supplier   	@55
+			    vertices   	(list Points
+				(1091, 159)
+				(1471, 159)
+				(1781, 866))
+			    line_style 	0
+			    label      	(object SegLabel @61
+				Parent_View 	@59
+				location   	(1737, 774)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.911636
+				height     	4
+				orientation 	1))
+			(object RoleView "thess" @62
+			    Parent_View 	@57
+			    location   	(707, -161)
+			    label      	(object SegLabel @63
+				Parent_View 	@62
+				location   	(505, 635)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1ED0344"
+			    client     	@57
+			    supplier   	@56
+			    vertices   	(list Points
+				(1091, 159)
+				(672, 159)
+				(487, 868))
+			    line_style 	0
+			    label      	(object SegLabel @64
+				Parent_View 	@62
+				location   	(507, 801)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.938710
+				height     	2
+				orientation 	0))))
+		(object AssociationViewNew "sbp2" @65
+		    location   	(1111, 350)
+		    label      	(object SegLabel @66
+			Parent_View 	@65
+			location   	(1111, 291)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"sbp2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F1F201EB"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @67
+			    Parent_View 	@65
+			    location   	(727, 30)
+			    label      	(object SegLabel @68
+				Parent_View 	@67
+				location   	(1618, 665)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.731405
+				height     	10
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1F201EC"
+			    client     	@65
+			    supplier   	@55
+			    vertices   	(list Points
+				(1111, 350)
+				(1374, 350)
+				(1754, 866))
+			    line_style 	0
+			    label      	(object SegLabel @69
+				Parent_View 	@67
+				location   	(1694, 797)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.898760
+				height     	9
+				orientation 	1))
+			(object RoleView "thess" @70
+			    Parent_View 	@65
+			    location   	(727, 30)
+			    label      	(object SegLabel @71
+				Parent_View 	@70
+				location   	(565, 691)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1F201ED"
+			    client     	@65
+			    supplier   	@56
+			    vertices   	(list Points
+				(1111, 350)
+				(800, 350)
+				(513, 868))
+			    line_style 	0
+			    label      	(object SegLabel @72
+				Parent_View 	@70
+				location   	(578, 801)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900621
+				height     	24
+				orientation 	0))))
+		(object AssociationViewNew "sbp3" @73
+		    location   	(1124, 559)
+		    label      	(object SegLabel @74
+			Parent_View 	@73
+			location   	(1124, 500)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"sbp3"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F1F7032F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @75
+			    Parent_View 	@73
+			    location   	(740, 127)
+			    label      	(object SegLabel @76
+				Parent_View 	@75
+				location   	(1574, 769)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.759141
+				height     	14
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1F70330"
+			    client     	@73
+			    supplier   	@55
+			    vertices   	(list Points
+				(1124, 559)
+				(1343, 559)
+				(1712, 866))
+			    line_style 	0
+			    label      	(object SegLabel @77
+				Parent_View 	@75
+				location   	(1596, 813)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.822584
+				height     	34
+				orientation 	1))
+			(object RoleView "thess" @78
+			    Parent_View 	@73
+			    location   	(740, 127)
+			    label      	(object SegLabel @79
+				Parent_View 	@78
+				location   	(622, 740)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1F70331"
+			    client     	@73
+			    supplier   	@56
+			    vertices   	(list Points
+				(1124, 559)
+				(862, 559)
+				(552, 868))
+			    line_style 	0
+			    label      	(object SegLabel @80
+				Parent_View 	@78
+				location   	(633, 811)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.859336
+				height     	17
+				orientation 	0))))
+		(object AssociationViewNew "sbp4" @81
+		    location   	(1117, 1263)
+		    label      	(object SegLabel @82
+			Parent_View 	@81
+			location   	(1117, 1204)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"sbp4"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F1FE033F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @83
+			    Parent_View 	@81
+			    location   	(733, 831)
+			    label      	(object SegLabel @84
+				Parent_View 	@83
+				location   	(1579, 1106)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1FE0340"
+			    client     	@81
+			    supplier   	@55
+			    vertices   	(list Points
+				(1117, 1263)
+				(1453, 1263)
+				(1707, 1053))
+			    line_style 	0
+			    label      	(object SegLabel @85
+				Parent_View 	@83
+				location   	(1682, 1094)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.930213
+				height     	16
+				orientation 	1))
+			(object RoleView "thess" @86
+			    Parent_View 	@81
+			    location   	(733, 831)
+			    label      	(object SegLabel @87
+				Parent_View 	@86
+				location   	(674, 1171)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.737491
+				height     	18
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F1FE0341"
+			    client     	@81
+			    supplier   	@56
+			    vertices   	(list Points
+				(1117, 1263)
+				(734, 1263)
+				(545, 1051))
+			    line_style 	0
+			    label      	(object SegLabel @88
+				Parent_View 	@86
+				location   	(602, 1131)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.855851
+				height     	12
+				orientation 	0))))
+		(object AssociationViewNew "sbp5" @89
+		    location   	(1136, 1519)
+		    label      	(object SegLabel @90
+			Parent_View 	@89
+			location   	(1136, 1460)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	88
+			justify    	0
+			label      	"sbp5"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F20302B0"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @91
+			    Parent_View 	@89
+			    location   	(752, 1087)
+			    label      	(object SegLabel @92
+				Parent_View 	@91
+				location   	(1653, 1198)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F20302B1"
+			    client     	@89
+			    supplier   	@55
+			    vertices   	(list Points
+				(1136, 1519)
+				(1534, 1519)
+				(1773, 1053))
+			    line_style 	0
+			    label      	(object SegLabel @93
+				Parent_View 	@91
+				location   	(1786, 1115)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.946862
+				height     	40
+				orientation 	1))
+			(object RoleView "thess" @94
+			    Parent_View 	@89
+			    location   	(752, 1087)
+			    label      	(object SegLabel @95
+				Parent_View 	@94
+				location   	(594, 1277)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.738754
+				height     	21
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F20302B2"
+			    client     	@89
+			    supplier   	@56
+			    vertices   	(list Points
+				(1136, 1519)
+				(734, 1519)
+				(507, 1051))
+			    line_style 	0
+			    label      	(object SegLabel @96
+				Parent_View 	@94
+				location   	(526, 1098)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.946585
+				height     	5
+				orientation 	0))))
+		(object AssociationViewNew "sbp6" @97
+		    location   	(1128, 1888)
+		    label      	(object SegLabel @98
+			Parent_View 	@97
+			location   	(1128, 1829)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	128
+			justify    	0
+			label      	"sbp6"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C69F20E024E"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @99
+			    Parent_View 	@97
+			    location   	(664, 928)
+			    label      	(object SegLabel @100
+				Parent_View 	@99
+				location   	(1713, 1316)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F20E024F"
+			    client     	@97
+			    supplier   	@55
+			    vertices   	(list Points
+				(1128, 1888)
+				(1646, 1888)
+				(1804, 1053))
+			    line_style 	0
+			    label      	(object SegLabel @101
+				Parent_View 	@99
+				location   	(1832, 1197)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "thess" @102
+			    Parent_View 	@97
+			    location   	(664, 928)
+			    label      	(object SegLabel @103
+				Parent_View 	@102
+				location   	(477, 1328)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C69F20E0250"
+			    client     	@97
+			    supplier   	@56
+			    vertices   	(list Points
+				(1128, 1888)
+				(606, 1888)
+				(476, 1051))
+			    line_style 	0
+			    label      	(object SegLabel @104
+				Parent_View 	@102
+				location   	(459, 1134)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.942505
+				height     	30
+				orientation 	0))))))
+	(object ClassDiagram "normal associative"
+	    quid       	"3C6B4EBB02CD"
+	    title      	"normal associative"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Associations::abcc1" @105
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(432, 256)
+		    label      	(object ItemLabel
+			Parent_View 	@105
+			location   	(351, 205)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B4F6F032E"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::abcc2" @106
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1312, 256)
+		    label      	(object ItemLabel
+			Parent_View 	@106
+			location   	(1231, 205)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B4FDD039D"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::abcc3" @107
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1936, 256)
+		    label      	(object ItemLabel
+			Parent_View 	@107
+			location   	(1855, 205)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B501B0035"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::abcc4" @108
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(224, 2032)
+		    label      	(object ItemLabel
+			Parent_View 	@108
+			location   	(143, 1981)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc4")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B506E00E8"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::abcc5" @109
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(544, 2032)
+		    label      	(object ItemLabel
+			Parent_View 	@109
+			location   	(463, 1981)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc5")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B50B10106"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::abcc6" @110
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(896, 2032)
+		    label      	(object ItemLabel
+			Parent_View 	@110
+			location   	(815, 1981)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc6")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B511903BD"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::aa" @111
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(320, 1104)
+		    label      	(object ItemLabel
+			Parent_View 	@111
+			location   	(78, 1023)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"aa")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C69F291030E"
+		    compartment 	(object Compartment
+			Parent_View 	@111
+			location   	(78, 1084)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490)
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::bb" @112
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1696, 1104)
+		    label      	(object ItemLabel
+			Parent_View 	@112
+			location   	(1454, 1023)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"bb")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65522D0310"
+		    compartment 	(object Compartment
+			Parent_View 	@112
+			location   	(1454, 1084)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490)
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "abc1" @113
+		    location   	(1014, 607)
+		    label      	(object SegLabel @114
+			Parent_View 	@113
+			location   	(1014, 548)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B4F230140"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @115
+			    Parent_View 	@113
+			    location   	(678, -17)
+			    label      	(object SegLabel @116
+				Parent_View 	@115
+				location   	(1522, 689)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.609072
+				height     	5
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4F2903E7"
+			    client     	@113
+			    supplier   	@112
+			    vertices   	(list Points
+				(1014, 607)
+				(1493, 605)
+				(1657, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @117
+				Parent_View 	@115
+				location   	(1514, 746)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.673816
+				height     	35
+				orientation 	1))
+			(object RoleView "theaa" @118
+			    Parent_View 	@113
+			    location   	(678, -17)
+			    label      	(object SegLabel @119
+				Parent_View 	@118
+				location   	(475, 679)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.607039
+				height     	30
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4F2A01EA"
+			    client     	@113
+			    supplier   	@111
+			    vertices   	(list Points
+				(1014, 607)
+				(537, 608)
+				(360, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @120
+				Parent_View 	@118
+				location   	(493, 724)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.655925
+				height     	7
+				orientation 	0))))
+		(object AssocAttachView "" @121
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@105
+		    supplier   	@113
+		    line_style 	0)
+		(object AssociationViewNew "abc2" @122
+		    location   	(1012, 800)
+		    label      	(object SegLabel @123
+			Parent_View 	@122
+			location   	(1012, 741)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B4FA7017C"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @124
+			    Parent_View 	@122
+			    location   	(692, -304)
+			    label      	(object SegLabel @125
+				Parent_View 	@124
+				location   	(1398, 800)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.567606
+				height     	1
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4FAB03AD"
+			    client     	@122
+			    supplier   	@112
+			    vertices   	(list Points
+				(1012, 800)
+				(1396, 800)
+				(1603, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @126
+				Parent_View 	@124
+				location   	(1419, 846)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.637611
+				height     	17
+				orientation 	1))
+			(object RoleView "theaa" @127
+			    Parent_View 	@122
+			    location   	(692, -304)
+			    label      	(object SegLabel @128
+				Parent_View 	@127
+				location   	(631, 791)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	1.016000
+				height     	9
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4FAC01E2"
+			    client     	@122
+			    supplier   	@111
+			    vertices   	(list Points
+				(1012, 800)
+				(637, 800)
+				(416, 1010))
+			    line_style 	0
+			    label      	(object SegLabel @129
+				Parent_View 	@127
+				location   	(631, 860)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.617663
+				height     	39
+				orientation 	0))))
+		(object AssocAttachView "" @130
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@106
+		    supplier   	@122
+		    line_style 	0)
+		(object AssociationViewNew "abc3" @131
+		    location   	(1008, 959)
+		    label      	(object SegLabel @132
+			Parent_View 	@131
+			location   	(1008, 900)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc3"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B4FEE011E"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @133
+			    Parent_View 	@131
+			    location   	(688, -145)
+			    label      	(object SegLabel @134
+				Parent_View 	@133
+				location   	(1371, 956)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4FF20257"
+			    client     	@131
+			    supplier   	@112
+			    vertices   	(list Points
+				(1008, 959)
+				(1246, 959)
+				(1444, 1022))
+			    line_style 	0
+			    label      	(object SegLabel @135
+				Parent_View 	@133
+				location   	(1387, 1060)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "theaa" @136
+			    Parent_View 	@131
+			    location   	(688, -145)
+			    label      	(object SegLabel @137
+				Parent_View 	@136
+				location   	(644, 954)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B4FF300F0"
+			    client     	@131
+			    supplier   	@111
+			    vertices   	(list Points
+				(1008, 959)
+				(765, 959)
+				(571, 1020))
+			    line_style 	0
+			    label      	(object SegLabel @138
+				Parent_View 	@136
+				location   	(631, 1028)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.877266
+				height     	25
+				orientation 	0))))
+		(object AssocAttachView "" @139
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@107
+		    supplier   	@131
+		    line_style 	0)
+		(object AssociationViewNew "abc4" @140
+		    location   	(1007, 1253)
+		    label      	(object SegLabel @141
+			Parent_View 	@140
+			location   	(1007, 1194)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc4"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B503703B1"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @142
+			    Parent_View 	@140
+			    location   	(687, 149)
+			    label      	(object SegLabel @143
+				Parent_View 	@142
+				location   	(1346, 1177)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B503D0330"
+			    client     	@140
+			    supplier   	@112
+			    vertices   	(list Points
+				(1007, 1253)
+				(1250, 1253)
+				(1444, 1187))
+			    line_style 	0
+			    label      	(object SegLabel @144
+				Parent_View 	@142
+				location   	(1419, 1252)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	1))
+			(object RoleView "theaa" @145
+			    Parent_View 	@140
+			    location   	(687, 149)
+			    label      	(object SegLabel @146
+				Parent_View 	@145
+				location   	(669, 1181)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B503E0270"
+			    client     	@140
+			    supplier   	@111
+			    vertices   	(list Points
+				(1007, 1253)
+				(747, 1253)
+				(571, 1190))
+			    line_style 	0
+			    label      	(object SegLabel @147
+				Parent_View 	@145
+				location   	(595, 1256)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object AssocAttachView "" @148
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@108
+		    supplier   	@140
+		    line_style 	0)
+		(object AssociationViewNew "abc5" @149
+		    location   	(1006, 1453)
+		    label      	(object SegLabel @150
+			Parent_View 	@149
+			location   	(1006, 1394)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc5"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B507D0163"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @151
+			    Parent_View 	@149
+			    location   	(686, 349)
+			    label      	(object SegLabel @152
+				Parent_View 	@151
+				location   	(1341, 1518)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.474392
+				height     	65
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B5082029C"
+			    client     	@149
+			    supplier   	@112
+			    vertices   	(list Points
+				(1006, 1453)
+				(1359, 1453)
+				(1603, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @153
+				Parent_View 	@151
+				location   	(1357, 1413)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.539411
+				height     	30
+				orientation 	0))
+			(object RoleView "theaa" @154
+			    Parent_View 	@149
+			    location   	(686, 349)
+			    label      	(object SegLabel @155
+				Parent_View 	@154
+				location   	(612, 1488)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	1.116147
+				height     	35
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B508301EE"
+			    client     	@149
+			    supplier   	@111
+			    vertices   	(list Points
+				(1006, 1453)
+				(653, 1453)
+				(409, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @156
+				Parent_View 	@154
+				location   	(593, 1395)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.609637
+				height     	4
+				orientation 	0))))
+		(object AssocAttachView "" @157
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@109
+		    supplier   	@149
+		    line_style 	0)
+		(object AssociationViewNew "abc6" @158
+		    location   	(1010, 1713)
+		    label      	(object SegLabel @159
+			Parent_View 	@158
+			location   	(1010, 1654)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc6"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B50DF034A"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @160
+			    Parent_View 	@158
+			    location   	(690, 609)
+			    label      	(object SegLabel @161
+				Parent_View 	@160
+				location   	(1491, 1647)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.525037
+				height     	6
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B50E900E8"
+			    client     	@158
+			    supplier   	@112
+			    vertices   	(list Points
+				(1010, 1713)
+				(1474, 1713)
+				(1661, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @162
+				Parent_View 	@160
+				location   	(1518, 1603)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.574970
+				height     	4
+				orientation 	1))
+			(object RoleView "theaa" @163
+			    Parent_View 	@158
+			    location   	(690, 609)
+			    label      	(object SegLabel @164
+				Parent_View 	@163
+				location   	(484, 1641)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.544218
+				height     	36
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B50E9037D"
+			    client     	@158
+			    supplier   	@111
+			    vertices   	(list Points
+				(1010, 1713)
+				(550, 1713)
+				(354, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @165
+				Parent_View 	@163
+				location   	(486, 1594)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.586935
+				height     	17
+				orientation 	0))))
+		(object AssocAttachView "" @166
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@110
+		    supplier   	@158
+		    line_style 	0)
+		(object AssociationViewNew "abc7" @167
+		    location   	(1006, 1806)
+		    label      	(object SegLabel @168
+			Parent_View 	@167
+			location   	(1021, 1794)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"abc7"
+			pctDist    	0.750000
+			height     	12
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6B51390034"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @169
+			    Parent_View 	@167
+			    location   	(686, 702)
+			    label      	(object SegLabel @170
+				Parent_View 	@169
+				location   	(1699, 1472)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.787821
+				height     	5
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B514100A9"
+			    client     	@167
+			    supplier   	@112
+			    vertices   	(list Points
+				(1006, 1806)
+				(1693, 1806)
+				(1695, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @171
+				Parent_View 	@169
+				location   	(1715, 1538)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.736936
+				height     	21
+				orientation 	1))
+			(object RoleView "theaa" @172
+			    Parent_View 	@167
+			    location   	(686, 702)
+			    label      	(object SegLabel @173
+				Parent_View 	@172
+				location   	(278, 1457)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+theaa"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6B51420014"
+			    client     	@167
+			    supplier   	@111
+			    vertices   	(list Points
+				(1006, 1806)
+				(319, 1806)
+				(319, 1197))
+			    line_style 	0
+			    label      	(object SegLabel @174
+				Parent_View 	@172
+				location   	(279, 1519)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.751543
+				height     	40
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Associations::abcc7" @175
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1344, 2032)
+		    label      	(object ItemLabel
+			Parent_View 	@175
+			location   	(1263, 1981)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"abcc7")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6B51860381"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @176
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@175
+		    supplier   	@167
+		    line_style 	0)))
+	(object ClassDiagram "singleton associative"
+	    quid       	"3C6C956501D9"
+	    title      	"singleton associative"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Associations::ss" @177
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(320, 1088)
+		    label      	(object ItemLabel
+			Parent_View 	@177
+			location   	(188, 1059)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"ss")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@177
+			location   	(188, 1009)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65521902C6"
+		    width      	282
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::bb" @178
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1840, 1088)
+		    label      	(object ItemLabel
+			Parent_View 	@178
+			location   	(1598, 1007)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"bb")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C65522D0310"
+		    compartment 	(object Compartment
+			Parent_View 	@178
+			location   	(1598, 1068)
+			icon_style 	"Label"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	490)
+		    width      	502
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "sbc1" @179
+		    location   	(1051, 448)
+		    label      	(object SegLabel @180
+			Parent_View 	@179
+			location   	(1051, 389)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc1"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C95CB02EA"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @181
+			    Parent_View 	@179
+			    location   	(731, -336)
+			    label      	(object SegLabel @182
+				Parent_View 	@181
+				location   	(1540, 500)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.482424
+				height     	9
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C95D90051"
+			    client     	@179
+			    supplier   	@178
+			    vertices   	(list Points
+				(1051, 448)
+				(1503, 448)
+				(1788, 994))
+			    line_style 	0
+			    label      	(object SegLabel @183
+				Parent_View 	@181
+				location   	(1561, 572)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.551297
+				height     	6
+				orientation 	1))
+			(object RoleView "thess" @184
+			    Parent_View 	@179
+			    location   	(731, -336)
+			    label      	(object SegLabel @185
+				Parent_View 	@184
+				location   	(540, 494)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.498382
+				height     	15
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C95D90336"
+			    client     	@179
+			    supplier   	@177
+			    vertices   	(list Points
+				(1051, 448)
+				(575, 448)
+				(355, 996))
+			    line_style 	0
+			    label      	(object SegLabel @186
+				Parent_View 	@184
+				location   	(558, 566)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.554765
+				height     	28
+				orientation 	0))))
+		(object AssociationViewNew "sbc2" @187
+		    location   	(1059, 685)
+		    label      	(object SegLabel @188
+			Parent_View 	@187
+			location   	(1059, 626)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C95FA0253"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @189
+			    Parent_View 	@187
+			    location   	(739, -99)
+			    label      	(object SegLabel @190
+				Parent_View 	@189
+				location   	(1443, 688)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.471612
+				height     	2
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C9602019D"
+			    client     	@187
+			    supplier   	@178
+			    vertices   	(list Points
+				(1059, 685)
+				(1437, 685)
+				(1746, 994))
+			    line_style 	0
+			    label      	(object SegLabel @191
+				Parent_View 	@189
+				location   	(1438, 741)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.513259
+				height     	39
+				orientation 	1))
+			(object RoleView "thess" @192
+			    Parent_View 	@187
+			    location   	(739, -99)
+			    label      	(object SegLabel @193
+				Parent_View 	@192
+				location   	(623, 716)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.554265
+				height     	1
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C960300C2"
+			    client     	@187
+			    supplier   	@177
+			    vertices   	(list Points
+				(1059, 685)
+				(647, 685)
+				(392, 996))
+			    line_style 	0
+			    label      	(object SegLabel @194
+				Parent_View 	@192
+				location   	(629, 772)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.602770
+				height     	41
+				orientation 	0))))
+		(object AssociationViewNew "sbc3" @195
+		    location   	(1020, 929)
+		    label      	(object SegLabel @196
+			Parent_View 	@195
+			location   	(1020, 870)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc3"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C96110087"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @197
+			    Parent_View 	@195
+			    location   	(700, 145)
+			    label      	(object SegLabel @198
+				Parent_View 	@197
+				location   	(1493, 917)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96150048"
+			    client     	@195
+			    supplier   	@178
+			    vertices   	(list Points
+				(1020, 929)
+				(1403, 929)
+				(1588, 995))
+			    line_style 	0
+			    label      	(object SegLabel @199
+				Parent_View 	@197
+				location   	(1466, 981)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.793861
+				height     	28
+				orientation 	1))
+			(object RoleView "thess" @200
+			    Parent_View 	@195
+			    location   	(700, 145)
+			    label      	(object SegLabel @201
+				Parent_View 	@200
+				location   	(678, 919)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.590674
+				height     	10
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C9615037D"
+			    client     	@195
+			    supplier   	@177
+			    vertices   	(list Points
+				(1020, 929)
+				(668, 929)
+				(461, 1023))
+			    line_style 	0
+			    label      	(object SegLabel @202
+				Parent_View 	@200
+				location   	(665, 984)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.651872
+				height     	48
+				orientation 	0))))
+		(object AssociationViewNew "sbc4" @203
+		    location   	(1031, 1263)
+		    label      	(object SegLabel @204
+			Parent_View 	@203
+			location   	(1031, 1204)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc4"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C961F0188"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @205
+			    Parent_View 	@203
+			    location   	(711, 479)
+			    label      	(object SegLabel @206
+				Parent_View 	@205
+				location   	(1439, 1207)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.716862
+				height     	43
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96270046"
+			    client     	@203
+			    supplier   	@178
+			    vertices   	(list Points
+				(1031, 1263)
+				(1415, 1263)
+				(1609, 1181))
+			    line_style 	0
+			    label      	(object SegLabel @207
+				Parent_View 	@205
+				location   	(1432, 1269)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.667810
+				height     	12
+				orientation 	1))
+			(object RoleView "thess" @208
+			    Parent_View 	@203
+			    location   	(711, 479)
+			    label      	(object SegLabel @209
+				Parent_View 	@208
+				location   	(634, 1197)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.712695
+				height     	46
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96270385"
+			    client     	@203
+			    supplier   	@177
+			    vertices   	(list Points
+				(1031, 1263)
+				(662, 1263)
+				(461, 1160))
+			    line_style 	0
+			    label      	(object SegLabel @210
+				Parent_View 	@208
+				location   	(649, 1266)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.638821
+				height     	9
+				orientation 	0))))
+		(object AssociationViewNew "sbc5" @211
+		    location   	(1057, 1470)
+		    label      	(object SegLabel @212
+			Parent_View 	@211
+			location   	(1057, 1411)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc5"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C962F0221"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @213
+			    Parent_View 	@211
+			    location   	(737, 686)
+			    label      	(object SegLabel @214
+				Parent_View 	@213
+				location   	(1437, 1425)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.514492
+				height     	33
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96360251"
+			    client     	@211
+			    supplier   	@178
+			    vertices   	(list Points
+				(1057, 1470)
+				(1437, 1470)
+				(1740, 1181))
+			    line_style 	0
+			    label      	(object SegLabel @215
+				Parent_View 	@213
+				location   	(1432, 1500)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.469337
+				height     	30
+				orientation 	1))
+			(object RoleView "thess" @216
+			    Parent_View 	@211
+			    location   	(737, 686)
+			    label      	(object SegLabel @217
+				Parent_View 	@216
+				location   	(627, 1443)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.563025
+				height     	10
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C963701E4"
+			    client     	@211
+			    supplier   	@177
+			    vertices   	(list Points
+				(1057, 1470)
+				(637, 1470)
+				(395, 1179))
+			    line_style 	0
+			    label      	(object SegLabel @218
+				Parent_View 	@216
+				location   	(632, 1494)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	1.011905
+				height     	24
+				orientation 	0))))
+		(object AssociationViewNew "sbc6" @219
+		    location   	(1057, 1673)
+		    label      	(object SegLabel @220
+			Parent_View 	@219
+			location   	(1057, 1614)
+			font       	(object Font
+			    italics    	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	107
+			justify    	0
+			label      	"sbc6"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3C6C96480240"
+		    roleview_list 	(list RoleViews
+			(object RoleView "thebb" @221
+			    Parent_View 	@219
+			    location   	(737, 889)
+			    label      	(object SegLabel @222
+				Parent_View 	@221
+				location   	(1555, 1578)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thebb"
+				pctDist    	0.550051
+				height     	13
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96530174"
+			    client     	@219
+			    supplier   	@178
+			    vertices   	(list Points
+				(1057, 1673)
+				(1518, 1673)
+				(1787, 1181))
+			    line_style 	0
+			    label      	(object SegLabel @223
+				Parent_View 	@221
+				location   	(1545, 1634)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.497255
+				height     	4
+				orientation 	1))
+			(object RoleView "thess" @224
+			    Parent_View 	@219
+			    location   	(737, 889)
+			    label      	(object SegLabel @225
+				Parent_View 	@224
+				location   	(500, 1594)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	136
+				justify    	0
+				label      	"+thess"
+				pctDist    	0.572380
+				height     	37
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"3C6C96540112"
+			    client     	@219
+			    supplier   	@177
+			    vertices   	(list Points
+				(1057, 1673)
+				(575, 1673)
+				(359, 1179))
+			    line_style 	0
+			    label      	(object SegLabel @226
+				Parent_View 	@224
+				location   	(511, 1638)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..1"
+				pctDist    	0.528591
+				height     	45
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Associations::sbcc1" @227
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(352, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@227
+			location   	(271, 125)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc1")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C96830097"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::sbcc2" @228
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1232, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@228
+			location   	(1151, 125)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc2")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C968B0373"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::sbcc3" @229
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1600, 176)
+		    label      	(object ItemLabel
+			Parent_View 	@229
+			location   	(1519, 125)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc3")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C969702AC"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::sbcc4" @230
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(320, 1952)
+		    label      	(object ItemLabel
+			Parent_View 	@230
+			location   	(239, 1901)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc4")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C96A20087"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::sbcc5" @231
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(864, 1952)
+		    label      	(object ItemLabel
+			Parent_View 	@231
+			location   	(783, 1901)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc5")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C96AC039E"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Associations::sbcc6" @232
+		    ShowCompartmentStereotypes 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1536, 1952)
+		    label      	(object ItemLabel
+			Parent_View 	@232
+			location   	(1455, 1901)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	162
+			justify    	0
+			label      	"sbcc6")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3C6C96B700E4"
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssocAttachView "" @233
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@227
+		    supplier   	@179
+		    line_style 	0)
+		(object AssocAttachView "" @234
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@228
+		    supplier   	@187
+		    line_style 	0)
+		(object AssocAttachView "" @235
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@229
+		    supplier   	@195
+		    line_style 	0)
+		(object AssocAttachView "" @236
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@230
+		    supplier   	@203
+		    line_style 	0)
+		(object AssocAttachView "" @237
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@231
+		    supplier   	@211
+		    line_style 	0)
+		(object AssocAttachView "" @238
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@232
+		    supplier   	@219
+		    line_style 	0)))))
