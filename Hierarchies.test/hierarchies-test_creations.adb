@@ -414,6 +414,9 @@ package body Hierarchies.Test_Creations is
    begin
       S3_H := S_3.Inheritance.Create_Tree (null, null);
       F2_H := F_2.Inheritance.Create_Tree (null, null, CIH (S3_H));
+      Assert (False, "creation succeeded");
+   exception
+      when Constraint_Error => null;
    end Create_Third_Child_With_Bad_R2_S3;
 
    procedure Create_Third_Child_With_Bad_S3_S3
@@ -426,6 +429,9 @@ package body Hierarchies.Test_Creations is
       S3_H := S_3.Inheritance.Create_Tree (null, null);
       S3_H2 := S_3.Inheritance.Create_Tree (null, null);
       F2_H := F_2.Inheritance.Create_Tree (null, CIH (S3_H), CIH (S3_H2));
+      Assert (False, "creation succeeded");
+   exception
+      when Constraint_Error => null;
    end Create_Third_Child_With_Bad_S3_S3;
 
    procedure Register_Tests (T : in out Test_Case) is
