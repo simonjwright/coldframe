@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v e9e9b2746b42 2001/02/25 10:07:01 simon $ -->
+<!-- $Id: generate-ada.xsl,v 17d39877893f 2001/03/20 05:55:00 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -56,19 +56,19 @@
     <xsl:apply-templates select="type" mode="domain-type-support"/>
 
     <!-- Package specs for individual classes. -->
-    <xsl:apply-templates select="object" mode="object-spec"/>
+    <xsl:apply-templates select="class" mode="class-spec"/>
 
     <!-- Package bodies for individual classes. -->
-    <xsl:apply-templates select="object" mode="object-body"/>
+    <xsl:apply-templates select="class" mode="class-body"/>
 
     <!-- Collection support packages. -->
-    <xsl:apply-templates select="object" mode="collection-support"/>
+    <xsl:apply-templates select="class" mode="collection-support"/>
 
     <!-- Child subprogram specs for individual operations. -->
-    <xsl:apply-templates select="object/operation" mode="operation-spec"/>
+    <xsl:apply-templates select="class/operation" mode="operation-spec"/>
 
     <!-- Child subprogram bodies for individual operations. -->
-    <xsl:apply-templates select="object/operation" mode="operation-body"/>
+    <xsl:apply-templates select="class/operation" mode="operation-body"/>
 
   </xsl:template>
 
@@ -195,7 +195,7 @@
 
 
   <!-- Generate the class packages (specs). -->
-  <xsl:template match="domain/object" mode="object-spec">
+  <xsl:template match="domain/class" mode="class-spec">
 
     <!-- determine if this is a supertype (if there is an inheritance
          relationship with this class as the parent) -->
@@ -205,14 +205,14 @@
       select="boolean(../inheritance[parent=$name])"/>
 
     <!-- Any context clauses needed for the class package .. -->
-    <xsl:call-template name="object-spec-context"/>
+    <xsl:call-template name="class-spec-context"/>
 
     <!-- .. the class package .. -->
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
 
-    <xsl:if test="attribute/@identifier">
+    <xsl:if test="not(@singleton)">
 
       <!-- .. the Identifier record .. -->
       <xsl:call-template name="identifier-record"/>
@@ -252,8 +252,8 @@
     
     <xsl:choose>    
  
-      <!-- if there is an identifier, there can be multiple instances -->
-      <xsl:when test="attribute/@identifier">
+      <!-- There can be multiple instances, unless this is a singleton -->
+      <xsl:when test="not(@singleton)">
 
         <!-- .. the Instance record .. -->
         <xsl:call-template name="instance-record">
@@ -314,9 +314,14 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate context clauses for package
+  <!-- Called from domain/class to generate context clauses for package
        spec -->
-  <xsl:template name="object-spec-context">
+  <xsl:template name="class-spec-context">
+
+    <xsl:if test="attribute/@refers">
+      <!-- We're going to use the GNAT "with type" extension -->
+      <xsl:text>pragma Extensions_Allowed (On);&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:if test="attribute/type='Unbounded_String'
                   or operation/parameter/type='Unbounded_String'
@@ -327,10 +332,9 @@
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
     </xsl:if>
 
-    <xsl:if test="attribute/@identifier">
+    <xsl:if test="not(@singleton)">
 
-      <!-- We need access to the standard heap storage pool. This is
-           a GNAT special. -->
+      <!-- We need access to the standard heap storage pool. -->
       <xsl:text>with Architecture.Global_Storage_Pool;&#10;</xsl:text>
 
       <!-- Choose the appropriate Map -->
@@ -351,10 +355,25 @@
 
     </xsl:if>
 
+    <!--XXX why doesn't this work always?<xsl:for-each
+      select="attribute[@refers
+              and not(@refers=preceding::attribute/@refers)]">-->
+    <xsl:for-each
+      select="attribute[@refers]">
+      <!-- We need the GNAT 'with type' extension to include the
+           handles (for non-singleton classes) -->
+      <xsl:sort select="@refers"/>
+      <xsl:text>with type </xsl:text>
+      <xsl:value-of select="../../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="@refers"/>
+      <xsl:text>.Handle is access;&#10;</xsl:text>
+    </xsl:for-each>
+
   </xsl:template>
 
 
-  <!-- Called from a supertype domain/object to output the subtype enumeration
+  <!-- Called from a supertype domain/class to output the subtype enumeration
        type (sorted) -->
   <xsl:template name="subtype-enumeration">
     <xsl:variable name="name" select="name"/>
@@ -363,6 +382,7 @@
     <xsl:for-each select="../inheritance[parent=$name]/child">
       <xsl:sort select="."/>
       <xsl:value-of select="."/>
+      <xsl:text>_T</xsl:text>
       <xsl:if test="position() &lt; last()">
         <xsl:text>,&#10;      </xsl:text>
       </xsl:if>
@@ -371,58 +391,52 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate get specs -->
+  <!-- Called from domain/class to generate get specs -->
   <xsl:template
-    match="object/attribute"
+    match="class/attribute"
     mode="attribute-get-spec">
 
     <!-- Get function -->
     <xsl:text>  function Get_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
 
-    <!-- If there's an Identifier, this isn't a singleton, so we need a
-         handle parameter -->
-    <xsl:if test="../attribute/@identifier">
+    <!-- If this isn't a singleton, we need a handle parameter -->
+    <xsl:if test="not(../@singleton)">
       <xsl:text> (This : Handle)</xsl:text>
     </xsl:if>
 
     <xsl:text> return </xsl:text>
-    <xsl:call-template name="type-name">
-      <xsl:with-param name="type" select="type"/>
-    </xsl:call-template>
+    <xsl:call-template name="attribute-type"/>
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate set specs (non-
+  <!-- Called from domain/class to generate set specs (non-
        identifier attributes only) -->
   <xsl:template
-    match="object/attribute[not(@identifier='yes')]"
+    match="class/attribute[not(@identifier='yes')]"
     mode="attribute-set-spec">
 
     <!-- Set procedure -->
     <xsl:text>  procedure Set_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text> (</xsl:text>
 
-    <!-- If there's an Identifier, this isn't a singleton, so we need a
-         handle parameter -->
-    <xsl:if test="../attribute/@identifier">
+    <!-- If this isn't a singleton, we need a handle parameter -->
+    <xsl:if test="not(../@singleton)">
       <xsl:text>This : Handle; </xsl:text>
     </xsl:if>
 
     <xsl:text>To_Be : </xsl:text>
-    <xsl:call-template name="type-name">
-      <xsl:with-param name="type" select="type"/>
-    </xsl:call-template>
+    <xsl:call-template name="attribute-type"/>
     <xsl:text>);&#10;</xsl:text>
 
   </xsl:template>
 
 
   <!-- Generate the class packages (bodies). -->
-  <xsl:template match="domain/object" mode="object-body">
+  <xsl:template match="domain/class" mode="class-body">
 
     <!-- If there are no attributes, there's no body -->
     <xsl:if test="attribute">
@@ -435,14 +449,14 @@
         select="boolean(../inheritance[parent=$name])"/>
       
       <!-- Any context clauses needed for the class body .. -->
-      <xsl:call-template name="object-body-context"/>
+      <xsl:call-template name="class-body-context"/>
       
       <!-- .. start the body .. -->
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text> is&#10;</xsl:text>
       
-      <xsl:if test="attribute/@identifier">
+      <xsl:if test="not(@singleton)">
         
         <!-- .. the creation, simple find, and deletion operations .. -->
         <xsl:text>  function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
@@ -475,9 +489,9 @@
         <xsl:text>    Delete&#10;</xsl:text>
         <xsl:text>      ((</xsl:text>
         <xsl:for-each select="attribute[@identifier='yes']">
-          <xsl:value-of select="name"/>
+          <xsl:call-template name="attribute-name"/>
           <xsl:text> =&gt; This.</xsl:text>
-          <xsl:value-of select="name"/>
+          <xsl:call-template name="attribute-name"/>
           <xsl:if test="position() &lt; last()">
             <xsl:text>,&#10;      </xsl:text>
           </xsl:if>
@@ -504,7 +518,7 @@
       <xsl:apply-templates mode="attribute-set-body"/>
       <xsl:apply-templates mode="attribute-get-body"/>
         
-      <xsl:if test="attribute/@identifier">
+      <xsl:if test="not(@singleton)">
         
         <!-- .. the hash function stub .. -->
         <xsl:text>  function Hash (Id : Identifier) return Natural is separate;&#10;</xsl:text>
@@ -516,7 +530,7 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
 
-      <xsl:if test="attribute/@identifier">
+      <xsl:if test="not(@singleton)">
         
         <!-- Output the separate hash function body. -->
         <xsl:call-template name="hash-function"/>
@@ -528,9 +542,9 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate context clauses for package
+  <!-- Called from domain/class to generate context clauses for package
        body. -->
-  <xsl:template name="object-body-context">
+  <xsl:template name="class-body-context">
   </xsl:template>
 
 
@@ -540,78 +554,72 @@
     match="attribute[@identifier='yes']"
     mode="identifier-element-assignment">
     <xsl:text>    Result.</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text> := With_Identifier.</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate get bodies -->
+  <!-- Called from domain/class to generate get bodies -->
   <xsl:template
-    match="object/attribute"
+    match="class/attribute"
     mode="attribute-get-body">
 
     <!-- Get function -->
     <xsl:text>  function Get_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
 
-    <!-- If there's an Identifier, this isn't a singleton, so we need a
-         handle parameter -->
-    <xsl:if test="../attribute/@identifier">
+    <!-- If this isn't a singleton, we need a handle parameter -->
+    <xsl:if test="not(../@singleton)">
       <xsl:text> (This : Handle)</xsl:text>
     </xsl:if>
 
     <xsl:text> return </xsl:text>
-    <xsl:call-template name="type-name">
-      <xsl:with-param name="type" select="type"/>
-    </xsl:call-template>
+    <xsl:call-template name="attribute-type"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:text>  begin&#10;</xsl:text>
     <xsl:text>    return This.</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
     <xsl:text>  end Get_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate set bodies (non-
+  <!-- Called from domain/class to generate set bodies (non-
        identifier attributes only) -->
   <xsl:template
-    match="object/attribute[not(@identifier='yes')]"
+    match="class/attribute[not(@identifier='yes')]"
     mode="attribute-set-body">
 
     <!-- Set procedure -->
     <xsl:text>  procedure Set_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text> (</xsl:text>
 
-    <!-- If there's an Identifier, this isn't a singleton, so we need a
-         handle parameter -->
-    <xsl:if test="../attribute/@identifier">
+    <!-- If this isn't a singleton, we need a handle parameter -->
+    <xsl:if test="not(../@singleton)">
       <xsl:text>This : Handle; </xsl:text>
     </xsl:if>
 
     <xsl:text>To_Be : </xsl:text>
-    <xsl:call-template name="type-name">
-      <xsl:with-param name="type" select="type"/>
-    </xsl:call-template>
+    <xsl:call-template name="attribute-type"/>
     <xsl:text>) is&#10;</xsl:text>
     <xsl:text>  begin&#10;</xsl:text>
     <xsl:text>    This.</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text> := To_Be;&#10;</xsl:text>
     <xsl:text>  end Set_</xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate the separate hash function. -->
+  <!-- Called from domain/class to generate the separate hash function. -->
   <xsl:template name="hash-function">
     <!-- XXX This needs to recognise Bounded String usage, too -->
     <xsl:if test="attribute/type/@identifier/..='Unbounded_String'
@@ -628,7 +636,7 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to compute the number of hash buckets. -->
+  <!-- Called from domain/class to compute the number of hash buckets. -->
   <xsl:template name="hash-buckets">
     <xsl:choose>
 
@@ -663,7 +671,7 @@
 
 
   <!-- Generate child subprogram specs. -->
-  <xsl:template match="object/operation" mode="operation-spec">
+  <xsl:template match="class/operation" mode="operation-spec">
     <xsl:apply-templates select="." mode="operation-context"/>
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text>;&#10;</xsl:text>
@@ -672,7 +680,7 @@
 
   <!-- Generate child subprogram context. -->
   <!-- XXX at present, doesn't ensure there's only one of each -->
-  <xsl:template match="object/operation" mode="operation-context">
+  <xsl:template match="class/operation" mode="operation-context">
 
     <!-- Find the names of all the types involved -->
     <xsl:for-each select="parameter/type | @return">
@@ -683,7 +691,7 @@
 
       <!-- .. only using those whose names are those of classes in
            the domain .. -->
-      <xsl:if test="/domain/object/name=.">
+      <xsl:if test="/domain/class/name=.">
         <xsl:text>with </xsl:text>
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
@@ -708,7 +716,7 @@
 
   <!-- Generate the bodies of child operations. The bodies are
        compilable but generate Program_Error if called. -->
-  <xsl:template match="object/operation" mode="operation-body">
+  <xsl:template match="class/operation" mode="operation-body">
 
     <xsl:call-template name="subprogram-specification"/>
     <xsl:text> is&#10;</xsl:text>
@@ -745,15 +753,15 @@
 
 
   <!-- Called to generate Collection support packages (only for
-       classes with at least one Identifying Attribute). -->
-  <xsl:template match="object[attribute/@identifier]" mode="collection-support">
+       non-singleton classes). -->
+  <xsl:template match="class[not(@singleton)]" mode="collection-support">
     <xsl:apply-templates select="." mode="collection-support-spec"/>
     <xsl:apply-templates select="." mode="collection-support-body"/>
   </xsl:template>
 
 
   <!-- Called to generate Collection support package specs. -->
-  <xsl:template match="object" mode="collection-support-spec">
+  <xsl:template match="class" mode="collection-support-spec">
 
     <!-- Make the name of the parent class (Domain.Class) -->
     <xsl:variable name="class">
@@ -847,7 +855,7 @@
 
 
   <!-- Called to generate Collection support package bodies. -->
-  <xsl:template match="object" mode="collection-support-body">
+  <xsl:template match="class" mode="collection-support-body">
 
     <!-- Make the name of the parent class (Domain.Class) -->
     <xsl:variable name="class">
@@ -934,7 +942,7 @@
   </xsl:template>
 
 
-  <!-- Called from object/operation to generate a subprogram specification.
+  <!-- Called from class/operation to generate a subprogram specification.
        Ends without the closing ";" or " is". -->
   <xsl:template name="subprogram-specification">
     <xsl:choose>
@@ -969,20 +977,20 @@
   </xsl:template>
 
 
-  <!-- Called from object/operation to generate a subprogram parameter list -->
+  <!-- Called from class/operation to generate a subprogram parameter list -->
   <xsl:template name="parameter-list">
 
     <!-- In Ada, an empty parameter list is void (not "()" as in C).
          If the operation has parameters, we clearly need a parameter
          list here! Otherwise, we have to check for a Handle; if
-         the Class has no Identifier attributes, all operations are
-         class operations, otherwise it depends on the class attribute. -->
+         the Class is a singleton, all operations are class operations,
+         otherwise it depends on the class attribute. -->
     <xsl:if
-      test="parameter or (../attribute/@identifier and not(@class='yes'))">
+      test="parameter or (not(../@singleton) and not(@class='yes'))">
 
       <xsl:text>&#10;</xsl:text>
       <xsl:text>  (</xsl:text>
-      <xsl:if test="../attribute/@identifier and not(@class='yes')">
+      <xsl:if test="not(../@singleton) and not(@class='yes')">
         <xsl:text>This : Handle</xsl:text>
         <xsl:if test="parameter">
           <xsl:text>;&#10;   </xsl:text>
@@ -996,7 +1004,7 @@
   </xsl:template>
 
 
-  <!-- Called from object/operation to generate a subprogram parameter -->
+  <!-- Called from class/operation to generate a subprogram parameter -->
   <xsl:template match="operation/parameter" mode="parameter">
     <xsl:value-of select="name"/>
     <xsl:text> : </xsl:text>
@@ -1022,7 +1030,7 @@
   </xsl:template>
 
 
-  <!-- Called from object/operation to generate a default value.
+  <!-- Called from class/operation to generate a default value.
        Used for default return value for function bodies,
        defaults in initializers. -->
   <xsl:template name="default-value">
@@ -1050,7 +1058,7 @@
           </xsl:when>
 
           <!-- Class -->
-          <xsl:when test="../../object/name=$type">
+          <xsl:when test="../../class/name=$type">
             <xsl:text>null</xsl:text>
           </xsl:when>
 
@@ -1077,7 +1085,7 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate the actual identifier
+  <!-- Called from domain/class to generate the actual identifier
        record for the class. -->
   <xsl:template name="identifier-record">
     <xsl:choose>
@@ -1099,7 +1107,7 @@
   </xsl:template>
 
 
-  <!-- Called from domain/object to generate the actual instance
+  <!-- Called from domain/class to generate the actual instance
        record for the class. -->
   <xsl:template name="instance-record">
     <xsl:param name="is-supertype"/>
@@ -1129,29 +1137,48 @@
        or instance record. -->
   <xsl:template match="attribute" mode="instance-record-component">
     <xsl:text>    </xsl:text>
-    <xsl:value-of select="name"/>
+    <xsl:call-template name="attribute-name"/>
     <xsl:text> : </xsl:text>
-    <xsl:call-template name="type-name">
-      <xsl:with-param name="type" select="type"/>
-    </xsl:call-template>
+    <xsl:call-template name="attribute-type"/>
     <xsl:if test="initial">
       <xsl:text> := </xsl:text>
       <xsl:value-of select="initial"/>
     </xsl:if>
-    <xsl:text>;</xsl:text>
-    <xsl:if test="@identifier or @referential">
-      <xsl:text>  --</xsl:text>
-      <xsl:if test="@identifier">
-        <xsl:text> identifier</xsl:text>
-        <xsl:if test="@referential">
-          <xsl:text>,</xsl:text>
-        </xsl:if>
-      </xsl:if>
-      <xsl:if test="@referential">
-        <xsl:text> referential</xsl:text>
-      </xsl:if>
-    </xsl:if>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:text>;&#10;</xsl:text>
+  </xsl:template>
+
+
+  <!-- Generate attribute name. Called at class/attribute -->
+  <xsl:template name="attribute-name">
+    <xsl:choose>
+      <xsl:when test="@refers">
+        <xsl:variable name="target-class" select="@refers"/>
+        <xsl:value-of select="/domain/class[name=$target-class]/abbreviation"/>
+        <xsl:text>_Handle_</xsl:text>
+        <xsl:value-of select="@relation"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="name"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Generate attribute type. Called at class/attribute -->
+  <xsl:template name="attribute-type">
+    <xsl:choose>
+      <xsl:when test="@refers">
+        <xsl:value-of select="../../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="@refers"/>
+        <xsl:text>.Handle</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="type-name">
+          <xsl:with-param name="type" select="type"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
@@ -1166,7 +1193,7 @@
       </xsl:when>
 
       <!-- Class -->
-      <xsl:when test="/domain/object/name=$type">
+      <xsl:when test="/domain/class/name=$type">
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$type"/>
@@ -1201,6 +1228,8 @@
   <xsl:template mode="attribute-set-body" match="*"/>
   <xsl:template mode="attribute-get-spec" match="*"/>
   <xsl:template mode="attribute-set-spec" match="*"/>
+  <xsl:template mode="class-spec" match="*"/>
+  <xsl:template mode="class-body" match="*"/>
   <xsl:template mode="collection-support" match="*"/>
   <xsl:template mode="collection-support-body" match="*"/>
   <xsl:template mode="collection-support-spec" match="*"/>
@@ -1209,8 +1238,6 @@
   <xsl:template mode="domain-type-support" match="*"/>
   <xsl:template mode="identifier-element-assignment" match="*"/>
   <xsl:template mode="instance-record-component" match="*"/>
-  <xsl:template mode="object-spec" match="*"/>
-  <xsl:template mode="object-body" match="*"/>
   <xsl:template mode="operation-body" match="*"/>
   <xsl:template mode="operation-context" match="*"/>
   <xsl:template mode="operation-spec" match="*"/>
