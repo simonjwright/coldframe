@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 45f128919b9e 2003/02/15 16:18:15 simon $
+# $Id: normalize-rose.tcl,v 264ea01036a9 2003/02/20 21:02:30 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2068,6 +2068,8 @@ itcl::class Datatype {
 
     variable hash
 
+    variable image
+
     variable operations
 
     variable type
@@ -2118,7 +2120,7 @@ itcl::class Datatype {
 
     # called when the user has tried to mark a non-record type as
     # serializable.
-    method -serialized {dummy} {
+    method -serializable {dummy} {
 	Error "tried to make $type, which has no attributes, serializable"
     }
 
@@ -2137,6 +2139,9 @@ itcl::class Datatype {
 	}
 	set dataDetail $vs
     }
+
+    # called to specify an image function (for serialization)
+    method -image {img} {set image [normalize $img]}
 
     # called when the type is imported from some other domain.
     method -imported {domain} {
@@ -2192,6 +2197,9 @@ itcl::class Datatype {
 	puts -nonewline "<type"
 	if $callback {
 	    puts -nonewline " callback=\"$callback\""
+	}
+	if [info exists image] {
+	    puts -nonewline " image=\"$image\""
 	}
 	puts ">"
 	putElement name "$type"
