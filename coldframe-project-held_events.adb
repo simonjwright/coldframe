@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: 05740ccec705 $
---  $Date: 2003/03/09 19:42:26 $
+--  $Revision: 32c27bda109e $
+--  $Date: 2003/03/15 19:58:31 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
@@ -68,10 +68,10 @@ package body ColdFrame.Project.Held_Events is
          Remove (Q.Calendar_Queue, 1);
       else
          declare
-            AC : Time_Cell := First (Q.Calendar_Queue);
+            AC : constant Time_Cell := First (Q.Calendar_Queue);
             A : constant Ada.Real_Time.Time :=
               Times.Equivalent (AC.Time_To_Fire);
-            RC : Time_Cell := First (Q.Real_Time_Queue);
+            RC : constant Time_Cell := First (Q.Real_Time_Queue);
             R : constant Ada.Real_Time.Time :=
               Times.Equivalent (RC.Time_To_Fire);
          begin

@@ -3,7 +3,7 @@ with Event_Test.Events;
 separate (Event_Test.Recipient)
 procedure Handle_Self
   (P : Content) is
-   E : ColdFrame.Project.Events.Event_P := new Mark (This);
+   E : constant ColdFrame.Project.Events.Event_P := new Mark (This);
 begin
    This.Ordinal := P.Ordinal;
    Mark (E.all).Payload.Ordinal := This.Ordinal + 1;

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 066fc08a0d6c $
---  $Date: 2003/03/09 19:40:35 $
+--  $Revision: 32c27bda109e $
+--  $Date: 2003/03/15 19:58:31 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -109,7 +109,7 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TEP : Event_P := new Timer_Event (On_Timer => False);
+      TEP : constant Event_P := new Timer_Event (On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
@@ -131,7 +131,7 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
-      TEP : Event_P := new Timer_Event (On_Timer => False);
+      TEP : constant Event_P := new Timer_Event (On_Timer => False);
       TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
