@@ -13,29 +13,34 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: coldframe-events-test_support.adb,v $
---  $Revision: fa4d5d083322 $
---  $Date: 2002/02/20 20:23:57 $
+--  $Revision: 8e09f5990806 $
+--  $Date: 2002/03/13 20:07:28 $
 --  $Author: simon $
 
 package body ColdFrame.Events.Test_Support is
 
 
    function State_Image (This : Instance) return String is
+      pragma Warnings (Off, This);
    begin
       return "<none>";
    end State_Image;
 
 
    procedure Handler (This : Quiet_Ev) is
+      pragma Warnings (Off, This);
    begin
       null;
    end Handler;
 
+
    procedure Handler (This : Noisy_Ev) is
+      pragma Warnings (Off, This);
    begin
       delay 0.5;
-      Events.Unset (The => T2,
+      Events.Unset (The => T1,
                     On => Noisy_Dispatcher);
    end Handler;
+
 
 end ColdFrame.Events.Test_Support;

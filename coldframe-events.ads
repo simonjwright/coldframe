@@ -20,18 +20,31 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events.ads,v $
---  $Revision: 0d91c35b0d85 $
---  $Date: 2002/03/09 09:53:49 $
+--  $Revision: 8e09f5990806 $
+--  $Date: 2002/03/13 20:07:28 $
 --  $Author: simon $
 
-with Ada.Calendar;
-with Ada.Real_Time;
 with Ada.Finalization;
+with Ada.Real_Time;
+with Ada.Unchecked_Deallocation;
 with ColdFrame.Instances;
 
 package ColdFrame.Events is
 
    pragma Elaborate_Body;
+
+   ------------------
+   --  Exceptions  --
+   ------------------
+
+   Cant_Happen : exception;
+   --  Raised when an unexpected Event occurs.
+
+   Use_Error : exception;
+   --  Raised on misuse of the facilities (eg, attempting to post
+   --  Events for the same Instance to more than one Queue; attempting
+   --  to set a Timer that's already set).
+
 
    -----------------------
    --  Class instances  --
@@ -39,6 +52,13 @@ package ColdFrame.Events is
 
    type Instance_Base is abstract new Instances.Instance_Base with private;
    --  All Instances with state machines are derived from this type.
+
+   type Instance_Base_P is access all Instance_Base;
+   --  We need to convert "access Instance_Base" to something
+   --  compare-able. GNAT 3.15a (Linux) generates slightly less code
+   --  if we declare here rather than locally below.
+   for Instance_Base_P'Storage_Size use 0;
+   --  .. but, of course, no storage collection is required.
 
    function State_Image (This : Instance_Base) return String is abstract;
    --  Used for debugging/logging.
@@ -82,16 +102,42 @@ package ColdFrame.Events is
    --  Different Event Queue implementations can have different
    --  strategies (eg, priority queuing, logging).
 
-   type Event_Queue_P is access Event_Queue_Base'Class;
+   type Event_Queue_P is access all Event_Queue_Base'Class;
 
    procedure Post (The : Event_P;
                    On : access Event_Queue_Base) is abstract;
    --  The normal method of adding events to the event queue.
+   --
+   --  May raise Use_Error if the Event is an Instance_Event and
+   --  Instance_Events for this Instance have previously been posted
+   --  to a different Queue.
+
+
+   --------------
+   --  Timers  --
+   --------------
+
+   type Time is abstract tagged private;
+   --  This type allows users to have different time classes, provided
+   --  they can all be translated to Real_Time.Time.
+
+   type Time_P is access Time'Class;
+
+   function Equivalent (Of_Time : Time) return Ada.Real_Time.Time is abstract;
+
 
    type Timer is limited private;
    --  Users declare these, in particular so that they can unset a
    --  timed event request when it is no longer needed (a timeout,
    --  perhaps, when the thing being timed out has actually occurred).
+
+
+   procedure Set (The : in out Timer;
+                  On : access Event_Queue_Base;
+                  To_Fire : Event_P;
+                  At_Time : Time_P) is abstract;
+   --  May raise Use_Error (if the Timer is already set)
+
 
    subtype Natural_Duration is Duration range 0.0 .. Duration'Last;
 
@@ -106,19 +152,24 @@ package ColdFrame.Events is
    --  May raise Use_Error (if the Timer is already unset)
 
 
-   ------------------
-   --  Exceptions  --
-   ------------------
-
-   Cant_Happen : exception;
-   --  Raised when an unexpected Event occurs.
-
-   Use_Error : exception;
-   --  Raised on misuse of the state machine (eg, attempting to set a
-   --  Timer that's already set).
-
-
 private
+
+   --  Event management (plain and timed) is fairly straightforward
+   --  until we consider deletion of instances and unsetting timers.
+   --
+   --  If an instance is deleted then any events directed to it must
+   --  not be actioned.
+   --
+   --  If a timer is deleted (which will happen when an instance with
+   --  a timer as an instance variable is deleted) then any pending
+   --  event held in it must not be actioned. Note it's possible
+   --  (though dubious) for the held event to be directed to a
+   --  different instance (possibly of a different class) from that
+   --  holding the timer.
+   --
+   --  If a timer is unset the held event must not be actioned.
+   --
+   --  Memory must be freed when finished with.
 
    --  An Instance_Terminator is a component of an Instance_Base which
    --  is used to cause removal of any outstanding events for that
@@ -141,12 +192,19 @@ private
       Invalidated : Boolean := False;  --  set if the event is retracted
    end record;
 
+   procedure Delete
+   is new Ada.Unchecked_Deallocation (Event_Base'Class, Event_P);
+
 
    type Instance_Event_Base (For_The_Instance : access Instance_Base'Class)
    is abstract new Event_Base with null record;
 
 
    type Event_Queue_Base is abstract tagged limited null record;
+
+   procedure Invalidate
+     (On : access Event_Queue_Base;
+      For_The_Instance : access Instance_Base'Class);
 
 
    --  Operations to support debug/logging. The implementation here
@@ -162,41 +220,45 @@ private
                                 On : access Event_Queue_Base);
 
 
-   --  Timers: there is a complex race condition to be avoided.
-   --
-   --  Suppose:
-   --
-   --    there are two Timers set for the same state machine;
-   --    the first fires and is posted to the event queue;
-   --    the second fires;
-   --    the first event's action unsets the second timer;
-   --
-   --  then the second timer will no longer be set here, and instead
-   --  we have to remove the _event_ from the event queue (it must
-   --  still be on the event queue, because we're in the context of an
-   --  event action dispatched from that same queue).
+   type Time is abstract tagged null record;
 
-   --  A Timer_Terminator is a component of a Timer which
-   --  is used to cause removal of any outstanding events for that
-   --  timer from the scheduler when the timer is deleted.
+   procedure Delete
+   is new Ada.Unchecked_Deallocation (Time'Class, Time_P);
+
+
+   type Timer_P is access all Timer;
+
+   --  A Timer_Event is dispatched like an ordinary event, but it has
+   --  a special Handler which (after some checks) dispatches the held
+   --  event.
+   type Timer_Event is new Event_Base with record
+      On : Event_Queue_P;
+      Time_To_Fire : Time_P;
+      The_Event : Event_P;
+      The_Timer : Timer_P;  -- null if the Timer has been deleted
+   end record;
+
+   procedure Handler (This : Timer_Event);
+
+   type Timer_Queue_Entry_P is access Timer_Event;
+
+
+   --  A Timer_Terminator is a component of a Timer which is used to
+   --  cause removal of any outstanding events for that timer from the
+   --  scheduler when the (instance containing) the timer is deleted.
+   --
+   --  We have to avoid making Timer tagged so as to avoid trying to
+   --  dispatch on more than one parameter.
    type Timer_Terminator (For_The_Timer : access Timer)
    is new Ada.Finalization.Limited_Controlled with null record;
 
    procedure Finalize (The_Terminator : in out Timer_Terminator);
 
 
-   type State is (Initial, Set, Fired);
-
    type Timer is limited record
       The_Terminator : Timer_Terminator (Timer'Access);
-      The_Event : Event_P;
-      Status : State := Initial;
-      Real_Time_To_Fire : Ada.Real_Time.Time;
-      Wall_Time_To_Fire : Ada.Calendar.Time;
+      The_Entry : Timer_Queue_Entry_P;
    end record;
-   --  The time at which the Timer is to fire may need to be
-   --  Calendar.Time or Real_Time.Time, depending on the actual
-   --  Timer_Queue; we supply both slots, Timer_Queue to choose.
 
 
 end ColdFrame.Events;
