@@ -1,0 +1,4 @@
+# $Id$
+# Unix Makefile for the examples subdirectory
+
+include ../Makefile-unix

@@ -1,0 +1,4 @@
+# $Id$
+# Windows Makefile for the examples subdirectory
+
+include ../Makefile-winnt
