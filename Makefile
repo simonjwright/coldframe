@@ -98,15 +98,18 @@ xslide-diff
 
 MAKEFILES = Makefile-cf Makefile-unix Makefile-winnt
 
-Makefile-cf: Makefile
+Makefile-cf: Makefile force
 	cp -p $< $@
-Makefile-unix: Makefile-unix-proto
+Makefile-unix: Makefile-unix-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
-Makefile-winnt: Makefile-winnt-proto
+Makefile-winnt: Makefile-winnt-proto force
+	sed -e "s;DATE;$(DATE);g" <$< >$@
+
+extractor.ebs: ddf.ebs
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 PROGS = COPYING \
-  ddf.ebs \
+  extractor.ebs \
   escape-markup.awk \
   normalize-rose.tcl \
   $(HTMLGEN_SCRIPT) \
@@ -139,10 +142,8 @@ cf-$(DATE)
 	cp -p $(DOCS) dist/
 	cp $(DISTRIBUTION_FILES) dist/download/
 
-cf-$(DATE): force
+cf-$(DATE): $(MAKEFILES) $(PROGS) force
 	-rm -rf $@
-	-rm -f $(MAKEFILES)
-	$(MAKE) $(MAKEFILES)
 	mkdir $@
 	cp -p $(PROGS) $(MAKEFILES) $@
 	mkdir $@/lib
