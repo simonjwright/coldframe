@@ -61,7 +61,7 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 # coldframe-architecture.ps is made by printing the Rose Architecture package
 # diagram (from coldframe-architecture.cat) to PostScript, from within Rose.
 
-pdf:: coldframe-architecture.pdf \
+PDFS = coldframe-architecture.pdf \
   coldframe-callback.pdf \
   coldframe-relationships.pdf
 
@@ -78,7 +78,8 @@ principles.html \
 releases.html \
 resources.html \
 use-cases.html use-cases.texi \
-coldframe-architecture.html coldframe-architecture.pdf \
+coldframe-architecture.html \
+$(PDFS) \
 coldframe-architecture.cat \
 ddf.dtd coldframe.dtd \
 xslide-diff
