@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v d86cfe7b7e8d 2002/01/16 06:41:41 simon $
+'$Id: ddf.ebs,v 9577551efc81 2002/02/01 20:41:03 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -147,42 +147,44 @@ Sub DumpStates (c As Class)
 	Dim sm As StateMachine
 	Set sm = c.StateMachine
 	If sm Is Not Nothing Then
-		Print "  state machine"
-		Print #1, "<statemachine>"
-		Dim ss As StateCollection
-		Set ss = sm.GetAllStates()
-   		Print #1, "<states>"
-		For s = 1 To ss.Count
-			Dim st As State
-			Set st = ss.GetAt(s)
-			If st.StateKind = "Initial" Then
-		   		Print #1, "<state initial=" & Chr(34) & "yes" & Chr(34) & ">"
-			Else
-				If st.StateKind = "Final" Then
-					Print #1, "<state final=" & Chr(34) & "yes" & Chr(34) & ">"
+		If sm.Stereotype = "generate" Then
+			Print "  state machine"
+	   		Print #1, "<statemachine>"
+			Dim ss As StateCollection
+			Set ss = sm.GetAllStates()
+   			Print #1, "<states>"
+			For s = 1 To ss.Count
+				Dim st As State
+				Set st = ss.GetAt(s)
+				If st.StateKind = "Initial" Then
+		   			Print #1, "<state initial=" & Chr(34) & "yes" & Chr(34) & ">"
 				Else
-					Print #1, "<state>"
+					If st.StateKind = "Final" Then
+						Print #1, "<state final=" & Chr(34) & "yes" & Chr(34) & ">"
+					Else
+						Print #1, "<state>"
+					End If
 				End If
-			End If
-			Print #1, "<name>" + StateName(st) + "</name>"
-			DumpEntryActions(st)
-			Print #1, "</state>"			
-		Next s
-		Print #1, "</states>"
-		Dim trs As TransitionCollection
-		Set trs = sm.GetAllTransitions()
-		Print #1, "<transitions>"
-		For t = 1 To trs.Count
-			Dim tr As Transition
-			Set tr = trs.GetAt(t)
-			Print #1, "<transition>"
-			Print #1, "<source>" & StateName(tr.GetSourceState()) & "</source>"
-			Print #1, "<target>" & StateName(tr.GetTargetState()) & "</target>"
-			DumpEvent(tr.GetTriggerEvent())
-			Print #1, "</transition>"
-		Next t
-		Print #1, "</transitions>"
-		Print #1, "</statemachine>"
+				Print #1, "<name>" + StateName(st) + "</name>"
+				DumpEntryActions(st)
+				Print #1, "</state>"			
+			Next s
+			Print #1, "</states>"
+			Dim trs As TransitionCollection
+			Set trs = sm.GetAllTransitions()
+			Print #1, "<transitions>"
+			For t = 1 To trs.Count
+				Dim tr As Transition
+				Set tr = trs.GetAt(t)
+				Print #1, "<transition>"
+				Print #1, "<source>" & StateName(tr.GetSourceState()) & "</source>"
+				Print #1, "<target>" & StateName(tr.GetTargetState()) & "</target>"
+				DumpEvent(tr.GetTriggerEvent())
+				Print #1, "</transition>"
+			Next t
+			Print #1, "</transitions>"
+			Print #1, "</statemachine>"
+		End If
 	End If
 End Sub
 
