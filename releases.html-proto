@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d7557d7e02a8 2004/12/06 10:03:28 simon $ -->
+<!-- $Id: releases.html-proto,v b3ee92f79b72 2005/01/29 06:31:29 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -116,6 +116,12 @@ Project's replacement.
 <p>You can mark a nested package that's to be included as
 <em>&#171;include&#187;</em> instead of <em>&#171;generate&#187;</em>
 if you find it clearer.
+
+
+<p>Because it's a Bad Idea for user code to call them, the operations
+previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
+<tt>Tear_Down</tt> are now named <tt>CF_Class_Initialize</tt> and
+<tt>CF_Tear_Down</tt> respectively.
 
 
 <p><dt>20040319
