@@ -313,6 +313,7 @@ House_Management.impl/stairwell_demo.adb
 
 DEMO += \
 Serialization.cat Serialization.raw Serialization_Demo.raw \
+Serialization.impl/Serialization.gpr \
 Serialization.impl/client.adb \
 Serialization.impl/serialization-events-initialize.adb \
 Serialization.impl/serialization-interface-open.adb \
