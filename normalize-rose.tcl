@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e0fc02b1104e 2002/04/12 19:00:19 simon $
+# $Id: normalize-rose.tcl,v 8bf02ff75718 2002/04/20 06:03:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -814,14 +814,24 @@ itcl::class Class {
     }
 
     method -getAbbreviation {} {
-	# if no abbreviation has been supplied, make one up from the
-	# initial letters of the name (which will already have been
-	# capitalised)
+	# if no abbreviation has been supplied,
+	#   if the name consists of more than one word, make one up from
+	#     the initial letters of the name (which will already have been
+	#     capitalised)
+	#   otherwise, prefix the name with A.
 	if ![info exists abbreviation] {
 	    set tmp [split $name "_"]
-	    set abbreviation ""
-	    foreach w $tmp {
-		set abbreviation "$abbreviation[string index $w 0]"
+	    if {[llength $tmp] == 1} {
+		if [string match {[AEIOU]} [string index $name 0]] {
+		    set abbreviation "An_$name"
+		} else {
+		    set abbreviation "A_$name"
+		}
+	    } else {
+		set abbreviation ""
+		foreach w $tmp {
+		    set abbreviation "$abbreviation[string index $w 0]"
+		}
 	    }
 	}
 	return $abbreviation
