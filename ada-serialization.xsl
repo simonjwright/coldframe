@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 7ec4064e3222 2003/09/10 05:46:09 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -145,9 +145,7 @@
               & "<field name=""{bstring-attr-name}"">"
               & {type}_Package.To_String (S.Payload.{bstring-attr-name})
               & "</field>" & ASCII.LF
-              & "<field name=""{imaged-attr-name}"">"
-              & {image} (S.Payload.{imaged-attr-name})
-              & "</field>" & ASCII.LF
+              & {field-image} (S.Payload.{field-imaged-attr-name}, "field-imaged-attr-name") & ASCII.LF
               & "</record>";
          end Image;
          -->
@@ -178,6 +176,7 @@
     <xsl:choose>
       
       <xsl:when test="attribute">
+        <!-- It's a record. -->
         
         <xsl:for-each select="attribute">
 
@@ -226,11 +225,11 @@
               <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
             </xsl:when>
             
-            <xsl:when test="/domain/type[name=current()/type]/@image">
-              <!-- The type has a user-defined image operation. -->
+            <xsl:when test="/domain/type[name=current()/type]/@field-image">
+              <!-- The type has a user-defined field image operation. -->
               <xsl:value-of select="$IIC"/>
               <xsl:text>&amp; </xsl:text>
-              <xsl:value-of select="/domain/type[name=current()/type]/@image"/>
+              <xsl:value-of select="/domain/type[name=current()/type]/@field-image"/>
               <xsl:text> (S.Payload.</xsl:text>
               <xsl:value-of select="name"/>
               <xsl:text>, "</xsl:text>
@@ -259,7 +258,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+        <!-- It's a plain value. -->
         <xsl:choose>
 
           <xsl:when test="type='Date' or type='Time'">
@@ -302,11 +301,11 @@
             <xsl:text>&amp; "&lt;/field&gt;" &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
           
-          <xsl:when test="@image">
-            <!-- The type has a user-defined image operation. -->
+          <xsl:when test="@field-image">
+            <!-- The type has a user-defined field image operation. -->
             <xsl:value-of select="$IIC"/>
             <xsl:text>&amp; </xsl:text>
-            <xsl:value-of select="@image"/>
+            <xsl:value-of select="@field-image"/>
             <xsl:text> (S.Payload, "") &amp; ASCII.LF&#10;</xsl:text>
           </xsl:when>
           
