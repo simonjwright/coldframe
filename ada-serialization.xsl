@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 271167f53722 2004/07/26 05:28:55 simon $ -->
+<!-- $Id: ada-serialization.xsl,v 98cd1d40bf0b 2004/07/26 16:33:26 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -486,13 +486,9 @@
 
       <xsl:if test="/domain/type[name=current()/type]/@serializable-there">
 
-        <xsl:message><xsl:value-of select="type"/></xsl:message>
-
         <xsl:variable
           name="other-type"
           select="/domain/type[name=current()/type]"/>
-
-        <xsl:message><xsl:value-of select="$other-type"/></xsl:message>
 
         <xsl:variable name="package">
           <xsl:choose>
