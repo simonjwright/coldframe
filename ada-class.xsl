@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 5fbc3956507f 2002/05/20 22:29:57 simon $ -->
+<!-- $Id: ada-class.xsl,v 85368269ff5a 2002/05/29 18:44:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -961,6 +961,8 @@
 
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
+
+        <!-- XXX how can this exception occur? -->
         <xsl:value-of select="$I"/>
         <xsl:text>exception&#10;</xsl:text>
         <xsl:value-of select="$II"/>
@@ -974,6 +976,10 @@
         <!--
              function Create (With_Identifier : Identifier) return Handle is
                 Result : Handle;
+                use type ColdFrame.Instances.Handle;
+                pragma Assert
+                   (ColdFrame.Instances.Handle
+                    (With_Identifier.{ref-attr-name}) /= null);
              begin
                 Result := new Instance;
              -->
@@ -982,12 +988,26 @@
         <xsl:text>function Create (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result : Handle;&#10;</xsl:text>
+
+        <xsl:value-of select="$II"/>
+        <xsl:text>use type ColdFrame.Instances.Handle;&#10;</xsl:text>
+        <xsl:for-each select="attribute[@identifier and @refers]/name">
+          <xsl:value-of select="$II"/>
+          <xsl:text>pragma Assert&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text>(ColdFrame.Instances.Handle&#10;</xsl:text>
+          <xsl:value-of select="$IIC"/>
+          <xsl:text> (With_Identifier.</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text>) /= null);&#10;</xsl:text>
+        </xsl:for-each>
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Result := new Instance;&#10;</xsl:text>
 
-        <!-- Set up attributes. -->
+        <!-- Set up identifying attributes. -->
         <xsl:apply-templates
           select="attribute[@identifier]"
           mode="identifier-element-assignment"/>
