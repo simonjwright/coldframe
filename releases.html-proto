@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b1f741272e5a 2004/06/17 07:01:23 simon $ -->
+<!-- $Id: releases.html-proto,v bc50afe92c32 2004/06/17 08:58:42 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -34,7 +34,7 @@ logged (rather than re-raising the exception to the supplier).
 
 
 <p>A callback operation can deregister itself (though the
-register/deregister oprations aren't task-safe).
+register/deregister operations aren't task-safe).
 
 
 <p>The ColdFrame-supplied storage pools, as well as filling
