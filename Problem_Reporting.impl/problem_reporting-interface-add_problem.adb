@@ -14,6 +14,7 @@ procedure Add_Problem
 
    H : Problem_Report.Handle;
    U : Unallocated_Problem_Report.Handle;
+   pragma Unreferenced (U);
 
 begin
 

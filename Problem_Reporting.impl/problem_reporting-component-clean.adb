@@ -46,6 +46,7 @@ procedure Clean
               Problem_Report.Handle
               (Diagnosed_Problem_Report.Get_R1_Parent (DPR));
             UPR : Unallocated_Problem_Report.Handle;
+            pragma Unreferenced (UPR);
          begin
             GNAT.IO.Put_Line ("deleting orphaned DPR!");
             Diagnosed_Problem_Report.Delete (That);

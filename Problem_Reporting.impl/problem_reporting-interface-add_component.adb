@@ -9,6 +9,7 @@ procedure Add_Component
      renames To_Unbounded_String;
 
    H : Component.Handle;
+   pragma Unreferenced (H);
 
 begin
 
