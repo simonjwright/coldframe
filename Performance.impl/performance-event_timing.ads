@@ -1,3 +1,5 @@
+--  $Id: performance-event_timing.ads,v 1f1f7922fb75 2003/11/11 22:23:42 simon $
+
 with ColdFrame.Project.Events;
 with ColdFrame.Project.High_Resolution_Time;
 
