@@ -1,69 +1,85 @@
 <domain>
-<extractor>cf-20030330t</extractor>
+<extractor>cf-DATE</extractor>
 <name>Serialization Demo</name>
 <date>
 <year>2003</year>
-<month>4</month>
-<day>1</day>
-<time>07:36</time>
+<month>9</month>
+<day>11</day>
+<time>20:41</time>
 </date>
 <documentation>This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-[[ revision : $Revision: 5572e3959478 $ ]]</documentation>
+[[ revision : $Revision: e5d0cd6ea338 $ ]]</documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>i</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>f</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Float</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>b</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Boolean</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>d</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Duration</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Time</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>u</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>n</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Name String</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>r</name>
+<visibility>PrivateAccess</visibility>
+<documentation></documentation>
+<type>Recordable Real Time</type>
 <initial></initial>
 </attribute>
 </attributes>
 <operations>
 <operation stereotype="generated">
 <name>image</name>
+<visibility>PublicAccess</visibility>
 <documentation>This operation is generated in the Serializable child package.</documentation>
 <parameters>
 </parameters>
@@ -74,6 +90,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Name String</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>[[ string : max 32 ]]
@@ -87,6 +104,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type, serializable">
 <name>Real Time</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation>[[ renames : Ada.Real_Time.Time;
@@ -96,6 +114,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <operations>
 <operation>
 <name>real time image</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>String</return>
 <parameters>
@@ -115,6 +134,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </operation>
 <operation stereotype="generated">
 <name>image</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
@@ -125,12 +145,14 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type, serializable">
 <name>Recordable Real Time</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>t</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Real Time</type>
 <initial></initial>
@@ -139,6 +161,7 @@ It is to be extracted separately from the main Serialization package (that's why
 <operations>
 <operation stereotype="generated">
 <name>image</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
