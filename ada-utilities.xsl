@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 0b51fe406424 2001/12/09 10:36:38 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 36a4d02691cd 2002/01/27 11:11:50 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -218,13 +218,9 @@
         <xsl:text>Unbounded_String</xsl:text>
       </xsl:when>
 
-      <!-- Set (only works for class instances) maps to a Collection. -->
-      <xsl:when test="/domain/type[name=$type]/set">
-        <xsl:variable name="type-name" select="/domain/type[name=$type]"/>
-        <xsl:if test="$type-name/set">
-          <xsl:value-of select="$type-name/set"/>
-          <xsl:text>.Collections.Collection</xsl:text>
-        </xsl:if>
+      <!-- Timer maps to Coldframe.States.Timers.Timer. -->
+      <xsl:when test="$type='Timer'">
+        <xsl:text>Coldframe.States.Timers.Timer</xsl:text>
       </xsl:when>
 
       <xsl:otherwise>
