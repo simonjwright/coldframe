@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v dc349f49f4ef 2002/09/12 20:50:30 simon $ -->
+<!-- $Id: ada-class.xsl,v 324fcbe3f93e 2002/09/15 18:19:46 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1148,16 +1148,27 @@
       <xsl:with-param name="handle" select="'H'"/>
     </xsl:call-template>
 
-    <xsl:if test="not(@max) or @max&gt;1">
-      <xsl:value-of select="$II"/>
-      <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
-    </xsl:if>
-
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
       <xsl:text>abort H.The_T;&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Finalize any Timers. -->
+    <xsl:for-each select="attribute[type='Timer']">
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Events.Finalize (H.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:for-each>
+
+    <xsl:if test="not(@max) or @max&gt;1">
+      <xsl:value-of select="$II"/>
+      <xsl:text>Maps.Unbind (The_Container, With_Identifier);&#10;</xsl:text>
+    </xsl:if>
+
+    <!-- Finalize the instance. -->
+    <xsl:value-of select="$II"/>
+    <xsl:text>ColdFrame.Project.Events.Finalize (H);&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>Free (H);&#10;</xsl:text>
 
@@ -1200,6 +1211,14 @@
       <xsl:text>abort This.The_T;&#10;</xsl:text>
     </xsl:if>
 
+    <!-- Finalize any Timers. -->
+    <xsl:for-each select="attribute[type='Timer']">
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>);&#10;</xsl:text>
+    </xsl:for-each>
+
     <xsl:choose>
       
       <xsl:when test="not(@max) or @max&gt;1">
@@ -1224,6 +1243,8 @@
 
         <!-- .. and free the instance. -->
         <xsl:value-of select="$II"/>
+        <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
       </xsl:when>
@@ -1236,6 +1257,8 @@
         <xsl:text>.This := null;&#10;</xsl:text>
 
         <!-- .. and free the instance. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
 
