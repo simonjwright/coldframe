@@ -15,7 +15,9 @@ with Performance.Event_Timing;
 with ColdFrame.Instances;
 with ColdFrame.Project.Events;
 
-with Seawolf_High_Resolution_Time; use Seawolf_High_Resolution_Time;
+with High_Resolution_Time; use High_Resolution_Time;
+
+with Time_Logging;
 
 procedure Performance.Harness is
    subtype CIH is ColdFrame.Instances.Handle;
@@ -350,6 +352,32 @@ begin
       D := Event_Timing.Done_At - T;
       Put_Line ("average event dispatch (other domain):"
                   & Duration'Image (D / Event_Timing.Loops));
+
+   end;
+
+   begin
+
+      Time_Logging.Initialize;
+      Time_Logging.Log (1);
+      T := Clock;
+
+      declare
+         Ev : ColdFrame.Project.Events.Event_P := new Event_Timing.Ping;
+         P : Event_Timing.Ping renames Event_Timing.Ping (Ev.all);
+      begin
+         Time_Logging.Log (2);
+         P.Count := 0;
+         ColdFrame.Project.Events.Set (Event_Timing.Timer,
+                                       On => Event_Timing.Dispatcher_A,
+                                       To_Fire => Ev,
+                                       After => 0.0);
+      end;
+
+      delay 1.0;
+      D := Event_Timing.Done_At - T;
+      Time_Logging.Print;
+      Put_Line ("timer firing:"
+                  & Duration'Image (D));
 
    end;
 
