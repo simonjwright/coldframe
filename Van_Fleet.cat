@@ -1,0 +1,858 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Van Fleet"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"409CC94B0114"
+    documentation 	
+|Demonstrates "subtype migration".
+|
+|{ revision = $Id: Van_Fleet.cat,v a88ba45be8ba 2004/05/08 13:54:26 simon $ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Van"
+	    quid       	"409CC9B90195"
+	    operations 	(list Operations
+		(object Operation "lend"
+		    quid       	"409CCBC50148"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"409CCBE60196"
+			    type       	"Customer"
+			    quidu      	"409CC9D6024B")
+			(object Parameter "terminating at"
+			    quid       	"409CCBE601B4"
+			    type       	"Date"))
+		    result     	"Van"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"409CC9B90195")
+		(object Operation "returned"
+		    quid       	"409CCC0A0260"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "index"
+		    quid       	"409CCA850076"
+		    stereotype 	"id"
+		    type       	"Text")))
+	(object Class "Hired Van"
+	    quid       	"409CC9BF007B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"409CC9DC028F"
+		    label      	"g1"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Van"
+		    quidu      	"409CC9B90195"))
+	    operations 	(list Operations
+		(object Operation "set expected termination"
+		    quid       	"409CDB33038D"
+		    stereotype 	"accessor"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"409CDB48015C"
+			    type       	"Date"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "cleanup"
+		    quid       	"409CDF6A0348"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "hire started at"
+		    quid       	"409CCAEF0104"
+		    type       	"Date")
+		(object ClassAttribute "expected termination"
+		    quid       	"409CCB0600DF"
+		    type       	"Date")))
+	(object Class "Pool Van"
+	    quid       	"409CC9C50029"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"409CC9DF02C6"
+		    label      	"g1"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Van"
+		    quidu      	"409CC9B90195")))
+	(object Class "Service"
+	    quid       	"409CC9CF001A"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "service at"
+		    quid       	"409CCA98011D"
+		    stereotype 	"id"
+		    type       	"Date")
+		(object ClassAttribute "service of"
+		    quid       	"409CCAA10120"
+		    documentation 	"{formalizes = a1}"
+		    stereotype 	"id"
+		    type       	"Van"
+		    quidu      	"409CC9B90195")))
+	(object Class "Customer"
+	    quid       	"409CC9D6024B"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "name"
+		    quid       	"409CCB150221"
+		    stereotype 	"id"
+		    type       	"Text")))
+	(object Class "Use Error"
+	    quid       	"409CCC2502EB"
+	    stereotype 	"exception")
+	(object Class "Not Found"
+	    quid       	"409CCCB50284"
+	    stereotype 	"exception")
+	(object Association "a1"
+	    quid       	"409CC9EA02EA"
+	    roles      	(list role_list
+		(object Role "was serviced at"
+		    quid       	"409CC9EC026A"
+		    label      	"was serviced at"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Service"
+		    quidu      	"409CC9CF001A"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "was service of"
+		    quid       	"409CC9EC026C"
+		    label      	"was service of"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Van"
+		    quidu      	"409CC9B90195"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE)))
+	(object Association "a2"
+	    quid       	"409CC9F20287"
+	    roles      	(list role_list
+		(object Role "is borrowing"
+		    quid       	"409CC9F3001C"
+		    label      	"is borrowing"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Hired Van"
+		    quidu      	"409CC9BF007B"
+		    client_cardinality 	(value cardinality "0..*")
+		    is_navigable 	TRUE)
+		(object Role "is on loan to"
+		    quid       	"409CC9F3001E"
+		    label      	"is on loan to"
+		    supplier   	"Logical View::ColdFrame Examples::Van Fleet::Customer"
+		    quidu      	"409CC9D6024B"
+		    client_cardinality 	(value cardinality "1")
+		    is_navigable 	TRUE))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"409CC9810375"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object Label @1
+		    location   	(113, 1553)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	600
+		    label      	"$Id: Van_Fleet.cat,v a88ba45be8ba 2004/05/08 13:54:26 simon $")
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Pool Van" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1407, 772)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1308, 726)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	198
+			justify    	0
+			label      	"Pool Van")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9C50029"
+		    width      	216
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Van" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(633, 333)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(116, 215)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1034
+			justify    	0
+			label      	"Van")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9B90195"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(116, 271)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	1030)
+		    width      	1052
+		    height     	258
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @4
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(1083, 588)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9DF02C6"
+		    client     	@2
+		    supplier   	@3
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Service" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2095, 329)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1866, 234)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	458
+			justify    	0
+			label      	"Service")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9CF001A"
+		    compartment 	(object Compartment
+			Parent_View 	@5
+			location   	(1866, 290)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	455)
+		    width      	476
+		    height     	212
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "a1" @6
+		    location   	(1507, 330)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @7
+			Parent_View 	@6
+			location   	(1510, 391)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a1"
+			pctDist    	0.550000
+			height     	61
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9EA02EA"
+		    roleview_list 	(list RoleViews
+			(object RoleView "was serviced at" @8
+			    Parent_View 	@6
+			    location   	(979, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @9
+				Parent_View 	@8
+				location   	(1694, 295)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	330
+				justify    	0
+				label      	"+was serviced at"
+				pctDist    	0.539028
+				height     	35
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"409CC9EC026A"
+			    client     	@6
+			    supplier   	@5
+			    line_style 	0
+			    label      	(object SegLabel @10
+				Parent_View 	@8
+				location   	(1816, 373)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.888227
+				height     	44
+				orientation 	1))
+			(object RoleView "was service of" @11
+			    Parent_View 	@6
+			    location   	(979, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @12
+				Parent_View 	@11
+				location   	(1298, 301)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	310
+				justify    	0
+				label      	"+was service of"
+				pctDist    	0.600129
+				height     	31
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"409CC9EC026C"
+			    client     	@6
+			    supplier   	@3
+			    line_style 	0
+			    label      	(object SegLabel @13
+				Parent_View 	@11
+				location   	(1195, 385)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.900000
+				height     	54
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Customer" @14
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(462, 1304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@14
+			location   	(274, 1231)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	376
+			justify    	0
+			label      	"Customer")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9D6024B"
+		    compartment 	(object Compartment
+			Parent_View 	@14
+			location   	(274, 1287)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	373)
+		    width      	394
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Hired Van" @15
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(459, 785)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@15
+			location   	(9, 645)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	900
+			justify    	0
+			label      	"Hired Van")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC9BF007B"
+		    compartment 	(object Compartment
+			Parent_View 	@15
+			location   	(9, 701)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	898)
+		    width      	918
+		    height     	302
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "g1" @16
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@16
+			location   	(548, 548)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"g1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9DC028F"
+		    client     	@15
+		    supplier   	@3
+		    line_style 	0)
+		(object AssociationViewNew "a2" @17
+		    location   	(460, 1077)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @18
+			Parent_View 	@17
+			location   	(460, 1018)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"a2"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"409CC9F20287"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is borrowing" @19
+			    Parent_View 	@17
+			    location   	(142, -208)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @20
+				Parent_View 	@19
+				location   	(325, 969)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	239
+				justify    	0
+				label      	"+is borrowing"
+				pctDist    	0.776366
+				height     	135
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"409CC9F3001C"
+			    client     	@17
+			    supplier   	@15
+			    line_style 	0
+			    label      	(object SegLabel @21
+				Parent_View 	@19
+				location   	(519, 962)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"0..*"
+				pctDist    	0.813534
+				height     	60
+				orientation 	1))
+			(object RoleView "is on loan to" @22
+			    Parent_View 	@17
+			    location   	(142, -208)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @23
+				Parent_View 	@22
+				location   	(319, 1195)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	254
+				justify    	0
+				label      	"+is on loan to"
+				pctDist    	0.826150
+				height     	143
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"409CC9F3001E"
+			    client     	@17
+			    supplier   	@14
+			    line_style 	0
+			    label      	(object SegLabel @24
+				Parent_View 	@22
+				location   	(504, 1196)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1"
+				pctDist    	0.837629
+				height     	43
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Use Error" @25
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2171, 705)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@25
+			location   	(2041, 679)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	260
+			justify    	0
+			label      	"Use Error")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@25
+			location   	(2041, 634)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"<<exception>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"409CCC2502EB"
+		    width      	278
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Not Found" @26
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2176, 937)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@26
+			location   	(2046, 911)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	260
+			justify    	0
+			label      	"Not Found")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@26
+			location   	(2046, 866)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	258
+			justify    	0
+			label      	"<<exception>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"409CCCB50284"
+		    width      	278
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::ColdFrame Examples::Van Fleet" @27
+		    location   	(2166, 1245)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(1919, 1161)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	494
+			justify    	0
+			label      	"Van Fleet")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"409CC94B0114"
+		    width      	506
+		    height     	180)))))
