@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 17c78350d556 2004/01/18 21:17:40 simon $ -->
+<!-- $Id: ada-class.xsl,v 5f0809c8bd64 2004/01/22 16:29:20 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1959,11 +1959,6 @@
 
     <xsl:text>begin&#10;</xsl:text>
 
-    <xsl:if test="@singleton">
-      <xsl:value-of select="$I"/>
-      <xsl:text>H := Create;&#10;</xsl:text>
-    </xsl:if>
-
     <xsl:for-each select="attribute[@class and initial]">
 
       <xsl:value-of select="$I"/>
@@ -1974,7 +1969,12 @@
 
     </xsl:for-each>
 
-    <xsl:text>end </xsl:text>
+     <xsl:if test="@singleton">
+      <xsl:value-of select="$I"/>
+      <xsl:text>H := Create;&#10;</xsl:text>
+    </xsl:if>
+
+   <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>.</xsl:text>
     <xsl:value-of select="name"/>
