@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 9b38f4543499 2001/05/09 18:47:12 simon $
+# $Id: normalize-rose.tcl,v fd889d50c871 2001/05/11 19:14:22 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -610,9 +610,15 @@ itcl::class Class {
 
     variable typeInfo
 
+    variable callback
+
     # called (via stereotype mechanism) to indicate that this is a
     # <<type>> class
     method -type {dummy} {set isType 1}
+
+    # called (via stereotype mechanism) to indicate that this is used
+    # in a callback
+    method -callback {size} {set callback [string trim $size]}
 
     method -attributes {l} {set attributes $l}
 
@@ -670,6 +676,10 @@ itcl::class Class {
 	    puts stderr "<<control>> not yet handled properly"
 	    [stack -top] -add $this $name
 	} else {
+	    if $isType {
+		# must be a record type
+		$this -handleAnnotation
+	    }
 	    [stack -top] -add $this $name
 	}
     }
@@ -679,13 +689,19 @@ itcl::class Class {
     }
 
     method -generate {domain} {
-	if [expr $singleton && [$this -hasIdentifier]] {
+	if [expr $isType && [$this -hasIdentifier]] {
+	    puts stderr "type [$this -getName] has identifier"
+	} elseif [expr $singleton && [$this -hasIdentifier]] {
 	    puts stderr "singleton [$this -getName] has identifier"
-	} elseif [expr !$singleton && ![$this -hasIdentifier]] {
+	} elseif [expr !($singleton || $isType) && ![$this -hasIdentifier]] {
 	    puts stderr "[$this -getName] has no identifier"
 	}
 	if $isType {
-	    puts "<type record=\"yes\">"
+	    puts -nonewline "<type record=\"yes\""
+	    if [info exists callback] {
+		puts -nonewline " callback=\"$callback\""
+	    }
+	    puts ">"
 	    putElement name "$name"
 	    $this -generateDocumentation
 	    $attributes -generate $domain
@@ -710,6 +726,9 @@ itcl::class Class {
 itcl::class Operation {
     inherit Element
 
+    # is this an access-to-operation?
+    variable acc 0
+
     # is this a class operation?
     variable cls 0
 
@@ -717,6 +736,14 @@ itcl::class Operation {
     variable ret ""
 
     variable parameters
+
+    # called via stereotype mechanism to indicate that this is an
+    # access-to-operation (and also a class operation; how would
+    # we know which instance to invoke?)
+    method -access {dummy} {
+	set acc 1
+	set cls 1
+    }
 
     # called via stereotype mechanism to indicate that this is a class
     # operation
@@ -728,6 +755,7 @@ itcl::class Operation {
 
     method -generate {domain}  {
 	puts -nonewline "<operation"
+	if $acc {puts -nonewline " access=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
@@ -1055,7 +1083,7 @@ itcl::class Inheritance {
 	set os [$domain -getClasses]
 	set p [$os -atName $parent]
 	if [expr ![$p -hasIdentifier]] {
-	    puts stderr "[$p -getName] has no identifier(s)"
+	    puts stderr "[$p -getName] has no identifier"
 	    return
 	}
 	$this -formalized
