@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-callbacks.ads,v $
---  $Revision: 108edf00e8c7 $
---  $Date: 2003/02/02 18:34:39 $
+--  $Revision: fbc3205e6500 $
+--  $Date: 2003/08/28 21:16:25 $
 --  $Author: simon $
 
 generic
@@ -39,7 +39,11 @@ package ColdFrame.Callbacks is
    --  Called to stop Proc receiving callbacks
    procedure Deregister (Proc : Callback);
 
-   --  Call all the registered callback procedures with With_Param
+   --  Call all the registered callback procedures with With_Param. If
+   --  an exception occurs in a callback procedure, it will be
+   --  re-raised after all the registered callback procedures have
+   --  been called. If multiple exceptions occur, the first is
+   --  re-raised.
    procedure Call_Callbacks (With_Param : T);
 
    --  Clear all registered callbacks
