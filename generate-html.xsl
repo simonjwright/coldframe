@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 3283535a01a5 2003/09/28 16:15:13 simon $ -->
+<!-- $Id: generate-html.xsl,v 31f0fc86ca6f 2004/01/18 20:29:50 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -49,6 +49,12 @@
 
   <!-- Control comment paragraph fill width. -->
   <xsl:param name="fill-column" select="70"/>
+
+  <!-- Control limit on using bounded containers. -->
+  <xsl:param name="max-bounded-container" select="49"/>
+
+  <!-- Control limit on number of hash buckets. -->
+  <xsl:param name="max-hash-buckets" select="49"/>
 
 
   <!-- Global shorthands for indentation. -->
