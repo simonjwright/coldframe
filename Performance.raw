@@ -5,7 +5,7 @@
 <year>2003</year>
 <month>6</month>
 <day>21</day>
-<time>17:23</time>
+<time>17:42</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -161,7 +161,7 @@
 <name>Person</name>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation>[[ max : 4 ]]</documentation>
+<documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
