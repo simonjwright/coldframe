@@ -20,17 +20,18 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 41f21012fae8 $
---  $Date: 2005/02/21 10:13:42 $
+--  $Revision: bc7edc787a53 $
+--  $Date: 2005/02/23 23:12:32 $
 --  $Author: simon $
 
 with Ada.Streams;
 
 package ColdFrame.Test_Stub_Support is
 
-   -------------------------------------------------------------
-   --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
-   -------------------------------------------------------------
+
+   -------------------------------
+   --  T e s t   c o n t r o l  --
+   -------------------------------
 
    --  Initialize storage.
    procedure Set_Up;
@@ -39,6 +40,10 @@ package ColdFrame.Test_Stub_Support is
    --  Free all storage.
    procedure Tear_Down;
 
+
+   -------------------------------------------------------------
+   --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
+   -------------------------------------------------------------
 
    --  Specify the result of calling a stubbed operation.
    --
