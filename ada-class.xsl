@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 341b8a8a1ac4 2002/01/27 11:29:41 simon $ -->
+<!-- $Id: ada-class.xsl,v 8fbb2712e9bf 2002/01/28 06:15:13 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -144,6 +144,8 @@
     <xsl:if test="@public">
       <xsl:value-of select="$I"/>
       <xsl:text>type Instance;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>type Handle is access all Instance;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
