@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v e0e49d5bfadd 2004/01/03 17:53:05 simon $ -->
+<!-- $Id: releases.html-proto,v 39dce0898768 2004/01/11 19:25:45 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -40,6 +40,10 @@ identifier is allowed.
 
 <p><tt>Cant_Happen</tt> exceptions are accompanied by exception
 information (to make them easier to debug).
+
+
+<p>You can specify array &#171;type&#187;s
+(<tt>{array=<i>element-type</i>, index=<i>index-type</i>}</tt>).
 
 
 <p><dt>20031126
