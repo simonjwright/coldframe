@@ -23,8 +23,8 @@
 --  showing current event statistics.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.ads,v $
---  $Revision: 78558c644edb $
---  $Date: 2003/11/16 08:22:38 $
+--  $Revision: c68a430e2234 $
+--  $Date: 2003/11/16 10:00:06 $
 --  $Author: simon $
 
 with EWS.Dynamic;
@@ -32,10 +32,12 @@ with EWS.HTTP;
 
 package ColdFrame.Logging_Event_Basis.EWS_Support is
 
+   --  Adds a <table> containing event statistics to To.
    procedure Add_Section
      (For_Request : EWS.HTTP.Request_P;
-      To : in out EWS.Dynamic.Dynamic_Response);
+      To : in out EWS.Dynamic.Dynamic_Response'Class);
 
+   --  Returns a page containing event statistics.
    function Whole_Page
      (From_Request : EWS.HTTP.Request_P)
      return EWS.Dynamic.Dynamic_Response'Class;
