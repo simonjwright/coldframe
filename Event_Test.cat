@@ -118,16 +118,16 @@
 		(object Operation "handle self"
 		    quid       	"3D2EE3160336"
 		    parameters 	(list Parameters
-			(object Parameter "ev"
-			    type       	"Self"))
+			(object Parameter "p"
+			    type       	"Content"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "handle mark"
 		    quid       	"3D2EE3210288"
 		    parameters 	(list Parameters
-			(object Parameter "ev"
-			    type       	"Mark"))
+			(object Parameter "p"
+			    type       	"Content"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
@@ -282,7 +282,7 @@
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	2
-				    max_width  	288
+				    max_width  	295
 				    compartmentItems 	(list Compartment
 					"entry/ handle self"
 					"entry/ send done"))
@@ -311,7 +311,7 @@
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	1
-				    max_width  	315
+				    max_width  	322
 				    compartmentItems 	(list Compartment
 					"entry/ handle mark"))
 				width      	420
@@ -541,10 +541,10 @@
 		    location   	(1590, 1935)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(1366, 1705)
+			location   	(1356, 1705)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	448
+			max_width  	468
 			justify    	0
 			label      	"Machine")
 		    icon_style 	"Label"
@@ -553,13 +553,13 @@
 		    quidu      	"3D2EE2D100E8"
 		    compartment 	(object Compartment
 			Parent_View 	@16
-			location   	(1366, 1761)
+			location   	(1356, 1761)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	9
-			max_width  	452)
-		    width      	466
+			max_width  	465)
+		    width      	486
 		    height     	482
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -648,7 +648,7 @@
 		(object UsesView "Mark" @23
 		    label      	(object ItemLabel
 			Parent_View 	@23
-			location   	(2459, 1719)
+			location   	(2461, 1715)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -656,7 +656,7 @@
 			label      	"Mark")
 		    stereotype 	(object SegLabel @24
 			Parent_View 	@23
-			location   	(2459, 1665)
+			location   	(2505, 1683)
 			anchor     	10
 			anchor_loc 	1
 			nlines     	1
@@ -671,7 +671,7 @@
 		    client     	@16
 		    supplier   	@14
 		    vertices   	(list Points
-			(1823, 1876)
+			(1833, 1874)
 			(2458, 1721)
 			(2757, 1136))
 		    line_style 	0)))))
