@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v ab239e4d0d94 2005/02/13 20:14:24 simon $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 6e8306b0b004 2005/02/26 13:24:04 simon $ -->
 
 <!-- 
 
@@ -228,9 +228,9 @@
         <xsd:element name="name"/>
         <xsd:element name="type"/>
         <xsd:element name="initial" minOccurs="0" maxOccurs="1"/>
-        <xsd:element name="mode" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="mode"/>
     </xsd:complexType>
   </xsd:element>
 
