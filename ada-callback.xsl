@@ -1,4 +1,4 @@
-<!-- $Id: ada-callback.xsl,v 9a3326a1b4e5 2002/10/06 06:49:12 simon $ -->
+<!-- $Id: ada-callback.xsl,v 20191470bc99 2002/12/01 12:09:10 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacks. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,12 +32,14 @@
 
   <xsl:template match="type[@callback]" mode="callback-spec">
     <!--
-         with coldframe.callbacks;
-         package domain.type_callback
-         is new coldframe.callbacks
-            (t => type,
-             maximum_size => 5);
+         with ColdFrame.Callbacks;
+         package {domain}.{type}_Callback
+         is new ColdFrame.Callbacks
+            (T => {type},
+             Maximum_Size => 5);
          -->
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>with ColdFrame.Callbacks;&#10;</xsl:text>
     <xsl:text>package </xsl:text>
