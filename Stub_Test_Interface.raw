@@ -4,13 +4,13 @@
 <date>
 <year>2005</year>
 <month>3</month>
-<day>5</day>
-<time>18:18</time>
+<day>7</day>
+<time>06:59</time>
 </date>
 <documentation><![CDATA[ Demonstration and test of test stub support.
 
 { name = Stub Test }
-{ revision = $Version } ]]></documentation>
+{ revision = $Revision: 46c794db4c49 $ } ]]></documentation>
 <classes>
 <class stereotype="type">
 <name>Record Type</name>
@@ -136,6 +136,20 @@
 <parametername>out r</parametername>
 <documentation><![CDATA[  ]]></documentation>
 <type>Record Type</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>Process String</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>String</return>
+<parameters>
+<parameter>
+<parametername>S</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>String</type>
 <initial></initial>
 </parameter>
 </parameters>

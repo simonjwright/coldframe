@@ -12,7 +12,7 @@
 |Demonstration and test of test stub support.
 |
 |{ name = Stub Test }
-|{ revision = $Version }
+|{ revision = $Revision: 46c794db4c49 $ }
     
     stereotype 	"include"
     exportControl 	"Public"
@@ -126,7 +126,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1895
-		    label      	"$Id: Stub_Test_Interface.cat,v 8a745ef5c81b 2005/03/07 06:58:11 simon $")
+		    label      	"$Id: Stub_Test_Interface.cat,v 46c794db4c49 2005/03/07 07:00:10 simon $")
 		(object ClassView "Class" "Logical View::Stub Test Interface::Record Type" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -163,23 +163,6 @@
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"4229E1FA029E"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1356, 697)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	205)
 		    width      	290
 		    height     	264
 		    annotation 	8
@@ -220,23 +203,6 @@
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"4229E23A0323"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(224, 667)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	992)
 		    width      	1006
 		    height     	308
 		    annotation 	8
@@ -277,23 +243,6 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"4229E27F00A1"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(299, 152)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	6
-			max_width  	810)
 		    width      	830
 		    height     	398
 		    annotation 	8
