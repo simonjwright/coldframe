@@ -1,4 +1,4 @@
-<!-- $Id: generation.html,v 1d9d9bb55821 2003/01/18 16:20:44 simon $ -->
+<!-- $Id: generation.html,v a9b450703263 2003/11/29 13:43:45 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Generation of code</title>
@@ -14,11 +14,12 @@ Processor from Michael Kay.
 <p>The output is placed by the <tt>Makefile</tt> into one Ada source
 file, <tt><i>package-name</i>.ada</tt>.
 
-<p>If you're using <a href="http://www.gnat.com/">GNAT</a>, you'll
-then need to use <tt>gnatchop</tt> to split the file into the required
-"one file per library unit" style. Other compilers will have their own
-way of importing the code. Note, however, that the supplied
-stylesheets make use of GNAT extensions (<tt>'Object_Size</tt>,
+<p>The <tt>Makefile</tt> then uses <a
+href="http://www.gnat.com/">GNAT</a>'s
+<tt>gnatchop</tt> to split the file into the required "one file per
+library unit" style. Other compilers will have their own way of
+importing the code. Note, however, that the supplied stylesheets make
+use of GNAT extensions (<tt>'Object_Size</tt>,
 <tt>'Unrestricted_Access</tt>).
 
 <p>The generated code is compilable, but most of the operation bodies
@@ -33,8 +34,7 @@ search path. I'm not sure how the idea of placing real subprogram body
 files earlier in the compiler's source search path translates to
 compilers other than GNAT; however, on regeneration the supplied
 Makefile deletes all generated code bodies that have implementations
-(this should make use of the GNAT <i>Project</i> facility easier, when
-it arrives).
+(this is necessary for using the GNAT <i>Project</i> facility).
 
 <p>You can see a <a href="error-messages.html">listing and explanation
 of error and warning messages</a> that may appear.
