@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 24c5b5796cf5 $
---  $Date: 2002/05/22 04:35:01 $
+--  $Revision: 020eb3820a52 $
+--  $Date: 2002/07/07 17:47:34 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -158,6 +158,13 @@ package ColdFrame.Events_G is
    procedure Unset (The_Timer : in out Timer;
                     On : access Event_Queue_Base) is abstract;
    --  May raise Use_Error (if the Timer is already unset)
+
+
+   -------------------------
+   --  Unit test support  --
+   -------------------------
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base);
 
 
 private
