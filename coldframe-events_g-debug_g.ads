@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.ads,v $
---  $Revision: 704dde9e2e9f $
---  $Date: 2002/07/07 14:40:43 $
+--  $Revision: 2bf0ced495ca $
+--  $Date: 2002/09/12 21:00:08 $
 --  $Author: simon $
 
 generic
@@ -40,6 +40,9 @@ package ColdFrame.Events_G.Debug_G is
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
+
+   procedure Post_To_Self (The_Event : Event_P;
+                           On : access Event_Queue);
 
    ----------------------
    --  Delayed events  --

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-debug_g.adb,v $
---  $Revision: 79a018bc7fbd $
---  $Date: 2002/07/27 12:46:55 $
+--  $Revision: 2bf0ced495ca $
+--  $Date: 2002/09/12 21:00:08 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -41,6 +41,18 @@ package body ColdFrame.Events_G.Debug_G is
             On => Standard_Queue (On.all)'Access);
 
    end Post;
+
+
+   procedure Post_To_Self (The_Event : Event_P;
+                           On : access Event_Queue) is
+   begin
+
+      Put_Line
+        ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag) & " to self");
+      Post_To_Self (The_Event => The_Event,
+                    On => Standard_Queue (On.all)'Access);
+
+   end Post_To_Self;
 
 
    procedure Post (The_Event : Event_P;
