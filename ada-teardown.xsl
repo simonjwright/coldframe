@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 90ac9048fab8 2003/03/13 20:32:44 simon $ -->
+<!-- $Id: ada-teardown.xsl,v b4f553402512 2003/03/27 20:54:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -39,6 +39,8 @@
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
+
+    <xsl:call-template name="do-not-edit"/>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
