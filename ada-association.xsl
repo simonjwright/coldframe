@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v b806c3ce4d90 2001/04/23 05:20:49 simon $ -->
+<!-- $Id: ada-association.xsl,v 4b0d5a63d0fa 2001/04/25 19:06:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -143,6 +143,8 @@
        body. -->
   <xsl:template name="association-body-context">
 
+    <xsl:text>with Architecture.Navigate_From_Collection;&#10;</xsl:text>
+
     <xsl:for-each select="role/classname | associative">
       <xsl:sort select="."/>
       <xsl:text>with </xsl:text>
@@ -158,6 +160,9 @@
 
   <!-- Called at domain/association to generate the linking subprogram body -->
   <xsl:template name="link-body">
+
+    <xsl:variable name="n" select="name"/>
+
     <xsl:choose>
 
       <xsl:when test="associative">
@@ -183,7 +188,7 @@
           <xsl:when test="role[1]/@multiple and role[2]/@multiple">
             <xsl:call-template name="referential-attribute-name">
               <xsl:with-param name="supplier" select="role[1]/classname"/>
-              <xsl:with-param name="relation" select="name"/>
+              <xsl:with-param name="relation" select="$n"/>
             </xsl:call-template>
             <xsl:text> => </xsl:text>
             <xsl:value-of select="role[1]/name"/>
@@ -191,7 +196,7 @@
             <xsl:text>         </xsl:text>
             <xsl:call-template name="referential-attribute-name">
               <xsl:with-param name="supplier" select="role[2]/classname"/>
-              <xsl:with-param name="relation" select="name"/>
+              <xsl:with-param name="relation" select="$n"/>
             </xsl:call-template>
             <xsl:text> => </xsl:text>
             <xsl:value-of select="role[2]/name"/>
@@ -205,7 +210,7 @@
               <xsl:with-param
                 name="supplier"
                 select="$multiple-role/classname"/>
-              <xsl:with-param name="relation" select="name"/>
+              <xsl:with-param name="relation" select="$n"/>
             </xsl:call-template>
             <xsl:text> => </xsl:text>
             <xsl:value-of select="$multiple-role/name"/>
@@ -217,7 +222,7 @@
               <xsl:with-param
                 name="supplier"
                 select="$single-role/classname"/>
-              <xsl:with-param name="relation" select="name"/>
+              <xsl:with-param name="relation" select="$n"/>
             </xsl:call-template>
             <xsl:text> (Result, </xsl:text>
             <xsl:value-of select="role[1]/name"/>
@@ -239,25 +244,44 @@
         <xsl:text> is&#10;</xsl:text>
         <xsl:text>  begin&#10;</xsl:text>
 
-        <xsl:text>    </xsl:text>
-        <xsl:value-of select="role[not(@source)]/classname"/>
-        <xsl:text>.Set_</xsl:text>
-        <xsl:call-template name="referential-attribute-name">
-          <xsl:with-param
-            name="supplier"
-            select="role[@source]/classname"/>
-          <xsl:with-param name="relation" select="name"/>
-        </xsl:call-template>
-        <xsl:text> (</xsl:text>
-        <xsl:value-of select="role[not(@source)]/name"/>
-        <xsl:text>, </xsl:text>
-        <xsl:value-of select="role[@source]/name"/>
-        <xsl:text>);&#10;</xsl:text>
+        <xsl:choose>
+
+          <!-- If the referential attribute is already part of the identifier,
+               we can't change it (there isn't a Set operation). But the
+               act of creating the instance in which the formalization is
+               required has already performed the Link. -->
+          <!-- XXX should I be testing for the correct class as well?
+               The argument against is that the association is only
+               formalized at one end, so we must have the _right_ end! -->
+          <xsl:when test="/domain/class/attribute[@relation=$n]/@identifier">
+            <xsl:text>    null;&#10;</xsl:text>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:text>    </xsl:text>
+            <xsl:value-of select="role[not(@source)]/classname"/>
+            <xsl:text>.Set_</xsl:text>
+            <xsl:call-template name="referential-attribute-name">
+              <xsl:with-param
+                name="supplier"
+                select="role[@source]/classname"/>
+              <xsl:with-param name="relation" select="$n"/>
+            </xsl:call-template>
+            <xsl:text> (</xsl:text>
+            <xsl:value-of select="role[not(@source)]/name"/>
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="role[@source]/name"/>
+            <xsl:text>);&#10;</xsl:text>
+          </xsl:otherwise>
+
+        </xsl:choose>
+
         <xsl:text>  end Link;&#10;</xsl:text>
 
       </xsl:when>
 
     </xsl:choose>
+
   </xsl:template>
 
 
@@ -292,7 +316,19 @@
     </xsl:call-template>
     <xsl:text>;&#10;</xsl:text>
 
+    <xsl:call-template name="navigation-collection-specification">
+      <xsl:with-param name="role-a" select="role[1]"/>
+      <xsl:with-param name="role-b" select="role[2]"/>
+    </xsl:call-template>
+    <xsl:text>;&#10;</xsl:text>
+
     <xsl:call-template name="navigation-specification">
+      <xsl:with-param name="role-a" select="role[2]"/>
+      <xsl:with-param name="role-b" select="role[1]"/>
+    </xsl:call-template>
+    <xsl:text>;&#10;</xsl:text>
+
+    <xsl:call-template name="navigation-collection-specification">
       <xsl:with-param name="role-a" select="role[2]"/>
       <xsl:with-param name="role-b" select="role[1]"/>
     </xsl:call-template>
@@ -310,7 +346,17 @@
       <xsl:with-param name="role-b" select="role[2]"/>
     </xsl:call-template>
 
+    <xsl:call-template name="navigation-collection-body">
+      <xsl:with-param name="role-a" select="role[1]"/>
+      <xsl:with-param name="role-b" select="role[2]"/>
+    </xsl:call-template>
+
     <xsl:call-template name="navigation-body">
+      <xsl:with-param name="role-a" select="role[2]"/>
+      <xsl:with-param name="role-b" select="role[1]"/>
+    </xsl:call-template>
+
+    <xsl:call-template name="navigation-collection-body">
       <xsl:with-param name="role-a" select="role[2]"/>
       <xsl:with-param name="role-b" select="role[1]"/>
     </xsl:call-template>
@@ -324,6 +370,17 @@
     <xsl:param name="role-a"/>
     <xsl:param name="role-b"/>
 
+    <xsl:variable name="a">
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$role-a/classname"/>
+    </xsl:variable>
+    <xsl:variable name="b">
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$role-b/classname"/>
+    </xsl:variable>
+
     <xsl:call-template name="navigation-specification">
       <xsl:with-param name="role-a" select="$role-a"/>
       <xsl:with-param name="role-b" select="$role-b"/>
@@ -333,27 +390,21 @@
     <xsl:choose>
 
       <xsl:when test="associative">
-        <xsl:text>    raise Program_Error;&#10;</xsl:text>
+        <xsl:text>    -- declarations for Associative navigations;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:when test="not(associative)">
         
         <xsl:if test="$role-b/@multiple or $role-a/@source">
           <xsl:text>    function Sel (This : </xsl:text>
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$role-b/classname"/>
+          <xsl:value-of select="$b"/>
           <xsl:text>.Handle) return Boolean is&#10;</xsl:text>
           <xsl:text>     use type </xsl:text>
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$role-a/classname"/>
+          <xsl:value-of select="$a"/>
           <xsl:text>.Handle;&#10;</xsl:text>
           <xsl:text>    begin&#10;</xsl:text>
           <xsl:text>      return </xsl:text>
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$role-b/classname"/>
+          <xsl:value-of select="$b"/>
           <xsl:text>.Get_</xsl:text>
           <xsl:call-template name="referential-attribute-name">
             <xsl:with-param
@@ -368,14 +419,10 @@
           <xsl:text>    end Sel;&#10;</xsl:text>
           <xsl:text>    function Find is&#10;</xsl:text>
           <xsl:text>    new </xsl:text>
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$role-b/classname"/>
+          <xsl:value-of select="$b"/>
           <xsl:text>.Selection_Function (Sel);&#10;</xsl:text>
           <xsl:text>    Result : constant </xsl:text>
-          <xsl:value-of select="/domain/name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$role-b/classname"/>
+          <xsl:value-of select="$b"/>
           <xsl:text>.Collections.Collection := Find;&#10;</xsl:text>
         </xsl:if>
 
@@ -401,25 +448,19 @@
 
           <xsl:when test="$role-a/@source">
             <xsl:text>    if </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$role-b/classname"/>
+            <xsl:value-of select="$b"/>
             <xsl:text>.Collections.Is_Empty (Result) then&#10;</xsl:text>
             <xsl:text>      return null;&#10;</xsl:text>
             <xsl:text>    else&#10;</xsl:text>
             <xsl:text>      return </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$role-b/classname"/>
+            <xsl:value-of select="$b"/>
             <xsl:text>.Collections.First (Result);&#10;</xsl:text>
             <xsl:text>    end if;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>
             <xsl:text>    return </xsl:text>
-            <xsl:value-of select="/domain/name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="$role-a/classname"/>
+            <xsl:value-of select="$a"/>
             <xsl:text>.Get_</xsl:text>
             <xsl:call-template name="referential-attribute-name">
               <xsl:with-param
@@ -434,6 +475,99 @@
           </xsl:otherwise>
 
         </xsl:choose>
+
+      </xsl:when>
+
+    </xsl:choose>
+
+    <xsl:text>  end </xsl:text>
+    <xsl:value-of select="$role-a/name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Called at domain/association to generate a navigation-from-collection
+       function body. -->
+  <xsl:template name="navigation-collection-body">
+    <xsl:param name="role-a"/>
+    <xsl:param name="role-b"/>
+
+    <xsl:variable name="a">
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$role-a/classname"/>
+    </xsl:variable>
+    <xsl:variable name="b">
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="$role-b/classname"/>
+    </xsl:variable>
+
+    <xsl:call-template name="navigation-collection-specification">
+      <xsl:with-param name="role-a" select="$role-a"/>
+      <xsl:with-param name="role-b" select="$role-b"/>
+    </xsl:call-template>
+    <xsl:text> is&#10;</xsl:text>
+
+    <xsl:choose>
+
+      <xsl:when test="associative">
+        <xsl:text>    -- declarations for Associative navigations;&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:when test="not(associative)">
+
+        <xsl:text>    function Nav is new Architecture.Navigate_From_Many_Collection&#10;</xsl:text>
+        <xsl:text>       (Source_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$a"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        <xsl:text>        Source =&gt; </xsl:text>
+        <xsl:value-of select="$a"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        <xsl:text>        From =&gt; </xsl:text>
+        <xsl:value-of select="$a"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        <xsl:text>        Target_Handle =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Handle,&#10;</xsl:text>
+        <xsl:text>        Target =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Abstract_Containers,&#10;</xsl:text>
+        <xsl:text>        To =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Collection,&#10;</xsl:text>
+        <xsl:text>        Get_Target_Handle =&gt; </xsl:text>
+            <xsl:value-of select="$a"/>
+            <xsl:text>.Get_</xsl:text>
+            <xsl:call-template name="referential-attribute-name">
+              <xsl:with-param
+                name="supplier"
+                select="$role-b/classname"/>
+              <xsl:with-param name="relation" select="name"/>
+            </xsl:call-template>
+        <xsl:text>,&#10;</xsl:text>
+        <xsl:text>        Add =&gt; </xsl:text>
+        <xsl:value-of select="$b"/>
+        <xsl:text>.Collections.Append);&#10;</xsl:text>
+        
+      </xsl:when>
+
+    </xsl:choose>
+
+    <xsl:text>  begin&#10;</xsl:text>
+
+    <xsl:choose>
+
+      <xsl:when test="associative">
+        <xsl:text>    raise Program_Error;&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:when test="not(associative)">
+
+        <xsl:text>    return Nav (</xsl:text>
+        <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
+        <xsl:text>);&#10;</xsl:text>
 
       </xsl:when>
 
@@ -568,6 +702,28 @@
         <xsl:text>.Handle</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Called at domain/association to generate a navigation-from-collection
+       function spec (no closing ";" or "is"). -->
+  <xsl:template name="navigation-collection-specification">
+    <xsl:param name="role-a"/>
+    <xsl:param name="role-b"/>
+    <xsl:text>  function </xsl:text>
+    <xsl:value-of select="$role-a/name"/>
+    <xsl:text>&#10;</xsl:text>
+    <xsl:text>     (</xsl:text>
+    <xsl:value-of select="/domain/class[name=$role-a/classname]/abbreviation"/>
+    <xsl:text> : </xsl:text>
+    <xsl:value-of select="/domain/name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$role-a/classname"/>
+    <xsl:text>.Collections.Collection) return </xsl:text>
+    <xsl:value-of select="/domain/name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$role-b/classname"/>
+    <xsl:text>.Collections.Collection</xsl:text>
   </xsl:template>
 
 
