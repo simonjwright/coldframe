@@ -1,6 +1,6 @@
 separate (Event_Test.Machine)
 procedure Handle_Mark
-  (This : Handle; Ev : Mark) is
+  (This : Handle; P : Content) is
 begin
-   This.Ordinal := Ev.Payload.Ordinal;
+   This.Ordinal := P.Ordinal;
 end Handle_Mark;

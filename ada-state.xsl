@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 864c2790de74 2002/08/17 15:17:13 simon $ -->
+<!-- $Id: ada-state.xsl,v 1790a635e7a3 2002/08/20 18:34:13 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -368,10 +368,10 @@
            (This : Handle; What : ColdFrame.Project.Events.Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
-            {entry-action} (This, {event} (What));  -  if has parameter
-            {entry-action} (This);                  -  if has no parameter
+            {entry-action} (This, {event} (What).Payload);  -  if has parameter
+            {entry-action} (This);                          -  if no parameter
             This.State_Machine_State := {state};
-            Enter_{next-state} (This, What);        -  if unguarded exit
+            Enter_{next-state} (This, What);                -  if unguarded exit
          end Enter_{state};
          -->
 
@@ -380,14 +380,12 @@
            (What : ColdFrame.Project.Events.Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
-            {entry-action} ({event} (What));        -  if has parameter
-            {entry-action};                         -  if has no parameter
+            {entry-action} ({event} (What).Payload);        -  if has parameter
+            {entry-action};                                 -  if no parameter
             This.State_Machine_State := {state};
-            Enter_{next-state} (Wnat);              -  if unguarded exit
+            Enter_{next-state} (Wnat);                      -  if unguarded exit
          end Enter_{state};
          -->
-
-     <!-- XXX which event? are they all the same? (should be, of course) -->
 
      <xsl:variable name="s" select="name"/>
      <xsl:variable name="e" select="../transition[target=$s]/event"/>
@@ -428,7 +426,7 @@
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
              <xsl:value-of select="$n"/>
-             <xsl:text> is a function, can't be an event handler.</xsl:text>
+             <xsl:text> is a function, can't be an entry action.</xsl:text>
            </xsl:message>           
          </xsl:when>
          
@@ -437,17 +435,19 @@
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
              <xsl:value-of select="$n"/>
-             <xsl:text> has too many parameters to be an event handler.</xsl:text>
+             <xsl:text> has too many parameters to be an entry action.</xsl:text>
            </xsl:message>
          </xsl:when>
 
          <xsl:when test="count($params)=1">
-           <xsl:if test="not(../../event/name=$params/type)">
+           <!-- The full spec of the event is in the class, not the
+                state machine. -->
+           <xsl:if test="not(../../../event[name=$e]/type=$params/type)">
              <xsl:message terminate="yes">
                <xsl:value-of select="../../../name"/>
-             <xsl:text>.</xsl:text>
-             <xsl:value-of select="$n"/>
-             <xsl:text>'s parameter isn't an Event.</xsl:text>
+               <xsl:text>.</xsl:text>
+               <xsl:value-of select="$n"/>
+               <xsl:text>'s parameter is of the wrong type.</xsl:text>
              </xsl:message>
            </xsl:if>
          </xsl:when>
@@ -472,7 +472,7 @@
 
                <xsl:text> (</xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What))</xsl:text>
+               <xsl:text> (What).Payload)</xsl:text>
                
              </xsl:when>
 
@@ -487,7 +487,7 @@
              <xsl:when test="$params">
                <xsl:text> (This, </xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What))</xsl:text>
+               <xsl:text> (What).Payload)</xsl:text>
              </xsl:when>
 
              <xsl:otherwise>
