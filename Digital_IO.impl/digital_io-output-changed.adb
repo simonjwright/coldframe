@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: digital_io-output-changed.adb,v $
---  $Revision: 25594980cdc0 $
---  $Date: 2003/02/07 05:51:00 $
+--  $Revision: 344fc5fd9c0e $
+--  $Date: 2003/02/15 17:54:32 $
 --  $Author: simon $
 
 --  Called when the signal has changed; no action for output signals
@@ -23,8 +23,7 @@
 separate (Digital_IO.Output)
 procedure Changed
   (This : Handle) is
+   pragma Warnings (Off, This);
 begin
-
    null;
-
 end Changed;
