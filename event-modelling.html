@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: event-modelling.html,v 9435f0351f7e 2002/12/10 20:05:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -56,8 +56,9 @@ you can extend the period by pushing again while it's still on.
 <ol>
 
 <li>The state model starts at the <i>initial</i> state (the black
-spot). Since the transition from the <i>initial</i> state is
-unguarded, the model immediately transitions to the <i>off</i> state.
+spot). Since the transition from the <i>initial</i> state requires no
+event to trigger it (it's a "completion transition"), the model
+immediately transitions to the <i>off</i> state.
 
 <li>On entry to the <i>off</i> state, the entry action <i>turn off</i>
 is executed.
