@@ -298,6 +298,7 @@ coldframe-project-events-creation.ads \
 coldframe-project-events-standard.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-test.ads \
+coldframe-project-events-standard-test_debug.ads \
 coldframe-project-events.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
