@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v bed2f25a1eeb 2005/01/18 17:25:00 simon $
+# $Id: normalize-rose.tcl,v 901e9c21a0f3 2005/01/29 05:45:58 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3047,11 +3047,15 @@ itcl::class Datatypes {
     constructor {} {
         $this -addStandard Autonumber
         $this -addStandard Boolean
+        $this -addStandard Character
         $this -addStandard Counterpart
-        $this -addStandard Handle
         $this -addStandard Date
+        $this -addStandard Duration
         $this -addStandard Float
+        $this -addStandard Handle
         $this -addStandard Integer
+        $this -addStandard Natural
+        $this -addStandard Positive
         $this -addStandard Real
         $this -addStandard String
         $this -addStandard Text
