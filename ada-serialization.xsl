@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 0df4f00f0dcf 2003/03/06 20:53:03 simon $ -->
+<!-- $Id: ada-serialization.xsl,v d08b44927a8f 2003/03/27 20:49:55 simon $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -131,6 +131,7 @@
              := "{domain}.{type}";
          begin
             return "<record name=""" & Name & """>" & ASCII.LF
+              & Base_Attribute_Image (S)
               & "<field name=""{attr-name}"">"
               & S.Payload.{attr-name}'Img
               & "</field>" & ASCII.LF
@@ -167,6 +168,9 @@
 
     <xsl:value-of select="$II"/>
     <xsl:text>return "&lt;record name=""" &amp; Name &amp; """&gt;" &amp; ASCII.LF&#10;</xsl:text>
+    <xsl:value-of select="$IIC"/>
+    <xsl:text>&amp; Base_Attribute_Image (S)&#10;</xsl:text>
+
 
     <!-- XXX we really need a procedure for this! -->
 
