@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: generate-ada.xsl,v 3425bf96d7fc 2003/11/05 22:49:06 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -188,12 +188,16 @@
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. any operations of types ..'"/>
     </xsl:call-template>
+
+    <!-- .. access-to-operation .. -->
     <xsl:apply-templates
       select="type[not(@protected)]/operation[@access and not(@suppressed)]"
       mode="access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:apply-templates>
+
+    <!--  .. others .. -->
     <xsl:apply-templates
       select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
