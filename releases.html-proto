@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 45ccf2fd7121 2004/03/14 11:33:26 simon $ -->
+<!-- $Id: releases.html-proto,v 10f1cafa8536 2004/03/27 16:07:55 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,10 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>
+
+<p><dt>20040319
 
 <dd>Unrecognised tagged values (eg, <i>{status}</i>) are no longer
 reported. Instead, they are included in the <i>normalized</i>
