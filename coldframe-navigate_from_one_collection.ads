@@ -19,14 +19,14 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-navigate_from_one_collection.ads,v c98aee53a2b4 2001/04/27 19:05:02 simon $
+-- $Id: coldframe-navigate_from_one_collection.ads,v ab497bf5b870 2001/04/29 10:42:09 simon $
 
 -- This package supports navigation of a one-to-many association from
 -- a set of instances of the 'one' end to the set of instances at the
 -- 'many' end.
 --
--- Note that the result will be a true set, that is, it will only
--- contain many copy of each instance.
+-- Note that the result must be a true set, that is, it will only
+-- contain one copy of each instance.
 
 with BC.Containers;
 
@@ -36,7 +36,7 @@ generic
   -- The handle for the 'one' end of the association
 
   with package One is new BC.Containers (One_Handle);
-  -- The Collections package for the 'one' end of the association
+  -- The abstract Container package for the 'one' end of the association
 
   type From is new One.Container with private;
   -- The Collection type for the 'one' end of the association
@@ -44,19 +44,8 @@ generic
   type Many_Handle is private;
   -- The handle for the 'one' end of the association
 
-  with package Intermediate is new BC.Containers (Many_Handle);
-  -- A package with 'set' functionality, to support intermediate
-  -- results
-
-  type Set is new Intermediate.Container with private;
-  -- To hold the set of results, ensuring uniqueness
-
-  with procedure Add_To_Set
-    (S : in out Set; I : Many_Handle; Added : out Boolean);
-  -- Operation to add a result to the intermediate result
-
   with package Many is new BC.Containers (Many_Handle);
-  -- The Collections package for the 'many' end of the association
+  -- The abstract Container package for the 'many' end of the association
 
   type To is new Many.Container with private;
   -- The Collection type for the 'many' end of the association
