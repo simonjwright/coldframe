@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 253a6ad430b0 $
---  $Date: 2002/07/25 05:03:12 $
+--  $Revision: 49984d1efe79 $
+--  $Date: 2002/09/04 18:51:35 $
 --  $Author: simon $
 
 generic
@@ -51,8 +51,46 @@ package ColdFrame.Events_G.Test_G is
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
 
+   -------------------------
+   --  Unit test support  --
+   -------------------------
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue);
+
 private
 
-   type Event_Queue is new Standard_Queue with null record;
+   --  Determining whether there are any events left (if not, unit test can
+   --  stop).
+   protected type Event_Count is
+
+      entry Wait_Until_Idle;
+      --  Blocks until there are no events pending or held.
+
+      procedure Add_Posted_Event;
+      procedure Remove_Posted_Event;
+      procedure Add_Held_Event;
+      procedure Remove_Held_Event;
+
+   private
+
+      Posted_Events : Natural := 0;
+      Held_Events : Natural := 0;
+
+   end Event_Count;
+
+
+   type Event_Queue is new Standard_Queue with record
+      The_Event_Count : Event_Count;
+   end record;
+
+
+   procedure Add_Posted_Event (On : access Event_Queue);
+
+   procedure Remove_Posted_Event (On : access Event_Queue);
+
+   procedure Add_Held_Event (On : access Event_Queue);
+
+   procedure Remove_Held_Event (On : access Event_Queue);
+
 
 end ColdFrame.Events_G.Test_G;

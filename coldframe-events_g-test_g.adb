@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 253a6ad430b0 $
---  $Date: 2002/07/25 05:03:12 $
+--  $Revision: 49984d1efe79 $
+--  $Date: 2002/09/04 18:51:35 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -62,6 +62,66 @@ package body ColdFrame.Events_G.Test_G is
       return The_Timer.The_Entry.Time_To_Fire;
 
    end Expires_At;
+
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue) is
+   begin
+      The_Queue.The_Event_Count.Wait_Until_Idle;
+   end Wait_Until_Idle;
+
+
+   procedure Add_Posted_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Add_Posted_Event;
+   end Add_Posted_Event;
+
+
+   procedure Remove_Posted_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Remove_Posted_Event;
+   end Remove_Posted_Event;
+
+
+   procedure Add_Held_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Add_Held_Event;
+   end Add_Held_Event;
+
+
+   procedure Remove_Held_Event (On : access Event_Queue) is
+   begin
+      On.The_Event_Count.Remove_Held_Event;
+   end Remove_Held_Event;
+
+
+   protected body Event_Count is
+
+      entry Wait_Until_Idle when Posted_Events = 0 and then Held_Events = 0 is
+      begin
+         null;
+      end Wait_Until_Idle;
+
+      procedure Add_Posted_Event is
+      begin
+         Posted_Events := Posted_Events + 1;
+      end Add_Posted_Event;
+
+      procedure Remove_Posted_Event is
+      begin
+         Posted_Events := Posted_Events - 1;
+      end Remove_Posted_Event;
+
+      procedure Add_Held_Event is
+      begin
+         Held_Events := Held_Events + 1;
+      end Add_Held_Event;
+
+      procedure Remove_Held_Event is
+      begin
+         Held_Events := Held_Events - 1;
+      end Remove_Held_Event;
+
+   end Event_Count;
 
 
 end ColdFrame.Events_G.Test_G;
