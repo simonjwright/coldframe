@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 941f3120406c 2001/02/01 20:02:29 simon $
+'$Id: ddf.ebs,v 397c432627f0 2001/03/20 05:43:51 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -99,23 +99,29 @@ Sub DumpOperations (o As Class)
 End Sub
 
 Sub DumpClass (o As Class)
-	Print "  object " & o.Name
-	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
+	Print "  class " & o.Name
+	Dim s As String
+	s = o.stereotype
+	If Len(s) > 0 Then
+	  	Print #1, "<class stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
+	Else
+		Print #1, "<class>"
+	End If	
 	Print #1, "<name>" & o.Name & "</name>"
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	DumpAttributes (o)
 	DumpOperations (o)
-	Print #1, "</object>"
+	Print #1, "</class>"
 End Sub
 
 Sub DumpClasses (domain As Category)
 	Dim classes As ClassCollection
 	Set classes = domain.Classes
-	Print #1, "<objects>"
+	Print #1, "<classes>"
 	For clid = 1 To classes.Count
 		DumpClass (classes.GetAt (clid))
 	Next clid
-	Print #1, "</objects>"
+	Print #1, "</classes>"
 End Sub
 
 Sub DumpAssociation (assoc As Association)
@@ -130,13 +136,13 @@ Sub DumpAssociation (assoc As Association)
 	Print #1, "<name>" & assoc.Role1.Name & "</name>"
 	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
 	Print #1, "<cardinality>" & assoc.Role1.Cardinality & "</cardinality>"
-	Print #1, "<exportcontrol>" & assoc.Role1.ExportControl & "</exportcontrol>"
+	Print #1, "<documentation>" & assoc.Role1.Documentation & "</documentation>"
 	Print #1, "</role>"
 	Print #1, "<role><end>2</end>"
 	Print #1, "<name>" & assoc.Role2.Name & "</name>"
 	Print #1, "<classname>" & assoc.Role2.Class.Name & "</classname>"
 	Print #1, "<cardinality>" & assoc.Role2.Cardinality & "</cardinality>"
-	Print #1, "<exportcontrol>" & assoc.Role2.ExportControl & "</exportcontrol>"
+	Print #1, "<documentation>" & assoc.Role2.Documentation & "</documentation>"
 	Print #1, "</role>"
 	If Not assoc.LinkClass Is Nothing Then
 		Print #1, "<associative>" & assoc.LinkClass.Name & "</associative>"
