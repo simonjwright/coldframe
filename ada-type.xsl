@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: ada-type.xsl,v 12f0c09c90c6 2003/09/13 07:20:53 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -639,9 +639,9 @@
     
     <!--
          protected type {name} is
-         {operations}
+            {operations}
          private
-         {attributes}
+            {attributes}
          end {name};
          -->
     
