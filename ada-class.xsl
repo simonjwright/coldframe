@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 0b3785a165a2 2002/10/17 20:31:12 simon $ -->
+<!-- $Id: ada-class.xsl,v cc6e1c4832b5 2002/11/22 18:10:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -172,11 +172,8 @@
     <!-- .. if the maximum number of instances is fixed, fix the storage
          pool for Handle .. -->
     <xsl:if test="@max">
-      <!-- We have to use the GNAT 'Object_Size because 'Size is the
-           minimal number of bits, not necessarily a whole number of
-           bytes. -->
       <xsl:value-of select="$I"/>
-      <xsl:text>for Handle'Storage_Size use Instance'Object_Size / 8 * </xsl:text>
+      <xsl:text>for Handle'Storage_Size use Instance'Max_Size_In_Storage_Elements * </xsl:text>
       <xsl:value-of select="@max"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
