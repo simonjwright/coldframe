@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 35f1c7e7533f 2002/10/13 17:11:28 simon $ -->
+<!-- $Id: ada-class.xsl,v 1d17cd933887 2002/10/13 17:52:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -52,8 +52,9 @@
     <xsl:call-template name="class-spec-context"/>
 
     <!-- .. the class package .. -->
-    <xsl:if test="not(@public)">
-      <!-- only public packages are externally visible -->
+    <xsl:if test="not(@public or @visible)">
+      <!-- only public and "visible" (for test support) packages are
+           externally visible -->
       <xsl:text>private </xsl:text>
     </xsl:if>
     <xsl:text>package </xsl:text>
