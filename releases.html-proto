@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0a4c3f184113 2004/03/03 15:42:38 simon $ -->
+<!-- $Id: releases.html-proto,v 45ccf2fd7121 2004/03/14 11:33:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -95,6 +95,11 @@ code generation, and will result in an error in a future release.
 <li>The operation is stereotyped &#171;final&#187;.
 </ul>
 <p>Other uses will result in an exception.
+
+
+<p>The error of creating (and using) a Timer on the stack is
+detected. Unfortunately, this means getting a <tt>Program_Error</tt>
+because of an unhandled exception in a <tt>Finalize</tt> subprogram.
 
 
 <p><dt>20031126
