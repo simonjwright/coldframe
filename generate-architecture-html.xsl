@@ -1,6 +1,7 @@
-<!-- $Id: generate-architecture-html.xsl,v 1b657fb64ecd 2001/02/04 12:04:33 simon $ -->
+<!-- $Id: generate-architecture-html.xsl,v 580628b0364f 2001/02/25 10:05:17 simon $ -->
 <!-- XSL stylesheet to generate HTML for the Architecture. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
@@ -16,7 +17,7 @@
       <body bgcolor="#FFFFFF">
         <h1><xsl:value-of select="name"/></h1>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="documentation"/>
+        <xsl:apply-templates select="./documentation"/>
         <h2>Classes</h2>
         <xsl:apply-templates select="objects/object">
           <xsl:sort select="name"/>
