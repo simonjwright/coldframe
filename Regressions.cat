@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: d1ffb8468fcc $]]
+|[[revision : $Revision: f60721a93296 $]]
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -67,6 +67,13 @@
 	    quid       	"3FA1EFE202CC"
 	    documentation 	"[[ enumeration : a, b, c ]]"
 	    stereotype 	"type, serializable")
+	(object Class "CB"
+	    quid       	"3FB1433B03CA"
+	    stereotype 	"callback"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Reason"
+		    quid       	"3FB14363027D"
+		    type       	"Positive")))
 	(object Class_Category "Not Yet Implemented"
 	    quid       	"3FA962850010"
 	    stereotype 	"dont generate"
@@ -141,23 +148,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3FA962050323"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(479, 437)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	430)
 			    width      	450
 			    height     	218
 			    annotation 	8
@@ -198,23 +188,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3FA962440233"
-			    compartment 	(object Compartment
-				Parent_View 	@2
-				location   	(551, 812)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	265)
 			    width      	286
 			    height     	218
 			    annotation 	8
@@ -225,7 +198,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|[[revision : $Revision: d1ffb8468fcc $]]
+|[[revision : $Revision: f60721a93296 $]]
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -522,7 +495,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v d1ffb8468fcc 2003/11/05 21:12:47 simon $")
+		    label      	"$Id: Regressions.cat,v f60721a93296 2003/11/11 21:00:03 simon $")
 		(object NoteView @12
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -773,7 +746,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	430)
+			max_width  	437)
 		    width      	452
 		    height     	264
 		    annotation 	8
@@ -830,7 +803,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	265)
+			max_width  	272)
 		    width      	418
 		    height     	264
 		    annotation 	8
@@ -868,4 +841,83 @@
 		    fill_color 	13434879
 		    quidu      	"3FA962850010"
 		    width      	350
-		    height     	180)))))
+		    height     	180)
+		(object NoteView @20
+		    location   	(1924, 1019)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(1786, 959)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	240
+			label      	"Exceptions in callbacks")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	300
+		    height     	132)
+		(object ClassView "Class" "Logical View::Regressions::CB" @21
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1934, 1295)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@21
+			location   	(1760, 1242)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"CB")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@21
+			location   	(1760, 1197)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	348
+			justify    	0
+			label      	"<<callback>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FB1433B03CA"
+		    compartment 	(object Compartment
+			Parent_View 	@21
+			location   	(1760, 1298)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	345)
+		    width      	366
+		    height     	218
+		    annotation 	8
+		    autoResize 	TRUE)))))
