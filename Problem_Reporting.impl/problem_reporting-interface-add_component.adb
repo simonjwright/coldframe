@@ -3,16 +3,16 @@ with Problem_Reporting.Component;
 
 separate (Problem_Reporting.Interface)
 procedure Add_Component
-   (Named : String) is
+  (Named : String) is
 
-  function "+" (Source : String) return Unbounded_String
-    renames To_Unbounded_String;
+   function "+" (Source : String) return Unbounded_String
+     renames To_Unbounded_String;
 
-  H : Component.Handle;
+   H : Component.Handle;
 
 begin
 
-  -- Create the new Component
-  H := Component.Create ((Id => +Named));
+   --  Create the new Component
+   H := Component.Create ((Id => +Named));
 
 end Add_Component;

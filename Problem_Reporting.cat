@@ -30,7 +30,7 @@
 		    quid       	"38218CA10364"
 		    documentation 	"The email address of the person who originally raised the Problem Report."
 		    type       	"Text"))
-	    cardinality 	(value Cardinality "34567"))
+	    cardinality 	(value Cardinality "0 .. 10100"))
 	(object Class "Rejected Problem Report"
 	    quid       	"380DB5330003"
 	    documentation 	"A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software."
@@ -64,6 +64,24 @@
 |[[max: 4]]
 |
 	    
+	    operations 	(list Operations
+		(object Operation "report"
+		    quid       	"3C457A2E03AC"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "report all"
+		    quid       	"3C457AB7033E"
+		    stereotype 	"class"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "clean"
+		    quid       	"3C45836601EB"
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"38218D68028E"
@@ -97,6 +115,12 @@
 |
 |It should address one logical error (which may correspond to several necessary changes in the affected Component).
 	    
+	    operations 	(list Operations
+		(object Operation "report"
+		    quid       	"3C457A6E0311"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "problem"
 		    quid       	"38219D94007F"
@@ -220,10 +244,10 @@
 	(object ClassDiagram "Main"
 	    quid       	"380DB51200B0"
 	    title      	"Main"
-	    zoom       	70
+	    zoom       	82
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	0
+	    origin_x   	51
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Problem_Reporting::Rejected Problem Report" @1
@@ -300,7 +324,7 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	4
-			max_width  	357)
+			max_width  	392)
 		    width      	378
 		    height     	258
 		    annotation 	8
@@ -395,10 +419,10 @@
 		    location   	(2608, 880)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(2450, 794)
+			location   	(2391, 724)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	316
+			max_width  	434
 			justify    	0
 			label      	"Component")
 		    icon_style 	"Icon"
@@ -407,21 +431,21 @@
 		    quidu      	"380DB54F0248"
 		    compartment 	(object Compartment
 			Parent_View 	@9
-			location   	(2450, 850)
+			location   	(2391, 785)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
-			max_width  	350)
-		    width      	334
-		    height     	206
+			nlines     	5
+			max_width  	431)
+		    width      	452
+		    height     	336
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r100" @10
-		    location   	(2110, 880)
+		    location   	(2081, 880)
 		    label      	(object SegLabel @11
 			Parent_View 	@10
-			location   	(2061, 842)
+			location   	(2032, 842)
 			font       	(object Font
 			    italics    	TRUE)
 			anchor     	1
@@ -439,10 +463,10 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "is affected by" @12
 			    Parent_View 	@10
-			    location   	(14, 112)
+			    location   	(-15, 112)
 			    label      	(object SegLabel @13
 				Parent_View 	@12
-				location   	(1922, 919)
+				location   	(1911, 919)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -460,7 +484,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @14
 				Parent_View 	@12
-				location   	(1849, 838)
+				location   	(1843, 838)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -472,10 +496,10 @@
 				orientation 	1))
 			(object RoleView "affects" @15
 			    Parent_View 	@10
-			    location   	(14, 112)
+			    location   	(-15, 112)
 			    label      	(object SegLabel @16
 				Parent_View 	@15
-				location   	(2350, 919)
+				location   	(2299, 919)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -493,7 +517,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @17
 				Parent_View 	@15
-				location   	(2353, 838)
+				location   	(2302, 838)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -540,10 +564,10 @@
 		    location   	(2096, 1296)
 		    label      	(object ItemLabel
 			Parent_View 	@19
-			location   	(1954, 1210)
+			location   	(1935, 1193)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	284
+			max_width  	322
 			justify    	0
 			label      	"Defect")
 		    icon_style 	"Icon"
@@ -552,14 +576,14 @@
 		    quidu      	"380F322C003E"
 		    compartment 	(object Compartment
 			Parent_View 	@19
-			location   	(1954, 1266)
+			location   	(1935, 1253)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
-			nlines     	2
-			max_width  	318)
-		    width      	302
-		    height     	206
+			nlines     	3
+			max_width  	324)
+		    width      	340
+		    height     	230
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssocAttachView "" @20
