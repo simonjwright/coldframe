@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: ada-state.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -109,7 +109,7 @@
 
   <!-- Called at domain/class to generate the enumerated type for the state
        machine. -->
-  <xsl:template name= "state-machine-states">
+  <xsl:template name= "st:state-machine-states">
 
     <!-- Check for an initial state. -->
     <xsl:if test="not(statemachine/state/@initial)">
@@ -187,7 +187,7 @@
 
 
   <!-- Called at domain/class to generate the State_Image operation spec. -->
-  <xsl:template name="state-image-spec">
+  <xsl:template name="st:state-image-spec">
 
     <xsl:value-of select="$I"/>
     <xsl:text>function State_Image (This : Instance) return String;&#10;</xsl:text>
@@ -197,7 +197,7 @@
 
 
   <!-- Called at domain/class to generate the State_Image operation body. -->
-  <xsl:template name="state-image-body">
+  <xsl:template name="st:state-image-body">
 
     <xsl:value-of select="$I"/>
     <xsl:text>function State_Image (This : Instance) return String is&#10;</xsl:text>
@@ -377,7 +377,7 @@
 
 
   <!-- Called at domain/class to generate any class body "with"s. -->
-  <xsl:template name="state-body-context">
+  <xsl:template name="st:state-body-context">
 
     <!-- Ada.Exceptions is only needed if there are Cant_Happen exceptions;
          but that would be rather complex to detect. -->

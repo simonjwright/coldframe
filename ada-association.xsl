@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: ada-association.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -29,6 +29,7 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:as="http://pushface.org/coldframe/association"
+  xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
 
@@ -398,7 +399,7 @@
             <xsl:variable name="r1" select="role[1]"/>
             <xsl:variable name="r2" select="role[2]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -410,7 +411,7 @@
 
             <xsl:value-of select="$IIC"/>
             <xsl:text>  </xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -437,7 +438,7 @@
             <xsl:variable name="multiple-role" select="role[@multiple]"/>
             <xsl:variable name="single-role" select="role[not(@multiple)]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -455,7 +456,7 @@
             <xsl:text></xsl:text>
             <xsl:value-of select="associative"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -481,7 +482,7 @@
             <xsl:variable name="source-role" select="role[@source]"/>
             <xsl:variable name="non-source-role" select="role[not(@source)]"/>
 
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -495,7 +496,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="associative"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -590,7 +591,7 @@
             <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Get_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -608,7 +609,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -687,7 +688,7 @@
           <xsl:variable name="r1" select="role[1]"/>
           <xsl:variable name="r2" select="role[2]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -699,7 +700,7 @@
 
           <xsl:value-of select="$IIC"/>
           <xsl:text>  </xsl:text>
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -724,7 +725,7 @@
           <xsl:variable name="multiple-role" select="role[@multiple]"/>
           <xsl:variable name="single-role" select="role[not(@multiple)]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -750,7 +751,7 @@
           <xsl:variable name="source-role" select="role[@source]"/>
           <xsl:variable name="non-source-role" select="role[not(@source)]"/>
 
-          <xsl:call-template name="attribute-name">
+          <xsl:call-template name="at:attribute-name">
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
@@ -872,7 +873,7 @@
             <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Get_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -890,7 +891,7 @@
             <xsl:value-of select="$II"/>
             <xsl:value-of select="$dst/classname"/>
             <xsl:text>.Set_</xsl:text>
-            <xsl:call-template name="attribute-name">
+            <xsl:call-template name="at:attribute-name">
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -1311,7 +1312,7 @@
       <xsl:text>:= </xsl:text>
       <xsl:value-of select="$b"/>
       <xsl:text>.Get_</xsl:text>
-      <xsl:call-template name="attribute-name">
+      <xsl:call-template name="at:attribute-name">
         <xsl:with-param
           name="a"
           select="/domain/class/attribute
@@ -1405,7 +1406,7 @@
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$a"/>
         <xsl:text>.Get_</xsl:text>
-        <xsl:call-template name="attribute-name">
+        <xsl:call-template name="at:attribute-name">
           <xsl:with-param
             name="a"
             select="/domain/class/attribute
@@ -1462,7 +1463,7 @@
     <xsl:text>:= </xsl:text>
     <xsl:value-of select="$assoc"/>
     <xsl:text>.Get_</xsl:text>
-    <xsl:call-template name="attribute-name">
+    <xsl:call-template name="at:attribute-name">
       <xsl:with-param
         name="a"
         select="/domain/class/attribute
@@ -1547,7 +1548,7 @@
     <xsl:text>:= </xsl:text>
     <xsl:value-of select="$c"/>
     <xsl:text>.Get_</xsl:text>
-    <xsl:call-template name="attribute-name">
+    <xsl:call-template name="at:attribute-name">
       <xsl:with-param
         name="a"
         select="/domain/class/attribute

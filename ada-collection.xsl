@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: ada-collection.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,22 +28,23 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:cl="http://pushface.org/coldframe/class"
   xmlns:co="http://pushface.org/coldframe/collection"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
 
   <!-- Called to generate Collection support packages (only for
        non-singleton classes). -->
-  <xsl:template match="class[not(@singleton)]" mode="collection-support">
-    <xsl:apply-templates select="." mode="collection-support-spec"/>
-    <xsl:apply-templates select="." mode="collection-support-body"/>
+  <xsl:template match="class[not(@singleton)]" mode="co:collection-support">
+    <xsl:apply-templates select="." mode="co:collection-support-spec"/>
+    <xsl:apply-templates select="." mode="co:collection-support-body"/>
   </xsl:template>
 
-  <xsl:template mode="collection-support" match="*"/>
+  <xsl:template mode="co:collection-support" match="*"/>
 
 
   <!-- Called to generate Collection support package specs. -->
-  <xsl:template match="class" mode="collection-support-spec">
+  <xsl:template match="class" mode="co:collection-support-spec">
 
     <!-- Make the name of the parent class (Domain.Class) -->
     <xsl:variable name="class">
@@ -173,7 +174,7 @@
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
         <xsl:text> Buckets =&gt; </xsl:text>
-        <xsl:call-template name="hash-buckets"/>
+        <xsl:call-template name="cl:hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
         <xsl:text> Maximum_Size =&gt; </xsl:text>
@@ -198,7 +199,7 @@
         <xsl:text>.Handle_Hash,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
         <xsl:text> Buckets =&gt; </xsl:text>
-        <xsl:call-template name="hash-buckets"/>
+        <xsl:call-template name="cl:hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
         <xsl:text> Storage =&gt; ColdFrame.Project.Storage_Pools.Pool);&#10;</xsl:text>
@@ -337,11 +338,11 @@
 
   </xsl:template>
 
-  <xsl:template mode="collection-support-spec" match="*"/>
+  <xsl:template mode="co:collection-support-spec" match="*"/>
 
 
   <!-- Called to generate Collection support package bodies. -->
-  <xsl:template match="class" mode="collection-support-body">
+  <xsl:template match="class" mode="co:collection-support-body">
 
     <!-- Make the name of the parent class (Domain.Class) -->
     <xsl:variable name="class">
@@ -689,7 +690,7 @@
 
   </xsl:template>
 
-  <xsl:template mode="collection-support-body" match="*"/>
+  <xsl:template mode="co:collection-support-body" match="*"/>
 
 
 </xsl:stylesheet>

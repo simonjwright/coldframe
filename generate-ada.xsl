@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: generate-ada.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -622,7 +622,7 @@
         name="m"
         select="'.. package specs for individual classes ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates select="class" mode="class-spec">
+    <xsl:apply-templates select="class" mode="cl:class-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -632,7 +632,7 @@
         name="m"
         select="'.. package bodies for individual classes ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates select="class" mode="class-body">
+    <xsl:apply-templates select="class" mode="cl:class-body">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -646,7 +646,7 @@
       select="class[attribute[@class and initial]
               or @singleton
               or (@public and attribute)]"
-      mode="class-initialization">
+      mode="cl:class-initialization">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -654,7 +654,7 @@
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. Collection support packages ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates select="class" mode="collection-support">
+    <xsl:apply-templates select="class" mode="co:collection-support">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -702,7 +702,7 @@
     </xsl:call-template>
     <xsl:apply-templates
       select="class[name=../inheritance/child or name=../inheritance/parent]"
-      mode="inheritance-spec">
+      mode="in:inheritance-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -712,7 +712,7 @@
     </xsl:call-template>
     <xsl:apply-templates
       select="class[name=../inheritance/child or name=../inheritance/parent]"
-      mode="inheritance-body">
+      mode="in:inheritance-body">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -720,7 +720,7 @@
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package specs for Callbacks ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates select="type[@callback]" mode="callback-spec">
+    <xsl:apply-templates select="type[@callback]" mode="cb:callback-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 

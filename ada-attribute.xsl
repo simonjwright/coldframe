@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: ada-attribute.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -35,7 +35,7 @@
 
   <!-- Called from domain/class to generate the actual identifier
        record for the class. -->
-  <xsl:template name="identifier-record">
+  <xsl:template name="at:identifier-record">
     <xsl:choose>
 
       <!-- Output only identifier attributes. -->
@@ -43,7 +43,7 @@
         <xsl:value-of select="$I"/>
         <xsl:text>type Identifier is record&#10;</xsl:text>
         <xsl:apply-templates
-          mode="instance-record-component"
+          mode="at:instance-record-component"
           select="attribute[@identifier]"/>
         <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
@@ -60,7 +60,7 @@
 
   <!-- Called from domain/class to generate the actual instance
        record for the class. -->
-  <xsl:template name="instance-record">
+  <xsl:template name="at:instance-record">
 
     <xsl:choose>
 
@@ -85,7 +85,7 @@
 
         <!-- The non-supertype attributes -->
         <xsl:apply-templates
-          mode="instance-record-component"
+          mode="at:instance-record-component"
           select="attribute"/>
         <xsl:variable name="parent-name" select="name"/>
 
@@ -127,19 +127,21 @@
 
   <!-- Generate the individual components of the class identifier
        or instance record. -->
-  <xsl:template match="attribute[not(@class)]" mode="instance-record-component">
-    <xsl:call-template name="single-record-component">
+  <xsl:template
+    match="attribute[not(@class)]"
+    mode="at:instance-record-component">
+    <xsl:call-template name="at:single-record-component">
       <xsl:with-param name="indent" select="$II"/>
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template mode="instance-record-component" match="*"/>
+  <xsl:template mode="at:instance-record-component" match="*"/>
 
 
   <!-- Generate get specs. -->
   <xsl:template
     match="class/attribute[not(@class)]"
-    mode="attribute-get-spec">
+    mode="at:attribute-get-spec">
 
     <xsl:choose>
 
@@ -151,13 +153,13 @@
 
         <xsl:variable name="operation-name">
           <xsl:text>Get_</xsl:text>
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
         </xsl:variable>
 
         <xsl:if test="not(../operation[name=$operation-name])">
           <xsl:value-of select="$I"/>
           <xsl:text>--  Private use only, use navigation operations&#10;</xsl:text>
-          <xsl:call-template name="attribute-get-header"/>
+          <xsl:call-template name="at:attribute-get-header"/>
           <xsl:text>;&#10;</xsl:text>
           <!--
           <xsl:value-of select="$I"/>
@@ -171,7 +173,7 @@
       </xsl:when>
 
       <xsl:when test="$generate-accessors='yes'">
-        <xsl:call-template name="attribute-get-header"/>
+        <xsl:call-template name="at:attribute-get-header"/>
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:when>
@@ -180,16 +182,16 @@
 
   </xsl:template>
 
-  <xsl:template mode="attribute-get-spec" match="*"/>
+  <xsl:template mode="at:attribute-get-spec" match="*"/>
 
 
   <!-- Called at class/attribute to generate an attribute "get"
        accessor heading (no semicolon). -->
-  <xsl:template name="attribute-get-header">
+  <xsl:template name="at:attribute-get-header">
 
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
       <xsl:text>&#10;</xsl:text>
 
       <!-- If this isn't a singleton, we need a handle parameter -->
@@ -204,7 +206,7 @@
         </xsl:otherwise>
       </xsl:choose>
 
-      <xsl:call-template name="attribute-type"/>
+      <xsl:call-template name="at:attribute-type"/>
 
   </xsl:template>
 
@@ -212,7 +214,7 @@
   <!-- Generate set specs (non-identifier attributes only). -->
   <xsl:template
     match="class/attribute[not(@identifier) and not(@class)]"
-    mode="attribute-set-spec">
+    mode="at:attribute-set-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
 
@@ -227,7 +229,7 @@
         </xsl:if>
       </xsl:if>
 
-      <xsl:call-template name="attribute-set-header"/>
+      <xsl:call-template name="at:attribute-set-header"/>
       <xsl:text>;&#10;</xsl:text>
       <!--
       <xsl:value-of select="$I"/>
@@ -241,16 +243,16 @@
 
   </xsl:template>
 
-  <xsl:template mode="attribute-set-spec" match="*"/>
+  <xsl:template mode="at:attribute-set-spec" match="*"/>
 
 
   <!-- Called at class/attribute to generate an attribute "set"
        accessor heading (no semicolon). -->
-  <xsl:template name="attribute-set-header">
+  <xsl:template name="at:attribute-set-header">
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Set_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:call-template name="at:attribute-name"/>
     <xsl:text>&#10;</xsl:text>
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
@@ -264,7 +266,7 @@
     </xsl:if>
 
     <xsl:text>To_Be : </xsl:text>
-    <xsl:call-template name="attribute-type"/>
+    <xsl:call-template name="at:attribute-type"/>
 
     <xsl:text>)</xsl:text>
 
@@ -274,7 +276,7 @@
   <!-- Called from domain/class to generate get bodies -->
   <xsl:template
     match="class/attribute[not(@class)]"
-    mode="attribute-get-body">
+    mode="at:attribute-get-body">
 
     <xsl:choose>
 
@@ -286,37 +288,38 @@
 
         <xsl:variable name="operation-name">
           <xsl:text>Get_</xsl:text>
-          <xsl:call-template name="attribute-name"/>
+          <xsl:call-template name="at:attribute-name"/>
         </xsl:variable>
 
         <xsl:if test="not(../operation[name=$operation-name])">
-          <xsl:call-template name="attribute-get-body"/>
+          <xsl:call-template name="at:attribute-get-body"/>
         </xsl:if>
 
       </xsl:when>
 
       <xsl:when test="$generate-accessors='yes'">
-        <xsl:call-template name="attribute-get-body"/>
+        <xsl:call-template name="at:attribute-get-body"/>
       </xsl:when>
 
     </xsl:choose>
 
   </xsl:template>
 
-  <xsl:template mode="attribute-get-body" match="*"/>
+  <xsl:template mode="at:attribute-get-body" match="*"/>
 
-  <xsl:template name="attribute-get-body">
-    <xsl:call-template name="attribute-get-header"/>
+
+  <xsl:template name="at:attribute-get-body">
+    <xsl:call-template name="at:attribute-get-header"/>
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>return This.</xsl:text>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:call-template name="at:attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end Get_</xsl:text>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:call-template name="at:attribute-name"/>
     <xsl:text>;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
@@ -326,22 +329,22 @@
        identifier attributes only) -->
   <xsl:template
     match="class/attribute[not(@identifier) and not(@class)]"
-    mode="attribute-set-body">
+    mode="at:attribute-set-body">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
 
       <!-- Set procedure -->
-      <xsl:call-template name="attribute-set-header"/>
+      <xsl:call-template name="at:attribute-set-header"/>
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>This.</xsl:text>
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
       <xsl:text> := To_Be;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>end Set_</xsl:text>
-      <xsl:call-template name="attribute-name"/>
+      <xsl:call-template name="at:attribute-name"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
@@ -349,18 +352,18 @@
 
   </xsl:template>
 
-  <xsl:template mode="attribute-set-body" match="*"/>
+  <xsl:template mode="at:attribute-set-body" match="*"/>
 
 
   <!-- Called at {class,type}/attribute to generate a record component,
        with optional initializer. -->
-  <xsl:template name="single-record-component">
+  <xsl:template name="at:single-record-component">
     <xsl:param name="indent" select="$II"/>
 
     <xsl:value-of select="$indent"/>
-    <xsl:call-template name="attribute-name"/>
+    <xsl:call-template name="at:attribute-name"/>
     <xsl:text> : </xsl:text>
-    <xsl:call-template name="attribute-type"/>
+    <xsl:call-template name="at:attribute-type"/>
     <xsl:if test="initial">
       <xsl:text> := </xsl:text>
       <xsl:value-of select="initial"/>
@@ -374,7 +377,7 @@
        If this is an anonymous referential attribute, we make up its
        name from the the relationship name and  the role name.
        If not, just use the <name> element. -->
-  <xsl:template name="attribute-name">
+  <xsl:template name="at:attribute-name">
     <xsl:param name="a" select="."/>
     <xsl:choose>
       <xsl:when test="$a/@refers and not($a/name)">
@@ -390,7 +393,7 @@
 
 
   <!-- Generate attribute type. Called at {class,type}/attribute -->
-  <xsl:template name="attribute-type">
+  <xsl:template name="at:attribute-type">
     <xsl:choose>
       <xsl:when test="@refers">
         <xsl:text>ColdFrame.Instances.Handle</xsl:text>

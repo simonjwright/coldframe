@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v da754df21f43 2004/07/23 04:57:46 simon $ -->
+<!-- $Id: ada-type.xsl,v c2951815e37c 2004/07/24 12:04:31 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,6 +28,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:at="http://pushface.org/coldframe/attribute"
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:ty="http://pushface.org/coldframe/type"
   xmlns:ut="http://pushface.org/coldframe/utilities"
@@ -305,7 +306,7 @@
               <xsl:value-of select="name"/>
               <xsl:text>_T =&gt;&#10;</xsl:text>
 
-              <xsl:call-template name="single-record-component">
+              <xsl:call-template name="at:single-record-component">
                 <xsl:with-param name="indent" select="$IIII"/>
               </xsl:call-template>
 
@@ -338,7 +339,7 @@
             <xsl:text> is new </xsl:text>
             <xsl:value-of select="@extends"/>
             <xsl:text> with record&#10;</xsl:text>
-            <xsl:apply-templates mode="instance-record-component"/>
+            <xsl:apply-templates mode="at:instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
 
@@ -356,7 +357,7 @@
             <xsl:text>type </xsl:text>
             <xsl:value-of select="name"/>
             <xsl:text> is record&#10;</xsl:text>
-            <xsl:apply-templates mode="instance-record-component"/>
+            <xsl:apply-templates mode="at:instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
 
@@ -795,7 +796,7 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
-    <xsl:apply-templates mode="instance-record-component"/>
+    <xsl:apply-templates mode="at:instance-record-component"/>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end </xsl:text>
