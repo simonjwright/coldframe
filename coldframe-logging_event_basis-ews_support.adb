@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis-ews_support.adb,v $
---  $Revision: 5aff14253c7c $
---  $Date: 2003/11/15 14:07:52 $
+--  $Revision: 06f6eca47e1b $
+--  $Date: 2003/11/15 14:34:05 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -69,8 +69,16 @@ begin
       "<p>"
         & "<table border=1>"
         & "<tr>"
-        & "<th>Event<th>No<th>Q mean<th>sd<th>min<th>max"
-        & "<th>D mean<th>sd<th>min<th>max");
+        & "<th bgcolor=""#eeeeee"">Event"
+        & "<th>No"
+        & "<th bgcolor=""#eeeeee"">Q mean"
+        & "<th bgcolor=""#eeeeee"">sd"
+        & "<th bgcolor=""#eeeeee"">min"
+        & "<th bgcolor=""#eeeeee"">max"
+        & "<th>D mean"
+        & "<th>sd"
+        & "<th>min"
+        & "<th>max");
 
    Sort (Data);
    Abstract_Datum_Containers.Reset (It);
@@ -83,17 +91,17 @@ begin
          EWS.Dynamic.Append_Content
            (Result,
             "<tr>"
-              & "<td>"
+              & "<td bgcolor=""#eeeeee"">"
               & Ada.Strings.Unbounded.To_String (D.Event)
               & "<td>"
               & Statistics.Count (D.Queueing)'Img
-              & "<td bgcolor=""#dddddd"">"
+              & "<td bgcolor=""#eeeeee"">"
               & Duration (Statistics.Mean (D.Queueing))'Img
-              & "<td bgcolor=""#dddddd"">"
+              & "<td bgcolor=""#eeeeee"">"
               & Duration (Statistics.Sigma (D.Queueing))'Img
-              & "<td bgcolor=""#dddddd"">"
+              & "<td bgcolor=""#eeeeee"">"
               & Duration (Statistics.Min (D.Queueing))'Img
-              & "<td bgcolor=""#dddddd"">"
+              & "<td bgcolor=""#eeeeee"">"
               & Duration (Statistics.Max (D.Queueing))'Img
               & "<td>"
               & Duration (Statistics.Mean (D.Executing))'Img
