@@ -166,12 +166,12 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = hierarchies.png hierarchies-full.png discriminated-record.png \
- serialization.png serialization-class-model.png serialization-sequence-t.png \
- serialization-class-model-t.png serialization-state.png \
- serialization-state-t.png serialization-sequence.png \
- real_time.png recordable_real_time.png sample_a.png \
- type-mapping.png relationships-mapping.png operations-mapping.png \
- metamodel.png event-mapping.png collections-mapping.png class-mappings.png
+serialization.png serialization-class-model.png serialization-sequence-t.png \
+serialization-class-model-t.png serialization-state.png \
+serialization-state-t.png serialization-sequence.png \
+real_time.png recordable_real_time.png sample_a.png \
+type-mapping.png relationships-mapping.png operations-mapping.png \
+metamodel.png event-mapping.png collections-mapping.png class-mappings.png
 
 ############################
 # Distribution construction
@@ -233,14 +233,16 @@ serialization-model.html: Serialization.html
 
 MAKEFILES = Makefile-cf Makefile-unix Makefile-winnt
 
+# Files that need editing for release
 Makefile-cf: Makefile force
 	cp -p $< $@
 Makefile-unix: Makefile-unix-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 Makefile-winnt: Makefile-winnt-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
-
 extractor.ebs: ddf.ebs force
+	sed -e "s;DATE;$(DATE);g" <$< >$@
+releases.html: releases.html-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 
 TOOLS = generated_lines
@@ -447,6 +449,7 @@ Event_Test.test/event_test-harness.ads \
 Event_Test.impl/event_test-machine-handle_mark.adb \
 Event_Test.impl/event_test-machine-handle_self.adb \
 Event_Test.impl/event_test-machine-send_done.adb \
+Event_Test.impl/event_test-machine-set_timer.adb \
 Event_Test.impl/event_test-recipient-handle_mark.adb \
 Event_Test.impl/event_test-recipient-handle_self.adb \
 Event_Test.impl/event_test-recipient-information_handler.adb \
