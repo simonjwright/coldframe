@@ -1,4 +1,4 @@
-<!-- $Id: ada-association-collection.xsl,v 55643a9356e6 2003/09/06 06:49:24 simon $ -->
+<!-- $Id: ada-association-collection.xsl,v de849678fc54 2004/05/29 17:36:58 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -40,22 +40,25 @@
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
 
+      <!-- Suppress style checks. -->
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
       <!-- Context clauses. -->
       <xsl:call-template name="association-collection-spec-context"/>
-      
+
       <xsl:text>package </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>.From_Collections is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-      
+
       <!-- .. navigations .. -->
       <xsl:call-template name="navigation-collection-specs"/>
-      
+
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>.From_Collections;&#10;</xsl:text>
-      
+
     </xsl:if>
 
   </xsl:template>
@@ -84,7 +87,7 @@
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Collections;&#10;</xsl:text>      
+      <xsl:text>.Collections;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>
@@ -94,26 +97,29 @@
   <xsl:template match="domain/association" mode="association-collection-body">
 
     <xsl:if test="not(/domain/class[name=current()/role/classname]/@singleton)">
-      
+
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
 
+      <!-- Suppress style checks. -->
+      <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+
       <!-- Context clauses. -->
       <xsl:call-template name="association-collection-body-context"/>
-      
+
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>.From_Collections is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
-      
+
       <!-- .. navigations .. -->
       <xsl:call-template name="navigation-collection-bodies"/>
-      
+
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>.From_Collections;&#10;</xsl:text>
-      
+
     </xsl:if>
 
   </xsl:template>
@@ -135,7 +141,7 @@
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="role[1]/classname"/>
-      <xsl:text>.Sets;&#10;</xsl:text>      
+      <xsl:text>.Sets;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:text>with </xsl:text>
@@ -156,7 +162,7 @@
       <xsl:value-of select="../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="associative"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>    
+      <xsl:text>.Abstract_Containers;&#10;</xsl:text>
     </xsl:if>
 
   </xsl:template>
@@ -185,7 +191,7 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
-    
+
     <xsl:if test="associative">
 
       <xsl:if test="not($singleton-1)">
@@ -198,7 +204,7 @@
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:if>
-      
+
       <xsl:if test="not($singleton-2)">
         <xsl:call-template
           name="navigation-collection-from-associative-specification">
@@ -209,11 +215,11 @@
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:if>
-      
+
     </xsl:if>
-    
+
     <!-- Second direction: from collection -->
-    
+
     <xsl:if test="not($singleton-1) and not($singleton-2)">
       <xsl:call-template name="navigation-collection-specification">
         <xsl:with-param name="role-a" select="role[2]"/>
@@ -222,9 +228,9 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
-    
+
     <xsl:if test="associative">
-      
+
       <xsl:if test="not($singleton-2)">
         <xsl:call-template
           name="navigation-collection-to-associative-specification">
@@ -235,7 +241,7 @@
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:if>
-       
+
       <xsl:if test="not($singleton-1)">
         <xsl:call-template
           name="navigation-collection-from-associative-specification">
@@ -246,7 +252,7 @@
         <xsl:text>;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
       </xsl:if>
-        
+
     </xsl:if>
 
   </xsl:template>
@@ -273,9 +279,9 @@
         <xsl:with-param name="role-b" select="role[2]"/>
       </xsl:call-template>
     </xsl:if>
-    
+
     <xsl:if test="associative">
-      
+
       <xsl:if test="not($singleton-1)">
         <xsl:call-template name="navigation-collection-to-associative-body">
           <xsl:with-param name="role-a" select="role[1]"/>
@@ -291,7 +297,7 @@
           <xsl:with-param name="assoc" select="associative"/>
         </xsl:call-template>
       </xsl:if>
-        
+
     </xsl:if>
 
     <!-- Second direction: from collection -->
@@ -302,9 +308,9 @@
         <xsl:with-param name="role-b" select="role[1]"/>
       </xsl:call-template>
     </xsl:if>
-      
+
     <xsl:if test="associative">
-        
+
       <xsl:if test="not($singleton-2)">
         <xsl:call-template name="navigation-collection-to-associative-body">
           <xsl:with-param name="role-a" select="role[2]"/>
@@ -312,7 +318,7 @@
           <xsl:with-param name="assoc" select="associative"/>
         </xsl:call-template>
       </xsl:if>
-        
+
       <xsl:if test="not($singleton-1)">
         <xsl:call-template name="navigation-collection-from-associative-body">
           <xsl:with-param name="role-a" select="role[2]"/>
@@ -389,7 +395,7 @@
     <xsl:value-of
       select="/domain/class[name=$role-a/classname]/abbreviation"/>
     <xsl:text>);&#10;</xsl:text>
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
@@ -435,7 +441,7 @@
       <xsl:when test="$role-a/@multiple">
 
         <xsl:call-template name="navigation-collection-many-to-one-body">
-          
+
           <xsl:with-param name="a" select="$a"/>
           <xsl:with-param name="b" select="$b"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -443,11 +449,11 @@
         </xsl:call-template>
 
       </xsl:when>
-      
+
       <xsl:when test="$role-b/@multiple">
 
         <xsl:call-template name="navigation-collection-one-to-many-body">
-          
+
           <xsl:with-param name="a" select="$a"/>
           <xsl:with-param name="b" select="$b"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -455,11 +461,11 @@
         </xsl:call-template>
 
       </xsl:when>
-      
+
       <xsl:otherwise>    <!-- one-to-one -->
-      
+
         <xsl:call-template name="navigation-collection-one-to-one-body">
-          
+
           <xsl:with-param name="a" select="$a"/>
           <xsl:with-param name="b" select="$b"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -467,9 +473,9 @@
         </xsl:call-template>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
-    
+
   </xsl:template>
 
 
@@ -504,7 +510,7 @@
       <xsl:when test="$role-a/@multiple">
 
         <xsl:call-template name="navigation-collection-many-to-one-body">
-          
+
           <xsl:with-param name="a" select="$c"/>
           <xsl:with-param name="b" select="$b"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -514,52 +520,52 @@
         <!--
         <xsl:value-of select="$II"/>
         <xsl:text>function Nav is new ColdFrame.Navigate_From_Many_Collection&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text>(Many_Instance =&gt; </xsl:text>
         <xsl:value-of select="$c"/>
         <xsl:text>.Instance,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Many_Handle =&gt; </xsl:text>
         <xsl:value-of select="$c"/>
         <xsl:text>.Handle,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Many =&gt; </xsl:text>
         <xsl:value-of select="$c"/>
         <xsl:text>.Abstract_Containers,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> From =&gt; </xsl:text>
         <xsl:value-of select="$c"/>
         <xsl:text>.Collections.Collection,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> One_Instance =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Instance,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> One_Handle =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Handle,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> One =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Abstract_Containers,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Set =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Sets.Set,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Add_To_Set =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Sets.Add,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> To =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
@@ -569,17 +575,17 @@
         <xsl:text> Navigate_From_Many =&gt; </xsl:text>
         <xsl:value-of select="$role-a/name"/>
         <xsl:text>,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Clear =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Collections.Clear,&#10;</xsl:text>
-        
+
         <xsl:value-of select="$IIC"/>
         <xsl:text> Add_To_Result =&gt; </xsl:text>
         <xsl:value-of select="$b"/>
         <xsl:text>.Collections.Append);&#10;</xsl:text>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
@@ -596,11 +602,11 @@
         -->
 
       </xsl:when>
-      
+
       <xsl:otherwise>
 
         <xsl:call-template name="navigation-collection-one-to-one-body">
-          
+
           <xsl:with-param name="a" select="$c"/>
           <xsl:with-param name="b" select="$b"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -608,7 +614,7 @@
         </xsl:call-template>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
   </xsl:template>
@@ -645,7 +651,7 @@
       <xsl:when test="$role-b/@multiple">
 
         <xsl:call-template name="navigation-collection-one-to-many-body">
-          
+
           <xsl:with-param name="a" select="$a"/>
           <xsl:with-param name="b" select="$c"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -657,7 +663,7 @@
       <xsl:otherwise>
 
         <xsl:call-template name="navigation-collection-one-to-one-body">
-          
+
           <xsl:with-param name="a" select="$a"/>
           <xsl:with-param name="b" select="$c"/>
           <xsl:with-param name="role-a" select="$role-a"/>
@@ -665,7 +671,7 @@
         </xsl:call-template>
 
       </xsl:otherwise>
-      
+
     </xsl:choose>
 
   </xsl:template>
@@ -754,7 +760,7 @@
   <!-- Called at domain/association to generate the body for a one-to-one
        navigation. -->
   <xsl:template name="navigation-collection-one-to-one-body">
-    
+
     <xsl:param name="a"/>       <!-- name of source class -->
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
@@ -857,7 +863,7 @@
   <!-- Called at domain/association to generate the body for a many-to-one
        navigation. -->
   <xsl:template name="navigation-collection-many-to-one-body">
-    
+
     <xsl:param name="a"/>       <!-- name of source class -->
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
@@ -1010,7 +1016,7 @@
   <!-- Called at domain/association to generate the body for a one-to-many
        navigation. -->
   <xsl:template name="navigation-collection-one-to-many-body">
-    
+
     <xsl:param name="a"/>       <!-- name of source class -->
     <xsl:param name="b"/>       <!-- name of target class -->
     <xsl:param name="role-a"/>  <!-- node for source role -->
