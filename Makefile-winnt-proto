@@ -120,9 +120,9 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
 # NB, the recording file needs to end cleanly (with </record>).
 %.csv: %.xml
 	echo "<recording>" >$<-t
-	cat $< >>$<-t
+	awk "/^<[a-z\/]/" $< >>$<-t
 	echo "</recording>" >>$<-t
-	$(SAXON) $<-t $(CSV_SCRIPT)
+	$(SAXON) $<-t $(HOME)/cf/serialized-to-csv.xsl || rm -f $<-t
 	rm -f $<-t
 
 # Installs ColdFrame's project source files in your directory.
