@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 26a7ccf780c7 2003/09/17 05:44:52 simon $ -->
+<!-- $Id: releases.html-proto,v ea8213542027 2003/09/17 19:10:15 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -24,8 +24,6 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dd>A class variable of the class's type wouldn't compile
 ("representation item appears too late").
-
-
 
 
 <p><dt>20030914
