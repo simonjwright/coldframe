@@ -1,4 +1,4 @@
-<!-- $Id: extraction.html,v 3daa7f1e04bd 2002/02/03 10:26:21 simon $ -->
+<!-- $Id: extraction.html,v ffebed4f10fe 2002/09/20 10:21:08 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Extraction of models from Rose</title>
@@ -45,10 +45,11 @@ diagram.
 <p>The extracted domain definition file name is the domain name with
 underscores substituted for spaces.
 
-<p>You can specify the output file location using the Rose Path Map
-variable <tt>ColdFrameOut</tt>. The default output file location if
-<tt>ColdFrameOut</tt> isn't specified is the directory that
-<tt>extractor.ebs</tt> was loaded from (sorry about
+<p>You can specify the output file location using the environment or
+Rose Path Map variable <tt>COLDFRAMEOUT</tt> (the Rose Path map
+version takes precedence if both are defined). The default output file
+location if <tt>COLDFRAMEOUT</tt> isn't specified is the directory
+that <tt>extractor.ebs</tt> was loaded from (sorry about
 that). Double-clicking on the <tt>.mdl</tt> file or using the "recent
 documents" facility of Windows opens Rose with the correct default
 directory.
