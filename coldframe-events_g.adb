@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 7f8de3dc1e88 $
---  $Date: 2002/09/15 10:31:13 $
+--  $Revision: 060b7471e788 $
+--  $Date: 2002/09/15 11:19:20 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -30,52 +30,38 @@ with ColdFrame.Exceptions;
 package body ColdFrame.Events_G is
 
 
-   procedure Instance_Is_Deleted
-     (For_The_Event : access Instance_Event_Base'Class) is
+   procedure Add_Held_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
    begin
-      if For_The_Event.Instance_Deleted then
-         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
-                                         "instance already marked as deleted");
-      else
-         For_The_Event.Instance_Deleted := True;
+      null;
+   end Add_Held_Event;
+
+
+   procedure Add_Posted_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Add_Posted_Event;
+
+
+   procedure Add_Timer_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Add_Timer_Event;
+
+
+   procedure Finalize (The_Lock : in out Lock) is
+   begin
+
+      if not The_Lock.Finalized then
+
+         The_Lock.Finalized := True;
+         Unlocker (The_Lock.The_Queue);
+
       end if;
-   end Instance_Is_Deleted;
 
-
-   procedure Start (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
-   begin
-      if The_Queue.Started then
-         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
-                                         "queue already started");
-      else
-         The_Queue.Started := True;
-         Start_Queue (Event_Queue_P (The_Queue)); -- need to dispatch
-      end if;
-   end Start;
-
-
-   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
-                              Ignoring_Timers : Boolean := False) is
-      pragma Warnings (Off, The_Queue);
-      pragma Warnings (Off, Ignoring_Timers);
-   begin
-      Ada.Exceptions.Raise_Exception
-        (Exceptions.Use_Error'Identity,
-         "Wait_Until_Idle only legal with Test event queue");
-   end Wait_Until_Idle;
-
-
-   procedure Tear_Down (The_Queue : in out Event_Queue_P) is
-      procedure Delete
-      is new Ada.Unchecked_Deallocation (Event_Queue_Base'Class,
-                                         Event_Queue_P);
-   begin
-      if The_Queue /= null then
-         Tear_Down (The_Queue.all);
-         Delete (The_Queue);
-      end if;
-   end Tear_Down;
+   end Finalize;
 
 
    procedure Finalize (The_Terminator : in out Instance_Terminator) is
@@ -89,113 +75,26 @@ package body ColdFrame.Events_G is
    end Finalize;
 
 
-   procedure Invalidate_Events
-     (On : access Event_Queue_Base;
-      For_The_Instance : access Instance_Base'Class) is
-      pragma Warnings (Off, On);
-      pragma Warnings (Off, For_The_Instance);
+   procedure Finalize (The_Terminator : in out Timer_Terminator) is
    begin
-      raise Program_Error;
-   end Invalidate_Events;
 
+      --  XXX is there a race condition here?
 
-   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
-   begin
-      Ada.Exceptions.Raise_Exception
-        (Exceptions.Use_Error'Identity,
-         "Tear_Down only legal with Test event queue");
-   end Tear_Down;
+      if The_Terminator.For_The_Timer.The_Entry /= null then
 
+         --  The Timer is set. Tell the timer event that the timer has
+         --  been deleted.
+         The_Terminator.For_The_Timer.The_Entry.The_Timer := null;
 
-   procedure Start_Queue (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
-   begin
-      raise Program_Error;
-   end Start_Queue;
+         --  Invalidate the held event.
+         The_Terminator.For_The_Timer.The_Entry.The_Event.Invalidated := True;
 
+         --  Decrement the count of timer events
+         Remove_Timer_Event (The_Terminator.For_The_Timer.The_Entry.On);
 
-   procedure Add_Posted_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Posted_Event;
+      end if;
 
-
-   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Remove_Posted_Event;
-
-
-   procedure Add_Held_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Held_Event;
-
-
-   procedure Remove_Held_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Remove_Held_Event;
-
-
-   procedure Add_Timer_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Add_Timer_Event;
-
-
-   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Remove_Timer_Event;
-
-
-   procedure Log_Retraction (The_Event : Event_P;
-                             On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Log_Retraction;
-
-
-   procedure Log_Pre_Dispatch (The_Event : Event_P;
-                               On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Log_Pre_Dispatch;
-
-
-   procedure Log_Post_Dispatch (The_Event : Event_P;
-                                On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
-   begin
-      null;
-   end Log_Post_Dispatch;
-
-
-   procedure Locker (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
-   begin
-      raise Program_Error;
-   end Locker;
-
-
-   procedure Unlocker (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
-   begin
-      raise Program_Error;
-   end Unlocker;
+   end Finalize;
 
 
    procedure Handler (This : Timer_Event) is
@@ -222,45 +121,146 @@ package body ColdFrame.Events_G is
    end Handler;
 
 
-   procedure Finalize (The_Terminator : in out Timer_Terminator) is
-   begin
-
-      --  XXX is there a race condition here?
-
-      if The_Terminator.For_The_Timer.The_Entry /= null then
-
-         --  The Timer is set. Tell the timer event that the timer has
-         --  been deleted.
-         The_Terminator.For_The_Timer.The_Entry.The_Timer := null;
-
-         --  Invalidate the held event.
-         The_Terminator.For_The_Timer.The_Entry.The_Event.Invalidated := True;
-
-         --  Decrement the count of timer events
-         Remove_Timer_Event (The_Terminator.For_The_Timer.The_Entry.On);
-
-      end if;
-
-   end Finalize;
-
-
    procedure Initialize (The_Lock : in out Lock) is
    begin
       Locker (The_Lock.The_Queue);
    end Initialize;
 
 
-   procedure Finalize (The_Lock : in out Lock) is
+   procedure Instance_Is_Deleted
+     (For_The_Event : access Instance_Event_Base'Class) is
    begin
-
-      if not The_Lock.Finalized then
-
-         The_Lock.Finalized := True;
-         Unlocker (The_Lock.The_Queue);
-
+      if For_The_Event.Instance_Deleted then
+         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
+                                         "instance already marked as deleted");
+      else
+         For_The_Event.Instance_Deleted := True;
       end if;
+   end Instance_Is_Deleted;
 
-   end Finalize;
+
+   procedure Invalidate_Events
+     (On : access Event_Queue_Base;
+      For_The_Instance : access Instance_Base'Class) is
+      pragma Warnings (Off, On);
+      pragma Warnings (Off, For_The_Instance);
+   begin
+      raise Program_Error;
+   end Invalidate_Events;
+
+
+   procedure Locker (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Locker;
+
+
+   procedure Log_Post_Dispatch (The_Event : Event_P;
+                                On : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Event);
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Log_Post_Dispatch;
+
+
+   procedure Log_Pre_Dispatch (The_Event : Event_P;
+                               On : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Event);
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Log_Pre_Dispatch;
+
+
+   procedure Log_Retraction (The_Event : Event_P;
+                             On : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Event);
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Log_Retraction;
+
+
+   procedure Remove_Held_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Remove_Held_Event;
+
+
+   procedure Remove_Posted_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Remove_Posted_Event;
+
+
+   procedure Remove_Timer_Event (On : access Event_Queue_Base) is
+      pragma Warnings (Off, On);
+   begin
+      null;
+   end Remove_Timer_Event;
+
+
+   procedure Start (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      if The_Queue.Started then
+         Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
+                                         "queue already started");
+      else
+         The_Queue.Started := True;
+         Start_Queue (Event_Queue_P (The_Queue)); -- need to dispatch
+      end if;
+   end Start;
+
+
+   procedure Start_Queue (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Start_Queue;
+
+
+   procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Tear_Down only legal with Test event queue");
+   end Tear_Down;
+
+
+   procedure Tear_Down (The_Queue : in out Event_Queue_P) is
+      procedure Delete
+      is new Ada.Unchecked_Deallocation (Event_Queue_Base'Class,
+                                         Event_Queue_P);
+   begin
+      if The_Queue /= null then
+         Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
+         Delete (The_Queue);
+      end if;
+   end Tear_Down;
+
+
+   procedure Unlocker (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      raise Program_Error;
+   end Unlocker;
+
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
+                              Ignoring_Timers : Boolean := False) is
+      pragma Warnings (Off, The_Queue);
+      pragma Warnings (Off, Ignoring_Timers);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Wait_Until_Idle only legal with Test event queue");
+   end Wait_Until_Idle;
 
 
 end ColdFrame.Events_G;
