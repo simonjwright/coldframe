@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 6df8619783c1 2003/09/09 04:14:58 simon $ -->
+<!-- $Id: error-messages.html,v 6606eb80dd60 2003/09/27 16:49:09 simon $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -122,13 +122,15 @@ value]]</i>" <dd>The given annotation wasn't understood.
 
 <dl>
 
-<dt>Error: <i>Class</i>.Delete not allowed as a singleton entry action. <dd>It's not permitted to delete a singleton.
+<dt>Error: <i>Class</i>.<i>State</i>, Delete not allowed as a singleton entry action <dd>It's not permitted to delete a singleton.
 
-<dt>Error: <i>Class.Operation</i> has too many parameters to be an entry action. <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
+<dt>Error: <i>Class.State</i>, <i>Operation</i> has too many parameters to be an entry action <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
 
-<dt>Error: <i>Class.Operation</i> is a function, can't be an entry action. <dd>Only procedures are allowed to be state machine entry actions.
+<dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
 
-<dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type. <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
+<dt>Error: <i>Class.Operation</i>'s parameter is of the wrong type <dd>If an entry action has a parameter, it must be of the type of associated event's payload.
+
+<dt>Error: drop-through and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
 <dt>Error: drop-through transition after Delete in state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
 
@@ -137,6 +139,8 @@ value]]</i>" <dd>The given annotation wasn't understood.
 <dt>Error: more than one drop-through transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
 
 <dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
+
+<dt>Error: more than one transition triggered by <i>Event</i> from state <i>Class.State</i> <dd>An event can trigger at most one transition from any state.
 
 <dt>Error: no concrete operation for <i>Parent.Operation</i> in <i>Leaf</i> <dd><tt>Operation</tt> was specified &#171;abstract&#187; in <tt>Parent</tt>, but no implementation has been found in the branch leading to the leaf class <tt>Leaf</tt>.
 
