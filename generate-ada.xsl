@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 6f79ea96d061 2001/06/19 18:48:46 simon $ -->
+<!-- $Id: generate-ada.xsl,v f2b6973524d3 2001/07/07 14:12:11 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -47,17 +47,21 @@
   <xsl:template match="domain">
 
     <!-- Any context clause needed for top-level package .. -->
+    <xsl:message>Generating domain context ..</xsl:message>
     <xsl:apply-templates mode="domain-context"/>
 
     <!-- .. the top-level package spec .. -->
+    <xsl:message>.. top-level package spec ..</xsl:message>
     <xsl:text>package </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
 
     <!-- .. any specially-declared types .. -->
+    <xsl:message>.. any specially-declared types ..</xsl:message>
     <xsl:call-template name="domain-types"/>
 
     <!-- .. the Initialize procedure .. -->
+    <xsl:message>.. the Initialize procedure ..</xsl:message>
     <xsl:text>  procedure Initialize;&#10;</xsl:text>
 
     <!-- .. and close. -->
@@ -66,6 +70,7 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- The top-level package body. -->
+    <xsl:message>.. the top-level package body ..</xsl:message>
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text> is&#10;</xsl:text>
@@ -75,6 +80,7 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- The separate Initialize procedure body. -->
+    <xsl:message>.. the separate Initialize procedure body ..</xsl:message>
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
       <xsl:text>with </xsl:text>
@@ -89,31 +95,40 @@
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
       <xsl:text>  </xsl:text>
-      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:value-of select="name"/>
       <xsl:text>.Initialize;&#10;</xsl:text>
     </xsl:for-each>
     <xsl:text>end Initialize;&#10;</xsl:text>
 
     <!-- Any support packages for specially-declared types. -->
+    <xsl:message>.. any support packages for specially-declared types ..</xsl:message>
     <xsl:apply-templates select="type" mode="domain-type-support"/>
 
     <!-- Package specs for individual classes. -->
+    <xsl:message>.. package specs for individual classes ..</xsl:message>
     <xsl:apply-templates select="class" mode="class-spec"/>
 
     <!-- Package bodies for individual classes. -->
+    <xsl:message>.. package bodies for individual classes ..</xsl:message>
     <xsl:apply-templates select="class" mode="class-body"/>
 
     <!-- Collection support packages. -->
+    <xsl:message>.. Collection support packages ..</xsl:message>
     <xsl:apply-templates select="class" mode="collection-support"/>
 
     <!-- Package specs for Associations -->
+    <xsl:message>.. package specs for Associations ..</xsl:message>
     <xsl:apply-templates select="association" mode="association-spec"/>
 
     <!-- Package bodies for Associations -->
+    <xsl:message>.. package bodies for Associations ..</xsl:message>
     <xsl:apply-templates select="association" mode="association-body"/>
 
     <!-- Package specs for callbacks. -->
+    <xsl:message>.. package bodies for Callbacks ..</xsl:message>
     <xsl:apply-templates select="type[@callback]" mode="callback-spec"/>
+
+    <xsl:message>.. done.</xsl:message>
 
   </xsl:template>
 
