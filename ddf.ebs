@@ -1,0 +1,139 @@
+'--------------------------------------------------------------------------------
+'ddf.ebs
+'$Id: ddf.ebs,v 73f83b044ea3 2000/03/19 17:39:28 simon $
+'
+'	This script exports data from a Rose model to an XML file for further 
+'	processing by the Object Oriented Model Compiler.
+'
+' Copyright Alenia Marconi Systems Limited 2000
+'--------------------------------------------------------------------------------
+
+Sub DumpObjectRelationInfo (o As Class)
+	'number of relations for this class
+	Print "    relations"
+	Print #1, "<relations>"
+	Print #1, "</relations>"
+	End Sub	
+
+Sub DumpTagInfo (o As Class)
+	'number of tags
+	Print "    tags"
+	Print #1, "<tags>"
+	Print #1, "</tags>"
+End Sub
+
+Sub DumpStatusAttribute (o As Class)
+	'the Status attribute is an extra attribute, needed if there's an STT
+'	Print 0
+'	Print #1, 0
+End Sub
+
+Sub DumpAttributes (o As Class)
+	Dim atts As AttributeCollection
+	Set atts = o.Attributes
+	'number of attributes (add 1 if Status needed)
+	Print "    attributes"					
+	Print #1, "<attributes>"
+	For attid = 1 To atts.Count
+		Dim a As Attribute
+		Dim s As String
+		Set a = atts.GetAt(attid)
+		s = a.Stereotype
+		If Len(s) > 0 Then
+			Print #1, "<attribute " & "stereotype=" & Chr(34) & s & Chr(34) & ">"
+		Else
+			Print #1, "<attribute>"
+		End If
+		Print "      " & a.Name	& " : " & a.Type
+		Print #1, "<name>" & a.Name & "</name>"
+		Print #1, "<type>" &  a.Type & "</type>"
+		Print #1, "<protection>" & a.ExportControl.Name & "</protection>"
+		Print #1, "</attribute>"
+	Next attid
+	DumpStatusAttribute (o)
+	Print #1, "</attributes>"
+End Sub
+
+Sub DumpClass (o As Class)
+	Print "  object " & o.Name
+	Print #1, "<object stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
+	Print #1, "<name>" & o.Name & "</name>"
+	DumpObjectRelationInfo (o)
+	DumpTagInfo (o)
+	DumpAttributes (o)
+	Print #1, "</object>"
+End Sub
+
+Sub DumpClasses (domain As Category)
+	Dim classes As ClassCollection
+	Set classes = domain.Classes
+	Print #1, "<objects>"
+	For clid = 1 To classes.Count
+		DumpClass (classes.GetAt (clid))
+	Next clid
+	Print #1, "</objects>"
+End Sub
+
+Sub DumpRelationships (domain As Category)
+	Print "  relationships"
+	Print #1, "<relationships>"
+	Print #1, "</relationships>"
+End Sub
+
+Sub DumpDataTypes (domain As Category)
+'	Print "  datatypes"
+'	Print #1, "<datatypes>"
+'	Print #1, "</datatypes>"
+End Sub
+
+Sub DumpTypesFiles (domain As Category)
+	Print "  typesfiles"
+	Print #1, "<typesfiles>"
+	Print #1, "</typesfiles>"
+End Sub
+
+Sub DumpTransitionTables (domain As Category)
+	Print "  transitiontables"
+	Print #1, "<transitiontables>"
+	Print #1, "</transitiontables>"
+End Sub
+
+Sub DumpTerminators (domain As Category)
+	Print "  terminators"
+	Print #1, "<terminators>"
+	Print #1, "</terminators>"
+End Sub
+
+Sub DumpDomainData (domain As Category)
+	Open (domain.Name + ".raw") For Output Access Write As #1
+	Print "domain "	& domain.Name
+	Dim s As String
+	s = domain.Stereotype
+	If Len(s) = 0 Then
+		Print #1, "<domain>"
+	Else
+		Print #1, "<domain stereotype=" & chr(34) & s & chr(34) & ">"
+	End If
+	'domain name
+	Print #1, "<name>" + domain.Name + "</name>"
+	'get date in external processing (must be a way!)
+	DumpClasses (domain)
+	DumpRelationships (domain)
+	DumpDataTypes (domain)
+	DumpTypesFiles (domain)
+	DumpTransitionTables (domain)
+	DumpTerminators (domain)
+	Print #1, "</domain>"
+	Close #1
+End Sub
+
+Sub Main
+	Dim cats As CategoryCollection
+	Viewport.Open
+	Set cats = RoseApp.CurrentModel.GetSelectedCategories()
+	For cid = 1 To cats.Count
+		Dim cat As Category
+		Set cat = cats.GetAt(cid)
+		DumpDomainData (cat)
+	Next cid   
+End Sub
