@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 0507e6778854 2001/04/13 12:42:15 simon $ -->
+<!-- $Id: ada-utilities.xsl,v 781656995dac 2001/04/22 10:42:52 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,6 +61,17 @@
       </xsl:otherwise>
 
     </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Generate a referential attribute name, from the supplier's
+       abbreviation and the relationship name. -->
+  <xsl:template name="referential-attribute-name">
+    <xsl:param name="supplier"/>
+    <xsl:param name="relation"/>
+    <xsl:value-of select="/domain/class[name=$supplier]/abbreviation"/>
+    <xsl:text>_Handle_</xsl:text>
+    <xsl:value-of select="$relation"/>
   </xsl:template>
 
 
