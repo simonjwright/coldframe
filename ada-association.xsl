@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 97b56c2a6f11 2001/10/13 13:15:40 simon $ -->
+<!-- $Id: ada-association.xsl,v 6cf22dec071c 2001/10/13 16:36:18 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -210,6 +210,17 @@
 
       <xsl:when test="associative">
 
+        <!--
+             function Link
+               ({role-a} : {a}.Handle;
+                {role-b} : {b}.Handle) is
+                Result : {c}.Handle;
+                use ColdFrame.Instances;
+             begin
+                Result := {c}.Create
+                  ((
+             -->
+
         <xsl:call-template name="link-function-specification"/>
         <xsl:text> is&#10;</xsl:text>
 
@@ -217,6 +228,8 @@
         <xsl:text>Result : </xsl:text>
         <xsl:value-of select="associative"/>
         <xsl:text>.Handle;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
@@ -234,6 +247,11 @@
             <!-- Both ends multiple; the associative class' identifier
                  references both ends. -->
 
+            <!--
+                 {a-role-attr} => Handle ({a-role}),
+                 {b-role-attr} => Handle ({b-role})));
+                 -->
+
             <xsl:variable name="r1" select="role[1]"/>
             <xsl:variable name="r2" select="role[2]"/>
 
@@ -243,9 +261,9 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$r1/classname]"/>
             </xsl:call-template>
-            <xsl:text> => </xsl:text>
+            <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r1/name"/>
-            <xsl:text>,&#10;</xsl:text>
+            <xsl:text>),&#10;</xsl:text>
 
             <xsl:value-of select="$IIC"/>
             <xsl:text> </xsl:text>
@@ -255,10 +273,10 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$r2/classname]"/>
             </xsl:call-template>
-            <xsl:text> => </xsl:text>
+            <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r2/name"/>
 
-            <xsl:text>));&#10;</xsl:text>
+            <xsl:text>)));&#10;</xsl:text>
 
           </xsl:when>
 
@@ -266,6 +284,12 @@
             <!-- One end multiple; the associative class' identifier
                  references the multiple end, the other end is
                  referenced by a plain attribute. -->
+
+            <!--
+                     {multiple-role-attr} => Handle ({multiple-role})));
+                 {c}.Set_{rel}_{single-role}
+                   (Result, Handle ({single-role}));
+                 -->
 
             <xsl:variable name="multiple-role" select="role[@multiple]"/>
             <xsl:variable name="single-role" select="role[not(@multiple)]"/>
@@ -280,9 +304,9 @@
               <!-- NB, had to be careful here because of possible reflexive
                    associations. -->
             </xsl:call-template>
-            <xsl:text> => </xsl:text>
+            <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$multiple-role/name"/>
-            <xsl:text>));&#10;</xsl:text>
+            <xsl:text>)));&#10;</xsl:text>
 
             <xsl:value-of select="$II"/>
             <xsl:text></xsl:text>
@@ -294,14 +318,22 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$single-role/classname]"/>
             </xsl:call-template>
-            <xsl:text> (Result, </xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
+            <xsl:text>(Result, Handle (</xsl:text>
             <xsl:value-of select="$single-role/name"/>
-            <xsl:text>);&#10;</xsl:text>
+            <xsl:text>));&#10;</xsl:text>
 
           </xsl:when>
 
           <xsl:otherwise>
             <!-- Neither end multiple -->
+
+            <!--
+                     {source-role-attr} => Handle ({source-role})));
+                 {c}.Set_{rel}_{non-source-role}
+                   (Result, Handle ({non-source-role}));
+                 -->
 
             <xsl:variable name="source-role" select="role[@source]"/>
             <xsl:variable name="non-source-role" select="role[not(@source)]"/>
@@ -313,9 +345,9 @@
                         [@relation=$n
                         and @identifier]"/>
             </xsl:call-template>
-            <xsl:text> => </xsl:text>
+            <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$source-role/name"/>
-            <xsl:text>));&#10;</xsl:text>
+            <xsl:text>)));&#10;</xsl:text>
 
             <xsl:value-of select="$II"/>
             <xsl:value-of select="associative"/>
@@ -326,13 +358,20 @@
                 select="/domain/class/attribute
                         [@relation=$n and @refers=$non-source-role/classname]"/>
             </xsl:call-template>
-            <xsl:text> (Result, </xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$II"/>
+            <xsl:text>(Result, Handle (</xsl:text>
             <xsl:value-of select="$non-source-role/name"/>
-            <xsl:text>);&#10;</xsl:text>
+            <xsl:text>));&#10;</xsl:text>
 
           </xsl:otherwise>
 
         </xsl:choose>
+
+        <!--
+                return Result;
+             end Link;
+             -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>return Result;&#10;</xsl:text>
@@ -344,8 +383,18 @@
 
       <xsl:when test="not(associative)">
 
+        <!--
+             procedure Link
+               ({role-a} : {a}.Handle;
+                {role-b} : {b}.Handle) is
+                use ColdFrame.Instances;
+             begin
+             -->
+
         <xsl:call-template name="link-procedure-specification"/>
         <xsl:text> is&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>use ColdFrame.Instances;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
@@ -355,15 +404,22 @@
                we can't change it (there isn't a Set operation). But the
                act of creating the instance in which the formalization is
                required has already performed the Link. -->
-          <!-- XXX should I be testing for the correct class as well?
-               The argument against is that the association is only
-               formalized at one end, so we must have the _right_ end! -->
           <xsl:when test="/domain/class/attribute[@relation=$n]/@identifier">
+
+            <!--
+                 null;
+                 -->
+
             <xsl:value-of select="$II"/>
             <xsl:text>null;&#10;</xsl:text>
           </xsl:when>
 
           <xsl:otherwise>
+
+            <!--
+                 {dst}.Set_{rel}_{src-attr}
+                   ({dst}, {src});
+                 -->
 
             <xsl:variable name="src" select="role[@source]"/>
             <xsl:variable name="dst" select="role[not(@source)]"/>
@@ -381,12 +437,16 @@
             <xsl:value-of select="$IIC"/>
             <xsl:text>(</xsl:text>
             <xsl:value-of select="$dst/name"/>
-            <xsl:text>, </xsl:text>
+            <xsl:text>, Handle (</xsl:text>
             <xsl:value-of select="$src/name"/>
-            <xsl:text>);&#10;</xsl:text>
+            <xsl:text>));&#10;</xsl:text>
           </xsl:otherwise>
 
         </xsl:choose>
+
+        <!--
+             end Link;
+             -->
 
         <xsl:value-of select="$I"/>
         <xsl:text>end Link;&#10;</xsl:text>
