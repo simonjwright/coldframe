@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 109ebb0e5e3a 2002/10/01 17:46:38 simon $
+'$Id: ddf.ebs,v 9769ecfb1187 2002/10/11 05:36:28 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -216,6 +216,34 @@ Sub DumpTypedEvents (o As Class)
 	Print #1, "</events>"
 End Sub
 
+Sub DumpClassParameters(c As Class)
+	Dim kind As String
+	kind = c.ClassKind
+	If Not (kind = "ParameterizedClass" Or kind = "ParameterizedClassUtility") Then
+		Exit Sub
+	End If
+	Dim pars As ParameterCollection
+	Set pars = c.Parameters
+	Print #1, "<parameters>"
+	For parid = 1 To pars.Count
+		Dim p As Parameter
+		Set p = pars.GetAt(parid)
+		Dim s As String
+		s = p.Stereotype
+		If Len(s) > 0 Then
+			Print #1, "<parameter " & "stereotype=" & Chr(34) & s & Chr(34) & ">"
+		Else
+			Print #1, "<parameter>"
+		End If
+		Print #1, "<name>" & p.Name & "</name>"
+		Print #1, "<documentation>" & p.Documentation & "</documentation>"
+		Print #1, "<type>" & p.Type & "</type>"
+		Print #1, "<initial>" & p.InitValue & "</initial>"
+		Print #1, "</parameter>"
+	Next parid
+	Print #1, "</parameters>"
+End Sub
+
 Sub DumpClass (o As Class)
 	Print "  class " & o.Name
 	Dim s As String
@@ -232,6 +260,8 @@ Sub DumpClass (o As Class)
 	Print #1, "<cardinality>" & o.Cardinality & "</cardinality>"
 	Print #1, "<concurrency>" & o.Concurrency & "</concurrency>"
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
+	'fiddling with generics
+	DumpClassParameters (o)
 	DumpAttributes (o)
 	DumpOperations (o)
 	DumpTypedEvents (o)
