@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 70c002850522 2002/08/20 18:32:35 simon $ -->
+<!-- $Id: releases.html,v a2d9c1c269e3 2002/09/04 19:00:19 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -35,6 +35,11 @@ you to query whether a <i>Timer</i> is set, and when it will expire.
 should be encoded in the state machine, as far as possible, and you
 ought to <u>know</u> whether a <i>Timer</i> is set or not.
 
+<br>The <tt>Wait_Until_Idle</tt> operation has a default
+implementation which raises <tt>ColdFrame.Exceptions.Use_Error</tt>
+(because operational code shouldn't be calling it). Test queues
+support this operation; the operation blocks the test thread of
+control until all event activity has terminated.
 
 <p>Documentation is copied through into the generated code.
 
@@ -52,7 +57,7 @@ there was an interaction with a GNAT feature (GCC PR/7613).
 <tt>use&nbsp;type</tt> for it. This will change operations' profiles.
 
 
-<p>Attempts to use reserved words for identifiers are caught.
+<p>Attempts to use Ada reserved words for identifiers are caught.
 
 
 <p><tt>Tear_Down</tt> now cleans up &#171;singleton&#187;s and class
@@ -61,7 +66,7 @@ a new <tt>Class_Initialize</tt> operation; <tt>Class_Initialize</tt>
 is now reserved).
 
 
-<p>If an state entry action procedure has a parameter, it's of the
+<p>If a state entry action procedure has a parameter, it's of the
 type of the corresponding event's payload rather than the vent
 itself. This allows different events to cause transitions to the same
 state, so long as they all have the same payload type.

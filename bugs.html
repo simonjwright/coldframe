@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 70c002850522 2002/08/20 18:32:35 simon $ -->
+<!-- $Id: bugs.html,v a2d9c1c269e3 2002/09/04 19:00:19 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -168,9 +168,20 @@ literals aren't.
 <dd>The error where a state has more than one exiting transition
 triggered by the same event (or drop-through) isn't detected.
 
+<dt>0110 (raised 2.ix.02)
+
+<dd>The <tt>Lock</tt> features of the standard Event Queue will result
+in a deadly embrace if used by two domains sharing the same event
+queue.
+
+<dt>0111 (raised 2.1x.02)
+
+<dd>It would make testing easier if non-&#171;public&#187; classes
+could be generated as non-<tt>private</tt> Ada packages.
+
 </dl>
 
-<!-- next: 0110 -->
+<!-- next: 0111 -->
 
 <h2><a name="fixed">Fixed</a></h2>
 
