@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6167e65171d2 2002/12/03 21:21:08 simon $ -->
+<!-- $Id: bugs.html,v b4518e22c070 2002/12/10 20:08:58 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -19,16 +19,6 @@
 <h2><a name="outstanding">Outstanding</a></h2>
 
 <dl>
-
-<dt>0010 (raised 27.vi.01)
-
-<dd>It would be helpful if active tasks' procedures (which call the
-corresponding entries) trapped and reported exceptions.
-
-<dt>0012 (raised 12.vii.01)
-
-<dd>It would be helpful if exception handlers could be automatically
-generated in stub subprograms.
 
 <dt>0016 (raised 6.viii.01)
 
@@ -116,12 +106,6 @@ requires you to specify the maximum number of instances.
 <dd>It would be helpful if ColdFrame could detect the error of having
 non-unique abbreviations.
 
-<dt>0080 (raised 1.v.02)
-
-<dd>In multiple inheritance, would it be possible for an operation
-inherited from one parent to act as the concrete version of an
-abstract operation declared in the other parent?
-
 <dt>0088 (raised 7.vi.02)
 
 <dd>Extraction hangs if the output directory (<tt>ColdFrameOut</tt> in
@@ -155,12 +139,6 @@ imported/renamed types.
 <br><i>It's already possible to use a stereotype like <em>&#171;type,
 callback=42&#187;</em>.</i>
 
-<dt>0135 (raised 26.xi.02)
-
-<dd>The documentation refers to transitions from a state which need no
-event to trigger them as "unguarded". In fact they are "completion
-transitions" (UML 1.3, section 2.12).
-
 <dt>0136 (raised 26.xi.02)
 
 <dd>The documentation gives an example of a
@@ -172,17 +150,29 @@ be specified in a model.
 <dd>If an event queue is designated by more than one domain, the
 tear-down unit test support won't work properly.
 
+<!-- next: 0141 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>10.xii.02</h3>
+
+<dl>
+
+<dt>0135 (raised 26.xi.02)
+
+<dd>The documentation refers to transitions from a state which need no
+event to trigger them as "unguarded". In fact they are "completion
+transitions" (UML 1.3, section 2.12).
+
 <dt>0140 (raised 3.xii.02)
 
 <dd>If a &#171;type&#187; has an attribute of type
 <tt>Counterpart</tt>, the necessary
 <tt>with&nbsp;Coldframe.Instances;</tt> isn't generated.
 
-<!-- next: 0141 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>3.xii.02</h3>
 
@@ -1099,6 +1089,33 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.xii.02</h3>
+<dl>
+
+<dt>0010 (raised 27.vi.01)
+
+<dd>It would be helpful if active classes' procedures (which call the
+corresponding entries) trapped and reported exceptions.
+
+<br><i>Active class procedures no longer call the corresponding
+entries. In any case, you're better off using GNAT's features for
+reporting unhandled exceptions.</i>
+
+<dt>0012 (raised 12.vii.01)
+
+<dd>It would be helpful if exception handlers could be automatically
+generated in stub subprograms.
+<br><i>You're better off using GNAT's features for reporting unhandled
+exceptions.</i>
+
+<dt>0080 (raised 1.v.02)
+
+<dd>In multiple inheritance, would it be possible for an operation
+inherited from one parent to act as the concrete version of an
+abstract operation declared in the other parent?
+
+</dl>
 
 <h3>17.viii.02</h3>
 <dl>
