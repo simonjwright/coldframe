@@ -20,10 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 9158b03ef33b $
---  $Date: 2005/02/24 18:18:55 $
+--  $Revision: 4740bc252c95 $
+--  $Date: 2005/02/24 20:54:32 $
 --  $Author: simon $
 
+with Ada.Exceptions;
 with Ada.Streams;
 
 package ColdFrame.Test_Stub_Support is
@@ -45,7 +46,7 @@ package ColdFrame.Test_Stub_Support is
    --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
    -------------------------------------------------------------
 
-   --  Specify the result of calling a stubbed operation for a
+   --  Specify an output from a call to a stubbed operation for a
    --  definite type T.
    --
    --  For_Subprogram_Named is the case-insensitive fully-qualified
@@ -62,16 +63,25 @@ package ColdFrame.Test_Stub_Support is
    --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
    --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
    --
-   --  Special parameter names are "exception" (in which case T needs
-   --  to be an Exception_ID) and "return". For "exception", the
-   --  result of the call will be to raise the given exception. For
-   --  "return", the To value will be the function result.
+   --  A special parameter name is "return". For "return", the To
+   --  value will be the function result.
    generic
       type T is private;
    procedure Set_Output_Value (For_Subprogram_Named : String;
                                For_Parameter_Named : String;
                                To : T;
                                For_Occurrence : Positive := 1);
+
+
+   --  Specify that a call to a stubbed operation is to raise an
+   --  exception.
+   --
+   --  For_Subprogram_Named is the case-insensitive fully-qualified
+   --  name of the subprogram (eg, if dealing with procedure
+   --  Domain.Class.Operation, "Domain.Class.Operation").
+   procedure Set_Exception (For_Subprogram_Named : String;
+                            E : Ada.Exceptions.Exception_Id;
+                            For_Occurrence : Positive := 1);
 
 
    --  Retrieve values passed to stubbed operations for a definite

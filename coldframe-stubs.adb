@@ -20,11 +20,10 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 9158b03ef33b $
---  $Date: 2005/02/24 18:18:55 $
+--  $Revision: 4740bc252c95 $
+--  $Date: 2005/02/24 20:54:32 $
 --  $Author: simon $
 
-with Ada.Exceptions;
 with Ada.Strings.Unbounded;
 with Ada.Strings.Maps.Constants;
 with BC.Containers.Bags.Unmanaged;
@@ -104,21 +103,66 @@ package body ColdFrame.Test_Stub_Support is
       Buckets => 37);
 
 
+   --  For Exceptions, we need collections of Exception_Ids, organized to
+   --  provide a sparse array. The collection is reverse-ordered, so
+   --  that we can find the appropriate entry for a particular entry
+   --  by iterating until we come to a cell whose Ordinal is less than
+   --  or equal to the one we require.
+   type Exception_Cell is record
+      Ordinal : Positive;
+      E : Ada.Exceptions.Exception_Id;
+   end record;
+
+   function "=" (L, R : Exception_Cell) return Boolean;
+   function ">" (L, R : Exception_Cell) return Boolean;
+
+   package Abstract_Sparse_Exception_Containers
+   is new  BC.Containers (Item => Exception_Cell);
+   package Abstract_Sparse_Exception_Collections
+   is new Abstract_Sparse_Exception_Containers.Collections;
+   package Abstract_Ordered_Sparse_Exception_Collections
+   is new Abstract_Sparse_Exception_Collections.Ordered ("<" => ">");
+   package Sparse_Exception_Collections
+   is new Abstract_Ordered_Sparse_Exception_Collections.Unmanaged;
+
+   --  We need to hold mutable instances in containers, so we need
+   --  pointers.
+   type Sparse_Exception_Collection_Access
+      is access Sparse_Exception_Collections.Collection;
+   package Sparse_Exception_Collection_Pointers
+   is new BC.Support.Smart_Pointers
+     (T => Sparse_Exception_Collections.Collection,
+      P => Sparse_Exception_Collection_Access);
+
+   package Abstract_Sparse_Exception_Collection_Containers
+   is new BC.Containers
+     (Item => Sparse_Exception_Collection_Pointers.Pointer,
+      "=" => Sparse_Exception_Collection_Pointers."=");
+   package Abstract_Sparse_Exception_Collection_Maps
+   is new Abstract_Sparse_Exception_Collection_Containers.Maps
+     (Key => Ada.Strings.Unbounded.Unbounded_String,
+      "=" => Case_Insensitive_Equality);
+   package Sparse_Exception_Collection_Maps
+   is new Abstract_Sparse_Exception_Collection_Maps.Unmanaged
+     (Hash => Case_Insensitive_Hash,
+      Buckets => 37);
+
+
    --  For Outputs, we need collections of Memory Streams, organized to
    --  provide a sparse array. The collection is reverse-ordered, so
    --  that we can find the appropriate entry for a particular entry
    --  by iterating until we come to a cell whose Ordinal is less than
    --  or equal to the one we require.
-   type Cell is record
+   type Output_Cell is record
       Ordinal : Positive;
       Stream : Stream_Pointers.Pointer;
    end record;
 
-   function "=" (L, R : Cell) return Boolean;
-   function ">" (L, R : Cell) return Boolean;
+   function "=" (L, R : Output_Cell) return Boolean;
+   function ">" (L, R : Output_Cell) return Boolean;
 
    package Abstract_Sparse_Stream_Pointer_Containers
-   is new  BC.Containers (Item => Cell);
+   is new  BC.Containers (Item => Output_Cell);
    package Abstract_Sparse_Stream_Pointer_Collections
    is new Abstract_Sparse_Stream_Pointer_Containers.Collections;
    package Abstract_Ordered_Sparse_Stream_Pointer_Collections
@@ -151,6 +195,7 @@ package body ColdFrame.Test_Stub_Support is
 
    Entries : Unbounded_String_Bags.Bag;
    Inputs : Stream_Pointer_Collection_Maps.Map;
+   Exceptions : Sparse_Exception_Collection_Maps.Map;
    Outputs : Sparse_Stream_Pointer_Collection_Maps.Map;
 
 
@@ -162,6 +207,7 @@ package body ColdFrame.Test_Stub_Support is
    begin
       Unbounded_String_Bags.Clear (Entries);
       Stream_Pointer_Collection_Maps.Clear (Inputs);
+      Sparse_Exception_Collection_Maps.Clear (Exceptions);
       Sparse_Stream_Pointer_Collection_Maps.Clear (Outputs);
    end Set_Up;
 
@@ -170,6 +216,7 @@ package body ColdFrame.Test_Stub_Support is
    begin
       Unbounded_String_Bags.Clear (Entries);
       Stream_Pointer_Collection_Maps.Clear (Inputs);
+      Sparse_Exception_Collection_Maps.Clear (Exceptions);
       Sparse_Stream_Pointer_Collection_Maps.Clear (Outputs);
    end Tear_Down;
 
@@ -203,9 +250,30 @@ package body ColdFrame.Test_Stub_Support is
       end if;
       Sparse_Stream_Pointer_Collections.Append
         (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all,
-         Cell'(For_Occurrence, Str));
-      T'Output (Stream_Pointers.Value (Str), To);
+         Output_Cell'(For_Occurrence, Str));
+      T'Write (Stream_Pointers.Value (Str), To);
    end Set_Output_Value;
+
+
+   procedure Set_Exception (For_Subprogram_Named : String;
+                            E : Ada.Exceptions.Exception_Id;
+                            For_Occurrence : Positive := 1) is
+      SEU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
+      Coll : Sparse_Exception_Collection_Pointers.Pointer;
+   begin
+      if not Sparse_Exception_Collection_Maps.Is_Bound (Exceptions, SEU) then
+         Coll := Sparse_Exception_Collection_Pointers.Create
+           (new Sparse_Exception_Collections.Collection);
+         Sparse_Exception_Collection_Maps.Bind (Exceptions, SEU, Coll);
+      else
+         Coll := Sparse_Exception_Collection_Maps.Item_Of (Exceptions, SEU);
+      end if;
+      Sparse_Exception_Collections.Append
+        (Sparse_Exception_Collection_Pointers.Value (Coll).all,
+         (Ordinal => For_Occurrence,
+          E => E));
+   end Set_Exception;
 
 
    function Get_Input_Value (For_Subprogram_Named : String;
@@ -285,33 +353,38 @@ package body ColdFrame.Test_Stub_Support is
 
    procedure Check_For_Exception (For_Subprogram_Named : String;
                                   For_Occurrence : Positive) is
-      SE : constant String := For_Subprogram_Named & ".exception";
       SEU : constant Ada.Strings.Unbounded.Unbounded_String
-        := Ada.Strings.Unbounded.To_Unbounded_String (SE);
-      E : Ada.Exceptions.Exception_Id;
+        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
    begin
-      if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SEU) then
+      if not Sparse_Exception_Collection_Maps.Is_Bound (Exceptions, SEU) then
          return;
       end if;
       declare
-         Pointers : Sparse_Stream_Pointer_Collections.Collection
-           renames Sparse_Stream_Pointer_Collection_Pointers.Value
-           (Sparse_Stream_Pointer_Collection_Maps.Item_Of (Outputs, SEU)).all;
-         It : Abstract_Sparse_Stream_Pointer_Containers.Iterator'Class
-           := Sparse_Stream_Pointer_Collections.New_Iterator (Pointers);
-         use Abstract_Sparse_Stream_Pointer_Containers;
+         Pointers : Sparse_Exception_Collections.Collection
+           renames Sparse_Exception_Collection_Pointers.Value
+           (Sparse_Exception_Collection_Maps.Item_Of (Exceptions, SEU)).all;
+         It : Abstract_Sparse_Exception_Containers.Iterator'Class
+           := Sparse_Exception_Collections.New_Iterator (Pointers);
+         use Abstract_Sparse_Exception_Containers;
       begin
          while not Is_Done (It)
          loop
             if Current_Item (It).Ordinal <= For_Occurrence then
-               E := Ada.Exceptions.Exception_Id'Input
-                 (Stream_Pointers.Value (Current_Item (It).Stream));
-               Ada.Exceptions.Raise_Exception (E, "from stub");
+               declare
+                  E : constant Ada.Exceptions.Exception_Id :=
+                    Current_Item (It).E;
+                  use type Ada.Exceptions.Exception_Id;
+               begin
+                  if E /= Ada.Exceptions.Null_Id then
+                     Ada.Exceptions.Raise_Exception (E, "from stub");
+                  else
+                     exit;
+                  end if;
+               end;
             end if;
             Next (It);
          end loop;
       end;
-      raise Program_Error;
    end Check_For_Exception;
 
 
@@ -371,13 +444,25 @@ package body ColdFrame.Test_Stub_Support is
    end Case_Insensitive_Hash;
 
 
-   function "=" (L, R : Cell) return Boolean is
+   function "=" (L, R : Exception_Cell) return Boolean is
    begin
       return L.Ordinal = R.Ordinal;
    end "=";
 
 
-   function ">" (L, R : Cell) return Boolean is
+   function ">" (L, R : Exception_Cell) return Boolean is
+   begin
+      return L.Ordinal > R.Ordinal;
+   end ">";
+
+
+   function "=" (L, R : Output_Cell) return Boolean is
+   begin
+      return L.Ordinal = R.Ordinal;
+   end "=";
+
+
+   function ">" (L, R : Output_Cell) return Boolean is
    begin
       return L.Ordinal > R.Ordinal;
    end ">";
