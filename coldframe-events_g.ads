@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
+--  $Revision: 41f75030b6f8 $
+--  $Date: 2004/12/08 06:41:41 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -67,7 +67,7 @@ package ColdFrame.Events_G is
    --  Private use only
    procedure Mark_Deletable (The_Instance : access Instance_Base);
    --  Indicate, in an event handler, that it's OK for the action
-   --  routine about to be called to delete the instance..
+   --  routine about to be called to delete the instance.
 
    function State_Image (This : Instance_Base) return String is abstract;
    --  Used for debugging/logging.
