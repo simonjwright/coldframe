@@ -1,4 +1,4 @@
--- Copyright (c) 2001 Simon Wright <simon@pushface.org>
+-- Copyright (C) Simon Wright <simon@pushface.org>
 
 -- This package is free software; you can redistribute it and/or
 -- modify it under terms of the GNU General Public License as
@@ -19,13 +19,15 @@
 -- exception does not however invalidate any other reasons why the
 -- executable file might be covered by the GNU Public License.
 
--- $Id: coldframe-string_hash.ads,v a77d4f0c0477 2001/01/07 10:09:37 simon $
+-- $Id: coldframe-string_hash.ads,v 24a93487f94e 2001/01/12 20:33:21 simon $
 
 with Ada.Strings.Bounded;
 with Ada.Strings.Unbounded;
 
 package Architecture.String_Hash is
-
+  
+  pragma Elaborate_Body;
+  
   function Hash (S : String;
                  Hash_Table_Size : in Integer := 43)
                 return Integer;
