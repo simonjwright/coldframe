@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 1a50feb6142c 2002/01/04 06:37:16 simon $ -->
+<!-- $Id: releases.html,v 7482331bd825 2002/01/13 10:25:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -45,12 +45,20 @@ fails if there isn't one.
 
 <p>Normalization no longer checks that the parent in an inheritance
 relationship has an identifier (if it hasn't, that will be found later
-anyway).
+anyway). This means it's no longer a fluke if inheritance trees work
+properly!
 
 
 <p>The Rose Extractor only extracts (selected) packages in the current
 class diagram; it pops up a dialog box on completion to say what it's
 done.
+
+
+<p>Reports of unhandled stereotypes, annotations tidied up.
+
+
+<p>The domain package comments include the generated lines-of-code
+count (actually, the usual Ada "number of semicolons").
 
 
 <p><dt>20011209
