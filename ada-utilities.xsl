@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 781656995dac 2001/04/22 10:42:52 simon $ -->
+<!-- $Id: ada-utilities.xsl,v ddc0ed11feb8 2001/04/29 10:39:56 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -32,6 +32,11 @@
     <xsl:param name="type"/>
     <xsl:choose>
 
+      <!-- Date maps to Time. -->
+      <xsl:when test="$type='Date'">
+        <xsl:text>Time</xsl:text>
+      </xsl:when>
+
       <!-- Text maps to Unbounded_String. -->
       <xsl:when test="$type='Text'">
         <xsl:text>Unbounded_String</xsl:text>
@@ -61,17 +66,6 @@
       </xsl:otherwise>
 
     </xsl:choose>
-  </xsl:template>
-
-
-  <!-- Generate a referential attribute name, from the supplier's
-       abbreviation and the relationship name. -->
-  <xsl:template name="referential-attribute-name">
-    <xsl:param name="supplier"/>
-    <xsl:param name="relation"/>
-    <xsl:value-of select="/domain/class[name=$supplier]/abbreviation"/>
-    <xsl:text>_Handle_</xsl:text>
-    <xsl:value-of select="$relation"/>
   </xsl:template>
 
 
