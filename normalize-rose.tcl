@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v d3d1f9bb3c04 2001/11/25 10:22:13 simon $
+# $Id: normalize-rose.tcl,v a04f9729c0a6 2001/11/30 20:20:31 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -704,21 +704,40 @@ itcl::class Class {
 
     method -cardinality {c} {
 	set c [string trim $c]
-	switch $c {
-	    "n" -
-	    "0..n" -
-	    "1..n" {}
-	    "0..0" -
-	    "0..1" {
-		Warning "cardinality $c ignored for $name"
-	    }
-	    "1..1" {$this -singleton dummy}
-	    default {
-		if ![regexp {^[0-9]+$} $c] {
-		    Error "bad cardinality $c for $name"
+	if [regexp {^(([0-9]+) *\.\. *)?([1-9][0-9]*|n|\*)$} $c \
+		whole b1 lower upper] {
+	    if [string length $lower] {
+		switch -exact $lower {
+		    "0"     {
+			switch -exact $upper {
+			    "n"     -
+			    "*"     {}
+			    default {$this -max $upper}
+			}
+		    }
+		    "1"     {
+			switch -exact $upper {
+			    "1"     {$this -singleton dummy}
+			    default {
+				Error "illegal lower bound 1 in cardinality \"$c\" for $name"
+			    }
+			}
+		    }
+		    default {
+			Error "illegal lower bound $lower in cardinality \"$c\" for $name"
+		    }
 		}
-		$this -max $c
+	    } else {
+		switch -exact $upper {
+		    "n"     -
+		    "*"     {}
+		    default {
+			Error "must specify cardinality for $name as 0..$upper"
+		    }
+		}
 	    }
+	} else {
+	    Error "unrecognised cardinality \"$c\" in $name"
 	}
     }
 
@@ -946,7 +965,8 @@ itcl::class Operation {
     variable final 0
 
     # is this operation one that we expect to be generated?
-    variable generated 0
+    # may be unset, "framework", "navigation".
+    variable generated
 
     # the return type, if any
     variable ret ""
@@ -988,10 +1008,10 @@ itcl::class Operation {
     # expected to be generated or otherwise omitted, and is only
     # included for completeness
     method -generated {dummy} {
-	set generated 1
+	set generated "framework"
     }
     method -navigation {dummy} {
-	set generated 1
+	set generated "navigation"
     }
 
     method -return {r} {set ret $r}
@@ -1005,7 +1025,7 @@ itcl::class Operation {
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
-	if $generated {puts -nonewline " generated=\"yes\""}
+	if [info exists generated] {puts -nonewline " generated=\"$generated\""}
 	if {[string length $ret] > 0} {puts -nonewline " return=\"$ret\""}
 	puts ">"
 	putElement name $name
@@ -1267,14 +1287,50 @@ itcl::class Role {
     variable sourceEnd 0
 
     method -cardinality {c} {
-	switch $c {
-	    "1"     -
-	    "1..1"  {set conditional 0; set cardinality "1"}
-	    "1..n"  -
-	    "n"     {set conditional 0; set cardinality "M"}
-	    "0..1"  {set conditional 1; set cardinality "1"}
-	    "0..n"  {set conditional 1; set cardinality "M"}
-	    default {Error "unrecognised multiplicity \"$c\" in role \"$name\""}
+	set c [string trim $c]
+	if [regexp {^(([0-9]+) *\.\. *)?([1-9][0-9]*|n|\*)$} $c \
+		whole b1 lower upper] {
+	    if [string length $lower] {
+		switch -exact $lower {
+		    "0"     {
+			switch -exact $upper {
+			    "1"     {set conditional 1; set cardinality "1"}
+			    "n"     -
+			    "*"     {set conditional 1; set cardinality "M"}
+			    default {
+				Warning "explicit size $upper in role $name ignored"
+				set conditional 1; set cardinality "M"
+			    }
+			}
+		    }
+		    "1"     {
+			switch -exact $upper {
+			    "1"     {set conditional 0; set cardinality "1"}
+			    "n"     -
+			    "*"     {set conditional 0; set cardinality "M"}
+			    default {
+				Warning "explicit size $upper in role $name ignored"
+				set conditional 0; set cardinality "M"
+			    }
+			}
+		    }
+		    default {
+			Error "illegal lower bound $lower in role $name"
+		    }
+		}
+	    } else {
+		switch -exact $upper {
+		    "1"     {set conditional 0; set cardinality "1"}
+		    "n"     -
+		    "*"     {set conditional 1; set cardinality "M"}
+		    default {
+			Warning "explicit size $upper in role $name ignored"
+			set conditional 0; set cardinality "M"
+		    }
+		}
+	    }
+	} else {
+	    Error "unrecognised multiplicity \"$c\" in role $name"
 	}
     }
 
