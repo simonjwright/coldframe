@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 2159d70e1290 2004/02/08 11:17:51 simon $
+# $Id: normalize-rose.tcl,v 144d7947a857 2004/02/09 09:59:13 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2416,7 +2416,10 @@ itcl::class Datatype {
     # called to specify a field image function (for serialization)
     method -field-image {img} {set fieldImage [normalize $img]}
     # support the old name for this attribute
-    method -image {img} {$this -field-image $img}
+    method -image {img} {
+        Warning "use of {image} in $type deprecated -- use {field-image}"
+        $this -field-image $img
+    }
 
     # called to specify a type image function (for serialization)
     method -type-image {img} {set typeImage [normalize $img]}
