@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c4b42ce6473f 2002/10/13 18:06:03 simon $
+# $Id: normalize-rose.tcl,v e97d45233e9a 2002/10/25 19:07:20 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -31,20 +31,28 @@ package require Itcl
 # Utilities #
 #############
 
-# Reads case exceptions from a file. The file format is basically
-# that used by ACT's GLIDE, but we don't distinguish substring specs
-# from whole-identifier ones.
-proc setCaseExceptions {file} {
-    global caseExceptions
+# Reads case exceptions from a file or colon-separated list of files.
+# The file format is basically that used by ACT's GLIDE, but we don't
+# distinguish substring specs from whole-identifier ones.
+proc setCaseExceptions {files} {
+    global tcl_platform caseExceptions
 
-    if [catch {open $file r} f] {
-	Warning "can't open $file: $f"
+    if {$tcl_platform(platform) == "windows"} {
+	set sep ";"
     } else {
-	while {[gets $f line] >= 0} {
-	    regsub -all {[\*\t ]} $line "" res
-	    set caseExceptions([string tolower $res]) $res
+	set sep ":"
+    }
+
+    foreach file [split $files $sep] {
+	if [catch {open $file r} f] {
+	    Warning "can't open $file: $f"
+	} else {
+	    while {[gets $f line] >= 0} {
+		regsub -all {[\*\t ]} $line "" res
+		set caseExceptions([string tolower $res]) $res
+	    }
+	    close $f
 	}
-	close $f
     }
 }
 
@@ -972,6 +980,8 @@ itcl::class Class {
 
     # specifies if this is an active class
     variable active 0
+
+    method -active {dummy} { set active 1}
 
     method -concurrency {conc} {
 	set c [string trim $conc]
