@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c2f61ef7ebf1 2003/11/05 21:10:15 simon $ -->
+<!-- $Id: bugs.html,v 2395a0262233 2003/11/11 20:03:11 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -202,7 +202,23 @@ the same event isn't detected.
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
 
-<!-- next: 0211 -->
+<dt>0211 (raised Remembrance Day 2003)
+
+<dd>There is a memory leak if an exception occurs in a callback
+routine. <a href="#bug-0191">See bug 0191</a>.
+
+<dt>0212 (raised Remembrance Day 2003)
+
+<dd>Would it be possible for the task of an active class to have
+<tt>This</tt> of type <tt>Handle</tt> rather than <tt>access
+Instance</tt>?
+
+<dt>0213 (raised Remembrance Day 2003)
+
+<dd>The generated separate bodies of operations of types don't include
+any documentation comments.
+
+<!-- next: 0214 -->
 
 </dl>
 
@@ -349,7 +365,7 @@ you'd have preferred to put on transitions in a pale colour
 
 <dl>
 
-<dt>0191 (raised 27.viii.03)
+<dt><a name="bug-0191">0191</a> (raised 27.viii.03)
 
 <dd>In &#171;callback&#187; handling, if a registered callback
 operation raises an exception during <tt>Call_Callbacks</tt>
