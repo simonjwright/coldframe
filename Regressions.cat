@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: b4c6cad514be $}
+|{ revision = $Revision: 025d75ff8113 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -4539,6 +4539,30 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Implementation"
 			    uid        	0)
+			(object Operation "aa"
+			    quid       	"40E47D0E00A3"
+			    documentation 	"{renames=a}"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)
+			(object Operation "bb"
+			    quid       	"40E47D110383"
+			    documentation 	"{renames=b}"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Protected"
+			    uid        	0)
+			(object Operation "cc"
+			    quid       	"40E47D1300DC"
+			    documentation 	"{renames=c}"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "dd"
+			    quid       	"40E47D1303CC"
+			    documentation 	"{renames=d}"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Implementation"
+			    uid        	0)
 			(object Operation "p"
 			    quid       	"40E397C10096"
 			    stereotype 	"entry"
@@ -4676,7 +4700,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@128
-				location   	(492, 238)
+				location   	(492, 148)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	642
@@ -4684,7 +4708,7 @@
 				label      	"Class Operation Access Modes")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@128
-				location   	(492, 193)
+				location   	(492, 103)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -4695,8 +4719,25 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40E396EC0266"
+			    compartment 	(object Compartment
+				Parent_View 	@128
+				location   	(492, 204)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	14
+				max_width  	445)
 			    width      	660
-			    height     	580
+			    height     	760
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Regressions::Access modes for operations::Protected Type Operation Access Modes" @129
@@ -4735,6 +4776,23 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40E3977700C1"
+			    compartment 	(object Compartment
+				Parent_View 	@129
+				location   	(427, 1625)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	10
+				max_width  	477)
 			    width      	800
 			    height     	578
 			    annotation 	8
@@ -4775,6 +4833,23 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40E398500091"
+			    compartment 	(object Compartment
+				Parent_View 	@130
+				location   	(514, 1052)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	175)
 			    width      	590
 			    height     	400
 			    annotation 	8
@@ -4848,13 +4923,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: b4c6cad514be $}
+|{ revision = $Revision: 025d75ff8113 $}
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	2426
+	    origin_y   	2427
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Regressions" @132
 		    location   	(2482, 190)
@@ -4894,7 +4969,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v b4c6cad514be 2004/07/01 20:58:51 simon $")
+		    label      	"$Id: Regressions.cat,v 025d75ff8113 2004/07/01 21:19:33 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @134
 		    location   	(301, 318)
 		    font       	(object Font
@@ -5644,7 +5719,7 @@
 		    width      	300
 		    height     	180)
 		(object CategoryView "Logical View::Regressions::Deleting after exception in event handler" @156
-		    location   	(308, 2073)
+		    location   	(315, 2056)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5656,7 +5731,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@156
-			location   	(69, 2034)
+			location   	(76, 2017)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	478
@@ -5664,7 +5739,7 @@
 			label      	"Deleting after exception in event handler")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@156
-			location   	(69, 1989)
+			location   	(76, 1972)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -5746,7 +5821,7 @@
 		    width      	334
 		    height     	180)
 		(object CategoryView "Logical View::Regressions::Special characters in documentation" @159
-		    location   	(1723, 2058)
+		    location   	(1790, 2071)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -5758,7 +5833,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@159
-			location   	(1535, 2019)
+			location   	(1602, 2032)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	376
@@ -5766,7 +5841,7 @@
 			label      	"Special characters in documentation")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@159
-			location   	(1535, 1974)
+			location   	(1602, 1987)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
