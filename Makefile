@@ -239,7 +239,8 @@ PROGS = COPYING \
   $(CODEGEN_SCRIPTS) \
   $(TOOL_SRC)
 
-GPRS = BC.gpr \
+GPRS = AUnit.gpr \
+BC.gpr \
 ColdFrame_Defaults.gpr \
 Options.gpr
 
