@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 3ef8ce6b8941 2004/01/21 21:13:19 simon $ -->
+<!-- $Id: ada-type.xsl,v 69f72922f268 2004/02/08 11:12:59 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -125,7 +125,7 @@
   <xsl:template name="domain-types">
     <xsl:call-template name="sorted-domain-types">
       <xsl:with-param name="nodes" select="/.."/>
-      <xsl:with-param name="finished" select="type[standard]"/>
+      <xsl:with-param name="finished" select="type[@standard]"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -517,7 +517,7 @@
        We do these as child packages in case they're not actually
        needed. -->
   <xsl:template mode="domain-type-support" match="domain/type">
-    <xsl:if test="not(standard)">
+    <xsl:if test="not(@standard)">
       <xsl:choose>
 
         <xsl:when test="array"/>

@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 31f0fc86ca6f 2004/01/18 20:29:50 simon $ -->
+<!-- $Id: generate-html.xsl,v 69f72922f268 2004/02/08 11:12:59 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -122,10 +122,10 @@
             </xsl:apply-templates>
           </ul>
         </xsl:if>
-        <xsl:if test="type[not(standard)]">
+        <xsl:if test="type[not(@standard)]">
           <h3>Types</h3>
           <ul>
-            <xsl:apply-templates select="type[not(standard)]" mode="index">
+            <xsl:apply-templates select="type[not(@standard)]" mode="index">
               <xsl:sort select="name"/>
             </xsl:apply-templates>
           </ul>
@@ -156,9 +156,9 @@
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
-        <xsl:if test="type[not(standard)]">
+        <xsl:if test="type[not(@standard)]">
           <h2>Types</h2>
-          <xsl:apply-templates select="type[not(standard)]">
+          <xsl:apply-templates select="type[not(@standard)]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
@@ -751,7 +751,7 @@
         <a href="#{../../name}.{$type}"><xsl:value-of select="$type"/></a>
       </xsl:when>
 
-      <xsl:when test="/domain/type[name=$type]/standard">
+      <xsl:when test="/domain/type[name=$type]/@standard">
         <!-- a standard type -->
         <xsl:value-of select="$type"/>
       </xsl:when>
