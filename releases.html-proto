@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3126e2976c12 2003/08/12 20:08:40 simon $ -->
+<!-- $Id: releases.html-proto,v e8c0be0c8084 2003/08/28 21:25:17 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -21,6 +21,9 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+
+<p><dt>20030815
 
 <dd>Added <tt>ColdFrame.Project.Log_Error</tt>, and used it to report
 exceptions in domain initialization.
@@ -75,7 +78,7 @@ should help to catch use of uninitialized attributes.
 
 <p>You can specify an active class's stack size and priority (as an
 offset from the system's default priority, the larger the number the
-higher the priority)..
+higher the priority).
 
 
 <p><dt>20030519
