@@ -1,26 +1,26 @@
 <domain>
-<extractor>cf-DATE</extractor>
+<extractor>cf-20040319p2c</extractor>
 <name>Hierarchies</name>
 <date>
-<year>2004</year>
-<month>5</month>
-<day>1</day>
-<time>15:40</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>06:04</time>
 </date>
-<documentation><![CDATA[Support for subtype migration in deeply layered multiple inheritance hierarchies.
-{revision = $Revision: b291368dc4f8 $ }]]></documentation>
+<documentation>Support for subtype migration in deeply layered multiple inheritance hierarchies.
+{revision = $Revision: 4d71b82a8caf $ }</documentation>
 <classes>
 <class>
 <name>R_1</name>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -29,12 +29,12 @@
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_1</return>
 <parameters>
 <parameter>
 <parametername>r1</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -43,7 +43,7 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -56,12 +56,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -70,12 +70,12 @@
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_2</return>
 <parameters>
 <parameter>
 <parametername>r2</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -84,7 +84,7 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -97,12 +97,12 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
@@ -111,12 +111,12 @@
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_3</return>
 <parameters>
 <parameter>
 <parametername>r3</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -125,7 +125,7 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -138,7 +138,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -151,19 +151,19 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>S_2</return>
 <parameters>
 <parameter>
 <parametername>r1</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -172,14 +172,14 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
 <name>find_r_1_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_1</return>
 <parameters>
 </parameters>
@@ -193,25 +193,25 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>S_3</return>
 <parameters>
 <parameter>
 <parametername>r2</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>r3</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -220,14 +220,14 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
 <name>find_r_2_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_2</return>
 <parameters>
 </parameters>
@@ -235,7 +235,7 @@
 <operation stereotype="generated">
 <name>find_r_3_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_3</return>
 <parameters>
 </parameters>
@@ -249,7 +249,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -262,7 +262,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -275,19 +275,19 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>T_2</return>
 <parameters>
 <parameter>
 <parametername>r1</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -296,14 +296,14 @@
 <operation stereotype="generated">
 <name>delete_child</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="generated">
 <name>find_r_1_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_1</return>
 <parameters>
 </parameters>
@@ -311,7 +311,7 @@
 <operation stereotype="generated">
 <name>find_s_2_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>S_2</return>
 <parameters>
 </parameters>
@@ -325,7 +325,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -338,31 +338,31 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation stereotype="generated">
 <name>create_tree</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>F_2</return>
 <parameters>
 <parameter>
 <parametername>r1</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>r2</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>r3</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <type>CIH</type>
 <initial></initial>
 </parameter>
@@ -371,7 +371,7 @@
 <operation stereotype="generated">
 <name>find_r_1_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_1</return>
 <parameters>
 </parameters>
@@ -379,7 +379,7 @@
 <operation stereotype="generated">
 <name>find_r_2_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_2</return>
 <parameters>
 </parameters>
@@ -387,7 +387,7 @@
 <operation stereotype="generated">
 <name>find_r_3_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>R_3</return>
 <parameters>
 </parameters>
@@ -395,7 +395,7 @@
 <operation stereotype="generated">
 <name>find_s_2_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>S_2</return>
 <parameters>
 </parameters>
@@ -403,7 +403,7 @@
 <operation stereotype="generated">
 <name>find_s_3_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>S_3</return>
 <parameters>
 </parameters>
@@ -411,7 +411,7 @@
 <operation stereotype="generated">
 <name>find_t_2_parent</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>T_2</return>
 <parameters>
 </parameters>
@@ -419,7 +419,7 @@
 <operation stereotype="class">
 <name>create_new</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <return>F_2</return>
 <parameters>
 </parameters>
@@ -433,7 +433,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -446,8 +446,8 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[{ renames = ColdFrame.Instances.Handle }
-]]></documentation>
+<documentation>{ renames = ColdFrame.Instances.Handle }
+</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -459,67 +459,67 @@
 <relationships>
 <inheritance>
 <name>a</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>S_1</child>
 <parent>R_1</parent>
 </inheritance>
 <inheritance>
 <name>a</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>S_2</child>
 <parent>R_1</parent>
 </inheritance>
 <inheritance>
 <name>c</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>S_3</child>
 <parent>R_3</parent>
 </inheritance>
 <inheritance>
 <name>b</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>S_3</child>
 <parent>R_2</parent>
 </inheritance>
 <inheritance>
 <name>c</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>S_4</child>
 <parent>R_3</parent>
 </inheritance>
 <inheritance>
 <name>d</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>T_1</child>
 <parent>S_2</parent>
 </inheritance>
 <inheritance>
 <name>d</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>T_2</child>
 <parent>S_2</parent>
 </inheritance>
 <inheritance>
 <name>f</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>F_1</child>
 <parent>T_2</parent>
 </inheritance>
 <inheritance>
 <name>f</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>F_2</child>
 <parent>T_2</parent>
 </inheritance>
 <inheritance>
 <name>e</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>F_2</child>
 <parent>S_3</parent>
 </inheritance>
 <inheritance>
 <name>e</name>
-<documentation><![CDATA[]]></documentation>
+<documentation></documentation>
 <child>T_3</child>
 <parent>S_3</parent>
 </inheritance>

@@ -2,26 +2,27 @@
 <extractor>cf-DATE</extractor>
 <name>Van Fleet</name>
 <date>
-<year>2004</year>
-<month>5</month>
-<day>8</day>
-<time>21:44</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>06:06</time>
 </date>
-<documentation><![CDATA[Demonstrates "subtype migration".
+<documentation><![CDATA[ Demonstrates "subtype migration".
 
-{ revision = $Revision: 6ea040caff18 $ }]]></documentation>
+{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
 <classes>
 <class>
 <name>Van</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>index</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -30,7 +31,7 @@
 <operation stereotype="abstract">
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>String</return>
 <parameters>
 </parameters>
@@ -38,7 +39,7 @@
 <operation stereotype="accessor">
 <name>get index</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
@@ -46,18 +47,18 @@
 <operation stereotype="class">
 <name>lend</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>Van</return>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Customer</type>
 <initial></initial>
 </parameter>
 <parameter>
 <parametername>terminating at</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Date</type>
 <initial></initial>
 </parameter>
@@ -66,7 +67,7 @@
 <operation>
 <name>returned</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -76,22 +77,23 @@
 </class>
 <class>
 <name>Hired Van</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute>
 <name>hire started at</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Date</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>expected termination</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Date</type>
 <initial></initial>
 </attribute>
@@ -100,7 +102,7 @@
 <operation>
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>String</return>
 <parameters>
 </parameters>
@@ -108,11 +110,11 @@
 <operation stereotype="accessor">
 <name>set expected termination</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Date</type>
 <initial></initial>
 </parameter>
@@ -121,7 +123,7 @@
 <operation stereotype="finalize">
 <name>cleanup</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -131,17 +133,18 @@
 </class>
 <class>
 <name>Pool Van</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>image</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>String</return>
 <parameters>
 </parameters>
@@ -152,22 +155,23 @@
 </class>
 <class>
 <name>Service</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>service at</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Date</type>
 <initial></initial>
 </attribute>
 <attribute stereotype="id">
 <name>service of</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[{formalizes = a1}]]></documentation>
+<documentation><![CDATA[ {formalizes = a1} ]]></documentation>
 <type>Van</type>
 <initial></initial>
 </attribute>
@@ -179,15 +183,16 @@
 </class>
 <class>
 <name>Customer</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>name</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Text</type>
 <initial></initial>
 </attribute>
@@ -196,7 +201,7 @@
 <operation stereotype="accessor">
 <name>get name</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <return>Text</return>
 <parameters>
 </parameters>
@@ -207,10 +212,11 @@
 </class>
 <class stereotype="exception">
 <name>Use Error</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -220,10 +226,11 @@
 </class>
 <class stereotype="exception">
 <name>Not Found</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -235,45 +242,45 @@
 <relationships>
 <association>
 <name>a1</name>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <role><end>1</end>
 <name>was serviced at</name>
 <classname>Service</classname>
 <cardinality>0..*</cardinality>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </role>
 <role><end>2</end>
 <name>was service of</name>
 <classname>Van</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>a2</name>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <role><end>1</end>
 <name>is borrowing</name>
 <classname>Hired Van</classname>
 <cardinality>0..*</cardinality>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </role>
 <role><end>2</end>
 <name>is on loan to</name>
 <classname>Customer</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <inheritance>
 <name>g1</name>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <child>Hired Van</child>
 <parent>Van</parent>
 </inheritance>
 <inheritance>
 <name>g1</name>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <child>Pool Van</child>
 <parent>Van</parent>
 </inheritance>

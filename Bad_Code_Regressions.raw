@@ -2,17 +2,18 @@
 <extractor>cf-DATE</extractor>
 <name>Bad Code Regressions</name>
 <date>
-<year>2004</year>
-<month>9</month>
-<day>11</day>
-<time>12:59</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>05:54</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: 6ea040caff18 $ } ]]></documentation>
+{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -40,6 +41,7 @@
 </class>
 <class stereotype="singleton">
 <name>Multiple Transitions</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -152,6 +154,7 @@
 </class>
 <class>
 <name>Instance Deletion</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -285,6 +288,7 @@
 </class>
 <class stereotype="singleton">
 <name>Bad Payload</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -389,6 +393,7 @@
 </class>
 <class stereotype="type">
 <name>T1</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -402,6 +407,7 @@
 </class>
 <class stereotype="type">
 <name>T2</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -415,6 +421,7 @@
 </class>
 <class stereotype="type">
 <name>T3</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -428,6 +435,7 @@
 </class>
 <class stereotype="abstract">
 <name>Super Action Mismatch</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -461,6 +469,7 @@
 </class>
 <class>
 <name>Child Action Mismatch</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -501,6 +510,7 @@
 </class>
 <class stereotype="singleton">
 <name>No Initial State</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -539,6 +549,7 @@
 </class>
 <class stereotype="public">
 <name>External</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -552,6 +563,7 @@
 </class>
 <class stereotype="singleton">
 <name>Internal</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -565,6 +577,7 @@
 </class>
 <class>
 <name>Bad Finalization</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -620,6 +633,7 @@
 </class>
 <class stereotype="singleton">
 <name>Bad Singleton Finalization</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -640,6 +654,7 @@
 </class>
 <class stereotype="protected">
 <name>No Operations</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>

@@ -2,18 +2,19 @@
 <extractor>cf-DATE</extractor>
 <name>Serialization</name>
 <date>
-<year>2004</year>
-<month>7</month>
-<day>24</day>
-<time>18:12</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>06:06</time>
 </date>
 <documentation><![CDATA[ This domain is a demonstration of the "serialization" features of ColdFrame.
 
-{ revision = $Revision: 6ea040caff18 $ }
+{ revision = $Revision: 4d71b82a8caf $ }
  ]]></documentation>
 <classes>
 <class stereotype="public">
 <name>Interface</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -59,6 +60,7 @@
 </class>
 <class stereotype="type">
 <name>Serializable</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -74,6 +76,7 @@
 </class>
 <class stereotype="type">
 <name>Port</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -90,6 +93,7 @@ hash = discrete } ]]></documentation>
 </class>
 <class>
 <name>Server</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>0..1</cardinality>
 <concurrency>Sequential</concurrency>
@@ -207,6 +211,7 @@ On successful return, the TCP/IP connection has been made. ]]></documentation>
 </class>
 <class stereotype="exception">
 <name>Use Error</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -220,6 +225,7 @@ On successful return, the TCP/IP connection has been made. ]]></documentation>
 </class>
 <class stereotype="type">
 <name>Socket</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -235,6 +241,7 @@ On successful return, the TCP/IP connection has been made. ]]></documentation>
 </class>
 <class stereotype="type">
 <name>Stream Access</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -250,6 +257,7 @@ On successful return, the TCP/IP connection has been made. ]]></documentation>
 </class>
 <class stereotype="type">
 <name>Serializable Base</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -265,6 +273,7 @@ On successful return, the TCP/IP connection has been made. ]]></documentation>
 </class>
 <class stereotype="type">
 <name>Buffer</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>

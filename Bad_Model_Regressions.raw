@@ -2,17 +2,18 @@
 <extractor>cf-DATE</extractor>
 <name>Bad Model Regressions</name>
 <date>
-<year>2004</year>
-<month>10</month>
-<day>2</day>
-<time>22:01</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>05:54</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 6ea040caff18 $ } ]]></documentation>
+{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -35,6 +36,7 @@
 </class>
 <class stereotype="public">
 <name>Has State Machine</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -73,6 +75,7 @@
 </class>
 <class stereotype="public">
 <name>Is Active</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
@@ -86,6 +89,7 @@
 </class>
 <class stereotype="type">
 <name>Mixed</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -107,6 +111,7 @@
 </class>
 <class stereotype="type">
 <name>Bad Real</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -120,6 +125,7 @@
 </class>
 <class stereotype="type">
 <name>Bad Integer</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -133,6 +139,7 @@
 </class>
 <class stereotype="type">
 <name>Bad Initialization</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -166,6 +173,7 @@
 </class>
 <class stereotype="protected">
 <name>No Attributes</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -186,6 +194,7 @@
 </class>
 <class>
 <name>Utility With Attribute</name>
+<visibility>PublicAccess</visibility>
 <kind>Utility</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -213,6 +222,7 @@
 </class>
 <class>
 <name>Utility With Class Attribute</name>
+<visibility>PublicAccess</visibility>
 <kind>Utility</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -240,6 +250,7 @@
 </class>
 <class>
 <name>Class For Utility Association</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -260,6 +271,7 @@
 </class>
 <class>
 <name>Utility With Association A</name>
+<visibility>PublicAccess</visibility>
 <kind>Utility</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -280,6 +292,7 @@
 </class>
 <class>
 <name>Utility With Association B</name>
+<visibility>PublicAccess</visibility>
 <kind>Utility</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>

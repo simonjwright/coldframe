@@ -2,18 +2,19 @@
 <extractor>cf-DATE</extractor>
 <name>Serialization Demo</name>
 <date>
-<year>2004</year>
-<month>9</month>
-<day>20</day>
-<time>17:26</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>06:06</time>
 </date>
 <documentation><![CDATA[ This domain is a demonstration of Serialization's facilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-{ revision = $Revision: 6ea040caff18 $ } ]]></documentation>
+{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
 <classes>
 <class stereotype="type">
 <name>Sample A</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -104,6 +105,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Name String</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -118,6 +120,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Real Time</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -160,6 +163,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Recordable Real Time</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -187,6 +191,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Record Type 1</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -201,6 +206,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Record Type A</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
@@ -215,6 +221,7 @@ It is to be extracted separately from the main Serialization package (that's why
 </class>
 <class stereotype="type">
 <name>Unsigned 16</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>

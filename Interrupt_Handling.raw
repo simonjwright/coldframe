@@ -2,26 +2,27 @@
 <extractor>cf-DATE</extractor>
 <name>Interrupt Handling</name>
 <date>
-<year>2004</year>
-<month>5</month>
-<day>1</day>
-<time>15:42</time>
+<year>2005</year>
+<month>1</month>
+<day>29</day>
+<time>06:06</time>
 </date>
-<documentation><![CDATA[Demonstration of Interrupt Handling using Ada facilities.
+<documentation><![CDATA[ Demonstration of Interrupt Handling using Ada facilities.
 
-{ revision = $Revision: b291368dc4f8 $ }]]></documentation>
+{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
 <classes>
 <class stereotype="singleton">
 <name>Device</name>
+<visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
-<documentation><![CDATA[{ priority =  +1, stack = 40000 }]]></documentation>
+<documentation><![CDATA[ { priority =  +1, stack = 40000 } ]]></documentation>
 <attributes>
 <attribute>
 <name>timeout</name>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
 <initial></initial>
 </attribute>
@@ -30,35 +31,35 @@
 <operation stereotype="entry">
 <name>start</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>report entry</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set timeout</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear timeout</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="init">
 <name>initialize</name>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
 </operation>
@@ -71,7 +72,7 @@
 <name>initial</name>
 <entryactions>
 </entryactions>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>idle</name>
@@ -79,7 +80,7 @@
 <entryaction><name>report entry</name></entryaction>
 <entryaction><name>set timeout</name></entryaction>
 </entryactions>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state>
 <name>interrupted</name>
@@ -87,7 +88,7 @@
 <entryaction><name>report entry</name></entryaction>
 <entryaction><name>clear timeout</name></entryaction>
 </entryactions>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
@@ -96,28 +97,28 @@
 <target>idle</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>interrupted</target>
 <event><name>interrupt</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>idle</source>
 <target>idle</target>
 <event><name>timeout</name></event>
 <transitionaction><name></name></transitionaction>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 <transition>
 <source>interrupted</source>
 <target>idle</target>
 <event><name></name></event>
 <transitionaction><name></name></transitionaction>
-<documentation><![CDATA[]]></documentation>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
