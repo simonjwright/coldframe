@@ -2,7 +2,7 @@
 # the next line restarts using tclsh \
 exec tclsh "$0" "$@"
 
-# $Id: split-csv.tcl,v a25b43693838 2004/02/10 06:08:36 simon $
+# $Id: split-csv.tcl,v 630afaac6cae 2004/02/10 06:14:54 simon $
 
 # Splits a CSV file containing a header line and data lines into
 # multiple CSV files, depending on the value in a particular column.
@@ -51,26 +51,51 @@ exec tclsh "$0" "$@"
 # USA.
 
 proc process {from baseName col} {
+
+    # make a regex which extracts the required column
     set rgx "^"
     for {set c 1} {$c < $col} {incr c} {
         set rgx [format "%s\[^,\]*," $rgx]
     }
     set rgx [format "%s(\[^,\]+)" $rgx]
-    puts "regex is $rgx"
+
+    # we need the header line to copy into every output file
     gets $from firstLine
+
     while {![eof $from]} {
+
+        # read the next line
         gets $from l
+
+        # if there was something to read ..
         if {![eof $from]} {
+
+            # extract the required column
             if {![regexp $rgx $l wh field]} {
+
                 puts stderr "failed to find column $col in line $l"
+
             } else {
+
+                # make the file name
                 set file "$baseName.$field.csv"
+
+                # create it if necessary
                 if [expr ![info exists files($file)]] {
+
+                    # report the new filename
                     puts stderr "opening file $file"
+
+                    # open the file
                     set files($file) [open $file w]
+
+                    # output the header line
                     puts $files($file) $firstLine
                 }
+
+                # output the line just read
                 puts $files($file) $l
+
             }
         }
     }
