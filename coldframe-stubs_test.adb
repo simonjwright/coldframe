@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: 1f74db81cc0d $
---  $Date: 2005/02/25 11:30:36 $
+--  $Revision: db99902d0f74 $
+--  $Date: 2005/02/26 08:49:34 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -17,18 +17,24 @@ with ColdFrame.Test_Stub_Support;
 procedure ColdFrame.Test_Stub_Support_Test is
 
    procedure Generated_Stub_Procedure
-     (Input : Integer;
+     (Message : String;
+      Input : Integer;
       Result : out Integer);
 
    procedure Generated_Stub_Procedure
-     (Input : Integer;
+     (Message : String;
+      Input : Integer;
       Result : out Integer) is
       Occurrence : constant Positive
         := ColdFrame.Test_Stub_Support.Note_Entry ("foo.bar.quux");
    begin
+      String'Output
+        (ColdFrame.Test_Stub_Support.Get_Input_Value_Stream
+           ("foo.bar.quux", "message", Occurrence, Message'Size),
+         Message);
       Integer'Output
         (ColdFrame.Test_Stub_Support.Get_Input_Value_Stream
-           ("foo.bar.quux", "input", Occurrence),
+           ("foo.bar.quux", "input", Occurrence, Input'Size),
          Input);
       ColdFrame.Test_Stub_Support.Check_For_Exception
         ("foo.bar.quux", Occurrence);
@@ -42,6 +48,8 @@ procedure ColdFrame.Test_Stub_Support_Test is
    is new ColdFrame.Test_Stub_Support.Set_Output_Value (Integer);
    function Get_Input_Integer
    is new ColdFrame.Test_Stub_Support.Get_Input_Value (Integer);
+   function Get_Input_String
+   is new ColdFrame.Test_Stub_Support.Get_Input_Value (String);
 
    Foo_Exception : exception;
 
@@ -63,33 +71,41 @@ begin
       Set_Output_Integer ("foo.bar.quux", "result", 45, 4);
 
       --  First call
-      Generated_Stub_Procedure (24, Result);
-      Put_Line ("result => " & Result'Img);           --  should be 42
+      Generated_Stub_Procedure ("first", 24, Result);
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 1));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 1)'Img);  --  should be 24
+      Put_Line ("result => " & Result'Img);           --  should be 42
 
       --  Second call
       begin
-         Generated_Stub_Procedure (25, Result);
+         Generated_Stub_Procedure ("second", 25, Result);
       exception
          when E : Foo_Exception =>
             Put_Line ("exception => " &
                         Ada.Exceptions.Exception_Information (E));
       end;
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 2));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 2)'Img);  --  should be 25
 
       --  Third call
-      Generated_Stub_Procedure (26, Result);
-      Put_Line ("result => " & Result'Img);           --  should be 44
+      Generated_Stub_Procedure ("third", 26, Result);
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 3));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 3)'Img);  --  should be 26
+      Put_Line ("result => " & Result'Img);           --  should be 44
 
       --  Fourth call
-      Generated_Stub_Procedure (27, Result);
-      Put_Line ("result => " & Result'Img);           --  should be 45
+      Generated_Stub_Procedure ("fourth and last", 27, Result);
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 4));
       Put_Line ("input => " & Get_Input_Integer
                   ("foo.bar.quux", "input", 4)'Img);  --  should be 27
+      Put_Line ("result => " & Result'Img);           --  should be 45
 
    end;
 

@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 1f74db81cc0d $
---  $Date: 2005/02/25 11:30:36 $
+--  $Revision: db99902d0f74 $
+--  $Date: 2005/02/26 08:49:34 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -46,8 +46,8 @@ package ColdFrame.Test_Stub_Support is
    --  O p e r a t i o n s   f o r   u s e r   s u p p o r t  --
    -------------------------------------------------------------
 
-   --  Specify an output from a call to a stubbed operation for a
-   --  definite type T.
+   --  Specify an output from a call to a stubbed operation for the
+   --  type T.
    --
    --  For_Subprogram_Named is the case-insensitive fully-qualified
    --  name of the subprogram (eg, if dealing with procedure
@@ -66,7 +66,7 @@ package ColdFrame.Test_Stub_Support is
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
    generic
-      type T is private;
+      type T (<>) is private;
    procedure Set_Output_Value (For_Subprogram_Named : String;
                                For_Parameter_Named : String;
                                To : T;
@@ -87,9 +87,7 @@ package ColdFrame.Test_Stub_Support is
                             E : Ada.Exceptions.Exception_Id;
                             For_Occurrence : Positive := 1);
 
-
-   --  Retrieve values passed to stubbed operations for a definite
-   --  type T.
+   --  Retrieve values passed to stubbed operations for the type T.
    --
    --  For_Subprogram_Named is the case-insensitive fully-qualified
    --  name of the subprogram (eg, if dealing with procedure
@@ -101,7 +99,7 @@ package ColdFrame.Test_Stub_Support is
    --     Result := Get_Integer_Operation_Input_Value
    --       ("Domain.Class.Operation", "Input", 2);
    generic
-      type T is private;
+      type T (<>) is private;
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
                              For_Occurrence : Positive := 1) return T;
@@ -138,7 +136,7 @@ package ColdFrame.Test_Stub_Support is
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
       For_Occurrence : Positive;
-      Max_Size_In_Storage_Elements : Ada.Streams.Stream_Element_Offset := 512)
+      Size_In_Bits : Natural)
      return Stream_Access;
 
 

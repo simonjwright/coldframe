@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: d632fd77e3a1 $
---  $Date: 2005/02/25 15:56:31 $
+--  $Revision: db99902d0f74 $
+--  $Date: 2005/02/26 08:49:34 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -234,16 +234,15 @@ package body ColdFrame.Test_Stub_Support is
                                For_Parameter_Named : String;
                                To : T;
                                For_Occurrence : Positive := 1) is
-      pragma Assert (T'Constrained,
-                     "Set_Output_Value's generic type must be constrained");
+      use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+      Size : constant Ada.Streams.Stream_Element_Offset
+        := (To'Size + 7) / 8 + 64;  --  the 64 is a guess for constraints.
       Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
-        (new BC.Support.Memory_Streams.Stream_Type
-           (Capacity => Ada.Streams.Stream_Element_Offset
-              (T'Max_Size_In_Storage_Elements)));
+        (new BC.Support.Memory_Streams.Stream_Type (Size));
       Coll : Sparse_Stream_Pointer_Collection_Pointers.Pointer;
    begin
       if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SPU) then
@@ -258,9 +257,7 @@ package body ColdFrame.Test_Stub_Support is
          Output_Cell'(Ordinal => For_Occurrence,
                       Stream => Str,
                       Copy => Stream_Pointers.Create
-                        (new BC.Support.Memory_Streams.Stream_Type
-                           (Capacity => Ada.Streams.Stream_Element_Offset
-                              (T'Max_Size_In_Storage_Elements)))));
+                        (new BC.Support.Memory_Streams.Stream_Type (Size))));
       T'Output (Stream_Pointers.Value (Str), To);
    end Set_Output_Value;
 
@@ -289,8 +286,6 @@ package body ColdFrame.Test_Stub_Support is
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
                              For_Occurrence : Positive := 1) return T is
-      pragma Assert (T'Constrained,
-                     "Get_Input_Value's generic type must be constrained");
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
@@ -340,15 +335,18 @@ package body ColdFrame.Test_Stub_Support is
      (For_Subprogram_Named : String;
       For_Parameter_Named : String;
       For_Occurrence : Positive;
-      Max_Size_In_Storage_Elements : Ada.Streams.Stream_Element_Offset := 512)
+      Size_In_Bits : Natural)
      return Stream_Access is
+      use type Ada.Streams.Stream_Element_Offset;
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+      Size : constant Ada.Streams.Stream_Element_Offset
+        := (Ada.Streams.Stream_Element_Offset (Size_In_Bits) + 7) / 8 + 64;
+      --  the 64 is a guess for constraints.
       Str : Stream_Pointers.Pointer
         := Stream_Pointers.Create
-        (new BC.Support.Memory_Streams.Stream_Type
-           (Capacity => Max_Size_In_Storage_Elements));
+        (new BC.Support.Memory_Streams.Stream_Type (Size));
       Coll : Stream_Pointer_Collection_Pointers.Pointer;
    begin
       if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
