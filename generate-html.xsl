@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 3c009d62cb58 2002/02/24 17:18:12 simon $ -->
+<!-- $Id: generate-html.xsl,v 6f63b39cd69e 2002/02/24 17:33:52 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -228,9 +228,11 @@
     </xsl:if>
     <xsl:if test="operation">
       <h4>Operations</h4>
-      <xsl:apply-templates select="operation">
-        <xsl:sort select="."/>
-      </xsl:apply-templates>
+      <dl>
+        <xsl:apply-templates select="operation">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
     </xsl:if>
     <xsl:if
       test="../association[role/classname = $name]
@@ -392,7 +394,7 @@
 
   <!-- Output Operation info. -->
   <xsl:template match="operation">
-    <h5>
+    <dt>
       <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="@abstract">
         <xsl:text> (abstract)</xsl:text>
@@ -412,7 +414,7 @@
       <xsl:if test="@suppressed='instantiation'">
         <xsl:text> (instantiated)</xsl:text>
       </xsl:if>
-      <xsl:if test="@init">
+      <xsl:if test="@initialize">
         <xsl:text> (initialization)</xsl:text>
       </xsl:if>
       <xsl:if test="@handler">
@@ -425,16 +427,18 @@
         </xsl:call-template>
         <xsl:text></xsl:text>
       </xsl:if>
-    </h5>
-    <xsl:apply-templates select="documentation"/>
-    <xsl:if test="parameter">
-      <h6>Parameters</h6>
-      <dl>
-        <xsl:apply-templates select="parameter">
-          <xsl:sort select="name"/>
-        </xsl:apply-templates>
-      </dl>
-    </xsl:if>
+    </dt>
+    <dd>
+      <xsl:apply-templates select="documentation"/>
+      <xsl:if test="parameter">
+        <h5>Parameters</h5>
+        <dl>
+          <xsl:apply-templates select="parameter">
+            <xsl:sort select="name"/>
+          </xsl:apply-templates>
+        </dl>
+      </xsl:if>
+    </dd>
   </xsl:template>
 
 
