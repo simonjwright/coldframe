@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0e29cc16167e 2002/05/20 22:33:20 simon $
+# $Id: normalize-rose.tcl,v 337883501ed3 2002/06/06 21:45:00 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1592,6 +1592,7 @@ itcl::class Event {
     # events. Dependencies stereotyped <<class event>> produce class events.
     variable cls 0
     method -class-event {dummy} {set cls 1}
+    method -instance-event {dummy} {set cls 0}
 
     method -complete {} {
 	[stack -top] -event $this
