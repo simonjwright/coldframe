@@ -4,8 +4,8 @@
 <date>
 <year>2002</year>
 <month>1</month>
-<day>19</day>
-<time>14:28</time>
+<day>27</day>
+<time>21:39</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -36,6 +36,44 @@
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set details</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>set reporter</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>get details</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class>
@@ -52,6 +90,25 @@
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set rejection reason</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Summary String</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get rejection reason</name>
+<documentation></documentation>
+<return>Summary String</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 </class>
 <class>
@@ -83,6 +140,13 @@ Purely for demonstration purposes, the maximum number of Components is limited t
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 <operation>
 <name>report</name>
 <documentation>Generate a report on the Component and each associated Defect (if any).</documentation>
@@ -140,6 +204,25 @@ It should address one logical error (which may correspond to several necessary c
 </attribute>
 </attributes>
 <operations>
+<operation>
+<name>set problem</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<name>to</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>get problem</name>
+<documentation></documentation>
+<return>Text</return>
+<parameters>
+</parameters>
+</operation>
 <operation>
 <name>report</name>
 <documentation>Report details of this Defect.</documentation>
