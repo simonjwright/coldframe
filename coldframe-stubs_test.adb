@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-stubs_test.adb,v $
---  $Revision: 73a1bb044ead $
---  $Date: 2005/02/26 11:55:32 $
+--  $Revision: 23090fd5363e $
+--  $Date: 2005/02/26 12:01:30 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -117,6 +117,29 @@ begin
       Generated_Stub_Procedure ("fourth and last: input 27, result 45",
                                 27,
                                 Result);
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 4));
+      Put_Line ("input => " & Get_Input_Integer
+                  ("foo.bar.quux", "input", 4)'Img);
+      Put_Line ("result => " & Result'Img);
+      New_Line;
+
+      --  Repeat the fourth call
+      Generated_Stub_Procedure ("fourth and last: input 27, result 45",
+                                27,
+                                Result);
+      Put_Line
+        ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
+      Put_Line ("message => " & Get_Input_String
+                  ("foo.bar.quux", "message", 4));
+      Put_Line ("input => " & Get_Input_Integer
+                  ("foo.bar.quux", "input", 4)'Img);
+      Put_Line ("result => " & Result'Img);
+      New_Line;
+
+      --  Repeat the report
       Put_Line
         ("calls => " & ColdFrame.Stubs.Number_Of_Calls ("foo.bar.quux")'Img);
       Put_Line ("message => " & Get_Input_String
