@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 973922e8e158 2002/12/03 21:19:46 simon $
+# $Id: normalize-rose.tcl,v 0b9f47170b2b 2002/12/10 20:08:29 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -307,7 +307,7 @@ itcl::class Base {
 	foreach i [array names a] {
 	    set xmlattributes($i) "$a($i)"
 	    if [catch {$this -$i "$a($i)"}] {
-		Warning "XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
+		Warning "CF: XML attribute <$xmlTag $i=\"$a($i)\"> not handled"
 	    }
 	}
     }
@@ -1615,7 +1615,7 @@ itcl::class Association {
 
     method -generate {domain} {
 	if [$this -needsFormalizing] {
-	    Error "[$this -getName] is unformalized"
+	    Error "CF: [$this -getName] is unformalized"
 	}
 	puts "<association>"
 	putElement name $name
@@ -1794,13 +1794,16 @@ itcl::class Inheritance {
 
     method -complete {} {
 	if {[string length $name] == 0} {
-	    Error "unnamed inheritance"
+	    Error "unnamed inheritance of $parent by $child"
 	}
 	set inheritances [stack -top]
 	if [$inheritances -isPresent $name] {
 	    set extant [$inheritances -atName $name]
 	    if {$parent != [$extant -getParent]} {
-		Error "multiple parents $parent, [$extant -getParent] in $name"
+		if {[string length $name] != 0} {
+		    Error "multiple parents $parent, [$extant -getParent]\
+                           in $name"
+		}
 	    } else {
 		$extant -addChild $child
 		$extant -documentation $documentation
@@ -1832,7 +1835,7 @@ itcl::class Inheritance {
 
     method -generate {domain} {
 	if [$this -needsFormalizing] {
-	    Error "[$this -getName] is unformalized"
+	    Error "CF: [$this -getName] is unformalized"
 	}
 	puts "<inheritance>"
 	putElement name $name
