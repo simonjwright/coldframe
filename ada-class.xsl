@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 3ec1b3b4947e 2004/03/09 15:13:37 simon $ -->
+<!-- $Id: ada-class.xsl,v 5062a96e7d37 2004/03/09 15:37:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -120,7 +120,7 @@
    </xsl:if>
 
    <!-- .. the non-public singleton find operation .. -->
-   <xsl:if test="$max=1 and not(@public)">
+   <xsl:if test="@max=1 and not(@public)">
      <xsl:value-of select="$I"/>
      <xsl:text>function Find return Handle;&#10;</xsl:text>
      <xsl:value-of select="$blank-line"/>
@@ -800,7 +800,7 @@
     <xsl:value-of select="$blank-line"/>
 
     <!-- .. the find operations .. -->
-    <xsl:if test="$max=1 and not(@public)">
+    <xsl:if test="@max=1 and not(@public)">
       <xsl:call-template name="find-single-instance-function-body"/>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
