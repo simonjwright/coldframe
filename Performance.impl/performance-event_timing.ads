@@ -1,11 +1,11 @@
 with ColdFrame.Project.Events;
-with Seawolf_High_Resolution_Time;
+with High_Resolution_Time;
 
 package Performance.Event_Timing is
 
    Loops : constant := 100;
 
-   Done_At : Seawolf_High_Resolution_Time.Time;
+   Done_At : High_Resolution_Time.Time;
 
    type Repost is new ColdFrame.Project.Events.Event_Base with record
       Count : Natural := Loops;
@@ -21,6 +21,8 @@ package Performance.Event_Timing is
       Count : Natural := Loops;
    end record;
    procedure Handler (Ev : Pong);
+
+   Timer : ColdFrame.Project.Events.Timer;
 
    Dispatcher_A : ColdFrame.Project.Events.Event_Queue_P;
    Dispatcher_B : ColdFrame.Project.Events.Event_Queue_P;
