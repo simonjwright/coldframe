@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 647f47dae20e $}
+|{ revision = $Revision: 01cbf2afdd60 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -680,8 +680,7 @@
 		    quid       	"404DCBDC01F4"
 		    stereotype 	"id"
 		    type       	"One Value Enum"
-		    quidu      	"404DCB6801BB"))
-	    cardinality 	(value Cardinality "0..1"))
+		    quidu      	"404DCB6801BB")))
 	(object Class "One Int ID"
 	    quid       	"404DCC0C0334"
 	    operations 	(list Operations
@@ -822,7 +821,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 647f47dae20e $}
+|{ revision = $Revision: 01cbf2afdd60 $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -866,23 +865,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3F56123103DD"
-		    compartment 	(object Compartment
-			Parent_View 	@19
-			location   	(176, 442)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	387)
 		    width      	402
 		    height     	218
 		    annotation 	8
@@ -1023,23 +1005,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3F67E8AE00D8"
-		    compartment 	(object Compartment
-			Parent_View 	@24
-			location   	(730, 402)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	782)
 		    width      	796
 		    height     	214
 		    annotation 	8
@@ -1119,7 +1084,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 647f47dae20e 2004/03/09 14:55:33 simon $")
+		    label      	"$Id: Regressions.cat,v 01cbf2afdd60 2004/03/09 15:11:23 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -1178,23 +1143,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FA1EEFD01B5"
-		    compartment 	(object Compartment
-			Parent_View 	@29
-			location   	(169, 1257)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	267)
 		    width      	400
 		    height     	310
 		    annotation 	8
@@ -1235,23 +1183,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FA1EFA3029A"
-		    compartment 	(object Compartment
-			Parent_View 	@30
-			location   	(225, 1599)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	247)
 		    width      	268
 		    height     	218
 		    annotation 	8
@@ -1354,23 +1285,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FA962050323"
-		    compartment 	(object Compartment
-			Parent_View 	@33
-			location   	(848, 1345)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	437)
 		    width      	452
 		    height     	264
 		    annotation 	8
@@ -1411,23 +1325,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FA962440233"
-		    compartment 	(object Compartment
-			Parent_View 	@34
-			location   	(860, 1639)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	272)
 		    width      	418
 		    height     	264
 		    annotation 	8
@@ -1524,23 +1421,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FB1433B03CA"
-		    compartment 	(object Compartment
-			Parent_View 	@37
-			location   	(1560, 1293)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	352)
 		    width      	366
 		    height     	218
 		    annotation 	8
@@ -1603,23 +1483,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FC371B002DF"
-		    compartment 	(object Compartment
-			Parent_View 	@39
-			location   	(2257, 1242)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	382)
 		    width      	396
 		    height     	308
 		    annotation 	8
@@ -1660,23 +1523,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FC3BAB301CF"
-		    compartment 	(object Compartment
-			Parent_View 	@40
-			location   	(2259, 1734)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	382)
 		    width      	396
 		    height     	308
 		    annotation 	8
@@ -1840,23 +1686,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FDAAA0200B6"
-		    compartment 	(object Compartment
-			Parent_View 	@46
-			location   	(121, 2500)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	512)
 		    width      	526
 		    height     	168
 		    annotation 	8
@@ -1982,7 +1811,7 @@
 			Parent_View 	@50
 			location   	(1589, 2479)
 			fill_color 	13434879
-			nlines     	2
+			nlines     	1
 			max_width  	284
 			justify    	0
 			label      	"Unconstrained Array Type")
@@ -2061,23 +1890,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4001965A037E"
-		    compartment 	(object Compartment
-			Parent_View 	@52
-			location   	(1604, 2974)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	212)
 		    width      	288
 		    height     	264
 		    annotation 	8
@@ -2286,23 +2098,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"402E6C9303C5"
-		    compartment 	(object Compartment
-			Parent_View 	@58
-			location   	(218, 3771)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	322)
 		    width      	336
 		    height     	218
 		    annotation 	8
@@ -2334,23 +2129,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"402E6CCC020F"
-		    compartment 	(object Compartment
-			Parent_View 	@59
-			location   	(53, 3991)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	670)
 		    width      	684
 		    height     	258
 		    annotation 	8
@@ -2474,35 +2252,18 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@63
-			location   	(847, 4133)
+			location   	(975, 4181)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	532
+			max_width  	276
 			justify    	0
 			label      	"One Enum ID")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"404DCBBE01B5"
-		    compartment 	(object Compartment
-			Parent_View 	@63
-			location   	(847, 4189)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	528)
-		    width      	550
-		    height     	212
+		    width      	294
+		    height     	116
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Regressions::One Int ID" @64
@@ -2532,23 +2293,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"404DCC0C0334"
-		    compartment 	(object Compartment
-			Parent_View 	@64
-			location   	(881, 4472)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	465)
 		    width      	486
 		    height     	212
 		    annotation 	8
