@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: b292d97c9e9d $
---  $Date: 2005/03/05 18:20:09 $
+--  $Revision: ee3f46cb6359 $
+--  $Date: 2005/03/07 06:56:03 $
 --  $Author: simon $
 
 with Ada.Strings.Unbounded;
@@ -303,24 +303,33 @@ package body ColdFrame.Stubs is
            (No_Value'Identity,
             "input " & SP & " not found");
       end if;
-      --  We have to get the result from a copy of the memory stream,
-      --  otherwise the user will get an End_Error if she reads it
-      --  more than once.
       declare
          package AS renames Ada.Streams;
          package BSMS renames BC.Support.Memory_Streams;
          Pointers : Stream_Pointer_Collections.Collection
            renames Stream_Pointer_Collection_Pointers.Value
            (Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU)).all;
-         Str : BSMS.Stream_Type
-           renames BSMS.Stream_Type (Stream_Pointers.Value
-                                       (Stream_Pointer_Collections.Item_At
-                                          (Pointers, For_Call)).all);
-         Copy : aliased BSMS.Stream_Type
-           (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
       begin
-         BSMS.Set_Contents (BSMS.Contents (Str), Copy);
-         return T'Input (Copy'Access);
+         if Stream_Pointer_Collections.Length (Pointers) >= For_Call then
+            --  We have to get the result from a copy of the memory
+            --  stream, otherwise the user will get an End_Error if
+            --  she reads it more than once.
+            declare
+               Str : BSMS.Stream_Type renames
+                 BSMS.Stream_Type (Stream_Pointers.Value
+                                     (Stream_Pointer_Collections.Item_At
+                                        (Pointers, For_Call)).all);
+               Copy : aliased BSMS.Stream_Type
+                 (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
+            begin
+               BSMS.Set_Contents (BSMS.Contents (Str), Copy);
+               return T'Input (Copy'Access);
+            end;
+         else
+            Ada.Exceptions.Raise_Exception
+              (No_Value'Identity,
+               "for output " & SP);
+         end if;
       end;
    end Get_Input_Value;
 
