@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
+<!-- $Id: ada-class.xsl,v 171b4c7fc507 2003/08/30 19:47:37 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -668,13 +668,6 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
     
-    <!-- .. state entry procedure specs .. -->
-    <xsl:apply-templates
-      mode="state-entry-specs"
-      select="statemachine/state[not(@initial)]">
-      <xsl:sort select="name"/>
-    </xsl:apply-templates>
-
     <!-- .. the set-the-identifier operation .. -->
     <xsl:if test="not(@singleton) and
                   ($max &gt; 1 or
@@ -742,13 +735,6 @@
       <xsl:call-template name="state-image-body"/>
     </xsl:if>
     
-    <!-- .. state entry procedure bodies .. -->
-    <xsl:apply-templates
-      mode="state-entry-bodies"
-      select="statemachine/state[not(@initial)]">
-      <xsl:sort select="name"/>
-    </xsl:apply-templates>
-
     <!-- .. <<message>> event handler bodies .. -->
     <xsl:apply-templates mode="event-handler-bodies" select="event[@class]">
       <xsl:sort select="name"/>
