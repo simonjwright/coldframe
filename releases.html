@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 9610039ff343 2001/07/13 18:41:19 simon $ -->
+<!-- $Id: releases.html,v a26a009dc6c2 2001/08/08 18:02:41 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -35,11 +35,37 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 
 <dd>The Domain <tt>Initialize</tt> procedure used to call an
 <tt>Initialize</tt> procedure for each Class, for which a default
-empty implementation was supplied. Now, it only calls class operations
-with the &#171;init&#187; stereotype. They should be parameterless
-procedures (a warning is given, but code generation completes); a
-standard stub implementation is provided, which raises
-<tt>Program_Error</tt>.
+empty implementation was supplied. Now, it only calls operations with
+the &#171;init&#187; stereotype (&#171;init&#187; implies
+&#171;class&#187;). They should be parameterless procedures (a warning
+is given, but code generation completes); a standard stub
+implementation is provided, which raises <tt>Program_Error</tt>.
+
+
+<p>ColdFrame used to use &#171;interface&#187; to indicate that the
+stereotyped class should be visible outside the Domain
+package. &#171;interface&#187; is used for another purpose in UML; now
+ColdFrame uses &#171;public&#187; instead. &#171;interface&#187; is
+retained but deprecated (ie, it will disappear at some later time;
+stop using it as soon as you can).
+
+
+<p>The generated top-level Ada file contains identification
+information:
+<ul>
+
+<li>revision control information for the domain (this is extracted
+from a <tt>[[revision]]</tt> annotation for the domain, if any: to put
+this in the Rose model in the correct place, select the domain Package
+in the browser)
+
+<li>date and time of extraction
+
+<li>the ColdFrame releases (in the form <tt>cf-<i>yyyymmdd</i></tt>)
+of the extractor, normalizer and generator components of ColdFrame
+used.
+
+</ul>
 
 
 <p>
