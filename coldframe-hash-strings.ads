@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-strings.ads,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
+--  $Revision: 4890d9290b55 $
+--  $Date: 2001/09/28 04:47:58 $
 --  $Author: simon $
 
 package ColdFrame.Hash.Strings is
@@ -30,7 +30,7 @@ package ColdFrame.Hash.Strings is
 
 private
 
-   type Special_Integer is mod 2 ** 31;
+   type Special_Integer is mod 2 ** 31;  --  simple to convert to Natural
    Character_Hash : array (Character) of Special_Integer;
 
 end ColdFrame.Hash.Strings;
