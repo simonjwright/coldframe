@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 85368269ff5a 2002/05/29 18:44:51 simon $ -->
+<!-- $Id: ada-class.xsl,v 3a1ab8244023 2002/05/29 18:56:33 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1105,11 +1105,20 @@
       
       <xsl:when test="@maxXXX = 1">
         <!-- no parameter needed. -->
+
+        <!--
+             function Find return Handle is
+             begin
+                return This;
+             end Find;
+             -->
       
         <xsl:value-of select="$I"/>
         <xsl:text>function Find return Handle is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>raise Program_Error;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>return null;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
@@ -1119,6 +1128,17 @@
 
       <xsl:otherwise>
         
+        <!--
+             function Find (With_Identifier : Identifier) return Handle is
+             begin
+                if Maps.Is_Bound (The_Container, With_Identifier) then
+                   return Maps.Item_Of (The_Container, With_Identifier);
+                else
+                   return null;
+                end if;
+             end Find;
+             -->
+      
         <xsl:value-of select="$I"/>
         <xsl:text>function Find (With_Identifier : Identifier) return Handle is&#10;</xsl:text>
         <xsl:value-of select="$I"/>
