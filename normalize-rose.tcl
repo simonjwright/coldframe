@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 0e6495e98ada 2002/02/06 20:02:18 simon $
+# $Id: normalize-rose.tcl,v 018f4445d7dc 2002/02/17 10:07:27 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1155,7 +1155,8 @@ itcl::class Association {
 	# -relationshipType may swap the roles over! Must be called before
 	# anything else is done.
 	if {[string length $name] == 0} {
-	    Error "unnamed association"
+	    Error "unnamed association between \"[$role1 -getClassname]\"\
+		    and \"[$role2 -getClassname]\""
 	}
 	if {[string length [$role1 -getName]] == 0} {
 	    Error "unnamed role in association $name"
@@ -2194,7 +2195,11 @@ if $stackDump {
 }
 
 if $errors {
-    puts stderr "$errors errors detected."
+    if {$errors == 1} {
+	puts stderr "One error detected."
+    } else {
+	puts stderr "$errors errors detected."
+    }
     exit 1
 }
 
