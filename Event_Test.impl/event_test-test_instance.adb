@@ -11,9 +11,6 @@ with ColdFrame.Exceptions;
 with ColdFrame.Project.Events;
 with ColdFrame.Project.Event_Support;
 
---  with Seawolf_High_Resolution_Time;
---  with GNAT.IO;
-
 package body Event_Test.Test_Instance is
 
    H : Machine.Handle;
@@ -27,18 +24,12 @@ package body Event_Test.Test_Instance is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Mark (H);
       Inf : Machine.Mark renames Machine.Mark (Ev.all);
---        Start : Seawolf_High_Resolution_Time.Time;
---        use type Seawolf_High_Resolution_Time.Time;
    begin
       Inf.Payload := (Ordinal => 2000,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
 
---        Start := Seawolf_High_Resolution_Time.Clock;
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
---        GNAT.IO.Put_Line ("simple event took"
---                            & Duration'Image (Seawolf_High_Resolution_Time.Clock
---                                                - Start));
 
       Assert (Machine.Get_Ordinal (H) = 2000,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
@@ -53,18 +44,12 @@ package body Event_Test.Test_Instance is
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Machine.Self (H);
       Inf : Machine.Self renames Machine.Self (Ev.all);
---        Start : Seawolf_High_Resolution_Time.Time;
---        use type Seawolf_High_Resolution_Time.Time;
    begin
       Inf.Payload := (Ordinal => 2001,
                       Expected_At => ColdFrame.Project.Calendar.Clock);
 
---        Start := Seawolf_High_Resolution_Time.Clock;
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
---        GNAT.IO.Put_Line ("event to self took"
---                            & Duration'Image (Seawolf_High_Resolution_Time.Clock
---                                                - Start));
 
       Assert (Machine.Get_Ordinal (H) = 2002,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
