@@ -20,17 +20,20 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 952c3ca908a9 $
---  $Date: 2002/09/20 10:15:53 $
+--  $Revision: 9ac0744c0449 $
+--  $Date: 2002/10/01 17:44:46 $
 --  $Author: simon $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
 with ColdFrame.Instances;
+with ColdFrame.Logging_Signature;
 with ColdFrame.Time_Signature;
 with System.Storage_Pools;
 
 generic
+
+   with package Logging is new Logging_Signature (<>);
 
    with package Time is new Time_Signature (<>);
 
