@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6784e5502188 2003/06/26 05:07:07 simon $
+# $Id: normalize-rose.tcl,v b115890bbf37 2003/06/29 16:52:12 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -788,6 +788,10 @@ itcl::class Initial {
     inherit ValueString
 }
 
+itcl::class Kind {
+    inherit String
+}
+
 itcl::class Month {
     inherit String
 }
@@ -1072,14 +1076,23 @@ itcl::class Class {
 	}
     }
 
+    # Specifies kind of class
+    variable kind
+    method -kind {k} {
+	set kind $k
+	switch $k {
+	    NormalClass {}
+	    Utility     {$this -singleton 1}
+	    default     {Error "kind $k (class $name) not handled"}
+	}
+    }
+
     # specifies if this class is abstract
     variable abstr 0
-
     method -abstract {dummy} {set abstr 1}
 
     # specifies if this is an active class
     variable active 0
-
     method -active {dummy} { set active 1}
 
     method -concurrency {conc} {
@@ -1092,11 +1105,9 @@ itcl::class Class {
 
     # specifies if this is a public class
     variable public 0
-
     method -public {dummy} {
 	set public 1
-	set singleton 1
-	set max 1
+	$this -singleton 1
     }
 
     method -interface {dummy} {
@@ -1105,12 +1116,10 @@ itcl::class Class {
 
     # specifies if this is a visible class
     variable visible 0
-
     method -visible-for-test {dummy} {set visible 1}
 
     # true if there's one and only one instance of the class
     variable singleton 0
-
     method -singleton {dummy} {
 	set singleton 1
 	set max 1
@@ -1119,7 +1128,6 @@ itcl::class Class {
     # an abbreviation of the name may be useful (eg, when making names
     # for referential attributes)
     variable abbreviation
-
     method -abbreviation {a} {
 	set abbreviation [string toupper [string trim $a]]
     }
@@ -1157,7 +1165,6 @@ itcl::class Class {
     #
 
     variable isControl 0
-
     method -control {dummy} {set isControl 1}
 
     #
@@ -1165,23 +1172,11 @@ itcl::class Class {
     #
 
     variable isType 0
-
-    variable callback
-
-    variable counterpart 0
-
-    variable discriminated 0
-
-    variable protected 0
-
-    variable extends
-
-    variable serializable 0
-
     # called (via stereotype mechanism) to indicate that this is a
     # <<type>> class
     method -type {dummy} {set isType 1}
 
+    variable callback
     # called (via annotation or stereotype mechanism) to indicate that this
     # is used in a callback
     method -callback {size} {
@@ -1189,6 +1184,7 @@ itcl::class Class {
 	set callback [string trim $size]
     }
 
+    variable counterpart 0
     # called (via annotation or stereotype mechanism) to indicate that this
     # is a counterpart type
     method -counterpart {dummy} {
@@ -1196,13 +1192,7 @@ itcl::class Class {
 	set counterpart 1
     }
 
-    # called (via annotation or stereotype mechanism) to indicate that this
-    # is a protected type
-    method -protected {dummy} {
-	$this -type 1
-	set protected 1
-    }
-
+    variable discriminated 0
     # called (via annotation or stereotype mechanism) to indicate that this
     # is a discriminated (record) type
     method -discriminated {dummy} {
@@ -1210,10 +1200,20 @@ itcl::class Class {
 	set discriminated 1
     }
 
+    variable protected 0
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is a protected type
+    method -protected {dummy} {
+	$this -type 1
+	set protected 1
+    }
+
+    variable extends
     # called (via annotation mechanism) to indicate that this type
     # extends an (imported) base type
     method -extends {base} {set extends [normalize $base]}
 
+    variable serializable 0
     # called (via annotation mechanism) to indicate that this type
     # is serializable
     method -serializable {dummy} {set serializable 1}
@@ -1343,6 +1343,14 @@ itcl::class Class {
 	    Error "singleton [$this -getName] has identifier"
 	} elseif [expr !($singleton || $isType) && ![$this -hasIdentifier]] {
 	    Error "[$this -getName] has no identifier"
+	}
+	if {$kind == "Utility"} {
+	    if $active {Error "utility [$this -getName] is active"}
+	    if [info exists attributes] {
+		if [$attributes -size] {
+		    Error "utility [$this -getName] has attributes/associations"
+		}
+	    }
 	}
 	if $isType {
 	    puts -nonewline "<type"
@@ -2725,6 +2733,7 @@ proc elementFactory {xmlTag} {
 	inheritance       {return [Inheritance #auto]}
 	inheritances      {return [Inheritances #auto]}
 	initial           {return [Initial #auto]}
+        kind              {return [Kind #auto]}
 	month             {return [Month #auto]}
 	name              {return [Name #auto]}
 	operation         {return [Operation #auto]}
