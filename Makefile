@@ -114,7 +114,7 @@ PDFS = coldframe-architecture.pdf \
   coldframe-relationships.pdf
 pdf:: $(PDFS)
 
-GIFS = States.gif States-Monitor.gif inheritance.gif
+GIFS = States.gif States-Monitor.gif inheritance.gif lamp.gif lamp-state.gif
 JPEGS = navigation.jpg window-screen.jpg
 
 ############################
@@ -124,17 +124,27 @@ JPEGS = navigation.jpg window-screen.jpg
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
 DOCS = architecture.html \
+associations.html \
+attributes.html \
 bugs.html \
+classes.html \
 conversion.html \
 directions.html \
+domains.html \
 events.html \
 event-modelling.html \
 event-motivation.html \
+event-translation.html \
+event-use.html \
 extraction.html \
 faq.html \
+generalizations.html \
 generation.html \
 index.html \
 installation.html \
+operation-parameters.html \
+operation-results.html \
+operations.html \
 preparation.html \
 principles.html \
 releases.html \
@@ -144,6 +154,8 @@ strategy.html \
 support.html \
 target.html \
 translation-rules.html \
+type-callbacks.html \
+types.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
 coldframe-architecture.html \
