@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e09817e6a2ab 2002/03/09 09:51:51 simon $
+# $Id: normalize-rose.tcl,v e0fc02b1104e 2002/04/12 19:00:19 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -989,35 +989,12 @@ itcl::class Operation {
 
     # is this abstract?
     variable abstr 0
-
-    # is this an access-to-operation?
-    variable acc 0
-
-    # is this a class operation?
-    variable cls 0
-
-    # is this an initialize operation?
-    variable init 0
-
-    # is this a finalize operation?
-    variable final 0
-
-    # is this a <<message>> event handler:
-    variable handler 0
-
-    # is this operation one that we expect to be generated?
-    # may be unset, "framework", "navigation", "instantiation".
-    variable suppressed
-
-    # the return type, if any
-    variable ret ""
-
-    variable parameters
-
     # called via stereotype mechanism to indicate that this is an
     # abstract operation
     method -abstract {dummy} {set abstr 1}
 
+    # is this an access-to-operation?
+    variable acc 0
     # called via stereotype mechanism to indicate that this is an
     # access-to-operation (and also a class operation; how would
     # we know which instance to invoke?)
@@ -1026,10 +1003,18 @@ itcl::class Operation {
 	set cls 1
     }
 
+    # is this an accessor?
+    variable accessor 0
+    method -accessor {dummy} {set accessor 1}
+
+    # is this a class operation?
+    variable cls 0
     # called via stereotype mechanism to indicate that this is a class
     # operation
     method -class {dummy} {set cls 1}
 
+    # is this an initialize operation?
+    variable init 0
     # called via stereotype mechanism to indicate that this is an
     # initialization operation (and also a class operation).
     method -init {dummy} {
@@ -1037,19 +1022,26 @@ itcl::class Operation {
 	set init 1
     }
 
+    # is this a finalize operation?
+    variable final 0
     # called via stereotype mechanism to indicate that this is an
     # instance finalization operation.
     method -finalize {dummy} {
 	set final 1
     }
 
+    # is this a <<class event>> event handler:
+    variable handler 0
     # called via stereotype mechanism to indicate that this is a
-    # <<message>> event handler (and also a class operation).
+    # <<class event>> event handler (and also a class operation).
     method -handler {dummy} {
 	set cls 1
 	set handler 1
     }
 
+    # is this operation one that we expect to be generated?
+    # may be unset, "framework", "navigation", "instantiation".
+    variable suppressed
     # called via stereotype mechanism to indicate that this is
     # expected to be generated or otherwise omitted, and is only
     # included for completeness and to allow its inclusion in
@@ -1064,14 +1056,18 @@ itcl::class Operation {
 	set suppressed "instantiation"
     }
 
+    # the return type, if any
+    variable ret ""
     method -return {r} {set ret $r}
 
+    variable parameters
     method -parameters {pl} {set parameters $pl}
 
     method -generate {domain}  {
 	puts -nonewline "<operation"
 	if $abstr {puts -nonewline " abstract=\"yes\""}
 	if $acc {puts -nonewline " access=\"yes\""}
+	if $accessor {puts -nonewline " accessor=\"yes\""}
 	if $cls {puts -nonewline " class=\"yes\""}
 	if $init {puts -nonewline " initialize=\"yes\""}
 	if $final {puts -nonewline " finalize=\"yes\""}
@@ -1396,6 +1392,8 @@ itcl::class Role {
 		    }
 		    default {
 			Error "illegal lower bound $lower in role $name"
+			# set some values to allow further processing
+			set conditional 0; set cardinality "1"
 		    }
 		}
 	    } else {
@@ -1661,6 +1659,10 @@ itcl::class Transition {
     variable ignore 0
     method -ignore {dummy} {set ignore 1}
 
+    # is this a transition triggered by an event-to-self?
+    variable self 0
+    method -self {dummy} {set self 1}
+
     variable source
     method -source {s} {set source $s}
 
@@ -1680,6 +1682,7 @@ itcl::class Transition {
     method -generate {domain} {
 	puts -nonewline "<transition"
 	if $ignore then {puts -nonewline " ignore=\"yes\""}
+	if $self then {puts -nonewline " self=\"yes\""}
 	puts ">"
 	if {[string length [$event -getName]] > 0} {
 	    putElement event [$event -getName]
