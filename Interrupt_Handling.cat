@@ -12,7 +12,7 @@
     logical_models 	(list unit_reference_list
 	(object Class "Device"
 	    quid       	"3DA72C9A01AA"
-	    documentation 	"[[ priority : (   15 + 16 - 20   ); stack : 40000 ]]"
+	    documentation 	"[[ priority :  +1  ; stack : 40000 ]]"
 	    stereotype 	"singleton"
 	    operations 	(list Operations
 		(object Operation "start"
@@ -402,4 +402,29 @@
 		    width      	376
 		    height     	444
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Interrupt Handling" @11
+		    location   	(1630, 395)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@11
+			location   	(1460, 311)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Interrupt Handling")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DA72C880050"
+		    width      	352
+		    height     	180)))))

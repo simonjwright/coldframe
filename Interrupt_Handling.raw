@@ -4,8 +4,8 @@
 <date>
 <year>2003</year>
 <month>7</month>
-<day>26</day>
-<time>18:46</time>
+<day>28</day>
+<time>20:15</time>
 </date>
 <documentation></documentation>
 <classes>
@@ -14,7 +14,7 @@
 <kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Active</concurrency>
-<documentation>[[ priority : (   15 + 16 - 20   ); stack : 40000 ]]</documentation>
+<documentation>[[ priority :  +1  ; stack : 40000 ]]</documentation>
 <attributes>
 <attribute>
 <name>timeout</name>
