@@ -1,4 +1,4 @@
---  $Id: Options.gpr,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  $Id: Options.gpr,v 132dfb4d9a4e 2004/05/08 20:17:30 simon $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -12,7 +12,7 @@ project Options is
   Build_Base := external ("BUILD_BASE", ".");
   for Object_Dir use Build_Base;
 
-  --  GLIDE configuration (these are the defaults). Available in
+  --  GLIDE/GPS configuration (these are the defaults). Available in
   --  gnat-3.13p and gcc-3.3+; comment out if using earlier gcc-3
   --  releases.
   package Ide is
@@ -40,9 +40,7 @@ project Options is
      for Default_Switches ("ada") use
        (
         "-gnatqQafoy",
-        "-fstack-check",
         "-gnatwaL",
-        "-gnatVa",
         "-O2"
        );
 
