@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 0e531d7bedcc $}
+|{ revision = $Revision: 7e4a91537d2a $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -4321,8 +4321,12 @@
 		    operations 	(list Operations
 			(object Operation "O"
 			    quid       	"40DBB855039C"
-			    documentation 	"{ renames = GNAT.IO.New_Line }"
+			    documentation 	"{ renames = GNAT.IO.Put }"
 			    stereotype 	"class"
+			    parameters 	(list Parameters
+				(object Parameter "i"
+				    quid       	"40DBBCE30082"
+				    type       	"Integer"))
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
@@ -4397,10 +4401,10 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@124
-				location   	(427, 355)
+				location   	(426, 355)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	536
+				max_width  	538
 				justify    	0
 				label      	"Renaming Operations Parent")
 			    icon_style 	"Icon"
@@ -4409,7 +4413,7 @@
 			    quidu      	"40DBB7F60223"
 			    compartment 	(object Compartment
 				Parent_View 	@124
-				location   	(427, 411)
+				location   	(426, 411)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -4423,8 +4427,8 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	452)
-			    width      	554
+				max_width  	445)
+			    width      	556
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
@@ -4546,7 +4550,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 0e531d7bedcc $}
+|{ revision = $Revision: 7e4a91537d2a $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -4592,7 +4596,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 0e531d7bedcc 2004/06/25 05:45:20 simon $")
+		    label      	"$Id: Regressions.cat,v 7e4a91537d2a 2004/06/25 05:50:33 simon $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @130
 		    location   	(301, 318)
 		    font       	(object Font
