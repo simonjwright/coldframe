@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 52365f68aa69 2001/06/16 16:28:25 simon $ -->
+<!-- $Id: releases.html,v 8a2be24bdf04 2001/06/19 18:48:14 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -73,6 +73,19 @@ associations.
 <p>All Classes have a &#171;class&#187; operation <tt>Initialize</tt>
 (no parameters); the Domain has an Initialize operation which calls
 each of the Class' Initialize (in alphabetical order).
+
+
+<p>If the Saxon command line parameter <tt>generate-accessors</tt>
+isn't set to <tt>yes</tt>, attribute accessor subprograms won't be
+generated.
+
+
+<p>The Makefiles set the file protection on generated code to
+read-only (to give you some sort of warning when you accidentally edit
+generated code).
+
+
+<p>Include proper default initialization for Date/Time.
 
 
 <p>
