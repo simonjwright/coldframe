@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 2d69c0c7f57f 2003/05/17 16:47:32 simon $ -->
+<!-- $Id: ada-type.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -303,6 +303,38 @@
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
 
+          </xsl:when>
+
+          <xsl:when test="@protected">
+
+            <!--
+                 protected type {name} is
+                    {operations}
+                 private
+                    {attributes}
+                 end {name};
+                 -->
+            
+            <xsl:value-of select="$I"/>
+            <xsl:text>protected type </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text> is&#10;</xsl:text>
+            <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
+              <xsl:sort select="name"/>
+              <xsl:call-template name="subprogram-specification">
+                <xsl:with-param name="indent" select="$II"/>
+                <xsl:with-param name="is-class" select="'no'"/>
+              </xsl:call-template>
+              <xsl:text>;&#10;</xsl:text>
+            </xsl:for-each>
+            <xsl:value-of select="$I"/>
+            <xsl:text>private&#10;</xsl:text>
+            <xsl:apply-templates mode="instance-record-component"/>
+            <xsl:value-of select="$I"/>
+            <xsl:text>end </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>;&#10;</xsl:text>
+            
           </xsl:when>
 
           <xsl:when test="@extends">

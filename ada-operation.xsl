@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v f64b3a16bbac 2003/05/17 21:11:34 simon $ -->
+<!-- $Id: ada-operation.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -426,6 +426,14 @@
 
       <!-- If there's a return attribute, it's a function. -->
       <xsl:when test="@return">
+        <!-- Check for entry (illegal for functions) -->
+        <xsl:if test="@entry">
+          <xsl:message terminate="yes">
+            <xsl:text>Error: function </xsl:text>
+            <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+            <xsl:text> can't be an entry</xsl:text>
+          </xsl:message>
+        </xsl:if>
         <xsl:value-of select="$indent"/>
         <xsl:text>function </xsl:text>
         <xsl:value-of select="name"/>
@@ -443,10 +451,17 @@
         </xsl:call-template>
       </xsl:when>
 
-      <!-- If there's no return attribute, it's a procedure. -->
+      <!-- If there's no return attribute, it's a procedure or entry. -->
       <xsl:otherwise>
         <xsl:value-of select="$indent"/>
-        <xsl:text>procedure </xsl:text>
+        <xsl:choose>
+          <xsl:when test="not(@entry)">
+            <xsl:text>procedure </xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>entry </xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:value-of select="name"/>
         <xsl:call-template name="parameter-list">
           <xsl:with-param name="indent" select="$cont"/>

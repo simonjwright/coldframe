@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v a0311f28b937 2003/05/25 17:53:20 simon $ -->
+<!-- $Id: generate-ada.xsl,v 13769666b747 2003/06/06 10:37:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -176,13 +176,13 @@
       <xsl:with-param name="m" select="'.. any operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="type/operation[@access and not(@suppressed)]"
+      select="type[not(@protected)]/operation[@access and not(@suppressed)]"
       mode="access-to-operation">
       <xsl:sort select="name"/>
       <xsl:with-param name="is-class" select="'no'"/>
     </xsl:apply-templates>
     <xsl:apply-templates
-      select="type/operation[not(@access) and not(@suppressed)]"
+      select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
@@ -209,13 +209,23 @@
       <xsl:text> is&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       
+      <!-- Protected types need stubs. -->
+      <xsl:for-each select="type[@protected]">
+        <xsl:sort select="name"/>
+        <xsl:value-of select="$I"/>
+        <xsl:text>protected body </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is separate;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:for-each>
+      
       <!-- Operations that were analyst-specified need stubs. -->
       <xsl:apply-templates
-        select="type/operation[not(@access) and not(@suppressed)]"
+        select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
         mode="domain-type-operation-body-stub">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
-      
+
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
       <xsl:value-of select="name"/>
@@ -230,7 +240,7 @@
         select="'.. operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="type/operation[not(@access) and not(@suppressed)]"
+      select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
       mode="domain-type-operation-body">
     </xsl:apply-templates>
     
