@@ -14,8 +14,8 @@ VERBOSE = no
 # Define these variables in an including Makefile (before the actual
 # include)
 
-ifeq ($(ColdFrameOut), )
-  ColdFrameOut = .
+ifeq ($(COLDFRAMEOUT), )
+  COLDFRAMEOUT = .
 endif
 
 ifeq ($(TOP), )
@@ -53,7 +53,7 @@ NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
-%.norm: $(ColdFrameOut)/%.raw
+%.norm: $(COLDFRAMEOUT)/%.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \
