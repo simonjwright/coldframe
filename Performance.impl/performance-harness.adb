@@ -35,6 +35,7 @@ begin
 
    declare
       Pr : Person.Handle;
+      pragma Warnings (Off, Pr);
    begin
 
       Performance.Initialize;
@@ -90,6 +91,7 @@ begin
 
    declare
       Pr : Person.Handle;
+      pragma Warnings (Off, Pr);
       Prc : Person.Collections.Collection;
    begin
 
@@ -132,6 +134,7 @@ begin
       Os : array (Owners) of Owner.Handle;
       Pts : array (Pets) of Pet.Handle;
       O : Owner.Handle;
+      pragma Warnings (Off, O);
    begin
 
       Performance.Initialize;
@@ -197,6 +200,7 @@ begin
       Prs : array (Owners) of Person.Handle;
       Pts : array (Pets) of Pet.Handle;
       H : House.Handle;
+      pragma Warnings (Off, H);
    begin
 
       Performance.Initialize;
