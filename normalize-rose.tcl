@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+# $Id: normalize-rose.tcl,v 926821f19181 2004/09/18 11:58:07 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1209,6 +1209,13 @@ itcl::class Class {
     # <<type>> class
     method -type {dummy} {set isType 1}
 
+    variable access
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # needs an access type
+    method -access {a} {
+        set access [normalize $a]
+    }
+
     variable callback
     # called (via annotation or stereotype mechanism) to indicate that this
     # is used in a callback
@@ -1400,6 +1407,9 @@ itcl::class Class {
         }
         if $isType {
             $this -putElementStart "type"
+            if [info exists access] {
+                puts -nonewline " access=\"$access\""
+            }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
             }
