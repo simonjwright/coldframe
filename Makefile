@@ -34,11 +34,9 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	rm -f $@/*.ad[bs]
 	gnatchop $< $@
 
-%.doc: %.norm $(HTMLGEN_SCRIPT)
-	-mkdir $@
-	rm -f $@/*
-	$(MAKE) `basename $@ .doc`.html
-	mv `basename $@ .doc`.html $@
+TG = $(HOME)/bin/tg
+%.adb: %.ts
+	$(TG) $<
 
 TEXI2HTML = texi2html
 %.html: %.texi
