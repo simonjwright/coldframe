@@ -1,4 +1,4 @@
-<!-- $Id: xml-schemas.html,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: xml-schemas.html,v e6d200f64a94 2005/01/29 19:50:15 simon $ -->
 <head>
 <title>ColdFrame: XML Schemas</title>
 </head>
@@ -9,8 +9,8 @@ There are currently (12.vi.04) two XML file formats (schemas) used:
 
 <ul>
 
-<li>the <tt>.raw</tt> format used for extraction from Rose; schema not
-yet written.
+<li>the <tt>.raw</tt> format used for extraction from Rose; schema in
+<a href="ColdFrame-raw.xsd">ColdFrame-raw.xsd</a>.
 
 <li>the <tt>.norm</tt> format used as input to the XSLT stylesheets
 for code generation, schema in <a
@@ -80,6 +80,8 @@ whole <tt>xmlschema</tt> by
 
 <p>The rather inscrutable output of a successful validation is like <a
 href="States-check.xsv">this</a>.
+<br><i>Well, actually I think this is wrong, because you get the same
+sort of output no matter what sort of actual document you supply!</i>
 
 <p>To convert the output to HTML, you need to process the above output
 (which is to standard error):
