@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 88b3b0b39952 2002/12/06 21:41:16 simon $ -->
+<!-- $Id: ada-class.xsl,v c4a010d40187 2002/12/24 11:44:48 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1664,8 +1664,10 @@
           <xsl:text> mod 2**31);&#10;</xsl:text>
         </xsl:when>
 
-        <xsl:when test="$type/enumeration or type='Boolean'">
-
+        <xsl:when test="$type/enumeration or type='Boolean'
+                        or $type/integer or type='Integer'
+                        or $type/hash='discrete'">
+          
           <!--
                Result := Result xor {type-name}'Pos (Id.{name});
                -->
@@ -1677,13 +1679,6 @@
           <xsl:value-of select="name"/>
           <xsl:text>);&#10;</xsl:text>
 
-        </xsl:when>
-
-        <xsl:when test="$type/integer or type='Integer'">
-          <xsl:value-of select="$I"/>
-          <xsl:text>Result := Result xor M (Id.</xsl:text>
-          <xsl:value-of select="name"/>
-          <xsl:text>);&#10;</xsl:text>
         </xsl:when>
 
         <xsl:when test="$type/string">
