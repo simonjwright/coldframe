@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 04b082f74c05 $
---  $Date: 2003/03/22 17:10:30 $
+--  $Revision: 594912a94743 $
+--  $Date: 2003/05/04 10:05:57 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -156,21 +156,31 @@ package body ColdFrame.Events_G.Standard_G is
    task body Dispatcher is
 
       E : Event_P;
-      Tearing_Down : Boolean;
+      Tearing_Down : Boolean := False;
 
    begin
 
       --  Wait to be told when to start, if not immediately
       if not The_Queue.Started then
-         accept Start do
-            --  Start processing events set or posted to run after a
-            --  delay (rather than at a time) only after we have
-            --  started ourselves; but don't return until we've done
-            --  so, so that our caller can tell the Timer manager to
-            --  rethink after we're ready
-            Held_Events.Start_Processing_After_Events
-              (The_Queue.The_Held_Events);
-         end Start;
+
+         select
+
+            accept Start do
+               --  Start processing events set or posted to run after a
+               --  delay (rather than at a time) only after we have
+               --  started ourselves; but don't return until we've done
+               --  so, so that our caller can tell the Timer_Manager to
+               --  rethink *after* we're ready
+               Held_Events.Start_Processing_After_Events
+                 (The_Queue.The_Held_Events);
+            end Start;
+
+         or
+            accept Finish;
+            Tearing_Down := True;
+
+         end select;
+
       else
             --  Start processing events set or posted to run after a
             --  delay (rather than at a time) immediately
@@ -178,35 +188,39 @@ package body ColdFrame.Events_G.Standard_G is
               (The_Queue.The_Held_Events);
       end if;
 
-      loop
+      if not Tearing_Down then
 
-         The_Queue.The_Excluder.Fetch (E, Tearing_Down);
-         --  Blocks until there's an event or the queue needs
-         --  tearing down.
-         exit when  Tearing_Down;
+         loop
 
-         if not E.Invalidated then
-            begin
-               Log_Pre_Dispatch (The_Event => E, On => The_Queue);
-               Handler (E.all);
-               Log_Post_Dispatch (The_Event => E, On => The_Queue);
-            exception
-               when Ex : others =>
-                  Logging.Log
-                    (Severity => Logging.Error,
-                     Message =>
-                       Ada.Exceptions.Exception_Information (Ex) &
-                       " in Dispatcher (event " &
-                       Ada.Tags.Expanded_Name (E.all'Tag) &
-                       ")");
-            end;
-         end if;
+            The_Queue.The_Excluder.Fetch (E, Tearing_Down);
+            --  Blocks until there's an event or the queue needs
+            --  tearing down.
+            exit when Tearing_Down;
 
-         Delete (E);
-         Note_Removal_Of_Posted_Event (The_Queue);
-         The_Queue.The_Excluder.Done;
+            if not E.Invalidated then
+               begin
+                  Log_Pre_Dispatch (The_Event => E, On => The_Queue);
+                  Handler (E.all);
+                  Log_Post_Dispatch (The_Event => E, On => The_Queue);
+               exception
+                  when Ex : others =>
+                     Logging.Log
+                       (Severity => Logging.Error,
+                        Message =>
+                          Ada.Exceptions.Exception_Information (Ex) &
+                          " in Dispatcher (event " &
+                          Ada.Tags.Expanded_Name (E.all'Tag) &
+                          ")");
+               end;
+            end if;
 
-      end loop;
+            Delete (E);
+            Note_Removal_Of_Posted_Event (The_Queue);
+            The_Queue.The_Excluder.Done;
+
+         end loop;
+
+      end if;
 
    end Dispatcher;
 
@@ -626,15 +640,32 @@ package body ColdFrame.Events_G.Standard_G is
       --  Perhaps this could be neater, but at least doing it in this
       --  order we know that the Timer Manager can't post any more
       --  events on a dead Dispatcher.
+
+      --  Stop processing held events ..
       The_Queue.The_Timer_Manager.Tear_Down;
+      --  .. waiting until the Timer_Manager has actually stopped.
       while not The_Queue.The_Timer_Manager'Terminated loop
          delay 0.1;
       end loop;
+
+      --  Tell the Excluder we're finishing. This makes the next Fetch
+      --  report that tear-down is in progress.
       The_Queue.The_Excluder.Tear_Down;
+
+      --  Just in case the queue wasn't started, tell the Dispatcher
+      --  we're finishing.
+      select
+         The_Queue.The_Dispatcher.Finish;
+      else
+         null;
+      end select;
+
+      --  Wait until the Dispatcher has actually stopped.
       while not The_Queue.The_Dispatcher'Terminated loop
          delay 0.1;
       end loop;
 
+      --  Delete all the outstanding events-to-self ..
       declare
          It : Abstract_Posted_Event_Containers.Iterator'Class
            := Unbounded_Posted_Event_Queues.New_Iterator
@@ -650,6 +681,7 @@ package body ColdFrame.Events_G.Standard_G is
          end loop;
       end;
 
+      --  .. and all the outstanding standard events ..
       declare
          It : Abstract_Posted_Event_Containers.Iterator'Class
            := Unbounded_Posted_Event_Queues.New_Iterator
@@ -665,6 +697,7 @@ package body ColdFrame.Events_G.Standard_G is
          end loop;
       end;
 
+      --  .. and all the held events.
       Held_Events.Tear_Down (The_Queue.The_Held_Events);
 
    end Tear_Down;

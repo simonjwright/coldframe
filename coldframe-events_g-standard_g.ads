@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: da2b89e104bc $
---  $Date: 2003/03/09 15:58:56 $
+--  $Revision: 594912a94743 $
+--  $Date: 2003/05/04 10:05:57 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -101,6 +101,9 @@ private
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
       entry Start;
+
+      entry Finish;
+      --  Called during tear down, in case the Queue hasn't been started.
 
    end Dispatcher;
 
