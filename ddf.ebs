@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 0e6495e98ada 2002/02/06 20:02:18 simon $
+'$Id: ddf.ebs,v 6627c72e6a98 2002/02/23 13:38:15 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -189,10 +189,38 @@ Sub DumpStates (c As Class)
 	End If
 End Sub
 
+Sub DumpTypedEvents (o As Class)
+	Dim deps As ClassDependencyCollection
+	Set deps = o.GetClassDependencies()
+	Print #1, "<events>"
+	For i = 1 To deps.Count
+		Dim d As ClassDependency
+		Set d = deps.GetAt(i)
+		Dim s As String
+		s = d.Stereotype
+		Dim sup As Class
+		Set sup = d.GetSupplierClass
+		If s = "event" Then
+			Print #1, "<event>"
+			Print #1, "<name>" & d.Name & "</name>"
+			Print #1, "<type>" & sup.Name & "</type>"
+			Print #1, "</event>"
+		Else
+			If s = "message" Then
+				Print #1, "<event message=" & chr(34) & "yes" & chr(34) & ">"
+				Print #1, "<name>" & d.Name & "</name>"
+				Print #1, "<type>" & sup.Name & "</type>"
+				Print #1, "</event>"
+			End If
+		End If
+	Next I
+	Print #1, "</events>"
+End Sub
+
 Sub DumpClass (o As Class)
 	Print "  class " & o.Name
 	Dim s As String
-	s = o.stereotype
+	s = o.Stereotype
 	If Len(s) > 0 Then
 	  	Print #1, "<class stereotype=" & Chr(34) & o.Stereotype & Chr(34) & ">"
 	Else
@@ -207,6 +235,7 @@ Sub DumpClass (o As Class)
 	Print #1, "<documentation>" & o.Documentation & "</documentation>"
 	DumpAttributes (o)
 	DumpOperations (o)
+	DumpTypedEvents (o)
 	DumpStates (o)
 	Print #1, "</class>"
 End Sub
