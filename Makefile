@@ -287,7 +287,6 @@ coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
-coldframe-serialization_signature.ads \
 coldframe-time_signature.ads \
 coldframe.ads
 

@@ -10,13 +10,9 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-serialization.ads,v $
---  $Revision: 2ed51d3c7740 $
---  $Date: 2003/02/02 19:08:30 $
+--  $Revision: c8e163a7f72b $
+--  $Date: 2003/03/13 20:58:20 $
 --  $Author: simon $
 
-with ColdFrame.Serialization_Signature;
 with ColdFrame.Serialization;
-package ColdFrame.Project.Serialization
-is new ColdFrame.Serialization_Signature
-  (Actual_Base => ColdFrame.Serialization.Base,
-   Actual_Class_Image => ColdFrame.Serialization.Class_Image);
+package ColdFrame.Project.Serialization renames ColdFrame.Serialization;
