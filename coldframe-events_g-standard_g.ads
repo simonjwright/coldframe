@@ -20,15 +20,18 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: bd96cd3c1539 $
---  $Date: 2003/01/19 18:27:17 $
+--  $Revision: da2b89e104bc $
+--  $Date: 2003/03/09 15:58:56 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
 with BC.Containers.Queues.Unbounded;
-with BC.Containers.Queues.Ordered.Unbounded;
+with ColdFrame.Events_G.Held_Event_Queue_Signature;
 
 generic
+
+   with package Held_Events is new Held_Event_Queue_Signature (<>);
+
 package ColdFrame.Events_G.Standard_G is
 
    pragma Elaborate_Body;
@@ -90,18 +93,6 @@ private
    is new Abstract_Posted_Event_Queues.Unbounded
      (Storage => Event_Storage);
 
-   function "<" (L, R : Timer_Queue_Entry_P) return Boolean;
-
-   package Abstract_Timed_Event_Containers
-   is new BC.Containers (Timer_Queue_Entry_P);
-   package Abstract_Timed_Event_Queues
-   is new Abstract_Timed_Event_Containers.Queues;
-   package Abstract_Timed_Event_Ordered_Queues
-   is new Abstract_Timed_Event_Queues.Ordered;
-   package Timed_Event_Queues
-   is new Abstract_Timed_Event_Ordered_Queues.Unbounded
-     (Storage => Event_Storage);
-
 
    task type Dispatcher (The_Queue : access Event_Queue_Base'Class) is
 
@@ -120,12 +111,21 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
-      entry Append (The_Entry : Timer_Queue_Entry_P);
+      entry Add_At_Event (The_Entry : Event_P;
+                          To_Run_At : Time.Time);
+
+      entry Add_After_Event (The_Entry : Event_P;
+                             To_Run_After : Duration);
+
+      entry Rethink;
+      --  Something has happened which may alter the relative timings
+      --  (or, the queue has been started so that "after" events are
+      --  now available)
 
       entry Invalidate (For_The_Instance : Instance_Base_P);
       --  Marks all the events on the queue which are for
       --  For_The_Instance as invalid, so they won't be actioned when
-      --  Fetched.
+      --  their time arrives.
 
       entry Tear_Down;
       --  Only for use by domain Tear_Down.
@@ -194,14 +194,13 @@ private
    end Excluder;
 
 
-   --  The actual Event Queue.
    type Event_Queue_Base (Start_Started : Boolean)
    is new Events_G.Event_Queue_Base (Start_Started => Start_Started)
    with record
       The_Excluder : Excluder (Event_Queue_Base'Access);
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Events : Unbounded_Posted_Event_Queues.Queue;
-      The_Timed_Events : Timed_Event_Queues.Queue;
+      The_Held_Events : aliased Held_Events.Queue;
       The_Dispatcher : Dispatcher (Event_Queue_Base'Access);
       The_Timer_Manager : Timer_Manager (Event_Queue_Base'Access);
    end record;

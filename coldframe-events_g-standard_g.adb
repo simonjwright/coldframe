@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 16159608c696 $
---  $Date: 2003/02/11 20:49:32 $
+--  $Revision: da2b89e104bc $
+--  $Date: 2003/03/09 15:58:56 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -109,7 +109,8 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
-      TE : Timer_Queue_Entry_P := new Timer_Event (On_Timer => False);
+      TEP : Event_P := new Timer_Event (On_Timer => False);
+      TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
       Note (The_Queue => On,
@@ -122,7 +123,7 @@ package body ColdFrame.Events_G.Standard_G is
       TE.On := Event_Queue_P (On);
       TE.Time_To_Fire := To_Fire_At;
       TE.The_Event := The_Event;
-      On.The_Timer_Manager.Append (TE);
+      On.The_Timer_Manager.Add_At_Event (TEP, To_Fire_At);
 
    end Post;
 
@@ -130,14 +131,22 @@ package body ColdFrame.Events_G.Standard_G is
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
+      TEP : Event_P := new Timer_Event (On_Timer => False);
+      TE : Timer_Event renames Timer_Event (TEP.all);
    begin
 
       Note (The_Queue => On,
             Used_By_The_Instance_Of => The_Event);
 
-      Post (The_Event => The_Event,
-            On => On,
-            To_Fire_At => Time.From_Now (To_Fire_After));
+      --  We need a dispatching call, in case the queue is actually a
+      --  derived type.
+      Add_Held_Event (Event_Queue_P (On));
+
+      TE.On := Event_Queue_P (On);
+      TE.Time_To_Fire := Time.From_Now (To_Fire_After);
+      --  NB, this will be wrong if the queue isn't yet started.
+      TE.The_Event := The_Event;
+      On.The_Timer_Manager.Add_After_Event (TEP, To_Fire_After);
 
    end Post;
 
@@ -203,11 +212,15 @@ package body ColdFrame.Events_G.Standard_G is
          Add_Timer_Event (Event_Queue_P (On));
 
          The_Timer.The_Entry := new Timer_Event (On_Timer => True);
-         The_Timer.The_Entry.On := Event_Queue_P (On);
-         The_Timer.The_Entry.Time_To_Fire := At_Time;
-         The_Timer.The_Entry.The_Event := To_Fire;
-         The_Timer.The_Entry.The_Timer := The_Timer'Unrestricted_Access;
-         On.The_Timer_Manager.Append (The_Timer.The_Entry);
+         declare
+            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+         begin
+            TE.On := Event_Queue_P (On);
+            TE.Time_To_Fire := At_Time;
+            TE.The_Event := To_Fire;
+            TE.The_Timer := The_Timer'Unrestricted_Access;
+         end;
+         On.The_Timer_Manager.Add_At_Event (The_Timer.The_Entry, At_Time);
 
       else
 
@@ -227,10 +240,35 @@ package body ColdFrame.Events_G.Standard_G is
                   After : Natural_Duration) is
    begin
 
-      Set (The_Timer => The_Timer,
-           On => On,
-           To_Fire => To_Fire,
-           At_Time => Time.From_Now (After));
+      Note (The_Queue => On,
+            Used_By_The_Instance_Of => To_Fire);
+
+      if The_Timer.The_Entry = null then
+
+         --  We need a dispatching call, in case the queue is actually
+         --  a derived type.
+         Add_Timer_Event (Event_Queue_P (On));
+
+         The_Timer.The_Entry := new Timer_Event (On_Timer => True);
+         declare
+            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+         begin
+            TE.On := Event_Queue_P (On);
+            TE.Time_To_Fire := Time.From_Now (After);
+            --  NB, this will be wrong if the queue isn't yet started.
+            TE.The_Event := To_Fire;
+            TE.The_Timer := The_Timer'Unrestricted_Access;
+         end;
+         On.The_Timer_Manager.Add_After_Event (The_Timer.The_Entry, After);
+
+      else
+
+         --  XXX may not be all ...
+         Ada.Exceptions.Raise_Exception
+           (Exceptions.Use_Error'Identity,
+            "attempt to set an already-set timer");
+
+      end if;
 
    end Set;
 
@@ -248,11 +286,17 @@ package body ColdFrame.Events_G.Standard_G is
 
       else
 
-         --  Cancel the Event
-         The_Timer.The_Entry.The_Event.Invalidated := True;
+         declare
+            TE : Timer_Event renames Timer_Event (The_Timer.The_Entry.all);
+         begin
 
-         --  Indicate the Timer's already unset
-         The_Timer.The_Entry.The_Timer := null;
+            --  Cancel the Event
+            TE.The_Event.Invalidated := True;
+
+            --  Indicate the Timer's already unset
+            TE.The_Timer := null;
+
+         end;
 
          --  Unset the Timer
          The_Timer.The_Entry := null;
@@ -268,17 +312,17 @@ package body ColdFrame.Events_G.Standard_G is
 
    task body Timer_Manager is
 
-      The_Events : Timed_Event_Queues.Queue renames The_Queue.The_Timed_Events;
+      The_Events : Held_Events.Queue renames The_Queue.The_Held_Events;
 
       procedure Process_First_Event;
       pragma Inline (Process_First_Event);
       procedure Process_First_Event is
-         T : constant Timer_Queue_Entry_P
-           := Timed_Event_Queues.Front (The_Events);
-         Held : constant Boolean := not T.On_Timer;
+         E : Event_P;
+         Held : Boolean;
       begin
-         Timed_Event_Queues.Pop (The_Events);
-         Post (Event_P (T), The_Queue);
+         Held_Events.Pop (The_Events, E);
+         Held := not Timer_Event (E.all).On_Timer;
+         Post (E, The_Queue);
          if Held then
             Remove_Held_Event (The_Queue);
          else
@@ -292,12 +336,26 @@ package body ColdFrame.Events_G.Standard_G is
 
       loop
 
-         if Timed_Event_Queues.Is_Empty (The_Events) then
+         if Held_Events.Is_Empty (The_Events) then
 
             select
-               accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  Timed_Event_Queues.Append (The_Events, The_Entry);
-               end Append;
+               accept Add_At_Event (The_Entry : Event_P;
+                                    To_Run_At : Time.Time) do
+                  Held_Events.Add_At_Event (The_Entry,
+                                            To_Run_At,
+                                            On => The_Events);
+               end Add_At_Event;
+
+            or
+               accept Add_After_Event (The_Entry : Event_P;
+                                       To_Run_After : Duration) do
+                  Held_Events.Add_After_Event (The_Entry,
+                                               To_Run_After,
+                                               On => The_Events);
+               end Add_After_Event;
+
+            or
+               accept Rethink;
 
             or
                accept Invalidate
@@ -313,50 +371,41 @@ package body ColdFrame.Events_G.Standard_G is
 
             end select;
 
-         elsif Time.Equivalent
-           (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
+         elsif Held_Events.Next_Event_Time (The_Events)
            <= Ada.Real_Time.Clock then
 
             loop
                Process_First_Event;
-               exit when Timed_Event_Queues.Is_Empty (The_Events);
-               exit when Time.Equivalent
-                 (Timed_Event_Queues.Front (The_Events).Time_To_Fire)
+               exit when Held_Events.Is_Empty (The_Events);
+               exit when Held_Events.Next_Event_Time (The_Events)
                  > Ada.Real_Time.Clock;
             end loop;
 
          else
 
             select
-               accept Append (The_Entry : Timer_Queue_Entry_P) do
-                  Timed_Event_Queues.Append (The_Events, The_Entry);
-               end Append;
+               accept Add_At_Event (The_Entry : Event_P;
+                                    To_Run_At : Time.Time) do
+                  Held_Events.Add_At_Event (The_Entry,
+                                            To_Run_At,
+                                            On => The_Events);
+               end Add_At_Event;
+
+            or
+               accept Add_After_Event (The_Entry : Event_P;
+                                       To_Run_After : Duration) do
+                  Held_Events.Add_After_Event (The_Entry,
+                                               To_Run_After,
+                                               On => The_Events);
+               end Add_After_Event;
+
+            or
+               accept Rethink;
 
             or
                accept Invalidate
                  (For_The_Instance : Instance_Base_P) do
-                  declare
-                     It : Abstract_Timed_Event_Containers.Iterator'Class
-                       := Timed_Event_Queues.New_Iterator (The_Events);
-                     use Abstract_Timed_Event_Containers;
-                  begin
-                     while not Is_Done (It) loop
-                        if Current_Item (It).The_Event.all
-                          in Instance_Event_Base'Class then
-                           declare
-                              E : Instance_Event_Base
-                                renames Instance_Event_Base
-                                (Current_Item (It).The_Event.all);
-                           begin
-                              if Instance_Base_P (E.For_The_Instance)
-                                = For_The_Instance then
-                                 E.Invalidated := True;
-                              end if;
-                           end;
-                        end if;
-                        Next (It);
-                     end loop;
-                  end;
+                  Held_Events.Invalidate_Events (The_Events, For_The_Instance);
                end Invalidate;
 
             or
@@ -364,8 +413,7 @@ package body ColdFrame.Events_G.Standard_G is
                exit;
 
             or
-               delay until Time.Equivalent
-                 (Timed_Event_Queues.Front (The_Events).Time_To_Fire);
+               delay until Held_Events.Next_Event_Time (The_Events);
                Process_First_Event;
 
             end select;
@@ -382,14 +430,6 @@ package body ColdFrame.Events_G.Standard_G is
               Ada.Exceptions.Exception_Information (E) &
               " in Timer_Manager");
    end Timer_Manager;
-
-
-   function "<" (L, R : Timer_Queue_Entry_P) return Boolean is
-      use type Ada.Real_Time.Time;
-   begin
-      return Time.Equivalent (L.Time_To_Fire)
-        < Time.Equivalent (R.Time_To_Fire);
-   end "<";
 
 
    protected body Excluder is
@@ -449,17 +489,9 @@ package body ColdFrame.Events_G.Standard_G is
             use Abstract_Posted_Event_Containers;
          begin
             while not Is_Done (Using) loop
-               if Current_Item (Using).all in Instance_Event_Base'Class then
-                  declare
-                     E : Instance_Event_Base
-                       renames Instance_Event_Base (Current_Item (Using).all);
-                  begin
-                     if Instance_Base_P (E.For_The_Instance)
-                       = Instance_Base_P (For_The_Instance) then
-                        E.Invalidated := True;
-                     end if;
-                  end;
-               end if;
+               Invalidate (Current_Item (Using),
+                           If_For_Instance =>
+                             Instance_Base_P (For_The_Instance));
                Next (Using);
             end loop;
          end Invalidate_Events;
@@ -500,8 +532,9 @@ package body ColdFrame.Events_G.Standard_G is
       begin
          --  We need to be sure that only event handlers called by our
          --  Dispatcher post events-to-self.
-         if Owner /= Standard_G.Event_Queue_Base (The_Queue.all).
-                        The_Dispatcher'Identity then
+         if Owner /=
+           Standard_G.Event_Queue_Base (The_Queue.all). The_Dispatcher'Identity
+         then
             Ada.Exceptions.Raise_Exception
               (Exceptions.Use_Error'Identity,
                "posting to self outside event handler");
@@ -544,6 +577,8 @@ package body ColdFrame.Events_G.Standard_G is
       --  The base implementation of Start checks first and doesn't
       --  make the call if it would be wrong to do so.
       The_Queue.The_Dispatcher.Start;
+      Held_Events.Start_Processing_After_Events (The_Queue.The_Held_Events);
+      The_Queue.The_Timer_Manager.Rethink;
    end Start_Queue;
 
 
@@ -570,7 +605,6 @@ package body ColdFrame.Events_G.Standard_G is
 
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
       use Abstract_Posted_Event_Containers;
-      use Abstract_Timed_Event_Containers;
    begin
 
       --  Perhaps this could be neater, but at least doing it in this
@@ -615,20 +649,7 @@ package body ColdFrame.Events_G.Standard_G is
          end loop;
       end;
 
-      declare
-         It : Abstract_Timed_Event_Containers.Iterator'Class
-           := Timed_Event_Queues.New_Iterator
-           (The_Queue.The_Timed_Events);
-      begin
-         while not Is_Done (It) loop
-            declare
-               E : Event_P := Event_P (Current_Item (It));
-            begin
-               Delete (E);
-            end;
-            Next (It);
-         end loop;
-      end;
+      Held_Events.Tear_Down (The_Queue.The_Held_Events);
 
    end Tear_Down;
 
