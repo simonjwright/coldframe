@@ -1,4 +1,4 @@
---  $Id: stairwell_demo.adb,v d49293778f12 2002/12/30 18:00:30 simon $
+--  $Id: stairwell_demo.adb,v a3d067f20749 2003/01/07 20:58:36 simon $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -17,13 +17,13 @@ pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
 procedure Stairwell_Demo is
 
    package C renames Interfaces.C;
-   use type C.Int;
+   use type C.int;
 
    --  All the interfacing functions use convention C, so we have to
    --  have specifications (even if -gnaty didn't require them).
 
    --  Start the Tcl interpreter
-   function Init (Interp : in Tcl.Tcl_Interp) return C.Int;
+   function Init (Interp : in Tcl.Tcl_Interp) return C.int;
    pragma Convention (C, Init);
 
    --  Tell the application we've pushed a button (argument is 0, 1
@@ -31,8 +31,8 @@ procedure Stairwell_Demo is
    function Push_Button_Command
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
-      Argc : in C.Int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.Int;
+      Argc : in C.int;
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int;
    pragma Convention (C, Push_Button_Command);
 
    --  Find whether the lamp specified in argv (a, b etc) is set or
@@ -40,24 +40,24 @@ procedure Stairwell_Demo is
    function Get_Lamp_State_Command
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
-      Argc : in C.Int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.Int;
+      Argc : in C.int;
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int;
    pragma Convention (C, Get_Lamp_State_Command);
 
    --  Handy wrapper for C.Strings.Free, so it can be used to free
    --  results.
-   procedure Freeproc (blockPtr : in C.Strings.Chars_Ptr);
+   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr);
    pragma Convention (C, Freeproc);
 
 
-   procedure Freeproc (blockPtr : in C.Strings.Chars_Ptr) is
-      Tmp : C.Strings.Chars_Ptr := BlockPtr;
+   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr) is
+      Tmp : C.Strings.chars_ptr := BlockPtr;
    begin
       C.Strings.Free (Tmp);
    end Freeproc;
 
 
-   function Init (Interp : in Tcl.Tcl_Interp) return C.Int is
+   function Init (Interp : in Tcl.Tcl_Interp) return C.int is
       package CreateCommands is new Tcl.Ada.Generic_Command (Integer);
       Command : Tcl.Tcl_Command;
    begin
@@ -80,14 +80,14 @@ procedure Stairwell_Demo is
          "pushButton",
          Push_Button_Command'Unrestricted_Access,
          0,
-         NULL);
+         null);
 
       Command := CreateCommands.Tcl_CreateCommand
         (Interp,
          "getLampState",
          Get_Lamp_State_Command'Unrestricted_Access,
          0,
-         NULL);
+         null);
 
       return Tcl.TCL_OK;
 
@@ -97,16 +97,16 @@ procedure Stairwell_Demo is
    function Get_Lamp_State_Command
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
-      Argc : in C.Int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.Int is
+      Argc : in C.int;
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
       Signal : Digital_IO.Signal_Name;
       State : Boolean;
    begin
       pragma Assert
         (Argc = 2, "getLampState requires one argument (lamp letter)");
       Signal := Digital_IO.Signal_Name'Value
-        ("lamp_" & C.Strings.Value (Cargv.Argv_Pointer.Value (Argv) (1)));
-      State := Digital_IO.Hci.Get_State (Of_Signal => Signal);
+        ("lamp_" & C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
+      State := Digital_IO.HCI.Get_State (Of_Signal => Signal);
       Tcl.Tcl_SetResult (Interp,
                          C.Strings.New_String (State'Img),
                          Freeproc'Unrestricted_Access);
@@ -124,13 +124,13 @@ procedure Stairwell_Demo is
    function Push_Button_Command
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
-      Argc : in C.Int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.Int is
+      Argc : in C.int;
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
       Signal : Digital_IO.Signal_Name;
    begin
       pragma Assert (Argc = 2, "pushButton requires one argument (button #)");
       Signal := Digital_IO.Signal_Name'Value
-        ("floor_" & C.Strings.Value (Cargv.Argv_Pointer.Value (Argv) (1)));
+        ("floor_" & C.Strings.Value (CArgv.Argv_Pointer.Value (Argv) (1)));
       Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => True);
       Digital_IO.HCI.Set_Input (Of_Signal => Signal, To => False);
       return Tcl.TCL_OK;
@@ -144,8 +144,8 @@ procedure Stairwell_Demo is
    end Push_Button_Command;
 
 
-   -- Argc and Argv include the command name
-   Argc : C.Int;
+   --  Argc and Argv include the command name
+   Argc : C.int;
    Argv : CArgv.Chars_Ptr_Ptr;
 
 begin
@@ -153,11 +153,11 @@ begin
    Digital_IO.Initialize;
    House_Management.Initialize;
 
-   -- Get command-line arguments and put them into C-style "argv",
-   -- as required by Tk_Main.
+   --  Get command-line arguments and put them into C-style "argv",
+   --  as required by Tk_Main.
    CArgv.Create (Argc, Argv);
 
-   -- Start Tcl
+   --  Start Tcl
    Tcl.Tk.Tk_Main (Argc, Argv, Init'Unrestricted_Access);
 
 end Stairwell_Demo;

@@ -1,4 +1,4 @@
---  $Id: house_management-button-changed.adb,v c837ef8247ad 2003/01/07 20:10:08 simon $
+--  $Id: house_management-button-changed.adb,v a3d067f20749 2003/01/07 20:58:36 simon $
 
 --  Acts as receiver of state changes from Digital IO.
 
@@ -21,7 +21,7 @@ begin
 
       if S.State then
 
-         Pushed (Find ((Name =>Buttons (S.S))));
+         Pushed (Find ((Name => Buttons (S.S))));
 
       end if;
 
