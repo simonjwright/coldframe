@@ -8,7 +8,9 @@ In the diagram, buff classes are part of the metamodel, grey classes show  how t
 <classes>
 <class>
 <name>Domain</name>
-<documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).</documentation>
+<documentation>The Domain corresponds to a package in the logical view. It ought to be about some well-defined subject matter (for example, best not to mix GUI with the underlying subject of your application).<br/>
+
+At present, only model objects (Classes, Relationships) that exist in the Domain Package are extracted by the Rose extractor <tt>def.ebs</tt>.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -211,7 +213,9 @@ A default compilable body is generated, which if called will raise <tt>Program_E
 
 Attributes may be Plain or Identifying.<br/>
 
-Referential attributes (those which formalise relationships) are automatically inserted by <tt>normalize-rose.tcl</tt> (the translation strategy for referential attributes is determined at code generation).</documentation>
+Considering Relationships, Attributes may alternately be classified as Standard or Referential.<br/>
+
+These classifications are independent (a referential attribute may be plain or identifying, etc).</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -381,7 +385,7 @@ One takes an Identifier Record as parameter, the other takes a  <tt>Handle</tt>.
 </operations>
 </class>
 <class>
-<name>Abstract Container Class</name>
+<name>Abstract Container Package</name>
 <documentation>Each Identified Class Package has an Abstract Containers Package (<tt><i>Domain.Class</i>.Abstract_Containers</tt>) which can be instantiated as Containers for references (<tt>Handle</tt>s) to all or some of the Instances.<br/>
 
 The prime functionality supplied is iteration over Containers.
@@ -393,7 +397,17 @@ The prime functionality supplied is iteration over Containers.
 </class>
 <class>
 <name>Referential Attribute</name>
-<documentation></documentation>
+<documentation>A Referential attribute formalizes a Relationship. They are usually automatically inserted by <tt>normalize-rose.tcl</tt>.<br/>
+
+The translation strategy for referential attributes is determined at code generation. For example, it might be proper to
+<ul>
+<li>insert a copy of each of the source Class' Identifying Attributes,</li>
+<li>insert a pointer to the source Class, or </li>
+<li>implement the relationship in some third class.</li>
+</ul>
+
+
+</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -401,7 +415,7 @@ The prime functionality supplied is iteration over Containers.
 </class>
 <class>
 <name>Standard Attribute</name>
-<documentation></documentation>
+<documentation>A Standard Attribute does not assist in formalizing any Relationship.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -419,7 +433,7 @@ The prime functionality supplied is iteration over Containers.
 </class>
 <class>
 <name>Simple Association</name>
-<documentation></documentation>
+<documentation>A Simple Association has no Associative Class.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -427,17 +441,30 @@ The prime functionality supplied is iteration over Containers.
 </class>
 <class>
 <name>Associative Association</name>
-<documentation></documentation>
+<documentation>An Associative Association implements its parent Association using a third class, the Associative Class.<br/>
+
+Often this is necessary to implement a many-to-many association, though it is also appropriate when there is imformation that only applies when the primary association exists; for example, even though Driver owns Vehicle is one-to-many, Excise Licence might be appropriate as an associative class for the association (since Date Of Issue has nowhere else to live).<br/>
+
+A convenient notation for associative associations is <i>desc-c-(desc-a:desc-b)</i>, where <i>a</i> and <i>b</i> are the primary classes, <i>c</i> is the associative class, and <i>desc</i> indicates the multiplicity and conditionality: <tt>1</tt> means one, <tt>m</tt> means many, and <tt>c</tt> means conditional.<br/>
+
+At present (12 May 2001) the following are <b>not</b> supported:<br/>
+
+1-(1:1)<br/>
+1-(1:1c)<br/>
+1-(1c:1c)<br/>
+m-(anything)</documentation>
 <attributes>
 </attributes>
 <operations>
 </operations>
 </class>
 <class>
-<name>Generalization</name>
-<documentation>A Generalization is a Relationship between a Supertype and a number of Subtypes.<br/>
+<name>Specialization</name>
+<documentation>A Specialization is a Relationship between a Supertype (the parent) and a number of Subtypes (children).<br/>
 
-A Supertype is always abstract.</documentation>
+Often, specialization is used when different subtypes have different relationships.<br/>
+
+Normally, for each instance of a parent class, there is a corresponding instance of one of the child classes (so that, in a sense, the parent is abstract). A possible optimization is to omit code for child classes that don't have any attributes of their own, or which don't participate in any relationships of their own.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -445,7 +472,9 @@ A Supertype is always abstract.</documentation>
 </class>
 <class>
 <name>AssociationPackage</name>
-<documentation></documentation>
+<documentation>Each Association maps to an Association Package with the name <tt><i>Domain</i>.<i>Association</i></tt>.<br/>
+
+The package is private.</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -453,7 +482,15 @@ A Supertype is always abstract.</documentation>
 </class>
 <class>
 <name>Association Navigation Operation</name>
-<documentation></documentation>
+<documentation>Given an instance of the Class at one end of a Association, Navigation finds the instance or set of instances of the Class at the other end of the Association.<br/>
+
+Whether a single instance or a set is returned depends on the cardinality of the Association.<br/>
+
+The result, or result set, may be respectively null, or empty, depending on the conditionality of the Association.<br/>
+
+For an Association with an Associative Class, Navigation is also provided between either end of the Association and the Associative Class.<br/>
+
+Each Associative Navigation Operation comes in two overloadings, one from single instances and one from sets of instances. In the latter case, the result is a true set (each destination instance appears only once).</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -489,7 +526,23 @@ Callbacks implement the Observer or Publisher/Subscriber pattern.</documentation
 <name>Callback Package</name>
 <documentation>Each Callback Type Specification maps to a Callback Package, named <tt><i>Domain.Type</i>_Callback</tt>.<br/>
 
-The number of registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
+The maximum number of concurrently registered callbacks is specified in the <tt><i>size</i></tt> parameter in the <tt>[[ callback ]]</tt> annotation on the Callback Type Specification.</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Associative Referential Attribute</name>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+</class>
+<class>
+<name>Specialization Referential Attribute</name>
+<documentation>A Specialization Referential Attribute formalizes a Specialization. It always appears in the child class, and is the Identifier for that class (or, in the case of multiple inheritance, part of the identifier).</documentation>
 <attributes>
 </attributes>
 <operations>
@@ -918,7 +971,7 @@ The number of registered callbacks is specified in the <tt><i>size</i></tt> para
 <documentation></documentation>
 <role><end>1</end>
 <name></name>
-<classname>Abstract Container Class</classname>
+<classname>Abstract Container Package</classname>
 <cardinality>1</cardinality>
 <documentation></documentation>
 </role>
@@ -956,25 +1009,9 @@ The number of registered callbacks is specified in the <tt><i>size</i></tt> para
 <documentation></documentation>
 </role>
 <role><end>2</end>
-<name></name>
+<name>is associative class for</name>
 <classname>Associative Association</classname>
-<cardinality></cardinality>
-<documentation></documentation>
-</role>
-</association>
-<association>
-<name></name>
-<documentation></documentation>
-<role><end>1</end>
-<name></name>
-<classname>Association</classname>
 <cardinality>1</cardinality>
-<documentation></documentation>
-</role>
-<role><end>2</end>
-<name></name>
-<classname>Referential Attribute</classname>
-<cardinality>1..n</cardinality>
 <documentation></documentation>
 </role>
 </association>
@@ -1058,6 +1095,23 @@ The number of registered callbacks is specified in the <tt><i>size</i></tt> para
 <documentation></documentation>
 </role>
 </association>
+<association>
+<name></name>
+<documentation></documentation>
+<role><end>1</end>
+<name></name>
+<classname>Identified Class</classname>
+<cardinality>1</cardinality>
+<documentation></documentation>
+</role>
+<role><end>2</end>
+<name>is child of</name>
+<classname>Identified Class</classname>
+<cardinality>1..n</cardinality>
+<documentation></documentation>
+</role>
+<associative>Specialization</associative>
+</association>
 <inheritance>
 <name></name>
 <documentation></documentation>
@@ -1137,39 +1191,39 @@ The number of registered callbacks is specified in the <tt><i>size</i></tt> para
 <parent>Class Package</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>refer</name>
 <documentation></documentation>
 <child>Referential Attribute</child>
 <parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>refer</name>
 <documentation></documentation>
 <child>Standard Attribute</child>
 <parent>Attribute</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>relationship kind</name>
 <documentation></documentation>
 <child>Association</child>
 <parent>Relationship</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>assoc kind</name>
 <documentation></documentation>
 <child>Simple Association</child>
 <parent>Association</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>assoc kind</name>
 <documentation></documentation>
 <child>Associative Association</child>
 <parent>Association</parent>
 </inheritance>
 <inheritance>
-<name></name>
+<name>relationship kind</name>
 <documentation></documentation>
-<child>Generalization</child>
+<child>Specialization</child>
 <parent>Relationship</parent>
 </inheritance>
 <inheritance>
@@ -1183,6 +1237,18 @@ The number of registered callbacks is specified in the <tt><i>size</i></tt> para
 <documentation></documentation>
 <child>Callback Type Specification</child>
 <parent>Type Specification</parent>
+</inheritance>
+<inheritance>
+<name>reference kind</name>
+<documentation></documentation>
+<child>Associative Referential Attribute</child>
+<parent>Referential Attribute</parent>
+</inheritance>
+<inheritance>
+<name>reference kind</name>
+<documentation></documentation>
+<child>Specialization Referential Attribute</child>
+<parent>Referential Attribute</parent>
 </inheritance>
 </relationships>
 </domain>
