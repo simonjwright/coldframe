@@ -45,7 +45,7 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
 
 %.ada: %.norm
-	$(SAXON) $< $(CODEGEN_SCRIPT) >$@  \
+	$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
