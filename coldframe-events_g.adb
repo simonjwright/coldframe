@@ -20,13 +20,20 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 39232e97cf74 $
---  $Date: 2002/04/12 18:59:39 $
+--  $Revision: 26c24714838a $
+--  $Date: 2002/07/07 17:47:49 $
 --  $Author: simon $
 
 with Ada.Unchecked_Deallocation;
 
 package body ColdFrame.Events_G is
+
+
+   procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      null;
+   end Wait_Until_Idle;
 
 
    procedure Finalize (The_Terminator : in out Instance_Terminator) is
