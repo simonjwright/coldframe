@@ -36,6 +36,10 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
+
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
 
@@ -57,15 +61,14 @@
       <xsl:text>_Callback;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:text>with </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>.Events.Tear_Down;&#10;</xsl:text>
-
     <xsl:text>procedure </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down is&#10;</xsl:text>
     <xsl:text>begin&#10;</xsl:text>
     
+    <xsl:value-of select="$I"/>
+    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
+
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
       
@@ -82,13 +85,6 @@
       <xsl:value-of select="name"/>
       <xsl:text>_Callback.Clear;&#10;</xsl:text>
     </xsl:for-each>
-    
-    <xsl:value-of select="$I"/>
-    <xsl:text>Events.Tear_Down;&#10;</xsl:text>
-
-    <!-- XXX this is a temporary bodge! GCC-3.2 on Linux. -->
-    <xsl:value-of select="$I"/>
-    <xsl:text>delay 0.1;&#10;</xsl:text>
     
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
