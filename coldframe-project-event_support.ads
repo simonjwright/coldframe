@@ -9,8 +9,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-event_support.ads,v $
---  $Revision: 6cd4886dc353 $
---  $Date: 2002/04/16 18:46:06 $
+--  $Revision: b6a429d55798 $
+--  $Date: 2002/05/22 04:35:52 $
 --  $Author: simon $
 
 with Ada.Calendar;
@@ -24,7 +24,7 @@ package ColdFrame.Project.Event_Support is
    type Time (Kind : Time_Kind := Calendar) is record
       T : Ada.Calendar.Time;
    end record;
-   --  This type should really be private, but we'de have to
+   --  This type should really be private, but we'd have to
    --  instantiate Time_Signature in a separate package.
 
    function Equivalent (Of_Time : Time) return Ada.Real_Time.Time;
