@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 8429877982ff 2004/10/25 05:48:31 simon $ -->
+<!-- $Id: ada-type.xsl,v 18694fa50b82 2004/10/29 13:49:44 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -841,6 +841,7 @@
          protected type {name} is
             {operations}
          private
+            {operations}
             {attributes}
          end {name};
          -->
@@ -874,9 +875,7 @@
                                     and not(@suppressed)
                                     and @visibility='private']">
       <xsl:sort select="name"/>
-      <xsl:if test="position()=1">
-        <xsl:text>&#10;</xsl:text>
-      </xsl:if>
+      </xsl:if>-->
       <xsl:call-template name="op:subprogram-specification">
         <xsl:with-param name="indent" select="$II"/>
         <xsl:with-param name="is-class" select="'no'"/>
@@ -885,7 +884,6 @@
       <xsl:call-template name="ut:commentary">
         <xsl:with-param name="indent" select="$II"/>
       </xsl:call-template>
-      <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
     <xsl:apply-templates mode="at:instance-record-component"/>
