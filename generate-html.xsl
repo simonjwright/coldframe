@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 11a4ee38e116 2001/06/02 16:46:48 simon $ -->
+<!-- $Id: generate-html.xsl,v b6e95bcd48b6 2001/08/08 18:01:30 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -43,18 +43,18 @@
         <h1><xsl:value-of select="name"/></h1>
         <xsl:apply-templates select="./documentation"/>
         <h2>Contents</h2>
-        <xsl:if test="class[@interface]">
-          <h3>Interface Classes</h3>
+        <xsl:if test="class[@public]">
+          <h3>Public Classes</h3>
           <ul>
-            <xsl:apply-templates select="class[@interface]" mode="index">
+            <xsl:apply-templates select="class[@public]" mode="index">
               <xsl:sort select="name"/>
             </xsl:apply-templates>
           </ul>
         </xsl:if>
-        <xsl:if test="class[not(@interface)]">
+        <xsl:if test="class[not(@public)]">
           <h3>Private Classes</h3>
           <ul>
-            <xsl:apply-templates select="class[not(@interface)]" mode="index">
+            <xsl:apply-templates select="class[not(@public)]" mode="index">
               <xsl:sort select="name"/>
             </xsl:apply-templates>
           </ul>
@@ -85,15 +85,15 @@
         </xsl:if>
         <!-- End of index -->
         <hr/>
-        <xsl:if test="class[@interface]">
-          <h2>Interface Classes</h2>
-          <xsl:apply-templates select="class[@interface]">
+        <xsl:if test="class[@public]">
+          <h2>Public Classes</h2>
+          <xsl:apply-templates select="class[@public]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
-        <xsl:if test="class[not(@interface)]">
+        <xsl:if test="class[not(@public)]">
           <h2>Private Classes</h2>
-          <xsl:apply-templates select="class[not(@interface)]">
+          <xsl:apply-templates select="class[not(@public)]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>

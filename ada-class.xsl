@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 0112fd4186d1 2001/07/13 18:42:51 simon $ -->
+<!-- $Id: ada-class.xsl,v b6e95bcd48b6 2001/08/08 18:01:30 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -39,8 +39,8 @@
     <xsl:call-template name="class-spec-context"/>
 
     <!-- .. the class package .. -->
-    <xsl:if test="not(@interface)">
-      <!-- only interface packages are externally visible -->
+    <xsl:if test="not(@public)">
+      <!-- only public packages are externally visible -->
       <xsl:text>private </xsl:text>
     </xsl:if>
     <xsl:text>package </xsl:text>
@@ -72,7 +72,7 @@
         
       </xsl:when>
 
-      <xsl:when test="@singleton and not(@interface)">
+      <xsl:when test="@singleton and not(@public)">
 
         <!-- .. the Instance record (indefinite, so it can't be
              allocated; limited, so people can't assign it) .. -->
@@ -101,7 +101,7 @@
     <!-- .. the private part .. -->
     <xsl:text>private&#10;</xsl:text>
  
-    <xsl:if test="@interface">
+    <xsl:if test="@public">
         <xsl:text>  type Instance;&#10;</xsl:text>
     </xsl:if>
 
@@ -478,7 +478,7 @@
         
       </xsl:when>
       
-      <xsl:when test="@singleton and not(@interface)">
+      <xsl:when test="@singleton and not(@public)">
         
         <!-- XXX Uses a GNAT-specific attribute. -->
         <xsl:text>  function Find return Handle is&#10;</xsl:text>
