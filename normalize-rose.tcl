@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cdd9f94fadec 2004/04/29 21:59:01 simon $
+# $Id: normalize-rose.tcl,v d5677990a0ce 2004/05/01 13:23:54 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -156,9 +156,10 @@ proc normalize {s} {
 # otherwise,
 # - handles as expression (lexically only)
 proc normalizeValue {s} {
-    if [catch {normalizeValueInner $s}] {
+    if [catch {set res [normalizeValueInner $s]}] {
         Error "unable to normalize the value \"$s\""
     }
+    return $res
 }
 
 proc normalizeValueInner {s} {
