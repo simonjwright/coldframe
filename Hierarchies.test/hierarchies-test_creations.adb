@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: hierarchies-test_creations.adb,v $
---  $Revision: 281d11e491da $
---  $Date: 2002/07/27 13:05:23 $
+--  $Revision: eab9ea82a5f1 $
+--  $Date: 2002/10/11 05:41:39 $
 --  $Author: simon $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -35,6 +35,7 @@ with Hierarchies.R_2.Collections;
 with Hierarchies.R_3.Inheritance;
 with Hierarchies.R_3.All_Instances;
 with Hierarchies.R_3.Collections;
+with Hierarchies.S_1.Inheritance;
 with Hierarchies.S_2.Inheritance;
 with Hierarchies.S_2.All_Instances;
 with Hierarchies.S_2.Collections;
@@ -63,6 +64,7 @@ package body Hierarchies.Test_Creations is
    R1_H : R_1.Handle;
    R2_H : R_2.Handle;
    R3_H : R_3.Handle;
+   S1_H : S_1.Handle;
    S2_H : S_2.Handle;
    S3_H : S_3.Handle;
    T2_H : T_2.Handle;
@@ -118,6 +120,20 @@ package body Hierarchies.Test_Creations is
       Assert (S_2.Handle (R_1.Get_A_Child (R1_H).S2) = S2_H,
               "R_1 has wrong child");
    end Create_First_Child;
+
+   procedure Create_Another_First_Child
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Create_Another_First_Child
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+   begin
+      S2_H := S_2.Inheritance.Create_Tree (null);
+      R1_H := R_1.Collections.First (R_1.All_Instances);
+      S1_H := S_1.Inheritance.Create_Tree (CIH (R1_H));
+      Assert (False, "Existing_Child exception expected");
+   exception
+      when ColdFrame.Exceptions.Existing_Child => null;
+   end Create_Another_First_Child;
 
    procedure Create_Second_Child
      (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -535,6 +551,9 @@ package body Hierarchies.Test_Creations is
       Register_Routine
         (T, Create_Root'Access, "Create root");
       Register_Routine
+        (T, Create_Another_First_Child'Access,
+         "Create first child when one exists");
+      Register_Routine
         (T, Create_First_Child'Access, "Create first child");
       Register_Routine
         (T, Create_Second_Child'Access, "Create second child");
@@ -591,6 +610,7 @@ package body Hierarchies.Test_Creations is
       R1_H := null;
       R2_H := null;
       R3_H := null;
+      S1_H := null;
       S2_H := null;
       S3_H := null;
       T2_H := null;
