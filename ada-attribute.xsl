@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v d9997828ee0f 2001/09/08 05:06:56 simon $ -->
+<!-- $Id: ada-attribute.xsl,v 32bd0287932d 2001/09/22 05:53:17 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -134,8 +134,8 @@
   <xsl:template mode="attribute-get-spec" match="*"/>
 
 
-  <!-- Called at domain/class to generate an attribute "get" accessor
-       heading (no semicolon). -->
+  <!-- Called at class/attribute to generate an attribute "get"
+       accessor heading (no semicolon). -->
   <xsl:template name="attribute-get-header">
 
       <xsl:value-of select="$I"/>
@@ -178,8 +178,8 @@
   <xsl:template mode="attribute-set-spec" match="*"/>
 
 
-  <!-- Called at domain/class to generate an attribute "set" accessor
-       heading (no semicolon). -->
+  <!-- Called at class/attribute to generate an attribute "set"
+       accessor heading (no semicolon). -->
   <xsl:template name="attribute-set-header">
     
     <xsl:value-of select="$I"/>
