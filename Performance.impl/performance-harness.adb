@@ -92,10 +92,7 @@ begin
 
       Performance.Initialize;
 
-      --  We only create one instance of Person, so as to give a
-      --  worst-case result.
-
-      for P in Owners'First .. Owners'First loop
+      for P in Owners'First .. Owners'Last loop
          Pr := Person.Create ((Name => P));
       end loop;
       T := Clock;
