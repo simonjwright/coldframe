@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: server.adb,v $
---  $Revision: c5c844affd39 $
---  $Date: 2003/08/13 19:43:08 $
+--  $Revision: 48357f4482f1 $
+--  $Date: 2003/09/10 05:44:52 $
 --  $Author: simon $
 
 --  This program receives and decodes TCP packets of type
@@ -57,32 +57,41 @@ begin
    GNAT.Sockets.Bind_Socket (Server_Socket, Address);
    GNAT.Sockets.Listen_Socket (Server_Socket, 1);
 
-   --  wait for a connection ..
-   GNAT.Sockets.Accept_Socket (Server_Socket, Socket, Connected_Address);
-
-   --  .. got it, get the stream.
-   Channel := GNAT.Sockets.Stream (Socket, Connected_Address);
-
    loop
-      --  forever
 
-      begin
+      --  wait for a connection ..
+      GNAT.Sockets.Accept_Socket (Server_Socket, Socket, Connected_Address);
 
-         Put_Line ("about to read ..");
-         declare
-            Rec : constant ColdFrame.Project.Serialization.Base'Class :=
-              ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+      --  .. got it, get the stream.
+      Channel := GNAT.Sockets.Stream (Socket, Connected_Address);
+
+      loop
+         --  until an error
+
          begin
-            Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Output,
-                                  ColdFrame.Project.Serialization.Image (Rec));
-            Ada.Text_IO.Flush;
+
+            Put_Line ("about to read ..");
+            declare
+               Rec : constant ColdFrame.Project.Serialization.Base'Class :=
+                 ColdFrame.Project.Serialization.Base'Class'Input (Channel);
+            begin
+               Ada.Text_IO.Put_Line
+                 (Ada.Text_IO.Standard_Output,
+                  ColdFrame.Project.Serialization.Image (Rec));
+               Ada.Text_IO.Flush;
+            end;
+
+         exception
+            when E : others =>
+               Put_Line (Ada.Exceptions.Exception_Information (E));
+               exit;
          end;
 
-      exception
-         when E : others =>
-            Put_Line (Ada.Exceptions.Exception_Information (E));
-            delay 1.0;  -- to give us time to C-c out
-      end;
+      end loop;
+
+      --  something went wrong, close and restart.
+      GNAT.Sockets.Close_Socket (Socket);
+      delay 1.0;  -- to give us time to C-c out
 
    end loop;
 
