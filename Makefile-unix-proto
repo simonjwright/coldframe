@@ -122,6 +122,19 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.xsl
 	$(SAXON) $<-t $(CSV_SCRIPT)
 	rm -f $<-t
 
+# Installs ColdFrame's project source files in your directory.
+# Suppose your overriding source is in ~/Base/Build/ColdFrameProject/project,
+# change directory to ~/Base/Build/ColdFrameProject and say
+#   $ make -f $TOP/$COLDFRAME/Makefile-unix install
+# This will place those of ColdFrame's files that you haven't overridden in
+# ~/Base/Build/ColdFrameProject/inherited
+install::
+	rm -rf inherited
+	mkdir inherited
+	for f in $(CF)/project/*.ad[bs]; do \
+	  [ -f project/`basename $$f` ] || cp -p $$f inherited/; \
+	done
+
 #;; for emacs:
 #;; Local Variables:
 #;; mode: makefile
