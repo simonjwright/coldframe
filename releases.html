@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v e8fdd874388a 2001/06/09 04:37:23 simon $ -->
+<!-- $Id: releases.html,v 52365f68aa69 2001/06/16 16:28:25 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -65,8 +65,14 @@ Active) are generated with a task for each instance. The task body is
 "separate".
 
 
-<p>Singleton classes now provide a <tt>Handle</tt> type (accessed
-through the <tt>Find</tt> function), for use in associations.
+<p>Singleton (but not Interface) classes now provide a <tt>Handle</tt>
+type (accessed through the <tt>Find</tt> function), for use in
+associations.
+
+
+<p>All Classes have a &#171;class&#187; operation <tt>Initialize</tt>
+(no parameters); the Domain has an Initialize operation which calls
+each of the Class' Initialize (in alphabetical order).
 
 
 <p>
