@@ -9,7 +9,7 @@
     is_loaded  	TRUE
     quid       	"3CDD01290395"
     documentation 	
-|[[ revision : $Id: Hierarchies.cat,v d1fd493bc851 2002/06/06 21:46:56 simon $ ]]
+|[[ revision : $Id: Hierarchies.cat,v 89a739b25f0e 2002/06/08 05:52:17 simon $ ]]
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
     
     exportControl 	"Public"
@@ -113,16 +113,16 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF79990163"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "find_r1_parent"
 		    quid       	"3CDF79810393"
 		    stereotype 	"generated"
 		    result     	"R_1"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "delete_child"
-		    quid       	"3CDF79990163"
-		    stereotype 	"generated"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -152,6 +152,12 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF7B1A018B"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "find_r2_parent"
 		    quid       	"3CDF7AED02B7"
 		    stereotype 	"generated"
@@ -163,12 +169,6 @@
 		    quid       	"3CDF7B090131"
 		    stereotype 	"generated"
 		    result     	"R_3"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "delete_child"
-		    quid       	"3CDF7B1A018B"
-		    stereotype 	"generated"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -207,6 +207,12 @@
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
+		(object Operation "delete_child"
+		    quid       	"3CDF79400113"
+		    stereotype 	"generated"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
 		(object Operation "find_r1_parent"
 		    quid       	"3CDF7918013B"
 		    stereotype 	"generated"
@@ -218,12 +224,6 @@
 		    quid       	"3CDF792E0254"
 		    stereotype 	"generated"
 		    result     	"S_2"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "delete_child"
-		    quid       	"3CDF79400113"
-		    stereotype 	"generated"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -469,13 +469,13 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(656, 752)
+		    location   	(660, 750)
 		    label      	(object ItemLabel
 			Parent_View 	@6
-			location   	(263, 626)
+			location   	(275, 626)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	786
+			max_width  	770
 			justify    	0
 			label      	"S_2")
 		    icon_style 	"Label"
@@ -484,20 +484,20 @@
 		    quidu      	"3CDD01F202A9"
 		    compartment 	(object Compartment
 			Parent_View 	@6
-			location   	(263, 684)
+			location   	(275, 684)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	825)
-		    width      	804
-		    height     	276
+			max_width  	767)
+		    width      	788
+		    height     	270
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "a" @7
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(656, 463)
+			location   	(658, 464)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -514,13 +514,13 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(656, 1280)
+		    location   	(660, 1275)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(263, 1130)
+			location   	(277, 1128)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	786
+			max_width  	766
 			justify    	0
 			label      	"T_2")
 		    icon_style 	"Label"
@@ -529,20 +529,20 @@
 		    quidu      	"3CDD021503D9"
 		    compartment 	(object Compartment
 			Parent_View 	@8
-			location   	(263, 1188)
+			location   	(277, 1186)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	5
-			max_width  	818)
-		    width      	804
-		    height     	324
+			max_width  	762)
+		    width      	784
+		    height     	316
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "d" @9
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(656, 1004)
+			location   	(660, 1001)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -589,13 +589,13 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1984, 752)
+		    location   	(1980, 750)
 		    label      	(object ItemLabel
 			Parent_View 	@11
-			location   	(1515, 602)
+			location   	(1518, 603)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	938
+			max_width  	924
 			justify    	0
 			label      	"S_3")
 		    icon_style 	"Label"
@@ -604,20 +604,20 @@
 		    quidu      	"3CDD01F703C5"
 		    compartment 	(object Compartment
 			Parent_View 	@11
-			location   	(1515, 660)
+			location   	(1518, 661)
 			icon_style 	"Label"
 			fill_color 	13434879
 			anchor     	2
 			nlines     	5
-			max_width  	987)
-		    width      	956
-		    height     	324
+			max_width  	920)
+		    width      	942
+		    height     	316
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "c" @12
 		    label      	(object ItemLabel
 			Parent_View 	@12
-			location   	(2242, 451)
+			location   	(2238, 452)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -647,7 +647,7 @@
 		(object InheritView "f" @14
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(658, 1547)
+			location   	(660, 1543)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -662,7 +662,7 @@
 		(object InheritView "e" @15
 		    label      	(object ItemLabel
 			Parent_View 	@15
-			location   	(1580, 1374)
+			location   	(1583, 1373)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	60
@@ -676,7 +676,7 @@
 		    vertices   	(list Points
 			(1096, 1652)
 			(1631, 1345)
-			(1885, 914))
+			(1885, 908))
 		    line_style 	0)
 		(object ClassView "Class" "Logical View::Hierarchies::CIH" @16
 		    ShowCompartmentStereotypes 	TRUE
@@ -686,7 +686,7 @@
 		    location   	(1792, 1936)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(1709, 1906)
+			location   	(1709, 1904)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
