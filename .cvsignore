@@ -1,5 +1,5 @@
 *.ada *.ali
-*.bb *.bbg *.gcov
+*.bb *.bbg *.da *.gcov
 cf-*.tgz cf-*.zip
 *.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 b~*.ad[bs]
