@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v b97f4ddf8ae0 2001/06/21 19:26:36 simon $ -->
+<!-- $Id: ada-association.xsl,v 9cb02f78b0a2 2001/06/26 18:49:15 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -238,7 +238,7 @@
                         [@relation=$n and @refers=$r1/classname]"/>
             </xsl:call-template>
             <xsl:text> => </xsl:text>
-            <xsl:value-of select="role[1]/name"/>
+            <xsl:value-of select="$r1/name"/>
             <xsl:text>,&#10;</xsl:text>
 
             <xsl:text>         </xsl:text>
@@ -249,7 +249,7 @@
                         [@relation=$n and @refers=$r2/classname]"/>
             </xsl:call-template>
             <xsl:text> => </xsl:text>
-            <xsl:value-of select="role[2]/name"/>
+            <xsl:value-of select="$r2/name"/>
 
             <xsl:text>));&#10;</xsl:text>
 
@@ -287,27 +287,20 @@
                         [@relation=$n and @refers=$single-role/classname]"/>
             </xsl:call-template>
             <xsl:text> (Result, </xsl:text>
-            <xsl:value-of select="role[1]/name"/>
+            <xsl:value-of select="$single-role/name"/>
             <xsl:text>);&#10;</xsl:text>
 
           </xsl:when>
 
           <xsl:otherwise>
-            <!-- Neither end multiple; -->
+            <!-- Neither end multiple -->
 
             <xsl:message>A 1-(1:1) association!</xsl:message>
 
-            <!-- XXX copy-n-paste warning here! -->
             <xsl:variable name="source-role" select="role[@source]"/>
             <xsl:variable name="non-source-role" select="role[not(@source)]"/>
 
             <xsl:call-template name="attribute-name">
-              <!-- <xsl:with-param
-                name="a"
-                select="/domain/class/attribute
-                        [@relation=$n
-                        and @refers=$source-role/classname
-                        and @identifier]"/> -->
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
@@ -328,7 +321,7 @@
                         [@relation=$n and @refers=$non-source-role/classname]"/>
             </xsl:call-template>
             <xsl:text> (Result, </xsl:text>
-            <xsl:value-of select="role[1]/name"/>
+            <xsl:value-of select="$non-source-role/name"/>
             <xsl:text>);&#10;</xsl:text>
 
           </xsl:otherwise>
