@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v eec2d8745e54 2003/11/22 08:32:34 simon $ -->
+<!-- $Id: preparation.html,v cd2ecd0bc3af 2004/01/18 07:45:06 simon $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 </head>
@@ -315,6 +315,10 @@ support Observers from higher-level Domains, and the higher-level
 Domains can register to be notified when something has changed in the
 lower-level Domain.
 
+<li><tt>convention = <i>language</i></tt> indicates that the type is
+to be laid out using the conventions of <i>language</i>.
+<br>The most common use will be <tt>convention=C</tt>.
+
 <li><tt>discriminated</tt> (only relevant if the type is a record
 type, ie has attributes) causes the generation of discriminated
 records; the discriminant is an enumeration type with literals formed
@@ -393,6 +397,14 @@ alternatively (and if you don't mind the diagram clutter)
 </ul>
 
 <p>
+
+<dt>on operations<dd><ul>
+
+<li><tt>convention = <i>language</i></tt> indicates that the operation
+is to be callable using the conventions of <i>language</i>.
+<br>The most common use will be <tt>convention=C</tt>.
+
+</ul>
 
 <dt>on roles<dd><ul>
 
