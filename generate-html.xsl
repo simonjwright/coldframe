@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 6f63b39cd69e 2002/02/24 17:33:52 simon $ -->
+<!-- $Id: generate-html.xsl,v c6ff569870f7 2002/02/28 19:59:10 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -199,7 +199,7 @@
       </dl>
     </xsl:if>
     <xsl:if test="event[@class]">
-      <h4>Messages</h4>
+      <h4>Class events</h4>
       <ul>
         <xsl:for-each select="event[@class]">
           <xsl:sort select="name"/>
@@ -310,7 +310,13 @@
             <td>
               <xsl:choose>
                 <xsl:when
-                  test="../transition[source=$st and event=current()]">
+                  test="../transition
+                        [source=$st and event=current()]/@ignore">
+                  <i>ignore</i>
+                </xsl:when>
+                <xsl:when
+                  test="../transition
+                        [source=$st and event=current()]">
                   <xsl:value-of
                     select="../transition[source=$st and event=current()]
                             /target"/>
