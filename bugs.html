@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 97b97af9ba18 2004/12/02 11:39:56 simon $ -->
+<!-- $Id: bugs.html,v d7557d7e02a8 2004/12/06 10:03:28 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -46,12 +46,6 @@ document from the domain model.
 <br><i>Pi is specially handled, in "expression" contexts
 (initial values, <tt>{real}</tt> ranges).</i>
 
-<dt>0067 (raised 5.iii.02)
-
-<dd>If the action associated with a timed event sets the just-fired
-timer again, there's a race condition which can result in a Use_Error
-exception.
-
 <dt>0068 (raised 6.iii.02)
 
 <dd>It would be useful to be able to specify subtypes (eg, of
@@ -71,12 +65,13 @@ be specified in a model.
 <dt>0141 (raised 13.xii.02)
 
 <dd>Ada doesn't allow functions to have <tt>in out</tt> or
-<tt>out</tt> parameters; ColdFrame should check.
+<tt>out</tt> parameters; ColdFrame could check.
 
 <dt>0172 (raised 6.vi.03)
 
 <dd>Would it be possible to specify the need for accessor operations
-by marking the attribute concerned? (perhaps by a stereotype).
+by marking the attribute concerned? (perhaps by a stereotype, or just
+using visibilty markup).
 
 <dt>0174 (raised 17.vi.03)
 
@@ -87,6 +82,7 @@ be detected (instead of generating bad code).
 
 <dd>There's no way for ColdFrame to inform the application that an
 unhandled exception has been caught in the event dispatcher.
+<br><i>It does log an Error, this may be enough.</i>
 
 <dt>0182 (raised 9.vii.03)
 
@@ -138,13 +134,6 @@ compilation errors in generated code.
 <dd>The Event Queue operation <tt>Unset</tt> assumes it's called in an
 action (ie, with the Event Queue locked).
 
-<dt>0249 (raised 2.iv.04)
-
-<dd>The <em>&#171;generate&#187;</em> stereotype on nested packages is
-confusing. Perhaps it should be <em>&#171;include&#187;</em>?
-<br><i>Of course, &#171;generate&#187; must be retained for
-compatibility.</i>
-
 <dt>0253 (raised 19.iv.04)
 
 <dd>In a state chart, the error of having more than one state with the
@@ -175,11 +164,6 @@ href="ColdFrame-norm.xsd">ColdFrame-norm.xsd</a>.</i>
 
 <dd>There is no check that associations' multiplicities have been
 maintained.
-
-<dt>0271 (raised 30.vi.04)
-
-<dd>It would be helpful to have an <tt>Epoch</tt> value in
-<tt>ColdFrame.Project.Calendar</tt>.
 
 <dt>0273 (raised 22.vii.04)
 
@@ -214,12 +198,6 @@ generation of the test support classes.</i>
 considered when checking whether the operation is allowable as an
 action.
 
-<dt>0288 (raised 11.xi.04)
-
-<dd>The <a href="generalizations.html">information on generalization
-and inheritance</a> doesn't describe what you're supposed to do with
-operations and attributes.
-
 <dt>0289 (raised 15.xi.04)
 
 <dd>If a &#171;protected&#187; type can't be declared because of an
@@ -229,16 +207,35 @@ mention the offending type.
 programmers know exists in package <tt>Standard</tt>. Perhaps some
 more of Ada's standard types should be predefined for ColdFrame.</i>
 
-<dt>0290 (raised 2.xii.04)
-
-<dd>The documentation on inheritance should discuss the visibility of
-inherited operations and attributes.
-
-<!-- next: 0291 -->
+<!-- next: 0290 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.xii.04</h3>
+
+<dl>
+
+<dt>0249 (raised 2.iv.04)
+
+<dd>The <em>&#171;generate&#187;</em> stereotype on nested packages is
+confusing. Perhaps it should be <em>&#171;include&#187;</em>?
+<br><i>Of course, &#171;generate&#187; must be retained for
+compatibility.</i>
+
+<dt>0271 (raised 30.vi.04)
+
+<dd>It would be helpful to have an <tt>Epoch</tt> value in
+<tt>ColdFrame.Project.Calendar</tt>.
+
+<dt>0288 (raised 11.xi.04)
+
+<dd>The <a href="generalizations.html">information on generalization
+and inheritance</a> doesn't describe what you're supposed to do with
+operations and attributes.
+
+</dl>
 
 <h3>12.xi.04</h3>
 
@@ -2461,6 +2458,19 @@ compiler option.</i>
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>3.xii.04</h3>
+
+<dl>
+
+<dt>0067 (raised 5.iii.02)
+
+<dd>If the action associated with a timed event sets the just-fired
+timer again, there's a race condition which can result in a Use_Error
+exception.
+<br><i>I think this must have been fixed!</i>
+
+</dl>
 
 <h3>10.vi.04</h3>
 
