@@ -1,4 +1,4 @@
-<!-- $Id: releases.html,v 0e29cc16167e 2002/05/20 22:33:20 simon $ -->
+<!-- $Id: releases.html,v f21ae47b15d8 2002/05/22 04:51:51 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -143,6 +143,16 @@ child of a parent which already has one.
 too: declare them as operations of some &#171;type&#187; (if there are
 no other <tt>[[annotaions]]</tt>, attributes or operations the
 &#171;type&#187; itself won't be generated).
+
+
+<p>As well as setting Events that you want to be delivered at some
+future time on Timers, which allows you to retract the event (by
+unsetting the timer), you can just Post them (in a "fire and forget"
+way).
+
+
+<p>Event-related exceptions have been moved to
+<tt>ColdFrame.Exceptions</tt> (with the rest).
 
 
 <p><dt>20020116
