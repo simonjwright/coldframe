@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: bd84b0e0df4a $
---  $Date: 2002/09/15 18:21:35 $
+--  $Revision: ce5cd76582ab $
+--  $Date: 2002/09/17 18:13:19 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -85,9 +85,6 @@ package body ColdFrame.Events_G is
 
          --  Invalidate the held event.
          The_Timer.The_Entry.The_Event.Invalidated := True;
-
-         --  Decrement the count of timer events
-         Remove_Timer_Event (The_Timer.The_Entry.On);
 
       end if;
    end Finalize;
