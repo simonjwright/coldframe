@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6b5148938701 2004/06/25 04:58:10 simon $
+# $Id: normalize-rose.tcl,v ed7bd4b5b516 2004/07/14 04:57:52 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1373,6 +1373,25 @@ itcl::class Class {
             if $isType {
                 # must be a record type
                 $this -handleAnnotation
+                if [info exists tags] {
+                    foreach t [array names tags] {
+                        switch $t {
+                            array -
+                            counterpart -
+                            enumeration -
+                            hash -
+                            imported -
+                            integer -
+                            null -
+                            real -
+                            renames -
+                            string {
+                                Error "type $name is marked {$t}\
+                                      but has attributes"
+                            }
+                        }
+                    }
+                }
                 set dts [[Domain::currentDomain] -getDatatypes]
                 if [$dts -isPresent $name] {
                     set dt [$dts -atName $name]
