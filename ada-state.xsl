@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v c8f3834cc5bd 2002/09/11 20:30:26 simon $ -->
+<!-- $Id: ada-state.xsl,v ef02314731f3 2002/09/12 20:52:34 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -427,6 +427,15 @@
              <xsl:text> is a function, can't be an entry action.</xsl:text>
            </xsl:message>           
          </xsl:when>
+
+         <xsl:when test="$n='Delete' and $singleton">
+           <xsl:message terminate="yes">
+             <xsl:value-of select="../../../name"/>
+             <xsl:text>.</xsl:text>
+             <xsl:value-of select="$n"/>
+             <xsl:text> not allowed as a singleton entry action.</xsl:text>
+           </xsl:message>           
+         </xsl:when>
          
          <xsl:when test="count($params)&gt;1">
            <xsl:message terminate="yes">
@@ -457,9 +466,6 @@
 
        </xsl:choose>
 
-       <xsl:value-of select="$II"/>
-       <xsl:value-of select="$n"/>
-
        <xsl:choose>
 
          <xsl:when test="$singleton">
@@ -468,9 +474,11 @@
              
              <xsl:when test="$params">
 
+               <xsl:value-of select="$II"/>
+               <xsl:value-of select="$n"/>
                <xsl:text> (</xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload)</xsl:text>
+               <xsl:text> (What).Payload);&#10;</xsl:text>
                
              </xsl:when>
 
@@ -481,15 +489,32 @@
          <xsl:otherwise>
            
            <xsl:choose>
+
+             <xsl:when test="$n='Delete'">
+               <xsl:value-of select="$II"/>
+               <xsl:text>declare&#10;</xsl:text>
+               <xsl:value-of select="$III"/>
+               <xsl:text>H : Handle := This;&#10;</xsl:text>
+               <xsl:value-of select="$II"/>
+               <xsl:text>begin&#10;</xsl:text>
+               <xsl:value-of select="$III"/>
+               <xsl:text>Delete (H);&#10;</xsl:text>
+               <xsl:value-of select="$II"/>
+               <xsl:text>end;&#10;</xsl:text>
+             </xsl:when>
              
              <xsl:when test="$params">
+               <xsl:value-of select="$II"/>
+               <xsl:value-of select="$n"/>
                <xsl:text> (This, </xsl:text>
                <xsl:value-of select="$e"/>
-               <xsl:text> (What).Payload)</xsl:text>
+               <xsl:text> (What).Payload);&#10;</xsl:text>
              </xsl:when>
 
              <xsl:otherwise>
-               <xsl:text> (This)</xsl:text>
+               <xsl:value-of select="$II"/>
+               <xsl:value-of select="$n"/>
+               <xsl:text> (This);&#10;</xsl:text>
              </xsl:otherwise>
 
            </xsl:choose>
@@ -498,14 +523,15 @@
 
        </xsl:choose>
 
-       <xsl:text>;&#10;</xsl:text>
-
      </xsl:for-each>
 
-     <xsl:value-of select="$II"/>
-     <xsl:text>This.State_Machine_State := </xsl:text>
-     <xsl:value-of select="$s"/>
-     <xsl:text>;&#10;</xsl:text>
+     <xsl:if test="not(action='Delete')">
+       <xsl:value-of select="$II"/>
+       <xsl:text>This.State_Machine_State := </xsl:text>
+       <xsl:value-of select="$s"/>
+       <xsl:text>;&#10;</xsl:text>       
+     </xsl:if>
+
 
      <xsl:if test="../transition[source=$s and not(event)]">
        <xsl:value-of select="$II"/>
