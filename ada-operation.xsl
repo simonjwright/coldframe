@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 0399a24898f9 2001/10/29 05:54:29 simon $ -->
+<!-- $Id: ada-operation.xsl,v e4b98d1dd42f 2001/11/03 06:54:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -341,7 +341,7 @@
             </xsl:call-template>
           </xsl:when>
       
-          <xsl:when test="../@active and not (@class) and not(@return)">
+          <xsl:when test="../@active and not (@class or @return or @finalize)">
 
             <!-- Concrete non-class task entry in current class; we provide
                  an implementation that calls the entry.
@@ -892,8 +892,9 @@
     
     <xsl:if test="parameter">
       
+      <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>&#10;(</xsl:text>
+      <xsl:text>(</xsl:text>
       
       <xsl:for-each select="parameter">
         <xsl:value-of select="name"/>
