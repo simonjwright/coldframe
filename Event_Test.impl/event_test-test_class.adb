@@ -36,6 +36,32 @@ package body Event_Test.Test_Class is
    end Immediate_Event;
 
    --  A class event can be created and queued to its class, to arrive
+   --  after a delay 0f 0.0 (which is specially handled in the event
+   --  queue).
+   procedure Delayed_Event_Now
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delayed_Event_Now
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Recipient.Information;
+      Inf : Recipient.Information renames Recipient.Information (Ev.all);
+      use type ColdFrame.Project.Calendar.Time;
+   begin
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      Inf.Payload := (Ordinal => 1001,
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 0.0);
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 0.0);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Recipient.Get_Ordinal = 1001,
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
+      Assert (abs Recipient.Get_Offset < 0.02,
+              "wrong time" & Recipient.Get_Offset'Img);
+   end Delayed_Event_Now;
+
+   --  A class event can be created and queued to its class, to arrive
    --  after a delay.
    procedure Delayed_Event_After
      (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -366,6 +392,8 @@ package body Event_Test.Test_Class is
    begin
       Register_Routine
         (T, Immediate_Event'Access, "Simple event");
+      Register_Routine
+        (T, Delayed_Event_Now'Access, "Delayed event (now)");
       Register_Routine
         (T, Delayed_Event_After'Access, "Delayed event (after)");
       Register_Routine
