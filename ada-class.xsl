@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 1d17cd933887 2002/10/13 17:52:30 simon $ -->
+<!-- $Id: ada-class.xsl,v 0b3785a165a2 2002/10/17 20:31:12 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1320,7 +1320,8 @@
          case {handle}.{relation}_Current_Child.Current is
            when {child-1}_T =>
              {child-1}.Delete
-               ({child-1}.Handle ({handle}.{relation}_Current_Child.{child-1-abbrev}));
+               ({child-1}.Handle
+                  ({handle}.{relation}_Current_Child.{child-1-abbrev}));
            when Null_T => null;
          end case;
          -->
@@ -1358,7 +1359,9 @@
         <xsl:value-of select="$IIIIC"/>
         <xsl:text>(</xsl:text>
         <xsl:value-of select="."/>
-        <xsl:text>.Handle (</xsl:text>
+        <xsl:text>.Handle&#10;</xsl:text>
+        <xsl:value-of select="$IIIIIC"/>
+        <xsl:text>(</xsl:text>
         <xsl:value-of select="$handle"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="$rel/name"/>
