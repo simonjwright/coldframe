@@ -1,9 +1,9 @@
 comp_opt=-gnatqQfy -gnata -gnatwul -O2
 bind_opt=-E
 gnatmake_opt=-g -j2 -m -k
-main=${current}
-main_unit=${current}
-build_dir=/home/simon/cf/.build/
+main=${HOME}/cf/States.impl/states-t
+main_unit=states-t
+build_dir=${HOME}/cf/.build/
 check_cmd=${cross_prefix}gnatgcc -c ${comp_opt} ${full_current} -gnats
 make_cmd=cd ${build_dir}
 make_cmd=${cross_prefix}gnatmake -o ${main} ${main_unit} ${gnatmake_opt} -cargs ${comp_opt} -bargs ${bind_opt} -largs ${link_opt}
