@@ -1,28 +1,31 @@
 <domain>
-<extractor>cf-20030330t</extractor>
+<extractor>cf-20030703t</extractor>
 <name>Event Test</name>
 <date>
 <year>2003</year>
-<month>4</month>
-<day>8</day>
-<time>20:05</time>
+<month>7</month>
+<day>6</day>
+<time>18:27</time>
 </date>
 <documentation></documentation>
 <classes>
 <class stereotype="singleton">
 <name>Recipient</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>ordinal</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>offset</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Duration</type>
 <initial></initial>
@@ -31,12 +34,14 @@
 <operations>
 <operation stereotype="init">
 <name>init</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="handler">
 <name>information handler</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -49,6 +54,7 @@
 </operation>
 <operation>
 <name>get ordinal</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Integer</return>
 <parameters>
@@ -56,6 +62,7 @@
 </operation>
 <operation>
 <name>get offset</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Duration</return>
 <parameters>
@@ -63,6 +70,7 @@
 </operation>
 <operation stereotype="handler">
 <name>wait handler</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -75,6 +83,7 @@
 </operation>
 <operation>
 <name>handle self</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -87,6 +96,7 @@
 </operation>
 <operation>
 <name>handle mark</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -99,6 +109,7 @@
 </operation>
 <operation>
 <name>send done</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
@@ -204,18 +215,21 @@
 </class>
 <class stereotype="type">
 <name>Content</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>ordinal</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>expected at</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Time</type>
 <initial></initial>
@@ -228,12 +242,14 @@
 </class>
 <class stereotype="type">
 <name>Waiting</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute>
 <name>interval</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Duration</type>
 <initial></initial>
@@ -246,30 +262,35 @@
 </class>
 <class>
 <name>Machine</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>ordinal</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Integer</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>offset</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Duration</type>
 <initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Timer</type>
 <initial></initial>
@@ -278,6 +299,7 @@
 <operations>
 <operation>
 <name>get ordinal</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Integer</return>
 <parameters>
@@ -285,6 +307,7 @@
 </operation>
 <operation>
 <name>get offset</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <return>Duration</return>
 <parameters>
@@ -292,6 +315,7 @@
 </operation>
 <operation>
 <name>handle self</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -304,6 +328,7 @@
 </operation>
 <operation>
 <name>handle mark</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -316,12 +341,14 @@
 </operation>
 <operation>
 <name>send done</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set timer</name>
+<visibility>PublicAccess</visibility>
 <documentation></documentation>
 <parameters>
 <parameter>
@@ -442,12 +469,14 @@
 </class>
 <class>
 <name>Terminal</name>
+<kind>NormalClass</kind>
 <cardinality>n</cardinality>
 <concurrency>Sequential</concurrency>
 <documentation></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<visibility>PrivateAccess</visibility>
 <documentation></documentation>
 <type>Autonumber</type>
 <initial></initial>
