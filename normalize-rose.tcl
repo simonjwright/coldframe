@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v a0620e4829ec 2003/12/12 22:10:08 simon $
+# $Id: normalize-rose.tcl,v e8f6552257b0 2003/12/13 06:52:28 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2306,6 +2306,8 @@ itcl::class Datatype {
 
     variable typeImage
 
+    variable null 0
+
     variable operations
 
     variable serializable 0
@@ -2428,6 +2430,12 @@ itcl::class Datatype {
         $this -setConstraint $constraint
     }
 
+    # called when the ttype is a null record
+    method -null {dummy} {
+        set dataType "null"
+        set null 1
+    }
+
     # called when the type is a real. constraint is a set of key/value
     # pairs, which may be newline-, pipe- or comma-separated.
     # Useful keys are delta, digits, lower, upper, size, small
@@ -2458,7 +2466,9 @@ itcl::class Datatype {
     }
 
     method -generate {domain} {
-        if {$dataType == "record"} {return}
+        if {$dataType == "record"} {
+            return
+        }
         $this -putElementStart "type"
         if [info exists callback] {
             puts -nonewline " callback=\"$callback\""
@@ -2472,10 +2482,18 @@ itcl::class Datatype {
         if $serializable {
             puts -nonewline " serializable=\"yes\""
         }
+        if $null {
+            # do this as an attribute so it's easier to check for mistaken
+            # usage (OK, could do it here ..)
+            puts -nonewline " null=\"yes\""
+        }
         puts ">"
         putElement name "$type"
         $this -generateDocumentation
         switch $dataType {
+            null {
+                puts "<null/>"
+            }
             counterpart {
                 puts "<counterpart/>"
             }

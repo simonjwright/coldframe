@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 34c28758df64 $}
+|{ revision = $Revision: e8f6552257b0 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -584,6 +584,10 @@
 	    quid       	"3FDAAA2902C4"
 	    documentation 	"{string = max 15}"
 	    stereotype 	"type")
+	(object Class "Null Record"
+	    quid       	"3FDAB0F002AB"
+	    documentation 	"{null}"
+	    stereotype 	"type")
 	(object Class_Category "Not Yet Implemented"
 	    quid       	"3FA962850010"
 	    stereotype 	"dont generate"
@@ -708,7 +712,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 34c28758df64 $}
+|{ revision = $Revision: e8f6552257b0 $}
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -768,7 +772,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	380)
+			max_width  	387)
 		    width      	402
 		    height     	218
 		    annotation 	8
@@ -925,7 +929,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	775)
+			max_width  	782)
 		    width      	796
 		    height     	214
 		    annotation 	8
@@ -1005,7 +1009,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 34c28758df64 2003/12/13 06:22:24 simon $")
+		    label      	"$Id: Regressions.cat,v e8f6552257b0 2003/12/13 06:52:28 simon $")
 		(object NoteView @28
 		    location   	(367, 1034)
 		    font       	(object Font
@@ -1080,7 +1084,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	260)
+			max_width  	267)
 		    width      	400
 		    height     	310
 		    annotation 	8
@@ -1137,7 +1141,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	240)
+			max_width  	247)
 		    width      	268
 		    height     	218
 		    annotation 	8
@@ -1256,7 +1260,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	430)
+			max_width  	437)
 		    width      	452
 		    height     	264
 		    annotation 	8
@@ -1313,7 +1317,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	265)
+			max_width  	272)
 		    width      	418
 		    height     	264
 		    annotation 	8
@@ -1426,7 +1430,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	345)
+			max_width  	352)
 		    width      	366
 		    height     	218
 		    annotation 	8
@@ -1505,7 +1509,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	375)
+			max_width  	382)
 		    width      	396
 		    height     	308
 		    annotation 	8
@@ -1562,7 +1566,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	4
-			max_width  	375)
+			max_width  	382)
 		    width      	396
 		    height     	308
 		    annotation 	8
@@ -1742,7 +1746,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	2
-			max_width  	505)
+			max_width  	512)
 		    width      	526
 		    height     	168
 		    annotation 	8
@@ -1784,6 +1788,68 @@
 		    fill_color 	13434879
 		    quidu      	"3FDAAA2902C4"
 		    width      	318
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object NoteView @48
+		    location   	(1148, 2295)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@48
+			location   	(1010, 2235)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	240
+			label      	"Allow null records")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	300
+		    height     	132)
+		(object ClassView "Class" "Logical View::Regressions::Null Record" @49
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1153, 2523)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(1021, 2497)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"Null Record")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@49
+			location   	(1021, 2452)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	264
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3FDAB0F002AB"
+		    width      	282
 		    height     	164
 		    annotation 	8
 		    autoResize 	TRUE)))))

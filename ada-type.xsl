@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 83fd12e1910d 2003/12/12 22:40:46 simon $ -->
+<!-- $Id: ada-type.xsl,v e8f6552257b0 2003/12/13 06:52:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -35,7 +35,7 @@
 
     <!-- Context for special references (eg pi). -->
     <xsl:if test="references='pi'">
-      <xsl:text>with Ada.Numerics;&#10;</xsl:text>            
+      <xsl:text>with Ada.Numerics;&#10;</xsl:text>
     </xsl:if>
 
     <!-- Context for [[counterpart]] and Counterpart. -->
@@ -43,11 +43,11 @@
                   or type/attribute/type='Counterpart'
                   or type/operation/parameter/type='Counterpart'
                   or type/operation/@result='Counterpart'">
-      <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>      
+      <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
     </xsl:if>
-    
+
     <!-- Context for time. -->
-    
+
     <xsl:if test="type/attribute/type='Date'
                   or type/operation/parameter/type='Date'
                   or type/operation/@result='Date'
@@ -99,7 +99,7 @@
           <xsl:element name="with">
             <xsl:value-of select="$package"/>
           </xsl:element>
-        </xsl:if>      
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
@@ -313,7 +313,7 @@
           </xsl:when>
 
           <xsl:when test="@extends">
-            
+
             <!--
                  type {name} is new {base} with record
                    {attr-name} : {attr-type}[ := {attr-init}];
@@ -329,7 +329,7 @@
             <xsl:apply-templates mode="instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
-            
+
           </xsl:when>
 
           <xsl:otherwise>
@@ -347,7 +347,7 @@
             <xsl:apply-templates mode="instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
-            
+
           </xsl:otherwise>
 
         </xsl:choose>
@@ -360,7 +360,7 @@
         <xsl:value-of select="name"/>
         <xsl:text> is ColdFrame.Instances.Handle;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:when test="enumeration">
         <xsl:value-of select="$I"/>
         <xsl:text>type </xsl:text>
@@ -379,7 +379,7 @@
         </xsl:for-each>
         <xsl:text>);&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:when test="imported">
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
@@ -396,7 +396,14 @@
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
+      <xsl:when test="@null">
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is null record;&#10;</xsl:text>
+      </xsl:when>
+
       <xsl:when test="renames">
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
@@ -411,7 +418,7 @@
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:when test="integer">
         <xsl:value-of select="$I"/>
         <xsl:text>type </xsl:text>
@@ -450,7 +457,7 @@
         <xsl:text>;&#10;</xsl:text>
 
       </xsl:when>
-      
+
       <xsl:when test="string">
         <xsl:value-of select="$I"/>
         <xsl:text>package </xsl:text>
@@ -471,35 +478,37 @@
         <xsl:value-of select="name"/>
         <xsl:text>;&#10;</xsl:text>
       </xsl:when>
-      
+
       <xsl:otherwise>
         <xsl:text>  -- Unrecognised type category for </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>&#10;</xsl:text>
       </xsl:otherwise>
-      
+
     </xsl:choose>
   </xsl:template>
 
 
   <!-- Generate domain Types support entries (not for standard types).
-       We do these as child packages in case they're not actually 
+       We do these as child packages in case they're not actually
        needed. -->
   <xsl:template mode="domain-type-support" match="domain/type">
     <xsl:if test="not(standard)">
       <xsl:choose>
 
         <xsl:when test="attribute"/>
-        
+
         <xsl:when test="counterpart"/>
-        
+
         <xsl:when test="enumeration"/>
-        
+
         <xsl:when test="imported"/>
 
         <xsl:when test="renames"/>
 
         <xsl:when test="integer"/>
+
+        <xsl:when test="null"/>
 
         <xsl:when test="real"/>
 
@@ -600,10 +609,10 @@
     </xsl:call-template>
     <xsl:text> is&#10;</xsl:text>
 
-    <!-- If it's a function, we may have to organize a return value. --> 
+    <!-- If it's a function, we may have to organize a return value. -->
     <xsl:if test="@return
                   and /domain/type[name=current()/@return]/attribute">
-      
+
       <xsl:value-of select="$I"/>
       <xsl:text>Dummy : </xsl:text>
       <xsl:value-of select="@return"/>
@@ -647,7 +656,7 @@
 
   <!-- Called at domain/type[@protected] to generate protected type specs. -->
   <xsl:template name="protected-type-spec">
-    
+
     <!--
          protected type {name} is
             {operations}
@@ -655,7 +664,7 @@
             {attributes}
          end {name};
          -->
-    
+
     <xsl:value-of select="$I"/>
     <xsl:text>protected type </xsl:text>
     <xsl:value-of select="name"/>
@@ -687,9 +696,9 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- Commentary output by caller. -->
-            
+
   </xsl:template>
-    
+
 
   <!-- Called to generate protected type bodies. -->
   <xsl:template match="type[@protected]" mode="protected-type-body">
@@ -702,7 +711,7 @@
       <xsl:with-param name="indent" select="''"/>
       <xsl:with-param name="separate-pars" select="$blank-line"/>
     </xsl:call-template>
-    
+
     <xsl:text>separate (</xsl:text>
     <xsl:value-of select="../name"/>
     <xsl:text>)&#10;</xsl:text>
@@ -711,14 +720,14 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
     <xsl:text>&#10;</xsl:text>
-    
+
     <xsl:for-each select="operation[not(@access) and not(@suppressed)]">
       <xsl:sort select="name"/>
 
       <xsl:call-template name="commentary">
         <xsl:with-param name="indent" select="$I"/>
       </xsl:call-template>
-    
+
       <xsl:call-template name="subprogram-specification">
         <xsl:with-param name="indent" select="$I"/>
         <xsl:with-param name="is-class" select="'no'"/>
@@ -780,11 +789,11 @@
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>;&#10;</xsl:text>
-    
+
   </xsl:template>
 
   <xsl:template match="*" mode="protected-type-body"/>
-    
+
 
 
   <!-- Called to extract the package name from a (possibly) qualified
@@ -807,7 +816,7 @@
       </xsl:when>
 
       <xsl:otherwise>
-        
+
         <xsl:variable name="new-package">
           <xsl:choose>
             <xsl:when test="string-length($package)=0">
