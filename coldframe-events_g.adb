@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 4b313b5789d5 $
---  $Date: 2004/06/30 21:27:42 $
+--  $Revision: f716ac03f157 $
+--  $Date: 2004/07/03 12:05:47 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -331,6 +331,26 @@ package body ColdFrame.Events_G is
    end Start_Queue;
 
 
+   procedure Stop (The_Queue : in out Event_Queue_Base) is
+      pragma Warnings (Off, The_Queue);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Stop not implemented in concrete event queue");
+   end Stop;
+
+
+   procedure Stop (The_Queue : in out Event_Queue_P) is
+   begin
+      if The_Queue /= null then
+         if not The_Queue.Stopped then
+            The_Queue.Stopped := True;
+            Stop (The_Queue.all);  -- dispatches to actual Stop
+         end if;
+      end if;
+   end Stop;
+
+
    procedure Tear_Down (The_Event : access Event_Base) is
       pragma Warnings (Off, The_Event);
    begin
@@ -354,12 +374,9 @@ package body ColdFrame.Events_G is
                                          Event_Queue_P);
    begin
       if The_Queue /= null then
-         if not The_Queue.Torn_Down then
-            The_Queue.Torn_Down := True;
-            Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
-         end if;
          The_Queue.Access_Count := The_Queue.Access_Count - 1;
          if The_Queue.Access_Count = 0 then
+            Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
             Delete (The_Queue);
          else
             --  We have to clear this pointer (which is of course the

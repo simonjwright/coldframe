@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 66f57df04705 $
---  $Date: 2004/03/13 21:02:39 $
+--  $Revision: f716ac03f157 $
+--  $Date: 2004/07/03 12:05:47 $
 --  $Author: simon $
 
 with Ada.Finalization;
@@ -200,6 +200,10 @@ package ColdFrame.Events_G is
    --  action procedure.
 
    --  Private use only
+   procedure Stop (The_Queue : in out Event_Queue_P);
+   --  Stops processing on The_Queue, pending Tear_Down (the queue
+   --  can't be restarted)..
+
    procedure Tear_Down (The_Queue : in out Event_Queue_P);
    --  Terminates any tasks and deallocates The_Queue.
 
@@ -353,9 +357,9 @@ private
       --  shared by multiple domains.
 
       --  when this reaches 0, the queue can be deleted
-      Access_Count : Natural := 1;
+      Access_Count : Natural := 0;
       --  if this is true, the queue has been stopped
-      Torn_Down : Boolean := False;
+      Stopped : Boolean := False;
 
       --  the queue is running
       Started : Boolean := Start_Started;
@@ -369,6 +373,10 @@ private
    procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class);
+
+   --  Default private interface to stop an event queue.  The
+   --  implementation here raises Exceptions.Use_Error if called.
+   procedure Stop (The_Queue : in out Event_Queue_Base);
 
    --  Default private interface to tear down an event queue.  The
    --  implementation here raises Exceptions.Use_Error if called.
