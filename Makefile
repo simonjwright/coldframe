@@ -1,4 +1,4 @@
-# Copyright (c) 2001 Simon Wright <simon@pushface.org>
+# Copyright (c) 2001-2002 Simon Wright <simon@pushface.org>
 # $Id$
 
 BLANK_LINES = yes
@@ -49,10 +49,10 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	  $(NORM_STACK_DUMP) \
 	  $(NORM_VERBOSE) \
 	  --version cf-DATE \
-	  >$@ || rm -f $@
+	  >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
-	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || rm -f $@
+	$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || (rm -f $@; exit 1)
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	$(SAXON) $< $(CODEGEN_SCRIPT) \
@@ -60,8 +60,11 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
 	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  verbose=$(VERBOSE) \
-	  >$@ \
-	  || (echo "Generation problem." && rm -f $@)
+	  >$@-t \
+	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)
+	sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
+	  <$@-t >$@
+	rm -f $@-t
 
 # Create the target directory
 # get rid of any files in it already
