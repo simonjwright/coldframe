@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 3425bf96d7fc 2003/11/05 22:49:06 simon $ -->
+<!-- $Id: generate-ada.xsl,v 707b69cd9b9e 2003/11/21 06:36:23 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -217,7 +217,10 @@
     <xsl:text>;&#10;</xsl:text>
     
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/operation[not(@access) and not(@suppressed)]">
+    <xsl:if test="type/operation[not(@access)
+                  and not(@suppressed)
+                  and not(@imported)
+                  and not(@renames)]">
       
       <xsl:call-template name="do-not-edit"/>
       <xsl:call-template name="identification-info"/>
