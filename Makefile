@@ -187,11 +187,14 @@ Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
 Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-report_problems.adb \
 States.cat States.raw \
+States.impl/states-events-initialize.adb \
 States.impl/states-monitor-clear_heartbeat_timeout.adb \
 States.impl/states-monitor-clear_warmup_timeout.adb \
+States.impl/states-monitor-receive.adb \
 States.impl/states-monitor-set_2_second_warmup_timeout.adb \
 States.impl/states-monitor-set_6_second_warmup_timeout.adb \
 States.impl/states-monitor-set_heartbeat_timeout.adb \
+States.impl/states-monitor-setup.adb \
 States.impl/states-t.adb \
 States.impl/states-t.ads
 
