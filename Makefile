@@ -72,6 +72,7 @@ C_CODEGEN_SCRIPT = generate-c.xsl
 C_CODEGEN_SCRIPTS = $(C_CODEGEN_SCRIPT) \
   c-utilities.xsl
 OTHER_SCRIPTS = serialized-to-csv.tcl \
+  split-csv.tcl \
   make-build.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
