@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
+--  $Revision: 73e19b026186 $
+--  $Date: 2004/03/13 21:02:23 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -318,6 +318,14 @@ package body ColdFrame.Events_G is
    end Start_Queue;
 
 
+   procedure Tear_Down (The_Event : access Event_Base) is
+      pragma Warnings (Off, The_Event);
+   begin
+      --  Default no-op.
+      null;
+   end Tear_Down;
+
+
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
       pragma Warnings (Off, The_Queue);
    begin
@@ -346,6 +354,17 @@ package body ColdFrame.Events_G is
             --  calls us again.
             The_Queue := null;
          end if;
+      end if;
+   end Tear_Down;
+
+
+   procedure Tear_Down (The_Event : access Timer_Event) is
+   begin
+      if The_Event.The_Timer /= null then
+         --  Clear the Timer's pointer to this event, so it doesn't
+         --  fail the Timer_Checker test when the Timer is deleted as
+         --  part of Instance teardown.
+         The_Event.The_Timer.The_Entry := null;
       end if;
    end Tear_Down;
 
