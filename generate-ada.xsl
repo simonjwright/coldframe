@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 85149b42a25d 2004/10/29 12:43:34 simon $ -->
+<!-- $Id: generate-ada.xsl,v 174f0bb1d1c3 2004/11/12 06:50:09 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -231,7 +231,7 @@
     <xsl:apply-templates
       select="type[not(@visibility='private') and not(@protected)]
               /operation[not(@access) and not(@suppressed)]"
-      mode="domain-type-operation-spec">
+      mode="ty:domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -271,7 +271,7 @@
     <xsl:apply-templates
       select="type[@visibility='private' and not(@protected)]
               /operation[not(@access) and not(@suppressed)]"
-      mode="domain-type-operation-spec">
+      mode="ty:domain-type-operation-spec">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
@@ -348,7 +348,7 @@
     </xsl:call-template>
     <xsl:apply-templates
       select="type[@protected]"
-      mode="protected-type-body">
+      mode="ty:protected-type-body">
     </xsl:apply-templates>
 
 
@@ -649,7 +649,7 @@
         name="m"
         select="'.. any support packages for specially-declared types ..'"/>
     </xsl:call-template>
-    <xsl:apply-templates select="type" mode="domain-type-support"/>
+    <xsl:apply-templates select="type" mode="ty:domain-type-support"/>
 
     <!-- Serializable support. -->
 
