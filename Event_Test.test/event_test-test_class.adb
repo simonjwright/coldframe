@@ -388,6 +388,32 @@ package body Event_Test.Test_Class is
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Delete_Timer;
 
+   --  A class event can be created and queued to its class, to arrive
+   --  after a delay (relative to when the queue starts).
+   procedure Delayed_Event_After_Start
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Delayed_Event_After_Start
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Recipient.Information;
+      Inf : Recipient.Information renames Recipient.Information (Ev.all);
+      use type ColdFrame.Project.Calendar.Time;
+   begin
+      Inf.Payload := (Ordinal => 1013,
+                      Expected_At => ColdFrame.Project.Calendar.Clock + 5.2);
+      ColdFrame.Project.Events.Post (Ev,
+                                     On => Events.Dispatcher,
+                                     To_Fire_After => 2.2);
+      delay 3.0;
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      Assert (Recipient.Get_Ordinal = 1013,
+              "wrong ordinal" & Recipient.Get_Ordinal'Img);
+      Assert (abs Recipient.Get_Offset < 0.02,
+              "wrong time" & Recipient.Get_Offset'Img);
+   end Delayed_Event_After_Start;
+
    procedure Register_Tests (T : in out Test_Case) is
    begin
       Register_Routine
@@ -414,6 +440,8 @@ package body Event_Test.Test_Class is
         (T, Unset_Used_Timer'Access, "Unset used timer");
       Register_Routine
         (T, Delete_Timer'Access, "Delete set timer");
+      Register_Routine
+        (T, Delayed_Event_After_Start'Access, "Delayed event (after start)");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
