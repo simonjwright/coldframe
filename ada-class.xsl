@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 90c158c500cd 2001/04/25 19:06:51 simon $ -->
+<!-- $Id: ada-class.xsl,v 6f97d323c6f9 2001/04/29 10:39:02 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -179,6 +179,15 @@
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
       <xsl:text> use Ada.Strings.Unbounded;&#10;</xsl:text>
+    </xsl:if>
+
+    <xsl:if test="attribute/type='Date'
+                  or operation/parameter/type='Date'
+                  or attribute/type='Time'
+                  or operation/parameter/type='Time'">
+      <!-- The above imply use of Ada.Calendar. -->
+      <xsl:text>with Ada.Calendar;</xsl:text>
+      <xsl:text> use Ada.Calendar;&#10;</xsl:text>
     </xsl:if>
 
     <xsl:if test="not(@singleton)">
