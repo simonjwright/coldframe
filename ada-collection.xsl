@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v e21819b3d8de 2003/05/01 05:25:49 simon $ -->
+<!-- $Id: ada-collection.xsl,v 6dfdb95ed63f 2003/07/13 06:36:14 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -106,6 +106,7 @@
         <!-- Use the Unbounded version -->
         <xsl:call-template name="do-not-edit"/>
         <xsl:text>with BC.Containers.Collections.Unbounded;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Collections;&#10;</xsl:text>
@@ -166,6 +167,7 @@
       <xsl:otherwise>
         <!-- Use the Unbounded version -->
         <xsl:text>with BC.Containers.Sets.Unbounded;&#10;</xsl:text>
+        <xsl:text>with ColdFrame.Project.Global_Storage_Pool;&#10;</xsl:text>
         <xsl:text>with </xsl:text>
         <xsl:value-of select="$class"/>
         <xsl:text>.Abstract_Sets;&#10;</xsl:text>
@@ -323,32 +325,20 @@
 
     <!-- Function to return a Collection of all the Instances -->
     <!-- full version ..
-         with BC.Copy;
-         with {dom}.{class}.Abstract_Containers;
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Collections.Collection is
-            procedure Copy_Instances is new BC.Copy
-              (Item => Handle,
-               Source => Abstract_Map_Containers,
-               From => Maps.Map,
-               Target => Abstract_Containers,
-               To => Collections.Collection,
-               Clear => Collections.Clear,
-               Add => Collections.Append);
+            use ColdFrame.Instances.Abstract_Containers;
+            It : Iterator'Class := Maps.New_Iterator (The_Container);
             Result : Collections.Collection;
          begin
-            Copy_Instances (The_Container, Result);
+            while not Is_Done (It) loop
+               Collections.Append (Result, Handle (Current_Item (It)));
+               Next (It);
+            end loop;
             return Result;
          end {dom}.{class}.All_Instances;
          -->
     <xsl:call-template name="do-not-edit"/>
-
-    <xsl:if test="$max &gt; 1">
-      <xsl:text>with BC.Copy;&#10;</xsl:text>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="$class"/>
-      <xsl:text>.Abstract_Containers;&#10;</xsl:text>      
-    </xsl:if>
 
     <xsl:text>function </xsl:text>
     <xsl:value-of select="$class"/>
@@ -360,22 +350,9 @@
 
     <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Copy_Instances is new BC.Copy&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text>(Item =&gt; Handle,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Source =&gt; Abstract_Map_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> From =&gt; Maps.Map,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Target =&gt; Abstract_Containers,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> To =&gt; Collections.Collection,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Clear =&gt; Collections.Clear,&#10;</xsl:text>
-      <xsl:value-of select="$IC"/>
-      <xsl:text> Add =&gt; Collections.Append);&#10;</xsl:text>
-
+      <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
@@ -387,7 +364,13 @@
       <xsl:when test="$max &gt; 1">
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Copy_Instances (The_Container, Result);&#10;</xsl:text>
+        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Collections.Append (Result, Handle (Current_Item (It)));&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>end loop;&#10;</xsl:text>
 
       </xsl:when>
 
