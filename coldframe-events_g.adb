@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: ede7ee592c82 $
---  $Date: 2002/07/07 18:31:52 $
+--  $Revision: 2364234f0cf2 $
+--  $Date: 2002/07/11 04:59:05 $
 --  $Author: simon $
 
 package body ColdFrame.Events_G is
@@ -39,8 +39,10 @@ package body ColdFrame.Events_G is
       is new Ada.Unchecked_Deallocation (Event_Queue_Base'Class,
                                          Event_Queue_P);
    begin
-      Tear_Down (The_Queue.all);
-      Delete (The_Queue);
+      if The_Queue /= null then
+         Tear_Down (The_Queue.all);
+         Delete (The_Queue);
+      end if;
    end Tear_Down;
 
 
