@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 06b1675afce7 2004/05/29 17:20:00 simon $
+# $Id: normalize-rose.tcl,v 4f9ce84015cf 2004/06/12 19:22:45 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1094,7 +1094,6 @@ itcl::class Class {
                         switch -exact $upper {
                             "1"     {
                                 $this -singleton dummy
-                                $this -max 1
                             }
                             default {
                                 Error "illegal lower bound 1 in cardinality \
@@ -1123,12 +1122,12 @@ itcl::class Class {
     }
 
     # Specifies kind of class
-    variable kind NormalClass
+    variable utility 0
     method -kind {k} {
         set kind $k
         switch $k {
             NormalClass {}
-            Utility     {$this -singleton 1}
+            Utility     {set utility 1}
             default     {Error "kind $k (class $name) not handled"}
         }
     }
@@ -1161,7 +1160,6 @@ itcl::class Class {
     variable public 0
     method -public {dummy} {
         set public 1
-        $this -singleton 1
     }
 
     method -interface {dummy} {
@@ -1176,7 +1174,6 @@ itcl::class Class {
     variable singleton 0
     method -singleton {dummy} {
         set singleton 1
-        set max 1
     }
 
     # an abbreviation of the name may be useful (eg, when making names
@@ -1402,10 +1399,11 @@ itcl::class Class {
             Error "type [$this -getName] has identifier"
         } elseif [expr $singleton && [$this -hasIdentifier]] {
             Error "singleton [$this -getName] has identifier"
-        } elseif [expr !($singleton || $isType) && ![$this -hasIdentifier]] {
+        } elseif [expr !($public || $utility || $singleton || $isType) \
+                      && ![$this -hasIdentifier]] {
             Error "[$this -getName] has no identifier"
         }
-        if {$kind == "Utility"} {
+        if {$utility} {
             if $isType {Error "utility [$this -getName] is a type"}
             if $active {Error "utility [$this -getName] is active"}
             if [info exists attributes] {
@@ -1460,7 +1458,7 @@ itcl::class Class {
                 }
             }
             $this -putElementStart "class"
-            if {$kind == "Utility"} {puts -nonewline " utility=\"yes\""}
+            if {$utility} {puts -nonewline " utility=\"yes\""}
             if $abstr {puts -nonewline " abstract=\"yes\""}
             if $active {puts -nonewline " active=\"yes\""}
             if [info exists stack] {puts -nonewline " stack=\"$stack\""}
