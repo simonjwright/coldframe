@@ -1,4 +1,4 @@
-<!-- $Id: architecture.html,v 6c8b11bd9ae9 2002/01/04 06:29:20 simon $ -->
+<!-- $Id: architecture.html,v 280c92236aa6 2002/02/03 10:17:22 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Architecture</title>
@@ -6,20 +6,20 @@
 <body bgcolor="#ffffff">
 <h1>ColdFrame: Architecture</h1>
 
-The first version of ColdFrame contains a single software
+<p>The first version of ColdFrame contains a single software
 architecture. This involves:
 
 <ul>
 
-<li><a href="#target">a target platform</a>,
+<li><a href="target.html">a target platform</a>,
 
-<li><a href="#strategy">a strategy</a>,
+<li><a href="strategy.html">a strategy</a>,
 
 <li><a href="preparation.html">preparation of models in Rational Rose</a>,
 
-<li><a href="#extraction">extraction of models from Rose</a>,
+<li><a href="extraction.html">extraction of models from Rose</a>,
 
-<li><a href="#conversion">conversion to standard form</a>,
+<li><a href="conversion.html">conversion to standard form</a>,
 
 </ul>
 
@@ -27,250 +27,27 @@ architecture. This involves:
 
 <ul>
 
-<li><a href="#generation">generation of code</a>,
+<li><a href="generation.html">generation of code</a>
 
-<li>using <a href="#support">specially written support components</a>
+<li>according to a set of <a href="translation-rules.html">translation
+rules</a>,
+
+<li>using <a href="support.html">specially written support
+components</a>
 
 <li>and a set of <a href="use-of-bcs.html">generic container
 components (with notes on their use)</a>.
 
 </ul>
 
+<!--
 <p>You can see a UML <a href="coldframe-architecture.pdf">diagram</a>
 of the current architecture, together with <a
 href="coldframe-architecture.html">descriptions</a> of the classes
 involved.
+-->
 
-<h2><a name="target">Target platform</a></h2>
-
-<p>The target is a memory-resident Ada software architecture (for
-example, a <a href="http://www.windriver.com/">VxWorks</a>-based
-controller).
-
-<h2><a name="strategy">Strategy</a></h2>
-
-<p>It's fundamental to the idea of ColdFrame that you don't need to
-build a design model by decorating your clean, beautiful analysis
-model with all sorts of support clutter (lists, queues etc). The
-software architect decides how analysis models are to be translated
-into code, and a mechanical process (applied either by a programmer or
-by a program) applies the rules.
-
-<p>That isn't to say that you can be slapdash about your models. Often
-people will treat the modelling phase as if it were a sketchy
-whiteboard activity; you can't do that if the model is going to be
-translated directly into code (not that that was ever a good idea!)
-
-<p>Examples of commercial products which take this approach are
-Software through Pictures from <a
-href="http://www.aonix.com/">Aonix</a> and <a
-href="http://www.artisansw.com/">ARTiSAN Software</a>'s Real-Time
-Modeler.
-
-<p>It's important that the tool lets the architect adopt different
-strategies depending on circumstances. For example, ColdFrame
-generates quite different code for a class with the stereotype
-<em>&#171;singleton&#187;</em>.
-
-<p>This need makes it very advantageous to have a complete programming
-environment available while scripting the output. Predetermined
-substitution variables aren't likely to fill the bill.
-
-<h2><a href="preparation.html">Preparation of models in Rational
-Rose</a></h2>
-
-<h2><a name="extraction">Extraction of models from Rose</a></h2>
-
-<p>The Rose model is extracted to a raw "domain definition file" (type
-<tt>.raw</tt>) using a RoseScript script <tt>extractor.ebs</tt>.
-
-<p>Install <tt>extractor.ebs</tt> in the Rose <i>Add-ins</i> menu (or
-whichever other one you want to use). In
-<tt>C:\Program&nbsp;Files\Rational\Rose\</tt> or thereabouts, edit
-<tt>rose.mnu</tt>:
-
-<blockquote>
-<pre>
-Menu Add-Ins
-{
-  Separator
-
-  option "Generate &XML..."	
-   {
-	RoseScript $ColdFrame\extractor.ebs
-   }
-
-}
-</pre>
-</blockquote>
-
-<p>This means, of course, that you must set the Rose Path Map variable
-<tt>ColdFrame</tt> to the directory where ColdFrame is installed (eg,
-<tt>d:\cf-20010707</tt>).
-
-<p>The Extractor extracts data for the selected Domain packages or, if
-none are selected, for all the packages on the current active class
-diagram (if any). A recommended approach is to have a diagram (called
-<i>Code Generation</i>, perhaps) and drag all the Domain packages in
-your model onto it.
-
-<p>You can select packages to be extracted in the Code Generation
-diagram.
-
-<p>The extracted domain definition file name is the domain name with
-underscores substituted for spaces.
-
-<p>You can specify the output file location using the Rose Path Map
-variable <tt>ColdFrameOut</tt>. The default output file location if
-<tt>ColdFrameOut</tt> isn't specified is the directory that
-<tt>extractor.ebs</tt> was loaded from (sorry about
-that). Double-clicking on the <tt>.mdl</tt> file or using the "recent
-documents" facility of Windows opens Rose with the correct default
-directory.
-
-<p>The output format is XML, using a Document Type Description (<a
-href="ddf.dtd">DTD</a>) designed to be easy to output from RoseScript
-and to handle in the next stage using a SAX-compliant parser.
-
-<h2><a name="conversion">Conversion to standard form</a></h2>
-
-<p>ColdFrame's "standard form" uses a home-grown <a
-href="coldframe.dtd">DTD</a> rather than the standard XMI Metadata
-Interchange (XMI) one. This is, I'm afraid, because I didn't think to
-check what standardisation activities were under way; however, I think
-it would have taken a lot longer if I'd used XMI. Perhaps an
-appropriate approach would be to use an XSL transform to convert
-documents from XMI to ColdFrame.
-
-<p>The processing is done using the <em><a
-href="resources.html#tcl">itcl</a></em> script
-<tt>normalize-rose.tcl</tt>, which uses the <a
-href="resources.html#xml">TclXML</a> package to handle the parse of
-the <tt><i>package-name</i>.raw</tt> file. The Makefile places the
-output in <tt><i>package-name</i>.norm</tt>.
-
-<h2><a name="generation">Generation of code</a></h2>
-
-<p>Code is generated using the <a href="resources.html#xslt">XSLT</a>
-stylesheet <tt>generate-ada.xsl</tt>. The XSLT processor I've used is
-<em>Saxon</em>.
-
-<p>The output is placed by the <tt>Makefile</tt> into one Ada source
-file, <tt><i>package-name</i>.ada</tt>.
-
-<p>If you're using <a href="http://www.gnat.com/">GNAT</a>, you'll
-then need to use <tt>gnatchop</tt> to split the file into the required
-"one file per library unit" style. Other compilers will have their own
-way of importing the code.
-
-<p>The generated code is compilable, but all the operation bodies will
-raise the exception <tt>Program_Error</tt> if called. ColdFrame makes
-no attempt to allow you to modify generated bodies and preserve your
-changes on the next generation; instead, the idea is that you keep the
-generated code in one directory and your real code bodies in another
-directory that's earlier on the compiler's source search path. I'm not
-sure how the idea of placing real subprogram body files earlier in the
-compiler's source search path translates to compilers other than GNAT;
-however, on regeneration the supplied Makefile deletes all generated
-code bodies that have implementations (this should make use of the
-GNAT <i>Project</i> facility easier, when it arrives).
-
-<h2><a name="support">Specially written support components</a></h2>
-
-<p>Specially written support components appear under the top-level
-package <tt>ColdFrame</tt>. Some exist to support navigation; the more
-user-interesting ones are
-
-<dl>
-
-<dt><tt>ColdFrame.Callbacks</tt>
-
-<dd>Provides callback (Observer) support.
-
-<dt><tt>ColdFrame.Exceptions</tt>
-
-<dd>Provides exceptions. These are at present just renamings of <a
-href="use-of-bcs.html">Booch</a> exceptions.
-
-<dl>
-
-<dt><tt>ColdFrame.Exceptions.Message</tt>
-
-<dd>Provides exception reporting (to standard output).
-
-<dt><tt>ColdFrame.Exceptions.Traceback</tt>
-
-<dd>Enables GNAT's exception traceback facility, which is set up to
-report unhandled exceptions both in the main program and in tasks. To
-use it, you must
-
-<ol>
-<li><tt>with</tt> this package,
-<li>give the switch <tt>-E</tt> to the binder.
-</ol>
-
-</dl>
-
-<dt><tt>ColdFrame.Hash</tt>
-
-<dd>A family of hash functions, suitable for use as hashes (or part of
-hashes) for instantiating <a href="use-of-bcs.html">Booch Map
-containers</a>.
-
-<dl>
-
-<dt><tt>ColdFrame.Hash.Access_Hash</tt>
-
-<dd>A hash function for access values (useful for associative classes).
-
-<dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
-
-<dd>A hash function for access-to-instance values (useful for child
-classes).
-
-<dt><tt>ColdFrame.Hash.Strings</tt>
-
-<dd>A family of hash functions for strings.
-
-<dl>
-
-<dt><tt>ColdFrame.Hash.Strings.Bounded</tt>
-
-<dd>A hash function for Bounded Strings.
-
-<dt><tt>ColdFrame.Hash.Strings.Standard</tt>
-
-<dd>A hash function for standard Strings.
-
-<dt><tt>ColdFrame.Hash.Strings.Unbounded</tt>
-
-<dd>A hash function for Unbounded Strings.
-
-</dl>
-
-</dl>
-
-<dt><tt>ColdFrame.Global_Storage_Pool</tt>
-
-<dd>Provides a (GNAT-specific) Storage Pool type and instance, using
-the standard system <tt>malloc</tt> pool, suitable for instantiating
-<a href="use-of-bcs.html">Booch Containers</a>.
-
-<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
-
-<dt><tt>ColdFrame.Instances</tt>
-
-<dd>Provides a type from which all Instances are derived.
-
-<br>The purpose is to allow mutual visibility (to support associations
-and inheritance relationships) without using non-standard extensions
-such as <i>WITH TYPE</i>.
-
-</dl>
-
-<h2><a href="use-of-bcs.html">Generic container components</a></h2>
-
-<hr>
+<p><hr>
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>
