@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 21e6a455fc82 2003/06/26 05:04:28 simon $ -->
+<!-- $Id: generate-ada.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -678,6 +678,8 @@
     <xsl:call-template name="progress-message">
       <xsl:with-param name="m" select="'.. done.'"/>
     </xsl:call-template>
+
+    <xsl:call-template name="check-for-errors"/>
 
   </xsl:template>
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 6fbf7a868481 2003/06/26 05:01:54 simon $ -->
+<!-- $Id: ada-operation.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -298,7 +298,8 @@
                  downward (if there's anywhere to go). -->
 
             <xsl:if test="not(/domain/inheritance[parent=$current/name])">
-              <xsl:message terminate="yes">
+              <xsl:call-template name="log-error"/>
+              <xsl:message>
                 <xsl:text>Error: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
                 <xsl:text> in </xsl:text>
@@ -428,7 +429,8 @@
       <xsl:when test="@return">
         <!-- Check for entry (illegal for functions) -->
         <xsl:if test="@entry">
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:text>Error: function </xsl:text>
             <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
             <xsl:text> can't be an entry</xsl:text>
@@ -903,7 +905,8 @@
       
       <!-- If neither, it's an error. -->
       <xsl:otherwise>
-        <xsl:message terminate="yes">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
           <xsl:text>Error: invalid &lt;&lt;accessor&gt;&gt; on </xsl:text>
           <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
         </xsl:message>

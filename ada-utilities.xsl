@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 8ea34429df94 2003/03/13 20:34:41 simon $ -->
+<!-- $Id: ada-utilities.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -26,8 +26,12 @@
      Public License.
      -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="1.0">
+<xsl:stylesheet 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  version="1.0"
+  xmlns:saxon="http://icl.com/saxon"
+  extension-element-prefixes="saxon"
+>
 
   <!-- Called at domain/class to compute number of instances.
        If not, set parameter "c" to the class for which the computation
@@ -368,6 +372,31 @@
       
     </xsl:choose>
 
+  </xsl:template>
+
+
+  <!-- Error handling. -->
+
+  <xsl:variable name="detected-errors" saxon:assignable="yes" select="0"/>
+
+  <xsl:template name="log-error">
+    <saxon:assign name="detected-errors" select="$detected-errors + 1"/>
+  </xsl:template>
+
+  <xsl:template name="check-for-errors">
+    <xsl:choose>
+      <xsl:when test="$detected-errors=1">
+        <xsl:message terminate="yes">
+          <xsl:text>1 error detected.</xsl:text>
+        </xsl:message>        
+      </xsl:when>
+      <xsl:when test="$detected-errors&gt;1">
+        <xsl:message terminate="yes">
+          <xsl:value-of select="$detected-errors"/>
+          <xsl:text> errors detected.</xsl:text>
+        </xsl:message>        
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 632ef9060b96 2003/07/30 19:20:23 simon $ -->
+<!-- $Id: ada-type.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -193,7 +193,8 @@
 
         <xsl:if test="$missing">
 
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:for-each select="$missing">
               <xsl:sort select="name"/>
               <xsl:text>Error: couldn't generate type </xsl:text>

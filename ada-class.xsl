@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 5f151bf7b317 2003/08/15 20:10:00 simon $ -->
+<!-- $Id: ada-class.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -988,7 +988,8 @@
 
       <xsl:otherwise>
         <xsl:if test="attribute/type='Autonumber'">
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:text>Error: invalid use of Autonumber in </xsl:text>
             <xsl:value-of select="name"/>
           </xsl:message>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 8d577582fb2c 2003/08/30 13:56:49 simon $ -->
+<!-- $Id: ada-state.xsl,v f0fa020c2568 2003/08/30 18:58:22 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -269,13 +269,15 @@
               and parameter/type=$e]"/>
 
     <xsl:if test="not($op)">
-      <xsl:message terminate="yes">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
         <xsl:text>Error: no handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
       </xsl:message>
     </xsl:if>
     <xsl:if test="count($op) &gt; 1">
-      <xsl:message terminate="yes">
+      <xsl:call-template name="log-error"/>
+      <xsl:message>
         <xsl:text>Error: more than one handler for </xsl:text>
         <xsl:value-of select="../name"/>.<xsl:value-of select="$e"/>
       </xsl:message>
@@ -384,7 +386,8 @@
       <xsl:choose>
 
         <xsl:when test="count($drop-through)&gt;1">
-           <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:text>Error: more than one drop-through transition from state </xsl:text>
             <xsl:value-of select="$tr/source"/>
             <xsl:text>.</xsl:text>
@@ -393,7 +396,8 @@
         </xsl:when>
         
         <xsl:when test="$deleting">
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:text>Error: drop-through transition after Delete in state </xsl:text>
             <xsl:value-of select="$tr/source"/>
             <xsl:text>.</xsl:text>
@@ -462,7 +466,8 @@
     <xsl:choose>
       
       <xsl:when test="$op/@return">
-        <xsl:message terminate="yes">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
@@ -472,7 +477,8 @@
       </xsl:when>
       
       <xsl:when test="$operation='Delete' and $single">
-        <xsl:message terminate="yes">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
@@ -480,7 +486,8 @@
       </xsl:when>
       
       <xsl:when test="count($params)&gt;1">
-        <xsl:message terminate="yes">
+        <xsl:call-template name="log-error"/>
+        <xsl:message>
           <xsl:text>Error: </xsl:text>
           <xsl:value-of select="$class/name"/>
           <xsl:text>.</xsl:text>
@@ -493,7 +500,8 @@
         <!-- The full spec of the event is in the class, not the
              state machine. -->
         <xsl:if test="not($class/event[name=$event]/type=$params/type)">
-          <xsl:message terminate="yes">
+          <xsl:call-template name="log-error"/>
+          <xsl:message>
             <xsl:value-of select="$class/name"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="$operation"/>
@@ -706,7 +714,8 @@
        <xsl:choose>
 
          <xsl:when test="../../../operation[name=$n]/@return">
-           <xsl:message terminate="yes">
+           <xsl:call-template name="log-error"/>
+           <xsl:message>
              <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
@@ -716,7 +725,8 @@
          </xsl:when>
 
          <xsl:when test="$n='Delete' and $singleton">
-           <xsl:message terminate="yes">
+           <xsl:call-template name="log-error"/>
+           <xsl:message>
              <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
              <xsl:text>.Delete not allowed as a singleton entry action.</xsl:text>
@@ -724,7 +734,8 @@
          </xsl:when>
          
          <xsl:when test="count($params)&gt;1">
-           <xsl:message terminate="yes">
+           <xsl:call-template name="log-error"/>
+           <xsl:message>
              <xsl:text>Error: </xsl:text>
              <xsl:value-of select="../../../name"/>
              <xsl:text>.</xsl:text>
@@ -737,7 +748,9 @@
            <!-- The full spec of the event is in the class, not the
                 state machine. -->
            <xsl:if test="not(../../../event[name=$e]/type=$params/type)">
-             <xsl:message terminate="yes">
+             <xsl:call-template name="log-error"/>
+             <xsl:message>
+               <xsl:text>Error: </xsl:text>
                <xsl:value-of select="../../../name"/>
                <xsl:text>.</xsl:text>
                <xsl:value-of select="$n"/>
