@@ -1,4 +1,4 @@
-<!-- $Id: generalizations.html,v 5e7966da10b1 2002/06/09 18:48:48 simon $ -->
+<!-- $Id: generalizations.html,v 5cf5aba72a8b 2002/06/11 19:00:36 simon $ -->
 <head>
 <title>ColdFrame: Generalizations</title>
 </head>
@@ -7,9 +7,93 @@
 
 <h2>Motivation</h2>
 
-<p><i>Stuff about static & dynamic classification</i>
+<p>The thinking behind ColdFrame is that you should be making analysis
+models rather than code models. <a
+href="resources.html#analysis-patterns">Martin Fowler</a> discusses
+this in his Appendix A.
+
+<p>One way of looking at it is that modelling ought to be, as far as
+reasonable, independent of the software architecture (both the
+implementation language and the support infrastructure). What we are
+modelling is generalization. We may be able to implement
+generalization using inheritance in our implementation language, but
+this may well fall foul of practicalities; perhaps we have to
+implement in C; maybe we're using an SQL database to implement
+persistence; our implementation language may not support
+<em>multiple</em> inheritance.
+
+<p>Another aspect is dynamic versus static classification.
+
+<p>The major use of generalization (well, specialization) is to
+classify aspects of the subject matter. Inheritance, as implemented in
+C++ or other object-oriented programming languages, is fine for static
+classification (subtyping Animal as Pig, Goat, Cow for example).
+
+<p><a name="rentawreck"><img src="inheritance.gif"></a>
+
+<p>However, a very useful analysis technique is dynamic
+classification. Rent-a-Wreck has a fleet of vans, which are sometimes
+on hire. We might want to model this as <i>Customer hires Van</i>,
+which is biconditional (a known Customer may not have any Van on hire
+at the moment; a Van may not be hired to anyone at the moment). The
+model can be made less vague by subtyping Van into Hired Van and Pool
+Van; now all Hired Vans have a Customer, so the code doesn't need to
+check whether there's a Customer or not.
+
+<p>The attribute <i>termination</i> only has meaning if the van is on
+hire (it's the date when it's due back), so we shouldn't leave it
+lying around in the parent <i>Van</i> class. Also, the association
+<i>r3</i>, <i>Hired Van</i> <i>is-on-loan-to</i> <i>Customer</i> is
+unconditional, which is good.
+
+<p>Note also the way <i>r1</i>, which maintains the service history of
+the <i>Van</i>, is independent of whether the <i>Van</i> is currently
+hired out or in the pool.
+
+<p>The problem with implementing this model using programming language
+inheritance arises when the Van changes from being Pooled to being
+Hired. There's only one code object, so you have to create a new
+<i>HiredVan</i>, copy the relevant attributes from the old
+<i>PoolVan</i> to it, break any associations with other objects
+(for instance, the <i>Service</i> history), delete the old
+<i>PoolVan</i> and remake the associations.
+
+<p>ColdFrame adopts a halfway-house approach to this, combining the <a
+href="resources.html#build-object-models">Executable UML (originally
+Shlaer-Mellor) view of generalization</a> with dispatching and
+inherited operations.
+
+<p>Of course, there is a cost to dynamic classification; you have to
+decide whether increased precision in the model is worth the extra run
+time costs of maintaining the model.
+
+<p>At present (11 June 2002), ColdFrame expects the set of child
+instances to be complete, which is why <i>Pool Van</i> appears in the
+model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
+<i>Pool Van</i>. This only actually shows up in implementing
+dispatching operations; if you try calling a dispatching operation for
+an instance without a current child you'll get a
+<tt>Constraint_Error</tt>. Often you'll find something interesting to
+say about all the child classes; in the example, it seems likely that
+only <i>Pool Van</i>s can be sent for servicing.
 
 <h2>Modelling</h2>
+
+<p>You <em>must not</em> specify identifiers for child classes in
+inheritance relationships.
+
+<p>ColdFrame supports polymorphism. Instance operations marked
+<em>&#171;abstract&#187;</em> are dispatched to the current child
+(skipping down the inheritance tree until a concrete implementation is
+found), while a child class receives upward-dispatching
+implementations of all normal (non-<em>&#171;class&#187;</em> concrete
+parental instance operations.
+
+<p>ColdFrame supports multiple inheritance, but not partitioned
+inheritance. In spite of this, you need to name all the
+generalization/specialization links in your class diagram,
+<em>and all the links for a particular relationship must have the same
+name</em> (<a href="#rentawreck"><i>r2</i> in the diagram</a>).
 
 <h2>Translation</h2>
 
@@ -34,6 +118,29 @@ appropriate type,
 <tt>Set_<i>G</i>_Child</tt>).
 
 </ul>
+
+<p><a href="#rentawreck">From the diagram</a>, we'd get
+
+<pre>
+   type R2_Child_Class is
+     (Hired_Van_T,
+      Pool_Van_T,
+      Null_T);
+
+   type R2_Child (Current : R2_Child_Class := Null_T) is record
+      case Current is
+         when Hired_Van_T =>
+            HV : ColdFrame.Instances.Handle;
+         when Pool_Van_T =>
+            PV : ColdFrame.Instances.Handle;
+         when Null_T => null;
+      end case;
+   end record;
+
+   procedure Set_R2_Child (This : Handle; To_Be : R2_Child);
+
+   function Get_R2_Child (This : Handle) return R2_Child;
+</pre>
 
 <p>In a child class, an inheritance relationship <i>G</i> is mapped onto
 
@@ -170,7 +277,8 @@ for each parental class, returning
 conversions rather more often than is quite friendly.
 
 <pre>
-   Child_H := Child.Create ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
+   Child_H := Child.Create
+      ((G_Parent =&gt; ColdFrame.Instances.Handle (Parent_H)));
 </pre>
 
 <p>If you're doing this a lot you may find a type renaming convenient:
