@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v ef02314731f3 2002/09/12 20:52:34 simon $ -->
+<!-- $Id: ada-state.xsl,v a793b4cd9758 2002/09/13 19:44:46 simon $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -323,13 +323,14 @@
 
     <!-- non-singleton
          procedure Enter_{state}
-           (This : Handle; What : ColdFrame.Project.Events.Event_Base'Class);
+           (This : Handle;
+            What : ColdFrame.Project.Events.Instance_Event_Base'Class);
          pragma Warnings (Off, Enter_{initial-state});
          -->
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Event_Base'Class);
+           (What : ColdFrame.Project.Events.Instance_Event_Base'Class);
          -->
 
      <xsl:variable name="s" select="name"/>
@@ -343,10 +344,12 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Event_Base'Class)</xsl:text>
+         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
-         <xsl:text>(This : Handle; What : ColdFrame.Project.Events.Event_Base'Class)</xsl:text>
+         <xsl:text>(This : Handle;&#10;</xsl:text>
+         <xsl:value-of select="$IC"/>
+         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text>;&#10;</xsl:text>
@@ -363,7 +366,8 @@
 
     <!-- non-singleton
          procedure Enter_{state}
-           (This : Handle; What : ColdFrame.Project.Events.Event_Base'Class) is
+           (This : Handle;
+            What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
             {entry-action} (This, {event} (What).Payload);  -  if has parameter
@@ -375,7 +379,7 @@
 
     <!-- singleton
          procedure Enter_{state}
-           (What : ColdFrame.Project.Events.Event_Base'Class) is
+           (What : ColdFrame.Project.Events.Instance_Event_Base'Class) is
            pragma Warnings (Off, What);
          begin
             {entry-action} ({event} (What).Payload);        -  if has parameter
@@ -396,10 +400,12 @@
      <xsl:value-of select="$IC"/>
      <xsl:choose>
        <xsl:when test="$singleton">
-         <xsl:text>(What : ColdFrame.Project.Events.Event_Base'Class)</xsl:text>
+         <xsl:text>(What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:when>
        <xsl:otherwise>
-         <xsl:text>(This : Handle; What : ColdFrame.Project.Events.Event_Base'Class)</xsl:text>
+         <xsl:text>(This : Handle;&#10;</xsl:text>
+         <xsl:value-of select="$IC"/>
+         <xsl:text> What : ColdFrame.Project.Events.Instance_Event_Base'Class)</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
      <xsl:text> is&#10;</xsl:text>
@@ -481,6 +487,12 @@
                <xsl:text> (What).Payload);&#10;</xsl:text>
                
              </xsl:when>
+
+             <xsl:otherwise>
+               <xsl:value-of select="$II"/>
+               <xsl:value-of select="$n"/>
+               <xsl:text>;&#10;</xsl:text>               
+             </xsl:otherwise>
 
            </xsl:choose>
            
