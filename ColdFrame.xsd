@@ -1,18 +1,24 @@
-<!-- $Id: ColdFrame.xsd,v 911c2b133dfa 2004/05/03 19:07:29 simon $ -->
-
 <?xml version="1.0"?>
+
+<!-- $Id: ColdFrame.xsd,v 25419c0e0b44 2004/05/23 17:45:52 simon $ -->
+
 <xsd:schema
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   targetNamespace="http:/www.pushface.org/coldframe/ColdFrame"
-  xmlns:cf="http:/www.pushface.org/coldframe/ColdFrame">
+  xmlns:cf="http:/www.pushface.org/coldframe/ColdFrame"
+  xmlns="http:/www.pushface.org/coldframe/ColdFrame">
+
+  <!--
+       I don't know why we have to have a default namespace here!
+       The examples in Professional XML "nd Edition don't show it .. 
+       but, if it's left out, the "ref"s don't work.
+       -->
 
   <xsd:element name="domain">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="name">
-        </xsd:element>
-        <xsd:element name="extractor">
-        </xsd:element>
+        <xsd:element name="name"/>
+        <xsd:element name="extractor"/>
         <xsd:element name="date">
           <xsd:complexType>
             <xsd:sequence>
@@ -23,16 +29,16 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>
-        <xsd:element name="revision">
-        </xsd:element>
-        <xsd:element name="normalizer">
-        </xsd:element>
-        <xsd:element ref="documentation"/>
-        <xsd:element ref="class" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element ref="type" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="revision" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="normalizer"/>
+        <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="class"/>
+          <xsd:element ref="type"/>
+        </xsd:choice>
         <xsd:element ref="exception" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element ref="reference" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:group ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="references" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -40,8 +46,7 @@
   <xsd:element name="documentation">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="par" minOccurs="1" maxOccurs="unbounded">
-        </xsd:element>
+        <xsd:element name="par" minOccurs="1" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
@@ -49,46 +54,45 @@
   <xsd:element name="class">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="abstract"/>
-        <xsd:attribute name="active"/>
-        <xsd:attribute name="max"/>
-        <xsd:attribute name="priority"/>
-        <xsd:attribute name="public"/>
-        <xsd:attribute name="singleton"/>
-        <xsd:attribute name="stack"/>
-        <xsd:attribute name="utility"/>
-        <xsd:attribute name="visible"/>
         <xsd:element name="name"/>
         <xsd:element name="abbreviation"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
-        <xsd:element ref="attribute" minOccurs="0" maxOccurs="unbounded">
-        <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded">
-        <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded">
-        <xsd:element ref="statemachine" minOccurs="0" maxOccurs="1">
-        </xsd:element>
+        <xsd:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="statemachine" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="abstract"/>
+      <xsd:attribute name="active"/>
+      <xsd:attribute name="max"/>
+      <xsd:attribute name="priority"/>
+      <xsd:attribute name="public"/>
+      <xsd:attribute name="singleton"/>
+      <xsd:attribute name="stack"/>
+      <xsd:attribute name="utility"/>
+      <xsd:attribute name="visible"/>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="type">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="callback"/>
-        <xsd:attribute name="serializable"/>
-        <xsd:attribute name="discriminated"/>
-        <xsd:attribute name="protected"/>
-        <xsd:attribute name="extends"/>
-        <xsd:attribute name="hash"/>
-        <xsd:attribute name="field-image"/>
-        <xsd:attribute name="type-image"/>
-        <xsd:attribute name="null"/>
-        <xsd:attribute name="unconstrained"/>
-        <xsd:attribute name="standard"/>
         <xsd:element name="name"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
         <xsd:group ref="typeDetail"/>
-        <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="operation" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
+      <xsd:attribute name="callback"/>
+      <xsd:attribute name="serializable"/>
+      <xsd:attribute name="discriminated"/>
+      <xsd:attribute name="protected"/>
+      <xsd:attribute name="extends"/>
+      <xsd:attribute name="hash"/>
+      <xsd:attribute name="field-image"/>
+      <xsd:attribute name="type-image"/>
+      <xsd:attribute name="null"/>
+      <xsd:attribute name="unconstrained"/>
+      <xsd:attribute name="standard"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -98,17 +102,17 @@
       <xsd:element name="array">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:attribute name="unconstrained"/>
             <xsd:element name="type"/>
             <xsd:element name="index"/>
           </xsd:sequence>
+          <xsd:attribute name="unconstrained"/>
         </xsd:complexType>
       </xsd:element>
       <xsd:element name="counterpart"/>
       <xsd:element name="enumeration">
         <xsd:complexType>
           <xsd:sequence>
-            <xsd:element name="literal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="literal" minOccurs="1" maxOccurs="unbounded"/>
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
@@ -131,9 +135,10 @@
       </xsd:element>
       <xsd:element name="string">
         <xsd:complexType>
-          <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="fixed"/>
             <xsd:element name="max"/>
-          </xsd:sequence>
+          </xsd:choice>
         </xsd:complexType>
       </xsd:element>
       <xsd:element name="imported"/>
@@ -142,57 +147,65 @@
     </xsd:choice>
   </xsd:group>
 
+  <!--
+       Note, this is not at all precise.
+       Ordinary attributes must have name/type/[documentation] & may have
+       @identifier, @class, @refers+@relation, @visibility.
+       Referential attributes have @refers, @relation, @role & optionally
+       @identifier.
+       -->
   <xsd:element name="attribute">
     <xsd:complexType>
-      <xsd:sequence>
-        <xsd:attribute name="class"/>
-        <xsd:attribute name="identifier"/>
-        <xsd:attribute name="refers"/>
-        <xsd:attribute name="relation"/>
-        <xsd:attribute name="role"/>
-        <xsd:attribute name="visibility"/>
+      <xsd:sequence minOccurs="0" maxOccurs="1">
         <xsd:element name="name"/>
         <xsd:element name="type"/>
+        <xsd:element name="initial" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="class"/>
+      <xsd:attribute name="identifier"/>
+      <xsd:attribute name="refers"/>
+      <xsd:attribute name="relation"/>
+      <xsd:attribute name="role"/>
+      <xsd:attribute name="visibility"/>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="operation">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="abstract"/>
-        <xsd:attribute name="access"/>
-        <xsd:attribute name="accessor"/>
-        <xsd:attribute name="class"/>
-        <xsd:attribute name="convention"/>
-        <xsd:attribute name="entry"/>
-        <xsd:attribute name="final"/>
-        <xsd:attribute name="finalize"/>
-        <xsd:attribute name="handler"/>
-        <xsd:attribute name="initialize"/>
-        <xsd:attribute name="renames"/>
-        <xsd:attribute name="return"/>
-        <xsd:attribute name="suppressed"/>
-        <xsd:attribute name="teardown"/>
-        <xsd:attribute name="visibility"/>
         <xsd:element name="name"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
+      <xsd:attribute name="abstract"/>
+      <xsd:attribute name="access"/>
+      <xsd:attribute name="accessor"/>
+      <xsd:attribute name="class"/>
+      <xsd:attribute name="convention"/>
+      <xsd:attribute name="entry"/>
+      <xsd:attribute name="final"/>
+      <xsd:attribute name="finalize"/>
+      <xsd:attribute name="handler"/>
+      <xsd:attribute name="initialize"/>
+      <xsd:attribute name="renames"/>
+      <xsd:attribute name="return"/>
+      <xsd:attribute name="suppressed"/>
+      <xsd:attribute name="teardown"/>
+      <xsd:attribute name="visibility"/>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="parameter">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="mode"/>
         <xsd:element name="name"/>
         <xsd:element name="type"/>
-        <xsd:element name="initial"/>
-        <xsd:element name="mode"/>        <!-- XXX cf attribute -->
+        <xsd:element name="initial" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="mode" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="mode"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -200,7 +213,9 @@
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="name"/>
+        <xsd:element name="type" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="class"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -218,37 +233,37 @@
   <xsd:element name="state">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="initial"/>
-        <xsd:attribute name="final"/>
         <xsd:element name="name"/>
         <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="initial"/>
+      <xsd:attribute name="final"/>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="transition">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="ignore"/>
-        <xsd:attribute name="self"/>
         <xsd:element name="event" minOccurs="0" maxOccurs="1"/>     <!-- XXX -->
         <xsd:element name="action" minOccurs="0" maxOccurs="1"/>
         <xsd:element name="source"/>
         <xsd:element name="target"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="ignore"/>
+      <xsd:attribute name="self"/>
     </xsd:complexType>
   </xsd:element>
 
   <xsd:element name="exception">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="imported"/>
-        <xsd:attribute name="renames"/>
         <xsd:element name="name"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="imported"/>
+      <xsd:attribute name="renames"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -266,12 +281,12 @@
   <xsd:element name="role">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:attribute name="conditional"/>
-        <xsd:attribute name="multiple"/>
-        <xsd:attribute name="source"/>
         <xsd:element name="classname"/>
         <xsd:element name="name"/>
       </xsd:sequence>
+      <xsd:attribute name="conditional"/>
+      <xsd:attribute name="multiple"/>
+      <xsd:attribute name="source"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -285,5 +300,14 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
+
+  <xsd:group name="relationship">
+    <xsd:choice>
+      <xsd:element ref="association"/>
+      <xsd:element ref="inheritance"/>
+    </xsd:choice>
+  </xsd:group>
+
+  <xsd:element name="references"/>
 
 </xsd:schema>
