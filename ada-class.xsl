@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
+<!-- $Id: ada-class.xsl,v c3e54f5545a7 2001/09/04 05:04:42 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -314,16 +314,18 @@
             </xsl:for-each>
           </xsl:when>
 
-          <!-- Normally, use "with type" to minimise risk of circularities -->
+          <!-- Normally, use "with type" to minimise risk of circularities. -->
           <xsl:otherwise>
             <xsl:for-each
               select="attribute[@refers and not(@refers=../name)]">
               <xsl:sort select="@refers"/>
+
               <xsl:text>with type </xsl:text>
               <xsl:value-of select="../../name"/>
               <xsl:text>.</xsl:text>
               <xsl:value-of select="@refers"/>
               <xsl:text>.Handle is access;&#10;</xsl:text>
+
             </xsl:for-each>
 
           </xsl:otherwise>
@@ -338,7 +340,7 @@
 
         <!-- Subtype handles are needed for the subtype selection
              record. -->
-        <xsl:call-template name="supertype-context"/>
+        <xsl:call-template name="supertype-spec-context"/>
 
       </xsl:otherwise>
 
@@ -347,9 +349,9 @@
   </xsl:template>
 
 
-  <!-- Called at domain/class to generate any required supertype context
+  <!-- Called at domain/class to generate any required supertype spec context
        information. -->
-  <xsl:template name="supertype-context">
+  <xsl:template name="supertype-spec-context">
     
     <xsl:variable name="parent-name" select="name"/>
 
@@ -362,12 +364,32 @@
       <xsl:text>with type </xsl:text>
       <xsl:value-of select="../../name"/>
       <xsl:text>.</xsl:text>
-      <xsl:value-of select="name"/>
+      <xsl:value-of select="."/>
       <xsl:text>.Handle is access;&#10;</xsl:text>
 
     </xsl:for-each>
 
   </xsl:template>
+
+  <!-- Called at domain/class to generate any required supertype body context
+       information. -->
+  <xsl:template name="supertype-body-context">
+    
+    <xsl:variable name="parent-name" select="name"/>
+
+    <xsl:for-each select="../inheritance[parent=$parent-name]/child">
+      <xsl:sort select="name"/>
+
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>;&#10;</xsl:text>
+
+    </xsl:for-each>
+
+  </xsl:template>
+
 
 
   <!-- Called at domain/class to generate any required supertype spec
@@ -385,16 +407,16 @@
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
+      <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class);&#10;</xsl:text>
+      <xsl:text>_Child);&#10;</xsl:text>
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class (This : Handle) return </xsl:text>
+      <xsl:text>_Child (This : Handle) return </xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class;&#10;</xsl:text>
+      <xsl:text>_Child;&#10;</xsl:text>
 
     </xsl:for-each>
 
@@ -413,9 +435,9 @@
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class (This : Handle; To_Be : </xsl:text>
+      <xsl:text>_Child (This : Handle; To_Be : </xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class) is&#10;</xsl:text>
+      <xsl:text>_Child) is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
@@ -425,14 +447,14 @@
       <xsl:value-of select="$I"/>
       <xsl:text>end Set_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class;&#10;</xsl:text>
+      <xsl:text>_Child;&#10;</xsl:text>
       
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class (This : Handle) return </xsl:text>
+      <xsl:text>_Child (This : Handle) return </xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class is&#10;</xsl:text>
+      <xsl:text>_Child is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
@@ -442,7 +464,7 @@
       <xsl:value-of select="$I"/>
       <xsl:text>end Get_</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>_Child_Class;&#10;</xsl:text>
+      <xsl:text>_Child;&#10;</xsl:text>
 
     </xsl:for-each>
 
@@ -718,9 +740,14 @@
           <xsl:with-param name="current" select="."/>
         </xsl:apply-templates>
 
+        <!-- Complete subtype handles, needed for the subtype selection
+             record. -->
+        <xsl:call-template name="supertype-body-context"/>
+
       </xsl:otherwise>
 
     </xsl:choose>
+
 
   </xsl:template>
 
