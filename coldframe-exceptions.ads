@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 3bb76df2b5fa $
---  $Date: 2002/07/05 05:53:03 $
+--  $Revision: ca6e1b27f85c $
+--  $Date: 2002/07/06 10:16:09 $
 --  $Author: simon $
 
 package ColdFrame.Exceptions is
@@ -49,7 +49,11 @@ package ColdFrame.Exceptions is
    --  be created but the Create operation requires an identifier (ie,
    --  the identifier isn't Autonumber).
 
-   Mismatched_Handles : exception;
+   Unexpected_Class : exception;
+   --  Raised in Inheritance.Create_Tree if an instance handle was
+   --  provided but didn't match any class along the indicated route.
+
+   Mismatched_Instances : exception;
    --  Raised in Inheritance.Create_Tree if a non-root class with
    --  multiple parents finds that all of the supplied handles match
    --  it (ie, the programmer is trying to designate an instance of
