@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 0abfced83539 2003/07/06 16:21:36 simon $ -->
+<!-- $Id: bugs.html,v e8a33f1f0582 2003/07/10 20:20:34 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -154,8 +154,24 @@ be detected (instead of generating bad code).
 <dd>There's no way for ColdFrame to inform the application that an
 unhandled exception has been caught in the event dispatcher.
 
+<dt>0182 (raised 9.vii.03)
 
-<!-- next: 0182 -->
+<dd>Using the <tt><i>[[formalizes]]</i></tt> annotation on a non-class
+attribute gives an unhelpful error message.
+
+<dt>0183 (raised 9.vii.03)
+
+<dd>Using the <tt><i>[[imported]]</i></tt> annotation (and possibly
+others) on a &#171;type&#187; with attributes gives an unhelpful error
+message.
+
+<dt>0184 (raised 9.vii.03)
+
+<dd>&#171;public&#187; and &#171;singleton&#187; classes have a
+<tt>Create</tt> operation which is not meant to be called by
+handwritten code. Perhaps it should be renamed.
+
+<!-- next: 0185 -->
 
 </dl>
 
