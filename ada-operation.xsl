@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v d03dfef789ea 2001/06/20 19:15:10 simon $ -->
+<!-- $Id: ada-operation.xsl,v b3b6d2e9f2ea 2001/06/21 19:27:51 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,7 +61,9 @@
 
         <!-- $operations contains all the nodes to be processed. -->
 
-        <xsl:apply-templates select="$operations" mode="operation-spec"/>
+        <xsl:apply-templates select="$operations" mode="operation-spec">
+          <xsl:with-param name="current" select="."/>
+        </xsl:apply-templates>
 
       </xsl:otherwise>
 
@@ -70,12 +72,20 @@
   </xsl:template>
 
 
-  <!-- Generate subprogram specs (but not access-to-operations). -->
+  <!-- Generate subprogram specs (but not parental <<class>> operations,
+       or access-to-operations). -->
   <xsl:template match="class/operation[not(@access)]" mode="operation-spec">
-    <xsl:call-template name="subprogram-specification">
-      <xsl:with-param name="indent" select="'  '"/>
-    </xsl:call-template>
-    <xsl:text>;&#10;</xsl:text>
+
+    <!-- The current class. -->
+    <xsl:param name="current"/>
+
+    <xsl:if test="..=$current or not(@class)">
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="'  '"/>
+      </xsl:call-template>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template mode="operation-spec" match="*"/>
@@ -85,6 +95,9 @@
   <!-- XXX at present, doesn't ensure there's only one of each -->
   <xsl:template match="class/operation" mode="operation-context">
 
+    <!-- The name of the current class. -->
+    <xsl:param name="current"/>
+
     <!-- Find the names of all the types involved -->
     <xsl:for-each select="parameter/type | @return">
 
@@ -93,13 +106,14 @@
       <xsl:sort select="."/>
 
       <!-- .. only using those whose names are those of classes in
-           the domain .. -->
-      <xsl:if test="/domain/class/name=.">
-        <xsl:text>with </xsl:text>
+           the domain (and not the current class) .. -->
+
+      <xsl:if test="/domain/class/name=. and not(.=$current)">
+        <xsl:text>with type </xsl:text>
         <xsl:value-of select="/domain/name"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="."/>
-        <xsl:text>;&#10;</xsl:text>
+        <xsl:text>.Handle is access;&#10;</xsl:text>
       </xsl:if>
 
       <!-- .. or sets of classes in the domain .. -->
@@ -153,7 +167,9 @@
 
         <!-- $operations contains all the nodes to be processed. -->
 
-        <xsl:apply-templates select="$operations" mode="operation-body-stub"/>
+        <xsl:apply-templates select="$operations" mode="operation-body-stub">
+          <xsl:with-param name="current" select="."/>
+        </xsl:apply-templates>
 
       </xsl:otherwise>
 
@@ -162,17 +178,23 @@
   </xsl:template>
 
 
-  <!-- Generate the body stubs of operations (but not
-       access-to-operations, which are realized in the Class package).
+  <!-- Generate the body stubs of operations (but not parental <<class>
+       operations, or access-to-operations, which are realized in the
+       Class package).
        The bodies are compilable but generate Program_Error if called. -->
   <xsl:template
     match="class/operation[not(@access)]"
     mode="operation-body-stub">
 
-    <xsl:call-template name="subprogram-specification">
-      <xsl:with-param name="indent" select="'  '"/>
-    </xsl:call-template>
-    <xsl:text> is separate;&#10;</xsl:text>
+    <!-- The current class. -->
+    <xsl:param name="current"/>
+
+    <xsl:if test="..=$current or not(@class)">
+      <xsl:call-template name="subprogram-specification">
+        <xsl:with-param name="indent" select="'  '"/>
+      </xsl:call-template>
+      <xsl:text> is separate;&#10;</xsl:text>
+    </xsl:if>
 
   </xsl:template>
 
@@ -224,51 +246,6 @@
   </xsl:template>
 
 
-  <!-- Generate the separate bodies of <<class>> operations (but not
-       access-to-operations, which are realized in the Class package,
-       or procedure operations of active classes, which may generate a
-       call to the corresponding entry).
-       The bodies are compilable but generate Program_Error if called. -->
-  <xsl:template
-    mode="operation-body"
-    match="class[@singleton or not(@active)]/operation[@class and not(@access)]
-           | class[@active]/operation[(@return or @class) and not(@access)]">
-
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="../name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:choose>
-
-      <!-- If it's a function, we have to supply a return statement
-           after raising the exception for it to compile.-->
-      <xsl:when test="@return">
-        <xsl:text>  raise Program_Error;&#10;</xsl:text>
-        <xsl:text>  return </xsl:text>
-        <xsl:call-template name="default-value">
-          <xsl:with-param name="type" select="@return"/>
-        </xsl:call-template>
-        <xsl:text>;&#10;</xsl:text>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:text>  raise Program_Error;&#10;</xsl:text>
-      </xsl:otherwise>
-
-    </xsl:choose>
-
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
-
-  </xsl:template>
-
-
   <!-- Generate the separate bodies of potentially dispatching operations
        (but not access-to-operations, which are realized in the Class package,
        or procedure operations of active classes, which generate a
@@ -277,75 +254,54 @@
        if called. -->
   <xsl:template
     mode="operation-body"
-    match="class[not(@active)]/operation[not(@access)]
-           | class[@active]/operation[@return and not(@access)]">
+    match="class/operation[not(@access)]">
 
-    <!-- The current node (not necessarily the one where the operation
+    <!-- The current class (not necessarily the one where the operation
          is defined, if we're talking inheritance) -->
     <xsl:param name="current"/>
 
-    <xsl:message>
+    <!-- <xsl:message>
       <xsl:value-of select="$current/name"/>.<xsl:value-of select="name"/>
-    </xsl:message>
-
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="$current/name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
+    </xsl:message> -->
 
     <xsl:choose>
 
       <xsl:when test="$current=..">
 
         <!-- The operation is declared in the current class. -->
-        <xsl:text>  -- current class --&#10;</xsl:text>
 
         <xsl:choose>
 
           <xsl:when test="@abstract">
 
-            <!-- We need to dispatch downward. -->
-            <xsl:text>  -- abstract --&#10;</xsl:text>
+            <!-- Abstract in current class; we need to dispatch downward. -->
 
-            <!--
-                 case Get_{relation}_Child_Class (This) is
-                   when {child-1}_T =>
-                     {return} {child-1}.{operation}
-                       (This => {child-1}.Find (This){,
-                        other-parameter-assignments});
-                 end case;
-                 -->
+            <xsl:call-template name="generate-dispatch-to-child">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
+
+          </xsl:when>
+
+          <xsl:when test="../@active and not(@return)">
+
+            <!-- Concrete task entry in current class; we provide an
+                 implementation that calls the entry. -->
+
+            <xsl:call-template name="generate-entry-call">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
 
           </xsl:when>
 
           <xsl:otherwise>
 
-            <!-- We provide a stub implementation. -->
-            <xsl:text>  -- concrete --&#10;</xsl:text>
+            <!-- Concrete, non-task-entry in current class; we provide a stub
+                 implementation. -->
 
-            <xsl:choose>
-              
-              <!-- If it's a function, we have to supply a return statement
-                   after raising the exception for it to compile.-->
-              <xsl:when test="@return">
-                <xsl:text>  raise Program_Error;&#10;</xsl:text>
-                <xsl:text>  return </xsl:text>
-                <xsl:call-template name="default-value">
-                  <xsl:with-param name="type" select="@return"/>
-                </xsl:call-template>
-                <xsl:text>;&#10;</xsl:text>
-              </xsl:when>
-              
-              <xsl:otherwise>
-                <xsl:text>  raise Program_Error;&#10;</xsl:text>
-              </xsl:otherwise>
-              
-            </xsl:choose>
-            
+            <xsl:call-template name="generate-body">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
+
           </xsl:otherwise>
 
         </xsl:choose>
@@ -354,193 +310,44 @@
 
       <xsl:otherwise>
 
-        <!-- The operation is declared in an ancestor class. -->
-        <xsl:text>  -- ancestor class --&#10;</xsl:text>
-
         <xsl:choose>
 
           <xsl:when test="@abstract">
 
-            <!-- We need to dispatch downward (if there's anywhere
-                 to go). -->
+            <!-- Abstract in ancestor class; we need to dispatch
+                 downward (if there's anywhere to go). -->
 
             <xsl:if test="not(/domain/inheritance[parent=$current/name])">
               <xsl:message>
                 <xsl:text>CF: no concrete operation for </xsl:text>
                 <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+                <xsl:text> in </xsl:text>
+                <xsl:value-of select="$current"/>
               </xsl:message>
             </xsl:if>
 
-            <xsl:text>  -- abstract --&#10;</xsl:text>
-
-            <!--
-                 case Get_{relation}_Child_Class (This) is
-                   when {child-1}_T =>
-                     {return} {child-1}.{operation}
-                       (This => {child-1}.Find (This){,
-                        other-parameter-assignments});
-                 end case;
-                 -->
+            <xsl:call-template name="generate-dispatch-to-child">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
 
           </xsl:when>
 
-          <xsl:otherwise>
+          <xsl:when test="not(@class)">
 
-            <!-- We need to call the operation in our parent. -->
-            <xsl:text>  -- concrete --&#10;</xsl:text>
+            <!-- Concrete, non-<<class>> in ancestor class; we need to call
+                 the operation in our parent. -->
 
-            <!--
-                 {return} {parent}.{operation-name}
-                   (This => Get_{relation}_Child_Of_{parent-abbreviation}
-                              (This){,
-                    other-parameter-assignments});
-                 -->
+            <xsl:call-template name="generate-dispatch-to-parent">
+              <xsl:with-param name="current" select="$current"/>
+            </xsl:call-template>
 
-          </xsl:otherwise>
+          </xsl:when>
 
         </xsl:choose>
 
       </xsl:otherwise>
 
     </xsl:choose>
-
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
-
-  </xsl:template>
-
-
-  <!-- Generate the potentially dispatching separate bodies of procedure
-       operations of active classes; concrete procedures make a call to
-       the corresponding entry). -->
-  <xsl:template
-    mode="operation-body"
-    match="class[@active]/operation[not(@return) and not(@access)]">
-
-    <!-- The current node (not necessarily the one where the operation
-         is defined, if we're talking inheritance) -->
-    <xsl:param name="current"/>
-
-    <xsl:message>
-      <xsl:text>Active: </xsl:text>
-      <xsl:value-of select="$current/name"/>.<xsl:value-of select="name"/>
-    </xsl:message>
-
-    <xsl:text>separate (</xsl:text>
-    <xsl:value-of select="../../name"/>
-    <xsl:text>.</xsl:text>
-    <xsl:value-of select="$current/name"/>
-    <xsl:text>)&#10;</xsl:text>
-    <xsl:call-template name="subprogram-specification"/>
-    <xsl:text> is&#10;</xsl:text>
-    <xsl:text>begin&#10;</xsl:text>
-
-    <xsl:choose>
-
-      <xsl:when test="$current=..">
-
-        <!-- The operation is declared in the current class. -->
-        <xsl:text>  -- current class --&#10;</xsl:text>
-
-        <xsl:choose>
-
-          <xsl:when test="@abstract">
-
-            <!-- We need to dispatch downward. -->
-            <xsl:text>  -- abstract --&#10;</xsl:text>
-
-            <!--
-                 case Get_{relation}_Child_Class (This) is
-                   when {child-1}_T =>
-                     {child-1}.{operation}
-                       (This => {child-1}.Find (This){,
-                        other-parameter-assignments});
-                 end case;
-                 -->
-
-          </xsl:when>
-
-          <xsl:otherwise>
-
-            <!-- We provide an implementation that calls our task's entry. -->
-            <xsl:text>  -- concrete --&#10;</xsl:text>
-
-            <xsl:text>  This.The_T.</xsl:text>
-            <xsl:value-of select="name"/>
-            
-            <xsl:if test="parameter">
-              
-              <xsl:text>&#10;    (</xsl:text>
-              
-              <xsl:for-each select="parameter">
-                <xsl:value-of select="name"/>
-                <xsl:text> =&gt; </xsl:text>
-                <xsl:value-of select="name"/>
-                <xsl:if test="position() &lt; last()">
-                  <xsl:text>,&#10;     </xsl:text>
-                </xsl:if>
-              </xsl:for-each>
-              
-              <xsl:text>)</xsl:text>
-              
-            </xsl:if>
-            
-            <xsl:text>;&#10;</xsl:text>
-
-          </xsl:otherwise>
-
-        </xsl:choose>
-
-      </xsl:when>
-
-      <xsl:otherwise>
-
-        <!-- The operation is declared in an ancestor class. -->
-        <xsl:text>  -- ancestor class --&#10;</xsl:text>
-
-        <xsl:choose>
-
-          <xsl:when test="@abstract">
-
-            <!-- We need to dispatch downward (if there's anywhere
-                 to go). -->
-            <xsl:text>  -- abstract --&#10;</xsl:text>
-
-            <!--
-                 case Get_{relation}_Child_Class (This) is
-                   when {child-1}_T =>
-                     {child-1}.{operation}
-                       (This => {child-1}.Find (This){,
-                        other-parameter-assignments});
-                 end case;
-                 -->
-
-          </xsl:when>
-
-          <xsl:otherwise>
-
-            <!-- We need to call the operation in our parent. -->
-            <xsl:text>  -- concrete --&#10;</xsl:text>
-
-            <!--
-                 {parent}.{operation-name}
-                   (This => Get_{relation}_Child_Of_{parent-abbreviation}
-                              (This){,
-                    other-parameter-assignments});
-                 -->
-
-          </xsl:otherwise>
-
-        </xsl:choose>
-
-      </xsl:otherwise>
-
-    </xsl:choose>
-
-    <xsl:text>end </xsl:text>
-    <xsl:value-of select="name"/>
-    <xsl:text>;&#10;</xsl:text>
 
   </xsl:template>
 
@@ -711,5 +518,248 @@
     </xsl:choose>
   </xsl:template>
 
+
+  <!-- Called at class/operation to generate a dispatch-to-child body -->
+  <xsl:template name="generate-dispatch-to-child">
+
+    <!-- The current class (not necessarily the one where the operation
+         is defined, if we're talking inheritance) -->
+    <xsl:param name="current"/>
+
+    <!-- 
+         case Get_{relation}_Child_Class (This) is
+           when {child-1}_T =>
+             {return} {child-1}.{operation}
+               (This => {child-1}.Find (({relation}_Child_Of_{parent-abbreviation} => This)){,
+                other-parameter-assignments});
+         end case;
+         -->
+    
+    <!-- Save the current operation. -->
+    <xsl:variable name="op" select="."/>
+    
+    <!-- XXX won't work with partitioned inheritance -->
+    <xsl:variable
+      name="rel"
+      select="/domain/inheritance[parent=$current/name]"/>
+    
+    <xsl:for-each select="$rel/child">
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="/domain/name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:for-each>
+    
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$current/name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    
+    <!-- XXX won't work for partitioned inheritance -->
+    <xsl:text>  case Get_</xsl:text>
+    <xsl:value-of select="$rel/name"/>
+    <xsl:text>_Child_Class (This) is&#10;</xsl:text>
+    
+    <xsl:for-each select="$rel/child">
+      
+      <xsl:text>    when </xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>_T =&gt;&#10;</xsl:text>
+      
+      <xsl:text>      </xsl:text>
+      <xsl:if test="$op/@return">
+        <xsl:text>return </xsl:text>
+      </xsl:if>
+      <xsl:value-of select="."/>.<xsl:value-of select="$op/name"/>
+      <xsl:text>&#10;</xsl:text>
+      
+      <xsl:text>        (This =&gt; </xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>.Find ((</xsl:text>
+      <xsl:value-of select="$rel/name"/>
+      <xsl:text>_Child_Of_</xsl:text>
+      <xsl:value-of select="$current/abbreviation"/>
+      <xsl:text> =&gt; This))</xsl:text>
+      
+      <xsl:for-each select="$op/parameter">
+        <xsl:text>,&#10;         </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> =&gt; </xsl:text>
+        <xsl:value-of select="name"/>
+      </xsl:for-each>
+      
+      <xsl:text>);&#10;</xsl:text>
+      
+    </xsl:for-each>
+    
+    <xsl:text>  end case;&#10;</xsl:text>
+    
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
+
+  
+  <!-- Called at class/operation to generate a dispatch-to-parent body -->
+  <xsl:template name="generate-dispatch-to-parent">
+
+    <!-- The current class (not necessarily the one where the operation
+         is defined, if we're talking inheritance) -->
+    <xsl:param name="current"/>
+
+    <!--          
+         {return} {parent}.{operation-name}
+           (This => Get_{relation}_Child_Of_{parent-abbreviation} (This){,
+         other-parameter-assignments});
+         -->
+
+    <!-- Save the current operation. -->
+    <xsl:variable name="op" select="."/>
+    
+    <!-- XXX won't work with multiple inheritance -->
+    <xsl:variable
+      name="rel"
+      select="/domain/inheritance[child=$current/name]"/>
+    
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="/domain/name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$rel/parent"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$current/name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    
+    <xsl:text>  </xsl:text>
+    <xsl:if test="$op/@return">
+      <xsl:text>return </xsl:text>
+    </xsl:if>
+    
+    <xsl:value-of select="$rel/parent"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$op/name"/>
+    <xsl:text>&#10;</xsl:text>
+    
+    <xsl:text>    (This =&gt; Get_</xsl:text>
+    <xsl:value-of select="$rel/name"/>
+    <xsl:text>_Child_Of_</xsl:text>
+    <xsl:value-of select="/domain/class[name=$rel/parent]/abbreviation"/>
+    <xsl:text> (This)</xsl:text>
+    
+    <xsl:for-each select="$op/parameter">
+      <xsl:text>,&#10;     </xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> =&gt; </xsl:text>
+      <xsl:value-of select="name"/>
+    </xsl:for-each>
+    
+    <xsl:text>);&#10;</xsl:text>
+    
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
+
+  
+  <!-- Called at class/operation to generate a body (which compiles,
+       but raises Program_Error). -->
+  <xsl:template name="generate-body">
+
+    <!-- The current class (not necessarily the one where the operation
+         is defined, if we're talking inheritance) -->
+    <xsl:param name="current"/>
+
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$current/name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    
+    <xsl:choose>
+      
+      <!-- If it's a function, we have to supply a return statement
+           after raising the exception for it to compile.-->
+      <xsl:when test="@return">
+        <xsl:text>  raise Program_Error;&#10;</xsl:text>
+        <xsl:text>  return </xsl:text>
+        <xsl:call-template name="default-value">
+          <xsl:with-param name="type" select="@return"/>
+        </xsl:call-template>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+      
+      <xsl:otherwise>
+        <xsl:text>  raise Program_Error;&#10;</xsl:text>
+      </xsl:otherwise>
+      
+    </xsl:choose>
+    
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+    
+  </xsl:template>
+  
+
+  <!-- Called at class/operation to generate a body which calls the matching
+       task entry. -->
+  <xsl:template name="generate-entry-call">
+
+    <!-- The current class (not necessarily the one where the operation
+         is defined, if we're talking inheritance) -->
+    <xsl:param name="current"/>
+
+    <xsl:text>separate (</xsl:text>
+    <xsl:value-of select="../../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="$current/name"/>
+    <xsl:text>)&#10;</xsl:text>
+    <xsl:call-template name="subprogram-specification"/>
+    <xsl:text> is&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    
+    <xsl:text>  This.The_T.</xsl:text>
+    <xsl:value-of select="name"/>
+    
+    <xsl:if test="parameter">
+      
+      <xsl:text>&#10;    (</xsl:text>
+      
+      <xsl:for-each select="parameter">
+        <xsl:value-of select="name"/>
+        <xsl:text> =&gt; </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:if test="position() &lt; last()">
+          <xsl:text>,&#10;     </xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+      
+      <xsl:text>)</xsl:text>
+      
+    </xsl:if>
+    
+    <xsl:text>;&#10;</xsl:text>
+    
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
 
 </xsl:stylesheet>
