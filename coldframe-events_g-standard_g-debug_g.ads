@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-debug_g.ads,v $
---  $Revision: 39232e97cf74 $
---  $Date: 2002/04/12 18:59:39 $
+--  $Revision: 4cdecc35b69b $
+--  $Date: 2002/05/22 04:37:40 $
 --  $Author: simon $
 
 generic
@@ -37,6 +37,27 @@ package ColdFrame.Events_G.Standard_G.Debug_G is
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue);
+
+   ----------------------
+   --  Delayed events  --
+   ----------------------
+
+--     procedure Post (The_Event : Event_P;
+--                     On : access Event_Queue;
+--                     To_Fire_At : Time.Time);
+
+   procedure Post (The_Event : Event_P;
+                   On : access Event_Queue;
+                   To_Fire_After : Natural_Duration);
+
+   --------------
+   --  Timers  --
+   --------------
+
+--     procedure Set (The_Timer : in out Timer;
+--                    On : access Event_Queue_Base;
+--                    To_Fire : Event_P;
+--                    At_Time : Time.Time) is abstract;
 
    procedure Set (The_Timer : in out Timer;
                   On : access Event_Queue;
