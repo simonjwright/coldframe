@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 281d11e491da 2002/07/27 13:05:23 simon $ -->
+<!-- $Id: installation.html,v ca9ca941ba55 2002/08/20 18:33:00 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -43,8 +43,9 @@ Components</a>; release 20020117 or later
 
 <p>The following installation notes match what's provided in the
 supplied <tt>Makefile-unix</tt>. If you install software elsewhere,
-you'll need to adjust the Makefile (it has hooks for you to use
-environment or command line variables).
+<a href="#unix-alternate-location">you'll need to adjust the
+Makefile</a> (it has hooks for you to use environment or command line
+variables).
 
 <h3>[incr Tcl]</h3>
 
@@ -108,6 +109,8 @@ subdirectories).
 
 <h3>Your Makefile</h3>
 
+<h4>Standard</h4>
+
 <p>Create a <tt>Makefile</tt> in the directory where your extracted
 <tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
 up the Makefile that ColdFrame provides.
@@ -142,6 +145,40 @@ etc, after which you only need to say
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
 
+<h4><a name="unix-alternate-location">Altering the default
+installation location</a></h4>
+
+<p>If you've decided to install other than in <tt>/usr/local/lib</tt>,
+you can alter where the Makefile looks for components: for example,
+
+<pre>
+  <b>TOP = /opt/local</b>
+  include <b>$(TOP)</b>/cf-<i>yyymmdd</i>/Makefile-unix
+</pre>
+
+
+<h4>Extracting to a different location</h4>
+
+<p>If you want to put ColdFrame's extracted (<tt>.raw</tt>) files in a
+different place, which you'd specify in Rose using the
+<tt>ColdFrameOut</tt> path variable, you can alter where ColdFrame
+looks:
+
+<pre>
+  <b>ColdFrameOut = ../extracted</b>
+  include /usr/local/lib/cf-<i>yyymmdd</i>/Makefile-unix
+</pre>
+
+after which when you say
+
+<pre>
+  <i>$</i> make Foo.gen
+</pre>
+
+ColdFrame will look for <tt>../extracted/Foo.raw</tt> but will create
+<tt>./Foo.gen</tt> "here".
+
+
 
 <p><hr>
 
@@ -174,7 +211,7 @@ Components</a>; release 20020117 or later
 
 <p>This note is written assuming that everything is installed on the
 <tt>C:</tt> drive at the top level. <a
-href="#alternate-location">Alternate locations</a> are possible.
+href="#win-alternate-location">Alternate locations</a> are possible.
 
 <h3>Cygwin</h3>
 
@@ -222,6 +259,8 @@ source is in the <tt>lib</tt> and <tt>project</tt> subdirectories).
 
 <h3>Your Makefile</h3>
 
+<h4>Standard</h4>
+
 <p>Create a <tt>Makefile</tt> in the directory where your extracted
 <tt><i>Domain</i>.raw</tt> files (will) live. Its purpose is to call
 up the Makefile that ColdFrame provides.
@@ -255,7 +294,8 @@ etc, after which you only need to say
 
 (until, of course, you find you need to add <tt>Domain_3</tt>).
 
-<h3><a name="alternate-location">Alternate software locations</a></h3>
+<h4><a name="win-alternate-location"></a>Altering the default
+installation location</h4>
 
 <p>It'll be most convenient if all of [incr Tcl], TclXML, Saxon and
 ColdFrame are installed on the same drive, at the same level; for
@@ -264,15 +304,39 @@ example, <tt>L:\Software\Tools</tt>.
 <p>Assuming this location, you'd change your Makefile to
 
 <pre>
-  include <b>L:/Software/Tools</b>/cf-<i>yyymmdd</i>/Makefile-winnt
-
   <b>TOP = L:/Software/Tools</b>
+  include <b>$(TOP)</b>/cf-<i>yyymmdd</i>/Makefile-winnt
+
 
   all:: <i>Domain_1</i>.gen
   all:: <i>Domain_2</i>.gen
 </pre>
 
 (and I <em>do</em> mean <tt>/</tt>, not <tt>\</tt>!)
+
+<h4>Extracting to a different location</h4>
+
+<p>If you want to put ColdFrame's extracted (<tt>.raw</tt>) files in a
+different place, which you'd specify in Rose using the
+<tt>ColdFrameOut</tt> path variable, you can alter where ColdFrame
+looks:
+
+<pre>
+  TOP = L:/Software/Tools
+  <b>ColdFrameOut = ../extracted</b>
+  include $(TOP)/cf-<i>yyymmdd</i>/Makefile-winnt
+</pre>
+
+after which when you say
+
+<pre>
+  <i>$</i> make Foo.gen
+</pre>
+
+ColdFrame will look for <tt>../extracted/Foo.raw</tt> but will create
+<tt>./Foo.gen</tt> "here".
+
+
 
 <p><hr>
 <i>

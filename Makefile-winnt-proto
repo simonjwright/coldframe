@@ -3,11 +3,36 @@
 
 # Makefile for use with Cygwin under Windows.
 
+# Define these variables on the Make command line.
+
 BLANK_LINES = yes
 CASE_EXCEPTIONS = ~/.emacs_case_exceptions
 GENERATE_ACCESSORS = defined
 STACK_DUMP = no
 VERBOSE = no
+
+# Define these variables in an including Makefile (before the actual
+# include)
+
+ifeq ($(ColdFrameOut), )
+  ColdFrameOut = .
+endif
+
+ifeq ($(TOP), )
+  TOP = c:
+endif
+
+# Locations, shouldn't need change
+
+CF = $(TOP)/cf-DATE
+
+AWK = awk
+ITCLSH = $(TOP)/Tcl/bin/itclsh31
+TCLXML = $(TOP)/tclxml-2.1theta
+
+SAXON = $(TOP)/Saxon/saxon
+
+# No user-servicable parts below
 
 ifeq ($(STACK_DUMP), yes)
   NORM_STACK_DUMP = --stack-dump
@@ -23,22 +48,12 @@ else
   CHOP_VERBOSE = -q
 endif
 
-TOP = c:
-
-CF = $(TOP)/cf-DATE
-
-AWK = awk
-ITCLSH = $(TOP)/Tcl/bin/itclsh31
-TCLXML = $(TOP)/tclxml-2.1theta
-
-SAXON = $(TOP)/Saxon/saxon
-
 ESCAPE_MARKUP_SCRIPT = $(CF)/escape-markup.awk
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
 CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
-%.norm: %.raw
+%.norm: $(ColdFrameOut)/%.raw
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \

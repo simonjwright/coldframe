@@ -7,6 +7,10 @@ GENERATE_ACCESSORS = defined
 STACK_DUMP = yes
 VERBOSE = no
 
+ifeq ($(ColdFrameOut), )
+  ColdFrameOut = .
+endif
+
 ifeq ($(STACK_DUMP), yes)
   NORM_STACK_DUMP = --stack-dump
 else
@@ -45,7 +49,8 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-teardown.xsl \
   ada-utilities.xsl
 
-%.norm: %.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+%.norm: $(ColdFrameOut)/%.raw $(NORMALIZE_ROSE_SCRIPT) $(ESCAPE_MARKUP_SCRIPT)
+	echo $(ColdFrameOut) $< $*
 	$(AWK) -f $(ESCAPE_MARKUP_SCRIPT) <$< | \
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	  --casing $(CASE_EXCEPTIONS) \
