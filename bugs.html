@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 34ef99084c90 2004/05/20 15:04:50 simon $ -->
+<!-- $Id: bugs.html,v 2c83a88355ed 2004/05/21 09:09:45 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -234,13 +234,13 @@ final state in Rose (a black blob in a circle).
 <dd>There seems to be a problem tearing down instances of
 &#171;active&#187; classes.
 
-<!-- next: 0246 -->
+<!-- next: DO NOT CREATE ANY NEW BUGS IN THIS BRANCH! -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>20.v.04</h3>
+<h3>21.v.04</h3>
 
 <dl>
 
@@ -251,6 +251,14 @@ of program (Program_Error, if you're lucky!)
 <br>Messing about with registering/deregistering callbacks is still
 not task-safe. However, so long as you don't try deregistering
 <i>another</i> callback from a callback operation you should be OK!
+
+<dt>0264 (raised 20.v.04)
+
+<dd>A race condition where tear-down involving a Timer can result in
+<tt>Program_Error</tt> exceptions makes unit test difficult. This is a
+result of the cure for bug <a href="#bug-0236">0236</a>.
+<br>When the condition is detected, the response is to log an error
+rather than raise an exception.
 
 </dl>
 
@@ -335,7 +343,7 @@ within any other operation will result in a
 
 <dl>
 
-<dt>0236 (raised 17.ii.04)
+<dt><a name="bug-0236">0236</a> (raised 17.ii.04)
 
 <dd>It would be helpful to detect the error of creating (and using) a
 Timer on the stack.
