@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v d22cfec63714 2003/05/25 17:17:55 simon $ -->
+<!-- $Id: support.html,v d38142966355 2003/05/25 17:23:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -10,7 +10,7 @@
 
 <li><a href="#library">Library components</a>
 
-<li><a href="#project">Supplied Project components</a>
+<li><a href="#project">Supplied <i>Project</i> components</a>
 
 <li><a href="#signatures">Signature packages</a>
 
@@ -31,7 +31,8 @@ package <tt>ColdFrame</tt>. The more user-interesting ones are
 
 <dd>Standard support for <a href="events.html">Events</a>. This is a
 basic generic event management specification; the time aspects are
-provided using <tt>ColdFrame.Time_Signature</tt>. Child packages are
+provided using <tt>ColdFrame.Time_Signature</tt>, and logging using
+<tt>ColdFrame.Logging_Signature</tt> Child packages are
 
 <dl>
 
@@ -156,7 +157,7 @@ such as <i>WITH TYPE</i>.
 
 </dl>
 
-<h2><a name="project">Supplied Project components</a></h2>
+<h2><a name="project">Supplied <i>Project</i> components</a></h2>
 
 <p>For some purposes, ColdFrame generates code expecting certain
 services to be provided by specific packages (under
@@ -231,7 +232,8 @@ the standard system <tt>malloc</tt> pool, suitable for instantiating
 
 <dt><tt>ColdFrame.Project.Log_Error</tt>
 
-<dd>Reports error messages.
+<dd>Reports error messages, using
+<tt>ColdFrame.Project.Logging_Support</tt>.
 
 <dt><tt>ColdFrame.Project.Serialization</tt>
 
