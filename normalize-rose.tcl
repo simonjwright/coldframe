@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v aa6acbf4fa48 2003/05/17 07:49:33 simon $
+# $Id: normalize-rose.tcl,v 0df5d6f19a7b 2003/05/17 16:54:33 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -154,7 +154,7 @@ proc normalize {s} {
 # - handles based literals directly (Ada syntax, eg 2#010101#)
 # - handles null directly
 # otherwise,
-# - handles as identifier.
+# - handles as expression (lexically only)
 proc normalizeValue {s} {
     set tmp [string trim $s]
     # handle strings
@@ -162,15 +162,59 @@ proc normalizeValue {s} {
     # handle characters
     if [regexp {^\'.\'$} $tmp] {return $tmp}
     # allow signed entities
-    if [regexp {[-+]} $tmp] {
-	set sign [string index $tmp 0]
-	return "$sign[normalizeValue [string range $tmp 1 end]]"
-    }
+#    if [regexp {[-+]} $tmp] {
+#	set sign [string index $tmp 0]
+#	return "$sign[normalizeValue [string range $tmp 1 end]]"
+#    }
     # allow based literals
     if [regexp -nocase {[0-9_]+\#[0-9a-f_.]*\#} $tmp] {return $tmp}
-    switch [string tolower $tmp] {
+    switch -- [string tolower $tmp] {
 	null       {return null}
-	default    {return [normalize $tmp]}
+	default    {
+	    # handle expressions.
+	    # XXX no doubt this could be done better!
+	    set lps [split $tmp "("]
+	    set lpl {}
+	    foreach lp $lps {
+		set rps [split $lp ")"]
+		set rpl {}
+		foreach rp $rps {
+		    set stars [split $rp "*"]
+		    set starl {}
+		    foreach star $stars {
+			set divs [split $star "/"]
+			set divl {}
+			foreach div $divs {
+			    set pluss [split $div "+"]
+			    set plusl {}
+			    foreach plus $pluss {
+				set mins [split $plus "-"]
+				set minl {}
+				foreach min $mins {
+				    set term [normalize $min]
+				    switch -- [string tolower $term] {
+					pi      {
+					    puts stderr "$tmp contains pi"
+					    [Domain::currentDomain] \
+						-references pi
+					}
+					default {}
+				    }
+				    lappend minl $term
+				}
+				lappend plusl [join $minl "-"]
+			    }
+			    lappend divl [join $plusl "+"]
+			}
+			lappend starl [join $divl "/"]
+		    }
+		    lappend rpl [join $starl "*"]
+		}
+		lappend lpl [join $rpl ")"] 
+	    }
+	    set tmp [join $lpl "("] 
+	    return $tmp
+	}
     }
 }
 
@@ -410,7 +454,8 @@ itcl::class IdentifierString {
 
 
 # The base class for all XML elements which represent values; stores
-# eg " hello   world " as "Hello_World".
+# eg " hello   world " as "Hello_World", and "+ (2.0 * name)" as
+# "+(2.0*Name)".
 itcl::class ValueString {
     inherit String
 
@@ -860,6 +905,9 @@ itcl::class Domain {
     variable exceptions
     
     variable relationships
+
+    # for interesting values etc (eg, pi)
+    variable references
     
     proc currentDomain {} {return $currentDomain}
     
@@ -891,6 +939,8 @@ itcl::class Domain {
     method -relationships {l} {set relationships $l}
 
     method -getRelationships {} {return $relationships}
+
+    method -references {o} {set references($o) 1}
 
     method -complete {} {
 	$this -generate
@@ -924,6 +974,11 @@ itcl::class Domain {
 	$datatypes -generate $this
 	$exceptions -generate $this
 	$relationships -generate $this
+
+	# NB, has to be last because we may discover references in datatypes
+	foreach r [array names references] {
+	    putElement references $r
+	}
 
 	puts "</domain>"
     }
@@ -2269,7 +2324,7 @@ itcl::class Datatype {
 	    string {
 		puts "<$dataType>"
 		foreach {key value} $dataDetail {
-		    putElement $key $value
+		    putElement $key [normalizeValue $value]
 		}
 		puts "</$dataType>"
 	    }
