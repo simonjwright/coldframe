@@ -1,16 +1,16 @@
 <domain>
-<extractor>cf-20030123a</extractor>
+<extractor>cf-20030107a</extractor>
 <name>Serialization Demo</name>
 <date>
 <year>2003</year>
-<month>1</month>
-<day>23</day>
-<time>10:54</time>
+<month>2</month>
+<day>2</day>
+<time>12:22</time>
 </date>
 <documentation>This domain is a demonstration of Serialization's faclilities.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-[[ revision : $Id: Serialization_Demo.raw,v f63562e2babd 2003/01/26 16:46:40 simon $ ]]</documentation>
+[[ revision : $Id: Serialization_Demo.raw,v 2cd92cbbdec1 2003/02/02 17:22:12 simon $ ]]</documentation>
 <classes>
 <class stereotype="type, serializable">
 <name>Sample A</name>
@@ -48,6 +48,31 @@ It is to be extracted separately from the main Serialization package (that's why
 <type>Time</type>
 <initial></initial>
 </attribute>
+<attribute>
+<name>u</name>
+<documentation></documentation>
+<type>Text</type>
+<initial></initial>
+</attribute>
+<attribute>
+<name>n</name>
+<documentation></documentation>
+<type>Name String</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Name String</name>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>[[ string : max 32 ]]
+</documentation>
+<attributes>
 </attributes>
 <operations>
 </operations>
