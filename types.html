@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 702fe96e6d9a 2002/10/06 06:54:00 simon $ -->
+<!-- $Id: types.html,v 211ee948c03b 2002/10/11 05:40:32 simon $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -66,21 +66,38 @@ upper <i>upper-bound</i></tt>
 
 </ul>
 
+<p>Syntactically, you can specify multiple annotations using semicolon
+separators. This probably only makes sense for adding callbacks:
+<pre>
+   [[ real : lower -100.0, upper 100.0; callback : 1 ]]
+</pre>
+
 <h3>Operations</h3>
 
-<p>
+<p>Types can have operations.
 
 <h2>Translation</h2>
 
-<p>Types are declared in the domain package. For string types, a
-string hash function is generated as a child subprogram of the domain
-package.
+<p>Types are declared in the domain package. Where appropriate,
+supporting code is generated as a child unit of the domain package.
+
+<p>Operations of types are generated in the domain package.
 
 <h3>Annotations</h3>
  
 <ul>
 
 <li><tt>callback : <i>max</i></tt>
+
+<p>For a type <tt>Typ</tt>, with <tt>[[ callback : 4 ]]</tt>, the
+generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
+<pre>
+   with ColdFrame.Callbacks;
+   package <i>Domain</i>.<i>Typ</i>_Callback
+   is new ColdFrame.Callbacks
+     (T => <i>Domain</i>.<i>Typ</i>,
+      Maximum_Size => 4);
+</pre>
 
 <li><tt>discriminated</tt>
 
@@ -90,7 +107,7 @@ package.
 
 <p>where <i>Alert Level</i> is an enumeration, <i>Information</i> is a
 lengthed string, and <i>Message</i> is
-<tt>[[&nbsp;discriminated&nbsp;]]</tt>, ColdFrfame generates
+<tt>[[&nbsp;discriminated&nbsp;]]</tt>, ColdFrame generates
 <pre>
    type Message_Discriminant is
      (Info_T,
@@ -127,6 +144,8 @@ gives, for example (see <a href="#discriminated-record-pic">above</a>),
 </pre>
 (clearly <tt><i>external-reference</i></tt> needs to correspond to a
 with-able package name).
+
+<p>
 
 <li><tt>renames : <i>external-type</i></tt>: for a type named
 <tt>T</tt>, renaming <tt>Ada.Real_Time.Time</tt>, gives
