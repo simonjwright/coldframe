@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v e8f6552257b0 2003/12/13 06:52:28 simon $ -->
+<!-- $Id: ada-type.xsl,v c41ef88ced48 2004/01/11 19:27:28 simon $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -168,7 +168,11 @@
     <xsl:variable
       name="next"
       select="type[not($processed/name=name)
-              and not(attribute/type[not($processed/name=.)])]"/>
+              and not(
+              attribute/type[not($processed/name=.)]
+              or array/type[not($processed/name=.)]
+              or array/index[not($processed/name=.)]
+              )]"/>
 
     <xsl:choose>
 
@@ -354,6 +358,21 @@
 
       </xsl:when>
 
+      <xsl:when test="array">
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text> is&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>array (</xsl:text>
+        <xsl:value-of select="array/index"/>
+        <xsl:text>)&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>of </xsl:text>
+        <xsl:value-of select="array/type"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:when>
+
       <xsl:when test="counterpart">
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
@@ -433,13 +452,15 @@
       <xsl:when test="real">
 
         <!--
-             subtype {type} is [Long_]Float[ range {lower} .. {upper}];
+             subtype {type} is
+               [Long_]Float[ range {lower} .. {upper}];
              -->
 
         <xsl:value-of select="$I"/>
         <xsl:text>subtype </xsl:text>
         <xsl:value-of select="name"/>
-        <xsl:text> is </xsl:text>
+        <xsl:text> is&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
         <xsl:choose>
           <xsl:when test="real/digits &gt; 6">
             <xsl:text>Long_Float</xsl:text>
@@ -495,6 +516,8 @@
   <xsl:template mode="domain-type-support" match="domain/type">
     <xsl:if test="not(standard)">
       <xsl:choose>
+
+        <xsl:when test="array"/>
 
         <xsl:when test="attribute"/>
 
