@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v b4047853fe30 2002/11/14 21:37:25 simon $ -->
+<!-- $Id: faq.html,v e23c1407d0b7 2003/02/07 05:57:18 simon $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 </head>
@@ -19,6 +19,10 @@
 operations do nothing?</a>
 
 <li><a href="#why-not-delete">.. so why can't I just call Delete?</a>
+
+<li><a href="#singleton-pause-until-init">How can I make an
+&#171;active&#187; &#171;singleton&#187;'s task wait intil the domain
+is completely initialized?</a>
 
 </ol>
 
@@ -188,6 +192,19 @@ tables of references to speed up navigation in what is now the
 unnatural direction (you might need to tell it to do
 so). <tt>Unlink</tt> would then do what was needed to keep those
 tables consistent.
+
+<h2><a name="singleton-pause-until-init">How can I make an
+&#171;active&#187; &#171;singleton&#187;'s task wait intil the domain
+is completely initialized?</a></h2>
+
+<p>Use the boolean variable
+(<tt><i>Domain</i>.Domain_Initialized</tt>) that ColdFrame itself uses
+to ensure it only initializes a domain once:
+<pre>
+   while not Domain_Initialized loop
+      delay 0.1;
+   end loop;
+</pre>
 
 <p><hr>
 <i>
