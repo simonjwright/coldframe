@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 231d2825c80d 2004/03/18 14:17:35 simon $ -->
+<!-- $Id: generate-html.xsl,v 13cd56ea0097 2004/03/19 15:39:22 simon $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -652,6 +652,32 @@
       <p><xsl:text>Callback support is provided.</xsl:text></p>
     </xsl:if>
     <xsl:choose>
+      <xsl:when test="array/@unconstrained">
+        <p>
+          <xsl:text>An unconstrained array of </xsl:text>
+          <xsl:call-template name="type-name-linked">
+            <xsl:with-param name="type" select="array/type"/>
+          </xsl:call-template>
+          <xsl:text>, indexed by </xsl:text>
+          <xsl:call-template name="type-name-linked">
+            <xsl:with-param name="type" select="array/index"/>
+          </xsl:call-template>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
+      <xsl:when test="array">
+        <p>
+          <xsl:text>An array of </xsl:text>
+          <xsl:call-template name="type-name-linked">
+            <xsl:with-param name="type" select="array/type"/>
+          </xsl:call-template>
+          <xsl:text>, indexed by </xsl:text>
+          <xsl:call-template name="type-name-linked">
+            <xsl:with-param name="type" select="array/index"/>
+          </xsl:call-template>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
       <xsl:when test="enumeration">
         <p>An enumeration, with literals:</p>
         <ul>
@@ -764,7 +790,7 @@
         </p>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>Hmm!</xsl:text>
+        <xsl:text>(ColdFrame doesn't recognize this type)</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
