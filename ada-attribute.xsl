@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v f3b5455761d7 2001/09/04 04:59:42 simon $ -->
+<!-- $Id: ada-attribute.xsl,v d9997828ee0f 2001/09/08 05:06:56 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -274,8 +274,6 @@
         <xsl:value-of select="$a/@relation"/>
         <xsl:text>_</xsl:text>
         <xsl:value-of select="$a/@role"/>
-        <xsl:text>_</xsl:text>
-        <xsl:value-of select="/domain/class[name=$a/@refers]/abbreviation"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$a/name"/>
