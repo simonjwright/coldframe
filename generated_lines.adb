@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines.adb,v $
---  $Revision: 2909f12edbf5 $
---  $Date: 2002/09/18 20:32:07 $
+--  $Revision: 04944f26f968 $
+--  $Date: 2003/06/05 20:40:56 $
 --  $Author: simon $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -79,7 +79,7 @@ begin
          when 'l' => Logging := True;
          when 'r' => Recursive := True;
          when 'v' => Verbose := True;
-            when others => raise Program_Error;
+         when others => raise Program_Error;
       end case;
    end loop;
 
