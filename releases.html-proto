@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 2660c01cea9b 2003/09/03 20:18:52 simon $ -->
+<!-- $Id: releases.html-proto,v 11fd79eb119c 2003/09/03 20:20:48 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -39,6 +39,10 @@ shared event queue to be torn down more than once, leading to
 
 <p>With the new container implementation, calling <tt>Find</tt> for
 an &#171;active&#187; (multiple-instance) class would hang.
+
+
+<p>Started a set of regression tests, in the <tt>test/</tt>
+subrirectory of the distribution.
 
 
 <p><dt>20030815
