@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 253a6ad430b0 $
---  $Date: 2002/07/25 05:03:12 $
+--  $Revision: 69029d01397b $
+--  $Date: 2002/09/18 20:24:21 $
 --  $Author: simon $
 
 with BC.Containers.Collections.Unbounded;
@@ -45,7 +45,7 @@ package body Generated_Lines_Support is
    function Count_Lines (In_File_Named : Path_Name) return Natural;
 
 
-   procedure Count (File_Named : Path_Name) is
+   procedure Count (File_Named : Path_Name; Verbosely : Boolean) is
       N : constant Path_Name := File_Name (File_Named);
       It : Abstract_Containers.Iterator'Class
         := Collections.New_Iterator (Patterns);
@@ -53,8 +53,10 @@ package body Generated_Lines_Support is
    begin
       loop
          if Is_Done (It) then
-            Put_Line (Standard_Error,
-                      "file " & File_Named & " didn't match any rule.");
+            if Verbosely then
+               Put_Line (Standard_Error,
+                         "file " & File_Named & " didn't match any rule.");
+            end if;
             exit;
          end if;
          if Match (Current_Item (It).For_Pattern.all, N) >= N'First then
@@ -134,20 +136,20 @@ package body Generated_Lines_Support is
 
 begin
 
-   Setup ("-tear_down\.ad[bs]", "test");
-   Setup ("^[^-]*-initialize\.ad[bs]", "initialization");
-   Setup ("^[^-]*-events(-initialize)?.ad[bs]", "events");
-   Setup ("-inheritance\.ad[bs]", "inheritance");
-   Setup ("-(filter|selection)_function\.ad[bs]", "selection");
-   Setup ("-iterate\.ad[bs]", "iteration");
-   Setup ("-(handle_)?hash\.ad[bs]", "hashing");
-   Setup ("-(abstract_)?(containers|collections).ad[bs]", "containers");
-   Setup ("-(abstract_)?sets.ad[bs]", "advanced containers");
-   Setup ("-from_collections\.ad[bs]", "navigation from collections");
-   Setup ("-all_instances\.ad[bs]", "all instances");
+   Setup ("initialize\.ad[bs]", "initialization", True);
+   Setup ("-tear_down\.ad[bs]", "test", True);
+   Setup ("^[^-]*-events(-initialize)?.ad[bs]", "events", True);
+   Setup ("-inheritance\.ad[bs]", "advanced inheritance", True);
+   Setup ("-(filter|selection)_function\.ad[bs]", "selection", True);
+   Setup ("-iterate\.ad[bs]", "iteration", True);
+   Setup ("-(handle_)?hash\.ad[bs]", "hashing", True);
+   Setup ("-(abstract_)?(containers|collections).ad[bs]", "containers", True);
+   Setup ("-(abstract_)?sets.ad[bs]", "advanced containers", True);
+   Setup ("-from_collections\.ad[bs]", "navigation from collections", True);
+   Setup ("-all_instances\.ad[bs]", "all instances", True);
 
-   Setup ("^.*-.*-.*\.adb", "operations");
+   Setup ("^.*-.*-.*\.adb", "operations", True);
 
-   Setup ("\.ad[bs]", "classes/associations");
+   Setup ("\.ad[bs]", "classes/associations", True);
 
 end Generated_Lines_Support;
