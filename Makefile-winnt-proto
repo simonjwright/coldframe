@@ -3,6 +3,8 @@
 
 # Makefile for use with Cygwin under Windows.
 
+GENERATE_ACCESSORS = defined
+
 TOP = d:
 
 CF = $(TOP)/cf-DATE
@@ -27,7 +29,8 @@ CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
 
 %.ada: %.norm
 	$(SAXON) $< $(CODEGEN_SCRIPT) >$@  \
-	  || (echo "Generation problem." && || rm -f $@)
+	  generate-accessors=$(GENERATE_ACCESSORS) >$@  \
+	  || (echo "Generation problem." && rm -f $@)
 
 %.gen: %.ada
 	-mkdir $@
