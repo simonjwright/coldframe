@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c0e4f628cdde 2001/01/25 06:10:46 simon $
+# $Id: normalize-rose.tcl,v 3c7534b9c8b3 2001/01/30 19:47:48 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -230,15 +230,33 @@ itcl::class Element {
     # called for a <documentation> element to extract annotation information,
     # if any, from the documentation string. The annotation info is contained
     # between double square brackets [[ ]].
+    # The documentation content is left normalised (leading and trailing white
+    # space trimmed, paragraphs separated by a single newline).
     method -documentation {d} {
 	set documentation $d
 	regexp {\[\[(.*)\]\]} $d wh annotation
 	$this -handleAnnotationWhenRead
+	regsub -all {\[\[(.*)\]\]} $d "" tmp
+	set tmp [string trim $tmp]
+	regsub -all {([ \t]*\n)+} $tmp "\n" documentation
     }
     # normally the annotation can be processed as soon as it's seen;
     # override to avoid this
     method -handleAnnotationWhenRead {} {
 	$this -handleAnnotation
+    }
+
+    method -generateDocumentation {} {
+	if [string length $documentation] {
+	    puts "<documentation>"
+	    set pars [split $documentation "\n"]
+	    foreach p $pars {
+		puts "<par>"
+		puts $p
+		puts "</par>"
+	    }
+	    puts "</documentation>"
+	}
     }
 
     method -name {n} {
@@ -452,31 +470,12 @@ itcl::class Initial {
     inherit IdentifierString
 }
 
-itcl::class Key {
-    inherit String
-}
-
 itcl::class Name {
     inherit IdentifierString
 }
 
-itcl::class Number {
-    inherit String
-}
-
 itcl::class Parent {
     inherit IdentifierString
-}
-
-itcl::class Protection {
-    inherit String
-
-    method -complete {} {
-	switch $text {
-	    PublicAccess {[stack -top] -identifier}
-	    default {}
-	}
-    }
 }
 
 itcl::class Return {
@@ -487,22 +486,12 @@ itcl::class Type {
     inherit IdentifierString
 }
 
-itcl::class Version {
-    inherit String
-}
-
 # Element classes
 
 itcl::class Domain {
     inherit Element
 
     private common currentDomain
-
-    variable key
-
-    variable number
-
-    variable version
 
     variable objects
 
@@ -522,16 +511,6 @@ itcl::class Domain {
 	set relationships [Relationships ::#auto]
 	set datatypes [Datatypes ::#auto]
     }
-
-    method -key {k} {set key [string toupper [string trim $k]]}
-
-    method -getKey {} {return $key}
-
-    method -number {n} {set number $n}
-
-    method -getNumber {} {return $number}
-
-    method -version {n} {set version $n}
 
     method -objects {l} {set objects $l}
 
@@ -568,9 +547,6 @@ itcl::class Domain {
     method -generate {} {
 	puts "<domain>"
 	putElement name "$name"
-	putElement key "$key"
-	putElement number "$number"
-	putElement version "$version"
 	putElement date "[exec /bin/date]"
 	$objects -evaluate $this
 	$relationships -evaluate $this
@@ -585,11 +561,9 @@ itcl::class Domain {
 itcl::class Object {
     inherit Element
 
-    variable key
-
-    variable number
-
-    variable relations {}
+    # an abbreviation of the name may be useful (eg, when making names
+    # for referential attributes)
+    variable abbreviation
 
     variable tags
 
@@ -597,26 +571,30 @@ itcl::class Object {
 
     variable operations
 
-    method -key {k} {set key [string toupper [string trim $k]]}
-
-    method -getKey {} {return $key}
-
-    method -number {n} {set number $n}
-
-    method -getNumber {} {return $number}
-
-    method -addRelation {n} {
-	if [expr [lsearch $relations $n] < 0] {
-	    lappend relations $n
-	}
+    method -abbreviation {a} {
+	set abbreviation [string toupper [string trim $a]]
     }
+
+    method -getAbbreviation {} {
+	# if no abbreviation has been supplied, make one up from the
+	# initial letters of the name (which will already have been
+	# capitalised)
+	if ![info exists abbreviation] {
+	    set tmp [split $name "_"]
+	    set abbreviation ""
+	    foreach w $tmp {
+		set abbreviation "$abbreviation[string index $w 0]"
+	    }
+	}
+	return $abbreviation
+   }
 
     method -tags {l} {set tags $l}
 
     method -operations {l} {set operations $l}
 
     #
-    # variables & methods related to <<control>> objects
+    # variables & methods related to <<control>> objects (XXX needed?)
     #
 
     variable isControl 0
@@ -655,7 +633,8 @@ itcl::class Object {
 		    set attr [$a -makeInheritanceIdentifierClone]
 		} else {
 		    set relName [$relation -getName]
-		    set attr [$a -makeReferentialClone $key $relName]
+		    set attr [$a -makeReferentialClone \
+			        [$this -getAbbreviation] $relName]
 		}
 		if $identifier {
 		    $attr -identifier
@@ -674,8 +653,6 @@ itcl::class Object {
     method -sourceOfRelation {role} {
 	foreach a [$attributes -getMembers] {
 	    if [$a -getIdentifier] {
-		puts stderr \
-		    "$name.[$a -getName] is source for [[$role -getOwner] -getName]"
 		$a -usedInRole $role
 	    }
 	}
@@ -700,8 +677,6 @@ itcl::class Object {
 		set dt [Datatype ::#auto $name]
 		$dts -add $dt $name
 	    }
-	    # XXX it cannot be right that the only annotation available
-	    # on a class is whether it's a type!
 	    $dt -annotation $annotation
 	} elseif $isControl {
 	    puts stderr "<<control>> not yet handled properly"
@@ -713,7 +688,6 @@ itcl::class Object {
 
     method -report {} {
 	$this Element::-report
-	#$objectrelations -report
 	$tags -report
 	$attributes -report
     }
@@ -726,8 +700,8 @@ itcl::class Object {
     method -generate {domain} {
 	puts "<object>"
 	putElement name "$name"
-	putElement key "$key"
-	#putElement number "$number"
+	putElement abbreviation [$this -getAbbreviation]
+	$this -generateDocumentation
 	$attributes -generate $domain
 	$operations -generate $domain
 	puts "</object>"
@@ -900,11 +874,8 @@ itcl::class Association {
 	    return
 	}
 	$this -formalized
-	$cl1 -addRelation $n
-	$cl2 -addRelation $n
 	if [$this -isAssociative] {
 	    set assoc [$os -atName $associative]
-	    $assoc -addRelation $n
 	}
 	switch $type {
 	    "1:1"     {
@@ -1116,10 +1087,8 @@ itcl::class Inheritance {
 	    return
 	}
 	$this -formalized
-	$p -addRelation [$this -getNumber]
 	foreach ch [$children -getMembers] {
 	    set c [$os -atName $ch]
-	    $c -addRelation [$this -getNumber]
 	    $p -addFormalizingAttributesTo $c $this 1
 	    set role [Role ::#auto]
 	    $role -owner $this
@@ -1339,9 +1308,9 @@ itcl::class Attribute {
 
     # called from an object which needs to formalize a relationship by
     # use of a matching attribute
-    method -makeReferentialClone {key relName} {
+    method -makeReferentialClone {abbrev relName} {
 	set res [Attribute ::#auto]
-	$res -name $key\_$name\_$relName
+	$res -name $abbrev\_$name\_$relName
 	$res -type $type
 	$res -referential
 	return $res
@@ -1512,9 +1481,7 @@ proc elementFactory {tag} {
 	inheritance       {return [Inheritance #auto]}
 	inheritances      {return [Inheritances #auto]}
 	initial           {return [Initial #auto]}
-	key               {return [Key #auto]}
 	name              {return [Name #auto]}
-	number            {return [Number #auto]}
 	object            {return [Object #auto]}
 	objects           {return [[Domain::currentDomain] -getObjects]}
 	operation         {return [Operation #auto]}
@@ -1522,7 +1489,6 @@ proc elementFactory {tag} {
 	parameter         {return [Parameter #auto]}
 	parameters        {return [Parameters #auto]}
 	parent            {return [Parent #auto]}
-	protection        {return [Protection #auto]}
 	relationship      {return [Relationship #auto]}
 	relationships     {return [[Domain::currentDomain] -getRelationships]}
 	"return"          {return [Return #auto]}
@@ -1534,9 +1500,6 @@ proc elementFactory {tag} {
 	transitiontable   {return [Transitiontable #auto]}
 	transitiontables  {return [Transitiontables #auto]}
 	type              {return [Type #auto]}
-	typesfile         {return [Typesfile #auto]}
-	typesfiles        {return [Typesfiles #auto]}
-	version           {return [Version #auto]}
 	default           {return [Element #auto]}
     }
 }
