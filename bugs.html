@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6d51fd02852e 2002/09/12 20:53:48 simon $ -->
+<!-- $Id: bugs.html,v 3f27a52ecc93 2002/09/13 19:46:05 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -168,14 +168,23 @@ literals aren't.
 <dd>The error where a state has more than one exiting transition
 triggered by the same event (or drop-through) isn't detected.
 
-<dt>0111 (raised 2.1x.02)
+<dt>0111 (raised 2.ix.02)
 
 <dd>It would make testing easier if non-&#171;public&#187; classes
 could be generated as non-<tt>private</tt> Ada packages.
 
+<dt>0117 (raised 12.ix.02)
+
+<dd>There's no support for deleting instances in <i>final</i> states.
+
+<dt>0018 (raised 13.ix.02)
+
+<dd>The <i>Lock</i> facility of Event Queues ought to allow "events to
+self" a higher priority than external locks.
+
 </dl>
 
-<!-- next: 0117 -->
+<!-- next: 0119 -->
 
 <h2><a name="fixed">Fixed</a></h2>
 
@@ -188,14 +197,14 @@ could be generated as non-<tt>private</tt> Ada packages.
 be if you have timeouts (because there's almost always something held
 on the event queue).
 
+<br><i><tt>Wait_Until_Idle</tt> now has an optional
+parameter<tt>Ignoring_Timers</tt> (defaulted to <tt>False</tt>) which
+controls whether <i>Timer</i>s are included in the count.</i>
+
 <dt>0116 (raised 12.ix.02)
 
 <dd>The generated code for an operation returning a value of type Time
 doesn't compile.
-
-<dt>0117 (raised 12.ix.02)
-
-<dd>There's no support for deleting instances in <i>final</i> states.
 
 </dl>
 
