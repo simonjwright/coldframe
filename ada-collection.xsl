@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v b08e689e18d1 2001/08/19 16:19:23 simon $ -->
+<!-- $Id: ada-collection.xsl,v 1540c4a0e9ad 2001/09/25 18:30:40 simon $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -105,9 +105,7 @@
         <xsl:text>.Collections&#10;</xsl:text>
         <xsl:text>is new Abstract_Collections.Unbounded&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text>(Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:value-of select="$C"/>
-        <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
+        <xsl:text>(Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>
@@ -173,8 +171,6 @@
         <xsl:call-template name="hash-buckets"/>
         <xsl:text>,&#10;</xsl:text>
         <xsl:value-of select="$C"/>
-        <xsl:text> Storage_Manager =&gt; ColdFrame.Global_Storage_Pool.Pool_Type,&#10;</xsl:text>
-        <xsl:value-of select="$C"/>
         <xsl:text> Storage =&gt; ColdFrame.Global_Storage_Pool.Pool);&#10;</xsl:text>
       </xsl:otherwise>
 
@@ -226,6 +222,28 @@
     <xsl:text>return </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Collections.Collection;&#10;</xsl:text>
+
+    <!-- Iteration support -->
+    <!--
+         with {domain}.{class}.Collections;
+         generic
+           with procedure Process (H : Handle);
+         procedure {domain}.{class}.Iterate
+            (Over : {domain}.{class}.Collections.Collection);
+         -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections;&#10;</xsl:text>
+    <xsl:text>generic&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>with procedure Process (H : Handle);&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Iterate&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Over : </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection);&#10;</xsl:text>
 
   </xsl:template>
 
@@ -379,6 +397,48 @@
     <xsl:text>end </xsl:text>
     <xsl:value-of select="$class"/>
     <xsl:text>.Filter_Function;&#10;</xsl:text>
+
+    <!-- Iteration support -->
+    <!--
+         with {domain}.{class}.Abstract_Containers;
+         procedure {domain}.{class}.Iterate
+           (Over : {domain}.{class}.Collections.Collection) is
+            It : Abstract_Containers.Iterator'Class
+              := Collections.New_Iterator (Over);
+         begin
+            while not Abstract_Containers.Is_Done (It) loop
+               Process (Abstract_Containers.Current_Item (It));
+               Abstract_Containers.Next (It);
+            end loop;
+         end {domain}.{class}.Iterate;
+         -->
+    <xsl:text>with </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Abstract_Containers;&#10;</xsl:text>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Iterate&#10;</xsl:text>
+    <xsl:value-of select="$C"/>
+    <xsl:text>(Over : </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Collections.Collection) is&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>It : Abstract_Containers.Iterator'Class&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>:= Collections.New_Iterator (Over);&#10;</xsl:text>
+    <xsl:text>begin&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>while not Abstract_Containers.Is_Done (It) loop&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Process (Abstract_Containers.Current_Item (It));&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Abstract_Containers.Next (It);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end loop;&#10;</xsl:text>
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$class"/>
+    <xsl:text>.Iterate;&#10;</xsl:text>
+
 
   </xsl:template>
 
