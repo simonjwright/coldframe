@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 9435f0351f7e 2002/12/10 20:05:50 simon $ -->
+<!-- $Id: event-modelling.html,v 21b4fbdb0d3b 2003/08/22 19:09:50 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -108,8 +108,28 @@ specified interval.
 
 </ol>
 
-<p>The difference between <i>Posting</i> and <i>Setting on a Timer</i>
-is that <i>Posted</i> events are "fire and forget", whereas <i>Set</i>
+<p>There are two variants of the first operation:
+
+<dl>
+
+<dt>plain <i>Post</i><dd>This is the normal way of posting
+events. The queuing is strictly first in, first out.
+
+<dt><i>Post To Self</i><dd>Sometimes you have to send an event to
+the current instance as a way of moving the state machine on (perhaps
+you've come across an error condition). If this happens, you need the
+event to take precedence over any other events in the queue
+(otherwise, your event will happen after all the events already in
+the queue).
+<br>To achieve this, use <tt>Post_To_Self</tt>; any event posted in
+this way takes priority over normally-posted events.
+<br>"Events to self" are also queued first in, first out.
+
+</dl>
+
+<p>The difference between <i>Posting to be handled in the future</i>
+and <i>Setting on a Timer</i> is that events that are <i>posted to be
+handled in the future</i> are "fire and forget", whereas <i>Set</i>
 events can be retracted. <i>Set</i> events are the kind to use for
 timeouts (indeed, in state machines in general, with perhaps odd
 exceptions).
@@ -123,8 +143,9 @@ been handled, and the event won't be delivered.
 
 <h3>Event kinds and payloads</h3>
 
-<p>Events are always directed to a class. They may be Instance Events
-(typically used in state machines) or Class Events (typically used for
+<p>Events are always directed to a specific class. They may be
+Instance Events (used in state machines), which are directed to
+individual instances of the class, or Class Events (typically used for
 domain isolation).
 
 <p>Class Events will always carry a payload; Instance Events need not.
@@ -146,6 +167,9 @@ works).
 payload, but it doesn't have to be a special
 <em>&#171;type&#187;</em>. Also, you can use the same
 <em>&#171;type&#187;</em> as the payload for several different events.
+
+<p>You still need instance events to manage state machines, even if
+the class concerned is a <em>&#171;singleton&#187;</em>.
 
 <h3>Transitions</h3>
 
