@@ -1,11 +1,11 @@
 '--------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 1ae8efc9ce2a 2000/08/08 10:36:55 simon $
+'$Id: ddf.ebs,v c0d5c075f882 2000/12/10 12:39:01 simon $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by the Object Oriented Model Compiler.
 '
-' Copyright Alenia Marconi Systems Limited 2000
+' Copyright (C) Simon Wright <simon@pushface.org>
 '--------------------------------------------------------------------------------
 
 Sub DumpObjectRelationInfo (o As Class)
@@ -84,21 +84,23 @@ Sub DumpClasses (domain As Category)
 End Sub
 
 Sub DumpAssociation (assoc As Association)
-	'NB the role names are given the KC semantic, ie swapped from UML convention
+	'NB the role names assume the opposite convention from KC's: the role name is a
+	' verb phrase of which the class is the subject -- the class at the other end
+	' being the object
 	Print "    association"
 	Print #1, "<association>"
 	Print #1, "<name>" & assoc.Name & "</name>"
 	Print #1, "<role><end>1</end>"
 	Print #1, "<name>" & assoc.Role1.Name & "</name>"
-	Print #1, "<classname>" & assoc.Role2.Class.Name & "</classname>"
-	Print #1, "<cardinality>" & assoc.Role2.Cardinality & "</cardinality>"
-	Print #1, "<exportcontrol>" & assoc.Role2.ExportControl & "</exportcontrol>"
-	Print #1, "</role>"
-	Print #1, "<role><end>2</end>"
-	Print #1, "<name>" & assoc.Role2.Name & "</name>"
 	Print #1, "<classname>" & assoc.Role1.Class.Name & "</classname>"
 	Print #1, "<cardinality>" & assoc.Role1.Cardinality & "</cardinality>"
 	Print #1, "<exportcontrol>" & assoc.Role1.ExportControl & "</exportcontrol>"
+	Print #1, "</role>"
+	Print #1, "<role><end>2</end>"
+	Print #1, "<name>" & assoc.Role2.Name & "</name>"
+	Print #1, "<classname>" & assoc.Role2.Class.Name & "</classname>"
+	Print #1, "<cardinality>" & assoc.Role2.Cardinality & "</cardinality>"
+	Print #1, "<exportcontrol>" & assoc.Role2.ExportControl & "</exportcontrol>"
 	Print #1, "</role>"
 	If Not assoc.LinkClass Is Nothing Then
 		Print #1, "<associative>" & assoc.LinkClass.Name & "</associative>"
