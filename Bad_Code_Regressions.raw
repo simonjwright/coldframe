@@ -3,35 +3,14 @@
 <name>Bad Code Regressions</name>
 <date>
 <year>2004</year>
-<month>2</month>
-<day>22</day>
-<time>19:36</time>
+<month>3</month>
+<day>15</day>
+<time>20:58</time>
 </date>
 <documentation>Regression tests that involve detecting errors.
 
-{ revision = $Revision: 38960f8e0d9a $ }</documentation>
+{ revision = $Revision: 7620f24adfba $ }</documentation>
 <classes>
-<class>
-<name>Child With Function</name>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation></documentation>
-<attributes>
-</attributes>
-<operations>
-<operation>
-<name>op</name>
-<visibility>PublicAccess</visibility>
-<documentation></documentation>
-<return>Boolean</return>
-<parameters>
-</parameters>
-</operation>
-</operations>
-<events>
-</events>
-</class>
 <class>
 <name>Parent With Procedure</name>
 <kind>NormalClass</kind>
@@ -171,32 +150,6 @@
 </transitions>
 </statemachine>
 </class>
-<class stereotype="public">
-<name>External</name>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation></documentation>
-<attributes>
-</attributes>
-<operations>
-</operations>
-<events>
-</events>
-</class>
-<class stereotype="singleton">
-<name>Internal</name>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation></documentation>
-<attributes>
-</attributes>
-<operations>
-</operations>
-<events>
-</events>
-</class>
 <class>
 <name>Instance Deletion</name>
 <kind>NormalClass</kind>
@@ -330,6 +283,175 @@
 </transitions>
 </statemachine>
 </class>
+<class stereotype="singleton">
+<name>Bad Payload</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>o1</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>p</parametername>
+<documentation></documentation>
+<type>T1</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>o2</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>o</parametername>
+<documentation></documentation>
+<type>T2</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>h</name>
+<visibility>PublicAccess</visibility>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>p</parametername>
+<documentation></documentation>
+<type>E1</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+<event stereotype="instance event">
+<name>E1</name>
+<type>T1</type>
+</event>
+<event stereotype="instance event">
+<name>E2</name>
+<type>T2</type>
+</event>
+<event stereotype="class event">
+<name>E3</name>
+<type>T3</type>
+</event>
+</events>
+<statemachine>
+<states>
+<state initial="yes">
+<name>initial</name>
+<entryactions>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>S1</name>
+<entryactions>
+<entryaction><name>o2</name></entryaction>
+</entryactions>
+<documentation></documentation>
+</state>
+<state>
+<name>S2</name>
+<entryactions>
+<entryaction><name>o1</name></entryaction>
+</entryactions>
+<documentation></documentation>
+</state>
+</states>
+<transitions>
+<transition>
+<source>initial</source>
+<target>S1</target>
+<event><name>e1</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+<transition>
+<source>S1</source>
+<target>S2</target>
+<event><name>e1</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation></documentation>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="type">
+<name>T1</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{renames = Boolean}</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>T2</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{renames = Integer}</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>T3</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation>{renames = Float}</documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>External</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Internal</name>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
 </classes>
 <relationships>
 <association>
@@ -348,11 +470,5 @@
 <documentation></documentation>
 </role>
 </association>
-<inheritance>
-<name>g1</name>
-<documentation></documentation>
-<child>Child With Function</child>
-<parent>Parent With Procedure</parent>
-</inheritance>
 </relationships>
 </domain>
