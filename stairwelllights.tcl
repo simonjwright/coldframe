@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: stairwelllights.tcl,v 6e2c982cb688 2002/12/30 17:59:22 simon $
+# $Id: stairwelllights.tcl,v cec34400aa7a 2003/01/11 15:55:53 simon $
 # HCI for ColdFrame stairwell lights demo
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"
@@ -17,10 +17,10 @@ canvas .c -width 772 -height 691
 pack .c -side top -fill x
 
 # lamps; top floor downwards
-.c create rect 316 280 324 288 -width 1 -outline black -fill gray -tags a
-.c create rect 316 386 324 394 -width 1 -outline black -fill gray -tags b
-.c create rect 316 487 324 495 -width 1 -outline black -fill gray -tags c
-.c create rect 330 588 338 596 -width 1 -outline black -fill gray -tags d
+.c create oval 316 280 324 288 -width 1 -outline black -fill gray -tags a
+.c create oval 316 386 324 394 -width 1 -outline black -fill gray -tags b
+.c create oval 316 487 324 495 -width 1 -outline black -fill gray -tags c
+.c create oval 330 588 338 596 -width 1 -outline black -fill gray -tags d
 
 # buttons; top floor downwards.
 # pushButton is exported from Ada, the argument is the button number.
@@ -41,7 +41,7 @@ after 100 checkLampProc
 
 proc checkLampProc {} {
     foreach l {a b c d} {
-	# getLampState is excprted from Ada, the argument is the lamp letter.
+	# getLampState is exported from Ada, the argument is the lamp letter.
 	set s [getLampState $l]
 	if {$s} {
 	    .c itemconfigure $l -fill yellow
