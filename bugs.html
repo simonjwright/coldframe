@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v afbceb86693e 2004/04/22 04:48:58 simon $ -->
+<!-- $Id: bugs.html,v ac9ffc7616b5 2004/04/22 08:20:26 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -185,6 +185,8 @@ are fatal.
 
 <dd>It would be helpful if action routines could be inherited from a
 superclass.
+<br><i>They can be inherited, provided they have no parameter. This is
+accidental.</i>
 
 <dt>0240 (raised 2.iii.04)
 
@@ -225,7 +227,11 @@ are the default names used for initial and final states).
 <dd>A &#171;finalize&#187; operation on a &#171;singleton&#187;
 results in bad code. It should be a code generation error.
 
-<!-- next: 0256  -->
+<dt>0256 (raised 22.iv.04)
+
+<dd>Naming an event <i>Ev</i> results in bad code.
+
+<!-- next: 0257  -->
 
 </dl>
 
