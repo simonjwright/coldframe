@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 42c0c28cd6b6 2002/07/07 18:58:59 simon $ -->
+<!-- $Id: bugs.html,v 60c76eb28c6e 2002/07/11 05:00:24 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -46,11 +46,6 @@ Forward/Aft or 1..10) should be implemented with array-like behaviour.
 <dd>It would be good to support private operations (particularly for
 active classes, where procedure operations turn into task entries).
 
-<dt>0027 (raised 5.x.01)
-
-<dd>For attributes and operation parameters, it would be good to
-detect missing types (or names).
-
 <dt>0031 (raised 13.x.01)
 
 <dd>&#171;finalize&#187; operations which are functions or have
@@ -69,11 +64,6 @@ non-singleton party is marked <tt>[[source]]</tt>.
 
 <dd>Would it be better only to generate task entries when there's an
 &#171;entry&#187; stereotype?
-
-<dt>0043 (raised 28.xi.01)
-
-<dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
-targeted to specific instances of a particular class.
 
 <dt>0047 (raised 6.xii.01)
 
@@ -96,10 +86,10 @@ associated class is specified).
 
 <dd>To create an instance of a child class (or any class that has a
 reference to another class in its identifier), you have to type
-convert the <tt>Handle</tt> to
-<tt>ColdFrame.Instances.Handle</tt>.<br> This could be avoided by
-making (all?) <tt>Create</tt> operations children of the class
-package.
+convert the <tt>Handle</tt> to <tt>ColdFrame.Instances.Handle</tt>.
+
+<br>This could be avoided by making (all?) <tt>Create</tt> operations
+children of the class package.
 
 <dt>0056 (raised 8.i.02)
 
@@ -207,6 +197,17 @@ linked.
 <!-- next: 0101 -->
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>10.vii.02</h3>
+
+<dl>
+
+<dt>0027 (raised 5.x.01)
+
+<dd>For attributes and operation parameters, it would be good to
+detect missing types (or names).
+
+</dl>
 
 <h3>7.vii.02</h3>
 
@@ -779,6 +780,19 @@ class (resulting in a circular dependency).
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vii.02</h3>
+<dl>
+
+<dt>0043 (raised 28.xi.01)
+
+<dd>It may be desirable to allow <tt>[[callback]]</tt>s to be
+targeted to specific instances of a particular class.
+
+<br>This can be done with the <i>Counterpart</i> facility, if
+required.
+
+</dl>
 
 <h3>25.vi.02</h3>
 <dl>
