@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v ffcf12ac841c 2002/02/24 17:17:05 simon $
+# $Id: normalize-rose.tcl,v 3ebf4e31edd9 2002/02/28 20:05:03 simon $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -344,11 +344,11 @@ itcl::class Element {
     #   $this -number 5
     method -handleStereotype {} {
 	if [info exists stereotype] {
-	    set p {[ \t]*([a-z0-9_]+)[ \t]*(=[ \t]*([a-z0-9_,]+))?[ \t]*}
+	    set p {([-a-z0-9_ \t]+)(=[ \t]*([a-z0-9_,]+))?[ \t]*}
 	    set s $stereotype
 	    for {} {[regexp -nocase $p $s wh n opt v]} {} {
 		# n is the tag name, v the tag value if any
-		if [catch {$this -[string tolower $n] "$v"}] {
+		if [catch {$this -[join [split [string tolower $n]] "-"] "$v"}] {
 		    Warning \
 		        "stereotype not handled, \
 			\"$name <<[string tolower $n]>>\""
@@ -632,8 +632,6 @@ itcl::class Domain {
     variable relationships
 
     variable datatypes
-
-#    variable transitiontables
 
     proc currentDomain {} {return $currentDomain}
 
@@ -1528,9 +1526,9 @@ itcl::class Event {
     method -type {t} { set type $t}
 
     # Dependencies stereotyped <<event>> produce instance (state machine)
-    # events. Dependencies stereotyped <<message>> produce class events.
+    # events. Dependencies stereotyped <<class event>> produce class events.
     variable cls 0
-    method -message {dummy} {set cls 1}
+    method -class-event {dummy} {set cls 1}
 
     method -complete {} {
 	[stack -top] -event $this
@@ -1634,6 +1632,9 @@ itcl::class Transition {
     variable event
     method -event {e} {set event $e}
 
+    variable ignore 0
+    method -ignore {dummy} {set ignore 1}
+
     variable source
     method -source {s} {set source $s}
 
@@ -1651,7 +1652,9 @@ itcl::class Transition {
     }
 
     method -generate {domain} {
-	puts "<transition>"
+	puts -nonewline "<transition"
+	if $ignore then {puts -nonewline " ignore=\"yes\""}
+	puts ">"
 	if {[string length [$event -getName]] > 0} {
 	    putElement event [$event -getName]
 	}
