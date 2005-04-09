@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Properties"
@@ -18,6 +18,7 @@
 		    quid       	"3D3AE84103E2"
 		    parameters 	(list Parameters
 			(object Parameter "p"
+			    quid       	"4257762602AF"
 			    type       	"{mode=inout} Integer"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -26,7 +27,8 @@
 		(object ClassAttribute "id"
 		    quid       	"3D3AE82F00ED"
 		    stereotype 	"id"
-		    type       	"Scale")))
+		    type       	"Scale"
+		    quidu      	"3D3AE8DD00C5")))
 	(object Class "Animal"
 	    quid       	"3D3AE85F013C"
 	    class_attributes 	(list class_attribute_list
@@ -75,6 +77,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2070, 465)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(1846, 392)
@@ -87,14 +98,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D3AE85F013C"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1846, 448)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	452)
 		    width      	466
 		    height     	168
 		    annotation 	8
@@ -105,6 +108,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(795, 465)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(534, 370)
@@ -117,25 +129,33 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D3AE81D03E0"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(534, 426)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	520)
 		    width      	540
 		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @3
 		    location   	(1450, 465)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @4
 			Parent_View 	@3
 			location   	(1450, 406)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -152,9 +172,27 @@
 			(object RoleView "{source} owns" @5
 			    Parent_View 	@3
 			    location   	(655, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @6
 				Parent_View 	@5
 				location   	(1701, 425)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -173,6 +211,15 @@
 			    label      	(object SegLabel @7
 				Parent_View 	@5
 				location   	(1797, 519)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -185,9 +232,27 @@
 			(object RoleView "is owned by" @8
 			    Parent_View 	@3
 			    location   	(655, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @9
 				Parent_View 	@8
 				location   	(1184, 425)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -206,6 +271,15 @@
 			    label      	(object SegLabel @10
 				Parent_View 	@8
 				location   	(1104, 519)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -221,9 +295,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(750, 1515)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@11
-			location   	(667, 1489)
+			location   	(667, 1488)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -252,9 +335,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(765, 1935)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@12
-			location   	(682, 1909)
+			location   	(682, 1908)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166

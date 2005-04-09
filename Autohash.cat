@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Autohash"
@@ -35,28 +35,32 @@
 		(object ClassAttribute "id"
 		    quid       	"3BB22E880362"
 		    stereotype 	"id"
-		    type       	"Enum")))
+		    type       	"Enum"
+		    quidu      	"3BB22DC8025E")))
 	(object Class "Id Is Int"
 	    quid       	"3BB22E9A0325"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"3BB22EA40262"
 		    stereotype 	"id"
-		    type       	"Int")))
+		    type       	"Int"
+		    quidu      	"3BB22DBE020F")))
 	(object Class "Id Is Int No Upper"
 	    quid       	"3BB22EB50166"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"3BB22EC00354"
 		    stereotype 	"id"
-		    type       	"Int No Upper")))
+		    type       	"Int No Upper"
+		    quidu      	"3BB22DDF0138")))
 	(object Class "Id Is Int No Lower"
 	    quid       	"3BB22ED501E0"
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"3BB22EDF023B"
 		    stereotype 	"id"
-		    type       	"Int No Lower")))
+		    type       	"Int No Lower"
+		    quidu      	"3BB22DD001C1")))
 	(object Class "Id Is Integer"
 	    quid       	"3BB22EF202B3"
 	    class_attributes 	(list class_attribute_list
@@ -70,11 +74,13 @@
 		(object ClassAttribute "id1"
 		    quid       	"3BB22F1502DD"
 		    stereotype 	"id"
-		    type       	"Enum")
+		    type       	"Enum"
+		    quidu      	"3BB22DC8025E")
 		(object ClassAttribute "id2"
 		    quid       	"3BB22F1F01BC"
 		    stereotype 	"id"
-		    type       	"Int")))
+		    type       	"Int"
+		    quidu      	"3BB22DBE020F")))
 	(object Class "Id Is Integer With Max"
 	    quid       	"3BB22F3F02B6"
 	    documentation 	"[[ max : 18 ]]"
@@ -261,9 +267,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2096, 384)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(2006, 355)
+			location   	(2006, 348)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	180
@@ -271,7 +286,7 @@
 			label      	"Int")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(2006, 305)
+			location   	(2006, 304)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -292,9 +307,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2112, 640)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(2022, 611)
+			location   	(2022, 604)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	180
@@ -302,7 +326,7 @@
 			label      	"Enum")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(2022, 561)
+			location   	(2022, 560)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -323,9 +347,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 1216)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(2031, 1187)
+			location   	(2031, 1180)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	258
@@ -333,7 +366,7 @@
 			label      	"Int No Lower")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(2031, 1137)
+			location   	(2031, 1136)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -354,9 +387,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2160, 912)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2031, 883)
+			location   	(2031, 876)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	258
@@ -364,7 +406,7 @@
 			label      	"Int No Upper")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(2031, 833)
+			location   	(2031, 832)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -385,6 +427,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1568, 752)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(1348, 671)
@@ -406,6 +457,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1600, 1136)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
 			location   	(1380, 1055)
@@ -427,6 +487,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(144, 704)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
 			location   	(41, 653)
@@ -448,6 +517,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(816, 704)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
 			location   	(713, 653)
@@ -469,6 +547,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(112, 1296)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
 			location   	(9, 1245)
@@ -490,6 +577,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(864, 1312)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
 			location   	(761, 1261)
@@ -505,35 +601,23 @@
 		    width      	224
 		    height     	126
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Autohash::Two Ids" @11
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1552, 272)
-		    label      	(object ItemLabel
-			Parent_View 	@11
-			location   	(1380, 166)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	344
-			justify    	0
-			label      	"Two Ids")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3BB22F080390"
-		    width      	362
-		    height     	236
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Autohash::Assoc R5" @12
+		(object ClassView "Class" "Logical View::Autohash::Assoc R5" @11
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(592, 64)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@12
+			Parent_View 	@11
 			location   	(489, 13)
 			fill_color 	13434879
 			nlines     	1
@@ -547,14 +631,23 @@
 		    width      	224
 		    height     	126
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Autohash::Assoc R6" @13
+		(object ClassView "Class" "Logical View::Autohash::Assoc R6" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1152, 608)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@13
+			Parent_View 	@12
 			location   	(1049, 557)
 			fill_color 	13434879
 			nlines     	1
@@ -568,12 +661,51 @@
 		    width      	224
 		    height     	126
 		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Autohash::Two Ids" @13
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1552, 272)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@13
+			location   	(1380, 166)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	344
+			justify    	0
+			label      	"Two Ids")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BB22F080390"
+		    width      	362
+		    height     	236
+		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Autohash::Id Is Enum" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(448, 304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
 			location   	(287, 223)
@@ -591,11 +723,27 @@
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r5" @15
 		    location   	(949, 143)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @16
 			Parent_View 	@15
 			location   	(949, 84)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -612,9 +760,27 @@
 			(object RoleView "rb" @17
 			    Parent_View 	@15
 			    location   	(501, -161)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @18
 				Parent_View 	@17
 				location   	(1294, 158)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -628,7 +794,7 @@
 			    line_color 	3342489
 			    quidu      	"3BB23F86014C"
 			    client     	@15
-			    supplier   	@11
+			    supplier   	@13
 			    vertices   	(list Points
 				(949, 143)
 				(1006, 125)
@@ -637,6 +803,15 @@
 			    label      	(object SegLabel @19
 				Parent_View 	@17
 				location   	(1282, 106)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -649,9 +824,27 @@
 			(object RoleView "ra" @20
 			    Parent_View 	@15
 			    location   	(501, -161)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @21
 				Parent_View 	@20
 				location   	(660, 187)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -670,6 +863,15 @@
 			    label      	(object SegLabel @22
 				Parent_View 	@20
 				location   	(724, 179)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -682,16 +884,32 @@
 		(object AssocAttachView "" @23
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@12
+		    client     	@11
 		    supplier   	@15
 		    line_style 	0)
 		(object AssociationViewNew "r6" @24
 		    location   	(948, 432)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @25
 			Parent_View 	@24
 			location   	(1056, 470)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -708,9 +926,27 @@
 			(object RoleView "rb" @26
 			    Parent_View 	@24
 			    location   	(500, 128)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @27
 				Parent_View 	@26
 				location   	(1275, 316)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -724,7 +960,7 @@
 			    line_color 	3342489
 			    quidu      	"3BB23FBC011A"
 			    client     	@24
-			    supplier   	@11
+			    supplier   	@13
 			    vertices   	(list Points
 				(948, 432)
 				(1006, 447)
@@ -733,6 +969,15 @@
 			    label      	(object SegLabel @28
 				Parent_View 	@26
 				location   	(1345, 393)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -745,9 +990,27 @@
 			(object RoleView "ra" @29
 			    Parent_View 	@24
 			    location   	(500, 128)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @30
 				Parent_View 	@29
 				location   	(693, 323)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -766,6 +1029,15 @@
 			    label      	(object SegLabel @31
 				Parent_View 	@29
 				location   	(688, 411)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -778,7 +1050,7 @@
 		(object AssocAttachView "" @32
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@13
+		    client     	@12
 		    supplier   	@24
 		    line_style 	0)
 		(object ClassView "Class" "Logical View::Autohash::Id Is Int" @33
@@ -787,6 +1059,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(448, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@33
 			location   	(318, 1023)
@@ -804,11 +1085,27 @@
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r1" @34
 		    location   	(309, 647)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @35
 			Parent_View 	@34
 			location   	(309, 588)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -825,9 +1122,27 @@
 			(object RoleView "rb" @36
 			    Parent_View 	@34
 			    location   	(-139, 343)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @37
 				Parent_View 	@36
 				location   	(348, 968)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -850,6 +1165,15 @@
 			    label      	(object SegLabel @38
 				Parent_View 	@36
 				location   	(320, 913)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -862,9 +1186,27 @@
 			(object RoleView "ra" @39
 			    Parent_View 	@34
 			    location   	(-139, 343)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @40
 				Parent_View 	@39
 				location   	(362, 425)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -883,6 +1225,15 @@
 			    label      	(object SegLabel @41
 				Parent_View 	@39
 				location   	(349, 463)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -900,11 +1251,27 @@
 		    line_style 	0)
 		(object AssociationViewNew "r2" @43
 		    location   	(585, 663)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @44
 			Parent_View 	@43
 			location   	(585, 604)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -921,9 +1288,27 @@
 			(object RoleView "rb" @45
 			    Parent_View 	@43
 			    location   	(137, 359)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @46
 				Parent_View 	@45
 				location   	(556, 978)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -946,6 +1331,15 @@
 			    label      	(object SegLabel @47
 				Parent_View 	@45
 				location   	(565, 916)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -958,9 +1352,27 @@
 			(object RoleView "ra" @48
 			    Parent_View 	@43
 			    location   	(137, 359)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @49
 				Parent_View 	@48
 				location   	(547, 434)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -979,6 +1391,15 @@
 			    label      	(object SegLabel @50
 				Parent_View 	@48
 				location   	(559, 500)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1000,6 +1421,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1600, 1552)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@52
 			location   	(1431, 1471)
@@ -1021,6 +1451,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(448, 1856)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@53
 			location   	(231, 1775)
@@ -1038,11 +1477,27 @@
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r3" @54
 		    location   	(272, 1428)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @55
 			Parent_View 	@54
 			location   	(272, 1369)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -1059,9 +1514,27 @@
 			(object RoleView "rb" @56
 			    Parent_View 	@54
 			    location   	(-176, 324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @57
 				Parent_View 	@56
 				location   	(325, 1716)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1084,6 +1557,15 @@
 			    label      	(object SegLabel @58
 				Parent_View 	@56
 				location   	(298, 1672)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1096,9 +1578,27 @@
 			(object RoleView "ra" @59
 			    Parent_View 	@54
 			    location   	(-176, 324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @60
 				Parent_View 	@59
 				location   	(336, 1223)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1117,6 +1617,15 @@
 			    label      	(object SegLabel @61
 				Parent_View 	@59
 				location   	(318, 1263)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1134,11 +1643,27 @@
 		    line_style 	0)
 		(object AssociationViewNew "r4" @63
 		    location   	(619, 1428)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @64
 			Parent_View 	@63
 			location   	(619, 1369)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -1155,9 +1680,27 @@
 			(object RoleView "rb" @65
 			    Parent_View 	@63
 			    location   	(171, 324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @66
 				Parent_View 	@65
 				location   	(578, 1722)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1180,6 +1723,15 @@
 			    label      	(object SegLabel @67
 				Parent_View 	@65
 				location   	(625, 1672)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1192,9 +1744,27 @@
 			(object RoleView "ra" @68
 			    Parent_View 	@63
 			    location   	(171, 324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @69
 				Parent_View 	@68
 				location   	(565, 1232)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1213,6 +1783,15 @@
 			    label      	(object SegLabel @70
 				Parent_View 	@68
 				location   	(589, 1275)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1230,11 +1809,27 @@
 		    line_style 	0)
 		(object AssociationViewNew "r7" @72
 		    location   	(1025, 1598)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @73
 			Parent_View 	@72
 			location   	(1025, 1539)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -1251,9 +1846,27 @@
 			(object RoleView "rb" @74
 			    Parent_View 	@72
 			    location   	(577, -258)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @75
 				Parent_View 	@74
 				location   	(1340, 1510)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1276,6 +1889,15 @@
 			    label      	(object SegLabel @76
 				Parent_View 	@74
 				location   	(1380, 1572)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1288,9 +1910,27 @@
 			(object RoleView "ra" @77
 			    Parent_View 	@72
 			    location   	(577, -258)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @78
 				Parent_View 	@77
 				location   	(728, 1706)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1309,6 +1949,15 @@
 			    label      	(object SegLabel @79
 				Parent_View 	@77
 				location   	(730, 1778)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1320,11 +1969,27 @@
 				orientation 	0))))
 		(object AssociationViewNew "r8" @80
 		    location   	(1069, 1838)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @81
 			Parent_View 	@80
 			location   	(1069, 1779)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -1341,9 +2006,27 @@
 			(object RoleView "rb" @82
 			    Parent_View 	@80
 			    location   	(621, -18)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @83
 				Parent_View 	@82
 				location   	(1335, 1648)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1362,6 +2045,15 @@
 			    label      	(object SegLabel @84
 				Parent_View 	@82
 				location   	(1415, 1712)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1374,9 +2066,27 @@
 			(object RoleView "ra" @85
 			    Parent_View 	@80
 			    location   	(621, -18)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @86
 				Parent_View 	@85
 				location   	(772, 1838)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -1399,6 +2109,15 @@
 			    label      	(object SegLabel @87
 				Parent_View 	@85
 				location   	(729, 1900)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -1414,6 +2133,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1200, 1408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@88
 			location   	(1097, 1357)
@@ -1441,6 +2169,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1184, 1968)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@90
 			location   	(1081, 1917)

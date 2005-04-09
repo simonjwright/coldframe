@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Discriminated Records"
@@ -29,10 +29,12 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "xdot"
 		    quid       	"3BB1E85A0271"
-		    type       	"Rate")
+		    type       	"Rate"
+		    quidu      	"3BB1E82D023E")
 		(object ClassAttribute "ydot"
 		    quid       	"3BB1E86C007A"
-		    type       	"Rate")))
+		    type       	"Rate"
+		    quidu      	"3BB1E82D023E")))
 	(object Class "Output"
 	    quid       	"3BB1E87E03A1"
 	    documentation 	"[[ discriminated; callback : 3 ]]"
@@ -50,10 +52,12 @@
 		(object ClassAttribute "pos"
 		    quid       	"3BB1E8980328"
 		    type       	"Position"
+		    quidu      	"3BB1E80002E5"
 		    initv      	"Aft")
 		(object ClassAttribute "vel"
 		    quid       	"3BB1E8A3027A"
-		    type       	"Velocity")
+		    type       	"Velocity"
+		    quidu      	"3BB1E850006B")
 		(object ClassAttribute "acquire"
 		    quid       	"3BB1EE3301B6"
 		    type       	"Boolean"
@@ -74,9 +78,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1600, 480)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(1510, 451)
+			location   	(1510, 444)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	180
@@ -84,7 +97,7 @@
 			label      	"Position")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(1510, 401)
+			location   	(1510, 400)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -105,9 +118,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2112, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(2022, 1075)
+			location   	(2022, 1068)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	180
@@ -115,7 +137,7 @@
 			label      	"Rate")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(2022, 1025)
+			location   	(2022, 1024)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -136,9 +158,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1616, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1490, 1020)
+			location   	(1490, 1013)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	252
@@ -146,7 +177,7 @@
 			label      	"Velocity")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(1490, 970)
+			location   	(1490, 969)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -166,9 +197,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(736, 688)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(487, 579)
+			location   	(487, 572)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	498
@@ -176,7 +216,7 @@
 			label      	"Output")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(487, 529)
+			location   	(487, 528)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

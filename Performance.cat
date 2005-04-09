@@ -11,7 +11,7 @@
     documentation 	
 |Classes for ColdFrame performance tests.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -21,7 +21,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D5B9B180302"
 		    label      	"g1"
-		    supplier   	"Logical View::Performance::Person"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Person"
 		    quidu      	"3D5B9B0400F1")))
 	(object Class "Pet"
 	    quid       	"3D36DB1500E8"
@@ -82,7 +82,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9100A8"
 		    label      	"g2"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
 		(object Operation "speak"
@@ -96,7 +96,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3D36DC9500EA"
 		    label      	"g2"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"))
 	    operations 	(list Operations
 		(object Operation "speak"
@@ -121,14 +121,14 @@
 		(object Role "owns"
 		    quid       	"3D36DB1F011E"
 		    label      	"owns"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"
 		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE)
 		(object Role "is owned by"
 		    quid       	"3D36DB1F011F"
 		    label      	"is owned by"
-		    supplier   	"Logical View::Performance::Owner"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Owner"
 		    quidu      	"3D36DB0E00FC"
 		    client_cardinality 	(value cardinality "1")
 		    is_navigable 	TRUE)))
@@ -139,18 +139,18 @@
 		(object Role "feeds"
 		    quid       	"3D5B9B4301F6"
 		    label      	"feeds"
-		    supplier   	"Logical View::Performance::Pet"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Pet"
 		    quidu      	"3D36DB1500E8"
 		    client_cardinality 	(value cardinality "0..n")
 		    is_navigable 	TRUE)
 		(object Role "lives with"
 		    quid       	"3D5B9B430228"
 		    label      	"lives with"
-		    supplier   	"Logical View::Performance::Person"
+		    supplier   	"Logical View::ColdFrame Examples::Performance::Person"
 		    quidu      	"3D5B9B0400F1"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
-	    AssociationClass 	"Logical View::Performance::House"))
+	    AssociationClass 	"Logical View::ColdFrame Examples::Performance::House"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3D36DA000338"
@@ -158,7 +158,7 @@
 	    documentation 	
 |Classes for ColdFrame performance tests.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -166,7 +166,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Performance::Owners" @1
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Owners" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -191,7 +191,7 @@
 			label      	"Owners")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(814, 1600)
+			location   	(814, 1601)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -203,10 +203,10 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB8B0079"
 		    width      	214
-		    height     	212
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Pets" @2
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Pets" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -231,7 +231,7 @@
 			label      	"Pets")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(826, 1911)
+			location   	(826, 1912)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -243,10 +243,10 @@
 		    fill_color 	13434879
 		    quidu      	"3D36DB980154"
 		    width      	206
-		    height     	212
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Cat" @3
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Cat" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -263,7 +263,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(2274, 1578)
+			location   	(2274, 1602)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	162
@@ -273,10 +273,10 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D36DC7E03C2"
-		    height     	164
+		    height     	116
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Dog" @4
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Dog" @4
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -293,7 +293,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2664, 1557)
+			location   	(2664, 1581)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	162
@@ -303,10 +303,10 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D36DC8501B9"
-		    height     	208
+		    height     	160
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::House" @5
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::House" @5
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -336,7 +336,7 @@
 		    height     	160
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Owner" @6
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Owner" @6
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -366,7 +366,7 @@
 		    height     	160
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Performance::Pet" @7
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Pet" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -565,7 +565,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(2437, 1422)
+			location   	(2433, 1433)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -589,7 +589,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@17
-			location   	(2668, 1411)
+			location   	(2673, 1423)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -601,7 +601,7 @@
 		    client     	@4
 		    supplier   	@7
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Performance::Person" @18
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Performance::Person" @18
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -835,4 +835,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1545
-		    label      	"$Id: Performance.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")))))
+		    label      	"$Id: Performance.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")))))

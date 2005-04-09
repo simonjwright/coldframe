@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve detecting errors.
 |
-|{ revision = $Revision: 6ea040caff18 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -576,7 +576,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1275
-					label      	"$Id: Bad_Code_Regressions.cat,v 6ea040caff18 2004/10/09 10:37:13 simon $"))))))
+					label      	"$Id: Bad_Code_Regressions.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $"))))))
 		(object Class "Instance Deletion"
 		    quid       	"4038F01403C7"
 		    operations 	(list Operations
@@ -930,7 +930,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1420
-					label      	"$Id: Bad_Code_Regressions.cat,v 6ea040caff18 2004/10/09 10:37:13 simon $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
 				    (object TransView "" @27
 					stereotype 	TRUE
 					line_color 	3342489
@@ -1877,7 +1877,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@57
-				location   	(371, 612)
+				location   	(371, 611)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	380
@@ -1975,7 +1975,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@62
-				location   	(346, 935)
+				location   	(346, 934)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	418
@@ -2015,7 +2015,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@63
-				location   	(167, 1455)
+				location   	(167, 1454)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	166
@@ -2055,7 +2055,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@64
-				location   	(724, 1454)
+				location   	(724, 1453)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	166
@@ -2183,7 +2183,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@69
-				location   	(1266, 1452)
+				location   	(1266, 1451)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	166
@@ -2296,7 +2296,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@74
-				location   	(298, 1770)
+				location   	(298, 1769)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	468
@@ -2420,7 +2420,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@79
-				location   	(281, 2142)
+				location   	(281, 2141)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	458
@@ -2489,7 +2489,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@82
-				location   	(353, 2540)
+				location   	(353, 2539)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	300
@@ -2682,7 +2682,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@86
-				location   	(242, 952)
+				location   	(242, 951)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	542
@@ -3128,7 +3128,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@102
-				location   	(387, 313)
+				location   	(387, 312)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	326
@@ -3147,23 +3147,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4142CD6603CD"
-			    compartment 	(object Compartment
-				Parent_View 	@102
-				location   	(387, 369)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	235)
 			    width      	344
 			    height     	218
 			    annotation 	8
@@ -3175,7 +3158,7 @@
 	    documentation 	
 |Regression tests that involve detecting errors at the code generation stage.
 |
-|{ revision = $Revision: 6ea040caff18 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -3221,7 +3204,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1425
-		    label      	"$Id: Bad_Code_Regressions.cat,v 6ea040caff18 2004/10/09 10:37:13 simon $")
+		    label      	"$Id: Bad_Code_Regressions.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
 		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @105
 		    location   	(453, 410)
 		    font       	(object Font
@@ -3235,7 +3218,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@105
-			location   	(97, 371)
+			location   	(97, 370)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	712
@@ -3269,7 +3252,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@106
-			location   	(103, 674)
+			location   	(103, 673)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	428
@@ -3303,7 +3286,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@107
-			location   	(108, 956)
+			location   	(108, 955)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	380
@@ -3337,7 +3320,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@108
-			location   	(113, 1261)
+			location   	(113, 1260)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	402
@@ -3396,7 +3379,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@110
-			location   	(114, 1604)
+			location   	(114, 1603)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	386

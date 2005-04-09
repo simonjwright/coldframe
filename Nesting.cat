@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Nesting"
@@ -21,7 +21,7 @@
 	(object Class_Category "L1"
 	    is_unit    	TRUE
 	    is_loaded  	FALSE
-	    file_name  	"$ColdFrame\\L1.cat"
+	    file_name  	"$CURDIR\\L1.cat"
 	    quid       	"3D986ABA02DC"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -35,14 +35,32 @@
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Nesting::L1" @1
 		    location   	(675, 390)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(531, 306)
+			location   	(531, 350)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"L1")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(531, 306)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"<<generate>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
@@ -55,6 +73,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1950, 1185)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(1869, 1116)
@@ -76,6 +103,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(675, 1200)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(589, 1154)

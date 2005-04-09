@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Formalization"
@@ -25,7 +25,8 @@
 		    result     	"Licensing Authority"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0))
+		    uid        	0
+		    quidu      	"3DCB83C30173"))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "number"
 		    quid       	"3DCB83F8018D"
@@ -35,7 +36,8 @@
 		    quid       	"3DCB8408032B"
 		    documentation 	"[[ formalizes : a3 ]]"
 		    stereotype 	"id"
-		    type       	"Licensing Authority")))
+		    type       	"Licensing Authority"
+		    quidu      	"3DCB83C30173")))
 	(object Association "a3"
 	    quid       	"3DCB843E0116"
 	    roles      	(list role_list
@@ -69,6 +71,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1740, 600)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(1421, 482)
@@ -81,14 +92,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DCB83EB02ED"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1421, 538)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	635)
 		    width      	656
 		    height     	258
 		    annotation 	8
@@ -99,6 +102,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(330, 600)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(142, 527)
@@ -111,25 +123,33 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DCB83C30173"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(142, 583)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	380)
 		    width      	394
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a3" @3
 		    location   	(969, 600)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @4
 			Parent_View 	@3
 			location   	(969, 541)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -146,9 +166,27 @@
 			(object RoleView "issued" @5
 			    Parent_View 	@3
 			    location   	(399, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @6
 				Parent_View 	@5
 				location   	(1323, 559)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -167,6 +205,15 @@
 			    label      	(object SegLabel @7
 				Parent_View 	@5
 				location   	(1367, 654)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -179,9 +226,27 @@
 			(object RoleView "was issued by" @8
 			    Parent_View 	@3
 			    location   	(399, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @9
 				Parent_View 	@8
 				location   	(683, 560)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -200,6 +265,15 @@
 			    label      	(object SegLabel @10
 				Parent_View 	@8
 				location   	(571, 654)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1

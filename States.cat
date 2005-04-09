@@ -11,7 +11,7 @@
     documentation 	
 |This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 |
-|[[ revision : $Id: States.cat,v 06014bfea356 2005/03/05 22:03:12 simon $ ]]
+|[[ revision : $Id: States.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $ ]]
 |
     
     exportControl 	"Public"
@@ -85,11 +85,13 @@
 		(object ClassAttribute "heartbeat timer"
 		    quid       	"3C53D8E9025C"
 		    documentation 	"Controls the detection of failure of the heartbeat signal."
-		    type       	"Timer")
+		    type       	"Timer"
+		    quidu      	"3C750FDC0384")
 		(object ClassAttribute "warmup timer"
 		    quid       	"3C53D8FA016F"
 		    documentation 	"After heartbeats have been detected, a period of proper heartbeat reception must elapse before the device is considered to be working."
-		    type       	"Timer"))
+		    type       	"Timer"
+		    quidu      	"3C750FDC0384"))
 	    statemachine 	(object State_Machine "Lifecycle"
 		quid       	"3C51670A02DB"
 		stereotype 	"generate"
@@ -1447,31 +1449,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3C53D8D401BD"
-		    compartment 	(object Compartment
-			Parent_View 	@46
-			location   	(222, 230)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	8
-			max_width  	618
-			compartmentItems 	(list Compartment
-			    "- heartbeat timer : Timer"
-			    "- warmup timer : Timer"
-			    "+ set heartbeat timeout()"
-			    "+ set 2 second warmup timeout()"
-			    "+ set 6 second warmup timeout()"
-			    "+ clear heartbeat timeout()"
-			    "+ clear warmup timeout()"))
 		    width      	630
 		    height     	636
 		    annotation 	8
@@ -1520,7 +1497,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@49
-			location   	(1845, 444)
+			location   	(1845, 443)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	182

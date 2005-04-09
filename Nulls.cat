@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Nulls"
@@ -17,6 +17,7 @@
 		    quid       	"3DDE66D200E6"
 		    parameters 	(list Parameters
 			(object Parameter "p"
+			    quid       	"4257762902CE"
 			    type       	"Cls"
 			    initv      	"null"))
 		    concurrency 	"Sequential"
@@ -43,6 +44,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(840, 450)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(616, 355)
@@ -55,14 +65,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDE66BF0161"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(616, 411)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	445)
 		    width      	466
 		    height     	212
 		    annotation 	8

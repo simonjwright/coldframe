@@ -10,7 +10,7 @@
     quid       	"3CEA58590211"
     documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: fba6f911e175 $} 
+|{revision = $Revision: 8003fcb36942 $} 
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -55,7 +55,8 @@
 		    parameters 	(list Parameters
 			(object Parameter "i"
 			    quid       	"3E914EF6020E"
-			    type       	"Information"))
+			    type       	"Information"
+			    quidu      	"3D9BD3FA00E5"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
@@ -89,7 +90,7 @@
 			    type       	"Content"
 			    quidu      	"3CEA58A00152"))
 		    concurrency 	"Sequential"
-		    opExpgrtControl 	"Public"
+		    opExportControl 	"Public"
 		    uid        	0)
 		(object Operation "handle mark"
 		    quid       	"3D7E10C2021C"
@@ -497,7 +498,8 @@
 		    type       	"Duration")
 		(object ClassAttribute "t"
 		    quid       	"3E931D370124"
-		    type       	"Timer"))
+		    type       	"Timer"
+		    quidu      	"3C750FDC0384"))
 	    statemachine 	(object State_Machine "State/Activity Model2"
 		quid       	"3D2EC70C00F0"
 		stereotype 	"generate"
@@ -1520,7 +1522,7 @@
 	    title      	"Main"
 	    documentation 	
 |This domain contains material for testing ColdFrame's event handling.
-|{revision = $Revision: fba6f911e175 $} 
+|{revision = $Revision: 8003fcb36942 $} 
 	    
 	    zoom       	87
 	    max_height 	28350
@@ -1545,7 +1547,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@44
-			location   	(957, 712)
+			location   	(957, 706)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	936
@@ -1553,7 +1555,7 @@
 			label      	"Recipient")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@44
-			location   	(957, 663)
+			location   	(957, 662)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1564,23 +1566,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA5887005D"
-		    compartment 	(object Compartment
-			Parent_View 	@44
-			location   	(957, 772)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	11
-			max_width  	934)
 		    width      	954
 		    height     	678
 		    annotation 	8
@@ -1602,7 +1587,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@45
-			location   	(2638, 908)
+			location   	(2638, 902)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	394
@@ -1610,7 +1595,7 @@
 			label      	"Content")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@45
-			location   	(2638, 859)
+			location   	(2638, 858)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1621,23 +1606,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CEA58A00152"
-		    compartment 	(object Compartment
-			Parent_View 	@45
-			location   	(2638, 968)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	391)
 		    width      	412
 		    height     	286
 		    annotation 	8
@@ -1659,7 +1627,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@46
-			location   	(38, 933)
+			location   	(38, 927)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	374
@@ -1667,7 +1635,7 @@
 			label      	"Waiting")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@46
-			location   	(38, 884)
+			location   	(38, 883)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1678,23 +1646,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2ED7E302C6"
-		    compartment 	(object Compartment
-			Parent_View 	@46
-			location   	(38, 993)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	371)
 		    width      	392
 		    height     	236
 		    annotation 	8
@@ -1726,23 +1677,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D2EE2D100E8"
-		    compartment 	(object Compartment
-			Parent_View 	@47
-			location   	(1334, 1696)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	11
-			max_width  	509)
 		    width      	530
 		    height     	622
 		    annotation 	8
@@ -2127,7 +2061,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1510
-		    label      	"$Id: Event_Test.cat,v fba6f911e175 2004/07/02 05:13:13 simon $")
+		    label      	"$Id: Event_Test.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
 		(object ClassView "Class" "Logical View::Event Test::Completion Transitions" @66
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -2145,7 +2079,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@66
-			location   	(1225, 2518)
+			location   	(1225, 2512)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	712
@@ -2153,7 +2087,7 @@
 			label      	"Completion Transitions")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@66
-			location   	(1225, 2469)
+			location   	(1225, 2468)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -2164,23 +2098,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4056C8C901DD"
-		    compartment 	(object Compartment
-			Parent_View 	@66
-			location   	(1225, 2578)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	6
-			max_width  	710)
 		    width      	730
 		    height     	432
 		    annotation 	8
@@ -2231,7 +2148,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@69
-			location   	(1257, 3184)
+			location   	(1257, 3178)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	634
@@ -2239,7 +2156,7 @@
 			label      	"Timer Task Teardown")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@69
-			location   	(1257, 3135)
+			location   	(1257, 3134)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -2250,23 +2167,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40E4E8A00210"
-		    compartment 	(object Compartment
-			Parent_View 	@69
-			location   	(1257, 3244)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	5
-			max_width  	632)
 		    width      	652
 		    height     	384
 		    annotation 	8
@@ -2288,7 +2188,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@70
-			location   	(433, 3298)
+			location   	(433, 3292)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	184
@@ -2296,7 +2196,7 @@
 			label      	"Dummy")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@70
-			location   	(433, 3249)
+			location   	(433, 3248)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

@@ -16,7 +16,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -80,7 +80,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F000B2"
 		    label      	"g1"
-		    supplier   	"Logical View::Digital IO::Signal"
+		    supplier   	"Logical View::ColdFrame Examples::Digital IO::Signal"
 		    quidu      	"3DFCF783026E"))
 	    operations 	(list Operations
 		(object Operation "changed"
@@ -96,7 +96,7 @@
 		(object Inheritance_Relationship
 		    quid       	"3DFCF7F700B2"
 		    label      	"g1"
-		    supplier   	"Logical View::Digital IO::Signal"
+		    supplier   	"Logical View::ColdFrame Examples::Digital IO::Signal"
 		    quidu      	"3DFCF783026E"))
 	    operations 	(list Operations
 		(object Operation "changed"
@@ -116,7 +116,7 @@
 |manages digital (discrete) input/output.
 |
 |{ name = Digital IO }
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    stereotype 	"include"
 	    exportControl 	"Public"
@@ -227,7 +227,7 @@
 		    origin_x   	0
 		    origin_y   	728
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Application" @1
+			(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Application" @1
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -244,30 +244,30 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@1
-				location   	(212, 303)
+				location   	(516, 306)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	832
+				max_width  	224
 				justify    	0
 				label      	"Application")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@1
-				location   	(212, 258)
+				location   	(516, 262)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	832
+				max_width  	221
 				justify    	0
 				label      	"<<public>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3DFCFA6E0024"
-			    width      	850
-			    height     	218
+			    width      	242
+			    height     	210
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal Name" @2
+			(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Signal Name" @2
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -284,30 +284,30 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@2
-				location   	(1526, 694)
+				location   	(1556, 671)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	256
+				max_width  	196
 				justify    	0
 				label      	"Signal Name")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@2
-				location   	(1526, 649)
+				location   	(1556, 627)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	256
+				max_width  	193
 				justify    	0
 				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3DFCFB77033C"
-			    width      	274
-			    height     	164
+			    width      	214
+			    height     	208
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::HCI" @3
+			(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::HCI" @3
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -324,30 +324,30 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@3
-				location   	(1246, 281)
+				location   	(1560, 307)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	840
+				max_width  	212
 				justify    	0
 				label      	"HCI")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@3
-				location   	(1246, 236)
+				location   	(1560, 263)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	840
+				max_width  	209
 				justify    	0
 				label      	"<<public>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3DFCFA83024B"
-			    width      	858
-			    height     	264
+			    width      	230
+			    height     	210
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal State" @4
+			(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Signal State" @4
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -364,27 +364,27 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@4
-				location   	(496, 656)
+				location   	(528, 682)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	318
+				max_width  	254
 				justify    	0
 				label      	"Signal State")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@4
-				location   	(496, 611)
+				location   	(528, 638)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	318
+				max_width  	254
 				justify    	0
 				label      	"<<callback>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	16777088
 			    quidu      	"3DFCF80601AE"
-			    width      	336
-			    height     	264
+			    width      	272
+			    height     	210
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object Label @5
@@ -400,7 +400,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1585
-			    label      	"$Id: Digital_IO.cat,v 06014bfea356 2005/03/05 22:03:12 simon $"))))))
+			    label      	"$Id: Digital_IO.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $"))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DFCF77A0261"
@@ -415,7 +415,7 @@
 |This domain manages digital (discrete) input/output.
 |It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -423,7 +423,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Digital IO::Signal" @6
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Signal" @6
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -440,21 +440,20 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
-			location   	(386, 1052)
+			location   	(639, 1191)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	668
+			nlines     	2
+			max_width  	162
 			justify    	0
 			label      	"Signal")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCF783026E"
-		    width      	686
-		    height     	438
+		    height     	160
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Output" @7
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Output" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -497,7 +496,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(1200, 1121)
+			location   	(1073, 1158)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -509,7 +508,7 @@
 		    client     	@7
 		    supplier   	@6
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal State" @9
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Signal State" @9
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -526,30 +525,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(2355, 231)
+			location   	(2408, 280)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	360
+			max_width  	254
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@9
-			location   	(2355, 186)
+			location   	(2408, 236)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	360
+			max_width  	254
 			justify    	0
 			label      	"<<callback>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCF80601AE"
-		    width      	378
-		    height     	310
+		    width      	272
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Input" @10
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Input" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -592,7 +591,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@11
-			location   	(1200, 1445)
+			location   	(1073, 1395)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -604,7 +603,7 @@
 		    client     	@10
 		    supplier   	@6
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Application" @12
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Application" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -621,30 +620,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@12
-			location   	(176, 260)
+			location   	(480, 286)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	832
+			max_width  	224
 			justify    	0
 			label      	"Application")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@12
-			location   	(176, 215)
+			location   	(480, 242)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	832
+			max_width  	221
 			justify    	0
 			label      	"<<public>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA6E0024"
-		    width      	850
-		    height     	264
+		    width      	242
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::HCI" @13
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::HCI" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -661,30 +660,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@13
-			location   	(1180, 237)
+			location   	(1494, 286)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	840
+			max_width  	212
 			justify    	0
 			label      	"HCI")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@13
-			location   	(1180, 192)
+			location   	(1494, 242)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	840
+			max_width  	209
 			justify    	0
 			label      	"<<public>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3DFCFA83024B"
-		    width      	858
-		    height     	310
+		    width      	230
+		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Digital IO::Digital IO Interface::Signal Name" @14
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Signal Name" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -701,26 +700,26 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
-			location   	(2364, 735)
+			location   	(2446, 734)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	360
+			max_width  	196
 			justify    	0
 			label      	"Signal Name")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@14
-			location   	(2364, 690)
+			location   	(2446, 690)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	360
+			max_width  	193
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFB77033C"
-		    width      	378
+		    width      	214
 		    height     	210
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -737,8 +736,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: Digital_IO.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")
-		(object CategoryView "Logical View::Digital IO::Digital IO Interface" @16
+		    label      	"$Id: Digital_IO.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
+		(object CategoryView "Logical View::ColdFrame Examples::Digital IO::Digital IO Interface" @16
 		    location   	(2566, 1561)
 		    font       	(object Font
 			size       	10
@@ -751,7 +750,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(2422, 1522)
+			location   	(2422, 1521)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288

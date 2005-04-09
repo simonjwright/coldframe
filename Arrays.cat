@@ -902,7 +902,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@25
-			location   	(2581, 593)
+			location   	(2581, 592)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	270
@@ -942,7 +942,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@26
-			location   	(2636, 855)
+			location   	(2636, 854)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -982,7 +982,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@27
-			location   	(2647, 1118)
+			location   	(2647, 1117)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -1022,7 +1022,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@28
-			location   	(265, 156)
+			location   	(265, 155)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	430
@@ -1041,23 +1041,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"400998B300D3"
-		    compartment 	(object Compartment
-			Parent_View 	@28
-			location   	(265, 212)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	426)
 		    width      	448
 		    height     	308
 		    annotation 	8
@@ -1079,7 +1062,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@29
-			location   	(315, 503)
+			location   	(315, 502)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	334
@@ -1098,23 +1081,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"400998D80285"
-		    compartment 	(object Compartment
-			Parent_View 	@29
-			location   	(315, 559)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	331)
 		    width      	352
 		    height     	308
 		    annotation 	8
@@ -1136,7 +1102,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@30
-			location   	(322, 838)
+			location   	(322, 837)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	328
@@ -1155,23 +1121,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"400998EF009D"
-		    compartment 	(object Compartment
-			Parent_View 	@30
-			location   	(322, 894)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	326)
 		    width      	346
 		    height     	308
 		    annotation 	8
@@ -1218,7 +1167,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@32
-			location   	(2642, 1365)
+			location   	(2642, 1364)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	194
@@ -1258,7 +1207,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@33
-			location   	(293, 1180)
+			location   	(293, 1179)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	378
@@ -1277,23 +1226,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40099C4B0270"
-		    compartment 	(object Compartment
-			Parent_View 	@33
-			location   	(293, 1236)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	376)
 		    width      	396
 		    height     	308
 		    annotation 	8
@@ -1315,7 +1247,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@34
-			location   	(312, 1520)
+			location   	(312, 1519)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	348
@@ -1334,23 +1266,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40099CB90048"
-		    compartment 	(object Compartment
-			Parent_View 	@34
-			location   	(312, 1576)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	345)
 		    width      	366
 		    height     	308
 		    annotation 	8
@@ -1372,7 +1287,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@35
-			location   	(273, 1861)
+			location   	(273, 1860)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	430
@@ -1391,23 +1306,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40099D030365"
-		    compartment 	(object Compartment
-			Parent_View 	@35
-			location   	(273, 1917)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	426)
 		    width      	448
 		    height     	308
 		    annotation 	8
@@ -1429,7 +1327,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@36
-			location   	(332, 2220)
+			location   	(332, 2219)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	334
@@ -1448,23 +1346,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40099E5702E2"
-		    compartment 	(object Compartment
-			Parent_View 	@36
-			location   	(332, 2276)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	331)
 		    width      	352
 		    height     	308
 		    annotation 	8
@@ -1486,7 +1367,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@37
-			location   	(308, 2562)
+			location   	(308, 2561)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	378
@@ -1505,23 +1386,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40099E650075"
-		    compartment 	(object Compartment
-			Parent_View 	@37
-			location   	(308, 2618)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	376)
 		    width      	396
 		    height     	308
 		    annotation 	8

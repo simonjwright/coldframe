@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Association Errors"
@@ -48,44 +48,23 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Association Errors::A" @1
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(782, 449)
-		    label      	(object ItemLabel
-			Parent_View 	@1
-			location   	(558, 376)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	448
-			justify    	0
-			label      	"A")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3E1EE00D0063"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(558, 432)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	452)
-		    width      	466
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Association Errors::B" @2
+		(object ClassView "Class" "Logical View::Association Errors::B" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1767, 445)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@2
+			Parent_View 	@1
 			location   	(1543, 372)
 			fill_color 	13434879
 			nlines     	1
@@ -96,25 +75,64 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E1EE0130225"
-		    compartment 	(object Compartment
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Association Errors::A" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(782, 449)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1543, 428)
-			icon_style 	"Label"
+			location   	(558, 376)
 			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	452)
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"A")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E1EE00D0063"
 		    width      	466
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @3
 		    location   	(1274, 446)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @4
 			Parent_View 	@3
 			location   	(1274, 387)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -131,9 +149,27 @@
 			(object RoleView "theB" @5
 			    Parent_View 	@3
 			    location   	(492, -3)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @6
 				Parent_View 	@5
 				location   	(1480, 404)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -147,7 +183,7 @@
 			    line_color 	3342489
 			    quidu      	"3E1EE61D0386"
 			    client     	@3
-			    supplier   	@2
+			    supplier   	@1
 			    line_style 	0)
 			(object RoleView "$UNNAMED$0" @7
 			    Parent_View 	@3
@@ -156,5 +192,5 @@
 			    line_color 	3342489
 			    quidu      	"3E1EE61D0390"
 			    client     	@3
-			    supplier   	@1
+			    supplier   	@2
 			    line_style 	0)))))))

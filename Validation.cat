@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Validation"
@@ -32,7 +32,8 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "e"
 		    quid       	"3BB9D24E030D"
-		    type       	"Exception ID")
+		    type       	"Exception ID"
+		    quidu      	"3BB9CFB50231")
 		(object ClassAttribute "cs"
 		    quid       	"3BB9D255037A"
 		    type       	"Classes")
@@ -77,6 +78,7 @@
 		    quid       	"3BBB07DD014B"
 		    parameters 	(list Parameters
 			(object Parameter "to"
+			    quid       	"4257762200CC"
 			    type       	"integer"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -93,11 +95,13 @@
 		    stereotype 	"class"
 		    parameters 	(list Parameters
 			(object Parameter "owner"
+			    quid       	"4257762200D1"
 			    type       	"Text"))
 		    result     	"Books"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0))
+		    uid        	0
+		    quidu      	"3BB9D207014C"))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "name"
 		    quid       	"3BBB096402E4"
@@ -126,6 +130,7 @@
 		    stereotype 	"class"
 		    parameters 	(list Parameters
 			(object Parameter "s"
+			    quid       	"4257762200DB"
 			    type       	"String"
 			    initv      	
 |"foo"
@@ -133,7 +138,8 @@
 		    result     	"Pet"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0))
+		    uid        	0
+		    quidu      	"3BC16F730195"))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "name"
 		    quid       	"3BC16FC7032A"
@@ -176,9 +182,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 400)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(393, 371)
+			location   	(393, 364)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	270
@@ -186,7 +201,7 @@
 			label      	"Exception ID")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(393, 321)
+			location   	(393, 320)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -207,9 +222,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1280, 1408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1190, 1379)
+			location   	(1190, 1372)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	180
@@ -217,7 +241,7 @@
 			label      	"Books")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@2
-			location   	(1190, 1329)
+			location   	(1190, 1328)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -238,9 +262,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(528, 1200)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(356, 891)
+			location   	(356, 884)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	344
@@ -248,7 +281,7 @@
 			label      	"Rec")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@3
-			location   	(356, 841)
+			location   	(356, 840)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -259,14 +292,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BB9D22801A4"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(356, 952)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	12
-			max_width  	350)
 		    width      	362
 		    height     	742
 		    annotation 	8
@@ -277,9 +302,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1168, 512)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(987, 403)
+			location   	(987, 396)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	362
@@ -287,7 +321,7 @@
 			label      	"S")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(987, 353)
+			location   	(987, 352)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -298,14 +332,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BBB078F0215"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(987, 464)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	368)
 		    width      	380
 		    height     	342
 		    annotation 	8
@@ -316,6 +342,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1280, 992)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(827, 861)
@@ -328,14 +363,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BBB09570014"
-		    compartment 	(object Compartment
-			Parent_View 	@5
-			location   	(827, 922)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	912)
 		    width      	924
 		    height     	286
 		    autoResize 	TRUE)
@@ -352,6 +379,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(976, 2272)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
 			location   	(888, 2221)
@@ -367,43 +403,23 @@
 		    width      	194
 		    height     	126
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Validation::Person" @8
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(544, 2064)
-		    label      	(object ItemLabel
-			Parent_View 	@8
-			location   	(363, 1983)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	362
-			justify    	0
-			label      	"Person")
-		    icon_style 	"Label"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3BC16F6B0376"
-		    compartment 	(object Compartment
-			Parent_View 	@8
-			location   	(363, 2044)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	368)
-		    width      	380
-		    height     	186
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Validation::Pet" @9
+		(object ClassView "Class" "Logical View::Validation::Pet" @8
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1648, 2064)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@9
+			Parent_View 	@8
 			location   	(1231, 1958)
 			fill_color 	13434879
 			nlines     	1
@@ -414,24 +430,62 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BC16F730195"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(1231, 2019)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	831)
 		    width      	852
 		    height     	236
 		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Validation::Person" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(544, 2064)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(363, 1983)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	362
+			justify    	0
+			label      	"Person")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3BC16F6B0376"
+		    width      	380
+		    height     	186
+		    autoResize 	TRUE)
 		(object AssociationViewNew "r" @10
 		    location   	(977, 2064)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @11
 			Parent_View 	@10
 			location   	(977, 2005)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -448,9 +502,27 @@
 			(object RoleView "owns" @12
 			    Parent_View 	@10
 			    location   	(433, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @13
 				Parent_View 	@12
 				location   	(1151, 2023)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -464,11 +536,20 @@
 			    line_color 	3342489
 			    quidu      	"3BC16F8400F0"
 			    client     	@10
-			    supplier   	@9
+			    supplier   	@8
 			    line_style 	0
 			    label      	(object SegLabel @14
 				Parent_View 	@12
 				location   	(1186, 2118)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -481,9 +562,27 @@
 			(object RoleView "belongs to" @15
 			    Parent_View 	@10
 			    location   	(433, 0)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @16
 				Parent_View 	@15
 				location   	(827, 2026)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -497,11 +596,20 @@
 			    line_color 	3342489
 			    quidu      	"3BC16F840104"
 			    client     	@10
-			    supplier   	@8
+			    supplier   	@9
 			    line_style 	0
 			    label      	(object SegLabel @17
 				Parent_View 	@15
 				location   	(768, 2118)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1

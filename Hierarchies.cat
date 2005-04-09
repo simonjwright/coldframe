@@ -10,7 +10,7 @@
     quid       	"3CDD01290395"
     documentation 	
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
-|{revision = $Revision: 014b87e33ada $ }
+|{revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -372,7 +372,7 @@
 	    title      	"Main"
 	    documentation 	
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
-|{revision = $Revision: 014b87e33ada $ }
+|{revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -456,7 +456,7 @@
 	    title      	"F 2 view"
 	    documentation 	
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
-|{revision = $Revision: 014b87e33ada $ }
+|{revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	85
 	    max_height 	28350
@@ -491,23 +491,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD01A70240"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(396, 345)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	862)
 		    width      	882
 		    height     	286
 		    annotation 	8
@@ -539,23 +522,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD01D90002"
-		    compartment 	(object Compartment
-			Parent_View 	@5
-			location   	(1356, 345)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	862)
 		    width      	882
 		    height     	286
 		    annotation 	8
@@ -587,23 +553,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD01E0011D"
-		    compartment 	(object Compartment
-			Parent_View 	@6
-			location   	(2388, 346)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	862)
 		    width      	882
 		    height     	286
 		    annotation 	8
@@ -635,23 +584,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD01F202A9"
-		    compartment 	(object Compartment
-			Parent_View 	@7
-			location   	(401, 919)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	859)
 		    width      	880
 		    height     	286
 		    annotation 	8
@@ -707,23 +639,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD021503D9"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(409, 1419)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	5
-			max_width  	856)
 		    width      	876
 		    height     	336
 		    annotation 	8
@@ -779,23 +694,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD022701A7"
-		    compartment 	(object Compartment
-			Parent_View 	@11
-			location   	(235, 1949)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	9
-			max_width  	1192)
 		    width      	1212
 		    height     	536
 		    annotation 	8
@@ -827,23 +725,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3CDD01F703C5"
-		    compartment 	(object Compartment
-			Parent_View 	@12
-			location   	(1696, 893)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	5
-			max_width  	1027)
 		    width      	1048
 		    height     	336
 		    annotation 	8
@@ -965,7 +846,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@17
-			location   	(1870, 2146)
+			location   	(1870, 2139)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	188
@@ -973,7 +854,7 @@
 			label      	"CIH")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@17
-			location   	(1870, 2096)
+			location   	(1870, 2095)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -1001,13 +882,13 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1654
-		    label      	"$Id: Hierarchies.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))
+		    label      	"$Id: Hierarchies.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")))
 	(object ClassDiagram "Tree view"
 	    quid       	"3CDD017D02DB"
 	    title      	"Tree view"
 	    documentation 	
 |Support for subtype migration in deeply layered multiple inheritance hierarchies.
-|{revision = $Revision: 014b87e33ada $ }
+|{revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -1640,4 +1521,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1654
-		    label      	"$Id: Hierarchies.cat,v 014b87e33ada 2003/11/15 18:04:06 simon $")))))
+		    label      	"$Id: Hierarchies.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")))))

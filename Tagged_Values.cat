@@ -61,7 +61,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(625, 314)
+			location   	(625, 313)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
@@ -126,7 +126,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(603, 986)
+			location   	(603, 985)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	248
@@ -145,23 +145,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FB3946702AE"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(603, 1042)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	207)
 		    width      	266
 		    height     	220
 		    annotation 	8

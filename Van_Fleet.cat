@@ -11,7 +11,7 @@
     documentation 	
 |Demonstrates "subtype migration".
 |
-|{ revision = $Revision: 6ea040caff18 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -202,7 +202,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1025
-		    label      	"$Id: Van_Fleet.cat,v 6ea040caff18 2004/10/09 10:37:13 simon $")
+		    label      	"$Id: Van_Fleet.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
 		(object ClassView "Class" "Logical View::ColdFrame Examples::Van Fleet::Pool Van" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
@@ -230,23 +230,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9C50029"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1252, 755)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	308)
 		    width      	328
 		    height     	168
 		    annotation 	8
@@ -278,23 +261,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9CF001A"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(1866, 290)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	462)
 		    width      	476
 		    height     	212
 		    annotation 	8
@@ -326,23 +292,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9B90195"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(116, 226)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	6
-			max_width  	1030)
 		    width      	1052
 		    height     	348
 		    annotation 	8
@@ -554,23 +503,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9BF007B"
-		    compartment 	(object Compartment
-			Parent_View 	@14
-			location   	(19, 747)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	6
-			max_width  	898)
 		    width      	918
 		    height     	348
 		    annotation 	8
@@ -626,23 +558,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"409CC9D6024B"
-		    compartment 	(object Compartment
-			Parent_View 	@16
-			location   	(172, 1355)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	590)
 		    width      	610
 		    height     	212
 		    annotation 	8
@@ -820,7 +735,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@25
-			location   	(2041, 679)
+			location   	(2041, 678)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	260
@@ -860,7 +775,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@26
-			location   	(2046, 911)
+			location   	(2046, 910)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	260

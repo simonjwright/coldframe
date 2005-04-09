@@ -796,7 +796,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@13
-				location   	(307, 266)
+				location   	(307, 265)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	347
@@ -838,7 +838,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@14
-				location   	(984, 153)
+				location   	(984, 152)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	252
@@ -880,7 +880,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@15
-				location   	(984, 483)
+				location   	(984, 482)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	252
@@ -999,23 +999,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3E33023A00EE"
-			    compartment 	(object Compartment
-				Parent_View 	@19
-				location   	(812, 827)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	TRUE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	0)
 			    width      	568
 			    height     	170
 			    annotation 	8
@@ -2434,25 +2417,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3C5C245C0096"
-		    compartment 	(object Compartment
-			Parent_View 	@82
-			location   	(117, 583)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	381
-			compartmentItems 	(list Compartment
-			    "- termination : Date"))
 		    width      	392
 		    height     	186
 		    annotation 	8
@@ -2739,7 +2703,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@95
-			location   	(1531, 662)
+			location   	(1531, 661)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	202
@@ -3551,7 +3515,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@131
-			location   	(988, 1569)
+			location   	(988, 1568)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	408
@@ -3570,23 +3534,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E3301D100D9"
-		    compartment 	(object Compartment
-			Parent_View 	@131
-			location   	(988, 1630)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	244)
 		    width      	426
 		    height     	292
 		    annotation 	8
@@ -3642,23 +3589,6 @@
 		    line_color 	3342489
 		    fill_color 	8454143
 		    quidu      	"3E33023A00EE"
-		    compartment 	(object Compartment
-			Parent_View 	@133
-			location   	(1739, 909)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	TRUE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	594)
 		    width      	614
 		    height     	282
 		    annotation 	8
@@ -3721,23 +3651,6 @@
 		    line_color 	3342489
 		    fill_color 	12632256
 		    quidu      	"3E33035903C2"
-		    compartment 	(object Compartment
-			Parent_View 	@135
-			location   	(1917, 1641)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	250)
 		    width      	270
 		    height     	282
 		    annotation 	8
@@ -3769,23 +3682,6 @@
 		    line_color 	3342489
 		    fill_color 	12632256
 		    quidu      	"3E3303BF0210"
-		    compartment 	(object Compartment
-			Parent_View 	@136
-			location   	(3000, 1629)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	416)
 		    width      	436
 		    height     	282
 		    annotation 	8
@@ -3816,7 +3712,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@139
-			location   	(2620, 1621)
+			location   	(2620, 1635)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -3847,10 +3743,6 @@
 		    quidu      	"3E33064B024A"
 		    client     	@130
 		    supplier   	@129
-		    vertices   	(list Points
-			(2809, 1623)
-			(2627, 1621)
-			(2431, 1627))
 		    line_style 	0)
 		(object UsesView "" @141
 		    stereotype 	TRUE
@@ -3880,7 +3772,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@142
-			location   	(802, 745)
+			location   	(802, 744)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	758
@@ -3899,23 +3791,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E5EFDFD038F"
-		    compartment 	(object Compartment
-			Parent_View 	@142
-			location   	(802, 850)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	756)
 		    width      	776
 		    height     	338
 		    annotation 	8
@@ -3937,7 +3812,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@143
-			location   	(1093, 1217)
+			location   	(1093, 1216)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	182

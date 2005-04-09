@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Deletion"
@@ -32,7 +32,9 @@
 		    stereotype 	"class"
 		    parameters 	(list Parameters
 			(object Parameter "this"
-			    type       	"Track"))
+			    quid       	"4257761E0176"
+			    type       	"Track"
+			    quidu      	"3BDBF3820396"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
@@ -268,7 +270,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.1"
 				    ordinal    	1
-				    quidu      	"3BDBF4A20387")
+				    quidu      	"3BDBF4A20387"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE908D028E"
 				    frequency  	"Aperiodic"
@@ -276,7 +279,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.2"
 				    ordinal    	7
-				    quidu      	"3BDE901F02E5")
+				    quidu      	"3BDE901F02E5"
+				    creation   	FALSE)
 				(object Message "delete track and threat( )"
 				    quid       	"3BDE90F90216"
 				    frequency  	"Aperiodic"
@@ -284,7 +288,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"2.1"
 				    ordinal    	9
-				    quidu      	"3BDBF4A20387")
+				    quidu      	"3BDBF4A20387"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE95DA03CC"
 				    frequency  	"Aperiodic"
@@ -292,7 +297,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"2.2"
 				    ordinal    	11
-				    quidu      	"3BDE901F02E5")))
+				    quidu      	"3BDE901F02E5"
+				    creation   	FALSE)))
 			(object Link
 			    quid       	"3BDE8FCF0195"
 			    supplier   	"$UNNAMED$1"
@@ -305,7 +311,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.1.1"
 				    ordinal    	2
-				    quidu      	"3BDBF51D035F")))
+				    quidu      	"3BDBF51D035F"
+				    creation   	FALSE)))
 			(object Link
 			    quid       	"3BDE95CD018D"
 			    supplier   	"$UNNAMED$2"
@@ -318,7 +325,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"2.1.1"
 				    ordinal    	10
-				    quidu      	"3BDBF5540325")
+				    quidu      	"3BDBF5540325"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE95E701FA"
 				    frequency  	"Aperiodic"
@@ -326,10 +334,12 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"2.2.1"
 				    ordinal    	12
-				    quidu      	"3BDE90430105"))))
+				    quidu      	"3BDE90430105"
+				    creation   	FALSE))))
 		    class      	"Logical View::Deletion::Track"
 		    quidu      	"3BDBF3820396"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$1"
 		    quid       	"3BDE8EFE0264"
@@ -346,7 +356,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.1.1.1"
 				    ordinal    	3
-				    quidu      	"3BDBF505039F")))
+				    quidu      	"3BDBF505039F"
+				    creation   	FALSE)))
 			(object Link
 			    quid       	"3BDE8FF30262"
 			    supplier   	"$UNNAMED$3"
@@ -359,7 +370,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.1.1.1.1"
 				    ordinal    	4
-				    quidu      	"3BDBF505039F")
+				    quidu      	"3BDBF505039F"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE90750141"
 				    frequency  	"Aperiodic"
@@ -367,22 +379,26 @@
 				    dir        	"ToClientFromSupplier"
 				    sequence   	"1.1.1.1.1.1.1"
 				    ordinal    	6
-				    quidu      	"3BDE903903DF"))))
+				    quidu      	"3BDE903903DF"
+				    creation   	FALSE))))
 		    class      	"Logical View::Deletion::New Threat"
 		    quidu      	"3BDBF3A8008E"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$4"
 		    quid       	"3BDE8F0200EB"
 		    class      	"Logical View::Deletion::Old Threat"
 		    quidu      	"3BDBF3AD036D"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$2"
 		    quid       	"3BDE8F0600C9"
 		    class      	"Logical View::Deletion::Not Threat"
 		    quidu      	"3BDBF3B400C8"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$5"
 		    quid       	"3BDE8F0A02BF"
@@ -399,7 +415,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"3.1"
 				    ordinal    	14
-				    quidu      	"3BDBF505039F")
+				    quidu      	"3BDBF505039F"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE96350305"
 				    frequency  	"Aperiodic"
@@ -407,10 +424,12 @@
 				    dir        	"ToClientFromSupplier"
 				    sequence   	"3.1.1.1"
 				    ordinal    	16
-				    quidu      	"3BDE90480142"))))
+				    quidu      	"3BDE90480142"
+				    creation   	FALSE))))
 		    class      	"Logical View::Deletion::Command Threat"
 		    quidu      	"3BDE839601D5"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$3"
 		    quid       	"3BDE8F0F035F"
@@ -427,7 +446,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1.1.1.1.1.1"
 				    ordinal    	5
-				    quidu      	"3BDE904D0278")
+				    quidu      	"3BDE904D0278"
+				    creation   	FALSE)
 				(object Message "delete( )"
 				    quid       	"3BDE962B02B4"
 				    frequency  	"Aperiodic"
@@ -435,10 +455,12 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"3.1.1"
 				    ordinal    	15
-				    quidu      	"3BDE904D0278"))))
+				    quidu      	"3BDE904D0278"
+				    creation   	FALSE))))
 		    class      	"Logical View::Deletion::Threat"
 		    quidu      	"3BDBF3930143"
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE)
 		(object Object "some application code"
 		    quid       	"3BDE8F3A021C"
@@ -455,7 +477,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"1"
 				    ordinal    	0
-				    quidu      	"3BDBF68401C4")
+				    quidu      	"3BDBF68401C4"
+				    creation   	FALSE)
 				(object Message "delete threat(Track)"
 				    quid       	"3BDE90EA030C"
 				    frequency  	"Aperiodic"
@@ -463,7 +486,8 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"2"
 				    ordinal    	8
-				    quidu      	"3BDBF68401C4")))
+				    quidu      	"3BDBF68401C4"
+				    creation   	FALSE)))
 			(object Link
 			    quid       	"3BDE9605028D"
 			    supplier   	"$UNNAMED$5"
@@ -476,8 +500,10 @@
 				    dir        	"FromClientToSupplier"
 				    sequence   	"3"
 				    ordinal    	13
-				    quidu      	"3BDBF505039F"))))
+				    quidu      	"3BDBF505039F"
+				    creation   	FALSE))))
 		    persistence 	"Transient"
+		    creationObj 	FALSE
 		    multi      	FALSE))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -495,6 +521,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(432, 432)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(60, 226)
@@ -507,14 +542,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3820396"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(60, 287)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	7
-			max_width  	741)
 		    width      	762
 		    height     	436
 		    annotation 	8
@@ -523,6 +550,15 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2016, 448)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(1755, 292)
@@ -535,19 +571,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3930143"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(1755, 353)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	5
-			max_width  	528
-			compartmentItems 	(list Compartment
-			    "<<id>> - id : Autonumber"
-			    "+ delete threat()"
-			    "<<finalize>> + log deletion()"
-			    "<<generated>> + delete()"))
 		    width      	540
 		    height     	336
 		    annotation 	8
@@ -556,6 +579,15 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1296, 240)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
 			location   	(1035, 109)
@@ -568,18 +600,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3A8008E"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(1035, 170)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	519
-			compartmentItems 	(list Compartment
-			    "+ delete track and threat()"
-			    "<<finalize>> + log deletion()"
-			    "<<generated>> + delete()"))
 		    width      	540
 		    height     	286
 		    annotation 	8
@@ -588,6 +608,15 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1296, 704)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(1035, 573)
@@ -600,18 +629,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3AD036D"
-		    compartment 	(object Compartment
-			Parent_View 	@5
-			location   	(1035, 634)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	519
-			compartmentItems 	(list Compartment
-			    "+ delete track and threat()"
-			    "<<finalize>> + log deletion()"
-			    "<<generated>> + delete()"))
 		    width      	540
 		    height     	286
 		    annotation 	8
@@ -620,6 +637,15 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1296, 1184)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@6
 			location   	(1035, 1053)
@@ -632,23 +658,20 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3B400C8"
-		    compartment 	(object Compartment
-			Parent_View 	@6
-			location   	(1035, 1114)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	4
-			max_width  	519
-			compartmentItems 	(list Compartment
-			    "+ delete track and threat()"
-			    "<<finalize>> + log deletion()"
-			    "<<generated>> + delete()"))
 		    width      	540
 		    height     	286
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "r1" @7
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
 			location   	(920, 323)
@@ -664,6 +687,15 @@
 		    supplier   	@2
 		    line_style 	0)
 		(object InheritView "r1" @8
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
 			location   	(919, 585)
@@ -679,6 +711,15 @@
 		    supplier   	@2
 		    line_style 	0)
 		(object InheritView "r1" @9
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
 			location   	(906, 845)
@@ -694,6 +735,15 @@
 		    supplier   	@2
 		    line_style 	0)
 		(object InheritView "r2" @10
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
 			location   	(1655, 343)
@@ -709,6 +759,15 @@
 		    supplier   	@3
 		    line_style 	0)
 		(object InheritView "r2" @11
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@11
 			location   	(1655, 576)
@@ -727,6 +786,15 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1296, 1680)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@12
 			location   	(1035, 1574)
@@ -739,22 +807,20 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDE839601D5"
-		    compartment 	(object Compartment
-			Parent_View 	@12
-			location   	(1035, 1635)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	528
-			compartmentItems 	(list Compartment
-			    "<<finalize>> + log deletion()"
-			    "<<generated>> + delete()"))
 		    width      	540
 		    height     	236
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object InheritView "r2" @13
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@13
 			location   	(1795, 1153)
@@ -775,6 +841,15 @@
 		    line_style 	0)
 		(object NoteView @14
 		    location   	(464, 1936)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@14
 			location   	(82, 1877)
@@ -800,7 +875,14 @@
 		(object InterObjView "$UNNAMED$0" @15
 		    location   	(1520, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@15
 			location   	(1520, 224)
@@ -815,7 +897,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8EFA00A3"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -865,7 +947,14 @@
 		(object InterObjView "$UNNAMED$1" @22
 		    location   	(1856, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@22
 			location   	(1856, 224)
@@ -880,7 +969,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8EFE0264"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -909,7 +998,14 @@
 		(object InterObjView "$UNNAMED$4" @26
 		    location   	(2192, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@26
 			location   	(2192, 224)
@@ -924,7 +1020,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8F0200EB"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -932,7 +1028,14 @@
 		(object InterObjView "$UNNAMED$2" @27
 		    location   	(2528, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@27
 			location   	(2528, 224)
@@ -947,7 +1050,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8F0600C9"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -969,7 +1072,14 @@
 		(object InterObjView "$UNNAMED$5" @30
 		    location   	(2864, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@30
 			location   	(2864, 224)
@@ -984,7 +1094,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8F0A02BF"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1006,7 +1116,14 @@
 		(object InterObjView "$UNNAMED$3" @33
 		    location   	(3200, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@33
 			location   	(3200, 224)
@@ -1021,7 +1138,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8F0F035F"
 		    width      	300
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1057,7 +1174,14 @@
 		(object InterObjView "some application code" @38
 		    location   	(1184, 224)
 		    font       	(object Font
-			underline  	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	TRUE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@38
 			location   	(1184, 224)
@@ -1072,7 +1196,7 @@
 		    fill_color 	13434879
 		    quidu      	"3BDE8F3A021C"
 		    width      	340
-		    height     	2981
+		    height     	2982
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1100,9 +1224,27 @@
 			Nested     	FALSE))
 		(object InterMessView "" @42
 		    location   	(16, 400)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @43
 			Parent_View 	@42
 			location   	(1351, 356)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE8F9F0128"
 			anchor_loc 	1
 			nlines     	1
@@ -1122,9 +1264,27 @@
 		    ordinal    	0)
 		(object SelfMessView "" @44
 		    location   	(16, 528)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @45
 			Parent_View 	@44
 			location   	(1626, 484)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE8FB40263"
 			anchor_loc 	1
 			nlines     	1
@@ -1144,9 +1304,27 @@
 		    ordinal    	1)
 		(object InterMessView "" @46
 		    location   	(16, 672)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @47
 			Parent_View 	@46
 			location   	(1695, 628)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE8FCF0196"
 			anchor_loc 	1
 			nlines     	1
@@ -1166,9 +1344,27 @@
 		    ordinal    	2)
 		(object SelfMessView "" @48
 		    location   	(16, 736)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @49
 			Parent_View 	@48
 			location   	(1962, 692)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE8FDD02DE"
 			anchor_loc 	1
 			nlines     	1
@@ -1188,9 +1384,27 @@
 		    ordinal    	3)
 		(object InterMessView "" @50
 		    location   	(16, 816)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @51
 			Parent_View 	@50
 			location   	(2535, 772)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE8FF30263"
 			anchor_loc 	1
 			nlines     	1
@@ -1210,9 +1424,27 @@
 		    ordinal    	4)
 		(object SelfMessView "" @52
 		    location   	(16, 864)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @53
 			Parent_View 	@52
 			location   	(3306, 820)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE90600033"
 			anchor_loc 	1
 			nlines     	1
@@ -1232,9 +1464,27 @@
 		    ordinal    	5)
 		(object InterMessView "" @54
 		    location   	(16, 928)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @55
 			Parent_View 	@54
 			location   	(2551, 884)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE90750141"
 			anchor_loc 	1
 			nlines     	1
@@ -1254,9 +1504,27 @@
 		    ordinal    	6)
 		(object SelfMessView "" @56
 		    location   	(16, 1376)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @57
 			Parent_View 	@56
 			location   	(1626, 1332)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE908D028E"
 			anchor_loc 	1
 			nlines     	1
@@ -1276,9 +1544,27 @@
 		    ordinal    	7)
 		(object InterMessView "" @58
 		    location   	(16, 1728)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @59
 			Parent_View 	@58
 			location   	(1351, 1684)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE90EA030C"
 			anchor_loc 	1
 			nlines     	1
@@ -1298,9 +1584,27 @@
 		    ordinal    	8)
 		(object SelfMessView "" @60
 		    location   	(16, 1856)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @61
 			Parent_View 	@60
 			location   	(1626, 1812)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE90F90216"
 			anchor_loc 	1
 			nlines     	1
@@ -1320,9 +1624,27 @@
 		    ordinal    	9)
 		(object InterMessView "" @62
 		    location   	(16, 1936)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @63
 			Parent_View 	@62
 			location   	(2031, 1892)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE95CD018E"
 			anchor_loc 	1
 			nlines     	1
@@ -1342,9 +1664,27 @@
 		    ordinal    	10)
 		(object SelfMessView "" @64
 		    location   	(16, 2112)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @65
 			Parent_View 	@64
 			location   	(1626, 2068)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE95DA03CC"
 			anchor_loc 	1
 			nlines     	1
@@ -1364,9 +1704,27 @@
 		    ordinal    	11)
 		(object InterMessView "" @66
 		    location   	(16, 2192)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @67
 			Parent_View 	@66
 			location   	(2031, 2148)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE95E701FA"
 			anchor_loc 	1
 			nlines     	1
@@ -1386,9 +1744,27 @@
 		    ordinal    	12)
 		(object InterMessView "" @68
 		    location   	(16, 2592)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @69
 			Parent_View 	@68
 			location   	(2023, 2548)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE9605028E"
 			anchor_loc 	1
 			nlines     	1
@@ -1408,9 +1784,27 @@
 		    ordinal    	13)
 		(object InterMessView "" @70
 		    location   	(16, 2624)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @71
 			Parent_View 	@70
 			location   	(3031, 2580)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE960F02EA"
 			anchor_loc 	1
 			nlines     	1
@@ -1430,9 +1824,27 @@
 		    ordinal    	14)
 		(object SelfMessView "" @72
 		    location   	(16, 2752)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @73
 			Parent_View 	@72
 			location   	(3306, 2708)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE962B02B4"
 			anchor_loc 	1
 			nlines     	1
@@ -1452,9 +1864,27 @@
 		    ordinal    	15)
 		(object InterMessView "" @74
 		    location   	(16, 2816)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @75
 			Parent_View 	@74
 			location   	(3047, 2772)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			quidu      	"3BDE96350305"
 			anchor_loc 	1
 			nlines     	1
@@ -1474,6 +1904,15 @@
 		    ordinal    	16)
 		(object NoteView @76
 		    location   	(704, 960)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@76
 			location   	(423, 391)
@@ -1487,6 +1926,15 @@
 		    height     	1150)
 		(object NoteView @77
 		    location   	(704, 2064)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@77
 			location   	(423, 1720)
@@ -1500,6 +1948,15 @@
 		    height     	700)
 		(object NoteView @78
 		    location   	(704, 2864)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@78
 			location   	(429, 2602)

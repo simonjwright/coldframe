@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 59479730a0c7 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -191,7 +191,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@5
-				location   	(551, 389)
+				location   	(551, 388)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	408
@@ -231,7 +231,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@6
-				location   	(1587, 387)
+				location   	(1587, 386)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	216
@@ -297,7 +297,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@7
-				location   	(652, 457)
+				location   	(652, 456)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	196
@@ -379,7 +379,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@8
-				location   	(410, 362)
+				location   	(410, 361)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	210
@@ -419,7 +419,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@9
-				location   	(936, 359)
+				location   	(936, 358)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	268
@@ -459,7 +459,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@10
-				location   	(332, 639)
+				location   	(332, 638)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	376
@@ -523,7 +523,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@11
-				location   	(404, 423)
+				location   	(404, 422)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	306
@@ -1181,7 +1181,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@33
-				location   	(487, 267)
+				location   	(487, 266)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	816
@@ -1200,23 +1200,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"420669B20204"
-			    compartment 	(object Compartment
-				Parent_View 	@33
-				location   	(487, 323)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	813)
 			    width      	834
 			    height     	264
 			    annotation 	8
@@ -1248,23 +1231,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"420669F2021A"
-			    compartment 	(object Compartment
-				Parent_View 	@34
-				location   	(558, 988)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	685)
 			    width      	706
 			    height     	168
 			    annotation 	8
@@ -1300,7 +1266,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 59479730a0c7 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -1321,7 +1287,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 59479730a0c7 2005/02/06 19:07:17 simon $")
+		    label      	"$Id: Bad_Model_Regressions.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
 		(object CategoryView "Logical View::Bad Model Regressions" @37
 		    location   	(2639, 233)
 		    font       	(object Font
@@ -1360,7 +1326,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@38
-			location   	(165, 396)
+			location   	(165, 395)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	660
@@ -1394,7 +1360,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@39
-			location   	(1087, 399)
+			location   	(1087, 398)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	536
@@ -1428,7 +1394,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@40
-			location   	(1889, 394)
+			location   	(1889, 393)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -1462,7 +1428,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@41
-			location   	(316, 746)
+			location   	(316, 745)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -1496,7 +1462,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@42
-			location   	(758, 751)
+			location   	(758, 750)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	386
@@ -1530,7 +1496,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@43
-			location   	(1334, 749)
+			location   	(1334, 748)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -1564,7 +1530,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@44
-			location   	(1881, 751)
+			location   	(1881, 750)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288

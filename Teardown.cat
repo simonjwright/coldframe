@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Teardown"
@@ -68,9 +68,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(495, 375)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(315, 322)
+			location   	(315, 321)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	360
@@ -89,14 +98,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBF04601E7"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(315, 378)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	358)
 		    width      	378
 		    height     	218
 		    annotation 	8
@@ -107,6 +108,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(495, 765)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(271, 670)
@@ -119,14 +129,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBF07F00E5"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(271, 726)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	445)
 		    width      	466
 		    height     	212
 		    annotation 	8
@@ -137,6 +139,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(480, 1170)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(256, 1075)
@@ -149,14 +160,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBF8330040"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(256, 1131)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	445)
 		    width      	466
 		    height     	212
 		    annotation 	8

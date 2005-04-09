@@ -256,23 +256,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E3E925B00DA"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1203, 2169)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	140)
 		    width      	292
 		    height     	168
 		    annotation 	8
@@ -1008,23 +991,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E3E9BF500DF"
-		    compartment 	(object Compartment
-			Parent_View 	@37
-			location   	(1405, 2480)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	140)
 		    width      	366
 		    height     	168
 		    annotation 	8
@@ -1144,66 +1110,7 @@
 		    client     	@42
 		    supplier   	@4
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Building and Initialization::Normal Domain" @45
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(2259, 1011)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@45
-			location   	(2075, 965)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	368
-			justify    	0
-			label      	"Normal Domain")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3E3EA04200F6"
-		    width      	386
-		    height     	114
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object InheritView "domain kind" @46
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@46
-			location   	(1826, 1293)
-			anchor_loc 	1
-			nlines     	1
-			max_width  	450
-			justify    	0
-			label      	"domain kind")
-		    stereotype 	TRUE
-		    line_color 	3342489
-		    quidu      	"3E3EA06C024B"
-		    client     	@45
-		    supplier   	@3
-		    vertices   	(list Points
-			(2169, 1068)
-			(1836, 1290)
-			(1430, 1406))
-		    line_style 	0)
-		(object ClassView "Class" "Logical View::Building and Initialization::Bottom Half Domain" @47
+		(object ClassView "Class" "Logical View::Building and Initialization::Bottom Half Domain" @45
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1219,7 +1126,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@47
+			Parent_View 	@45
 			location   	(2061, 1511)
 			fill_color 	13434879
 			nlines     	1
@@ -1231,6 +1138,61 @@
 		    fill_color 	13434879
 		    quidu      	"3E3EA04F02DF"
 		    width      	410
+		    height     	114
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "domain kind" @46
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(1740, 1486)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"domain kind")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"3E3EA073016E"
+		    client     	@45
+		    supplier   	@3
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Building and Initialization::Normal Domain" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2259, 1011)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(2075, 965)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	368
+			justify    	0
+			label      	"Normal Domain")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3E3EA04200F6"
+		    width      	386
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -1246,7 +1208,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@48
-			location   	(1740, 1486)
+			location   	(1826, 1293)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1254,9 +1216,13 @@
 			label      	"domain kind")
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    quidu      	"3E3EA073016E"
+		    quidu      	"3E3EA06C024B"
 		    client     	@47
 		    supplier   	@3
+		    vertices   	(list Points
+			(2169, 1068)
+			(1836, 1290)
+			(1430, 1406))
 		    line_style 	0)
 		(object AssociationViewNew "implementation" @49
 		    location   	(2257, 1283)
@@ -1331,7 +1297,7 @@
 			    line_color 	3342489
 			    quidu      	"3E3EA082035B"
 			    client     	@49
-			    supplier   	@47
+			    supplier   	@45
 			    line_style 	0
 			    label      	(object SegLabel @53
 				Parent_View 	@51
@@ -1391,7 +1357,7 @@
 			    line_color 	3342489
 			    quidu      	"3E3EA0820365"
 			    client     	@49
-			    supplier   	@45
+			    supplier   	@47
 			    line_style 	0
 			    label      	(object SegLabel @56
 				Parent_View 	@54
@@ -1440,5 +1406,5 @@
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    client     	@57
-		    supplier   	@47
+		    supplier   	@45
 		    line_style 	0)))))

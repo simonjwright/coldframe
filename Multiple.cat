@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Multiple"
@@ -22,6 +22,7 @@
 		    stereotype 	"abstract"
 		    parameters 	(list Parameters
 			(object Parameter "x"
+			    quid       	"4257762102CF"
 			    type       	"Integer"))
 		    result     	"Boolean"
 		    concurrency 	"Sequential"
@@ -41,6 +42,7 @@
 		    quid       	"3B8B796C00CA"
 		    parameters 	(list Parameters
 			(object Parameter "x"
+			    quid       	"4257762102DA"
 			    type       	"Integer"))
 		    result     	"Boolean"
 		    concurrency 	"Sequential"
@@ -71,6 +73,7 @@
 		    quid       	"3B8B797B00CA"
 		    parameters 	(list Parameters
 			(object Parameter "x"
+			    quid       	"4257762102EF"
 			    type       	"Integer"))
 		    result     	"Boolean"
 		    concurrency 	"Sequential"
@@ -93,7 +96,14 @@
 		    ShowOperationSignature 	TRUE
 		    location   	(496, 704)
 		    font       	(object Font
-			italics    	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(133, 600)
@@ -106,14 +116,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3B8B78E5032C"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(133, 661)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	715)
 		    width      	744
 		    height     	232
 		    autoResize 	TRUE)
@@ -124,7 +126,14 @@
 		    ShowOperationSignature 	TRUE
 		    location   	(1408, 704)
 		    font       	(object Font
-			italics    	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
 			location   	(1171, 598)
@@ -137,14 +146,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3B8B78EC03C2"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1171, 659)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	3
-			max_width  	472)
 		    width      	492
 		    height     	236
 		    autoResize 	TRUE)
@@ -154,6 +155,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(976, 1536)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
 			location   	(747, 1455)
@@ -166,18 +176,19 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3B8B78F701E5"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(747, 1516)
-			icon_style 	"Label"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	2
-			max_width  	456)
 		    width      	476
 		    height     	186
 		    autoResize 	TRUE)
 		(object InheritView "i2" @4
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
 			location   	(1185, 1132)
@@ -193,6 +204,15 @@
 		    supplier   	@2
 		    line_style 	0)
 		(object InheritView "i1" @5
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
 			location   	(742, 1131)

@@ -91,27 +91,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3C10BBFA0103"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(725, 442)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	4
-				max_width  	925
-				compartmentItems 	(list Compartment
-				    "<<init>> + initialize()"
-				    "<<class>> + receive update(report : Track Report)"
-				    "<<id>> - tn : Integer"))
 			    width      	936
 			    height     	286
 			    annotation 	8
@@ -131,7 +110,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@2
-				location   	(116, 1005)
+				location   	(116, 1004)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	312
@@ -249,7 +228,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@6
-				location   	(765, 790)
+				location   	(765, 789)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	390
@@ -268,26 +247,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3C10BD1E014E"
-			    compartment 	(object Compartment
-				Parent_View 	@6
-				location   	(765, 846)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	388
-				compartmentItems 	(list Compartment
-				    "<<init>> + initialize()"
-				    "+ start()"))
 			    width      	408
 			    height     	292
 			    annotation 	8
@@ -307,7 +266,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@7
-				location   	(239, 271)
+				location   	(239, 270)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -326,25 +285,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3C10CCF503BC"
-			    compartment 	(object Compartment
-				Parent_View 	@7
-				location   	(239, 327)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	319
-				compartmentItems 	(list Compartment
-				    "+ name() : String"))
 			    width      	340
 			    height     	242
 			    annotation 	8
@@ -493,7 +433,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@13
-				location   	(682, 678)
+				location   	(682, 677)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	428
@@ -512,26 +452,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"3C10BCD10183"
-			    compartment 	(object Compartment
-				Parent_View 	@13
-				location   	(682, 734)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	396
-				compartmentItems 	(list Compartment
-				    "<<init>> + initialize()"
-				    "+ start()"))
 			    width      	446
 			    height     	292
 			    annotation 	8
@@ -551,7 +471,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@14
-				location   	(223, 191)
+				location   	(223, 190)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -570,25 +490,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3C10CD450233"
-			    compartment 	(object Compartment
-				Parent_View 	@14
-				location   	(223, 247)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	328
-				compartmentItems 	(list Compartment
-				    "+ name() : String"))
 			    width      	340
 			    height     	242
 			    annotation 	8
@@ -703,7 +604,8 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "tn"
 			    quid       	"3C10BAC40251"
-			    type       	"Track Number")
+			    type       	"Track Number"
+			    quidu      	"3C10BA86038A")
 			(object ClassAttribute "x"
 			    quid       	"3C10BAD00359"
 			    type       	"Metres"
@@ -726,7 +628,8 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "tn"
 			    quid       	"3C10BB1F01C8"
-			    type       	"Track Number")))
+			    type       	"Track Number"
+			    quidu      	"3C10BA86038A")))
 		(object Class "Track Deletion"
 		    quid       	"3C10BB2B0265"
 		    stereotype 	"type"
@@ -738,7 +641,8 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "tn"
 			    quid       	"3C10BB3C02FE"
-			    type       	"Track Number")))
+			    type       	"Track Number"
+			    quidu      	"3C10BA86038A")))
 		(object Class "Track Report"
 		    quid       	"3C10BB5601ED"
 		    documentation 	"[[ discriminated; callback : 2 ]]"
@@ -804,7 +708,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@20
-				location   	(182, 1085)
+				location   	(182, 1084)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	180
@@ -842,7 +746,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@21
-				location   	(154, 589)
+				location   	(154, 588)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	300
@@ -880,7 +784,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@22
-				location   	(755, 388)
+				location   	(755, 387)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -899,28 +803,6 @@
 			    line_color 	3342489
 			    fill_color 	8454143
 			    quidu      	"3C10BAA80268"
-			    compartment 	(object Compartment
-				Parent_View 	@22
-				location   	(755, 444)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	5
-				max_width  	384
-				compartmentItems 	(list Compartment
-				    "- tn : Track Number"
-				    "- x : Metres"
-				    "- y : Metres"
-				    "- time valid : Time"))
 			    width      	396
 			    height     	392
 			    annotation 	8
@@ -940,7 +822,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@23
-				location   	(771, 1039)
+				location   	(771, 1038)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -959,25 +841,6 @@
 			    line_color 	3342489
 			    fill_color 	8454143
 			    quidu      	"3C10BB060013"
-			    compartment 	(object Compartment
-				Parent_View 	@23
-				location   	(771, 1095)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	384
-				compartmentItems 	(list Compartment
-				    "- tn : Track Number"))
 			    width      	396
 			    height     	242
 			    annotation 	8
@@ -997,7 +860,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@24
-				location   	(787, 1535)
+				location   	(787, 1534)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	378
@@ -1016,25 +879,6 @@
 			    line_color 	3342489
 			    fill_color 	8454143
 			    quidu      	"3C10BB2B0265"
-			    compartment 	(object Compartment
-				Parent_View 	@24
-				location   	(787, 1591)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	384
-				compartmentItems 	(list Compartment
-				    "- tn : Track Number"))
 			    width      	396
 			    height     	242
 			    annotation 	8
@@ -1054,7 +898,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@25
-				location   	(1496, 989)
+				location   	(1496, 988)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	496
@@ -1073,27 +917,6 @@
 			    line_color 	3342489
 			    fill_color 	8454143
 			    quidu      	"3C10BB5601ED"
-			    compartment 	(object Compartment
-				Parent_View 	@25
-				location   	(1496, 1045)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	4
-				max_width  	503
-				compartmentItems 	(list Compartment
-				    "- creation : Track Creation"
-				    "- update : Track Update"
-				    "- deletion : Track Deletion"))
 			    width      	514
 			    height     	342
 			    annotation 	8
@@ -1180,7 +1003,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@33
-				location   	(95, 143)
+				location   	(95, 142)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	322
@@ -1199,25 +1022,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"3C10CC90031F"
-			    compartment 	(object Compartment
-				Parent_View 	@33
-				location   	(95, 199)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Label"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	328
-				compartmentItems 	(list Compartment
-				    "+ name() : String"))
 			    width      	340
 			    height     	242
 			    annotation 	8

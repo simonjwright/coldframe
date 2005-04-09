@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Generics"
@@ -15,8 +15,10 @@
 	    stereotype 	"public"
 	    parameters 	(list Parameters
 		(object Parameter "input signal"
+		    quid       	"42577628015A"
 		    type       	"(<>)")
 		(object Parameter "output signal"
+		    quid       	"42577628015B"
 		    type       	"(<>)"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -34,9 +36,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(750, 555)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(489, 520)
+			location   	(489, 518)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	522
@@ -44,7 +55,7 @@
 			label      	"Interface")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(489, 475)
+			location   	(489, 474)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1

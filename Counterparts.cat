@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Counterparts"
@@ -26,7 +26,9 @@
 		    stereotype 	"access"
 		    parameters 	(list Parameters
 			(object Parameter "p"
-			    type       	"Cls Handle"))
+			    quid       	"4257762901EB"
+			    type       	"Cls Handle"
+			    quidu      	"3DDD08C302E7"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)))
@@ -50,6 +52,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(810, 480)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(586, 407)
@@ -62,14 +73,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDD077E024A"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(586, 463)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	445)
 		    width      	466
 		    height     	168
 		    annotation 	8
@@ -80,9 +83,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2175, 540)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1896, 487)
+			location   	(1896, 486)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	558
@@ -101,14 +113,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDD079E0105"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(1896, 543)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	555)
 		    width      	576
 		    height     	218
 		    annotation 	8
@@ -119,9 +123,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(660, 1500)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(535, 1474)
+			location   	(535, 1473)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	250

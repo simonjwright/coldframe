@@ -11,7 +11,7 @@
     documentation 	
 |Time conversions between Collections of ColdFrame instance handles and class handles (to see what the impact of navigation optimisation might be).
 |
-|{ revision = $Revision: 98f47600f284 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -112,28 +112,42 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"417734550258"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1175, 190)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	270)
 		    width      	284
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Collection Timing::A" @2
+		(object ClassView "Class" "Logical View::Collection Timing::B U" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1310, 810)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(1086, 737)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"B U")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"417734710190"
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Collection Timing::A" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -149,7 +163,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@2
+			Parent_View 	@3
 			location   	(309, 250)
 			fill_color 	13434879
 			nlines     	1
@@ -160,28 +174,11 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4177343D011D"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(309, 306)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	445)
 		    width      	466
 		    height     	168
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "b" @3
+		(object AssociationViewNew "b" @4
 		    location   	(811, 163)
 		    font       	(object Font
 			size       	10
@@ -192,8 +189,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @4
-			Parent_View 	@3
+		    label      	(object SegLabel @5
+			Parent_View 	@4
 			location   	(811, 104)
 			font       	(object Font
 			    size       	10
@@ -217,8 +214,8 @@
 		    line_color 	3342489
 		    quidu      	"417735040079"
 		    roleview_list 	(list RoleViews
-			(object RoleView "owns" @5
-			    Parent_View 	@3
+			(object RoleView "owns" @6
+			    Parent_View 	@4
 			    location   	(278, -160)
 			    font       	(object Font
 				size       	10
@@ -229,8 +226,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @6
-				Parent_View 	@5
+			    label      	(object SegLabel @7
+				Parent_View 	@6
 				location   	(1095, 122)
 				font       	(object Font
 				    size       	10
@@ -253,13 +250,13 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"4177350402B3"
-			    client     	@3
+			    client     	@4
 			    supplier   	@1
 			    line_style 	3
 			    origin_attachment 	(811, 163)
 			    terminal_attachment 	(1166, 163)
-			    label      	(object SegLabel @7
-				Parent_View 	@5
+			    label      	(object SegLabel @8
+				Parent_View 	@6
 				location   	(1130, 217)
 				font       	(object Font
 				    size       	10
@@ -279,8 +276,8 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	1))
-			(object RoleView "belongs to" @8
-			    Parent_View 	@3
+			(object RoleView "belongs to" @9
+			    Parent_View 	@4
 			    location   	(278, -160)
 			    font       	(object Font
 				size       	10
@@ -291,8 +288,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @9
-				Parent_View 	@8
+			    label      	(object SegLabel @10
+				Parent_View 	@9
 				location   	(412, 204)
 				font       	(object Font
 				    size       	10
@@ -315,8 +312,8 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"4177350402BE"
-			    client     	@3
-			    supplier   	@2
+			    client     	@4
+			    supplier   	@3
 			    vertices   	(list Points
 				(811, 163)
 				(532, 163)
@@ -324,8 +321,8 @@
 			    line_style 	3
 			    origin_attachment 	(811, 163)
 			    terminal_attachment 	(532, 239)
-			    label      	(object SegLabel @10
-				Parent_View 	@8
+			    label      	(object SegLabel @11
+				Parent_View 	@9
 				location   	(586, 203)
 				font       	(object Font
 				    size       	10
@@ -345,54 +342,6 @@
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::Collection Timing::B U" @11
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1310, 810)
-		    font       	(object Font
-			size       	10
-			face       	"Arial"
-			bold       	FALSE
-			italics    	FALSE
-			underline  	FALSE
-			strike     	FALSE
-			color      	0
-			default_color 	TRUE)
-		    label      	(object ItemLabel
-			Parent_View 	@11
-			location   	(1086, 737)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	448
-			justify    	0
-			label      	"B U")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"417734710190"
-		    compartment 	(object Compartment
-			Parent_View 	@11
-			location   	(1086, 793)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			icon_style 	"Icon"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	452)
-		    width      	466
-		    height     	168
-		    annotation 	8
-		    autoResize 	TRUE)
 		(object AssociationViewNew "u" @12
 		    location   	(606, 810)
 		    font       	(object Font
@@ -466,7 +415,7 @@
 			    line_color 	3342489
 			    quidu      	"4177350F01BF"
 			    client     	@12
-			    supplier   	@11
+			    supplier   	@2
 			    line_style 	3
 			    origin_attachment 	(606, 810)
 			    terminal_attachment 	(1077, 810)
@@ -528,7 +477,7 @@
 			    line_color 	3342489
 			    quidu      	"4177350F01C9"
 			    client     	@12
-			    supplier   	@2
+			    supplier   	@3
 			    vertices   	(list Points
 				(606, 810)
 				(537, 810)
@@ -574,7 +523,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@20
-			location   	(1704, 184)
+			location   	(1704, 183)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166

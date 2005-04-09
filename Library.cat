@@ -38,46 +38,46 @@
 		(object Role "has borrowed"
 		    quid       	"3AF1B5BA001D"
 		    label      	"has borrowed"
-		    supplier   	"Logical View::Library::Book"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Book"
 		    quidu      	"3AF1B5960199"
 		    client_cardinality 	(value cardinality "0..n"))
 		(object Role "has been loaned to"
 		    quid       	"3AF1B5BA0031"
 		    label      	"has been loaned to"
-		    supplier   	"Logical View::Library::Borrower"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Borrower"
 		    quidu      	"3AF1B59D004C"
 		    client_cardinality 	(value cardinality "0..n")))
-	    AssociationClass 	"Logical View::Library::Loan History")
+	    AssociationClass 	"Logical View::ColdFrame Examples::Library::Loan History")
 	(object Association "current"
 	    quid       	"3AF1B5D201F1"
 	    roles      	(list role_list
 		(object Role "is borrowing"
 		    quid       	"3AF1B5D201F2"
 		    label      	"is borrowing"
-		    supplier   	"Logical View::Library::Book"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Book"
 		    quidu      	"3AF1B5960199"
 		    client_cardinality 	(value cardinality "0..n"))
 		(object Role "is on loan to"
 		    quid       	"3AF1B5D201F3"
 		    documentation 	"[[ source ]]"
 		    label      	"is on loan to"
-		    supplier   	"Logical View::Library::Borrower"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Borrower"
 		    quidu      	"3AF1B59D004C"
 		    client_cardinality 	(value cardinality "0..1")))
-	    AssociationClass 	"Logical View::Library::Current Loan")
+	    AssociationClass 	"Logical View::ColdFrame Examples::Library::Current Loan")
 	(object Association "authorship"
 	    quid       	"3AF22FF703C0"
 	    roles      	(list role_list
 		(object Role "wrote"
 		    quid       	"3AF230000021"
 		    label      	"wrote"
-		    supplier   	"Logical View::Library::Book"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Book"
 		    quidu      	"3AF1B5960199"
 		    client_cardinality 	(value cardinality "0..n"))
 		(object Role "was written by"
 		    quid       	"3AF230000085"
 		    label      	"was written by"
-		    supplier   	"Logical View::Library::Borrower"
+		    supplier   	"Logical View::ColdFrame Examples::Library::Borrower"
 		    quidu      	"3AF1B59D004C"
 		    client_cardinality 	(value cardinality "1")))))
     logical_presentations 	(list unit_reference_list
@@ -90,7 +90,7 @@
 	    origin_x   	492
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Library::Current Loan" @1
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Library::Current Loan" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -106,21 +106,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(1326, 237)
+			location   	(1377, 220)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	292
+			nlines     	2
+			max_width  	190
 			justify    	0
 			label      	"Current Loan")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3AF1B693021B"
-		    width      	310
-		    height     	126
+		    width      	208
+		    height     	158
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Library::Loan History" @2
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Library::Loan History" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -136,21 +136,20 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1392, 1357)
+			location   	(1455, 1340)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	288
+			nlines     	2
+			max_width  	162
 			justify    	0
 			label      	"Loan History")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3AF1B6A200B9"
-		    width      	306
-		    height     	126
+		    height     	158
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Library::Book" @3
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Library::Book" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -180,7 +179,7 @@
 		    height     	186
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Library::Borrower" @4
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Library::Borrower" @4
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE

@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Finality"
@@ -63,6 +63,7 @@
 				    when       	"Entry")))
 			type       	"EndState"))
 		partitions 	(list Partitions)
+		objects    	(list Objects)
 		statediagrams 	(list StateDiagrams
 		    (object State_Diagram "Statechart"
 			quid       	"3D807F2A03C5"
@@ -75,6 +76,15 @@
 			items      	(list diagram_item_list
 			    (object StateView "Normal" "a" @1
 				location   	(720, 315)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@1
 				    location   	(720, 299)
@@ -91,6 +101,15 @@
 				autoResize 	TRUE)
 			    (object StateView "Normal" "b" @2
 				location   	(720, 915)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
 				    location   	(720, 899)
@@ -107,6 +126,15 @@
 				autoResize 	TRUE)
 			    (object StateView "StartState" "$UNNAMED$1" @3
 				location   	(135, 315)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@3
 				    location   	(177, 285)
@@ -115,11 +143,19 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3D807F520082"
 				autoResize 	TRUE)
 			    (object StateView "EndState" "$UNNAMED$0" @4
 				location   	(720, 1380)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@4
 				    location   	(774, 1338)
@@ -128,11 +164,19 @@
 				    label      	"")
 				icon_style 	"Label"
 				line_color 	3342489
-				fill_color 	13434879
 				quidu      	"3D807F550308"
 				compartment 	(object Compartment
 				    Parent_View 	@4
 				    location   	(735, 1400)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    icon_style 	"Label"
 				    anchor     	2
 				    nlines     	1
@@ -161,9 +205,27 @@
 				line_style 	0
 				x_offset   	FALSE)
 			    (object TransView "" @7
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				label      	(object SegLabel @8
 				    Parent_View 	@7
 				    location   	(765, 1160)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
 				    anchor_loc 	1
 				    nlines     	1
 				    max_width  	60
@@ -195,6 +257,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(510, 435)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
 			location   	(286, 362)
@@ -207,14 +278,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D807F170286"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(286, 418)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	445)
 		    width      	466
 		    height     	168
 		    annotation 	8

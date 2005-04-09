@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Accessors"
@@ -18,6 +18,7 @@
 		    stereotype 	"accessor, class"
 		    parameters 	(list Parameters
 			(object Parameter "to"
+			    quid       	"425776290399"
 			    type       	"Integer"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -34,6 +35,7 @@
 		    stereotype 	"accessor"
 		    parameters 	(list Parameters
 			(object Parameter "to"
+			    quid       	"4257762903AC"
 			    type       	"Integer"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
@@ -73,6 +75,15 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(765, 660)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
 			location   	(415, 452)
@@ -85,14 +96,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DEC51150104"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(415, 508)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	8
-			max_width  	698)
 		    width      	718
 		    height     	438
 		    annotation 	8

@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Nested Types"
@@ -31,7 +31,8 @@
 		    type       	"boolean")
 		(object ClassAttribute "beta"
 		    quid       	"3DDBA93800A4"
-		    type       	"part")))
+		    type       	"part"
+		    quidu      	"3DDBA8E602E1")))
 	(object Class "one part"
 	    quid       	"3DDBA8C5022F"
 	    stereotype 	"type"
@@ -62,10 +63,12 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "a"
 		    quid       	"3DDBA8EF0027"
-		    type       	"one part")
+		    type       	"one part"
+		    quidu      	"3DDBA8C5022F")
 		(object ClassAttribute "b"
 		    quid       	"3DDBA8F501F2"
-		    type       	"another part")))
+		    type       	"another part"
+		    quidu      	"3DDBA8D30185")))
 	(object Class "sort"
 	    quid       	"3DDBA9570243"
 	    stereotype 	"type, discriminated"
@@ -81,10 +84,12 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "i"
 		    quid       	"3DDBA95F00B4"
-		    type       	"one sort")
+		    type       	"one sort"
+		    quidu      	"3DDBA8AD036B")
 		(object ClassAttribute "j"
 		    quid       	"3DDBA96600B4"
-		    type       	"another sort"))))
+		    type       	"another sort"
+		    quidu      	"3DDBA8BB031B"))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DDBA66103B6"
@@ -101,9 +106,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(855, 1020)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(680, 967)
+			location   	(680, 966)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	350
@@ -122,14 +136,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA8AD036B"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(680, 1023)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	348)
 		    width      	368
 		    height     	218
 		    annotation 	8
@@ -140,9 +146,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(885, 1410)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(731, 1334)
+			location   	(731, 1333)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	308
@@ -161,14 +176,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA8BB031B"
-		    compartment 	(object Compartment
-			Parent_View 	@2
-			location   	(731, 1390)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	312)
 		    width      	326
 		    height     	264
 		    annotation 	8
@@ -179,9 +186,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2220, 1365)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(2104, 1312)
+			location   	(2104, 1311)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	232
@@ -200,14 +216,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA8C5022F"
-		    compartment 	(object Compartment
-			Parent_View 	@3
-			location   	(2104, 1368)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	235)
 		    width      	250
 		    height     	218
 		    annotation 	8
@@ -218,9 +226,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(2205, 1845)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(2079, 1792)
+			location   	(2079, 1791)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	252
@@ -239,14 +256,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA8D30185"
-		    compartment 	(object Compartment
-			Parent_View 	@4
-			location   	(2079, 1848)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	2
-			max_width  	228)
 		    width      	270
 		    height     	218
 		    annotation 	8
@@ -257,9 +266,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1590, 1575)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
-			location   	(1380, 1499)
+			location   	(1380, 1498)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	420
@@ -278,14 +296,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA8E602E1"
-		    compartment 	(object Compartment
-			Parent_View 	@5
-			location   	(1380, 1555)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	300)
 		    width      	438
 		    height     	264
 		    annotation 	8
@@ -317,9 +327,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(315, 1200)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(105, 1124)
+			location   	(105, 1123)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	420
@@ -338,14 +357,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DDBA9570243"
-		    compartment 	(object Compartment
-			Parent_View 	@9
-			location   	(105, 1180)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	283)
 		    width      	438
 		    height     	264
 		    annotation 	8

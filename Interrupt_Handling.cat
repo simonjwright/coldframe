@@ -11,7 +11,7 @@
     documentation 	
 |Demonstration of Interrupt Handling using Ada facilities.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -50,7 +50,8 @@
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "timeout"
 		    quid       	"3DA72CCB0197"
-		    type       	"Timer"))
+		    type       	"Timer"
+		    quidu      	"3C750FDC0384"))
 	    statemachine 	(object State_Machine "State/Activity Model"
 		quid       	"3DA72CFC01BF"
 		stereotype 	"generate"
@@ -348,7 +349,7 @@
 	    documentation 	
 |Demonstration of Interrupt Handling using Ada facilities.
 |
-|{ revision = $Revision: 06014bfea356 $ }
+|{ revision = $Revision: 8003fcb36942 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -356,7 +357,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Interrupt Handling::Device" @10
+		(object ClassView "Class" "Logical View::ColdFrame Examples::Interrupt Handling::Device" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -373,7 +374,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@10
-			location   	(512, 304)
+			location   	(512, 444)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	266
@@ -381,7 +382,7 @@
 			label      	"Device")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@10
-			location   	(512, 259)
+			location   	(512, 400)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -393,10 +394,10 @@
 		    fill_color 	13434879
 		    quidu      	"3DA72C9A01AA"
 		    width      	284
-		    height     	494
+		    height     	212
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object CategoryView "Logical View::Interrupt Handling" @11
+		(object CategoryView "Logical View::ColdFrame Examples::Interrupt Handling" @11
 		    location   	(1630, 395)
 		    font       	(object Font
 			size       	10
@@ -434,4 +435,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1615
-		    label      	"$Id: Interrupt_Handling.cat,v 06014bfea356 2005/03/05 22:03:12 simon $")))))
+		    label      	"$Id: Interrupt_Handling.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")))))

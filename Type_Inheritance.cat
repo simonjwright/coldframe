@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Type Inheritance"
@@ -19,8 +19,10 @@
 		    quid       	"3E20466102BC"
 		    parameters 	(list Parameters
 			(object Parameter "d"
+			    quid       	"4257762A0264"
 			    documentation 	"[[ mode : inout ]]"
-			    type       	"Derived"))
+			    type       	"Derived"
+			    quidu      	"3E1F00A80319"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -56,9 +58,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1433, 470)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(1244, 394)
+			location   	(1244, 393)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	378
@@ -77,14 +88,6 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E1F00A80319"
-		    compartment 	(object Compartment
-			Parent_View 	@1
-			location   	(1244, 450)
-			icon_style 	"Label"
-			fill_color 	13434879
-			anchor     	2
-			nlines     	3
-			max_width  	382)
 		    width      	396
 		    height     	264
 		    annotation 	8
@@ -95,9 +98,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(730, 1235)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(544, 1209)
+			location   	(544, 1208)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	372
@@ -126,9 +138,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1540, 1112)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1449, 1086)
+			location   	(1449, 1085)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	182
@@ -157,9 +178,18 @@
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
 		    location   	(1468, 1818)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(1385, 1792)
+			location   	(1385, 1791)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	166
