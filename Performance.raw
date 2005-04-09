@@ -2,14 +2,14 @@
 <extractor>cf-DATE</extractor>
 <name>Performance</name>
 <date>
-<year>2004</year>
-<month>11</month>
-<day>11</day>
-<time>15:06</time>
+<year>2005</year>
+<month>4</month>
+<day>9</day>
+<time>07:52</time>
 </date>
 <documentation><![CDATA[ Classes for ColdFrame performance tests.
 
-{ revision = $Revision: eb9ac40af0f9 $ } ]]></documentation>
+{ revision = $Revision: dfc288fd3d22 $ } ]]></documentation>
 <classes>
 <class>
 <name>Owner</name>

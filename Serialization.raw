@@ -3,13 +3,13 @@
 <name>Serialization</name>
 <date>
 <year>2005</year>
-<month>1</month>
-<day>29</day>
-<time>07:10</time>
+<month>4</month>
+<day>9</day>
+<time>07:52</time>
 </date>
 <documentation><![CDATA[ This domain is a demonstration of the "serialization" features of ColdFrame.
 
-{ revision = $Revision: 18cff6ec23b8 $ }
+{ revision = $Revision: dfc288fd3d22 $ }
  ]]></documentation>
 <classes>
 <class stereotype="public">

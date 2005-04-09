@@ -3,13 +3,13 @@
 <name>Bad Model Regressions</name>
 <date>
 <year>2005</year>
-<month>2</month>
-<day>6</day>
-<time>19:07</time>
+<month>4</month>
+<day>9</day>
+<time>07:51</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 59479730a0c7 $ } ]]></documentation>
+{ revision = $Revision: dfc288fd3d22 $ } ]]></documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>

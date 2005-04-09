@@ -3,9 +3,9 @@
 <name>Digital IO</name>
 <date>
 <year>2005</year>
-<month>3</month>
-<day>2</day>
-<time>21:23</time>
+<month>4</month>
+<day>9</day>
+<time>07:52</time>
 </date>
 <documentation><![CDATA[ Copyright (C) Simon Wright <simon@pushface.org>
 
@@ -14,7 +14,7 @@ This package is free software; you can redistribute it and/or modify it under te
 This domain manages digital (discrete) input/output.
 It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 
-{ revision = $Revision: b592a1c68ebe $ } ]]></documentation>
+{ revision = $Revision: dfc288fd3d22 $ } ]]></documentation>
 <classes>
 <class>
 <name>Signal</name>

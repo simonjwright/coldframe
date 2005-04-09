@@ -3,13 +3,13 @@
 <name>Bad Code Regressions</name>
 <date>
 <year>2005</year>
-<month>1</month>
-<day>29</day>
-<time>05:54</time>
+<month>4</month>
+<day>9</day>
+<time>07:51</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: 4d71b82a8caf $ } ]]></documentation>
+{ revision = $Revision: dfc288fd3d22 $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
