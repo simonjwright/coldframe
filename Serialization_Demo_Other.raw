@@ -3,14 +3,14 @@
 <name>Serialization Demo Other</name>
 <date>
 <year>2005</year>
-<month>1</month>
-<day>29</day>
-<time>07:10</time>
+<month>4</month>
+<day>9</day>
+<time>08:45</time>
 </date>
 <documentation><![CDATA[ This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
 It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
 
-{ revision = $Revision: 18cff6ec23b8 $ } ]]></documentation>
+{ revision = $Revision: c388fb863c91 $ } ]]></documentation>
 <classes>
 <class stereotype="type">
 <name>Record Type 1</name>
