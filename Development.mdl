@@ -608,7 +608,7 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@11
-				    location   	(1627, 368)
+				    location   	(1627, 369)
 				    fill_color 	13434879
 				    nlines     	1
 				    max_width  	226
@@ -696,11 +696,11 @@
 	    (object ClassDiagram "Main"
 		quid       	"3BDB208B0049"
 		title      	"Main"
-		zoom       	88
+		zoom       	90
 		max_height 	28350
 		max_width  	21600
-		origin_x   	3
-		origin_y   	20
+		origin_x   	25
+		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::Deletion" @14
 			location   	(180, 885)
