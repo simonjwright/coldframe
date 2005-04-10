@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
+--  $Revision: 56d4f7b06d8e $
+--  $Date: 2005/04/10 18:35:57 $
 --  $Author: simon $
 
 with Ada.Exceptions;
@@ -106,7 +106,8 @@ package body ColdFrame.Events_G is
          Logging.Log
            (Severity => Logging.Error,
             Message => "A Timer has been destroyed while holding a " &
-              Ada.Tags.Expanded_Name (The_Timer.The_Entry.all'Tag) &
+              Ada.Tags.Expanded_Name
+              (Held_Event (The_Timer.The_Entry.all).The_Event'Tag) &
               ", may have been declared on the stack");
 
          Finalize (The_Timer);
