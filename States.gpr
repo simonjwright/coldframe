@@ -1,5 +1,5 @@
 --  GNAT project file for the States demonstration.
---  $Id: States.gpr,v 92ddc96ac381 2003/03/22 18:30:31 simon $
+--  $Id: States.gpr,v 7722685df9cf 2005/04/10 18:01:23 simon $
 
 with "Options";
 with "ColdFrame";
@@ -13,7 +13,7 @@ project States is
   for Source_Dirs use ("States.impl",
                        "States.gen");
 
-  for Object_Dir use Options'Object_Dir;
+  for Object_Dir use Options'Object_Dir & "/main";
 
   package Ide renames Options.Ide;
   package Builder renames Options.Builder;
