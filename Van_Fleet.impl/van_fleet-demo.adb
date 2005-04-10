@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-demo.adb,v 6ea040caff18 2004/10/09 10:37:13 simon $
+--  $Id: van_fleet-demo.adb,v acc47fe4a910 2005/04/10 18:06:29 simon $
 
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
@@ -27,7 +27,6 @@ with Van_Fleet.Van.Iterate;
 procedure Van_Fleet.Demo is
 
    procedure Print (V : Van.Handle);
-   pragma Inline_Always (Print);
    procedure Print is new Van.Iterate (Print);
    procedure Print (V : Van.Handle) is
    begin
