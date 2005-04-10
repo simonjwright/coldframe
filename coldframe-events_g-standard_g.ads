@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
+--  $Revision: 3629ddde7dd0 $
+--  $Date: 2005/04/10 17:44:41 $
 --  $Author: simon $
 
 with Ada.Task_Identification;
@@ -188,13 +188,13 @@ private
       procedure Unlock;
       --  Notes that the queue is no longer locked.
 
+      procedure Done;
+      --  Notes that execution is no longer in progress.
+
       procedure Stop;
       --  Only for use by domain Tear_Down.
 
    private
-
-      procedure Done;
-      --  Notes that execution is no longer in progress.
 
       entry Waiting_For_Lock;
       --  Requeued by Lock if the calling task isn't already the
