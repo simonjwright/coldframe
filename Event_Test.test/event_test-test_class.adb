@@ -9,7 +9,7 @@ with Event_Test.Events;
 
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events;
-with ColdFrame.Project.Event_Support;
+with ColdFrame.Project.Times;
 
 package body Event_Test.Test_Class is
 
@@ -105,7 +105,7 @@ package body Event_Test.Test_Class is
         (Ev,
          On => Events.Dispatcher,
          To_Fire_At =>
-           ColdFrame.Project.Event_Support.Signature.From_Now (2.2));
+           ColdFrame.Project.Times.From_Now (2.2));
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       Assert (Recipient.Get_Ordinal = 1002,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
