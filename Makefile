@@ -589,6 +589,26 @@ DISTRIBUTION_FILES = \
 cf-$(DATE).tgz \
 cf-$(DATE).zip
 
+# Documentation upload to SF
+
+SFUSER ?= simonjwright
+
+upload-docs: $(DOCS) force
+	rsync \
+	  --compress \
+	  --copy-unsafe-links \
+	  --cvs-exclude \
+	  --perms \
+	  --recursive \
+	  --rsh=ssh \
+	  --times \
+	  --update \
+	  --verbose \
+	  $(DOCS) \
+	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/
+
+# The complete distribution
+
 dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	-@rm -rf dist
 	mkdir -p dist/download
