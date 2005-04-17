@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 57d91e128858 2005/03/08 06:29:00 simon $ -->
+<!-- $Id: releases.html-proto,v 0c554299a3e8 2005/04/17 06:06:56 simon $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -8,7 +8,9 @@
 
 <hr>
 
-<p>Source can be downloaded <a href="download/">here</a>.
+<p>Source can be
+downloaded <a
+href="http://sourceforge.net/project/showfiles.php?group_id=135558">here</a>.
 
 <p>Archives are available in <tt>.zip</tt> or <tt>.tgz</tt>
 (<tt>.tar.gz</tt>) form. The file name encodes the date of the
