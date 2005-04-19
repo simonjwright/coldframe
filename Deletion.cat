@@ -73,7 +73,7 @@
 		    quid       	"3BDBF4CB027C"
 		    stereotype 	"id"
 		    type       	"Autonumber"))
-	    cardinality 	(value Cardinality "13"))
+	    cardinality 	(value Cardinality "0..13"))
 	(object Class "Threat"
 	    quid       	"3BDBF3930143"
 	    documentation 	
@@ -532,18 +532,35 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(60, 226)
+			location   	(85, 246)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	744
+			max_width  	694
 			justify    	0
 			label      	"Track")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3BDBF3820396"
-		    width      	762
-		    height     	436
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(85, 302)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	690)
+		    width      	712
+		    height     	394
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Deletion::Threat" @3
@@ -674,7 +691,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(920, 323)
+			location   	(907, 326)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -698,7 +715,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(919, 585)
+			location   	(907, 581)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -722,7 +739,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@9
-			location   	(906, 845)
+			location   	(895, 834)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
