@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d12e4718426d 2005/04/22 04:41:21 simonjwright $ -->
+<!-- $Id: bugs.html,v 6fe39e0ac844 2005/04/22 05:49:19 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -176,21 +176,6 @@ action.
 characters which cause problems at code generation. Typical offenders
 would be Windows "smart quotes".
 
-<dt>0298 (raised 14.iv.05)
-
-<dd>The supplied storage pools fill memory with 16#deadbeef# both
-before returning it from Allocate and when it's returned to
-Deallocate. Might be helpful to fill with something different in the
-two cases.
-<br>SourceForge 1183184
-
-<dt>0299 (raised 14.iv.05)
-
-<dd>The provided storage pools fill memory with 16#deadbeef#. This
-looks fine on PowerPC (big-endian) hardware but less visible on Intel
-(little-endian), because the *byte* order is reversed (16#efbeadde#).
-<br>SourceForge 1183180
-
 <dt>0300 (raised 14.iv.05)
 
 <dd>The Wait_Until_Idle operation of test event queues has an option
@@ -208,7 +193,28 @@ ignore held events as well. Don't like the idea of making
 
 <h2><a name="fixed">Fixed</a></h2>
 
-<h3>3.iv.04</h3>
+<h3>22.iv.05</h3>
+
+<dl>
+
+<dt>0298 (raised 14.iv.05)
+
+<dd>The supplied storage pools fill memory with 16#deadbeef# both
+before returning it from Allocate and when it's returned to
+Deallocate. Might be helpful to fill with something different in the
+two cases.
+<br>SourceForge 1183184
+
+<dt>0299 (raised 14.iv.05)
+
+<dd>The provided storage pools fill memory with 16#deadbeef#. This
+looks fine on PowerPC (big-endian) hardware but less visible on Intel
+(little-endian), because the *byte* order is reversed (16#efbeadde#).
+<br>SourceForge 1183180
+
+</dl>
+
+<h3>3.iv.05</h3>
 
 <dt>0297 (raised 3.iv.05)
 
