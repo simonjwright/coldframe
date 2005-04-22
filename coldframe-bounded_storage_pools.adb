@@ -29,11 +29,15 @@
 --  * operations are protected against concurrent access.
 
 --  $RCSfile: coldframe-bounded_storage_pools.adb,v $
---  $Revision: 83ccda78d743 $
---  $Date: 2004/05/20 05:03:42 $
---  $Author: simon $
+--  $Revision: 2b6adb0d98d3 $
+--  $Date: 2005/04/22 05:30:04 $
+--  $Author: simonjwright $
 
 package body ColdFrame.Bounded_Storage_Pools is
+
+
+   Big_Endian : constant Boolean
+     := System."=" (System.Default_Bit_Order, System.High_Order_First);
 
 
    protected body Mutex is
@@ -81,17 +85,40 @@ package body ColdFrame.Bounded_Storage_Pools is
          Result : Storage;
          pragma Import (Ada, Result);
          for Result'Address use Result_Address;
-         Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
-           := (16#de#, 16#ad#, 16#be#, 16#ef#, 16#de#, 16#ad#, 16#be#, 16#ef#);
-         Remnant : constant System.Storage_Elements.Storage_Offset
-           := Storage_Size mod Filler'Length;
       begin
-         for S in 0 .. Storage_Size / Filler'Length - 1 loop
-            Result (S * Filler'Length .. S * Filler'Length + Filler'Length - 1)
-              := Filler;
-         end loop;
-         Result (Result'Last - Remnant + 1 .. Result'Last)
-           := Filler (0 .. Remnant - 1);
+         if Big_Endian then
+            declare
+               Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
+                 := (16#de#, 16#ad#, 16#be#, 16#ef#,
+                     16#de#, 16#ad#, 16#be#, 16#ef#);
+               Remnant : constant System.Storage_Elements.Storage_Offset
+                 := Storage_Size mod Filler'Length;
+            begin
+               for S in 0 .. Storage_Size / Filler'Length - 1 loop
+                  Result (S * Filler'Length ..
+                            S * Filler'Length + Filler'Length - 1)
+                    := Filler;
+               end loop;
+               Result (Result'Last - Remnant + 1 .. Result'Last)
+                 := Filler (0 .. Remnant - 1);
+            end;
+         else
+            declare
+               Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
+                 := (16#ef#, 16#be#, 16#ad#, 16#de#,
+                     16#ef#, 16#be#, 16#ad#, 16#de#);
+               Remnant : constant System.Storage_Elements.Storage_Offset
+                 := Storage_Size mod Filler'Length;
+            begin
+               for S in 0 .. Storage_Size / Filler'Length - 1 loop
+                  Result (S * Filler'Length ..
+                            S * Filler'Length + Filler'Length - 1)
+                    := Filler;
+               end loop;
+               Result (Result'Last - Remnant + 1 .. Result'Last)
+                 := Filler (0 .. Remnant - 1);
+            end;
+         end if;
       end;
 
    exception
@@ -122,17 +149,40 @@ package body ColdFrame.Bounded_Storage_Pools is
          Result : Storage;
          pragma Import (Ada, Result);
          for Result'Address use Result_Address;
-         Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
-           := (16#de#, 16#ad#, 16#be#, 16#ef#, 16#de#, 16#ad#, 16#be#, 16#ef#);
-         Remnant : constant System.Storage_Elements.Storage_Offset
-           := Storage_Size mod Filler'Length;
       begin
-         for S in 0 .. Storage_Size / Filler'Length - 1 loop
-            Result (S * Filler'Length .. S * Filler'Length + Filler'Length - 1)
-              := Filler;
-         end loop;
-         Result (Result'Last - Remnant + 1 .. Result'Last)
-           := Filler (0 .. Remnant - 1);
+         if Big_Endian then
+            declare
+               Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
+                 := (16#de#, 16#ad#, 16#de#, 16#ad#,
+                     16#de#, 16#ad#, 16#de#, 16#ad#);
+               Remnant : constant System.Storage_Elements.Storage_Offset
+                 := Storage_Size mod Filler'Length;
+            begin
+               for S in 0 .. Storage_Size / Filler'Length - 1 loop
+                  Result (S * Filler'Length ..
+                            S * Filler'Length + Filler'Length - 1)
+                    := Filler;
+               end loop;
+               Result (Result'Last - Remnant + 1 .. Result'Last)
+                 := Filler (0 .. Remnant - 1);
+            end;
+         else
+            declare
+               Filler : constant System.Storage_Elements.Storage_Array (0 .. 7)
+                 := (16#ad#, 16#de#, 16#ad#, 16#de#,
+                     16#ad#, 16#de#, 16#ad#, 16#de#);
+               Remnant : constant System.Storage_Elements.Storage_Offset
+                 := Storage_Size mod Filler'Length;
+            begin
+               for S in 0 .. Storage_Size / Filler'Length - 1 loop
+                  Result (S * Filler'Length ..
+                            S * Filler'Length + Filler'Length - 1)
+                    := Filler;
+               end loop;
+               Result (Result'Last - Remnant + 1 .. Result'Last)
+                 := Filler (0 .. Remnant - 1);
+            end;
+         end if;
       end;
 
       --  deallocate the storage
