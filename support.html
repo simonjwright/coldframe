@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v b72a3ecb25af 2004/06/17 07:12:06 simon $ -->
+<!-- $Id: support.html,v 18b0b80b6567 2005/04/22 05:47:46 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -31,13 +31,16 @@ package <tt>ColdFrame</tt>. The more user-interesting ones are
 <dd>Used in place of the <tt>'Storage_Size</tt> attribute for access
 types; it provides the mutual exclusion omitted from GNAT up to
 3.16a1, and fills allocated memory with improbable data
-(<tt>16#deadbeef#</tt>).
+(<tt>16#deadbeef#</tt> when viewed in the debugger).
+<br>Freed memory is refilled with <tt>16#dead#</tt> (the Ada runtime
+overwrites the first few bytes for internal purposes).
 
 <p><dt><tt>ColdFrame.Unbounded_Storage_Pools</tt>
 
 <dd>Provides a storage pool which uses the standard system memory
 allocator but fills allocated memory with improbable data
-(<tt>16#deadbeef#</tt>).
+(<tt>16#deadbeef#</tt> when viewed in the debugger).
+<br>Freed memory is refilled with <tt>16#dead#</tt>.
 
 <p><dt><tt>ColdFrame.Callbacks</tt>
 
