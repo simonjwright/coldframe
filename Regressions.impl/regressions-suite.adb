@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 398f5bb53c19 2005/03/15 08:16:01 simon $
+--  $Id: regressions-suite.adb,v 43b4f8d573b3 2005/04/23 06:25:32 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -23,6 +23,7 @@ with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
 with Regressions.PT_User;
+with Regressions.Self_Immolator;
 with Regressions.Serializable;
 with Regressions.Tear_Down;
 
@@ -1042,6 +1043,57 @@ package body Regressions.Suite is
    end Protected_Types_And_Access;
 
 
+   package Task_Deletes_Itself is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Task_Deletes_Itself;
+
+   package body Task_Deletes_Itself is
+
+      procedure Delete_Yourself (C : in out Test_Case'Class);
+      procedure Delete_Yourself (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         H : Self_Immolator.Handle;
+      begin
+         H := Self_Immolator.Create;
+         Self_Immolator.Terminate_Yourself (H);
+      end Delete_Yourself;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Task_Deletes_Itself.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Delete_Yourself'Access,
+            "task deletes itself");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Task_Deletes_Itself;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -1059,6 +1111,8 @@ package body Regressions.Suite is
                                   new Event_Handler_Exceptions.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Protected_Types_And_Access.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Task_Deletes_Itself.Case_1);
       return Result;
    end Suite;
 
