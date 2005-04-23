@@ -222,7 +222,12 @@ type-mapping.png
 # anything else.
 SUBRELEASE = cvs
 
-# Create the current date, in the form yyyymmdd. This certainly works in Linux.
+# Create the current date, in the form yyyymmdd. This certainly works in
+# Linux.
+#
+# Used to construct release IDs (eg, cf-20050423cvs). You can set the
+# whole thing from the command line -- for example, if creating a patch
+# release.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
 DOCS = \
