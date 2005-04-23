@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 159ee3829455 $
---  $Date: 2004/07/03 12:28:39 $
---  $Author: simon $
+--  $Revision: 7cb77e031b4e $
+--  $Date: 2005/04/23 15:49:45 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with ColdFrame.Exceptions;
@@ -61,7 +61,7 @@ package body ColdFrame.Events_G.Test_G is
                               Ignoring_Timers : Boolean := False) is
    begin
       if Ignoring_Timers then
-         The_Queue.The_Event_Count.Wait_Until_No_Timed_Events;
+         The_Queue.The_Event_Count.Wait_Until_No_Posted_Events;
       else
          The_Queue.The_Event_Count.Wait_Until_Idle;
       end if;
@@ -114,12 +114,11 @@ package body ColdFrame.Events_G.Test_G is
          null;
       end Wait_Until_Idle;
 
-      entry Wait_Until_No_Timed_Events
-      when Posted_Events = 0
-        and then Held_Events = 0 is
+      entry Wait_Until_No_Posted_Events
+      when Posted_Events = 0 is
       begin
          null;
-      end Wait_Until_No_Timed_Events;
+      end Wait_Until_No_Posted_Events;
 
       procedure Add_Posted_Event is
       begin

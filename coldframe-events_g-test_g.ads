@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: acb2cc29bb74 $
---  $Date: 2003/07/24 19:50:30 $
---  $Author: simon $
+--  $Revision: 7cb77e031b4e $
+--  $Date: 2005/04/23 15:49:45 $
+--  $Author: simonjwright $
 
 generic
 
@@ -75,8 +75,9 @@ private
       entry Wait_Until_Idle;
       --  Blocks until there are no events pending or held or on timers.
 
-      entry Wait_Until_No_Timed_Events;
-      --  Blocks until there are no events pending or held.
+      entry Wait_Until_No_Posted_Events;
+      --  Blocks until there are no events pending (there may be
+      --  events held or on timers).
 
       procedure Add_Posted_Event;
       procedure Remove_Posted_Event;
