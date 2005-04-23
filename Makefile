@@ -218,6 +218,10 @@ type-mapping.png
 ############################
 # Distribution construction
 
+# The subrelease is 'cvs' by default. Change on the command line for
+# anything else.
+SUBRELEASE = cvs
+
 # Create the current date, in the form yyyymmdd. This certainly works in Linux.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
