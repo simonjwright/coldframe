@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0c554299a3e8 2005/04/17 06:06:56 simon $ -->
+<!-- $Id: releases.html-proto,v e02c3cf9dda2 2005/04/23 15:26:14 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -150,6 +150,10 @@ to be marked as a whole).
 
 
 <p>ColdFrame can now generate <a href="testing.html">test stubs</a>.
+
+
+<p>The error of deleting an active instance from its own task is
+detected.
 
 
 <p><dt>20040319

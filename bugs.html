@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6fe39e0ac844 2005/04/22 05:49:19 simonjwright $ -->
+<!-- $Id: bugs.html,v e02c3cf9dda2 2005/04/23 15:26:14 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -187,11 +187,22 @@ held events, or whether the present option should be extended to
 ignore held events as well. Don't like the idea of making
 <tt>Ignoring_Timers</tt> imply <tt>Ignoring_Held_Events</tt>.</i>
 
-<!-- next: 0301 -->
+<!-- next: 0302 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>23.iv.05</h3>
+
+<dl>
+
+<dt>0301 (raised 22.iv.05)
+
+<dd>It's an unrecoverable error for an active instance's task to try
+to delete itself, so it would be a good idea to report it.
+
+</dl>
 
 <h3>22.iv.05</h3>
 
