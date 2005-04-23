@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v cb2d4731ba52 2005/02/06 18:42:57 simon $ -->
+<!-- $Id: ada-class.xsl,v a1d3d8fe0148 2005/04/23 15:23:56 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -990,6 +990,12 @@
           <xsl:call-template name="ut:can-use-array"/>
         </xsl:variable>
 
+        <!-- We need task identities and error logging if we're active. -->
+        <xsl:if test="@active">
+          <xsl:text>with Ada.Task_Identification;&#10;</xsl:text>
+          <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
+        </xsl:if>
+
         <!-- We'll need to free memory, unless we have no instances. -->
         <xsl:if test="$max &gt; 0">
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
@@ -1397,6 +1403,11 @@
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (With_Identifier : Identifier) is&#10;</xsl:text>
 
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>use type Ada.Task_Identification.Task_ID;&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:if test="$max &gt; 1">
       <xsl:value-of select="$II"/>
       <xsl:text>This : Handle;&#10;</xsl:text>
@@ -1498,6 +1509,18 @@
 
     <xsl:if test="@active">
       <xsl:value-of select="$II"/>
+      <xsl:text>if This.The_T'Identity = Ada.Task_Identification.Current_Task then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
+      <xsl:value-of select="$IIIC"/>
+      <xsl:text>("Task of active </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> tried to delete itself");&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
       <xsl:text>abort This.The_T.all;&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>Free (This.The_T);&#10;</xsl:text>
@@ -1566,6 +1589,10 @@
 
     <xsl:value-of select="$I"/>
     <xsl:text>procedure Delete (This : in out Handle) is&#10;</xsl:text>
+    <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>use type Ada.Task_Identification.Task_ID;&#10;</xsl:text>
+    </xsl:if>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
@@ -1590,6 +1617,18 @@
     </xsl:call-template>
 
     <xsl:if test="@active">
+      <xsl:value-of select="$II"/>
+      <xsl:text>if This.The_T'Identity = Ada.Task_Identification.Current_Task then&#10;</xsl:text>
+      <xsl:value-of select="$III"/>
+      <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
+      <xsl:value-of select="$IIIC"/>
+      <xsl:text>("Task of active </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text> tried to delete itself");&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>end if;&#10;</xsl:text>
       <xsl:value-of select="$II"/>
       <xsl:text>abort This.The_T.all;&#10;</xsl:text>
       <xsl:value-of select="$II"/>
