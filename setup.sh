@@ -1,8 +1,8 @@
-# $Id: setup.sh,v b28ada3f0750 2005/04/10 17:41:07 simon $
+# $Id: setup.sh,v df503843c83f 2005/04/23 06:33:37 simonjwright $
 # Sets up environment variables for development of the Stairwell demo
 # (very local!).
 
-cf=$HOME/local/cf
+cf=$HOME/cf
 
 export ADA_PROJECT_PATH=$cf
 export AUNIT=AUnit-1.03p
