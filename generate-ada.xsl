@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v a618cffed681 2005/02/26 13:23:22 simon $ -->
+<!-- $Id: generate-ada.xsl,v d1db35d9ca12 2005/04/30 06:40:10 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -209,10 +209,13 @@
         select="'.. any specially-declared public types ..'"/>
     </xsl:call-template>
 
-    <xsl:call-template name="ty:domain-types">
+    <xsl:call-template name="ty:sorted-domain-types">
       <xsl:with-param 
         name="types" 
         select="/domain/type[not(@visibility='private')]"/>
+      <xsl:with-param 
+        name="finished" 
+        select="type[@standard]"/>
     </xsl:call-template>
 
     <!-- .. any type operations .. -->
@@ -249,10 +252,14 @@
         select="'.. any specially-declared private types ..'"/>
     </xsl:call-template>
 
-    <xsl:call-template name="ty:domain-types">
+    <xsl:call-template name="ty:sorted-domain-types">
       <xsl:with-param
         name="types"
         select="/domain/type[@visibility='private']"/>
+      <!-- Types already output in the public part are visible here, too. -->
+      <xsl:with-param 
+        name="finished" 
+        select="type[@standard or not(@visibility='private')]"/>
     </xsl:call-template>
 
     <!-- .. any type operations .. -->
