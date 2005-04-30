@@ -723,7 +723,7 @@
 		origin_y   	0
 		items      	(list diagram_item_list
 		    (object CategoryView "Logical View::Deletion" @15
-			location   	(180, 885)
+			location   	(175, 1615)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -735,7 +735,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@15
-			    location   	(36, 801)
+			    location   	(31, 1531)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1216,7 +1216,7 @@
 			    max_width  	288
 			    justify    	0
 			    label      	"Properties")
-			icon_style 	"Label"
+			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"3D3AE80B033A"
@@ -1598,7 +1598,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::ColdFrame Examples" @50
-			location   	(3369, 984)
+			location   	(2311, 974)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1610,7 +1610,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@50
-			    location   	(3223, 900)
+			    location   	(2165, 890)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	292
@@ -1623,7 +1623,7 @@
 			width      	304
 			height     	180)
 		    (object CategoryView "Logical View::Regressions" @51
-			location   	(3368, 172)
+			location   	(2310, 162)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1635,7 +1635,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@51
-			    location   	(3224, 88)
+			    location   	(2166, 78)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1648,7 +1648,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Bad Code Regressions" @52
-			location   	(3345, 445)
+			location   	(2315, 438)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1660,7 +1660,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@52
-			    location   	(3201, 361)
+			    location   	(2171, 354)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1673,7 +1673,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Tagged Values" @53
-			location   	(2847, 1827)
+			location   	(1856, 2080)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1685,7 +1685,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@53
-			    location   	(2703, 1743)
+			    location   	(1712, 1996)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1698,7 +1698,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Bad Model Regressions" @54
-			location   	(3365, 716)
+			location   	(2307, 706)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1710,7 +1710,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@54
-			    location   	(3221, 632)
+			    location   	(2163, 622)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1723,7 +1723,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Arrays" @55
-			location   	(2483, 413)
+			location   	(1841, 1362)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1735,7 +1735,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@55
-			    location   	(2339, 329)
+			    location   	(1697, 1278)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1748,7 +1748,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Timers" @56
-			location   	(2516, 2587)
+			location   	(1833, 1104)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1760,7 +1760,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@56
-			    location   	(2372, 2503)
+			    location   	(1689, 1020)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1773,7 +1773,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Fixed Strings" @57
-			location   	(2842, 1588)
+			location   	(1851, 1841)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1785,7 +1785,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@57
-			    location   	(2698, 1504)
+			    location   	(1707, 1757)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -1798,7 +1798,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Collection Timing" @58
-			location   	(2832, 1324)
+			location   	(2308, 1251)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1810,7 +1810,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@58
-			    location   	(2688, 1240)
+			    location   	(2164, 1167)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
