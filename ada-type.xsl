@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v feb7113985be 2005/04/30 07:36:19 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 7dd6d63f60fd 2005/04/30 07:58:20 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -222,7 +222,7 @@
                    | operation[not(@access) and ../@protected
                         and result and not($processed/name=result)]/result">
                 <xsl:sort select="."/>
-                <xsl:text>  problem with type </xsl:text>
+                <xsl:text>  no definition of type </xsl:text>
                 <xsl:value-of select="."/>
                 <xsl:text>&#10;</xsl:text>
               </xsl:for-each>
