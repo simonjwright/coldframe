@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 99961276707a 2005/04/30 07:33:07 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v feb7113985be 2005/04/30 07:36:19 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -695,13 +695,13 @@
 
         <xsl:when test="imported"/>
 
-        <xsl:when test="renames"/>
-
         <xsl:when test="integer"/>
 
         <xsl:when test="@null"/>
 
         <xsl:when test="real"/>
+
+        <xsl:when test="renames"/>
 
         <xsl:when test="string/fixed"/>
 
@@ -720,8 +720,10 @@
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>
 
+        <xsl:when test="unsigned"/>
+
         <xsl:otherwise>
-          <xsl:text>-- Unrecognised type category for </xsl:text>
+          <xsl:text>--  Unrecognised type category for </xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>&#10;</xsl:text>
         </xsl:otherwise>
