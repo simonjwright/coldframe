@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6889452b5d86 2005/04/03 10:34:43 simon $
+# $Id: normalize-rose.tcl,v 745255c117fd 2005/04/30 07:39:59 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2815,7 +2815,7 @@ itcl::class Datatype {
         }
         if {$dataType == "defined"} {
             Warning "no tags to indicate type of $type, treated as {null}"
-            puts -nonewline " null=\"true\""
+	    set null 1
         }
         if $null {
             # do this as an attribute so it's easier to check for mistaken
@@ -2879,9 +2879,6 @@ itcl::class Datatype {
             }
             imported {
                 putElement imported $dataDetail
-            }
-            null {
-                puts "<null/>"
             }
             renames {
                 putElement renames $dataDetail
