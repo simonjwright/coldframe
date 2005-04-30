@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 9363fdaaf716 2005/03/05 18:32:50 simon $ -->
+<!-- $Id: ada-type.xsl,v c28b703568e2 2005/04/30 06:38:58 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -126,18 +126,6 @@
   </xsl:template>
 
 
-  <!-- Called at domain to generate public domain Types entries (not for
-       standard types). -->
-  <xsl:template name="ty:domain-types">
-    <xsl:param name="types" select="/domain/type"/>
-    <xsl:call-template name="ty:sorted-domain-types">
-      <xsl:with-param name="types" select="$types"/>
-      <xsl:with-param name="nodes" select="/.."/>
-      <xsl:with-param name="finished" select="type[@standard]"/>
-    </xsl:call-template>
-  </xsl:template>
-
-
   <!-- Called at domain to output the type declarations sorted
        in dependency order. -->
   <xsl:template name="ty:sorted-domain-types">
@@ -146,7 +134,7 @@
     <xsl:param name="types"/>
 
     <!-- The types which are to be output in this pass -->
-    <xsl:param name="nodes"/>
+    <xsl:param name="nodes" select="/.."/>
 
     <!-- The types which have already been output -->
     <xsl:param name="finished"/>
