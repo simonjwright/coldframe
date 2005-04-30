@@ -282,8 +282,12 @@ ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff \
 House_Management.html Digital_IO.html
 
-serialization-model.html: Serialization.html
-	cp -p $< $@
+# We used to generate Serialization.html from Serialization.raw and
+# copy it to serialization-model.html, but unfortunately Darwin's
+# default file system is case-insensitive; which makes for confusion
+# with the hand-written serialization.html.
+serialization-model.raw: Serialization.raw
+	cp $< $@
 
 # Makefile-cf is the published makefile for development of ColdFrame itself.
 # Other makefiles are
