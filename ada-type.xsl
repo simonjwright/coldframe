@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v c28b703568e2 2005/04/30 06:38:58 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 99961276707a 2005/04/30 07:33:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -699,7 +699,7 @@
 
         <xsl:when test="integer"/>
 
-        <xsl:when test="null"/>
+        <xsl:when test="@null"/>
 
         <xsl:when test="real"/>
 

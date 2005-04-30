@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 6ea040caff18 2004/10/09 10:37:13 simon $ -->
+<!-- $Id: generate-html.xsl,v 99961276707a 2005/04/30 07:33:07 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -783,7 +783,7 @@
           <xsl:text> characters.</xsl:text>
         </p>
       </xsl:when>
-      <xsl:when test="null">
+      <xsl:when test="@null">
         <p>
           <xsl:text>Empty record.</xsl:text>
         </p>
