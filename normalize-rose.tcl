@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 745255c117fd 2005/04/30 07:39:59 simonjwright $
+# $Id: normalize-rose.tcl,v 3933eb5a5061 2005/04/30 07:48:27 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2883,9 +2883,10 @@ itcl::class Datatype {
             renames {
                 putElement renames $dataDetail
             }
-            implicit {}
+            defined -
+            implicit -
+	    null -
             standard {}
-            defined {}
             default {
                 Error "CF: unhandled dataType \"$dataType\""
             }
