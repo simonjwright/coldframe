@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 00b8c83a60cb 2005/04/30 08:13:23 simonjwright $ -->
+<!-- $Id: bugs.html,v 082b8ec24148 2005/04/30 08:25:24 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -176,16 +176,13 @@ action.
 characters which cause problems at code generation. Typical offenders
 would be Windows "smart quotes".
 
-<dt>0302 (raised 29.iv.05)
+<dt>0304 (raised 30.iv.05)
 
-<dd>A private type couldn't depend on (eg, have a component of) a
-public type.
+<dd>An association class that's not in the same package as the
+association (might be in a child or parent) can be missed during
+extraction.
 
-<dt>0303 (raised 30.iv.05)
-
-<dd>A private type couldn't be <i>{serializable}</i>.
-
-<!-- next: 0304 -->
+<!-- next: 0305 -->
 
 </dl>
 
