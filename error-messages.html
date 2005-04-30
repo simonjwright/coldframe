@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 18d602f4da16 2005/02/18 06:34:16 simon $ -->
+<!-- $Id: error-messages.html,v 5c0e15960ad2 2005/04/30 08:04:14 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -191,6 +191,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Error: <i>Class.State</i>, <i>Operation</i> has too many parameters to be an entry action <dd>An entry action in the model can have at most one parameter (the event payload). Of course, for non-singleton classes there will be an initial <tt>This</tt> parameter in the generated code.
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
+
+<dt>Error: couldn't generate type <i>Type</i> <dd>The type has an attribute, or is an array involving, or is a protected type with an operation involving, a type or types that haven't been specified. The undefined types are listed. Note, this can occur with a public type that depends on a private type.
 
 <dt>Error: drop-through and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
