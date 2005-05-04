@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v e02c3cf9dda2 2005/04/23 15:26:14 simonjwright $ -->
+<!-- $Id: releases.html-proto,v e9c3ba9f5c9c 2005/05/04 04:44:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -28,11 +28,81 @@ release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
 all Domains from the model.</font>
 
 
+<p><b>Modelling</b>
+
+
+<p>ColdFrame now recognises <i>utility classes</i> ("classes" with no
+instances, only operations).
+
+
+<p>Visibility is partially implemented for operations of classes and
+&#171;protected&#187; types; <i>public</i> and <i>protected</i>
+operations are public, <i>private</i> and <i>implementation</i>
+operations are private (unless they are marked &#171;init&#187;).
+
+
+<p>You can declare types <tt>private</tt>,  by saying
+&#171;type, private&#187;, (more tidily, perhaps) by tagging
+<i>{private}</i>, or even by using the Rose class specification dialog
+box!
+<br><i>&#171;serializable&#187;</i> types must be <i>public</i>.
+
+
+<p>You can mark a nested package that's to be included as
+<em>&#171;include&#187;</em> instead of <em>&#171;generate&#187;</em>
+if you find it clearer.
+
+
+<p>You can use Ada attributes (eg, <tt>'Small</tt>) in values (initial
+values, bounds).
+
+
+<p>You can specify an initialization operation to be called before any
+&#171;init&#187; operations during domain initialization, using 
+<i>{ init = package.operation }</i> on the domain.
+
+
+<p>You can declare unsigned (modular) types.
+
+
+<p>You can make ColdFrame generate access types for your own types.
+
+
+<p>You can specify <i>{atomic}</i>, <i>{volatile}</i> on types or
+attributes (translating to the corresponding pragmas). If the type is
+an <i>{array}</i> type, the components are marked as <i>atomic</i> or
+<i>volatile</i> (the array itself will almost certainly be too large
+to be marked as a whole).
+
+
+<p><b>Event queues, state machines</b>
+
+
 <p>Action routines can be inherited from the parent.
 
 
 <p>ColdFrame checks that operations corresponding to actions actually
 exist.
+
+
+<p>There are added checks on state machine legality.
+
+
+<p>The error of creating a Timer on the stack now results in a log
+message rather than an exception.
+
+
+<p>The Event Queue task responsible for delayed Events has been
+renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
+(since it doesn't just deal with Timers).
+
+
+<p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
+the new <tt>Trace</tt> versions instead (for example,
+<tt>ColdFrame.Project.Events.Standard.Trace</tt>).
+
+
+<p><b>Callbacks</b>
 
 
 <p>If an exception gets raised in a called-back routine, an error is
@@ -46,10 +116,13 @@ elaboration circularity if your
 register/deregister operations aren't task-safe).
 
 
+<p><b>Miscellaneous</b>
+
+
 <p>The ColdFrame-supplied storage pools, as well as filling
 newly-allocated memory with an obviously bad pattern
-(<tt>16#deadbeef#</tt>), now refill just-freed memory with the same
-pattern.
+(<tt>16#deadbeef#</tt>), now refill just-freed memory with
+<tt>16#deaddead#</tt>.
 
 
 <p><a href="http://xml.coverpages.org/schemas.html">XML Schemas</a>
@@ -57,45 +130,8 @@ are now supplied for ColdFrame's "<a href="ColdFrame-raw.xsd">raw</a>"
 and "<a href="ColdFrame-norm.xsd">normalized</a>" XML.
 
 
-<p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
-the new <tt>Trace</tt> versions instead (for example,
-<tt>ColdFrame.Project.Events.Standard.Trace</tt>).
-
-
-<p>The error of creating a Timer on the stack now results in a log
-message rather than an exception.
-
-
-<p>The Event Queue task responsible for delayed Events has been
-renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
-(since it doesn't just deal with Timers).
-
-
-<p>There are added checks on state machine legality.
-
-
 <p>Tear Down has been reworked to remove some race conditions that
 could lead to <tt>Tasking_Error</tt>.
-
-
-<p>ColdFrame now recognises <i>utility classes</i> ("classes" with no
-instances, only operations).
-
-
-<p>If a &#171;public&#187; class has no attributes, no instance record
-will be generated.
-
-
-<p>Visibility is partially implemented for operations of classes and
-&#171;protected&#187; types; <i>public</i> and <i>protected</i>
-operations are public, <i>private</i> and <i>implementation</i>
-operations are private (unless they are marked &#171;init&#187;).
-
-
-<p>You can declare types <tt>private</tt>,  by saying
-&#171;type, private&#187;, (more tidily, perhaps) by tagging
-<i>{private}</i>, or even by using the Rose class specification dialog
-box!
 
 
 <p>It's been made a bit more straightforward to <a
@@ -104,23 +140,9 @@ can also customize the banner ColdFrame outputs at the head of each
 file.
 
 
-<p>You can declare unsigned (modular) types.
-
-
-<p>You can make ColdFrame generate access types for your own types.
-
-
-<p><i>{array}</i> types can be (de)serialized automatically.
-
-
 <p>The supplied <tt>ColdFrame.Project.Calendar</tt> provides an
 <tt>Epoch</tt> function (to be used for aggregates); so should a
 Project's replacement.
-
-
-<p>You can mark a nested package that's to be included as
-<em>&#171;include&#187;</em> instead of <em>&#171;generate&#187;</em>
-if you find it clearer.
 
 
 <p>Because it's a Bad Idea for user code to call them, the operations
@@ -134,26 +156,18 @@ using <i>{ name = New Name }</i> on the domain. See the new <a
 href="testing.html">discussion on testing</a>.
 
 
-<p>You can use Ada attributes in values (initial values, bounds).
-
-
-<p>You can specify an initialization operation to be called before any
-&#171;init&#187; operations during domain initialization, using 
-<i>{ init = package.operation }</i> on the domain.
-
-
-<p>You can specify <i>{atomic}</i>, <i>{volatile}</i> on types or
-attributes (translating to the corresponding pragmas). If the type is
-an <i>{array}</i> type, the components are marked as <i>atomic</i> or
-<i>volatile</i> (the array itself will almost certainly be too large
-to be marked as a whole).
-
-
 <p>ColdFrame can now generate <a href="testing.html">test stubs</a>.
 
 
 <p>The error of deleting an active instance from its own task is
 detected.
+
+
+<p><i>{array}</i> types can be (de)serialized automatically.
+
+
+<p>If a &#171;public&#187; class has no attributes, no instance record
+will be generated.
 
 
 <p><dt>20040319
