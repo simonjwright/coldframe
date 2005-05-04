@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v e9c3ba9f5c9c 2005/05/04 04:44:27 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 9c4d6c3629b6 2005/05/04 04:58:57 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -8,14 +8,32 @@
 
 <hr>
 
-<p>Source can be
-downloaded <a
+<p>Source can be downloaded <a
 href="http://sourceforge.net/project/showfiles.php?group_id=135558">here</a>.
 
 <p>Archives are available in <tt>.zip</tt> or <tt>.tgz</tt>
 (<tt>.tar.gz</tt>) form. The file name encodes the date of the
-release: <tt>cf-20010130.zip</tt> is the zipped release of 30 January
+release: <tt>cf-20010130.zip</tt> was the zipped release of 30 January
 2001.
+
+<p>You'll sometimes see a suffix on the date, for example
+<tt>20050503cvs</tt>. The meanings are
+
+<p><table border="1">
+
+<tr><th>Suffix <th>Meaning <th>Tagged
+
+<tr><td>- <td>full release <td>yes
+
+<tr><td>p1, p2... <td>patch release <td>yes
+
+<tr><td>a, b... <td>candidate release <td>yes
+
+<tr><td>cvs <td>from CVS <td>no
+
+<tr><td>t, u... <td>temporary <td>no
+
+</table>
 
 <dl>
 
