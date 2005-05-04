@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3933eb5a5061 2005/04/30 07:48:27 simonjwright $
+# $Id: normalize-rose.tcl,v f59ce2b08952 2005/05/04 04:39:40 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1403,7 +1403,7 @@ itcl::class Class {
                 Error "protected type [$this -getName] has no attributes"
             }
             if [info exists extends] {
-                Error "extending type  [$this -getName] has no attributes"
+                Error "extending type [$this -getName] has no attributes"
             }
             set dts [[Domain::currentDomain] -getDatatypes]
             if [$dts -isPresent $name] {
@@ -1435,6 +1435,13 @@ itcl::class Class {
             }
             if $serializable {
                 $dt -serializable 1
+		switch $visibility {
+		    public  {}
+		    default {
+			Error "type $name must be public (not $visibility)\
+                               because it is serializable"
+		    }
+		}
             }
         } elseif $isControl {
             Warning "<<control>> not yet handled properly"
@@ -1475,6 +1482,15 @@ itcl::class Class {
                     set dt [Datatype ::\#auto $name]
                     $dts -add $dt $name
                 }
+		if $serializable {
+		    switch $visibility {
+			public  {}
+			default {
+			    Error "type $name must be public (not $visibility)\
+                                   because it is serializable"
+			}
+		    }
+		}
                 $dt -record
             } else {
 		if {$public || $utility} {
@@ -2828,7 +2844,7 @@ itcl::class Datatype {
         }
         switch $dataType {
             implicit {
-                puts -nonewline " standard=\"no\""
+                puts -nonewline " standard=\"false\""
             }
             standard {
                 puts -nonewline " standard=\"true\""
