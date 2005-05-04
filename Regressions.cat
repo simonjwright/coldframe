@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: dac21ce83afc $}
+|{ revision = $Revision: 789b765d9128 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -7126,7 +7126,7 @@
 		(object Class "Private Enum"
 		    quid       	"417C8D4D01F7"
 		    documentation 	"{ enumeration = A | B }"
-		    stereotype 	"type, serializable"
+		    stereotype 	"type"
 		    exportControl 	"Implementation"
 		    operations 	(list Operations
 			(object Operation "op"
@@ -7192,7 +7192,7 @@
 			    quidu      	"417C8D4D01F7")))
 		(object Class "Private Rec"
 		    quid       	"417C8E23005A"
-		    stereotype 	"type, serializable"
+		    stereotype 	"type"
 		    exportControl 	"Private"
 		    operations 	(list Operations
 			(object Operation "private rec fun"
@@ -7268,44 +7268,27 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@188
-				location   	(1077, 259)
+				location   	(1149, 260)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	432
+				max_width  	288
 				justify    	0
 				label      	"Private Enum")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@188
-				location   	(1077, 214)
+				location   	(1149, 215)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	432
+				max_width  	288
 				justify    	0
-				label      	"<<type, serializable>>")
+				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"417C8D4D01F7"
-			    compartment 	(object Compartment
-				Parent_View 	@188
-				location   	(1077, 315)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	428)
-			    width      	450
-			    height     	264
+			    width      	306
+			    height     	262
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Protected" @189
@@ -7344,23 +7327,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"417C8DAA0150"
-			    compartment 	(object Compartment
-				Parent_View 	@189
-				location   	(119, 943)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	855)
 			    width      	868
 			    height     	398
 			    annotation 	8
@@ -7382,44 +7348,27 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@190
-				location   	(96, 274)
+				location   	(378, 275)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	798
+				max_width  	234
 				justify    	0
 				label      	"Private Rec")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@190
-				location   	(96, 229)
+				location   	(378, 230)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	798
+				max_width  	234
 				justify    	0
-				label      	"<<type, serializable>>")
+				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"417C8E23005A"
-			    compartment 	(object Compartment
-				Parent_View 	@190
-				location   	(96, 330)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	3
-				max_width  	795)
-			    width      	816
-			    height     	264
+			    width      	252
+			    height     	262
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Class With Private Operations" @191
@@ -7449,23 +7398,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"423565D70157"
-			    compartment 	(object Compartment
-				Parent_View 	@191
-				location   	(1219, 903)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	518)
 			    width      	572
 			    height     	348
 			    annotation 	8
@@ -7871,13 +7803,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: dac21ce83afc $}
+|{ revision = $Revision: 789b765d9128 $}
 	    
 	    zoom       	88
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	0
+	    origin_y   	273
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Regressions" @199
 		    location   	(2473, 200)
@@ -7917,7 +7849,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v dac21ce83afc 2005/04/30 08:09:49 simonjwright $")
+		    label      	"$Id: Regressions.cat,v 789b765d9128 2005/05/04 04:47:52 simonjwright $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @201
 		    location   	(301, 318)
 		    font       	(object Font
