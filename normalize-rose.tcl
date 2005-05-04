@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v f59ce2b08952 2005/05/04 04:39:40 simonjwright $
+# $Id: normalize-rose.tcl,v 75e3ac5d4cf6 2005/05/04 05:42:19 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1744,17 +1744,6 @@ itcl::class Operation {
             set c [[[$this -getOwner] -getOwner] -getName]
 	    Error "operation $c.$name can't be class and teardown"
 	}
-        switch $visibility {
-            "private" {
-                if {$init} {
-                    Warning "<<init>> operation\
-                      [[[$this -getOwner] -getOwner] -getName].$name \
-                      was marked 'private'"
-                    set visibility "public"
-                }
-            }
-            default {}
-        }
         $parameters -evaluate {domain}
     }
 
