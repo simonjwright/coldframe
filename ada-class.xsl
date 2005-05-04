@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v a1d3d8fe0148 2005/04/23 15:23:56 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v c33250cec38f 2005/05/04 05:39:18 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -2113,6 +2113,58 @@
   </xsl:template>
 
   <xsl:template mode="cl:class-initialization" match="*"/>
+
+
+  <!-- Generates a class's contribution to domain initialization. -->
+  <xsl:template
+    mode="cl:initialization"
+    match="class[operation/@initialize]">
+
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.CF_Initialize;&#10;</xsl:text>
+
+    <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
+    <xsl:call-template name="ut:identification-info"/>
+    <xsl:text>procedure </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.CF_Initialize is&#10;</xsl:text>
+
+    <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:for-each select="operation[@initialize]">
+      <xsl:sort select="name"/>
+
+      <xsl:if test="parameter or @return">
+        <xsl:message>
+          <xsl:text>CF: bad "initialize" operation </xsl:text>
+          <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+        </xsl:message>
+      </xsl:if>
+
+      <xsl:value-of select="$I"/>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+
+    </xsl:for-each>
+
+    <xsl:text>end </xsl:text>
+    <xsl:value-of select="../name"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>.CF_Initialize;&#10;</xsl:text>
+
+  </xsl:template>
+
+  <xsl:template mode="cl:initialization" match="*"/>
 
 
   <!-- Called from domain/class to generate the instance identifier
