@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v d1db35d9ca12 2005/04/30 06:40:10 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 426ad247e2c9 2005/05/04 05:41:17 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -443,17 +443,8 @@
               or (@public and attribute)]"/>
 
     <xsl:variable
-      name="initialize-procedures"
-      select="class/operation[@initialize]"/>
-
-    <xsl:for-each select="$initialize-procedures[parameter or @return]">
-      <xsl:sort select="../name"/>
-      <xsl:sort select="name"/>
-      <xsl:message>
-        <xsl:text>CF: bad "initialize" operation </xsl:text>
-        <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-      </xsl:message>
-    </xsl:for-each>
+      name="instance-initializations"
+      select="class[operation/@initialize]"/>
 
     <!-- .. withs, starting with exception handling .. -->
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
@@ -486,12 +477,11 @@
       <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:for-each select="$initialize-procedures">
-      <xsl:sort select="../name"/>
+    <xsl:for-each select="$instance-initializations">
       <xsl:sort select="name"/>
       <xsl:text>with </xsl:text>
-      <xsl:value-of select="../../name"/>.<xsl:value-of select="../name"/>
-      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+      <xsl:text>.CF_Initialize;&#10;</xsl:text>
     </xsl:for-each>
 
     <xsl:text>procedure </xsl:text>
@@ -540,15 +530,12 @@
       <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
 
-    <!-- .. <<init>> operations .. -->
-    <xsl:for-each select="$initialize-procedures">
-      <xsl:sort select="../name"/>
+    <!-- .. instance operations .. -->
+    <xsl:for-each select="$instance-initializations">
       <xsl:sort select="name"/>
       <xsl:value-of select="$II"/>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
       <xsl:value-of select="name"/>
-      <xsl:text>;&#10;</xsl:text>
+      <xsl:text>.CF_Initialize;&#10;</xsl:text>
     </xsl:for-each>
 
     <xsl:value-of select="$I"/>
@@ -724,6 +711,18 @@
               or @singleton
               or (@public and attribute)]"
       mode="cl:class-initialization">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Domain initialization procedures. -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param
+        name="m"
+        select="'.. &lt;&lt;init&gt;&gt; operations ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[operation/@initialize]"
+      mode="cl:initialization">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
