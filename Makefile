@@ -133,16 +133,12 @@ OTHER_SCRIPTS = create-build-directories \
 	@-rm -rf $@
 	@-mkdir $@
 	@gnatchop $(CHOP_VERBOSE) $< $@
-	@for s in impl test; do \
-	  echo "checking $*.$$s ..."; \
-	  [ ! -d $*.$$s ] || \
-	    for f in `(cd $*.$$s; find . -maxdepth 1 -name \*.ad[bs])`; do \
-	      if [ -f $@/$$f ]; then \
-		echo "    removing $@/$$f"; rm $@/$$f; \
-	      else \
-		echo "  extra source file $$f in .$$s"; \
-	      fi \
-	    done \
+	@for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	  if [ -f $@/$$f ]; then \
+	    echo "    removing $@/$$f"; rm $@/$$f; \
+	  else \
+	    echo "  extra source file $$f in .impl"; \
+	  fi \
 	done
 	@chmod -R a-w $@
 	@chmod u+w $@
