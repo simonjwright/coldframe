@@ -124,7 +124,7 @@ OTHER_SCRIPTS = create-build-directories \
 # create the target directory
 # gnatchop the .ada file
 # remove any generated files which are also present in the implementation
-# directories (.impl and .test)
+# directory (.impl)
 # write-protect the generated files (careful, in case there are a lot of them!)
 # make the target directory itself writable (so users can delete files in it)
 # report unimplemented bodies
