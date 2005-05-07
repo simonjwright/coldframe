@@ -133,7 +133,8 @@ OTHER_SCRIPTS = create-build-directories \
 	@-rm -rf $@
 	@-mkdir $@
 	@gnatchop $(CHOP_VERBOSE) $< $@
-	@for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	@-[ -d $*.impl ] && \
+	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
 	    echo "    removing $@/$$f"; rm $@/$$f; \
 	  else \
