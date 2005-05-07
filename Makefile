@@ -448,7 +448,7 @@ House_Management.impl/stairwell_demo.adb
 DEMO += \
 Serialization.cat \
 Serialization.raw Serialization_Demo.raw Serialization_Demo_Other.raw \
-Serialization.html Serialization.gpr \
+serialization-model.html Serialization.gpr \
 Serialization.impl/serialization_client.adb \
 Serialization.impl/serialization-events-initialize.adb \
 Serialization.impl/serialization-interface-open.adb \
