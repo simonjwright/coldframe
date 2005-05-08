@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 44df894d8cd1 2005/05/08 05:35:36 simonjwright $
+# $Id: normalize-rose.tcl,v 41d8e1915585 2005/05/08 06:20:32 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -199,8 +199,6 @@ proc normalizeValueInner {s} {
                                     set minl {}
                                     foreach min $mins {
 					set attrs [split $min {'}] 
-                                        # ' to stop the rest looking like a 
-					# string
 					set attrl {}
 					foreach attr $attrs {
 					    set term [normalize $attr]
@@ -1297,6 +1295,13 @@ itcl::class Class {
         set callback [string trim $size]
     }
 
+    variable convention
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # type is to be implemented according to a language convention
+    method -convention {conv} {
+	set convention [normalize $conv]
+    }
+
     variable counterpart 0
     # called (via annotation or stereotype mechanism) to indicate that this
     # is a counterpart type
@@ -1432,6 +1437,9 @@ itcl::class Class {
             if [info exists callback] {
                 $dt -callback $callback
             }
+            if [info exists convention] {
+                $dt -convention $convention
+            }
             if $counterpart {
                 $dt -counterpart 1
             }
@@ -1462,6 +1470,7 @@ itcl::class Class {
                     foreach t [array names tags] {
                         switch $t {
                             array -
+			    constrains -
                             counterpart -
                             enumeration -
                             hash -
@@ -1555,6 +1564,9 @@ itcl::class Class {
 	    }
             if [info exists callback] {
                 puts -nonewline " callback=\"$callback\""
+            }
+            if [info exists convention] {
+                puts -nonewline " convention=\"$convention\""
             }
             if $discriminated {
                 puts -nonewline " discriminated=\"true\""
@@ -2489,6 +2501,8 @@ itcl::class Datatype {
 
     variable constrains
 
+    variable convention
+
     variable dataDetail
 
     variable dataType "implicit"
@@ -2594,6 +2608,10 @@ itcl::class Datatype {
 	set constrains [normalize [lindex $constraint 0]]
         $this -setConstraint [join [lrange $constraint 1 end] "|"]
     }
+
+    # called via annotation mechanism to indicate that this has a
+    # language convention
+    method -convention {conv} {set convention [normalize $conv]}
 
     # Called when the type is a counterpart.
     method -counterpart {dummy} {
@@ -2788,14 +2806,14 @@ itcl::class Datatype {
         }
 	switch $dataType {
 	    counterpart -
-	    real -
-	    string -
+	    defined -
+	    implicit -
 	    imported -
 	    null -
+	    real -
 	    renames -
-	    implicit -
 	    standard -
-	    defined {
+	    string {
 		if $atomic {
 		    Warning "$dataType type $type can't be atomic"
 		    set atomic 0
@@ -2803,6 +2821,23 @@ itcl::class Datatype {
 		if $volatile {
 		    Warning "$dataType type $type can't be volatile"
 		    set volatile 0
+		}
+	    }
+	    default {}
+	}
+	switch $dataType {
+	    constrains -
+	    counterpart -
+	    defined - 
+	    implicit -
+	    imported -
+	    null -
+	    real -
+	    renames -
+	    standard -
+	    string {
+		if [info exists convention] {
+		    Error "$dataType type $type can't have a convention"
 		}
 	    }
 	    default {}
@@ -2822,6 +2857,9 @@ itcl::class Datatype {
 	}
         if [info exists callback] {
             puts -nonewline " callback=\"true\""
+        }
+        if [info exists convention] {
+            puts -nonewline " convention=\"$convention\""
         }
         if [info exists hash] {
             puts -nonewline " hash=\"$hash\""
