@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 6e8306b0b004 2005/02/26 13:24:04 simon $ -->
+<!-- $Id: ColdFrame-norm.xsd,v f4d00859e0f3 2005/05/08 11:34:11 simonjwright $ -->
 
 <!-- 
 
@@ -157,6 +157,15 @@
             <xsd:element name="max"/>
           </xsd:choice>
         </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="subtype">
+	<xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="lower" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="upper" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+	  <xsd:attribute name="constrains"/>
+	</xsd:complexType>
       </xsd:element>
       <xsd:element name="unsigned">
         <xsd:complexType>
