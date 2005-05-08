@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 2a24d3132c0c 2005/02/02 06:21:34 simon $ -->
+<!-- $Id: types.html,v 710a9c652233 2005/05/08 05:57:09 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -83,7 +83,7 @@ your project might prefer something more obvious like
 <tt>_Access</tt>.
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
-and optionally <tt>unconstrained</tt>.
+and optionally <tt>, unconstrained</tt>.
 <br>Please <em>don't</em> use arrays to implement associations!
 
 <li><tt>callback</tt> specifies that callback support code is to be
@@ -93,6 +93,11 @@ Domains can register to be notified when something has changed in the
 lower-level Domain.
 <br>As a shorthand, you can use the stereotype
 <em>&#171;callback&#187;</em>, which implies &#171;type&#187;.
+
+<li><tt>constrains = <i>parent</i> | lower <i>low-bound</i> |
+upper <i>upper-bound</i></tt>
+<br>Specifies that the type is a subrange of <i>parent</i> (which of
+course has to be scalar).
 
 <li><tt>convention = <i>language</i></tt> specifies that the type is
 to be laid out using the conventions of the specified programming
@@ -274,6 +279,16 @@ generated code is an instantiation of <tt>ColdFrame.Callbacks</tt>:
    package <i>Domain</i>.<i>Typ</i>_Callback
    is new ColdFrame.Callbacks
      (T => <i>Domain</i>.<i>Typ</i>);
+</pre>
+
+<li><tt>constrains = <i>parent</i> | lower <i>low-bound</i> |
+upper <i>upper-bound</i></tt>
+
+<p>For a type <tt>Typ</tt>, generates
+<pre>
+   subtype <i>Typ</i>
+     is <i>Parent</i>
+     range <i>low-bound</i> .. <i>upper-bound</i>;
 </pre>
 
 <li><tt>convention = <i>language</i></tt>
