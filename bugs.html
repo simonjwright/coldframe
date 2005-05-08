@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a8081dccde57 2005/05/04 05:44:17 simonjwright $ -->
+<!-- $Id: bugs.html,v 4b181de7d303 2005/05/08 05:41:20 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -187,6 +187,18 @@ extraction.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>8.v.05</h3>
+
+<dl>
+
+<dt>0068 (raised 6.iii.02)
+
+<dd>It would be useful to be able to specify subtypes (eg, of
+enumerations).
+<br><i>Use {constrains}.</i>
+
+</dl>
 
 <h3>30.iv.05</h3>
 
@@ -641,8 +653,8 @@ attributes and no type-specifying tags (<i>{real}</i> etc) into a
 <dd>Bad code is generated if you say
 <i>{integer,&nbsp;lower=1,&nbsp;upper=6}</i> (rather than
 <i>{integer&nbsp;=&nbsp;lower&nbsp;1&nbsp;|&nbsp;upper&nbsp;6}</i>).
-<br><i>No range constraint is generated unless you specify both
-bounds.</i>
+<br><i>If you omit a bound the corresponding 'First or 'Last is
+used.</i>
 
 </dl>
 
@@ -2543,11 +2555,6 @@ class (resulting in a circular dependency).
 <h2><a name="feature">Features</a></h2>
 
 <dl>
-
-<dt>0068 (raised 6.iii.02)
-
-<dd>It would be useful to be able to specify subtypes (eg, of
-enumerations).
 
 <dt>0105 (raised 23.vii.02)
 
