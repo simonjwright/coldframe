@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 75e3ac5d4cf6 2005/05/04 05:42:19 simonjwright $
+# $Id: normalize-rose.tcl,v 44df894d8cd1 2005/05/08 05:35:36 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -198,7 +198,9 @@ proc normalizeValueInner {s} {
                                     set mins [split $plus "-"]
                                     set minl {}
                                     foreach min $mins {
-					set attrs [split $min {'}]
+					set attrs [split $min {'}] 
+                                        # ' to stop the rest looking like a 
+					# string
 					set attrl {}
 					foreach attr $attrs {
 					    set term [normalize $attr]
@@ -2477,25 +2479,23 @@ itcl::class Datatype {
 
     variable access
 
-    variable atomic 0
+    variable arrayIndexBy
 
     variable arrayOf
 
-    variable arrayIndexBy
-
-    variable unconstrained
+    variable atomic 0
 
     variable callback
+
+    variable constrains
 
     variable dataDetail
 
     variable dataType "implicit"
 
-    variable hash
-
     variable fieldImage
 
-    variable typeImage
+    variable hash
 
     variable null 0
 
@@ -2504,6 +2504,10 @@ itcl::class Datatype {
     variable serializable 0
 
     variable type
+
+    variable typeImage
+
+    variable unconstrained
 
     variable visibility "public"
 
@@ -2562,25 +2566,15 @@ itcl::class Datatype {
         set access [normalize $a]
     }
 
-    # called to indicate that this is an atomic type
-    method -atomic {a} {
-        set atomic 1
-    }
-
-     # called when the user has requested an array
+    # called when the user has requested an array
     method -array {of} {
         set dataType "array"
         set arrayOf [normalize $of]
     }
 
-    # called when the user has specified an (array) index
-    method -index {by} {
-        set arrayIndexBy [normalize $by]
-    }
-
-    # called when the user has specified an unconstrained (array)
-    method -unconstrained {by} {
-        set unconstrained 1
+    # called to indicate that this is an atomic type
+    method -atomic {a} {
+        set atomic 1
     }
 
     # called when the user has requested a callback.
@@ -2588,23 +2582,27 @@ itcl::class Datatype {
         set callback [string trim $max]
     }
 
-    # called when the user has tried to extend a non-record type.
-    method -discriminated {dummy} {
-        Error "discriminated type $type has no attributes"
+    # called when the type constrains another type. constraint is the
+    # name of a type, followed by a set of key/value pairs, which may
+    # be newline- or comma-separated.
+    # Useful keys are lower, upper
+    method -constrains {constraint} {
+        set dataType "constrains"
+	# Note, we have to split off the constrained type first before
+	# re-joining for -setConstraint
+	set constraint [split $constraint "|"]
+	set constrains [normalize [lindex $constraint 0]]
+        $this -setConstraint [join [lrange $constraint 1 end] "|"]
     }
-
-    # called when the user has tried to extend a non-record type.
-    method -extends {dummy} {
-        Error "tried to extend $type, which has no attributes"
-    }
-
-    # called when the user has marked a non-record type as
-    # serializable.
-    method -serializable {dummy} {set serializable 1}
 
     # Called when the type is a counterpart.
     method -counterpart {dummy} {
         set dataType "counterpart"
+    }
+
+    # called when the user has tried to extend a non-record type.
+    method -discriminated {dummy} {
+        Error "discriminated type $type has no attributes"
     }
 
     # called when the type is an enumeration. values is a list of the
@@ -2626,31 +2624,28 @@ itcl::class Datatype {
         $this -field-image $img
     }
 
-    # called to specify a type image function (for serialization)
-    method -type-image {img} {set typeImage [normalize $img]}
+    # called to specify the hash mechanism (probably only relevant
+    # for imported/renamed types)
+    method -hash {as} {
+        set hash [string tolower $as]
+        switch $hash {
+            discrete -
+            enumeration {}
+            default {
+                Warning "unrecognised hash mechanism \"$hash\" for $type"
+            }
+        }
+    }
+
+    # called when the user has specified an (array) index
+    method -index {by} {
+        set arrayIndexBy [normalize $by]
+    }
 
     # called when the type is imported from some other domain.
     method -imported {domain} {
         set dataType "imported"
         set dataDetail [normalize $domain]
-    }
-
-    # called when the type renames some other type.
-    method -renames {other} {
-        set dataType "renames"
-        set dataDetail [normalize $other]
-    }
-
-    # utility to deal with constraints (where the values may be expressions
-    # involving spaces).
-    method -setConstraint {d} {
-        set constraints [split $d ",|\n"]
-        set result {}
-        foreach c $constraints {
-            set constraint [split [string trim $c]]
-            lappend result [lindex $constraint 0] [lrange $constraint 1 end]
-        }
-        set dataDetail $result
     }
 
     # called when the type is an integer. constraint is a set of key/value
@@ -2678,12 +2673,30 @@ itcl::class Datatype {
     # called when the type is actually a record (a Class with isType set)
     method -record {} {set dataType "record"}
 
+    # called when the type renames some other type.
+    method -renames {other} {
+        set dataType "renames"
+        set dataDetail [normalize $other]
+    }
+
+    # called when the user has marked a non-record type as
+    # serializable.
+    method -serializable {dummy} {set serializable 1}
+
     # called when the type is a string. constraint is a set of key/value
     # pairs, which may be newline- or comma-separated.
     # Useful keys are max (max length) & fixed (fixed length).
     method -string {constraint} {
         set dataType "string"
         $this -setConstraint $constraint
+    }
+
+    # called to specify a type image function (for serialization)
+    method -type-image {img} {set typeImage [normalize $img]}
+
+    # called when the user has specified an unconstrained (array)
+    method -unconstrained {by} {
+        set unconstrained 1
     }
 
     # called when the type is an unsigned. constraint is a set of key/value
@@ -2694,19 +2707,6 @@ itcl::class Datatype {
         $this -setConstraint $constraint
     }
 
-    # called to specify the hash mechanism (probably only relevant
-    # for imported/renamed types)
-    method -hash {as} {
-        set hash [string tolower $as]
-        switch $hash {
-            discrete -
-            enumeration {}
-            default {
-                Warning "unrecognised hash mechanism \"$hash\" for $type"
-            }
-        }
-    }
-
     # called to set the visibility
     method -visibility {v} {
         set visibility $v
@@ -2715,6 +2715,20 @@ itcl::class Datatype {
     # called to indicate that this is a volatile type
     method -volatile {a} {
         set volatile 1
+    }
+
+    # utility to deal with constraints (where the values may be expressions
+    # involving spaces).
+    method -setConstraint {d} {
+	# This used also to split on newline; how come? I can see it
+	# would be neat, but it was never in the spec.
+        set constraints [split $d ",|"]
+        set result {}
+        foreach c $constraints {
+            set constraint [split [string trim $c]]
+            lappend result [lindex $constraint 0] [lrange $constraint 1 end]
+        }
+        set dataDetail $result
     }
 
     # utility to check the constraints (held in dataDetail).
@@ -2755,6 +2769,9 @@ itcl::class Datatype {
 
     method -evaluate {domain} {
         switch $dataType {
+	    constrains {
+		$this -checkConstraints {} {lower upper}
+	    }
             integer  {
                 $this -checkConstraints {} {lower upper}
             }
@@ -2862,6 +2879,15 @@ itcl::class Datatype {
                 }
                 puts "</array>"
             }
+	    constrains {
+		puts "<subtype constrains=\"$constrains\">"
+                foreach {key value} $dataDetail {
+                    if {$key != "true"} {
+                        putElement $key [normalizeValue $value]
+                    }
+                }
+                puts "</subtype>"
+	    }
             counterpart {
                 puts "<counterpart/>"
             }

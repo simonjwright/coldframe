@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 7dd6d63f60fd 2005/04/30 07:58:20 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 44df894d8cd1 2005/05/08 05:35:36 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -173,6 +173,7 @@
                       attribute[not($processed/name=type)]
                       or array[not($processed/name=type)]
                       or array[not($processed/name=index)]
+                      or subtype[not($processed/name=@constrains)]
                       or (@protected and (
                            operation
                             [not(@access)]/parameter[not($processed/name=type)]
@@ -217,6 +218,7 @@
                   "attribute[not($processed/name=type)]/type
                    | array[not($processed/name=type)]/type
                    | array[not($processed/name=index)]/index
+                   | subtype[not($processed/name=@constrains)]/@constrains
                    | operation[not(@access) and ../@protected]
                         /parameter[not($processed/name=type)]/type
                    | operation[not(@access) and ../@protected
@@ -507,7 +509,7 @@
             <xsl:text>Integer'First</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:text>  .. </xsl:text>
+        <xsl:text> .. </xsl:text>
         <xsl:choose>
           <xsl:when test="integer/upper">
             <xsl:value-of select="integer/upper"/>
@@ -575,7 +577,7 @@
               <xsl:text>'First</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:text>  .. </xsl:text>
+          <xsl:text> .. </xsl:text>
           <xsl:choose>
             <xsl:when test="real/upper">
               <xsl:value-of select="real/upper"/>
@@ -622,6 +624,52 @@
         <xsl:text> is String (1 .. </xsl:text>
         <xsl:value-of select="string/fixed"/>
         <xsl:text>);&#10;</xsl:text>
+      </xsl:when>
+
+      <xsl:when test="subtype">
+
+        <!--
+             subtype {type}
+                is {type}
+                range {lower} .. {upper};
+             -->
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>subtype </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>is </xsl:text>
+        <xsl:value-of select="subtype/@constrains"/>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>range </xsl:text>
+        <xsl:choose>
+          <xsl:when test="subtype/lower">
+            <xsl:value-of select="subtype/lower"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>
+              <xsl:text>Warning: lower bound not specified for </xsl:text>
+               <xsl:value-of select="name"/>
+            </xsl:message>
+            <xsl:text>Subtype'First</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text> .. </xsl:text>
+        <xsl:choose>
+          <xsl:when test="subtype/upper">
+            <xsl:value-of select="subtype/upper"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>
+              <xsl:text>Warning: upper bound not specified for </xsl:text>
+               <xsl:value-of select="name"/>
+            </xsl:message>
+            <xsl:text>Subtype'Last</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>;&#10;</xsl:text>
       </xsl:when>
 
       <xsl:when test="unsigned">
