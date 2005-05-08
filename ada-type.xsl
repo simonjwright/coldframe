@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 44df894d8cd1 2005/05/08 05:35:36 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 54d10f0ea618 2005/05/08 19:58:36 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -653,7 +653,8 @@
               <xsl:text>Warning: lower bound not specified for </xsl:text>
                <xsl:value-of select="name"/>
             </xsl:message>
-            <xsl:text>Subtype'First</xsl:text>
+            <xsl:value-of select="subtype/@constrains"/>
+            <xsl:text>'First</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text> .. </xsl:text>
@@ -666,7 +667,8 @@
               <xsl:text>Warning: upper bound not specified for </xsl:text>
                <xsl:value-of select="name"/>
             </xsl:message>
-            <xsl:text>Subtype'Last</xsl:text>
+            <xsl:value-of select="subtype/@constrains"/>
+            <xsl:text>'Last</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
