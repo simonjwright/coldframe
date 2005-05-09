@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3fd7b2ee5ef4 2005/05/08 21:34:36 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 990d63815307 2005/05/09 19:39:46 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -193,6 +193,10 @@ detected.
 
 <p>If a &#171;public&#187; class has no attributes, no instance record
 will be generated.
+
+
+<p>Unimplemented operations raise <tt>Unimplemented</tt> instead
+of <tt>Program_Error</tt>.
 
 
 <p><dt>20040319
