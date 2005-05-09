@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 54d10f0ea618 2005/05/08 19:58:36 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -986,9 +986,11 @@
           <xsl:text>;&#10;</xsl:text>
         </xsl:if>
         
+        <xsl:value-of select="$I"/>
+        <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>raise Program_Error;&#10;</xsl:text>
+        <xsl:text>raise Unimplemented;&#10;</xsl:text>
         
         <xsl:if test="@return">
           
@@ -1141,10 +1143,12 @@
         <xsl:when test="@return
                         and not(/domain/type[name=current()/@return]/attribute)">
           <!-- It returns a non-composite type. -->
+          <xsl:value-of select="$II"/>
+          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>begin&#10;</xsl:text>
           <xsl:value-of select="$II"/>
-          <xsl:text>raise Program_Error;&#10;</xsl:text>
+          <xsl:text>raise Unimplemented;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>return </xsl:text>
           <xsl:call-template name="op:default-value">
@@ -1159,20 +1163,24 @@
           <xsl:text>Dummy : </xsl:text>
           <xsl:value-of select="@return"/>
           <xsl:text>;&#10;</xsl:text>
+          <xsl:value-of select="$II"/>
+          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>begin&#10;</xsl:text>
           <xsl:value-of select="$II"/>
-          <xsl:text>raise Program_Error;&#10;</xsl:text>
+          <xsl:text>raise Unimplemented;&#10;</xsl:text>
           <xsl:value-of select="$II"/>
           <xsl:text>return Dummy;&#10;</xsl:text>
         </xsl:when>
 
         <xsl:otherwise>
           <!-- No return; procedure or entry. -->
+          <xsl:value-of select="$II"/>
+          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
           <xsl:value-of select="$I"/>
           <xsl:text>begin&#10;</xsl:text>
           <xsl:value-of select="$II"/>
-          <xsl:text>raise Program_Error;&#10;</xsl:text>
+          <xsl:text>raise Unimplemented;&#10;</xsl:text>
         </xsl:otherwise>
 
       </xsl:choose>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v c27edd43a8e5 2005/02/28 20:25:50 simon $ -->
+<!-- $Id: ada-operation.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -363,7 +363,7 @@
   <!-- Generate the separate bodies of operations. If recognised as
        accessors (but not marked as such) they will contain real
        implementations; if stubs are required, they'll contain stubs;
-       otherwise they'll Program_Error if called. -->
+       otherwise they'll raise Unimplemented if called. -->
   <xsl:template
     mode="op:operation-separate-body"
     match="class/operation[not(@access)]">
@@ -1122,9 +1122,11 @@
             <!-- .. this is for non-composite, non-imported,
                  non-renaming, known types .. -->
 
+            <xsl:value-of select="$I"/>
+            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
             <xsl:text>begin&#10;</xsl:text>
             <xsl:value-of select="$I"/>
-            <xsl:text>raise Program_Error;&#10;</xsl:text>
+            <xsl:text>raise Unimplemented;&#10;</xsl:text>
             <xsl:value-of select="$I"/>
             <xsl:text>return </xsl:text>
             <xsl:call-template name="op:default-value">
@@ -1143,9 +1145,11 @@
             <xsl:text>Dummy : </xsl:text>
             <xsl:value-of select="@return"/>
             <xsl:text>;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
             <xsl:text>begin&#10;</xsl:text>
             <xsl:value-of select="$I"/>
-            <xsl:text>raise Program_Error;&#10;</xsl:text>
+            <xsl:text>raise Unimplemented;&#10;</xsl:text>
             <xsl:value-of select="$I"/>
             <xsl:text>return Dummy;&#10;</xsl:text>
 
@@ -1167,9 +1171,11 @@
         </xsl:call-template>
 
         <xsl:value-of select="$heading"/>
+        <xsl:value-of select="$I"/>
+        <xsl:text>Unimplemented : exception;&#10;</xsl:text>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>raise Program_Error;&#10;</xsl:text>
+        <xsl:text>raise Unimplemented;&#10;</xsl:text>
       </xsl:otherwise>
 
     </xsl:choose>

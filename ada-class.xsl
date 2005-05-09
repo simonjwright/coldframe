@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c33250cec38f 2005/05/04 05:39:18 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -936,9 +936,11 @@
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>)&#10;</xsl:text>
       <xsl:text>task body T is&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>Unimplemented : exception;&#10;</xsl:text>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>raise Program_Error;&#10;</xsl:text>
+      <xsl:text>raise Unimplemented;&#10;</xsl:text>
       <xsl:text>end T;&#10;</xsl:text>
     </xsl:if>
 
