@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 3629ddde7dd0 $
---  $Date: 2005/04/10 17:44:41 $
---  $Author: simon $
+--  $Revision: d7daf46ee7c7 $
+--  $Date: 2005/05/10 20:16:52 $
+--  $Author: simonjwright $
 
 with Ada.Task_Identification;
 with BC.Containers.Queues.Unbounded;
@@ -96,15 +96,18 @@ private
      (Storage => Event_Storage);
 
 
-   task type Dispatcher (The_Queue : access Event_Queue_Base'Class) is
-
-      pragma Task_Name ("aDispatcher");
-      pragma Priority (The_Queue.Priority);
-      pragma Storage_Size (The_Queue.Storage_Size);
+   task type Dispatcher (The_Queue : access Event_Queue_Base'Class;
+                         Priority : System.Priority;
+                         Storage_Size : Positive) is
 
       --  We need to constrain by 'Class so that internal calls to
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
+
+      pragma Task_Name ("aDispatcher");
+      pragma Priority (Priority);
+      pragma Storage_Size (Storage_Size);
+
 
       entry Start;
 
@@ -226,7 +229,9 @@ private
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Held_Events : aliased Held_Events.Queue;
-      The_Dispatcher : Dispatcher (Event_Queue_Base'Access);
+      The_Dispatcher : Dispatcher (Event_Queue_Base'Access,
+                                   Priority => Priority,
+                                   Storage_Size => Storage_Size);
       The_Held_Event_Manager : Held_Event_Manager (Event_Queue_Base'Access);
    end record;
 
