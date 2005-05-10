@@ -1,10 +1,18 @@
-<!-- $Id: releases.html-proto,v 990d63815307 2005/05/09 19:39:46 simonjwright $ -->
+<!-- $Id: releases.html-proto,v afdfc5e8b60b 2005/05/10 05:05:33 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
 </head>
 <body bgcolor="white">
-<h1>ColdFrame: Releases</h1>
+
+<table width="100%">
+<tr>
+<td><font size="+3">ColdFrame: Releases</font>
+<td align="right"><a href="http://sourceforge.net"> <img
+src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
+width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
+</tr>
+</table>
 
 <hr>
 
@@ -70,7 +78,7 @@ constrains = Metres | lower 0.0 | upper 100_000.0 }</i>
 &#171;type, private&#187;, (more tidily, perhaps) by tagging
 <i>{private}</i>, or even by using the Rose class specification dialog
 box!
-<br><i>&#171;serializable&#187;</i> types must be <i>public</i>.
+<br><i>{serializable}</i> types must be <i>public</i>.
 
 
 <p>You can mark a nested package that's to be included as
