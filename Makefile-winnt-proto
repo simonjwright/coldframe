@@ -76,7 +76,10 @@ endif
 
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
-CODEGEN_SCRIPT = $(CF)/generate-ada.xsl
+Codegen_Script = $(CF)/generate-ada.xsl
+ifeq ($(CODEGEN_SCRIPT), )
+  CODEGEN_SCRIPT = $(Codegen_Script)
+endif
 CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
