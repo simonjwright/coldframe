@@ -59,8 +59,11 @@ SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
-CODEGEN_SCRIPT = generate-ada.xsl
-CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
+Codegen_Script = generate-ada.xsl
+ifeq ($(CODEGEN_SCRIPT), )
+  CODEGEN_SCRIPT = $(Codegen_Script)
+endif
+CODEGEN_SCRIPTS = $(Codegen_Script) \
   ada-association.xsl \
   ada-association-collection.xsl \
   ada-attribute.xsl \
@@ -74,8 +77,11 @@ CODEGEN_SCRIPTS = $(CODEGEN_SCRIPT) \
   ada-type.xsl \
   ada-teardown.xsl \
   ada-utilities.xsl
-C_CODEGEN_SCRIPT = generate-c.xsl
-C_CODEGEN_SCRIPTS = $(C_CODEGEN_SCRIPT) \
+C_Codegen_Script = generate-c.xsl
+ifeq ($(C_CODEGEN_SCRIPT), )
+  C_CODEGEN_SCRIPT = $(C_Codegen_Script)
+endif
+C_CODEGEN_SCRIPTS = $(C_Codegen_Script) \
   c-utilities.xsl
 OTHER_SCRIPTS = create-build-directories \
   serialized-to-csv.tcl \
