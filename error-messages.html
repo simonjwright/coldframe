@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: error-messages.html,v ae869bc1c510 2005/05/12 05:19:04 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -121,6 +121,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Error: type <i>name</i> has identifier <dd><i>name</i> is a &#171;type&#187;; it can't have an identifier.
 
 <dt>Error: type <i>name</i> is marked {<i>tag</i>} but has attributes <dd>The tag {<i>tag</i>} (eg, {<i>renames</i>}) isn't consistent with having attributes.
+
+<dt>Error: type <i>name</i> must be public (not private) because it is serializable <dd>The alternative would be to make the package <tt><i>Domain</i>.Serializable</tt> a private child .. hmm, might work ..
 
 <dt>Error: unnamed association between "<i>Class</i>" and "<i>Class</i>" <dd>Missing association name.
 
