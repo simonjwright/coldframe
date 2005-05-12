@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ae869bc1c510 2005/05/12 05:19:04 simonjwright $ -->
+<!-- $Id: bugs.html,v 0bb8a198016d 2005/05/12 20:59:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,7 +192,27 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<!-- next: 0306 -->
+<dt>0307 (raised 12.v.05)
+
+<dd>The version reported by the code generation phase is misleading if
+<tt>CODEGEN_SCRIPT</tt> was defined and you've forgotten to import the
+new XSLT scripts.
+
+<dt>0308 (raised 12.v.05)
+
+<dd>Bad code is generated in children where an &#171;accessor&#187;
+operation is marked <i>private</i>.
+<br><i>Not clear what good a private accessor is - you have direct
+visibility of the instance attributes! Perhaps the user meant to say
+</i>protected<i>?</i>
+
+<dt>0309 (raised 12.v.05)
+
+<dd>The generated header for separate proper bodies ought not to
+include ColdFrame version information (it will be well out of date
+after a few years, and people don't seem to want to delete it).
+
+<!-- next: 0310 -->
 
 </dl>
 
@@ -209,6 +229,11 @@ generated code fails with: "Storage_Elements" not declared in
 "System".  This can be resolved by prefixing System with Standard in
 the generated code.
 <br>SourceForge 1199638
+
+<dt>0306 (raised 12.v.05)
+
+<dd>If a function returns a class, the proper dummy return value is
+<tt>null</tt>.
 
 </dl>
 
