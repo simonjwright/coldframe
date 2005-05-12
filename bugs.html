@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: bugs.html,v 2c6704324814 2005/05/12 04:55:59 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -189,12 +189,28 @@ would be Windows "smart quotes".
 <dd>An association class that's not in the same package as the
 association (might be in a child or parent) can be missed during
 extraction.
+<br><i>This seems to be a Rose quirk; it happens if a package is moved
+in the model, or imported into a different model.</i>
 
-<!-- next: 0305 -->
+<!-- next: 0306 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>12.v.05</h3>
+
+<dl>
+
+<dt>0305 (raised 11.v.05)
+
+<dd> It is not possible to use a class called System as compiling the
+generated code fails with: "Storage_Elements" not declared in
+"System".  This can be resolved by prefixing System with Standard in
+the generated code.
+<br>SourceForge 1199638
+
+</dl>
 
 <h3>8.v.05</h3>
 
