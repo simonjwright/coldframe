@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v afdfc5e8b60b 2005/05/10 05:05:33 simonjwright $ -->
+<!-- $Id: releases.html-proto,v ec886bbb8d01 2005/05/12 05:22:41 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -15,6 +15,10 @@ width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
 </table>
 
 <hr>
+
+<p>You can <a
+href="http://sourceforge.net/cvs/?group_id=135558">access the CVS
+Repository to browse or download</a>.
 
 <p>Source can be downloaded <a
 href="http://sourceforge.net/project/showfiles.php?group_id=135558">here</a>.
@@ -42,9 +46,6 @@ release: <tt>cf-20010130.zip</tt> was the zipped release of 30 January
 <tr><td>t, u... <td>temporary <td>no
 
 </table>
-
-<p>You can access the CVS Repository to browse or download; details <a
-href="http://sourceforge.net/cvs/?group_id=135558">here</a>.
 
 <dl>
 
