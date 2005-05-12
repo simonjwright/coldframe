@@ -138,7 +138,7 @@ OTHER_SCRIPTS = create-build-directories \
 	@echo generating $@ ...
 	@-rm -rf $@
 	@-mkdir $@
-	@gnatchop $(CHOP_VERBOSE) $< $@
+	@gnatchop -w $(CHOP_VERBOSE) $< $@
 	@-[ -d $*.impl ] && \
 	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
