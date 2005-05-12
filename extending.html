@@ -1,4 +1,4 @@
-<!-- $Id: extending.html,v d88e9b41b3ec 2005/05/08 11:28:14 simonjwright $ -->
+<!-- $Id: extending.html,v 9b4a66225788 2005/05/12 05:29:45 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Extending</title>
@@ -91,7 +91,11 @@ and then you can say
    $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
 </pre>
 
-This should be easily extendable to multiple extensions. Clearly it
+<p>It's best to put your extensions after ColdFrame; if you generate a
+proper body which replaces ColdFrame's default you need it to be later
+in the output, because <i>gnatchop</i> keeps the last unit it sees.
+
+<p>This should be easily extendable to multiple extensions. Clearly it
 will be best if they don't interact!
 
 <h2>Practicalities</h2>
@@ -110,6 +114,9 @@ your extensions to the same place and specify that:
 <pre>
    $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="blue">/my/script/dir/</font><font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen
 </pre>
+
+<p>You can also specify <tt>CODEGEN_SCRIPT</tt> as an environment
+variable.
 
 <p><hr>
 <i>
