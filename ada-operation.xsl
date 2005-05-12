@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 0ca9d499c082 2005/05/12 20:58:57 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -179,14 +179,28 @@
           <xsl:with-param
             name="parents"
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
+
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                      [not(@suppressed)
-                       and not(@entry)
-                       and not(@renames)
-                       and not(name=$operations/name)]
+                    [not(@suppressed)
+                    and not(@entry)
+                    and not(@renames)
+                    and not(name=$operations/name)]
                     | $operations"/>
+
+          <!--
+          <xsl:with-param
+            name="operations"
+            select="$parents/operation
+                      [not(name=$operations/name)
+                       and not(@visibility='private')
+                       and not(@suppressed)
+                       and not(@entry)
+                       and not(@renames)]
+                    | $operations"/>
+          -->
+
         </xsl:call-template>
 
       </xsl:when>
@@ -1116,7 +1130,23 @@
 
         <xsl:choose>
 
-          <!-- There are two styles: -->
+          <!-- There are three styles: -->
+
+          <xsl:when test="/domain/class[name=current()/@return]">
+
+            <!-- .. this is for class (handles) -->
+            
+            <xsl:value-of select="$I"/>
+            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
+            <xsl:text>begin&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>raise Unimplemented;&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>return null</xsl:text>
+            <xsl:text>;&#10;</xsl:text>
+
+          </xsl:when>
+
           <xsl:when test="$simple-return">
 
             <!-- .. this is for non-composite, non-imported,
