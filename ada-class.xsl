@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v cc966949497f 2005/05/12 04:48:30 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -233,7 +233,7 @@
 
        <!-- .. fix the storage pool for Handle .. -->
        <!--
-            use type System.Storage_Elements.Storage_Offset;
+            use type Standard.System.Storage_Elements.Storage_Offset;
             Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
               (Pool_Size => Instance'Max_Size_In_Storage_Elements,
                Elmt_Size => Instance'Max_Size_In_Storage_Elements,
@@ -241,7 +241,7 @@
             for Handle'Storage_Pool use Storage_Pool;
             -->
        <xsl:value-of select="$I"/>
-       <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+       <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
        <xsl:value-of select="$I"/>
        <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
        <xsl:value-of select="$IC"/>
@@ -268,7 +268,7 @@
 
          <xsl:when test="$max &lt;= $max-bounded-container">
            <!--
-                use type System.Storage_Elements.Storage_Offset;
+                use type Standard.System.Storage_Elements.Storage_Offset;
                 Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
                   (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
                    Elmt_Size => Instance'Max_Size_In_Storage_Elements,
@@ -276,7 +276,7 @@
                 for Handle'Storage_Pool use Storage_Pool;
                 -->
            <xsl:value-of select="$I"/>
-           <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+           <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
            <xsl:value-of select="$I"/>
            <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
            <xsl:value-of select="$IC"/>
@@ -332,7 +332,7 @@
 
          <xsl:when test="$max &lt;= $max-bounded-container">
            <!--
-                use type System.Storage_Elements.Storage_Offset;
+                use type Standard.System.Storage_Elements.Storage_Offset;
                 Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool
                   (Pool_Size => Instance'Max_Size_In_Storage_Elements * {max},
                    Elmt_Size => Instance'Max_Size_In_Storage_Elements,
@@ -340,7 +340,7 @@
                 for Handle'Storage_Pool use Storage_Pool;
                 -->
            <xsl:value-of select="$I"/>
-           <xsl:text>use type System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
+           <xsl:text>use type Standard.System.Storage_Elements.Storage_Offset;&#10;</xsl:text>
            <xsl:value-of select="$I"/>
            <xsl:text>Storage_Pool : ColdFrame.Project.Storage_Pools.Bounded_Pool&#10;</xsl:text>
            <xsl:value-of select="$IC"/>
@@ -952,6 +952,13 @@
   <xsl:template mode="cl:class-body" match="*"/>
 
 
+  <!-- This attribute set is used in cl:class-body-context to mark those
+       withs that are there because of referential attributes, and
+       need warnings suppressing in case they aren't actually used. -->
+  <xsl:attribute-set name="cl:mark-referential-with">
+    <xsl:attribute name="referential">true</xsl:attribute>
+  </xsl:attribute-set>
+
   <!-- Called from domain/class to generate context clauses for package
        body. -->
   <xsl:template name="cl:class-body-context">
@@ -1028,7 +1035,9 @@
           <!-- Withs for referential attributes of the current class -->
           <xsl:for-each
             select="attribute[@refers and not(@refers=$name)]">
-            <xsl:element name="with">
+            <xsl:element
+              name="with"
+              use-attribute-sets="cl:mark-referential-with">
               <xsl:value-of select="@refers"/>
             </xsl:element>
           </xsl:for-each>
@@ -1064,11 +1073,19 @@
         <xsl:for-each select="$withs/with">
           <xsl:sort/>
           <xsl:if test="not (.=preceding-sibling::node())">
+            <xsl:variable name="spec">
+              <xsl:value-of select="$d"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="."/>
+            </xsl:variable>
             <xsl:text>with </xsl:text>
-            <xsl:value-of select="$d"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="."/>
+            <xsl:value-of select="$spec"/>
             <xsl:text>;&#10;</xsl:text>
+            <xsl:if test="@referential">
+              <xsl:text>pragma Warnings (Off, </xsl:text>
+              <xsl:value-of select="$spec"/>
+              <xsl:text>);&#10;</xsl:text>
+            </xsl:if>
           </xsl:if>
         </xsl:for-each>
 
@@ -2418,20 +2435,15 @@
   <!-- Called from domain/class to generate a task spec. -->
   <xsl:template name="cl:task-spec">
     <!--
-         use type System.Priority;
          task type T (This : access Instance) is
            pragma Task_Name ("{domain}.{name}");
-           pragma Priority (System.Default_Priority + ({priority}));
+           pragma Priority (Standard.System.Default_Priority + ({priority}));
            pragma Storage_Size ({stack});
            entry {e} ({parameters});
          end T;
          type T_P is access T;
          procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
          -->
-    <xsl:if test="@priority">
-      <xsl:value-of select="$I"/>
-      <xsl:text>use type System.Priority;&#10;</xsl:text>
-    </xsl:if>
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
     <xsl:value-of select="$II"/>
@@ -2442,7 +2454,7 @@
     <xsl:text>&quot;);&#10;</xsl:text>
     <xsl:if test="@priority">
       <xsl:value-of select="$II"/>
-      <xsl:text>pragma Priority (System.Default_Priority + (</xsl:text>
+      <xsl:text>pragma Priority (Standard.System.Default_Priority + (</xsl:text>
       <xsl:value-of select="@priority"/>
       <xsl:text>));&#10;</xsl:text>
     </xsl:if>
