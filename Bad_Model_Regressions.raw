@@ -4,12 +4,12 @@
 <date>
 <year>2005</year>
 <month>5</month>
-<day>8</day>
-<time>22:05</time>
+<day>12</day>
+<time>06:09</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 03a87749d562 $ } ]]></documentation>
+{ revision = $Revision: 8f7552c85107 $ } ]]></documentation>
 <classes>
 <class>
 <name>Bad Tag Name</name>
@@ -581,6 +581,27 @@
 <attributes>
 <attribute>
 <name>i</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Integer</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Private and Serializable</name>
+<visibility>PrivateAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ { serializable } ]]></documentation>
+<attributes>
+<attribute>
+<name>X</name>
 <visibility>PrivateAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>

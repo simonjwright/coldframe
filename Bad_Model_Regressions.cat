@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 0550a7489047 $ }
+|{ revision = $Revision: 8f7552c85107 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1350,6 +1350,15 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "i"
 			    quid       	"427E6BB80315"
+			    type       	"Integer")))
+		(object Class "Private and Serializable"
+		    quid       	"4282E40B01F4"
+		    documentation 	"{ serializable }"
+		    stereotype 	"type"
+		    exportControl 	"Private"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "X"
+			    quid       	"4282E42002B3"
 			    type       	"Integer"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
@@ -1413,7 +1422,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	428
 			    height     	218
 			    annotation 	8
@@ -1470,7 +1479,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	508
 			    height     	218
 			    annotation 	8
@@ -1527,7 +1536,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	542
 			    height     	218
 			    annotation 	8
@@ -1584,7 +1593,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	554
 			    height     	218
 			    annotation 	8
@@ -1641,7 +1650,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	412
 			    height     	218
 			    annotation 	8
@@ -1698,7 +1707,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	464
 			    height     	218
 			    annotation 	8
@@ -1755,7 +1764,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	456
 			    height     	218
 			    annotation 	8
@@ -1812,7 +1821,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	384
 			    height     	218
 			    annotation 	8
@@ -1869,7 +1878,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	392
 			    height     	218
 			    annotation 	8
@@ -1926,7 +1935,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	472
 			    height     	218
 			    annotation 	8
@@ -1983,8 +1992,65 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	198)
+				max_width  	205)
 			    width      	440
+			    height     	218
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Improper types::Private and Serializable" @47
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1163, 1125)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@47
+				location   	(898, 1072)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	530
+				justify    	0
+				label      	"Private and Serializable")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@47
+				location   	(898, 1027)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	530
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"4282E40B01F4"
+			    compartment 	(object Compartment
+				Parent_View 	@47
+				location   	(898, 1128)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	215)
+			    width      	548
 			    height     	218
 			    annotation 	8
 			    autoResize 	TRUE))))))
@@ -1995,7 +2061,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 0550a7489047 $ }
+|{ revision = $Revision: 8f7552c85107 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2003,7 +2069,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object Label @47
+		(object Label @48
 		    location   	(215, 133)
 		    font       	(object Font
 			size       	10
@@ -2016,8 +2082,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 0550a7489047 2005/05/08 19:59:55 simonjwright $")
-		(object CategoryView "Logical View::Bad Model Regressions" @48
+		    label      	"$Id: Bad_Model_Regressions.cat,v 8f7552c85107 2005/05/12 05:13:59 simonjwright $")
+		(object CategoryView "Logical View::Bad Model Regressions" @49
 		    location   	(2639, 233)
 		    font       	(object Font
 			size       	10
@@ -2029,7 +2095,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@48
+			Parent_View 	@49
 			location   	(2469, 149)
 			fill_color 	13434879
 			nlines     	2
@@ -2042,7 +2108,7 @@
 		    quidu      	"3FDAA7500168"
 		    width      	352
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @49
+		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @50
 		    location   	(495, 435)
 		    font       	(object Font
 			size       	10
@@ -2054,7 +2120,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@50
 			location   	(165, 396)
 			fill_color 	13434879
 			nlines     	2
@@ -2062,7 +2128,7 @@
 			justify    	0
 			label      	"Detect illegal characters in tag name rather than letting Saxon find them")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@50
 			location   	(165, 351)
 			fill_color 	13434879
 			anchor     	10
@@ -2076,7 +2142,7 @@
 		    quidu      	"408168AE0217"
 		    width      	672
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @50
+		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @51
 		    location   	(1355, 438)
 		    font       	(object Font
 			size       	10
@@ -2088,7 +2154,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@50
+			Parent_View 	@51
 			location   	(1087, 399)
 			fill_color 	13434879
 			nlines     	2
@@ -2096,7 +2162,7 @@
 			justify    	0
 			label      	"Public classes can't be active or have state machines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@50
+			Parent_View 	@51
 			location   	(1087, 354)
 			fill_color 	13434879
 			anchor     	10
@@ -2110,7 +2176,7 @@
 		    quidu      	"408168F600C6"
 		    width      	548
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @51
+		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @52
 		    location   	(2033, 433)
 		    font       	(object Font
 			size       	10
@@ -2122,7 +2188,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@52
 			location   	(1889, 394)
 			fill_color 	13434879
 			nlines     	2
@@ -2130,7 +2196,7 @@
 			justify    	0
 			label      	"Mixed type declarations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@52
 			location   	(1889, 349)
 			fill_color 	13434879
 			anchor     	10
@@ -2144,7 +2210,7 @@
 		    quidu      	"40EE860C015F"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @52
+		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @53
 		    location   	(460, 785)
 		    font       	(object Font
 			size       	10
@@ -2156,7 +2222,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@52
+			Parent_View 	@53
 			location   	(316, 746)
 			fill_color 	13434879
 			nlines     	2
@@ -2164,7 +2230,7 @@
 			justify    	0
 			label      	"Bad expressions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@52
+			Parent_View 	@53
 			location   	(316, 701)
 			fill_color 	13434879
 			anchor     	10
@@ -2178,7 +2244,7 @@
 		    quidu      	"4111B4E10070"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @53
+		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @54
 		    location   	(951, 790)
 		    font       	(object Font
 			size       	10
@@ -2190,7 +2256,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@53
+			Parent_View 	@54
 			location   	(758, 751)
 			fill_color 	13434879
 			nlines     	2
@@ -2198,7 +2264,7 @@
 			justify    	0
 			label      	"Protected types with missing features")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@53
+			Parent_View 	@54
 			location   	(758, 706)
 			fill_color 	13434879
 			anchor     	10
@@ -2212,7 +2278,7 @@
 		    quidu      	"4142CE040300"
 		    width      	398
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @54
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @55
 		    location   	(1478, 788)
 		    font       	(object Font
 			size       	10
@@ -2224,7 +2290,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@54
+			Parent_View 	@55
 			location   	(1334, 749)
 			fill_color 	13434879
 			nlines     	2
@@ -2232,7 +2298,7 @@
 			justify    	0
 			label      	"Bad Utilities")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@54
+			Parent_View 	@55
 			location   	(1334, 704)
 			fill_color 	13434879
 			anchor     	10
@@ -2246,7 +2312,7 @@
 		    quidu      	"415F11BC000C"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @55
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @56
 		    location   	(2025, 790)
 		    font       	(object Font
 			size       	10
@@ -2258,7 +2324,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@55
+			Parent_View 	@56
 			location   	(1881, 751)
 			fill_color 	13434879
 			nlines     	2
@@ -2266,7 +2332,7 @@
 			justify    	0
 			label      	"Bad Operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@55
+			Parent_View 	@56
 			location   	(1881, 706)
 			fill_color 	13434879
 			anchor     	10
@@ -2280,7 +2346,7 @@
 		    quidu      	"4206699F00DA"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @56
+		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @57
 		    location   	(415, 1083)
 		    font       	(object Font
 			size       	10
@@ -2292,7 +2358,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@56
+			Parent_View 	@57
 			location   	(271, 1044)
 			fill_color 	13434879
 			nlines     	2
@@ -2300,7 +2366,7 @@
 			justify    	0
 			label      	"Improper types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@56
+			Parent_View 	@57
 			location   	(271, 999)
 			fill_color 	13434879
 			anchor     	10
