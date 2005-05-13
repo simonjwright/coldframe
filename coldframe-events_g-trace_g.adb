@@ -20,21 +20,28 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-trace_g.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
---  $Author: simon $
+--  $Revision: 9379b84f8b31 $
+--  $Date: 2005/05/13 04:56:09 $
+--  $Author: simonjwright $
 
+with Ada.Calendar;
 with Ada.Exceptions;
 with Ada.Tags;
 with ColdFrame.Exceptions;
 
 package body ColdFrame.Events_G.Trace_G is
 
+   Start_Time : constant Ada.Calendar.Time := Ada.Calendar.Clock;
+   use type Ada.Calendar.Time;
+
    procedure Put_Line (Message : String);
    procedure Put_Line (Message : String) is
    begin
-      Logging.Log (Severity => Logging.Informational,
-                   Message => Message);
+      Logging.Log
+        (Severity => Logging.Informational,
+         Message => Duration'Image (Ada.Calendar.Clock - Start_Time)
+           & ": "
+           & Message);
    end Put_Line;
 
 
