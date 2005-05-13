@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v cc966949497f 2005/05/12 04:48:30 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 03b4289c764b 2005/05/13 04:36:51 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -893,8 +893,8 @@
 
     </xsl:if>
 
-    <!-- .. operation stubs .. -->
-    <xsl:call-template name="op:operation-body-stubs"/>
+    <!-- .. operation parts .. -->
+    <xsl:call-template name="op:operation-body-parts"/>
 
     <!-- .. state image body .. -->
     <xsl:if test="statemachine">
