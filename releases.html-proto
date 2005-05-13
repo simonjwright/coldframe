@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v ec886bbb8d01 2005/05/12 05:22:41 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 04ba09a1003f 2005/05/13 05:02:17 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -132,8 +132,11 @@ renamed from <tt>Timer_Manager</tt> to <tt>Held_Event_Manager</tt>
 
 
 <p>The <tt>Debug</tt> versions of Event Queues are now deprecated; use
-the new <tt>Trace</tt> versions instead (for example,
-<tt>ColdFrame.Project.Events.Standard.Trace</tt>).
+the new <tt>Trace</tt> versions instead
+(<tt>ColdFrame.Project.Events.Standard.Trace</tt> and
+<tt>ColdFrame.Project.Events.Standard.Test_Trace</tt>).
+<br>As an added incentive to change, Trace now includes the time since
+program start with each log message.
 
 
 <p><b>Callbacks</b>
@@ -153,25 +156,20 @@ register/deregister operations aren't task-safe).
 <p><b>Miscellaneous</b>
 
 
-<p>The ColdFrame-supplied storage pools, as well as filling
-newly-allocated memory with an obviously bad pattern
-(<tt>16#deadbeef#</tt>), now refill just-freed memory with
-<tt>16#deaddead#</tt>.
-
-
 <p><a href="http://xml.coverpages.org/schemas.html">XML Schemas</a>
 are now supplied for ColdFrame's "<a href="ColdFrame-raw.xsd">raw</a>"
 and "<a href="ColdFrame-norm.xsd">normalized</a>" XML.
-
-
-<p>Tear Down has been reworked to remove some race conditions that
-could lead to <tt>Tasking_Error</tt>.
 
 
 <p>It's been made a bit more straightforward to <a
 href="extending.html">add your own code generation extensions</a>. You
 can also customize the banner ColdFrame outputs at the head of each
 file.
+
+
+<p>You can change the generated top-level package name of a domain,
+using <i>{ name = New Name }</i> on the domain. See the new <a
+href="testing.html">discussion on testing</a>.
 
 
 <p>The supplied <tt>ColdFrame.Project.Calendar</tt> provides an
@@ -185,16 +183,7 @@ previously named <tt><i>Domain.Class</i>.Class_Initialize</tt> and
 <tt>CF_Tear_Down</tt> respectively.
 
 
-<p>You can change the generated top-level package name of a domain,
-using <i>{ name = New Name }</i> on the domain. See the new <a
-href="testing.html">discussion on testing</a>.
-
-
 <p>ColdFrame can now generate <a href="testing.html">test stubs</a>.
-
-
-<p>The error of deleting an active instance from its own task is
-detected.
 
 
 <p><i>{array}</i> types can be (de)serialized automatically.
@@ -204,8 +193,22 @@ detected.
 will be generated.
 
 
+<p>The ColdFrame-supplied storage pools, as well as filling
+newly-allocated memory with an obviously bad pattern
+(<tt>16#deadbeef#</tt>), now refill just-freed memory with
+<tt>16#deaddead#</tt>.
+
+
 <p>Unimplemented operations raise <tt>Unimplemented</tt> instead
 of <tt>Program_Error</tt>.
+
+
+<p>Tear Down has been reworked to remove some race conditions that
+could lead to <tt>Tasking_Error</tt>.
+
+
+<p>The error of deleting an active instance from its own task is
+detected.
 
 
 <p><dt>20040319
