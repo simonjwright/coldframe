@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 0ca9d499c082 2005/05/12 20:58:57 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 9c42238de832 2005/05/13 04:35:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -61,6 +61,7 @@
             select="$parents/operation
                       [not(name=$operations/name)
                        and not(@visibility='private')
+                       and not(@access)
                        and not(@suppressed)
                        and not(@entry)
                        and not(@renames)]
@@ -87,7 +88,7 @@
 
   <!-- Generate subprogram specs (but not parental <<class>> or
        <<finalize>> operations, or any access-to-operations). -->
-  <xsl:template match="class/operation[not(@access)]" mode="op:operation-spec">
+  <xsl:template match="class/operation" mode="op:operation-spec">
 
     <!-- The current class. -->
     <xsl:param name="current"/>
@@ -157,10 +158,10 @@
   <xsl:template mode="op:renaming-operation-spec" match="*"/>
 
 
-  <!-- called at domain/class to generate subprogram stubs for a class.
-       Since this may be a child type, we handle all the operations
-       in the ancestor tree. -->
-  <xsl:template name="op:operation-body-stubs">
+  <!-- called at domain/class to generate subprogram body parts
+       (proper bodies or stubs) for a class. Since this may be a child
+       type, we handle all the operations in the ancestor tree. -->
+  <xsl:template name="op:operation-body-parts">
 
     <!-- The classes to be processed this time. The default is the
          current class. -->
@@ -175,7 +176,8 @@
 
         <!-- Still something to collect; call self recursively with the
              parent node(s). -->
-        <xsl:call-template name="op:operation-body-stubs">
+        <xsl:call-template name="op:operation-body-parts">
+
           <xsl:with-param
             name="parents"
             select="../class[name=../inheritance[child=$parents/name]/parent]"/>
@@ -183,23 +185,12 @@
           <xsl:with-param
             name="operations"
             select="$parents/operation
-                    [not(@suppressed)
-                    and not(@entry)
-                    and not(@renames)
-                    and not(name=$operations/name)]
-                    | $operations"/>
-
-          <!--
-          <xsl:with-param
-            name="operations"
-            select="$parents/operation
                       [not(name=$operations/name)
-                       and not(@visibility='private')
+                       and not(@access)
                        and not(@suppressed)
                        and not(@entry)
                        and not(@renames)]
                     | $operations"/>
-          -->
 
         </xsl:call-template>
 
@@ -223,11 +214,10 @@
 
 
   <!-- Generate the package body parts of operations (but not parental
-       <<class>> or <<finalize>> operations, or access-to-operations,
-       which are realized in the Class package). -->
-  <xsl:template
-    match="class/operation[not(@access)]"
-    mode="op:operation-body-in-body">
+       <<class>>, <<finalize>> or private operations, or
+       access-to-operations, which are realized in the Class
+       package). -->
+  <xsl:template match="class/operation" mode="op:operation-body-in-body">
 
     <!-- The current class. -->
     <xsl:param name="current"/>
@@ -302,10 +292,12 @@
 
           </xsl:when>
 
-          <xsl:when test="not(@class or @finalize)">
+          <xsl:when test="not(@class or @finalize)
+                          and not(@visibility='private')">
 
-            <!-- Concrete, non-<<class>>, non-<<finalize>> in ancestor class;
-                 we need to call the operation in our parent. -->
+            <!-- Concrete, non-<<class>>, non-<<finalize>>, visible in
+                 ancestor class; we need to call the operation in our
+                 parent. -->
 
             <xsl:call-template name="op:generate-dispatch-to-parent">
               <xsl:with-param name="current" select="$current"/>
