@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 4667a69c8f75 2005/05/09 19:41:34 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -951,9 +951,8 @@
       <xsl:otherwise>
         
         <xsl:call-template name="ut:should-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
-        
         <xsl:value-of select="$blank-line"/>
+        
         <xsl:call-template name="ut:commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
@@ -1105,9 +1104,8 @@
   <xsl:template match="type[@protected]" mode="ty:protected-type-body">
 
     <xsl:call-template name="ut:should-edit"/>
-    <xsl:call-template name="ut:identification-info"/>
-
     <xsl:value-of select="$blank-line"/>
+
     <xsl:call-template name="ut:commentary">
       <xsl:with-param name="indent" select="''"/>
       <xsl:with-param name="separate-pars" select="$blank-line"/>

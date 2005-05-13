@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 9c42238de832 2005/05/13 04:35:31 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1098,9 +1098,8 @@
       <xsl:when test="@return">
 
         <xsl:call-template name="ut:should-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
-
         <xsl:value-of select="$blank-line"/>
+
         <xsl:call-template name="ut:commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>
@@ -1184,9 +1183,8 @@
       <!-- .. and this is for procedures. -->
       <xsl:otherwise>
         <xsl:call-template name="ut:should-edit"/>
-        <xsl:call-template name="ut:identification-info"/>
-
         <xsl:value-of select="$blank-line"/>
+
         <xsl:call-template name="ut:commentary">
           <xsl:with-param name="indent" select="''"/>
           <xsl:with-param name="separate-pars" select="$blank-line"/>

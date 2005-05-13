@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 03b4289c764b 2005/05/13 04:36:51 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -930,8 +930,8 @@
       <!-- Output the separate task body. -->
 
       <xsl:call-template name="ut:should-edit"/>
-      <xsl:call-template name="ut:identification-info"/>
       <xsl:value-of select="$blank-line"/>
+
       <xsl:text>separate (</xsl:text>
       <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
       <xsl:text>)&#10;</xsl:text>
