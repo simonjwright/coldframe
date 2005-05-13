@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 0bb8a198016d 2005/05/12 20:59:47 simonjwright $ -->
+<!-- $Id: bugs.html,v 8f4778355a80 2005/05/13 04:38:46 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -198,14 +198,6 @@ in the model, or imported into a different model.</i>
 <tt>CODEGEN_SCRIPT</tt> was defined and you've forgotten to import the
 new XSLT scripts.
 
-<dt>0308 (raised 12.v.05)
-
-<dd>Bad code is generated in children where an &#171;accessor&#187;
-operation is marked <i>private</i>.
-<br><i>Not clear what good a private accessor is - you have direct
-visibility of the instance attributes! Perhaps the user meant to say
-</i>protected<i>?</i>
-
 <dt>0309 (raised 12.v.05)
 
 <dd>The generated header for separate proper bodies ought not to
@@ -217,6 +209,20 @@ after a few years, and people don't seem to want to delete it).
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.v.05</h3>
+
+<dl>
+
+<dt>0308 (raised 12.v.05)
+
+<dd>Bad code is generated in children where an &#171;accessor&#187;
+operation is marked <i>private</i>.
+<br><i>Not clear what good a private accessor is - you have direct
+visibility of the instance attributes! Perhaps the user meant to say
+</i>protected<i>?</i>
+
+</dl>
 
 <h3>12.v.05</h3>
 
