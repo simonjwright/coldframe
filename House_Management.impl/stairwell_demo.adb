@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v b72a3ecb25af 2004/06/17 07:12:06 simon $
+--  $Id: stairwell_demo.adb,v c24c52e44b50 2005/05/14 16:18:22 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -26,8 +26,7 @@ with Digital_IO.HCI;
 with House_Management.Initialize;
 
 with ColdFrame.Project.Events.Standard.Trace;
-with ColdFrame.Exceptions.Symbolic_Traceback;
-pragma Warnings (Off, ColdFrame.Exceptions.Symbolic_Traceback);
+with GNAT.Exception_Traces;
 
 procedure Stairwell_Demo is
 
@@ -170,6 +169,9 @@ procedure Stairwell_Demo is
      := new ColdFrame.Project.Events.Standard.Trace.Event_Queue;
 
 begin
+
+   GNAT.Exception_Traces.Trace_On
+     (Kind => GNAT.Exception_Traces.Unhandled_Raise);
 
    Digital_IO.Initialize (Dispatcher);
    House_Management.Initialize (Dispatcher);
