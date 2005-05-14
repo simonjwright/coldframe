@@ -556,7 +556,9 @@ Event_Test.test/event_test-test_engine.ads \
 Event_Test.test/event_test-test_instance.adb \
 Event_Test.test/event_test-test_instance.ads \
 Event_Test.test/event_test-test_singleton_instance.adb \
-Event_Test.test/event_test-test_singleton_instance.ads
+Event_Test.test/event_test-test_singleton_instance.ads \
+event_test-test_timer_task_teardown.adb \
+event_test-test_timer_task_teardown.ads
 
 TEST += \
 Hierarchies.cat Hierarchies.raw Hierarchies.gpr \
@@ -587,6 +589,8 @@ Regressions.impl/regressions-pt_holder.adb \
 Regressions.impl/regressions-pt_owner-get_h_access.adb \
 Regressions.impl/regressions-pt_user-get_state.adb \
 Regressions.impl/regressions-pt_user-set_state.adb \
+Regressions.impl/regressions-self_immolator-terminate_self.adb \
+Regressions.impl/regressions-self_immolator-terminate_yourself.adb \
 Regressions.impl/regressions-suite.adb \
 Regressions.impl/regressions-suite.ads \
 Regressions.impl/regression_tests.adb
