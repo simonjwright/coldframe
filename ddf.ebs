@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v 2fb719b3fb2f 2005/03/28 17:44:37 simon $
+'$Id: ddf.ebs,v a32c3e637ead 2005/05/14 12:27:34 simonjwright $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -43,7 +43,7 @@ Sub DumpAttributes (o As Class)
 		Print #1, "<name>" & a.Name & "</name>"
 		Print #1, "<visibility>" & a.ExportControl.Name & "</visibility>"
 		If a.Static Then
-			Print #1, "<static/>"
+			Print #1, "<static></static>"
 		End If	
 		Print #1, "<documentation><![CDATA[ " & a.Documentation & " ]]></documentation>"
 		Print #1, "<type>" &  a.Type & "</type>"
@@ -93,7 +93,7 @@ Sub DumpOperations (o As Class)
 		End If
 		Print #1, "<name>" & op.Name & "</name>"
 		If op.Abstract Then
-			Print #1, "<abstract/>"
+			Print #1, "<abstract></abstract>"
 		End If
 		Print #1, "<visibility>" & op.ExportControl.Name & "</visibility>"
 		Print #1, "<documentation><![CDATA[ " & op.Documentation & " ]]></documentation>"
@@ -252,7 +252,7 @@ Sub DumpClass (o As Class)
 	Print #1, "<visibility>" & o.ExportControl.Name & "</visibility>"
 	Print #1, "<kind>" & o.ClassKind & "</kind>"
 	If o.Abstract then
-		Print #1, "<abstract/>"
+		Print #1, "<abstract></abstract>"
 	End If
 	Print #1, "<cardinality>" & o.Cardinality & "</cardinality>"
 	Print #1, "<concurrency>" & o.Concurrency & "</concurrency>"
