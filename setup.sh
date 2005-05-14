@@ -1,4 +1,4 @@
-# $Id: setup.sh,v 05129fec2d4c 2005/05/14 16:16:56 simonjwright $
+# $Id: setup.sh,v 047838f9d48f 2005/05/14 16:23:05 simonjwright $
 # Sets up environment variables for development of the Stairwell demo
 # (very local!).
 
@@ -33,4 +33,6 @@ case `uname` in
 esac
 export TOP=$HOME
 
-[ -d $cf/.build ] || (cd $cf; ./create-build-directories )
+[ -d $cf/.build ] || (cd $cf; ./create-build-directories)
+[ -d $cf/lib ] || (cd $cf; ln -s . lib)
+[ -d $cf/project ] || (cd $cf; mkdir project)
