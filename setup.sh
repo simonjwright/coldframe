@@ -1,4 +1,4 @@
-# $Id: setup.sh,v df503843c83f 2005/04/23 06:33:37 simonjwright $
+# $Id: setup.sh,v 05129fec2d4c 2005/05/14 16:16:56 simonjwright $
 # Sets up environment variables for development of the Stairwell demo
 # (very local!).
 
@@ -13,8 +13,24 @@ export BUILD_BASE=$cf/.build
 export CASE_EXCEPTIONS=\
 $HOME/.emacs_case_exceptions:\
 $cf/emacs_case_exceptions
-export DEVEL=YES
-export TASH=~/tash832a
-export TCL=/usr/lib
-export TCL_VERSION=8.3
+case `uname` in
+    Linux)
+	# hey, I know this is antique, but it works for me ..
+	export TASH=~/tash832a
+	export TCL=/usr/lib
+	export TCL_VERSION=8.3
+	;;
+    Darwin)
+	# The 8.4.9.0 BI distribution; NB you need some fancy symlinks
+	# here, see note on the Tash mailing list.
+	export TASH=~/tash841a
+	export TCL=/usr/local
+	export TCL_VERSION=8.4
+	;;
+    *)
+	echo "I don't know how to set up for Tash in `uname`"
+	;;
+esac
 export TOP=$HOME
+
+[ -d $cf/.build ] || (cd $cf; ./create-build-directories )
