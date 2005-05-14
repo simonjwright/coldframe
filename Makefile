@@ -542,6 +542,10 @@ Event_Test.impl/event_test-recipient-information_handler.adb \
 Event_Test.impl/event_test-recipient-init.adb \
 Event_Test.impl/event_test-recipient-send_done.adb \
 Event_Test.impl/event_test-recipient-wait_handler.adb \
+Event_Test.impl/event_test-timer_task_teardown-e1_handler.adb \
+Event_Test.impl/event_test-timer_task_teardown-e2_handler.adb \
+Event_Test.impl/event_test-timer_task_teardown-start.adb \
+Event_Test.impl/event_test-timer_task_teardown-t.adb \
 Event_Test.test/debugging.ads \
 Event_Test.test/event_test-harness.adb \
 Event_Test.test/event_test-harness.ads \
@@ -557,8 +561,8 @@ Event_Test.test/event_test-test_instance.adb \
 Event_Test.test/event_test-test_instance.ads \
 Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads \
-event_test-test_timer_task_teardown.adb \
-event_test-test_timer_task_teardown.ads
+Event_Test.test/event_test-test_timer_task_teardown.adb \
+Event_Test.test/event_test-test_timer_task_teardown.ads
 
 TEST += \
 Hierarchies.cat Hierarchies.raw Hierarchies.gpr \
@@ -589,6 +593,7 @@ Regressions.impl/regressions-pt_holder.adb \
 Regressions.impl/regressions-pt_owner-get_h_access.adb \
 Regressions.impl/regressions-pt_user-get_state.adb \
 Regressions.impl/regressions-pt_user-set_state.adb \
+Regressions.impl/regressions-self_immolator-t.adb \
 Regressions.impl/regressions-self_immolator-terminate_self.adb \
 Regressions.impl/regressions-self_immolator-terminate_yourself.adb \
 Regressions.impl/regressions-suite.adb \
