@@ -1,4 +1,4 @@
-;;; $Id: setup.el,v df503843c83f 2005/04/23 06:33:37 simonjwright $
+;;; $Id: setup.el,v 499c4d3b554e 2005/05/14 16:36:11 simonjwright $
 ;;;
 ;;; Sets up environment variables for ColdFrame development
 
@@ -15,9 +15,19 @@
 		    ":"
 		    cf
 		    "/emacs_case_exceptions"))
-    (setenv "DEVEL" "YES")
-    (setenv "TASH" (concat home "/tash832a"))
-    (setenv "TCL" "/usr/lib")
-    (setenv "TCL_VERSION" "8.3")
+    (cond
+     ;; see notes in setup.el
+     ((memq system-type '(gnu/linux))
+      (progn 
+	(setenv "TASH" (concat home "/tash832a"))
+	(setenv "TCL" "/usr/lib")
+	(setenv "TCL_VERSION" "8.3")
+	))
+     ((memq system-type '(darwin))
+      (progn 
+	(setenv "TASH" (concat home "/tash841a"))
+	(setenv "TCL" "/usr/local")
+	(setenv "TCL_VERSION" "8.4")
+	)))
     (setenv "TOP" home)
     ))
