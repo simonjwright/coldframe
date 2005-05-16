@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# $Id: case_exceptions.py,v 9db431fa8c47 2004/12/14 21:56:56 simon $
+# $Id: case_exceptions.py,v 946ae2a048f2 2005/05/16 15:11:34 simonjwright $
 
 # Converts a GLIDE or ColdFrame case exception file into GPS (XML) format.
 
@@ -25,7 +25,7 @@ def addElement(match, element, doc, top):
 
 def parseCaseExceptionLines(f):
 
-    """'f' is an opencase exception file. Returns a DOM object
+    """'f' is an open case exception file. Returns a DOM object
     containing the XML version of the data."""
 
     doc = xml.dom.minidom.getDOMImplementation().createDocument\
@@ -38,12 +38,12 @@ def parseCaseExceptionLines(f):
     substringPattern = re.compile(r'^\*(?P<cases>\S+)(\s+(?P<comment>.*))?$')
     wordPattern = re.compile(r'^(?P<cases>[^*]\S+)(\s+(?P<comment>.*))?$')
     for l in f.readlines():
-        m = substringPattern.match(l)
-        if substringPattern.match(l):
-            addElement(substringPattern.match(l), "substring", doc, top)
-        m = wordPattern.match(l)
-        if wordPattern.match(l):
-            addElement(wordPattern.match(l), "word", doc, top)
+        s = substringPattern.match(l)
+        if s:
+            addElement(s, "substring", doc, top)
+        w = wordPattern.match(l)
+        if w:
+            addElement(w, "word", doc, top)
     return doc
 
                 
