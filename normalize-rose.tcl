@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 41d8e1915585 2005/05/08 06:20:32 simonjwright $
+# $Id: normalize-rose.tcl,v 842588522adb 2005/05/16 12:19:02 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1212,8 +1212,8 @@ itcl::class Class {
     }
 
     # specifies if this is a visible class
-    variable visible 0
-    method -visible-for-test {dummy} {set visible 1}
+    variable visibleForTest 0
+    method -visible-for-test {dummy} {set visibleForTest 1}
 
     # true if there's one and only one instance of the class
     variable singleton 0
@@ -1335,14 +1335,11 @@ itcl::class Class {
     method -serializable {dummy} {set serializable 1}
 
     variable visibility "public"
-    # called (as part of extraction) to indicate this type's visibility.
-    # Class visibility is determined by <<public>>, <<visible-for-test>>.
+    # called (as part of extraction) to indicate this type's
+    # visibility.  Class visibility is determined by <<public>>,
+    # <<visible-for-test>>; this only affects type visibility.
     method -visibility {a} {
-        set v [normalizeVisibility $a]
-        switch $v {
-            public  {set visibility public}
-            default {set visibility private}
-        }
+	set visibility [normalizeVisibility $a]
     }
 
     variable volatile 0
@@ -1402,6 +1399,17 @@ itcl::class Class {
 
     method -complete {} {
         $this -handleStereotype
+	if $isType {
+	    switch $visibility {
+		public -
+		protected {
+		    set visibility public
+		}
+		default {
+		    set visibility private
+		}
+	    }
+	}
         if {$isType && [$attributes -size] == 0} {
             if $discriminated {
                 Error "discriminated type [$this -getName] has no attributes"
@@ -1608,7 +1616,7 @@ itcl::class Class {
             if [info exists max] {puts -nonewline " max=\"$max\""}
             if $singleton {puts -nonewline " singleton=\"true\""}
             if $public {puts -nonewline " public=\"true\""}
-            if $visible {puts -nonewline " visible=\"true\""}
+            if $visibleForTest {puts -nonewline " visible=\"true\""}
             puts ">"
             putElement name "$name"
             putElement abbreviation [$this -getAbbreviation]
