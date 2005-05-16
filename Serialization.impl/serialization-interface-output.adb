@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: serialization-interface-output.adb,v $
---  $Revision: 141dc30870c4 $
---  $Date: 2003/02/20 20:58:51 $
---  $Author: simon $
+--  $Revision: cc46ec9c1af3 $
+--  $Date: 2005/05/16 12:52:42 $
+--  $Author: simonjwright $
 
 with ColdFrame.Project.Events;
 with Serialization.Events;
@@ -38,8 +38,13 @@ begin
    end if;
 
    Ev := new Server.Posted_Value (SH);
-   Serializable'Output
-     (Server.Posted_Value (Ev.all).Payload'Unrestricted_Access, V);
+   declare
+      --  This suppression avoids a bug in GCC 4.0.0 & GNAT 5.03a.
+      pragma Suppress (All_Checks);
+   begin
+      Serializable'Output
+        (Server.Posted_Value (Ev.all).Payload'Unrestricted_Access, V);
+   end;
    ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
 
 end Output;
