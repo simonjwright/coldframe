@@ -4,7 +4,7 @@
     _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
-(object Class_Category "Visiblilty"
+(object Class_Category "Visibility"
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3DA9B3D002EB"
@@ -17,7 +17,22 @@
 		(object ClassAttribute "id"
 		    quid       	"3DA9B3E9032D"
 		    stereotype 	"id"
-		    type       	"Autonumber"))))
+		    type       	"Autonumber")))
+	(object Class "Type With Private Visibility"
+	    quid       	"42888C480369"
+	    documentation 	"{ renames = Boolean }"
+	    stereotype 	"type"
+	    exportControl 	"Private")
+	(object Class "Type With Protected Visibility"
+	    quid       	"42888C6900F0"
+	    documentation 	"{ renames = Boolean }"
+	    stereotype 	"type"
+	    exportControl 	"Protected")
+	(object Class "Type With Implementation Visibility"
+	    quid       	"42888C7E01F4"
+	    documentation 	"{ renames = Boolean }"
+	    stereotype 	"type"
+	    exportControl 	"Implementation"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3DA9B3D8026B"
@@ -28,12 +43,12 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Visiblilty::P" @1
+		(object ClassView "Class" "Logical View::Visibility::P" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(615, 915)
+		    location   	(575, 395)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -45,7 +60,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(391, 861)
+			location   	(351, 342)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	448
@@ -53,7 +68,7 @@
 			label      	"P")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(391, 817)
+			location   	(351, 297)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -64,7 +79,169 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DA9B3DD0204"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(351, 398)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	445)
 		    width      	466
 		    height     	218
 		    annotation 	8
-		    autoResize 	TRUE)))))
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Visibility::Type With Private Visibility" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(577, 1262)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(308, 1236)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"Type With Private Visibility")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(308, 1191)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	538
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"42888C480369"
+		    width      	556
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Visibility::Type With Protected Visibility" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(581, 925)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(279, 899)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	604
+			justify    	0
+			label      	"Type With Protected Visibility")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(279, 854)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	604
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"42888C6900F0"
+		    width      	622
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Visibility::Type With Implementation Visibility" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(576, 1617)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(246, 1591)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	660
+			justify    	0
+			label      	"Type With Implementation Visibility")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(246, 1546)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	660
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"42888C7E01F4"
+		    width      	678
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Visibility" @5
+		    location   	(1920, 410)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(1750, 326)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Visibility")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"3DA9B3D002EB"
+		    width      	352
+		    height     	180)))))
