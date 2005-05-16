@@ -1,21 +1,43 @@
-AFCP
-CCRE
-MGU
-RTC
-T23CS
-TEWA
-TTKF
-VxWorks
-clock_getres
-clock_gettime
-clock_settime
-timespec
+*AVL
 *BP
-*CPA
+*CPU
 *DOM
 *GMT
-*GWS26
+*HTML
+*HTTP
+*IO
+*OK
+*OS
 *SNTP
-*SSI
-*TTKF
+*TCP
+*UDP
+*URL
 *XML
+ASCII
+AUnit
+BC
+CArgv		TASH
+CGI
+CHAR_BIT	Interfaces.C
+ColdFrame
+EWS
+GNAT
+HTTP
+IDE
+OpenToken
+RTC
+VxWorks
+XDR
+XMLAda
+char_array	Interfaces.C
+chars_ptr	Interfaces.C
+clock_getres	POSIX time
+clock_gettime	POSIX time
+clock_settime	POSIX time
+int		Interfaces.C
+long		Interfaces.C
+short		Interfaces.C
+timespec	
+unsigned	Interfaces.C
+unsigned_long	Interfaces.C
+unsigned_short	Interfaces.C
