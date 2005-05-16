@@ -173,7 +173,7 @@
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Generics.cat"
 		quid       	"3DA17052005E")
-	    (object Class_Category "Visiblilty"
+	    (object Class_Category "Visibility"
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Visibility.cat"
@@ -991,7 +991,7 @@
 			    max_width  	288
 			    justify    	0
 			    label      	"Alternities")
-			icon_style 	"Label"
+			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"3C10B8BD01E4"
@@ -1322,8 +1322,8 @@
 			quidu      	"3DA17052005E"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Visiblilty" @39
-			location   	(510, 2340)
+		    (object CategoryView "Logical View::Visibility" @39
+			location   	(511, 2340)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1335,13 +1335,13 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@39
-			    location   	(366, 2256)
+			    location   	(367, 2256)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
 			    justify    	0
-			    label      	"Visiblilty")
-			icon_style 	"Label"
+			    label      	"Visibility")
+			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"3DA9B3D002EB"
