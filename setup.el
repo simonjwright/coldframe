@@ -1,4 +1,4 @@
-;;; $Id: setup.el,v 499c4d3b554e 2005/05/14 16:36:11 simonjwright $
+;;; $Id: setup.el,v 8e5d5c31edcb 2005/05/16 12:50:08 simonjwright $
 ;;;
 ;;; Sets up environment variables for ColdFrame development
 
@@ -16,7 +16,7 @@
 		    cf
 		    "/emacs_case_exceptions"))
     (cond
-     ;; see notes in setup.el
+     ;; see notes in setup.sh
      ((memq system-type '(gnu/linux))
       (progn 
 	(setenv "TASH" (concat home "/tash832a"))
