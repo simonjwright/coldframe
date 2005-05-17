@@ -1,4 +1,4 @@
-<!-- $Id: extending.html,v 9b4a66225788 2005/05/12 05:29:45 simonjwright $ -->
+<!-- $Id: extending.html,v 7de6a8b32130 2005/05/17 20:27:37 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Extending</title>
@@ -100,7 +100,7 @@ will be best if they don't interact!
 
 <h2>Practicalities</h2>
 
-<p>One problem is, where are these scripts going to be?
+<h3>Where are these scripts going to be?</h3>
 
 <p>The <i>xsl:import</i> element's <i>href</i> attribute allows you to
 specify absolute and relative paths, but doesn't (I think) allow you
@@ -117,6 +117,12 @@ your extensions to the same place and specify that:
 
 <p>You can also specify <tt>CODEGEN_SCRIPT</tt> as an environment
 variable.
+
+<h3>Efficiency</h3>
+
+<p>Things will run quicker if your extension can do a simple one-off
+check to see whether there's anything at all of interest in the
+domain.
 
 <p><hr>
 <i>
