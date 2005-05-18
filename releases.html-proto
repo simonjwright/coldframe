@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 04ba09a1003f 2005/05/13 05:02:17 simonjwright $ -->
+<!-- $Id: releases.html-proto,v afad428c2f3c 2005/05/18 19:37:48 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -209,6 +209,10 @@ could lead to <tt>Tasking_Error</tt>.
 
 <p>The error of deleting an active instance from its own task is
 detected.
+
+
+<p>Making an association with a &#171;public&#187; class was never
+meant to be supported and now results in an error.
 
 
 <p><dt>20040319

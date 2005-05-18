@@ -18,39 +18,69 @@
 # Unix system if Cygwin not detected)
 
 sys = $(shell uname)
-ifneq (, $(findstring CYGWIN, $sys))
-  system = windows
+ifneq (, $(findstring CYGWIN, $(sys)))
+  system = winnt
   exe = .exe
 else
   system = unix
   exe =
 endif
 
-include ../Makefile-$(system)
+parent = ../Makefile-$(system)
 
-all:: executables failures
+all:: runs fails
 
-executables: \
- regression_tests$(exe) \
- event_test-harness$(exe) \
- hierarchies-harness$(exe) \
- stub_test_harness$(exe)
+runs:: regression_tests$(exe)
+	./$< 2>&1 | tee --append regressions.log
 
-failures: Bad_Model_Regressions.gen Bad_Code_Regressions.gen
+runs:: event_test-harness$(exe)
+	./$< 2>&1 | tee --append event_test.log
+
+runs:: hierarchies-harness$(exe)
+	./$< 2>&1 | tee --append hierarchies.log
+
+runs:: stub_test_harness$(exe)
+	./$< 2>&1 | tee --append stub_test.log
+
+fails:: Bad_Model_Regressions.gen
+
+fails:: Bad_Code_Regressions.gen
+
+regression_tests$(exe): Regressions.gen force
+	gnatmake -P Regressions 2>&1 | tee --append regressions.log
+
+event_test-harness$(exe): Event_Test.gen force
+	gnatmake -P Event_Test 2>&1 | tee --append event_test.log
+
+hierarchies-harness$(exe): Hierarchies.gen force
+	gnatmake -P Hierarchies 2>&1 | tee --append hierarchies.log
+
+stub_test_harness$(exe): Stub_Test_Interface.gen force
+	gnatmake -P Stub_Test 2>&1 | tee --append stub_test.log
+
+Regressions.gen: force
+	$(MAKE) -f $(parent) $@ 2>&1 | tee regressions.log
+
+Event_Test.gen: force
+	$(MAKE) -f $(parent) $@ 2>&1 | tee event_test.log
+
+Hierarchies.gen: force
+	$(MAKE) -f $(parent) $@ 2>&1 | tee hierarchies.log
+
+Stub_Test_Interface.gen: force
+	$(MAKE) -f $(parent) $@ GENERATE_STUBS=yes2>&1 | tee stub_test.log
+
+Bad_Model_Regressions.gen: force
+	-$(MAKE) -f $(parent) $@ 2>&1 | tee bad_model_regressions.log
+	@true
+
+Bad_Code_Regressions.gen: force
+	-$(MAKE) -f $(parent) $@ 2>&1 | tee bad_code_regressions.log
+	@true
 
 .PHONY: force
 
-regression_tests$(exe): Regressions.gen force
-	gnatmake -P Regressions
-
-event_test-harness$(exe): Event_Test.gen force
-	gnatmake -P Event_Test
-
-hierarchies-harness$(exe): Hierarchies.gen force
-	gnatmake -P Hierarchies
-
-stub_test_harness$(exe): Stub_Test_Interface.gen force
-	gnatmake -P Stub_Test
-
-Stub_Test_Interface.gen: Stub_Test_Interface.norm
-	$(MAKE) $@ GENERATE_STUBS=yes
+#;; for emacs:
+#;; Local Variables:
+#;; mode: makefile
+#;; End:
