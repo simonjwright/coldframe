@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-association.xsl,v 96a7d86ef933 2005/05/18 19:26:41 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -89,11 +89,9 @@
       select="../class[name=current()/role[2]/classname]"/>
 
     <xsl:if test="$class-a/@public">
-      <!--
-      <xsl:call-template name="log-error"/>
-      -->
+      <xsl:call-template name="ut:log-error"/>
       <xsl:message>
-        <xsl:text>Strong warning: illegal association </xsl:text>
+        <xsl:text>Error: illegal association </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> with class </xsl:text>
         <xsl:value-of select="$class-a/name"/>
@@ -101,11 +99,9 @@
     </xsl:if>
 
     <xsl:if test="$class-b/@public">
-      <!--
-      <xsl:call-template name="log-error"/>
-      -->
+      <xsl:call-template name="ut:log-error"/>
       <xsl:message>
-        <xsl:text>Strong warning: illegal association </xsl:text>
+        <xsl:text>Error: illegal association </xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text> with class </xsl:text>
         <xsl:value-of select="$class-b/name"/>
