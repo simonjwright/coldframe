@@ -49,7 +49,7 @@ event_test-harness$(exe): Event_Test.gen force
 hierarchies-harness$(exe): Hierarchies.gen force
 	gnatmake -P Hierarchies
 
-stub_test_harness$(exe): Stub_Test.gen Stub_Test_Interface.gen force
+stub_test_harness$(exe): Stub_Test_Interface.gen force
 	gnatmake -P Stub_Test
 
 Stub_Test_Interface.gen: Stub_Test_Interface.norm
