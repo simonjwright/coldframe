@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v ae869bc1c510 2005/05/12 05:19:04 simonjwright $ -->
+<!-- $Id: error-messages.html,v 31c4248b8e26 2005/05/18 19:33:06 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 </head>
@@ -215,6 +215,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
 
 <dt>Error: illegal finalize operation <i>Class.Operation</i> <dd>&#171;finalize&#187; operations must not be &#171;abstract&#187; or &#171;class&#187;, or return a value, or have parameters; and &#171;singleton&#187;s can't have &#171;finalize&#187; operations at all.
+
+<dt>Error: "inherited" private operation <i>Parent.Operation</i> in <i>Child</i>  <dd>Implementations of abstract operations must be <i>public</i> (or <i>protected</i>).
 
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 

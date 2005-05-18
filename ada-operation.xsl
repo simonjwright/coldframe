@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 31c4248b8e26 2005/05/18 19:33:06 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -45,6 +45,9 @@
     <!-- The operations so far. The default value is "null". -->
     <xsl:param name="operations" select="/.."/>
 
+    <!-- The starting class. -->
+    <xsl:param name="current" select="."/>
+
     <xsl:choose>
 
       <xsl:when test="$parents">
@@ -66,6 +69,9 @@
                        and not(@entry)
                        and not(@renames)]
                     | $operations"/>
+          <xsl:with-param 
+            name="current" 
+            select="$current"/>
         </xsl:call-template>
 
       </xsl:when>
@@ -73,6 +79,20 @@
       <xsl:otherwise>
 
         <!-- $operations contains all the nodes to be processed. -->
+
+        <!-- Check for a private operation with the same name as an
+             (inherited) public one. -->
+        <xsl:for-each
+          select="$operations[name
+                  =current()/operation[@visibility='private']/name]">
+          <xsl:call-template name="ut:log-error"/>
+          <xsl:message>
+            <xsl:text>Error: "inherited" private operation </xsl:text>
+            <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+            <xsl:text> in </xsl:text>
+            <xsl:value-of select="$current/name"/>
+          </xsl:message>
+        </xsl:for-each>
 
         <xsl:apply-templates select="$operations" mode="op:operation-spec">
           <xsl:sort select="name"/>
