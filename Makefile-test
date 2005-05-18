@@ -31,16 +31,16 @@ parent = ../Makefile-$(system)
 all:: runs fails
 
 runs:: regression_tests$(exe)
-	./$< 2>&1 | tee --append regressions.log
+	./$< -v 2>&1 | tee --append regressions.log
 
 runs:: event_test-harness$(exe)
-	./$< 2>&1 | tee --append event_test.log
+	./$< -v 2>&1 | tee --append event_test.log
 
 runs:: hierarchies-harness$(exe)
-	./$< 2>&1 | tee --append hierarchies.log
+	./$< -v 2>&1 | tee --append hierarchies.log
 
 runs:: stub_test_harness$(exe)
-	./$< 2>&1 | tee --append stub_test.log
+	./$< -v 2>&1 | tee --append stub_test.log
 
 fails:: Bad_Model_Regressions.gen
 
@@ -68,7 +68,7 @@ Hierarchies.gen: force
 	$(MAKE) -f $(parent) $@ 2>&1 | tee hierarchies.log
 
 Stub_Test_Interface.gen: force
-	$(MAKE) -f $(parent) $@ GENERATE_STUBS=yes2>&1 | tee stub_test.log
+	$(MAKE) -f $(parent) $@ GENERATE_STUBS=yes 2>&1 | tee stub_test.log
 
 Bad_Model_Regressions.gen: force
 	-$(MAKE) -f $(parent) $@ 2>&1 | tee bad_model_regressions.log
