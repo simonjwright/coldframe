@@ -86,7 +86,8 @@ C_CODEGEN_SCRIPTS = $(C_Codegen_Script) \
 OTHER_SCRIPTS = create-build-directories \
   serialized-to-csv.tcl \
   split-csv.tcl \
-  make-build.tcl
+  make-build.tcl \
+  case_exceptions.py
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@echo generating $@ ...
@@ -292,16 +293,14 @@ House_Management.html Digital_IO.html
 serialization-model.raw: Serialization.raw
 	cp $< $@
 
-# Makefile-cf is the published makefile for development of ColdFrame itself.
-# Other makefiles are
+# The published makefiles are
 # * Makefile-winnt for inclusion in a user makefile under Windows
 # * Makefile-unix for inclusion in a user makefile under Unix.
+# * test/Makefile for running the test pack.
 
-MAKEFILES = Makefile-cf Makefile-unix Makefile-winnt
+MAKEFILES = Makefile-unix Makefile-winnt
 
 # Files that need editing for release
-Makefile-cf: Makefile force
-	cp -p $< $@
 Makefile-unix: Makefile-unix-proto force
 	sed -e "s;DATE;$(DATE);g" <$< >$@
 Makefile-winnt: Makefile-winnt-proto force
@@ -642,7 +641,7 @@ dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	cp $(DISTRIBUTION_FILES) dist/download/
 
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
-$(DEMO) $(TEST) force
+$(DEMO) $(TEST) Makefile-test force
 	-rm -rf $@
 	mkdir $@
 	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
@@ -656,6 +655,7 @@ $(DEMO) $(TEST) force
 	tar cf - $(DEMO) | tar xf - -C $@/example
 	mkdir $@/test
 	tar cf - $(TEST) | tar xf - -C $@/test
+	cp -p Makefile-test $@/test/Makefile
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-rm $@
