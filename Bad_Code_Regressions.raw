@@ -3,13 +3,13 @@
 <name>Bad Code Regressions</name>
 <date>
 <year>2005</year>
-<month>4</month>
-<day>9</day>
-<time>07:51</time>
+<month>5</month>
+<day>18</day>
+<time>20:19</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: dfc288fd3d22 $ } ]]></documentation>
+{ revision = $Revision: a015c59ba586 $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -673,6 +673,55 @@
 <events>
 </events>
 </class>
+<class stereotype="abstract">
+<name>Parent With Abstract Operation</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="abstract">
+<name>op</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Child With Private Operation</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
 </classes>
 <relationships>
 <inheritance>
@@ -697,5 +746,11 @@
 <documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
+<inheritance>
+<name>private abstract operation</name>
+<documentation><![CDATA[  ]]></documentation>
+<child>Child With Private Operation</child>
+<parent>Parent With Abstract Operation</parent>
+</inheritance>
 </relationships>
 </domain>
