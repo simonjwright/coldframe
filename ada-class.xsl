@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v ebe62b3deebe 2005/05/18 21:35:33 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1044,6 +1044,7 @@
 
           <!-- Withs for subprograms of this and ancestor classes.
                We only want classes (not including the current class). -->
+          <!--
           <xsl:for-each select="$ancestors/operation/parameter/type
                                 | $ancestors/operation/@return">
             <xsl:if test="/domain/class/name=. and not(.=$name)">
@@ -1052,6 +1053,7 @@
               </xsl:element>
             </xsl:if>
           </xsl:for-each>
+          -->
 
           <!-- Withs for child classes. Needed for the subtype selection
                record. -->
