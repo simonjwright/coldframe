@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v ebe62b3deebe 2005/05/18 21:35:33 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 536d0f57cf83 2005/05/20 21:17:13 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -2466,7 +2466,16 @@
       <xsl:value-of select="@stack"/>
       <xsl:text>);&#10;</xsl:text>
     </xsl:if>
-    <xsl:apply-templates mode="cl:task-entry" select="operation">
+    <xsl:apply-templates 
+      mode="cl:task-entry" 
+      select="operation[@entry and @visibility='public']">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+    <xsl:value-of select="$I"/>
+    <xsl:text>private&#10;</xsl:text>
+    <xsl:apply-templates 
+      mode="cl:task-entry" 
+      select="operation[@entry and @visibility='private']">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
     <xsl:value-of select="$I"/>
