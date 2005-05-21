@@ -138,16 +138,16 @@ OTHER_SCRIPTS = create-build-directories \
 %.gen: %.ada
 	@echo generating $@ ...
 	@-rm -rf $@
-	@-mkdir $@
+	@mkdir $@
 	@gnatchop -w $(CHOP_VERBOSE) $< $@
-	@-[ -d $*.impl ] && \
+	@([ -d $*.impl ] && \
 	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
 	    echo "    removing $@/$$f"; rm $@/$$f; \
 	  else \
 	    echo "  extra source file $$f in .impl"; \
 	  fi \
-	done
+	done) || true
 	@chmod -R a-w $@
 	@chmod u+w $@
 	@echo "checking for unimplemented bodies ..."
