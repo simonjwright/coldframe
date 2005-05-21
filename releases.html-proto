@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8c5617da88f1 2005/05/20 21:26:54 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 132398994de2 2005/05/21 09:37:24 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -68,10 +68,9 @@ instances, only operations).
 <p>Visibility is partially implemented for operations of classes and
 &#171;protected&#187; types; <i>public</i> and <i>protected</i>
 operations are public, <i>private</i> and <i>implementation</i>
-operations are private (unless they are marked &#171;init&#187;).
+operations are private.
 <br>This includes &#171;entry&#187; operations of &#171;active&#187;
-classes (presumably to allow
-the <i><a
+classes (presumably to allow the <i><a
 href="http://www.adaic.com/standards/95aarm/html/AA-9-5-4.html">requeue</a></i>
 idiom).
 
