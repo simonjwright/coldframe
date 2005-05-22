@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 5169ab6a2857 2005/05/22 18:54:23 simonjwright $
+# $Id: cat2raw.py,v 6da234232e07 2005/05/22 22:04:35 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -34,16 +34,18 @@ class Base:
 	pass
     def __getattr__(self, n):
 	'''Attribute lookup.
-
 	Not sure why using plain 'name' for the object name results in a
 	lookup of the attribute __repr__ which is expected to be
 	callable, but that's what happens!
-
 	To get the object name, use 'object_name'.'''
 	if n == 'object_name':
 	    return self.qualifiers[0]
 	elif n in self.attributes:
-	    return self.attributes[n]
+	    try:
+		return self.attributes[n]
+	    except:
+		sys.stderr.write('oops! looking up attribute %s\n' % n)
+		return None
 	else:
 	    return None
     def init(self):
@@ -81,6 +83,14 @@ class Base:
 recognizedID = {}
 
 
+class Action_Time(Base):
+    def __init__(self):
+	self.init()
+    # Emitted as part of State.
+
+recognizedID['ActionTime'] = Action_Time
+
+
 class Association(Base):
     def __init__(self):
 	self.init()
@@ -105,7 +115,7 @@ class Attribute(Base):
 	self.init()
     def element(self): return 'attribute'
     def emit_contents(self, to):
-	self.emit_element('visibility', self.opExportControl, to)
+	# visibility???
 	# static
 	to.write('<type>%s</type>\n' % self.attributes['type'])
 	if self.initv:
@@ -123,12 +133,17 @@ class Class(Base):
 	self.emit_element('visibility', self.opExportControl, to)
 	self.emit_kind(to)
 	# abstract
-	self.emit_element('cardinality', self.client_cardinality, to)
+	if self.cardinality:
+	    self.emit_element('cardinality', self.cardinality, to)
 	# concurrency
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
 	self.emit_nested_attribute_list('events', 'events', to)
-	# statemachine
+	print `self.state_machine`
+	if self.state_machine:
+	    self.state_machine.emit(to)
+	    sys.stderr.write('found state mchine\n')
+	    pass
     def emit_kind(self, to):
 	# Overridden in children
 	self.emit_element('kind', 'NormalClass', to)
@@ -171,7 +186,7 @@ class Domain(Base):
 	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
-	self.emit_element('extractor', 'cat2raw.py $Version$', to)
+	self.emit_element('extractor', 'cat2raw.py $Revision: 6da234232e07 $', to)
 	to.write('<date>\n')
 	self.emit_element('year', t.year, to)
 	self.emit_element('month', t.month, to)
@@ -246,7 +261,6 @@ recognizedID['Parameter'] = Parameter
 class Role(Base):
     def __init__(self):
 	self.init()
-	self.end = 0
     def element(self): return 'role'
     def emit_contents(self, to):
 	self.emit_element('end', self.end, to)
@@ -259,9 +273,73 @@ recognizedID['Role'] = Role
 
 
 # statemachine: states, transitions
-# state: entryactions, initial, final
-# transition: source, target, event/name, transitionaction/name
+class State_Machine(Base):
+    def __init__(self):
+	self.init()
+    def element(self): return 'statemachine'
+    def emit_contents(self, to):
+	pass
 
+recognizedID['State_Machine'] = State_Machine
+
+
+# state: entryactions, initial, final
+class State(Base):
+    def __init__(self):
+	self.init()
+    def element(self): return 'state'
+    def emit_contents(self, to):
+	pass
+
+recognizedID['State'] = State
+
+
+# transition: source, target, event/name, transitionaction/name
+class Transition(Base):
+    def __init__(self):
+	self.init()
+    def element(self): return 'transition'
+    def emit_contents(self, to):
+	pass
+
+recognizedID['State_Transition'] = Transition
+
+
+# Objects we don't care about
+for o in (
+    'AssocAttachView',
+    'AssociationViewNew',
+    'AttachView',
+    'CategoryView',
+    'ClassDiagram',
+    'ClassView',
+    'Compartment',
+    'Destruction_Marker',
+    'Focus_Of_Control',
+    'Font',
+    'InheritView',
+    'InterMessView',
+    'InterObjView',
+    'InteractionDiagram',
+    'ItemLabel',
+    'Label',
+    'Link',
+    'Mechanism',
+    'Message',
+    'NoteView',
+    'Object',
+    'Petal',
+    'RoleView',
+    'SegLabel',
+    'SelfTransView',
+    'StateView',
+    'State_Diagram',
+    'TransView',
+    'UsesView',
+    'Uses_Relationship',
+    'Visibility_Relationship',
+    ):
+    recognizedID[o] = Base
 
 #-----------------------------------------------------------------------
 # Utilities
@@ -272,7 +350,7 @@ def create_object(id):
     if id in recognizedID:
 	return recognizedID[id]()
     else:
-	#sys.stderr.write("didn't recognise object ID %s.\n" % id)
+	sys.stderr.write("didn't recognise object ID %s.\n" % id)
 	return Base()
 
 def object_name(fqn):
@@ -515,3 +593,4 @@ l.input(sys.stdin.read())
 p = yacc.yacc()
 
 p.parse(lexer = l).emit()
+
