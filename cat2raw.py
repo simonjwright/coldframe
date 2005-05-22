@@ -14,14 +14,14 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 94a2118e476b 2005/05/22 14:36:09 simonjwright $
+# $Id: cat2raw.py,v 5169ab6a2857 2005/05/22 18:54:23 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
 # Uses PLY.
 
 import lex, yacc
-import sys
+import datetime, sys
 
 #-----------------------------------------------------------------------
 # Object model
@@ -81,7 +81,6 @@ class Base:
 recognizedID = {}
 
 
-# association: role(2), associative
 class Association(Base):
     def __init__(self):
 	self.init()
@@ -106,7 +105,7 @@ class Attribute(Base):
 	self.init()
     def element(self): return 'attribute'
     def emit_contents(self, to):
-	# visibility
+	self.emit_element('visibility', self.opExportControl, to)
 	# static
 	to.write('<type>%s</type>\n' % self.attributes['type'])
 	if self.initv:
@@ -121,17 +120,39 @@ class Class(Base):
     def element(self): return 'class'
     def name(self): return self.qualifiers[0]
     def emit_contents(self, to):
-	# visibility
-	# kind
+	self.emit_element('visibility', self.opExportControl, to)
+	self.emit_kind(to)
 	# abstract
-	# cardinality
+	self.emit_element('cardinality', self.client_cardinality, to)
 	# concurrency
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
 	self.emit_nested_attribute_list('events', 'events', to)
 	# statemachine
+    def emit_kind(self, to):
+	# Overridden in children
+	self.emit_element('kind', 'NormalClass', to)
+    def emit_inheritance(self, to):
+	for p in self.superclasses:
+	    to.write('<inheritance>\n')
+	    p.emit_element('name', p.label, to)
+	    p.emit_documentation(to)
+	    p.emit_element('parent',
+			   object_name(p.supplier),
+			   to)
+	    self.emit_element('child', self.object_name, to)
+	    to.write('</inheritance>\n')
 
 recognizedID['Class'] = Class
+
+
+class Class_Utility(Class):
+    def __init__(self):
+	self.init()
+    def emit_kind(self, to):
+	self.emit_element('kind', 'Utility', to)
+
+recognizedID['Class_Utility'] = Class_Utility
 
 
 class Domain(Base):
@@ -142,41 +163,58 @@ class Domain(Base):
 	op(self, to)
 	for c in filter(lambda o:
 			(o.__class__ == Domain 
-			 and (o.stereotype == 'generate' 
-			      or o.stereotype == 'include')),
+			 and (o.stereotype.lower() == 'generate' 
+			      or o.stereotype.lower() == 'include')),
 			self.logical_models):
+	    sys.stderr.write('entering %s ..\n' % c.object_name)
 	    c.emit_recursive(op, to)
+	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
-	self.emit_element('extractor', 'cat2raw.py', to)
+	t = datetime.datetime.today()
+	self.emit_element('extractor', 'cat2raw.py $Version$', to)
 	to.write('<date>\n')
-	self.emit_element('year', 1970, to)
-	self.emit_element('month', 1, to)
-	self.emit_element('day', 1, to)
-	self.emit_element('time', '00:00', to)
+	self.emit_element('year', t.year, to)
+	self.emit_element('month', t.month, to)
+	self.emit_element('day', t.day, to)
+	self.emit_element('time', '%02d:%02d' % (t.hour, t.minute), to)
 	to.write('</date>\n')
 	to.write('<classes>\n')
 	self.emit_recursive(self.emit_classes, to)
 	to.write('</classes>\n')
 	to.write('<relationships>\n')
 	self.emit_recursive(self.emit_associations, to)
+	self.emit_recursive(self.emit_inheritances, to)
 	to.write('</relationships>\n')
     def emit_classes(self, to):
 	for i in self.logical_models:
-	    if i.__class__ == Class:
+	    if isinstance(i, Class):
 		i.emit(to)
     emit_classes = staticmethod(emit_classes)
     def emit_associations(self, to):
 	for i in self.logical_models:
-	    if i.__class__ == Association:
+	    if isinstance(i, Association):
 		i.emit(to)
     emit_associations = staticmethod(emit_associations)
+    def emit_inheritances(self, to):
+	for i in self.logical_models:
+	    if i.superclasses:
+		i.emit_inheritance(to)
+    emit_inheritances = staticmethod(emit_inheritances)
 
 recognizedID['Class_Category'] = Domain
 
 
 # entryaction: 
 # event:
-# inheritance: child, parent
+
+
+class Inheritance(Base):
+    def __init__(self):
+	self.init()
+    # All the work for Inheritance is done in Class (because part of
+    # the output is the parent, and that's not readily available).
+
+recognizedID['Inheritance_Relationship'] = Inheritance
 
 
 class Operation(Base):
@@ -234,7 +272,7 @@ def create_object(id):
     if id in recognizedID:
 	return recognizedID[id]()
     else:
-	sys.stderr.write("didn't recognise object ID %s.\n" % id)
+	#sys.stderr.write("didn't recognise object ID %s.\n" % id)
 	return Base()
 
 def object_name(fqn):
