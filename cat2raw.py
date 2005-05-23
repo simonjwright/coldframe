@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 6da234232e07 2005/05/22 22:04:35 simonjwright $
+# $Id: cat2raw.py,v bb98c1ea4dde 2005/05/23 20:21:28 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -41,11 +41,7 @@ class Base:
 	if n == 'object_name':
 	    return self.qualifiers[0]
 	elif n in self.attributes:
-	    try:
-		return self.attributes[n]
-	    except:
-		sys.stderr.write('oops! looking up attribute %s\n' % n)
-		return None
+	    return self.attributes[n]
 	else:
 	    return None
     def init(self):
@@ -139,10 +135,13 @@ class Class(Base):
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
 	self.emit_nested_attribute_list('events', 'events', to)
-	print `self.state_machine`
-	if self.state_machine:
-	    self.state_machine.emit(to)
-	    sys.stderr.write('found state mchine\n')
+	if self.statemachine:
+	    sm = self.statemachine[0]
+	    if sm.stereotype is not None \
+		    and sm.stereotype.lower() == 'generate':
+		sm.emit(to)
+	    else:
+		sys.stderr.write('found state machine but skipped it!\n')
 	    pass
     def emit_kind(self, to):
 	# Overridden in children
@@ -186,7 +185,7 @@ class Domain(Base):
 	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
-	self.emit_element('extractor', 'cat2raw.py $Revision: 6da234232e07 $', to)
+	self.emit_element('extractor', 'cat2raw.py $Revision: bb98c1ea4dde $', to)
 	to.write('<date>\n')
 	self.emit_element('year', t.year, to)
 	self.emit_element('month', t.month, to)
@@ -220,7 +219,14 @@ recognizedID['Class_Category'] = Domain
 
 
 # entryaction: 
-# event:
+
+
+class Event(Base):
+    def __init__(self):
+	self.init()
+    # I expect all the output will be managed elsewhere ...
+
+recognizedID['Event'] = Event
 
 
 class Inheritance(Base):
@@ -406,7 +412,16 @@ def p_attributes(p):
                   | empty'''
     if len(p) == 3:
 	p[0] = p[2]
-	p[0][p[1][0]] = p[1][1]
+	n = p[1][0]
+	if n == 'statemachine':
+	    # There is something very odd here; mjj thought it might
+	    # be a copy/deepcopy problem, but that seems to end up
+	    # trying to deepcopy None -- just like the problem without
+	    # the deepcopy! Converting this particular case to a tuple
+	    # seems to work. Could maybe be generalised?
+	    p[0][n] = (p[1][1],)
+	else:
+	    p[0][n] = p[1][1]
     else:
 	p[0] = {}
     pass
