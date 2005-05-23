@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 132398994de2 2005/05/21 09:37:24 simonjwright $ -->
+<!-- $Id: releases.html-proto,v d5b74b645d57 2005/05/23 20:25:21 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -26,7 +26,8 @@ href="http://sourceforge.net/project/showfiles.php?group_id=135558">here</a>.
 <p>Archives are available in <tt>.zip</tt> or <tt>.tgz</tt>
 (<tt>.tar.gz</tt>) form. The file name encodes the date of the
 release: <tt>cf-20010130.zip</tt> was the zipped release of 30 January
-2001.
+2001. The corresponding <tt>cf-html-20010130.zip</tt> contained the
+complete documentation.
 
 <p>You'll sometimes see a suffix on the date, for example
 <tt>20050503cvs</tt>. The meanings are
