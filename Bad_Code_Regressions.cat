@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve detecting errors.
 |
-|{ revision = $Revision: 74ac6d3b373f $ }
+|{ revision = $Revision: 3657cfa5b03e $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -576,7 +576,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1275
-					label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $"))))))
+					label      	"$Id: Bad_Code_Regressions.cat,v 3657cfa5b03e 2005/05/24 20:14:24 simonjwright $"))))))
 		(object Class "Instance Deletion"
 		    quid       	"4038F01403C7"
 		    operations 	(list Operations
@@ -930,7 +930,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1420
-					label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 3657cfa5b03e 2005/05/24 20:14:24 simonjwright $")
 				    (object TransView "" @27
 					stereotype 	TRUE
 					line_color 	3342489
@@ -3189,7 +3189,7 @@
 			(object Operation "grandparental"
 			    quid       	"42932B520261"
 			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
+			    opExportControl 	"Private"
 			    uid        	0)))
 		(object Class "Grandparent With Abstract Operation"
 		    quid       	"42932AF302D3"
@@ -3397,7 +3397,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	545)
+				max_width  	552)
 			    width      	702
 			    height     	264
 			    annotation 	8
@@ -3433,7 +3433,7 @@
 	    documentation 	
 |Regression tests that involve detecting errors at the code generation stage.
 |
-|{ revision = $Revision: 74ac6d3b373f $ }
+|{ revision = $Revision: 3657cfa5b03e $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -3479,7 +3479,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1425
-		    label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $")
+		    label      	"$Id: Bad_Code_Regressions.cat,v 3657cfa5b03e 2005/05/24 20:14:24 simonjwright $")
 		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @110
 		    location   	(453, 410)
 		    font       	(object Font

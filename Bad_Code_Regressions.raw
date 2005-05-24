@@ -5,11 +5,11 @@
 <year>2005</year>
 <month>5</month>
 <day>24</day>
-<time>21:06</time>
+<time>21:10</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: 74ac6d3b373f $ } ]]></documentation>
+{ revision = $Revision: 3657cfa5b03e $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -713,7 +713,7 @@
 </operation>
 <operation>
 <name>grandparental</name>
-<visibility>PublicAccess</visibility>
+<visibility>PrivateAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
