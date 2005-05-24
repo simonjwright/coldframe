@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve detecting errors.
 |
-|{ revision = $Revision: a015c59ba586 $ }
+|{ revision = $Revision: 74ac6d3b373f $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -576,7 +576,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1275
-					label      	"$Id: Bad_Code_Regressions.cat,v a015c59ba586 2005/05/18 19:23:43 simonjwright $"))))))
+					label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $"))))))
 		(object Class "Instance Deletion"
 		    quid       	"4038F01403C7"
 		    operations 	(list Operations
@@ -930,7 +930,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1420
-					label      	"$Id: Bad_Code_Regressions.cat,v a015c59ba586 2005/05/18 19:23:43 simonjwright $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $")
 				    (object TransView "" @27
 					stereotype 	TRUE
 					line_color 	3342489
@@ -3159,32 +3159,53 @@
 		(object Class "Parent With Abstract Operation"
 		    quid       	"428B542A039D"
 		    stereotype 	"abstract"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"42932B2402FB"
+			    label      	"private abstract operation 1"
+			    supplier   	"Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Grandparent With Abstract Operation"
+			    quidu      	"42932AF302D3"))
 		    operations 	(list Operations
-			(object Operation "op"
+			(object Operation "parental"
 			    quid       	"428B5453005D"
+			    stereotype 	"abstract"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)))
+		(object Class "Child With Private Operation"
+		    quid       	"428B54640382"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"428B547A01F4"
+			    label      	"private abstract operation 2"
+			    supplier   	"Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Parent With Abstract Operation"
+			    quidu      	"428B542A039D"))
+		    operations 	(list Operations
+			(object Operation "parental"
+			    quid       	"428B54870379"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Private"
+			    uid        	0)
+			(object Operation "grandparental"
+			    quid       	"42932B520261"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)))
+		(object Class "Grandparent With Abstract Operation"
+		    quid       	"42932AF302D3"
+		    stereotype 	"abstract"
+		    operations 	(list Operations
+			(object Operation "grandparental"
+			    quid       	"42932B6E02C6"
 			    stereotype 	"abstract"
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "id"
-			    quid       	"428B544802F6"
+			    quid       	"42932B1602B5"
 			    stereotype 	"id"
-			    type       	"Autonumber")))
-		(object Class "Child With Private Operation"
-		    quid       	"428B54640382"
-		    superclasses 	(list inheritance_relationship_list
-			(object Inheritance_Relationship
-			    quid       	"428B547A01F4"
-			    label      	"private abstract operation"
-			    supplier   	"Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Parent With Abstract Operation"
-			    quidu      	"428B542A039D"))
-		    operations 	(list Operations
-			(object Operation "op"
-			    quid       	"428B54870379"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Private"
-			    uid        	0))))
+			    type       	"Autonumber"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"428B5423019E"
@@ -3200,7 +3221,7 @@
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(539, 320)
+			    location   	(561, 970)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3212,7 +3233,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@103
-				location   	(222, 244)
+				location   	(244, 916)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	634
@@ -3220,7 +3241,7 @@
 				label      	"Parent With Abstract Operation")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@103
-				location   	(222, 199)
+				location   	(244, 871)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3233,7 +3254,55 @@
 			    quidu      	"428B542A039D"
 			    compartment 	(object Compartment
 				Parent_View 	@103
-				location   	(222, 300)
+				location   	(244, 972)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	452)
+			    width      	652
+			    height     	220
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Child With Private Operation" @104
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(561, 1656)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@104
+				location   	(356, 1538)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	410
+				justify    	0
+				label      	"Child With Private Operation")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"428B54640382"
+			    compartment 	(object Compartment
+				Parent_View 	@104
+				location   	(356, 1639)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3247,17 +3316,12 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	3
-				max_width  	445)
-			    width      	652
-			    height     	264
+				max_width  	312)
+			    width      	428
+			    height     	258
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Child With Private Operation" @104
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(540, 1018)
+			(object InheritView "private abstract operation 2" @105
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3268,20 +3332,58 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@104
-				location   	(335, 923)
-				fill_color 	13434879
-				nlines     	2
-				max_width  	410
+				Parent_View 	@105
+				location   	(561, 1303)
+				anchor_loc 	1
+				nlines     	1
+				max_width  	492
 				justify    	0
-				label      	"Child With Private Operation")
+				label      	"private abstract operation 2")
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"428B547A01F4"
+			    client     	@104
+			    supplier   	@103
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Grandparent With Abstract Operation" @106
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(561, 296)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@106
+				location   	(219, 220)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	684
+				justify    	0
+				label      	"Grandparent With Abstract Operation")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@106
+				location   	(219, 175)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	684
+				justify    	0
+				label      	"<<abstract>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
-			    quidu      	"428B54640382"
+			    quidu      	"42932AF302D3"
 			    compartment 	(object Compartment
-				Parent_View 	@104
-				location   	(335, 1024)
+				Parent_View 	@106
+				location   	(219, 276)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3294,13 +3396,13 @@
 				icon_style 	"Icon"
 				fill_color 	13434879
 				anchor     	2
-				nlines     	2
-				max_width  	117)
-			    width      	428
-			    height     	212
+				nlines     	3
+				max_width  	545)
+			    width      	702
+			    height     	264
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "private abstract operation" @105
+			(object InheritView "private abstract operation 1" @107
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3311,18 +3413,18 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@105
-				location   	(539, 681)
+				Parent_View 	@107
+				location   	(561, 644)
 				anchor_loc 	1
 				nlines     	1
-				max_width  	450
+				max_width  	492
 				justify    	0
-				label      	"private abstract operation")
+				label      	"private abstract operation 1")
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    quidu      	"428B547A01F4"
-			    client     	@104
-			    supplier   	@103
+			    quidu      	"42932B2402FB"
+			    client     	@103
+			    supplier   	@106
 			    line_style 	0))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -3331,7 +3433,7 @@
 	    documentation 	
 |Regression tests that involve detecting errors at the code generation stage.
 |
-|{ revision = $Revision: a015c59ba586 $ }
+|{ revision = $Revision: 74ac6d3b373f $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -3339,7 +3441,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Bad Code Regressions" @106
+		(object CategoryView "Logical View::Bad Code Regressions" @108
 		    location   	(2721, 228)
 		    font       	(object Font
 			size       	10
@@ -3351,7 +3453,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@106
+			Parent_View 	@108
 			location   	(2551, 144)
 			fill_color 	13434879
 			nlines     	2
@@ -3364,7 +3466,7 @@
 		    quidu      	"3F6738F4023A"
 		    width      	352
 		    height     	180)
-		(object Label @107
+		(object Label @109
 		    location   	(162, 93)
 		    font       	(object Font
 			size       	10
@@ -3377,8 +3479,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1425
-		    label      	"$Id: Bad_Code_Regressions.cat,v a015c59ba586 2005/05/18 19:23:43 simonjwright $")
-		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @108
+		    label      	"$Id: Bad_Code_Regressions.cat,v 74ac6d3b373f 2005/05/24 20:11:14 simonjwright $")
+		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @110
 		    location   	(453, 410)
 		    font       	(object Font
 			size       	10
@@ -3390,7 +3492,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@108
+			Parent_View 	@110
 			location   	(97, 371)
 			fill_color 	13434879
 			nlines     	2
@@ -3398,7 +3500,7 @@
 			justify    	0
 			label      	"The parent and the child have specified an operation with different profiles")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@108
+			Parent_View 	@110
 			location   	(97, 326)
 			fill_color 	13434879
 			anchor     	10
@@ -3412,7 +3514,7 @@
 		    quidu      	"40561368026C"
 		    width      	724
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @109
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @111
 		    location   	(317, 713)
 		    font       	(object Font
 			size       	10
@@ -3424,7 +3526,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@109
+			Parent_View 	@111
 			location   	(103, 674)
 			fill_color 	13434879
 			nlines     	2
@@ -3432,7 +3534,7 @@
 			justify    	0
 			label      	"Various illegalities in a state machine")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@109
+			Parent_View 	@111
 			location   	(103, 629)
 			fill_color 	13434879
 			anchor     	10
@@ -3446,7 +3548,7 @@
 		    quidu      	"405613970115"
 		    width      	440
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @110
+		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @112
 		    location   	(298, 995)
 		    font       	(object Font
 			size       	10
@@ -3458,7 +3560,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@110
+			Parent_View 	@112
 			location   	(108, 956)
 			fill_color 	13434879
 			nlines     	2
@@ -3466,7 +3568,7 @@
 			justify    	0
 			label      	"Detect association with a public class")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@110
+			Parent_View 	@112
 			location   	(108, 911)
 			fill_color 	13434879
 			anchor     	10
@@ -3480,7 +3582,7 @@
 		    quidu      	"405613C402B5"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @111
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @113
 		    location   	(314, 1300)
 		    font       	(object Font
 			size       	10
@@ -3492,7 +3594,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@111
+			Parent_View 	@113
 			location   	(113, 1261)
 			fill_color 	13434879
 			nlines     	2
@@ -3500,7 +3602,7 @@
 			justify    	0
 			label      	"Various illegal finalize operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@111
+			Parent_View 	@113
 			location   	(113, 1216)
 			fill_color 	13434879
 			anchor     	10
@@ -3514,7 +3616,7 @@
 		    quidu      	"40701D62013F"
 		    width      	414
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Don't Generate" @112
+		(object CategoryView "Logical View::Bad Code Regressions::Don't Generate" @114
 		    location   	(2124, 580)
 		    font       	(object Font
 			size       	10
@@ -3526,7 +3628,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@112
+			Parent_View 	@114
 			location   	(1980, 496)
 			fill_color 	13434879
 			nlines     	2
@@ -3539,7 +3641,7 @@
 		    quidu      	"40A295670292"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Protected types with missing features" @113
+		(object CategoryView "Logical View::Bad Code Regressions::Protected types with missing features" @115
 		    location   	(307, 1643)
 		    font       	(object Font
 			size       	10
@@ -3551,7 +3653,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@113
+			Parent_View 	@115
 			location   	(114, 1604)
 			fill_color 	13434879
 			nlines     	2
@@ -3559,7 +3661,7 @@
 			justify    	0
 			label      	"Protected types with missing features")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@113
+			Parent_View 	@115
 			location   	(114, 1559)
 			fill_color 	13434879
 			anchor     	10
@@ -3573,7 +3675,7 @@
 		    quidu      	"4142CD1B0040"
 		    width      	398
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Private operation matches abstract parental operation" @114
+		(object CategoryView "Logical View::Bad Code Regressions::Private operation matches abstract parental operation" @116
 		    location   	(327, 1953)
 		    font       	(object Font
 			size       	10
@@ -3585,7 +3687,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@114
+			Parent_View 	@116
 			location   	(41, 1914)
 			fill_color 	13434879
 			nlines     	2
@@ -3593,7 +3695,7 @@
 			justify    	0
 			label      	"Private operation matches abstract parental operation")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@114
+			Parent_View 	@116
 			location   	(41, 1869)
 			fill_color 	13434879
 			anchor     	10

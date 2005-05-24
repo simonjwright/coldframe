@@ -4,12 +4,12 @@
 <date>
 <year>2005</year>
 <month>5</month>
-<day>18</day>
-<time>20:19</time>
+<day>24</day>
+<time>21:06</time>
 </date>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: a015c59ba586 $ } ]]></documentation>
+{ revision = $Revision: 74ac6d3b373f $ } ]]></documentation>
 <classes>
 <class>
 <name>Parent With Procedure</name>
@@ -681,17 +681,10 @@
 <concurrency>Sequential</concurrency>
 <documentation><![CDATA[  ]]></documentation>
 <attributes>
-<attribute stereotype="id">
-<name>id</name>
-<visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<type>Autonumber</type>
-<initial></initial>
-</attribute>
 </attributes>
 <operations>
 <operation stereotype="abstract">
-<name>op</name>
+<name>parental</name>
 <visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <parameters>
@@ -712,8 +705,43 @@
 </attributes>
 <operations>
 <operation>
-<name>op</name>
+<name>parental</name>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>grandparental</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="abstract">
+<name>Grandparent With Abstract Operation</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<type>Autonumber</type>
+<initial></initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="abstract">
+<name>grandparental</name>
+<visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <parameters>
 </parameters>
@@ -747,7 +775,13 @@
 </role>
 </association>
 <inheritance>
-<name>private abstract operation</name>
+<name>private abstract operation 1</name>
+<documentation><![CDATA[  ]]></documentation>
+<child>Parent With Abstract Operation</child>
+<parent>Grandparent With Abstract Operation</parent>
+</inheritance>
+<inheritance>
+<name>private abstract operation 2</name>
 <documentation><![CDATA[  ]]></documentation>
 <child>Child With Private Operation</child>
 <parent>Parent With Abstract Operation</parent>
