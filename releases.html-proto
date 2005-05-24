@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d5b74b645d57 2005/05/23 20:25:21 simonjwright $ -->
+<!-- $Id: releases.html-proto,v c92e2dba4650 2005/05/24 20:20:23 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -70,10 +70,10 @@ instances, only operations).
 &#171;protected&#187; types; <i>public</i> and <i>protected</i>
 operations are public, <i>private</i> and <i>implementation</i>
 operations are private.
-<br>This includes &#171;entry&#187; operations of &#171;active&#187;
-classes (presumably to allow the <i><a
-href="http://www.adaic.com/standards/95aarm/html/AA-9-5-4.html">requeue</a></i>
-idiom).
+<br>This doesn't include &#171;entry&#187; operations of
+&#171;active&#187; classes, which are always public (but only visible
+in the context of their own class, since the task is declared in the
+private part of the class package).
 
 
 <p>You can constrain a scalar type; for a Height, you could say <i>{
