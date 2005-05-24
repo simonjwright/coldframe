@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 31c4248b8e26 2005/05/18 19:33:06 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v a72e8243a46b 2005/05/24 20:19:45 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -80,11 +80,18 @@
 
         <!-- $operations contains all the nodes to be processed. -->
 
-        <!-- Check for a private operation with the same name as an
-             (inherited) public one. -->
+        <!-- Check for a private (and interesting!) operation with the
+             same name as an (inherited) public one.
+             Clearly there should be some rules here, preferably
+             embodied at some more global place (eg, in
+             normalization). For example, what would the designer have
+             intended by marking a renaming private? -->
         <xsl:for-each
           select="$operations[name
-                  =current()/operation[@visibility='private']/name]">
+                  =current()/operation
+                    [@visibility='private'
+                     and not(@suppressed)
+                     and not(@entry)]/name]">
           <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: "inherited" private operation </xsl:text>
