@@ -14,14 +14,14 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v bb98c1ea4dde 2005/05/23 20:21:28 simonjwright $
+# $Id: cat2raw.py,v 0054a99c8594 2005/05/24 05:46:43 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
-# Uses PLY.
+# Uses PLY (http://savannah.nongnu.org/projects/ply/).
 
 import lex, yacc
-import datetime, sys
+import datetime, re, sys
 
 #-----------------------------------------------------------------------
 # Object model
@@ -56,6 +56,8 @@ class Base:
     def emit_contents(self, to): pass
     def emit_element(self, element, value, to):
 	to.write('<%s>%s</%s>\n' % (element, value, element))
+    def emit_name(self, to):
+	self.emit_element('name', self.object_name, to)
     def emit_nested_attribute_list(self, list, attribute, to):
         to.write('<%s>\n' % list)
 	self.emit_attribute_list(attribute, to)
@@ -71,7 +73,7 @@ class Base:
 			 (self.element(), self.stereotype))
 	    else:
 		to.write('<%s>\n' % self.element())
-	    self.emit_element('name', self.object_name, to)
+	    self.emit_name(to)
 	    self.emit_documentation(to)
 	    self.emit_contents(to)
 	    to.write('</%s>\n' % self.element())
@@ -134,7 +136,7 @@ class Class(Base):
 	# concurrency
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
-	self.emit_nested_attribute_list('events', 'events', to)
+	self.emit_nested_attribute_list('events', 'used_nodes', to)
 	if self.statemachine:
 	    sm = self.statemachine[0]
 	    if sm.stereotype is not None \
@@ -185,7 +187,7 @@ class Domain(Base):
 	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
-	self.emit_element('extractor', 'cat2raw.py $Revision: bb98c1ea4dde $', to)
+	self.emit_element('extractor', 'cat2raw.py $Revision: 0054a99c8594 $', to)
 	to.write('<date>\n')
 	self.emit_element('year', t.year, to)
 	self.emit_element('month', t.month, to)
@@ -283,6 +285,12 @@ class State_Machine(Base):
     def __init__(self):
 	self.init()
     def element(self): return 'statemachine'
+    def emit_name(self, to):
+	if not re.search(r'/', self.object_name):
+	    self.emit_element('name', self.object_name, to)
+    def emit(self, to):
+	if self.stereotype and self.stereotype.lower() == 'generate':
+	    Base.emit(self, to)
     def emit_contents(self, to):
 	pass
 
@@ -294,6 +302,9 @@ class State(Base):
     def __init__(self):
 	self.init()
     def element(self): return 'state'
+    def emit_name(self, to):
+	if not re.search(r'UNNAMED', self.object_name):
+	    Base.emit_name(self, to)
     def emit_contents(self, to):
 	pass
 
@@ -309,6 +320,25 @@ class Transition(Base):
 	pass
 
 recognizedID['State_Transition'] = Transition
+
+
+class Uses_Relationship(Base):
+    # Used for typed events only.
+    def __init__(self):
+	self.init()
+    def element(self): return 'event'
+    def emit_name(self, to):
+	self.emit_element('name', self.label, to)
+    def emit(self, to):
+	st = self.stereotype.lower()
+	if st and re.search(r'event', st, re.I):
+	    Base.emit(self, to)
+    def emit_contents(self, to):
+	self.emit_element('type',
+			  object_name(self.supplier),
+			  to)
+
+recognizedID['Uses_Relationship'] = Uses_Relationship
 
 
 # Objects we don't care about
@@ -342,7 +372,6 @@ for o in (
     'State_Diagram',
     'TransView',
     'UsesView',
-    'Uses_Relationship',
     'Visibility_Relationship',
     ):
     recognizedID[o] = Base
