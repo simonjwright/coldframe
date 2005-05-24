@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 0054a99c8594 2005/05/24 05:46:43 simonjwright $
+# $Id: cat2raw.py,v 57c35ed2e6bf 2005/05/24 06:09:16 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -58,6 +58,11 @@ class Base:
 	to.write('<%s>%s</%s>\n' % (element, value, element))
     def emit_name(self, to):
 	self.emit_element('name', self.object_name, to)
+    def emit_visibility(self, to):
+	if self.opExportControl:
+	    self.emit_element('visibility', self.opExportControl, to)
+	else:
+	    self.emit_element('visibility', 'PublicAccess', to)
     def emit_nested_attribute_list(self, list, attribute, to):
         to.write('<%s>\n' % list)
 	self.emit_attribute_list(attribute, to)
@@ -128,7 +133,7 @@ class Class(Base):
     def element(self): return 'class'
     def name(self): return self.qualifiers[0]
     def emit_contents(self, to):
-	self.emit_element('visibility', self.opExportControl, to)
+	self.emit_visibility(to)
 	self.emit_kind(to)
 	# abstract
 	if self.cardinality:
@@ -187,7 +192,7 @@ class Domain(Base):
 	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
-	self.emit_element('extractor', 'cat2raw.py $Revision: 0054a99c8594 $', to)
+	self.emit_element('extractor', 'cat2raw.py $Revision: 57c35ed2e6bf $', to)
 	to.write('<date>\n')
 	self.emit_element('year', t.year, to)
 	self.emit_element('month', t.month, to)
@@ -246,7 +251,7 @@ class Operation(Base):
     def element(self): return 'operation'
     def emit_contents(self, to):
 	# abstract
-	self.emit_element('visibility', self.opExportControl, to)
+	self.emit_visibility(to)
 	self.emit_nested_attribute_list('parameters', 'parameters', to)
 	if self.result:
 	    self.emit_element('return', self.result, to)
