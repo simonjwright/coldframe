@@ -89,7 +89,6 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    --version cf-DATE \
 	    <$< >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm
@@ -100,7 +99,6 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@echo generating $@ ...
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
-	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
 	  verbose=$(VERBOSE) \

@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 842588522adb 2005/05/16 12:19:02 simonjwright $
+# $Id: normalize-rose.tcl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3433,7 +3433,6 @@ proc Error {str} {
 #   --domain-name name
 #   --stack-dump
 #   --verbose
-#   --version cf-20010607
 
 set argState expectingFlag
 foreach arg $argv {
@@ -3444,7 +3443,6 @@ foreach arg $argv {
 		--domain-name {set argState expectingDomainName}
                 --stack-dump {set stackDump 1}
                 --verbose {set verbose 1}
-                --version {set argState expectingVersion}
                 default   {error "unknown flag $arg"}
             }
         }
@@ -3456,12 +3454,10 @@ foreach arg $argv {
             set domainNameOverride $arg
             set argState expectingFlag
         }
-        expectingVersion {
-            set coldFrameVersion $arg
-            set argState expectingFlag
-        }
     }
 }
+
+set coldFrameVersion "cf-DATE"
 
 if [info exists domainNameOverride] {
     set domainNameOverride [normalize $domainNameOverride]

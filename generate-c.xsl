@@ -1,5 +1,5 @@
 <!-- XSL stylesheet to generate C code. -->
-<!-- $Id: generate-c.xsl,v 2a474d26c7e0 2003/07/10 20:26:59 simon $ -->
+<!-- $Id: generate-c.xsl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $ -->
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -15,7 +15,7 @@
   <!-- +++++ Command line parameters. +++++ -->
 
   <!-- For identification info. -->
-  <xsl:param name="coldframe-version"/>
+  <xsl:param name="coldframe-version" select="cf-DATE"/>
 
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'  '"/>

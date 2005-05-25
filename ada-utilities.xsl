@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 59db5d7aafe5 2005/01/29 20:01:37 simon $ -->
+<!-- $Id: ada-utilities.xsl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -33,11 +33,6 @@
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
 >
-
-  <!-- +++++ Command line parameters. +++++ -->
-
-  <!-- For identification info. -->
-  <xsl:param name="coldframe-version" select="''"/>
 
   <!-- Generate commentary. -->
   <xsl:template name="ut:commentary">
@@ -199,9 +194,7 @@
     <xsl:text>--  Normalizer: </xsl:text>
     <xsl:value-of select="/domain/normalizer"/>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>--  Generator: </xsl:text>
-    <xsl:value-of select="$coldframe-version"/>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:text>--  Generator: cf-DATE&#10;</xsl:text>
   </xsl:template>
 
 

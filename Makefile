@@ -96,7 +96,6 @@ OTHER_SCRIPTS = create-build-directories \
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    --version cf-DATE \
 	    <$< >$@ || (rm -f $@; exit 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
@@ -107,7 +106,6 @@ OTHER_SCRIPTS = create-build-directories \
 	@echo generating $@ ...
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
-	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
 	  verbose=$(VERBOSE) \
@@ -121,7 +119,6 @@ OTHER_SCRIPTS = create-build-directories \
 	@echo generating $@ ...
 	@$(SAXON) $< $(C_CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
-	  coldframe-version=cf-DATE \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  verbose=$(VERBOSE) \
 	  >$@ \
@@ -317,7 +314,7 @@ TOOL_SRC = generated_lines.adb \
 
 PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
-  normalize-rose.tcl \
+  $(NORMALIZE_ROSE_SCRIPT) \
   cf-banner.el \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS) \
@@ -640,11 +637,20 @@ dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	cd dist && zip download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
+# Files that need DATE substituted
+DATED_FILES = \
+ normalize-rose.tcl \
+ ada-utilities.xsl \
+ generate-c.xsl
+
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
 $(DEMO) $(TEST) Makefile-test force
 	-rm -rf $@
 	mkdir $@
 	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
+	for f in $(DATED_FILES); do \
+	    (sed -e "s;DATE;$(DATE);g" <$$f >$@/$$f) \
+	done
 	mkdir $@/lib
 	cp -p $(SUPPORT) $@/lib
 	mkdir $@/project

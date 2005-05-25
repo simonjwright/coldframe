@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 99961276707a 2005/04/30 07:33:07 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -34,6 +34,11 @@
 
   <xsl:output method="html"/>
 
+
+  <!-- +++++ Command line parameters. +++++ -->
+
+  <!-- For identification info. -->
+  <xsl:param name="coldframe-version" select="cf-DATE"/>
 
   <!-- Controls how attribute accessor functions are generated. -->
   <xsl:param name="generate-accessors"/>
