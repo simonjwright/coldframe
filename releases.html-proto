@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v c92e2dba4650 2005/05/24 20:20:23 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 92a55e77b120 2005/05/25 05:06:48 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -25,9 +25,10 @@ href="http://sourceforge.net/project/showfiles.php?group_id=135558">here</a>.
 
 <p>Archives are available in <tt>.zip</tt> or <tt>.tgz</tt>
 (<tt>.tar.gz</tt>) form. The file name encodes the date of the
-release: <tt>cf-20010130.zip</tt> was the zipped release of 30 January
-2001. The corresponding <tt>cf-html-20010130.zip</tt> contained the
-complete documentation.
+release: <tt>cf-<font color="blue">20010130</font>.zip</tt> was the
+zipped release of 30 January 2001. The
+corresponding <tt>cf-html-<font color="blue">20010130</font>.zip</tt>
+contains the complete documentation.
 
 <p>You'll sometimes see a suffix on the date, for example
 <tt>20050503cvs</tt>. The meanings are
@@ -98,7 +99,7 @@ values, bounds).
 
 <p>You can specify an initialization operation to be called before any
 &#171;init&#187; operations during domain initialization, using 
-<i>{ init = package.operation }</i> on the domain.
+<i>{ init = ada-package-name.operation }</i> on the domain.
 
 
 <p>You can declare unsigned (modular) types.
