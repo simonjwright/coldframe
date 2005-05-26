@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 57c35ed2e6bf 2005/05/24 06:09:16 simonjwright $
+# $Id: cat2raw.py,v d9bb0bf4a4bd 2005/05/26 05:43:32 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -28,6 +28,7 @@ import datetime, re, sys
 #-----------------------------------------------------------------------
 
 class Base:
+    '''The base class for all Objects retrieved from the Petal file.'''
     def __init__(self):
 	self.qualifiers = ()
 	self.attributes = {}
@@ -45,51 +46,92 @@ class Base:
 	else:
 	    return None
     def init(self):
+	'''Equivalent of super.__init__.'''
 	if self.__class__ != Base: Base.__init__(self)
-    def add_qualifiers(self, list): self.qualifiers = list
-    def add_attributes(self, dict): self.attributes = dict
-    def element(self): return ''
+    def add_qualifiers(self, list):
+	'''The qualifiers appear on the head line of the Petal object:
+	(object kind q1 q2 q3
+	Usually the first one is the object's name.'''
+	self.qualifiers = list
+    def add_attributes(self, dict):
+	self.attributes = dict
+    def element_tag(self):
+	'''The string that appears in the XML element: <tag/>.'''
+	return ''
+    def emit_element_start(self, to):
+	'''Outputs <element attr="value"> or just <element>, as required.
+	The only attr supported here is stereotype.'''
+	if self.stereotype:
+	    to.write('<%s stereotype="%s">\n' %
+		     (self.element_tag(), self.stereotype))
+	else:
+	    to.write('<%s>\n' % self.element_tag())
+    def emit_element_end(self, to):
+	'''Outputs the trailing </element>.'''
+	to.write('</%s>\n' % self.element_tag())
     def emit_documentation(self, to):
 	if 'documentation' in self.attributes:
 	    to.write('<documentation><![CDATA[ %s ]]></documentation>\n' %
 		     self.attributes['documentation'])
-    def emit_contents(self, to): pass
-    def emit_element(self, element, value, to):
+    def emit_contents(self, to):
+	'''Outputs the contents of the XML element (excluding <name/> and
+	<documentation/>).'''
+	pass
+    def emit_single_element(self, element, value, to):
+	'''Outputs a single XML element.'''
 	to.write('<%s>%s</%s>\n' % (element, value, element))
     def emit_name(self, to):
-	self.emit_element('name', self.object_name, to)
+	'''Outputs the <name/> of the XML element.'''
+	self.emit_single_element('name', self.object_name, to)
     def emit_visibility(self, to):
+	'''Outputs the <visibility/> of the XMLelement.'''
 	if self.opExportControl:
-	    self.emit_element('visibility', self.opExportControl, to)
+	    self.emit_single_element('visibility', self.opExportControl, to)
 	else:
-	    self.emit_element('visibility', 'PublicAccess', to)
+	    self.emit_single_element('visibility', 'PublicAccess', to)
     def emit_nested_attribute_list(self, list, attribute, to):
+	'''Outputs all the contained <attribute/> XML elements, contained
+	in a <list/> element.'''
         to.write('<%s>\n' % list)
 	self.emit_attribute_list(attribute, to)
 	to.write('</%s>\n' % list)
     def emit_attribute_list(self, attribute, to):
+	'''Outputs all the <attribute/> XMLelements.'''
 	if attribute in self.attributes:
 	    for i in self.attributes[attribute]:
 		i.emit(to)
     def emit(self, to=sys.stdout):
-	if len(self.element()) > 0:
-	    if self.stereotype:
-		to.write('<%s stereotype="%s">\n' %
-			 (self.element(), self.stereotype))
-	    else:
-		to.write('<%s>\n' % self.element())
+	'''Outputs the whole XML element.'''
+	if len(self.element_tag()) > 0:
+	    self.emit_element_start(to)
 	    self.emit_name(to)
 	    self.emit_documentation(to)
 	    self.emit_contents(to)
-	    to.write('</%s>\n' % self.element())
+	    self.emit_element_end(to)
 
 recognizedID = {}
 
 
-class Action_Time(Base):
+class Action(Base):
+    '''Part of State. The only Actions we care about are entry actions.''' 
     def __init__(self):
 	self.init()
-    # Emitted as part of State.
+    def element_tag(self): return 'entryaction'
+    def is_entry_action(self):
+	#return self.ActionTime.when == 'Entry'
+	return 1
+    def emit(self, to):
+	to.write('<!-- HELLO -->\n')
+	if self.is_entry_action(): Base.emit(self, to)
+
+recognizedID['action'] = Action
+
+
+class Action_Time(Base):
+    '''Part of State. Indicates when the action occurs; the only ones we
+    care about are entry actions.''' 
+    def __init__(self):
+	self.init()
 
 recognizedID['ActionTime'] = Action_Time
 
@@ -97,7 +139,7 @@ recognizedID['ActionTime'] = Action_Time
 class Association(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'association'
+    def element_tag(self): return 'association'
     def emit_contents(self, to):
 	# errk, don't like this 'end' stuff!
 	end = 0
@@ -106,9 +148,9 @@ class Association(Base):
 	    r.end = end
 	    r.emit(to)
 	if self.AssociationClass:
-	    self.emit_element('associative',
-			      object_name(self.AssociationClass),
-			      to)
+	    self.emit_single_element('associative',
+				     object_name(self.AssociationClass),
+				     to)
 
 recognizedID['Association'] = Association
 
@@ -116,13 +158,13 @@ recognizedID['Association'] = Association
 class Attribute(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'attribute'
+    def element_tag(self): return 'attribute'
     def emit_contents(self, to):
 	# visibility???
 	# static
 	to.write('<type>%s</type>\n' % self.attributes['type'])
 	if self.initv:
-	    self.emit_element('initial', self.initv, to)
+	    self.emit_single_element('initial', self.initv, to)
 
 recognizedID['ClassAttribute'] = Attribute
 
@@ -130,14 +172,14 @@ recognizedID['ClassAttribute'] = Attribute
 class Class(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'class'
+    def element_tag(self): return 'class'
     def name(self): return self.qualifiers[0]
     def emit_contents(self, to):
 	self.emit_visibility(to)
 	self.emit_kind(to)
 	# abstract
 	if self.cardinality:
-	    self.emit_element('cardinality', self.cardinality, to)
+	    self.emit_single_element('cardinality', self.cardinality, to)
 	# concurrency
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
@@ -152,16 +194,16 @@ class Class(Base):
 	    pass
     def emit_kind(self, to):
 	# Overridden in children
-	self.emit_element('kind', 'NormalClass', to)
+	self.emit_single_element('kind', 'NormalClass', to)
     def emit_inheritance(self, to):
 	for p in self.superclasses:
 	    to.write('<inheritance>\n')
-	    p.emit_element('name', p.label, to)
+	    p.emit_single_element('name', p.label, to)
 	    p.emit_documentation(to)
-	    p.emit_element('parent',
-			   object_name(p.supplier),
-			   to)
-	    self.emit_element('child', self.object_name, to)
+	    p.emit_single_element('parent',
+				  object_name(p.supplier),
+				  to)
+	    self.emit_single_element('child', self.object_name, to)
 	    to.write('</inheritance>\n')
 
 recognizedID['Class'] = Class
@@ -171,7 +213,7 @@ class Class_Utility(Class):
     def __init__(self):
 	self.init()
     def emit_kind(self, to):
-	self.emit_element('kind', 'Utility', to)
+	self.emit_single_element('kind', 'Utility', to)
 
 recognizedID['Class_Utility'] = Class_Utility
 
@@ -179,7 +221,7 @@ recognizedID['Class_Utility'] = Class_Utility
 class Domain(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'domain'
+    def element_tag(self): return 'domain'
     def emit_recursive(self, op, to):
 	op(self, to)
 	for c in filter(lambda o:
@@ -192,12 +234,14 @@ class Domain(Base):
 	    sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
-	self.emit_element('extractor', 'cat2raw.py $Revision: 57c35ed2e6bf $', to)
+	self.emit_single_element('extractor',
+				 'cat2raw.py $Revision: d9bb0bf4a4bd $',
+				 to)
 	to.write('<date>\n')
-	self.emit_element('year', t.year, to)
-	self.emit_element('month', t.month, to)
-	self.emit_element('day', t.day, to)
-	self.emit_element('time', '%02d:%02d' % (t.hour, t.minute), to)
+	self.emit_single_element('year', t.year, to)
+	self.emit_single_element('month', t.month, to)
+	self.emit_single_element('day', t.day, to)
+	self.emit_single_element('time', '%02d:%02d' % (t.hour, t.minute), to)
 	to.write('</date>\n')
 	to.write('<classes>\n')
 	self.emit_recursive(self.emit_classes, to)
@@ -248,13 +292,13 @@ recognizedID['Inheritance_Relationship'] = Inheritance
 class Operation(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'operation'
+    def element_tag(self): return 'operation'
     def emit_contents(self, to):
 	# abstract
 	self.emit_visibility(to)
 	self.emit_nested_attribute_list('parameters', 'parameters', to)
 	if self.result:
-	    self.emit_element('return', self.result, to)
+	    self.emit_single_element('return', self.result, to)
 
 recognizedID['Operation'] = Operation
 
@@ -262,11 +306,11 @@ recognizedID['Operation'] = Operation
 class Parameter(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'parameter'
+    def element_tag(self): return 'parameter'
     def emit_contents(self, to):
 	to.write('<type>%s</type>\n' % self.type)
 	if self.initv:
-	    self.emit_element('initial', self.initv, to)
+	    self.emit_single_element('initial', self.initv, to)
 
 recognizedID['Parameter'] = Parameter
 
@@ -274,13 +318,13 @@ recognizedID['Parameter'] = Parameter
 class Role(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'role'
+    def element_tag(self): return 'role'
     def emit_contents(self, to):
-	self.emit_element('end', self.end, to)
-	self.emit_element('classname',
-			  object_name(self.supplier),
-			  to)
-	self.emit_element('cardinality', self.client_cardinality, to)
+	self.emit_single_element('end', self.end, to)
+	self.emit_single_element('classname',
+				 object_name(self.supplier),
+				 to)
+	self.emit_single_element('cardinality', self.client_cardinality, to)
 
 recognizedID['Role'] = Role
 
@@ -289,15 +333,20 @@ recognizedID['Role'] = Role
 class State_Machine(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'statemachine'
+    def element_tag(self): return 'statemachine'
     def emit_name(self, to):
 	if not re.search(r'/', self.object_name):
-	    self.emit_element('name', self.object_name, to)
+	    self.emit_single_element('name', self.object_name, to)
     def emit(self, to):
 	if self.stereotype and self.stereotype.lower() == 'generate':
 	    Base.emit(self, to)
     def emit_contents(self, to):
-	pass
+	self.emit_nested_attribute_list('states', 'states', to)
+	self.emit_transitions(to)
+    def emit_transitions(self, to):
+	to.write('<transitions>\n')
+	to.write('<!-- transitions -->\n')
+	to.write('</transitions>\n')
 
 recognizedID['State_Machine'] = State_Machine
 
@@ -306,11 +355,19 @@ recognizedID['State_Machine'] = State_Machine
 class State(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'state'
+    def element_tag(self): return 'state'
+    def emit_element_start(self, to):
+	if self.type == 'StartState':
+	    to.write('<state initial="yes">\n')
+	elif self.type == 'EndState':
+	    to.write('<state final="yes">\n')
+	else:
+	    to.write('<state>\n')
     def emit_name(self, to):
 	if not re.search(r'UNNAMED', self.object_name):
 	    Base.emit_name(self, to)
     def emit_contents(self, to):
+	self.emit_nested_attribute_list('entryactions', 'actions', to)
 	pass
 
 recognizedID['State'] = State
@@ -320,7 +377,7 @@ recognizedID['State'] = State
 class Transition(Base):
     def __init__(self):
 	self.init()
-    def element(self): return 'transition'
+    def element_tag(self): return 'transition'
     def emit_contents(self, to):
 	pass
 
@@ -331,17 +388,17 @@ class Uses_Relationship(Base):
     # Used for typed events only.
     def __init__(self):
 	self.init()
-    def element(self): return 'event'
+    def element_tag(self): return 'event'
     def emit_name(self, to):
-	self.emit_element('name', self.label, to)
+	self.emit_single_element('name', self.label, to)
     def emit(self, to):
 	st = self.stereotype.lower()
 	if st and re.search(r'event', st, re.I):
 	    Base.emit(self, to)
     def emit_contents(self, to):
-	self.emit_element('type',
-			  object_name(self.supplier),
-			  to)
+	self.emit_single_element('type',
+				 object_name(self.supplier),
+				 to)
 
 recognizedID['Uses_Relationship'] = Uses_Relationship
 
