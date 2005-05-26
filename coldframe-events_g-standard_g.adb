@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 330d8901b975 $
---  $Date: 2005/01/20 05:20:08 $
---  $Author: simon $
+--  $Revision: 8903b9eb9e52 $
+--  $Date: 2005/05/26 04:06:34 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
@@ -198,10 +198,10 @@ package body ColdFrame.Events_G.Standard_G is
 
       else
 
-            --  Start processing events set or posted to run after a
-            --  delay (rather than at a time) immediately
-            Held_Events.Start_Processing_After_Events
-              (The_Queue.The_Held_Events);
+         --  Start processing events set or posted to run after a
+         --  delay (rather than at a time) immediately
+         Held_Events.Start_Processing_After_Events
+           (The_Queue.The_Held_Events);
 
       end if;
 
