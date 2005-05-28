@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 43b4f8d573b3 2005/04/23 06:25:32 simonjwright $
+--  $Id: regressions-suite.adb,v a539adaea7aa 2005/05/28 07:02:11 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -1094,6 +1094,104 @@ package body Regressions.Suite is
    end Task_Deletes_Itself;
 
 
+   generic
+      type Float_Type is digits <>;
+      Test_Name : String;
+   package Numeric_Overflow is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Numeric_Overflow;
+
+   package body Numeric_Overflow is
+
+      function Divide (Top, Bottom : Float_Type) return Float_Type;
+      function Divide (Top, Bottom : Float_Type) return Float_Type is
+      begin
+         return Top / Bottom;
+      end Divide;
+
+      procedure Positive_Infinity (C : in out Test_Case'Class);
+      procedure Positive_Infinity (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Result : Float_Type;
+         pragma Warnings (Off, Result);
+      begin
+         Result := Divide (+1.0, 0.0);
+         Assert (False, "should have raised an exception");
+      exception
+         when Constraint_Error => null;
+      end Positive_Infinity;
+
+      procedure Negative_Infinity (C : in out Test_Case'Class);
+      procedure Negative_Infinity (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Result : Float_Type;
+         pragma Warnings (Off, Result);
+      begin
+         Result := Divide (-1.0, 0.0);
+         Assert (False, "should have raised an exception");
+      exception
+         when Constraint_Error => null;
+      end Negative_Infinity;
+
+      procedure Not_A_Number (C : in out Test_Case'Class);
+      procedure Not_A_Number (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+         Result : Float_Type;
+         pragma Warnings (Off, Result);
+      begin
+         Result := Divide (0.0, 0.0);
+         Assert (False, "should have raised an exception");
+      exception
+         when Constraint_Error => null;
+      end Not_A_Number;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'(Test_Name & ".Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Positive_Infinity'Unrestricted_Access,
+            "positive infinity");
+         Register_Routine
+           (C,
+            Negative_Infinity'Unrestricted_Access,
+            "negative infinity");
+         Register_Routine
+           (C,
+            Not_A_Number'Unrestricted_Access,
+            "not a number");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Numeric_Overflow;
+   package Short_Numeric_Overflow
+   is new Numeric_Overflow (Real_Without_Bounds, "Short_Numeric_Overflow");
+   package Long_Numeric_Overflow
+   is new Numeric_Overflow (Furlongs, "Long_Numeric_Overflow");
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -1113,6 +1211,10 @@ package body Regressions.Suite is
                                   new Protected_Types_And_Access.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Task_Deletes_Itself.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Short_Numeric_Overflow.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Long_Numeric_Overflow.Case_1);
       return Result;
    end Suite;
 
