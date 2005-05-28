@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 92a55e77b120 2005/05/25 05:06:48 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 897a4f78b98f 2005/05/28 05:43:56 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -142,7 +142,8 @@ the new <tt>Trace</tt> versions instead
 (<tt>ColdFrame.Project.Events.Standard.Trace</tt> and
 <tt>ColdFrame.Project.Events.Standard.Test_Trace</tt>).
 <br>As an added incentive to change, Trace now includes the time since
-program start with each log message.
+program start with each log message and reports the fully-qualified
+state name..
 
 
 <p><b>Callbacks</b>
