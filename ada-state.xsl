@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v a752150dffcf 2005/05/28 05:42:48 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 27a3c7ee2929 2005/05/28 17:28:15 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -751,7 +751,13 @@
 
     <xsl:choose>
 
-      <xsl:when test="$class[operation[name=$action]]">
+      <xsl:when test="$class/operation
+                      [name=$action 
+                      and not(@class 
+                              or @entry 
+                              or @renames 
+                              or @access 
+                              or @suppressed)]">
         <!-- XXX should perhaps check count? but
              (a) might not be at the same level,
              (b) multiple parents with the same operation is a bug anyway. -->
