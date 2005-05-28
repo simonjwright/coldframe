@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v d9bb0bf4a4bd 2005/05/26 05:43:32 simonjwright $
+# $Id: cat2raw.py,v ed03aa6ace00 2005/05/28 05:17:11 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -40,7 +40,10 @@ class Base:
 	callable, but that's what happens!
 	To get the object name, use 'object_name'.'''
 	if n == 'object_name':
-	    return self.qualifiers[0]
+            if len(self.qualifiers):
+	        return self.qualifiers[0]
+            else:
+                return None;
 	elif n in self.attributes:
 	    return self.attributes[n]
 	else:
@@ -118,10 +121,8 @@ class Action(Base):
 	self.init()
     def element_tag(self): return 'entryaction'
     def is_entry_action(self):
-	#return self.ActionTime.when == 'Entry'
-	return 1
+	return (self.ActionTime.when == 'Entry')
     def emit(self, to):
-	to.write('<!-- HELLO -->\n')
 	if self.is_entry_action(): Base.emit(self, to)
 
 recognizedID['action'] = Action
@@ -235,7 +236,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: d9bb0bf4a4bd $',
+				 'cat2raw.py $Revision: ed03aa6ace00 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -345,8 +346,22 @@ class State_Machine(Base):
 	self.emit_transitions(to)
     def emit_transitions(self, to):
 	to.write('<transitions>\n')
-	to.write('<!-- transitions -->\n')
+	transitions = []
+        for s in self.states:
+            if s.transitions:
+                for t in s.transitions:
+                    # A bit ooky here; t needs to know the
+                    # statemachine and the source state.
+                    t.statemachine = self
+                    t.source = s
+                    t.emit(to)
 	to.write('</transitions>\n')
+    def state_named(self, n):
+        '''Returns the state named 'n'.'''
+        for s in self.states:
+            if s.object_name == n:
+                return s
+        return None
 
 recognizedID['State_Machine'] = State_Machine
 
@@ -356,6 +371,16 @@ class State(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'state'
+    def name(self):
+        if not self.object_name or re.search(r'UNNAMED', self.object_name):
+            if self.type == 'StartState':
+                return 'initial'
+            elif  self.type == 'EndState':
+                return 'final'
+            else:
+                return 'unnamed'
+        else:
+            return self.object_name
     def emit_element_start(self, to):
 	if self.type == 'StartState':
 	    to.write('<state initial="yes">\n')
@@ -364,8 +389,9 @@ class State(Base):
 	else:
 	    to.write('<state>\n')
     def emit_name(self, to):
-	if not re.search(r'UNNAMED', self.object_name):
-	    Base.emit_name(self, to)
+        n = self.name()
+        if n != 'anonymous':
+	    self.emit_single_element('name', n, to)
     def emit_contents(self, to):
 	self.emit_nested_attribute_list('entryactions', 'actions', to)
 	pass
@@ -378,8 +404,23 @@ class Transition(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'transition'
+    def emit_name(self, to):
+        '''Transitions dont have names.'''
+        pass
     def emit_contents(self, to):
-	pass
+	self.emit_single_element('source', self.source.name(), to)
+        self.emit_single_element\
+            ('target',
+             self.statemachine.state_named(self.supplier).name(),
+             to)
+        if self.Event:
+            to.write('<event>\n')
+            self.emit_single_element('name', self.Event.object_name, to)
+            to.write('</event>\n')
+        if self.action:
+            self.emit_single_element('transitionaction',
+                                     self.action.object_name,
+                                     to)
 
 recognizedID['State_Transition'] = Transition
 
