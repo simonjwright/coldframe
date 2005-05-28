@@ -365,7 +365,6 @@ coldframe-hash-strings-standard.ads \
 coldframe-hash-strings-test.adb \
 coldframe-hash-strings-unbounded.adb \
 coldframe-hash-strings-unbounded.ads \
-coldframe-hash-strings.adb \
 coldframe-hash-strings.ads \
 coldframe-hash.ads \
 coldframe-events_g-held_event_queue_signature.ads \
