@@ -1,6 +1,6 @@
 '-------------------------------------------------------------------------------
 'ddf.ebs
-'$Id: ddf.ebs,v a32c3e637ead 2005/05/14 12:27:34 simonjwright $
+'$Id: ddf.ebs,v ef134634039c 2005/05/28 05:18:37 simonjwright $
 '
 '	This script exports data from a Rose model to an XML file for further 
 '	processing by ColdFrame's normalize-rose.tcl.
@@ -369,7 +369,7 @@ Sub DumpDomainData (domain As Category, dirName As String)
 	End If
 	'the following line is edited by the Makefile when generating
 	'extractor.ebs from ddf.ebs
-	Print #1, "<extractor>cf-DATE</extractor>"
+	Print #1, "<extractor>extractor.ebs: cf-DATE</extractor>"
 	'domain name
 	Print #1, "<name>" + domain.Name + "</name>"
 	'date, time
