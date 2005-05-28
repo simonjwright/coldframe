@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 316735f9b11c 2005/05/26 20:50:23 simonjwright $ -->
+<!-- $Id: bugs.html,v 61f92b1aa731 2005/05/28 17:29:05 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -198,6 +198,16 @@ in the model, or imported into a different model.</i>
 code in the <tt><i>Domain</i>.Serializable</tt> package (it's only
 needed in the <i>analyzing</i> executable).
 
+<!-- next: 0314 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>28.v.05</h3>
+
+<dl>
+
 <dt>0312 (raised 26.v.05)
 
 <dd>With GNAT there are no hardware floating-point exceptions; you
@@ -205,11 +215,12 @@ just get <i>Inf</i>s or <i>NaN</i>s on overflow. However, you do
 get <tt>Constraint_Error</tt> on assigning to a constrained subtype;
 it would be a Good Thing if this feature could be used.
 
-<!-- next: 0313 -->
+<dt>0313 (raised 27.v.05)
+
+<dd>A parental <i>class</i> operation masks a failure to declare a
+state action procedure.
 
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>25.v.05</h3>
 
