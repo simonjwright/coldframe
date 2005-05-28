@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v bf43d3656e9c 2005/05/13 04:47:29 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 5507e484d52e 2005/05/28 05:51:37 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -560,38 +560,46 @@
         <xsl:value-of select="name"/>
         <xsl:text> is </xsl:text>
         <xsl:value-of select="$base"/>
-        <xsl:if test="real/lower or real/upper">
-          <xsl:text>&#10;</xsl:text>
-          <xsl:value-of select="$IC"/>
-          <xsl:text>range </xsl:text>
-          <xsl:choose>
-            <xsl:when test="real/lower">
-              <xsl:value-of select="real/lower"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>
-                <xsl:text>Warning: lower bound not specified for </xsl:text>
-                <xsl:value-of select="name"/>
-              </xsl:message>
-              <xsl:value-of select="$base"/>
-              <xsl:text>'First</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:text> .. </xsl:text>
-          <xsl:choose>
-            <xsl:when test="real/upper">
-              <xsl:value-of select="real/upper"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>
-                <xsl:text>Warning: upper bound not specified for </xsl:text>
-                <xsl:value-of select="name"/>
-              </xsl:message>
-              <xsl:value-of select="$base"/>
-              <xsl:text>'Last</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:if>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>range </xsl:text>
+        <xsl:choose>
+          <xsl:when test="real/lower or real/upper">
+            <xsl:choose>
+              <xsl:when test="real/lower">
+                <xsl:value-of select="real/lower"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message>
+                  <xsl:text>Warning: lower bound not specified for </xsl:text>
+                  <xsl:value-of select="name"/>
+                </xsl:message>
+                <xsl:value-of select="$base"/>
+                <xsl:text>'First</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text> .. </xsl:text>
+            <xsl:choose>
+              <xsl:when test="real/upper">
+                <xsl:value-of select="real/upper"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message>
+                  <xsl:text>Warning: upper bound not specified for </xsl:text>
+                  <xsl:value-of select="name"/>
+                </xsl:message>
+                <xsl:value-of select="$base"/>
+                <xsl:text>'Last</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$base"/>
+            <xsl:text>'First .. </xsl:text>
+            <xsl:value-of select="$base"/>
+            <xsl:text>'Last</xsl:text>           
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:text>;&#10;</xsl:text>
 
       </xsl:when>
