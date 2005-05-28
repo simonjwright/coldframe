@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 07a9454620a7 2004/12/08 06:20:19 simon $ -->
+<!-- $Id: ada-state.xsl,v a752150dffcf 2005/05/28 05:42:48 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -196,7 +196,9 @@
   </xsl:template>
 
 
-  <!-- Called at domain/class to generate the State_Image operation body. -->
+  <!-- Called at domain/class to generate the State_Image operation
+       body.  It's upper-cases because it looks better in log files
+       (event names are tag-derived and hence upper cased). -->
   <xsl:template name="st:state-image-body">
 
     <xsl:value-of select="$I"/>
@@ -204,7 +206,15 @@
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
     <xsl:value-of select="$II"/>
-    <xsl:text>return This.State_Machine_State'Img;&#10;</xsl:text>
+    <xsl:text>return "</xsl:text>
+    <xsl:value-of select="translate(../name,
+                          'abcdefghijklmnopqrstuvwxyz',
+                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="translate(name,
+                          'abcdefghijklmnopqrstuvwxyz',
+                          'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+    <xsl:text>." &amp; This.State_Machine_State'Img;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>end State_Image;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
