@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v ed03aa6ace00 2005/05/28 05:17:11 simonjwright $
+# $Id: cat2raw.py,v 4a4ff8607db8 2005/05/29 19:58:55 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -236,7 +236,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: ed03aa6ace00 $',
+				 'cat2raw.py $Revision: 4a4ff8607db8 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -415,12 +415,14 @@ class Transition(Base):
              to)
         if self.Event:
             to.write('<event>\n')
-            self.emit_single_element('name', self.Event.object_name, to)
+            self.emit_single_element('name', self.Event[0].object_name, to)
             to.write('</event>\n')
         if self.action:
-            self.emit_single_element('transitionaction',
-                                     self.action.object_name,
+	    to.write('<transitionaction>\n')
+            self.emit_single_element('name',
+                                     self.action[0].object_name,
                                      to)
+	    to.write('</transitionaction>\n')
 
 recognizedID['State_Transition'] = Transition
 
@@ -545,12 +547,12 @@ def p_attributes(p):
     if len(p) == 3:
 	p[0] = p[2]
 	n = p[1][0]
-	if n == 'statemachine':
+	if n == 'statemachine' or n == 'Event' or n == 'action':
 	    # There is something very odd here; mjj thought it might
 	    # be a copy/deepcopy problem, but that seems to end up
 	    # trying to deepcopy None -- just like the problem without
-	    # the deepcopy! Converting this particular case to a tuple
-	    # seems to work. Could maybe be generalised?
+	    # the deepcopy! Converting these particular cases to a
+	    # tuple seems to work. Could maybe be generalised?
 	    p[0][n] = (p[1][1],)
 	else:
 	    p[0][n] = p[1][1]
