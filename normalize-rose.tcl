@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $
+# $Id: normalize-rose.tcl,v 08dcfc34ee14 2005/05/30 16:26:58 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2100,7 +2100,7 @@ itcl::class Role {
     # True if the class at this end provides the referential attributes
     # that formalize the relation. Normally we can work this out from the
     # multiplicity and conditionality, but for 1:1, 1c:1c, 1-(1:1) and
-    # 1-(1c:1c) the analyst has to specify using the [[source]] annotation.
+    # 1-(1c:1c) the analyst has to specify using the {source} tag.
     variable sourceEnd 0
 
     method -cardinality {c} {
@@ -2463,13 +2463,16 @@ itcl::class Transition {
     method -target {t} {set target $t}
 
     method -evaluate {domain} {
-        # tell the statemachine about the event unless this is an unguarded
-        # transition (XXX what's the word for that?)
-        if {[string length [$event -getName]] > 0} {
-            $event -evaluate $domain
-            set mc [[$this -getOwner] -getOwner]
-            $mc -addEvent $event
-        }
+        # tell the statemachine about the event unless this is a
+        # completion transition
+	#
+	# extractor.ebs generates an event/name even if there is no
+	# event; cat2raw.py doesn't.
+	if {[info exists event] && [string length [$event -getName]] > 0} {
+	    $event -evaluate $domain
+	    set mc [[$this -getOwner] -getOwner]
+	    $mc -addEvent $event
+	}
     }
 
     method -generate {domain} {
@@ -2477,7 +2480,7 @@ itcl::class Transition {
         if $ignore then {puts -nonewline " ignore=\"true\""}
         if $self then {puts -nonewline " self=\"true\""}
         puts ">"
-        if {[string length [$event -getName]] > 0} {
+        if {[info exists event] && [string length [$event -getName]] > 0} {
             putElement event [$event -getName]
         }
         if [info exists action] {
