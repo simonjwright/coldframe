@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 4a4ff8607db8 2005/05/29 19:58:55 simonjwright $
+# $Id: cat2raw.py,v 0a919f8a1b68 2005/05/30 16:24:00 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -76,6 +76,11 @@ class Base:
 	if 'documentation' in self.attributes:
 	    to.write('<documentation><![CDATA[ %s ]]></documentation>\n' %
 		     self.attributes['documentation'])
+	else:
+	    # Feature in normalize-rose.tcl; -handleAnnotation is what
+	    # processes tags, and it's only called if there was a
+	    # <documentation/> element.
+	    to.write('<documentation></documentation>\n')
     def emit_contents(self, to):
 	'''Outputs the contents of the XML element (excluding <name/> and
 	<documentation/>).'''
@@ -236,7 +241,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 4a4ff8607db8 $',
+				 'cat2raw.py $Revision: 0a919f8a1b68 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -435,8 +440,7 @@ class Uses_Relationship(Base):
     def emit_name(self, to):
 	self.emit_single_element('name', self.label, to)
     def emit(self, to):
-	st = self.stereotype.lower()
-	if st and re.search(r'event', st, re.I):
+	if re.search(r'event', self.stereotype.lower(), re.I):
 	    Base.emit(self, to)
     def emit_contents(self, to):
 	self.emit_single_element('type',
