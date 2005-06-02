@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: classes.html,v c1df7321b0b5 2005/06/02 19:04:55 simonjwright $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -28,6 +28,7 @@ roles {<em>Hired Van</em>).
 <ul>
 <li><a href="attributes.html">attributes</a>
 <li><a href="operations.html">operations</a>
+<li><a href="active-classes.html">active classes</a>
 </ul>
 
 <h2>Modelling</h2>
@@ -175,12 +176,14 @@ multiplicity, depending on the version of Rose) of
 <i>Detail</i> tab. <tt>1..1</tt> is allowed as a shorthand for
 &#171;singleton&#187;; <tt>1..n</tt> isn't allowed.
 
-<p><tt>{ priority = <i>priority</i> }</tt> allows you to specify
-the priority of each instance of an active class, relative to the
-system's default priority (larger numbers mean higher priority).
+<p><tt>{ priority = <i>priority</i> }</tt> allows you to specify the
+priority of each instance of an <a href="active-classes.html">active
+class</a>, relative to the system's default priority (larger numbers
+mean higher priority).
 
 <p><tt>{ stack = <i>stack-size</i> }</tt> allows you to specify a
-non-default stack size for each instance of an active class.
+non-default stack size for each instance of an <a
+href="active-classes.html">active class</a>.
 
 
 <h2>Translation</h2>
@@ -189,7 +192,7 @@ non-default stack size for each instance of an active class.
 <li><a href="#library-structure">Ada library structure</a>
 <li><a href="#externals">Package externals</a>
 <li><a href="#internals">Package internals</a>
-<li><a href="#active-classes">Active classes</a>
+<li><a href="active-classes.html">Active classes</a>
 </ul>
 
 <h3><a name="library-structure">Ada library structure</a></h3>
@@ -337,8 +340,9 @@ is the same in either case.
 <h3><a name="externals">Package externals</a></h3>
 
 <p>A class's identifying attribute or attributes map to a record type
-named <tt>Identifier</tt>. Note that <em>&#171;public&#187;</em> and
-<em>&#171;singleton&#187;</em> classes don't have identifiers.
+named <tt>Identifier</tt>. Note that 'utility',
+<em>&#171;public&#187;</em> and <em>&#171;singleton&#187;</em> classes
+don't have identifiers.
 
 <p>A class's instance data maps to a private record type named
 <tt>Instance</tt>, with an access type <tt>Handle</tt>. In the case of
@@ -381,11 +385,8 @@ with that identifier).
 
 <h3><a name="internals">Package internals</a></h3>
 
-<p><i>more to come</i>
-
-<h3><a name="active-classes">Active classes</a></h3>
-
-<p><i>more to come</i>
+<p><i>more to come, specifically on the withs that will be
+automatically inserted.</i>
 
 <h2>Use</h2>
 
