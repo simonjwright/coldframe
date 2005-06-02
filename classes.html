@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v c1df7321b0b5 2005/06/02 19:04:55 simonjwright $ -->
+<!-- $Id: classes.html,v 7a9a44f2b0c7 2005/06/02 19:48:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Classes</title>
 </head>
@@ -385,8 +385,25 @@ with that identifier).
 
 <h3><a name="internals">Package internals</a></h3>
 
-<p><i>more to come, specifically on the withs that will be
-automatically inserted.</i>
+<p>In case operations may need them, ColdFrame automatically places
+<tt>with</tt>s in the body of a class package for all class packages
+where
+<ul>
+
+<li>the other class is a parent;
+
+<li>the other class is a child;
+
+<li>the other class is used as the type of an operation's parameter or
+return;
+
+<li>this class holds a referential attribute designating the other class.
+<br>This will be expanded at some point to include all other classes
+involved in associations.
+
+</ul>
+
+<p><i>more to come</i>
 
 <h2>Use</h2>
 
