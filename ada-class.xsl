@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c92e2dba4650 2005/05/24 20:20:23 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 79c7dcae670f 2005/06/02 19:40:54 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -952,13 +952,6 @@
   <xsl:template mode="cl:class-body" match="*"/>
 
 
-  <!-- This attribute set is used in cl:class-body-context to mark those
-       withs that are there because of referential attributes, and
-       need warnings suppressing in case they aren't actually used. -->
-  <xsl:attribute-set name="cl:mark-referential-with">
-    <xsl:attribute name="referential">true</xsl:attribute>
-  </xsl:attribute-set>
-
   <!-- Called from domain/class to generate context clauses for package
        body. -->
   <xsl:template name="cl:class-body-context">
@@ -1035,16 +1028,14 @@
           <!-- Withs for referential attributes of the current class -->
           <xsl:for-each
             select="attribute[@refers and not(@refers=$name)]">
-            <xsl:element
-              name="with"
-              use-attribute-sets="cl:mark-referential-with">
+            <xsl:element name="with">
               <xsl:value-of select="@refers"/>
             </xsl:element>
           </xsl:for-each>
 
           <!-- Withs for subprograms of this and ancestor classes.
-               We only want classes (not including the current class). -->
-          <!--
+               We only want classes (not including the current class)
+               that are used as parameters or results. -->
           <xsl:for-each select="$ancestors/operation/parameter/type
                                 | $ancestors/operation/@return">
             <xsl:if test="/domain/class/name=. and not(.=$name)">
@@ -1053,7 +1044,6 @@
               </xsl:element>
             </xsl:if>
           </xsl:for-each>
-          -->
 
           <!-- Withs for child classes. Needed for the subtype selection
                record. -->
@@ -1083,11 +1073,9 @@
             <xsl:text>with </xsl:text>
             <xsl:value-of select="$spec"/>
             <xsl:text>;&#10;</xsl:text>
-            <xsl:if test="@referential">
-              <xsl:text>pragma Warnings (Off, </xsl:text>
-              <xsl:value-of select="$spec"/>
-              <xsl:text>);&#10;</xsl:text>
-            </xsl:if>
+            <xsl:text>pragma Warnings (Off, </xsl:text>
+            <xsl:value-of select="$spec"/>
+            <xsl:text>);&#10;</xsl:text>
           </xsl:if>
         </xsl:for-each>
 
@@ -2466,9 +2454,7 @@
       <xsl:value-of select="@stack"/>
       <xsl:text>);&#10;</xsl:text>
     </xsl:if>
-    <xsl:apply-templates 
-      mode="cl:task-entry" 
-      select="operation[@entry]">
+    <xsl:apply-templates mode="cl:task-entry" select="operation[@entry]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
     <xsl:value-of select="$I"/>
