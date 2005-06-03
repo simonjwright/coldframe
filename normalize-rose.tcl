@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 08dcfc34ee14 2005/05/30 16:26:58 simonjwright $
+# $Id: normalize-rose.tcl,v 2bbc40ac1423 2005/06/03 05:32:00 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1063,7 +1063,7 @@ itcl::class Domain {
         }
 
         if [info exists coldFrameVersion] {
-            putElement normalizer $coldFrameVersion
+            putElement normalizer "normalize-rose.tcl $coldFrameVersion"
         }
 
         $this -generateDocumentation
@@ -3489,3 +3489,9 @@ if $errors {
     }
     exit 1
 }
+
+
+#;; for emacs:
+#;; Local Variables:
+#;; mode: tcl
+#;; End:
