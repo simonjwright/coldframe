@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 0a919f8a1b68 2005/05/30 16:24:00 simonjwright $
+# $Id: cat2raw.py,v 0a4812d67628 2005/06/05 15:13:13 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -48,6 +48,8 @@ class Base:
 	    return self.attributes[n]
 	else:
 	    return None
+    def __str__(self):
+	return 'a %s, id %s' % (self.__class__, self.source_id)
     def init(self):
 	'''Equivalent of super.__init__.'''
 	if self.__class__ != Base: Base.__init__(self)
@@ -58,6 +60,8 @@ class Base:
 	self.qualifiers = list
     def add_attributes(self, dict):
 	self.attributes = dict
+    def add_attribute(self, name, value):
+	self.attributes[name] = value
     def element_tag(self):
 	'''The string that appears in the XML element: <tag/>.'''
 	return ''
@@ -228,10 +232,34 @@ class Domain(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'domain'
+    def load(self):
+	"""This is an unloaded Domain."""
+	filename = re.sub(r'^\$CURDIR', '.', self.file_name)
+	filename = re.sub(r'\\\\', '/', filename)
+	sys.stderr.write('  filename is %s\n' % filename)
+	lexer = lex.lex()
+	file = open(filename, 'r')
+	lexer.input(file.read())
+	file.close()
+	parser = yacc.yacc()
+	domain = parser.parse(lexer = lexer)
+	domain.load_children()
+	self.attributes = domain.attributes
+    def load_children(self):
+	"""Loads all the child packages."""
+	if self.logical_models != None:
+	    for o in self.logical_models:
+		if o.__class__ == Domain and o.is_loaded == 'FALSE':
+		    sys.stderr.write('loading %s.%s ..\n'
+				     % (self.object_name, o.object_name))
+		    o.load()
+		    sys.stderr.write('.. finished %s.%s.\n'
+				     % (self.object_name, o.object_name))
     def emit_recursive(self, op, to):
 	op(self, to)
 	for c in filter(lambda o:
-			(o.__class__ == Domain 
+			(o.__class__ == Domain
+			 and o.is_loaded == 'TRUE'
 			 and (o.stereotype.lower() == 'generate' 
 			      or o.stereotype.lower() == 'include')),
 			self.logical_models):
@@ -241,7 +269,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 0a919f8a1b68 $',
+				 'cat2raw.py $Revision: 0a4812d67628 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -492,10 +520,11 @@ for o in (
 def create_object(id):
     '''The factory for creating objects of the class corresponding to the id.'''
     if id in recognizedID:
-	return recognizedID[id]()
+	new = recognizedID[id]()
     else:
 	sys.stderr.write("didn't recognise object ID %s.\n" % id)
-	return Base()
+	new = Base()
+    return new
 
 def object_name(fqn):
     '''Strips the leading model path from a fully qualified name.'''
@@ -511,39 +540,34 @@ def object_name(fqn):
 
 def p_cat_file(p):
     'cat_file : object object'
-    #print "design: %s" % p[1]
-    #print p[2]
     p[0] = p[2]
-    pass
 
 def p_object(p):
     'object : OBJECT ID qualifiers reference attributes RPAREN'
-    #print "object %s, qualifiers %s, attributes %s" % (p[2], p[3], p[5])
-    p[0] = create_object(p[2])
-    p[0].add_qualifiers(p[3])
-    p[0].add_attributes(p[5])
-    pass
+    new = create_object(p[2])
+    new.add_qualifiers(p[3])
+    new.add_attributes(p[5])
+    p[0] = new
 
 def p_qualifiers(p):
     '''qualifiers : qualifier qualifiers
                   | empty'''
     if len(p) == 3:
-	p[0] = (p[1],) + p[2]
+	p[0] = [p[1],] + p[2]
     else:
-	p[0] = ()
-    pass
+	p[0] = []
 
 def p_qualifier(p):
     'qualifier : QSTRING'
     p[0] = p[1]
-    pass
 
 def p_reference(p):
     '''reference : AMP INTNUM
                  | empty'''
     if len(p) == 3:
 	p[0] = p[2]
-    pass
+    else:
+	p[0] = None
 
 def p_attributes(p):
     '''attributes : attribute attributes
@@ -557,17 +581,15 @@ def p_attributes(p):
 	    # trying to deepcopy None -- just like the problem without
 	    # the deepcopy! Converting these particular cases to a
 	    # tuple seems to work. Could maybe be generalised?
-	    p[0][n] = (p[1][1],)
+	    p[0][n] = [p[1][1],]
 	else:
 	    p[0][n] = p[1][1]
     else:
 	p[0] = {}
-    pass
 
 def p_attribute(p):
     'attribute : ID value'
-    p[0] = (p[1], p[2])
-    pass
+    p[0] = [p[1], p[2]]
 
 def p_value(p):
     '''value : QSTRING
@@ -581,22 +603,18 @@ def p_value(p):
 	     | doclines
 	     | object'''
     p[0] = p[1]
-    pass
 
 def p_location(p):
     'location : LPAREN INTNUM COMMA INTNUM RPAREN'
-    p[0] = (p[2], p[4])
-    pass
+    p[0] = [p[2], p[4]]
 
 def p_list(p):
     'list : LIST ID list_members RPAREN'
     p[0] = p[3]
-    pass
 
 def p_value_list(p):
     'value_list : VALUE ID value RPAREN'
     p[0] = p[3]
-    pass
 
 def p_doclines(p):
     '''doclines : DOCLINE doclines
@@ -605,7 +623,6 @@ def p_doclines(p):
 	p[0] = p[1] + '\n' + p[2]
     else:
 	p[0] = p[1]
-    pass
 
 def p_list_members(p):
     '''list_members : objects
@@ -615,35 +632,31 @@ def p_list_members(p):
     if p[1]:
 	p[0] = p[1]
     else:
-	p[0] = ()
-    pass
+	p[0] = []
 
 def p_objects(p):
     '''objects : object objects
                | object'''
     if len(p) == 3:
-	p[0] = (p[1],) + p[2]
+	p[0] = [p[1],] + p[2]
     else:
-	p[0] = (p[1],)
-    pass
+	p[0] = [p[1],]
 
 def p_locations(p):
     '''locations : location locations
                  | location'''
     if len(p) == 3:
-	p[0] = (p[1],) + p[2]
+	p[0] = [p[1],] + p[2]
     else:
-	p[0] = (p[1],)
-    pass
+	p[0] = [p[1],]
 
 def p_qstrings(p):
     '''qstrings : QSTRING qstrings
                 | QSTRING'''
     if len(p) == 3:
-	p[0] = (p[1],) + p[2]
+	p[0] = [p[1],] + p[2]
     else:
-	p[0] = (p[1],)
-    pass
+	p[0] = [p[1],]
 
 # Empty productions
 def p_empty(p):
@@ -728,22 +741,17 @@ def t_error(t):
 # Main, test
 #-----------------------------------------------------------------------
 
-# Build the lexer
-l = lex.lex()
-
-# Some test input
-data = '''\
-(object Foo "foos name" "check foo" @41
-
-)
-
-(object Bar "bars name" @42
-  fred 123)
-'''
-
-l.input(sys.stdin.read())
-
-p = yacc.yacc()
-
-p.parse(lexer = l).emit()
+if __name__ == '__main__':
+    # Build the lexer
+    l = lex.lex()
+    
+    l.input(sys.stdin.read())
+    
+    p = yacc.yacc()
+    
+    d = p.parse(lexer = l)
+    
+    d.load_children()
+    
+    d.emit()
 
