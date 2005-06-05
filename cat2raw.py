@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v b4db8dd3f9c2 2005/06/05 17:14:49 simonjwright $
+# $Id: cat2raw.py,v b2f894a93174 2005/06/05 18:10:35 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -81,7 +81,7 @@ class Base:
 	    # Feature in normalize-rose.tcl; -handleAnnotation is what
 	    # processes tags, and it's only called if there was a
 	    # <documentation/> element.
-	    to.write('<documentation></documentation>\n')
+	    self.emit_single_element('documentation', '', to)
     def emit_contents(self, to):
 	'''Outputs the contents of the XML element (excluding <name/> and
 	<documentation/>).'''
@@ -92,12 +92,21 @@ class Base:
     def emit_name(self, to):
 	'''Outputs the <name/> of the XML element.'''
 	self.emit_single_element('name', self.object_name, to)
-    def emit_visibility(self, to):
+    visibility_lookup = {
+	'public' : 'PublicAccess',
+	'protected' : 'ProtectedAccess',
+	'private' : 'PrivateAccess',
+	'implementation' : 'ImplementationAccess'
+	}
+    def emit_visibility(self, to, default):
 	'''Outputs the <visibility/> of the XMLelement.'''
 	if self.opExportControl:
-	    self.emit_single_element('visibility', self.opExportControl, to)
+	    v = self.opExportControl
 	else:
-	    self.emit_single_element('visibility', 'PublicAccess', to)
+	    v = default
+	self.emit_single_element('visibility',
+				 Base.visibility_lookup[v.lower()],
+				 to)
     def emit_nested_attribute_list(self, list, attribute, to):
 	'''Outputs all the contained <attribute/> XML elements, contained
 	in a <list/> element.'''
@@ -167,9 +176,10 @@ class Attribute(Base):
 	self.init()
     def element_tag(self): return 'attribute'
     def emit_contents(self, to):
-	# visibility???
-	# static
-	to.write('<type>%s</type>\n' % self.attributes['type'])
+	self.emit_visibility(to, default='private')
+	if self.static == 'TRUE':
+	    self.emit_single_element('static', '', to)
+	self.emit_single_element('type', self.attributes['type'], to)
 	if self.initv:
 	    self.emit_single_element('initial', self.initv, to)
 
@@ -182,12 +192,15 @@ class Class(Base):
     def element_tag(self): return 'class'
     def name(self): return self.qualifiers[0]
     def emit_contents(self, to):
-	self.emit_visibility(to)
+	self.emit_visibility(to, default='public')
+	# 'public' actually only applies to types.
 	self.emit_kind(to)
-	# abstract
+	if self.abstract == 'TRUE':
+	    self.emit_single_element('abstract', '', to)
 	if self.cardinality:
 	    self.emit_single_element('cardinality', self.cardinality, to)
-	# concurrency
+	if self.concurrency:
+	    self.emit_single_element('concurrency', self.concurrency, to)
 	self.emit_nested_attribute_list('attributes', 'class_attributes', to)
 	self.emit_nested_attribute_list('operations', 'operations', to)
 	self.emit_nested_attribute_list('events', 'used_nodes', to)
@@ -197,7 +210,8 @@ class Class(Base):
 		    and sm.stereotype.lower() == 'generate':
 		sm.emit(to)
 	    else:
-		sys.stderr.write('found state machine but skipped it!\n')
+		sys.stderr.write('found state machine in %s but skipped it!\n'
+				 % self.object_name)
 	    pass
     def emit_kind(self, to):
 	# Overridden in children
@@ -233,7 +247,7 @@ class Domain(Base):
 	"""This is an unloaded Domain."""
 	filename = re.sub(r'^\$CURDIR', '.', self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
-	sys.stderr.write('  filename is %s\n' % filename)
+	#sys.stderr.write('  filename is %s\n' % filename)
 	lexer = lex.lex()
 	file = open(filename, 'r')
 	lexer.input(file.read())
@@ -247,11 +261,11 @@ class Domain(Base):
 	if self.logical_models != None:
 	    for o in self.logical_models:
 		if o.__class__ == Domain and o.is_loaded == 'FALSE':
-		    sys.stderr.write('loading %s.%s ..\n'
-				     % (self.object_name, o.object_name))
+		    #sys.stderr.write('loading %s.%s ..\n'
+		    #    	     % (self.object_name, o.object_name))
 		    o.load()
-		    sys.stderr.write('.. finished %s.%s.\n'
-				     % (self.object_name, o.object_name))
+		    #sys.stderr.write('.. finished %s.%s.\n'
+		    #   	     % (self.object_name, o.object_name))
     def emit_recursive(self, op, to):
 	op(self, to)
 	for c in filter(lambda o:
@@ -260,13 +274,13 @@ class Domain(Base):
 			 and (o.stereotype.lower() == 'generate' 
 			      or o.stereotype.lower() == 'include')),
 			self.logical_models):
-	    sys.stderr.write('entering %s ..\n' % c.object_name)
+	    #sys.stderr.write('entering %s ..\n' % c.object_name)
 	    c.emit_recursive(op, to)
-	    sys.stderr.write('.. leaving %s\n' % c.object_name)
+	    #sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: b4db8dd3f9c2 $',
+				 'cat2raw.py $Revision: b2f894a93174 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -325,8 +339,9 @@ class Operation(Base):
 	self.init()
     def element_tag(self): return 'operation'
     def emit_contents(self, to):
-	# abstract
-	self.emit_visibility(to)
+	self.emit_visibility(to, default='public')
+	if self.abstract == 'TRUE':
+	    self.emit_single_element('abstract', '', to)
 	self.emit_nested_attribute_list('parameters', 'parameters', to)
 	if self.result:
 	    self.emit_single_element('return', self.result, to)
@@ -339,7 +354,7 @@ class Parameter(Base):
 	self.init()
     def element_tag(self): return 'parameter'
     def emit_contents(self, to):
-	to.write('<type>%s</type>\n' % self.type)
+	self.emit_single_element('type', self.type, to)
 	if self.initv:
 	    self.emit_single_element('initial', self.initv, to)
 
@@ -360,7 +375,6 @@ class Role(Base):
 recognizedID['Role'] = Role
 
 
-# statemachine: states, transitions
 class State_Machine(Base):
     def __init__(self):
 	self.init()
@@ -396,7 +410,6 @@ class State_Machine(Base):
 recognizedID['State_Machine'] = State_Machine
 
 
-# state: entryactions, initial, final
 class State(Base):
     def __init__(self):
 	self.init()
@@ -429,13 +442,12 @@ class State(Base):
 recognizedID['State'] = State
 
 
-# transition: source, target, event/name, transitionaction/name
 class Transition(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'transition'
     def emit_name(self, to):
-        '''Transitions dont have names.'''
+        """Transitions don't have names."""
         pass
     def emit_contents(self, to):
 	self.emit_single_element('source', self.source.name(), to)
@@ -578,7 +590,7 @@ def p_attributes(p):
 	    # trying to deepcopy None -- just like the problem without
 	    # the deepcopy! Converting these particular cases to a
 	    # tuple seems to work. Could maybe be generalised?
-	    p[0][n] = [p[1][1],]
+	    p[0][n] = (p[1][1],)
 	else:
 	    p[0][n] = p[1][1]
     else:
