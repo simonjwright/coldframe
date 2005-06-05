@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 5beca878c7da 2005/06/05 17:06:31 simonjwright $
+# $Id: cat2raw.py,v b4db8dd3f9c2 2005/06/05 17:14:49 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -266,7 +266,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 5beca878c7da $',
+				 'cat2raw.py $Revision: b4db8dd3f9c2 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -542,18 +542,17 @@ def p_cat_file(p):
 
 def p_object(p):
     'object : OBJECT ID qualifiers reference attributes RPAREN'
-    new = create_object(p[2])
-    new.qualifiers = p[3]
-    new.attributes = p[5]
-    p[0] = new
+    p[0] = create_object(p[2])
+    p[0].qualifiers = p[3]
+    p[0].attributes = p[5]
 
 def p_qualifiers(p):
     '''qualifiers : qualifier qualifiers
                   | empty'''
     if len(p) == 3:
-	p[0] = [p[1],] + p[2]
+	p[0] = (p[1],) + p[2]
     else:
-	p[0] = []
+	p[0] = ()
 
 def p_qualifier(p):
     'qualifier : QSTRING'
@@ -587,7 +586,7 @@ def p_attributes(p):
 
 def p_attribute(p):
     'attribute : ID value'
-    p[0] = [p[1], p[2]]
+    p[0] = (p[1], p[2])
 
 def p_value(p):
     '''value : QSTRING
@@ -604,7 +603,7 @@ def p_value(p):
 
 def p_location(p):
     'location : LPAREN INTNUM COMMA INTNUM RPAREN'
-    p[0] = [p[2], p[4]]
+    p[0] = (p[2], p[4])
 
 def p_list(p):
     'list : LIST ID list_members RPAREN'
@@ -630,31 +629,31 @@ def p_list_members(p):
     if p[1]:
 	p[0] = p[1]
     else:
-	p[0] = []
+	p[0] = ()
 
 def p_objects(p):
     '''objects : object objects
                | object'''
     if len(p) == 3:
-	p[0] = [p[1],] + p[2]
+	p[0] = (p[1],) + p[2]
     else:
-	p[0] = [p[1],]
+	p[0] = (p[1],)
 
 def p_locations(p):
     '''locations : location locations
                  | location'''
     if len(p) == 3:
-	p[0] = [p[1],] + p[2]
+	p[0] = (p[1],) + p[2]
     else:
-	p[0] = [p[1],]
+	p[0] = (p[1],)
 
 def p_qstrings(p):
     '''qstrings : QSTRING qstrings
                 | QSTRING'''
     if len(p) == 3:
-	p[0] = [p[1],] + p[2]
+	p[0] = (p[1],) + p[2]
     else:
-	p[0] = [p[1],]
+	p[0] = (p[1],)
 
 # Empty productions
 def p_empty(p):
