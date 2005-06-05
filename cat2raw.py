@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v b2f894a93174 2005/06/05 18:10:35 simonjwright $
+# $Id: cat2raw.py,v cda6d5cbb1c1 2005/06/05 18:46:05 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -100,8 +100,12 @@ class Base:
 	}
     def emit_visibility(self, to, default):
 	'''Outputs the <visibility/> of the XMLelement.'''
-	if self.opExportControl:
-	    v = self.opExportControl
+	if self.exportControl:
+            # class
+	    v = self.exportControl
+        elif self.opExportControl:
+            # operation
+            v = self.opExportControl
 	else:
 	    v = default
 	self.emit_single_element('visibility',
@@ -280,7 +284,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: b2f894a93174 $',
+				 'cat2raw.py $Revision: cda6d5cbb1c1 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -353,6 +357,10 @@ class Parameter(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'parameter'
+    def emit_name(self, to):
+	'''Has to be a <parametername/> element to get special mode
+        processing.'''
+	self.emit_single_element('parametername', self.object_name, to)
     def emit_contents(self, to):
 	self.emit_single_element('type', self.type, to)
 	if self.initv:
