@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 0a4812d67628 2005/06/05 15:13:13 simonjwright $
+# $Id: cat2raw.py,v 5beca878c7da 2005/06/05 17:06:31 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -31,7 +31,11 @@ class Base:
     '''The base class for all Objects retrieved from the Petal file.'''
     def __init__(self):
 	self.qualifiers = ()
+	'''The qualifiers appear on the head line of the Petal object:
+	(object kind q1 q2 q3
+	Usually the first one is the object's name.'''
 	self.attributes = {}
+	'''The attributes are all the named features of the object.'''
 	pass
     def __getattr__(self, n):
 	'''Attribute lookup.
@@ -48,18 +52,11 @@ class Base:
 	    return self.attributes[n]
 	else:
 	    return None
-    def __str__(self):
-	return 'a %s, id %s' % (self.__class__, self.source_id)
     def init(self):
 	'''Equivalent of super.__init__.'''
 	if self.__class__ != Base: Base.__init__(self)
-    def add_qualifiers(self, list):
-	'''The qualifiers appear on the head line of the Petal object:
-	(object kind q1 q2 q3
-	Usually the first one is the object's name.'''
+    def add_qualifiersx(self, list):
 	self.qualifiers = list
-    def add_attributes(self, dict):
-	self.attributes = dict
     def add_attribute(self, name, value):
 	self.attributes[name] = value
     def element_tag(self):
@@ -259,7 +256,7 @@ class Domain(Base):
 	op(self, to)
 	for c in filter(lambda o:
 			(o.__class__ == Domain
-			 and o.is_loaded == 'TRUE'
+			 and (o.is_loaded == None or o.is_loaded == 'TRUE')
 			 and (o.stereotype.lower() == 'generate' 
 			      or o.stereotype.lower() == 'include')),
 			self.logical_models):
@@ -269,7 +266,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 0a4812d67628 $',
+				 'cat2raw.py $Revision: 5beca878c7da $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -505,6 +502,7 @@ for o in (
     'RoleView',
     'SegLabel',
     'SelfTransView',
+    'sendEvent',
     'StateView',
     'State_Diagram',
     'TransView',
@@ -545,8 +543,8 @@ def p_cat_file(p):
 def p_object(p):
     'object : OBJECT ID qualifiers reference attributes RPAREN'
     new = create_object(p[2])
-    new.add_qualifiers(p[3])
-    new.add_attributes(p[5])
+    new.qualifiers = p[3]
+    new.attributes = p[5]
     p[0] = new
 
 def p_qualifiers(p):
