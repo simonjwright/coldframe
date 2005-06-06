@@ -14,14 +14,14 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v cda6d5cbb1c1 2005/06/05 18:46:05 simonjwright $
+# $Id: cat2raw.py,v 2a8b774b8c2d 2005/06/06 21:04:06 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
 # Uses PLY (http://savannah.nongnu.org/projects/ply/).
 
 import lex, yacc
-import datetime, re, sys
+import datetime, getopt, re, sys
 
 #-----------------------------------------------------------------------
 # Object model
@@ -131,6 +131,8 @@ class Base:
 	    self.emit_contents(to)
 	    self.emit_element_end(to)
 
+# Maps the Petal file component to the class to be used here. Use Base
+# if the component isn't interesting.
 recognizedID = {}
 
 
@@ -247,27 +249,33 @@ class Domain(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'domain'
-    def load(self):
-	"""This is an unloaded Domain."""
-	filename = re.sub(r'^\$CURDIR', '.', self.file_name)
+    def load(self, model):
+	"""This is an unloaded Domain.
+	'model' is the directory where the .mdl file lives (CURDIR)."""
+	filename = re.sub(r'^\$CURDIR', model, self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
 	#sys.stderr.write('  filename is %s\n' % filename)
 	lexer = lex.lex()
-	file = open(filename, 'r')
+	try:
+	    file = open(filename, 'r')
+	except:
+	    sys.stderr.write("couldn't open %s.\n" % filename)
+	    sys.exit(1)
 	lexer.input(file.read())
 	file.close()
 	parser = yacc.yacc()
 	domain = parser.parse(lexer = lexer)
-	domain.load_children()
+	domain.load_children(model)
 	self.attributes = domain.attributes
-    def load_children(self):
-	"""Loads all the child packages."""
+    def load_children(self, model):
+	"""Loads all the child packages.
+	'model' is the directory where the .mdl file lives (CURDIR)."""
 	if self.logical_models != None:
 	    for o in self.logical_models:
 		if o.__class__ == Domain and o.is_loaded == 'FALSE':
 		    #sys.stderr.write('loading %s.%s ..\n'
 		    #    	     % (self.object_name, o.object_name))
-		    o.load()
+		    o.load(model)
 		    #sys.stderr.write('.. finished %s.%s.\n'
 		    #   	     % (self.object_name, o.object_name))
     def emit_recursive(self, op, to):
@@ -284,7 +292,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: cda6d5cbb1c1 $',
+				 'cat2raw.py $Revision: 2a8b774b8c2d $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -758,17 +766,63 @@ def t_error(t):
 # Main, test
 #-----------------------------------------------------------------------
 
-if __name__ == '__main__':
-    # Build the lexer
-    l = lex.lex()
+def main():
     
-    l.input(sys.stdin.read())
-    
-    p = yacc.yacc()
-    
-    d = p.parse(lexer = l)
-    
-    d.load_children()
-    
-    d.emit()
+    def usage():
+	sys.stderr.write('%s $Revision: 2a8b774b8c2d $\n' % sys.argv[0])
+	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
+	sys.stderr.write('flags:\n')
+	sys.stderr.write('-h, --help:        output this message\n')
+	sys.stderr.write('-m, --model=BASE: ')
+	sys.stderr.write('the directory contaning the Rose Model\n')
+	sys.stderr.write('-o, --output=:     the output file\n')
 
+    try:
+        opts, args = getopt.getopt\
+	    (sys.argv[1:],
+	     'hm:o:',
+	     ['help', 'model=', 'output='])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(1)    
+
+    input = sys.stdin
+    output = sys.stdout
+    model = '.'
+
+    for o, v in opts:
+	if o in ('-h', '--help'):
+	    usage()
+	    sys.exit()
+	if o in ('-m', '--model'):
+	    model = v
+	if o in ('-o', '--output'):
+	    output = open(v, 'w')
+
+    if len(args) > 1:
+        usage()
+        sys.exit(1)    
+    if len(args) == 1:
+	try:
+	    input = open(args[0], 'r')
+	except:
+	    sys.stderr.write("couldn't open %s.\." % args[0])
+	    sys.exit(1)
+
+    # create the lexer
+    l = lex.lex()
+    # connect it to the input cat file
+    l.input(input.read())
+    input.close()
+    # create the parser
+    p = yacc.yacc()
+    # parse the input, creating a domain
+    d = p.parse(lexer = l)
+    # recursively load any child domains
+    d.load_children(model)
+    # output
+    d.emit(output)
+    output.close()
+
+if __name__ == '__main__':
+    main()
