@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 2a8b774b8c2d 2005/06/06 21:04:06 simonjwright $
+# $Id: cat2raw.py,v cd55ac7c407f 2005/06/07 20:19:45 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -292,7 +292,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 2a8b774b8c2d $',
+				 'cat2raw.py $Revision: cd55ac7c407f $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -769,13 +769,13 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 2a8b774b8c2d $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: cd55ac7c407f $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        output this message\n')
-	sys.stderr.write('-m, --model=BASE: ')
-	sys.stderr.write('the directory contaning the Rose Model\n')
-	sys.stderr.write('-o, --output=:     the output file\n')
+	sys.stderr.write('-m, --model=BASE:  ')
+	sys.stderr.write('the directory containing the Rose Model\n')
+	sys.stderr.write('-o, --output=FILE: the output file\n')
 
     try:
         opts, args = getopt.getopt\
