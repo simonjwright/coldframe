@@ -14,14 +14,14 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v cd55ac7c407f 2005/06/07 20:19:45 simonjwright $
+# $Id: cat2raw.py,v 74ecb27fd750 2005/06/08 20:07:41 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
 # Uses PLY (http://savannah.nongnu.org/projects/ply/).
 
 import lex, yacc
-import datetime, getopt, re, sys
+import datetime, getopt, os, re, sys
 
 #-----------------------------------------------------------------------
 # Object model
@@ -249,10 +249,11 @@ class Domain(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'domain'
-    def load(self, model):
+    def load(self, path):
 	"""This is an unloaded Domain.
-	'model' is the directory where the .mdl file lives (CURDIR)."""
-	filename = re.sub(r'^\$CURDIR', model, self.file_name)
+	'path' is the filename of the parent CAT file; CURDIR is relative
+	to (the directory part of path."""
+	filename = re.sub(r'^\$CURDIR', os.path.dirname(path), self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
 	#sys.stderr.write('  filename is %s\n' % filename)
 	lexer = lex.lex()
@@ -265,9 +266,9 @@ class Domain(Base):
 	file.close()
 	parser = yacc.yacc()
 	domain = parser.parse(lexer = lexer)
-	domain.load_children(model)
+	domain.load_children(filename)
 	self.attributes = domain.attributes
-    def load_children(self, model):
+    def load_children(self, path):
 	"""Loads all the child packages.
 	'model' is the directory where the .mdl file lives (CURDIR)."""
 	if self.logical_models != None:
@@ -275,7 +276,7 @@ class Domain(Base):
 		if o.__class__ == Domain and o.is_loaded == 'FALSE':
 		    #sys.stderr.write('loading %s.%s ..\n'
 		    #    	     % (self.object_name, o.object_name))
-		    o.load(model)
+		    o.load(path)
 		    #sys.stderr.write('.. finished %s.%s.\n'
 		    #   	     % (self.object_name, o.object_name))
     def emit_recursive(self, op, to):
@@ -283,8 +284,9 @@ class Domain(Base):
 	for c in filter(lambda o:
 			(o.__class__ == Domain
 			 and (o.is_loaded == None or o.is_loaded == 'TRUE')
-			 and (o.stereotype.lower() == 'generate' 
-			      or o.stereotype.lower() == 'include')),
+			 and (o.stereotype 
+			      and o.stereotype.lower() in
+			      ('generate',  'include'))),
 			self.logical_models):
 	    #sys.stderr.write('entering %s ..\n' % c.object_name)
 	    c.emit_recursive(op, to)
@@ -292,7 +294,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: cd55ac7c407f $',
+				 'cat2raw.py $Revision: 74ecb27fd750 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -515,6 +517,7 @@ for o in (
     'Destruction_Marker',
     'Focus_Of_Control',
     'Font',
+    'ImportView',
     'InheritView',
     'InterMessView',
     'InterObjView',
@@ -529,13 +532,14 @@ for o in (
     'Petal',
     'RoleView',
     'SegLabel',
+    'SelfMessView',
     'SelfTransView',
-    'sendEvent',
     'StateView',
     'State_Diagram',
     'TransView',
     'UsesView',
     'Visibility_Relationship',
+    'sendEvent',
     ):
     recognizedID[o] = Base
 
@@ -769,33 +773,29 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: cd55ac7c407f $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 74ecb27fd750 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        output this message\n')
-	sys.stderr.write('-m, --model=BASE:  ')
-	sys.stderr.write('the directory containing the Rose Model\n')
 	sys.stderr.write('-o, --output=FILE: the output file\n')
 
     try:
         opts, args = getopt.getopt\
 	    (sys.argv[1:],
-	     'hm:o:',
-	     ['help', 'model=', 'output='])
+	     'ho:',
+	     ['help', 'output='])
     except getopt.GetoptError:
         usage()
         sys.exit(1)    
 
     input = sys.stdin
     output = sys.stdout
-    model = '.'
+    path = '.'
 
     for o, v in opts:
 	if o in ('-h', '--help'):
 	    usage()
 	    sys.exit()
-	if o in ('-m', '--model'):
-	    model = v
 	if o in ('-o', '--output'):
 	    output = open(v, 'w')
 
@@ -803,10 +803,11 @@ def main():
         usage()
         sys.exit(1)    
     if len(args) == 1:
+	path = args[0]
 	try:
-	    input = open(args[0], 'r')
+	    input = open(path, 'r')
 	except:
-	    sys.stderr.write("couldn't open %s.\." % args[0])
+	    sys.stderr.write("couldn't open %s.\." % path)
 	    sys.exit(1)
 
     # create the lexer
@@ -819,7 +820,7 @@ def main():
     # parse the input, creating a domain
     d = p.parse(lexer = l)
     # recursively load any child domains
-    d.load_children(model)
+    d.load_children(path)
     # output
     d.emit(output)
     output.close()
