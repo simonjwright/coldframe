@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 74ecb27fd750 2005/06/08 20:07:41 simonjwright $
+# $Id: cat2raw.py,v 07df84f1368b 2005/06/08 20:58:28 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -294,7 +294,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 74ecb27fd750 $',
+				 'cat2raw.py $Revision: 07df84f1368b $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -495,7 +495,8 @@ class Uses_Relationship(Base):
     def emit_name(self, to):
 	self.emit_single_element('name', self.label, to)
     def emit(self, to):
-	if re.search(r'event', self.stereotype.lower(), re.I):
+	if self.stereotype and \
+		re.search(r'event', self.stereotype.lower(), re.I):
 	    Base.emit(self, to)
     def emit_contents(self, to):
 	self.emit_single_element('type',
@@ -507,7 +508,9 @@ recognizedID['Uses_Relationship'] = Uses_Relationship
 
 # Objects we don't care about
 for o in (
+    'ActivityDiagram',
     'AssocAttachView',
+    'AssocConstraintView',
     'AssociationViewNew',
     'AttachView',
     'CategoryView',
@@ -534,8 +537,10 @@ for o in (
     'SegLabel',
     'SelfMessView',
     'SelfTransView',
+    'Semantic_Info',
     'StateView',
     'State_Diagram',
+    'Swimlane',
     'TransView',
     'UsesView',
     'Visibility_Relationship',
@@ -773,7 +778,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 74ecb27fd750 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 07df84f1368b $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        output this message\n')
