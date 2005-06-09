@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 07df84f1368b 2005/06/08 20:58:28 simonjwright $
+# $Id: cat2raw.py,v 05a9764cea9b 2005/06/09 19:56:44 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -294,7 +294,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 07df84f1368b $',
+				 'cat2raw.py $Revision: 05a9764cea9b $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -398,8 +398,14 @@ class State_Machine(Base):
 	self.init()
     def element_tag(self): return 'statemachine'
     def emit_name(self, to):
-	if not re.search(r'/', self.object_name):
-	    self.emit_single_element('name', self.object_name, to)
+	# There seems to be a bug in normalize-rose.tcl such that if a
+	# statemacdhine has a 'generate="yes"' attribute *and* a
+	# <name/> element, part of the XML gets output before the
+	# <domain> start tag. ddf.ebs (aka extractor.ebs) doesn't
+	# output the 'generate="yes"' attribute, but the code
+	# generator doesn't use the <name/> so it seems easiest to
+	# omit the latter!
+	pass
     def emit(self, to):
 	if self.stereotype and self.stereotype.lower() == 'generate':
 	    Base.emit(self, to)
@@ -778,7 +784,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 07df84f1368b $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 05a9764cea9b $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        output this message\n')
