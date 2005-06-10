@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 897a4f78b98f 2005/05/28 05:43:56 simonjwright $ -->
+<!-- $Id: releases.html-proto,v b9d8b9abbdea 2005/06/10 05:20:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -78,14 +78,16 @@ private part of the class package).
 
 
 <p>You can constrain a scalar type; for a Height, you could say <i>{
-constrains = Metres | lower 0.0 | upper 100_000.0 }</i>
+constrains = Metres | lower 0.0 | upper 100_000.0 }</i>.
 
 
 <p>You can declare types <tt>private</tt>,  by saying
 &#171;type, private&#187;, (more tidily, perhaps) by tagging
 <i>{private}</i>, or even by using the Rose class specification dialog
 box!
-<br><i>{serializable}</i> types must be <i>public</i>.
+<br><i>{serializable}</i> types must be <i>public</i>, as must the
+types of any components. ColdFrame checks the former but not the
+latter.
 
 
 <p>You can mark a nested package that's to be included as
