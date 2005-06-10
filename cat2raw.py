@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 05a9764cea9b 2005/06/09 19:56:44 simonjwright $
+# $Id: cat2raw.py,v c1888eabe585 2005/06/10 05:00:12 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -28,21 +28,21 @@ import datetime, getopt, os, re, sys
 #-----------------------------------------------------------------------
 
 class Base:
-    '''The base class for all Objects retrieved from the Petal file.'''
+    """The base class for all Objects retrieved from the Petal file."""
     def __init__(self):
 	self.qualifiers = ()
-	'''The qualifiers appear on the head line of the Petal object:
+	"""The qualifiers appear on the head line of the Petal object:
 	(object kind q1 q2 q3
-	Usually the first one is the object's name.'''
+	Usually the first one is the object's name."""
 	self.attributes = {}
-	'''The attributes are all the named features of the object.'''
+	"""The attributes are all the named features of the object."""
 	pass
     def __getattr__(self, n):
-	'''Attribute lookup.
+	"""Attribute lookup.
 	Not sure why using plain 'name' for the object name results in a
 	lookup of the attribute __repr__ which is expected to be
 	callable, but that's what happens!
-	To get the object name, use 'object_name'.'''
+	To get the object name, use 'object_name'."""
 	if n == 'object_name':
             if len(self.qualifiers):
 	        return self.qualifiers[0]
@@ -53,25 +53,25 @@ class Base:
 	else:
 	    return None
     def init(self):
-	'''Equivalent of super.__init__.'''
+	"""Equivalent of super.__init__."""
 	if self.__class__ != Base: Base.__init__(self)
     def add_qualifiersx(self, list):
 	self.qualifiers = list
     def add_attribute(self, name, value):
 	self.attributes[name] = value
     def element_tag(self):
-	'''The string that appears in the XML element: <tag/>.'''
+	"""The string that appears in the XML element: <tag/>."""
 	return ''
     def emit_element_start(self, to):
-	'''Outputs <element attr="value"> or just <element>, as required.
-	The only attr supported here is stereotype.'''
+	"""Outputs <element attr="value"> or just <element>, as required.
+	The only attr supported here is stereotype."""
 	if self.stereotype:
 	    to.write('<%s stereotype="%s">\n' %
 		     (self.element_tag(), self.stereotype))
 	else:
 	    to.write('<%s>\n' % self.element_tag())
     def emit_element_end(self, to):
-	'''Outputs the trailing </element>.'''
+	"""Outputs the trailing </element>."""
 	to.write('</%s>\n' % self.element_tag())
     def emit_documentation(self, to):
 	if 'documentation' in self.attributes:
@@ -83,14 +83,14 @@ class Base:
 	    # <documentation/> element.
 	    self.emit_single_element('documentation', '', to)
     def emit_contents(self, to):
-	'''Outputs the contents of the XML element (excluding <name/> and
-	<documentation/>).'''
+	"""Outputs the contents of the XML element (excluding <name/> and
+	<documentation/>)."""
 	pass
     def emit_single_element(self, element, value, to):
-	'''Outputs a single XML element.'''
+	"""Outputs a single XML element."""
 	to.write('<%s>%s</%s>\n' % (element, value, element))
     def emit_name(self, to):
-	'''Outputs the <name/> of the XML element.'''
+	"""Outputs the <name/> of the XML element."""
 	self.emit_single_element('name', self.object_name, to)
     visibility_lookup = {
 	'public' : 'PublicAccess',
@@ -99,7 +99,7 @@ class Base:
 	'implementation' : 'ImplementationAccess'
 	}
     def emit_visibility(self, to, default):
-	'''Outputs the <visibility/> of the XMLelement.'''
+	"""Outputs the <visibility/> of the XMLelement."""
 	if self.exportControl:
             # class
 	    v = self.exportControl
@@ -112,18 +112,18 @@ class Base:
 				 Base.visibility_lookup[v.lower()],
 				 to)
     def emit_nested_attribute_list(self, list, attribute, to):
-	'''Outputs all the contained <attribute/> XML elements, contained
-	in a <list/> element.'''
+	"""Outputs all the contained <attribute/> XML elements, contained
+	in a <list/> element."""
         to.write('<%s>\n' % list)
 	self.emit_attribute_list(attribute, to)
 	to.write('</%s>\n' % list)
     def emit_attribute_list(self, attribute, to):
-	'''Outputs all the <attribute/> XMLelements.'''
+	"""Outputs all the <attribute/> XMLelements."""
 	if attribute in self.attributes:
 	    for i in self.attributes[attribute]:
 		i.emit(to)
     def emit(self, to=sys.stdout):
-	'''Outputs the whole XML element.'''
+	"""Outputs the whole XML element."""
 	if len(self.element_tag()) > 0:
 	    self.emit_element_start(to)
 	    self.emit_name(to)
@@ -137,7 +137,7 @@ recognizedID = {}
 
 
 class Action(Base):
-    '''Part of State. The only Actions we care about are entry actions.''' 
+    """Part of State. The only Actions we care about are entry actions.""" 
     def __init__(self):
 	self.init()
     def element_tag(self): return 'entryaction'
@@ -150,8 +150,8 @@ recognizedID['action'] = Action
 
 
 class Action_Time(Base):
-    '''Part of State. Indicates when the action occurs; the only ones we
-    care about are entry actions.''' 
+    """Part of State. Indicates when the action occurs; the only ones we
+    care about are entry actions.""" 
     def __init__(self):
 	self.init()
 
@@ -294,7 +294,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 05a9764cea9b $',
+				 'cat2raw.py $Revision: c1888eabe585 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -368,8 +368,8 @@ class Parameter(Base):
 	self.init()
     def element_tag(self): return 'parameter'
     def emit_name(self, to):
-	'''Has to be a <parametername/> element to get special mode
-        processing.'''
+	"""Has to be a <parametername/> element to get special mode
+        processing."""
 	self.emit_single_element('parametername', self.object_name, to)
     def emit_contents(self, to):
 	self.emit_single_element('type', self.type, to)
@@ -397,15 +397,18 @@ class State_Machine(Base):
     def __init__(self):
 	self.init()
     def element_tag(self): return 'statemachine'
+    def emit_element_start(self, to):
+	"""There seems to be a bug in normalize-rose.tcl such that if
+	a statemacdhine has a 'generate="yes"' attribute *and* a
+	<name/> element, part of the XML gets output before the
+	<domain> start tag. ddf.ebs (aka extractor.ebs) doesn't output
+	the 'generate="yes"' attribute."""
+        to.write('<%s>\n' % self.element_tag())
     def emit_name(self, to):
-	# There seems to be a bug in normalize-rose.tcl such that if a
-	# statemacdhine has a 'generate="yes"' attribute *and* a
-	# <name/> element, part of the XML gets output before the
-	# <domain> start tag. ddf.ebs (aka extractor.ebs) doesn't
-	# output the 'generate="yes"' attribute, but the code
-	# generator doesn't use the <name/> so it seems easiest to
-	# omit the latter!
-	pass
+        """Only emit the name if it's not a Rose default
+        ('State/Activity Model*')."""
+	if not re.search(r'/', self.object_name):
+	    self.emit_single_element('name', self.object_name, to)
     def emit(self, to):
 	if self.stereotype and self.stereotype.lower() == 'generate':
 	    Base.emit(self, to)
@@ -425,7 +428,7 @@ class State_Machine(Base):
                     t.emit(to)
 	to.write('</transitions>\n')
     def state_named(self, n):
-        '''Returns the state named 'n'.'''
+        """Returns the state named 'n'."""
         for s in self.states:
             if s.object_name == n:
                 return s
@@ -559,7 +562,7 @@ for o in (
 #-----------------------------------------------------------------------
 
 def create_object(id):
-    '''The factory for creating objects of the class corresponding to the id.'''
+    """The factory for creating objects of the class corresponding to the id."""
     if id in recognizedID:
 	new = recognizedID[id]()
     else:
@@ -568,7 +571,7 @@ def create_object(id):
     return new
 
 def object_name(fqn):
-    '''Strips the leading model path from a fully qualified name.'''
+    """Strips the leading model path from a fully qualified name."""
     last_sep = fqn.rfind('::')
     if last_sep >= 0:
 	return fqn[last_sep + 2:]
@@ -590,8 +593,8 @@ def p_object(p):
     p[0].attributes = p[5]
 
 def p_qualifiers(p):
-    '''qualifiers : qualifier qualifiers
-                  | empty'''
+    """qualifiers : qualifier qualifiers
+                  | empty"""
     if len(p) == 3:
 	p[0] = (p[1],) + p[2]
     else:
@@ -602,16 +605,16 @@ def p_qualifier(p):
     p[0] = p[1]
 
 def p_reference(p):
-    '''reference : AMP INTNUM
-                 | empty'''
+    """reference : AMP INTNUM
+                 | empty"""
     if len(p) == 3:
 	p[0] = p[2]
     else:
 	p[0] = None
 
 def p_attributes(p):
-    '''attributes : attribute attributes
-                  | empty'''
+    """attributes : attribute attributes
+                  | empty"""
     if len(p) == 3:
 	p[0] = p[2]
 	n = p[1][0]
@@ -632,7 +635,7 @@ def p_attribute(p):
     p[0] = (p[1], p[2])
 
 def p_value(p):
-    '''value : QSTRING
+    """value : QSTRING
              | FLONUM
 	     | INTNUM
 	     | ID
@@ -641,7 +644,7 @@ def p_value(p):
 	     | value_list
 	     | reference
 	     | doclines
-	     | object'''
+	     | object"""
     p[0] = p[1]
 
 def p_location(p):
@@ -657,42 +660,42 @@ def p_value_list(p):
     p[0] = p[3]
 
 def p_doclines(p):
-    '''doclines : DOCLINE doclines
-                | DOCLINE'''
+    """doclines : DOCLINE doclines
+                | DOCLINE"""
     if len(p) == 3:
 	p[0] = p[1] + '\n' + p[2]
     else:
 	p[0] = p[1]
 
 def p_list_members(p):
-    '''list_members : objects
+    """list_members : objects
                     | locations
 		    | qstrings
-		    | empty'''
+		    | empty"""
     if p[1]:
 	p[0] = p[1]
     else:
 	p[0] = ()
 
 def p_objects(p):
-    '''objects : object objects
-               | object'''
+    """objects : object objects
+               | object"""
     if len(p) == 3:
 	p[0] = (p[1],) + p[2]
     else:
 	p[0] = (p[1],)
 
 def p_locations(p):
-    '''locations : location locations
-                 | location'''
+    """locations : location locations
+                 | location"""
     if len(p) == 3:
 	p[0] = (p[1],) + p[2]
     else:
 	p[0] = (p[1],)
 
 def p_qstrings(p):
-    '''qstrings : QSTRING qstrings
-                | QSTRING'''
+    """qstrings : QSTRING qstrings
+                | QSTRING"""
     if len(p) == 3:
 	p[0] = (p[1],) + p[2]
     else:
@@ -784,7 +787,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 05a9764cea9b $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: c1888eabe585 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        output this message\n')
