@@ -47,16 +47,16 @@ fails:: Bad_Model_Regressions.gen
 fails:: Bad_Code_Regressions.gen
 
 regression_tests$(exe): Regressions.gen force
-	gnatmake -P Regressions 2>&1 | tee --append regressions.log
+	gnatmake -PRegressions 2>&1 | tee --append regressions.log
 
 event_test-harness$(exe): Event_Test.gen force
-	gnatmake -P Event_Test 2>&1 | tee --append event_test.log
+	gnatmake -PEvent_Test 2>&1 | tee --append event_test.log
 
 hierarchies-harness$(exe): Hierarchies.gen force
-	gnatmake -P Hierarchies 2>&1 | tee --append hierarchies.log
+	gnatmake -PHierarchies 2>&1 | tee --append hierarchies.log
 
 stub_test_harness$(exe): Stub_Test_Interface.gen force
-	gnatmake -P Stub_Test 2>&1 | tee --append stub_test.log
+	gnatmake -PStub_Test 2>&1 | tee --append stub_test.log
 
 Regressions.gen: force
 	$(MAKE) -f $(parent) $@ 2>&1 | tee regressions.log
