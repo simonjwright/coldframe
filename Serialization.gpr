@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: Serialization.gpr,v $
---  $Revision: 271167f53722 $
---  $Date: 2004/07/26 05:28:55 $
---  $Author: simon $
+--  $Revision: 85ae2140d941 $
+--  $Date: 2005/06/11 06:49:54 $
+--  $Author: simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -35,7 +35,7 @@ project Serialization is
 
   for Exec_Dir use ".";
 
-  for Object_Dir use Options'Object_Dir;
+  for Object_Dir use Options'Object_Dir & "/main";
   package Ide renames Options.Ide;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;

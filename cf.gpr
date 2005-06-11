@@ -1,5 +1,5 @@
 --  Project file (GCC-3, GNAT-3.15) for ColdFrame
---  $Id: cf.gpr,v e8f9f750625f 2005/04/23 15:28:21 simonjwright $
+--  $Id: cf.gpr,v 85ae2140d941 2005/06/11 06:49:54 simonjwright $
 
 project CF is
 
@@ -7,7 +7,7 @@ project CF is
 
   for Source_Dirs use (Home & "/cf", Home & "/bc");
 
-  for Object_Dir use ".build";
+  for Object_Dir use ".build/main";
 
   for Exec_Dir use ".";
 

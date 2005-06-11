@@ -1,5 +1,5 @@
 --  GNAT project file for the TASH part of the Stairwell demonstration.
---  $Id: tash.gpr,v 38960f8e0d9a 2004/02/27 06:32:50 simon $
+--  $Id: tash.gpr,v 85ae2140d941 2005/06/11 06:49:54 simonjwright $
 
 project Tash is
 
@@ -12,7 +12,7 @@ project Tash is
 
   for Source_Dirs use (Tash_Src);
 
-  for Object_Dir use Build_Base;
+  for Object_Dir use Build_Base & "/main";
 
   package Builder is
      for Default_Switches ("Ada") use ("-g",
