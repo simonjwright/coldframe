@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 2ecfcb30bd3d 2005/04/30 07:59:07 simonjwright $ -->
+<!-- $Id: ada-serialization.xsl,v 8f3347117ecd 2005/06/11 06:48:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -169,17 +169,18 @@
              := "{domain}.{type}";
             R : Unbounded_String;
          begin
-            R := R & "<record name=""" & Name & """>" & ASCII.LF;
-            R := R & Base_Attribute_Image (S);
+            if ColdFrame.Project.Serialization.Deserialize then
+               R := R & "<record name=""" & Name & """>" & ASCII.LF;
+               R := R & Base_Attribute_Image (S);
 
-            R := R & "<field name=""{attr-name}"">";
-            R := R & S.Payload.{attr-name}'Img;
-            R := R & "</field>" & ASCII.LF;
+               R := R & "<field name=""{attr-name}"">";
+               R := R & S.Payload.{attr-name}'Img;
+               R := R & "</field>" & ASCII.LF;
 
-            ... other conversions, see se:image-of-type
+               ... other conversions, see se:image-of-type
 
-            R := R & "</record>";
-
+               R := R & "</record>";
+            end if;
             return To_String (R);
           end Image;
          -->
@@ -202,8 +203,10 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$II"/>
+    <xsl:text>if ColdFrame.Project.Serialization.Deserialize then&#10;</xsl:text>
+    <xsl:value-of select="$III"/>
     <xsl:text>R := R &amp; "&lt;record name=""" &amp; Name &amp; """&gt;" &amp; ASCII.LF;&#10;</xsl:text>
-    <xsl:value-of select="$II"/>
+    <xsl:value-of select="$III"/>
     <xsl:text>R := R &amp; Base_Attribute_Image (S);&#10;</xsl:text>
 
     <xsl:choose>
@@ -212,6 +215,7 @@
 
         <xsl:call-template name="se:image-of-type">
           <xsl:with-param name="type" select="."/>
+          <xsl:with-param name="indent" select="$III"/>
         </xsl:call-template>
 
       </xsl:when>
@@ -221,18 +225,23 @@
         <xsl:call-template name="se:image-of-type">
           <xsl:with-param name="type" select="."/>
           <xsl:with-param name="name" select="name"/>
+          <xsl:with-param name="indent" select="$III"/>
         </xsl:call-template>
 
       </xsl:otherwise>
 
     </xsl:choose>
 
-    <xsl:value-of select="$II"/>
+    <xsl:value-of select="$III"/>
     <xsl:text>R := R &amp; "&lt;/record&gt;";&#10;</xsl:text>
 
     <!-- attributes of 'there' types. -->
-    <xsl:call-template name="se:image-of-there-types"/>
+    <xsl:call-template name="se:image-of-there-types">
+      <xsl:with-param name="indent" select="$III"/>
+    </xsl:call-template>
 
+    <xsl:value-of select="$II"/>
+    <xsl:text>end if;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
     <xsl:text>return To_String (R);&#10;</xsl:text>
 
@@ -560,6 +569,8 @@
        {top-level-package}.{type}. -->
   <xsl:template name="se:image-of-there-types">
 
+    <xsl:param name="indent" select="$II"/>
+
     <xsl:for-each select="attribute">
 
       <xsl:if test="/domain/type[name=current()/type]/@serializable-there">
@@ -592,20 +603,20 @@
           </xsl:choose>
         </xsl:variable>
 
-        <xsl:value-of select="$II"/>
+        <xsl:value-of select="$indent"/>
         <xsl:text>R := R &amp; ASCII.LF &amp;&#10;</xsl:text>
-        <xsl:value-of select="$IIC"/>
+        <xsl:value-of select="concat($indent,$C)"/>
         <xsl:value-of select="$package"/>
         <xsl:text>.Serializable.Image&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
+        <xsl:value-of select="concat($indent,$I)"/>
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$package"/>
         <xsl:text>.Serializable.</xsl:text>
         <xsl:value-of select="$orig-type"/>
         <xsl:text>'&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
+        <xsl:value-of select="concat($indent,$I)"/>
         <xsl:text> (ColdFrame.Project.Serialization.Base (S)&#10;</xsl:text>
-        <xsl:value-of select="$III"/>
+        <xsl:value-of select="concat($indent,$I)"/>
         <xsl:text>  with Payload => S.Payload.</xsl:text>
         <xsl:value-of select="name"/>
         <xsl:text>));&#10;</xsl:text>

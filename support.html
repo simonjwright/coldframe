@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v d88e9b41b3ec 2005/05/08 11:28:14 simonjwright $ -->
+<!-- $Id: support.html,v 8f3347117ecd 2005/06/11 06:48:07 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -298,8 +298,9 @@ all other allocations.
 <p><dt><tt>ColdFrame.Project.Serialization</tt>
 
 <dd>Provides support for <i><a
-href="serialization.html">serializable</a></i> types; renames
-<tt>ColdFrame.Serialization</tt>,
+href="serialization.html">serializable</a></i> types; an instantiation of
+<tt>ColdFrame.Serialization_Signature</tt>
+using <tt>ColdFrame.Serialization</tt>,
 
 </dl>
 
@@ -320,6 +321,11 @@ time) are stored.
 <p><dt><tt>ColdFrame.Logging_Signature</tt>
 
 <dd>Specifies how error reports are logged.
+
+<p><dt><tt>ColdFrame.Serialization_Signature</tt>
+
+<dd>Specifies any user-defined extension to the serializable base
+type.
 
 <p><dt><tt>ColdFrame.Time_Signature</tt>
 

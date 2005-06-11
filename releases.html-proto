@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b9d8b9abbdea 2005/06/10 05:20:50 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 8f3347117ecd 2005/06/11 06:48:07 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -222,6 +222,16 @@ detected.
 
 <p>Making an association with a &#171;public&#187; class was never
 meant to be supported and now results in an error.
+
+
+<p>Floating point types are always generated as constrained subtypes,
+using <tt>'Base'First</tt> or <tt>'Base'Last</tt> as appropriate for
+omitted bounds.
+
+
+<p>It's possible to suppress the deserialization code in generated
+Image operations in a target-dependent way;
+see <tt>ColdFrame.Project.Serialization</tt>.
 
 
 <p><dt>20040319

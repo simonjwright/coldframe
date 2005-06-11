@@ -7,12 +7,25 @@
 
 --  ColdFrame expects this package to exist to support serialization.
 --
---  This is ColdFrame's default implementation.
+--  This is ColdFrame's default implementation, set to provide
+--  deserialization (ie, generated Image operations produce the
+--  XML-represented data, rather than an empty string).
+--
+--  To make target builds contain empty Image operations, with smaller
+--  executables and no unused code, set Deserialization_Required to a
+--  compile-time False; for example, if your target is a PowerPC and
+--  your host is an x86, make it 'System.Default_Bit_Order =
+--  System.Low_Order_First'.
 
 --  $RCSfile: coldframe-project-serialization.ads,v $
---  $Revision: c8e163a7f72b $
---  $Date: 2003/03/13 20:58:20 $
---  $Author: simon $
+--  $Revision: 8f3347117ecd $
+--  $Date: 2005/06/11 06:48:07 $
+--  $Author: simonjwright $
 
 with ColdFrame.Serialization;
-package ColdFrame.Project.Serialization renames ColdFrame.Serialization;
+with ColdFrame.Serialization_Signature;
+
+package ColdFrame.Project.Serialization
+is new ColdFrame.Serialization_Signature
+  (Actual_Base => ColdFrame.Serialization.Base,
+   Deserialization_Required => True);

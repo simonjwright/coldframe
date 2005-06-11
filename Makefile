@@ -378,6 +378,7 @@ coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
+coldframe-serialization_signature.ads \
 coldframe-stubs.adb \
 coldframe-stubs.ads \
 coldframe-time_signature.ads \
