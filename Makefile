@@ -124,19 +124,21 @@ OTHER_SCRIPTS = create-build-directories \
 	  >$@ \
 	  || (echo "Generation problem."; rm -f $@; exit 1)
 
-# Delete the target directory & all contents
-# create the target directory
-# gnatchop the .ada file
-# remove any generated files which are also present in the implementation
-# directory (.impl)
-# write-protect the generated files (careful, in case there are a lot of them!)
-# make the target directory itself writable (so users can delete files in it)
-# report unimplemented bodies
+# Delete the target directory & all contents.
+# Create the target directory.
+# Gnatchop the .ada file; allow overwrites (in case user-suplied
+# additional processing steps generate actual implementations). Allow
+# "failure" because GNAT 3.16a1 reports an error here.
+# Remove any generated files which are also present in the implementation
+# directory (.impl).
+# Write-protect the generated files (careful, in case there are a lot of them!).
+# Make the target directory itself writable (so users can delete files in it).
+# Report unimplemented bodies.
 %.gen: %.ada
 	@echo generating $@ ...
 	@-rm -rf $@
 	@mkdir $@
-	@gnatchop -w $(CHOP_VERBOSE) $< $@
+	@-gnatchop -w $(CHOP_VERBOSE) $< $@
 	@([ -d $*.impl ] && \
 	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
