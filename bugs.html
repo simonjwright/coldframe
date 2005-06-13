@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8f3347117ecd 2005/06/11 06:48:07 simonjwright $ -->
+<!-- $Id: bugs.html,v 2ae6b910330b 2005/06/13 21:31:16 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,11 +192,24 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<!-- next: 0314 -->
+<!-- next: 0315 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>13.vi.05</h3>
+
+<dl>
+
+<dt>0314 (raised 13.vi.05)
+
+<dd>The body code generated for the Create and Find operations of a
+many-to-many reflexive association doesn't compile (it uses the same
+parameter name for each role).
+<br>SourceForge 1219816
+
+</dl>
 
 <h3>11.vi.05</h3>
 
