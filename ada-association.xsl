@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 96a7d86ef933 2005/05/18 19:26:41 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v 8faf8a6104f2 2005/06/13 21:29:53 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -397,7 +397,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$r1/classname]"/>
+                        [@relation=$n
+                         and @refers=$r1/classname
+                         and @role=$r1/name]"/>
             </xsl:call-template>
             <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r1/name"/>
@@ -409,7 +411,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$r2/classname]"/>
+                        [@relation=$n
+                         and @refers=$r2/classname
+                         and @role=$r2/name]"/>
             </xsl:call-template>
             <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r2/name"/>
@@ -686,7 +690,9 @@
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
-                      [@relation=$n and @refers=$r1/classname]"/>
+                      [@relation=$n
+                       and @refers=$r1/classname
+                       and @role=$r1/name]"/>
           </xsl:call-template>
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r1/name"/>
@@ -698,7 +704,9 @@
             <xsl:with-param
               name="a"
               select="/domain/class/attribute
-                      [@relation=$n and @refers=$r2/classname]"/>
+                      [@relation=$n
+                       and @refers=$r2/classname
+                       and @role=$r2/name]"/>
           </xsl:call-template>
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r2/name"/>
