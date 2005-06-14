@@ -591,6 +591,7 @@ Regressions.impl/regressions-pt_holder.adb \
 Regressions.impl/regressions-pt_owner-get_h_access.adb \
 Regressions.impl/regressions-pt_user-get_state.adb \
 Regressions.impl/regressions-pt_user-set_state.adb \
+Regressions.impl/regressions-rule-create.adb \
 Regressions.impl/regressions-self_immolator-t.adb \
 Regressions.impl/regressions-self_immolator-terminate_self.adb \
 Regressions.impl/regressions-self_immolator-terminate_yourself.adb \
