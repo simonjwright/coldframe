@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 8faf8a6104f2 2005/06/13 21:29:53 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v af60b222ea8f 2005/06/14 20:15:00 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -458,7 +458,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$single-role/classname]"/>
+                        [@relation=$n
+                         and @refers=$single-role/classname
+                         and @role=$single-role/name]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -498,7 +500,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$non-source-role/classname]"/>
+                        [@relation=$n
+                         and @refers=$non-source-role/classname
+                         and @role=$non-source-role/name]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -593,7 +597,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$src/classname]"/>
+                        [@relation=$n
+                         and @refers=$src/classname
+                         and @role=$src/name]"/>
             </xsl:call-template>
             <xsl:text> (</xsl:text>
             <xsl:value-of select="$dst/name"/>
@@ -611,7 +617,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$src/classname]"/>
+                        [@relation=$n
+                         and @refers=$src/classname
+                         and @role=$src/name]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -733,6 +741,7 @@
               select="/domain/class/attribute
                       [@relation=$n
                       and @refers=$multiple-role/classname
+                      and @role=$multiple-role/name
                       and @identifier]"/>
             <!-- NB, had to be careful here because of possible reflexive
                  associations. -->
@@ -879,7 +888,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$src/classname]"/>
+                        [@relation=$n
+                         and @refers=$src/classname
+                         and @role=$src/name]"/>
             </xsl:call-template>
             <xsl:text> (</xsl:text>
             <xsl:value-of select="$dst/name"/>
@@ -897,7 +908,9 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n and @refers=$src/classname]"/>
+                        [@relation=$n 
+                         and @refers=$src/classname
+                         and @role=$src/name]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -1318,7 +1331,9 @@
         <xsl:with-param
           name="a"
           select="/domain/class/attribute
-                  [@relation=$n and @refers=$role-a/classname]"/>
+                  [@relation=$n
+                   and @refers=$role-a/classname
+                   and @role=$role-a/name]"/>
       </xsl:call-template>
       <xsl:text> (This);&#10;</xsl:text>
       <xsl:value-of select="$III"/>
@@ -1412,7 +1427,9 @@
           <xsl:with-param
             name="a"
             select="/domain/class/attribute
-                    [@relation=$n and @refers=$role-b/classname]"/>
+                    [@relation=$n
+                     and @refers=$role-b/classname
+                     and @role=$role-b/name]"/>
         </xsl:call-template>
         <xsl:text> (</xsl:text>
         <xsl:value-of
@@ -1469,7 +1486,9 @@
       <xsl:with-param
         name="a"
         select="/domain/class/attribute
-                [@relation=$n and @refers=$role-b/classname]"/>
+                [@relation=$n
+                 and @refers=$role-b/classname
+                 and @role=$role-b/name]"/>
     </xsl:call-template>
     <xsl:text> (</xsl:text>
     <xsl:value-of
@@ -1554,7 +1573,9 @@
       <xsl:with-param
         name="a"
         select="/domain/class/attribute
-                [@relation=$n and @refers=$role-a/classname]"/>
+                [@relation=$n
+                 and @refers=$role-a/classname
+                 and @role=$role-a/name]"/>
     </xsl:call-template>
     <xsl:text> (This);&#10;</xsl:text>
     <xsl:value-of select="$III"/>
