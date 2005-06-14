@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 423de3be7ea1 2005/06/13 21:14:28 simonjwright $
+--  $Id: regressions-suite.adb,v e9a579990073 2005/06/14 20:10:03 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -14,18 +14,22 @@ with ColdFrame.Project.Serialization;
 with ColdFrame.Project.Times;
 with System.Assertions;
 
-with Regressions.Callback_Type_Callback;
 with Regressions.CB_Callback;
-with Regressions.Events;
+with Regressions.Callback_Type_Callback;
 with Regressions.Event_Holder;
+with Regressions.Events;
 with Regressions.Exception_In_Event_Handler;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
 with Regressions.PT_User;
+with Regressions.Preemptable_Test.Collections;
+with Regressions.Preemptable_Test.Iterate;
+with Regressions.Rule;
 with Regressions.Self_Immolator;
 with Regressions.Serializable;
 with Regressions.Tear_Down;
+with Regressions.Test_Preemption;
 
 --  The following units only have to compile
 
@@ -1194,6 +1198,137 @@ package body Regressions.Suite is
    package Long_Numeric_Overflow
    is new Numeric_Overflow (Furlongs, "Long_Numeric_Overflow");
 
+
+   package Reflexive_Associations is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Reflexive_Associations;
+
+   package body Reflexive_Associations is
+
+      type Tests is array (Test_Name) of Boolean;
+
+      function Conflicts (From : Test_Name) return Tests;
+      function Conflicts (From : Test_Name) return Tests is
+         procedure Note (H : Preemptable_Test.Handle);
+         procedure Note  is new Preemptable_Test.Iterate (Note);
+         Result : Tests := (others => False);
+         procedure Note (H : Preemptable_Test.Handle) is
+         begin
+            Result (Preemptable_Test.Get_Name (H)) := True;
+         end Note;
+      begin
+         Note (Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
+                 (Preemptable_Test.Find ((Name => From))));
+         return Result;
+      end Conflicts;
+
+      function Image (T : Tests) return String;
+      function Image (T : Tests) return String is
+         Result : String (1 .. 7) := (others => ' ');
+      begin
+         for C in T'Range loop
+            if T (C) then
+               declare
+                  I : String renames C'Img;
+               begin
+                  Result (Test_Name'Pos (C) + 1) := I (1);
+               end;
+            end if;
+         end loop;
+         return Result;
+      end Image;
+
+      procedure Check_Associations (Cs : in out Test_Case'Class);
+      procedure Check_Associations (Cs : in out Test_Case'Class) is
+         pragma Warnings (Off, Cs);
+         T : Preemptable_Test.Collections.Collection;
+      begin
+         T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
+           (Preemptable_Test.Find ((Name => A)));
+         Assert (Preemptable_Test.Collections.Length (T) = 2,
+                 "wrong count from A: "
+                   & Preemptable_Test.Collections.Length (T)'Img);
+         T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
+           (Preemptable_Test.Find ((Name => B)));
+         Assert (Preemptable_Test.Collections.Length (T) = 1,
+                 "wrong count from B: "
+                   & Preemptable_Test.Collections.Length (T)'Img);
+         T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
+           (Preemptable_Test.Find ((Name => C)));
+         Assert (Preemptable_Test.Collections.Length (T) = 2,
+                 "wrong count from C: "
+                   & Preemptable_Test.Collections.Length (T)'Img);
+         T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
+           (Preemptable_Test.Find ((Name => D)));
+         Assert (Preemptable_Test.Collections.Length (T) = 0,
+                 "wrong count from D: "
+                   & Preemptable_Test.Collections.Length (T)'Img);
+         Assert (Conflicts (A) = Tests'(E | F => True, others => False),
+                 "bad conflicts with A: " & Image (Conflicts (A)));
+         Assert (Conflicts (B) = Tests'(F => True, others => False),
+                 "bad conflicts with B: "& Image (Conflicts (B)));
+         Assert (Conflicts (C) = Tests'(F | G => True, others => False),
+                 "bad conflicts with C: "& Image (Conflicts (C)));
+         Assert (Conflicts (D) = Tests'(others => False),
+                 "bad conflicts with D: "& Image (Conflicts (D)));
+      end Check_Associations;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Reflexive_Associations.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Check_Associations'Access,
+            "check associations");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+         Rule.Create
+           (Preempter => A,
+            Preemptee => E,
+            Preempts => False);
+         Rule.Create
+           (Preempter => A,
+            Preemptee => F,
+            Preempts => True);
+         Rule.Create
+           (Preempter => B,
+            Preemptee => F,
+            Preempts => True);
+         Rule.Create
+           (Preempter => Regressions.C,
+            Preemptee => F,
+            Preempts => False);
+         Rule.Create
+           (Preempter => Regressions.C,
+            Preemptee => G,
+            Preempts => True);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Tear_Down;
+      end Tear_Down;
+
+   end Reflexive_Associations;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -1217,6 +1352,8 @@ package body Regressions.Suite is
                                   new Short_Numeric_Overflow.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Long_Numeric_Overflow.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Reflexive_Associations.Case_1);
       return Result;
    end Suite;
 
