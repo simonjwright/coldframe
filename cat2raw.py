@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v c1888eabe585 2005/06/10 05:00:12 simonjwright $
+# $Id: cat2raw.py,v 689d6af6e0ca 2005/06/15 19:36:41 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -294,7 +294,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	t = datetime.datetime.today()
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: c1888eabe585 $',
+				 'cat2raw.py $Revision: 689d6af6e0ca $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', t.year, to)
@@ -787,11 +787,13 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: c1888eabe585 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 689d6af6e0ca $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
-	sys.stderr.write('-h, --help:        output this message\n')
-	sys.stderr.write('-o, --output=FILE: the output file\n')
+	sys.stderr.write('-h, --help:        '
+			 + 'output this message\n')
+	sys.stderr.write('-o, --output=FILE: '
+			 + 'the output file (default is domain_name.raw\n')
 
     try:
         opts, args = getopt.getopt\
@@ -812,6 +814,11 @@ def main():
 	    sys.exit()
 	if o in ('-o', '--output'):
 	    output = open(v, 'w')
+	    try:
+		output = open(v, 'w')
+	    except:
+		sys.stderr.write("couldn't open %s for output.\n" % v)
+		sys.exit(1)
 
     if len(args) > 1:
         usage()
@@ -821,7 +828,7 @@ def main():
 	try:
 	    input = open(path, 'r')
 	except:
-	    sys.stderr.write("couldn't open %s.\." % path)
+	    sys.stderr.write("couldn't open %s for input.\n" % path)
 	    sys.exit(1)
 
     # create the lexer
@@ -836,6 +843,15 @@ def main():
     # recursively load any child domains
     d.load_children(path)
     # output
+    # by default, the output is to "the domain's normalized name".raw
+    if output == sys.stdout:
+	n = re.sub(r'\s+', '_', d.object_name.strip()) + '.raw'
+	try:
+	    output = open(n, 'w')
+	except:
+	    sys.stderr.write("couldn't open %s for output.\n" % n)
+	    sys.exit(1)
+
     d.emit(output)
     output.close()
 
