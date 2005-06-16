@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v e9a579990073 2005/06/14 20:10:03 simonjwright $
+--  $Id: regressions-suite.adb,v c5e63bfdf8e6 2005/06/16 19:16:08 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -58,6 +58,7 @@ with Regressions.Public_With_Attributes;
 with Regressions.Public_Without_Attributes;
 with Regressions.Renaming_Operations_Child;
 with Regressions.Renaming_Operations_Parent;
+with Regressions.Service_History;
 with Regressions.Singleton_With_Attributes;
 with Regressions.Singleton_With_Referential_Attribute;
 with Regressions.Singleton_Without_Attributes;
@@ -89,6 +90,7 @@ pragma Warnings (Off, Regressions.Public_With_Attributes);
 pragma Warnings (Off, Regressions.Public_Without_Attributes);
 pragma Warnings (Off, Regressions.Renaming_Operations_Child);
 pragma Warnings (Off, Regressions.Renaming_Operations_Parent);
+pragma Warnings (Off, Regressions.Service_History);
 pragma Warnings (Off, Regressions.Singleton_With_Attributes);
 pragma Warnings (Off, Regressions.Singleton_With_Referential_Attribute);
 pragma Warnings (Off, Regressions.Singleton_Without_Attributes);
