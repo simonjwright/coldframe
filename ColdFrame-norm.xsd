@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v f4d00859e0f3 2005/05/08 11:34:11 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v ee93b622b4c7 2005/06/16 19:30:20 simonjwright $ -->
 
 <!-- 
 
@@ -182,10 +182,13 @@
 
   <!--
        Note, this is not at all precise.
-       Ordinary attributes must have name/type/[documentation] & may have
-       @identifier, @class, @refers+@relation, @visibility.
+       Ordinary attributes must have name, type, [documentation] & may have
+       @identifier, @class, @visibility.
        Referential attributes have @refers, @relation, @role & optionally
-       @identifier.
+       @identifier but no name.
+       Referential attributes which exist already (identifying
+       attributes with (formalizes}) have @refers, @relation,
+       @identifier and name, type, [documentation].
        -->
   <xsd:element name="attribute">
     <xsd:complexType>
