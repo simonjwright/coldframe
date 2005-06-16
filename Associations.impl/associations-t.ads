@@ -1,3 +1,4 @@
+pragma Warnings (Off);
 with Associations.Abp1.From_Collections;
 with Associations.Abp2.From_Collections;
 with Associations.Abp3.From_Collections;
@@ -23,6 +24,5 @@ with Associations.Sbc3;
 with Associations.Sbc4;
 with Associations.Sbc5;
 with Associations.Sbc6;
-private package Associations.T is
-end Associations.T;
+private procedure Associations.T;
 
