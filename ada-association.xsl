@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v af60b222ea8f 2005/06/14 20:15:00 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v e66432c8ff34 2005/06/16 19:24:15 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -399,7 +399,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$r1/classname
-                         and @role=$r1/name]"/>
+                         and (not(@role) or @role=$r1/name)]"/>
             </xsl:call-template>
             <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r1/name"/>
@@ -413,7 +413,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$r2/classname
-                         and @role=$r2/name]"/>
+                         and (not(@role) or @role=$r2/name)]"/>
             </xsl:call-template>
             <xsl:text> => Handle (</xsl:text>
             <xsl:value-of select="$r2/name"/>
@@ -460,7 +460,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$single-role/classname
-                         and @role=$single-role/name]"/>
+                         and (not(@role) or @role=$single-role/name)]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -502,7 +502,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$non-source-role/classname
-                         and @role=$non-source-role/name]"/>
+                         and (not(@role) or @role=$non-source-role/name)]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -599,7 +599,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$src/classname
-                         and @role=$src/name]"/>
+                         and (not(@role) or @role=$src/name)]"/>
             </xsl:call-template>
             <xsl:text> (</xsl:text>
             <xsl:value-of select="$dst/name"/>
@@ -619,7 +619,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$src/classname
-                         and @role=$src/name]"/>
+                         and (not(@role) or @role=$src/name)]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -700,7 +700,7 @@
               select="/domain/class/attribute
                       [@relation=$n
                        and @refers=$r1/classname
-                       and @role=$r1/name]"/>
+                       and (not(@role) or @role=$r1/name)]"/>
           </xsl:call-template>
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r1/name"/>
@@ -714,7 +714,7 @@
               select="/domain/class/attribute
                       [@relation=$n
                        and @refers=$r2/classname
-                       and @role=$r2/name]"/>
+                       and (not(@role) or @role=$r2/name)]"/>
           </xsl:call-template>
           <xsl:text> => Handle (</xsl:text>
           <xsl:value-of select="$r2/name"/>
@@ -890,7 +890,7 @@
                 select="/domain/class/attribute
                         [@relation=$n
                          and @refers=$src/classname
-                         and @role=$src/name]"/>
+                         and (not(@role) or @role=$src/name)]"/>
             </xsl:call-template>
             <xsl:text> (</xsl:text>
             <xsl:value-of select="$dst/name"/>
@@ -910,7 +910,7 @@
                 select="/domain/class/attribute
                         [@relation=$n 
                          and @refers=$src/classname
-                         and @role=$src/name]"/>
+                         and (not(@role) or @role=$src/name)]"/>
             </xsl:call-template>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$IIC"/>
@@ -1333,7 +1333,7 @@
           select="/domain/class/attribute
                   [@relation=$n
                    and @refers=$role-a/classname
-                   and @role=$role-a/name]"/>
+                   and (not(@role) or @role=$role-a/name)]"/>
       </xsl:call-template>
       <xsl:text> (This);&#10;</xsl:text>
       <xsl:value-of select="$III"/>
@@ -1429,7 +1429,7 @@
             select="/domain/class/attribute
                     [@relation=$n
                      and @refers=$role-b/classname
-                     and @role=$role-b/name]"/>
+                     and (not(@role) or @role=$role-b/name)]"/>
         </xsl:call-template>
         <xsl:text> (</xsl:text>
         <xsl:value-of
@@ -1488,7 +1488,7 @@
         select="/domain/class/attribute
                 [@relation=$n
                  and @refers=$role-b/classname
-                 and @role=$role-b/name]"/>
+                 and (not(@role) or @role=$role-b/name)]"/>
     </xsl:call-template>
     <xsl:text> (</xsl:text>
     <xsl:value-of
@@ -1575,7 +1575,7 @@
         select="/domain/class/attribute
                 [@relation=$n
                  and @refers=$role-a/classname
-                 and @role=$role-a/name]"/>
+                 and (not(@role) or @role=$role-a/name)]"/>
     </xsl:call-template>
     <xsl:text> (This);&#10;</xsl:text>
     <xsl:value-of select="$III"/>
