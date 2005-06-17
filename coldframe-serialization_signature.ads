@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-serialization_signature.ads,v $
---  $Revision: 953977342342 $
---  $Date: 2005/06/11 05:48:42 $
+--  $Revision: a47004786a59 $
+--  $Date: 2005/06/17 05:20:20 $
 --  $Author: simonjwright $
 
 --  This package specifies the support required for {serializable}
@@ -29,6 +29,9 @@
 --
 --  The package ColdFrame.Project.Serialization should be an
 --  instantiation of this package.
+--
+--  Alternatively, it could be a re-implementation of that package
+--  with the addition of the Deserialize constant.
 
 with ColdFrame.Serialization;
 
