@@ -1,4 +1,4 @@
-<!-- $Id: active-classes.html,v 661bdae16b13 2005/05/21 09:36:41 simonjwright $ -->
+<!-- $Id: active-classes.html,v 0cb3a4e597e9 2005/06/28 15:46:03 simonjwright $ -->
 <head>
 <title>ColdFrame: Active Classes</title>
 </head>
@@ -124,16 +124,16 @@ processing and when it has to have completed).
 <h2>Modelling</h2>
 
 <p>You specify a class as active by marking it with the stereotype
-«active» or, if preferred, by setting the Concurrency attribute in the
+&#171;active&#187; or, if preferred, by setting the Concurrency attribute in the
 Detail tab of the Rose specification dialog box to <i>Active</i> (which is
 less immediately visible).
 
 <p>Procedure operations (ie, those without a return value) of an
-active class can be stereotyped «entry»; see <a
+active class can be stereotyped &#171;entry&#187;; see <a
 href="http://www.adaic.org/standards/95lrm/html/RM-9-5.html">ARM
 9.5</a> for a discussion on entries.
 
-<p>It is permitted for an «entry» operation to have the same name as
+<p>It is permitted for an &#171;entry&#187; operation to have the same name as
 an ordinary operation.
 
 <p>You can specify the run-time priority of the task using the tag
@@ -151,17 +151,21 @@ an ordinary operation.
 
 <h2>Translation</h2>
 
-<p>Each instance of an «active» class has an associated task. The
+<p>Each instance of an &#171;active&#187; class has an associated task. The
 task's name, if supported by the operating system, is
 <tt><i>Domain.Class</i></tt>.
 
 <p>You access the task using <tt>This.The_T</tt>; so if there is an
-<i>«entry» Start</i>, you would call it as <tt>This.The_T.Start</tt>.
+<i>&#171;entry&#187; Start</i>, you would call it as <tt>This.The_T.Start</tt>.
 
-<p>If an «entry» operation's visibility is <i>public</i> or
-<i>protected</i>, it is implemented as a public entry; otherwise as a
-private entry. You would use this for <a
+<p>If a &#171;protected&#187; type's &#171;entry&#187; operation's
+visibility is <i>public</i> or <i>protected</i>, it is implemented as
+a public entry; otherwise as a private entry. You would use this
+for <a
 href="http://www.adaic.com/standards/95aarm/html/AA-9-5-4.html">requeuing</a>.
+
+<p>The visibility of task entries is always public (but only to the
+class in which it's defined).
 
 <h2>Use</h2>
 
@@ -177,7 +181,7 @@ complains use a view conversion:
 
 <h3>Deleting the instance</h3>
 
-<p>The generated <tt>Delete</tt> operation of an «active» class aborts
+<p>The generated <tt>Delete</tt> operation of an &#171;active&#187; class aborts
 the task before freeing the task and instance memory. This means that
 if you call <tt>Delete</tt> from the task you are pulling the rug from
 under your feet!
@@ -190,8 +194,10 @@ will <tt>Delete</tt> the instance when it fires.
 <p>Some examples of this idiom have posted the event to run after a
 delay. This should not be necessary.
 
-<p>To avoid the need for a special state machine, a <i>«class
-event»</i> should be used.
+<p>To avoid the need for a special state machine, a <i>&#171;class
+event&#187;</i> should be used (if there can be more than one
+instance, it will need a parameter of type <i>Class</i>, translating
+to <tt>Handle</tt>, to indicate which instance is to be deleted).
 
 
 <p><hr>
