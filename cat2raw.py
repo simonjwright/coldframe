@@ -14,14 +14,14 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 689d6af6e0ca 2005/06/15 19:36:41 simonjwright $
+# $Id: cat2raw.py,v 7de98c12a1c4 2005/06/30 05:24:11 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
 # Uses PLY (http://savannah.nongnu.org/projects/ply/).
 
 import lex, yacc
-import datetime, getopt, os, re, sys
+import time, getopt, os, re, sys
 
 #-----------------------------------------------------------------------
 # Object model
@@ -251,8 +251,8 @@ class Domain(Base):
     def element_tag(self): return 'domain'
     def load(self, path):
 	"""This is an unloaded Domain.
-	'path' is the filename of the parent CAT file; CURDIR is relative
-	to (the directory part of path."""
+	'path' is the filename of the parent CAT file; CURDIR is the
+	 directory part of path."""
 	filename = re.sub(r'^\$CURDIR', os.path.dirname(path), self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
 	#sys.stderr.write('  filename is %s\n' % filename)
@@ -270,7 +270,8 @@ class Domain(Base):
 	self.attributes = domain.attributes
     def load_children(self, path):
 	"""Loads all the child packages.
-	'model' is the directory where the .mdl file lives (CURDIR)."""
+	'path' is the filename of the current .cat file (whose
+	directory component is CURDIR)."""
 	if self.logical_models != None:
 	    for o in self.logical_models:
 		if o.__class__ == Domain and o.is_loaded == 'FALSE':
@@ -292,15 +293,16 @@ class Domain(Base):
 	    c.emit_recursive(op, to)
 	    #sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
-	t = datetime.datetime.today()
+	t = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 689d6af6e0ca $',
+				 'cat2raw.py $Revision: 7de98c12a1c4 $',
 				 to)
 	to.write('<date>\n')
-	self.emit_single_element('year', t.year, to)
-	self.emit_single_element('month', t.month, to)
-	self.emit_single_element('day', t.day, to)
-	self.emit_single_element('time', '%02d:%02d' % (t.hour, t.minute), to)
+	self.emit_single_element('year', t.tm_year, to)
+	self.emit_single_element('month', t.tm_mon, to)
+	self.emit_single_element('day', t.tm_mday, to)
+	self.emit_single_element('time',
+				 '%02d:%02d' % (t.tm_hour, t.tm_min), to)
 	to.write('</date>\n')
 	to.write('<classes>\n')
 	self.emit_recursive(self.emit_classes, to)
@@ -313,17 +315,17 @@ class Domain(Base):
 	for i in self.logical_models:
 	    if isinstance(i, Class):
 		i.emit(to)
-    emit_classes = staticmethod(emit_classes)
+    emit_classes = Callable(emit_classes)
     def emit_associations(self, to):
 	for i in self.logical_models:
 	    if isinstance(i, Association):
 		i.emit(to)
-    emit_associations = staticmethod(emit_associations)
+    emit_associations = Callable(emit_associations)
     def emit_inheritances(self, to):
 	for i in self.logical_models:
 	    if i.superclasses:
 		i.emit_inheritance(to)
-    emit_inheritances = staticmethod(emit_inheritances)
+    emit_inheritances = Callable(emit_inheritances)
 
 recognizedID['Class_Category'] = Domain
 
@@ -561,6 +563,12 @@ for o in (
 # Utilities
 #-----------------------------------------------------------------------
 
+class Callable:
+    '''Jython doesn't have staticmethod(), so this acts as a replacement.
+    See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52304'''
+    def __init__(self, anycallable):
+	self.__call__ = anycallable
+
 def create_object(id):
     """The factory for creating objects of the class corresponding to the id."""
     if id in recognizedID:
@@ -787,7 +795,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 689d6af6e0ca $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 7de98c12a1c4 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        '
