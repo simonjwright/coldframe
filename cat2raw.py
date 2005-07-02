@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 7de98c12a1c4 2005/06/30 05:24:11 simonjwright $
+# $Id: cat2raw.py,v 0eda0be00cae 2005/07/02 05:16:28 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -22,6 +22,12 @@
 
 import lex, yacc
 import time, getopt, os, re, sys
+
+class Callable:
+    '''Jython doesn't have staticmethod(), so this acts as a replacement.
+    See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52304'''
+    def __init__(self, anycallable):
+	self.__call__ = anycallable
 
 #-----------------------------------------------------------------------
 # Object model
@@ -48,7 +54,7 @@ class Base:
 	        return self.qualifiers[0]
             else:
                 return None;
-	elif n in self.attributes:
+	elif self.attributes.has_key(n):
 	    return self.attributes[n]
 	else:
 	    return None
@@ -74,7 +80,7 @@ class Base:
 	"""Outputs the trailing </element>."""
 	to.write('</%s>\n' % self.element_tag())
     def emit_documentation(self, to):
-	if 'documentation' in self.attributes:
+	if self.attributes.has_key('documentation'):
 	    to.write('<documentation><![CDATA[ %s ]]></documentation>\n' %
 		     self.attributes['documentation'])
 	else:
@@ -119,7 +125,7 @@ class Base:
 	to.write('</%s>\n' % list)
     def emit_attribute_list(self, attribute, to):
 	"""Outputs all the <attribute/> XMLelements."""
-	if attribute in self.attributes:
+	if self.attributes.has_key(attribute):
 	    for i in self.attributes[attribute]:
 		i.emit(to)
     def emit(self, to=sys.stdout):
@@ -293,16 +299,16 @@ class Domain(Base):
 	    c.emit_recursive(op, to)
 	    #sys.stderr.write('.. leaving %s\n' % c.object_name)
     def emit_contents(self, to):
-	t = time.localtime(time.time())
+	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 7de98c12a1c4 $',
+				 'cat2raw.py $Revision: 0eda0be00cae $',
 				 to)
 	to.write('<date>\n')
-	self.emit_single_element('year', t.tm_year, to)
-	self.emit_single_element('month', t.tm_mon, to)
-	self.emit_single_element('day', t.tm_mday, to)
+	self.emit_single_element('year', yr, to)
+	self.emit_single_element('month', mo, to)
+	self.emit_single_element('day', dy, to)
 	self.emit_single_element('time',
-				 '%02d:%02d' % (t.tm_hour, t.tm_min), to)
+				 '%02d:%02d' % (hr, mn), to)
 	to.write('</date>\n')
 	to.write('<classes>\n')
 	self.emit_recursive(self.emit_classes, to)
@@ -563,15 +569,9 @@ for o in (
 # Utilities
 #-----------------------------------------------------------------------
 
-class Callable:
-    '''Jython doesn't have staticmethod(), so this acts as a replacement.
-    See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52304'''
-    def __init__(self, anycallable):
-	self.__call__ = anycallable
-
 def create_object(id):
     """The factory for creating objects of the class corresponding to the id."""
-    if id in recognizedID:
+    if recognizedID.has_key(id):
 	new = recognizedID[id]()
     else:
 	sys.stderr.write("didn't recognise object ID %s.\n" % id)
@@ -795,7 +795,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 7de98c12a1c4 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 0eda0be00cae $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:        '
