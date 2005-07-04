@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 6adef7a2abd0 $}
+|{ revision = $Revision: 762916f478f5 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -5374,7 +5374,11 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0
-			    quidu      	"42C9245D0302"))))
+			    quidu      	"42C9245D0302"))
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "i"
+			    quid       	"42C98AF60100"
+			    type       	"Integer"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"412DFAE50329"
@@ -5557,7 +5561,7 @@
 				fill_color 	16777215
 				anchor     	2
 				nlines     	6
-				max_width  	443)
+				max_width  	450)
 			    width      	464
 			    height     	398
 			    annotation 	8
@@ -5619,7 +5623,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@144
-				location   	(1514, 202)
+				location   	(1514, 180)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	462
@@ -5627,7 +5631,7 @@
 				label      	"Another Protected Type")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@144
-				location   	(1514, 157)
+				location   	(1514, 135)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -5640,7 +5644,7 @@
 			    quidu      	"42C96F710190"
 			    compartment 	(object Compartment
 				Parent_View 	@144
-				location   	(1514, 258)
+				location   	(1514, 236)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -5653,10 +5657,10 @@
 				icon_style 	"Icon"
 				fill_color 	13434879
 				anchor     	2
-				nlines     	3
+				nlines     	4
 				max_width  	398)
 			    width      	480
-			    height     	264
+			    height     	308
 			    annotation 	8
 			    autoResize 	TRUE)))))
 	(object Class_Category "Unsigned types"
@@ -9485,7 +9489,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 6adef7a2abd0 $}
+|{ revision = $Revision: 762916f478f5 $}
 	    
 	    zoom       	88
 	    max_height 	28350
@@ -9531,7 +9535,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 6adef7a2abd0 2005/07/04 19:06:03 simonjwright $")
+		    label      	"$Id: Regressions.cat,v 762916f478f5 2005/07/04 19:18:13 simonjwright $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @249
 		    location   	(301, 318)
 		    font       	(object Font
@@ -9545,7 +9549,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@249
-			location   	(141, 281)
+			location   	(141, 279)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	320
@@ -9579,7 +9583,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@250
-			location   	(523, 283)
+			location   	(523, 281)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	384
@@ -9613,7 +9617,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@251
-			location   	(966, 281)
+			location   	(966, 279)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	472
@@ -9647,7 +9651,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@252
-			location   	(1521, 273)
+			location   	(1521, 271)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	380
@@ -9681,7 +9685,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@253
-			location   	(2297, 498)
+			location   	(2297, 496)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	500
@@ -9715,7 +9719,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@254
-			location   	(144, 566)
+			location   	(144, 564)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -9749,7 +9753,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@255
-			location   	(538, 571)
+			location   	(538, 569)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	544
@@ -9783,7 +9787,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@256
-			location   	(1305, 580)
+			location   	(1305, 578)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	294
@@ -9817,7 +9821,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@257
-			location   	(168, 865)
+			location   	(168, 863)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -9851,7 +9855,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@258
-			location   	(588, 873)
+			location   	(588, 871)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -9885,7 +9889,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@259
-			location   	(1003, 883)
+			location   	(1003, 881)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	632
@@ -9919,7 +9923,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@260
-			location   	(178, 1163)
+			location   	(178, 1161)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -9953,7 +9957,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@261
-			location   	(598, 1168)
+			location   	(598, 1166)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -9987,7 +9991,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@262
-			location   	(1218, 1176)
+			location   	(1218, 1174)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	394
@@ -10021,7 +10025,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@263
-			location   	(186, 1471)
+			location   	(186, 1469)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10055,7 +10059,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@264
-			location   	(588, 1481)
+			location   	(588, 1479)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	354
@@ -10089,7 +10093,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@265
-			location   	(1128, 1471)
+			location   	(1128, 1469)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	346
@@ -10123,7 +10127,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@266
-			location   	(1593, 1468)
+			location   	(1593, 1466)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
@@ -10157,7 +10161,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@267
-			location   	(184, 1743)
+			location   	(184, 1741)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10191,7 +10195,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@268
-			location   	(593, 1749)
+			location   	(593, 1747)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	434
@@ -10225,7 +10229,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@269
-			location   	(1151, 1743)
+			location   	(1151, 1741)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10259,7 +10263,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@270
-			location   	(1619, 1751)
+			location   	(1619, 1749)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10293,7 +10297,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@271
-			location   	(76, 2019)
+			location   	(76, 2017)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	478
@@ -10327,7 +10331,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@272
-			location   	(649, 2026)
+			location   	(649, 2024)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10361,7 +10365,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@273
-			location   	(1129, 2031)
+			location   	(1129, 2029)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	322
@@ -10395,7 +10399,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@274
-			location   	(1602, 2034)
+			location   	(1602, 2032)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	376
@@ -10429,7 +10433,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@275
-			location   	(156, 2316)
+			location   	(156, 2314)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	312
@@ -10463,7 +10467,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@276
-			location   	(639, 2312)
+			location   	(639, 2310)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10497,7 +10501,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@277
-			location   	(1612, 2309)
+			location   	(1612, 2307)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	348
@@ -10531,7 +10535,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@278
-			location   	(1134, 2316)
+			location   	(1134, 2314)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	308
@@ -10565,7 +10569,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@279
-			location   	(154, 2577)
+			location   	(154, 2575)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10599,7 +10603,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@280
-			location   	(569, 2573)
+			location   	(569, 2571)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	452
@@ -10633,7 +10637,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@281
-			location   	(2301, 766)
+			location   	(2301, 764)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	460
@@ -10667,7 +10671,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@282
-			location   	(1129, 2573)
+			location   	(1129, 2571)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10701,7 +10705,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@283
-			location   	(1615, 2581)
+			location   	(1615, 2579)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	336
@@ -10735,7 +10739,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@284
-			location   	(161, 2849)
+			location   	(161, 2847)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10769,7 +10773,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@285
-			location   	(594, 2849)
+			location   	(594, 2847)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	350
@@ -10803,7 +10807,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@286
-			location   	(1119, 2869)
+			location   	(1119, 2867)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10837,7 +10841,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@287
-			location   	(1613, 2863)
+			location   	(1613, 2861)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10871,7 +10875,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@288
-			location   	(159, 3105)
+			location   	(159, 3103)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10905,7 +10909,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@289
-			location   	(617, 3112)
+			location   	(617, 3110)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10939,7 +10943,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@290
-			location   	(1119, 3137)
+			location   	(1119, 3135)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -10973,7 +10977,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@291
-			location   	(1608, 3130)
+			location   	(1608, 3128)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	316
