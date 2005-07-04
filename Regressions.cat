@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: c5e63bfdf8e6 $}
+|{ revision = $Revision: 6adef7a2abd0 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -5341,11 +5341,40 @@
 			    concurrency 	"Sequential"
 			    opExportControl 	"Public"
 			    uid        	0
-			    quidu      	"412DFB34000C"))
+			    quidu      	"412DFB34000C")
+			(object Operation "f2"
+			    quid       	"42C925ED000E"
+			    result     	"X Ordinary Type"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0
+			    quidu      	"42C9245D0302"))
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "i"
 			    quid       	"412DFB6A0064"
-			    type       	"Integer"))))
+			    type       	"Integer")))
+		(object Class "X Ordinary Type"
+		    quid       	"42C9245D0302"
+		    documentation 	"{integer = lower 0 | upper 1}"
+		    stereotype 	"type")
+		(object Class "Another Protected Type"
+		    quid       	"42C96F710190"
+		    stereotype 	"protected"
+		    operations 	(list Operations
+			(object Operation "c"
+			    quid       	"42C96F8801F8"
+			    result     	"B Ordinary Type"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0
+			    quidu      	"412DFAEC00DB")
+			(object Operation "d"
+			    quid       	"42C96FB600EF"
+			    result     	"X Ordinary Type"
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0
+			    quidu      	"42C9245D0302"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"412DFAE50329"
@@ -5493,7 +5522,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@142
-				location   	(519, 161)
+				location   	(519, 139)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	446
@@ -5501,7 +5530,7 @@
 				label      	"A Protected Type")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@142
-				location   	(519, 116)
+				location   	(519, 94)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -5512,8 +5541,122 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"412DFB5000C0"
+			    compartment 	(object Compartment
+				Parent_View 	@142
+				location   	(519, 195)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	443)
 			    width      	464
-			    height     	354
+			    height     	398
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::X Ordinary Type" @143
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(764, 1715)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@143
+				location   	(592, 1689)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	344
+				justify    	0
+				label      	"X Ordinary Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@143
+				location   	(592, 1644)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	344
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"42C9245D0302"
+			    width      	362
+			    height     	164
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Regressions::Ordering for protected types::Another Protected Type" @144
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1745, 278)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@144
+				location   	(1514, 202)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	462
+				justify    	0
+				label      	"Another Protected Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@144
+				location   	(1514, 157)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	462
+				justify    	0
+				label      	"<<protected>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"42C96F710190"
+			    compartment 	(object Compartment
+				Parent_View 	@144
+				location   	(1514, 258)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	3
+				max_width  	398)
+			    width      	480
+			    height     	264
 			    annotation 	8
 			    autoResize 	TRUE)))))
 	(object Class_Category "Unsigned types"
@@ -5535,7 +5678,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object CategoryView "Logical View::Regressions::Unsigned types" @143
+			(object CategoryView "Logical View::Regressions::Unsigned types" @145
 			    location   	(2285, 380)
 			    font       	(object Font
 				size       	10
@@ -5547,7 +5690,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@143
+				Parent_View 	@145
 				location   	(2118, 341)
 				fill_color 	13434879
 				nlines     	2
@@ -5555,7 +5698,7 @@
 				justify    	0
 				label      	"Unsigned types")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@143
+				Parent_View 	@145
 				location   	(2118, 296)
 				fill_color 	13434879
 				anchor     	10
@@ -5569,7 +5712,7 @@
 			    quidu      	"4138899100DE"
 			    width      	346
 			    height     	180)
-			(object ClassView "Class" "Logical View::Regressions::Unsigned types::U1" @144
+			(object ClassView "Class" "Logical View::Regressions::Unsigned types::U1" @146
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5585,7 +5728,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@144
+				Parent_View 	@146
 				location   	(797, 347)
 				fill_color 	13434879
 				nlines     	1
@@ -5593,7 +5736,7 @@
 				justify    	0
 				label      	"U1")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@144
+				Parent_View 	@146
 				location   	(797, 302)
 				fill_color 	13434879
 				anchor     	10
@@ -5656,7 +5799,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::Single Element Enum" @145
+			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::Single Element Enum" @147
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5672,7 +5815,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@145
+				Parent_View 	@147
 				location   	(286, 1059)
 				fill_color 	13434879
 				nlines     	1
@@ -5680,7 +5823,7 @@
 				justify    	0
 				label      	"Single Element Enum")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@145
+				Parent_View 	@147
 				location   	(286, 1014)
 				fill_color 	13434879
 				anchor     	10
@@ -5696,7 +5839,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::Ordinary Class" @146
+			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::Ordinary Class" @148
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5712,7 +5855,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@146
+				Parent_View 	@148
 				location   	(1809, 281)
 				fill_color 	13434879
 				nlines     	1
@@ -5727,7 +5870,7 @@
 			    height     	168
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::A Singleton" @147
+			(object ClassView "Class" "Logical View::Regressions::No collections where ID is single element enum::A Singleton" @149
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5743,7 +5886,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@147
+				Parent_View 	@149
 				location   	(373, 332)
 				fill_color 	13434879
 				nlines     	1
@@ -5751,7 +5894,7 @@
 				justify    	0
 				label      	"A Singleton")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@147
+				Parent_View 	@149
 				location   	(373, 287)
 				fill_color 	13434879
 				anchor     	10
@@ -5767,7 +5910,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object AssociationViewNew "S E E" @148
+			(object AssociationViewNew "S E E" @150
 			    location   	(1220, 355)
 			    font       	(object Font
 				size       	10
@@ -5778,8 +5921,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @149
-				Parent_View 	@148
+			    label      	(object SegLabel @151
+				Parent_View 	@150
 				location   	(1220, 296)
 				font       	(object Font
 				    size       	10
@@ -5803,8 +5946,8 @@
 			    line_color 	3342489
 			    quidu      	"413F13F402D3"
 			    roleview_list 	(list RoleViews
-				(object RoleView "manages" @150
-				    Parent_View 	@148
+				(object RoleView "manages" @152
+				    Parent_View 	@150
 				    location   	(717, -3)
 				    font       	(object Font
 					size       	10
@@ -5815,8 +5958,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @151
-					Parent_View 	@150
+				    label      	(object SegLabel @153
+					Parent_View 	@152
 					location   	(1683, 313)
 					font       	(object Font
 					    size       	10
@@ -5839,11 +5982,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F13F500AE"
-				    client     	@148
-				    supplier   	@146
+				    client     	@150
+				    supplier   	@148
 				    line_style 	0
-				    label      	(object SegLabel @152
-					Parent_View 	@150
+				    label      	(object SegLabel @154
+					Parent_View 	@152
 					location   	(1741, 408)
 					font       	(object Font
 					    size       	10
@@ -5863,8 +6006,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	1))
-				(object RoleView "is managed by" @153
-				    Parent_View 	@148
+				(object RoleView "is managed by" @155
+				    Parent_View 	@150
 				    location   	(717, -3)
 				    font       	(object Font
 					size       	10
@@ -5875,8 +6018,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @154
-					Parent_View 	@153
+				    label      	(object SegLabel @156
+					Parent_View 	@155
 					location   	(759, 316)
 					font       	(object Font
 					    size       	10
@@ -5899,11 +6042,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F13F500B8"
-				    client     	@148
-				    supplier   	@147
+				    client     	@150
+				    supplier   	@149
 				    line_style 	0
-				    label      	(object SegLabel @155
-					Parent_View 	@153
+				    label      	(object SegLabel @157
+					Parent_View 	@155
 					location   	(701, 411)
 					font       	(object Font
 					    size       	10
@@ -5982,7 +6125,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Symmetric singleton associations::Symmetric Ordinary" @156
+			(object ClassView "Class" "Logical View::Regressions::Symmetric singleton associations::Symmetric Ordinary" @158
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -5998,7 +6141,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@156
+				Parent_View 	@158
 				location   	(1826, 367)
 				fill_color 	13434879
 				nlines     	1
@@ -6013,7 +6156,7 @@
 			    height     	168
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Symmetric singleton associations::Symmetric Singleton" @157
+			(object ClassView "Class" "Logical View::Regressions::Symmetric singleton associations::Symmetric Singleton" @159
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6029,7 +6172,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@157
+				Parent_View 	@159
 				location   	(233, 427)
 				fill_color 	13434879
 				nlines     	1
@@ -6037,7 +6180,7 @@
 				justify    	0
 				label      	"Symmetric Singleton")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@157
+				Parent_View 	@159
 				location   	(233, 382)
 				fill_color 	13434879
 				anchor     	10
@@ -6053,7 +6196,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object AssociationViewNew "ss1" @158
+			(object AssociationViewNew "ss1" @160
 			    location   	(1256, 116)
 			    font       	(object Font
 				size       	10
@@ -6064,8 +6207,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @159
-				Parent_View 	@158
+			    label      	(object SegLabel @161
+				Parent_View 	@160
 				location   	(1256, 57)
 				font       	(object Font
 				    size       	10
@@ -6089,8 +6232,8 @@
 			    line_color 	3342489
 			    quidu      	"413F60840189"
 			    roleview_list 	(list RoleViews
-				(object RoleView "target" @160
-				    Parent_View 	@158
+				(object RoleView "target" @162
+				    Parent_View 	@160
 				    location   	(821, -337)
 				    font       	(object Font
 					size       	10
@@ -6101,8 +6244,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @161
-					Parent_View 	@160
+				    label      	(object SegLabel @163
+					Parent_View 	@162
 					location   	(1713, 346)
 					font       	(object Font
 					    size       	10
@@ -6125,11 +6268,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F608701D3"
-				    client     	@158
-				    supplier   	@156
+				    client     	@160
+				    supplier   	@158
 				    line_style 	0
-				    label      	(object SegLabel @162
-					Parent_View 	@160
+				    label      	(object SegLabel @164
+					Parent_View 	@162
 					location   	(1806, 282)
 					font       	(object Font
 					    size       	10
@@ -6149,8 +6292,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "source {source}" @163
-				    Parent_View 	@158
+				(object RoleView "source {source}" @165
+				    Parent_View 	@160
 				    location   	(821, -337)
 				    font       	(object Font
 					size       	10
@@ -6161,8 +6304,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @164
-					Parent_View 	@163
+				    label      	(object SegLabel @166
+					Parent_View 	@165
 					location   	(640, 281)
 					font       	(object Font
 					    size       	10
@@ -6185,15 +6328,15 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F608701DD"
-				    client     	@158
-				    supplier   	@157
+				    client     	@160
+				    supplier   	@159
 				    vertices   	(list Points
 					(1256, 116)
 					(1200, 93)
 					(609, 370))
 				    line_style 	0
-				    label      	(object SegLabel @165
-					Parent_View 	@163
+				    label      	(object SegLabel @167
+					Parent_View 	@165
 					location   	(697, 389)
 					font       	(object Font
 					    size       	10
@@ -6213,7 +6356,7 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))))
-			(object AssociationViewNew "ss2" @166
+			(object AssociationViewNew "ss2" @168
 			    location   	(1261, 748)
 			    font       	(object Font
 				size       	10
@@ -6224,8 +6367,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @167
-				Parent_View 	@166
+			    label      	(object SegLabel @169
+				Parent_View 	@168
 				location   	(1261, 689)
 				font       	(object Font
 				    size       	10
@@ -6249,8 +6392,8 @@
 			    line_color 	3342489
 			    quidu      	"413F60A10145"
 			    roleview_list 	(list RoleViews
-				(object RoleView "source {source}" @168
-				    Parent_View 	@166
+				(object RoleView "source {source}" @170
+				    Parent_View 	@168
 				    location   	(826, 295)
 				    font       	(object Font
 					size       	10
@@ -6261,8 +6404,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @169
-					Parent_View 	@168
+				    label      	(object SegLabel @171
+					Parent_View 	@170
 					location   	(1707, 552)
 					font       	(object Font
 					    size       	10
@@ -6285,11 +6428,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F60A30396"
-				    client     	@166
-				    supplier   	@156
+				    client     	@168
+				    supplier   	@158
 				    line_style 	0
-				    label      	(object SegLabel @170
-					Parent_View 	@168
+				    label      	(object SegLabel @172
+					Parent_View 	@170
 					location   	(1751, 626)
 					font       	(object Font
 					    size       	10
@@ -6309,8 +6452,8 @@
 					pctDist    	0.820568
 					height     	66
 					orientation 	1))
-				(object RoleView "target" @171
-				    Parent_View 	@166
+				(object RoleView "target" @173
+				    Parent_View 	@168
 				    location   	(826, 295)
 				    font       	(object Font
 					size       	10
@@ -6321,8 +6464,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @172
-					Parent_View 	@171
+				    label      	(object SegLabel @174
+					Parent_View 	@173
 					location   	(746, 626)
 					font       	(object Font
 					    size       	10
@@ -6345,15 +6488,15 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"413F60A303A0"
-				    client     	@166
-				    supplier   	@157
+				    client     	@168
+				    supplier   	@159
 				    vertices   	(list Points
 					(1261, 748)
 					(1205, 770)
 					(636, 535))
 				    line_style 	0
-				    label      	(object SegLabel @173
-					Parent_View 	@171
+				    label      	(object SegLabel @175
+					Parent_View 	@173
 					location   	(719, 512)
 					font       	(object Font
 					    size       	10
@@ -6448,7 +6591,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Class" @174
+			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Class" @176
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6464,7 +6607,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@174
+				Parent_View 	@176
 				location   	(239, 228)
 				fill_color 	13434879
 				nlines     	1
@@ -6479,7 +6622,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Public" @175
+			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Public" @177
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6495,7 +6638,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@175
+				Parent_View 	@177
 				location   	(925, 215)
 				fill_color 	13434879
 				nlines     	1
@@ -6503,7 +6646,7 @@
 				justify    	0
 				label      	"Class Timer In Public")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@175
+				Parent_View 	@177
 				location   	(925, 170)
 				fill_color 	13434879
 				anchor     	10
@@ -6519,7 +6662,7 @@
 			    height     	308
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Max One" @176
+			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Max One" @178
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6535,7 +6678,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@176
+				Parent_View 	@178
 				location   	(221, 559)
 				fill_color 	13434879
 				nlines     	1
@@ -6550,7 +6693,7 @@
 			    height     	214
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Array" @177
+			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Array" @179
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6566,7 +6709,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@177
+				Parent_View 	@179
 				location   	(944, 549)
 				fill_color 	13434879
 				nlines     	1
@@ -6581,7 +6724,7 @@
 			    height     	214
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Singleton" @178
+			(object ClassView "Class" "Logical View::Regressions::Class timer finalization::Class Timer In Singleton" @180
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6597,7 +6740,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@178
+				Parent_View 	@180
 				location   	(222, 937)
 				fill_color 	13434879
 				nlines     	1
@@ -6605,7 +6748,7 @@
 				justify    	0
 				label      	"Class Timer In Singleton")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@178
+				Parent_View 	@180
 				location   	(222, 892)
 				fill_color 	13434879
 				anchor     	10
@@ -6720,7 +6863,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Protected types and access::PT Owner" @179
+			(object ClassView "Class" "Logical View::Regressions::Protected types and access::PT Owner" @181
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6736,7 +6879,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@179
+				Parent_View 	@181
 				location   	(921, 337)
 				fill_color 	13434879
 				nlines     	1
@@ -6744,7 +6887,7 @@
 				justify    	0
 				label      	"PT Owner")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@179
+				Parent_View 	@181
 				location   	(921, 292)
 				fill_color 	13434879
 				anchor     	10
@@ -6760,7 +6903,7 @@
 			    height     	308
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Protected types and access::PT Holder" @180
+			(object ClassView "Class" "Logical View::Regressions::Protected types and access::PT Holder" @182
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6776,7 +6919,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@180
+				Parent_View 	@182
 				location   	(1784, 360)
 				fill_color 	13434879
 				nlines     	1
@@ -6784,7 +6927,7 @@
 				justify    	0
 				label      	"PT Holder")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@180
+				Parent_View 	@182
 				location   	(1784, 315)
 				fill_color 	13434879
 				anchor     	10
@@ -6800,7 +6943,7 @@
 			    height     	308
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "ClassUtility" "Logical View::Regressions::Protected types and access::PT User" @181
+			(object ClassView "ClassUtility" "Logical View::Regressions::Protected types and access::PT User" @183
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6816,7 +6959,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@181
+				Parent_View 	@183
 				location   	(239, 336)
 				fill_color 	13434879
 				nlines     	1
@@ -6878,7 +7021,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Serialization Image outputs record name::Enum" @182
+			(object ClassView "Class" "Logical View::Regressions::Serialization Image outputs record name::Enum" @184
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6894,7 +7037,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@182
+				Parent_View 	@184
 				location   	(1821, 271)
 				fill_color 	13434879
 				nlines     	1
@@ -6902,7 +7045,7 @@
 				justify    	0
 				label      	"Enum")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@182
+				Parent_View 	@184
 				location   	(1821, 226)
 				fill_color 	13434879
 				anchor     	10
@@ -6918,7 +7061,7 @@
 			    height     	210
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Serialization Image outputs record name::S Record" @183
+			(object ClassView "Class" "Logical View::Regressions::Serialization Image outputs record name::S Record" @185
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6934,7 +7077,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@183
+				Parent_View 	@185
 				location   	(1812, 616)
 				fill_color 	13434879
 				nlines     	1
@@ -6942,7 +7085,7 @@
 				justify    	0
 				label      	"S Record")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@183
+				Parent_View 	@185
 				location   	(1812, 571)
 				fill_color 	13434879
 				anchor     	10
@@ -6958,7 +7101,7 @@
 			    height     	354
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::Enum Array" @184
+			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::Enum Array" @186
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -6974,7 +7117,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@184
+				Parent_View 	@186
 				location   	(1183, 414)
 				fill_color 	13434879
 				nlines     	1
@@ -6982,7 +7125,7 @@
 				justify    	0
 				label      	"Enum Array")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@184
+				Parent_View 	@186
 				location   	(1183, 369)
 				fill_color 	13434879
 				anchor     	10
@@ -6998,7 +7141,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::S Record Array" @185
+			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::S Record Array" @187
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7014,7 +7157,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@185
+				Parent_View 	@187
 				location   	(1164, 726)
 				fill_color 	13434879
 				nlines     	1
@@ -7022,7 +7165,7 @@
 				justify    	0
 				label      	"S Record Array")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@185
+				Parent_View 	@187
 				location   	(1164, 681)
 				fill_color 	13434879
 				anchor     	10
@@ -7038,7 +7181,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::S Record Array Index" @186
+			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::S Record Array Index" @188
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7054,7 +7197,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@186
+				Parent_View 	@188
 				location   	(1100, 1096)
 				fill_color 	13434879
 				nlines     	1
@@ -7062,7 +7205,7 @@
 				justify    	0
 				label      	"S Record Array Index")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@186
+				Parent_View 	@188
 				location   	(1100, 1051)
 				fill_color 	13434879
 				anchor     	10
@@ -7078,7 +7221,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::Array Composite" @187
+			(object ClassView "Class" "Logical View::Regressions::Serializing arrays::Array Composite" @189
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7094,7 +7237,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@187
+				Parent_View 	@189
 				location   	(420, 549)
 				fill_color 	13434879
 				nlines     	1
@@ -7102,7 +7245,7 @@
 				justify    	0
 				label      	"Array Composite")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@187
+				Parent_View 	@189
 				location   	(420, 504)
 				fill_color 	13434879
 				anchor     	10
@@ -7288,7 +7431,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Enum" @188
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Enum" @190
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7304,7 +7447,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@188
+				Parent_View 	@190
 				location   	(1078, 259)
 				fill_color 	13434879
 				nlines     	1
@@ -7312,7 +7455,7 @@
 				justify    	0
 				label      	"Private Enum")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@188
+				Parent_View 	@190
 				location   	(1078, 214)
 				fill_color 	13434879
 				anchor     	10
@@ -7328,7 +7471,7 @@
 			    height     	264
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Protected" @189
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Protected" @191
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7344,7 +7487,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@189
+				Parent_View 	@191
 				location   	(119, 887)
 				fill_color 	13434879
 				nlines     	1
@@ -7352,7 +7495,7 @@
 				justify    	0
 				label      	"Private Protected")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@189
+				Parent_View 	@191
 				location   	(119, 842)
 				fill_color 	13434879
 				anchor     	10
@@ -7368,7 +7511,7 @@
 			    height     	398
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Rec" @190
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Private Rec" @192
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7384,7 +7527,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@190
+				Parent_View 	@192
 				location   	(96, 274)
 				fill_color 	13434879
 				nlines     	1
@@ -7392,7 +7535,7 @@
 				justify    	0
 				label      	"Private Rec")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@190
+				Parent_View 	@192
 				location   	(96, 229)
 				fill_color 	13434879
 				anchor     	10
@@ -7408,7 +7551,7 @@
 			    height     	264
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Class With Private Operations" @191
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Class With Private Operations" @193
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7424,7 +7567,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@191
+				Parent_View 	@193
 				location   	(1219, 847)
 				fill_color 	13434879
 				nlines     	1
@@ -7439,7 +7582,7 @@
 			    height     	348
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Parent With Private Operations" @192
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Parent With Private Operations" @194
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7455,7 +7598,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@192
+				Parent_View 	@194
 				location   	(211, 1530)
 				fill_color 	13434879
 				nlines     	1
@@ -7470,7 +7613,7 @@
 			    height     	274
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Child With Private Operations" @193
+			(object ClassView "Class" "Logical View::Regressions::Private types and operations::Child With Private Operations" @195
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7486,7 +7629,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@193
+				Parent_View 	@195
 				location   	(145, 2020)
 				fill_color 	13434879
 				nlines     	1
@@ -7501,7 +7644,7 @@
 			    height     	168
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "PPE" @194
+			(object InheritView "PPE" @196
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -7512,7 +7655,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@194
+				Parent_View 	@196
 				location   	(549, 1900)
 				anchor_loc 	1
 				nlines     	1
@@ -7522,8 +7665,8 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"4283ABCB013B"
-			    client     	@193
-			    supplier   	@192
+			    client     	@195
+			    supplier   	@194
 			    line_style 	0)))))
 	(object Class_Category "Atomic and volatile"
 	    quid       	"420FAE750175"
@@ -7600,7 +7743,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Atomic Int" @195
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Atomic Int" @197
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7616,7 +7759,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@195
+				Parent_View 	@197
 				location   	(2152, 317)
 				fill_color 	13434879
 				nlines     	1
@@ -7624,7 +7767,7 @@
 				justify    	0
 				label      	"Atomic Int")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@195
+				Parent_View 	@197
 				location   	(2152, 272)
 				fill_color 	13434879
 				anchor     	10
@@ -7640,7 +7783,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Atomic Array" @196
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Atomic Array" @198
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7656,7 +7799,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@196
+				Parent_View 	@198
 				location   	(2114, 686)
 				fill_color 	13434879
 				nlines     	1
@@ -7664,7 +7807,7 @@
 				justify    	0
 				label      	"Atomic Array")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@196
+				Parent_View 	@198
 				location   	(2114, 641)
 				fill_color 	13434879
 				anchor     	10
@@ -7680,7 +7823,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Volatile Int" @197
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Volatile Int" @199
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7696,7 +7839,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@197
+				Parent_View 	@199
 				location   	(2146, 1069)
 				fill_color 	13434879
 				nlines     	1
@@ -7704,7 +7847,7 @@
 				justify    	0
 				label      	"Volatile Int")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@197
+				Parent_View 	@199
 				location   	(2146, 1024)
 				fill_color 	13434879
 				anchor     	10
@@ -7720,7 +7863,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Volatile Array" @198
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Volatile Array" @200
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7736,7 +7879,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@198
+				Parent_View 	@200
 				location   	(2124, 1441)
 				fill_color 	13434879
 				nlines     	1
@@ -7744,7 +7887,7 @@
 				justify    	0
 				label      	"Volatile Array")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@198
+				Parent_View 	@200
 				location   	(2124, 1396)
 				fill_color 	13434879
 				anchor     	10
@@ -7760,7 +7903,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Rec With Atomic  and Volatile Component" @199
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Rec With Atomic  and Volatile Component" @201
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7776,7 +7919,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@199
+				Parent_View 	@201
 				location   	(2066, 1770)
 				fill_color 	13434879
 				nlines     	1
@@ -7784,7 +7927,7 @@
 				justify    	0
 				label      	"Rec With Atomic  and Volatile Component")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@199
+				Parent_View 	@201
 				location   	(2066, 1725)
 				fill_color 	13434879
 				anchor     	10
@@ -7800,7 +7943,7 @@
 			    height     	308
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Cls With Atomic and Volatile Component" @200
+			(object ClassView "Class" "Logical View::Regressions::Atomic and volatile::Cls With Atomic and Volatile Component" @202
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7816,7 +7959,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@200
+				Parent_View 	@202
 				location   	(536, 711)
 				fill_color 	13434879
 				nlines     	1
@@ -7824,7 +7967,7 @@
 				justify    	0
 				label      	"Cls With Atomic and Volatile Component")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@200
+				Parent_View 	@202
 				location   	(536, 666)
 				fill_color 	13434879
 				anchor     	10
@@ -7880,7 +8023,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Task deletes itself::Self Immolator" @201
+			(object ClassView "Class" "Logical View::Regressions::Task deletes itself::Self Immolator" @203
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -7896,7 +8039,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@201
+				Parent_View 	@203
 				location   	(821, 601)
 				fill_color 	13434879
 				nlines     	1
@@ -7904,7 +8047,7 @@
 				justify    	0
 				label      	"Self Immolator")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@201
+				Parent_View 	@203
 				location   	(821, 556)
 				fill_color 	13434879
 				anchor     	10
@@ -7990,7 +8133,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Constrained Boolean" @202
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Constrained Boolean" @204
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8006,7 +8149,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@202
+				Parent_View 	@204
 				location   	(1096, 285)
 				fill_color 	13434879
 				nlines     	1
@@ -8014,7 +8157,7 @@
 				justify    	0
 				label      	"Constrained Boolean")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@202
+				Parent_View 	@204
 				location   	(1096, 240)
 				fill_color 	13434879
 				anchor     	10
@@ -8030,7 +8173,7 @@
 			    height     	166
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Furlongs" @203
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Furlongs" @205
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8046,7 +8189,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@203
+				Parent_View 	@205
 				location   	(453, 808)
 				fill_color 	13434879
 				nlines     	1
@@ -8054,7 +8197,7 @@
 				justify    	0
 				label      	"Furlongs")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@203
+				Parent_View 	@205
 				location   	(453, 763)
 				fill_color 	13434879
 				anchor     	10
@@ -8070,7 +8213,7 @@
 			    height     	166
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Constrained Furlongs" @204
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Constrained Furlongs" @206
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8086,7 +8229,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@204
+				Parent_View 	@206
 				location   	(1097, 810)
 				fill_color 	13434879
 				nlines     	1
@@ -8094,7 +8237,7 @@
 				justify    	0
 				label      	"Constrained Furlongs")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@204
+				Parent_View 	@206
 				location   	(1097, 765)
 				fill_color 	13434879
 				anchor     	10
@@ -8110,7 +8253,7 @@
 			    height     	166
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Day Name" @205
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Day Name" @207
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8126,7 +8269,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@205
+				Parent_View 	@207
 				location   	(439, 540)
 				fill_color 	13434879
 				nlines     	1
@@ -8134,7 +8277,7 @@
 				justify    	0
 				label      	"Day Name")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@205
+				Parent_View 	@207
 				location   	(439, 495)
 				fill_color 	13434879
 				anchor     	10
@@ -8150,7 +8293,7 @@
 			    height     	166
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Weekday Name" @206
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Weekday Name" @208
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8166,7 +8309,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@206
+				Parent_View 	@208
 				location   	(1134, 545)
 				fill_color 	13434879
 				nlines     	1
@@ -8174,7 +8317,7 @@
 				justify    	0
 				label      	"Weekday Name")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@206
+				Parent_View 	@208
 				location   	(1134, 500)
 				fill_color 	13434879
 				anchor     	10
@@ -8190,7 +8333,7 @@
 			    height     	166
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::Up To Friday" @207
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::Up To Friday" @209
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8206,7 +8349,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@207
+				Parent_View 	@209
 				location   	(2012, 384)
 				fill_color 	13434879
 				nlines     	1
@@ -8214,7 +8357,7 @@
 				justify    	0
 				label      	"Up To Friday")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@207
+				Parent_View 	@209
 				location   	(2012, 339)
 				fill_color 	13434879
 				anchor     	10
@@ -8230,7 +8373,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Constrained types::From Monday" @208
+			(object ClassView "Class" "Logical View::Regressions::Constrained types::From Monday" @210
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8246,7 +8389,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@208
+				Parent_View 	@210
 				location   	(1984, 639)
 				fill_color 	13434879
 				nlines     	1
@@ -8254,7 +8397,7 @@
 				justify    	0
 				label      	"From Monday")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@208
+				Parent_View 	@210
 				location   	(1984, 594)
 				fill_color 	13434879
 				anchor     	10
@@ -8362,7 +8505,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With P" @209
+			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With P" @211
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8378,7 +8521,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@209
+				Parent_View 	@211
 				location   	(369, 240)
 				fill_color 	13434879
 				nlines     	1
@@ -8393,7 +8536,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With C" @210
+			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With C" @212
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8409,7 +8552,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@210
+				Parent_View 	@212
 				location   	(371, 795)
 				fill_color 	13434879
 				nlines     	1
@@ -8424,7 +8567,7 @@
 			    height     	168
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "G Body With" @211
+			(object InheritView "G Body With" @213
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -8435,7 +8578,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@211
+				Parent_View 	@213
 				location   	(570, 612)
 				anchor_loc 	1
 				nlines     	1
@@ -8445,10 +8588,10 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"429F59E20042"
-			    client     	@210
-			    supplier   	@209
+			    client     	@212
+			    supplier   	@211
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With B" @212
+			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With B" @214
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8464,7 +8607,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@212
+				Parent_View 	@214
 				location   	(1494, 910)
 				fill_color 	13434879
 				nlines     	1
@@ -8479,7 +8622,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With A" @213
+			(object ClassView "Class" "Logical View::Regressions::Body withs::Body With A" @215
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8495,7 +8638,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@213
+				Parent_View 	@215
 				location   	(1494, 225)
 				fill_color 	13434879
 				nlines     	1
@@ -8510,7 +8653,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object AssociationViewNew "A1 Body With" @214
+			(object AssociationViewNew "A1 Body With" @216
 			    location   	(1718, 662)
 			    font       	(object Font
 				size       	10
@@ -8521,8 +8664,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @215
-				Parent_View 	@214
+			    label      	(object SegLabel @217
+				Parent_View 	@216
 				location   	(1718, 603)
 				font       	(object Font
 				    size       	10
@@ -8546,8 +8689,8 @@
 			    line_color 	3342489
 			    quidu      	"429F5A5E0054"
 			    roleview_list 	(list RoleViews
-				(object RoleView "is viewed by" @216
-				    Parent_View 	@214
+				(object RoleView "is viewed by" @218
+				    Parent_View 	@216
 				    location   	(0, 342)
 				    font       	(object Font
 					size       	10
@@ -8558,8 +8701,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @217
-					Parent_View 	@216
+				    label      	(object SegLabel @219
+					Parent_View 	@218
 					location   	(1563, 845)
 					font       	(object Font
 					    size       	10
@@ -8582,11 +8725,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"429F5A5E0203"
-				    client     	@214
-				    supplier   	@212
+				    client     	@216
+				    supplier   	@214
 				    line_style 	0
-				    label      	(object SegLabel @218
-					Parent_View 	@216
+				    label      	(object SegLabel @220
+					Parent_View 	@218
 					location   	(1772, 873)
 					font       	(object Font
 					    size       	10
@@ -8606,8 +8749,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "views" @219
-				    Parent_View 	@214
+				(object RoleView "views" @221
+				    Parent_View 	@216
 				    location   	(0, 342)
 				    font       	(object Font
 					size       	10
@@ -8618,8 +8761,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @220
-					Parent_View 	@219
+				    label      	(object SegLabel @222
+					Parent_View 	@221
 					location   	(1647, 455)
 					font       	(object Font
 					    size       	10
@@ -8642,11 +8785,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"429F5A5E020D"
-				    client     	@214
-				    supplier   	@213
+				    client     	@216
+				    supplier   	@215
 				    line_style 	0
-				    label      	(object SegLabel @221
-					Parent_View 	@219
+				    label      	(object SegLabel @223
+					Parent_View 	@221
 					location   	(1772, 451)
 					font       	(object Font
 					    size       	10
@@ -8757,7 +8900,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Preemptable Test" @222
+			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Preemptable Test" @224
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8773,7 +8916,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@222
+				Parent_View 	@224
 				location   	(428, 677)
 				fill_color 	13434879
 				nlines     	1
@@ -8788,7 +8931,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object AssociationViewNew "test preemption" @223
+			(object AssociationViewNew "test preemption" @225
 			    location   	(1482, 852)
 			    font       	(object Font
 				size       	10
@@ -8799,8 +8942,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @224
-				Parent_View 	@223
+			    label      	(object SegLabel @226
+				Parent_View 	@225
 				location   	(1480, 708)
 				font       	(object Font
 				    size       	10
@@ -8824,8 +8967,8 @@
 			    line_color 	3342489
 			    quidu      	"42AD59FC013D"
 			    roleview_list 	(list RoleViews
-				(object RoleView "conflicts with and may preempt" @225
-				    Parent_View 	@223
+				(object RoleView "conflicts with and may preempt" @227
+				    Parent_View 	@225
 				    location   	(794, 277)
 				    font       	(object Font
 					size       	10
@@ -8836,8 +8979,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @226
-					Parent_View 	@225
+				    label      	(object SegLabel @228
+					Parent_View 	@227
 					location   	(492, 918)
 					font       	(object Font
 					    size       	10
@@ -8860,8 +9003,8 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"42AD5A03025C"
-				    client     	@223
-				    supplier   	@222
+				    client     	@225
+				    supplier   	@224
 				    vertices   	(list Points
 					(1482, 852)
 					(1482, 1252)
@@ -8870,8 +9013,8 @@
 				    line_style 	3
 				    origin_attachment 	(1482, 852)
 				    terminal_attachment 	(792, 878)
-				    label      	(object SegLabel @227
-					Parent_View 	@225
+				    label      	(object SegLabel @229
+					Parent_View 	@227
 					location   	(847, 915)
 					font       	(object Font
 					    size       	10
@@ -8891,8 +9034,8 @@
 					pctDist    	0.974428
 					height     	55
 					orientation 	1))
-				(object RoleView "conflicts with and may be preempted by" @228
-				    Parent_View 	@223
+				(object RoleView "conflicts with and may be preempted by" @230
+				    Parent_View 	@225
 				    location   	(794, 277)
 				    font       	(object Font
 					size       	10
@@ -8903,8 +9046,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @229
-					Parent_View 	@228
+				    label      	(object SegLabel @231
+					Parent_View 	@230
 					location   	(424, 621)
 					font       	(object Font
 					    size       	10
@@ -8927,8 +9070,8 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"42AD5A030266"
-				    client     	@223
-				    supplier   	@222
+				    client     	@225
+				    supplier   	@224
 				    vertices   	(list Points
 					(1482, 852)
 					(1482, 372)
@@ -8937,8 +9080,8 @@
 				    line_style 	3
 				    origin_attachment 	(1482, 852)
 				    terminal_attachment 	(792, 666)
-				    label      	(object SegLabel @230
-					Parent_View 	@228
+				    label      	(object SegLabel @232
+					Parent_View 	@230
 					location   	(849, 632)
 					font       	(object Font
 					    size       	10
@@ -8958,7 +9101,7 @@
 					pctDist    	0.976510
 					height     	57
 					orientation 	0))))
-			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Rule" @231
+			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Rule" @233
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -8974,7 +9117,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@231
+				Parent_View 	@233
 				location   	(1056, 1524)
 				fill_color 	13434879
 				nlines     	1
@@ -8989,7 +9132,7 @@
 			    height     	258
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Test Name" @232
+			(object ClassView "Class" "Logical View::Regressions::Reflexive many to many::Test Name" @234
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -9005,7 +9148,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@232
+				Parent_View 	@234
 				location   	(2078, 271)
 				fill_color 	13434879
 				nlines     	1
@@ -9013,7 +9156,7 @@
 				justify    	0
 				label      	"Test Name")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@232
+				Parent_View 	@234
 				location   	(2078, 226)
 				fill_color 	13434879
 				anchor     	10
@@ -9029,7 +9172,7 @@
 			    height     	164
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object CategoryView "Logical View::Regressions" @233
+			(object CategoryView "Logical View::Regressions" @235
 			    location   	(280, 2188)
 			    font       	(object Font
 				size       	10
@@ -9041,7 +9184,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@233
+				Parent_View 	@235
 				location   	(110, 2104)
 				fill_color 	13434879
 				nlines     	2
@@ -9054,11 +9197,11 @@
 			    quidu      	"3F5611DF02F9"
 			    width      	352
 			    height     	180)
-			(object AssocAttachView "" @234
+			(object AssocAttachView "" @236
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@231
-			    supplier   	@223
+			    client     	@233
+			    supplier   	@225
 			    vertices   	(list Points
 				(1902, 1512)
 				(1895, 852)
@@ -9118,55 +9261,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Regressions::Pre-formalized associations::Van" @235
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(1238, 324)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@235
-				location   	(987, 251)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	502
-				justify    	0
-				label      	"Van")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"42B15F2D000B"
-			    compartment 	(object Compartment
-				Parent_View 	@235
-				location   	(987, 307)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	507)
-			    width      	520
-			    height     	168
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Regressions::Pre-formalized associations::Service" @236
+			(object ClassView "Class" "Logical View::Regressions::Pre-formalized associations::Service" @237
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -9182,7 +9277,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@236
+				Parent_View 	@237
 				location   	(1000, 1337)
 				fill_color 	13434879
 				nlines     	1
@@ -9193,28 +9288,42 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"42B15F500123"
-			    compartment 	(object Compartment
-				Parent_View 	@236
-				location   	(1000, 1393)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	475)
 			    width      	496
 			    height     	214
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object AssociationViewNew "service history" @237
+			(object ClassView "Class" "Logical View::Regressions::Pre-formalized associations::Van" @238
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1238, 324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@238
+				location   	(987, 251)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	502
+				justify    	0
+				label      	"Van")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"42B15F2D000B"
+			    width      	520
+			    height     	168
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object AssociationViewNew "service history" @239
 			    location   	(1238, 866)
 			    font       	(object Font
 				size       	10
@@ -9225,8 +9334,8 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    label      	(object SegLabel @238
-				Parent_View 	@237
+			    label      	(object SegLabel @240
+				Parent_View 	@239
 				location   	(1238, 807)
 				font       	(object Font
 				    size       	10
@@ -9250,8 +9359,8 @@
 			    line_color 	3342489
 			    quidu      	"42B15FA803DD"
 			    roleview_list 	(list RoleViews
-				(object RoleView "was serviced at" @239
-				    Parent_View 	@237
+				(object RoleView "was serviced at" @241
+				    Parent_View 	@239
 				    location   	(670, 538)
 				    font       	(object Font
 					size       	10
@@ -9262,8 +9371,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @240
-					Parent_View 	@239
+				    label      	(object SegLabel @242
+					Parent_View 	@241
 					location   	(1071, 1286)
 					font       	(object Font
 					    size       	10
@@ -9286,11 +9395,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"42B15FA901CC"
-				    client     	@237
-				    supplier   	@236
+				    client     	@239
+				    supplier   	@237
 				    line_style 	0
-				    label      	(object SegLabel @241
-					Parent_View 	@239
+				    label      	(object SegLabel @243
+					Parent_View 	@241
 					location   	(1292, 1278)
 					font       	(object Font
 					    size       	10
@@ -9310,8 +9419,8 @@
 					pctDist    	0.900000
 					height     	54
 					orientation 	0))
-				(object RoleView "was a service of" @242
-				    Parent_View 	@237
+				(object RoleView "was a service of" @244
+				    Parent_View 	@239
 				    location   	(670, 538)
 				    font       	(object Font
 					size       	10
@@ -9322,8 +9431,8 @@
 					strike     	FALSE
 					color      	0
 					default_color 	TRUE)
-				    label      	(object SegLabel @243
-					Parent_View 	@242
+				    label      	(object SegLabel @245
+					Parent_View 	@244
 					location   	(1066, 455)
 					font       	(object Font
 					    size       	10
@@ -9346,11 +9455,11 @@
 				    stereotype 	TRUE
 				    line_color 	3342489
 				    quidu      	"42B15FA901D7"
-				    client     	@237
-				    supplier   	@235
+				    client     	@239
+				    supplier   	@238
 				    line_style 	0
-				    label      	(object SegLabel @244
-					Parent_View 	@242
+				    label      	(object SegLabel @246
+					Parent_View 	@244
 					location   	(1292, 455)
 					font       	(object Font
 					    size       	10
@@ -9376,7 +9485,7 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: c5e63bfdf8e6 $}
+|{ revision = $Revision: 6adef7a2abd0 $}
 	    
 	    zoom       	88
 	    max_height 	28350
@@ -9384,7 +9493,7 @@
 	    origin_x   	0
 	    origin_y   	983
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Regressions" @245
+		(object CategoryView "Logical View::Regressions" @247
 		    location   	(2472, 200)
 		    font       	(object Font
 			size       	10
@@ -9396,7 +9505,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@245
+			Parent_View 	@247
 			location   	(2294, 116)
 			fill_color 	13434879
 			nlines     	2
@@ -9409,7 +9518,7 @@
 		    quidu      	"3F5611DF02F9"
 		    width      	368
 		    height     	180)
-		(object Label @246
+		(object Label @248
 		    location   	(127, 38)
 		    font       	(object Font
 			size       	10
@@ -9422,8 +9531,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v c5e63bfdf8e6 2005/06/16 19:16:08 simonjwright $")
-		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @247
+		    label      	"$Id: Regressions.cat,v 6adef7a2abd0 2005/07/04 19:06:03 simonjwright $")
+		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @249
 		    location   	(301, 318)
 		    font       	(object Font
 			size       	10
@@ -9435,15 +9544,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@247
-			location   	(141, 279)
+			Parent_View 	@249
+			location   	(141, 281)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	320
 			justify    	0
 			label      	"Find hangs for active classes")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@247
+			Parent_View 	@249
 			location   	(141, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -9457,7 +9566,7 @@
 		    quidu      	"4051E4F90039"
 		    width      	332
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @248
+		(object CategoryView "Logical View::Regressions::Can't have class variable of class type" @250
 		    location   	(715, 320)
 		    font       	(object Font
 			size       	10
@@ -9469,15 +9578,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@248
-			location   	(523, 281)
+			Parent_View 	@250
+			location   	(523, 283)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	384
 			justify    	0
 			label      	"Can't have class variable of class type")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@248
+			Parent_View 	@250
 			location   	(523, 236)
 			fill_color 	13434879
 			anchor     	10
@@ -9491,7 +9600,7 @@
 		    quidu      	"4051E5420337"
 		    width      	396
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @249
+		(object CategoryView "Logical View::Regressions::Can't have expressions in bounds" @251
 		    location   	(1202, 318)
 		    font       	(object Font
 			size       	10
@@ -9503,15 +9612,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@249
-			location   	(966, 279)
+			Parent_View 	@251
+			location   	(966, 281)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	472
 			justify    	0
 			label      	"Can't have expressions in bounds")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@249
+			Parent_View 	@251
 			location   	(966, 234)
 			fill_color 	13434879
 			anchor     	10
@@ -9525,7 +9634,7 @@
 		    quidu      	"4051E57F02C7"
 		    width      	484
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @250
+		(object CategoryView "Logical View::Regressions::Serialization Image outputs record name" @252
 		    location   	(1711, 310)
 		    font       	(object Font
 			size       	10
@@ -9537,15 +9646,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@250
-			location   	(1521, 271)
+			Parent_View 	@252
+			location   	(1521, 273)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	380
 			justify    	0
 			label      	"Serialization Image outputs record name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@250
+			Parent_View 	@252
 			location   	(1521, 226)
 			fill_color 	13434879
 			anchor     	10
@@ -9559,7 +9668,7 @@
 		    quidu      	"4051E5B00169"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't have an <access> operation on <type>" @251
+		(object CategoryView "Logical View::Regressions::Can't have an <access> operation on <type>" @253
 		    location   	(2547, 535)
 		    font       	(object Font
 			size       	10
@@ -9571,15 +9680,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@251
-			location   	(2297, 496)
+			Parent_View 	@253
+			location   	(2297, 498)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	500
 			justify    	0
 			label      	"Can't have an <access> operation on <type>")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@251
+			Parent_View 	@253
 			location   	(2297, 451)
 			fill_color 	13434879
 			anchor     	10
@@ -9593,7 +9702,7 @@
 		    quidu      	"4051E604035E"
 		    width      	512
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @252
+		(object CategoryView "Logical View::Regressions::Exceptions in callbacks" @254
 		    location   	(288, 603)
 		    font       	(object Font
 			size       	10
@@ -9605,15 +9714,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@252
-			location   	(144, 564)
+			Parent_View 	@254
+			location   	(144, 566)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Exceptions in callbacks")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@252
+			Parent_View 	@254
 			location   	(144, 519)
 			fill_color 	13434879
 			anchor     	10
@@ -9627,7 +9736,7 @@
 		    quidu      	"4051E6AE01E6"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @253
+		(object CategoryView "Logical View::Regressions::Class delete for 0..1 classes doesn't null the container" @255
 		    location   	(810, 608)
 		    font       	(object Font
 			size       	10
@@ -9639,15 +9748,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@253
-			location   	(538, 569)
+			Parent_View 	@255
+			location   	(538, 571)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	544
 			justify    	0
 			label      	"Class delete for 0..1 classes doesn't null the container")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@253
+			Parent_View 	@255
 			location   	(538, 524)
 			fill_color 	13434879
 			anchor     	10
@@ -9661,7 +9770,7 @@
 		    quidu      	"4051E6DC000B"
 		    width      	556
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @254
+		(object CategoryView "Logical View::Regressions::Allow bounded string identifiers" @256
 		    location   	(1452, 617)
 		    font       	(object Font
 			size       	10
@@ -9673,15 +9782,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@254
-			location   	(1305, 578)
+			Parent_View 	@256
+			location   	(1305, 580)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	294
 			justify    	0
 			label      	"Allow bounded string identifiers")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@254
+			Parent_View 	@256
 			location   	(1305, 533)
 			fill_color 	13434879
 			anchor     	10
@@ -9695,7 +9804,7 @@
 		    quidu      	"4051E74D000E"
 		    width      	306
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Allow null records" @255
+		(object CategoryView "Logical View::Regressions::Allow null records" @257
 		    location   	(312, 902)
 		    font       	(object Font
 			size       	10
@@ -9707,15 +9816,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@255
-			location   	(168, 863)
+			Parent_View 	@257
+			location   	(168, 865)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Allow null records")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@255
+			Parent_View 	@257
 			location   	(168, 818)
 			fill_color 	13434879
 			anchor     	10
@@ -9729,7 +9838,7 @@
 		    quidu      	"4051E7820082"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Array types" @256
+		(object CategoryView "Logical View::Regressions::Array types" @258
 		    location   	(732, 910)
 		    font       	(object Font
 			size       	10
@@ -9741,15 +9850,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@256
-			location   	(588, 871)
+			Parent_View 	@258
+			location   	(588, 873)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Array types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@256
+			Parent_View 	@258
 			location   	(588, 826)
 			fill_color 	13434879
 			anchor     	10
@@ -9763,7 +9872,7 @@
 		    quidu      	"4051E7A40370"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @257
+		(object CategoryView "Logical View::Regressions::Callback registration/deregistration assertions" @259
 		    location   	(1319, 920)
 		    font       	(object Font
 			size       	10
@@ -9775,15 +9884,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@257
-			location   	(1003, 881)
+			Parent_View 	@259
+			location   	(1003, 883)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	632
 			justify    	0
 			label      	"Callback registration/deregistration assertions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@257
+			Parent_View 	@259
 			location   	(1003, 836)
 			fill_color 	13434879
 			anchor     	10
@@ -9797,7 +9906,7 @@
 		    quidu      	"4051E7EC0161"
 		    width      	644
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Fixed strings" @258
+		(object CategoryView "Logical View::Regressions::Fixed strings" @260
 		    location   	(322, 1200)
 		    font       	(object Font
 			size       	10
@@ -9809,15 +9918,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@258
-			location   	(178, 1161)
+			Parent_View 	@260
+			location   	(178, 1163)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Fixed strings")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@258
+			Parent_View 	@260
 			location   	(178, 1116)
 			fill_color 	13434879
 			anchor     	10
@@ -9831,7 +9940,7 @@
 		    quidu      	"4051E82F006D"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Identifier has one value" @259
+		(object CategoryView "Logical View::Regressions::Identifier has one value" @261
 		    location   	(742, 1205)
 		    font       	(object Font
 			size       	10
@@ -9843,15 +9952,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@259
-			location   	(598, 1166)
+			Parent_View 	@261
+			location   	(598, 1168)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Identifier has one value")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@259
+			Parent_View 	@261
 			location   	(598, 1121)
 			fill_color 	13434879
 			anchor     	10
@@ -9865,7 +9974,7 @@
 		    quidu      	"4051E84F02CC"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @260
+		(object CategoryView "Logical View::Regressions::Can't tear down active class with timer" @262
 		    location   	(1415, 1213)
 		    font       	(object Font
 			size       	10
@@ -9877,15 +9986,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@260
-			location   	(1218, 1174)
+			Parent_View 	@262
+			location   	(1218, 1176)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	394
 			justify    	0
 			label      	"Can't tear down active class with timer")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@260
+			Parent_View 	@262
 			location   	(1218, 1129)
 			fill_color 	13434879
 			anchor     	10
@@ -9899,7 +10008,7 @@
 		    quidu      	"4051E899023C"
 		    width      	406
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Exponential expressions" @261
+		(object CategoryView "Logical View::Regressions::Exponential expressions" @263
 		    location   	(330, 1508)
 		    font       	(object Font
 			size       	10
@@ -9911,15 +10020,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@261
-			location   	(186, 1469)
+			Parent_View 	@263
+			location   	(186, 1471)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Exponential expressions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@261
+			Parent_View 	@263
 			location   	(186, 1424)
 			fill_color 	13434879
 			anchor     	10
@@ -9933,7 +10042,7 @@
 		    quidu      	"406AC32301A8"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Identifier type with based literal range" @262
+		(object CategoryView "Logical View::Regressions::Identifier type with based literal range" @264
 		    location   	(765, 1518)
 		    font       	(object Font
 			size       	10
@@ -9945,15 +10054,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@262
-			location   	(588, 1479)
+			Parent_View 	@264
+			location   	(588, 1481)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	354
 			justify    	0
 			label      	"Identifier type with based literal range")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@262
+			Parent_View 	@264
 			location   	(588, 1434)
 			fill_color 	13434879
 			anchor     	10
@@ -9967,7 +10076,7 @@
 		    quidu      	"40864F3300C2"
 		    width      	366
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Inheritance of action routines" @263
+		(object CategoryView "Logical View::Regressions::Inheritance of action routines" @265
 		    location   	(1301, 1508)
 		    font       	(object Font
 			size       	10
@@ -9979,15 +10088,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@263
-			location   	(1128, 1469)
+			Parent_View 	@265
+			location   	(1128, 1471)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	346
 			justify    	0
 			label      	"Inheritance of action routines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@263
+			Parent_View 	@265
 			location   	(1128, 1424)
 			fill_color 	13434879
 			anchor     	10
@@ -10001,7 +10110,7 @@
 		    quidu      	"4087736A008A"
 		    width      	358
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Omitting bounds for integer, real" @264
+		(object CategoryView "Logical View::Regressions::Omitting bounds for integer, real" @266
 		    location   	(1763, 1505)
 		    font       	(object Font
 			size       	10
@@ -10013,15 +10122,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@264
-			location   	(1593, 1466)
+			Parent_View 	@266
+			location   	(1593, 1468)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
 			justify    	0
 			label      	"Omitting bounds for integer, real")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@264
+			Parent_View 	@266
 			location   	(1593, 1421)
 			fill_color 	13434879
 			anchor     	10
@@ -10035,7 +10144,7 @@
 		    quidu      	"40907D73029F"
 		    width      	352
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::No tag to define Type" @265
+		(object CategoryView "Logical View::Regressions::No tag to define Type" @267
 		    location   	(328, 1780)
 		    font       	(object Font
 			size       	10
@@ -10047,15 +10156,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@265
-			location   	(184, 1741)
+			Parent_View 	@267
+			location   	(184, 1743)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"No tag to define Type")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@265
+			Parent_View 	@267
 			location   	(184, 1696)
 			fill_color 	13434879
 			anchor     	10
@@ -10069,7 +10178,7 @@
 		    quidu      	"40908724038D"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Checks on association multiplicity" @266
+		(object CategoryView "Logical View::Regressions::Checks on association multiplicity" @268
 		    location   	(810, 1786)
 		    font       	(object Font
 			size       	10
@@ -10081,15 +10190,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@266
-			location   	(593, 1747)
+			Parent_View 	@268
+			location   	(593, 1749)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	434
 			justify    	0
 			label      	"Checks on association multiplicity")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@266
+			Parent_View 	@268
 			location   	(593, 1702)
 			fill_color 	13434879
 			anchor     	10
@@ -10103,7 +10212,7 @@
 		    quidu      	"40B5710300D7"
 		    width      	446
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::In and inout parameters" @267
+		(object CategoryView "Logical View::Regressions::In and inout parameters" @269
 		    location   	(1295, 1780)
 		    font       	(object Font
 			size       	10
@@ -10115,15 +10224,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@267
-			location   	(1151, 1741)
+			Parent_View 	@269
+			location   	(1151, 1743)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"In and inout parameters")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@267
+			Parent_View 	@269
 			location   	(1151, 1696)
 			fill_color 	13434879
 			anchor     	10
@@ -10137,7 +10246,7 @@
 		    quidu      	"40B8C3B40279"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Classes with no instances" @268
+		(object CategoryView "Logical View::Regressions::Classes with no instances" @270
 		    location   	(1763, 1788)
 		    font       	(object Font
 			size       	10
@@ -10149,15 +10258,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@268
-			location   	(1619, 1749)
+			Parent_View 	@270
+			location   	(1619, 1751)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Classes with no instances")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@268
+			Parent_View 	@270
 			location   	(1619, 1704)
 			fill_color 	13434879
 			anchor     	10
@@ -10171,7 +10280,7 @@
 		    quidu      	"40CB26A403C4"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Deleting after exception in event handler" @269
+		(object CategoryView "Logical View::Regressions::Deleting after exception in event handler" @271
 		    location   	(315, 2056)
 		    font       	(object Font
 			size       	10
@@ -10183,15 +10292,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@269
-			location   	(76, 2017)
+			Parent_View 	@271
+			location   	(76, 2019)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	478
 			justify    	0
 			label      	"Deleting after exception in event handler")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@269
+			Parent_View 	@271
 			location   	(76, 1972)
 			fill_color 	13434879
 			anchor     	10
@@ -10205,7 +10314,7 @@
 		    quidu      	"40D338FB0292"
 		    width      	490
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Renaming operations" @270
+		(object CategoryView "Logical View::Regressions::Renaming operations" @272
 		    location   	(793, 2063)
 		    font       	(object Font
 			size       	10
@@ -10217,15 +10326,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@270
-			location   	(649, 2024)
+			Parent_View 	@272
+			location   	(649, 2026)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Renaming operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@270
+			Parent_View 	@272
 			location   	(649, 1979)
 			fill_color 	13434879
 			anchor     	10
@@ -10239,7 +10348,7 @@
 		    quidu      	"40DBB7E401A5"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Access modes for operations" @271
+		(object CategoryView "Logical View::Regressions::Access modes for operations" @273
 		    location   	(1290, 2068)
 		    font       	(object Font
 			size       	10
@@ -10251,15 +10360,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@271
-			location   	(1129, 2029)
+			Parent_View 	@273
+			location   	(1129, 2031)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	322
 			justify    	0
 			label      	"Access modes for operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@271
+			Parent_View 	@273
 			location   	(1129, 1984)
 			fill_color 	13434879
 			anchor     	10
@@ -10273,7 +10382,7 @@
 		    quidu      	"40E396C7019B"
 		    width      	334
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Special characters in documentation" @272
+		(object CategoryView "Logical View::Regressions::Special characters in documentation" @274
 		    location   	(1790, 2071)
 		    font       	(object Font
 			size       	10
@@ -10285,15 +10394,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@272
-			location   	(1602, 2032)
+			Parent_View 	@274
+			location   	(1602, 2034)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	376
 			justify    	0
 			label      	"Special characters in documentation")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@272
+			Parent_View 	@274
 			location   	(1602, 1987)
 			fill_color 	13434879
 			anchor     	10
@@ -10307,7 +10416,7 @@
 		    quidu      	"40E46F4702F5"
 		    width      	388
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Complex default values" @273
+		(object CategoryView "Logical View::Regressions::Complex default values" @275
 		    location   	(312, 2353)
 		    font       	(object Font
 			size       	10
@@ -10319,15 +10428,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@273
-			location   	(156, 2314)
+			Parent_View 	@275
+			location   	(156, 2316)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	312
 			justify    	0
 			label      	"Complex default values")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@273
+			Parent_View 	@275
 			location   	(156, 2269)
 			fill_color 	13434879
 			anchor     	10
@@ -10341,7 +10450,7 @@
 		    quidu      	"40EB88B002F1"
 		    width      	324
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Private init operations" @274
+		(object CategoryView "Logical View::Regressions::Private init operations" @276
 		    location   	(783, 2349)
 		    font       	(object Font
 			size       	10
@@ -10353,15 +10462,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@274
-			location   	(639, 2310)
+			Parent_View 	@276
+			location   	(639, 2312)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Private init operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@274
+			Parent_View 	@276
 			location   	(639, 2265)
 			fill_color 	13434879
 			anchor     	10
@@ -10375,7 +10484,7 @@
 		    quidu      	"412A138B018A"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Access operations of protected types" @275
+		(object CategoryView "Logical View::Regressions::Access operations of protected types" @277
 		    location   	(1786, 2346)
 		    font       	(object Font
 			size       	10
@@ -10387,15 +10496,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@275
-			location   	(1612, 2307)
+			Parent_View 	@277
+			location   	(1612, 2309)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	348
 			justify    	0
 			label      	"Access operations of protected types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@275
+			Parent_View 	@277
 			location   	(1612, 2262)
 			fill_color 	13434879
 			anchor     	10
@@ -10409,7 +10518,7 @@
 		    quidu      	"412DF662006B"
 		    width      	360
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Ordering for protected types" @276
+		(object CategoryView "Logical View::Regressions::Ordering for protected types" @278
 		    location   	(1288, 2353)
 		    font       	(object Font
 			size       	10
@@ -10421,15 +10530,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@276
-			location   	(1134, 2314)
+			Parent_View 	@278
+			location   	(1134, 2316)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	308
 			justify    	0
 			label      	"Ordering for protected types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@276
+			Parent_View 	@278
 			location   	(1134, 2269)
 			fill_color 	13434879
 			anchor     	10
@@ -10443,7 +10552,7 @@
 		    quidu      	"412DFAB60322"
 		    width      	320
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Unsigned types" @277
+		(object CategoryView "Logical View::Regressions::Unsigned types" @279
 		    location   	(298, 2614)
 		    font       	(object Font
 			size       	10
@@ -10455,15 +10564,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@277
-			location   	(154, 2575)
+			Parent_View 	@279
+			location   	(154, 2577)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Unsigned types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@277
+			Parent_View 	@279
 			location   	(154, 2530)
 			fill_color 	13434879
 			anchor     	10
@@ -10477,7 +10586,7 @@
 		    quidu      	"4138899100DE"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::No collections where ID is single element enum" @278
+		(object CategoryView "Logical View::Regressions::No collections where ID is single element enum" @280
 		    location   	(795, 2610)
 		    font       	(object Font
 			size       	10
@@ -10489,15 +10598,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@278
-			location   	(569, 2571)
+			Parent_View 	@280
+			location   	(569, 2573)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	452
 			justify    	0
 			label      	"No collections where ID is single element enum")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@278
+			Parent_View 	@280
 			location   	(569, 2526)
 			fill_color 	13434879
 			anchor     	10
@@ -10511,7 +10620,7 @@
 		    quidu      	"413F135801FC"
 		    width      	464
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Symmetric singleton associations" @279
+		(object CategoryView "Logical View::Regressions::Symmetric singleton associations" @281
 		    location   	(2531, 803)
 		    font       	(object Font
 			size       	10
@@ -10523,15 +10632,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@279
-			location   	(2301, 764)
+			Parent_View 	@281
+			location   	(2301, 766)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	460
 			justify    	0
 			label      	"Symmetric singleton associations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@279
+			Parent_View 	@281
 			location   	(2301, 719)
 			fill_color 	13434879
 			anchor     	10
@@ -10545,7 +10654,7 @@
 		    quidu      	"413F6024005F"
 		    width      	472
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Class timer finalization" @280
+		(object CategoryView "Logical View::Regressions::Class timer finalization" @282
 		    location   	(1273, 2610)
 		    font       	(object Font
 			size       	10
@@ -10557,15 +10666,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@280
-			location   	(1129, 2571)
+			Parent_View 	@282
+			location   	(1129, 2573)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Class timer finalization")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@280
+			Parent_View 	@282
 			location   	(1129, 2526)
 			fill_color 	13434879
 			anchor     	10
@@ -10579,7 +10688,7 @@
 		    quidu      	"4142D9FB0156"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Protected types and access" @281
+		(object CategoryView "Logical View::Regressions::Protected types and access" @283
 		    location   	(1783, 2618)
 		    font       	(object Font
 			size       	10
@@ -10591,15 +10700,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@281
-			location   	(1615, 2579)
+			Parent_View 	@283
+			location   	(1615, 2581)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	336
 			justify    	0
 			label      	"Protected types and access")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@281
+			Parent_View 	@283
 			location   	(1615, 2534)
 			fill_color 	13434879
 			anchor     	10
@@ -10613,7 +10722,7 @@
 		    quidu      	"3EE060C102C5"
 		    width      	348
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Serializing arrays" @282
+		(object CategoryView "Logical View::Regressions::Serializing arrays" @284
 		    location   	(305, 2886)
 		    font       	(object Font
 			size       	10
@@ -10625,15 +10734,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@282
-			location   	(161, 2847)
+			Parent_View 	@284
+			location   	(161, 2849)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Serializing arrays")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@282
+			Parent_View 	@284
 			location   	(161, 2802)
 			fill_color 	13434879
 			anchor     	10
@@ -10647,7 +10756,7 @@
 		    quidu      	"417A6E890074"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Private types and operations" @283
+		(object CategoryView "Logical View::Regressions::Private types and operations" @285
 		    location   	(769, 2886)
 		    font       	(object Font
 			size       	10
@@ -10659,15 +10768,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@283
-			location   	(594, 2847)
+			Parent_View 	@285
+			location   	(594, 2849)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	350
 			justify    	0
 			label      	"Private types and operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@283
+			Parent_View 	@285
 			location   	(594, 2802)
 			fill_color 	13434879
 			anchor     	10
@@ -10681,7 +10790,7 @@
 		    quidu      	"417C8D2F033E"
 		    width      	362
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Atomic and volatile" @284
+		(object CategoryView "Logical View::Regressions::Atomic and volatile" @286
 		    location   	(1263, 2906)
 		    font       	(object Font
 			size       	10
@@ -10693,15 +10802,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@284
-			location   	(1119, 2867)
+			Parent_View 	@286
+			location   	(1119, 2869)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Atomic and volatile")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@284
+			Parent_View 	@286
 			location   	(1119, 2822)
 			fill_color 	13434879
 			anchor     	10
@@ -10715,7 +10824,7 @@
 		    quidu      	"420FAE750175"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Task deletes itself" @285
+		(object CategoryView "Logical View::Regressions::Task deletes itself" @287
 		    location   	(1757, 2900)
 		    font       	(object Font
 			size       	10
@@ -10727,15 +10836,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@285
-			location   	(1613, 2861)
+			Parent_View 	@287
+			location   	(1613, 2863)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Task deletes itself")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@285
+			Parent_View 	@287
 			location   	(1613, 2816)
 			fill_color 	13434879
 			anchor     	10
@@ -10749,7 +10858,7 @@
 		    quidu      	"4269E1AD0245"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Constrained types" @286
+		(object CategoryView "Logical View::Regressions::Constrained types" @288
 		    location   	(303, 3142)
 		    font       	(object Font
 			size       	10
@@ -10761,15 +10870,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@286
-			location   	(159, 3103)
+			Parent_View 	@288
+			location   	(159, 3105)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Constrained types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@286
+			Parent_View 	@288
 			location   	(159, 3058)
 			fill_color 	13434879
 			anchor     	10
@@ -10783,7 +10892,7 @@
 		    quidu      	"427D086401A8"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Body withs" @287
+		(object CategoryView "Logical View::Regressions::Body withs" @289
 		    location   	(761, 3149)
 		    font       	(object Font
 			size       	10
@@ -10795,15 +10904,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@287
-			location   	(617, 3110)
+			Parent_View 	@289
+			location   	(617, 3112)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Body withs")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@287
+			Parent_View 	@289
 			location   	(617, 3065)
 			fill_color 	13434879
 			anchor     	10
@@ -10817,7 +10926,7 @@
 		    quidu      	"429F59900383"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Reflexive many to many" @288
+		(object CategoryView "Logical View::Regressions::Reflexive many to many" @290
 		    location   	(1263, 3174)
 		    font       	(object Font
 			size       	10
@@ -10829,15 +10938,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@288
-			location   	(1119, 3135)
+			Parent_View 	@290
+			location   	(1119, 3137)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Reflexive many to many")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@288
+			Parent_View 	@290
 			location   	(1119, 3090)
 			fill_color 	13434879
 			anchor     	10
@@ -10851,7 +10960,7 @@
 		    quidu      	"42AD599D026C"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Regressions::Pre-formalized associations" @289
+		(object CategoryView "Logical View::Regressions::Pre-formalized associations" @291
 		    location   	(1766, 3167)
 		    font       	(object Font
 			size       	10
@@ -10863,15 +10972,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@289
-			location   	(1608, 3131)
+			Parent_View 	@291
+			location   	(1608, 3130)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	316
 			justify    	0
 			label      	"Pre-formalized associations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@289
+			Parent_View 	@291
 			location   	(1608, 3083)
 			fill_color 	13434879
 			anchor     	10
