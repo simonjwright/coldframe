@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 5507e484d52e 2005/05/28 05:51:37 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 5e1f390c1d1a 2005/07/04 19:22:35 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -178,7 +178,7 @@
                            operation
                             [not(@access)]/parameter[not($processed/name=type)]
                            or operation
-                            [not(@access)]/result[not($processed/name=.)]))
+                            [not(@access)]/@return[not($processed/name=.)]))
                      )]"/>
 
     <xsl:choose>
@@ -222,7 +222,7 @@
                    | operation[not(@access) and ../@protected]
                         /parameter[not($processed/name=type)]/type
                    | operation[not(@access) and ../@protected
-                        and result and not($processed/name=result)]/result">
+                        and @return and not($processed/name=@return)]/@return">
                 <xsl:sort select="."/>
                 <xsl:text>  no definition of type </xsl:text>
                 <xsl:value-of select="."/>
