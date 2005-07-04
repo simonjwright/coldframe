@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 0eda0be00cae 2005/07/02 05:16:28 simonjwright $
+# $Id: cat2raw.py,v 61022cfeae88 2005/07/04 19:54:16 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -28,6 +28,9 @@ class Callable:
     See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52304'''
     def __init__(self, anycallable):
 	self.__call__ = anycallable
+
+# Should we revert to a previous standard of ColdFrame?
+reversionary = 0
 
 #-----------------------------------------------------------------------
 # Object model
@@ -81,8 +84,12 @@ class Base:
 	to.write('</%s>\n' % self.element_tag())
     def emit_documentation(self, to):
 	if self.attributes.has_key('documentation'):
-	    to.write('<documentation><![CDATA[ %s ]]></documentation>\n' %
-		     self.attributes['documentation'])
+	    if not reversionary:
+		to.write('<documentation><![CDATA[ %s ]]></documentation>\n' %
+			 self.attributes['documentation'])
+	    else:
+		to.write('<documentation>%s</documentation>\n' %
+			 self.attributes['documentation'])
 	else:
 	    # Feature in normalize-rose.tcl; -handleAnnotation is what
 	    # processes tags, and it's only called if there was a
@@ -106,17 +113,18 @@ class Base:
 	}
     def emit_visibility(self, to, default):
 	"""Outputs the <visibility/> of the XMLelement."""
-	if self.exportControl:
-            # class
-	    v = self.exportControl
-        elif self.opExportControl:
-            # operation
-            v = self.opExportControl
-	else:
-	    v = default
-	self.emit_single_element('visibility',
-				 Base.visibility_lookup[v.lower()],
-				 to)
+	if not reversionary:
+	    if self.exportControl:
+		# class
+		v = self.exportControl
+	    elif self.opExportControl:
+		# operation
+		v = self.opExportControl
+	    else:
+		v = default
+		self.emit_single_element('visibility',
+					 Base.visibility_lookup[v.lower()],
+					 to)
     def emit_nested_attribute_list(self, list, attribute, to):
 	"""Outputs all the contained <attribute/> XML elements, contained
 	in a <list/> element."""
@@ -301,7 +309,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: 0eda0be00cae $',
+				 'cat2raw.py $Revision: 61022cfeae88 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -494,6 +502,8 @@ class Transition(Base):
             to.write('<event>\n')
             self.emit_single_element('name', self.Event[0].object_name, to)
             to.write('</event>\n')
+	elif reversionary:
+	    to.write('<event></event>\n')
         if self.action:
 	    to.write('<transitionaction>\n')
             self.emit_single_element('name',
@@ -795,25 +805,30 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 0eda0be00cae $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 61022cfeae88 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
-	sys.stderr.write('-h, --help:        '
+	sys.stderr.write('-h, --help:              '
 			 + 'output this message\n')
-	sys.stderr.write('-o, --output=FILE: '
+	sys.stderr.write('-o, --output=FILE:       '
 			 + 'the output file (default is domain_name.raw\n')
+	sys.stderr.write('-r, --reversionary-mode: '
+			 + 'output to previous standard (20040319)\n')
 
     try:
         opts, args = getopt.getopt\
 	    (sys.argv[1:],
-	     'ho:',
-	     ['help', 'output='])
+	     'ho:r',
+	     ['help', 'output=', 'reversionary-mode'])
     except getopt.GetoptError:
         usage()
-        sys.exit(1)    
+        sys.exit(1)
+
+    global reversionary
 
     input = sys.stdin
     output = sys.stdout
+    reversionary = 0
     path = '.'
 
     for o, v in opts:
@@ -827,6 +842,8 @@ def main():
 	    except:
 		sys.stderr.write("couldn't open %s for output.\n" % v)
 		sys.exit(1)
+	if o in ('-r', '--reversionary-mode'):
+	    reversionary = 1
 
     if len(args) > 1:
         usage()
