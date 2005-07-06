@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 4a5d290b83bc 2005/07/04 19:31:30 simonjwright $ -->
+<!-- $Id: bugs.html,v 59144231b7bf 2005/07/06 20:53:17 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,7 +192,18 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<!-- next: 0318 -->
+<dt>0318 (raised 6.vii.05)
+
+<dd>A class may be active (have a task) and have a state machine. If
+so, it would be a good idea if the current state could be made atomic.
+
+<dt>0319 (raised 6.vii.05)
+
+<dd>A domain initialization <i>{init}</i> operation should be called
+after any class initializations have been done (ie, singletons exist,
+class attributes with default values have been set up).
+
+<!-- next: 0320 -->
 
 </dl>
 
