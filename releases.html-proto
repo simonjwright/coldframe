@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8f3347117ecd 2005/06/11 06:48:07 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 207378de8947 2005/07/06 20:36:52 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -55,6 +55,11 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>
+
+
+<p><dt>20050515
 
 <dd><font color="red">For this release, it's necessary to re-extract
 all Domains from the model.</font>
