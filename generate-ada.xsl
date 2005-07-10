@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 426ad247e2c9 2005/05/04 05:41:17 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v f353af3f8b49 2005/07/10 18:19:38 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -501,13 +501,6 @@
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
 
-    <!-- .. any domain initialization .. -->
-    <xsl:if test="initialize">
-      <xsl:value-of select="$II"/>
-      <xsl:value-of select="initialize"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
-
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>if Dispatcher /= null then&#10;</xsl:text>
@@ -529,6 +522,13 @@
       <xsl:value-of select="name"/>
       <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
+
+    <!-- .. any domain initialization .. -->
+    <xsl:if test="initialize">
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="initialize"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. instance operations .. -->
     <xsl:for-each select="$instance-initializations">
