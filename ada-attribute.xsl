@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v a2be55a7c0f6 2005/02/18 06:08:54 simon $ -->
+<!-- $Id: ada-attribute.xsl,v bcea8cd9c4a3 2005/07/10 18:29:47 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -110,6 +110,10 @@
           <xsl:text>State_Machine_State : State_Machine_State_T := </xsl:text>
           <xsl:value-of select="statemachine/state[@initial]/name"/>
           <xsl:text>;&#10;</xsl:text>
+          <xsl:if test="@active">
+            <xsl:value-of select="$II"/>
+            <xsl:text>pragma Atomic (State_Machine_State);&#10;</xsl:text>
+          </xsl:if>
         </xsl:if>
 
         <xsl:value-of select="$I"/>
