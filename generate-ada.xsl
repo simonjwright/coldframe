@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v f353af3f8b49 2005/07/10 18:19:38 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 066139816bd9 2005/07/12 21:24:17 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -415,7 +415,6 @@
          begin
             if not Domain_Initialized then
                Domain_Initialized := True;
-               {domain-init-proc};
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -423,6 +422,7 @@
                end if;
                ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
                {class}.CF_Class_Initialize:
+               {domain-init-proc};
                {class}.{init-operation};
             end if;
          exception
@@ -455,6 +455,15 @@
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
 
+    <xsl:for-each select="$class-initializations">
+      <xsl:sort select="name"/>
+      <xsl:text>with </xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
+    </xsl:for-each>
+
     <xsl:if test="initialize">
       <xsl:variable name="context">
         <xsl:call-template name="ty:find-source-package">
@@ -467,15 +476,6 @@
         <xsl:text>;&#10;</xsl:text>
       </xsl:if>
     </xsl:if>
-
-    <xsl:for-each select="$class-initializations">
-      <xsl:sort select="name"/>
-      <xsl:text>with </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
-    </xsl:for-each>
 
     <xsl:for-each select="$instance-initializations">
       <xsl:sort select="name"/>
