@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v a72e8243a46b 2005/05/24 20:19:45 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v f2b77af35dbb 2005/07/12 21:15:56 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1067,7 +1067,11 @@
 
         <xsl:for-each select="parameter[not(@mode) or @mode='inout']">
           <xsl:value-of select="$I"/>
-          <xsl:value-of select="type"/>
+          <xsl:call-template name="ut:type-name">
+            <xsl:with-param name="type" select="type"/>
+            <xsl:with-param name="class" select=".."/>
+            <xsl:with-param name="is-class" select="'no'"/>
+          </xsl:call-template>
           <xsl:text>'Output&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text>(ColdFrame.Stubs.Get_Input_Value_Stream&#10;</xsl:text>
@@ -1094,7 +1098,11 @@
           <xsl:value-of select="$I"/>
           <xsl:value-of select="name"/>
           <xsl:text> := </xsl:text>
-          <xsl:value-of select="type"/>
+          <xsl:call-template name="ut:type-name">
+            <xsl:with-param name="type" select="type"/>
+            <xsl:with-param name="class" select=".."/>
+            <xsl:with-param name="is-class" select="'no'"/>
+          </xsl:call-template>
           <xsl:text>'Input&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
@@ -1108,7 +1116,11 @@
         <xsl:if test="@return">
           <xsl:value-of select="$I"/>
           <xsl:text>return </xsl:text>
-          <xsl:value-of select="@return"/>
+          <xsl:call-template name="ut:type-name">
+            <xsl:with-param name="type" select="@return"/>
+            <xsl:with-param name="class" select=".."/>
+            <xsl:with-param name="is-class" select="'no'"/>
+          </xsl:call-template>
           <xsl:text>'Input&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text>(ColdFrame.Stubs.Get_Output_Value_Stream&#10;</xsl:text>
