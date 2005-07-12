@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $ -->
+<!-- $Id: ada-utilities.xsl,v e7538f3adb5d 2005/07/12 21:13:11 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -461,7 +461,7 @@
         <xsl:text>Long_Long_Integer</xsl:text>
       </xsl:when>
 
-      <!-- If we're coding a class and this is The current class, it  maps to
+      <!-- If we're coding a class and this is the current class, it  maps to
            just Handle. -->
       <xsl:when test="$type=$class/name and $is-class='yes'">
         <xsl:text>Handle</xsl:text>
