@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: 020fc7b624aa $
---  $Date: 2005/03/08 05:57:24 $
---  $Author: simon $
+--  $Revision: e64ad9ec2d98 $
+--  $Date: 2005/07/12 21:07:20 $
+--  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
@@ -38,6 +38,10 @@ package body Stub_Test_Suite is
    is new ColdFrame.Stubs.Set_Output_Value (Stub_Test.Record_Type);
    procedure Set_String
    is new ColdFrame.Stubs.Set_Output_Value (String);
+   procedure Set_Fixed_Message
+   is new ColdFrame.Stubs.Set_Output_Value (Stub_Test.Fixed_Message);
+   procedure Set_Variable_Message
+   is new ColdFrame.Stubs.Set_Output_Value (Stub_Test.Variable_Message);
 
    function Get_Boolean
    is new ColdFrame.Stubs.Get_Input_Value (Boolean);
@@ -45,6 +49,10 @@ package body Stub_Test_Suite is
    is new ColdFrame.Stubs.Get_Input_Value (Integer);
    function Get_String
    is new ColdFrame.Stubs.Get_Input_Value (String);
+   function Get_Fixed_Message
+   is new ColdFrame.Stubs.Get_Input_Value (Stub_Test.Fixed_Message);
+   function Get_Variable_Message
+   is new ColdFrame.Stubs.Get_Input_Value (Stub_Test.Variable_Message);
 
 
    procedure Missing_Values
@@ -274,6 +282,55 @@ package body Stub_Test_Suite is
    end Call_With_String;
 
 
+   procedure Call_With_Fixed_Message
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Call_With_Fixed_Message
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+   begin
+      Set_Fixed_Message ("Stub_Test.Public.Process_Fixed_Message",
+                         "return",
+                         ("wxyz"));
+      declare
+         S : constant Stub_Test.Fixed_Message :=
+           Stub_Test.Public.Process_Fixed_Message ("abcd");
+      begin
+         Assert (S = "wxyz",
+                 "wrong fixed_message returned");
+         Assert (Get_Fixed_Message
+                   ("Stub_Test.Public.Process_Fixed_Message", "M")
+                   = "abcd",
+                 "wrong fixed_message passed");
+      end;
+   end Call_With_Fixed_Message;
+
+
+   procedure Call_With_Variable_Message
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Call_With_Variable_Message
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      use type Stub_Test.Variable_Message;
+      use Stub_Test.Variable_Message_Package;
+   begin
+      Set_Variable_Message ("Stub_Test.Public.Process_Variable_Message",
+                            "return",
+                            To_Bounded_String ("wxyz"));
+      declare
+         S : constant Stub_Test.Variable_Message :=
+           Stub_Test.Public.Process_Variable_Message
+           (To_Bounded_String ("abcd"));
+      begin
+         Assert (S = To_Bounded_String ("wxyz"),
+                 "wrong variable_message returned");
+         Assert (Get_Variable_Message
+                   ("Stub_Test.Public.Process_Variable_Message", "M")
+                   = To_Bounded_String ("abcd"),
+                 "wrong variable_message passed");
+      end;
+   end Call_With_Variable_Message;
+
+
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
 
    procedure Register_Tests (C : in out Case_1);
@@ -314,6 +371,14 @@ package body Stub_Test_Suite is
         (C,
          Call_With_String'Access,
          "strings");
+      Register_Routine
+        (C,
+         Call_With_Fixed_Message'Access,
+         "fixed strings");
+      Register_Routine
+        (C,
+         Call_With_Variable_Message'Access,
+         "variable strings");
    end Register_Tests;
 
    function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
