@@ -1,38 +1,34 @@
 <domain stereotype="include">
-<extractor>cf-DATE</extractor>
 <name>Stub Test Interface</name>
-<date>
-<year>2005</year>
-<month>3</month>
-<day>7</day>
-<time>06:59</time>
-</date>
 <documentation><![CDATA[ Demonstration and test of test stub support.
 
 { name = Stub Test }
-{ revision = $Revision: 46c794db4c49 $ } ]]></documentation>
+{ revision = $Revision: 7b35df26c8ac $ } ]]></documentation>
+<extractor>cat2raw.py $Revision: 7b35df26c8ac $</extractor>
+<date>
+<year>2005</year>
+<month>7</month>
+<day>12</day>
+<time>22:03</time>
+</date>
 <classes>
 <class stereotype="type">
 <name>Record Type</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute>
 <name>i</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
-<initial></initial>
 </attribute>
 <attribute>
 <name>f</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Float</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
@@ -42,41 +38,35 @@
 </class>
 <class stereotype="discriminated">
 <name>Discriminated Type</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute>
 <name>i</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
-<initial></initial>
 </attribute>
 <attribute>
 <name>r</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Record Type</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
 <operation>
 <name>create discriminated</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>Discriminated Type</return>
+<documentation></documentation>
 <parameters>
 <parameter>
 <parametername>b</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Boolean</type>
-<initial></initial>
 </parameter>
 </parameters>
+<return>Discriminated Type</return>
 </operation>
 </operations>
 <events>
@@ -84,75 +74,88 @@
 </class>
 <class stereotype="public">
 <name>Public</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>Set Value</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <parameters>
 <parameter>
 <parametername>i</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Integer</type>
-<initial></initial>
 </parameter>
 </parameters>
 </operation>
 <operation>
 <name>Get Value</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>Integer</return>
+<documentation></documentation>
 <parameters>
 </parameters>
+<return>Integer</return>
 </operation>
 <operation>
 <name>Get Record Type</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>Record Type</return>
+<documentation></documentation>
 <parameters>
 <parameter>
 <parametername>b</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Boolean</type>
-<initial></initial>
 </parameter>
 </parameters>
+<return>Record Type</return>
 </operation>
 <operation>
 <name>Retrieve Record Type</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <parameters>
 <parameter>
 <parametername>out r</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Record Type</type>
-<initial></initial>
 </parameter>
 </parameters>
 </operation>
 <operation>
 <name>Process String</name>
-<visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>String</return>
+<documentation></documentation>
 <parameters>
 <parameter>
 <parametername>S</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>String</type>
-<initial></initial>
 </parameter>
 </parameters>
+<return>String</return>
+</operation>
+<operation>
+<name>Process Fixed Message</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>m</parametername>
+<documentation></documentation>
+<type>Fixed Message</type>
+</parameter>
+</parameters>
+<return>Fixed Message</return>
+</operation>
+<operation>
+<name>Process Variable Message</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>m</parametername>
+<documentation></documentation>
+<type>Variable Message</type>
+</parameter>
+</parameters>
+<return>Variable Message</return>
 </operation>
 </operations>
 <events>
@@ -160,11 +163,393 @@
 </class>
 <class stereotype="exception">
 <name>Exception Type</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Special Public</name>
+<documentation><![CDATA[ Just has to compile. ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>autonumber p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>counterpart p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>date p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>real p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>text p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>time p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>autonumber f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Autonumber</return>
+</operation>
+<operation>
+<name>counterpart f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Counterpart</return>
+</operation>
+<operation>
+<name>date f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Date</return>
+</operation>
+<operation>
+<name>real f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Real</return>
+</operation>
+<operation>
+<name>text f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Text</return>
+</operation>
+<operation>
+<name>time f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Time</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="counterpart">
+<name>Special Type</name>
+<documentation><![CDATA[ Just has to compile. ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>autonumber p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Autonumber</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>counterpart p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Counterpart</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>date p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Date</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>real p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Real</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>text p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Text</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>time p</name>
+<documentation></documentation>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+<parameter>
+<parametername>inout m</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+<parameter>
+<parametername>out o</parametername>
+<documentation></documentation>
+<type>Time</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>autonumber f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Autonumber</return>
+</operation>
+<operation>
+<name>counterpart f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Counterpart</return>
+</operation>
+<operation>
+<name>date f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Date</return>
+</operation>
+<operation>
+<name>real f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Real</return>
+</operation>
+<operation>
+<name>text f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Text</return>
+</operation>
+<operation>
+<name>time f</name>
+<documentation></documentation>
+<parameters>
+</parameters>
+<return>Time</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Variable Message</name>
+<documentation><![CDATA[ { string = max 32 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Fixed Message</name>
+<documentation><![CDATA[ { string = fixed 4 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
