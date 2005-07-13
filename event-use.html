@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: event-use.html,v 3bd5fdc246eb 2005/07/13 20:52:14 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -14,7 +14,14 @@ width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
 </tr>
 </table>
 
-<h2>Event queues</h2>
+<ul>
+<li><a href="#eventqueues">Event queues</a>
+<li><a href="#postinganevent">Posting an event</a>
+<li><a href="#locking">Locking</a>
+<li><a href="#activeclasses">Active classes</a>
+</ul>
+
+<h2><a name="eventqueues">Event queues</a></h2>
 
 <p>All code is executed in the context of some Ada task. There are
 three relevant kinds of task:
@@ -102,7 +109,7 @@ more efficient (it saves a memory allocation/freeing and a couple of
 context switches, perhaps 20 to 30 microseconds).
 
 
-<h2>Posting an event</h2>
+<h2><a name="postinganevent">Posting an event</a></h2>
 
 The typical code for posting an event <tt>Ev</tt> is
 <pre>
@@ -216,6 +223,11 @@ ColdFrame guarantees that
 <p>Note that there's no guarantee about the relative timing of events
 and locks; you could post an event and then take a lock, but the event
 may or may not have been handled when the lock is achieved.
+
+<h2><a name="activeclasses">Active classes</a></h2>
+
+<p><i>This is to be a discussion about active classes with state
+machines, and how to make sure they're properly initialized.</i>
 
 <hr>
 <i>
