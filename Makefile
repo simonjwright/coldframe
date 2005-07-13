@@ -637,7 +637,7 @@ dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
 	-@rm -rf dist
 	mkdir -p dist/download
 	cp -p $(DOCS) dist/
-	cd dist && zip download/cf-html-$(DATE).zip *
+	cd dist && zip -9 download/cf-html-$(DATE).zip *
 	cp $(DISTRIBUTION_FILES) dist/download/
 
 # Files that need DATE substituted
@@ -672,6 +672,6 @@ cf-$(DATE).tgz: cf-$(DATE)
 
 cf-$(DATE).zip: cf-$(DATE)
 	-rm $@
-	zip -r $@ $</*
+	zip -r -9 $@ $</*
 
 .PHONY: force
