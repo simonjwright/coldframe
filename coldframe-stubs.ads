@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: e905df7674ba $
---  $Date: 2005/03/01 06:30:50 $
---  $Author: simon $
+--  $Revision: 04e1b1c6a573 $
+--  $Date: 2005/07/17 21:46:55 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Streams;
@@ -37,6 +37,15 @@ package ColdFrame.Stubs is
    --  object's constraints. This value should be enough for all but
    --  extreme cases.
    Storage_Overhead : constant := 128;
+
+
+   --  Raised if a referenced subprogram isn't known.
+   No_Subprogram : exception;
+
+
+   --  Raised if a referenced parameter isn't known, or if an attempt
+   --  is made to set the return value of a procedure.
+   No_Parameter : exception;
 
 
    --  Raised if a required return or (in)out value is not found.
@@ -129,6 +138,23 @@ package ColdFrame.Stubs is
    -----------------------------------------------------------------
    --  O p e r a t i o n s   f o r   g e n e r a t e d   c o d e  --
    -----------------------------------------------------------------
+
+   --  Called during elaboration (of generated code) to register the
+   --  existence of a subprogram.
+   procedure Register_Subprogram (Named : String);
+
+
+   --  Called during elaboration (of generated code) to register the
+   --  existence of a subprogram input parameter.
+   procedure Register_Input_Parameter (Subprogram_Named : String;
+                                       Parameter_Named : String);
+
+
+   --  Called during elaboration (of generated code) to register the
+   --  existence of a subprogram output parameter (or function return).
+   procedure Register_Output_Parameter (Subprogram_Named : String;
+                                        Parameter_Named : String);
+
 
    --  Local type for access to internal streams.
    type Stream_Access is access Ada.Streams.Root_Stream_Type'Class;

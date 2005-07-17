@@ -20,16 +20,18 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: ee3f46cb6359 $
---  $Date: 2005/03/07 06:56:03 $
---  $Author: simon $
+--  $Revision: 04e1b1c6a573 $
+--  $Date: 2005/07/17 21:46:55 $
+--  $Author: simonjwright $
 
+with Ada.Strings.Fixed;
 with Ada.Strings.Unbounded;
 with Ada.Strings.Maps.Constants;
 with BC.Containers.Bags.Unmanaged;
 with BC.Containers.Collections.Unmanaged;
 with BC.Containers.Collections.Ordered.Unmanaged;
 with BC.Containers.Maps.Unmanaged;
+with BC.Containers.Sets.Unmanaged;
 with BC.Support.Memory_Streams;
 with BC.Support.Smart_Pointers;
 with ColdFrame.Hash.Strings.Unbounded;
@@ -57,6 +59,16 @@ package body ColdFrame.Stubs is
    is new Abstract_Unbounded_String_Containers.Bags;
    package Unbounded_String_Bags
    is new Abstract_Unbounded_String_Bags.Unmanaged
+     (Hash => Case_Insensitive_Hash,
+      Buckets => 37);
+
+
+   --  We need to check for the existence of subprograms and
+   --  parameters/results.
+   package Abstract_Unbounded_String_Sets
+   is new Abstract_Unbounded_String_Containers.Sets;
+   package Unbounded_String_Sets
+   is new Abstract_Unbounded_String_Sets.Unmanaged
      (Hash => Case_Insensitive_Hash,
       Buckets => 37);
 
@@ -198,6 +210,14 @@ package body ColdFrame.Stubs is
       Buckets => 37);
 
 
+   --  Validity checking information, set up during elaboration of
+   --  generated code.
+   Subprograms : Unbounded_String_Sets.Set;
+   Input_Parameters : Unbounded_String_Sets.Set;
+   Output_Parameters : Unbounded_String_Sets.Set;
+
+
+   --  Test storage, managed by Set_Up and Tear_Down.
    Entries : Unbounded_String_Bags.Bag;
    Inputs : Stream_Pointer_Collection_Maps.Map;
    Exceptions : Sparse_Exception_Collection_Maps.Map;
@@ -235,16 +255,37 @@ package body ColdFrame.Stubs is
                                To : T;
                                For_Call : Positive := 1;
                                Overhead_Bytes : Natural := Storage_Overhead) is
-      subtype SEO is Ada.Streams.Stream_Element_Offset;
+      SU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+      subtype SEO is Ada.Streams.Stream_Element_Offset;
       Size : constant SEO := SEO ((To'Size + 7) / 8 + Overhead_Bytes);
       Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type (Size));
       Coll : Sparse_Stream_Pointer_Collection_Pointers.Pointer;
    begin
+      if not Unbounded_String_Sets.Is_Member (Subprograms, SU) then
+         Ada.Exceptions.Raise_Exception
+           (No_Subprogram'Identity,
+            "subprogram " & For_Subprogram_Named & " not known");
+      end if;
+      if not Unbounded_String_Sets.Is_Member (Output_Parameters, SPU) then
+         if Ada.Strings.Fixed.Translate
+           (For_Parameter_Named,
+            Ada.Strings.Maps.Constants.Lower_Case_Map)
+           = "return" then
+            Ada.Exceptions.Raise_Exception
+              (No_Parameter'Identity,
+               For_Subprogram_Named & " is not a function");
+         else
+            Ada.Exceptions.Raise_Exception
+              (No_Parameter'Identity,
+               "parameter " & SP & " not known");
+         end if;
+      end if;
       if not Sparse_Stream_Pointer_Collection_Maps.Is_Bound (Outputs, SPU) then
          Coll := Sparse_Stream_Pointer_Collection_Pointers.Create
            (new Sparse_Stream_Pointer_Collections.Collection);
@@ -269,6 +310,11 @@ package body ColdFrame.Stubs is
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       Coll : Sparse_Exception_Collection_Pointers.Pointer;
    begin
+      if not Unbounded_String_Sets.Is_Member (Subprograms, SEU) then
+         Ada.Exceptions.Raise_Exception
+           (No_Subprogram'Identity,
+            "subprogram " & For_Subprogram_Named & " not known");
+      end if;
       if not Sparse_Exception_Collection_Maps.Is_Bound (Exceptions, SEU) then
          Coll := Sparse_Exception_Collection_Pointers.Create
            (new Sparse_Exception_Collections.Collection);
@@ -294,10 +340,22 @@ package body ColdFrame.Stubs is
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
                              For_Call : Positive := 1) return T is
+      SU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
       SPU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
    begin
+      if not Unbounded_String_Sets.Is_Member (Subprograms, SU) then
+         Ada.Exceptions.Raise_Exception
+           (No_Subprogram'Identity,
+            "subprogram " & For_Subprogram_Named & " not known");
+      end if;
+      if not Unbounded_String_Sets.Is_Member (Input_Parameters, SPU) then
+         Ada.Exceptions.Raise_Exception
+           (No_Parameter'Identity,
+            "parameter " & SP & " not known");
+      end if;
       if not Stream_Pointer_Collection_Maps.Is_Bound (Inputs, SPU) then
          Ada.Exceptions.Raise_Exception
            (No_Value'Identity,
@@ -328,7 +386,7 @@ package body ColdFrame.Stubs is
          else
             Ada.Exceptions.Raise_Exception
               (No_Value'Identity,
-               "for output " & SP);
+               "for input " & SP & For_Call'Img);
          end if;
       end;
    end Get_Input_Value;
@@ -337,6 +395,36 @@ package body ColdFrame.Stubs is
    -----------------------------------------------------------------
    --  O p e r a t i o n s   f o r   g e n e r a t e d   c o d e  --
    -----------------------------------------------------------------
+
+   procedure Register_Subprogram (Named : String) is
+      SU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (Named);
+   begin
+      Unbounded_String_Sets.Add (Subprograms, SU);
+   end Register_Subprogram;
+
+
+   procedure Register_Input_Parameter (Subprogram_Named : String;
+                                       Parameter_Named : String) is
+      SP : constant String
+        := Subprogram_Named & "." & Parameter_Named;
+      SPU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+   begin
+      Unbounded_String_Sets.Add (Input_Parameters, SPU);
+   end Register_Input_Parameter;
+
+
+   procedure Register_Output_Parameter (Subprogram_Named : String;
+                                        Parameter_Named : String) is
+      SP : constant String
+        := Subprogram_Named & "." & Parameter_Named;
+      SPU : constant Ada.Strings.Unbounded.Unbounded_String
+        := Ada.Strings.Unbounded.To_Unbounded_String (SP);
+   begin
+      Unbounded_String_Sets.Add (Output_Parameters, SPU);
+   end Register_Output_Parameter;
+
 
    function Note_Entry (For_Subprogram_Named : String) return Positive is
       S : constant Ada.Strings.Unbounded.Unbounded_String

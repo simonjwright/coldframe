@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 79c7dcae670f 2005/06/02 19:40:54 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 04e1b1c6a573 2005/07/17 21:46:55 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -807,6 +807,9 @@
 
     <!-- Any context clauses needed for the class body .. -->
     <xsl:call-template name="cl:class-body-context"/>
+    <xsl:if test="$generate-stubs='yes'">
+      <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. start the body .. -->
     <xsl:text>package body </xsl:text>
@@ -912,6 +915,69 @@
       select="statemachine/event">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
+
+    <!-- .. test stub registration .. -->
+    <xsl:if test="$generate-stubs='yes'">
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+      <xsl:for-each
+        select="operation[not(@access) and not(@entry)]">
+        <!-- I know that this doesn't exclude all the operations that
+             won't be stubbed, but there's no harm in having too
+             many. And you shouldn't have accessor operations on
+             public classes. -->
+        <xsl:sort select="name"/>
+        <xsl:variable name="subprogram-name">
+          <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="name"/>
+        </xsl:variable>
+        <xsl:value-of select="$I"/>
+        <xsl:text>ColdFrame.Stubs.Register_Subprogram&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>("</xsl:text>
+        <xsl:value-of select="$subprogram-name"/>
+        <xsl:text>");&#10;</xsl:text>
+        <xsl:for-each select="parameter
+                              [not(@mode) or @mode='in' or @mode='inout']">
+          <xsl:value-of select="$I"/>
+          <xsl:text>ColdFrame.Stubs.Register_Input_Parameter&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>("</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>",&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> "</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>");&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:for-each select="parameter[@mode='out' or @mode='inout']">
+          <xsl:value-of select="$I"/>
+          <xsl:text>ColdFrame.Stubs.Register_Output_Parameter&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>("</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>",&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> "</xsl:text>
+          <xsl:value-of select="name"/>
+          <xsl:text>");&#10;</xsl:text>
+        </xsl:for-each>
+        <xsl:if test="@return">
+          <xsl:value-of select="$I"/>
+          <xsl:text>ColdFrame.Stubs.Register_Output_Parameter&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text>("</xsl:text>
+          <xsl:value-of select="$subprogram-name"/>
+          <xsl:text>",&#10;</xsl:text>
+          <xsl:value-of select="$IC"/>
+          <xsl:text> "return");&#10;</xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
 
     <!-- and close. -->
     <xsl:text>end </xsl:text>
