@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v f2b77af35dbb 2005/07/12 21:15:56 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v bfc919386b1f 2005/07/17 21:53:58 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1052,7 +1052,6 @@
         </xsl:call-template>
 
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
-        <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
         <xsl:value-of select="$blank-line"/>
 
         <xsl:value-of select="$heading"/>
