@@ -20,12 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 04e1b1c6a573 $
---  $Date: 2005/07/17 21:46:55 $
+--  $Revision: 76e50b19e01e $
+--  $Date: 2005/08/02 20:37:33 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Streams;
+with BC.Support.Synchronization;
 
 package ColdFrame.Stubs is
 
@@ -210,6 +211,10 @@ package ColdFrame.Stubs is
                                      For_Parameter_Named : String;
                                      For_Call : Positive)
                                     return Stream_Access;
+
+
+   --  Used for mutual exclusion with a BC.Support.Synchronization.Lock.
+   Mutex : aliased BC.Support.Synchronization.Semaphore;
 
 
 end ColdFrame.Stubs;
