@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v bcf160b59f9c 2005/07/12 21:21:18 simonjwright $
+# $Id: cat2raw.py,v c3d671c21887 2005/08/02 20:29:44 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -309,7 +309,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: bcf160b59f9c $',
+				 'cat2raw.py $Revision: c3d671c21887 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -502,14 +502,16 @@ class Transition(Base):
             to.write('<event>\n')
             self.emit_single_element('name', self.Event[0].object_name, to)
             to.write('</event>\n')
-	elif reversionary:
-	    to.write('<event></event>\n')
+        elif reversionary:
+            to.write('<event><name></name></event>\n')
         if self.action:
 	    to.write('<transitionaction>\n')
             self.emit_single_element('name',
                                      self.action[0].object_name,
                                      to)
-	    to.write('</transitionaction>\n')
+            to.write('</transitionaction>\n')
+        elif reversionary:
+            to.write('<transitionaction><name></name></transitionaction>\n')
 
 recognizedID['State_Transition'] = Transition
 
@@ -805,7 +807,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: bcf160b59f9c $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: c3d671c21887 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
