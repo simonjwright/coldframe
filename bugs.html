@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 84956567694c 2005/07/17 21:55:29 simonjwright $ -->
+<!-- $Id: bugs.html,v 8fb3f806a531 2005/08/04 20:29:23 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -198,7 +198,15 @@ in the model, or imported into a different model.</i>
 passed to the stub mechanism are correct.
 <br>SourceForge 1239282
 
-<!-- next: 0322 -->
+<dt>0322 (raised 4.viii.05)
+
+<dd> If you have an event queue which doesn't start at creation (all
+Test event queues, or any queue with Start_Started false), there's a
+possible race condition (especially if the queue is low priority)
+which can lead to lockup when Start is eventually called.
+<br>SourceForge 1252188
+
+<!-- next: 0323 -->
 
 </dl>
 
