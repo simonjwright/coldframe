@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 8903b9eb9e52 $
---  $Date: 2005/05/26 04:06:34 $
+--  $Revision: 527a40e5e103 $
+--  $Date: 2005/08/04 20:33:00 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -176,8 +176,11 @@ package body ColdFrame.Events_G.Standard_G is
 
    begin
 
-      --  Wait to be told when to start, if not immediately
-      if not The_Queue.Started then
+      --  Wait to be told when to start, if not immediately. Note, we
+      --  have to check Start_Started (the intention) rather than
+      --  Started (the current state), in case of a race condition
+      --  with the Start operation.
+      if not The_Queue.Start_Started then
 
          select
             accept Start do
