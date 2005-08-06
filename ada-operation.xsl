@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v bfc919386b1f 2005/07/17 21:53:58 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v db62e9cd90b8 2005/08/06 15:19:33 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1286,6 +1286,59 @@
   </xsl:template>
 
   <xsl:template match="*" mode="op:access-to-operation"/>
+
+
+  <!-- Called at type/operation or class/operation to register it for
+       test stubbing. -->
+  <xsl:template name="op:register-operation-stub">
+
+    <!-- The name of the operation. -->
+    <xsl:param name="subprogram-name"/>
+
+    <xsl:value-of select="$I"/>
+    <xsl:text>ColdFrame.Stubs.Register_Subprogram&#10;</xsl:text>
+    <xsl:value-of select="$IC"/>
+    <xsl:text>("</xsl:text>
+    <xsl:value-of select="$subprogram-name"/>
+    <xsl:text>");&#10;</xsl:text>
+    <xsl:for-each select="parameter
+                          [not(@mode) or @mode='in' or @mode='inout']">
+      <xsl:value-of select="$I"/>
+      <xsl:text>ColdFrame.Stubs.Register_Input_Parameter&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>("</xsl:text>
+      <xsl:value-of select="$subprogram-name"/>
+      <xsl:text>",&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text> "</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>");&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:for-each select="parameter[@mode='out' or @mode='inout']">
+      <xsl:value-of select="$I"/>
+      <xsl:text>ColdFrame.Stubs.Register_Output_Parameter&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>("</xsl:text>
+      <xsl:value-of select="$subprogram-name"/>
+      <xsl:text>",&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text> "</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>");&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:if test="@return">
+      <xsl:value-of select="$I"/>
+      <xsl:text>ColdFrame.Stubs.Register_Output_Parameter&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>("</xsl:text>
+      <xsl:value-of select="$subprogram-name"/>
+      <xsl:text>",&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text> "return");&#10;</xsl:text>
+    </xsl:if>
+    <xsl:value-of select="$blank-line"/>
+    
+  </xsl:template>
 
 
 </xsl:stylesheet>
