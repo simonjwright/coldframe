@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 76e50b19e01e $
---  $Date: 2005/08/02 20:37:33 $
+--  $Revision: c3b09aeb0490 $
+--  $Date: 2005/08/06 17:49:34 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -51,6 +51,18 @@ package ColdFrame.Stubs is
 
    --  Raised if a required return or (in)out value is not found.
    No_Value : exception;
+
+
+   --  Raised by Set_Output_Value or Set_Exception if a return or
+   --  (in)out value or an exception has already been set and the
+   --  'Override' parameter is False.
+   Already_Set : exception;
+
+
+   --  Raised by Set_Output_Value or Set_Exception if a return or
+   --  (in)out value or an exception has not already been set and the
+   --  'Override' parameter is True.
+   Not_Already_Set : exception;
 
 
    -------------------------------
@@ -89,6 +101,9 @@ package ColdFrame.Stubs is
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
    --
+   --  A previously stored value for a particular call can only be
+   --  overridden if Override is True (when it must be).
+   --
    --  Overhead_Bytes is the additional space reserved for the
    --  streamed representation.
    generic
@@ -97,6 +112,7 @@ package ColdFrame.Stubs is
                                For_Parameter_Named : String;
                                To : T;
                                For_Call : Positive := 1;
+                               Override : Boolean := False;
                                Overhead_Bytes : Natural := Storage_Overhead);
 
 
@@ -109,9 +125,13 @@ package ColdFrame.Stubs is
    --
    --  Normally the exception will be raised for the specified call
    --  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
+   --
+   --  A previously stored exception for a particular call can only be
+   --  overridden if Override is True (when it must be).
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1);
+                            For_Call : Positive := 1;
+                            Override : Boolean := False);
 
 
    --  Retrieve the number of calls made to the named subprogram.
