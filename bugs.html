@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8fb3f806a531 2005/08/04 20:29:23 simonjwright $ -->
+<!-- $Id: bugs.html,v ba367d12f19d 2005/08/06 17:54:03 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -195,7 +195,8 @@ in the model, or imported into a different model.</i>
 <dt>0321 (raised 16.vii.05)
 
 <dd>It would be helpful to check that subprogram names and parameters
-passed to the stub mechanism are correct.
+passed to the stub mechanism are correct; also that overridings are
+intended.
 <br>SourceForge 1239282
 
 <dt>0322 (raised 4.viii.05)
@@ -206,7 +207,12 @@ possible race condition (especially if the queue is low priority)
 which can lead to lockup when Start is eventually called.
 <br>SourceForge 1252188
 
-<!-- next: 0323 -->
+<dt>0323 (raised 6.viii.05)
+
+<dd>The stub mechanism isn't thread-safe.
+<br>SourceForge 1253254
+
+<!-- next: 0324 -->
 
 </dl>
 
