@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 04e1b1c6a573 $
---  $Date: 2005/07/17 21:46:55 $
+--  $Revision: f9d9d272b0fc $
+--  $Date: 2005/08/06 17:48:59 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -254,6 +254,7 @@ package body ColdFrame.Stubs is
                                For_Parameter_Named : String;
                                To : T;
                                For_Call : Positive := 1;
+                               Override : Boolean := False;
                                Overhead_Bytes : Natural := Storage_Overhead) is
       SU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
@@ -293,6 +294,29 @@ package body ColdFrame.Stubs is
       else
          Coll := Sparse_Stream_Pointer_Collection_Maps.Item_Of (Outputs, SPU);
       end if;
+      declare
+         It : Abstract_Sparse_Stream_Pointer_Containers.Iterator'Class
+           := Sparse_Stream_Pointer_Collections.New_Iterator
+           (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all);
+         Overridden : Boolean := False;
+         use Abstract_Sparse_Stream_Pointer_Containers;
+      begin
+         while not Is_Done (It) loop
+            if Current_Item (It).Ordinal = For_Call then
+               if Override then
+                  Overridden := True;
+                  Delete_Item_At (It);
+                  exit;
+               else
+                  raise Already_Set;
+               end if;
+            end if;
+            Next (It);
+         end loop;
+         if Override and not Overridden then
+            raise Not_Already_Set;
+         end if;
+      end;
       Sparse_Stream_Pointer_Collections.Append
         (Sparse_Stream_Pointer_Collection_Pointers.Value (Coll).all,
          Output_Cell'(Ordinal => For_Call,
@@ -305,7 +329,8 @@ package body ColdFrame.Stubs is
 
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1) is
+                            For_Call : Positive := 1;
+                            Override : Boolean := False) is
       SEU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       Coll : Sparse_Exception_Collection_Pointers.Pointer;
@@ -322,6 +347,29 @@ package body ColdFrame.Stubs is
       else
          Coll := Sparse_Exception_Collection_Maps.Item_Of (Exceptions, SEU);
       end if;
+      declare
+         It : Abstract_Sparse_Exception_Containers.Iterator'Class
+           := Sparse_Exception_Collections.New_Iterator
+           (Sparse_Exception_Collection_Pointers.Value (Coll).all);
+         Overridden : Boolean := False;
+         use Abstract_Sparse_Exception_Containers;
+      begin
+         while not Is_Done (It) loop
+            if Current_Item (It).Ordinal = For_Call then
+               if Override then
+                  Overridden := True;
+                  Delete_Item_At (It);
+                  exit;
+               else
+                  raise Already_Set;
+               end if;
+            end if;
+            Next (It);
+         end loop;
+         if Override and not Overridden then
+            raise Not_Already_Set;
+         end if;
+      end;
       Sparse_Exception_Collections.Append
         (Sparse_Exception_Collection_Pointers.Value (Coll).all,
          (Ordinal => For_Call,
@@ -333,6 +381,11 @@ package body ColdFrame.Stubs is
       S : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
    begin
+      if not Unbounded_String_Sets.Is_Member (Subprograms, S) then
+         Ada.Exceptions.Raise_Exception
+           (No_Subprogram'Identity,
+            "subprogram " & For_Subprogram_Named & " not known");
+      end if;
       return Unbounded_String_Bags.Count (Entries, S);
    end Number_Of_Calls;
 
