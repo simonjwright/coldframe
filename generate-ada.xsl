@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 066139816bd9 2005/07/12 21:24:17 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 8b489bcbf764 2005/08/06 15:18:40 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -296,14 +296,31 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- .. the domain package body, if needed .. -->
-    <xsl:if test="type/operation[not(@access)
-                  and not(@suppressed)
-                  and not(@imported)
-                  and not(@renames)]">
+    <xsl:variable
+      name="type-operations"
+      select="type/operation[not(@access)
+              and not(@suppressed)
+              and not(@imported)
+              and not(@renames)]"/>
+
+    <xsl:if test="$type-operations">
 
       <xsl:call-template name="ut:do-not-edit"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:call-template name="ut:identification-info"/>
+
+      <!-- If we have operations of plain types and we're stubbing, we
+           must register them. -->
+      <xsl:variable 
+        name="plain-type-operations"
+        select="type[not(@protected)]/operation[not(@access)
+                and not(@suppressed)
+                and not(@imported)
+                and not(@renames)]"/>
+
+      <xsl:if test="$generate-stubs='yes' and $plain-type-operations">
+        <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
+      </xsl:if>
 
       <xsl:text>package body </xsl:text>
       <xsl:value-of select="name"/>
@@ -326,10 +343,32 @@
 
       <!-- Operations that were analyst-specified need stubs. -->
       <xsl:apply-templates
-        select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
+        select="type[not(@protected)]
+                /operation[not(@access) and not(@suppressed)]"
         mode="ty:domain-type-operation-body-stub">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
+
+      <!-- If we have operations of plain types and we're stubbing, we
+           must register them. -->
+      <xsl:if test="$generate-stubs='yes' and $plain-type-operations">
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+         <xsl:for-each select="$plain-type-operations">
+           <!-- I know that this doesn't exclude all the operations that
+                won't be stubbed, but there's no harm in having too
+                many. And you shouldn't have accessor operations on
+                public classes. -->
+           <xsl:sort select="name"/>
+           <xsl:call-template name="op:register-operation-stub">
+             <xsl:with-param name="subprogram-name">
+               <xsl:value-of select="../../name"/>
+               <xsl:text>.</xsl:text>
+               <xsl:value-of select="name"/>
+             </xsl:with-param>
+           </xsl:call-template>
+        </xsl:for-each>
+      </xsl:if>
 
       <!-- .. and close. -->
       <xsl:text>end </xsl:text>
@@ -345,7 +384,8 @@
         select="'.. operations of types ..'"/>
     </xsl:call-template>
     <xsl:apply-templates
-      select="type[not(@protected)]/operation[not(@access) and not(@suppressed)]"
+      select="type[not(@protected)]
+              /operation[not(@access) and not(@suppressed)]"
       mode="ty:domain-type-operation-body">
     </xsl:apply-templates>
 
