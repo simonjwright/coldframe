@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: f9d9d272b0fc $
---  $Date: 2005/08/06 17:48:59 $
+--  $Revision: 19aa9bd0926b $
+--  $Date: 2005/08/07 18:55:46 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -162,7 +162,7 @@ package body ColdFrame.Stubs is
 
    --  For Outputs, we need collections of Memory Streams, organized to
    --  provide a sparse array. The collection is reverse-ordered, so
-   --  that we can find the appropriate entry for a particular entry
+   --  that we can find the appropriate entry for a particular call
    --  by iterating until we come to a cell whose Ordinal is less than
    --  or equal to the one we require.
    --
