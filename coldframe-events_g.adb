@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 56d4f7b06d8e $
---  $Date: 2005/04/10 18:35:57 $
---  $Author: simon $
+--  $Revision: 479755d5493a $
+--  $Date: 2005/08/07 15:36:05 $
+--  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Tags;
@@ -375,7 +375,10 @@ package body ColdFrame.Events_G is
                                          Event_Queue_P);
    begin
       if The_Queue /= null then
-         The_Queue.Access_Count := The_Queue.Access_Count - 1;
+         --  Decrement the use count (if there have actually been any uses).
+         if The_Queue.Access_Count > 0 then
+            The_Queue.Access_Count := The_Queue.Access_Count - 1;
+         end if;
          if The_Queue.Access_Count = 0 then
             Tear_Down (The_Queue.all);  -- dispatches to actual Tear_Down
             Delete (The_Queue);
