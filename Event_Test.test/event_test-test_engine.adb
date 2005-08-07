@@ -286,28 +286,6 @@ package body Event_Test.Test_Engine is
    end Event_Takes_Lock;
 
 
-   --  You can tear down an Event_Queue that hasn't started.
-   --  This would be better as a different test case!
-   procedure Tear_Down_Unstarted_Queue
-     (R : in out AUnit.Test_Cases.Test_Case'Class);
-   procedure Tear_Down_Unstarted_Queue
-     (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
-      Dispatcher : ColdFrame.Project.Events.Event_Queue_P := Events.Dispatcher;
-   begin
-      ColdFrame.Project.Events.Add_Reference (Dispatcher);
-      --  we need to add a use so that the Tear_Down in the fixture
-      --  doesn't fail.
-      select
-         delay 1.0;
-         Assert (False, "queue wasn't torn down");
-      then abort
-         ColdFrame.Project.Events.Stop (Dispatcher);
-         ColdFrame.Project.Events.Tear_Down (Dispatcher);
-      end select;
-   end Tear_Down_Unstarted_Queue;
-
-
    --  Deleting a Timer without a held event is OK.
    procedure Delete_Timer_Without_Held_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class);
@@ -366,10 +344,6 @@ package body Event_Test.Test_Engine is
         (T, Lock_Vs_Self_Event'Access, "Lock against self event");
       Register_Routine
         (T, Event_Takes_Lock'Access, "Event handler takes nested lock");
-      Register_Routine
-        (T,
-         Tear_Down_Unstarted_Queue'Access,
-         "Unstarted queue can be torn down");
       Register_Routine
         (T,
          Delete_Timer_Without_Held_Event'Access,
