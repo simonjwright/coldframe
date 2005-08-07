@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: c3b09aeb0490 $
---  $Date: 2005/08/06 17:49:34 $
+--  $Revision: 384f3abc32c1 $
+--  $Date: 2005/08/07 18:36:55 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -233,7 +233,14 @@ package ColdFrame.Stubs is
                                     return Stream_Access;
 
 
-   --  Used for mutual exclusion with a BC.Support.Synchronization.Lock.
+   --  Used for mutual exclusion via the RAII (Resource Acquisition Is
+   --  Initialization) pattern.
+   --
+   --  declare
+   --     L : Lock (Mutex'Access);
+   --     --  now locked
+   --  begin
+   subtype Lock is BC.Support.Synchronization.Lock;
    Mutex : aliased BC.Support.Synchronization.Semaphore;
 
 
