@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 207378de8947 2005/07/06 20:36:52 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 8d606793c04c 2005/08/07 18:48:26 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -56,7 +56,19 @@ contains the complete documentation.
 
 <p><dt>DATE
 
-<dd>
+<dd>Various corrections and improvements to test stub generation/use.
+
+
+<p>Corrected a race condition which could block on starting a
+low-priority event queue.
+
+
+<p>A type used for the return type of a protected function might not
+be declared in the right order.
+
+
+<p>Some domain initialization (singletons, default values for class
+attributes) is done before any <i>{init}</i> operation is called.
 
 
 <p><dt>20050515
