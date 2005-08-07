@@ -557,6 +557,8 @@ Event_Test.test/event_test-test_engine.adb \
 Event_Test.test/event_test-test_engine.ads \
 Event_Test.test/event_test-test_instance.adb \
 Event_Test.test/event_test-test_instance.ads \
+Event_Test.test/event_test-test_queue.adb \
+Event_Test.test/event_test-test_queue.ads \
 Event_Test.test/event_test-test_singleton_instance.adb \
 Event_Test.test/event_test-test_singleton_instance.ads \
 Event_Test.test/event_test-test_timer_task_teardown.adb \
