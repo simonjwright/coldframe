@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8d606793c04c 2005/08/07 18:48:26 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 21f136d383c5 2005/08/12 18:58:58 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -68,7 +68,8 @@ be declared in the right order.
 
 
 <p>Some domain initialization (singletons, default values for class
-attributes) is done before any <i>{init}</i> operation is called.
+attributes) is done before any domain <i>{init}</i> operation is
+called.
 
 
 <p><dt>20050515
