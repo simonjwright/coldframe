@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 479755d5493a $
---  $Date: 2005/08/07 15:36:05 $
+--  $Revision: 4d5d40ed80d4 $
+--  $Date: 2005/08/12 19:00:40 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -321,7 +321,9 @@ package body ColdFrame.Events_G is
 
    procedure Stop_Handling (The_Event : access Instance_Event_Base) is
    begin
-      The_Event.For_The_Instance.In_Handler := False;
+      if not The_Event.Instance_Deleted then
+         The_Event.For_The_Instance.In_Handler := False;
+      end if;
    end Stop_Handling;
 
 
