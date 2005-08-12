@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 527a40e5e103 $
---  $Date: 2005/08/04 20:33:00 $
+--  $Revision: 3f2c8a202aed $
+--  $Date: 2005/08/12 19:01:41 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -235,10 +235,9 @@ package body ColdFrame.Events_G.Standard_G is
                end;
                Stop_Handling (E);
                Log_Post_Dispatch (The_Event => E, On => The_Queue);
+               Log (E, Event_Basis.Finishing);
             end if;
 
-            Stop_Handling (E);
-            Log (E, Event_Basis.Finishing);
             Delete (E);
             Note_Removal_Of_Posted_Event (The_Queue);
             The_Queue.The_Excluder.Done;
