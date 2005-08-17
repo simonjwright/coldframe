@@ -1,11 +1,11 @@
 <domain stereotype="include">
-<extractor>cf-DATE</extractor>
+<extractor>extractor.ebs: cf-DATE</extractor>
 <name>Digital IO Interface</name>
 <date>
 <year>2005</year>
-<month>3</month>
-<day>2</day>
-<time>21:23</time>
+<month>8</month>
+<day>15</day>
+<time>17:37</time>
 </date>
 <documentation><![CDATA[ Copyright (C) Simon Wright <simon@pushface.org>
 
@@ -15,7 +15,7 @@ Provides the interface to the Digital IO domain, which
 manages digital (discrete) input/output.
 
 { name = Digital IO }
-{ revision = $Revision: f747aa6c4de2 $ } ]]></documentation>
+{ revision = $Revision: 824f8d52e37e $ } ]]></documentation>
 <classes>
 <class stereotype="public">
 <name>Application</name>
