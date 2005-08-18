@@ -431,7 +431,8 @@ DEMO += \
 stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
-Digital_IO.cat Digital_IO.raw Digital_IO_Interface.raw \
+Digital_IO.cat Digital_IO_Interface.cat \
+Digital_IO.raw Digital_IO_Interface.raw \
 Digital_IO.impl/digital_io-application-set_output.adb \
 Digital_IO.impl/digital_io-hci-get_state.adb \
 Digital_IO.impl/digital_io-hci-set_input.adb \
