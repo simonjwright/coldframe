@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 176dd8bc47f4 2005/05/20 21:36:16 simonjwright $ -->
+<!-- $Id: testing.html,v 4d38170bbd56 2005/08/20 05:57:56 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -193,6 +193,9 @@ this should not be a problem.
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
    --
+   --  A previously stored value for a particular call can only be
+   --  overridden if Override is True (when it must be).
+   --
    --  Overhead_Bytes is the additional space reserved for the
    --  streamed representation.
    generic
@@ -201,6 +204,7 @@ this should not be a problem.
                                For_Parameter_Named : String;
                                To : T;
                                For_Call : Positive := 1;
+                               Override : Boolean := False;
                                Overhead_Bytes : Natural := Storage_Overhead);
 </pre>
 
@@ -246,12 +250,24 @@ subprogram to raise an exception.
    --
    --  Normally the exception will be raised for the specified call
    --  and all later calls; to stop this, use Ada.Exceptions.Null_Id.
+   --
+   --  A previously stored exception for a particular call can only be
+   --  overridden if Override is True (when it must be).
    procedure Set_Exception (For_Subprogram_Named : String;
                             E : Ada.Exceptions.Exception_Id;
-                            For_Call : Positive := 1);
+                            For_Call : Positive := 1;
+                            Override : Boolean := False);
 </pre>
 
 <p>Call your code as required.
+
+<p>Call <tt>Number_Of_Calls</tt> to find out how often a subprogram
+has been called.
+
+<code>
+   --  Retrieve the number of calls made to the named subprogram.
+   function Number_Of_Calls (For_Subprogram_Named : String) return Natural;
+</code>
 
 <p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
 any parameters input to stubbed subprograms.
