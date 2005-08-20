@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 21f136d383c5 2005/08/12 18:58:58 simonjwright $ -->
+<!-- $Id: bugs.html,v 90b3eb934793 2005/08/20 06:10:19 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,21 +192,27 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<dt>0324 (raised 12.viii.05)
-
-<dd>The event Dispatcher's logic is faulty; specifically,
-Stop_Handling is called twice.
-
-<dt>0325 (raised 12.vii.05)
-
-<dd>The Stop_Handling operation for instance events results in invalid
-memory accesses if the instance was deleted by the event handler.
-
 <!-- next: 0326 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>12.viii.05</h3>
+
+<dl>
+
+<dt>0324 (raised 12.viii.05)
+
+<dd>The event Dispatcher's logic is faulty; specifically,
+Stop_Handling is called twice.
+
+<dt>0325 (raised 12.viii.05)
+
+<dd>The Stop_Handling operation for instance events results in invalid
+memory accesses if the instance was deleted by the event handler.
+
+</dl>
 
 <h3>7.viii.05</h3>
 
