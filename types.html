@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 29573dc5d4f5 2005/05/12 05:42:00 simonjwright $ -->
+<!-- $Id: types.html,v d25a621cff43 2005/08/25 19:09:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -84,11 +84,13 @@ example,
 <ul>
 
 <li><tt>access = <i>access-type-name</i></tt> specifies that you need
-a type which provides access to objects of the type (ie, a pointer
-type). It's probably a good idea to adopt a naming convention:
-ColdFrame's precedent would be to append <tt>_P</tt> to the type name,
-your project might prefer something more obvious like
-<tt>_Access</tt>.
+a type (<i>access-type-name</i>) which provides access to objects of
+the type (ie, a pointer type). It's probably a good idea to adopt a
+naming convention: ColdFrame's precedent would be to append
+<tt>_P</tt> to the type name, your project might prefer something more
+like <tt>_Access</tt>.
+<br>So, if you've created a &#171;type&#187; <i>Foo</i>, and you want
+pointers to <i>Foo</i>s, tag <i>Foo</i> <i>{ access = Foo P }</i>
 
 <li><tt>array = <i>element-type</i>, index = <i>index-type</i></tt>
 and optionally <tt>, unconstrained</tt>.
