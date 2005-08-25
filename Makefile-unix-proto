@@ -45,15 +45,28 @@ ifeq ($(TOP), )
   TOP = /usr/local/lib
 endif
 
+# Environmental overrides for 'standard' commands
+
+CHMOD ?= chmod
+CP ?= cp
+ECHO ?= echo
+EXIT ?= exit
+GNATCHOP ?= gnatchop
+GREP ?= grep
+JAVA ?= java
+MKDIR ?= mkdir
+RM ?= rm
+SED ?= sed
+TRUE ?= true
+
 # Locations, shouldn't need change
 
 CF = $(TOP)/cf-DATE
 
-AWK = awk
 ITCLSH = tclsh
 TCLXML = $(TOP)/tclxml-2.1theta
 
-SAXON = java -cp $(TOP)/saxon/saxon.jar com.icl.saxon.StyleSheet
+SAXON = $(JAVA) -cp $(TOP)/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 # No user-servicable parts below
 
@@ -83,30 +96,30 @@ endif
 CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
-	@echo generating $@ ...
+	@$(ECHO) generating $@ ...
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    <$< >$@ || (rm -f $@; exit 1)
+	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.html: %.norm
-	@echo generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || (rm -f $@; exit 1)
+	@$(ECHO) generating $@ ...
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
-	@echo generating $@ ...
+	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
-	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)
-	@sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
+	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
+	@$(SED) -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
-	@rm -f $@-t
+	@$(RM) -f $@-t
 
 # Delete the target directory & all contents.
 # Create the target directory.
@@ -119,22 +132,22 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # Make the target directory itself writable (so users can delete files in it).
 # Report unimplemented bodies.
 %.gen: %.ada
-	@echo generating $@ ...
-	@-rm -rf $@
-	@mkdir $@
-	@-gnatchop -w $(CHOP_VERBOSE) $< $@
+	@$(ECHO) generating $@ ...
+	@-$(RM) -rf $@
+	@$(MKDIR) $@
+	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@([ -d $*.impl ] && \
 	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
-	    echo "    removing $@/$$f"; rm $@/$$f; \
+	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
 	  else \
-	    echo "  extra source file $$f in .impl"; \
+	    $(ECHO) "  extra source file $$f in .impl"; \
 	  fi \
-	done) || true
-	@chmod -R a-w $@
-	@chmod u+w $@
-	@echo "checking for unimplemented bodies ..."
-	@grep -rl 'edit this' $@ || echo "... none."
+	done) || $(TRUE)
+	@$(CHMOD) -R a-w $@
+	@$(CHMOD) u+w $@
+	@$(ECHO) "checking for unimplemented bodies ..."
+	@$(GREP) -rl 'edit this' $@ || $(ECHO) "... none."
 
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
@@ -147,18 +160,20 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # This will place those of ColdFrame's files that you haven't overridden in
 # ~/Base/Build/ColdFrameProject/inherited
 install::
-	rm -rf inherited
-	mkdir inherited
+	$(RM) -rf inherited
+	$(MKDIR) inherited
 	for f in $(CF)/project/*.ad[bs]; do \
-	  [ -f project/`basename $$f` ] || cp -p $$f inherited/; \
+	  [ -f project/`basename $$f` ] || $(CP) -p $$f inherited/; \
 	done
 
 # Creates your build directory (Ada Library) tree, under $BUILD_BASE
 build-dirs::
-	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
+	@[ -n "$(BUILD_BASE)" ] \
+	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
 	@for d in aunit bc coldframe fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
-	    (echo mkdir -p $(BUILD_BASE)/$$d; mkdir -p $(BUILD_BASE)/$$d);\
+	    ($(ECHO) mkdir -p $(BUILD_BASE)/$$d; \
+	     $(MKDIR) -p $(BUILD_BASE)/$$d); \
 	done
 
 #;; for emacs:

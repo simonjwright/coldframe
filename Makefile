@@ -23,13 +23,8 @@ VERBOSE = no
 # Define these variables in an including Makefile (before the actual
 # include) or in the environment
 
-ifeq ($(CASE_EXCEPTIONS), )
-  CASE_EXCEPTIONS = ~/.emacs_case_exceptions
-endif
-
-ifeq ($(COLDFRAMEOUT), )
-  COLDFRAMEOUT = .
-endif
+CASE_EXCEPTIONS ?= ~/.emacs_case_exceptions
+COLDFRAMEOUT ?= .
 
 ifeq ($(DOMAIN_NAME), )
   NORM_DOMAIN_NAME = 
@@ -51,11 +46,28 @@ else
   CHOP_VERBOSE = -q
 endif
 
-AWK = awk
+# Environmental overrides for 'standard' commands
+
+CHMOD ?= chmod
+CD ?= cd
+CP ?= cp
+ECHO ?= echo
+EXIT ?= exit
+GNATCHOP ?= gnatchop
+GREP ?= grep
+JAVA ?= java
+MKDIR ?= mkdir
+RM ?= rm
+RSYNC ?= rsync
+SED ?= sed
+TAR ?= tar
+TRUE ?= true
+ZIP ?= zip
+
 ITCLSH = tclsh
 TCLXML = /usr/local/lib/tclxml-2.1theta
 
-SAXON = java -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
+SAXON = $(JAVA) -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
@@ -90,39 +102,39 @@ OTHER_SCRIPTS = create-build-directories \
   case_exceptions.py
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
-	@echo generating $@ ...
+	@$(ECHO) generating $@ ...
 	TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    <$< >$@ || (rm -f $@; exit 1)
+	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.html: %.norm $(HTMLGEN_SCRIPT)
-	@echo generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || (rm -f $@; exit 1)
+	@$(ECHO) generating $@ ...
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
-	@echo generating $@ ...
+	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
-	  || (echo "Generation problem."; rm -f $@ $@-t; exit 1)
-	@sed -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
+	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
+	@$(SED) -e "s/LINES-OF-CODE/`tr -cd ';' <$@-t | wc -c | tr -d ' '`/" \
 	  <$@-t >$@
-	@rm -f $@-t
+	@$(RM) -f $@-t
 
 %.h: %.norm $(C_CODEGEN_SCRIPTS)
-	@echo generating $@ ...
+	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(C_CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  verbose=$(VERBOSE) \
 	  >$@ \
-	  || (echo "Generation problem."; rm -f $@; exit 1)
+	  || ($(ECHO) "Generation problem."; $(RM) -f $@; $(EXIT) 1)
 
 # Delete the target directory & all contents.
 # Create the target directory.
@@ -131,26 +143,27 @@ OTHER_SCRIPTS = create-build-directories \
 # "failure" because GNAT 3.16a1 reports an error here.
 # Remove any generated files which are also present in the implementation
 # directory (.impl).
-# Write-protect the generated files (careful, in case there are a lot of them!).
+# Write-protect the generated files (careful, in case there are a lot
+# of them!).
 # Make the target directory itself writable (so users can delete files in it).
 # Report unimplemented bodies.
 %.gen: %.ada
-	@echo generating $@ ...
-	@-rm -rf $@
-	@mkdir $@
-	@-gnatchop -w $(CHOP_VERBOSE) $< $@
+	@$(ECHO) generating $@ ...
+	@-$(RM) -rf $@
+	@$(MKDIR) $@
+	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@([ -d $*.impl ] && \
-	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	for f in `($(CD) $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
-	    echo "    removing $@/$$f"; rm $@/$$f; \
+	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
 	  else \
-	    echo "  extra source file $$f in .impl"; \
+	    $(ECHO) "  extra source file $$f in .impl"; \
 	  fi \
-	done) || true
-	@chmod -R a-w $@
-	@chmod u+w $@
-	@echo "checking for unimplemented bodies ..."
-	@grep -rl 'edit this' $@ || echo "... none."
+	done) || $(TRUE)
+	@$(CHMOD) -R a-w $@
+	@$(CHMOD) u+w $@
+	@$(ECHO) "checking for unimplemented bodies ..."
+	@$(GREP) -rl 'edit this' $@ || $(ECHO) "... none."
 
 # Split serialized XML files into CSV format, one per serialized type found.
 %.csv: %.xml
@@ -158,10 +171,12 @@ OTHER_SCRIPTS = create-build-directories \
 
 # Creates the build directory (Ada Library) tree, under $BUILD_BASE
 build-dirs::
-	@[ -n "$(BUILD_BASE)" ] || (echo "BUILD_BASE must be set" && exit 1)
+	@[ -n "$(BUILD_BASE)" ] || \
+	  ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
 	@for d in aunit bc coldframe fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
-	    (echo mkdir -p $(BUILD_BASE)/$$d; mkdir -p $(BUILD_BASE)/$$d);\
+	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
+	     $(MKDIR) -p $(BUILD_BASE)/$$d);\
 	done
 
 TEXI2HTML = texi2html
@@ -290,7 +305,7 @@ House_Management.html Digital_IO.html
 # default file system is case-insensitive; which makes for confusion
 # with the hand-written serialization.html.
 serialization-model.raw: Serialization.raw
-	cp $< $@
+	$(CP) $< $@
 
 # The published makefiles are
 # * Makefile-winnt for inclusion in a user makefile under Windows
@@ -301,13 +316,13 @@ MAKEFILES = Makefile-unix Makefile-winnt
 
 # Files that need editing for release
 Makefile-unix: Makefile-unix-proto force
-	sed -e "s;DATE;$(DATE);g" <$< >$@
+	$(SED) -e "s;DATE;$(DATE);g" <$< >$@
 Makefile-winnt: Makefile-winnt-proto force
-	sed -e "s;DATE;$(DATE);g" <$< >$@
+	$(SED) -e "s;DATE;$(DATE);g" <$< >$@
 extractor.ebs: ddf.ebs force
-	sed -e "s;DATE;$(DATE);g" <$< >$@
+	$(SED) -e "s;DATE;$(DATE);g" <$< >$@
 releases.html: releases.html-proto force
-	sed -e "s;DATE;$(DATE);g" <$< >$@
+	$(SED) -e "s;DATE;$(DATE);g" <$< >$@
 
 TOOLS = generated_lines
 
@@ -417,7 +432,7 @@ coldframe-project-times.adb \
 coldframe-project-times.ads
 
 coldframe-project-events.ads-standard: coldframe-project-events.ads
-	cp -p $< $@
+	$(CP) -p $< $@
 
 EXTRAS = \
 coldframe-logging_event_basis-ews_support.adb \
@@ -621,7 +636,7 @@ cf-$(DATE).zip
 SFUSER ?= simonjwright
 
 upload-docs: $(DOCS) force
-	rsync \
+	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
 	  --cvs-exclude \
@@ -637,11 +652,11 @@ upload-docs: $(DOCS) force
 # The complete distribution
 
 dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
-	-@rm -rf dist
-	mkdir -p dist/download
-	cp -p $(DOCS) dist/
-	cd dist && zip -9 download/cf-html-$(DATE).zip *
-	cp $(DISTRIBUTION_FILES) dist/download/
+	-@$(RM) -rf dist
+	$(MKDIR) -p dist/download
+	$(CP) -p $(DOCS) dist/
+	$(CD) dist && $(ZIP) -9 download/cf-html-$(DATE).zip *
+	$(CP) $(DISTRIBUTION_FILES) dist/download/
 
 # Files that need DATE substituted
 DATED_FILES = \
@@ -651,30 +666,30 @@ DATED_FILES = \
 
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
 $(DEMO) $(TEST) Makefile-test force
-	-rm -rf $@
-	mkdir $@
-	cp -p $(MAKEFILES) $(GPRS) $(PROGS) $@
+	-$(RM) -rf $@
+	$(MKDIR) $@
+	$(CP) -p $(MAKEFILES) $(GPRS) $(PROGS) $@
 	for f in $(DATED_FILES); do \
-	    (sed -e "s;DATE;$(DATE);g" <$$f >$@/$$f) \
+	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$@/$$f) \
 	done
-	mkdir $@/lib
-	cp -p $(SUPPORT) $@/lib
-	mkdir $@/project
-	cp -p $(PROJECT) $@/project
-	mkdir $@/extras
-	cp -p $(EXTRAS) $@/extras
-	mkdir $@/example
-	tar cf - $(DEMO) | tar xf - -C $@/example
-	mkdir $@/test
-	tar cf - $(TEST) | tar xf - -C $@/test
-	cp -p Makefile-test $@/test/Makefile
+	$(MKDIR) $@/lib
+	$(CP) -p $(SUPPORT) $@/lib
+	$(MKDIR) $@/project
+	$(CP) -p $(PROJECT) $@/project
+	$(MKDIR) $@/extras
+	$(CP) -p $(EXTRAS) $@/extras
+	$(MKDIR) $@/example
+	$(TAR) cf - $(DEMO) | $(TAR) xf - -C $@/example
+	$(MKDIR) $@/test
+	$(TAR) cf - $(TEST) | $(TAR) xf - -C $@/test
+	$(CP) -p Makefile-test $@/test/Makefile
 
 cf-$(DATE).tgz: cf-$(DATE)
-	-rm $@
-	tar zcvf $@ $</
+	-$(RM) $@
+	$(TAR) zcvf $@ $</
 
 cf-$(DATE).zip: cf-$(DATE)
-	-rm $@
-	zip -r -9 $@ $</*
+	-$(RM) $@
+	$(ZIP) -r -9 $@ $</*
 
 .PHONY: force
