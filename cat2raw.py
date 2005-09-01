@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v c3d671c21887 2005/08/02 20:29:44 simonjwright $
+# $Id: cat2raw.py,v 0f6273131e9a 2005/09/01 06:03:06 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -264,12 +264,15 @@ class Domain(Base):
 	self.init()
     def element_tag(self): return 'domain'
     def load(self, path):
-	"""This is an unloaded Domain.
-	'path' is the filename of the parent CAT file; CURDIR is the
-	 directory part of path."""
-	filename = re.sub(r'^\$CURDIR', os.path.dirname(path), self.file_name)
+	"""This is an unloaded Domain. 'path' is the filename of the parent
+	CAT file; CURDIR has to be replaced by the directory part of
+	path."""
+	dirname = os.path.dirname(path)
+	if not dirname:
+	    dirname = '.'
+	filename = re.sub(r'^\$CURDIR', dirname, self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
-	#sys.stderr.write('  filename is %s\n' % filename)
+	sys.stderr.write('  filename is %s\n' % filename)
 	lexer = lex.lex()
 	try:
 	    file = open(filename, 'r')
@@ -309,7 +312,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py $Revision: c3d671c21887 $',
+				 'cat2raw.py $Revision: 0f6273131e9a $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -807,13 +810,13 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: c3d671c21887 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 0f6273131e9a $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
 			 + 'output this message\n')
 	sys.stderr.write('-o, --output=FILE:       '
-			 + 'the output file (default is domain_name.raw\n')
+			 + 'the output file (default is domain_name.raw)\n')
 	sys.stderr.write('-r, --reversionary-mode: '
 			 + 'output to previous standard (20040319)\n')
 
