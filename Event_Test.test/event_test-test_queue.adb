@@ -1,13 +1,15 @@
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
-with ColdFrame.Project.Events.Standard;
+with ColdFrame.Exceptions;
+with ColdFrame.Project.Events.Standard.Test;
 with System;
 
 package body Event_Test.Test_Queue is
 
 
-   --  You can tear down an Event_Queue that hasn't started.
+   --  You can tear down an Event_Queue that hasn't started (and that
+   --  has no references).
    procedure Tear_Down_Unstarted_Queue
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Tear_Down_Unstarted_Queue
@@ -18,6 +20,7 @@ package body Event_Test.Test_Queue is
         (Start_Started => False,
          Priority => System.Default_Priority,
          Storage_Size => 20_000);
+      use type ColdFrame.Project.Events.Event_Queue_P;
    begin
       select
          delay 1.0;
@@ -25,6 +28,7 @@ package body Event_Test.Test_Queue is
       then abort
          ColdFrame.Project.Events.Stop (Dispatcher);
          ColdFrame.Project.Events.Tear_Down (Dispatcher);
+         Assert (Dispatcher = null, "dispatcher not nulled");
       end select;
    end Tear_Down_Unstarted_Queue;
 
@@ -54,6 +58,29 @@ package body Event_Test.Test_Queue is
    end Start_Low_Priority_Queue;
 
 
+   --  You can't Wait_Until_Idle on an unstarted queue.
+   procedure Wait_Until_Idle_On_Unstarted_Queue
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Wait_Until_Idle_On_Unstarted_Queue
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Dispatcher : ColdFrame.Project.Events.Event_Queue_P
+        := new ColdFrame.Project.Events.Standard.Test.Event_Queue_Base
+        (Start_Started => False,
+         Priority => System.Default_Priority,
+         Storage_Size => 20_000);
+   begin
+      ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher);
+      ColdFrame.Project.Events.Stop (Dispatcher);
+      ColdFrame.Project.Events.Tear_Down (Dispatcher);
+      Assert (False, "there was no exception");
+   exception
+      when ColdFrame.Exceptions.Use_Error =>
+         ColdFrame.Project.Events.Stop (Dispatcher);
+         ColdFrame.Project.Events.Tear_Down (Dispatcher);
+   end Wait_Until_Idle_On_Unstarted_Queue;
+
+
    ---------------
    --  Harness  --
    ---------------
@@ -68,6 +95,10 @@ package body Event_Test.Test_Queue is
         (T,
          Start_Low_Priority_Queue'Access,
          "Low-priority queue can be started");
+      Register_Routine
+        (T,
+         Wait_Until_Idle_On_Unstarted_Queue'Access,
+         "can't Wait_Until_Idle on unstarted queue");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
