@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 58f35bfa1d66 2005/08/22 18:59:33 simonjwright $ -->
+<!-- $Id: bugs.html,v 66e6c7d391f8 2005/09/03 06:52:35 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,16 +192,26 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
+<!-- next: 0330 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.ix.05</h3>
+
+<dl>
+
 <dt>0326 (raised 22.viii.05)
 
 <dd> Especially when running under Windows, it's all too possible for
-the Makefiles to pick the wrong version of a command (especially
-find).
+the Makefiles to pick the wrong version of a command (eg
+<tt>find</tt>).
 <br>SourceForge 1266456
 
 <dt>0327 (raised 22.viii.05)
 
-<dd>t would be helpful to output a domain's {revision}, to standard
+<dd>It would be helpful to output a domain's {revision}, to standard
 error; that way you could see the revision in captured logs.
 <br>SourceForge 1265701
 
@@ -209,11 +219,13 @@ error; that way you could see the revision in captured logs.
 
 <dd>An Event Queue with no references can't be torn down.
 
-<!-- next: 0329 -->
+<dt>0329 (raised 2.ix.05)
+
+<dd>If you call <tt>Wait_Until_Idle</tt> on a (<i>test</i>) event
+queue that hasn't been started, it may hang.
+<br>Now, a <tt>Use_Error</tt> exception is raised.
 
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>12.viii.05</h3>
 

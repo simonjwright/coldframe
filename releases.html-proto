@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 90b3eb934793 2005/08/20 06:10:19 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 66e6c7d391f8 2005/09/03 06:52:35 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -63,23 +63,27 @@ contains the complete documentation.
 low-priority event queue.
 
 
-<p>A type used for the return type of a protected function might not
-be declared in the right order.
+<p>A type used for the return type of a protected function might have
+been declared too late.
 
 
-<p>Some domain initialization (singletons, default values for class
-attributes) is done before any domain <i>{init}</i> operation is
-called.
+<p>Some domain initialization (creation of singletons, default values
+for class attributes) is done before any domain <i>{init}</i>
+operation is called.
 
 
 <p>Corrected problems with &#171;final&#187; event actions (actions
 which delete the instance).
 
 
+<p>The Makefiles allow you to specify which version of a command (eg,
+<tt>find</tt>) to use; especially useful with mixed CMD/Cygwin builds.
+
+
 <p><dt>20050515
 
 <dd><font color="red">For this release, it's necessary to re-extract
-all Domains from the model.</font>
+all Domains from the model and to regenerate.</font>
 
 
 <p><b>Modelling</b>
