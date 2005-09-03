@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 7cb77e031b4e $
---  $Date: 2005/04/23 15:49:45 $
+--  $Revision: 3de041b29c99 $
+--  $Date: 2005/09/03 06:08:03 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -60,6 +60,11 @@ package body ColdFrame.Events_G.Test_G is
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
    begin
+      if not The_Queue.Started then
+         Ada.Exceptions.Raise_Exception
+           (ColdFrame.Exceptions.Use_Error'Identity,
+            "Wait_Until_Idle called on event queue that wasn't started");
+      end if;
       if Ignoring_Timers then
          The_Queue.The_Event_Count.Wait_Until_No_Posted_Events;
       else
