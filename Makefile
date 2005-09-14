@@ -438,11 +438,11 @@ EXTRAS = \
 coldframe-logging_event_basis-ews_support.adb \
 coldframe-logging_event_basis-ews_support.ads
 
-DEMO = \
+EXAMPLES = \
 Makefile-demo-unix Makefile-demo-winnt \
 Examples.mdl
 
-DEMO += \
+EXAMPLES += \
 stairwell_demo.gpr tash.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
@@ -466,13 +466,13 @@ House_Management.impl/house_management-lamp-turn_off.adb \
 House_Management.impl/house_management-lamp-turn_on.adb \
 House_Management.impl/stairwell_demo.adb
 
-DEMO += \
+EXAMPLES += \
 House_Management.test/House_Management_Test.gpr \
 House_Management.test/house_management-harness.adb \
 House_Management.test/house_management-test_suite.adb \
 House_Management.test/house_management-test_suite.ads
 
-DEMO += \
+EXAMPLES += \
 Serialization.cat \
 Serialization.raw Serialization_Demo.raw Serialization_Demo_Other.raw \
 serialization-model.html Serialization.gpr \
@@ -486,7 +486,7 @@ Serialization.impl/serialization_support.ads \
 Serialization.impl/serialization_server.adb \
 Serialization_Demo.impl/serialization_demo-real_time_image.adb
 
-DEMO += \
+EXAMPLES += \
 Interrupt_Handling.cat Interrupt_Handling.raw Interrupt_Handling.gpr \
 Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb \
 Interrupt_Handling.impl/interrupt_handling-device-initialize.adb \
@@ -497,7 +497,7 @@ Interrupt_Handling.impl/interrupt_handling-events-initialize.adb \
 Interrupt_Handling.impl/interrupt_handling-harness.adb \
 Interrupt_Handling.impl/interrupt_handling-harness.ads
 
-DEMO += \
+EXAMPLES += \
 Library.cat Library.raw Library.gpr \
 Library.impl/library-test.adb \
 Library.impl/library-test.ads \
@@ -505,7 +505,7 @@ Library.impl/library_test_harness.adb \
 Library.impl/library-tests.adb \
 Library.impl/library-tests.ads
 
-DEMO += \
+EXAMPLES += \
 Performance.cat Performance.raw Performance.gpr \
 Performance.impl/performance-cat-speak.adb \
 Performance.impl/performance-event_timing.adb \
@@ -514,7 +514,7 @@ Performance.impl/performance-harness.adb \
 Performance.impl/performance-harness.ads \
 Performance.impl/performance-pet-eat.adb
 
-DEMO += \
+EXAMPLES += \
 Problem_Reporting.cat Problem_Reporting.raw Problem_Reporting.gpr \
 Problem_Reporting.impl/problem_reporting_harness.adb \
 Problem_Reporting.impl/problem_reporting-component-clean.adb \
@@ -528,7 +528,7 @@ Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
 Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
 Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
 
-DEMO += \
+EXAMPLES += \
 States.cat States.raw States.gpr \
 States.impl/states-events-initialize.adb \
 States.impl/states-monitor-clear_heartbeat_timeout.adb \
@@ -671,7 +671,7 @@ DATED_FILES = \
  generate-c.xsl
 
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
-$(DEMO) $(TEST) Makefile-test force
+$(EXAMPLES) $(TEST) Makefile-test force
 	-$(RM) -rf $@
 	$(MKDIR) $@
 	$(CP) -p $(MAKEFILES) $(GPRS) $(PROGS) $@
@@ -685,7 +685,7 @@ $(DEMO) $(TEST) Makefile-test force
 	$(MKDIR) $@/extras
 	$(CP) -p $(EXTRAS) $@/extras
 	$(MKDIR) $@/example
-	$(TAR) cf - $(DEMO) | $(TAR) xf - -C $@/example
+	$(TAR) cf - $(EXAMPLES) | $(TAR) xf - -C $@/example
 	$(MKDIR) $@/test
 	$(TAR) cf - $(TEST) | $(TAR) xf - -C $@/test
 	$(CP) -p Makefile-test $@/test/Makefile
