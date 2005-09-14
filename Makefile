@@ -467,6 +467,12 @@ House_Management.impl/house_management-lamp-turn_on.adb \
 House_Management.impl/stairwell_demo.adb
 
 DEMO += \
+House_Management.test/House_Management_Test.gpr \
+House_Management.test/house_management-harness.adb \
+House_Management.test/house_management-test_suite.adb \
+House_Management.test/house_management-test_suite.ads
+
+DEMO += \
 Serialization.cat \
 Serialization.raw Serialization_Demo.raw Serialization_Demo_Other.raw \
 serialization-model.html Serialization.gpr \
