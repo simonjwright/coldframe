@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v c38c4d2f776f 2005/09/17 09:05:34 simonjwright $ -->
+<!-- $Id: testing.html,v f37828520704 2005/09/17 11:23:22 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -14,7 +14,39 @@ width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
 </tr>
 </table>
 
-<h2><a href="http://libre.act-europe.fr/aunit/">AUnit</a></h2>
+<hr/>
+
+<ul>
+
+<li><a href="#aunit">AUnit</a>
+
+<li><a href="#stubs">Stubs</a>
+
+<ul>
+
+<li><a href="#separating">Separating out the interface</a>
+
+<li><a href="#implementing-stub">Implementing stub functionality</a>
+
+<li><a href="#generating-stub">Generating stub functionality</a>
+
+<ul>
+
+<li><a href="#test-case-support">Test Case support</a>
+
+<li><a href="#test-procedure-support">Test Procedure support</a>
+
+<li><a href="#example">Example</a>
+
+</ul>
+
+</ul>
+
+</ul>
+
+<hr/>
+
+<h2><a href="http://libre.act-europe.fr/aunit/"><a name="aunit">AUnit</a></a></h2>
 
 <p>AUnit has the concept <i>test case</i>; for each test case there is
 a <i>fixture</i>, which corresponds to the standard setup that each
@@ -68,7 +100,7 @@ the real Digital IO, for various reasons:
 interfaces of the real thing but with an alternative implementation,
 more amenable to testing.
 
-<h3>Separating out the interface</h3>
+<h3><a name="separating">Separating out the interface</a></h3>
 
 <p>The first thing to do is to make a child package, <i>Digital IO
 Interface</i>, stereotyped &#171;include&#187;. You may like to make
@@ -116,7 +148,7 @@ given.</i>
 <i><p><b>Don't</b> set <tt>DOMAIN_NAME</tt> as an environment
 variable!</i>
 
-<h3>Implementing stub functionality</h3>
+<h3><a name="implementing-stub">Implementing stub functionality</a></h3>
 
 <p>If you want, you can provide implementations in the parallel
 <tt>Digital_IO_Interface.impl/</tt> directory, as normal. You'll want
@@ -131,7 +163,7 @@ needed.
 same as other developers also testing code that uses <i>Digital
 IO</i>.
 
-<h3>Generating stub functionality</h3>
+<h3><a name="generating-stub">Generating stub functionality</a></h3>
 
 <p>Normally, ColdFrame generates the separate bodies of operations to
 raise <tt>Unimplemented</tt>, and you get to fill in the real code.
@@ -162,7 +194,7 @@ function's <tt>return</tt> value as specified.
 the intention of the stub support is to implement domain interfaces
 this should not be a problem.
 
-<h4>Test Case support</h4>
+<h4><a name="test-case-support">Test Case support</a></h4>
 
 <p>Your test case <tt>Set_Up</tt> must call
 <tt>ColdFrame.Stubs.Set_Up</tt>, and your <tt>Tear_Down</tt> must call
@@ -232,7 +264,7 @@ instantiate <tt>ColdFrame.Stubs.Get_Input_Value</tt> with
                              For_Call : Positive := 1) return T;
 </pre>
 
-<h4>Test Procedure support</h4>
+<h4><a name="test-procedure-support">Test Procedure support</a></h4>
 
 <p>Call your instantiations of <tt>Set_Output_Value</tt> to set up
 the results of calls to stubbed subprograms.
@@ -272,7 +304,7 @@ has been called.
 <p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
 any parameters input to stubbed subprograms.
 
-<h4>Example</h4>
+<h4><a name="example">Example</a></h4>
 
 <p>There's an example in the <tt>example/House_Management.test/</tt>
 subdirectory of the source distribution.
