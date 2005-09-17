@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: house_management-test_suite.adb,v $
---  $Revision: df44e685fc6c $
---  $Date: 2005/09/14 05:15:00 $
+--  $Revision: 108faef7a173 $
+--  $Date: 2005/09/17 09:06:26 $
 --  $Author: simonjwright $
 
 with AUnit.Assertions; use AUnit.Assertions;
@@ -44,6 +44,9 @@ package body House_Management.Test_Suite is
 
    package body Lamps is
 
+      --  Check that each Lamp is connected to the correct Signal in
+      --  the Digital_IO domain, in the correct sense (ie, turning the
+      --  Lamp on sets the Signal to True).
       procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class);
       procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
          pragma Unreferenced (R);
@@ -51,24 +54,35 @@ package body House_Management.Test_Suite is
       begin
 
          --  Initialization creates a number of lamps; each one turns
-         --  itself off on creation.
+         --  itself off on creation (to be tested elsewhere). However,
+         --  we have to account for them; we can't just not initialize
+         --  the domain, because initialization creates all the
+         --  domain's singletons, initialises <<class>> attributes,
+         --  and calls user {init} operations to, amongst other
+         --  things, set up 'specification' instances and
+         --  associations.
          Assert (ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 4,
                  "wrong number of calls");
 
+         --  Turn on the Basement lamp.
          Lamp.Turn_On (Lamp.Find ((Name => Basement)));
+         --  There should have been 5 calls now.
          Assert (ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 5,
                  "wrong number of calls (a)");
+         --  The 5th call should have been for Lamp D ...
          Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   5) = Digital_IO.Lamp_D,
                  "wrong signal (a)");
+         --  ... and it should have been turned on.
          Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
                               "To_State",
                               5),
                  "should have been turned on (a)");
 
+         --  Repeat for the remaining Lamps.
          Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
          Assert (ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 6,
