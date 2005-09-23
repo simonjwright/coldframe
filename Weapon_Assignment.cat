@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	43
-    _written   	"Rose 6.1.9113.5"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Weapon_Assignment"
@@ -21,6 +21,7 @@
 		(object ClassAttribute "status"
 		    quid       	"393E6F680232"
 		    type       	"Policy"
+		    quidu      	"393E700302A3"
 		    initv      	"weapons tight")))
 	(object Class "Track"
 	    quid       	"3903EC150373"
@@ -55,22 +56,29 @@
 		    quid       	"3A5F1FD403CE"
 		    parameters 	(list Parameters
 			(object Parameter "p1"
+			    quid       	"4333949402B2"
 			    type       	"integer")
 			(object Parameter "p2"
-			    type       	"Track")
+			    quid       	"4333949402B3"
+			    type       	"Track"
+			    quidu      	"3903EC150373")
 			(object Parameter "p3"
-			    type       	"Weapon"))
+			    quid       	"4333949402B4"
+			    type       	"Weapon"
+			    quidu      	"38FE9311026B"))
 		    result     	"Track"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0)
+		    uid        	0
+		    quidu      	"3903EC150373")
 		(object Operation "bar"
 		    quid       	"3A5F1FF503B7"
 		    stereotype 	"class"
 		    result     	"Track"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
-		    uid        	0)))
+		    uid        	0
+		    quidu      	"3903EC150373")))
 	(object Class "Missile"
 	    quid       	"390F0E8C039C"
 	    class_attributes 	(list class_attribute_list
@@ -100,71 +108,6 @@
 |
 	    
 	    stereotype 	"type")
-	(object Class "Test"
-	    quid       	"397ECF99000E"
-	    documentation 	"[[ abbreviation : TEST ]]"
-	    operations 	(list Operations
-		(object Operation "t4"
-		    quid       	"397ECFC100F3"
-		    external_docs 	(list external_doc_list
-			(object external_doc
-			    external_doc_path 	"E:\\rose\\t4.fn"))
-		    parameters 	(list Parameters
-			(object Parameter "arg"
-			    type       	"Boolean"
-			    initv      	"true"))
-		    result     	"Boolean"
-		    exceptions 	"bad, badder, baddest"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "t5"
-		    quid       	"3991214D01AD"
-		    external_docs 	(list external_doc_list
-			(object external_doc
-			    external_doc_path 	"E:\\rose\\t5.fn"))
-		    parameters 	(list Parameters
-			(object Parameter "pol"
-			    type       	"Policy"
-			    initv      	"weapons tight")
-			(object Parameter "ident"
-			    documentation 	"[[ mode : in out ]]"
-			    type       	"Integer")
-			(object Parameter "val"
-			    documentation 	"[[ mode : out ]]"
-			    type       	"Integer"))
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "t6"
-		    quid       	"3A3790F70093"
-		    parameters 	(list Parameters
-			(object Parameter "arg"
-			    type       	"String"))
-		    result     	"Unbounded String"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "t7"
-		    quid       	"3A3A0D570317"
-		    parameters 	(list Parameters
-			(object Parameter "st"
-			    type       	"Unbounded String"))
-		    result     	"String"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0)
-		(object Operation "t8"
-		    quid       	"3A3A16840378"
-		    result     	"Title String"
-		    concurrency 	"Sequential"
-		    opExportControl 	"Public"
-		    uid        	0))
-	    class_attributes 	(list class_attribute_list
-		(object ClassAttribute "x"
-		    quid       	"3A787012025B"
-		    type       	"policy"
-		    initv      	"weapons free")))
 	(object Class "Title String"
 	    quid       	"3A37AAB80390"
 	    documentation 	
@@ -177,14 +120,6 @@
 	(object Class "Threat List"
 	    quid       	"3AACC5C003D5"
 	    stereotype 	"singleton")
-	(object Class "Targets"
-	    quid       	"3AD355E202D6"
-	    documentation 	
-|This type represents a collection of different Targets.
-|
-|[[ set : Target ]]
-	    
-	    stereotype 	"type")
 	(object Association "r9"
 	    quid       	"390B053F0342"
 	    documentation 	"an association"
@@ -240,20 +175,29 @@
 	(object ClassDiagram "Main"
 	    quid       	"38FE93040226"
 	    title      	"Main"
-	    zoom       	85
+	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	3
+	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
 		(object ClassView "Class" "Logical View::Weapon_Assignment::Assignment" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(1008, 1680)
+		    location   	(1381, 1848)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(883, 1628)
+			location   	(1256, 1799)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	250
@@ -264,38 +208,56 @@
 		    fill_color 	13434879
 		    quidu      	"39087F3401E9"
 		    width      	268
-		    height     	128
+		    height     	120
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Weapon_Assignment::Unallocated Track" @2
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(1680, 240)
+		    location   	(2053, 408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(1488, 188)
+			location   	(1867, 359)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	384
+			max_width  	372
 			justify    	0
 			label      	"Unallocated Track")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"390B04B8015D"
-		    width      	402
-		    height     	128
+		    width      	390
+		    height     	120
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Weapon_Assignment::Target" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(1680, 1168)
+		    location   	(2053, 1336)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1213, 1062)
+			location   	(1586, 1229)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	934
@@ -307,7 +269,16 @@
 		    quidu      	"390B04C503B5"
 		    compartment 	(object Compartment
 			Parent_View 	@3
-			location   	(1213, 1121)
+			location   	(1586, 1285)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -321,31 +292,66 @@
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(304, 1776)
+		    location   	(677, 1944)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(110, 1695)
+			location   	(479, 1866)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	388
+			max_width  	396
 			justify    	0
 			label      	"Missile")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"390F0E8C039C"
-		    width      	406
-		    height     	186
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(479, 1922)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	394)
+		    width      	414
+		    height     	178
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Weapon_Assignment::Weapon" @5
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(320, 1168)
+		    location   	(693, 1336)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@5
-			location   	(13, 1062)
+			location   	(386, 1229)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	614
@@ -357,7 +363,16 @@
 		    quidu      	"38FE9311026B"
 		    compartment 	(object Compartment
 			Parent_View 	@5
-			location   	(13, 1121)
+			location   	(386, 1285)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -368,12 +383,28 @@
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "r9" @6
-		    location   	(919, 1168)
+		    location   	(1292, 1336)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @7
 			Parent_View 	@6
-			location   	(919, 1109)
+			location   	(1292, 1277)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -389,10 +420,28 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "is aimed at" @8
 			    Parent_View 	@6
-			    location   	(615, 0)
+			    location   	(988, 168)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @9
 				Parent_View 	@8
-				location   	(1069, 1130)
+				location   	(1442, 1299)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -410,7 +459,16 @@
 			    line_style 	0
 			    label      	(object SegLabel @10
 				Parent_View 	@8
-				location   	(1174, 1222)
+				location   	(1547, 1390)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -422,10 +480,28 @@
 				orientation 	1))
 			(object RoleView "is target for" @11
 			    Parent_View 	@6
-			    location   	(615, 0)
+			    location   	(988, 168)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @12
 				Parent_View 	@11
-				location   	(773, 1130)
+				location   	(1146, 1299)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -443,13 +519,22 @@
 			    line_style 	0
 			    label      	(object SegLabel @13
 				Parent_View 	@11
-				location   	(665, 1222)
+				location   	(1038, 1390)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
-				label      	"1..*"
+				label      	"1..n"
 				pctDist    	0.900000
 				height     	54
 				orientation 	0))))
@@ -460,12 +545,28 @@
 		    supplier   	@6
 		    line_style 	0)
 		(object AssociationViewNew "r12" @15
-		    location   	(311, 1484)
+		    location   	(684, 1654)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object SegLabel @16
 			Parent_View 	@15
-			location   	(309, 1490)
+			location   	(682, 1660)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -481,10 +582,28 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "can fire" @17
 			    Parent_View 	@15
-			    location   	(7, 316)
+			    location   	(380, 486)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @18
 				Parent_View 	@17
-				location   	(216, 1637)
+				location   	(591, 1810)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -502,22 +621,49 @@
 			    line_style 	0
 			    label      	(object SegLabel @19
 				Parent_View 	@17
-				location   	(360, 1627)
+				location   	(733, 1797)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
-				label      	"0..*"
+				label      	"0..n"
 				pctDist    	0.715847
 				height     	53
 				orientation 	0))
 			(object RoleView "is loaded in" @20
 			    Parent_View 	@15
-			    location   	(7, 316)
+			    location   	(380, 486)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
 			    label      	(object SegLabel @21
 				Parent_View 	@20
-				location   	(179, 1343)
+				location   	(553, 1514)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -535,7 +681,16 @@
 			    line_style 	0
 			    label      	(object SegLabel @22
 				Parent_View 	@20
-				location   	(368, 1360)
+				location   	(741, 1530)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -545,46 +700,23 @@
 				pctDist    	0.631868
 				height     	54
 				orientation 	1))))
-		(object ClassView "Class" "Logical View::Weapon_Assignment::Test" @23
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Track" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    ShowOperationSignature 	TRUE
-		    location   	(1856, 1648)
-		    label      	(object ItemLabel
-			Parent_View 	@23
-			location   	(1297, 1442)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	1118
-			justify    	0
-			label      	"Test")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"397ECF99000E"
-		    compartment 	(object Compartment
-			Parent_View 	@23
-			location   	(1297, 1501)
-			icon_style 	"Icon"
-			fill_color 	16777215
-			anchor     	2
-			nlines     	7
-			max_width  	1125)
-		    width      	1136
-		    height     	436
-		    annotation 	8
-		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Weapon_Assignment::Track" @24
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    location   	(1088, 592)
+		    location   	(1461, 760)
 		    font       	(object Font
-			italics    	TRUE)
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	TRUE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@24
-			location   	(894, 511)
+			Parent_View 	@23
+			location   	(1267, 679)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	388
@@ -595,8 +727,17 @@
 		    fill_color 	13434879
 		    quidu      	"3903EC150373"
 		    compartment 	(object Compartment
-			Parent_View 	@24
-			location   	(894, 570)
+			Parent_View 	@23
+			location   	(1267, 738)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			icon_style 	"Icon"
 			fill_color 	16777215
 			anchor     	2
@@ -606,10 +747,19 @@
 		    height     	186
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object InheritView "r10" @25
+		(object InheritView "r10" @24
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@25
-			location   	(1407, 401)
+			Parent_View 	@24
+			location   	(1783, 567)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -619,12 +769,21 @@
 		    line_color 	3342489
 		    quidu      	"390F0D56024B"
 		    client     	@2
-		    supplier   	@24
+		    supplier   	@23
 		    line_style 	0)
-		(object InheritView "r10" @26
+		(object InheritView "r10" @25
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@26
-			location   	(1370, 867)
+			Parent_View 	@25
+			location   	(1743, 1035)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -634,24 +793,33 @@
 		    line_color 	3342489
 		    quidu      	"390F0D510335"
 		    client     	@3
-		    supplier   	@24
+		    supplier   	@23
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::Weapon_Assignment::Threat List" @27
+		(object ClassView "Class" "Logical View::Weapon_Assignment::Threat List" @26
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
-		    location   	(144, 592)
+		    location   	(517, 760)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@27
-			location   	(12, 561)
+			Parent_View 	@26
+			location   	(385, 725)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	264
 			justify    	0
 			label      	"Threat List")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@27
-			location   	(12, 513)
+			Parent_View 	@26
+			location   	(385, 680)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -666,13 +834,29 @@
 		    height     	182
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object AssociationViewNew "r13" @28
-		    location   	(584, 592)
-		    label      	(object SegLabel @29
-			Parent_View 	@28
-			location   	(584, 629)
+		(object AssociationViewNew "r13" @27
+		    location   	(957, 760)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @28
+			Parent_View 	@27
+			location   	(957, 797)
 			font       	(object Font
-			    italics    	TRUE)
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
 			anchor     	1
 			anchor_loc 	1
 			nlines     	1
@@ -686,12 +870,30 @@
 		    line_color 	3342489
 		    quidu      	"3AACC5D2037F"
 		    roleview_list 	(list RoleViews
-			(object RoleView "contains" @30
-			    Parent_View 	@28
-			    location   	(168, 144)
-			    label      	(object SegLabel @31
-				Parent_View 	@30
-				location   	(747, 551)
+			(object RoleView "contains" @29
+			    Parent_View 	@27
+			    location   	(541, 312)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @30
+				Parent_View 	@29
+				location   	(1120, 719)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -704,27 +906,54 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3AACC5D30395"
-			    client     	@28
-			    supplier   	@24
+			    client     	@27
+			    supplier   	@23
 			    line_style 	0
-			    label      	(object SegLabel @32
-				Parent_View 	@30
-				location   	(824, 634)
+			    label      	(object SegLabel @31
+				Parent_View 	@29
+				location   	(1197, 802)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
 				max_width  	15
 				justify    	0
-				label      	"0..*"
+				label      	"0..n"
 				pctDist    	0.798996
 				height     	42
 				orientation 	1))
-			(object RoleView "is a threat in" @33
-			    Parent_View 	@28
-			    location   	(168, 144)
-			    label      	(object SegLabel @34
-				Parent_View 	@33
-				location   	(420, 533)
+			(object RoleView "is a threat in" @32
+			    Parent_View 	@27
+			    location   	(541, 312)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @33
+				Parent_View 	@32
+				location   	(793, 702)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	1
 				anchor_loc 	1
 				nlines     	1
@@ -737,12 +966,21 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"3AACC5D303B3"
-			    client     	@28
-			    supplier   	@27
+			    client     	@27
+			    supplier   	@26
 			    line_style 	0
-			    label      	(object SegLabel @35
-				Parent_View 	@33
-				location   	(328, 625)
+			    label      	(object SegLabel @34
+				Parent_View 	@32
+				location   	(701, 793)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
 				anchor     	2
 				anchor_loc 	1
 				nlines     	1
@@ -751,34 +989,4 @@
 				label      	"0..1"
 				pctDist    	0.858491
 				height     	33
-				orientation 	0))))
-		(object ClassView "Class" "Logical View::Weapon_Assignment::Targets" @36
-		    ShowCompartmentStereotypes 	TRUE
-		    IncludeAttribute 	TRUE
-		    IncludeOperation 	TRUE
-		    location   	(1808, 2192)
-		    label      	(object ItemLabel
-			Parent_View 	@36
-			location   	(1720, 2166)
-			fill_color 	13434879
-			nlines     	1
-			max_width  	176
-			justify    	0
-			label      	"Targets")
-		    stereotype 	(object ItemLabel
-			Parent_View 	@36
-			location   	(1720, 2116)
-			fill_color 	13434879
-			anchor     	10
-			nlines     	1
-			max_width  	176
-			justify    	0
-			label      	"<<type>>")
-		    icon_style 	"Icon"
-		    line_color 	3342489
-		    fill_color 	13434879
-		    quidu      	"3AD355E202D6"
-		    width      	194
-		    height     	176
-		    annotation 	8
-		    autoResize 	TRUE)))))
+				orientation 	0))))))))

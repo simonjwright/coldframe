@@ -1,312 +1,270 @@
 <domain>
 <name>Weapon_Assignment</name>
-<documentation>some domain documentation</documentation>
+<documentation><![CDATA[ some domain documentation ]]></documentation>
+<extractor>cat2raw.py $Revision: 018a9bcab6e2 $</extractor>
+<date>
+<year>2005</year>
+<month>9</month>
+<day>23</day>
+<time>06:46</time>
+</date>
 <classes>
 <class>
 <name>Weapon</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <documentation></documentation>
+<visibility>PrivateAccess</visibility>
 <type>Integer</type>
-<initial></initial>
 </attribute>
 <attribute>
 <name>status</name>
 <documentation></documentation>
+<visibility>PrivateAccess</visibility>
 <type>Policy</type>
 <initial>weapons tight</initial>
 </attribute>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Track</name>
-<documentation>[[ abbreviation : TR ]]</documentation>
+<documentation><![CDATA[ [[ abbreviation : TR ]] ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<abstract></abstract>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <documentation></documentation>
+<visibility>PrivateAccess</visibility>
 <type>integer</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Assignment</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Unallocated Track</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Target</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>foo</name>
 <documentation></documentation>
-<return>Track</return>
 <parameters>
 <parameter>
-<name>p1</name>
+<parametername>p1</parametername>
 <documentation></documentation>
 <type>integer</type>
-<initial></initial>
 </parameter>
 <parameter>
-<name>p2</name>
+<parametername>p2</parametername>
 <documentation></documentation>
 <type>Track</type>
-<initial></initial>
 </parameter>
 <parameter>
-<name>p3</name>
+<parametername>p3</parametername>
 <documentation></documentation>
 <type>Weapon</type>
-<initial></initial>
 </parameter>
 </parameters>
+<return>Track</return>
 </operation>
 <operation stereotype="class">
 <name>bar</name>
 <documentation></documentation>
-<return>Track</return>
 <parameters>
 </parameters>
+<return>Track</return>
 </operation>
 </operations>
+<events>
+</events>
 </class>
 <class>
 <name>Missile</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
 <documentation></documentation>
+<visibility>PrivateAccess</visibility>
 <type>integer</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class stereotype="type">
 <name>Policy</name>
-<documentation>Policy defines missile launch authorisation requirements.
+<documentation><![CDATA[ Policy defines missile launch authorisation requirements.
 
 "Tight" means that specific authorisation is required.
 
 "Free" means "launch at will".
 
 [[enumeration: weapons tight, weapons free]]
-</documentation>
+ ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class stereotype="type">
 <name>Distance</name>
-<documentation>A Distance represents a range in metres (we can't use "Range", it's a reserved word in Ada).
+<documentation><![CDATA[ A Distance represents a range in metres (we can't use "Range", it's a reserved word in Ada).
 
 [[real: digits 6, lower 0.0, upper 100_000.0]]
-</documentation>
+ ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</class>
-<class>
-<name>Test</name>
-<documentation>[[ abbreviation : TEST ]]</documentation>
-<attributes>
-<attribute>
-<name>x</name>
-<documentation></documentation>
-<type>policy</type>
-<initial>weapons free</initial>
-</attribute>
-</attributes>
-<operations>
-<operation>
-<name>t4</name>
-<documentation></documentation>
-<return>Boolean</return>
-<parameters>
-<parameter>
-<name>arg</name>
-<documentation></documentation>
-<type>Boolean</type>
-<initial>true</initial>
-</parameter>
-</parameters>
-</operation>
-<operation>
-<name>t5</name>
-<documentation></documentation>
-<parameters>
-<parameter>
-<name>pol</name>
-<documentation></documentation>
-<type>Policy</type>
-<initial>weapons tight</initial>
-</parameter>
-<parameter>
-<name>ident</name>
-<documentation>[[ mode : in out ]]</documentation>
-<type>Integer</type>
-<initial></initial>
-</parameter>
-<parameter>
-<name>val</name>
-<documentation>[[ mode : out ]]</documentation>
-<type>Integer</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation>
-<name>t6</name>
-<documentation></documentation>
-<return>Unbounded String</return>
-<parameters>
-<parameter>
-<name>arg</name>
-<documentation></documentation>
-<type>String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation>
-<name>t7</name>
-<documentation></documentation>
-<return>String</return>
-<parameters>
-<parameter>
-<name>st</name>
-<documentation></documentation>
-<type>Unbounded String</type>
-<initial></initial>
-</parameter>
-</parameters>
-</operation>
-<operation>
-<name>t8</name>
-<documentation></documentation>
-<return>Title String</return>
-<parameters>
-</parameters>
-</operation>
-</operations>
+<events>
+</events>
 </class>
 <class stereotype="type">
 <name>Title String</name>
-<documentation>This is a string used for titles. Its length is variable, up to 30 characters.
+<documentation><![CDATA[ This is a string used for titles. Its length is variable, up to 30 characters.
 
 [[string: max 30]]
-</documentation>
+ ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
+<events>
+</events>
 </class>
 <class stereotype="singleton">
 <name>Threat List</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 </operations>
-</class>
-<class stereotype="type">
-<name>Targets</name>
-<documentation>This type represents a collection of different Targets.
-
-[[ set : Target ]]</documentation>
-<attributes>
-</attributes>
-<operations>
-</operations>
+<events>
+</events>
 </class>
 </classes>
 <relationships>
 <association>
 <name>r9</name>
-<documentation>an association</documentation>
-<role><end>1</end>
+<documentation><![CDATA[ an association ]]></documentation>
+<role>
 <name>is aimed at</name>
+<documentation></documentation>
+<end>1</end>
 <classname>Target</classname>
 <cardinality>0..1</cardinality>
-<documentation></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>is target for</name>
+<documentation></documentation>
+<end>2</end>
 <classname>Weapon</classname>
 <cardinality>1..n</cardinality>
-<documentation></documentation>
 </role>
 <associative>Assignment</associative>
 </association>
 <association>
 <name>r12</name>
 <documentation></documentation>
-<role><end>1</end>
+<role>
 <name>can fire</name>
+<documentation></documentation>
+<end>1</end>
 <classname>Missile</classname>
 <cardinality>0..n</cardinality>
-<documentation></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>is loaded in</name>
+<documentation></documentation>
+<end>2</end>
 <classname>Weapon</classname>
 <cardinality>1</cardinality>
-<documentation></documentation>
 </role>
 </association>
 <association>
 <name>r13</name>
 <documentation></documentation>
-<role><end>1</end>
+<role>
 <name>contains</name>
+<documentation></documentation>
+<end>1</end>
 <classname>Track</classname>
 <cardinality>0..n</cardinality>
-<documentation></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>is a threat in</name>
+<documentation></documentation>
+<end>2</end>
 <classname>Threat List</classname>
 <cardinality>0..1</cardinality>
-<documentation></documentation>
 </role>
 </association>
 <inheritance>
 <name>r10</name>
-<documentation>an inheritance relation</documentation>
-<child>Unallocated Track</child>
+<documentation><![CDATA[ an inheritance relation ]]></documentation>
 <parent>Track</parent>
+<child>Unallocated Track</child>
 </inheritance>
 <inheritance>
 <name>r10</name>
 <documentation></documentation>
-<child>Target</child>
 <parent>Track</parent>
+<child>Target</child>
 </inheritance>
 </relationships>
 </domain>
