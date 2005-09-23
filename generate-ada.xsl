@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 8b489bcbf764 2005/08/06 15:18:40 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 45c60c88648c 2005/09/23 05:48:50 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -36,6 +36,7 @@
   xmlns:co="http://pushface.org/coldframe/collection"
   xmlns:in="http://pushface.org/coldframe/inheritance"
   xmlns:op="http://pushface.org/coldframe/operation"
+  xmlns:pp="http://pushface.org/coldframe/peekpoke"
   xmlns:se="http://pushface.org/coldframe/serialization"
   xmlns:st="http://pushface.org/coldframe/state"
   xmlns:td="http://pushface.org/coldframe/teardown"
@@ -51,6 +52,7 @@
   <xsl:include href="ada-collection.xsl"/>
   <xsl:include href="ada-inheritance.xsl"/>
   <xsl:include href="ada-operation.xsl"/>
+  <xsl:include href="ada-peekpoke.xsl"/>
   <xsl:include href="ada-serialization.xsl"/>
   <xsl:include href="ada-state.xsl"/>
   <xsl:include href="ada-teardown.xsl"/>
@@ -836,7 +838,27 @@
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
-    <!-- Package specs for callbacks. -->
+    <!-- Package specs for Class peek/poke -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param name="m" select="'.. package specs for Class peek/poke ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[attribute[not(@refers)] or statemachine]"
+      mode="pp:peekpoke-spec">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package bodies for Class peek/poke -->
+    <xsl:call-template name="ut:progress-message">
+      <xsl:with-param name="m" select="'.. package bodies for Class peek/poke ..'"/>
+    </xsl:call-template>
+    <xsl:apply-templates
+      select="class[attribute[not(@refers)] or statemachine]"
+      mode="pp:peekpoke-body">
+      <xsl:sort select="name"/>
+    </xsl:apply-templates>
+
+    <!-- Package specs for Callbacks. -->
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. package specs for Callbacks ..'"/>
     </xsl:call-template>
