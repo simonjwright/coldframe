@@ -16,12 +16,12 @@
 |This domain represents an electronic household control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 8003fcb36942 $ }
+|{ revision = $Revision: 7ab146a76ec7 $ }
     
     visible_categories 	(list visibility_relationship_list
 	(object Visibility_Relationship
 	    quid       	"3E1B0DF501D9"
-	    supplier   	"Logical View::ColdFrame Examples::Digital IO"
+	    supplier   	"Logical View::Digital IO"
 	    quidu      	"3DFCF76B0011"))
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -74,8 +74,7 @@
 		(object ClassAttribute "timeout"
 		    quid       	"3DFCFF9F00A7"
 		    documentation 	"This ColdFrame Timer is used to turn off the Lamp at the end of its activation period."
-		    type       	"Timer"
-		    quidu      	"3C750FDC0384"))
+		    type       	"Timer"))
 	    statemachine 	(object State_Machine "State/Activity Model"
 		quid       	"3DFCFEA50061"
 		stereotype 	"generate"
@@ -334,7 +333,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1585
-				label      	"$Id: House_Management.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
+				label      	"$Id: House_Management.cat,v 7ab146a76ec7 2005/09/23 04:29:41 simonjwright $")
 			    (object SelfTransView "" @8
 				location   	(1398, 450)
 				font       	(object Font
@@ -422,7 +421,7 @@
 		    documentation 	"This event is posted when a button has been pushed."
 		    stereotype 	"class event"
 		    label      	"Button Event"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Button Name"
+		    supplier   	"Logical View::House Management::Button Name"
 		    quidu      	"3DFCFD3C0008"))
 	    operations 	(list Operations
 		(object Operation "changed"
@@ -507,14 +506,14 @@
 		(object Role "controls"
 		    quid       	"3DFCFC370338"
 		    label      	"controls"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Lamp"
+		    supplier   	"Logical View::House Management::Lamp"
 		    quidu      	"3DFCFC1401ED"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE)
 		(object Role "is controlled by"
 		    quid       	"3DFCFC370342"
 		    label      	"is controlled by"
-		    supplier   	"Logical View::ColdFrame Examples::House Management::Button"
+		    supplier   	"Logical View::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    client_cardinality 	(value cardinality "1..n")
 		    is_navigable 	TRUE))
@@ -538,7 +537,7 @@
 				    ordinal    	0
 				    quidu      	"000000000000"
 				    creation   	FALSE))))
-		    class      	"Logical View::ColdFrame Examples::Digital IO::Input"
+		    class      	"Logical View::Digital IO::Input"
 		    quidu      	"3DFCF78D0241"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -560,7 +559,7 @@
 				    ordinal    	1
 				    quidu      	"3DFCFDE40258"
 				    creation   	FALSE))))
-		    class      	"Logical View::ColdFrame Examples::Digital IO::Digital IO Interface::Signal State"
+		    class      	"Logical View::Digital IO::Digital IO Interface::Signal State"
 		    quidu      	"3DFCF80601AE"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -596,7 +595,7 @@
 				    ordinal    	3
 				    quidu      	"000000000000"
 				    creation   	FALSE))))
-		    class      	"Logical View::ColdFrame Examples::House Management::Button"
+		    class      	"Logical View::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -667,7 +666,7 @@
 				    ordinal    	7
 				    quidu      	"000000000000"
 				    creation   	FALSE))))
-		    class      	"Logical View::ColdFrame Examples::House Management::Button"
+		    class      	"Logical View::House Management::Button"
 		    quidu      	"3DFCFC250129"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -703,7 +702,7 @@
 		    multi      	FALSE)
 		(object Object "$UNNAMED$5"
 		    quid       	"41D04F880230"
-		    class      	"Logical View::ColdFrame Examples::House Management::Lamp"
+		    class      	"Logical View::House Management::Lamp"
 		    quidu      	"3DFCFC1401ED"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -720,7 +719,7 @@
 |This domain represents an electronic household control system.
 |The first release only manages the stairwell lighting system.
 |
-|{ revision = $Revision: 8003fcb36942 $ }
+|{ revision = $Revision: 7ab146a76ec7 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -728,7 +727,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp" @13
+		(object ClassView "Class" "Logical View::House Management::Lamp" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -745,20 +744,38 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@13
-			location   	(687, 1066)
+			location   	(509, 928)
 			fill_color 	13434879
-			nlines     	2
-			max_width  	162
+			nlines     	1
+			max_width  	518
 			justify    	0
 			label      	"Lamp")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC1401ED"
-		    height     	162
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(509, 984)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	515)
+		    width      	536
+		    height     	438
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button" @14
+		(object ClassView "Class" "Logical View::House Management::Button" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -785,12 +802,29 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC250129"
+		    compartment 	(object Compartment
+			Parent_View 	@14
+			location   	(419, 328)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	690)
 		    width      	710
 		    height     	258
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @15
-		    location   	(766, 786)
+		    location   	(765, 717)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -802,7 +836,7 @@
 			default_color 	TRUE)
 		    label      	(object SegLabel @16
 			Parent_View 	@15
-			location   	(766, 727)
+			location   	(765, 658)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -827,7 +861,7 @@
 		    roleview_list 	(list RoleViews
 			(object RoleView "controls" @17
 			    Parent_View 	@15
-			    location   	(-2, 402)
+			    location   	(-3, 333)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -839,7 +873,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @18
 				Parent_View 	@17
-				location   	(886, 1017)
+				location   	(885, 888)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -866,7 +900,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @19
 				Parent_View 	@17
-				location   	(710, 1008)
+				location   	(709, 882)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -887,7 +921,7 @@
 				orientation 	1))
 			(object RoleView "is controlled by" @20
 			    Parent_View 	@15
-			    location   	(-2, 402)
+			    location   	(-3, 333)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -899,7 +933,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @21
 				Parent_View 	@20
-				location   	(931, 556)
+				location   	(931, 546)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -926,7 +960,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @22
 				Parent_View 	@20
-				location   	(708, 546)
+				location   	(708, 539)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -945,7 +979,7 @@
 				pctDist    	0.897638
 				height     	58
 				orientation 	0))))
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button to Lamp" @23
+		(object ClassView "Class" "Logical View::House Management::Button to Lamp" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -962,21 +996,21 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@23
-			location   	(202, 675)
+			location   	(195, 675)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	294
+			max_width  	308
 			justify    	0
 			label      	"Button to Lamp")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3DFCFC830160"
-		    width      	312
+		    width      	326
 		    height     	114
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Lamp Name" @24
+		(object ClassView "Class" "Logical View::House Management::Lamp Name" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -993,30 +1027,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@24
-			location   	(2292, 524)
+			location   	(2264, 548)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	196
+			max_width  	252
 			justify    	0
 			label      	"Lamp Name")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@24
-			location   	(2292, 480)
+			location   	(2264, 503)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	193
+			max_width  	252
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFD180255"
-		    width      	214
-		    height     	212
+		    width      	270
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Button Name" @25
+		(object ClassView "Class" "Logical View::House Management::Button Name" @25
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1033,30 +1067,30 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@25
-			location   	(2294, 340)
+			location   	(2261, 364)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	196
+			max_width  	262
 			justify    	0
 			label      	"Button Name")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@25
-			location   	(2294, 296)
+			location   	(2261, 319)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	193
+			max_width  	262
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFD3C0008"
-		    width      	214
-		    height     	212
+		    width      	280
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::House Management::Signal State" @26
+		(object ClassView "Class" "Logical View::House Management::Signal State" @26
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1073,27 +1107,27 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@26
-			location   	(2293, 719)
+			location   	(2267, 743)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	196
+			max_width  	248
 			justify    	0
 			label      	"Signal State")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@26
-			location   	(2293, 675)
+			location   	(2267, 698)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	193
+			max_width  	248
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3DFCFE60018E"
-		    width      	214
-		    height     	212
+		    width      	266
+		    height     	166
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object Label @27
@@ -1109,7 +1143,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1585
-		    label      	"$Id: House_Management.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")
+		    label      	"$Id: House_Management.cat,v 7ab146a76ec7 2005/09/23 04:29:41 simonjwright $")
 		(object NoteView @28
 		    location   	(1635, 1140)
 		    font       	(object Font
@@ -1179,7 +1213,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@32
-			location   	(1702, 390)
+			location   	(1686, 390)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
@@ -1187,7 +1221,7 @@
 			label      	"Button Event")
 		    stereotype 	(object SegLabel @33
 			Parent_View 	@32
-			location   	(1596, 324)
+			location   	(1580, 324)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1246,7 +1280,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E45033A"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1283,7 +1317,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E4B00E9"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1320,7 +1354,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E520392"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1357,7 +1391,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E7F00A8"
 		    width      	330
-		    height     	1359
+		    height     	1389
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1407,7 +1441,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04E5F014C"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1451,7 +1485,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F0D0251"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1488,7 +1522,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F5601B6"
 		    width      	330
-		    height     	619
+		    height     	649
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1538,7 +1572,7 @@
 		    fill_color 	13434879
 		    quidu      	"41D04F880230"
 		    width      	300
-		    height     	1756
+		    height     	1786
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
@@ -1919,12 +1953,12 @@
 		    ordinal    	8)
 		(object Destruction_Marker @74
 		    Parent_View 	@49
-		    location   	(2785, 1729)
+		    location   	(2785, 1759)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Destruction_Marker @75
 		    Parent_View 	@40
-		    location   	(1575, 1981)
+		    location   	(1575, 2011)
 		    line_color 	3342489
 		    fill_color 	13434879)
 		(object Label @76
@@ -1994,4 +2028,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1366
-		    label      	"$Id: House_Management.cat,v 8003fcb36942 2005/04/09 06:42:34 simon $")))))
+		    label      	"$Id: House_Management.cat,v 7ab146a76ec7 2005/09/23 04:29:41 simonjwright $")))))
