@@ -578,6 +578,8 @@ Event_Test.test/event_test-test_completion_transitions.adb \
 Event_Test.test/event_test-test_completion_transitions.ads \
 Event_Test.test/event_test-test_engine.adb \
 Event_Test.test/event_test-test_engine.ads \
+Event_Test.test/event_test-test_inspection.adb \
+Event_Test.test/event_test-test_inspection.ads \
 Event_Test.test/event_test-test_instance.adb \
 Event_Test.test/event_test-test_instance.ads \
 Event_Test.test/event_test-test_queue.adb \
