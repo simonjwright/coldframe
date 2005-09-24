@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v ebc62eb1a4e8 2005/01/20 05:14:12 simon $
+--  $Id: Options.gpr,v 34fe060c0dca 2005/09/24 15:01:22 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -23,6 +23,10 @@ project Options is
 
   --  Determine the build directory using the BUILD_BASE environment
   --  variable, if any.
+  --
+  --  Each Project that contains source must have its own build
+  --  directory. A useful set of build directories can be made by
+  --  calling the script 'create-build-directories'.
   Build_Base := external ("BUILD_BASE", ".");
   for Object_Dir use Build_Base;
 
