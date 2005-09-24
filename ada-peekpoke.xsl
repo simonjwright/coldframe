@@ -1,4 +1,4 @@
-<!-- $Id: ada-peekpoke.xsl,v 615ed29b3a5b 2005/09/23 05:47:54 simonjwright $ -->
+<!-- $Id: ada-peekpoke.xsl,v b0e347485d11 2005/09/24 16:27:11 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Callbacksattribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -193,7 +193,7 @@
 
   </xsl:template>
 
-  <xsl:template match="*" mode="pp:peekpoke-spec"/>
+  <xsl:template match="*" mode="pp:peekpoke-body"/>
 
 
 </xsl:stylesheet>
