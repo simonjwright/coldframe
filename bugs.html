@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 66e6c7d391f8 2005/09/03 06:52:35 simonjwright $ -->
+<!-- $Id: bugs.html,v 96f0f044c9e5 2005/09/24 16:20:29 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -192,7 +192,20 @@ extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
 
-<!-- next: 0330 -->
+<dt>0330 (raised 24.ix.05)
+
+<dd>If a state model has a completion transition from the initial
+state, the transition is performed synchronously during instance
+creation using a special <i>creation event</i>. Normally this won't
+cause a problem, but if the class is a singleton this transition, and
+any entry actions on the first state, will take place during domain
+initialization, <b>after</b> the domain <i>{init}</i> operation
+but <b>before</b> any class &#171;init&#187; operations have been
+called; which means that those entry actions had better not depend on
+any of the class initializations.
+<br>SourceForge 1303319
+
+<!-- next: 0331 -->
 
 </dl>
 
