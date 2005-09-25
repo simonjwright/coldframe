@@ -1,5 +1,5 @@
-<!-- $Id: ada-peekpoke.xsl,v b0e347485d11 2005/09/24 16:27:11 simonjwright $ -->
-<!-- XSL stylesheet to generate Ada code for Callbacksattribute peek/poke
+<!-- $Id: ada-unittest.xsl,v 196c2e5820a9 2005/09/25 07:18:56 simonjwright $ -->
+<!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -30,7 +30,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:pp="http://pushface.org/coldframe/peekpoke"
+  xmlns:un="http://pushface.org/coldframe/unittest"
   xmlns:ty="http://pushface.org/coldframe/type"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.0">
@@ -38,15 +38,15 @@
   <xsl:template
     match="class[attribute[not(@refers) and not(type='Timer')]
            or statemachine]"
-    mode="pp:peekpoke-spec">
+    mode="un:unit-spec">
 
     <!--
-         package {domain}.{class}.Peek_Poke is
-            function Peek_{attr-name}
+         package {domain}.{class}.Unit_Test is
+            function Get_{attr-name}
               (This : Handle) return {attr-type};
-            procedure Poke_{attr-name)
+            procedure Set_{attr-name)
               (This : Handle; To : {attr-type});
-         end {domain}.{class}.Peek_Poke;
+         end {domain}.{class}.Unit_Test;
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
@@ -55,14 +55,14 @@
 
     <xsl:text>package </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>_Peek_Poke is&#10;</xsl:text>
+    <xsl:text>.Unit_Test is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
 
     <xsl:for-each select="attribute[not(@refers) and not(type='Timer')]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
-      <xsl:text>function Peek_</xsl:text>
+      <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -81,7 +81,7 @@
                           and not(type='Timer')]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Poke_</xsl:text>
+      <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -96,30 +96,30 @@
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>_Peek_Poke;&#10;</xsl:text>
+    <xsl:text>.Unit_Test;&#10;</xsl:text>
 
   </xsl:template>
 
-  <xsl:template match="*" mode="pp:peekpoke-spec"/>
+  <xsl:template match="*" mode="un:unit-spec"/>
 
 
   <xsl:template
     match="class[attribute[not(@refers)] or statemachine]"
-    mode="pp:peekpoke-body">
+    mode="un:unit-body">
 
     <!--
-         package body {domain}.{class}.Peek_Poke is
-            function Peek_{attr-name}
+         package body {domain}.{class}.Unit_Test is
+            function Get_{attr-name}
               (This : Handle) return {attr-type} is
             begin
                return This.{attr-name}
-            end Peek_{attr-name};
-            procedure Poke_{attr-name)
+            end Get_{attr-name};
+            procedure Set_{attr-name)
               (This : Handle; To : {attr-type}) is
             begin
                This.{attr-name} := To;
-            end Poke_{attr-name);
-         end {domain}.{class}.Peek_Poke;
+            end Set_{attr-name);
+         end {domain}.{class}.Unit_Test;
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
@@ -128,14 +128,14 @@
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>_Peek_Poke is&#10;</xsl:text>
+    <xsl:text>.Unit_Test is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
 
     <xsl:for-each select="attribute[not(@refers) and not(type='Timer')]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
-      <xsl:text>function Peek_</xsl:text>
+      <xsl:text>function Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -152,7 +152,7 @@
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>end Peek_</xsl:text>
+      <xsl:text>end Get_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -164,7 +164,7 @@
                           and not(type='Timer')]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Poke_</xsl:text>
+      <xsl:text>procedure Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
@@ -181,7 +181,7 @@
       <xsl:value-of select="name"/>
       <xsl:text> := To;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>end Poke_</xsl:text>
+      <xsl:text>end Set_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
@@ -189,11 +189,11 @@
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
-    <xsl:text>_Peek_Poke;&#10;</xsl:text>
+    <xsl:text>.Unit_Test;&#10;</xsl:text>
 
   </xsl:template>
 
-  <xsl:template match="*" mode="pp:peekpoke-body"/>
+  <xsl:template match="*" mode="un:unit-body"/>
 
 
 </xsl:stylesheet>

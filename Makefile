@@ -84,11 +84,11 @@ CODEGEN_SCRIPTS = $(Codegen_Script) \
   ada-collection.xsl \
   ada-inheritance.xsl \
   ada-operation.xsl \
-  ada-peekpoke.xsl \
   ada-serialization.xsl \
   ada-state.xsl \
   ada-type.xsl \
   ada-teardown.xsl \
+  ada-unittest.xsl \
   ada-utilities.xsl
 C_Codegen_Script = generate-c.xsl
 ifeq ($(C_CODEGEN_SCRIPT), )
