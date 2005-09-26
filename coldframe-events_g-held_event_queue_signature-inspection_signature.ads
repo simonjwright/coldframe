@@ -19,10 +19,12 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
+pragma Style_Checks (Off);
 --  $RCSfile: coldframe-events_g-held_event_queue_signature-inspection_signature.ads,v $
---  $Revision: f82037aff426 $
---  $Date: 2005/09/21 05:41:29 $
+--  $Revision: 77df1bb2d1c4 $
+--  $Date: 2005/09/26 05:20:41 $
 --  $Author: simonjwright $
+pragma Style_Checks (On);
 
 --  Specifies the properties required to inspect a Queue.
 
