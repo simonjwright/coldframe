@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v 196c2e5820a9 2005/09/25 07:18:56 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v 85021462d182 2005/09/26 05:18:15 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -42,6 +42,8 @@
 
     <!--
          package {domain}.{class}.Unit_Test is
+            type State is
+              (..);
             function Get_{attr-name}
               (This : Handle) return {attr-type};
             procedure Set_{attr-name)
@@ -58,6 +60,34 @@
     <xsl:text>.Unit_Test is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
+
+    <xsl:if test="statemachine">
+      
+      <!-- See ada-state.xsl. -->
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>type State is&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>(</xsl:text>
+
+      <xsl:for-each select="statemachine/state/name">
+
+        <!-- initial state first -->
+        <!-- XXX final state last? -->
+        <xsl:sort select="concat(not (../@initial),.)"/>
+
+        <xsl:value-of select="."/>
+        <xsl:if test="position() &lt; last()">
+          <xsl:text>,&#10; </xsl:text>
+          <xsl:value-of select="$IC"/>
+        </xsl:if>
+
+      </xsl:for-each>
+      
+      <xsl:text>);&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+      
+    </xsl:if>
 
     <xsl:for-each select="attribute[not(@refers) and not(type='Timer')]">
       <xsl:sort select="name"/>
@@ -93,6 +123,18 @@
       <xsl:text>);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
+
+    <xsl:if test="statemachine">
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Get_State (This : Handle) return State;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>procedure Set_State (This : Handle; To : State);&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
+    </xsl:if>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -186,6 +228,78 @@
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
+
+    <xsl:if test="statemachine">
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Get_State (This : Handle) return State is&#10;</xsl:text>
+
+      <xsl:value-of select="$II"/>
+      <xsl:text>C : constant array (State_Machine_State_T) of State :=&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(</xsl:text>
+
+      <xsl:for-each select="statemachine/state/name">
+
+        <!-- initial state first -->
+        <!-- XXX final state last? -->
+        <xsl:sort select="concat(not (../@initial),.)"/>
+
+        <xsl:value-of select="."/>
+        <xsl:text> =&gt; </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:if test="position() &lt; last()">
+          <xsl:text>,&#10; </xsl:text>
+          <xsl:value-of select="$IIC"/>
+        </xsl:if>
+
+      </xsl:for-each>
+
+      <xsl:text>);&#10;</xsl:text>
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>return C (This.State_Machine_State);&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>end Get_State;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+      
+      <xsl:value-of select="$I"/>
+      <xsl:text>procedure Set_State (This : Handle; To : State) is&#10;</xsl:text>
+
+      <xsl:value-of select="$II"/>
+      <xsl:text>C : constant array (State) of State_Machine_State_T :=&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(</xsl:text>
+
+      <xsl:for-each select="statemachine/state/name">
+
+        <!-- initial state first -->
+        <!-- XXX final state last? -->
+        <xsl:sort select="concat(not (../@initial),.)"/>
+
+        <xsl:value-of select="."/>
+        <xsl:text> =&gt; </xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:if test="position() &lt; last()">
+          <xsl:text>,&#10; </xsl:text>
+          <xsl:value-of select="$IIC"/>
+        </xsl:if>
+
+      </xsl:for-each>
+
+      <xsl:text>);&#10;</xsl:text>
+
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>This.State_Machine_State := C (To);&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>end Set_State;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
+    </xsl:if>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
