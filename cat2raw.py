@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 9afd1a545123 2005/09/25 06:41:06 simonjwright $
+# $Id: cat2raw.py,v 68713af53ed5 2005/09/26 05:30:15 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -122,9 +122,9 @@ class Base:
 		v = self.opExportControl
 	    else:
 		v = default
-		self.emit_single_element('visibility',
-					 Base.visibility_lookup[v.lower()],
-					 to)
+	    self.emit_single_element('visibility',
+				     Base.visibility_lookup[v.lower()],
+				     to)
     def emit_nested_attribute_list(self, list, attribute, to):
 	"""Outputs all the contained <attribute/> XML elements, contained
 	in a <list/> element."""
@@ -312,7 +312,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 9afd1a545123 $',
+				 'cat2raw.py: $Revision: 68713af53ed5 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -810,7 +810,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 9afd1a545123 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 68713af53ed5 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
