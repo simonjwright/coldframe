@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 66e6c7d391f8 2005/09/03 06:52:35 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 7e5f0774d210 2005/09/27 05:35:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -78,6 +78,10 @@ which delete the instance).
 
 <p>The Makefiles allow you to specify which version of a command (eg,
 <tt>find</tt>) to use; especially useful with mixed CMD/Cygwin builds.
+
+
+<p>Added support for low-level unit test involving Event Queues; you
+can inspect a (non-started) queue.
 
 
 <p><dt>20050515

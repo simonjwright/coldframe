@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 96f0f044c9e5 2005/09/24 16:20:29 simonjwright $ -->
+<!-- $Id: bugs.html,v 7e5f0774d210 2005/09/27 05:35:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -205,7 +205,14 @@ called; which means that those entry actions had better not depend on
 any of the class initializations.
 <br>SourceForge 1303319
 
-<!-- next: 0331 -->
+<dt>0331 (raised 27.ix.05)
+
+<dd>If a &#171;type&#187; includes an attribute whose type is a class
+in the domain (which is translated
+as <tt>ColdFrame.Instances.Handle</tt>), that of itself doesn't cause
+a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
+
+<!-- next: 0332 -->
 
 </dl>
 

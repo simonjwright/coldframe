@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v f37828520704 2005/09/17 11:23:22 simonjwright $ -->
+<!-- $Id: testing.html,v 7e5f0774d210 2005/09/27 05:35:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -308,6 +308,11 @@ any parameters input to stubbed subprograms.
 
 <p>There's an example in the <tt>example/House_Management.test/</tt>
 subdirectory of the source distribution.
+
+<p>Note that the test suite is a child of
+the <tt>House_Management</tt> domain. This is so that the test code
+has access to private members of the domain (non-&#171;public&#187;
+classes and associations, for a start).
 
 <ul>
 
