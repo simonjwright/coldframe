@@ -1,10 +1,9 @@
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
-with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Inspection;
 with ColdFrame.Project.Times;
-with System.Assertions;
+with System;
 
 package body Event_Test.Test_Inspection is
 
@@ -23,9 +22,11 @@ package body Event_Test.Test_Inspection is
       N : Natural;
       pragma Warnings (Off, N);
       E : ColdFrame.Project.Events.Event_P;
-      pragma Warnings (Off, N);
+      pragma Warnings (Off, E);
       D : Duration;
+      pragma Warnings (Off, D);
       T : ColdFrame.Project.Times.Time;
+      pragma Warnings (Off, T);
    begin
       ColdFrame.Project.Events.Start (Q);
 
@@ -33,64 +34,64 @@ package body Event_Test.Test_Inspection is
          N := Inspection.Number_Of_Self_Events (Q);
          Assert (False, "Number_Of_Self_Events should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          E := Inspection.Self_Event (Q, 1);
          Assert (False, "Self_Event should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_Now_Events (Q);
          Assert (False, "Number_Of_Now_Events should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          E := Inspection.Now_Event (Q, 1);
          Assert (False, "Now_Event should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_After_Events (Q);
          Assert (False, "Number_Of_After_Events should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          E := Inspection.After_Event (Q, 1);
          Assert (False, "After_Event should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          D := Inspection.How_Long_After (Q, 1);
          Assert (False, "How_Long_After should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_Later_Events (Q);
          Assert (False, "Number_Of_Later_Events should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          E := Inspection.Later_Event (Q, 1);
          Assert (False, "Later_Event should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
       begin
          T := Inspection.When_Later (Q, 1);
          Assert (False, "When_Later should have failed");
       exception
-         when System.Assertions.Assert_Failure => null;
+         when Inspection.Started => null;
       end;
 
    end Inspect_Started_Queue;

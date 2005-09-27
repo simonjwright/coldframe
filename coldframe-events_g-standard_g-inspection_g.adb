@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: f82037aff426 $
---  $Date: 2005/09/21 05:41:29 $
+--  $Revision: bc162effcb96 $
+--  $Date: 2005/09/27 05:16:14 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -54,10 +54,11 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
    function Number_Of_Self_Events (On : Event_Queue_P) return Natural is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
       Q : Event_Queue_Base renames Event_Queue_Base (On.all);
    begin
+      if On.Started then
+         raise Started;
+      end if;
       return UPEQ.Length (Q.The_Self_Events);
    end Number_Of_Self_Events;
 
@@ -66,10 +67,11 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                         At_Index : Positive) return Event_P is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
       Q : Event_Queue_Base renames Event_Queue_Base (On.all);
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > UPEQ.Length (Q.The_Self_Events) then
          raise Not_Found;
       end if;
@@ -84,10 +86,11 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
    function Number_Of_Now_Events (On : Event_Queue_P) return Natural is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
       Q : Event_Queue_Base renames Event_Queue_Base (On.all);
    begin
+      if On.Started then
+         raise Started;
+      end if;
       return UPEQ.Length (Q.The_Events);
    end Number_Of_Now_Events;
 
@@ -96,10 +99,11 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                        At_Index : Positive) return Event_P is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
       Q : Event_Queue_Base renames Event_Queue_Base (On.all);
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > UPEQ.Length (Q.The_Events) then
          raise Not_Found;
       end if;
@@ -114,9 +118,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
    function Number_Of_After_Events (On : Event_Queue_P) return Natural is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       return Held_Events_Inspection.Number_Of_After_Events
         (Standard_G.Event_Queue_Base (On.all).The_Held_Events);
    end Number_Of_After_Events;
@@ -126,9 +131,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                          At_Index : Positive) return Event_P is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > Number_Of_After_Events (On) then
          raise Not_Found;
       end if;
@@ -142,9 +148,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                             At_Index : Positive) return Duration is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > Number_Of_After_Events (On) then
          raise Not_Found;
       end if;
@@ -161,9 +168,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
    function Number_Of_Later_Events (On : Event_Queue_P) return Natural is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       return Held_Events_Inspection.Number_Of_At_Events
         (Standard_G.Event_Queue_Base (On.all).The_Held_Events);
    end Number_Of_Later_Events;
@@ -173,9 +181,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                          At_Index : Positive) return Event_P is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > Number_Of_Later_Events (On) then
          raise Not_Found;
       end if;
@@ -189,9 +198,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
                         At_Index : Positive) return Time.Time is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
-      pragma Assert (not On.Started,
-                     "queue has been started");
    begin
+      if On.Started then
+         raise Started;
+      end if;
       if At_Index > Number_Of_Later_Events (On) then
          raise Not_Found;
       end if;

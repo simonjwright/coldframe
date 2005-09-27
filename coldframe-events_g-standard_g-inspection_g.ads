@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.ads,v $
---  $Revision: f82037aff426 $
---  $Date: 2005/09/21 05:41:29 $
+--  $Revision: bc162effcb96 $
+--  $Date: 2005/09/27 05:16:14 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature.Inspection_Signature;
@@ -34,17 +34,14 @@ generic
 
 package ColdFrame.Events_G.Standard_G.Inspection_G is
 
-   --  The idea is to be able to see what's on an Event Queue, so you
+   --  This package allows you to see what's on an Event Queue, so you
    --  don't need to test event posting just by seeing the
    --  aftereffects.
    --
-   --  It would be reasonable to insist that the queue is in fact
-   --  stopped (not started, really).
-   --
-   --  This could be a child of Events_G, perhaps, though that would
-   --  require all sorts of extra (private?) interfaces.
-   --
-   --  Handling the 'time-to-fire' events is going to be a tad iffy.
+   --  The queue must not have been started.
+
+   Started : exception;
+   --  Raised if the queue has been started.
 
    Not_Found : exception;
    --  Raised if you ask for an event that wasn't posted.
