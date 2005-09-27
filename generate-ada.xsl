@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 196c2e5820a9 2005/09/25 07:18:56 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 1688935edd0c 2005/09/27 04:37:03 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -73,7 +73,7 @@
   <xsl:param name="generate-stubs" select="'no'"/>
 
   <!-- Controls when unit test support is generated. -->
-  <xsl:param name="unit-test-support" select="'yes'"/>
+  <xsl:param name="unit-test-support" select="'no'"/>
 
   <!-- Control indentation. -->
   <xsl:param name="standard-indent" select="'   '"/>
