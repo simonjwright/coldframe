@@ -10,9 +10,9 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: 66f57df04705 $
---  $Date: 2004/03/13 21:02:39 $
---  $Author: simon $
+--  $Revision: 9296293e78d4 $
+--  $Date: 2005/09/29 20:47:28 $
+--  $Author: simonjwright $
 
 with Ada.Unchecked_Deallocation;
 
@@ -195,6 +195,12 @@ package body ColdFrame.Project.Held_Events is
          Time_Collections.Clear (Q.Queues (K));
       end loop;
    end Tear_Down;
+
+
+   function "<" (L, R : Duration_Cell) return Boolean is
+   begin
+      return L.Delay_To_Fire < R.Delay_To_Fire;
+   end "<";
 
 
    function "<" (L, R : Time_Cell) return Boolean is
