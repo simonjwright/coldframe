@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: bc162effcb96 $
---  $Date: 2005/09/27 05:16:14 $
+--  $Revision: 94c7bda1bff4 $
+--  $Date: 2005/09/29 20:50:05 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -138,9 +138,10 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if At_Index > Number_Of_After_Events (On) then
          raise Not_Found;
       end if;
-      return Held_Events_Inspection.After_Event
-        (Standard_G.Event_Queue_Base (On.all).The_Held_Events,
-         At_Index);
+      return Held_Event
+        (Held_Events_Inspection.After_Event
+           (Standard_G.Event_Queue_Base (On.all).The_Held_Events,
+            At_Index).all).The_Event;
    end After_Event;
 
 
