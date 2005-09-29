@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: domains.html,v 7638d0cd7e8b 2005/09/29 05:22:09 simonjwright $ -->
 <head>
 <title>ColdFrame: Domains</title>
 </head>
@@ -110,15 +110,15 @@ children of the domain package.
 
 <ol>
 
-<li>calling the domain initialization operation, if one was specified
-by <i>{ init = package.operation }</i>,
-
 <li>initializing the domain's Event Queue with the supplied Event
 Queue, or (if it's <tt>null</tt>) by calling
 <tt>Events.Initialize</tt>,
 
 <li>initializing all class attributes and singletons via
-<tt><i>Class</i>.Class_Initialize</tt>,
+<tt><i>Class</i>.CF_Class_Initialize</tt>,
+
+<li>calling the domain initialization operation, if one was specified
+by <i>{ init = package.operation }</i>,
 
 <li>and then calling all the
 <em>&#171;init&#187;</em> operations of all the classes.
@@ -128,7 +128,7 @@ Queue, or (if it's <tt>null</tt>) by calling
 The calls are in alphabetical order by class and then by operation.
 
 <dt><a name="teardown"><tt><i>Domain</i>.Tear_Down</a></tt>
-<dd>For <a href="resources.html#testing">testing</a> purposes; returns
+<dd>For <a href="testing.html">testing</a> purposes; returns
 the domain to its initial state by
 <ol>
 
@@ -144,7 +144,9 @@ domain's Event Queue and deletes it if this was the last reference,
 include all the domains that it uses in the build process, At run
 time, these domains need to be initialized. The idea behind
 <tt>Cascade_Initialize</tt> is to make this process easier, especially
-for unit test.
+for domain-level testing, and more especially where you are using
+"real" versions of the domains you depend on rather than <a
+href="testing.html#generating-stub">stubbed</a> ones.
 <br>It takes an Event Queue parameter, defaulting to
 <tt>null</tt>. The generated code merely calls <tt>Initialize</tt>
 with the supplied Event Queue.
@@ -162,6 +164,12 @@ require this one (eg, device bottom halves), again with the supplied
 Event Queue.
 
 </ol>
+
+If you are testing against <a
+href="testing.html#generating-stub">stubbed</a> domains, or you're
+building a real program, you'll be better off <i>not</i> using
+<tt>Cascade_Initialize</tt>; instead, initialize all the used domains
+in an appropriate order.
 
 <dt><a name="cascade-teardown"><tt><i>Domain</i>.Cascade_Tear_Down</a></tt>
 <dd>The inverse of <tt>Cascade_Initialize</tt>.
