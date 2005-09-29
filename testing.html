@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 7e5f0774d210 2005/09/27 05:35:18 simonjwright $ -->
+<!-- $Id: testing.html,v e4bd6d712480 2005/09/29 05:38:36 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -19,6 +19,12 @@ width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
 <ul>
 
 <li><a href="#aunit">AUnit</a>
+
+<ul>
+
+<li><a href="#access-to-private">Access to private information</a>
+
+</ul>
 
 <li><a href="#stubs">Stubs</a>
 
@@ -46,7 +52,7 @@ width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
 
 <hr/>
 
-<h2><a href="http://libre.act-europe.fr/aunit/"><a name="aunit">AUnit</a></a></h2>
+<h2><a name="aunit"><a href="http://libre.act-europe.fr/aunit/">AUnit</a></a></h2>
 
 <p>AUnit has the concept <i>test case</i>; for each test case there is
 a <i>fixture</i>, which corresponds to the standard setup that each
@@ -67,6 +73,24 @@ and
 <a
 href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>
 procedures.
+
+<h3><a name="access-to-private">Access to private information</a></h3>
+
+<p>ColdFrame takes a fairly restrictive attitude to the visibility of
+constructs in the generated code. For example, only &#171;public&#187;
+classes are publicly visible outside the domain; all other classes are
+implemented as private children of the domain package, and the full
+declaration of a class's instance record is in the private part of the
+class's package specification.
+
+<p>If you are doing domain-level "unit" tests (that is, tests that
+involve <a href="#stubs">stubbed functionality</a> from other
+domains), implement the test suite in a child unit of the domain
+(perhaps <tt><i>Domain</i>.Unit_Test</tt>).
+
+<p>Similarly, if you are doing class-level unit tests, implement the
+test suite in a child unit of the class (perhaps
+<tt><i>Domain.Class</i>.Unit_Test</tt>).
 
 
 <h2><a name="stubs">Stubs</a></h2>
