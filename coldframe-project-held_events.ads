@@ -10,13 +10,12 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.ads,v $
---  $Revision: 2e5a61225d18 $
---  $Date: 2004/01/16 06:51:43 $
---  $Author: simon $
+--  $Revision: 8d79e317b2ac $
+--  $Date: 2005/09/29 20:47:06 $
+--  $Author: simonjwright $
 
 with Ada.Real_Time;
 with BC.Containers.Collections.Ordered.Unbounded;
-with BC.Containers.Collections.Unbounded;
 with ColdFrame.Project.Events;
 with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Times;
@@ -63,12 +62,16 @@ private
       Event : Events.Event_P;
    end record;
 
+   function "<" (L, R : Duration_Cell) return Boolean;
+
    package Abstract_Duration_Containers
    is new BC.Containers (Duration_Cell);
    package Abstract_Duration_Collections
    is new Abstract_Duration_Containers.Collections;
+   package Abstract_Ordered_Duration_Collections
+   is new Abstract_Duration_Collections.Ordered;
    package Duration_Collections
-   is new Abstract_Duration_Collections.Unbounded
+   is new Abstract_Ordered_Duration_Collections.Unbounded
      (Storage => ColdFrame.Project.Storage_Pools.Pool);
 
    type Time_Cell is record
