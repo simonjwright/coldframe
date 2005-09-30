@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 0cb3a4e597e9 2005/06/28 15:46:03 simonjwright $ -->
+<!-- $Id: event-modelling.html,v de9a4db5cba1 2005/09/30 05:10:14 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -141,12 +141,12 @@ specified interval,
 <dt>plain <i>Post</i><dd>This is the normal way of posting
 events. The queuing is strictly first in, first out.
 
-<dt><i>Post To Self</i><dd>Sometimes you have to send an event to
-the current instance as a way of moving the state machine on (perhaps
-you've come across an error condition). If this happens, you need the
-event to take precedence over any other events in the queue
-(otherwise, your event will happen after all the events already in
-the queue).
+<dt><a name="post-to-self"/><i>Post To Self</i><dd>Sometimes you
+have to send an event to the current instance as a way of moving the
+state machine on (perhaps you've come across an error condition). If
+this happens, you need the event to take precedence over any other
+events in the queue (otherwise, your event will happen after all the
+events already in the queue).
 <br>To achieve this, use <tt>Post_To_Self</tt>; any event posted in
 this way takes priority over normally-posted events.
 <br>"Events to self" are also queued first in, first out.
