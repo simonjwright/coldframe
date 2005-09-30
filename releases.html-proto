@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 7e5f0774d210 2005/09/27 05:35:18 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 52459c041c06 2005/09/30 05:45:40 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -81,7 +81,10 @@ which delete the instance).
 
 
 <p>Added support for low-level unit test involving Event Queues; you
-can inspect a (non-started) queue.
+can inspect a (non-started)
+queue. See <tt>ColdFrame.Events_G.Standard_G.Inspection_G</tt> for
+details; there's an instantiation
+at <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
 
 
 <p><dt>20050515
