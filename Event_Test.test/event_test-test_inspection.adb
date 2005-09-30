@@ -1,9 +1,8 @@
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 
-with Ada.Tags;
-with Ada.Text_IO; use Ada.Text_IO;
-
+with Ada.Calendar;
+with Ada.Real_Time;
 with ColdFrame.Project.Events.Standard.Inspection;
 with ColdFrame.Project.Times;
 with System;
@@ -37,18 +36,39 @@ package body Event_Test.Test_Inspection is
    --  Test events  --
    -------------------
 
-   type Ev (For_The_Instance : access Instance)
+   type Self_Event (For_The_Instance : access Instance)
       is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
    with record
       Payload : Integer;
    end record;
 
-   procedure Handler (For_The_Event : Ev);
-   procedure Handler (For_The_Event : Ev) is
+   procedure Handler (For_The_Event : Self_Event);
+
+   type Event (For_The_Instance : access Instance)
+      is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+   with record
+      Payload : Integer;
+   end record;
+
+   procedure Handler (For_The_Event : Event);
+
+
+   procedure Handler (For_The_Event : Self_Event) is
       pragma Warnings (Off, For_The_Event);
    begin
       null;
    end Handler;
+
+   procedure Handler (For_The_Event : Event) is
+      pragma Warnings (Off, For_The_Event);
+      I : Instance renames For_The_Event.For_The_Instance.all;
+      S : constant ColdFrame.Project.Events.Event_P
+        := new Self_Event (I'Unchecked_Access);
+   begin
+      Self_Event (S.all).Payload := For_The_Event.Payload + 1000;
+      ColdFrame.Project.Events.Post_To_Self (S, Q);
+   end Handler;
+
 
    -------------
    --  Tests  --
@@ -142,6 +162,36 @@ package body Event_Test.Test_Inspection is
 
 
    --  Can retrieve events posted to self.
+   procedure Check_Self_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Check_Self_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      E : aliased Event (The_Instance'Access);
+   begin
+      Assert (Inspection.Number_Of_Self_Events (Q) = 0,
+              "number of self events not 0");
+      E.Payload := 1;
+      Handler (E);
+      E.Payload := 2;
+      Handler (E);
+      Assert (Inspection.Number_Of_Self_Events (Q) = 2,
+              "number of self events not 2");
+      Assert (Event (Inspection.Self_Event (Q, 1).all).Payload = 1001,
+              "wrong payload in first event");
+      Assert (Event (Inspection.Self_Event (Q, 2).all).Payload = 1002,
+              "wrong payload in second event");
+      declare
+         Ev : ColdFrame.Project.Events.Event_P;
+         pragma Warnings (Off, Ev);
+      begin
+         Ev := Inspection.Self_Event (Q, 3);
+         Assert (False, "should have raised exception");
+      exception
+         when Inspection.Not_Found => null;
+      end;
+   end Check_Self_Events;
+
 
    --  Can retrieve standard posted events.
    procedure Check_Posting_Events
@@ -153,17 +203,17 @@ package body Event_Test.Test_Inspection is
    begin
       Assert (Inspection.Number_Of_Now_Events (Q) = 0,
               "number of now events not 0");
-      E := new Ev (The_Instance'Access);
-      Ev (E.all).Payload := 1;
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q);
-      E := new Ev (The_Instance'Access);
-      Ev (E.all).Payload := 2;
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q);
       Assert (Inspection.Number_Of_Now_Events (Q) = 2,
               "number of now events not 2");
-      Assert (Ev (Inspection.Now_Event (Q, 1).all).Payload = 1,
+      Assert (Event (Inspection.Now_Event (Q, 1).all).Payload = 1,
               "wrong payload in first event");
-      Assert (Ev (Inspection.Now_Event (Q, 2).all).Payload = 2,
+      Assert (Event (Inspection.Now_Event (Q, 2).all).Payload = 2,
               "wrong payload in second event");
       begin
          E := Inspection.Now_Event (Q, 3);
@@ -184,21 +234,20 @@ package body Event_Test.Test_Inspection is
    begin
       Assert (Inspection.Number_Of_After_Events (Q) = 0,
               "number of after events not 0");
-      E := new Ev (The_Instance'Access);
-      Ev (E.all).Payload := 1;
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_After => 1.0);
-      E := new Ev (The_Instance'Access);
-      Ev (E.all).Payload := 2;
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_After => 0.5);
       Assert (Inspection.Number_Of_After_Events (Q) = 2,
               "number of after events not 2");
       E := Inspection.After_Event (Q, 1);
-      Put_Line (Ada.Tags.Expanded_Name (E.all'Tag));
-      Assert (Ev (Inspection.After_Event (Q, 1).all).Payload = 2,
+      Assert (Event (Inspection.After_Event (Q, 1).all).Payload = 2,
               "wrong payload in first event");
       Assert (Inspection.How_Long_After (Q, 1) = 0.5,
               "wrong delay in first event");
-      Assert (Ev (Inspection.After_Event (Q, 2).all).Payload = 1,
+      Assert (Event (Inspection.After_Event (Q, 2).all).Payload = 1,
               "wrong payload in second event");
       Assert (Inspection.How_Long_After (Q, 2) = 1.0,
               "wrong delay in second event");
@@ -221,6 +270,56 @@ package body Event_Test.Test_Inspection is
 
 
    --  Can retrieve events to run 'at' a time.
+   procedure Check_Later_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Check_Later_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      E : ColdFrame.Project.Events.Event_P;
+      use type Ada.Calendar.Time;
+      use type Ada.Real_Time.Time;
+      T1 : constant ColdFrame.Project.Times.Time
+        := ColdFrame.Project.Times.Create (Ada.Calendar.Clock + 1.0);
+      T2 : constant ColdFrame.Project.Times.Time
+        := ColdFrame.Project.Times.Create
+        (Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (500));
+      use type ColdFrame.Project.Times.Time;
+   begin
+      Assert (Inspection.Number_Of_Later_Events (Q) = 0,
+              "number of later events not 0");
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 1;
+      ColdFrame.Project.Events.Post (E, Q, To_Fire_At => T1);
+      E := new Event (The_Instance'Access);
+      Event (E.all).Payload := 2;
+      ColdFrame.Project.Events.Post (E, Q, To_Fire_At => T2);
+      Assert (Inspection.Number_Of_Later_Events (Q) = 2,
+              "number of later events not 2");
+      E := Inspection.Later_Event (Q, 1);
+      Assert (Event (Inspection.Later_Event (Q, 1).all).Payload = 2,
+              "wrong payload in first event");
+      Assert (Inspection.When_Later (Q, 1) = T2,
+              "wrong delay in first event");
+      Assert (Event (Inspection.Later_Event (Q, 2).all).Payload = 1,
+              "wrong payload in second event");
+      Assert (Inspection.When_Later (Q, 2) = T1,
+              "wrong delay in second event");
+      begin
+         E := Inspection.Later_Event (Q, 3);
+         Assert (False, "Later_Event should have raised exception");
+      exception
+         when Inspection.Not_Found => null;
+      end;
+      declare
+         T : ColdFrame.Project.Times.Time;
+         pragma Warnings (Off, T);
+      begin
+         T := Inspection.When_Later (Q, 3);
+         Assert (False, "When_Later should have raised exception");
+      exception
+         when Inspection.Not_Found => null;
+      end;
+   end Check_Later_Events;
 
 
    ----------------------------
@@ -231,10 +330,14 @@ package body Event_Test.Test_Inspection is
    begin
       Register_Routine
         (C, Inspect_Started_Queue'Access, "Inspect started queue");
+--        Register_Routine
+--          (C, Check_Self_Events'Access, "Self events");
       Register_Routine
         (C, Check_Posting_Events'Access, "Standard events");
       Register_Routine
         (C, Check_After_Events'Access, "Events to run after a delay");
+      Register_Routine
+        (C, Check_Later_Events'Access, "Events to run at a time");
    end Register_Tests;
 
    function Name (C : Test_Case) return String_Access is
