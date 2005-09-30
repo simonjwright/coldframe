@@ -1,6 +1,7 @@
 with Event_Test.Test_Class;
 with Event_Test.Test_Completion_Transitions;
 with Event_Test.Test_Engine;
+with Event_Test.Test_Inspection;
 with Event_Test.Test_Instance;
 with Event_Test.Test_Queue;
 with Event_Test.Test_Singleton_Instance;
@@ -17,5 +18,6 @@ begin
    Add_Test (Result, new Test_Class.Test_Case);
    Add_Test (Result, new Test_Completion_Transitions.Test_Case);
    Add_Test (Result, new Test_Timer_Task_Teardown.Test_Case);
+   Add_Test (Result, new Test_Inspection.Test_Case);
    return Result;
 end Event_Test.Suite;
