@@ -11,12 +11,15 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events-standard-test_trace.ads,v $
---  $Revision: b72a3ecb25af $
---  $Date: 2004/06/17 07:12:06 $
---  $Author: simon $
+--  $Revision: 273216b04d56 $
+--  $Date: 2005/10/01 13:54:19 $
+--  $Author: simonjwright $
 
-with ColdFrame.Events_G.Test_G;
-with ColdFrame.Project.Events.Standard.Trace;
+with ColdFrame.Events_G.Trace_G;
+with ColdFrame.Project.Events.Standard.Test;
+
+--  The previous revision had the instantiations in the other order,
+--  which failed. This appears to be a compiler bug.
 
 package ColdFrame.Project.Events.Standard.Test_Trace
-is new Events.Test_G (Standard_Queue => Trace.Event_Queue_Base);
+is new Events.Trace_G (Standard_Queue => Test.Event_Queue_Base);
