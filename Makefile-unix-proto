@@ -51,6 +51,7 @@ CHMOD ?= chmod
 CP ?= cp
 ECHO ?= echo
 EXIT ?= exit
+FIND ?= find
 GNATCHOP ?= gnatchop
 GREP ?= grep
 JAVA ?= java
@@ -137,7 +138,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@$(MKDIR) $@
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@([ -d $*.impl ] && \
-	for f in `(cd $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
+	for f in `(cd $*.impl; $(FIND) . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
 	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
 	  else \
