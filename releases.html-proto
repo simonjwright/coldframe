@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 52459c041c06 2005/09/30 05:45:40 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 5567807a4589 2005/10/04 03:42:51 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -55,6 +55,11 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Working release ...
+
+
+<p><dt>20051001
 
 <dd>Various corrections and improvements to test stub generation/use.
 
