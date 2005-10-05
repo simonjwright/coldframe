@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 3bd5fdc246eb 2005/07/13 20:52:14 simonjwright $ -->
+<!-- $Id: event-use.html,v 27741046db4b 2005/10/05 06:03:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -187,8 +187,8 @@ this problem.
 
 <p>In the simpler, it's clear that <tt>Resetting</tt> is an
 intermediate state; the state machine bounces immediately back to
-<tt>On</tt> via an unguarded transition, so
-<tt>Is_On</tt> could be coded
+<tt>On</tt> via a completion transition, so <tt>Is_On</tt> could be
+coded
 <pre>
    function Is_On (This : Handle) return Boolean is
    begin
