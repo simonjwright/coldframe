@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 68713af53ed5 2005/09/26 05:30:15 simonjwright $
+# $Id: cat2raw.py,v fcd27cc3924a 2005/10/05 08:37:25 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -312,7 +312,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 68713af53ed5 $',
+				 'cat2raw.py: $Revision: fcd27cc3924a $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -810,13 +810,14 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 68713af53ed5 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: fcd27cc3924a $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
 			 + 'output this message\n')
-	sys.stderr.write('-o, --output=FILE:       '
-			 + 'the output file (default is domain_name.raw)\n')
+	sys.stderr.write('-o, --output=PATH:       '
+			 + 'the output path/file '
+			 + '(default is ./domain_name.raw)\n')
 	sys.stderr.write('-r, --reversionary-mode: '
 			 + 'output to previous standard (20040319)\n')
 
@@ -835,17 +836,20 @@ def main():
     output = sys.stdout
     reversionary = 0
     path = '.'
+    output_path = ''
+    output_file = ''
 
     for o, v in opts:
 	if o in ('-h', '--help'):
 	    usage()
 	    sys.exit()
 	if o in ('-o', '--output'):
-	    try:
-		output = open(v, 'w')
-	    except:
-		sys.stderr.write("couldn't open %s for output.\n" % v)
-		sys.exit(1)
+	    if os.path.isdir(v):
+		output_path = os.path.abspath(v)
+	    else:
+		output_path = os.path.dirname(v)
+		if not output_path: output_path = '.'
+		output_file = os.path.basename(v)
 	if o in ('-r', '--reversionary-mode'):
 	    reversionary = 1
 
@@ -874,7 +878,9 @@ def main():
     # output
     # by default, the output is to "the domain's normalized name".raw
     if output == sys.stdout:
-	n = re.sub(r'\s+', '_', d.object_name.strip()) + '.raw'
+	if not output_file:
+	    output_file = re.sub(r'\s+', '_', d.object_name.strip()) + '.raw'
+	n = os.path.join(output_path, output_file)
 	try:
 	    output = open(n, 'w')
 	except:
