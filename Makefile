@@ -96,11 +96,13 @@ ifeq ($(C_CODEGEN_SCRIPT), )
 endif
 C_CODEGEN_SCRIPTS = $(C_Codegen_Script) \
   c-utilities.xsl
-OTHER_SCRIPTS = create-build-directories \
-  serialized-to-csv.tcl \
-  split-csv.tcl \
+OTHER_SCRIPTS = \
+  case_exceptions.py \
+  cat2raw.py \
+  create-build-directories \
   make-build.tcl \
-  case_exceptions.py
+  serialized-to-csv.tcl \
+  split-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@$(ECHO) generating $@ ...
