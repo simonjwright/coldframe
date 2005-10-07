@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 529cc92a1bd4 2005/10/01 13:57:26 simonjwright $ -->
+<!-- $Id: bugs.html,v 7fa1c86b3cca 2005/10/07 05:04:54 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -218,7 +218,17 @@ a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
 use <a href="event-modelling.html#post-to-self">events-to-self</a>
 from an event that's being handled synchronously.
 
-<!-- next: 0334 -->
+<dt>0334 (raised 7.x.05)
+
+<dd>There is a storage leak if a state machine action that is not
+marked &#171;final&#187; or named <tt>Delete</tt> deletes the
+instance. The leak is caused by the deliberate raising
+of <tt>ColdFrame.Exceptions.Use_Error</tt>.
+<br>SourceForge 1315548
+<br><i>Of course the code that deleted the instance is in violation of
+its contract ...</i>
+
+<!-- next: 0335 -->
 
 </dl>
 
