@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v cddde7ffd0b9 2005/08/25 20:02:18 simonjwright $
+# $Id: normalize-rose.tcl,v 3152866ee8e8 2005/10/16 10:13:02 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -118,7 +118,7 @@ proc normalize {s} {
         # handle the words; convert runs of spaces/underscores to spaces
         set c [string trim $c]
         if {[string length $c] == 0} {
-            Warning "spare . in \"$s\""
+            Error "spare . in \"$s\""
         }
         regsub -all {[ _]+} $c " " c
         set words [split $c]
