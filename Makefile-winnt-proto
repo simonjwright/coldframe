@@ -102,7 +102,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
+	    <$< | cat >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.html: %.norm
 	@$(ECHO) generating $@ ...
