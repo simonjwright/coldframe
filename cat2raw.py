@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v fcd27cc3924a 2005/10/05 08:37:25 simonjwright $
+# $Id: cat2raw.py,v 52988b23a553 2005/10/19 19:14:41 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -272,7 +272,7 @@ class Domain(Base):
 	    dirname = '.'
 	filename = re.sub(r'^\$CURDIR', dirname, self.file_name)
 	filename = re.sub(r'\\\\', '/', filename)
-	sys.stderr.write('  filename is %s\n' % filename)
+	sys.stderr.write('  included file \"%s\"\n' % filename)
 	lexer = lex.lex()
 	try:
 	    file = open(filename, 'r')
@@ -312,7 +312,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: fcd27cc3924a $',
+				 'cat2raw.py: $Revision: 52988b23a553 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -447,11 +447,16 @@ class State_Machine(Base):
                     t.emit(to)
 	to.write('</transitions>\n')
     def state_named(self, n):
-        """Returns the state named 'n'."""
-        for s in self.states:
-            if s.object_name == n:
-                return s
-        return None
+        """Returns the state named 'n'.
+        A name of the form ':#4' means the 4th state (counting from 0)."""
+        m = re.match(r'^:#(\d+)$', n)
+        if m:
+            return self.states[int(m.group(1))]
+        else:
+            for s in self.states:
+                if s.object_name == n:
+                    return s
+            return None
 
 recognizedID['State_Machine'] = State_Machine
 
@@ -549,21 +554,31 @@ for o in (
     'ClassDiagram',
     'ClassView',
     'Compartment',
+    'DependencyView',
+    'Dependency_Relationship',
     'Destruction_Marker',
     'Focus_Of_Control',
     'Font',
     'ImportView',
     'InheritView',
+    'InstantiateView',
+    'Instantiated_Class',
+    'Instantiation_Relationship',
     'InterMessView',
     'InterObjView',
     'InteractionDiagram',
     'ItemLabel',
     'Label',
     'Link',
+    'LinkView',
     'Mechanism',
+    'MessView',
     'Message',
     'NoteView',
     'Object',
+    'ObjectDiagram',
+    'ObjectView',
+    'Parameterized_Class',
     'Petal',
     'RoleView',
     'SegLabel',
@@ -574,6 +589,9 @@ for o in (
     'State_Diagram',
     'Swimlane',
     'TransView',
+    'UseCase',
+    'UseCaseDiagram',
+    'UseCaseView',
     'UsesView',
     'Visibility_Relationship',
     'sendEvent',
@@ -810,7 +828,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: fcd27cc3924a $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 52988b23a553 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
