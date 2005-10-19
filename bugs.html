@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f28b24a9d14c 2005/10/19 19:41:47 simonjwright $ -->
+<!-- $Id: bugs.html,v a1b04b437626 2005/10/19 19:57:51 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -228,6 +228,16 @@ of <tt>ColdFrame.Exceptions.Use_Error</tt>.
 <br><i>Of course the code that deleted the instance is in violation of
 its contract ...</i>
 
+<!-- next: 0337 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>19.x.05</h3>
+
+<dl>
+
 <dt>0335 (raised 19.x.05)
 
 <dd> The 'normalization' phase of code generation takes a very long
@@ -238,18 +248,14 @@ XP.
 
 <dt>0336 (raised 19.x.05)
 
-<dd>Python stack trace ends with:
+<dd>A <tt>cat2raw.py</tt> problem: the Python stack trace ends with:
 
 File "cat2raw.py", line 502, in emit_contents
 <br>self.statemachine.state_named(self.supplier).name(),
 <br>AttributeError: 'NoneType' object has no attribute 'name'
 <br>SourceForge 1331565
 
-<!-- next: 0337 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>1.x.05</h3>
 

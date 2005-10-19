@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 5567807a4589 2005/10/04 03:42:51 simonjwright $ -->
+<!-- $Id: releases.html-proto,v a1b04b437626 2005/10/19 19:57:51 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -56,7 +56,15 @@ contains the complete documentation.
 
 <p><dt>DATE
 
-<dd>Working release ...
+<dd>Generation tooks a lot longer than you would expect on Windows
+2000, Windows XP.
+
+
+<p>Problems with <tt>cat2raw.py</tt> (one day soon I'll tell you about
+it!) and transitions to unnamed <i>final</i> states.
+
+
+<p>Leading or trailing dots in names are treated as errors.
 
 
 <p><dt>20051001
