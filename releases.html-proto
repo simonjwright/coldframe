@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v a1b04b437626 2005/10/19 19:57:51 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 6f10d750f783 2005/10/19 20:48:26 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -56,7 +56,7 @@ contains the complete documentation.
 
 <p><dt>DATE
 
-<dd>Generation tooks a lot longer than you would expect on Windows
+<dd>Generation took a lot longer than you would expect on Windows
 2000, Windows XP.
 
 
