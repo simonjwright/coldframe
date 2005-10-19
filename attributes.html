@@ -1,4 +1,4 @@
-<!-- $Id: attributes.html,v 274b86379b5f 2005/05/08 07:23:02 simonjwright $ -->
+<!-- $Id: attributes.html,v 668359a7e87b 2005/10/19 20:04:31 simonjwright $ -->
 <head>
 <title>ColdFrame: Attributes</title>
 </head>
@@ -84,11 +84,20 @@ the attribute definition, but this will tend to clutter the diagram.
 
 <dl>
 
+<dt><tt>atomic</tt>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed, like <tt>volatile</tt>, but additionally in such
+a way that it's proof against concurrent access.
+
 <dt><tt>id</tt>
 <dd>The attribute is an identifying attribute.
 
 <dt><tt>class</tt>
 <dd>The attribute is a class attribute.
+
+<dt><tt>volatile</tt>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed.
 
 </dl>
 
