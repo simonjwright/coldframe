@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a1b04b437626 2005/10/19 19:57:51 simonjwright $ -->
+<!-- $Id: bugs.html,v ded3fe6f0873 2005/10/25 05:09:32 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -228,7 +228,13 @@ of <tt>ColdFrame.Exceptions.Use_Error</tt>.
 <br><i>Of course the code that deleted the instance is in violation of
 its contract ...</i>
 
-<!-- next: 0337 -->
+<dt>0337 (raised 25.x.05)
+
+<dd> There's a potential deadly embrace if a dispatched action tries
+ to delete an instance after the Held Event Manager has finished.
+<br>SourceForge 1337007
+
+<!-- next: 0338 -->
 
 </dl>
 
