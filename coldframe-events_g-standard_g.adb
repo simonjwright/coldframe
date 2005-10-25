@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 1e33272b6f29 $
---  $Date: 2005/10/25 06:15:33 $
+--  $Revision: d94f3cfb78b1 $
+--  $Date: 2005/10/25 19:39:25 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -527,13 +527,24 @@ package body ColdFrame.Events_G.Standard_G is
       --  Tasking_Error.
       Final : loop
          select
+            --  This is the call we're really interested in.
             accept Finish;
             exit Final;
          or
+            --  However, we have to be prepared for others, because
+            --  the Dispatcher may still be processing an event which
+            --  is entitled to make any of the remaining calls; though
+            --  of course there is nothing to do.
+            accept Add_At_Event (The_Entry : Event_P;
+                                 To_Run_At : Time.Time);
+         or
+            accept Add_After_Event (The_Entry : Event_P;
+                                    To_Run_After : Duration);
+         or
+            accept Rethink;
+         or
             accept Invalidate
               (For_The_Instance : Instance_Base_P);
-            --  Invalidate may be called in an obscure race
-            --  condition. Nothing to do, of course.
          end select;
       end loop Final;
 
