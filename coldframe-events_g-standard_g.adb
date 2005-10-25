@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 3f2c8a202aed $
---  $Date: 2005/08/12 19:01:41 $
+--  $Revision: 1e33272b6f29 $
+--  $Date: 2005/10/25 06:15:33 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -522,10 +522,20 @@ package body ColdFrame.Events_G.Standard_G is
       --  actually terminating; if we terminate, user tasks may fail
       --  when trying to post held events.
 
-      accept Finish;
       --  Wait to be told to quit ... there may be tasks (eg, in other
       --  event queues) still alive, and we don't want them to get
       --  Tasking_Error.
+      Final : loop
+         select
+            accept Finish;
+            exit Final;
+         or
+            accept Invalidate
+              (For_The_Instance : Instance_Base_P);
+            --  Invalidate may be called in an obscure race
+            --  condition. Nothing to do, of course.
+         end select;
+      end loop Final;
 
    end Held_Event_Manager;
 
