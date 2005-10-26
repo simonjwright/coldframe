@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 8f7552c85107 $ }
+|{ revision = $Revision: 5c327c34b411 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -1406,23 +1406,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E691201E4"
-			    compartment 	(object Compartment
-				Parent_View 	@36
-				location   	(201, 223)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	428
 			    height     	218
 			    annotation 	8
@@ -1463,23 +1446,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6A0B0066"
-			    compartment 	(object Compartment
-				Parent_View 	@37
-				location   	(178, 529)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	508
 			    height     	218
 			    annotation 	8
@@ -1520,23 +1486,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6A2F0342"
-			    compartment 	(object Compartment
-				Parent_View 	@38
-				location   	(158, 830)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	542
 			    height     	218
 			    annotation 	8
@@ -1577,23 +1526,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6A6703C5"
-			    compartment 	(object Compartment
-				Parent_View 	@39
-				location   	(152, 1119)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	554
 			    height     	218
 			    annotation 	8
@@ -1634,23 +1566,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6A9203BD"
-			    compartment 	(object Compartment
-				Parent_View 	@40
-				location   	(223, 1400)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	412
 			    height     	218
 			    annotation 	8
@@ -1691,23 +1606,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6AB003A2"
-			    compartment 	(object Compartment
-				Parent_View 	@41
-				location   	(189, 1703)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	464
 			    height     	218
 			    annotation 	8
@@ -1748,23 +1646,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6AD3030C"
-			    compartment 	(object Compartment
-				Parent_View 	@42
-				location   	(213, 1968)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	456
 			    height     	218
 			    annotation 	8
@@ -1805,23 +1686,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6AF0025A"
-			    compartment 	(object Compartment
-				Parent_View 	@43
-				location   	(224, 2250)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	384
 			    height     	218
 			    annotation 	8
@@ -1862,23 +1726,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6B3502C7"
-			    compartment 	(object Compartment
-				Parent_View 	@44
-				location   	(1007, 199)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	392
 			    height     	218
 			    annotation 	8
@@ -1919,23 +1766,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6B7101B5"
-			    compartment 	(object Compartment
-				Parent_View 	@45
-				location   	(953, 524)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	472
 			    height     	218
 			    annotation 	8
@@ -1976,23 +1806,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"427E6B9C02ED"
-			    compartment 	(object Compartment
-				Parent_View 	@46
-				location   	(947, 822)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	205)
 			    width      	440
 			    height     	218
 			    annotation 	8
@@ -2033,9 +1846,99 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4282E40B01F4"
+			    width      	548
+			    height     	218
+			    annotation 	8
+			    autoResize 	TRUE)))))
+	(object Class_Category "More than one inheritance tree with the same name"
+	    quid       	"435F57B3001A"
+	    stereotype 	"generate"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "MTOITWTSN P1"
+		    quid       	"435F57F903A0"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "id"
+			    quid       	"435F58170082"
+			    stereotype 	"id"
+			    type       	"Autonumber")))
+		(object Class "MTOITWTSN P2"
+		    quid       	"435F58260250"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "id"
+			    quid       	"435F583A037B"
+			    stereotype 	"id"
+			    type       	"Autonumber")))
+		(object Class "MTOITWTSN C1"
+		    quid       	"435F5849016A"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"435F5883029A"
+			    label      	"MTOITWTSN G"
+			    supplier   	"Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN P1"
+			    quidu      	"435F57F903A0")))
+		(object Class "MTOITWTSN C2"
+		    quid       	"435F5870038D"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"435F58860353"
+			    label      	"MTOITWTSN G"
+			    supplier   	"Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN P2"
+			    quidu      	"435F58260250"))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"435F57E70155"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object Label @48
+			    location   	(225, 83)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    nlines     	1
+			    max_width  	1980
+			    label      	"$Id: Bad_Model_Regressions.cat,v 5c327c34b411 2005/10/26 19:07:06 simonjwright $")
+			(object ClassView "Class" "Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN P1" @49
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(390, 470)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@49
+				location   	(166, 397)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	448
+				justify    	0
+				label      	"MTOITWTSN P1")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"435F57F903A0"
 			    compartment 	(object Compartment
-				Parent_View 	@47
-				location   	(898, 1128)
+				Parent_View 	@49
+				location   	(166, 453)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -2049,11 +1952,173 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	2
-				max_width  	215)
-			    width      	548
-			    height     	218
+				max_width  	445)
+			    width      	466
+			    height     	168
 			    annotation 	8
-			    autoResize 	TRUE))))))
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN P2" @50
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1493, 461)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@50
+				location   	(1269, 388)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	448
+				justify    	0
+				label      	"MTOITWTSN P2")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"435F58260250"
+			    compartment 	(object Compartment
+				Parent_View 	@50
+				location   	(1269, 444)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	445)
+			    width      	466
+			    height     	168
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN C1" @51
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(388, 1023)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@51
+				location   	(215, 977)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"MTOITWTSN C1")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"435F5849016A"
+			    width      	364
+			    height     	114
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN C2" @52
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1499, 1001)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@52
+				location   	(1326, 955)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	346
+				justify    	0
+				label      	"MTOITWTSN C2")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"435F5870038D"
+			    width      	364
+			    height     	114
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object InheritView "MTOITWTSN G" @53
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@53
+				location   	(1499, 745)
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"MTOITWTSN G")
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"435F58860353"
+			    client     	@52
+			    supplier   	@50
+			    line_style 	3
+			    origin_attachment 	(1499, 944)
+			    terminal_attachment 	(1499, 545))
+			(object InheritView "MTOITWTSN G" @54
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@54
+				location   	(388, 760)
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"MTOITWTSN G")
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"435F5883029A"
+			    client     	@51
+			    supplier   	@49
+			    line_style 	3
+			    origin_attachment 	(388, 966)
+			    terminal_attachment 	(388, 554)))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3FDAA7B50163"
@@ -2061,7 +2126,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 8f7552c85107 $ }
+|{ revision = $Revision: 5c327c34b411 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2069,7 +2134,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object Label @48
+		(object Label @55
 		    location   	(215, 133)
 		    font       	(object Font
 			size       	10
@@ -2082,8 +2147,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 8f7552c85107 2005/05/12 05:13:59 simonjwright $")
-		(object CategoryView "Logical View::Bad Model Regressions" @49
+		    label      	"$Id: Bad_Model_Regressions.cat,v 5c327c34b411 2005/10/26 19:07:06 simonjwright $")
+		(object CategoryView "Logical View::Bad Model Regressions" @56
 		    location   	(2639, 233)
 		    font       	(object Font
 			size       	10
@@ -2095,7 +2160,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@56
 			location   	(2469, 149)
 			fill_color 	13434879
 			nlines     	2
@@ -2108,7 +2173,7 @@
 		    quidu      	"3FDAA7500168"
 		    width      	352
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @50
+		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @57
 		    location   	(495, 435)
 		    font       	(object Font
 			size       	10
@@ -2120,7 +2185,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@50
+			Parent_View 	@57
 			location   	(165, 396)
 			fill_color 	13434879
 			nlines     	2
@@ -2128,7 +2193,7 @@
 			justify    	0
 			label      	"Detect illegal characters in tag name rather than letting Saxon find them")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@50
+			Parent_View 	@57
 			location   	(165, 351)
 			fill_color 	13434879
 			anchor     	10
@@ -2142,7 +2207,7 @@
 		    quidu      	"408168AE0217"
 		    width      	672
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @51
+		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @58
 		    location   	(1355, 438)
 		    font       	(object Font
 			size       	10
@@ -2154,7 +2219,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@58
 			location   	(1087, 399)
 			fill_color 	13434879
 			nlines     	2
@@ -2162,7 +2227,7 @@
 			justify    	0
 			label      	"Public classes can't be active or have state machines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@58
 			location   	(1087, 354)
 			fill_color 	13434879
 			anchor     	10
@@ -2176,7 +2241,7 @@
 		    quidu      	"408168F600C6"
 		    width      	548
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @52
+		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @59
 		    location   	(2033, 433)
 		    font       	(object Font
 			size       	10
@@ -2188,7 +2253,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@52
+			Parent_View 	@59
 			location   	(1889, 394)
 			fill_color 	13434879
 			nlines     	2
@@ -2196,7 +2261,7 @@
 			justify    	0
 			label      	"Mixed type declarations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@52
+			Parent_View 	@59
 			location   	(1889, 349)
 			fill_color 	13434879
 			anchor     	10
@@ -2210,7 +2275,7 @@
 		    quidu      	"40EE860C015F"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @53
+		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @60
 		    location   	(460, 785)
 		    font       	(object Font
 			size       	10
@@ -2222,7 +2287,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@53
+			Parent_View 	@60
 			location   	(316, 746)
 			fill_color 	13434879
 			nlines     	2
@@ -2230,7 +2295,7 @@
 			justify    	0
 			label      	"Bad expressions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@53
+			Parent_View 	@60
 			location   	(316, 701)
 			fill_color 	13434879
 			anchor     	10
@@ -2244,7 +2309,7 @@
 		    quidu      	"4111B4E10070"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @54
+		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @61
 		    location   	(951, 790)
 		    font       	(object Font
 			size       	10
@@ -2256,7 +2321,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@54
+			Parent_View 	@61
 			location   	(758, 751)
 			fill_color 	13434879
 			nlines     	2
@@ -2264,7 +2329,7 @@
 			justify    	0
 			label      	"Protected types with missing features")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@54
+			Parent_View 	@61
 			location   	(758, 706)
 			fill_color 	13434879
 			anchor     	10
@@ -2278,7 +2343,7 @@
 		    quidu      	"4142CE040300"
 		    width      	398
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @55
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @62
 		    location   	(1478, 788)
 		    font       	(object Font
 			size       	10
@@ -2290,7 +2355,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@55
+			Parent_View 	@62
 			location   	(1334, 749)
 			fill_color 	13434879
 			nlines     	2
@@ -2298,7 +2363,7 @@
 			justify    	0
 			label      	"Bad Utilities")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@55
+			Parent_View 	@62
 			location   	(1334, 704)
 			fill_color 	13434879
 			anchor     	10
@@ -2312,7 +2377,7 @@
 		    quidu      	"415F11BC000C"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @56
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @63
 		    location   	(2025, 790)
 		    font       	(object Font
 			size       	10
@@ -2324,7 +2389,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@56
+			Parent_View 	@63
 			location   	(1881, 751)
 			fill_color 	13434879
 			nlines     	2
@@ -2332,7 +2397,7 @@
 			justify    	0
 			label      	"Bad Operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@56
+			Parent_View 	@63
 			location   	(1881, 706)
 			fill_color 	13434879
 			anchor     	10
@@ -2346,7 +2411,7 @@
 		    quidu      	"4206699F00DA"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @57
+		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @64
 		    location   	(415, 1083)
 		    font       	(object Font
 			size       	10
@@ -2358,7 +2423,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@57
+			Parent_View 	@64
 			location   	(271, 1044)
 			fill_color 	13434879
 			nlines     	2
@@ -2366,7 +2431,7 @@
 			justify    	0
 			label      	"Improper types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@57
+			Parent_View 	@64
 			location   	(271, 999)
 			fill_color 	13434879
 			anchor     	10
@@ -2379,4 +2444,38 @@
 		    fill_color 	13434879
 		    quidu      	"427E68DC0074"
 		    width      	300
+		    height     	180)
+		(object CategoryView "Logical View::Bad Model Regressions::More than one inheritance tree with the same name" @65
+		    location   	(960, 1090)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@65
+			location   	(727, 1051)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	466
+			justify    	0
+			label      	"More than one inheritance tree with the same name")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@65
+			location   	(727, 1006)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	466
+			justify    	0
+			label      	"<<generate>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"435F57B3001A"
+		    width      	478
 		    height     	180)))))
