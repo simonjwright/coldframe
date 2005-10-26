@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 6f10d750f783 2005/10/19 20:48:26 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 1fcb7425d313 2005/10/26 20:15:00 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -67,6 +67,9 @@ it!) and transitions to unnamed <i>final</i> states.
 <p>Leading or trailing dots in names are treated as errors.
 
 
+<p>Unit testing might freeze during tear down.
+
+
 <p><dt>20051001
 
 <dd>Various corrections and improvements to test stub generation/use.
@@ -98,6 +101,10 @@ can inspect a (non-started)
 queue. See <tt>ColdFrame.Events_G.Standard_G.Inspection_G</tt> for
 details; there's an instantiation
 at <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
+
+
+<p>Protected function return types are taken account of when
+calculating the order in which to output type declarations.
 
 
 <p><dt>20050515
