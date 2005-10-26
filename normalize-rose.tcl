@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3152866ee8e8 2005/10/16 10:13:02 simonjwright $
+# $Id: normalize-rose.tcl,v c2db4846edc3 2005/10/26 19:20:50 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -2260,8 +2260,8 @@ itcl::class Inheritance {
             set extant [$inheritances -atName $name]
             if {$parent != [$extant -getParent]} {
                 if {[string length $name] != 0} {
-                    Error "multiple parents $parent, [$extant -getParent]\
-                           in $name"
+                    Error "multiple parents ($parent, [$extant -getParent])\
+                           for $name"
                 }
             } else {
                 $extant -addChild $child
