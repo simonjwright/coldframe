@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: 5b175d8a1de6 $
---  $Date: 2005/09/30 04:54:10 $
+--  $Revision: 8cc7facbc6e8 $
+--  $Date: 2005/10/31 20:52:39 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -211,6 +211,15 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
         (Standard_G.Event_Queue_Base (On.all).The_Held_Events,
          At_Index);
    end When_Later;
+
+
+   function Event_Of (The_Timer : Timer) return Event_P is
+   begin
+      if The_Timer.The_Entry = null then
+         return null;
+      end if;
+      return Held_Event (The_Timer.The_Entry.all).The_Event;
+   end Event_Of;
 
 
 end ColdFrame.Events_G.Standard_G.Inspection_G;

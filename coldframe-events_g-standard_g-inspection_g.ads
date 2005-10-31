@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.ads,v $
---  $Revision: bc162effcb96 $
---  $Date: 2005/09/27 05:16:14 $
+--  $Revision: 8cc7facbc6e8 $
+--  $Date: 2005/10/31 20:52:39 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature.Inspection_Signature;
@@ -94,5 +94,13 @@ package ColdFrame.Events_G.Standard_G.Inspection_G is
    --  increasing time-to-fire order).
    function When_Later (On : Event_Queue_P;
                         At_Index : Positive) return Time.Time;
+
+   -----------------------------
+   --  Events set on a Timer. --
+   -----------------------------
+
+   --  Returns the event held on the Timer (or null if none). Use one
+   --  of the above query interfaces to check the time concerned.
+   function Event_Of (The_Timer : Timer) return Event_P;
 
 end ColdFrame.Events_G.Standard_G.Inspection_G;
