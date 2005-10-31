@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 34c1f1a02ae8 2005/10/31 06:31:49 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v fce773135f0d 2005/10/31 21:09:08 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -519,7 +519,7 @@
         <xsl:text> (navigation)</xsl:text>
       </xsl:if>
       <xsl:if test="@entry">
-        <xsl:text> (task entry)</xsl:text>
+        <xsl:text> (entry)</xsl:text>
       </xsl:if>
       <xsl:if test="@return">
         <xsl:text> returns </xsl:text>
@@ -805,6 +805,9 @@
               <xsl:value-of select="@extends"/>
               <xsl:text>, with attributes:</xsl:text>
             </p>
+          </xsl:when>
+          <xsl:when test="@protected">
+            <p>A protected record type, with attributes:</p>
           </xsl:when>
           <xsl:otherwise>
             <p>A record type, with attributes:</p>
