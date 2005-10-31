@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v e024b8fed56e 2005/05/25 04:56:37 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 34c1f1a02ae8 2005/10/31 06:31:49 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -24,6 +24,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:saxon="http://icl.com/saxon"
   xmlns:at="http://pushface.org/coldframe/attribute"
+  xmlns:ut="http://pushface.org/coldframe/utilities"
   extension-element-prefixes="saxon"
   version="1.0">
 
@@ -32,8 +33,14 @@
 
   <xsl:strip-space elements="*"/>
 
-  <xsl:output method="html"/>
+  <xsl:output 
+    method="html"
+    doctype-public="-//W3C/DTD HTML 4.01 Transitional//EN"
+    doctype-system="http://www.w3.org/TR/html4/loose.dtd"/>
 
+  <!-- Most of the parameters/variables here are needed by the
+       imported stylesheets even though they are of no use in this
+       context. -->
 
   <!-- +++++ Command line parameters. +++++ -->
 
@@ -88,11 +95,15 @@
 
 
   <xsl:template match="domain">
-    <html>
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
       <head>
+        <meta 
+          http-equiv="Content-type" 
+          content="text/html; charset=iso-8859-1"/>
+        <link href="cf-gen-doc-styles.css" rel="stylesheet" type="text/css"/>
         <title><xsl:value-of select="name"/></title>
       </head>
-      <body bgcolor="white">
+      <body>
         <h1><xsl:value-of select="name"/></h1>
         <xsl:apply-templates select="./documentation"/>
         <xsl:if test="revision">
@@ -101,9 +112,9 @@
             <xsl:value-of select="revision"/>
           </p>
         </xsl:if>
-        <h2>Contents</h2>
+        <h1>Contents</h1>
         <xsl:if test="class[@public]">
-          <h3>Public Classes</h3>
+          <h2>Public Classes</h2>
           <ul>
             <xsl:apply-templates select="class[@public]" mode="index">
               <xsl:sort select="name"/>
@@ -111,7 +122,7 @@
           </ul>
         </xsl:if>
         <xsl:if test="class[not(@public)]">
-          <h3>Private Classes</h3>
+          <h2>Private Classes</h2>
           <ul>
             <xsl:apply-templates select="class[not(@public)]" mode="index">
               <xsl:sort select="name"/>
@@ -119,7 +130,7 @@
           </ul>
         </xsl:if>
         <xsl:if test="association">
-          <h3>Associations</h3>
+          <h2>Associations</h2>
           <ul>
             <xsl:apply-templates select="association" mode="index">
               <xsl:sort select="name"/>
@@ -127,7 +138,7 @@
           </ul>
         </xsl:if>
         <xsl:if test="inheritance">
-          <h3>Inheritance relationships</h3>
+          <h2>Inheritance relationships</h2>
           <ul>
             <xsl:apply-templates select="inheritance" mode="index">
               <xsl:sort select="name"/>
@@ -135,7 +146,7 @@
           </ul>
         </xsl:if>
         <xsl:if test="type[not(@standard)]">
-          <h3>Types</h3>
+          <h2>Types</h2>
           <ul>
             <xsl:apply-templates select="type[not(@standard)]" mode="index">
               <xsl:sort select="name"/>
@@ -145,31 +156,31 @@
         <!-- End of index -->
         <hr/>
         <xsl:if test="class[@public]">
-          <h2>Public Classes</h2>
+          <h1>Public Classes</h1>
           <xsl:apply-templates select="class[@public]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="class[not(@public)]">
-          <h2>Private Classes</h2>
+          <h1>Private Classes</h1>
           <xsl:apply-templates select="class[not(@public)]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="association">
-          <h2>Associations</h2>
+          <h1>Associations</h1>
           <xsl:apply-templates select="association">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="inheritance">
-          <h2>Inheritance relationships</h2>
+          <h1>Inheritance relationships</h1>
           <xsl:apply-templates select="inheritance">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="type[not(@standard)]">
-          <h2>Types</h2>
+          <h1>Types</h1>
           <xsl:apply-templates select="type[not(@standard)]">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
@@ -188,31 +199,35 @@
 
   <xsl:template match="domain/class">
     <xsl:variable name="name" select="name"/>
-    <h3><a name="{$name}"><xsl:value-of select="$name"/></a></h3>
+    <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
-    <xsl:for-each select="../inheritance[parent=$name]">
-      <xsl:sort select="name"/>
-      <xsl:text>Supertype in </xsl:text>
-      <a href="#{name}"><xsl:value-of select="name"/></a>.
-      <p/>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:for-each select="../inheritance[child=$name]">
-      <xsl:sort select="name"/>
-      <xsl:variable
-        name="parent"
-        select="../inheritance[child=$name]/parent"/>
-      <xsl:text>Subtype of </xsl:text>
-      <i><a href="#{parent}">
-      <xsl:value-of select="parent"/></a></i>
-      <xsl:text> in </xsl:text>
-      <a href="#{name}"><xsl:value-of select="name"/></a>.
-      <p/>
-      <xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:variable 
+      name="super"
+      select="../inheritance[parent=$name]"/>
+    <xsl:if test="$super">
+      <p>
+        <xsl:text>Supertype in </xsl:text>
+        <a href="#{super/name}">
+          <xsl:value-of select="$super/name"/>
+        </a>.
+      </p>
+    </xsl:if>
+    <xsl:variable
+      name="sub"
+      select="../inheritance[child=$name]"/>
+    <xsl:if test="$sub">
+      <p>
+        <xsl:text>Subtype of </xsl:text>
+        <a href="#{sub/parent}">
+          <xsl:value-of select="$sub/parent"/>
+        </a>
+        <xsl:text> in </xsl:text>
+        <a href="#{sub/name}"><xsl:value-of select="$sub/name"/></a>.
+      </p>
+    </xsl:if>
+
     <xsl:if test="attribute">
-      <h4>Attributes</h4>
+      <h3>Attributes</h3>
       <dl>
         <xsl:apply-templates select="attribute">
           <xsl:sort select="."/>
@@ -220,35 +235,35 @@
       </dl>
     </xsl:if>
     <xsl:if test="event[@class]">
-      <h4>Class events</h4>
-      <ul>
+      <h3>Class events</h3>
+      <dl>
         <xsl:for-each select="event[@class]">
           <xsl:sort select="name"/>
           <xsl:call-template name="class-event-details"/>
         </xsl:for-each>
-      </ul>
+      </dl>
     </xsl:if>
     <xsl:if test="statemachine">
-      <h4>States</h4>
-      <ul>
+      <h3>States</h3>
+      <dl>
         <xsl:for-each select="statemachine/state">
           <xsl:sort select="not(@initial)"/>
           <xsl:sort select="name"/>
           <xsl:call-template name="state-details"/>
         </xsl:for-each>
-      </ul>
-      <h4>Events</h4>
-      <ul>
+      </dl>
+      <h3>Events</h3>
+      <dl>
         <xsl:for-each select="statemachine/event">
           <xsl:sort select="name"/>
           <xsl:call-template name="event-details"/>
         </xsl:for-each>
-      </ul>
-      <h4>State-Event Matrix</h4>
+      </dl>
+      <h3>State-Event Matrix</h3>
       <xsl:call-template name="state-machine"/>
     </xsl:if>
     <xsl:if test="operation">
-      <h4>Operations</h4>
+      <h3>Operations</h3>
       <dl>
         <xsl:apply-templates select="operation">
           <xsl:sort select="."/>
@@ -258,7 +273,7 @@
     <xsl:if
       test="../association[role/classname = $name]
             or ../association[associative = $name]">
-      <h4>Associations</h4>
+      <h3>Associations</h3>
       <ul>
         <xsl:for-each
           select="../association[role/classname = $name]
@@ -274,22 +289,21 @@
 
 
   <!-- Output details of a State. Called at statemachine/state
-       in a List context. -->
+       in a Definition List context. -->
   <xsl:template name="state-details">
-
-    <li>
+    <dt>
       <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
+    </dt>
+    <dd>
       <xsl:apply-templates select="documentation"/>
-    </li>
-
+    </dd>
   </xsl:template>
 
 
   <!-- Output details of a class Event. Called at statemachine/event
-       in a List context. -->
+       in a Definition List context. -->
   <xsl:template name="class-event-details">
-
-    <li>
+    <dt>
       <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="type">
         <xsl:text> (payload of type </xsl:text>
@@ -298,17 +312,17 @@
         </xsl:call-template>
         <xsl:text>)</xsl:text>
       </xsl:if>
+    </dt>
+    <dd>
       <xsl:apply-templates select="documentation"/>
-    </li>
-
+    </dd>
   </xsl:template>
 
 
   <!-- Output details of an instance Event. Called at statemachine/event
-       in a List context. -->
+       in a Definition List context. -->
   <xsl:template name="event-details">
-
-    <li>
+    <dt>
       <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="type">
         <xsl:text> (payload of type </xsl:text>
@@ -317,15 +331,16 @@
         </xsl:call-template>
         <xsl:text>)</xsl:text>
       </xsl:if>
+    </dt>
+    <dd>
       <xsl:apply-templates select="documentation"/>
-    </li>
-
+    </dd>
   </xsl:template>
 
 
   <!-- Called at class to output a Class's state model. -->
   <xsl:template name="state-machine">
-    <table border="1">
+    <table border="1" summary="State machine for {name}">
       <tr>
         <th rowspan="2">State</th>
         <th rowspan="2">Entry Action(s)</th>
@@ -469,9 +484,14 @@
       <xsl:if test="@suppressed='framework'">
         <xsl:text> (automatically-generated)</xsl:text>
       </xsl:if>
-      <xsl:if test="@class">
-        <xsl:text> (class)</xsl:text>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@access">
+          <xsl:text> (access-to-operation)</xsl:text>
+        </xsl:when>
+        <xsl:when test="@class">
+          <xsl:text> (class)</xsl:text>
+        </xsl:when>
+      </xsl:choose>
       <xsl:if test="@convention">
         <xsl:text> (convention </xsl:text>
         <xsl:value-of select="@convention"/>
@@ -512,7 +532,10 @@
     <dd>
       <xsl:apply-templates select="documentation"/>
       <xsl:if test="parameter">
-        <h5>Parameters</h5>
+        <p>
+          <xsl:value-of select="name"/>
+          <xsl:text> has parameters:</xsl:text>
+        </p>
         <dl>
           <xsl:apply-templates select="parameter"/>
         </dl>
@@ -533,6 +556,9 @@
         <xsl:when test="@mode='out'">
           <xsl:text>out </xsl:text>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>in </xsl:text>
+        </xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="type-name-linked">
         <xsl:with-param name="type" select="type"/>
@@ -546,7 +572,6 @@
     <dd>
       <xsl:apply-templates select="documentation"/>
     </dd>
-    <p/>
   </xsl:template>
 
 
@@ -558,9 +583,9 @@
   </xsl:template>
 
   <xsl:template match="domain/association">
-    <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
+    <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
-    <h4>Roles</h4>
+    <h3>Roles</h3>
     <xsl:apply-templates select="role"/>
     <xsl:apply-templates select="associative"/>
   </xsl:template>
@@ -627,13 +652,13 @@
   </xsl:template>
 
   <xsl:template match="domain/inheritance">
-    <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
+    <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
-    <h4>Superclass</h4>
+    <h3>Superclass</h3>
     <p>
       <a href="#{parent}"><xsl:value-of select="parent"/></a>
     </p>
-    <h4>Children</h4>
+    <h3>Children</h3>
     <ul>
       <xsl:apply-templates select="child">
         <xsl:sort select="."/>
@@ -658,7 +683,7 @@
   </xsl:template>
 
   <xsl:template match="domain/type">
-    <h3><a name="{name}"><xsl:value-of select="name"/></a></h3>
+    <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
     <xsl:if test="@callback">
       <p><xsl:text>Callback support is provided.</xsl:text></p>
@@ -690,6 +715,9 @@
           <xsl:text>.</xsl:text>
         </p>
       </xsl:when>
+      <xsl:when test="counterpart">
+        <p>A counterpart for a ColdFrame class in or for another domain.</p>
+      </xsl:when>
       <xsl:when test="enumeration">
         <p>An enumeration, with literals:</p>
         <ul>
@@ -708,44 +736,59 @@
         </p>
       </xsl:when>
       <xsl:when test="integer">
-        <p>An integral number, with:</p>
-        <ul>
-          <xsl:if test="integer/lower">
-            <li>
-              <xsl:text>minimum value </xsl:text>
+        <p>
+          <xsl:text>An integral number, with lower bound </xsl:text>
+          <xsl:choose>
+            <xsl:when test="integer/lower">
               <xsl:value-of select="integer/lower"/>
-            </li>
-          </xsl:if>
-          <xsl:if test="integer/upper">
-            <li>
-              <xsl:text>maximum value </xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unspecified</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text> and upper bound </xsl:text>
+          <xsl:choose>
+            <xsl:when test="integer/upper">
               <xsl:value-of select="integer/upper"/>
-            </li>
-          </xsl:if>
-        </ul>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unspecified</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>.</xsl:text>
+        </p>
       </xsl:when>
       <xsl:when test="real">
-        <p>A real number, with:</p>
-        <ul>
-          <xsl:if test="real/digits">
-            <li>
+        <p>
+          <xsl:text>A real number, with </xsl:text>
+          <xsl:choose>
+            <xsl:when test="real/digits">
               <xsl:value-of select="real/digits"/>
-              <xsl:text> significant digits</xsl:text>
-            </li>
-          </xsl:if>
-          <xsl:if test="real/lower">
-            <li>
-              <xsl:text>minimum value </xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unspecified</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text> significant digits, lower bound </xsl:text>
+          <xsl:choose>
+            <xsl:when test="real/lower">
               <xsl:value-of select="real/lower"/>
-            </li>
-          </xsl:if>
-          <xsl:if test="real/upper">
-            <li>
-              <xsl:text>maximum value </xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unspecified</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text> and upper bound </xsl:text>
+          <xsl:choose>
+            <xsl:when test="real/upper">
               <xsl:value-of select="real/upper"/>
-            </li>
-          </xsl:if>
-        </ul>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>unspecified</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>.</xsl:text>
+        </p>
       </xsl:when>
       <xsl:when test="renames">
         <p>
@@ -760,14 +803,13 @@
             <p>
               <xsl:text>A record type, extending </xsl:text>
               <xsl:value-of select="@extends"/>
-              <xsl:text>:</xsl:text>
+              <xsl:text>, with attributes:</xsl:text>
             </p>
           </xsl:when>
           <xsl:otherwise>
-            <p>A record type:</p>
+            <p>A record type, with attributes:</p>
           </xsl:otherwise>
         </xsl:choose>
-        <h4>Attributes</h4>
         <dl>
           <xsl:apply-templates select="attribute">
             <xsl:sort select="."/>
@@ -788,6 +830,40 @@
           <xsl:text> characters.</xsl:text>
         </p>
       </xsl:when>
+      <xsl:when test="subtype">
+        <p>
+          <xsl:text>A constrained version  of </xsl:text>
+          <a href="#{subtype/@constrains}">
+            <xsl:value-of select="subtype/@constrains"/>
+          </a>
+          <xsl:text> from </xsl:text>
+          <xsl:choose>
+            <xsl:when test="subtype/lower">
+              <xsl:value-of select="subtype/lower"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>its lowest value</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text> to </xsl:text>
+          <xsl:choose>
+            <xsl:when test="subtype/upper">
+              <xsl:value-of select="subtype/upper"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>its highest value</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
+      <xsl:when test="unsigned">
+        <p>
+          <xsl:text>An unsigned type, modulo </xsl:text>
+          <xsl:value-of select="unsigned/mod"/>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
       <xsl:when test="@null">
         <p>
           <xsl:text>Empty record.</xsl:text>
@@ -798,10 +874,15 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="operation">
-      <h4>Operations</h4>
-      <xsl:apply-templates select="operation">
-        <xsl:sort select="."/>
-      </xsl:apply-templates>
+      <p>
+        <xsl:value-of select="name"/>
+        <xsl:text> has operations:</xsl:text>
+      </p>
+      <dl>
+        <xsl:apply-templates select="operation">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
     </xsl:if>
   </xsl:template>
 
