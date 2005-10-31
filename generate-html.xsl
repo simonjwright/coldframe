@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v fce773135f0d 2005/10/31 21:09:08 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v ed18f17f335b 2005/10/31 21:18:09 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -100,7 +100,44 @@
         <meta 
           http-equiv="Content-type" 
           content="text/html; charset=iso-8859-1"/>
+        <!--
         <link href="cf-gen-doc-styles.css" rel="stylesheet" type="text/css"/>
+        -->
+        <style type="text/css">
+          * { margin : 0;
+          padding : 0;
+          }
+          html { font-family : Verdana, Arial, Helvetica, sans-serif;
+          font-size : 20pt;
+          }
+          body { font-size : 50%;
+          margin-left : .5em;
+          margin-right : .5em;
+          color : black;
+          background : white;
+          }
+          h1, h2, h3, h4, h5, h6 { margin : 0.1em; }
+          h1 { font-size : 1.7em;
+          text-transform : uppercase;
+          letter-spacing :.2em;
+          margin-top : .3em;
+          }
+          h2 { font-size : 1.5em;
+          margin-top : .2em;
+          }
+          h3 { font-size : 1.3em; }
+          h4 { font-size : 1.2em; }
+          h5 { font-size : 1.1em; }
+          h6 { font-size : 1em; }
+          p { margin : .1em 0 .1em 1em; }
+          dl { margin-left : 1em; }
+          ol, ul { margin-left : 2.2em; }
+          table { margin-left : 1em; }
+          tt { font-family : Courier, monospace;
+          font-size : 1.05em;
+          }
+          hr { margin-top : .5em; }
+        </style>
         <title><xsl:value-of select="name"/></title>
       </head>
       <body>
