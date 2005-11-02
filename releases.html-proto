@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1fcb7425d313 2005/10/26 20:15:00 simonjwright $ -->
+<!-- $Id: releases.html-proto,v ddf3ba044d30 2005/11/02 06:18:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -55,6 +55,11 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>Added a limited form of inspection for Timers.
+
+
+<p><dt>20051019
 
 <dd>Generation took a lot longer than you would expect on Windows
 2000, Windows XP.
