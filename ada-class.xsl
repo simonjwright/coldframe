@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 437b1690b9a7 2005/08/06 15:20:58 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 75f6769d8226 2005/11/02 06:17:26 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1532,75 +1532,9 @@
 
     </xsl:choose>
 
-    <xsl:call-template name="cl:subtype-deletion">
-      <xsl:with-param name="handle" select="'This'"/>
-    </xsl:call-template>
-    <xsl:call-template name="cl:perform-finalization">
-      <xsl:with-param name="handle" select="'This'"/>
-    </xsl:call-template>
-    <xsl:call-template name="cl:clear-parent-child-info">
-      <xsl:with-param name="handle" select="'This'"/>
-    </xsl:call-template>
-
-    <xsl:if test="@active">
-      <xsl:value-of select="$II"/>
-      <xsl:text>if This.The_T'Identity = Ada.Task_Identification.Current_Task then&#10;</xsl:text>
-      <xsl:value-of select="$III"/>
-      <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
-      <xsl:value-of select="$IIIC"/>
-      <xsl:text>("Task of active </xsl:text>
-      <xsl:value-of select="../name"/>
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text> tried to delete itself");&#10;</xsl:text>
-      <xsl:value-of select="$II"/>
-      <xsl:text>end if;&#10;</xsl:text>
-      <xsl:value-of select="$II"/>
-      <xsl:text>abort This.The_T.all;&#10;</xsl:text>
-      <xsl:value-of select="$II"/>
-      <xsl:text>Free (This.The_T);&#10;</xsl:text>
-    </xsl:if>
-
-    <!-- Finalize any instance Timers. -->
-    <xsl:for-each select="attribute[type='Timer' and not(@class)]">
-      <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Finalize (This.</xsl:text>
-      <xsl:value-of select="name"/>
-      <xsl:text>);&#10;</xsl:text>
-    </xsl:for-each>
-
-    <xsl:choose>
-
-      <xsl:when test="$max = 1"/>
-
-      <xsl:when test="$array = 'yes'">
-        <xsl:value-of select="$II"/>
-        <xsl:text>The_Container (With_Identifier.</xsl:text>
-        <xsl:value-of select="attribute[@identifier]/name"/>
-        <xsl:text>) := null;&#10;</xsl:text>
-      </xsl:when>
-
-      <xsl:otherwise>
-        <xsl:value-of select="$II"/>
-        <xsl:text>Maps.Unbind (The_Container, Key'Unchecked_Access);&#10;</xsl:text>
-      </xsl:otherwise>
-
-    </xsl:choose>
-
-    <xsl:if test="statemachine">
-      <!-- Clean up any events. -->
-      <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
-      <!-- Check it's OK to delete the instance (ie, not in event handler).
-           This will leak memory, but we were in a fatal situation anyway.
-           -->
-      <xsl:value-of select="$II"/>
-      <xsl:text>Check_Deletable (This);&#10;</xsl:text>
-    </xsl:if>
-
-    <!-- Finalize the instance. -->
+    <!-- Delete the instance. -->
     <xsl:value-of select="$II"/>
-    <xsl:text>Free (This);&#10;</xsl:text>
+    <xsl:text>Delete (This);&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end Delete;&#10;</xsl:text>
@@ -1678,6 +1612,18 @@
       <xsl:text>);&#10;</xsl:text>
     </xsl:for-each>
 
+    <xsl:if test="statemachine">
+      <!-- Clean up any events. -->
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
+      <!-- Check it's OK to delete the instance (ie, not in event
+           handler).
+           This will leak memory, but we were in a fatal situation anyway.
+           -->
+      <xsl:value-of select="$II"/>
+      <xsl:text>Check_Deletable (This);&#10;</xsl:text>
+    </xsl:if>
+
     <xsl:choose>
 
       <xsl:when test="$max = 1">
@@ -1701,18 +1647,6 @@
         <xsl:value-of select="$II"/>
         <xsl:value-of select="name"/>
         <xsl:text>.This := null;&#10;</xsl:text>
-
-        <xsl:if test="statemachine">
-          <!-- Clean up any events. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
-          <!-- Check it's OK to delete the instance (ie, not in event
-               handler).
-               This will leak memory, but we were in a fatal situation anyway.
-               -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Check_Deletable (This);&#10;</xsl:text>
-        </xsl:if>
 
         <!-- .. and free the instance. -->
         <xsl:value-of select="$II"/>
@@ -1743,12 +1677,6 @@
         <xsl:value-of select="attribute[@identifier]/name"/>
         <xsl:text>) := null;&#10;</xsl:text>
 
-        <!-- .. clean up any events .. -->
-        <xsl:if test="statemachine">
-          <xsl:value-of select="$II"/>
-          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
-        </xsl:if>
-
         <!-- .. and free the instance. -->
         <xsl:value-of select="$II"/>
         <xsl:text>Free (This);&#10;</xsl:text>
@@ -1764,18 +1692,6 @@
         <xsl:text>(The_Container,&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
         <xsl:text> ColdFrame.Instances.Handle (This));&#10;</xsl:text>
-
-        <xsl:if test="statemachine">
-          <!-- Clean up any events. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
-          <!-- Check it's OK to delete the instance (ie, not in event
-               handler).
-               This will leak memory, but we were in a fatal situation anyway.
-               -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Check_Deletable (This);&#10;</xsl:text>
-        </xsl:if>
 
         <!-- .. and free the instance. -->
         <xsl:value-of select="$II"/>
