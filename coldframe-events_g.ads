@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 41f75030b6f8 $
---  $Date: 2004/12/08 06:41:41 $
---  $Author: simon $
+--  $Revision: 03203eb03c99 $
+--  $Date: 2005/11/02 06:15:56 $
+--  $Author: simonjwright $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
@@ -471,7 +471,6 @@ private
       The_Checker : Timer_Checker (Timer'Access);
       The_Entry : Event_P;   -- needs to be a Held_Event
    end record;
-
 
 
    type Lock (The_Queue : access Event_Queue_Base'Class)
