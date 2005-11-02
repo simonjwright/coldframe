@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v ded3fe6f0873 2005/10/25 05:09:32 simonjwright $ -->
+<!-- $Id: bugs.html,v 00b33887801c 2005/11/02 06:14:37 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -218,6 +218,16 @@ a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
 use <a href="event-modelling.html#post-to-self">events-to-self</a>
 from an event that's being handled synchronously.
 
+<!-- next: 0338 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>2.xi.05</h3>
+
+<dl>
+
 <dt>0334 (raised 7.x.05)
 
 <dd>There is a storage leak if a state machine action that is not
@@ -228,17 +238,19 @@ of <tt>ColdFrame.Exceptions.Use_Error</tt>.
 <br><i>Of course the code that deleted the instance is in violation of
 its contract ...</i>
 
+</dl>
+
+<h3>1.xi.05</h3>
+
+<dl>
+
 <dt>0337 (raised 25.x.05)
 
 <dd> There's a potential deadly embrace if a dispatched action tries
  to delete an instance after the Held Event Manager has finished.
 <br>SourceForge 1337007
 
-<!-- next: 0338 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>19.x.05</h3>
 
