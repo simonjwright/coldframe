@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v ddf3ba044d30 2005/11/02 06:18:31 simonjwright $ -->
+<!-- $Id: releases.html-proto,v d8a54691f62a 2005/11/06 20:32:39 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -57,6 +57,16 @@ contains the complete documentation.
 <p><dt>DATE
 
 <dd>Added a limited form of inspection for Timers.
+
+
+<p>Unit testing might freeze during tear down (again!).
+
+
+<p>Fixed a storage leak caused by improper instance deletion during an
+action routine.
+
+
+<p>Improved the presentation of generated HTML.
 
 
 <p><dt>20051019
