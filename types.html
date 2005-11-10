@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v d25a621cff43 2005/08/25 19:09:50 simonjwright $ -->
+<!-- $Id: types.html,v 4ed54728912e 2005/11/10 21:01:05 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 </head>
@@ -63,7 +63,7 @@ domains (but see the <i>counterpart</i> stereotype/annotation below).
 <ul>
 <li><em>&#171;callback&#187;</em>,
 <li><em>&#171;counterpart&#187;</em>,
-<li><em>&#171;discriminated&#187;</em>
+<li><em>&#171;discriminated&#187;</em>,
 <li><em>&#171;protected&#187;</em>
 </ul>
 are provided.
@@ -159,9 +159,9 @@ given type is to be found at the specified external reference.
 <li><tt>null</tt> specifies an empty record; useful for a callback
 with no actual data associated.
 
-<li><tt>protected</tt> specifies that instances of the type are
-protected against concurrent access by multiple threads of
-execution. It implies &#171;type&#187;.
+<li><tt>protected<a name="protected"></a></tt> specifies that
+instances of the type are protected against concurrent access by
+multiple threads of execution. It implies &#171;type&#187;.
 
 <li><tt>renames = <i>external-type</i></tt> specifies that the given
 type is a renaming of the specified external reference.
