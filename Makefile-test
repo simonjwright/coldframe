@@ -15,7 +15,14 @@
 # $Id$
 
 # Makefile for tests, use with Cygwin under Windows or Unix (assumes a
-# Unix system if Cygwin not detected)
+# Unix system if Cygwin not detected).
+
+# It's assumed that no project-special settings are in place and that
+# the command 'gnatmake' will compile and generate an executable.
+
+# It's assumed that this is still a subdirectory of the ColdFrame
+# install directory, and that we have write access (OK on Windows,
+# may require admin cooperation on Unix).
 
 sys = $(shell uname)
 ifneq (, $(findstring CYGWIN, $(sys)))
@@ -28,7 +35,9 @@ endif
 
 parent = ../Makefile-$(system)
 
-all:: runs fails
+include $(parent)
+
+all:: build-dirs runs fails
 
 runs:: regression_tests$(exe)
 	./$< -v 2>&1 | tee --append regressions.log
