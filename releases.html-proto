@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v d8a54691f62a 2005/11/06 20:32:39 simonjwright $ -->
+<!-- $Id: releases.html-proto,v c9388eff46b5 2005/11/18 06:34:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -55,6 +55,10 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <p><dt>DATE
+
+<dd>
+
+<p><dt>20051107
 
 <dd>Added a limited form of inspection for Timers.
 
