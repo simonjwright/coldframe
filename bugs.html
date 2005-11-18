@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v bbeae0cc3d1e 2005/11/10 20:59:58 simonjwright $ -->
+<!-- $Id: bugs.html,v be7524842d07 2005/11/18 06:32:12 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -218,7 +218,14 @@ a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
 use <a href="event-modelling.html#post-to-self">events-to-self</a>
 from an event that's being handled synchronously.
 
-<!-- next: 0338 -->
+<dt>0338 (raised 18.xi.05)
+
+<dd>The supplied <tt>test/Makefile</tt> may not work if the
+environment has been customised by the project; particularly, the Ada
+project path shouldn't introduce additional dependencies, and
+executables generated need to run on the host.
+
+<!-- next: 0339 -->
 
 </dl>
 
@@ -266,7 +273,8 @@ XP.
 
 <dt>0336 (raised 19.x.05)
 
-<dd>A <tt>cat2raw.py</tt> problem: the Python stack trace ends with:
+<dd>A <tt>cat2raw.py</tt> problem: the Python stack trace ends
+with:<br>
 
 File "cat2raw.py", line 502, in emit_contents
 <br>self.statemachine.state_named(self.supplier).name(),
