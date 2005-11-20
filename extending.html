@@ -1,18 +1,19 @@
-<!-- $Id: extending.html,v 7de6a8b32130 2005/05/17 20:27:37 simonjwright $ -->
+<!-- $Id: extending.html,v 90e2275914a5 2005/11/20 21:31:39 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Extending</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
-<table width="100%">
-<tr>
-<td><font size="+3">ColdFrame: Extending</font>
-<td align="right"><a href="http://sourceforge.net"> <img
-src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
-</tr>
-</table>
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Extending</h1>
 
 <p>You may find it useful to use your own tagged values to control
 your own extensions to ColdFrame's code generation. It's only really
@@ -51,16 +52,17 @@ ones).
    &lt;/xsl-stylesheet&gt;
 </pre>
 
-which allows you to test it on its own by, for example,
+<p>which allows you to test it on its own by, for example,
 
 <pre>
    $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">your-extension.xsl</font> <i>Domain</i>.ada
 </pre>
 
-In order to combine with ColdFrame's code generation, so that all the
-generated Ada ends up in the <tt>.gen</tt> subdirectory, you need a
-combining script:
-<pre>
+<p>In order to combine with ColdFrame's code generation, so that all
+the generated Ada ends up in the <tt>.gen</tt> subdirectory, you need
+a combining script:
+
+<pre style="margin : 0.2em 0 0.2em 0">
    &lt;?xml version="1.0" encoding="utf-8"?&gt;
    &lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                    version="1.0"&gt;
@@ -69,23 +71,17 @@ combining script:
      &lt;xsl:import href="<font color="red">your-extension.xsl</font>"/&gt;
 
      &lt;xsl:strip-space elements="*"/&gt;
-
      &lt;xsl:output method="text"/&gt;
 
-
      &lt;xsl:template match="domain"&gt;
-
        &lt;xsl:apply-templates select="." mode="coldframe"/&gt;
-
        &lt;xsl:apply-templates select="." mode="<font color="red">your-extension</font>"/&gt;
-
      &lt;/xsl:template&gt;
-
 
    &lt;/xsl:stylesheet&gt;
 </pre>
 
-and then you can say
+<p>and then you can say
 
 <pre>
    $ make -f $TOP/$COLDFRAME/Makefile-<i>os</i> CODEGEN_SCRIPT=<font color="red">combined-codegen.xsl</font> <i>Domain</i>.gen

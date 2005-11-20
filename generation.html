@@ -1,18 +1,19 @@
-<!-- $Id: generation.html,v 90a0d718e02c 2005/06/10 05:16:23 simonjwright $ -->
+<!-- $Id: generation.html,v 90e2275914a5 2005/11/20 21:31:39 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Generation of code</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
-<body bgcolor="white">
+<body>
 
-<table width="100%">
-<tr>
-<td><font size="+3">ColdFrame: Generation of code</font>
-<td align="right"><a href="http://sourceforge.net"> <img
-src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
-</tr>
-</table>
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Generation of code</h1>
 
 <p>Code is generated using the <a href="resources.html#xslt">XSLT</a>
 stylesheet <tt>generate-ada.xsl</tt>. The XSLT processor I've used is
@@ -30,8 +31,7 @@ href="http://www.adacore.com/">GNAT</a>'s
 <tt>gnatchop</tt> to split the file into the required "one file per
 library unit" style. Other compilers will have their own way of
 importing the code. Note, however, that the supplied stylesheets make
-use of GNAT extensions (<tt>'Object_Size</tt>,
-<tt>'Unrestricted_Access</tt>).
+use of GNAT extensions (<tt>'Unrestricted_Access</tt>).
 
 <p>The generated code is compilable, but operation and task bodies
 will raise the exception <tt>Unimplemented</tt> if called (except for
@@ -87,7 +87,7 @@ value is a string of space characters, the default being 2 spaces.
 accessor operations will be generated directly in the package body for
 all attributes.
 
-<p>If the value is <tt>defined</tt> (the Makefile default), operations
+<br>If the value is <tt>defined</tt> (the Makefile default), operations
 which match the profile of accessors
 (<tt>Get_<i>attribute-name</i></tt> with no parameters returning a
 value of <tt><i>attribute-type</i></tt>, or
@@ -97,7 +97,7 @@ generated for them (they will still be generated as <tt>separate</tt>
 subprograms, though, unless they're stereotyped or tagged
 <i>accessor</i>).
 
-<p>Otherwise, no special notice will be taken of accessors or
+<br>Otherwise, no special notice will be taken of accessors or
 attributes.
 
 <p>

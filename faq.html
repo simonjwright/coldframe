@@ -1,17 +1,18 @@
-<!-- $Id: faq.html,v d88e9b41b3ec 2005/05/08 11:28:14 simonjwright $ -->
+<!-- $Id: faq.html,v 90e2275914a5 2005/11/20 21:31:39 simonjwright $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
-<body bgcolor="white">
+<body>
 
-<table width="100%">
-<tr>
-<td><font size="+3">ColdFrame: Frequently Asked Questions</font>
-<td align="right"><a href="http://sourceforge.net"> <img
-src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
-</tr>
-</table>
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Frequently Asked Questions</h1>
 
 <ol>
 
@@ -29,7 +30,7 @@ operations do nothing?</a>
 <li><a href="#why-not-delete">.. so why can't I just call Delete?</a>
 
 <li><a href="#singleton-pause-until-init">How can I make an
-&#171;active&#187; &#171;singleton&#187;'s task wait intil the domain
+&#171;active&#187; &#171;singleton&#187;'s task wait until the domain
 is completely initialized?</a>
 
 </ol>
@@ -177,8 +178,8 @@ unlink.
 
 </ul>
 
-It would have been possible for <tt>Unlink</tt> to <tt>Delete</tt> the
-association class instance directly, but that would rely on your
+<p>It would have been possible for <tt>Unlink</tt> to <tt>Delete</tt>
+the association class instance directly, but that would rely on your
 having cleaned up any other associations between the association class
 and the rest of the model beforehand (or in a &#171;finalize&#187;
 operation; however, using &#171;finalize&#187; operations to maintain
@@ -202,7 +203,7 @@ so). <tt>Unlink</tt> would then do what was needed to keep those
 tables consistent.
 
 <h2><a name="singleton-pause-until-init">How can I make an
-&#171;active&#187; &#171;singleton&#187;'s task wait intil the domain
+&#171;active&#187; &#171;singleton&#187;'s task wait until the domain
 is completely initialized?</a></h2>
 
 <p>Use the boolean variable
