@@ -1,5 +1,5 @@
 /* 
-   $Id: cf.css,v a45e31e6d28f 2005/11/20 23:00:00 simonjwright $
+   $Id: cf.css,v 18d774e8bb46 2005/11/20 23:28:43 simonjwright $
    Stylesheet for ColdFrame documents.
    */
 
@@ -47,13 +47,15 @@ p { margin : .1em 0 .1em 1em; }
 
 dl { margin-left : 1em; }
 
-ol { margin : .1em 0 .1em 2.7em; }
-ul { margin : .1em 0 .1em 2.2em; }
+ol { margin : .1em 0 .1em 2.7em; }  /* room for numbers */
+ul { margin : .1em 0 .1em 2.2em; }  /* room for bullets */
 
 ol ol, ul ul { margin : .1em 0 .1em 1.2em; }
 
-ul.release { margin-left :0;
-             list-style-type : none; }
+/* These two used for the release description definition list. */
+dl#release dt { font-weight : bold; }
+dl#release ul { margin-left :0;
+                list-style-type : none; }
 
 table { margin : 0.2em 1em;
         font-size : 100%;
