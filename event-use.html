@@ -1,18 +1,19 @@
-<!-- $Id: event-use.html,v 27741046db4b 2005/10/05 06:03:31 simonjwright $ -->
+<!-- $Id: event-use.html,v 572e21773875 2005/11/20 21:04:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
-<body bgcolor="white">
+<body>
 
-<table width="100%">
-<tr>
-<td><font size="+3">ColdFrame: Event use</font>
-<td align="right"><a href="http://sourceforge.net"> <img
-src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
-</tr>
-</table>
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Event use</h1>
 
 <ul>
 <li><a href="#eventqueues">Event queues</a>
@@ -111,7 +112,7 @@ context switches, perhaps 20 to 30 microseconds).
 
 <h2><a name="postinganevent">Posting an event</a></h2>
 
-The typical code for posting an event <tt>Ev</tt> is
+<p>The typical code for posting an event <tt>Ev</tt> is
 <pre>
    ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
 </pre>
