@@ -252,6 +252,7 @@ SUBRELEASE = cvs
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 
 DOCS = \
+cf.css \
 active-classes.html \
 annotations.html \
 architecture.html \
