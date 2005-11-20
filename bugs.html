@@ -1,18 +1,19 @@
-<!-- $Id: bugs.html,v 79600c1724f5 2005/11/18 06:46:14 simonjwright $ -->
+<!-- $Id: bugs.html,v c24ec0b09a30 2005/11/20 20:37:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
 </head>
-<body bgcolor="white">
+<body>
 
-<table width="100%">
-<tr>
-<td><font size="+3">ColdFrame: Bugs</font>
-<td align="right"><a href="http://sourceforge.net"> <img
-src="http://sourceforge.net/sflogo.php?group_id=95861&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net Logo" /></a>
-</tr>
-</table>
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Bugs</h1>
 
 <ul>
 
@@ -1019,6 +1020,8 @@ identifier of a class results in bad code.
 
 <h3>17.iv.04</h3>
 
+<dl>
+
 <dt>0247 (raised 27.iii.04)
 
 <dd>It's not obvious what the test models <i>Bad Model
@@ -1034,8 +1037,6 @@ Regressions</i>, <i>Bad Code Regressions</i> are testing <em>for</em>.
 <dd>Attempts to give a <em>&#171;public&#187;</em> class a state model
 should be explicitly forbidden, rather than letting them generate
 non-compiling code.
-
-<dl>
 
 </dl>
 
@@ -2465,6 +2466,9 @@ generated code?
 </dl>
 
 <h3>9.v.02</h3>
+
+<dl>
+
 <dt>0025 (raised 26.ix.01)
 
 <dd>It would be a good thing if illegal characters in names were detected.
@@ -2473,8 +2477,6 @@ generated code?
 
 <dd>Tear_Down of an active non-singleton doesn't clean up the
 associated task.
-
-<dl>
 
 </dl>
 
@@ -2903,20 +2905,9 @@ unhandled exception has been caught in the event dispatcher.
 <br><i>It does log an Error, this may be enough; after all, the
 application is now unstable.</i>
 
-<dt>0196 (raised 5.ix.03)
-
-<dd>Now that state machines support actions on transitions, what about
-guards?
-
 <dt>0235 (raised 12.ii.04)
 
 <dd>Initial states can't have entry actions.
-
-<dt>0238 (raised 25.ii.04)
-
-<dd>Would it be possible for operations named
-<tt>Is_<i>boolean-attribute-name</i></tt> returning <tt>Boolean</tt>
-to be treated as &#171;accessor&#187;s?
 
 <dt>0244 (raised 15.iii.04)
 
@@ -2940,6 +2931,12 @@ compiler option.</i>
 
 <dl>
 
+<dt>0196 (raised 5.ix.03)
+
+<dd>Now that state machines support actions on transitions, what about
+guards?
+<br><i>This seems very complex to implement.</i>
+
 <dt>0197 (raised 5.ix.03)
 
 <dd>If you need an event action, you have to specify the matching
@@ -2947,6 +2944,13 @@ compiler option.</i>
 existence of the action to imply the operation?
 <br><i>This seems like a bad idea. Very un-obvious that there's an
 operation there!</i>
+
+<dt>0238 (raised 25.ii.04)
+
+<dd>Would it be possible for operations named
+<tt>Is_<i>boolean-attribute-name</i></tt> returning <tt>Boolean</tt>
+to be treated as &#171;accessor&#187;s?
+<br><i>No.</i>
 
 <dt>0273 (raised 22.vii.04)
 
