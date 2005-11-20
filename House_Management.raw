@@ -7,13 +7,13 @@ This package is free software; you can redistribute it and/or modify it under te
 This domain represents an electronic household control system.
 The first release only manages the stairwell lighting system.
 
-{ revision = $Revision: 7ab146a76ec7 $ } ]]></documentation>
-<extractor>cat2raw.py $Revision: 7ab146a76ec7 $</extractor>
+{ revision = $Revision: a748610c27a5 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: a748610c27a5 $</extractor>
 <date>
 <year>2005</year>
-<month>9</month>
-<day>23</day>
-<time>05:24</time>
+<month>11</month>
+<day>18</day>
+<time>22:56</time>
 </date>
 <classes>
 <class>
@@ -41,30 +41,35 @@ If it is activated again while it is still on, the activation period is extended
 <operation stereotype="init">
 <name>initialize</name>
 <documentation><![CDATA[ This operation initializes the Lamps and Buttons, and connects to the Digital IO domaion. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>turn off</name>
 <documentation><![CDATA[ This state entry action turns off the associated signal via Digital IO. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>turn on</name>
 <documentation><![CDATA[ This state entry action turns on the associated signal via Digital IO. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>set timeout</name>
 <documentation><![CDATA[ This state entry action sets the instance Timeout to the required activation period. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation>
 <name>clear timeout</name>
 <documentation><![CDATA[ This state entry action unsets the instance Timeout. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
@@ -159,6 +164,7 @@ It's assumed that it's acceptable to turn the Lamp off even if it is off already
 <operation stereotype="class">
 <name>changed</name>
 <documentation><![CDATA[ Acts as receiver of state changes from Digital IO, via Signal State Callback. Posts a (class) Button Event (only if the button has been pushed). ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>s</parametername>
@@ -171,6 +177,7 @@ It's assumed that it's acceptable to turn the Lamp off even if it is off already
 <name>pushed</name>
 <documentation><![CDATA[ Handles Button Events, which occur when a button has been pushed.
 Tell the associated Lamps. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>e</parametername>
