@@ -12,11 +12,11 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: library-test.adb,v f4fe3a74c81e 2001/09/04 05:20:33 simon $
+--  $Id: library-test.adb,v 5a2213d125d0 2005/11/22 21:29:05 simonjwright $
 
 with Library.Tests;
 function Library.Test return Access_Test_Suite is
-   Result : Access_Test_Suite := new Test_Suite;
+   Result : constant Access_Test_Suite := new Test_Suite;
 begin
    Add_Test (Result, new Library.Tests.Test_Case);
    return Result;
