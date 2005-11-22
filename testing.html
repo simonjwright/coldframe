@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 742ae27d411c 2005/11/20 22:50:57 simonjwright $ -->
+<!-- $Id: testing.html,v ebe316800f73 2005/11/22 22:55:19 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -63,16 +63,16 @@ test procedure in the test case expects.
 <tt>Set_Up</tt> and <tt>Tear_Down</tt>.
 
 <p>ColdFrame supports <tt>Set_Up</tt> using its standard
-<a href="domains.html#initialize"><tt><i>Domain</i>.Initialize</tt></a> and
+<a href="domains.html#initialize"><tt><i>Domain</i>.Initialize</tt></a> (and
 <a
-href="domains.html#cascade-initialize"><tt>Cascade_Initialize</tt></a>
+href="domains.html#cascade-initialize"><tt>Cascade_Initialize</tt></a>)
 procedures.
 
 <p>ColdFrame supports <tt>Tear_Down</tt> by providing 
 <a href="domains.html#teardown"><tt><i>Domain</i>.Tear_Down</tt></a>
-and
+(and
 <a
-href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>
+href="domains.html#cascade-teardown"><tt>Cascade_Tear_Down</tt></a>)
 procedures.
 
 <h3><a name="access-to-private">Access to private information</a></h3>
@@ -89,10 +89,25 @@ involve <a href="#stubs">stubbed functionality</a> from other
 domains), implement the test suite in a child unit of the domain
 (perhaps <tt><i>Domain</i>.Unit_Test</tt>).
 
-<p>Similarly, if you are doing class-level unit tests, implement the
-test suite in a child unit of the class (perhaps
-<tt><i>Domain.Class</i>.Unit_Test</tt>).
+<p>There are two approaches to doing class-level unit tests.
 
+<p>The first is similar to that for domain-level tests: implement the
+test suite in a child unit of the class (perhaps
+<tt><i>Domain.Class</i>.Tests</tt>).
+
+<p>You may feel that this leads to too many deeply-nested packages. As
+an alternative, generate the code with the <tt>UNIT_TEST_SUPPORT</tt>
+variable set to <tt>yes</tt>:
+
+<pre>
+   $ make <i>Domain</i>.gen UNIT_TEST_SUPPORT=yes
+</pre>
+
+<p>This generates a child package for each
+class, <tt><i>Domain.Class</i>.Unit_Test</tt> which
+contains <tt>Get_</tt> and <tt>Set_</tt> subprograms for each
+attribute and, for a class with a state machine, <tt>Get_State</tt>
+and <tt>Set_State</tt> subprograms
 
 <h2><a name="stubs">Stubs</a></h2>
 
