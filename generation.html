@@ -1,4 +1,4 @@
-<!-- $Id: generation.html,v 90e2275914a5 2005/11/20 21:31:39 simonjwright $ -->
+<!-- $Id: generation.html,v b5cfa3296cfd 2005/11/22 22:54:15 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Generation of code</title>
@@ -63,23 +63,18 @@ script <tt>generate-ada.xsl</tt> recognises the options
 <dd>If the value is <tt>yes</tt>, blank lines are added to the
 generated Ada to make it easier to read, in case you have to.
 
-<p>
-
-<dt><tt>coldframe-version</tt>
-
-<dd>Specifies a string (the supplied Makefiles use
-<tt>cf-<i>yyyymmdd</i></tt>) which is output by this phase in the
-comments in the generated Ada to tell the release of
-<tt>generate-ada.xsl</tt> that was used.
-
-<p>
+<br>The Make variable is <tt>BLANK_LINES</tt>, default <tt>yes</tt>.
 
 <dt><tt>continuation-indent</tt>
 
 <dd>Specifies the indentation increment for continuation lines; the
 value is a string of space characters, the default being 2 spaces.
 
-<p>
+<br>There's no Make variable for this.
+
+<dt><tt>fill-column</tt>
+
+<dd>
 
 <dt><tt>generate-accessors</tt>
 
@@ -100,20 +95,37 @@ subprograms, though, unless they're stereotyped or tagged
 <br>Otherwise, no special notice will be taken of accessors or
 attributes.
 
-<p>
+<br>The Make variable is <tt>GENERATE_ACCESSORS</tt>,
+default <tt>defined</tt>.
+
+<dt><tt>generate-stubs</tt>
+
+<dd>
+
+<dt><tt>max-bounded-container</tt>
+
+<dd>
+
+<dt><tt>max-hash-buckets</tt>
+
+<dd>
 
 <dt><tt>standard-indent</tt>
 
 <dd>Specifies the standard indentation increment; the value is a
 string of space characters, the default being 3 spaces.
 
-<p>
+<br>There's no Make variable for this.
+
+<dt><tt>unit-test-support</tt>
+
+<dd>
 
 <dt><tt>verbose</tt>
 
 <dd>Specifies whether ColdFrame should report what it's doing.
 
-<p>
+<br>The Make variable is <tt>VERBOSE</tt>, default <tt>no</tt>.
 
 </dl>
 
