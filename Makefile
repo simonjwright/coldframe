@@ -123,6 +123,7 @@ OTHER_SCRIPTS = \
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
+	  unit-test-support=$(UNIT_TEST_SUPPORT) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
 	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
