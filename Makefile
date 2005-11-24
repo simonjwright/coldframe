@@ -54,6 +54,7 @@ CD ?= cd
 CP ?= cp
 ECHO ?= echo
 EXIT ?= exit
+FIND ?= find
 GNATCHOP ?= gnatchop
 GREP ?= grep
 JAVA ?= java
@@ -176,8 +177,8 @@ OTHER_SCRIPTS = \
 
 # Creates the build directory (Ada Library) tree, under $BUILD_BASE
 build-dirs::
-	@[ -n "$(BUILD_BASE)" ] || \
-	  ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
+	@[ -n "$(BUILD_BASE)" ] \
+	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
 	@for d in aunit bc coldframe fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
 	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
