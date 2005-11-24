@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-teardown.xsl,v 8d4479ad9dba 2005/11/24 06:21:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -104,6 +104,8 @@
     <xsl:value-of select="$I"/>
     <xsl:text>ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);&#10;</xsl:text>
 
+    <xsl:value-of select="$I"/>
+    <xsl:text>Domain_Initializing := False;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
 

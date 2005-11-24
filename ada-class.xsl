@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 75f6769d8226 2005/11/02 06:17:26 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 8d4479ad9dba 2005/11/24 06:21:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1216,7 +1216,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>pragma Assert&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
-      <xsl:text>(Domain_Initialized,&#10;</xsl:text>
+      <xsl:text>(Domain_Initialized or else Domain_Initializing,&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
       <xsl:text> "</xsl:text>
       <xsl:value-of select="../name"/>
