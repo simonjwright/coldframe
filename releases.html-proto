@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1dede2772b0d 2005/11/20 23:27:29 simonjwright $ -->
+<!-- $Id: releases.html-proto,v aa3867e27771 2005/11/24 05:47:35 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,17 @@ contains the complete documentation.
 <dt>DATE
 
 <dd>
+<ul class="release">
+
+<li>Improved the presentation of the HTML documents.
+
+<li>Included support
+for <a href="testing.html#access-to-private">low-level unit tests</a>.
+
+<li>Fixed a problem with <tt>Domain_Initialized</tt>, which was
+getting set too early.
+
+</ul>
 
 <dt>20051107
 
@@ -1534,7 +1545,7 @@ file (<tt>gnat.adc</tt>) or use the <tt>-gnatX</tt> flag.
 
 
 <li>You need at least Release 20010325 of the <a
-href="http://www.pushface.org/components/bc/">Booch Components</a>.
+href="http://booch95.sourceforge.net/">Booch Components</a>.
 
 </ul>
 
@@ -1544,7 +1555,7 @@ href="http://www.pushface.org/components/bc/">Booch Components</a>.
 <ul class="release">
 
 <li>Choose between Bounded and Unbounded Containers depending on the
-class' <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
+class's <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
 
 <li>Choose the number of hash buckets for Bounded Maps depending on the
 <tt>[[ max: <i>max-size</i> ]]</tt> documentation annotation.
