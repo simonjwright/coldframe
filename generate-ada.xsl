@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 1688935edd0c 2005/09/27 04:37:03 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 1a6f6f5488ac 2005/11/24 06:19:59 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -292,6 +292,8 @@
 
    <!-- .. initialization detection .. -->
     <xsl:value-of select="$I"/>
+    <xsl:text>Domain_Initializing : Boolean := False;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
     <xsl:text>Domain_Initialized : Boolean := False;&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
@@ -459,7 +461,7 @@
             use type ColdFrame.Project.Events.Event_Queue_P;
          begin
             if not Domain_Initialized then
-               Domain_Initialized := True;
+               Domain_Initializing := True;
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -469,6 +471,8 @@
                {class}.CF_Class_Initialize:
                {domain-init-proc};
                {class}.{init-operation};
+               Domain_Initialized := True;
+               Domain_Initializing := False;
             end if;
          exception
             when E : Others =>
@@ -541,10 +545,10 @@
     <xsl:value-of select="$I"/>
     <xsl:text>if not Domain_Initialized then&#10;</xsl:text>
 
-    <!-- Mark initialized (required for any Create calls in class
+    <!-- Mark initializing (required for any Create calls in class
          initialization procedures). -->
     <xsl:value-of select="$II"/>
-    <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
+    <xsl:text>Domain_Initializing := True;&#10;</xsl:text>
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
@@ -582,6 +586,13 @@
       <xsl:value-of select="name"/>
       <xsl:text>.CF_Initialize;&#10;</xsl:text>
     </xsl:for-each>
+
+    <!-- .. mark initialization complete (so any waiting tasks can
+         continue) .. --> 
+    <xsl:value-of select="$II"/>
+    <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
+    <xsl:value-of select="$II"/> <xsl:text>Domain_Initializing :=
+    False;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end if;&#10;</xsl:text>
