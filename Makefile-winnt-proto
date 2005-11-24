@@ -21,6 +21,7 @@
 BLANK_LINES = yes
 GENERATE_ACCESSORS = defined
 GENERATE_STUBS = no
+UNIT_TEST_SUPPORT = no
 STACK_DUMP = no
 VERBOSE = no
 
@@ -48,12 +49,14 @@ endif
 # Environmental overrides for 'standard' commands
 
 CHMOD ?= chmod
+CD ?= cd
 CP ?= cp
 ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
 GNATCHOP ?= gnatchop
 GREP ?= grep
+JAVA ?= java
 MKDIR ?= mkdir
 RM ?= rm
 SED ?= sed
@@ -114,6 +117,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-stubs=$(GENERATE_STUBS) \
+	  unit-test-support=$(UNIT_TEST_SUPPORT) \
 	  verbose=$(VERBOSE) \
 	  >$@-t \
 	  || ($(ECHO) "Generation problem."; $(RM) -f $@ $@-t; $(EXIT) 1)
@@ -137,7 +141,7 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@$(MKDIR) $@
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@([ -d $*.impl ] && \
-	for f in `(cd $*.impl; $(FIND) . -maxdepth 1 -name \*.ad[bs])`; do \
+	for f in `($(CD) $*.impl; $(FIND) . -maxdepth 1 -name \*.ad[bs])`; do \
 	  if [ -f $@/$$f ]; then \
 	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
 	  else \
