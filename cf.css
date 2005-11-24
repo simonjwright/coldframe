@@ -1,5 +1,5 @@
 /* 
-   $Id: cf.css,v 715880ed1861 2005/11/22 22:26:41 simonjwright $
+   $Id: cf.css,v b32bc622a4d6 2005/11/24 05:46:56 simonjwright $
    Stylesheet for ColdFrame documents.
    */
 
@@ -56,8 +56,8 @@ pre { background : #d0d0d0; }
 
 /* These two used for the release description definition list. */
 dl#release dt { font-weight : bold; }
-dl#release ul { margin-left :0;
-                list-style-type : none; }
+dl#release ul.release { margin-left :0;
+                        list-style-type : none; }
 
 table { margin : 0.2em 1em;
         font-size : 100%;
