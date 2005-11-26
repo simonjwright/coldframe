@@ -331,10 +331,11 @@ extractor.ebs: ddf.ebs force
 releases.html: releases.html-proto force
 	$(SED) -e "s;DATE;$(DATE);g" <$< >$@
 
-TOOLS = generated_lines
+TOOLS = generated_lines serialized_to_csv
 
-TOOL_SRC = generated_lines.adb \
-  generated_lines_support.ad[bs]
+TOOL_SRC = \
+  generated_lines.adb generated_lines_support.ad[bs] \
+  serialized_to_csv.adb serialized_to_csv_support.ads
 
 PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
