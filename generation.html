@@ -1,4 +1,4 @@
-<!-- $Id: generation.html,v b5cfa3296cfd 2005/11/22 22:54:15 simonjwright $ -->
+<!-- $Id: generation.html,v 5f03998eeba2 2005/11/26 17:06:32 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Generation of code</title>
@@ -74,7 +74,9 @@ value is a string of space characters, the default being 2 spaces.
 
 <dt><tt>fill-column</tt>
 
-<dd>
+<dd>Specifies the fill width for comments, the default being 70.
+
+<br>There's no Make variable for this.
 
 <dt><tt>generate-accessors</tt>
 
@@ -100,15 +102,24 @@ default <tt>defined</tt>.
 
 <dt><tt>generate-stubs</tt>
 
-<dd>
+<dd>Specifies whether test stub bodies are to be generated.
+
+<br>The Make variable is <tt>GENERATE_STUBS</tt>, default <tt>no</tt>.
 
 <dt><tt>max-bounded-container</tt>
 
-<dd>
+<dd>If a class is known never to have more than this number
+of instances, a bounded container will be used. The default is 49.
+
+<br>There's no Make variable for this.
 
 <dt><tt>max-hash-buckets</tt>
 
-<dd>
+<dd>The number of hash buckets used for map containers will be the
+same as the maximum number of instances so long as it's less than this
+value. The default is 49.
+
+<br>There's no Make variable for this.
 
 <dt><tt>standard-indent</tt>
 
@@ -119,7 +130,11 @@ string of space characters, the default being 3 spaces.
 
 <dt><tt>unit-test-support</tt>
 
-<dd>
+<dd>Specifies whether a <tt>Unit_Test</tt> child package is required
+for each class.
+
+<br>The Make variable is <tt>UNIT_TEST_SUPPORT</tt>,
+default <tt>no</tt>.
 
 <dt><tt>verbose</tt>
 
