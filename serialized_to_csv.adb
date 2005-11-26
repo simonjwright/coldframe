@@ -15,7 +15,10 @@
 --  Provides conversion from the XML output of ColdFrams's
 --  'serialization' facility to CSV files.
 
---  $Id: serialized_to_csv.adb,v e6c41bb0a7c7 2005/11/26 16:20:27 simonjwright $
+--  $RCSfile: serialized_to_csv.adb,v $
+--  $Revision: c13a47c161a7 $
+--  $Date: 2005/11/26 16:42:09 $
+--  $Author: simonjwright $
 
 with Ada.Text_IO;
 with Ada.Strings.Unbounded.Text_IO;
@@ -35,13 +38,38 @@ procedure Serialized_To_Csv is
    function "+" (S : Unbounded_String) return String
      renames To_String;
 
+
    procedure Escape_Value (V : in out Unbounded_String);
+   --  Deals with commas and quotes (that have to be hidden within CSV
+   --  format).
+
    procedure Process_Record (Output : File_Type; New_File : Boolean);
+   --  Processes a single record, outputting it to the open file
+   --  Output. If New_File is True, outputs a header line.
+
 
    procedure Escape_Value (V : in out Unbounded_String) is
    begin
-      null;
+      if Index (V, ",") /= 0 or else Index (V, """") /= 0 then
+         declare
+            Result : Unbounded_String;
+            C : Character;
+         begin
+            Append (Result, '"');
+            for I in 1 .. Length (V) loop
+               C := Element (V, I);
+               if C = '"' then
+                  Append (Result, """""");
+               else
+                  Append (Result, C);
+               end if;
+            end loop;
+            Append (Result, '"');
+            V := Result;
+         end;
+      end if;
    end Escape_Value;
+
 
    procedure Process_Record (Output : File_Type; New_File : Boolean) is
       Line : Unbounded_String;
@@ -79,9 +107,11 @@ procedure Serialized_To_Csv is
       Flush (Output);
    end Process_Record;
 
+
    Files : Map;
    Line : Unbounded_String;
    Records : Natural := 0;
+
 
 begin
 
