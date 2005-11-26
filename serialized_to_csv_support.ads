@@ -14,7 +14,10 @@
 
 --  Provides maps from Unbounded_String to File_Access.
 
---  $Id: serialized_to_csv_support.ads,v e6c41bb0a7c7 2005/11/26 16:20:27 simonjwright $
+--  $RCSfile: serialized_to_csv_support.ads,v $
+--  $Revision: 45c1aa1ab315 $
+--  $Date: 2005/11/26 16:21:14 $
+--  $Author: simonjwright $
 
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
