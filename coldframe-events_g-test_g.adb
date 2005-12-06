@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.adb,v $
---  $Revision: 3de041b29c99 $
---  $Date: 2005/09/03 06:08:03 $
+--  $Revision: d71a16be0780 $
+--  $Date: 2005/12/06 06:40:02 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -60,7 +60,9 @@ package body ColdFrame.Events_G.Test_G is
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
    begin
-      if not The_Queue.Started then
+      --  This conversion shouldn't (IMO) be necessary. GNAT
+      --  [EC06-001] raised.
+      if not Events_G.Event_Queue_Base (The_Queue.all).Started then
          Ada.Exceptions.Raise_Exception
            (ColdFrame.Exceptions.Use_Error'Identity,
             "Wait_Until_Idle called on event queue that wasn't started");
