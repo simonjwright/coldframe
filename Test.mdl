@@ -82,7 +82,12 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Stub_Test_Interface.cat"
-		quid       	"4229E16101EA"))
+		quid       	"4229E16101EA")
+	    (object Class_Category "Initialization"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Initialization.cat"
+		quid       	"43A3EEB50381"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3EF216CA022A"
@@ -158,10 +163,10 @@
 			max_width  	1211
 			label      	
 |These packages are part of ColdFrame's test suite.
-|$Id: Test.mdl,v 0a18cc2c3968 2005/03/08 06:14:38 simon $
+|$Id: Test.mdl,v f352702c49d7 2005/12/17 12:10:58 simonjwright $
 			)
 		    (object CategoryView "Logical View::Regressions" @4
-			location   	(400, 1078)
+			location   	(395, 1438)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -173,7 +178,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@4
-			    location   	(256, 994)
+			    location   	(251, 1354)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -236,7 +241,7 @@
 			width      	300
 			height     	180)
 		    (object CategoryView "Logical View::Stub Test Interface" @7
-			location   	(390, 1475)
+			location   	(393, 1785)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -248,7 +253,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@7
-			    location   	(246, 1436)
+			    location   	(249, 1746)
 			    fill_color 	13434879
 			    nlines     	2
 			    max_width  	288
@@ -256,7 +261,7 @@
 			    label      	"Stub Test Interface")
 			stereotype 	(object ItemLabel
 			    Parent_View 	@7
-			    location   	(246, 1391)
+			    location   	(249, 1701)
 			    fill_color 	13434879
 			    anchor     	10
 			    nlines     	1
@@ -267,6 +272,31 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"4229E16101EA"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Initialization" @8
+			location   	(390, 1060)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@8
+			    location   	(246, 976)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Initialization")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"43A3EEB50381"
 			width      	300
 			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"
