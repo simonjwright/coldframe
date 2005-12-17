@@ -3,6 +3,7 @@ with AUnit.Assertions; use AUnit.Assertions;
 
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
+with ColdFrame.Project.Events.Standard.Test_Trace;
 with System;
 
 package body Event_Test.Test_Queue is
@@ -81,6 +82,26 @@ package body Event_Test.Test_Queue is
    end Wait_Until_Idle_On_Unstarted_Queue;
 
 
+   --  A Test_Trace queue starts 'unstarted'.
+   procedure Test_Trace_Queue_Starts_Unstarted
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Test_Trace_Queue_Starts_Unstarted
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Dispatcher : ColdFrame.Project.Events.Event_Queue_P
+        := new ColdFrame.Project.Events.Standard.Test_Trace.Event_Queue;
+   begin
+      ColdFrame.Project.Events.Start (Dispatcher);
+      ColdFrame.Project.Events.Stop (Dispatcher);
+      ColdFrame.Project.Events.Tear_Down (Dispatcher);
+   exception
+      when ColdFrame.Exceptions.Use_Error =>
+         ColdFrame.Project.Events.Stop (Dispatcher);
+         ColdFrame.Project.Events.Tear_Down (Dispatcher);
+         Assert (False, "was started");
+   end Test_Trace_Queue_Starts_Unstarted;
+
+
    ---------------
    --  Harness  --
    ---------------
@@ -99,6 +120,10 @@ package body Event_Test.Test_Queue is
         (T,
          Wait_Until_Idle_On_Unstarted_Queue'Access,
          "can't Wait_Until_Idle on unstarted queue");
+      Register_Routine
+        (T,
+         Test_Trace_Queue_Starts_Unstarted'Access,
+         "Test_Trace queue starts unstarted");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
