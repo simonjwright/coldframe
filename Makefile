@@ -618,6 +618,16 @@ Hierarchies.test/hierarchies-test_finds.adb \
 Hierarchies.test/hierarchies-test_finds.ads
 
 TEST += \
+Initialization.cat Initialization.raw Initialization.gpr \
+Initialization.impl/initialization-checking_domain_initialization-initialize.adb \
+Initialization.impl/initialization-checking_domain_initialization-t.adb \
+Initialization.impl/initialization-harness.adb \
+Initialization.impl/initialization-harness.ads \
+Initialization.impl/initialization-suite.adb \
+Initialization.impl/initialization-suite.ads \
+Initialization.impl/initialization-suite-check_domain_initialization.adb
+
+TEST += \
 Regressions.cat Regressions.raw Regressions.gpr \
 Regressions.impl/regressions-class_with_private_init_operation-private_init_operation.adb\
 Regressions.impl/regressions-event_holder-set_timer.adb \
