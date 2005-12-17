@@ -1,0 +1,78 @@
+<domain>
+<extractor>extractor.ebs: cf-DATE</extractor>
+<name>Initialization</name>
+<date>
+<year>2005</year>
+<month>12</month>
+<day>17</day>
+<time>11:56</time>
+</date>
+<documentation><![CDATA[ Contains tests (mostly regression tests) appropriate to domain initialization.
+
+{ revision = $Revision: 173bcd39cac7 $ } ]]></documentation>
+<classes>
+<class stereotype="active, singleton">
+<name>Checking Domain Initialization</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ Checks for bug#339.
+
+The task loops until Domain_Initialized is true, then copies the value of Initialized to Initialized_As_Seen. ]]></documentation>
+<attributes>
+<attribute stereotype="class">
+<name>Initialized</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ Indicates whether 'Initialize()' has run. ]]></documentation>
+<type>Boolean</type>
+<initial>False</initial>
+</attribute>
+<attribute stereotype="class">
+<name>Initialized As Seen</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ Tells whether the task has run, and if so what value it saw for Initialized. ]]></documentation>
+<type>Boolean Status</type>
+<initial>Unknown</initial>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="init">
+<name>Initialize</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[ Wait for a second before setting 'Initialized'. ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor, class">
+<name>Get Initialized As Seen</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Boolean Status</return>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Boolean Status</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ Tells whether a value is True or False, or not yet known.
+
+{ enumeration = Unknown | False | True } ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
