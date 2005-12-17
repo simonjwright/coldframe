@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v aa3867e27771 2005/11/24 05:47:35 simonjwright $ -->
+<!-- $Id: releases.html-proto,v cda06b024b04 2005/12/17 15:04:17 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -67,6 +67,9 @@ for <a href="testing.html#access-to-private">low-level unit tests</a>.
 
 <li>Fixed a problem with <tt>Domain_Initialized</tt>, which was
 getting set too early.
+
+<li>A <tt>Test_Trace</tt> event queue starts 'unstarted', as you'd
+expect.
 
 </ul>
 
