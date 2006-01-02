@@ -66,10 +66,14 @@ TAR ?= tar
 TRUE ?= true
 ZIP ?= zip
 
+# Non-standard commands
 ITCLSH = tclsh
-TCLXML = /usr/local/lib/tclxml-2.1theta
-
 SAXON = $(JAVA) -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
+
+# Control depth of .impl directory search
+MAXIMPLDEPTH ?= 1
+
+TCLXML = /usr/local/lib/tclxml-2.1theta
 
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
@@ -149,8 +153,7 @@ OTHER_SCRIPTS = \
 # "failure" because GNAT 3.16a1 reports an error here.
 # Remove any generated files which are also present in the implementation
 # directory (.impl).
-# Write-protect the generated files (careful, in case there are a lot
-# of them!).
+# Write-protect the generated files (careful, in case there are a lot of them!).
 # Make the target directory itself writable (so users can delete files in it).
 # Report unimplemented bodies.
 %.gen: %.ada
@@ -158,14 +161,24 @@ OTHER_SCRIPTS = \
 	@-$(RM) -rf $@
 	@$(MKDIR) $@
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
-	@([ -d $*.impl ] && \
-	for f in `($(CD) $*.impl; find . -maxdepth 1 -name \*.ad[bs])`; do \
-	  if [ -f $@/$$f ]; then \
-	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
-	  else \
-	    $(ECHO) "  extra source file $$f in .impl"; \
-	  fi \
-	done) || $(TRUE)
+	@if [ -d $*.impl ]; then \
+	  TODELETE=""; \
+	  IMPLFILES=\
+	    `$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
+	  for f in $$IMPLFILES; do \
+	    GENFILE=$@/`basename $$f`; \
+	    if [ -f $$GENFILE ]; then \
+	      TODELETE="$$TODELETE $$GENFILE"; \
+	    else \
+	      $(ECHO) "  extra source file $$f"; \
+	    fi; \
+	  done; \
+	  for f in $$TODELETE; do \
+	    if [ -f $$f ]; then \
+	      $(ECHO) "    removing $$f"; $(RM) $$f; \
+	    fi; \
+	  done; \
+	fi
 	@$(CHMOD) -R a-w $@
 	@$(CHMOD) u+w $@
 	@$(ECHO) "checking for unimplemented bodies ..."
@@ -343,8 +356,7 @@ PROGS = COPYING \
   cf-banner.el \
   $(HTMLGEN_SCRIPT) \
   $(CODEGEN_SCRIPTS) \
-  $(OTHER_SCRIPTS) \
-  $(TOOL_SRC)
+  $(OTHER_SCRIPTS)
 
 GPRS = AUnit.gpr \
 BC.gpr \
@@ -698,7 +710,7 @@ DATED_FILES = \
  generate-c.xsl
 
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
-$(EXAMPLES) $(TEST) Makefile-test force
+$(EXAMPLES) $(TEST) $(TOOL_SRC) Makefile-test force
 	-$(RM) -rf $@
 	$(MKDIR) $@
 	$(CP) -p $(MAKEFILES) $(GPRS) $(PROGS) $@
@@ -715,6 +727,8 @@ $(EXAMPLES) $(TEST) Makefile-test force
 	$(TAR) cf - $(EXAMPLES) | $(TAR) xf - -C $@/example
 	$(MKDIR) $@/test
 	$(TAR) cf - $(TEST) | $(TAR) xf - -C $@/test
+	$(MKDIR) $@/tools
+	$(TAR) cf - $(TOOL_SRC) | $(TAR) xf - -C $@/tools
 	$(CP) -p Makefile-test $@/test/Makefile
 
 cf-$(DATE).tgz: cf-$(DATE)
