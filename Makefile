@@ -163,8 +163,7 @@ OTHER_SCRIPTS = \
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@if [ -d $*.impl ]; then \
 	  TODELETE=""; \
-	  IMPLFILES=\
-	    `$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
+	  IMPLFILES=`$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
 	  for f in $$IMPLFILES; do \
 	    GENFILE=$@/`basename $$f`; \
 	    if [ -f $$GENFILE ]; then \
