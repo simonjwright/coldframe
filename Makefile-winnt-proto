@@ -28,13 +28,8 @@ VERBOSE = no
 # Define these variables in an including Makefile (before the actual
 # include) or in the environment
 
-ifeq ($(CASE_EXCEPTIONS), )
-  CASE_EXCEPTIONS = ~/.emacs_case_exceptions
-endif
-
-ifeq ($(COLDFRAMEOUT), )
-  COLDFRAMEOUT = .
-endif
+CASE_EXCEPTIONS ?= ~/.emacs_case_exceptions
+COLDFRAMEOUT ?= .
 
 ifeq ($(DOMAIN_NAME), )
   NORM_DOMAIN_NAME = 
@@ -42,9 +37,7 @@ else
   NORM_DOMAIN_NAME = --domain-name "$(DOMAIN_NAME)"
 endif
 
-ifeq ($(TOP), )
-  TOP = c:
-endif
+TOP ?= c:
 
 # Environmental overrides for 'standard' commands
 
@@ -60,16 +53,22 @@ JAVA ?= java
 MKDIR ?= mkdir
 RM ?= rm
 SED ?= sed
+TAR ?= tar
 TRUE ?= true
+ZIP ?= zip
+
+# Non-standard commands
+ITCLSH ?= $(TOP)/Tcl/bin/itclsh31
+SAXON ?= $(TOP)/Saxon/saxon
+
+# Control depth of .impl directory search
+MAXIMPLDEPTH ?= 1
 
 # Locations, shouldn't need change
 
 CF = $(TOP)/cf-DATE
 
-ITCLSH = $(TOP)/Tcl/bin/itclsh31
-TCLXML = $(TOP)/tclxml-2.1theta
-
-SAXON = $(TOP)/Saxon/saxon
+TCLXML ?= $(TOP)/tclxml-2.1theta
 
 # No user-servicable parts below
 
@@ -92,10 +91,7 @@ endif
 
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
-Codegen_Script = $(CF)/generate-ada.xsl
-ifeq ($(CODEGEN_SCRIPT), )
-  CODEGEN_SCRIPT = $(Codegen_Script)
-endif
+CODEGEN_SCRIPT ?= $(CF)/generate-ada.xsl
 CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
 %.norm: $(COLDFRAMEOUT)/%.raw
@@ -140,14 +136,24 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@-$(RM) -rf $@
 	@$(MKDIR) $@
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
-	@([ -d $*.impl ] && \
-	for f in `($(CD) $*.impl; $(FIND) . -maxdepth 1 -name \*.ad[bs])`; do \
-	  if [ -f $@/$$f ]; then \
-	    $(ECHO) "    removing $@/$$f"; $(RM) $@/$$f; \
-	  else \
-	    $(ECHO) "  extra source file $$f in .impl"; \
-	  fi \
-	done) || $(TRUE)
+	@if [ -d $*.impl ]; then \
+	  TODELETE=""; \
+	  IMPLFILES=\
+	    `$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
+	  for f in $$IMPLFILES; do \
+	    GENFILE=$@/`basename $$f`; \
+	    if [ -f $$GENFILE ]; then \
+	      TODELETE="$$TODELETE $$GENFILE"; \
+	    else \
+	      $(ECHO) "  extra source file $$f"; \
+	    fi; \
+	  done; \
+	  for f in $$TODELETE; do \
+	    if [ -f $$f ]; then \
+	      $(ECHO) "    removing $$f"; $(RM) $$f; \
+	    fi; \
+	  done; \
+	fi
 	@$(CHMOD) -R a-w $@
 	@$(CHMOD) u+w $@
 	@$(ECHO) "checking for unimplemented bodies ..."
@@ -170,13 +176,13 @@ install::
 	  [ -f project/`basename $$f` ] || $(CP) -p $$f inherited/; \
 	done
 
-# Creates your build directory (Ada Library) tree, under $BUILD_BASE
+# Creates the build directory (Ada Library) tree, under $BUILD_BASE
 build-dirs::
 	@[ -n "$(BUILD_BASE)" ] \
 	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
 	@for d in aunit bc coldframe fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
-	    ($(ECHO) mkdir -p $(BUILD_BASE)/$$d; \
+	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
 	     $(MKDIR) -p $(BUILD_BASE)/$$d); \
 	done
 
