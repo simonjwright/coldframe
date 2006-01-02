@@ -13,9 +13,9 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: generated_lines_support.adb,v $
---  $Revision: 82c90d721e25 $
---  $Date: 2004/04/21 15:16:53 $
---  $Author: simon $
+--  $Revision: 21cd7912267f $
+--  $Date: 2006/01/02 18:30:53 $
+--  $Author: simonjwright $
 
 with BC.Containers.Collections.Unbounded;
 with BC.Support.Standard_Storage;
@@ -145,7 +145,7 @@ package body Generated_Lines_Support is
 begin
 
    Setup ("initialize\.ad[bs]", "initialization");
-   Setup ("-tear_down\.ad[bs]", "test");
+   Setup ("tear_down\.ad[bs]", "test");
    Setup ("^[^-]*-events(-initialize)?.ad[bs]", "events");
    Setup ("-inheritance\.ad[bs]", "advanced inheritance");
    Setup ("-(filter|selection)_function\.ad[bs]", "selection");
@@ -157,6 +157,7 @@ begin
    Setup ("-all_instances\.ad[bs]", "all instances");
    Setup ("-serializable\.ad[bs]", "serialization");
 
+   Setup ("^.*-.*-t\.adb", "tasks");
    Setup ("^.*-.*-.*\.adb", "operations");
 
    Setup ("\.ad[bs]", "classes/associations");
