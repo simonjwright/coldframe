@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 4c32baefce66 2006/01/02 19:42:16 simonjwright $ -->
+<!-- $Id: bugs.html,v 020127ddfd52 2006/01/10 21:10:57 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -219,7 +219,15 @@ a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
 use <a href="event-modelling.html#post-to-self">events-to-self</a>
 from an event that's being handled synchronously.
 
-<!-- next: 0342 -->
+<dt>0342 (raised 10.i.06)
+
+<dd> ColdFrame doesn't detect the error of having
+transitions (particularly completion transitions) from
+a state with a &#171;final&#187; action (ie, where the instance
+has been deleted).
+<br>SourceForge 1401275
+
+<!-- next: 0343 -->
 
 </dl>
 
