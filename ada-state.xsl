@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 27a3c7ee2929 2005/05/28 17:28:15 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 4493039bf3d9 2006/01/10 21:58:25 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -489,14 +489,22 @@
       </xsl:call-template>
     </xsl:for-each>
 
+    <!-- Now do drop-throughs (recursively). -->
+
+    <!-- It's illegal to have a drop-through from a state during which
+         the instance has been deleted; either in the transition to
+         the state or in one of the actions (already checked that no
+         actions occur after a deletion).
+         Deletion occurs if the action's name is Delete or if the
+         operation is marked final. The operation may be inherited.-->
+
+    <!-- XXX doesn't work for inherited operations! -->
     <xsl:variable
       name="deleting"
       select="$tr/action='Delete'
-              or $target/@final
+              or ../../operation[name=$tr/action]/@final
               or $target/action='Delete'
-              or $target/action/@final"/>
-
-    <!-- Now do drop-throughs (recursively). -->
+              or ../../operation[name=$target/action]/@final"/>
 
     <xsl:variable
       name="drop-through"
