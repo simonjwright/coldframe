@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 020127ddfd52 2006/01/10 21:10:57 simonjwright $ -->
+<!-- $Id: bugs.html,v 1cccb44d1868 2006/01/29 20:42:03 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -221,13 +221,20 @@ from an event that's being handled synchronously.
 
 <dt>0342 (raised 10.i.06)
 
-<dd> ColdFrame doesn't detect the error of having
-transitions (particularly completion transitions) from
-a state with a &#171;final&#187; action (ie, where the instance
-has been deleted).
+<dd>ColdFrame's checks on state machines don't properly handle the
+case where actions are inherited; in particular, the error of having
+transitions (particularly completion transitions) from a state with a
+&#171;final&#187; action (ie, where the instance has been deleted) may
+not be detected.
 <br>SourceForge 1401275
 
-<!-- next: 0343 -->
+<dt>0343 (raised 29.i.06)
+
+<dd>The problem reported at <a href="#0319">0319</a> wasn't a problem
+at all. Domain initialization should be called at the very beginning;
+and there should be some documentation on initialization.
+
+<!-- next: 0344 -->
 
 </dl>
 
@@ -415,7 +422,7 @@ which can lead to lockup when Start is eventually called.
 <dd>A class may be active (have a task) and have a state machine. If
 so, it would be a good idea if the current state could be made atomic.
 
-<dt>0319 (raised 6.vii.05)
+<dt><a name="0319">0319</a> (raised 6.vii.05)
 
 <dd>A domain initialization <i>{init}</i> operation should be called
 after any class initializations have been done (ie, singletons exist,
