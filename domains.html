@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v 6098e24ea614 2005/11/20 20:54:18 simonjwright $ -->
+<!-- $Id: domains.html,v c7cfd290eced 2006/01/29 20:36:14 simonjwright $ -->
 <head>
 <title>ColdFrame: Domains</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -116,18 +116,20 @@ children of the domain package.
 Queue, or (if it's <tt>null</tt>) by calling
 <tt>Events.Initialize</tt>,
 
-<li>initializing all class attributes and singletons via
-<tt><i>Class</i>.CF_Class_Initialize</tt>,
-
 <li>calling the domain initialization operation, if one was specified
 by <i>{ init = package.operation }</i>,
+
+<li>initializing all class attributes and singletons via
+<tt><i>Class</i>.CF_Class_Initialize</tt>,
 
 <li>and then calling all the
 <em>&#171;init&#187;</em> operations of all the classes.
 
 </ol>
 
-The calls are in alphabetical order by class and then by operation.
+<p>The calls are in alphabetical order by class and then by operation.
+
+<p>See also <a href="initialization.html">further discussion</a>.
 
 <dt><a name="teardown"><tt><i>Domain</i>.Tear_Down</a></tt>
 <dd>For <a href="testing.html">testing</a> purposes; returns
