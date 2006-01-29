@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v fb977059ee01 2006/01/17 21:43:05 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v e8bb8bcdcec0 2006/01/29 20:46:48 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -468,8 +468,8 @@
                   Events.Initialize;
                end if;
                ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
-               {class}.CF_Class_Initialize:
                {domain-init-proc};
+               {class}.CF_Class_Initialize:
                {class}.{init-operation};
                Domain_Initialized := True;
                Domain_Initializing := False;
@@ -564,6 +564,13 @@
     <xsl:value-of select="$II"/>
     <xsl:text>ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);&#10;</xsl:text>
 
+    <!-- .. any domain initialization .. -->
+    <xsl:if test="initialize">
+      <xsl:value-of select="$II"/>
+      <xsl:value-of select="initialize"/>
+      <xsl:text>;&#10;</xsl:text>
+    </xsl:if>
+
     <!-- .. class initializations .. -->
     <xsl:for-each select="$class-initializations">
       <xsl:sort select="name"/>
@@ -571,13 +578,6 @@
       <xsl:value-of select="name"/>
       <xsl:text>.CF_Class_Initialize;&#10;</xsl:text>
     </xsl:for-each>
-
-    <!-- .. any domain initialization .. -->
-    <xsl:if test="initialize">
-      <xsl:value-of select="$II"/>
-      <xsl:value-of select="initialize"/>
-      <xsl:text>;&#10;</xsl:text>
-    </xsl:if>
 
     <!-- .. instance operations .. -->
     <xsl:for-each select="$instance-initializations">
