@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 4493039bf3d9 2006/01/10 21:58:25 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v d5fedf8a542d 2006/01/31 06:38:36 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -397,9 +397,12 @@
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
     <xsl:text>pragma Warnings (Off, Ada.Exceptions);&#10;</xsl:text>
 
-    <!-- The initial state automatically enters the next state if there's an
-         untriggered transtion. If so, and if there are actions with parameters
-         in that state, we need a Creation event. -->
+    <!-- The initial state automatically enters the next state if
+         there's an untriggered transition. If so, and if there are
+         actions with parameters in that state, we need a Creation
+         event. -->
+
+    <!-- XXX surely it's an error for such actions to have parameters? -->
 
     <!-- the initial state .. -->
     <xsl:variable name="init" select="statemachine/state[@initial]/name"/>
@@ -499,6 +502,8 @@
          operation is marked final. The operation may be inherited.-->
 
     <!-- XXX doesn't work for inherited operations! -->
+    <!-- use st:class-of-operation-for-action(class, action-name) -->
+
     <xsl:variable
       name="deleting"
       select="$tr/action='Delete'
@@ -747,9 +752,10 @@
   </xsl:template>
 
 
-  <!-- Called to find the class of the actual operation for an action
-       (may be in a parent class). -->
-  <xsl:template name="st:class-of-operation-for-action">
+  <!-- Called to find the name of the class of the actual operation
+       for an action (may be in a parent class). -->
+  <xsl:template
+       name="st:class-of-operation-for-action">
 
     <!-- The class(es) to be considered. -->
     <xsl:param name="class"/>
