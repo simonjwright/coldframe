@@ -1,4 +1,4 @@
-<!-- $Id: initialization.html,v 234851abc5d5 2006/01/28 22:58:22 simonjwright $ -->
+<!-- $Id: initialization.html,v db82622a2d6e 2006/01/31 06:37:22 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Initialization</title>
@@ -15,7 +15,80 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Initialization</h1>
 
-<i>Under construction.</i>
+<p>ColdFrame initializes a domain when the you call the
+operation <tt><i>Domain</i>.Initialize</tt>. This operation takes a
+single parameter, defaulted to <tt>null</tt>, that designates
+the <a href="event-use.html#eventqueues">event queue</a> to be used by
+the domain.
+
+<p>Only the first call to <tt>Initialize</tt> (after the program has
+been started or, if you're testing, after the domain has
+been <a href="domains.html#teardown">torn down</a>) has any effect. In
+particular, this
+supports <a href="domains.html#cascade-initialize">cascade
+initialization</a>.
+
+<h2>Sequence of actions</h2>
+
+<p>The domain is initialized by
+
+<ol>
+
+<li>initializing the domain's Event Queue with the supplied Event
+Queue, or (if it's <tt>null</tt>) by calling
+<tt><i>Domain</i>.Events.Initialize</tt>,
+
+<li>calling the domain initialization operation, if one was specified
+by <i>{init=package.operation}</i>,
+
+<li>initializing all class attributes with default values and creating
+all singletons,
+
+<li>and then calling all the
+<em>&#171;init&#187;</em> operations of all the classes.
+
+</ol>
+
+<p>Everything is done in alphabetical order by class and then by
+operation.
+
+<h2>Event queues</h2>
+
+<h2>Domain initialization operation</h2>
+
+<p>The intended purpose of the domain initialization operation is to
+set up the environment expected by later initializations. At the point
+it's called, there are no instances of any class, including
+singletons.
+
+<h2>&#171;Singleton&#187; classes</h2>
+
+<p>At the point where a singleton class instance is created,
+no <em>&#171;init&#187;</em> operations have been called. This means
+that the initial instances of other classes, and the associations
+between them, don't exist yet.
+
+<p>This will only matter if any of the singleton's code gets executed
+at this point; this can happen if the singleton has a state machine or
+is active.
+
+<h3>Singletons with state machines</h3>
+
+<p>If a state machine has a completion transition (one which doesn't
+need an event to trigger it) from its initial state, ColdFrame
+performs that transition synchronously during instance creation.
+
+<p>This results in the entry actions in the next state being called
+during creation (if there aren't any, why do you have the completion
+transition?).
+
+<p>This is always problematic, but especially so for a singleton since
+the rest of the domain doesn't exist yet. The canonical solution is
+not to use completion transitions from initial states; instead, use an
+actual event posted by class initialization (called <i>start</i>,
+perhaps).
+
+<h3>&#171;active&#187; singletons</h3>
 
 <p><hr>
 <i>
