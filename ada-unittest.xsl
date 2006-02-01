@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v 85021462d182 2005/09/26 05:18:15 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v a8df723e5968 2006/02/01 20:51:28 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -127,11 +127,11 @@
     <xsl:if test="statemachine">
 
       <xsl:value-of select="$I"/>
-      <xsl:text>function Get_State (This : Handle) return State;&#10;</xsl:text>
+      <xsl:text>function Get_State_Machine_State (This : Handle) return State;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Set_State (This : Handle; To : State);&#10;</xsl:text>
+      <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
@@ -232,7 +232,7 @@
     <xsl:if test="statemachine">
 
       <xsl:value-of select="$I"/>
-      <xsl:text>function Get_State (This : Handle) return State is&#10;</xsl:text>
+      <xsl:text>function Get_State_Machine_State (This : Handle) return State is&#10;</xsl:text>
 
       <xsl:value-of select="$II"/>
       <xsl:text>C : constant array (State_Machine_State_T) of State :=&#10;</xsl:text>
@@ -262,11 +262,11 @@
       <xsl:value-of select="$II"/>
       <xsl:text>return C (This.State_Machine_State);&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>end Get_State;&#10;</xsl:text>
+      <xsl:text>end Get_State_Machine_State;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Set_State (This : Handle; To : State) is&#10;</xsl:text>
+      <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State) is&#10;</xsl:text>
 
       <xsl:value-of select="$II"/>
       <xsl:text>C : constant array (State) of State_Machine_State_T :=&#10;</xsl:text>
@@ -296,7 +296,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>This.State_Machine_State := C (To);&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>end Set_State;&#10;</xsl:text>
+      <xsl:text>end Set_State_Machine_State;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
