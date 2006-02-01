@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 572e21773875 2005/11/20 21:04:27 simonjwright $ -->
+<!-- $Id: event-use.html,v 9c28ed76b5e8 2006/02/01 20:34:52 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -78,7 +78,7 @@ creates a <tt>Button Push</tt> event for the Lamp concerned
 (<em>Operation 2.1.1</em>) on the stack and then invokes its generated
 <tt>Handler</tt> (<em>Operation 2.1.2</em>):
 <pre>
-   procedure Button_Pushed (L : Lamp.Handle) is
+   <a name="synchronous">procedure Button_Pushed</a> (L : Lamp.Handle) is
       Ev : Lamp.Button_Push (For_The_Instance => L);
    begin
       Lamp.Handler (Ev);
@@ -107,7 +107,8 @@ the event must be posted rather than being processed
 synchronously. There's no logical difference between the synchronous
 and posting styles; posting is more consistent, while synchronous is
 more efficient (it saves a memory allocation/freeing and a couple of
-context switches, perhaps 20 to 30 microseconds).
+context switches, perhaps 20 to 30 microseconds on a 1 GHz PowerPC
+under VxWorks).
 
 
 <h2><a name="postinganevent">Posting an event</a></h2>

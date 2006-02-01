@@ -1,4 +1,4 @@
-<!-- $Id: initialization.html,v db82622a2d6e 2006/01/31 06:37:22 simonjwright $ -->
+<!-- $Id: initialization.html,v 9c28ed76b5e8 2006/02/01 20:34:52 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Initialization</title>
@@ -34,8 +34,8 @@ initialization</a>.
 
 <ol>
 
-<li>initializing the domain's Event Queue with the supplied Event
-Queue, or (if it's <tt>null</tt>) by calling
+<li>initializing the domain's Event Queue (<tt>Dispatcher</tt>) with
+the supplied Event Queue, or (if it's <tt>null</tt>) by calling
 <tt><i>Domain</i>.Events.Initialize</tt>,
 
 <li>calling the domain initialization operation, if one was specified
@@ -54,6 +54,9 @@ operation.
 
 <h2>Event queues</h2>
 
+<p><i>Event queues that aren't started; cascade initialize deprecated;
+...</i>
+
 <h2>Domain initialization operation</h2>
 
 <p>The intended purpose of the domain initialization operation is to
@@ -64,13 +67,13 @@ singletons.
 <h2>&#171;Singleton&#187; classes</h2>
 
 <p>At the point where a singleton class instance is created,
-no <em>&#171;init&#187;</em> operations have been called. This means
+no <i>&#171;init&#187;</i> operations have been called. This means
 that the initial instances of other classes, and the associations
 between them, don't exist yet.
 
 <p>This will only matter if any of the singleton's code gets executed
 at this point; this can happen if the singleton has a state machine or
-is active.
+is active. Or, of course, both, for added flavour.
 
 <h3>Singletons with state machines</h3>
 
@@ -88,7 +91,32 @@ not to use completion transitions from initial states; instead, use an
 actual event posted by class initialization (called <i>start</i>,
 perhaps).
 
-<h3>&#171;active&#187; singletons</h3>
+<h3>&#171;Active&#187; singletons</h3>
+
+<p>The task associated with an instance of an active class begins
+execution during instance creation. This is always likely to lead to
+difficulty, but it's especially so with singletons since the rest of
+the domain isn't initialized yet.
+
+<p>The standard solution for non-singleton tasks is to have an
+initial <i>&#171;entry&#187;</i>, again called <i>start</i>
+perhaps, called at an appropriate point (again, you can use an event
+posted by class initialization).
+
+<p>An alternative for singletons is to have the task loop (with a
+short delay, please!) until the variable <tt>Domain_Initialized</tt>
+becomes <tt>True</tt>:
+<pre>
+   begin
+      while not Domain_Initialized loop
+	 delay 0.01;
+      end loop;
+      ...
+</pre>
+
+<h2>Class initialization</h2>
+
+<p><i>&#171;init&#187; operations, ordering, how many</i>
 
 <p><hr>
 <i>
