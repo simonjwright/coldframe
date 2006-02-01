@@ -292,6 +292,7 @@ faq.html \
 generalizations.html generalizations-extended.html \
 generation.html \
 index.html \
+initialization.html \
 installation.html \
 operation-parameters.html \
 operations.html \
