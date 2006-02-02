@@ -330,6 +330,9 @@ package body Event_Test.Test_Inspection is
    begin
       Register_Routine
         (C, Inspect_Started_Queue'Access, "Inspect started queue");
+      --  Can't run next test because it posts to self outside an
+      --  event handler. Could have an event handler that does this
+      --  and then handle synchronously? (the queue has to be stopped!)
 --        Register_Routine
 --          (C, Check_Self_Events'Access, "Self events");
       Register_Routine
