@@ -1,4 +1,4 @@
-<!-- $Id: domains.html,v c7cfd290eced 2006/01/29 20:36:14 simonjwright $ -->
+<!-- $Id: domains.html,v 0f5e93e3c87d 2006/02/04 18:04:52 simonjwright $ -->
 <head>
 <title>ColdFrame: Domains</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -158,14 +158,18 @@ with the supplied Event Queue.
 
 <ol>
 
-<li>call <tt>Cascade_Initialize</tt> for all called domains, with the
-supplied Event Queue,
+<li>call <tt>Cascade_Initialize</tt> for all called
+domains, <span style="background:yellow">with the supplied Event
+Queue</span>,
 
-<li>call its own <tt>Initialize</tt>, with the supplied Event Queue,
+<li>call its
+own <tt>Initialize</tt>, <span style="background:yellow">with the
+supplied Event Queue</span>,
 
 <li>and then call <tt>Cascade_Initialize</tt> for any domains known to
-require this one (eg, device bottom halves), again with the supplied
-Event Queue.
+require this one (eg, device bottom halves),
+again <span style="background:yellow">with the supplied Event
+Queue</span>.
 
 </ol>
 
