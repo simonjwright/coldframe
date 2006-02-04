@@ -1,4 +1,4 @@
-<!-- $Id: initialization.html,v 9c28ed76b5e8 2006/02/01 20:34:52 simonjwright $ -->
+<!-- $Id: initialization.html,v da643d6b8ae8 2006/02/04 18:44:08 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Initialization</title>
@@ -54,8 +54,33 @@ operation.
 
 <h2>Event queues</h2>
 
-<p><i>Event queues that aren't started; cascade initialize deprecated;
-...</i>
+<p>By default, standard event queues start running as soon as they're
+created, while test event queues don't. When building a large program,
+it's best to use one event queue for all the domains and not to let it
+start until you've finished initialization.
+
+<p>You can create an unstarted standard event queue in your main
+program (or AUnit setup) by:
+<pre>
+   Q : constant ColdFrame.Project.Events.Event_Queue_P
+     := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+        (Start_Started => <font color="blue">False</font>,
+         Priority => System.Default_Priority,
+         Storage_Size => 20_000);
+</pre>
+
+<p>(<tt>constant</tt> because you don't alter the access value; you
+can alter the priority if you want, though there's no obvious benefit
+to doing so; and you can alter the stack size of the task context
+within which all the state machine actions are executed from the
+default, but it may indicate a problem with your design if you need
+to).
+
+<p>After you've initialized all the domains with <tt>Q</tt>, start it
+by
+<pre>
+   ColdFrame.Project.Events.Start (Q);
+</pre>
 
 <h2>Domain initialization operation</h2>
 
@@ -64,7 +89,7 @@ set up the environment expected by later initializations. At the point
 it's called, there are no instances of any class, including
 singletons.
 
-<h2>&#171;Singleton&#187; classes</h2>
+<h2><a name="singleton">&#171;Singleton&#187; classes</a></h2>
 
 <p>At the point where a singleton class instance is created,
 no <i>&#171;init&#187;</i> operations have been called. This means
