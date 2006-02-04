@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 9c28ed76b5e8 2006/02/01 20:34:52 simonjwright $ -->
+<!-- $Id: event-use.html,v b5163e9fa660 2006/02/04 18:43:08 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -228,8 +228,15 @@ may or may not have been handled when the lock is achieved.
 
 <h2><a name="activeclasses">Active classes</a></h2>
 
-<p><i>This is to be a discussion about active classes with state
-machines, and how to make sure they're properly initialized.</i>
+<p>There's no reason why an active class can't have a state machine as
+well, though you have to be careful about concurrent access to
+instance variables and about
+initialization, <a href="initialization.html#singleton">especially
+of <i>&#171;singleton&#187;</i>s</a>.
+
+<p>This idiom can be very useful to deal with interrupt handling; see
+<i>Interrupt_Handling</i> in the <tt>example/</tt> subdirectory of
+the distribution.
 
 <hr>
 <i>
