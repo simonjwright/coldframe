@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 384f3abc32c1 $
---  $Date: 2005/08/07 18:36:55 $
+--  $Revision: 5a8ec51f9c45 $
+--  $Date: 2006/02/06 20:40:18 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -155,6 +155,19 @@ package ColdFrame.Stubs is
                              For_Parameter_Named : String;
                              For_Call : Positive := 1) return T;
 
+   --  To retrieve the result of the last call, you can say
+   --
+   --     Result := Get_Integer_Operation_Input_Value
+   --       ("Domain.Class.Operation", "Input", Last);
+   Last : constant Positive := Positive'Last;
+
+   --  You could use a convenience renaming:
+   --     function Get_Last_Integer_Operation_Input_Value
+   --       (For_Subprogram_Named : String;
+   --        For_Parameter_Named : String;
+   --        For_Call : Positive := ColdFrame.Stubs.Last) return T
+   --       renames Get_Integer_Operation_Input_Value;
+
 
    -----------------------------------------------------------------
    --  O p e r a t i o n s   f o r   g e n e r a t e d   c o d e  --
@@ -238,6 +251,7 @@ package ColdFrame.Stubs is
    --
    --  declare
    --     L : Lock (Mutex'Access);
+   --     pragma Unreferenced (L);
    --     --  now locked
    --  begin
    subtype Lock is BC.Support.Synchronization.Lock;
