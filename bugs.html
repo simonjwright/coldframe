@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 1cccb44d1868 2006/01/29 20:42:03 simonjwright $ -->
+<!-- $Id: bugs.html,v 0bfe372d4ebf 2006/02/06 20:18:13 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -234,7 +234,17 @@ not be detected.
 at all. Domain initialization should be called at the very beginning;
 and there should be some documentation on initialization.
 
-<!-- next: 0344 -->
+<dt>0344 (raised 6.ii.06)
+
+<dd>Stubbed operations of types aren't thread-safe.
+
+<dt>0345 (raised 6.ii.06)
+
+<dd>Although it would be normal for the output values and the
+exceptions in a stubbed interface to be set up before execution
+begins, it would be a good thing if the setup could be thread-safe.
+
+<!-- next: 0346 -->
 
 </dl>
 
