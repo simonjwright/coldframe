@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 7dc4fd3fdcbd 2006/02/01 20:52:23 simonjwright $ -->
+<!-- $Id: testing.html,v fd3243c85f45 2006/02/06 20:57:06 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -313,8 +313,12 @@ instantiate <tt>ColdFrame.Stubs.Get_Input_Value</tt> with
 
 <h4><a name="test-procedure-support">Test Procedure support</a></h4>
 
-<p>Call your instantiations of <tt>Set_Output_Value</tt> to set up
-the results of calls to stubbed subprograms.
+<p>Call your instantiations of <tt>Set_Output_Value</tt> to set up the
+results of calls to stubbed subprograms. Often, and particularly for
+"environmental" operations, this will be in the AUnit test
+case's <tt>Set_Up</tt> procedure; in that case, you might want to use
+the <tt>Override</tt> parameter to alter your standard setup for a
+specific test procedure.
 
 <p>Call <tt>ColdFrame.Stubs.Set_Exception</tt> if you want a stubbed
 subprogram to raise an exception.
@@ -349,7 +353,10 @@ has been called.
 </pre>
 
 <p>Call your instantiations of <tt>Get_Input_Value</tt> to retrieve
-any parameters input to stubbed subprograms.
+any parameters input to stubbed subprograms. You can supply the
+value <tt>ColdFrame.Stubs.Last</tt> in the <tt>For_Call</tt> parameter
+to retrieve the last value (though usually you should know how many
+calls should have been made).
 
 <h4><a name="example">Example</a></h4>
 
