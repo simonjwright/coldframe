@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: 19aa9bd0926b $
---  $Date: 2005/08/07 18:55:46 $
+--  $Revision: fa2c19ff7d94 $
+--  $Date: 2006/02/06 20:41:40 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -263,6 +263,8 @@ package body ColdFrame.Stubs is
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       subtype SEO is Ada.Streams.Stream_Element_Offset;
       Size : constant SEO := SEO ((To'Size + 7) / 8 + Overhead_Bytes);
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
       Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type (Size));
@@ -334,6 +336,8 @@ package body ColdFrame.Stubs is
       SEU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       Coll : Sparse_Exception_Collection_Pointers.Pointer;
+      Lck : Lock (Mutex'Access);
+      pragma Unreferenced (Lck);
    begin
       if not Unbounded_String_Sets.Is_Member (Subprograms, SEU) then
          Ada.Exceptions.Raise_Exception
@@ -415,27 +419,33 @@ package body ColdFrame.Stubs is
             "input " & SP & " not found");
       end if;
       declare
-         package AS renames Ada.Streams;
-         package BSMS renames BC.Support.Memory_Streams;
          Pointers : Stream_Pointer_Collections.Collection
            renames Stream_Pointer_Collection_Pointers.Value
            (Stream_Pointer_Collection_Maps.Item_Of (Inputs, SPU)).all;
-      begin
-         if Stream_Pointer_Collections.Length (Pointers) >= For_Call then
+         function Result (From : Positive) return T;
+         function Result (From : Positive) return T is
             --  We have to get the result from a copy of the memory
             --  stream, otherwise the user will get an End_Error if
             --  she reads it more than once.
-            declare
-               Str : BSMS.Stream_Type renames
-                 BSMS.Stream_Type (Stream_Pointers.Value
-                                     (Stream_Pointer_Collections.Item_At
-                                        (Pointers, For_Call)).all);
-               Copy : aliased BSMS.Stream_Type
-                 (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
-            begin
-               BSMS.Set_Contents (BSMS.Contents (Str), Copy);
-               return T'Input (Copy'Access);
-            end;
+            package AS renames Ada.Streams;
+            package BSMS renames BC.Support.Memory_Streams;
+            Str : BSMS.Stream_Type renames
+              BSMS.Stream_Type (Stream_Pointers.Value
+                                  (Stream_Pointer_Collections.Item_At
+                                     (Pointers, From)).all);
+            Copy : aliased BSMS.Stream_Type
+              (Capacity => AS.Stream_Element_Offset (BSMS.Length (Str)));
+         begin
+            BSMS.Set_Contents (BSMS.Contents (Str), Copy);
+            return T'Input (Copy'Access);
+         end Result;
+         Len : constant Natural
+           := Stream_Pointer_Collections.Length (Pointers);
+      begin
+         if For_Call <= Len then
+            return Result (For_Call);
+         elsif For_Call = Last and Len > 0 then
+            return Result (Len);
          else
             Ada.Exceptions.Raise_Exception
               (No_Value'Identity,
