@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: 3656e70ef5ae $
---  $Date: 2005/08/06 17:48:32 $
+--  $Revision: afd0782da302 $
+--  $Date: 2006/02/06 20:38:54 $
 --  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -320,11 +320,21 @@ package body Stub_Test_Suite is
               "wrong input (c)");
       Assert (R = (I => 24, F => 0.42),
               "wrong result (c)");
+      Assert (not Get_Boolean
+                ("Stub_Test.Public.Get_Record_Type",
+                 "B",
+                 ColdFrame.Stubs.Last),
+              "wrong input (c')");
       R := Stub_Test.Public.Get_Record_Type (True);
       Assert (Get_Boolean ("Stub_Test.Public.Get_Record_Type", "B", 4),
               "wrong input (d)");
       Assert (R = (I => 24, F => 0.42),
               "wrong value (d)");
+      Assert (Get_Boolean
+                ("Stub_Test.Public.Get_Record_Type",
+                 "B",
+                 ColdFrame.Stubs.Last),
+              "wrong input (d')");
    end Call_With_In_Parameter_And_Return;
 
 
