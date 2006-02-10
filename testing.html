@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v fd3243c85f45 2006/02/06 20:57:06 simonjwright $ -->
+<!-- $Id: testing.html,v 5a786b5ac6a5 2006/02/10 06:34:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -321,7 +321,8 @@ the <tt>Override</tt> parameter to alter your standard setup for a
 specific test procedure.
 
 <p>Call <tt>ColdFrame.Stubs.Set_Exception</tt> if you want a stubbed
-subprogram to raise an exception.
+subprogram to raise an exception (to get an <tt>Exception_Id</tt>, use
+<tt><i>exception-name</i>'Identity</tt>).
 
 <pre>
    --  Specify that a call to a stubbed operation is to raise an
