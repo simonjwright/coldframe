@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 5a786b5ac6a5 2006/02/10 06:34:50 simonjwright $ -->
+<!-- $Id: testing.html,v 64b4bc3e71fd 2006/02/14 05:58:32 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -105,16 +105,19 @@ variable set to <tt>yes</tt>:
 
 <p>This generates a child package for each
 class, <tt><i>Domain.Class</i>.Unit_Test</tt>, which
-contains <tt>Get_</tt> and <tt>Set_</tt> subprograms for each
-attribute and, for a class with a state
+contains <tt>Get_</tt> and <tt>Set_</tt> subprograms for each mutable
+attribute excluding <i>Timer</i>s and, for a class with a state
 machine, <tt>Get_State_Machine_State</tt>
-and <tt>Set_State_Machine_State</tt> subprograms.
+and <tt>Set_State_Machine_State</tt> subprograms. Identifying
+attributes are immutable, and only have a <tt>Get_</tt> operation.
 
 <p>What it does <em>not</em> do is allow you to access private
 subprograms of the class. A common reason for having private
 operations is to implement state machines; in this case, you could
 consider <a href="event-use.html#synchronous">calling the event
-handler synchronously</a> (just remember to set the state first).
+handler synchronously</a> (just remember to set the state first). It's
+arguable that by doing this you have a more representative execution
+path, anyway.
 
 <h2><a name="stubs">Stubs</a></h2>
 
