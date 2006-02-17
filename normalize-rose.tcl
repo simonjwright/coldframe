@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v c2db4846edc3 2005/10/26 19:20:50 simonjwright $
+# $Id: normalize-rose.tcl,v aeecf8593349 2006/02/17 06:52:21 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -666,7 +666,7 @@ itcl::class Element {
             for {} {[regexp -nocase $p $s wh n opt v]} {} {
                 # n is the tag name, v the tag value if any
                 if [catch {$this -[join [split [string tolower $n]] "-"] "$v"}] {
-                    Info \
+                    Warning \
                         "stereotype not handled,\
                         \"$name <<[string tolower $n]>>\""
                 }
