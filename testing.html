@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 64b4bc3e71fd 2006/02/14 05:58:32 simonjwright $ -->
+<!-- $Id: testing.html,v 4a277e46b7bf 2006/02/17 18:51:30 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -559,7 +559,7 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
             Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
             Assert (ColdFrame.Stubs.Number_Of_Calls
                       ("Digital_IO.Application.Set_Output") = 6,
-                    "wrong number of calls (a)");
+                    "wrong number of calls (b)");
             Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                      "S",
                                      6) = Digital_IO.Lamp_C,
