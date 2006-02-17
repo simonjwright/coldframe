@@ -6,8 +6,8 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: house_management-test_suite.adb,v $
---  $Revision: 108faef7a173 $
---  $Date: 2005/09/17 09:06:26 $
+--  $Revision: 52bfedfeb186 $
+--  $Date: 2006/02/17 18:52:29 $
 --  $Author: simonjwright $
 
 with AUnit.Assertions; use AUnit.Assertions;
@@ -86,7 +86,7 @@ package body House_Management.Test_Suite is
          Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
          Assert (ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 6,
-                 "wrong number of calls (a)");
+                 "wrong number of calls (b)");
          Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   6) = Digital_IO.Lamp_C,
