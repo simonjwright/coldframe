@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v cc6192b94ea7 2006/02/17 06:46:52 simonjwright $ -->
+<!-- $Id: bugs.html,v 7c5b172fb975 2006/02/18 21:41:02 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -228,6 +228,23 @@ transitions (particularly completion transitions) from a state with a
 not be detected.
 <br>SourceForge 1401275
 
+<dt>0347 (raised 18.ii.06)
+
+<dd>Especially with large arrays (or perhaps just with large records),
+the performance of converting a serialized output stream to XML is
+very sluggish.
+<br>SourceForge 1434319
+
+<!-- next: 0348 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>18.ii.06</h3>
+
+<dl>
+
 <dt>0346 (raised 17.ii.06)
 
 <dd>The documentation says that atomic and volatile can be specified
@@ -236,11 +253,7 @@ tags.  Shouldn't there be at least a warning for unrecognised
 stereotypes?
 <br>SourceForge 1433373
 
-<!-- next: 0347 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>6.ii.06</h3>
 
