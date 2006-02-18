@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v dd9f3d02972a 2006/02/06 20:45:42 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 1545f335a139 2006/02/18 16:50:02 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -71,10 +71,15 @@ getting set too early.
 <li>A <tt>Test_Trace</tt> event queue starts 'unstarted', as you'd
 expect.
 
+<li><b>Stub support</b>
+
 <li>Stubbed operations of types weren't thread-safe.
 
 <li>Setting up 'output' values and exceptions for stubbed operations
 is now thread-safe.
+
+<li>It was inconvenient to retrieve the "last" value of an
+<i>in</i> parameter.
 
 </ul>
 
