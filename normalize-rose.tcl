@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v aeecf8593349 2006/02/17 06:52:21 simonjwright $
+# $Id: normalize-rose.tcl,v feae2dbfb4d3 2006/02/18 16:35:13 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3082,6 +3082,18 @@ itcl::class Attribute {
             public  {set visibility public}
             default {set visibility private}
         }
+    }
+
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is an atomic attribute
+    method -atomic {a} {
+        set atomic 1
+    }
+
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is a volatile attribute
+    method -volatile {a} {
+        set volatile 1
     }
 
     # used via stereotype processing to indicate that this analyst-defined
