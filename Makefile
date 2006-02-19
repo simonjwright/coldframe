@@ -424,6 +424,8 @@ coldframe-stubs.ads \
 coldframe-time_signature.ads \
 coldframe-unbounded_storage_pools.adb \
 coldframe-unbounded_storage_pools.ads \
+coldframe-unbounded_strings.adb \
+coldframe-unbounded_strings.ads \
 coldframe.ads
 
 PROJECT = \
