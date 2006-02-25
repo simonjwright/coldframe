@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 112225fee980 2005/12/31 18:09:52 simonjwright $
+# $Id: cat2raw.py,v bb2c68141619 2006/02/25 17:40:55 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -316,7 +316,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 112225fee980 $',
+				 'cat2raw.py: $Revision: bb2c68141619 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -349,9 +349,6 @@ class Domain(Base):
     emit_inheritances = Callable(emit_inheritances)
 
 recognizedID['Class_Category'] = Domain
-
-
-# entryaction: 
 
 
 class Event(Base):
@@ -611,7 +608,9 @@ def create_object(id):
     if recognizedID.has_key(id):
 	new = recognizedID[id]()
     else:
-	sys.stderr.write("didn't recognise object ID %s.\n" % id)
+	# There are a few left, but no need to tell folk about them --
+	# especially since the form looks rather like an error message.
+	# sys.stderr.write("didn't recognise object ID %s.\n" % id)
 	new = Base()
     return new
 
@@ -832,7 +831,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 112225fee980 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: bb2c68141619 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
