@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v d5fedf8a542d 2006/01/31 06:38:36 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 76f8c1f04821 2006/03/03 22:02:22 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -895,14 +895,18 @@
          -->
 
     <xsl:call-template name="ut:do-not-edit"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
-    <!-- Leave out style check suppression here .. -->
 
     <xsl:text>package body </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
+    <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
     <xsl:text>procedure Initialize is separate;&#10;</xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Events;&#10;</xsl:text>
