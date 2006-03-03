@@ -243,13 +243,13 @@ package body Event_Test.Test_Inspection is
       Assert (Inspection.Number_Of_After_Events (Q) = 2,
               "number of after events not 2");
       E := Inspection.After_Event (Q, 1);
-      Assert (Event (Inspection.After_Event (Q, 1).all).Payload = 2,
+      Assert (Event (Inspection.After_Event (Q, 1).all).Payload = 1,
               "wrong payload in first event");
-      Assert (Inspection.How_Long_After (Q, 1) = 0.5,
+      Assert (Inspection.How_Long_After (Q, 1) = 1.0,
               "wrong delay in first event");
-      Assert (Event (Inspection.After_Event (Q, 2).all).Payload = 1,
+      Assert (Event (Inspection.After_Event (Q, 2).all).Payload = 2,
               "wrong payload in second event");
-      Assert (Inspection.How_Long_After (Q, 2) = 1.0,
+      Assert (Inspection.How_Long_After (Q, 2) = 0.5,
               "wrong delay in second event");
       begin
          E := Inspection.After_Event (Q, 3);
@@ -296,13 +296,13 @@ package body Event_Test.Test_Inspection is
       Assert (Inspection.Number_Of_Later_Events (Q) = 2,
               "number of later events not 2");
       E := Inspection.Later_Event (Q, 1);
-      Assert (Event (Inspection.Later_Event (Q, 1).all).Payload = 2,
+      Assert (Event (Inspection.Later_Event (Q, 1).all).Payload = 1,
               "wrong payload in first event");
-      Assert (Inspection.When_Later (Q, 1) = T2,
+      Assert (Inspection.When_Later (Q, 1) = T1,
               "wrong delay in first event");
-      Assert (Event (Inspection.Later_Event (Q, 2).all).Payload = 1,
+      Assert (Event (Inspection.Later_Event (Q, 2).all).Payload = 2,
               "wrong payload in second event");
-      Assert (Inspection.When_Later (Q, 2) = T1,
+      Assert (Inspection.When_Later (Q, 2) = T2,
               "wrong delay in second event");
       begin
          E := Inspection.Later_Event (Q, 3);
