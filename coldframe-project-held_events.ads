@@ -10,12 +10,13 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.ads,v $
---  $Revision: 8d79e317b2ac $
---  $Date: 2005/09/29 20:47:06 $
+--  $Revision: 63f8a818a534 $
+--  $Date: 2006/03/03 22:08:25 $
 --  $Author: simonjwright $
 
 with Ada.Real_Time;
 with BC.Containers.Collections.Ordered.Unbounded;
+with BC.Containers.Collections.Unbounded;
 with ColdFrame.Project.Events;
 with ColdFrame.Project.Storage_Pools;
 with ColdFrame.Project.Times;
@@ -42,8 +43,8 @@ package ColdFrame.Project.Held_Events is
                               To_Run_After : Duration;
                               On : in out Queue);
 
-   procedure Start_Processing_After_Events (On : in out Queue);
-   --  After events will not be visible until this procedure has been
+   procedure Start_Processing_Events (On : in out Queue);
+   --  Events will not be visible until this procedure has been
    --  called.
 
    procedure Invalidate_Events (On : Queue;
@@ -87,6 +88,9 @@ private
    is new Abstract_Time_Containers.Collections;
    package Abstract_Ordered_Time_Collections
    is new Abstract_Time_Collections.Ordered;
+   package Initial_Time_Collections
+   is new Abstract_Time_Collections.Unbounded
+     (Storage => ColdFrame.Project.Storage_Pools.Pool);
    package Time_Collections
    is new Abstract_Ordered_Time_Collections.Unbounded
      (Storage => ColdFrame.Project.Storage_Pools.Pool);
@@ -96,6 +100,7 @@ private
    type Queue is limited record
       Started : Boolean := False;
       Duration_Queue : Duration_Collections.Collection;
+      Initial_Queue : Initial_Time_Collections.Collection;
       Queues : Time_Queues;
    end record;
 

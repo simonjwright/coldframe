@@ -10,9 +10,9 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events-signature.ads,v $
---  $Revision: 7778b3e41931 $
---  $Date: 2004/01/16 06:54:58 $
---  $Author: simon $
+--  $Revision: 63f8a818a534 $
+--  $Date: 2006/03/03 22:08:25 $
+--  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature;
 with ColdFrame.Project.Events;
@@ -28,7 +28,7 @@ is new ColdFrame.Project.Events.Held_Event_Queue_Signature
    Pop => Held_Events.Pop,
    Add_At_Event => Held_Events.Add_At_Event,
    Add_After_Event => Held_Events.Add_After_Event,
-   Start_Processing_After_Events
-     => Held_Events.Start_Processing_After_Events,
+   Start_Processing_Events
+     => Held_Events.Start_Processing_Events,
    Invalidate_Events => Held_Events.Invalidate_Events,
    Tear_Down => Held_Events.Tear_Down);

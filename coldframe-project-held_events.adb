@@ -10,8 +10,8 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events.adb,v $
---  $Revision: 9296293e78d4 $
---  $Date: 2005/09/29 20:47:28 $
+--  $Revision: 63f8a818a534 $
+--  $Date: 2006/03/03 22:08:25 $
 --  $Author: simonjwright $
 
 with Ada.Unchecked_Deallocation;
@@ -81,9 +81,17 @@ package body ColdFrame.Project.Held_Events is
                            To_Run_At : Times.Time;
                            On : in out Queue) is
       use Time_Collections;
+      use Initial_Time_Collections;
    begin
-      Append (On.Queues (To_Run_At.Kind), Time_Cell'(Time_To_Fire => To_Run_At,
-                                                     Event => E));
+      if On.Started then
+         Append (On.Queues (To_Run_At.Kind),
+                 Time_Cell'(Time_To_Fire => To_Run_At,
+                            Event => E));
+      else
+         Append (On.Initial_Queue,
+                 Time_Cell'(Time_To_Fire => To_Run_At,
+                            Event => E));
+      end if;
    end Add_At_Event;
 
 
@@ -107,10 +115,13 @@ package body ColdFrame.Project.Held_Events is
    end Add_After_Event;
 
 
-   procedure Start_Processing_After_Events (On : in out Queue) is
+   procedure Start_Processing_Events (On : in out Queue) is
       DI : Abstract_Duration_Containers.Iterator'Class
         := Duration_Collections.New_Iterator (On.Duration_Queue);
+      II : Abstract_Time_Containers.Iterator'Class
+        := Initial_Time_Collections.New_Iterator (On.Initial_Queue);
       use Abstract_Duration_Containers;
+      use Abstract_Time_Containers;
       use type Ada.Real_Time.Time;
    begin
       On.Started := True;
@@ -126,8 +137,17 @@ package body ColdFrame.Project.Held_Events is
          end;
          Next (DI);
       end loop;
+      while not Is_Done (II) loop
+         declare
+            T : Time_Cell renames Current_Item (II);
+         begin
+            Add_At_Event (T.Event, T.Time_To_Fire, On);
+         end;
+         Next (II);
+      end loop;
       Duration_Collections.Clear (On.Duration_Queue);
-   end Start_Processing_After_Events;
+      Initial_Time_Collections.Clear (On.Initial_Queue);
+   end Start_Processing_Events;
 
 
    procedure Invalidate_Events (On : Queue;

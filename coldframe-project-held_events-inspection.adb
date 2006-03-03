@@ -11,69 +11,34 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-held_events-inspection.adb,v $
---  $Revision: facf98450e1d $
---  $Date: 2005/09/21 20:51:33 $
+--  $Revision: 63f8a818a534 $
+--  $Date: 2006/03/03 22:08:25 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Project.Held_Events.Inspection is
 
-   procedure Merge (C : Time_Collections.Collection;
-                    Into : in out Time_Collections.Collection);
-   procedure Merge (C : Time_Collections.Collection;
-                    Into : in out Time_Collections.Collection) is
-      It : Abstract_Time_Containers.Iterator'Class
-        := Time_Collections.New_Iterator (C);
-      use Abstract_Time_Containers;
-   begin
-      while not Is_Done (It) loop
-         Time_Collections.Append (Into, Current_Item (It));
-         Next (It);
-      end loop;
-   end Merge;
-
 
    function Number_Of_At_Events (On : Queue) return Natural is
-      Result : Natural := 0;
    begin
-      for K in Times.Time_Kind loop
-         Result := Result + Time_Collections.Length (On.Queues (K));
-      end loop;
-      return Result;
+      return Initial_Time_Collections.Length (On.Initial_Queue);
    end Number_Of_At_Events;
 
 
    function At_Event (On : Queue;
                       At_Index : Positive) return Events.Event_P is
-      Merged : Time_Collections.Collection;
+      TC : Time_Cell renames
+        Initial_Time_Collections.Item_At (On.Initial_Queue, At_Index);
    begin
-      for K in Times.Time_Kind loop
-         Merge (On.Queues (K), Into => Merged);
-      end loop;
-      --  One would have expected to be able to return
-      --  function-call.component, but GNAT (4.0.0) says it's
-      --  ambiguous.
-      declare
-         TC : Time_Cell
-           renames Time_Collections.Item_At (Merged, At_Index);
-      begin
-         return TC.Event;
-      end;
+      return TC.Event;
    end At_Event;
 
 
    function When_At (On : Queue;
                      At_Index : Positive) return Times.Time is
-      Merged : Time_Collections.Collection;
+      TC : Time_Cell renames
+        Initial_Time_Collections.Item_At (On.Initial_Queue, At_Index);
    begin
-      for K in Times.Time_Kind loop
-         Merge (On.Queues (K), Into => Merged);
-      end loop;
-      declare
-         TC : Time_Cell
-           renames Time_Collections.Item_At (Merged, At_Index);
-      begin
-         return TC.Time_To_Fire;
-      end;
+      return TC.Time_To_Fire;
    end When_At;
 
 
