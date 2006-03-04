@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v a8df723e5968 2006/02/01 20:51:28 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v 2da22a23063f 2006/03/04 17:47:31 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -42,12 +42,15 @@
 
     <!--
          package {domain}.{class}.Unit_Test is
+            type Timer_P is access constant ColdFrame.Project.Events.Timer;
             type State is
               (..);
             function Get_{attr-name}
               (This : Handle) return {attr-type};
             procedure Set_{attr-name)
               (This : Handle; To : {attr-type});
+            function Access_{timer-attr-name}
+              (This : Handle) return Timer_P;
          end {domain}.{class}.Unit_Test;
          -->
 
@@ -60,6 +63,12 @@
     <xsl:text>.Unit_Test is&#10;</xsl:text>
 
     <xsl:value-of select="$blank-line"/>
+
+    <xsl:if test="attribute/type='Timer'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>type Timer_P is access constant ColdFrame.Project.Events.Timer;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
 
     <xsl:if test="statemachine">
       
@@ -134,6 +143,17 @@
       <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
 
+    <xsl:for-each select="attribute[type='Timer']">
+      <xsl:sort select="name"/>
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Access_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>(This : Handle) return Timer_P;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:for-each>
+
     </xsl:if>
 
     <xsl:text>end </xsl:text>
@@ -161,6 +181,11 @@
             begin
                This.{attr-name} := To;
             end Set_{attr-name);
+            function Access_{timer-attr-name}
+              (This : Handle) return Timer_P is
+            begin
+               return This.{timer-attr-name}'Unrestricted_Access;
+            end Access_{timer-attr-name};
          end {domain}.{class}.Unit_Test;
          -->
 
@@ -300,6 +325,27 @@
       <xsl:value-of select="$blank-line"/>
 
     </xsl:if>
+
+    <xsl:for-each select="attribute[type='Timer']">
+      <xsl:sort select="name"/>
+      <xsl:value-of select="$I"/>
+      <xsl:text>function Access_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$IC"/>
+      <xsl:text>(This : Handle) return Timer_P is&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>return This.</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>'Unrestricted_Access;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>end Access_</xsl:text>
+      <xsl:value-of select="name"/>
+      <xsl:text>;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:for-each>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
