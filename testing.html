@@ -1,4 +1,4 @@
-<!-- $Id: testing.html,v 4a277e46b7bf 2006/02/17 18:51:30 simonjwright $ -->
+<!-- $Id: testing.html,v c3a2698e52a9 2006/03/06 20:10:05 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Testing</title>
@@ -48,6 +48,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 </ul>
 
 </ul>
+<li><a href="#inspecting-event-queues">Inspecting event queues</a>
 
 </ul>
 
@@ -108,8 +109,15 @@ class, <tt><i>Domain.Class</i>.Unit_Test</tt>, which
 contains <tt>Get_</tt> and <tt>Set_</tt> subprograms for each mutable
 attribute excluding <i>Timer</i>s and, for a class with a state
 machine, <tt>Get_State_Machine_State</tt>
-and <tt>Set_State_Machine_State</tt> subprograms. Identifying
-attributes are immutable, and only have a <tt>Get_</tt> operation.
+and <tt>Set_State_Machine_State</tt> subprograms.
+
+<p>Identifying attributes are immutable, and only have a <tt>Get_</tt>
+operation.
+
+<p><i>Timer</i>s are supported by an <tt>Access_</tt> function
+returning an access-to-Timer; you can use
+the <a href="#inspecting-event-queues">event queue inspection
+facilities</a> to find out more.
 
 <p>What it does <em>not</em> do is allow you to access private
 subprograms of the class. A common reason for having private
@@ -662,6 +670,77 @@ enabled, <tt>-gnaty</tt>, complains if a subprogram has no spec):
 <pre>
    end House_Management.Test_Suite;
 </pre>
+
+<h2><a name="inspecting-event-queues">Inspecting event queues</a></h2>
+
+<p>If your domain has state machines (and most will), you'll need to
+cater for them in your testing. But it can be very difficult to manage
+a unit test when the state machines are all ticking over with timed
+events every 10 milliseconds!
+
+<p>Rather than posting events to a running event queue and observing
+the results, the supported way of dealing with this is via event queue
+inspection; run the code, using an unstarted event queue, and check
+that the appropriate events have been posted.
+
+<p>An event queue inspector is provided
+in <tt>ColdFrame.Project.Events.Standard.Inspection</tt>.
+
+<p>There's no need to use the <tt>Test</tt> variant, because the queue
+mustn't be started. To create an unstarted standard queue, say
+<pre>
+   Q := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+     (Start_Started => False,
+      Priority => System.Default_Priority,
+      Storage_Size => 20_000);
+</pre>
+
+<p>You can inspect the queue's self events using the functions
+<pre>
+   function Number_Of_Self_Events (On : Event_Queue_P) return Natural;
+   function Self_Event (On : Event_Queue_P;
+                        At_Index : Positive) return Event_P;
+</pre>
+
+<p>You can inspect the queue's standard events (posted to run 'now')
+using the functions
+<pre>
+   function Number_Of_Now_Events (On : Event_Queue_P) return Natural;
+   function Now_Event (On : Event_Queue_P;
+                       At_Index : Positive) return Event_P;
+</pre>
+
+<p>You can inspect the queue's events posted to run after a delay
+using the functions
+<pre>
+   function Number_Of_After_Events (On : Event_Queue_P) return Natural;
+   function After_Event (On : Event_Queue_P;
+                         At_Index : Positive) return Event_P;
+   function How_Long_After (On : Event_Queue_P;
+                            At_Index : Positive) return Duration;
+</pre>
+
+<p>You can inspect the queue's events posted to run at a later time
+using the functions
+<pre>
+   function Number_Of_Later_Events (On : Event_Queue_P) return Natural;
+   function Later_Event (On : Event_Queue_P;
+                         At_Index : Positive) return Event_P;
+   function When_Later (On : Event_Queue_P;
+                        At_Index : Positive) return Time.Time;
+</pre>
+<p>(<tt>Time</tt> is the time support package used in
+instantiating <tt>ColdFrame.Project.Events</tt>,
+usually <tt>ColdFrame.Project.Times</tt>).
+
+<p>All of the above access events in order of posting, and
+raise <tt>Not_Found</tt> if there is no such event.
+
+<p>Additionally, you can access the event held on a <i>Timer</i>:
+<pre>
+   function Event_Of (The_Timer : Timer) return Event_P; 
+</pre>
+<p>(returns <tt>null</tt> if there isn't one).
 
 <p><hr>
 <i>
