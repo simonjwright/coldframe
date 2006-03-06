@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.ads,v $
---  $Revision: 8cc7facbc6e8 $
---  $Date: 2005/10/31 20:52:39 $
+--  $Revision: d66face9dfd2 $
+--  $Date: 2006/03/06 20:12:32 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature.Inspection_Signature;
@@ -72,11 +72,11 @@ package ColdFrame.Events_G.Standard_G.Inspection_G is
 
    --  How many?
    function Number_Of_After_Events (On : Event_Queue_P) return Natural;
-   --  Return the At_Index'th event (in increasing delay order).
+   --  Return the At_Index'th event (in order of posting).
    function After_Event (On : Event_Queue_P;
                          At_Index : Positive) return Event_P;
-   --  Return the delay for the At_Index'th event (in increasing delay
-   --  order).
+   --  Return the delay for the At_Index'th event (in order of
+   --  posting).
    function How_Long_After (On : Event_Queue_P;
                             At_Index : Positive) return Duration;
 
@@ -86,12 +86,11 @@ package ColdFrame.Events_G.Standard_G.Inspection_G is
 
    --  How many?
    function Number_Of_Later_Events (On : Event_Queue_P) return Natural;
-   --  Return the At_Index'th event (in increasing time-to-fire
-   --  order).
+   --  Return the At_Index'th event (in order of posting).
    function Later_Event (On : Event_Queue_P;
                          At_Index : Positive) return Event_P;
    --  Return the time-to-fire for the At_Index'th event (in
-   --  increasing time-to-fire order).
+   --  order of posting).
    function When_Later (On : Event_Queue_P;
                         At_Index : Positive) return Time.Time;
 
