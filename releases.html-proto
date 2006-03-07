@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1545f335a139 2006/02/18 16:50:02 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 91a8eeee8100 2006/03/07 06:43:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -62,8 +62,9 @@ contains the complete documentation.
 
 <li>Improved the presentation of the HTML documents.
 
-<li>Included support
-for <a href="testing.html#access-to-private">low-level unit tests</a>.
+<li>Revised, and documented,the support
+for <a href="testing.html#access-to-private">low-level unit tests</a>
+and <a href="#inspecting-event-queues">inspecting event queues</a>.
 
 <li>Fixed a problem with <tt>Domain_Initialized</tt>, which was
 getting set too early.
