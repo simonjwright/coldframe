@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 8d4479ad9dba 2005/11/24 06:21:29 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v 29fc85001fc1 2006/03/09 21:27:23 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -192,6 +192,7 @@
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
              begin
                 if This /= null then
+                   ColdFrame.Project.Events.Finalize (This.{timer});
                    {teardown} {(This)};                - if any
                    if not This.The_T'Terminated then   - if active
                       abort This.The_T.all;
@@ -225,6 +226,13 @@
 
         <xsl:value-of select="$I"/>
         <xsl:text>if This /= null then&#10;</xsl:text>
+
+        <xsl:for-each select="attribute[type='Timer' and not(@class)]">
+          <xsl:call-template name="td:instance-timer">
+            <xsl:with-param name="indent" select="$II"/>
+            <xsl:with-param name="selector" select="'This'"/>
+          </xsl:call-template>
+        </xsl:for-each>
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
@@ -276,6 +284,7 @@
              begin
                 for I in The_Container'Range loop
                    if The_Container (I)  /= null then
+                      ColdFrame.Project.Events.Finalize (The_Container ().{timer});
                       {teardown} {(The_Container (I))};              - teardown
                       if not The_Container (I).The_T'Terminated then - active
                          abort The_Container (I).The_T.all;
@@ -313,6 +322,13 @@
 
         <xsl:value-of select="$II"/>
         <xsl:text>if The_Container (I) /= null then&#10;</xsl:text>
+
+        <xsl:for-each select="attribute[type='Timer' and not(@class)]">
+          <xsl:call-template name="td:instance-timer">
+            <xsl:with-param name="indent" select="$III"/>
+            <xsl:with-param name="selector" select="'The_Container (I)'"/>
+          </xsl:call-template>
+        </xsl:for-each>
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
@@ -370,6 +386,7 @@
              begin
                 while not Is_Done (It) loop
                    H := Handle (Current_Item (It));
+                   ColdFrame.Project.Events.Finalize (H.{timer});
                    {teardown} (H);                     - if any
                    if not H.The_T'Terminated then      - if active
                       abort H.The_T.all;
@@ -414,6 +431,13 @@
         <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>H := Handle (Current_Item (It));&#10;</xsl:text>
+ 
+        <xsl:for-each select="attribute[type='Timer' and not(@class)]">
+          <xsl:call-template name="td:instance-timer">
+            <xsl:with-param name="indent" select="$II"/>
+            <xsl:with-param name="selector" select="'H'"/>
+          </xsl:call-template>
+        </xsl:for-each>
 
         <xsl:for-each select="operation[@teardown]">
           <xsl:sort select="name"/>
@@ -491,6 +515,22 @@
       <xsl:text>)</xsl:text>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
+
+  </xsl:template>
+
+
+  <!-- Tear down instance timers. -->
+  <xsl:template
+    name="td:instance-timer">
+    <xsl:param name="selector"/>
+    <xsl:param name="indent"/>
+
+    <xsl:value-of select="$indent"/>
+    <xsl:text>ColdFrame.Project.Events.Finalize (</xsl:text>
+    <xsl:value-of select="$selector"/>
+    <xsl:text>.</xsl:text>
+    <xsl:value-of select="name"/>
+    <xsl:text>);&#10;</xsl:text>
 
   </xsl:template>
 
