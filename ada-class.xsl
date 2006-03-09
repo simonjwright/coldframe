@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 8d4479ad9dba 2005/11/24 06:21:29 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 804676fd4b5c 2006/03/09 20:37:46 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1618,7 +1618,6 @@
       <xsl:text>ColdFrame.Project.Events.Finalize (This);&#10;</xsl:text>
       <!-- Check it's OK to delete the instance (ie, not in event
            handler).
-           This will leak memory, but we were in a fatal situation anyway.
            -->
       <xsl:value-of select="$II"/>
       <xsl:text>Check_Deletable (This);&#10;</xsl:text>
