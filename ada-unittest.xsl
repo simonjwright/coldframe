@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v 2da22a23063f 2006/03/04 17:47:31 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v a92983c044a0 2006/03/09 07:05:39 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -36,8 +36,7 @@
   version="1.0">
 
   <xsl:template
-    match="class[attribute[not(@refers) and not(type='Timer')]
-           or statemachine]"
+    match="class[attribute[not(@refers)] or statemachine]"
     mode="un:unit-spec">
 
     <!--
@@ -53,6 +52,10 @@
               (This : Handle) return Timer_P;
          end {domain}.{class}.Unit_Test;
          -->
+
+    <xsl:variable
+      name="instance-needs-this"
+      select="not(@public or @singleton or @utility)"/>
 
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
@@ -105,7 +108,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle) return </xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle) return </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
         <xsl:with-param name="class" select=".."/>        
@@ -124,7 +134,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle; To : </xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle; To : </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>(To : </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
         <xsl:with-param name="class" select=".."/>        
@@ -135,13 +152,26 @@
 
     <xsl:if test="statemachine">
 
-      <xsl:value-of select="$I"/>
-      <xsl:text>function Get_State_Machine_State (This : Handle) return State;&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
-      
-      <xsl:value-of select="$I"/>
-      <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State);&#10;</xsl:text>
-      <xsl:value-of select="$blank-line"/>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this">
+          <xsl:value-of select="$I"/>
+          <xsl:text>function Get_State_Machine_State (This : Handle) return State;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State);&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$I"/>
+          <xsl:text>function Get_State_Machine_State return State;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+          
+          <xsl:value-of select="$I"/>
+          <xsl:text>procedure Set_State_Machine_State (To : State);&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
+        </xsl:otherwise>
+      </xsl:choose>
 
     <xsl:for-each select="attribute[type='Timer']">
       <xsl:sort select="name"/>
@@ -150,7 +180,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle) return Timer_P;&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle) return Timer_P;&#10;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return Timer_P;&#10;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
