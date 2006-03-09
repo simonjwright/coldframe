@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v a92983c044a0 2006/03/09 07:05:39 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v 2e055d68bba0 2006/03/09 21:48:27 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -226,6 +226,10 @@
          end {domain}.{class}.Unit_Test;
          -->
 
+    <xsl:variable
+      name="instance-needs-this"
+      select="not(@public or @singleton or @utility)"/>
+
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
@@ -243,7 +247,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle) return </xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle) return </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
         <xsl:with-param name="class" select=".."/>        
@@ -272,7 +283,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle; To : </xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle; To : </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>(To : </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="ut:type-name">
         <xsl:with-param name="type" select="type"/>
         <xsl:with-param name="class" select=".."/>        
@@ -294,7 +312,14 @@
     <xsl:if test="statemachine">
 
       <xsl:value-of select="$I"/>
-      <xsl:text>function Get_State_Machine_State (This : Handle) return State is&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this">
+          <xsl:text>function Get_State_Machine_State (This : Handle) return State is&#10;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>function Get_State_Machine_State return State is&#10;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:value-of select="$II"/>
       <xsl:text>C : constant array (State_Machine_State_T) of State :=&#10;</xsl:text>
@@ -328,7 +353,14 @@
       <xsl:value-of select="$blank-line"/>
       
       <xsl:value-of select="$I"/>
-      <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State) is&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this">
+          <xsl:text>procedure Set_State_Machine_State (This : Handle; To : State) is&#10;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>procedure Set_State_Machine_State (To : State) is&#10;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:value-of select="$II"/>
       <xsl:text>C : constant array (State) of State_Machine_State_T :=&#10;</xsl:text>
@@ -370,7 +402,14 @@
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:text>(This : Handle) return Timer_P is&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$instance-needs-this and not(@class)">
+          <xsl:text>(This : Handle) return Timer_P is&#10;</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return Timer_P is&#10;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
