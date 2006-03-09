@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f0c86ed5d4c4 2006/03/04 17:46:43 simonjwright $ -->
+<!-- $Id: bugs.html,v 81588ca1e055 2006/03/09 20:13:22 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -235,7 +235,12 @@ the performance of converting a serialized output stream to XML is
 very sluggish.
 <br>SourceForge 1434319
 
-<!-- next: 0349 -->
+<dt>0349 (raised 9.iii.06)
+
+<dd>Teardown doesn't finalize instance Timers (so you get log messages
+about a Timer being destroyed while holding an event).
+
+<!-- next: 0350 -->
 
 </dl>
 
