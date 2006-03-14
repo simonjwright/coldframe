@@ -1,4 +1,4 @@
-<!-- $Id: initialization.html,v da643d6b8ae8 2006/02/04 18:44:08 simonjwright $ -->
+<!-- $Id: initialization.html,v 726acfb4c1e8 2006/03/14 06:45:41 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Initialization</title>
@@ -15,7 +15,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Initialization</h1>
 
-<p>ColdFrame initializes a domain when the you call the
+<p>ColdFrame initializes a domain when you call the
 operation <tt><i>Domain</i>.Initialize</tt>. This operation takes a
 single parameter, defaulted to <tt>null</tt>, that designates
 the <a href="event-use.html#eventqueues">event queue</a> to be used by
@@ -70,11 +70,10 @@ program (or AUnit setup) by:
 </pre>
 
 <p>(<tt>constant</tt> because you don't alter the access value; you
-can alter the priority if you want, though there's no obvious benefit
-to doing so; and you can alter the stack size of the task context
-within which all the state machine actions are executed from the
-default, but it may indicate a problem with your design if you need
-to).
+can set the priority if you want, though there's no obvious benefit to
+doing so; and you can set the stack size of the task context within
+which all the state machine actions are executed from the default, but
+it may indicate a problem with your design if you need to).
 
 <p>After you've initialized all the domains with <tt>Q</tt>, start it
 by
@@ -141,7 +140,23 @@ becomes <tt>True</tt>:
 
 <h2>Class initialization</h2>
 
-<p><i>&#171;init&#187; operations, ordering, how many</i>
+<p>Classes are initialized in alphabetical order.
+
+<p>If you have a class attribute which is an access type (maybe a
+counterpart), the language will initialize it at elaboration but it
+won't be automatically re-initialized
+after <a href="domains.html#teardown">teardown</a> unless you give a
+default value (<tt>= null</tt>) in the model.
+
+<p><a href="event-modelling.html#class-timers">Class <i>Timer</i>s</a>
+may not be reinitialized properly after teardown.
+
+<p>After class attributes have been initialized, any operations
+stereotyped <i>&#171;init&#187;</i> are called, again in alphabetical
+order within the class.
+
+This ordering means that, for most purposes, you'll probably only want
+to have one <i>&#171;init&#187;</i> operation in the domain.
 
 <p><hr>
 <i>
