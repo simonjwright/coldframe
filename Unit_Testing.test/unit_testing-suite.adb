@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: unit_testing-suite.adb,v $
---  $Revision: 40949c6d745f $
---  $Date: 2006/03/15 20:17:38 $
+--  $Revision: cb6befa37495 $
+--  $Date: 2006/03/15 21:54:00 $
 --  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -22,7 +22,7 @@ with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Strings.Unbounded;
 
 with Ada.Exceptions;
-with ColdFrame.Project.Events.Standard;
+with ColdFrame.Project.Events.Standard.Inspection;
 with System;
 with Unit_Testing.Initialize;
 with Unit_Testing.Arr.Unit_Test;
@@ -34,14 +34,68 @@ with Unit_Testing.Tear_Down;
 package body Unit_Testing.Suite is
 
 
+   package CPE renames ColdFrame.Project.Events;
+   package CPESI renames ColdFrame.Project.Events.Standard.Inspection;
+
+   use type CPE.Event_P;
+
+
+   Delivered : Integer;
+
+   type Test_Event is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Integer;
+   end record;
+
+   procedure Handler (Ev : Test_Event);
+   procedure Handler (Ev : Test_Event) is
+   begin
+      Delivered := Ev.Payload;
+   end Handler;
+
+
    procedure Public_Tests
      (C : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Public_Tests
      (C : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, C);
+      Original_X, Original_Y : Integer;
    begin
-      null;
+      Original_X := Public.Unit_Test.Get_X;
+      Public.Unit_Test.Set_X (Original_X + 1);
+      Assert (Public.Unit_Test.Get_X = Original_X + 1,
+              "Public.Unit_Test.Get_X wrong");
+      Original_Y := Public.Unit_Test.Get_Y;
+      Public.Unit_Test.Set_Y (Original_Y + 1);
+      Assert (Public.Unit_Test.Get_Y = Original_Y + 1,
+              "Public.Unit_Test.Get_Y wrong");
    end Public_Tests;
+
+
+   procedure Arr_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Arr_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      H : Arr.Handle;
+      Original_X, Original_Y : Integer;
+      S, T : Arr.Unit_Test.Timer_P;
+   begin
+      H := Arr.Create ((Id => True));
+      Original_X := Arr.Unit_Test.Get_X;
+      Arr.Unit_Test.Set_X (Original_X + 1);
+      Assert (Arr.Unit_Test.Get_X  = Original_X + 1,
+              "Arr.Unit_Test.Get_X wrong");
+      Original_Y := Arr.Unit_Test.Get_Y (H);
+      Arr.Unit_Test.Set_Y (H, Original_Y + 1);
+      Assert (Arr.Unit_Test.Get_Y (H) = Original_Y + 1,
+              "Arr.Unit_Test.Get_Y wrong");
+      S := Arr.Unit_Test.Access_S;
+      Assert (CPESI.Event_Of (S.all) = null,
+              "there is an event on S");
+      T := Arr.Unit_Test.Access_T (H);
+      Assert (CPESI.Event_Of (T.all) = null,
+              "there is an event on T");
+   end Arr_Tests;
 
 
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
@@ -59,7 +113,11 @@ package body Unit_Testing.Suite is
       Register_Routine
         (C,
          Public_Tests'Access,
-         "bad names");
+         "Public class");
+      Register_Routine
+        (C,
+         Arr_Tests'Access,
+         "Array class");
    end Register_Tests;
 
    function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
@@ -70,8 +128,7 @@ package body Unit_Testing.Suite is
 
    procedure Set_Up (C : in out Case_1) is
       pragma Warnings (Off, C);
-      Q : constant ColdFrame.Project.Events.Event_Queue_P
-        := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+      Q : constant CPE.Event_Queue_P := new CPE.Standard.Event_Queue_Base
         (Start_Started => False,
          Priority => System.Default_Priority,
          Storage_Size => 20_000);
