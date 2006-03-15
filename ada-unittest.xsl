@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v 2e055d68bba0 2006/03/09 21:48:27 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v d49a7ab6da91 2006/03/15 20:11:46 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -263,7 +263,14 @@
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>return This.</xsl:text>
+      <xsl:choose>
+        <xsl:when test="not(@class)">
+          <xsl:text>return This.</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:value-of select="name"/>
       <xsl:text>;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -299,7 +306,9 @@
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>This.</xsl:text>
+      <xsl:if test="not(@class)">
+        <xsl:text>This.</xsl:text>
+      </xsl:if>
       <xsl:value-of select="name"/>
       <xsl:text> := To;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -413,7 +422,14 @@
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>return This.</xsl:text>
+      <xsl:choose>
+        <xsl:when test="not(@class)">
+          <xsl:text>return This.</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>return </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:value-of select="name"/>
       <xsl:text>'Unrestricted_Access;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
