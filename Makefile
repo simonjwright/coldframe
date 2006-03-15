@@ -671,6 +671,12 @@ Stub_Test.test/stub_test_suite.adb \
 Stub_Test.test/stub_test_suite.ads
 
 TEST += \
+Unit_Testing.cat Unit_Testing.raw Unit_Testing.gpr \
+Unit_Testing.test/unit_testing-harness.adb \
+Unit_Testing.test/unit_testing-suite.adb \
+Unit_Testing.test/unit_testing-suite.ads
+
+TEST += \
 Bad_Code_Regressions.cat Bad_Code_Regressions.raw \
 Bad_Model_Regressions.cat Bad_Model_Regressions.raw
 
