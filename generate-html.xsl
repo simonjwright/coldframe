@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v ed18f17f335b 2005/10/31 21:18:09 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 99121864e65d 2006/03/15 06:20:32 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -487,7 +487,7 @@
           <xsl:call-template name="type-name-linked">
             <xsl:with-param name="type" select="type"/>
           </xsl:call-template>
-          <xsl:if test="class">
+          <xsl:if test="@class">
             <xsl:text> (class)</xsl:text>
           </xsl:if>
           <xsl:if test="initial">
