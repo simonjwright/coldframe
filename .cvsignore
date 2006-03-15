@@ -6,6 +6,7 @@
 *.norm
 *.pdf
 .build
+.DS_Store
 Makefile-cf Makefile-winnt Makefile-unix
 Serialization.html
 b~*.ad[bs]
