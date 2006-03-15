@@ -44,38 +44,44 @@ app = ADA_PROJECT_PATH=$(cf)
 all:: build-dirs runs fails
 
 runs:: event_test-harness$(exe)
-	./$< -v 2>&1 | tee --append event_test.log
+	./$< -v 2>&1 | tee -a event_test.log
 
 runs:: hierarchies-harness$(exe)
-	./$< -v 2>&1 | tee --append hierarchies.log
+	./$< -v 2>&1 | tee -a hierarchies.log
 
 runs:: initialization-harness$(exe)
-	./$< -v 2>&1 | tee --append initialization.log
+	./$< -v 2>&1 | tee -a initialization.log
 
 runs:: regression_tests$(exe)
-	./$< -v 2>&1 | tee --append regressions.log
+	./$< -v 2>&1 | tee -a regressions.log
 
 runs:: stub_test_harness$(exe)
-	./$< -v 2>&1 | tee --append stub_test.log
+	./$< -v 2>&1 | tee -a stub_test.log
+
+runs:: unit_testing-harness$(exe)
+	./$< -v 2>&1 | tee -a unit_testing.log
 
 fails:: Bad_Model_Regressions.gen
 
 fails:: Bad_Code_Regressions.gen
 
 event_test-harness$(exe): Event_Test.gen force
-	$(app) gnatmake -PEvent_Test 2>&1 | tee --append event_test.log
+	$(app) gnatmake -PEvent_Test 2>&1 | tee -a event_test.log
 
 hierarchies-harness$(exe): Hierarchies.gen force
-	$(app) gnatmake -PHierarchies 2>&1 | tee --append hierarchies.log
+	$(app) gnatmake -PHierarchies 2>&1 | tee -a hierarchies.log
 
 initialization-harness$(exe): Initialization.gen force
-	$(app) gnatmake -PInitialization 2>&1 | tee --append initialization.log
+	$(app) gnatmake -PInitialization 2>&1 | tee -a initialization.log
 
 regression_tests$(exe): Regressions.gen force
-	$(app) gnatmake -PRegressions 2>&1 | tee --append regressions.log
+	$(app) gnatmake -PRegressions 2>&1 | tee -a regressions.log
 
 stub_test_harness$(exe): Stub_Test_Interface.gen force
-	$(app) gnatmake -PStub_Test 2>&1 | tee --append stub_test.log
+	$(app) gnatmake -PStub_Test 2>&1 | tee -a stub_test.log
+
+unit_testing-harness$(exe): Unit_Testing.gen force
+	$(app) gnatmake -PUnit_Testing 2>&1 | tee -a unit_testing.log
 
 Event_Test.gen: force
 	$(MAKE) -f $(parent) $@ 2>&1 | tee event_test.log
@@ -91,6 +97,9 @@ Regressions.gen: force
 
 Stub_Test_Interface.gen: force
 	$(MAKE) -f $(parent) $@ GENERATE_STUBS=yes 2>&1 | tee stub_test.log
+
+Unit_Testing.gen: force
+	$(MAKE) -f $(parent) $@ UNIT_TEST_SUPPORT=yes 2>&1 | tee unit_testing.log
 
 Bad_Model_Regressions.gen: force
 	-$(MAKE) -f $(parent) $@ 2>&1 | tee bad_model_regressions.log
