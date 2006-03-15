@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 804676fd4b5c 2006/03/09 20:37:46 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 2070c85b181c 2006/03/15 21:11:24 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -904,12 +904,12 @@
       <xsl:call-template name="st:state-image-body"/>
     </xsl:if>
 
-    <!-- .. <<message>> event handler bodies .. -->
+    <!-- .. class event handler bodies .. -->
     <xsl:apply-templates mode="st:event-handler-bodies" select="event[@class]">
       <xsl:sort select="name"/>
     </xsl:apply-templates>
 
-    <!-- .. <<event>> event handler bodies .. -->
+    <!-- .. instance event handler bodies .. -->
     <xsl:apply-templates
       mode="st:event-handler-bodies"
       select="statemachine/event">
@@ -917,7 +917,8 @@
     </xsl:apply-templates>
 
     <!-- .. test stub registration .. -->
-    <xsl:if test="$generate-stubs='yes'">
+    <xsl:if test="$generate-stubs='yes'
+                  and operation[not(@access) and not(@entry)]">
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
       <xsl:for-each
