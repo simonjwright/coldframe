@@ -87,7 +87,12 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Initialization.cat"
-		quid       	"43A3EEB50381"))
+		quid       	"43A3EEB50381")
+	    (object Class_Category "Unit Testing"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\Unit_Testing.cat"
+		quid       	"44110BB801FC"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3EF216CA022A"
@@ -163,7 +168,7 @@
 			max_width  	1211
 			label      	
 |These packages are part of ColdFrame's test suite.
-|$Id: Test.mdl,v f352702c49d7 2005/12/17 12:10:58 simonjwright $
+|$Id: Test.mdl,v 6baa80b59ef7 2006/03/17 08:19:13 simonjwright $
 			)
 		    (object CategoryView "Logical View::Regressions" @4
 			location   	(395, 1438)
@@ -297,6 +302,31 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"43A3EEB50381"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::Unit Testing" @9
+			location   	(398, 2128)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@9
+			    location   	(254, 2044)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"Unit Testing")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"44110BB801FC"
 			width      	300
 			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"
