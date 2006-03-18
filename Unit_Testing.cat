@@ -11,7 +11,7 @@
     documentation 	
 |This domain checks out the Unit Test facilities.
 |
-|{revision=$Revision: c9c83a731bc4 $}
+|{revision=$Revision: 9283bdd9aef3 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -60,8 +60,11 @@
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"44110F5702F9"
+				label      	""
 				supplier   	"$UNNAMED$1"
 				quidu      	"44110F4C0344"
+				Event      	(object Event "e"
+				    quid       	"441BE8740382")
 				sendEvent  	(object sendEvent
 				    quid       	"44110F5702FC")))
 			type       	"StartState")
@@ -102,7 +105,7 @@
 				quidu      	"44110F4401B2"
 				autoResize 	TRUE)
 			    (object StateView "EndState" "$UNNAMED$1" @2
-				location   	(790, 710)
+				location   	(787, 710)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -114,7 +117,7 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
-				    location   	(844, 668)
+				    location   	(841, 668)
 				    nlines     	2
 				    max_width  	600
 				    label      	"")
@@ -123,14 +126,45 @@
 				quidu      	"44110F4C0344"
 				autoResize 	TRUE)
 			    (object TransView "" @3
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @4
+				    Parent_View 	@3
+				    location   	(817, 470)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"e"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44110F5702F9"
 				client     	@1
 				supplier   	@2
-				line_style 	0
+				line_style 	3
+				origin_attachment 	(787, 360)
+				terminal_attachment 	(787, 668)
 				x_offset   	FALSE)
-			    (object Label @4
+			    (object Label @5
 				location   	(238, 1233)
 				font       	(object Font
 				    size       	10
@@ -143,7 +177,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1675
-				label      	"$Id: Unit_Testing.cat,v c9c83a731bc4 2006/03/17 08:19:47 simonjwright $"))))))
+				label      	"$Id: Unit_Testing.cat,v 9283bdd9aef3 2006/03/18 11:06:38 simonjwright $"))))))
 	(object Class "Singleton"
 	    quid       	"44110EF60264"
 	    stereotype 	"singleton"
@@ -186,8 +220,11 @@
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"44110FC90018"
+				label      	""
 				supplier   	"$UNNAMED$3"
 				quidu      	"44110FC5017B"
+				Event      	(object Event "e"
+				    quid       	"441BE8740399")
 				sendEvent  	(object sendEvent
 				    quid       	"44110FC9001B")))
 			type       	"StartState")
@@ -206,29 +243,8 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object StateView "StartState" "$UNNAMED$2" @5
-				location   	(435, 353)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				label      	(object ItemLabel
-				    Parent_View 	@5
-				    location   	(477, 323)
-				    nlines     	2
-				    max_width  	600
-				    label      	"")
-				icon_style 	"Icon"
-				line_color 	3342489
-				quidu      	"44110FC202A3"
-				autoResize 	TRUE)
-			    (object StateView "EndState" "$UNNAMED$3" @6
-				location   	(1120, 360)
+			    (object StateView "StartState" "$UNNAMED$2" @6
+				location   	(790, 253)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -240,7 +256,28 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@6
-				    location   	(1174, 318)
+				    location   	(832, 223)
+				    nlines     	2
+				    max_width  	600
+				    label      	"")
+				icon_style 	"Icon"
+				line_color 	3342489
+				quidu      	"44110FC202A3"
+				autoResize 	TRUE)
+			    (object StateView "EndState" "$UNNAMED$3" @7
+				location   	(790, 630)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@7
+				    location   	(844, 588)
 				    nlines     	2
 				    max_width  	600
 				    label      	"")
@@ -248,16 +285,47 @@
 				line_color 	3342489
 				quidu      	"44110FC5017B"
 				autoResize 	TRUE)
-			    (object TransView "" @7
+			    (object TransView "" @8
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @9
+				    Parent_View 	@8
+				    location   	(835, 436)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"e"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"44110FC90018"
-				client     	@5
-				supplier   	@6
-				line_style 	0
+				client     	@6
+				supplier   	@7
+				line_style 	3
+				origin_attachment 	(790, 283)
+				terminal_attachment 	(790, 588)
 				x_offset   	FALSE)
-			    (object Label @8
-				location   	(150, 810)
+			    (object Label @10
+				location   	(155, 1125)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -269,7 +337,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	2005
-				label      	"$Id: Unit_Testing.cat,v c9c83a731bc4 2006/03/17 08:19:47 simonjwright $"))))))
+				label      	"$Id: Unit_Testing.cat,v 9283bdd9aef3 2006/03/18 11:06:38 simonjwright $"))))))
 	(object Class "Public"
 	    quid       	"4411105803D5"
 	    stereotype 	"public"
@@ -328,8 +396,11 @@
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"4411115202BC"
+				label      	""
 				supplier   	"$UNNAMED$5"
 				quidu      	"4411114F02D6"
+				Event      	(object Event "e"
+				    quid       	"441BE87403B6")
 				sendEvent  	(object sendEvent
 				    quid       	"4411115202BF")))
 			type       	"StartState")
@@ -348,7 +419,7 @@
 			origin_x   	0
 			origin_y   	0
 			items      	(list diagram_item_list
-			    (object Label @9
+			    (object Label @11
 				location   	(293, 1193)
 				font       	(object Font
 				    size       	10
@@ -361,9 +432,9 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1840
-				label      	"$Id")
-			    (object StateView "StartState" "$UNNAMED$4" @10
-				location   	(480, 520)
+				label      	"$Id: Unit_Testing.cat,v 9283bdd9aef3 2006/03/18 11:06:38 simonjwright $")
+			    (object StateView "StartState" "$UNNAMED$4" @12
+				location   	(810, 265)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -374,8 +445,8 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@10
-				    location   	(522, 490)
+				    Parent_View 	@12
+				    location   	(852, 235)
 				    nlines     	2
 				    max_width  	600
 				    label      	"")
@@ -383,8 +454,8 @@
 				line_color 	3342489
 				quidu      	"4411114D025B"
 				autoResize 	TRUE)
-			    (object StateView "EndState" "$UNNAMED$5" @11
-				location   	(1490, 510)
+			    (object StateView "EndState" "$UNNAMED$5" @13
+				location   	(809, 710)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -395,8 +466,8 @@
 				    color      	0
 				    default_color 	TRUE)
 				label      	(object ItemLabel
-				    Parent_View 	@11
-				    location   	(1544, 468)
+				    Parent_View 	@13
+				    location   	(863, 668)
 				    nlines     	2
 				    max_width  	600
 				    label      	"")
@@ -404,13 +475,44 @@
 				line_color 	3342489
 				quidu      	"4411114F02D6"
 				autoResize 	TRUE)
-			    (object TransView "" @12
+			    (object TransView "" @14
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object SegLabel @15
+				    Parent_View 	@14
+				    location   	(839, 437)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	60
+				    justify    	0
+				    label      	"e"
+				    pctDist    	0.500000
+				    height     	45
+				    orientation 	0)
 				stereotype 	TRUE
 				line_color 	3342489
 				quidu      	"4411115202BC"
-				client     	@10
-				supplier   	@11
-				line_style 	0
+				client     	@12
+				supplier   	@13
+				line_style 	3
+				origin_attachment 	(809, 295)
+				terminal_attachment 	(809, 668)
 				x_offset   	FALSE)))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -422,7 +524,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Unit Testing::Normal" @13
+		(object ClassView "Class" "Logical View::Unit Testing::Normal" @16
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -438,7 +540,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@13
+			Parent_View 	@16
 			location   	(266, 107)
 			fill_color 	13434879
 			nlines     	1
@@ -450,7 +552,7 @@
 		    fill_color 	13434879
 		    quidu      	"44110E9D01D0"
 		    compartment 	(object Compartment
-			Parent_View 	@13
+			Parent_View 	@16
 			location   	(266, 163)
 			font       	(object Font
 			    size       	10
@@ -465,12 +567,12 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	8
-			max_width  	673)
+			max_width  	680)
 		    width      	694
 		    height     	438
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Unit Testing::Singleton" @14
+		(object ClassView "Class" "Logical View::Unit Testing::Singleton" @17
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -486,7 +588,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@14
+			Parent_View 	@17
 			location   	(1762, 151)
 			fill_color 	13434879
 			nlines     	1
@@ -494,7 +596,7 @@
 			justify    	0
 			label      	"Singleton")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@14
+			Parent_View 	@17
 			location   	(1762, 106)
 			fill_color 	13434879
 			anchor     	10
@@ -507,7 +609,7 @@
 		    fill_color 	13434879
 		    quidu      	"44110EF60264"
 		    compartment 	(object Compartment
-			Parent_View 	@14
+			Parent_View 	@17
 			location   	(1762, 207)
 			font       	(object Font
 			    size       	10
@@ -522,12 +624,12 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	7
-			max_width  	673)
+			max_width  	680)
 		    width      	694
 		    height     	444
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object NoteView @15
+		(object NoteView @18
 		    location   	(628, 742)
 		    font       	(object Font
 			size       	10
@@ -539,7 +641,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@15
+			Parent_View 	@18
 			location   	(400, 681)
 			fill_color 	13434879
 			nlines     	2
@@ -550,15 +652,15 @@
 		    width      	480
 		    height     	135
 		    quidu      	"44110F4003E7")
-		(object AttachView "" @16
+		(object AttachView "" @19
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@13
-		    supplier   	@15
+		    client     	@16
+		    supplier   	@18
 		    line_style 	3
 		    origin_attachment 	(610, 534)
 		    terminal_attachment 	(610, 674))
-		(object Label @17
+		(object Label @20
 		    location   	(137, 1878)
 		    font       	(object Font
 			size       	10
@@ -571,8 +673,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2005
-		    label      	"$Id: Unit_Testing.cat,v c9c83a731bc4 2006/03/17 08:19:47 simonjwright $")
-		(object NoteView @18
+		    label      	"$Id: Unit_Testing.cat,v 9283bdd9aef3 2006/03/18 11:06:38 simonjwright $")
+		(object NoteView @21
 		    location   	(2096, 743)
 		    font       	(object Font
 			size       	10
@@ -584,7 +686,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@18
+			Parent_View 	@21
 			location   	(1861, 684)
 			fill_color 	13434879
 			nlines     	2
@@ -595,15 +697,15 @@
 		    width      	495
 		    height     	130
 		    quidu      	"44110FBC038B")
-		(object AttachView "" @19
+		(object AttachView "" @22
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@14
-		    supplier   	@18
+		    client     	@17
+		    supplier   	@21
 		    line_style 	3
 		    origin_attachment 	(2096, 539)
 		    terminal_attachment 	(2096, 677))
-		(object ClassView "Class" "Logical View::Unit Testing::Public" @20
+		(object ClassView "Class" "Logical View::Unit Testing::Public" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -619,7 +721,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@20
+			Parent_View 	@23
 			location   	(393, 1002)
 			fill_color 	13434879
 			nlines     	1
@@ -627,7 +729,7 @@
 			justify    	0
 			label      	"Public")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@20
+			Parent_View 	@23
 			location   	(393, 957)
 			fill_color 	13434879
 			anchor     	10
@@ -640,7 +742,7 @@
 		    fill_color 	13434879
 		    quidu      	"4411105803D5"
 		    compartment 	(object Compartment
-			Parent_View 	@20
+			Parent_View 	@23
 			location   	(393, 1058)
 			font       	(object Font
 			    size       	10
@@ -655,12 +757,12 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	395)
+			max_width  	402)
 		    width      	416
 		    height     	264
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Unit Testing::Arr" @21
+		(object ClassView "Class" "Logical View::Unit Testing::Arr" @24
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -676,7 +778,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@21
+			Parent_View 	@24
 			location   	(1009, 107)
 			fill_color 	13434879
 			nlines     	1
@@ -688,7 +790,7 @@
 		    fill_color 	13434879
 		    quidu      	"441110FC0088"
 		    compartment 	(object Compartment
-			Parent_View 	@21
+			Parent_View 	@24
 			location   	(1009, 163)
 			font       	(object Font
 			    size       	10
@@ -703,12 +805,12 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	8
-			max_width  	673)
+			max_width  	680)
 		    width      	694
 		    height     	438
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object NoteView @22
+		(object NoteView @25
 		    location   	(1355, 733)
 		    font       	(object Font
 			size       	10
@@ -720,7 +822,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@22
+			Parent_View 	@25
 			location   	(1154, 674)
 			fill_color 	13434879
 			nlines     	2
@@ -731,11 +833,11 @@
 		    width      	426
 		    height     	130
 		    quidu      	"4411113B00E3")
-		(object AttachView "" @23
+		(object AttachView "" @26
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@21
-		    supplier   	@22
+		    client     	@24
+		    supplier   	@25
 		    line_style 	3
 		    origin_attachment 	(1355, 534)
 		    terminal_attachment 	(1355, 667))))))

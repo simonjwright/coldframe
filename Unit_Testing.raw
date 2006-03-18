@@ -1,171 +1,210 @@
 <domain>
+<extractor>extractor.ebs: cf-20060102cvs</extractor>
 <name>Unit Testing</name>
-<documentation><![CDATA[ This domain checks out the Unit Test facilities.
-
-{revision=$Revision: 40949c6d745f $} ]]></documentation>
-<extractor>cat2raw.py: $Revision: 40949c6d745f $</extractor>
 <date>
 <year>2006</year>
 <month>3</month>
-<day>15</day>
-<time>05:38</time>
+<day>18</day>
+<time>11:03</time>
 </date>
+<documentation><![CDATA[ This domain checks out the Unit Test facilities.
+
+{revision=$Revision: 9283bdd9aef3 $} ]]></documentation>
 <classes>
 <class>
 <name>Normal</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
+<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>x</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>y</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>s</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="class, accessor">
+<name>get x|</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get y</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
 <statemachine>
-<documentation></documentation>
 <states>
 <state initial="yes">
 <name>initial</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state final="yes">
 <name>final</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
 <transition>
-<documentation></documentation>
 <source>initial</source>
 <target>final</target>
+<event><name>e</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
 </class>
 <class stereotype="singleton">
 <name>Singleton</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="class">
 <name>x</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>y</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>s</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="class, accessor">
+<name>get x|</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get y</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
 <statemachine>
-<documentation></documentation>
 <states>
 <state initial="yes">
 <name>initial</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state final="yes">
 <name>final</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
 <transition>
-<documentation></documentation>
 <source>initial</source>
 <target>final</target>
+<event><name>e</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
 </class>
 <class stereotype="public">
 <name>Public</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="class">
 <name>x</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>y</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
-</attribute>
-<attribute stereotype="class">
-<name>s</name>
-<documentation></documentation>
-<visibility>PrivateAccess</visibility>
-<type>Timer</type>
-</attribute>
-<attribute>
-<name>t</name>
-<documentation></documentation>
-<visibility>PrivateAccess</visibility>
-<type>Timer</type>
+<initial></initial>
 </attribute>
 </attributes>
 <operations>
@@ -175,66 +214,90 @@
 </class>
 <class>
 <name>Arr</name>
-<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Boolean</type>
+<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>x</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>y</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
+<initial></initial>
 </attribute>
 <attribute stereotype="class">
 <name>s</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 <attribute>
 <name>t</name>
-<documentation></documentation>
 <visibility>PrivateAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
 <type>Timer</type>
+<initial></initial>
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="class, accessor">
+<name>get x|</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get y</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
 <statemachine>
-<documentation></documentation>
 <states>
 <state initial="yes">
 <name>initial</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 <state final="yes">
 <name>final</name>
-<documentation></documentation>
 <entryactions>
 </entryactions>
+<documentation><![CDATA[  ]]></documentation>
 </state>
 </states>
 <transitions>
 <transition>
-<documentation></documentation>
 <source>initial</source>
 <target>final</target>
+<event><name>e</name></event>
+<transitionaction><name></name></transitionaction>
+<documentation><![CDATA[  ]]></documentation>
 </transition>
 </transitions>
 </statemachine>
