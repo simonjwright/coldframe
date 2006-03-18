@@ -12,7 +12,9 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: unit_testing-arr-post_c.adb,v 3a265d7948e3 2006/03/18 17:36:01 simonjwright $
+pragma Style_Checks (Off);
+--  $Id: unit_testing-arr-post_c.adb,v 94977717b3f9 2006/03/18 17:49:18 simonjwright $
+pragma Style_Checks (On);
 
 with ColdFrame.Project.Events;
 with Unit_Testing.Events;
