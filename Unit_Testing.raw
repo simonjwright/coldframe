@@ -1,15 +1,15 @@
 <domain>
-<extractor>extractor.ebs: cf-20060102cvs</extractor>
+<extractor>extractor.ebs: cf-DATE</extractor>
 <name>Unit Testing</name>
 <date>
 <year>2006</year>
 <month>3</month>
 <day>18</day>
-<time>11:03</time>
+<time>11:07</time>
 </date>
 <documentation><![CDATA[ This domain checks out the Unit Test facilities.
 
-{revision=$Revision: 9283bdd9aef3 $} ]]></documentation>
+{revision=$Revision: e87ab7d703f0 $} ]]></documentation>
 <classes>
 <class>
 <name>Normal</name>
@@ -28,7 +28,7 @@
 </attribute>
 <attribute stereotype="class">
 <name>x</name>
-<visibility>PrivateAccess</visibility>
+<visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
 <initial></initial>
@@ -57,7 +57,7 @@
 </attributes>
 <operations>
 <operation stereotype="class, accessor">
-<name>get x|</name>
+<name>get x</name>
 <visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <return>Integer</return>
@@ -111,7 +111,7 @@
 <attributes>
 <attribute stereotype="class">
 <name>x</name>
-<visibility>PrivateAccess</visibility>
+<visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
 <initial></initial>
@@ -140,7 +140,7 @@
 </attributes>
 <operations>
 <operation stereotype="class, accessor">
-<name>get x|</name>
+<name>get x</name>
 <visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <return>Integer</return>
@@ -208,6 +208,22 @@
 </attribute>
 </attributes>
 <operations>
+<operation stereotype="class, accessor">
+<name>get x</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="accessor">
+<name>get y</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<return>Integer</return>
+<parameters>
+</parameters>
+</operation>
 </operations>
 <events>
 </events>
@@ -229,7 +245,7 @@
 </attribute>
 <attribute stereotype="class">
 <name>x</name>
-<visibility>PrivateAccess</visibility>
+<visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <type>Integer</type>
 <initial></initial>
@@ -258,7 +274,7 @@
 </attributes>
 <operations>
 <operation stereotype="class, accessor">
-<name>get x|</name>
+<name>get x</name>
 <visibility>PublicAccess</visibility>
 <documentation><![CDATA[  ]]></documentation>
 <return>Integer</return>
