@@ -13,15 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: unit_testing-suite.adb,v $
---  $Revision: cb6befa37495 $
---  $Date: 2006/03/15 21:54:00 $
+--  $Revision: 5e03b339dffb $
+--  $Date: 2006/03/18 17:30:50 $
 --  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Strings.Unbounded;
 
-with Ada.Exceptions;
 with ColdFrame.Project.Events.Standard.Inspection;
 with System;
 with Unit_Testing.Initialize;
@@ -40,33 +39,21 @@ package body Unit_Testing.Suite is
    use type CPE.Event_P;
 
 
-   Delivered : Integer;
-
-   type Test_Event is new ColdFrame.Project.Events.Event_Base with record
-      Payload : Integer;
-   end record;
-
-   procedure Handler (Ev : Test_Event);
-   procedure Handler (Ev : Test_Event) is
-   begin
-      Delivered := Ev.Payload;
-   end Handler;
-
-
    procedure Public_Tests
      (C : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Public_Tests
      (C : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, C);
-      Original_X, Original_Y : Integer;
    begin
-      Original_X := Public.Unit_Test.Get_X;
-      Public.Unit_Test.Set_X (Original_X + 1);
-      Assert (Public.Unit_Test.Get_X = Original_X + 1,
+      Public.Unit_Test.Set_X (42);
+      Assert (Public.Get_X = 42,
+              "Public.Get_X wrong");
+      Assert (Public.Unit_Test.Get_X = 42,
               "Public.Unit_Test.Get_X wrong");
-      Original_Y := Public.Unit_Test.Get_Y;
-      Public.Unit_Test.Set_Y (Original_Y + 1);
-      Assert (Public.Unit_Test.Get_Y = Original_Y + 1,
+      Public.Unit_Test.Set_Y (43);
+      Assert (Public.Get_Y = 43,
+              "Public.Get_Y wrong");
+      Assert (Public.Unit_Test.Get_Y = 43,
               "Public.Unit_Test.Get_Y wrong");
    end Public_Tests;
 
@@ -77,25 +64,157 @@ package body Unit_Testing.Suite is
      (C : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, C);
       H : Arr.Handle;
-      Original_X, Original_Y : Integer;
       S, T : Arr.Unit_Test.Timer_P;
+      use type Arr.Unit_Test.State;
    begin
       H := Arr.Create ((Id => True));
-      Original_X := Arr.Unit_Test.Get_X;
-      Arr.Unit_Test.Set_X (Original_X + 1);
-      Assert (Arr.Unit_Test.Get_X  = Original_X + 1,
+      Arr.Unit_Test.Set_X (42);
+      Assert (Arr.Get_X  = 42,
+              "Arr.Get_X wrong");
+      Assert (Arr.Unit_Test.Get_X  = 42,
               "Arr.Unit_Test.Get_X wrong");
-      Original_Y := Arr.Unit_Test.Get_Y (H);
-      Arr.Unit_Test.Set_Y (H, Original_Y + 1);
-      Assert (Arr.Unit_Test.Get_Y (H) = Original_Y + 1,
+      Arr.Unit_Test.Set_Y (H, 43);
+      Assert (Arr.Get_Y (H) = 43,
+              "Arr.Get_Y wrong");
+      Assert (Arr.Unit_Test.Get_Y (H) = 43,
               "Arr.Unit_Test.Get_Y wrong");
       S := Arr.Unit_Test.Access_S;
       Assert (CPESI.Event_Of (S.all) = null,
               "there is an event on S");
+      Arr.Post_C;
+      Assert (CPESI.Event_Of (S.all).all in Arr.C'Class,
+              "the event on S is of the wrong class");
       T := Arr.Unit_Test.Access_T (H);
       Assert (CPESI.Event_Of (T.all) = null,
               "there is an event on T");
+      Assert (Arr.Unit_Test.Get_State_Machine_State (H)
+                = Arr.Unit_Test.Initial,
+              "state machine in wrong initial state");
+      declare
+         Ev : Arr.E (H);
+      begin
+         Arr.Handler (Ev);
+      end;
+      Assert (Arr.Unit_Test.Get_State_Machine_State (H)
+                = Arr.Unit_Test.Final,
+              "state machine not in final state");
+      Arr.Unit_Test.Set_State_Machine_State (H,
+                                             To => Arr.Unit_Test.Initial);
+      declare
+         Ev : Arr.E (H);
+      begin
+         Arr.Handler (Ev);
+      end;
+      Assert (Arr.Unit_Test.Get_State_Machine_State (H) =
+                Arr.Unit_Test.Final,
+              "state machine not in final state (2)");
    end Arr_Tests;
+
+
+   procedure Normal_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Normal_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      H : Normal.Handle;
+      S, T : Normal.Unit_Test.Timer_P;
+      use type Normal.Unit_Test.State;
+   begin
+      H := Normal.Create;
+      Normal.Unit_Test.Set_X (42);
+      Assert (Normal.Get_X  = 42,
+              "Normal.Get_X wrong");
+      Assert (Normal.Unit_Test.Get_X  = 42,
+              "Normal.Unit_Test.Get_X wrong");
+      Normal.Unit_Test.Set_Y (H, 43);
+      Assert (Normal.Get_Y (H) = 43,
+              "Normal.Get_Y wrong");
+      Assert (Normal.Unit_Test.Get_Y (H) = 43,
+              "Normal.Unit_Test.Get_Y wrong");
+      S := Normal.Unit_Test.Access_S;
+      Assert (CPESI.Event_Of (S.all) = null,
+              "there is an event on S");
+      Normal.Post_C;
+      Assert (CPESI.Event_Of (S.all).all in Normal.C'Class,
+              "the event on S is of the wrong class");
+      T := Normal.Unit_Test.Access_T (H);
+      Assert (CPESI.Event_Of (T.all) = null,
+              "there is an event on T");
+      Assert (Normal.Unit_Test.Get_State_Machine_State (H)
+                = Normal.Unit_Test.Initial,
+              "state machine in wrong initial state");
+      declare
+         Ev : Normal.E (H);
+      begin
+         Normal.Handler (Ev);
+      end;
+      Assert (Normal.Unit_Test.Get_State_Machine_State (H)
+                = Normal.Unit_Test.Final,
+              "state machine not in final state");
+      Normal.Unit_Test.Set_State_Machine_State (H,
+                                             To => Normal.Unit_Test.Initial);
+      declare
+         Ev : Normal.E (H);
+      begin
+         Normal.Handler (Ev);
+      end;
+      Assert (Normal.Unit_Test.Get_State_Machine_State (H) =
+                Normal.Unit_Test.Final,
+              "state machine not in final state (2)");
+   end Normal_Tests;
+
+
+   procedure Singleton_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Singleton_Tests
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      H : Singleton.Handle;
+      S, T : Singleton.Unit_Test.Timer_P;
+      use type Singleton.Unit_Test.State;
+   begin
+      H := Singleton.Find;
+      Singleton.Unit_Test.Set_X (42);
+      Assert (Singleton.Get_X  = 42,
+              "Singleton.Get_X wrong");
+      Assert (Singleton.Unit_Test.Get_X  = 42,
+              "Singleton.Unit_Test.Get_X wrong");
+      Singleton.Unit_Test.Set_Y (43);
+      Assert (Singleton.Get_Y = 43,
+              "Singleton.Get_Y wrong");
+      Assert (Singleton.Unit_Test.Get_Y = 43,
+              "Singleton.Unit_Test.Get_Y wrong");
+      S := Singleton.Unit_Test.Access_S;
+      Assert (CPESI.Event_Of (S.all) = null,
+              "there is an event on S");
+      Singleton.Post_C;
+      Assert (CPESI.Event_Of (S.all).all in Singleton.C'Class,
+              "the event on S is of the wrong class");
+      T := Singleton.Unit_Test.Access_T;
+      Assert (CPESI.Event_Of (T.all) = null,
+              "there is an event on T");
+      Assert (Singleton.Unit_Test.Get_State_Machine_State
+                = Singleton.Unit_Test.Initial,
+              "state machine in wrong initial state");
+      declare
+         Ev : Singleton.E (H);
+      begin
+         Singleton.Handler (Ev);
+      end;
+      Assert (Singleton.Unit_Test.Get_State_Machine_State
+                = Singleton.Unit_Test.Final,
+              "state machine not in final state");
+      Singleton.Unit_Test.Set_State_Machine_State
+        (To => Singleton.Unit_Test.Initial);
+      declare
+         Ev : Singleton.E (H);
+      begin
+         Singleton.Handler (Ev);
+      end;
+      Assert (Singleton.Unit_Test.Get_State_Machine_State =
+                Singleton.Unit_Test.Final,
+              "state machine not in final state (2)");
+   end Singleton_Tests;
 
 
    type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
@@ -118,6 +237,14 @@ package body Unit_Testing.Suite is
         (C,
          Arr_Tests'Access,
          "Array class");
+      Register_Routine
+        (C,
+         Normal_Tests'Access,
+         "Normal class");
+      Register_Routine
+        (C,
+         Singleton_Tests'Access,
+         "Singleton class");
    end Register_Tests;
 
    function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
