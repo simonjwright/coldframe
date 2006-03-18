@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 7d14662758d9 2006/02/06 20:18:58 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v ef39ccd24d64 2006/03/18 18:35:11 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -42,11 +42,21 @@
       <xsl:text>with Ada.Numerics;&#10;</xsl:text>
     </xsl:if>
 
-    <!-- Context for [[counterpart]] and Counterpart. -->
+    <!-- Context for 
+         (a) {counterpart} and Counterpart
+         (b) use of domain classes as attribute/parameter/result type. -->
+    <xsl:variable name="counterpart">
+      <!-- Need an element to make a nodeset next. -->
+      <xsl:element name="name">Counterpart</xsl:element>
+    </xsl:variable>
+    <xsl:variable
+      name="classes-or-counterpart"
+      select="$counterpart/name
+              | /domain/class/name"/>
     <xsl:if test="type/counterpart
-                  or type/attribute/type='Counterpart'
-                  or type/operation/parameter/type='Counterpart'
-                  or type/operation/@result='Counterpart'">
+                  or type/attribute/type=$classes-or-counterpart
+                  or type/operation/parameter/type=$classes-or-counterpart
+                  or type/operation/@return=$classes-or-counterpart">
       <xsl:text>with ColdFrame.Instances;&#10;</xsl:text>
     </xsl:if>
 
@@ -54,10 +64,10 @@
 
     <xsl:if test="type/attribute/type='Date'
                   or type/operation/parameter/type='Date'
-                  or type/operation/@result='Date'
+                  or type/operation/@return='Date'
                   or type/attribute/type='Time'
                   or type/operation/parameter/type='Time'
-                  or type/operation/@result='Time'">
+                  or type/operation/@return='Time'">
       <!-- The above imply use of ColdFrame.Project.Calendar.Time -->
       <xsl:text>with ColdFrame.Project.Calendar;&#10;</xsl:text>
     </xsl:if>
@@ -73,11 +83,11 @@
 
     <xsl:if test="type/attribute/type='Unbounded_String'
                   or type/operation/parameter/type='Unbounded_String'
-                  or type/operation/@result='Unbounded_String'
+                  or type/operation/@return='Unbounded_String'
                   or type/array/type='Unbounded_String'
                   or type/array/type='Text'
                   or type/operation/parameter/type='Text'
-                  or type/operation/@result='Text'
+                  or type/operation/@return='Text'
                   or type/attribute/type='Text'" >
       <!-- All the above imply use of Unbounded_Strings. -->
       <xsl:text>with Ada.Strings.Unbounded;</xsl:text>
