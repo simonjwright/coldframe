@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Unit_Testing.gpr,v 71305862e0ee 2006/03/15 05:42:32 simonjwright $
+--  $Id: Unit_Testing.gpr,v 5d7d8681e0a1 2006/03/18 17:34:23 simonjwright $
 
 with "Options";
 with "AUnit";
@@ -28,11 +28,12 @@ project Unit_Testing is
   for Source_Dirs use
     (
      "Unit_Testing.gen",
+     "Unit_Testing.impl",
      "Unit_Testing.test"
     );
 
   for Object_Dir use Options'Object_Dir & "/main";
-  package Ide renames Options.Ide;
+  package IDE renames Options.IDE;
   package Builder renames Options.Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
