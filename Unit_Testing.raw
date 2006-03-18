@@ -5,11 +5,11 @@
 <year>2006</year>
 <month>3</month>
 <day>18</day>
-<time>11:07</time>
+<time>17:02</time>
 </date>
 <documentation><![CDATA[ This domain checks out the Unit Test facilities.
 
-{revision=$Revision: e87ab7d703f0 $} ]]></documentation>
+{revision=$Revision: c84e9b07f911 $} ]]></documentation>
 <classes>
 <class>
 <name>Normal</name>
@@ -72,8 +72,32 @@
 <parameters>
 </parameters>
 </operation>
+<operation stereotype="class">
+<name>post c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>receive c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+<parameter>
+<parametername>ev</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>C</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
 </operations>
 <events>
+<event stereotype="class event">
+<name>c</name>
+<type>Empty</type>
+</event>
 </events>
 <statemachine>
 <states>
@@ -155,8 +179,32 @@
 <parameters>
 </parameters>
 </operation>
+<operation stereotype="class">
+<name>post c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>receive c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+<parameter>
+<parametername>ev</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>C</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
 </operations>
 <events>
+<event stereotype="class event">
+<name>c</name>
+<type>Empty</type>
+</event>
 </events>
 <statemachine>
 <states>
@@ -289,8 +337,32 @@
 <parameters>
 </parameters>
 </operation>
+<operation stereotype="class">
+<name>post c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="handler">
+<name>receive c</name>
+<visibility>PublicAccess</visibility>
+<documentation><![CDATA[  ]]></documentation>
+<parameters>
+<parameter>
+<parametername>ev</parametername>
+<documentation><![CDATA[  ]]></documentation>
+<type>C</type>
+<initial></initial>
+</parameter>
+</parameters>
+</operation>
 </operations>
 <events>
+<event stereotype="class event">
+<name>c</name>
+<type>Empty</type>
+</event>
 </events>
 <statemachine>
 <states>
@@ -317,6 +389,20 @@
 </transition>
 </transitions>
 </statemachine>
+</class>
+<class stereotype="type">
+<name>Empty</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ {null} ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
 </class>
 </classes>
 <relationships>

@@ -11,12 +11,19 @@
     documentation 	
 |This domain checks out the Unit Test facilities.
 |
-|{revision=$Revision: e87ab7d703f0 $}
+|{revision=$Revision: c84e9b07f911 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Normal"
 	    quid       	"44110E9D01D0"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"441C3BA601C0"
+		    stereotype 	"class event"
+		    label      	"c"
+		    supplier   	"Logical View::Unit Testing::Empty"
+		    quidu      	"441C3B8800C2"))
 	    operations 	(list Operations
 		(object Operation "get x"
 		    quid       	"441A50A00268"
@@ -29,6 +36,22 @@
 		    quid       	"441A50BC0377"
 		    stereotype 	"accessor"
 		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "post c"
+		    quid       	"441C3C300219"
+		    stereotype 	"class"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "receive c"
+		    quid       	"441C3CA8011B"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "ev"
+			    quid       	"441C3D2100F3"
+			    type       	"C"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -178,10 +201,17 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1675
-				label      	"$Id: Unit_Testing.cat,v e87ab7d703f0 2006/03/18 11:10:43 simonjwright $"))))))
+				label      	"$Id: Unit_Testing.cat,v c84e9b07f911 2006/03/18 17:37:00 simonjwright $"))))))
 	(object Class "Singleton"
 	    quid       	"44110EF60264"
 	    stereotype 	"singleton"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"441C3BEA02FE"
+		    stereotype 	"class event"
+		    label      	"c"
+		    supplier   	"Logical View::Unit Testing::Empty"
+		    quidu      	"441C3B8800C2"))
 	    operations 	(list Operations
 		(object Operation "get x"
 		    quid       	"441A50FD02EE"
@@ -194,6 +224,22 @@
 		    quid       	"441A5140025E"
 		    stereotype 	"accessor"
 		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "post c"
+		    quid       	"441C3C470321"
+		    stereotype 	"class"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "receive c"
+		    quid       	"441C3D22033A"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "ev"
+			    quid       	"441C3D360270"
+			    type       	"C"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -339,7 +385,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	2005
-				label      	"$Id: Unit_Testing.cat,v e87ab7d703f0 2006/03/18 11:10:43 simonjwright $"))))))
+				label      	"$Id: Unit_Testing.cat,v c84e9b07f911 2006/03/18 17:37:00 simonjwright $"))))))
 	(object Class "Public"
 	    quid       	"4411105803D5"
 	    stereotype 	"public"
@@ -370,6 +416,13 @@
 		    exportControl 	"Public")))
 	(object Class "Arr"
 	    quid       	"441110FC0088"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"441C3BCB02BD"
+		    stereotype 	"class event"
+		    label      	"c"
+		    supplier   	"Logical View::Unit Testing::Empty"
+		    quidu      	"441C3B8800C2"))
 	    operations 	(list Operations
 		(object Operation "get x"
 		    quid       	"441A50F5036F"
@@ -382,6 +435,22 @@
 		    quid       	"441A510E023E"
 		    stereotype 	"accessor"
 		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "post c"
+		    quid       	"441C3C3E016F"
+		    stereotype 	"class"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "receive c"
+		    quid       	"441C3CFC0399"
+		    stereotype 	"handler"
+		    parameters 	(list Parameters
+			(object Parameter "ev"
+			    quid       	"441C3D140004"
+			    type       	"C"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -450,7 +519,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1840
-				label      	"$Id: Unit_Testing.cat,v e87ab7d703f0 2006/03/18 11:10:43 simonjwright $")
+				label      	"$Id: Unit_Testing.cat,v c84e9b07f911 2006/03/18 17:37:00 simonjwright $")
 			    (object StateView "StartState" "$UNNAMED$4" @12
 				location   	(810, 265)
 				font       	(object Font
@@ -531,7 +600,11 @@
 				line_style 	3
 				origin_attachment 	(809, 295)
 				terminal_attachment 	(809, 668)
-				x_offset   	FALSE)))))))
+				x_offset   	FALSE))))))
+	(object Class "Empty"
+	    quid       	"441C3B8800C2"
+	    documentation 	"{null}"
+	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"44110C0C01D5"
@@ -547,7 +620,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(604, 315)
+		    location   	(604, 708)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -559,7 +632,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@16
-			location   	(270, 107)
+			location   	(270, 455)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	668
@@ -571,7 +644,7 @@
 		    quidu      	"44110E9D01D0"
 		    compartment 	(object Compartment
 			Parent_View 	@16
-			location   	(270, 163)
+			location   	(270, 511)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -584,10 +657,10 @@
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	8
-			max_width  	672)
+			nlines     	10
+			max_width  	665)
 		    width      	686
-		    height     	438
+		    height     	528
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Unit Testing::Singleton" @17
@@ -595,7 +668,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(2100, 317)
+		    location   	(2100, 710)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -607,7 +680,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@17
-			location   	(1766, 151)
+			location   	(1766, 499)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	668
@@ -615,7 +688,7 @@
 			label      	"Singleton")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@17
-			location   	(1766, 106)
+			location   	(1766, 454)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -628,7 +701,7 @@
 		    quidu      	"44110EF60264"
 		    compartment 	(object Compartment
 			Parent_View 	@17
-			location   	(1766, 207)
+			location   	(1766, 555)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -641,14 +714,14 @@
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	7
-			max_width  	672)
+			nlines     	9
+			max_width  	665)
 		    width      	686
-		    height     	444
+		    height     	534
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object NoteView @18
-		    location   	(628, 742)
+		    location   	(628, 1135)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -660,7 +733,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@18
-			location   	(400, 681)
+			location   	(400, 1074)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	420
@@ -676,10 +749,10 @@
 		    client     	@16
 		    supplier   	@18
 		    line_style 	3
-		    origin_attachment 	(610, 534)
-		    terminal_attachment 	(610, 674))
+		    origin_attachment 	(610, 972)
+		    terminal_attachment 	(610, 1067))
 		(object Label @20
-		    location   	(137, 1878)
+		    location   	(162, 2124)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -691,9 +764,9 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2005
-		    label      	"$Id: Unit_Testing.cat,v e87ab7d703f0 2006/03/18 11:10:43 simonjwright $")
+		    label      	"$Id: Unit_Testing.cat,v c84e9b07f911 2006/03/18 17:37:00 simonjwright $")
 		(object NoteView @21
-		    location   	(2096, 743)
+		    location   	(2096, 1136)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -705,7 +778,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@21
-			location   	(1861, 684)
+			location   	(1861, 1077)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	435
@@ -721,14 +794,14 @@
 		    client     	@17
 		    supplier   	@21
 		    line_style 	3
-		    origin_attachment 	(2096, 539)
-		    terminal_attachment 	(2096, 677))
+		    origin_attachment 	(2096, 977)
+		    terminal_attachment 	(2096, 1070))
 		(object ClassView "Class" "Logical View::Unit Testing::Public" @23
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(592, 1078)
+		    location   	(617, 1717)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -740,7 +813,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@23
-			location   	(258, 957)
+			location   	(283, 1596)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	668
@@ -748,7 +821,7 @@
 			label      	"Public")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@23
-			location   	(258, 912)
+			location   	(283, 1551)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -761,7 +834,7 @@
 		    quidu      	"4411105803D5"
 		    compartment 	(object Compartment
 			Parent_View 	@23
-			location   	(258, 1013)
+			location   	(283, 1652)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -775,7 +848,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	5
-			max_width  	665)
+			max_width  	672)
 		    width      	686
 		    height     	354
 		    annotation 	8
@@ -785,7 +858,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1347, 315)
+		    location   	(1347, 709)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -797,7 +870,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@24
-			location   	(1013, 107)
+			location   	(1013, 456)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	668
@@ -809,7 +882,7 @@
 		    quidu      	"441110FC0088"
 		    compartment 	(object Compartment
 			Parent_View 	@24
-			location   	(1013, 163)
+			location   	(1013, 512)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -822,14 +895,14 @@
 			icon_style 	"Icon"
 			fill_color 	13434879
 			anchor     	2
-			nlines     	8
-			max_width  	672)
+			nlines     	10
+			max_width  	665)
 		    width      	686
-		    height     	438
+		    height     	528
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object NoteView @25
-		    location   	(1355, 733)
+		    location   	(1355, 1126)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -841,7 +914,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@25
-			location   	(1154, 674)
+			location   	(1154, 1067)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	366
@@ -857,5 +930,214 @@
 		    client     	@24
 		    supplier   	@25
 		    line_style 	3
-		    origin_attachment 	(1355, 534)
-		    terminal_attachment 	(1355, 667))))))
+		    origin_attachment 	(1355, 973)
+		    terminal_attachment 	(1355, 1060))
+		(object ClassView "Class" "Logical View::Unit Testing::Empty" @27
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1353, 112)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@27
+			location   	(1270, 86)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	166
+			justify    	0
+			label      	"Empty")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@27
+			location   	(1270, 41)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	163
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"441C3B8800C2"
+		    width      	184
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "c" @28
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@28
+			location   	(1350, 319)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"c")
+		    stereotype 	(object SegLabel @29
+			Parent_View 	@28
+			location   	(1244, 253)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.677217
+			height     	10
+			orientation 	1)
+		    line_color 	3342489
+		    quidu      	"441C3BCB02BD"
+		    client     	@24
+		    supplier   	@27
+		    line_style 	0)
+		(object UsesView "c" @30
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1944, 108)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"c")
+		    stereotype 	(object SegLabel @31
+			Parent_View 	@30
+			location   	(1838, 42)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.407478
+			height     	53
+			orientation 	1)
+		    line_color 	3342489
+		    quidu      	"441C3BEA02FE"
+		    client     	@17
+		    supplier   	@27
+		    vertices   	(list Points
+			(2108, 443)
+			(2108, 108)
+			(1445, 108))
+		    line_style 	3
+		    origin_attachment 	(2108, 443)
+		    terminal_attachment 	(1445, 108))
+		(object UsesView "c" @32
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@32
+			location   	(792, 108)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"c")
+		    stereotype 	(object SegLabel @33
+			Parent_View 	@32
+			location   	(686, 42)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	10
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"<<class event>>"
+			pctDist    	0.508343
+			height     	44
+			orientation 	0)
+		    line_color 	3342489
+		    quidu      	"441C3BA601C0"
+		    client     	@16
+		    supplier   	@27
+		    vertices   	(list Points
+			(658, 444)
+			(658, 108)
+			(1261, 108))
+		    line_style 	3
+		    origin_attachment 	(658, 444)
+		    terminal_attachment 	(1261, 108))
+		(object CategoryView "Logical View::Unit Testing" @34
+		    location   	(2413, 1690)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@34
+			location   	(2243, 1606)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Unit Testing")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"44110BB801FC"
+		    width      	352
+		    height     	180)))))
