@@ -672,6 +672,9 @@ Stub_Test.test/stub_test_suite.ads
 
 TEST += \
 Unit_Testing.cat Unit_Testing.raw Unit_Testing.gpr \
+Unit_Testing.impl/unit_testing-arr-post_c.adb \
+Unit_Testing.impl/unit_testing-normal-post_c.adb \
+Unit_Testing.impl/unit_testing-singleton-post_c.adb \
 Unit_Testing.test/unit_testing-harness.adb \
 Unit_Testing.test/unit_testing-suite.adb \
 Unit_Testing.test/unit_testing-suite.ads
