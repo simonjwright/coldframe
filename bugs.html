@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 81588ca1e055 2006/03/09 20:13:22 simonjwright $ -->
+<!-- $Id: bugs.html,v c9e0212189c5 2006/03/20 21:03:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -234,17 +234,26 @@ not be detected.
 the performance of converting a serialized output stream to XML is
 very sluggish.
 <br>SourceForge 1434319
-
-<dt>0349 (raised 9.iii.06)
-
-<dd>Teardown doesn't finalize instance Timers (so you get log messages
-about a Timer being destroyed while holding an event).
+<br><i>Some initial work done --
+see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
+better to have a primitive Print operation.</i>
 
 <!-- next: 0350 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>18.iii.06</h3>
+
+<dl>
+
+<dt>0349 (raised 9.iii.06)
+
+<dd>Teardown doesn't finalize instance Timers (so you get log messages
+about a Timer being destroyed while holding an event).
+
+</dl>
 
 <h3>4.iii.06</h3>
 
