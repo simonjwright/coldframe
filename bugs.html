@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 17190e5fb459 2006/03/22 19:59:50 simonjwright $ -->
+<!-- $Id: bugs.html,v a266d61a217a 2006/03/22 23:53:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -206,13 +206,6 @@ called; which means that those entry actions had better not depend on
 any of the class initializations.
 <br>SourceForge 1303319
 
-<dt>0331 (raised 27.ix.05)
-
-<dd>If a &#171;type&#187; includes an attribute whose type is a class
-in the domain (which is translated
-as <tt>ColdFrame.Instances.Handle</tt>), that of itself doesn't cause
-a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
-
 <dt>0332 (raised 30.ix.05)
 
 <dd>You can't
@@ -238,6 +231,23 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
+<!-- next: 0351 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>22.iii.06</h3>
+
+<dl>
+
+<dt>0331 (raised 27.ix.05)
+
+<dd>If a &#171;type&#187; includes an attribute whose type is a class
+in the domain (which is translated
+as <tt>ColdFrame.Instances.Handle</tt>), that of itself doesn't cause
+a <tt>with</tt> of <tt>ColdFrame.Instances</tt>.
+
 <dt>0350 (raised 22.iii.06)
 
 <dd>If the interface part of a domain that has no operations of types
@@ -246,11 +256,7 @@ the full domain does have operations of types (or protected types),
 because you can't just use an extension GPR to override the full
 software tree.
 
-<!-- next: 0351 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>18.iii.06</h3>
 
