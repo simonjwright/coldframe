@@ -20,11 +20,11 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions-message.adb,v $
---  $Revision: 13b9a04bb991 $
---  $Date: 2005/11/09 21:48:57 $
+--  $Revision: 88d784333d29 $
+--  $Date: 2006/03/22 23:46:56 $
 --  $Author: simonjwright $
 
-with ColdFrame.Project.Logging_Support;
+with ColdFrame.Project.Log_Error;
 
 procedure ColdFrame.Exceptions.Message
   (S : String; E : Ada.Exceptions.Exception_Occurrence) is
