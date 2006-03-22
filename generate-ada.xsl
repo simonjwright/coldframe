@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v e8bb8bcdcec0 2006/01/29 20:46:48 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 28daf18c1920 2006/03/22 23:51:35 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -163,6 +163,33 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
+    <!-- If there are operations of types, or if we are generating
+         stubs, we will need a package body.
+         The reason for needing a package body if we are stubbing is
+         that the full domain might have elements that require a body;
+         if the stubbed interface doesn't, the extra and unneeded body
+         code would be an embarrassment.
+         -->
+    <xsl:variable
+      name="type-operations" 
+      select="type/operation
+              [not(@access)
+              and not(@suppressed)
+              and not(@imported)
+              and not(@renames)]"/>
+    <xsl:variable 
+      name="plain-type-operations"
+      select="type[not(@protected)]/operation[not(@access)
+              and not(@suppressed)
+              and not(@imported)
+              and not(@renames)]"/>
+
+    <xsl:if test="$generate-stubs='yes' and not($plain-type-operations)">
+      <xsl:value-of select="$I"/>
+      <xsl:text>pragma Elaborate_Body;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
     <!-- .. any exceptions .. -->
     <xsl:call-template name="ut:progress-message">
       <xsl:with-param name="m" select="'.. any exceptions ..'"/>
@@ -303,14 +330,7 @@
     <xsl:text>;&#10;</xsl:text>
 
     <!-- .. the domain package body, if needed .. -->
-    <xsl:variable
-      name="type-operations"
-      select="type/operation[not(@access)
-              and not(@suppressed)
-              and not(@imported)
-              and not(@renames)]"/>
-
-    <xsl:if test="$type-operations">
+    <xsl:if test="$generate-stubs='yes' or $type-operations">
 
       <xsl:call-template name="ut:do-not-edit"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
@@ -318,12 +338,6 @@
 
       <!-- If we have operations of plain types and we're stubbing, we
            must register them. -->
-      <xsl:variable 
-        name="plain-type-operations"
-        select="type[not(@protected)]/operation[not(@access)
-                and not(@suppressed)
-                and not(@imported)
-                and not(@renames)]"/>
 
       <xsl:if test="$generate-stubs='yes' and $plain-type-operations">
         <xsl:text>with ColdFrame.Stubs;&#10;</xsl:text>
