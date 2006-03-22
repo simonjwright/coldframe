@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c9e0212189c5 2006/03/20 21:03:47 simonjwright $ -->
+<!-- $Id: bugs.html,v 17190e5fb459 2006/03/22 19:59:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -238,7 +238,15 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<!-- next: 0350 -->
+<dt>0350 (raised 22.iii.06)
+
+<dd>If the interface part of a domain that has no operations of types
+is being stubbed, no package body is generated. This is a Bad Thing if
+the full domain does have operations of types (or protected types),
+because you can't just use an extension GPR to override the full
+software tree.
+
+<!-- next: 0351 -->
 
 </dl>
 
