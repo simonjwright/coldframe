@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v ef39ccd24d64 2006/03/18 18:35:11 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v faa26b4f2ff2 2006/03/23 20:25:15 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -236,7 +236,9 @@
                 <xsl:sort select="."/>
                 <xsl:text>  no definition of type </xsl:text>
                 <xsl:value-of select="."/>
-                <xsl:text>&#10;</xsl:text>
+                <xsl:if test="position() &lt; last()">
+                  <xsl:text>,&#10;</xsl:text>
+                </xsl:if>
               </xsl:for-each>
             </xsl:for-each>
           </xsl:message>
