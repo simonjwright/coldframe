@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v faa26b4f2ff2 2006/03/23 20:25:15 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 31f5a4548dbb 2006/03/23 20:34:00 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -789,6 +789,8 @@
           <xsl:value-of select="name"/>
           <xsl:text>_Package);&#10;</xsl:text>
         </xsl:when>
+
+        <xsl:when test="subtype"/>
 
         <xsl:when test="unsigned"/>
 
