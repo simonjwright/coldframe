@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 91a8eeee8100 2006/03/07 06:43:50 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 1cfb2f78f913 2006/03/23 00:02:40 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -60,11 +60,18 @@ contains the complete documentation.
 <dd>
 <ul class="release">
 
+<li><b>Documentation</b>
+
 <li>Improved the presentation of the HTML documents.
 
 <li>Revised, and documented,the support
 for <a href="testing.html#access-to-private">low-level unit tests</a>
-and <a href="#inspecting-event-queues">inspecting event queues</a>.
+and <a href="#inspecting-event-queues">inspecting event
+queues</a>. Note in particular that the accessors for a state
+machine's current state are
+now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State.</i>
+
+<li><b>Code</b>
 
 <li>Fixed a problem with <tt>Domain_Initialized</tt>, which was
 getting set too early.
@@ -79,8 +86,12 @@ expect.
 <li>Setting up 'output' values and exceptions for stubbed operations
 is now thread-safe.
 
-<li>It was inconvenient to retrieve the "last" value of an
-<i>in</i> parameter.
+<li>It's more convenient to retrieve the "last" value of an <i>in</i>
+parameter.
+
+<li>A domain package body is generated even if there are no operations
+of types (in case the full domain does have a body, to avoid
+compilation difficulties with extension GPRs).
 
 </ul>
 
