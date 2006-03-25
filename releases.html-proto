@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1cfb2f78f913 2006/03/23 00:02:40 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 145de00693c5 2006/03/25 22:04:20 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -66,10 +66,22 @@ contains the complete documentation.
 
 <li>Revised, and documented,the support
 for <a href="testing.html#access-to-private">low-level unit tests</a>
-and <a href="#inspecting-event-queues">inspecting event
+and <a href="testing.html#inspecting-event-queues">inspecting event
 queues</a>. Note in particular that the accessors for a state
 machine's current state are
-now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State.</i>
+now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State</i>,
+and that when inspecting an event queue the events are held in posting
+order, not time order.
+
+<li><b>Modelling</b>
+
+<li>You can specify &#171;atomic&#187; and &#171;volatile&#187; (as
+well as <i>{atomic}</i> and <i>{volatile}</i>).
+
+<li><b>Generation</b>
+
+<li>Warnings are generated for unrecognised stereotypes (but not for
+tagged values).
 
 <li><b>Code</b>
 
