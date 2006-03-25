@@ -1,4 +1,4 @@
-<!-- $Id: extraction.html,v 90e2275914a5 2005/11/20 21:31:39 simonjwright $ -->
+<!-- $Id: extraction.html,v 18c4d9339222 2006/03/25 18:31:46 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Extraction of models from Rose</title>
@@ -14,6 +14,16 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 </div>
 
 <h1>ColdFrame: Extraction of models from Rose</h1>
+
+<p>Rose keeps your model in a <tt>.mdl</tt> file. It's probably a good
+idea to keep the individual domains in separate <tt>.cat</tt> files;
+you do this in Rose by making them 'controlled units'.
+
+<p>ColdFrame needs the individual domains to be extracted
+to <tt>.raw</tt> files for further processing. There are two ways of
+doing this.
+
+<h2>Extraction from within Rose</h2>
 
 <p>The Rose model is extracted to a raw "domain definition file" (type
 <tt>.raw</tt>) using a RoseScript script <tt>extractor.ebs</tt>.
@@ -80,6 +90,27 @@ directory.
 href="ColdFrame-raw.xsd">schema</a> designed to be easy to output from
 RoseScript and to handle in the next stage using a SAX-compliant
 parser.
+
+<h2>Extraction using <tt>cat2raw.py</tt></h2>
+
+<p>Provided you keep each domain in its own <tt>.cat</tt> file, you
+can convert the <tt>.cat</tt> to <tt>.raw</tt> format using the Python
+script <tt>cat2raw.py</tt>.
+
+<p>This script depends on
+the <a href="http://savannah.nongnu.org/projects/ply/">PLY</a> parsing
+library.
+
+<p>Its usage is
+<pre>
+   $ python cat2raw.py -h
+   cat2raw.py $Revision: 18c4d9339222 $
+   usage: cat2raw.py [flags] [input cat file]
+   flags:
+   -h, --help:              output this message
+   -o, --output=PATH:       the output path/file (default is ./domain_name.raw)
+   -r, --reversionary-mode: output to previous standard (20040319)
+</pre>
 
 <p><hr>
 <i>
