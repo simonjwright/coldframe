@@ -1,4 +1,4 @@
-# $Id: setup.sh,v 582fe9b01914 2005/05/16 12:50:48 simonjwright $
+# $Id: setup.sh,v d93d4560de01 2006/03/26 15:30:10 simonjwright $
 # Sets up environment variables for development of the Stairwell demo
 # (very local!).
 
@@ -13,6 +13,7 @@ export BUILD_BASE=$cf/.build
 export CASE_EXCEPTIONS=\
 $HOME/.emacs_case_exceptions:\
 $cf/emacs_case_exceptions
+export COLDFRAME=cf
 case `uname` in
     Linux)
 	# hey, I know this is antique, but it works for me ..
