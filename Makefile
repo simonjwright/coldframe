@@ -691,7 +691,31 @@ cf-$(DATE).zip
 
 SFUSER ?= simonjwright
 
-upload-docs: $(DOCS) force
+upload-docs: top-index.html $(DOCS) force
+	$(RSYNC) \
+	  --compress \
+	  --copy-unsafe-links \
+	  --cvs-exclude \
+	  --perms \
+	  --recursive \
+	  --rsh=ssh \
+	  --times \
+	  --update \
+	  --verbose \
+	  top-index.html\
+	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/index.html
+	$(RSYNC) \
+	  --compress \
+	  --copy-unsafe-links \
+	  --cvs-exclude \
+	  --perms \
+	  --recursive \
+	  --rsh=ssh \
+	  --times \
+	  --update \
+	  --verbose \
+	  cf.css \
+	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -703,7 +727,7 @@ upload-docs: $(DOCS) force
 	  --update \
 	  --verbose \
 	  $(DOCS) \
-	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/
+	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/coldframe
 
 # The complete distribution
 
