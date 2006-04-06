@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v a266d61a217a 2006/03/22 23:53:27 simonjwright $ -->
+<!-- $Id: bugs.html,v e25caf239236 2006/04/06 05:30:55 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -231,7 +231,14 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<!-- next: 0351 -->
+<dt>0351 (raised 6.iv.06)
+
+<dd>If you specify a class function returning Handle, the generated
+stub tries to return <tt>Handle'First</tt> instead of <tt>null</tt>.
+(The 'official' way of specifying the type of the current class is to
+use the class's name).
+
+<!-- next: 0352 -->
 
 </dl>
 
