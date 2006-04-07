@@ -13,6 +13,16 @@
 	(object Class "S"
 	    quid       	"3D4416940320"
 	    stereotype 	"singleton"
+	    operations 	(list Operations
+		(object Operation "modify"
+		    quid       	"4435ECB501BF"
+		    parameters 	(list Parameters
+			(object Parameter "h"
+			    quid       	"4435ECF40206"
+			    type       	"Handle"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "a"
 		    quid       	"3D4688DC0004"
@@ -22,7 +32,6 @@
 		    quid       	"3D4688E90139"
 		    stereotype 	"class"
 		    type       	"Handle"
-		    quidu      	"3A7C3037017F"
 		    initv      	"null")
 		(object ClassAttribute "d"
 		    quid       	"3D468919020A"
@@ -32,6 +41,13 @@
 	(object Class "O"
 	    quid       	"3D44170A01F3"
 	    documentation 	"[[ max : 1 ]]"
+	    operations 	(list Operations
+		(object Operation "provide b"
+		    quid       	"4435ECD80237"
+		    result     	"Handle"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
 	    class_attributes 	(list class_attribute_list
 		(object ClassAttribute "id"
 		    quid       	"3D44171A0066"
@@ -45,7 +61,6 @@
 		    quid       	"3D468935016A"
 		    stereotype 	"class"
 		    type       	"Handle"
-		    quidu      	"3A7C3037017F"
 		    initv      	"null")
 		(object ClassAttribute "d"
 		    quid       	"3D46894301B1"
@@ -121,7 +136,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@2
-			location   	(532, 438)
+			location   	(532, 439)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	196
@@ -161,7 +176,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@3
-			location   	(1877, 759)
+			location   	(1877, 737)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	506
@@ -171,8 +186,25 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D44170A01F3"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(1877, 793)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	502)
 		    width      	524
-		    height     	304
+		    height     	348
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Ones::S" @4
@@ -192,7 +224,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@4
-			location   	(377, 800)
+			location   	(377, 779)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	506
@@ -200,7 +232,7 @@
 			label      	"S")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@4
-			location   	(377, 756)
+			location   	(377, 734)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -211,8 +243,25 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3D4416940320"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(377, 835)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	502)
 		    width      	524
-		    height     	310
+		    height     	354
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object AssociationViewNew "a1" @5
@@ -265,7 +314,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @8
 				Parent_View 	@7
-				location   	(1774, 859)
+				location   	(1769, 859)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -292,7 +341,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @9
 				Parent_View 	@7
-				location   	(1820, 954)
+				location   	(1817, 954)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -325,7 +374,7 @@
 				default_color 	TRUE)
 			    label      	(object SegLabel @11
 				Parent_View 	@10
-				location   	(1003, 860)
+				location   	(990, 860)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -352,7 +401,7 @@
 			    line_style 	0
 			    label      	(object SegLabel @12
 				Parent_View 	@10
-				location   	(946, 954)
+				location   	(942, 954)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
