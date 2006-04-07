@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: d7daf46ee7c7 $
---  $Date: 2005/05/10 20:16:52 $
+--  $Revision: 1a3cce9fba4e $
+--  $Date: 2006/04/07 06:08:36 $
 --  $Author: simonjwright $
 
 with Ada.Task_Identification;
@@ -119,7 +119,7 @@ private
 
    task type Held_Event_Manager (The_Queue : access Event_Queue_Base'Class) is
 
-      pragma Task_Name ("aTimerManager");
+      pragma Task_Name ("aHeldEventManager");
       --  No need to specify priority (because we only deal with timed
       --  events anyway) or stack size (if anything, we could reduce
       --  it, since there's no user code to call).
