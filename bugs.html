@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v cc4344f6f2d7 2006/04/07 06:07:24 simonjwright $ -->
+<!-- $Id: bugs.html,v 6465895826a3 2006/04/08 15:19:52 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -233,10 +233,12 @@ better to have a primitive Print operation.</i>
 
 <dt>0351 (raised 6.iv.06)
 
-<dd>If you specify a class function returning Handle, the generated
+<dd>If you specify a function returning Handle, the generated
 stub tries to return <tt>Handle'First</tt> instead of <tt>null</tt>.
-(The 'official' way of specifying the type of the current class is to
-use the class's name).
+<br><i>If the <tt>Handle</tt> represents an instance of a class in
+this domain (including 'this' class), use the class name. If it
+represents an instance of a class in another domain,
+use <tt>Counterpart</tt> (or a <tt>{counterpart}</tt> type).</i>
 
 <dt>0352 (raised 6.iv.06)
 
