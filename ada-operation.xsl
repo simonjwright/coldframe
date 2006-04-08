@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 988f13c566b4 2006/03/15 20:15:57 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v fea63221d361 2006/04/08 15:24:06 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -281,7 +281,9 @@
             <xsl:call-template name="op:subprogram-specification">
               <xsl:with-param name="indent" select="$I"/>
             </xsl:call-template>
-            <xsl:text> is separate;&#10;</xsl:text>
+            <xsl:text>&#10;</xsl:text>
+            <xsl:value-of select="$I"/>
+            <xsl:text>is separate;&#10;</xsl:text>
             <xsl:value-of select="$I"/>
             <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
             <xsl:value-of select="$blank-line"/>
@@ -588,6 +590,16 @@
 
       <!-- Class -->
       <xsl:when test="../../class/name=$type">
+        <xsl:text>null</xsl:text>
+      </xsl:when>
+
+      <!-- Counterpart -->
+      <xsl:when test="$type='Counterpart'">
+        <xsl:text>null</xsl:text>
+      </xsl:when>
+
+      <!-- Handle (won't work for types, though) -->
+      <xsl:when test="$type='Handle'">
         <xsl:text>null</xsl:text>
       </xsl:when>
 
