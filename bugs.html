@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6465895826a3 2006/04/08 15:19:52 simonjwright $ -->
+<!-- $Id: bugs.html,v 3b5f0f90d299 2006/04/08 15:31:09 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -231,15 +231,6 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<dt>0351 (raised 6.iv.06)
-
-<dd>If you specify a function returning Handle, the generated
-stub tries to return <tt>Handle'First</tt> instead of <tt>null</tt>.
-<br><i>If the <tt>Handle</tt> represents an instance of a class in
-this domain (including 'this' class), use the class name. If it
-represents an instance of a class in another domain,
-use <tt>Counterpart</tt> (or a <tt>{counterpart}</tt> type).</i>
-
 <dt>0352 (raised 6.iv.06)
 
 <dd>ColdFrame doesn't detect the error of having more than one type
@@ -250,6 +241,21 @@ with the same name.
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>8.iv.06</h3>
+
+<dl>
+
+<dt>0351 (raised 6.iv.06)
+
+<dd>If you specify a function returning Handle, the generated
+stub tries to return <tt>Handle'First</tt> instead of <tt>null</tt>.
+<br><i>If the <tt>Handle</tt> represents an instance of a class in
+this domain (including 'this' class), use the class name. If it
+represents an instance of a class in another domain,
+use <tt>Counterpart</tt> (or a <tt>{counterpart}</tt> type).</i>
+
+</dl>
 
 <h3>22.iii.06</h3>
 

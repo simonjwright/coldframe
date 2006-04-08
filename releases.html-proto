@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 463cb9e1732c 2006/03/26 15:27:21 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 3b5f0f90d299 2006/04/08 15:31:09 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -106,6 +106,12 @@ parameter.
 <li>A domain package body is generated even if there are no operations
 of types (in case the full domain does have a body, to avoid
 compilation difficulties with extension GPRs).
+
+<li>The accessors for a state machine's current state are
+now <i>Get_State_Machine_State</i>, <i>Set_State_Machine_State</i>.
+
+<li>When inspecting an event queue the events are held in posting
+order, not time order.
 
 </ul>
 
