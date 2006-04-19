@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-test_g.ads,v $
---  $Revision: 7cb77e031b4e $
---  $Date: 2005/04/23 15:49:45 $
+--  $Revision: 9c21d5ac19f0 $
+--  $Date: 2006/04/19 20:18:32 $
 --  $Author: simonjwright $
 
 generic
@@ -47,9 +47,9 @@ package ColdFrame.Events_G.Test_G is
       Storage_Size => 20_000);
 
 
-   --------------
-   --  Timers  --
-   --------------
+   -------------------------
+   --  Unit test support  --
+   -------------------------
 
    function Is_Set (The_Timer : Timer;
                     On : access Event_Queue_Base) return Boolean;
@@ -59,12 +59,15 @@ package ColdFrame.Events_G.Test_G is
    --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
 
 
-   -------------------------
-   --  Unit test support  --
-   -------------------------
-
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
+   --  Blocks the caller until there are no more events awaiting
+   --  processing.
+   --  If Ignoring_Timers is True, ignores events held on Timers; this
+   --  feature is intended for the case where a unit test has driven
+   --  the state machine to a point where a timer is set, but need go
+   --  no further.
+
 
 private
 
