@@ -10,7 +10,7 @@
     quid       	"3F5611DF02F9"
     documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 2834b262b985 $}
+|{ revision = $Revision: d5fd00535faf $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -9505,30 +9505,13 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4446A4B7034B"
-			    compartment 	(object Compartment
-				Parent_View 	@247
-				location   	(400, 361)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	3
-				max_width  	452)
 			    width      	518
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)))))
 	(object Class_Category "Operations using {access} types"
 	    quid       	"4446A47E0295"
-	    stereotype 	"include"
+	    stereotype 	"dont include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "My Boolean"
@@ -9717,7 +9700,7 @@
 				Parent_View 	@250
 				location   	(113, 951)
 				fill_color 	13434879
-				nlines     	2
+				nlines     	1
 				max_width  	816
 				justify    	0
 				label      	"A Plain Type Using Access Types")
@@ -9847,7 +9830,7 @@
 				fill_color 	13434879
 				anchor     	2
 				nlines     	5
-				max_width  	960)
+				max_width  	967)
 			    width      	980
 			    height     	354
 			    annotation 	8
@@ -9858,13 +9841,13 @@
 	    title      	"Main"
 	    documentation 	
 |Contains ColdFrame regression tests.
-|{ revision = $Revision: 2834b262b985 $}
+|{ revision = $Revision: d5fd00535faf $}
 	    
 	    zoom       	88
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	0
-	    origin_y   	34
+	    origin_y   	1103
 	    items      	(list diagram_item_list
 		(object CategoryView "Logical View::Regressions" @253
 		    location   	(2944, 1618)
@@ -9904,7 +9887,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id: Regressions.cat,v 2834b262b985 2006/04/19 22:36:47 simonjwright $")
+		    label      	"$Id: Regressions.cat,v d5fd00535faf 2006/04/19 22:57:36 simonjwright $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @255
 		    location   	(301, 318)
 		    font       	(object Font
@@ -11380,7 +11363,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@298
-			location   	(142, 3385)
+			location   	(142, 3382)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	340
@@ -11402,7 +11385,7 @@
 		    width      	353
 		    height     	187)
 		(object CategoryView "Logical View::Regressions::Operations using {access} types" @299
-		    location   	(763, 3413)
+		    location   	(2463, 1079)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -11414,24 +11397,52 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@299
-			location   	(603, 3377)
+			location   	(2297, 1043)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	320
+			max_width  	332
 			justify    	0
 			label      	"Operations using {access} types")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@299
-			location   	(603, 3329)
+			location   	(2297, 995)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	320
+			max_width  	332
 			justify    	0
-			label      	"<<include>>")
+			label      	"<<dont include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4446A47E0295"
-		    width      	332
-		    height     	180)))))
+		    width      	344
+		    height     	180)
+		(object NoteView @300
+		    location   	(2959, 1077)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@300
+			location   	(2804, 995)
+			fill_color 	13434879
+			nlines     	3
+			max_width  	275
+			label      	"Including this generates a bug box")
+		    line_color 	3342489
+		    fill_color 	13434879
+		    width      	335
+		    height     	176)
+		(object AttachView "" @301
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@299
+		    supplier   	@300
+		    line_style 	0)))))
