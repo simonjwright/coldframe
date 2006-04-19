@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v fea63221d361 2006/04/08 15:24:06 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 1ebb9ae80f76 2006/04/19 22:32:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -603,6 +603,11 @@
         <xsl:text>null</xsl:text>
       </xsl:when>
 
+      <!-- Access -->
+      <xsl:when test="/domain/type/@access=$type">
+        <xsl:text>null</xsl:text>        
+      </xsl:when>
+      
       <xsl:otherwise>
         <xsl:variable name="the-type" select="../../type[name=$type]"/>
         <xsl:choose>
