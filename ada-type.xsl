@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 31f5a4548dbb 2006/03/23 20:34:00 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 7d843f1765f6 2006/04/19 22:34:21 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -171,8 +171,19 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
+    <!-- Any implied access types -->
+    <xsl:variable name="access-types">
+      <xsl:for-each select="$nodes/@access">
+        <xsl:element name="name">
+          <xsl:value-of select="."/>
+        </xsl:element>
+      </xsl:for-each>
+    </xsl:variable>
+
     <!-- The set of types output so far -->
-    <xsl:variable name="processed" select="$finished | $nodes"/>
+    <xsl:variable 
+      name="processed" 
+      select="$finished | $nodes | $access-types"/>
 
     <!-- The set of types not yet output and dependent only on types
          that have been output already -->
