@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3b5f0f90d299 2006/04/08 15:31:09 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 14bd806d8c39 2006/04/19 23:23:56 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,32 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li><b>Generation</b>
+
+<li>The generated separate bodies for functions of classes returning
+type <i>Handle</i> now compile.
+<br>The approved way of achieving this effect is to use the name of
+the class concerned.
+
+<li>There was a problem with protected types which used access types
+created using <i>{access=name}</i>.
+
+<li><b>Code</b>
+
+<li>The functions <tt>Is_Set</tt> and <tt>Expires_At</tt>
+in <tt>ColdFrame.Events_G.Test_G</tt> were not dispatching operations
+in the same way as <tt>Wait_Until_Idle</tt>, this made calling them
+very clumsy.
+
+</ul>
+
+<dt>20060326
 
 <dd>
 <ul class="release">
