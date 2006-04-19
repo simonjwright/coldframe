@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 3b5f0f90d299 2006/04/08 15:31:09 simonjwright $ -->
+<!-- $Id: bugs.html,v f095b9768b8a 2006/04/19 20:05:38 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -236,7 +236,37 @@ better to have a primitive Print operation.</i>
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
-<!-- next: 0353 -->
+<dt>0353 (raised 19.iv.06)
+
+<dd>Coldframe reports:
+<pre>
+   Error: couldn't generate type Recording_Queue
+   no definition of type Serialization_Base_Class_P
+</pre>
+
+Where Rercording_Queue is a protected type with an operation accessing
+Serialization_Base_Class_P and Serialization_Base_Class is defined as
+a type with:
+<pre>
+   {renames = Serialization_Support.Base Class}
+   {access = Serialization_Base_Class_P}
+</pre>
+
+The problem is not reported if a dummy type is declared which has an
+attribute of Serialization_Base_Class_P.
+<br>SourceForge 1472823
+
+<dt>0354 (raised 19.iv.06)
+
+<dd>The functions Is_Set and Expires_At in ColdFrame.Events_G.Test_G
+are not dispatching operations in the same way as Wait_Until_Idle,
+this makes calling theses functions virtually impossible.
+<br>Versions of Is_Set and Expires_At need declaring in
+ColdFrame.Events_G in the same way as Wait_Until_Idle to make them
+usable.
+<br>SourceForge 1473115
+
+<!-- next: 0355 -->
 
 </dl>
 
