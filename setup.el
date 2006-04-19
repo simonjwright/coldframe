@@ -1,4 +1,4 @@
-;;; $Id: setup.el,v d93d4560de01 2006/03/26 15:30:10 simonjwright $
+;;; $Id: setup.el,v e5442c6cf263 2006/04/19 20:21:31 simonjwright $
 ;;;
 ;;; Sets up environment variables for ColdFrame development
 
@@ -15,7 +15,7 @@
 		    ":"
 		    cf
 		    "/emacs_case_exceptions"))
-    (setenv COLDFRAME "cf")
+    (setenv "COLDFRAME" "cf")
     (cond
      ;; see notes in setup.sh
      ((memq system-type '(gnu/linux))
