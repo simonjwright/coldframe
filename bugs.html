@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v f095b9768b8a 2006/04/19 20:05:38 simonjwright $ -->
+<!-- $Id: bugs.html,v 89e197ad4df8 2006/04/19 23:11:19 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -236,6 +236,16 @@ better to have a primitive Print operation.</i>
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
+<!-- next: 0355 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>19.iv.06</h3>
+
+<dl>
+
 <dt>0353 (raised 19.iv.06)
 
 <dd>Coldframe reports:
@@ -244,7 +254,7 @@ with the same name.
    no definition of type Serialization_Base_Class_P
 </pre>
 
-Where Rercording_Queue is a protected type with an operation accessing
+Where Recording_Queue is a protected type with an operation accessing
 Serialization_Base_Class_P and Serialization_Base_Class is defined as
 a type with:
 <pre>
@@ -266,11 +276,7 @@ ColdFrame.Events_G in the same way as Wait_Until_Idle to make them
 usable.
 <br>SourceForge 1473115
 
-<!-- next: 0355 -->
-
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>8.iv.06</h3>
 
