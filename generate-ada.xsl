@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 28daf18c1920 2006/03/22 23:51:35 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 04f7b672839f 2006/04/19 22:36:00 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -163,8 +163,8 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
-    <!-- If there are operations of types, or if we are generating
-         stubs, we will need a package body.
+    <!-- If there are protected types, or operations of types, or if
+         we are generating stubs, we will need a package body.
          The reason for needing a package body if we are stubbing is
          that the full domain might have elements that require a body;
          if the stubbed interface doesn't, the extra and unneeded body
@@ -177,14 +177,16 @@
               and not(@suppressed)
               and not(@imported)
               and not(@renames)]"/>
-    <xsl:variable 
+    <xsl:variable
       name="plain-type-operations"
       select="type[not(@protected)]/operation[not(@access)
               and not(@suppressed)
               and not(@imported)
               and not(@renames)]"/>
 
-    <xsl:if test="$generate-stubs='yes' and not($plain-type-operations)">
+    <xsl:if test="$generate-stubs='yes' 
+                  and not($plain-type-operations)
+                  and not(type/@protected)">
       <xsl:value-of select="$I"/>
       <xsl:text>pragma Elaborate_Body;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
