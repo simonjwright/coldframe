@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 03203eb03c99 $
---  $Date: 2005/11/02 06:15:56 $
+--  $Revision: 2ba7de0cb7fd $
+--  $Date: 2006/04/19 20:18:00 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
@@ -289,6 +289,13 @@ package ColdFrame.Events_G is
    --  The implementations here raise Exceptions.Use_Error. Must only
    --  be used with an instantiation of Events_G.Test_G.
 
+   function Is_Set (The_Timer : Timer;
+                    On : access Event_Queue_Base) return Boolean;
+
+   function Expires_At (The_Timer : Timer;
+                        On : access Event_Queue_Base) return Time.Time;
+   --  Raises ColdFrame.Exceptions.Use_Error if the Timer isn't set.
+
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False);
    --  Blocks the caller until there are no more events awaiting
@@ -297,7 +304,6 @@ package ColdFrame.Events_G is
    --  feature is intended for the case where a unit test has driven
    --  the state machine to a point where a timer is set, but need go
    --  no further.
-
 
 private
 

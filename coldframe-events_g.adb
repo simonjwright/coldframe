@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 4d5d40ed80d4 $
---  $Date: 2005/08/12 19:00:40 $
+--  $Revision: 2ba7de0cb7fd $
+--  $Date: 2006/04/19 20:18:00 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -54,6 +54,19 @@ package body ColdFrame.Events_G is
    begin
       return The_Queue;
    end Copy;
+
+
+   function Expires_At (The_Timer : Timer;
+                        On : access Event_Queue_Base) return Time.Time is
+      pragma Unreferenced (The_Timer);
+      pragma Unreferenced (On);
+      Dummy : Time.Time (Kind => Time.Real_Time);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Expires_At only legal with Test event queue");
+      return Dummy;
+   end Expires_At;
 
 
    procedure Finalize (The_Instance : access Instance_Base'Class) is
@@ -171,8 +184,8 @@ package body ColdFrame.Events_G is
 
    procedure Invalidate (The_Event : access Event_Base;
                          If_For_Instance : Instance_Base_P) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, If_For_Instance);
+      pragma Unreferenced (The_Event);
+      pragma Unreferenced (If_For_Instance);
    begin
       null;
    end Invalidate;
@@ -197,15 +210,27 @@ package body ColdFrame.Events_G is
    procedure Invalidate_Events
      (On : access Event_Queue_Base;
       For_The_Instance : access Instance_Base'Class) is
-      pragma Warnings (Off, On);
-      pragma Warnings (Off, For_The_Instance);
+      pragma Unreferenced (On);
+      pragma Unreferenced (For_The_Instance);
    begin
       raise Program_Error;
    end Invalidate_Events;
 
 
+   function Is_Set (The_Timer : Timer;
+                    On : access Event_Queue_Base) return Boolean is
+      pragma Unreferenced (The_Timer);
+      pragma Unreferenced (On);
+   begin
+      Ada.Exceptions.Raise_Exception
+        (Exceptions.Use_Error'Identity,
+         "Is_Set only legal with Test event queue");
+      return False;
+   end Is_Set;
+
+
    procedure Locker (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
+      pragma Unreferenced (The_Queue);
    begin
       raise Program_Error;
    end Locker;
@@ -213,8 +238,8 @@ package body ColdFrame.Events_G is
 
    procedure Log_Post_Dispatch (The_Event : Event_P;
                                 On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
+      pragma Unreferenced (The_Event);
+      pragma Unreferenced (On);
    begin
       null;
    end Log_Post_Dispatch;
@@ -222,8 +247,8 @@ package body ColdFrame.Events_G is
 
    procedure Log_Pre_Dispatch (The_Event : Event_P;
                                On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
+      pragma Unreferenced (The_Event);
+      pragma Unreferenced (On);
    begin
       null;
    end Log_Pre_Dispatch;
@@ -231,8 +256,8 @@ package body ColdFrame.Events_G is
 
    procedure Log_Retraction (The_Event : Event_P;
                              On : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Event);
-      pragma Warnings (Off, On);
+      pragma Unreferenced (The_Event);
+      pragma Unreferenced (On);
    begin
       null;
    end Log_Retraction;
@@ -245,49 +270,48 @@ package body ColdFrame.Events_G is
 
 
    procedure Note_Addition_Of_Held_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Addition_Of_Held_Event;
 
 
    procedure Note_Addition_Of_Posted_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Addition_Of_Posted_Event;
 
 
    procedure Note_Addition_Of_Timer_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Addition_Of_Timer_Event;
 
 
    procedure Note_Removal_Of_Held_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Removal_Of_Held_Event;
 
 
    procedure Note_Removal_Of_Posted_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Removal_Of_Posted_Event;
 
 
    procedure Note_Removal_Of_Timer_Event (On : access Event_Queue_Base) is
-      pragma Warnings (Off, On);
+      pragma Unreferenced (On);
    begin
       null;
    end Note_Removal_Of_Timer_Event;
 
 
    procedure Start (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
    begin
       if The_Queue.Started then
          Ada.Exceptions.Raise_Exception (Exceptions.Use_Error'Identity,
@@ -300,7 +324,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Start_Handling (The_Event : access Event_Base) is
-      pragma Warnings (Off, The_Event);
+      pragma Unreferenced (The_Event);
    begin
       null;
    end Start_Handling;
@@ -313,7 +337,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Stop_Handling (The_Event : access Event_Base) is
-      pragma Warnings (Off, The_Event);
+      pragma Unreferenced (The_Event);
    begin
       null;
    end Stop_Handling;
@@ -328,14 +352,14 @@ package body ColdFrame.Events_G is
 
 
    procedure Start_Queue (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
+      pragma Unreferenced (The_Queue);
    begin
       raise Program_Error;
    end Start_Queue;
 
 
    procedure Stop (The_Queue : in out Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
+      pragma Unreferenced (The_Queue);
    begin
       Ada.Exceptions.Raise_Exception
         (Exceptions.Use_Error'Identity,
@@ -355,7 +379,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Tear_Down (The_Event : access Event_Base) is
-      pragma Warnings (Off, The_Event);
+      pragma Unreferenced (The_Event);
    begin
       --  Default no-op.
       null;
@@ -363,7 +387,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Tear_Down (The_Queue : in out Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
+      pragma Unreferenced (The_Queue);
    begin
       Ada.Exceptions.Raise_Exception
         (Exceptions.Use_Error'Identity,
@@ -406,7 +430,7 @@ package body ColdFrame.Events_G is
 
 
    procedure Unlocker (The_Queue : access Event_Queue_Base) is
-      pragma Warnings (Off, The_Queue);
+      pragma Unreferenced (The_Queue);
    begin
       raise Program_Error;
    end Unlocker;
@@ -414,8 +438,8 @@ package body ColdFrame.Events_G is
 
    procedure Wait_Until_Idle (The_Queue : access Event_Queue_Base;
                               Ignoring_Timers : Boolean := False) is
-      pragma Warnings (Off, The_Queue);
-      pragma Warnings (Off, Ignoring_Timers);
+      pragma Unreferenced (The_Queue);
+      pragma Unreferenced (Ignoring_Timers);
    begin
       Ada.Exceptions.Raise_Exception
         (Exceptions.Use_Error'Identity,
