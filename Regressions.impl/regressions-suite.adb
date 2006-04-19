@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v c5e63bfdf8e6 2005/06/16 19:16:08 simonjwright $
+--  $Id: regressions-suite.adb,v a5562b89edfd 2006/04/19 21:31:01 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -33,6 +33,7 @@ with Regressions.Test_Preemption;
 
 --  The following units only have to compile
 
+pragma Warnings (Off);
 with Regressions.Bounded_String_ID;
 with Regressions.CT_Class;
 with Regressions.Child_Uses_Action;
@@ -44,6 +45,7 @@ with Regressions.Class_Timer_In_Public;
 with Regressions.Class_Timer_In_Singleton;
 with Regressions.Class_With_Private_Operations;
 with Regressions.Fixed_String_Class;
+with Regressions.Function_Returning_Handle;
 with Regressions.Identified_Class;
 with Regressions.Max_More;
 with Regressions.Max_More_C;
@@ -64,38 +66,7 @@ with Regressions.Singleton_With_Referential_Attribute;
 with Regressions.Singleton_Without_Attributes;
 with Regressions.Test_Preemption;
 with Regressions.Utility;
-
-pragma Warnings (Off, Regressions.Bounded_String_ID);
-pragma Warnings (Off, Regressions.CT_Class);
-pragma Warnings (Off, Regressions.Child_Uses_Action);
-pragma Warnings (Off, Regressions.Class_Operation_Access_Modes);
-pragma Warnings (Off, Regressions.Class_Timer_In_Array);
-pragma Warnings (Off, Regressions.Class_Timer_In_Class);
-pragma Warnings (Off, Regressions.Class_Timer_In_Max_One);
-pragma Warnings (Off, Regressions.Class_Timer_In_Public);
-pragma Warnings (Off, Regressions.Class_Timer_In_Singleton);
-pragma Warnings (Off, Regressions.Class_With_Private_Operations);
-pragma Warnings (Off, Regressions.Fixed_String_Class);
-pragma Warnings (Off, Regressions.Identified_Class);
-pragma Warnings (Off, Regressions.Max_More);
-pragma Warnings (Off, Regressions.Max_More_C);
-pragma Warnings (Off, Regressions.Max_One);
-pragma Warnings (Off, Regressions.Max_One_C);
-pragma Warnings (Off, Regressions.One_Enum_ID);
-pragma Warnings (Off, Regressions.One_Int_ID);
-pragma Warnings (Off, Regressions.Ordinary_Class.All_Instances);
-pragma Warnings (Off, Regressions.Ordinary_Class.Selection_Function);
-pragma Warnings (Off, Regressions.Parent_With_Action);
-pragma Warnings (Off, Regressions.Public_With_Attributes);
-pragma Warnings (Off, Regressions.Public_Without_Attributes);
-pragma Warnings (Off, Regressions.Renaming_Operations_Child);
-pragma Warnings (Off, Regressions.Renaming_Operations_Parent);
-pragma Warnings (Off, Regressions.Service_History);
-pragma Warnings (Off, Regressions.Singleton_With_Attributes);
-pragma Warnings (Off, Regressions.Singleton_With_Referential_Attribute);
-pragma Warnings (Off, Regressions.Singleton_Without_Attributes);
-pragma Warnings (Off, Regressions.Test_Preemption);
-pragma Warnings (Off, Regressions.Utility);
+pragma Warnings (On);
 
 --  May not be referenced for released versions
 pragma Warnings (Off, Ada.Text_IO);
