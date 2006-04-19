@@ -702,7 +702,7 @@ upload-docs: top-index.html $(DOCS) force
 	  --times \
 	  --update \
 	  --verbose \
-	  top-index.html\
+	  top-index.html \
 	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/index.html
 	$(RSYNC) \
 	  --compress \
