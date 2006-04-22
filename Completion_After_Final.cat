@@ -11,16 +11,17 @@
     documentation 	
 |Checks for completion transitions to the final state after final actions.
 |
-|{ revision = $Revision: 97aff7e0f043 $ }
+|{ revision = $Revision: 729a6f5ce8cc $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
-	(object Class "Completer"
+	(object Class "Phoenix"
 	    quid       	"4449CF2E025D"
 	    operations 	(list Operations
-		(object Operation "Delete"
+		(object Operation "Reincarnate"
 		    quid       	"4449CFFB0302"
-		    stereotype 	"generated"
+		    documentation 	"Delete the current instance and create a new one; which should be in the Initial state."
+		    stereotype 	"final"
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0))
@@ -39,14 +40,14 @@
 			    (object State_Transition
 				quid       	"4449CF7902F1"
 				label      	""
-				supplier   	"Deleting"
+				supplier   	"Reincarnating"
 				quidu      	"4449CF650248"
 				Event      	(object Event "quit"
 				    quid       	"4449CF7902F2")
 				sendEvent  	(object sendEvent
 				    quid       	"4449CF7902F4")))
 			type       	"StartState")
-		    (object State "Deleting"
+		    (object State "Reincarnating"
 			quid       	"4449CF650248"
 			transitions 	(list transition_list
 			    (object State_Transition
@@ -56,7 +57,7 @@
 				sendEvent  	(object sendEvent
 				    quid       	"4449CF7400F8")))
 			actions    	(list action_list
-			    (object action "Delete"
+			    (object action "Reincarnate"
 				quid       	"4449CF9B0336"
 				ActionTime 	(object ActionTime
 				    when       	"Entry")))
@@ -97,8 +98,8 @@
 				line_color 	3342489
 				quidu      	"4449CF510159"
 				autoResize 	TRUE)
-			    (object StateView "Normal" "Deleting" @2
-				location   	(762, 750)
+			    (object StateView "Normal" "Reincarnating" @2
+				location   	(794, 750)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -110,20 +111,20 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@2
-				    location   	(762, 715)
+				    location   	(794, 697)
 				    fill_color 	13434879
 				    anchor_loc 	1
 				    nlines     	2
-				    max_width  	258
+				    max_width  	358
 				    justify    	0
-				    label      	"Deleting")
+				    label      	"Reincarnating")
 				icon_style 	"Icon"
 				line_color 	3342489
 				fill_color 	13434879
 				quidu      	"4449CF650248"
 				compartment 	(object Compartment
 				    Parent_View 	@2
-				    location   	(642, 756)
+				    location   	(624, 738)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -137,11 +138,11 @@
 				    fill_color 	13434879
 				    anchor     	2
 				    nlines     	1
-				    max_width  	240
+				    max_width  	340
 				    compartmentItems 	(list Compartment
-					"entry/ Delete"))
-				width      	354
-				height     	182
+					"entry/ Reincarnate"))
+				width      	454
+				height     	218
 				autoResize 	TRUE)
 			    (object StateView "EndState" "$UNNAMED$1" @3
 				location   	(1100, 1166)
@@ -184,7 +185,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @6
 				    Parent_View 	@5
-				    location   	(611, 483)
+				    location   	(618, 475)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -220,7 +221,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Completion After Final::Completer" @7
+		(object ClassView "Class" "Logical View::Completion After Final::Phoenix" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -237,18 +238,35 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(436, 316)
+			location   	(305, 260)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	222
+			max_width  	484
 			justify    	0
-			label      	"Completer")
+			label      	"Phoenix")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4449CF2E025D"
-		    width      	240
-		    height     	124
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(305, 321)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	481)
+		    width      	502
+		    height     	236
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object NoteView @8
@@ -268,7 +286,7 @@
 			fill_color 	13434879
 			nlines     	2
 			max_width  	409
-			label      	"Statechart Diagram: Completer / Lifecycle")
+			label      	"Statechart Diagram: Phoenix / Lifecycle")
 		    line_color 	3342489
 		    fill_color 	13434879
 		    width      	469

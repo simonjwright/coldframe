@@ -2,17 +2,17 @@
 <name>Completion After Final</name>
 <documentation><![CDATA[ Checks for completion transitions to the final state after final actions.
 
-{ revision = $Revision: 97aff7e0f043 $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 97aff7e0f043 $</extractor>
+{ revision = $Revision: 729a6f5ce8cc $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 729a6f5ce8cc $</extractor>
 <date>
 <year>2006</year>
 <month>4</month>
 <day>22</day>
-<time>19:57</time>
+<time>20:55</time>
 </date>
 <classes>
 <class>
-<name>Completer</name>
+<name>Phoenix</name>
 <documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
@@ -26,9 +26,9 @@
 </attribute>
 </attributes>
 <operations>
-<operation stereotype="generated">
-<name>Delete</name>
-<documentation></documentation>
+<operation stereotype="final">
+<name>Reincarnate</name>
+<documentation><![CDATA[ Delete the current instance and create a new one; which should be in the Initial state. ]]></documentation>
 <visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
@@ -46,11 +46,11 @@
 </entryactions>
 </state>
 <state>
-<name>Deleting</name>
+<name>Reincarnating</name>
 <documentation></documentation>
 <entryactions>
 <entryaction>
-<name>Delete</name>
+<name>Reincarnate</name>
 <documentation></documentation>
 </entryaction>
 </entryactions>
@@ -66,14 +66,14 @@
 <transition>
 <documentation></documentation>
 <source>initial</source>
-<target>Deleting</target>
+<target>Reincarnating</target>
 <event>
 <name>quit</name>
 </event>
 </transition>
 <transition>
 <documentation></documentation>
-<source>Deleting</source>
+<source>Reincarnating</source>
 <target>final</target>
 </transition>
 </transitions>
