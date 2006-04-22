@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 89e197ad4df8 2006/04/19 23:11:19 simonjwright $ -->
+<!-- $Id: bugs.html,v ce4f4af6119c 2006/04/22 11:42:16 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -236,7 +236,21 @@ better to have a primitive Print operation.</i>
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
-<!-- next: 0355 -->
+<dt>0355 (raised 21.iv.06)
+
+<dd>The (de)serialization code generated
+for <i>{type-image}</i>doesn't compile.
+
+<dt>0356 (raised 21.iv.06)
+
+<dd>
+
+<dd>0357 (raised 21.iv.06)
+
+<dd>It would be good if a completion transition from a state with a
+&#171;final&#187; action to a final state wasn't treated as an error.
+
+<!-- next: 0358 -->
 
 </dl>
 
@@ -270,7 +284,7 @@ attribute of Serialization_Base_Class_P.
 
 <dd>The functions Is_Set and Expires_At in ColdFrame.Events_G.Test_G
 are not dispatching operations in the same way as Wait_Until_Idle,
-this makes calling theses functions virtually impossible.
+this makes calling these functions virtually impossible.
 <br>Versions of Is_Set and Expires_At need declaring in
 ColdFrame.Events_G in the same way as Wait_Until_Idle to make them
 usable.
