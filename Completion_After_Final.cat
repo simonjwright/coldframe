@@ -11,7 +11,7 @@
     documentation 	
 |Checks for completion transitions to the final state after final actions.
 |
-|{ revision = $Id: Completion_After_Final.cat,v 76a649e383c3 2006/04/22 13:23:10 simonjwright $ }
+|{ revision = $Revision: 97aff7e0f043 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list

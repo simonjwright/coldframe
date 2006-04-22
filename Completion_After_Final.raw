@@ -2,13 +2,13 @@
 <name>Completion After Final</name>
 <documentation><![CDATA[ Checks for completion transitions to the final state after final actions.
 
-{ revision = $Id: Completion_After_Final.raw,v 8fd161f9d1f6 2006/04/22 13:37:28 simonjwright $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 8fd161f9d1f6 $</extractor>
+{ revision = $Revision: 97aff7e0f043 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 97aff7e0f043 $</extractor>
 <date>
 <year>2006</year>
 <month>4</month>
 <day>22</day>
-<time>14:26</time>
+<time>19:57</time>
 </date>
 <classes>
 <class>
