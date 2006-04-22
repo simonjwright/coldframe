@@ -1,0 +1,85 @@
+<domain>
+<name>Completion After Final</name>
+<documentation><![CDATA[ Checks for completion transitions to the final state after final actions.
+
+{ revision = $Id: Completion_After_Final.raw,v 8fd161f9d1f6 2006/04/22 13:37:28 simonjwright $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 8fd161f9d1f6 $</extractor>
+<date>
+<year>2006</year>
+<month>4</month>
+<day>22</day>
+<time>14:26</time>
+</date>
+<classes>
+<class>
+<name>Completer</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>0..1</cardinality>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="generated">
+<name>Delete</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+<statemachine>
+<documentation></documentation>
+<states>
+<state initial="yes">
+<name>initial</name>
+<documentation></documentation>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>Deleting</name>
+<documentation></documentation>
+<entryactions>
+<entryaction>
+<name>Delete</name>
+<documentation></documentation>
+</entryaction>
+</entryactions>
+</state>
+<state final="yes">
+<name>final</name>
+<documentation></documentation>
+<entryactions>
+</entryactions>
+</state>
+</states>
+<transitions>
+<transition>
+<documentation></documentation>
+<source>initial</source>
+<target>Deleting</target>
+<event>
+<name>quit</name>
+</event>
+</transition>
+<transition>
+<documentation></documentation>
+<source>Deleting</source>
+<target>final</target>
+</transition>
+</transitions>
+</statemachine>
+</class>
+</classes>
+<relationships>
+</relationships>
+</domain>
