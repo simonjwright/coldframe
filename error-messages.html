@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v aeecf8593349 2006/02/17 06:52:21 simonjwright $ -->
+<!-- $Id: error-messages.html,v d7bc0781fe25 2006/04/22 19:13:42 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -207,9 +207,9 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: couldn't generate type <i>Type</i> <dd>The type has an attribute, or is an array involving, or is a protected type with an operation involving, a type or types that haven't been specified. The undefined types are listed. Note, this can occur with a public type that depends on a private type.
 
-<dt>Error: drop-through and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
+<dt>Error: completion (drop-through) and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
-<dt>Error: drop-through transition after final state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
+<dt>Error: completion (drop-through) transition after final state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
 
 <dt>Error: entry action(s) after final action in <i>Class.State</i> <dd>An entry action that deletes the instance must be the last action.
 
@@ -223,7 +223,7 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 
-<dt>Error: more than one drop-through transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
+<dt>Error: more than one completion (drop-through) transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
 
 <dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
 
