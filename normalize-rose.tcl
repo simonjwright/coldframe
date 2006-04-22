@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v feae2dbfb4d3 2006/02/18 16:35:13 simonjwright $
+# $Id: normalize-rose.tcl,v 071bcc33aa50 2006/04/22 19:15:22 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3033,6 +3033,9 @@ itcl::class XmlTag {
 itcl::class Attribute {
     inherit Element
 
+    # indicates whether this is aliased
+    variable aliased 0
+
     # indicates whether this is atomic
     variable atomic 0
 
@@ -3082,6 +3085,12 @@ itcl::class Attribute {
             public  {set visibility public}
             default {set visibility private}
         }
+    }
+
+    # called (via annotation or stereotype mechanism) to indicate that this
+    # is an aliased attribute
+    method -aliased {a} {
+        set aliased 1
     }
 
     # called (via annotation or stereotype mechanism) to indicate that this
@@ -3146,6 +3155,9 @@ itcl::class Attribute {
 
     method -generate {domain} {
         $this -putElementStart "attribute"
+	if $aliased {
+	    puts -nonewline " aliased=\"true\""
+	}
 	if $atomic {
 	    puts -nonewline " atomic=\"true\""
 	}

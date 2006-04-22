@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v ee93b622b4c7 2005/06/16 19:30:20 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 071bcc33aa50 2006/04/22 19:15:22 simonjwright $ -->
 
 <!-- 
 
@@ -198,6 +198,7 @@
         <xsd:element name="initial" minOccurs="0" maxOccurs="1"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
+      <xsd:attribute name="aliased"/>
       <xsd:attribute name="atomic"/>
       <xsd:attribute name="class"/>
       <xsd:attribute name="identifier"/>
