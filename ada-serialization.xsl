@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v 22f42810f56f 2006/02/19 21:22:51 simonjwright $ -->
+<!-- $Id: ada-serialization.xsl,v ca40abd4a52e 2006/04/22 11:43:10 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -530,13 +530,13 @@
             <xsl:value-of select="$indent"/>
             <xsl:text>Append (R, "&lt;field name=""</xsl:text>
             <xsl:value-of select="$name"/>
-            <xsl:text>""&gt;"&#10;</xsl:text>
+            <xsl:text>""&gt;");&#10;</xsl:text>
             <xsl:value-of select="$indent"/>
             <xsl:text>Append (R, </xsl:text>
             <xsl:value-of select="$type/@type-image"/>
             <xsl:text> (S.</xsl:text>
             <xsl:value-of select="$field"/>
-            <xsl:text>))&#10;</xsl:text>
+            <xsl:text>));&#10;</xsl:text>
             <xsl:value-of select="$indent"/>
             <xsl:text>Append (R, "&lt;/field&gt;" &amp; ASCII.LF);&#10;</xsl:text>
           </xsl:when>
