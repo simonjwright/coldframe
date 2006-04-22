@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 76f8c1f04821 2006/03/03 22:02:22 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v bf9cb9f2b1df 2006/04/22 19:16:54 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -144,7 +144,7 @@
       <xsl:if test="count($leaving[not(event)]) &gt; 1">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
-          <xsl:text>Error: more than one drop-through transition from state </xsl:text>
+          <xsl:text>Error: more than one completion (drop-through) transition from state </xsl:text>
           <xsl:value-of select="../../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="."/>
@@ -154,7 +154,7 @@
       <xsl:if test="$leaving[event] and $leaving[not(event)]">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
-          <xsl:text>Error: drop-through and triggered transitions from state </xsl:text>
+          <xsl:text>Error: completion (drop-through) and triggered transitions from state </xsl:text>
           <xsl:value-of select="../../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="."/>
@@ -497,9 +497,11 @@
     <!-- It's illegal to have a drop-through from a state during which
          the instance has been deleted; either in the transition to
          the state or in one of the actions (already checked that no
-         actions occur after a deletion).
+         actions occur after a deletion); unless the target state is
+         final, in which case don't actually transition!
          Deletion occurs if the action's name is Delete or if the
-         operation is marked final. The operation may be inherited.-->
+         operation is marked final.
+         The operation may be inherited.-->
 
     <!-- XXX doesn't work for inherited operations! -->
     <!-- use st:class-of-operation-for-action(class, action-name) -->
@@ -517,25 +519,38 @@
 
     <xsl:if test="$drop-through">
 
-      <xsl:if test="$deleting">
-        <xsl:call-template name="ut:log-error"/>
-        <xsl:message>
-          <xsl:text>Error: drop-through transition after final state </xsl:text>
-          <xsl:value-of select="../../name"/>
-          <xsl:text>.</xsl:text>
-          <xsl:value-of select="$tr/target"/>
-        </xsl:message>
-      </xsl:if>
+      <xsl:choose>
 
-      <!-- Need to change context to call perform-transition from the
-           current target state. -->
+        <xsl:when test="$deleting 
+                        and ../state[name=$drop-through/target]/@final"/>
 
-      <xsl:for-each select="../state[name=$drop-through/source]">
-        <xsl:call-template name="st:perform-transition">
-          <xsl:with-param name="tr" select="$drop-through"/>
-          <xsl:with-param name="indent" select="$indent"/>
-        </xsl:call-template>
-      </xsl:for-each>
+        <xsl:when test="$deleting">
+
+          <xsl:call-template name="ut:log-error"/>
+          <xsl:message>
+            <xsl:text>Error: completion (drop-through) transition after final state </xsl:text>
+            <xsl:value-of select="../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$tr/target"/>
+          </xsl:message>
+          
+        </xsl:when>
+
+        <xsl:otherwise>
+          
+          <!-- Need to change context to call perform-transition from the
+               current target state. -->
+          
+          <xsl:for-each select="../state[name=$drop-through/source]">
+            <xsl:call-template name="st:perform-transition">
+              <xsl:with-param name="tr" select="$drop-through"/>
+              <xsl:with-param name="indent" select="$indent"/>
+            </xsl:call-template>
+          </xsl:for-each>
+
+        </xsl:otherwise>
+
+      </xsl:choose>
 
     </xsl:if>
 
