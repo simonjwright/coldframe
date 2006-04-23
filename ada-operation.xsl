@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 1ebb9ae80f76 2006/04/19 22:32:07 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v d9275ffc6d80 2006/04/23 11:38:25 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -988,8 +988,12 @@
         <!-- Check on public class operations that the domain has been
              initialized; hopefully the implementer will retain this. -->
         <xsl:value-of select="$I"/>
-        <xsl:text>pragma Assert (Domain_Initialized, "</xsl:text>
-        <xsl:value-of select="../../name"/>
+        <xsl:text>pragma Assert&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text>(Domain_Initialized,&#10;</xsl:text>
+        <xsl:value-of select="$IC"/>
+        <xsl:text> "</xsl:text>
+       <xsl:value-of select="../../name"/>
         <xsl:text> not initialized");&#10;</xsl:text>
        </xsl:if>
     </xsl:variable>
