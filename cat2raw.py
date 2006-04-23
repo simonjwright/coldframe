@@ -14,11 +14,11 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 9c92f987bcf3 2006/03/09 06:33:11 simonjwright $
+# $Id: cat2raw.py,v 3568b0440089 2006/04/23 11:26:56 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
-# Uses PLY (http://savannah.nongnu.org/projects/ply/).
+# Uses PLY (http://www.dabeaz.com/ply/).
 
 import lex, yacc
 import time, getopt, os, re, sys
@@ -316,7 +316,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 9c92f987bcf3 $',
+				 'cat2raw.py: $Revision: 3568b0440089 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -831,7 +831,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 9c92f987bcf3 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 3568b0440089 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
