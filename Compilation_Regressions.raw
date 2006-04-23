@@ -1,0 +1,2208 @@
+<domain>
+<name>Compilation Regressions</name>
+<documentation><![CDATA[ Contains ColdFrame regression tests that only check that the generated code compiles..
+{ revision = $Revision: eecaf0241046 $} ]]></documentation>
+<extractor>cat2raw.py: $Revision: eecaf0241046 $</extractor>
+<date>
+<year>2006</year>
+<month>4</month>
+<day>23</day>
+<time>08:31</time>
+</date>
+<classes>
+<class stereotype="active">
+<name>Class Operation Access Modes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>a</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>b</name>
+<documentation></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>c</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>d</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>aa</name>
+<documentation><![CDATA[ {renames=a} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>bb</name>
+<documentation><![CDATA[ {renames=b} ]]></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>cc</name>
+<documentation><![CDATA[ {renames=c} ]]></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>dd</name>
+<documentation><![CDATA[ {renames=d} ]]></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>p</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>q</name>
+<documentation></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>r</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>s</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>Protected Type Operation Access Modes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>seized</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+<initial>False</initial>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>a</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>b</name>
+<documentation></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>c</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>d</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>p</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>q</name>
+<documentation></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>r</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>s</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Type Operation Access Modes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>x</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Real</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>a</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>b</name>
+<documentation></documentation>
+<visibility>ProtectedAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>c</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>d</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Bounded String ID</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Bounded String</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Bounded String</name>
+<documentation><![CDATA[ {string = max 15} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Unconstrained Array Type</name>
+<documentation><![CDATA[ {array = record type,
+ index = enum type,
+ unconstrained} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Array Type</name>
+<documentation><![CDATA[ {array = record type,
+ index = enum type} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Record Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>x</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute>
+<name>y</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Enum Type</name>
+<documentation><![CDATA[ {enumeration = l | m | n}
+ ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Complex Record Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Array Type</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Renaming Operations Parent</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>o</name>
+<documentation><![CDATA[ { renames = GNAT.IO.Put } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>i</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Renaming Operations Child</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="class">
+<name>q</name>
+<documentation><![CDATA[ { renames = GNAT.IO.Put_Line } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>s</parametername>
+<documentation></documentation>
+<type>String</type>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="class">
+<name>p</name>
+<documentation><![CDATA[ { renames = GNAT.IO.Put_Line } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>s</parametername>
+<documentation></documentation>
+<type>String</type>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>File Type</name>
+<documentation><![CDATA[ Make sure we with GNAT.IO.
+
+{ imported = GNAT.IO } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class Timer In Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+<attribute stereotype="class">
+<name>t</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Timer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Class Timer In Public</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="class">
+<name>t</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Timer</type>
+</attribute>
+<attribute>
+<name>dummy</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation><![CDATA[ Forces a body (of course, not to have operations would be stupid!) ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class Timer In Max One</name>
+<documentation><![CDATA[ { max = 1 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+<attribute stereotype="class">
+<name>t</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Timer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class Timer In Array</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+</attribute>
+<attribute stereotype="class">
+<name>t</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Timer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Class Timer In Singleton</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="class">
+<name>t</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Timer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>ColdFrame Time</name>
+<documentation><![CDATA[ Demonstrates a code genration problem in release 20060418a.
+
+{serializable,
+ renames = ColdFrame.Project.Calendar.Time,
+ type-image = ColdFrame.Project.Calendar.Image } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation stereotype="generated">
+<name>image</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class With Class Variable</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+<attribute stereotype="class">
+<name>self</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Class With Class Variable</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Atomic Int</name>
+<documentation><![CDATA[ { integer = lower 0 | upper 16#ffff#,
+   atomic } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Atomic Array</name>
+<documentation><![CDATA[ { array = Atomic Int,
+   index = Integer,
+   unconstrained,
+   atomic } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Volatile Int</name>
+<documentation><![CDATA[ { integer = lower 0 | upper 16#ffff#,
+   volatile } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Volatile Array</name>
+<documentation><![CDATA[ { array = Volatile Int,
+   index = Integer,
+   unconstrained,
+   volatile } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Rec With Atomic  and Volatile Component</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>{atomic} a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute>
+<name>{volatile} f</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Float</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Cls With Atomic and Volatile Component</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>{atomic} a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute>
+<name>{volatile} f</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Float</type>
+</attribute>
+<attribute stereotype="class">
+<name>{atomic}c a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute stereotype="class">
+<name>{volatile}c f</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Float</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Expression In Bound</name>
+<documentation><![CDATA[ { real = digits 15 | lower - 2.0 * pi | upper 2.0 * pi } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class A in Association</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class B in Association</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>A to B Conditional</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>A to B</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Public without attributes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="public">
+<name>Public with attributes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Singleton without attributes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Singleton with attributes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>a</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Singleton with referential attribute</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class to be associated</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Utility</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>Utility</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>CT Record</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>x</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>return CT Record</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>CT Record</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>CT Renames</name>
+<documentation><![CDATA[ {renames = GNAT.Sockets.Socket_Type} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>return CT Renames</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>CT Renames</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>CT Unknown</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>return Long Float</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Long Float</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Socket Type</name>
+<documentation><![CDATA[ {imported = GNAT.Sockets} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>return Socket Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Socket Type</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>CT Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>return CT Record</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>CT Record</return>
+</operation>
+<operation>
+<name>return CT Renames</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>CT Renames</return>
+</operation>
+<operation>
+<name>return Socket Typet</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Socket Type</return>
+</operation>
+<operation>
+<name>return Long Float</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Long Float</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Integer Type</name>
+<documentation><![CDATA[ { integer = lower 2^1 | upper 2 ** 4 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>EEIT_f</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>x</parametername>
+<documentation></documentation>
+<type>Integer Type</type>
+<initial>2^2*2**1</initial>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Function Returning Handle</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>func</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Handle</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>U1</name>
+<documentation><![CDATA[ {unsigned = mod 2^32} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Fixed String</name>
+<documentation><![CDATA[ {string = fixed 32, serializable} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>f</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Fixed String</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Fixed String Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Fixed String</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="accessor">
+<name>get id</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Fixed String</return>
+</operation>
+<operation>
+<name>f</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Fixed String</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Has Special Characters</name>
+<documentation><![CDATA[ This <type> has special characters (including &) in its documentation.
+
+{null} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>One Value Enum</name>
+<documentation><![CDATA[ {enumeration = a} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>One Value Int</name>
+<documentation><![CDATA[ {integer = lower 42 | upper 42} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>One Enum ID</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>One Value Enum</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>One Value Enum</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>One Int ID</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>One Value Int</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>get id</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>One Value Int</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Van</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>number plate</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Text</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Service</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>when done</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Date</type>
+</attribute>
+<attribute stereotype="id">
+<name>on van</name>
+<documentation><![CDATA[ {formalizes = service history}  ]]></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Van</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Private Enum</name>
+<documentation><![CDATA[ { enumeration = A | B } ]]></documentation>
+<visibility>ImplementationAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>PE</parametername>
+<documentation></documentation>
+<type>Private Enum</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>fun</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Private Enum</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>Private Protected</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>state</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Private Enum</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="entry">
+<name>E</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation>
+<name>proc</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>PE</parametername>
+<documentation></documentation>
+<type>Private Enum</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>fun</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Private Enum</return>
+</operation>
+<operation stereotype="access">
+<name>private rec proc</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>PE</parametername>
+<documentation></documentation>
+<type>Private Rec</type>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Private Rec</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>PE</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Private Enum</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="access">
+<name>private rec fun</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Private Enum</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class With Private Operations</name>
+<documentation><![CDATA[ Check on private/implementation finalize, teardown operations. ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="finalize">
+<name>final p</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="teardown">
+<name>teardown p</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="finalize">
+<name>final i</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+<operation stereotype="teardown">
+<name>teardown i</name>
+<documentation></documentation>
+<visibility>ImplementationAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Parent With Private Operations</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<abstract></abstract>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="accessor">
+<name>get id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+<return>Autonumber</return>
+</operation>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Child With Private Operations</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>get parent</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Parent With Private Operations</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Class With Private Init Operation</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation stereotype="init">
+<name>private init operation</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>B Ordinary Type</name>
+<documentation><![CDATA[ {integer = lower 0 | upper 1} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>C Ordinary Type</name>
+<documentation><![CDATA[ {integer = lower 0 | upper 1} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>D Ordinary Type</name>
+<documentation><![CDATA[ {integer = lower 0 | upper 1} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>A Protected Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>i</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>p1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>b</parametername>
+<documentation></documentation>
+<type>B Ordinary Type</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>p2</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>c</parametername>
+<documentation></documentation>
+<type>C Ordinary Type</type>
+</parameter>
+</parameters>
+</operation>
+<operation>
+<name>f1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>D Ordinary Type</return>
+</operation>
+<operation>
+<name>f2</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>X Ordinary Type</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>X Ordinary Type</name>
+<documentation><![CDATA[ {integer = lower 0 | upper 1} ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>Another Protected Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>i</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>c</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>B Ordinary Type</return>
+</operation>
+<operation>
+<name>d</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>X Ordinary Type</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Untagged Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>A Singleton</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Ordinary Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Single Element Enum</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Single Element Enum</name>
+<documentation><![CDATA[ { enumeration = foo } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="abstract">
+<name>Parent With Action</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>action</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>p</parametername>
+<documentation></documentation>
+<type>Action Payload</type>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="abstract">
+<name>inherited</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Child Uses Action</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+<event stereotype="instance event">
+<name>e</name>
+<documentation></documentation>
+<type>Action Payload</type>
+</event>
+</events>
+<statemachine>
+<documentation></documentation>
+<states>
+<state initial="yes">
+<name>initial</name>
+<documentation></documentation>
+<entryactions>
+</entryactions>
+</state>
+<state>
+<name>intermediate</name>
+<documentation></documentation>
+<entryactions>
+<entryaction>
+<name>action</name>
+<documentation></documentation>
+</entryaction>
+<entryaction>
+<name>inherited</name>
+<documentation></documentation>
+</entryaction>
+</entryactions>
+</state>
+<state final="yes">
+<name>final</name>
+<documentation></documentation>
+<entryactions>
+</entryactions>
+</state>
+</states>
+<transitions>
+<transition>
+<documentation></documentation>
+<source>initial</source>
+<target>intermediate</target>
+<event>
+<name>e</name>
+</event>
+</transition>
+<transition>
+<documentation></documentation>
+<source>intermediate</source>
+<target>final</target>
+<event>
+<name>f</name>
+</event>
+<transitionaction>
+<name>delete</name>
+</transitionaction>
+</transition>
+</transitions>
+</statemachine>
+</class>
+<class stereotype="type">
+<name>Action Payload</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>b</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Grandchild Supplied Actual</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+<operation>
+<name>inherited</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="active">
+<name>Operations With Parameter Modes</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>op</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>in x</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+<parameter>
+<parametername>out y</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+<parameter>
+<parametername>inout z</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+</parameters>
+</operation>
+<operation stereotype="entry">
+<name>ent</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+<parameter>
+<parametername>in x</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+<parameter>
+<parametername>out y</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+<parameter>
+<parametername>inout z</parametername>
+<documentation></documentation>
+<type>Integer</type>
+</parameter>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Candidate Identifier</name>
+<documentation><![CDATA[ { integer = lower 16#00# | upper 16#1f# } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Identified Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Candidate Identifier</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Aliased Components</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+<attribute stereotype="class, aliased">
+<name>cls i</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute stereotype="aliased">
+<name>ins i</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
+<attribute stereotype="class, aliased">
+<name>cls b</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Aliasable Boolean</type>
+</attribute>
+<attribute stereotype="aliased">
+<name>ins b</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Aliasable Boolean</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>check access</name>
+<documentation><![CDATA[ Check that we can take 'Access of aliased attributes. ]]></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Aliasable Boolean</name>
+<documentation><![CDATA[ To check that types that can be accessed make the instances aliased.
+
+{ renames = Boolean,
+  access = Aliasable Boolean P } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+</classes>
+<relationships>
+<association>
+<name>one to one</name>
+<documentation></documentation>
+<role>
+<name>{source} has b</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Class B in Association</classname>
+<cardinality>1</cardinality>
+</role>
+<role>
+<name>has a</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Class A in Association</classname>
+<cardinality>1</cardinality>
+</role>
+</association>
+<association>
+<name>one to one c</name>
+<documentation></documentation>
+<role>
+<name>has b</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Class B in Association</classname>
+<cardinality>0..1</cardinality>
+</role>
+<role>
+<name>has a</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Class A in Association</classname>
+<cardinality>1</cardinality>
+</role>
+</association>
+<association>
+<name>one to one c assoc</name>
+<documentation></documentation>
+<role>
+<name>has b</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Class B in Association</classname>
+<cardinality>0..1</cardinality>
+</role>
+<role>
+<name>has a</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Class A in Association</classname>
+<cardinality>1</cardinality>
+</role>
+<associative>A to B Conditional</associative>
+</association>
+<association>
+<name>one to one assoc</name>
+<documentation></documentation>
+<role>
+<name>{source} has b</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Class B in Association</classname>
+<cardinality>1</cardinality>
+</role>
+<role>
+<name>has a</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Class A in Association</classname>
+<cardinality>1</cardinality>
+</role>
+<associative>A to B</associative>
+</association>
+<association>
+<name>singleton assoc</name>
+<documentation></documentation>
+<role>
+<name>has a</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Class to be associated</classname>
+<cardinality>1</cardinality>
+</role>
+<role>
+<name>is used by</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Singleton with referential attribute</classname>
+<cardinality>0..1</cardinality>
+</role>
+</association>
+<association>
+<name>service history</name>
+<documentation></documentation>
+<role>
+<name>was serviced at</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Service</classname>
+<cardinality>0..*</cardinality>
+</role>
+<role>
+<name>was a service of</name>
+<documentation></documentation>
+<end>2</end>
+<classname>Van</classname>
+<cardinality>1</cardinality>
+</role>
+</association>
+<association>
+<name>S E E</name>
+<documentation></documentation>
+<role>
+<name>manages</name>
+<documentation></documentation>
+<end>1</end>
+<classname>Ordinary Class</classname>
+<cardinality>0..*</cardinality>
+</role>
+<role>
+<name>is managed by</name>
+<documentation></documentation>
+<end>2</end>
+<classname>A Singleton</classname>
+<cardinality>1</cardinality>
+</role>
+</association>
+<inheritance>
+<name>renam</name>
+<documentation></documentation>
+<parent>Renaming Operations Parent</parent>
+<child>Renaming Operations Child</child>
+</inheritance>
+<inheritance>
+<name>PPE</name>
+<documentation></documentation>
+<parent>Parent With Private Operations</parent>
+<child>Child With Private Operations</child>
+</inheritance>
+<inheritance>
+<name>inherit action</name>
+<documentation></documentation>
+<parent>Parent With Action</parent>
+<child>Child Uses Action</child>
+</inheritance>
+<inheritance>
+<name>supply</name>
+<documentation></documentation>
+<parent>Child Uses Action</parent>
+<child>Grandchild Supplied Actual</child>
+</inheritance>
+</relationships>
+</domain>
