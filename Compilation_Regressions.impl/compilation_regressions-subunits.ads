@@ -1,4 +1,7 @@
---  $Id: compilation_regressions-subunits.ads,v eecaf0241046 2006/04/23 07:53:46 simonjwright $
+--  $RCSfile: compilation_regressions-subunits.ads,v $
+--  $Revision: 8a6ada73a491 $
+--  $Date: 2006/04/23 11:32:39 $
+--  $Author: simonjwright $
 --
 --  Regression tests for ColdFrame.
 --
