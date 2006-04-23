@@ -74,7 +74,7 @@ hierarchies-harness$(exe): Hierarchies.gen force
 initialization-harness$(exe): Initialization.gen force
 	$(app) gnatmake -PInitialization 2>&1 | tee -a initialization.log
 
-regression_tests$(exe): Regressions.gen force
+regression_tests$(exe): Regressions.gen Compilation_Regressions.gen force
 	$(app) gnatmake -PRegressions 2>&1 | tee -a regressions.log
 
 stub_test_harness$(exe): Stub_Test_Interface.gen force
@@ -82,6 +82,9 @@ stub_test_harness$(exe): Stub_Test_Interface.gen force
 
 unit_testing-harness$(exe): Unit_Testing.gen force
 	$(app) gnatmake -PUnit_Testing 2>&1 | tee -a unit_testing.log
+
+Compilation_Regressions.gen: force
+	$(MAKE) -f $(parent) $@ 2>&1 | tee regressions.log
 
 Event_Test.gen: force
 	$(MAKE) -f $(parent) $@ 2>&1 | tee event_test.log
