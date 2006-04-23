@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 14bd806d8c39 2006/04/19 23:23:56 simonjwright $ -->
+<!-- $Id: releases.html-proto,v af41e46d388e 2006/04/23 16:59:41 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -63,6 +63,16 @@ contains the complete documentation.
 <ul class="release">
 
 <li><b>Modelling</b>
+
+<li>You can mark an attribute <i>{aliased}</i> (or
+&#171;aliased&#187;; it's probably best to use the tagged
+(<i>{aliased}</i>) form for this, since it hardly contributes to the
+problem-domain analysis and the stereotype form is very visible; but
+note that in UML2 tagged values can only be used in association with a
+particular stereotype, so the diagram clutter will be unavoidable).
+
+<li>A completion transition from a state with a &#171;final&#187;
+action to a final state isn't treated as an error.
 
 <li><b>Generation</b>
 
