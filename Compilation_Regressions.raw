@@ -1,13 +1,13 @@
 <domain>
 <name>Compilation Regressions</name>
 <documentation><![CDATA[ Contains ColdFrame regression tests that only check that the generated code compiles..
-{ revision = $Revision: eecaf0241046 $} ]]></documentation>
-<extractor>cat2raw.py: $Revision: eecaf0241046 $</extractor>
+{ revision = $Revision: 79ee2da10f03 $} ]]></documentation>
+<extractor>cat2raw.py: $Revision: 79ee2da10f03 $</extractor>
 <date>
 <year>2006</year>
 <month>4</month>
 <day>23</day>
-<time>08:31</time>
+<time>11:58</time>
 </date>
 <classes>
 <class stereotype="active">
