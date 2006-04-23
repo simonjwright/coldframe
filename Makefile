@@ -110,6 +110,13 @@ OTHER_SCRIPTS = \
   serialized-to-csv.tcl \
   split-csv.tcl
 
+# Pattern rules
+
+# Must have ply installed in python.
+# Will need extra dependencies if there are controlled child packages.
+$(COLDFRAMEOUT)/%.raw: %.cat
+	python cat2raw.py $<
+
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@$(ECHO) generating $@ ...
 	@TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
@@ -573,6 +580,12 @@ States.impl/states-t.ads
 TEST = Test.mdl
 
 TEST += \
+Compilation_Regressions.cat Compilation_Regressions.raw \
+compilation_regressions-aliased_components-check_access.adb \
+Compilation_Regressions.impl/compilation_regressions-subunits.adb \
+Compilation_Regressions.impl/compilation_regressions-subunits.ads
+
+TEST += \
 coldframe-events_test.adb \
 coldframe-events_test_support.adb \
 coldframe-events_test_support.ads \
@@ -643,7 +656,6 @@ Initialization.impl/initialization-suite-check_domain_initialization.adb
 
 TEST += \
 Regressions.cat Regressions.raw Regressions.gpr \
-Regressions.impl/regressions-class_with_private_init_operation-private_init_operation.adb\
 Regressions.impl/regressions-event_holder-set_timer.adb \
 Regressions.impl/regressions-event_holder-t.adb \
 Regressions.impl/regressions-find_active_singleton-t.adb \
@@ -652,6 +664,7 @@ Regressions.impl/regressions-max_more-f.adb \
 Regressions.impl/regressions-max_more-t.adb \
 Regressions.impl/regressions-max_one-f.adb \
 Regressions.impl/regressions-max_one-t.adb \
+Regressions.impl/regressions-phoenix-reincarnate.adb \
 Regressions.impl/regressions-pt_holder.adb \
 Regressions.impl/regressions-pt_owner-get_h_access.adb \
 Regressions.impl/regressions-pt_user-get_state.adb \
