@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v a5562b89edfd 2006/04/19 21:31:01 simonjwright $
+--  $Id: regressions-suite.adb,v 3926b1ab35c4 2006/04/23 07:57:08 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -22,6 +22,7 @@ with Regressions.Exception_In_Event_Handler;
 with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
+with Regressions.Max_One;
 with Regressions.PT_User;
 with Regressions.Preemptable_Test.Collections;
 with Regressions.Preemptable_Test.Iterate;
@@ -31,41 +32,10 @@ with Regressions.Serializable;
 with Regressions.Tear_Down;
 with Regressions.Test_Preemption;
 
---  The following units only have to compile
+--  Call up units only have to compile
 
 pragma Warnings (Off);
-with Regressions.Bounded_String_ID;
-with Regressions.CT_Class;
-with Regressions.Child_Uses_Action;
-with Regressions.Class_Operation_Access_Modes;
-with Regressions.Class_Timer_In_Array;
-with Regressions.Class_Timer_In_Class;
-with Regressions.Class_Timer_In_Max_One;
-with Regressions.Class_Timer_In_Public;
-with Regressions.Class_Timer_In_Singleton;
-with Regressions.Class_With_Private_Operations;
-with Regressions.Fixed_String_Class;
-with Regressions.Function_Returning_Handle;
-with Regressions.Identified_Class;
-with Regressions.Max_More;
-with Regressions.Max_More_C;
-with Regressions.Max_One;
-with Regressions.Max_One_C;
-with Regressions.One_Enum_ID;
-with Regressions.One_Int_ID;
-with Regressions.Ordinary_Class.All_Instances;
-with Regressions.Ordinary_Class.Selection_Function;
-with Regressions.Parent_With_Action;
-with Regressions.Public_With_Attributes;
-with Regressions.Public_Without_Attributes;
-with Regressions.Renaming_Operations_Child;
-with Regressions.Renaming_Operations_Parent;
-with Regressions.Service_History;
-with Regressions.Singleton_With_Attributes;
-with Regressions.Singleton_With_Referential_Attribute;
-with Regressions.Singleton_Without_Attributes;
-with Regressions.Test_Preemption;
-with Regressions.Utility;
+with Compilation_Regressions.Subunits;
 pragma Warnings (On);
 
 --  May not be referenced for released versions
