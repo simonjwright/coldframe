@@ -1,4 +1,4 @@
-<!-- $Id: attributes.html,v 6ad334b19ee4 2006/02/17 06:46:51 simonjwright $ -->
+<!-- $Id: attributes.html,v e6d4a6f6d05d 2006/04/23 17:21:29 simonjwright $ -->
 <head>
 <title>ColdFrame: Attributes</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -85,26 +85,28 @@ the attribute definition, but this will tend to clutter the diagram.
 
 <dl>
 
-<dt><tt>atomic</tt>
-<dd>The attribute must be read from memory or written to memory each
-time it is accessed, like <tt>volatile</tt>, but additionally in such
-a way that it's proof against concurrent access.
-
 <dt><tt>class</tt>
 <dd>The attribute is a class attribute.
 
 <dt><tt>id</tt>
 <dd>The attribute is an identifying attribute.
 
-<dt><tt>volatile</tt>
-<dd>The attribute must be read from memory or written to memory each
-time it is accessed.
-
 </dl>
 
 <h3><a name="tags">Tagged values</a></h3>
 
 <dl>
+
+<dt><tt>aliased</tt>
+<dd>The attribute is to be stored in such a way that its address can
+be taken (in Ada, <tt>'Access</tt>).
+
+<dt><tt>atomic</tt>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed, like <tt>volatile</tt>, but additionally in such
+a way that it's proof against concurrent access.
+<br>The implementation may limit the size of objects that can be
+treated as atomic.
 
 <dt><tt><a name="formalizes">formalizes</a> = <i>association-name</i></tt>
 <dd>Indicates that the attribute is a
@@ -135,6 +137,10 @@ alternatively (and if you don't mind the diagram clutter)
 </pre>
 
 
+<dt><tt>volatile</tt>
+<dd>The attribute must be read from memory or written to memory each
+time it is accessed.
+
 </dl>
 
 <h2>Translation</h2>
@@ -146,6 +152,11 @@ record", accessed as <tt>This.<i>attribute-name</i></tt>.
 
 <p>Class attributes are implemented as variables in the private part
 of the class package, and are accessed directly by name.
+
+<p>If the attribute's type is known to be an array, the <i>{atomic}</i> and
+<i>{volatile}</i> tags are translated to <tt>pragma
+Atomic_Components</tt> or
+<tt>pragma Volatile_Components</tt> respectively.
 
 <!--
 <h2>Use</h2>
