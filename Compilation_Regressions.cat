@@ -10,7 +10,7 @@
     quid       	"444B136E023A"
     documentation 	
 |Contains ColdFrame regression tests that only check that the generated code compiles..
-|{ revision = $Revision: eecaf0241046 $}
+|{ revision = $Revision: e1f2e36befe5 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -4617,23 +4617,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"412DFB5000C0"
-			    compartment 	(object Compartment
-				Parent_View 	@112
-				location   	(519, 193)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	6
-				max_width  	481)
 			    width      	464
 			    height     	424
 			    annotation 	8
@@ -4714,23 +4697,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"42C96F710190"
-			    compartment 	(object Compartment
-				Parent_View 	@114
-				location   	(1502, 230)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	428)
 			    width      	504
 			    height     	342
 			    annotation 	8
@@ -5854,7 +5820,15 @@
 |{ renames = Boolean,
 |  access = Aliasable Boolean P }
 		    
-		    stereotype 	"type"))
+		    stereotype 	"type")
+		(object Class "Record With Aliased Component"
+		    quid       	"444B89920209"
+		    stereotype 	"type"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "i"
+			    quid       	"444B89C60376"
+			    stereotype 	"aliased"
+			    type       	"Integer"))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"444A877E039F"
@@ -5882,18 +5856,35 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@146
-				location   	(322, 388)
+				location   	(92, 232)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	406
+				max_width  	866
 				justify    	0
 				label      	"Aliased Components")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"444A878203A5"
-			    width      	424
-			    height     	124
+			    compartment 	(object Compartment
+				Parent_View 	@146
+				location   	(92, 293)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	7
+				max_width  	863)
+			    width      	884
+			    height     	436
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Compilation Regressions::Aliasing::Aliasable Boolean" @147
@@ -5936,8 +5927,12 @@
 			    height     	180
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object CategoryView "Logical View::Compilation Regressions::Aliasing" @148
-			    location   	(1600, 913)
+			(object ClassView "Class" "Logical View::Compilation Regressions::Aliasing::Record With Aliased Component" @148
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1591, 772)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -5949,27 +5944,46 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@148
-				location   	(1423, 878)
+				location   	(1251, 713)
 				fill_color 	13434879
-				nlines     	2
-				max_width  	354
+				nlines     	1
+				max_width  	680
 				justify    	0
-				label      	"Aliasing")
+				label      	"Record With Aliased Component")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@148
-				location   	(1423, 828)
+				location   	(1251, 663)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	354
+				max_width  	680
 				justify    	0
-				label      	"<<include>>")
+				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"444A873603E2"
-			    width      	366
-			    height     	182)))))
+			    fill_color 	16777088
+			    quidu      	"444B89920209"
+			    compartment 	(object Compartment
+				Parent_View 	@148
+				location   	(1251, 774)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	459)
+			    width      	698
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)))))
 	(object Class_Category "Operations using {access} types"
 	    quid       	"4446A47E0295"
 	    stereotype 	"dont include"
@@ -6178,23 +6192,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4446A5870065"
-			    compartment 	(object Compartment
-				Parent_View 	@151
-				location   	(93, 1024)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	4
-				max_width  	854)
 			    width      	874
 			    height     	342
 			    annotation 	8
@@ -6275,23 +6272,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4446A68603B5"
-			    compartment 	(object Compartment
-				Parent_View 	@153
-				location   	(1039, 999)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	5
-				max_width  	1010)
 			    width      	1030
 			    height     	392
 			    annotation 	8
@@ -6319,7 +6299,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1343
-		    label      	"$Id: Compilation_Regressions.cat,v eecaf0241046 2006/04/23 07:53:46 simonjwright $")
+		    label      	"$Id: Compilation_Regressions.cat,v e1f2e36befe5 2006/04/23 16:02:38 simonjwright $")
 		(object CategoryView "Logical View::Compilation Regressions::Access modes for operations" @155
 		    location   	(258, 315)
 		    font       	(object Font
@@ -7013,7 +6993,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@175
-			location   	(1248, 1352)
+			location   	(1248, 1348)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	328
@@ -7149,7 +7129,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@179
-			location   	(1838, 270)
+			location   	(1838, 266)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	310
@@ -7183,7 +7163,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@180
-			location   	(1846, 577)
+			location   	(1846, 573)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -7217,7 +7197,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@181
-			location   	(1840, 850)
+			location   	(1840, 846)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	410
@@ -7251,7 +7231,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@182
-			location   	(1857, 1115)
+			location   	(1857, 1111)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
@@ -7285,7 +7265,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@183
-			location   	(1870, 1396)
+			location   	(1870, 1392)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288

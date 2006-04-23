@@ -1,13 +1,13 @@
 <domain>
 <name>Compilation Regressions</name>
 <documentation><![CDATA[ Contains ColdFrame regression tests that only check that the generated code compiles..
-{ revision = $Revision: 79ee2da10f03 $} ]]></documentation>
-<extractor>cat2raw.py: $Revision: 79ee2da10f03 $</extractor>
+{ revision = $Revision: e1f2e36befe5 $} ]]></documentation>
+<extractor>cat2raw.py: $Revision: e1f2e36befe5 $</extractor>
 <date>
 <year>2006</year>
 <month>4</month>
 <day>23</day>
-<time>11:58</time>
+<time>16:52</time>
 </date>
 <classes>
 <class stereotype="active">
@@ -2044,6 +2044,24 @@
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Record With Aliased Component</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="aliased">
+<name>i</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Integer</type>
+</attribute>
 </attributes>
 <operations>
 </operations>
