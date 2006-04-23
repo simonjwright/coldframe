@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v bcea8cd9c4a3 2005/07/10 18:29:47 simonjwright $ -->
+<!-- $Id: ada-attribute.xsl,v ea746f8d2054 2006/04/23 11:01:32 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -375,7 +375,7 @@
     <xsl:value-of select="$indent"/>
     <xsl:call-template name="at:attribute-name"/>
     <xsl:text> : </xsl:text>
-    <xsl:if test="/domain/type[name=current()/type]/@access">
+    <xsl:if test="@aliased or /domain/type[name=current()/type]/@access">
       <xsl:text>aliased </xsl:text>
     </xsl:if>
     <xsl:call-template name="at:attribute-type"/>
