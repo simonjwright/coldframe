@@ -581,7 +581,7 @@ TEST = Test.mdl
 
 TEST += \
 Compilation_Regressions.cat Compilation_Regressions.raw \
-compilation_regressions-aliased_components-check_access.adb \
+Compilation_Regressions.impl/compilation_regressions-aliased_components-check_access.adb \
 Compilation_Regressions.impl/compilation_regressions-subunits.adb \
 Compilation_Regressions.impl/compilation_regressions-subunits.ads
 
