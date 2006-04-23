@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v af41e46d388e 2006/04/23 16:59:41 simonjwright $ -->
+<!-- $Id: releases.html-proto,v c10a287b1b0e 2006/04/23 17:31:33 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -175,8 +175,8 @@ action routine.
 <li>Generation took a lot longer than you would expect on Windows
 2000, Windows XP.
 
-<li>Problems with <tt>cat2raw.py</tt> (one day soon I'll tell you about
-it!) and transitions to unnamed <i>final</i> states.
+<li>Problems with <tt><a href="extraction.html">cat2raw.py</a></tt>
+and transitions to unnamed <i>final</i> states.
 
 <li>Leading or trailing dots in names are treated as errors.
 
