@@ -1,4 +1,4 @@
---  $Id: regressions-suite.adb,v 3926b1ab35c4 2006/04/23 07:57:08 simonjwright $
+--  $Id: regressions-suite.adb,v 73296bc9fe7b 2006/04/23 10:44:26 simonjwright $
 --
 --  Regression tests for ColdFrame.
 
@@ -23,6 +23,7 @@ with Regressions.Find_Active;
 with Regressions.Find_Active_Singleton;
 with Regressions.Initialize;
 with Regressions.Max_One;
+with Regressions.Phoenix;
 with Regressions.PT_User;
 with Regressions.Preemptable_Test.Collections;
 with Regressions.Preemptable_Test.Iterate;
@@ -1272,6 +1273,67 @@ package body Regressions.Suite is
    end Reflexive_Associations;
 
 
+   package Completion_After_Final_Action is
+      type Case_1 is new Test_Case with private;
+   private
+      type Case_1 is new Test_Case with null record;
+      function Name (C : Case_1) return String_Access;
+      procedure Register_Tests (C : in out Case_1);
+      procedure Set_Up (C : in out Case_1);
+      procedure Tear_Down (C : in out Case_1);
+   end Completion_After_Final_Action;
+
+   package body Completion_After_Final_Action is
+
+      procedure Trigger_Final_Action (C : in out Test_Case'Class);
+      procedure Trigger_Final_Action (C : in out Test_Case'Class) is
+         pragma Warnings (Off, C);
+      begin
+         declare
+            H : constant Phoenix.Handle := Phoenix.Create;
+            Ev : Phoenix.Quit (H);
+         begin
+            Phoenix.Handler (Ev);
+         end;
+         declare
+            H : constant Phoenix.Handle := Phoenix.Find;
+            St : constant String := Phoenix.State_Image (H.all);
+         begin
+            Assert (St = "REGRESSIONS.PHOENIX.INITIAL",
+                    "incorrect state " & St);
+         end;
+      end Trigger_Final_Action;
+
+      function Name (C : Case_1) return String_Access is
+         pragma Warnings (Off, C);
+      begin
+         return new String'("Completion_After_Final_Action.Case_1");
+      end Name;
+
+      procedure Register_Tests (C : in out Case_1) is
+      begin
+         Register_Routine
+           (C,
+            Trigger_Final_Action'Access,
+            "final action creates new instance");
+      end Register_Tests;
+
+      procedure Set_Up (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Initialize
+           (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
+      end Set_Up;
+
+      procedure Tear_Down (C : in out Case_1) is
+         pragma Warnings (Off, C);
+      begin
+         Regressions.Tear_Down;
+      end Tear_Down;
+
+   end Completion_After_Final_Action;
+
+
    function Suite return AUnit.Test_Suites.Access_Test_Suite is
       Result : constant AUnit.Test_Suites.Access_Test_Suite
         := new AUnit.Test_Suites.Test_Suite;
@@ -1297,6 +1359,8 @@ package body Regressions.Suite is
                                   new Long_Numeric_Overflow.Case_1);
       AUnit.Test_Suites.Add_Test (Result,
                                   new Reflexive_Associations.Case_1);
+      AUnit.Test_Suites.Add_Test (Result,
+                                  new Completion_After_Final_Action.Case_1);
       return Result;
    end Suite;
 
