@@ -1,14 +1,12 @@
---------------------------------------------
---  Automatically generated:  edit this!  --
---  PLEASE DELETE THIS BANNER AFTERWARDS  --
---------------------------------------------
-
 --  Buffers a data value for recording.
 
 separate (Recording.Recorder)
 procedure Take_Record
   (Item : Recordable) is
-   Unimplemented : exception;
+   Str : Stream;
 begin
-   raise Unimplemented;
+   This.Buff.Get_Stream (Str);
+   if Str /= null then
+      Recordable'Output (Str, Item);
+   end if;
 end Take_Record;
