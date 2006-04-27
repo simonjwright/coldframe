@@ -1,0 +1,609 @@
+
+(object Petal
+    version    	46
+    _written   	"Rose 7.7.0204.3001"
+    charSet    	0)
+
+(object Class_Category "Recording"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"444EE77D0115"
+    documentation 	"When using ColdFrame's Serialization features to support recording of the inner workings of an application, it may be necessary to limit the amount of buffering used; if your output bandwidth doesn't match your recording rate, you'll run out of memory for your application!"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Recorder"
+	    quid       	"444EEAA7012E"
+	    documentation 	
+|The singleton active class which manages recording.
+|Its task fetches Recordables from the Buffer, blocking until there is data to record; each fetched Recordable is output over the Socket.
+	    
+	    operations 	(list Operations
+		(object Operation "Take Record"
+		    quid       	"444EEE7101FB"
+		    documentation 	"Buffers a data value for recording."
+		    parameters 	(list Parameters
+			(object Parameter "Item"
+			    quid       	"444EEE92022A"
+			    type       	"Recordable"
+			    quidu      	"444EE8FD0226"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Initialize"
+		    quid       	"444EEE92014E"
+		    documentation 	"Sets up the Socket and the Buffer."
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "Start"
+		    quid       	"444EEEA90165"
+		    documentation 	"The task waits here until the instance is initialized."
+		    stereotype 	"entry"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Socket"
+		    quid       	"444EEBB502D1"
+		    documentation 	"The socket through which data is streamed."
+		    type       	"Socket Type")
+		(object ClassAttribute "Buff"
+		    quid       	"444EEBDF0335"
+		    documentation 	"Manages the queue of items to be recorded."
+		    type       	"Buffer"
+		    quidu      	"444EEC0600D8"))
+	    concurrency 	"Active"
+	    cardinality 	(value Cardinality "1..1"))
+	(object Class "Buffer"
+	    quid       	"444EEC0600D8"
+	    documentation 	"Controls the storage of items to be recorded."
+	    stereotype 	"protected"
+	    exportControl 	"Private"
+	    operations 	(list Operations
+		(object Operation "Initialize"
+		    quid       	"444EF11D017C"
+		    documentation 	"Initializes the buffer."
+		    parameters 	(list Parameters
+			(object Parameter "Capacity"
+			    quid       	"444EF1D5009A"
+			    type       	"Positive"
+			    initv      	"1024"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Get Stream"
+		    quid       	"444EEF45010F"
+		    documentation 	
+|Returns an empty Memory Stream capable of holding up to Capacity bytes, or null if the Buffer is full.
+|The designated stream is held within the Outstanding queue.
+		    
+		    parameters 	(list Parameters
+			(object Parameter "Capacity"
+			    quid       	"444EF222000F"
+			    type       	"Positive"
+			    initv      	"1024")
+			(object Parameter "out S"
+			    quid       	"444F034E03B3"
+			    type       	"Stream"
+			    quidu      	"444EF5EC037B"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Fetch Stream"
+		    quid       	"444EF46B0060"
+		    documentation 	
+|Blocks until there is an item read for output to the recording medium.
+|After recording is complete, MUST call Done() to remove the item from the Outstanding queue.
+		    
+		    stereotype 	"entry"
+		    parameters 	(list Parameters
+			(object Parameter "out S"
+			    quid       	"444EF4A80339"
+			    type       	"Stream"
+			    quidu      	"444EF5EC037B"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Done"
+		    quid       	"444EF53101D8"
+		    documentation 	"Called to indicate that the currently Fetched item has been dealt with."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Statistics"
+		    quid       	"444EEFC80212"
+		    documentation 	"Provides information on the capacity of the Buffer, the number of items presented for recording, and the number that had to be dropped because the capacity was exceeded."
+		    parameters 	(list Parameters
+			(object Parameter "out Capacity"
+			    quid       	"444EF07101D9"
+			    type       	"Positive")
+			(object Parameter "out Items"
+			    quid       	"444EF0C90208"
+			    type       	"Natural")
+			(object Parameter "out Dropped"
+			    quid       	"444EEFF302BE"
+			    type       	"Natural"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Capacity"
+		    quid       	"444EEC5D0296"
+		    documentation 	
+|Specifies the capacity of the buffer (number of items that can be queued for recording).
+|The initial value of 0 is a signal that the Buffer hasn't been initialized.
+		    
+		    type       	"Natural"
+		    initv      	"0")
+		(object ClassAttribute "Outstanding"
+		    quid       	"444EEC6D0040"
+		    documentation 	"The queue of items to be recorded."
+		    type       	"Queue"
+		    quidu      	"444EED740016")
+		(object ClassAttribute "Count"
+		    quid       	"444EEFF90281"
+		    documentation 	"Tells how many recording attempts have been made."
+		    type       	"Natural"
+		    initv      	"0")
+		(object ClassAttribute "Dropped"
+		    quid       	"444EECAF03A2"
+		    documentation 	"Counts the number of dropped items."
+		    type       	"Natural"
+		    initv      	"0")
+		(object ClassAttribute "Fetched"
+		    quid       	"444EF561030D"
+		    documentation 	"Indicates that Fetch has been called and that we are waiting for a Done to indicate that the outstanding item can be freed."
+		    type       	"Boolean"
+		    initv      	"False")))
+	(object Class "Queue"
+	    quid       	"444EED740016"
+	    documentation 	
+|Contains items to be recorded.
+|Note that what are queued are pointers to Memory Streams containing the Recordable items.
+|Implemented as an unbounded queue; the capacity limitation for an instance is imposed by the Buffer that contains it.
+|{imported = Recording Support}
+	    
+	    stereotype 	"type"
+	    exportControl 	"Private")
+	(object Class "Use Error"
+	    quid       	"444EF3A2036E"
+	    documentation 	"Raised on improper usage (for example, if a Buffer is used before it's been Initialized)."
+	    stereotype 	"exception"
+	    exportControl 	"Private")
+	(object Class "Stream"
+	    quid       	"444EF5EC037B"
+	    documentation 	
+|Supports Ada streaming to memory.
+|Implemented as a pointer to an unconstrained Booch Components Memory Stream, so instances can be of varying sizes.
+|
+|{imported = Recording Support}
+	    
+	    stereotype 	"type"
+	    exportControl 	"Private")
+	(object Class_Category "Recording Interface"
+	    quid       	"444EE82F0161"
+	    stereotype 	"include"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Interface"
+		    quid       	"444EE85903C4"
+		    documentation 	"The public interface to Recording."
+		    stereotype 	"public"
+		    operations 	(list Operations
+			(object Operation "Take Record"
+			    quid       	"444EE88C02B9"
+			    documentation 	
+|Buffers a data value for recording.
+|If the recording buffer is full, the data will be silently dropped (though statistics on the number of dropped records may be kept and output).
+			    
+			    parameters 	(list Parameters
+				(object Parameter "Item"
+				    quid       	"444EED01011F"
+				    type       	"Recordable"
+				    quidu      	"444EE8FD0226"))
+			    concurrency 	"Sequential"
+			    opExportControl 	"Public"
+			    uid        	0)))
+		(object Class "Recordable"
+		    quid       	"444EE8FD0226"
+		    documentation 	
+|The base class for recordable objects.
+|Implemented as an Ada classwide type.
+|{imported = Recording Support}
+		    
+		    stereotype 	"type"))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"444EE8480207"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Recording::Recording Interface::Interface" @1
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(494, 325)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@1
+				location   	(181, 266)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	626
+				justify    	0
+				label      	"Interface")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@1
+				location   	(181, 216)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	626
+				justify    	0
+				label      	"<<public>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	8454016
+			    quidu      	"444EE85903C4"
+			    width      	644
+			    height     	242
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Recording::Recording Interface::Recordable" @2
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1501, 312)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@2
+				location   	(1377, 283)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	248
+				justify    	0
+				label      	"Recordable")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@2
+				location   	(1377, 233)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	248
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	16777088
+			    quidu      	"444EE8FD0226"
+			    width      	266
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE))))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"444EE8250135"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	62
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Recording::Recording Interface::Interface" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(468, 256)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(155, 174)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	626
+			justify    	0
+			label      	"Interface")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(155, 124)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	626
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"444EE85903C4"
+		    width      	644
+		    height     	288
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Recording Interface::Recordable" @4
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1134, 248)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(942, 196)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	384
+			justify    	0
+			label      	"Recordable")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@4
+			location   	(942, 146)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	384
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"444EE8FD0226"
+		    width      	402
+		    height     	228
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Recorder" @5
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(928, 809)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(616, 628)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	624
+			justify    	0
+			label      	"Recorder")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"444EEAA7012E"
+		    width      	642
+		    height     	386
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Buffer" @6
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(916, 1475)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(203, 1191)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1426
+			justify    	0
+			label      	"Buffer")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@6
+			location   	(203, 1141)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	1426
+			justify    	0
+			label      	"<<protected>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"444EEC0600D8"
+		    width      	1444
+		    height     	692
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Queue" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1932, 1493)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1841, 1464)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"Queue")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@7
+			location   	(1841, 1414)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"444EED740016"
+		    width      	200
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Use Error" @8
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1935, 1228)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1796, 1199)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	278
+			justify    	0
+			label      	"Use Error")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@8
+			location   	(1796, 1149)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	275
+			justify    	0
+			label      	"<<exception>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"444EF3A2036E"
+		    width      	296
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Recording::Stream" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1935, 1753)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(1844, 1723)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"Stream")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@9
+			location   	(1844, 1673)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"444EF5EC037B"
+		    width      	200
+		    height     	184
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Recording" @10
+		    location   	(1928, 259)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@10
+			location   	(1755, 175)
+			nlines     	2
+			max_width  	346
+			justify    	0
+			label      	"Recording")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    quidu      	"444EE77D0115"
+		    width      	358
+		    height     	180)))))
