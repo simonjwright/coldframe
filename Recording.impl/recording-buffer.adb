@@ -11,9 +11,9 @@ protected body Buffer is
    --  Called to indicate that the currently Fetched item has been
    --  dealt with.
    procedure Done is
-      pragma Assert (Capacity > 0,
+      pragma Assert (Buffer.Capacity > 0,
                      "Buffer.Done called before Initialize");
-      pragma Assert (Fetched,
+      pragma Assert (Buffer.Fetched,
                      "Buffer.Done called when no Fetch outstanding");
    begin
       Recording_Support.Queues.Pop (Outstanding);
@@ -27,9 +27,9 @@ protected body Buffer is
    --  the item from the Outstanding queue.
    entry Fetch_Stream
      (S : out Stream) when Recording_Support.Queues.Length (Outstanding) > 0 is
-      pragma Assert (Capacity > 0,
+      pragma Assert (Buffer.Capacity > 0,
                      "Buffer.Fetch_Stream called before Initialize");
-      pragma Assert (Fetched,
+      pragma Assert (Buffer.Fetched,
                      "Buffer.Fetch_Stream called when already Fetched");
    begin
       S := Recording_Support.Queues.Front (Outstanding).Str;
@@ -41,14 +41,11 @@ protected body Buffer is
    --  Capacity bytes, or null if the Buffer is full. The designated
    --  stream is held within the Outstanding queue.
    procedure Get_Stream
-     (Capacity : Positive := 1024;
-      S : out Stream) is
-      pragma Assert (Capacity > 0,
+     (S : out Stream;
+      Capacity : Positive := 1024) is
+      pragma Assert (Buffer.Capacity > 0,
                      "Buffer.Get_Stream called before Initialize");
    begin
-      if Capacity = 0 then
-         raise Use_Error;
-      end if;
       Count := Count + 1;
       if Recording_Support.Queues.Length (Outstanding) < Capacity then
          S := new BC.Support.Memory_Streams.Stream_Type
@@ -65,7 +62,7 @@ protected body Buffer is
    --  Initializes the buffer.
    procedure Initialize
      (Capacity : Positive := 1024) is
-      pragma Assert (Capacity = 0,
+      pragma Assert (Buffer.Capacity > 0,
                      "Buffer.Initialize called before Initialize");
    begin
       Buffer.Capacity := Capacity;
