@@ -1,7 +1,7 @@
 
 (object Petal
-    version    	46
-    _written   	"Rose 7.7.0204.3001"
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
     charSet    	0)
 
 (object Class_Category "Recording"
@@ -79,14 +79,14 @@
 |The designated stream is held within the Outstanding queue.
 		    
 		    parameters 	(list Parameters
-			(object Parameter "Capacity"
-			    quid       	"444EF222000F"
-			    type       	"Positive"
-			    initv      	"1024")
 			(object Parameter "out S"
 			    quid       	"444F034E03B3"
 			    type       	"Stream"
-			    quidu      	"444EF5EC037B"))
+			    quidu      	"444EF5EC037B")
+			(object Parameter "Capacity"
+			    quid       	"444EF222000F"
+			    type       	"Positive"
+			    initv      	"1024"))
 		    concurrency 	"Sequential"
 		    opExportControl 	"Public"
 		    uid        	0)
@@ -166,11 +166,6 @@
 	    
 	    stereotype 	"type"
 	    exportControl 	"Private")
-	(object Class "Use Error"
-	    quid       	"444EF3A2036E"
-	    documentation 	"Raised on improper usage (for example, if a Buffer is used before it's been Initialized)."
-	    stereotype 	"exception"
-	    exportControl 	"Private")
 	(object Class "Stream"
 	    quid       	"444EF5EC037B"
 	    documentation 	
@@ -181,6 +176,13 @@
 	    
 	    stereotype 	"type"
 	    exportControl 	"Private")
+	(object Class "Socket Type"
+	    quid       	"44504D6400AF"
+	    documentation 	
+|A TCP/IP socket, to be connected to the host that is to accept the recorded data.
+|{imported = GNAT.Sockets}
+	    
+	    stereotype 	"type")
 	(object Class_Category "Recording Interface"
 	    quid       	"444EE82F0161"
 	    stereotype 	"include"
@@ -212,7 +214,12 @@
 |Implemented as an Ada classwide type.
 |{imported = Recording Support}
 		    
-		    stereotype 	"type"))
+		    stereotype 	"type")
+		(object Class "Use Error"
+		    quid       	"444EF3A2036E"
+		    documentation 	"Raised on improper usage (for example, if a Buffer is used before it's been Initialized)."
+		    stereotype 	"exception"
+		    exportControl 	"Private"))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"444EE8480207"
@@ -259,6 +266,23 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"444EE85903C4"
+			    compartment 	(object Compartment
+				Parent_View 	@1
+				location   	(181, 327)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	631)
 			    width      	644
 			    height     	242
 			    annotation 	8
@@ -268,7 +292,7 @@
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(1501, 312)
+			    location   	(1139, 325)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -280,7 +304,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@2
-				location   	(1377, 283)
+				location   	(1015, 296)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	248
@@ -288,7 +312,7 @@
 				label      	"Recordable")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@2
-				location   	(1377, 233)
+				location   	(1015, 246)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -302,6 +326,46 @@
 			    width      	266
 			    height     	182
 			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Recording::Recording Interface::Use Error" @3
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1579, 328)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@3
+				location   	(1440, 299)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	278
+				justify    	0
+				label      	"Use Error")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@3
+				location   	(1440, 249)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	275
+				justify    	0
+				label      	"<<exception>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	8454143
+			    quidu      	"444EF3A2036E"
+			    width      	296
+			    height     	182
+			    annotation 	8
 			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -310,10 +374,10 @@
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
-	    origin_x   	62
+	    origin_x   	63
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Recording::Recording Interface::Interface" @3
+		(object ClassView "Class" "Logical View::Recording::Recording Interface::Interface" @4
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -329,7 +393,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@3
+			Parent_View 	@4
 			location   	(155, 174)
 			fill_color 	13434879
 			nlines     	1
@@ -337,7 +401,7 @@
 			justify    	0
 			label      	"Interface")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@3
+			Parent_View 	@4
 			location   	(155, 124)
 			fill_color 	13434879
 			anchor     	10
@@ -349,11 +413,28 @@
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"444EE85903C4"
+		    compartment 	(object Compartment
+			Parent_View 	@4
+			location   	(155, 279)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	2
+			max_width  	631)
 		    width      	644
 		    height     	288
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Recording Interface::Recordable" @4
+		(object ClassView "Class" "Logical View::Recording::Recording Interface::Recordable" @5
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -369,7 +450,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@4
+			Parent_View 	@5
 			location   	(942, 196)
 			fill_color 	13434879
 			nlines     	1
@@ -377,7 +458,7 @@
 			justify    	0
 			label      	"Recordable")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@4
+			Parent_View 	@5
 			location   	(942, 146)
 			fill_color 	13434879
 			anchor     	10
@@ -393,7 +474,7 @@
 		    height     	228
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Recorder" @5
+		(object ClassView "Class" "Logical View::Recording::Recorder" @6
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -409,7 +490,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@5
+			Parent_View 	@6
 			location   	(616, 628)
 			fill_color 	13434879
 			nlines     	1
@@ -420,11 +501,28 @@
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"444EEAA7012E"
+		    compartment 	(object Compartment
+			Parent_View 	@6
+			location   	(616, 689)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	622)
 		    width      	642
 		    height     	386
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Buffer" @6
+		(object ClassView "Class" "Logical View::Recording::Buffer" @7
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -440,7 +538,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@6
+			Parent_View 	@7
 			location   	(203, 1191)
 			fill_color 	13434879
 			nlines     	1
@@ -448,7 +546,7 @@
 			justify    	0
 			label      	"Buffer")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@6
+			Parent_View 	@7
 			location   	(203, 1141)
 			fill_color 	13434879
 			anchor     	10
@@ -460,11 +558,28 @@
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"444EEC0600D8"
+		    compartment 	(object Compartment
+			Parent_View 	@7
+			location   	(203, 1252)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	11
+			max_width  	1423)
 		    width      	1444
 		    height     	692
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Queue" @7
+		(object ClassView "Class" "Logical View::Recording::Queue" @8
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -480,7 +595,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@7
+			Parent_View 	@8
 			location   	(1841, 1464)
 			fill_color 	13434879
 			nlines     	1
@@ -488,7 +603,7 @@
 			justify    	0
 			label      	"Queue")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@7
+			Parent_View 	@8
 			location   	(1841, 1414)
 			fill_color 	13434879
 			anchor     	10
@@ -504,12 +619,12 @@
 		    height     	182
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Use Error" @8
+		(object ClassView "Class" "Logical View::Recording::Recording Interface::Use Error" @9
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1935, 1228)
+		    location   	(1934, 537)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -520,31 +635,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@8
-			location   	(1796, 1199)
+			Parent_View 	@9
+			location   	(1742, 485)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	278
+			max_width  	384
 			justify    	0
 			label      	"Use Error")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@8
-			location   	(1796, 1149)
+			Parent_View 	@9
+			location   	(1742, 435)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	275
+			max_width  	384
 			justify    	0
 			label      	"<<exception>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	8454143
 		    quidu      	"444EF3A2036E"
-		    width      	296
-		    height     	182
+		    width      	402
+		    height     	228
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::Recording::Stream" @9
+		(object ClassView "Class" "Logical View::Recording::Stream" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -560,7 +675,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@9
+			Parent_View 	@10
 			location   	(1844, 1723)
 			fill_color 	13434879
 			nlines     	1
@@ -568,7 +683,7 @@
 			justify    	0
 			label      	"Stream")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@9
+			Parent_View 	@10
 			location   	(1844, 1673)
 			fill_color 	13434879
 			anchor     	10
@@ -584,7 +699,7 @@
 		    height     	184
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object CategoryView "Logical View::Recording" @10
+		(object CategoryView "Logical View::Recording" @11
 		    location   	(1928, 259)
 		    font       	(object Font
 			size       	10
@@ -596,7 +711,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@10
+			Parent_View 	@11
 			location   	(1755, 175)
 			nlines     	2
 			max_width  	346
@@ -606,4 +721,44 @@
 		    line_color 	3342489
 		    quidu      	"444EE77D0115"
 		    width      	358
-		    height     	180)))))
+		    height     	180)
+		(object ClassView "Class" "Logical View::Recording::Socket Type" @12
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1932, 1209)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@12
+			location   	(1788, 1180)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"Socket Type")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@12
+			location   	(1788, 1130)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	288
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"44504D6400AF"
+		    width      	306
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)))))
