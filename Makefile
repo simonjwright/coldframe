@@ -285,6 +285,7 @@ callbacks.html \
 classes.html \
 compilation.html \
 conversion.html \
+copying.html \
 directions.html \
 domains.html \
 error-messages.html \
