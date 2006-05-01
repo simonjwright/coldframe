@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v c10a287b1b0e 2006/04/23 17:31:33 simonjwright $ -->
+<!-- $Id: releases.html-proto,v f3269016d6a6 2006/05/01 08:43:36 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,18 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>General</b>
+
+<li>Added a more explicit <a href="copying.html">copyright
+statement</a>.
+
+</ul>
+
+<dt>20060427
 
 <dd>
 <ul class="release">
