@@ -3,11 +3,13 @@
 <name>Recording</name>
 <date>
 <year>2006</year>
-<month>4</month>
-<day>27</day>
-<time>06:04</time>
+<month>5</month>
+<day>2</day>
+<time>23:51</time>
 </date>
-<documentation><![CDATA[ When using ColdFrame's Serialization features to support recording of the inner workings of an application, it may be necessary to limit the amount of buffering used; if your output bandwidth doesn't match your recording rate, you'll run out of memory for your application! ]]></documentation>
+<documentation><![CDATA[ When using ColdFrame's Serialization features to support recording of the inner workings of an application, it may be necessary to limit the amount of buffering used; if your output bandwidth doesn't match your recording rate, you'll run out of memory for your application!
+
+{revision=$Revision: 7808c033df58 $} ]]></documentation>
 <classes>
 <class>
 <name>Recorder</name>
@@ -237,6 +239,36 @@ Implemented as a pointer to an unconstrained Booch Components Memory Stream, so 
 <documentation><![CDATA[ A TCP/IP socket, to be connected to the host that is to accept the recorded data.
 {imported = GNAT.Sockets} ]]></documentation>
 <attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Statistics</name>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<cardinality>n</cardinality>
+<concurrency>Sequential</concurrency>
+<documentation><![CDATA[ Used to record the details of the recording process itself.
+
+{serializable} ]]></documentation>
+<attributes>
+<attribute>
+<name>Count</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ Tells how many recording attempts have been made. ]]></documentation>
+<type>Natural</type>
+<initial>0</initial>
+</attribute>
+<attribute>
+<name>Dropped</name>
+<visibility>PrivateAccess</visibility>
+<documentation><![CDATA[ Counts the number of dropped items. ]]></documentation>
+<type>Natural</type>
+<initial>0</initial>
+</attribute>
 </attributes>
 <operations>
 </operations>
