@@ -11,7 +11,7 @@
     documentation 	
 |When using ColdFrame's Serialization features to support recording of the inner workings of an application, it may be necessary to limit the amount of buffering used; if your output bandwidth doesn't match your recording rate, you'll run out of memory for your application!
 |
-|{revision=$Revision: 7808c033df58 $}
+|{revision=$Revision: 82f7e66d9931 $}
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -21,6 +21,7 @@
 |The singleton active class which manages recording.
 |Its task fetches Recordables from the Buffer, blocking until there is data to record; each fetched Recordable is output over the Socket.
 	    
+	    stereotype 	"active"
 	    operations 	(list Operations
 		(object Operation "Take Record"
 		    quid       	"444EEE7101FB"
@@ -81,6 +82,7 @@
 		    quid       	"444EEF45010F"
 		    documentation 	
 |Returns an empty Memory Stream capable of holding up to Capacity bytes, or null if the Buffer is full.
+|Count contains the count of recording attempts made so far (including failed attempts) and can be used as a serial number.
 |The designated stream is held within the Outstanding queue.
 		    
 		    parameters 	(list Parameters
@@ -88,6 +90,9 @@
 			    quid       	"444F034E03B3"
 			    type       	"Stream"
 			    quidu      	"444EF5EC037B")
+			(object Parameter "out Count"
+			    quid       	"446AC4D60383"
+			    type       	"Positive")
 			(object Parameter "Capacity"
 			    quid       	"444EF222000F"
 			    type       	"Positive"
@@ -212,7 +217,7 @@
 	    documentation 	
 |When using ColdFrame's Serialization features to support recording of the inner workings of an application. It may be necessary to limit the amount of buffering used; if your output bandwidth doesn't match your recording rate, you'll run out of memory for your application!
 |
-|{revision=$Revision: 7808c033df58 $}
+|{revision=$Revision: 82f7e66d9931 $}
 |{name=Recording}
 	    
 	    stereotype 	"include"
@@ -296,23 +301,6 @@
 			    line_color 	3342489
 			    fill_color 	8454016
 			    quidu      	"444EE85903C4"
-			    compartment 	(object Compartment
-				Parent_View 	@1
-				location   	(181, 327)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	16777215
-				anchor     	2
-				nlines     	2
-				max_width  	631)
 			    width      	644
 			    height     	242
 			    annotation 	8
@@ -410,7 +398,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1194
-			    label      	"$Id: Recording.cat,v 7808c033df58 2006/05/02 21:54:22 simonjwright $"))))))
+			    label      	"$Id: Recording.cat,v 82f7e66d9931 2006/05/17 05:52:16 simonjwright $"))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"444EE8250135"
@@ -535,19 +523,28 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@7
-			location   	(616, 628)
+			location   	(616, 650)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	624
 			justify    	0
 			label      	"Recorder")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@7
+			location   	(616, 600)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	624
+			justify    	0
+			label      	"<<active>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"444EEAA7012E"
 		    compartment 	(object Compartment
 			Parent_View 	@7
-			location   	(616, 689)
+			location   	(616, 711)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -561,9 +558,9 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	6
-			max_width  	631)
+			max_width  	622)
 		    width      	642
-		    height     	386
+		    height     	442
 		    annotation 	8
 		    autoResize 	TRUE)
 		(object ClassView "Class" "Logical View::Recording::Buffer" @8
@@ -571,7 +568,7 @@
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(916, 1475)
+		    location   	(915, 1475)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -583,19 +580,19 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@8
-			location   	(203, 1191)
+			location   	(200, 1191)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	1426
+			max_width  	1430
 			justify    	0
 			label      	"Buffer")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@8
-			location   	(203, 1141)
+			location   	(200, 1141)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	1426
+			max_width  	1430
 			justify    	0
 			label      	"<<protected>>")
 		    icon_style 	"Icon"
@@ -604,7 +601,7 @@
 		    quidu      	"444EEC0600D8"
 		    compartment 	(object Compartment
 			Parent_View 	@8
-			location   	(203, 1252)
+			location   	(200, 1252)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -618,8 +615,8 @@
 			fill_color 	16777215
 			anchor     	2
 			nlines     	11
-			max_width  	1431)
-		    width      	1444
+			max_width  	1428)
+		    width      	1448
 		    height     	692
 		    annotation 	8
 		    autoResize 	TRUE)
@@ -858,7 +855,7 @@
 			fill_color 	13434879
 			anchor     	2
 			nlines     	3
-			max_width  	438)
+			max_width  	446)
 		    width      	458
 		    height     	292
 		    annotation 	8
@@ -876,4 +873,4 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1351
-		    label      	"$Id: Recording.cat,v 7808c033df58 2006/05/02 21:54:22 simonjwright $")))))
+		    label      	"$Id: Recording.cat,v 82f7e66d9931 2006/05/17 05:52:16 simonjwright $")))))

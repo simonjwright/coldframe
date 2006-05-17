@@ -8,8 +8,8 @@
 --  Part of the Recording demonstration.
 
 --  $RCSfile: recording-buffer.adb,v $
---  $Revision: ef76ca9d66ef $
---  $Date: 2006/05/03 22:07:21 $
+--  $Revision: 82f7e66d9931 $
+--  $Date: 2006/05/17 05:52:16 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
@@ -52,15 +52,21 @@ protected body Buffer is
 
 
    --  Returns an empty Memory Stream capable of holding up to
-   --  Capacity bytes, or null if the Buffer is full. The designated
-   --  stream is held within the Outstanding queue.
+   --  Capacity bytes, or null if the Buffer is full.
+   --
+   --  Count contains the count of recording attempts made so far
+   --  (including failed attempts) and can be used as a serial number.
+   --
+   --  The designated stream is held within the Outstanding queue.
    procedure Get_Stream
      (S : out Stream;
+      Count : out Positive;
       Capacity : Positive := 1024) is
       pragma Assert (Buffer.Capacity > 0,
                      "Buffer.Get_Stream called before Initialize");
    begin
-      Count := Count + 1;
+      Buffer.Count := Buffer.Count + 1;
+      Count := Buffer.Count;
       if Recording_Support.Queues.Length (Outstanding) < Capacity then
          S := new BC.Support.Memory_Streams.Stream_Type
            (Ada.Streams.Stream_Element_Offset (Capacity));
