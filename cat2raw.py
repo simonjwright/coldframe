@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 3568b0440089 2006/04/23 11:26:56 simonjwright $
+# $Id: cat2raw.py,v caa60bd21222 2006/05/21 20:02:58 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -316,7 +316,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 3568b0440089 $',
+				 'cat2raw.py: $Revision: caa60bd21222 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -606,13 +606,11 @@ for o in (
 
 def create_object(id):
     """The factory for creating objects of the class corresponding to the id."""
-    if recognizedID.has_key(id):
-	new = recognizedID[id]()
-    else:
+    if not recognizedID.has_key(id):
 	sys.stderr.write\
            ("cat2raw.py: info: didn't recognise object ID %s.\n" % id)
-	new = Base()
-    return new
+	recognizedID[id] = Base
+    return recognizedID[id]()
 
 def object_name(fqn):
     """Strips the leading model path from a fully qualified name."""
@@ -831,7 +829,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 3568b0440089 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: caa60bd21222 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
