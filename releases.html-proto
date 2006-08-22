@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v c10a287b1b0e 2006/04/23 17:31:33 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 31dafd670b3a 2006/08/22 20:38:27 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,22 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Runtime</b>
+
+<li>A new event queue type is available
+in <tt>ColdFrame.Project.Events.Instance_Priority</tt>. This kind of
+event queue gives priority to instance events over class events, so
+that all the instance (state machine) events consequent on a class
+(interface) event will be dealt with before the next class event is
+handled.
+
+</ul>
+
+<dt>20060427
 
 <dd>
 <ul class="release">
