@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 6562c185e781 2006/07/07 20:17:33 simonjwright $ -->
+<!-- $Id: bugs.html,v 88a99dde5e1b 2006/08/22 20:23:00 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -242,7 +242,23 @@ with the same name.
 generated Unit_Test child package fails to compile.
 <br>SourceForge 1517591
 
-<!-- next: 0359 -->
+<dt>0359 (raised 22.viii.06)
+
+<dd>At present, class and instance events have the same priority.
+However, since class events are usually used to isolate one domain
+from another, it's arguable that class events should have lower
+priority than instance events; all the instance events following from
+the handling of a class event should be handled before considering the
+next class event.
+<br>SourceForge 1544856
+
+<dt>0360 (raised 22.viii.06)
+
+<dd>It would be helpful to allow an action to be attached to stubbed
+operations (perhaps just procedures?).
+<br>SourceForge 1544860
+
+<!-- next: 0361 -->
 
 </dl>
 
