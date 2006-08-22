@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v af41e46d388e 2006/04/23 16:59:41 simonjwright $ -->
+<!-- $Id: bugs.html,v 317a0bf73008 2006/08/22 20:25:05 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -236,7 +236,17 @@ better to have a primitive Print operation.</i>
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
-<!-- next: 0358 -->
+<dt>0359 (raised 22.viii.06)
+
+<dd>At present, class and instance events have the same priority.
+However, since class events are usually used to isolate one domain
+from another, it's arguable that class events should have lower
+priority than instance events; all the instance events following from
+the handling of a class event should be handled before considering the
+next class event.
+<br>SourceForge 1544856
+
+<!-- next: 0361 -->
 
 </dl>
 
