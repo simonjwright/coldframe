@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 88a99dde5e1b 2006/08/22 20:23:00 simonjwright $ -->
+<!-- $Id: bugs.html,v 1db2aab5ce8c 2006/08/24 20:53:18 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -258,7 +258,18 @@ next class event.
 operations (perhaps just procedures?).
 <br>SourceForge 1544860
 
-<!-- next: 0361 -->
+<dt>0361 (raised 24.viii.06)
+
+<dd>While doing unit tests
+using <tt>ColdFrame.Project.Events.Standard.Inspection</tt>, it wasn't
+possible to simulate the firing of a <tt>Timer</tt> where the actions
+result in the <tt>Timer</tt> getting set again (for example, when
+sending a regular message) by getting the event
+using <tt>Event_Of</tt> and invoking its <tt>Handler</tt>, because
+the <tt>Timer</tt> was still set.
+<br>SourceForge 1546249
+
+<!-- next: 0362 -->
 
 </dl>
 
