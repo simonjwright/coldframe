@@ -1,4 +1,4 @@
-<!-- $Id: ada-unittest.xsl,v d49a7ab6da91 2006/03/15 20:11:46 simonjwright $ -->
+<!-- $Id: ada-unittest.xsl,v 09907576472e 2006/09/05 05:44:35 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for attribute peek/poke
      (for test only, please!). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -41,13 +41,16 @@
 
     <!--
          package {domain}.{class}.Unit_Test is
-            type Timer_P is access constant ColdFrame.Project.Events.Timer;
+            type Timer_P is access ColdFrame.Project.Events.Timer;
+            type {protected-type}_P is access {protected-type}; 
             type State is
               (..);
             function Get_{attr-name}
               (This : Handle) return {attr-type};
             procedure Set_{attr-name)
               (This : Handle; To : {attr-type});
+            function Access_{protected-attr-name}
+              (This : Handle) return {protected-type}_P;         
             function Access_{timer-attr-name}
               (This : Handle) return Timer_P;
          end {domain}.{class}.Unit_Test;
@@ -67,9 +70,31 @@
 
     <xsl:value-of select="$blank-line"/>
 
+    <!-- Special action needed for limited types. At the moment, these
+         are just @protected and Timers -->
+    <xsl:variable 
+      name="domain-limited-types"
+      select="/domain/type[@protected]"/>
+
+    <!-- Access types for used limited types -->
+    <xsl:variable name="this" select="."/>
+    <xsl:for-each select="$domain-limited-types">
+      <xsl:sort select="name"/>
+      <xsl:if test="$this/attribute[type=current()/name]">
+        <xsl:value-of select="$I"/>
+        <xsl:text>type </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>_P is access </xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>;&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
+      </xsl:if>
+    </xsl:for-each>
+
+    <!-- Access type for Timer, which is limited, if used by any attribute. -->
     <xsl:if test="attribute/type='Timer'">
       <xsl:value-of select="$I"/>
-      <xsl:text>type Timer_P is access constant ColdFrame.Project.Events.Timer;&#10;</xsl:text>
+      <xsl:text>type Timer_P is access ColdFrame.Project.Events.Timer;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
@@ -101,7 +126,15 @@
       
     </xsl:if>
 
-    <xsl:for-each select="attribute[not(@refers) and not(type='Timer')]">
+    <xsl:variable
+      name="accessible-attributes"
+      select="attribute
+              [not(@refers)
+              and not(type='Timer')
+              and not(type=$domain-limited-types/name)]"/>
+    <!-- XXX tried $domain-limited-types[name={various}/type], NG -->
+
+    <xsl:for-each select="$accessible-attributes">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
@@ -124,10 +157,7 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
-    <xsl:for-each select="attribute
-                          [not(@refers)
-                          and not(@identifier)
-                          and not(type='Timer')]">
+    <xsl:for-each select="$accessible-attributes[not(@identifier)]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
@@ -173,25 +203,24 @@
         </xsl:otherwise>
       </xsl:choose>
 
-    <xsl:for-each select="attribute[type='Timer']">
+    </xsl:if>
+
+    <xsl:for-each 
+      select="attribute[type='Timer' or type=$domain-limited-types/name]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>function Access_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:choose>
-        <xsl:when test="$instance-needs-this and not(@class)">
-          <xsl:text>(This : Handle) return Timer_P;&#10;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>return Timer_P;&#10;</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:if test="$instance-needs-this and not(@class)">
+        <xsl:text>(This : Handle) </xsl:text>
+      </xsl:if>
+      <xsl:text>return </xsl:text>
+      <xsl:value-of select="type"/>
+      <xsl:text>_P;&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
-
-    </xsl:if>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
@@ -218,6 +247,11 @@
             begin
                This.{attr-name} := To;
             end Set_{attr-name);
+            function Access_{limited-attr-name}
+              (This : Handle) return {limited-type}_P is
+            begin
+               return This.{limited-attr-name}'Unrestricted_Access;
+            end Access_{limited-attr-name};
             function Access_{timer-attr-name}
               (This : Handle) return Timer_P is
             begin
@@ -240,7 +274,21 @@
 
     <xsl:value-of select="$blank-line"/>
 
-    <xsl:for-each select="attribute[not(@refers) and not(type='Timer')]">
+    <!-- Special action needed for limited types. At the moment, these
+         are just @protected and Timers -->
+    <xsl:variable 
+      name="domain-limited-types"
+      select="/domain/type[@protected]"/>
+
+    <xsl:variable
+      name="accessible-attributes"
+      select="attribute
+              [not(@refers)
+              and not(type='Timer')
+              and not(type=$domain-limited-types/name)]"/>
+    <!-- XXX tried $domain-limited-types[name={various}/type], NG -->
+
+    <xsl:for-each select="$accessible-attributes">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>function Get_</xsl:text>
@@ -280,10 +328,7 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:for-each>
 
-    <xsl:for-each select="attribute
-                          [not(@refers)
-                          and not(@identifier)
-                          and not(type='Timer')]">
+    <xsl:for-each select="$accessible-attributes[not(@identifier)]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>procedure Set_</xsl:text>
@@ -404,21 +449,20 @@
 
     </xsl:if>
 
-    <xsl:for-each select="attribute[type='Timer']">
+    <xsl:for-each
+      select="attribute[type='Timer' or type=$domain-limited-types/name]">
       <xsl:sort select="name"/>
       <xsl:value-of select="$I"/>
       <xsl:text>function Access_</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
-      <xsl:choose>
-        <xsl:when test="$instance-needs-this and not(@class)">
-          <xsl:text>(This : Handle) return Timer_P is&#10;</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>return Timer_P is&#10;</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:if test="$instance-needs-this and not(@class)">
+        <xsl:text>(This : Handle) </xsl:text>
+      </xsl:if>
+      <xsl:text>return </xsl:text>
+      <xsl:value-of select="type"/>
+      <xsl:text>_P is&#10;</xsl:text>
       <xsl:value-of select="$I"/>
       <xsl:text>begin&#10;</xsl:text>
       <xsl:value-of select="$II"/>
