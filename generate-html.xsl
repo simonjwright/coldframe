@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 99121864e65d 2006/03/15 06:20:32 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 77df7b46fff8 2006/09/05 05:45:32 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -132,7 +132,15 @@
           p { margin : .1em 0 .1em 1em; }
           dl { margin-left : 1em; }
           ol, ul { margin-left : 2.2em; }
-          table { margin-left : 1em; }
+          table { margin-left : 1em;
+          font-size : 100%; 
+          border : thin solid black;
+          border-collapse : collapse;
+          empty-cells : show; }
+          th { border : thin solid black;
+          padding : 0.1em; }
+          td { border : thin solid black;
+          padding : 0.1em; }
           tt { font-family : Courier, monospace;
           font-size : 1.05em;
           }
