@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 1db2aab5ce8c 2006/08/24 20:53:18 simonjwright $ -->
+<!-- $Id: bugs.html,v e3142f0bc020 2006/09/05 05:59:56 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -236,12 +236,6 @@ better to have a primitive Print operation.</i>
 <dd>ColdFrame doesn't detect the error of having more than one type
 with the same name.
 
-<dt>0358 (raised 7.vii.06)
-
-<dd>When a class has an attribute whose type is a protected type the
-generated Unit_Test child package fails to compile.
-<br>SourceForge 1517591
-
 <dt>0359 (raised 22.viii.06)
 
 <dd>At present, class and instance events have the same priority.
@@ -269,11 +263,30 @@ using <tt>Event_Of</tt> and invoking its <tt>Handler</tt>, because
 the <tt>Timer</tt> was still set.
 <br>SourceForge 1546249
 
-<!-- next: 0362 -->
+<dt>0362 (raised 5.ix.06)
+
+<dd>Generated unit test support fails to compile if a
+&#171;public&#187; class has an attribute of a private type.
+<br><i>On the whole it's best if public classes don't have attributes
+at all.</i>
+
+<!-- next: 0363 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>5.ix.06</h3>
+
+<dl>
+
+<dt>0358 (raised 7.vii.06)
+
+<dd>When a class has an attribute whose type is a protected type the
+generated Unit_Test child package fails to compile.
+<br>SourceForge 1517591
+
+</dl>
 
 <h3>23.iv.06</h3>
 
