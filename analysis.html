@@ -1,4 +1,4 @@
-<!-- $Id: analysis.html,v 29589f3b8ecf 2006/09/24 21:33:46 simonjwright $ -->
+<!-- $Id: analysis.html,v 816c1aa3eaba 2006/10/01 16:40:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Analysis</title>
@@ -15,17 +15,69 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Analysis</h1>
 
-<p>High-level languages such as Ada and C++ whow the benefits of
+<p>People often think that the right place to start an analysis is in
+front of a computer running a UML modelling tool. This approach is
+tempting but wrong, for several reasons.
+
+<h2>Requirements and design</h2>
+
+<p>The first thing to do is to work out what the problem domain is and
+what the constraints (performance, safety, security, environment,
+legal etc) are. In an older (some would say, more mature) way of doing
+things, this would have been an appropriate time to produce
+an <a
+href="http://www.pogner.demon.co.uk/mil_498/sdd-did.htm#scope">SDD</a>. In
+the UML world, this need is possibly best met by using Use Cases or at
+least user stories, with at least two intended audiences:
+
+<ul>
+
+<li>The person, architect or systems engineer, who has to sign off on
+the proposed development and (later) remember how it fits into the
+greater scheme; and
+
+<li>The person who has to develop and (later) maintain the model.
+
+</ul>
+
+<p>However, remember that Use Cases only make up about 30% of a
+typical requirement statement.
+
+<h2>Analysis</h2>
+
+<p>Even when the requirements are clear, it's still not time to start
+drawing UML models on the computer. It usually takes several
+iterations before you have a model that begins to reflect the problem
+domain, and it's much cheaper to sketch it out, in pencil or (not so
+good) on a whiteboard. Modelling in a tool offers far too much
+opportunity to waste time by making a bad model look good, and also
+gives a spurious air of correctness which a pencil sketch in your
+notebook doesn't. Make notes! Especially, make notes on why a
+particular design
+<em>didn't</em> work! You might find that a Wiki- or blog-based
+approach works for this phase, provided it's acceptable in your
+workplace.
+
+<h2>Good models</h2>
+
+<p>High-level languages such as Ada and C++ show the benefits of
 strong typing; it makes it easier to write code that 'does the right
 thing', if done properly, because it constrains the code that can be
 written so that many mistakes can be caught by compilers.
 
-<p>A crisp UML model offers similar benefits. First, the emodeller
-needs to understand, and make clear to the reader, what each entity in
-the model means and why it is there.
+<p>A crisp UML model offers similar benefits.
 
-<p>You'll find much more on the OOA approach via
-the <a href="resources.html#analysis">Resources</a> page..
+<p>First, the modeller needs to understand, and make clear to the
+reader, what each entity in the model means and why it is there. This
+will mean writing clear descriptions of the classes, the attributes,
+the associations and the roles. Unfortunately, that probably won't be
+enough; the model is essentially flat, and the reader needs some
+guidance on how things fit together; some sort of roadmap. Internal
+use cases, possibly expressed in sequence diagrams, may help here; but
+it's a bad idea to insist on too high a level of detail too soon (for
+example, insisting on defining operations rather than messages).
+
+<p>
 
 <hr>
 <i>
