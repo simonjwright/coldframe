@@ -10,12 +10,10 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-times.adb,v $
---  $Revision: 249fa976e643 $
---  $Date: 2003/03/16 16:19:05 $
---  $Author: simon $
+--  $Revision: 334403c6a7e4 $
+--  $Date: 2006/10/19 05:30:59 $
+--  $Author: simonjwright $
 
-with Ada.Calendar;
-with Ada.Real_Time;
 with Ada.Unchecked_Conversion;
 with GNAT.Calendar.Time_IO;
 
