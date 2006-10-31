@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: 8cc7facbc6e8 $
---  $Date: 2005/10/31 20:52:39 $
+--  $Revision: 1da128db0fde $
+--  $Date: 2006/10/31 06:40:40 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -91,7 +91,8 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       if On.Started then
          raise Started;
       end if;
-      return UPEQ.Length (Q.The_Events);
+      return UPEQ.Length (Q.The_Instance_Events)
+        + UPEQ.Length (Q.The_Class_Events);
    end Number_Of_Now_Events;
 
 
@@ -100,14 +101,19 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       pragma Assert (On.all in Event_Queue_Base'Class,
                      "not a standard queue");
       Q : Event_Queue_Base renames Event_Queue_Base (On.all);
+      N : Positive := At_Index;
    begin
       if On.Started then
          raise Started;
       end if;
-      if At_Index > UPEQ.Length (Q.The_Events) then
-         raise Not_Found;
+      if N <= UPEQ.Length (Q.The_Instance_Events) then
+         return Nth_Event (Q.The_Instance_Events, N);
       end if;
-      return Nth_Event (Q.The_Events, At_Index);
+      N := N - UPEQ.Length (Q.The_Instance_Events);
+      if N <= UPEQ.Length (Q.The_Class_Events) then
+         return Nth_Event (Q.The_Class_Events, N);
+      end if;
+      raise Not_Found;
    end Now_Event;
 
 
