@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 1a3cce9fba4e $
---  $Date: 2006/04/07 06:08:36 $
+--  $Revision: 2e9deaba0565 $
+--  $Date: 2006/10/31 06:35:53 $
 --  $Author: simonjwright $
 
 with Ada.Task_Identification;
@@ -227,7 +227,8 @@ private
    with record
       The_Excluder : Excluder (Event_Queue_Base'Access);
       The_Self_Events : Unbounded_Posted_Event_Queues.Queue;
-      The_Events : Unbounded_Posted_Event_Queues.Queue;
+      The_Instance_Events : Unbounded_Posted_Event_Queues.Queue;
+      The_Class_Events : Unbounded_Posted_Event_Queues.Queue;
       The_Held_Events : aliased Held_Events.Queue;
       The_Dispatcher : Dispatcher (Event_Queue_Base'Access,
                                    Priority => Priority,
