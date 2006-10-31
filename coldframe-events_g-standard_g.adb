@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: 63f8a818a534 $
---  $Date: 2006/03/03 22:08:25 $
+--  $Revision: aca703ec2d56 $
+--  $Date: 2006/10/31 06:37:20 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -571,9 +571,11 @@ package body ColdFrame.Events_G.Standard_G is
       when Excluder.Stopping
         or else not Unbounded_Posted_Event_Queues.Is_Empty
                       (The_Queue.The_Self_Events)
-        or else (Locks = 0
-                   and then not Unbounded_Posted_Event_Queues.Is_Empty
-                                  (The_Queue.The_Events)) is
+        or else (Locks = 0 and then not
+                   (Unbounded_Posted_Event_Queues.Is_Empty
+                      (The_Queue.The_Instance_Events)
+                    and then Unbounded_Posted_Event_Queues.Is_Empty
+                      (The_Queue.The_Class_Events))) is
       begin
          Stopping := Excluder.Stopping;
          if Stopping then
@@ -586,10 +588,16 @@ package body ColdFrame.Events_G.Standard_G is
             The_Event :=
               Unbounded_Posted_Event_Queues.Front (The_Queue.The_Self_Events);
             Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Self_Events);
+         elsif not Unbounded_Posted_Event_Queues.Is_Empty
+           (The_Queue.The_Instance_Events) then
+            The_Event :=
+              Unbounded_Posted_Event_Queues.Front
+              (The_Queue.The_Instance_Events);
+            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Instance_Events);
          else
             The_Event :=
-              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Events);
-            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Events);
+              Unbounded_Posted_Event_Queues.Front (The_Queue.The_Class_Events);
+            Unbounded_Posted_Event_Queues.Pop (The_Queue.The_Class_Events);
          end if;
          pragma Assert (The_Event /= null,
                         "failed to fetch valid event");
@@ -616,13 +624,13 @@ package body ColdFrame.Events_G.Standard_G is
          Self_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
            Unbounded_Posted_Event_Queues.New_Iterator
            (The_Queue.The_Self_Events);
-         Normal_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
+         Instance_Iterator : Abstract_Posted_Event_Containers.Iterator'Class :=
            Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Events);
+           (The_Queue.The_Instance_Events);
 
       begin
          Invalidate_Events (Self_Iterator);
-         Invalidate_Events (Normal_Iterator);
+         Invalidate_Events (Instance_Iterator);
       end Invalidate_Events;
 
 
@@ -639,8 +647,13 @@ package body ColdFrame.Events_G.Standard_G is
 
       entry Post (The_Event : Event_P) when not Stopping is
       begin
-         Unbounded_Posted_Event_Queues.Append (The_Queue.The_Events,
-                                               The_Event);
+         if The_Event.all in Instance_Event_Base'Class then
+            Unbounded_Posted_Event_Queues.Append
+              (The_Queue.The_Instance_Events, The_Event);
+         else
+            Unbounded_Posted_Event_Queues.Append
+              (The_Queue.The_Class_Events, The_Event);
+         end if;
       end Post;
 
 
@@ -770,11 +783,28 @@ package body ColdFrame.Events_G.Standard_G is
          end loop;
       end;
 
-      --  .. and all the outstanding standard events ..
+      --  .. and all the outstanding instance events ..
       declare
          It : Abstract_Posted_Event_Containers.Iterator'Class
            := Unbounded_Posted_Event_Queues.New_Iterator
-           (The_Queue.The_Events);
+           (The_Queue.The_Instance_Events);
+      begin
+         while not Is_Done (It) loop
+            declare
+               E : Event_P := Current_Item (It);
+            begin
+               Tear_Down (E);
+               Delete (E);
+            end;
+            Next (It);
+         end loop;
+      end;
+
+      --  .. and all the outstanding class events ..
+      declare
+         It : Abstract_Posted_Event_Containers.Iterator'Class
+           := Unbounded_Posted_Event_Queues.New_Iterator
+           (The_Queue.The_Class_Events);
       begin
          while not Is_Done (It) loop
             declare
