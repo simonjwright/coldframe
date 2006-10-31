@@ -1,4 +1,4 @@
-<!-- $Id: analysis.html,v 816c1aa3eaba 2006/10/01 16:40:50 simonjwright $ -->
+<!-- $Id: analysis.html,v 374712f5ecf9 2006/10/31 06:33:26 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Analysis</title>
@@ -25,6 +25,9 @@ tempting but wrong, for several reasons.
 what the constraints (performance, safety, security, environment,
 legal etc) are. In an older (some would say, more mature) way of doing
 things, this would have been an appropriate time to produce
+an <a
+href="http://www.pogner.demon.co.uk/mil_498/srs-did.htm#scope">SRS</a>
+and
 an <a
 href="http://www.pogner.demon.co.uk/mil_498/sdd-did.htm#scope">SDD</a>. In
 the UML world, this need is possibly best met by using Use Cases or at
@@ -58,6 +61,20 @@ particular design
 approach works for this phase, provided it's acceptable in your
 workplace.
 
+<h2>Documentation</h2>
+
+<p>The modeller's job is to understand, and make clear to the reader,
+what each entity in the model means and why it is there. This will
+mean writing clear descriptions of the classes, the attributes, the
+associations and the roles.
+
+Unfortunately, documentation in the model probably won't be enough;
+the model is essentially flat, and the reader needs some guidance on
+how things fit together; some sort of roadmap. Internal use cases,
+possibly expressed in sequence diagrams, may help here; but it's a bad
+idea to insist on too high a level of detail too soon (for example,
+insisting on defining operations rather than messages).
+
 <h2>Good models</h2>
 
 <p>High-level languages such as Ada and C++ show the benefits of
@@ -67,17 +84,16 @@ written so that many mistakes can be caught by compilers.
 
 <p>A crisp UML model offers similar benefits.
 
-<p>First, the modeller needs to understand, and make clear to the
-reader, what each entity in the model means and why it is there. This
-will mean writing clear descriptions of the classes, the attributes,
-the associations and the roles. Unfortunately, that probably won't be
-enough; the model is essentially flat, and the reader needs some
-guidance on how things fit together; some sort of roadmap. Internal
-use cases, possibly expressed in sequence diagrams, may help here; but
-it's a bad idea to insist on too high a level of detail too soon (for
-example, insisting on defining operations rather than messages).
-
-<p>
+<p>A good model is like a scientific hypothesis: it should be possible
+for it to be proved wrong. I could say that the identifier
+of <i>Car</i> was its licence plate number, which would be a
+reasonable first stab in the UK; but it turns out that you can swap
+licence plate numbers if you pay enough. Perhaps a Vehicle Index
+Number would do? well, yes, provided you don't care about cars made
+before VINs were invented. And not many people know their car's
+VIN. Our problem domain may allow the licence plate number after all;
+if you're running a car fleet you're not going to be changing the
+numberplates!
 
 <hr>
 <i>

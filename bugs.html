@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v e3142f0bc020 2006/09/05 05:59:56 simonjwright $ -->
+<!-- $Id: bugs.html,v 374712f5ecf9 2006/10/31 06:33:26 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -115,6 +115,12 @@ compilation errors in generated code.
 
 <dd>A &#171;type&#187; can't have an attribute of an
 &#171;access&#187; (access-to-operation) type.
+<br><i>The problem is that all access-to-operation types are declared
+after all ordinary types. Note that the declarations are done in two
+tranches depending on the visibility, so consider declaring the
+access-to-operation types with public visibility (ie as operations of
+types with public visibility) and the using types with private
+visibility.</i>
 
 <dt>0240 (raised 2.iii.04)
 
