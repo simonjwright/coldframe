@@ -1,6 +1,6 @@
 --  $RCSfile: compilation_regressions-subunits.adb,v $
---  $Revision: 854ea9b65675 $
---  $Date: 2006/04/23 11:01:14 $
+--  $Revision: b391d5a96bc2 $
+--  $Date: 2006/11/03 19:22:15 $
 --  $Author: simonjwright $
 --
 --  Regression tests for ColdFrame.
@@ -31,6 +31,7 @@ with Compilation_Regressions.Fixed_String_Class;
 with Compilation_Regressions.Function_Returning_Handle;
 with Compilation_Regressions.Grandchild_Supplied_Actual;
 with Compilation_Regressions.Identified_Class;
+with Compilation_Regressions.Long_Modular_Ident;
 with Compilation_Regressions.One_Enum_ID;
 with Compilation_Regressions.One_Int_ID;
 with Compilation_Regressions.One_To_One;
@@ -46,6 +47,7 @@ with Compilation_Regressions.S_E_E;
 with Compilation_Regressions.Serializable;
 with Compilation_Regressions.Service;
 with Compilation_Regressions.Service_History;
+with Compilation_Regressions.Short_Modular_Ident;
 --  Doesn't work yet (23.iv.06).
 --  with Compilation_Regressions.Singleton_Assoc;
 with Compilation_Regressions.Singleton_With_Attributes;
