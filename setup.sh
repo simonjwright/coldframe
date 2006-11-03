@@ -1,6 +1,6 @@
-# $Id: setup.sh,v d93d4560de01 2006/03/26 15:30:10 simonjwright $
-# Sets up environment variables for development of the Stairwell demo
-# (very local!).
+# $Id: setup.sh,v 3ee1b56c281b 2006/11/03 19:23:05 simonjwright $
+# Sets up environment variables for ColdFrame development.
+# (very specific to SJW config!).
 
 cf=$HOME/cf
 
