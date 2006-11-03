@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 2070c85b181c 2006/03/15 21:11:24 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 369876261915 2006/11/03 19:23:36 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -2233,6 +2233,7 @@
         <xsl:when test="$type/enumeration or type='Boolean'
                         or $type/integer or type='Integer'
                         or type='Natural' or type='Positive'
+                        or $type/unsigned
                         or $type/@hash">
 
           <!--
