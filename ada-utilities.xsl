@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v e7538f3adb5d 2005/07/12 21:13:11 simonjwright $ -->
+<!-- $Id: ada-utilities.xsl,v 36015cf3e04c 2006/11/03 19:26:53 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -362,6 +362,12 @@
 
           </xsl:when>
 
+          <xsl:when test="$type/unsigned and number($type/unsigned/mod)">
+            
+            <xsl:value-of select="$type/unsigned/mod"/>
+
+          </xsl:when>
+
           <xsl:otherwise>
             <xsl:value-of select="1000000000000"/>
           </xsl:otherwise>
@@ -403,15 +409,26 @@
           <!-- Assume all enumeration types are OK. -->
           <xsl:when test="$type/enumeration">yes</xsl:when>
 
+          <!-- Imported types are OK if {hash=enumeration} -->
           <xsl:when test="$type/@hash='enumeration'">yes</xsl:when>
 
           <!-- Bounded integer types, if small enough. -->
-          <xsl:when test="$type/integer[lower and upper]">
+          <xsl:when 
+            test="number($type/integer/lower) and number($type/integer/upper)">
             <xsl:choose>
               <xsl:when
                 test="($type/integer/upper
                       - $type/integer/lower)
                       &lt; $max-hash-buckets">yes</xsl:when>
+              <xsl:otherwise>no</xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+
+          <!-- Unsigned types, if small enough. -->
+          <xsl:when test="number($type/unsigned/mod)">
+            <xsl:choose>
+              <xsl:when
+                test="$type/unsigned/mod &lt; $max-hash-buckets">yes</xsl:when>
               <xsl:otherwise>no</xsl:otherwise>
             </xsl:choose>
           </xsl:when>

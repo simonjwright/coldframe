@@ -1,13 +1,13 @@
 <domain>
 <name>Compilation Regressions</name>
 <documentation><![CDATA[ Contains ColdFrame regression tests that only check that the generated code compiles..
-{ revision = $Revision: e1f2e36befe5 $} ]]></documentation>
-<extractor>cat2raw.py: $Revision: e1f2e36befe5 $</extractor>
+{ revision = $Revision: 36015cf3e04c $} ]]></documentation>
+<extractor>cat2raw.py: $Revision: 36015cf3e04c $</extractor>
 <date>
 <year>2006</year>
-<month>4</month>
-<day>23</day>
-<time>16:52</time>
+<month>11</month>
+<day>3</day>
+<time>19:26</time>
 </date>
 <classes>
 <class stereotype="active">
@@ -2061,6 +2061,66 @@
 <documentation></documentation>
 <visibility>PrivateAccess</visibility>
 <type>Integer</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Short Modular T</name>
+<documentation><![CDATA[ { unsigned = mod 16 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Long Modular T</name>
+<documentation><![CDATA[ { unsigned = mod 2^16 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Short Modular Ident</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Short Modular T</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Long Modular Ident</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Long Modular T</type>
 </attribute>
 </attributes>
 <operations>
