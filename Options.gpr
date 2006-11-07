@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v 34fe060c0dca 2005/09/24 15:01:22 simonjwright $
+--  $Id: Options.gpr,v 610fd51c6e3e 2006/11/07 19:58:08 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -47,6 +47,7 @@ project Options is
        (
         "-g",
         "-j2",
+        "-gnat95",
         "-m"
        );
 
