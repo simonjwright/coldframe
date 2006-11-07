@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v 610fd51c6e3e 2006/11/07 19:58:08 simonjwright $
+--  $Id: Options.gpr,v 5a5249766314 2006/11/07 20:00:49 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -31,7 +31,7 @@ project Options is
   for Object_Dir use Build_Base;
 
   --  GLIDE/GPS configuration (these are the defaults). Available in
-  --  gnat-3.13p and gcc-3.3+; comment out if using earlier gcc-3
+  --  gnat-3.15p and gcc-3.3+; comment out if using earlier gcc-3
   --  releases.
   package IDE is
 
