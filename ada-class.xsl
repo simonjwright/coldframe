@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 369876261915 2006/11/03 19:23:36 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v c518421c1cb9 2006/11/08 20:46:29 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1025,8 +1025,9 @@
           <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- We'll need to free memory, unless we have no instances. -->
-        <xsl:if test="$max &gt; 0">
+        <!-- We'll need to free memory, unless we have no instances.
+             If we're active, we've already done this in the spec. -->
+        <xsl:if test="$max &gt; 0 and not(@active)">
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
