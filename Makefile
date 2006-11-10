@@ -276,6 +276,7 @@ DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
 DOCS = \
 cf.css \
 active-classes.html \
+analysis.html \
 annotations.html \
 architecture.html \
 associations.html \
