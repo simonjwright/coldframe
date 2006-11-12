@@ -1,4 +1,4 @@
-<!-- $Id: analysis.html,v f62c3479f18e 2006/11/10 06:16:39 simonjwright $ -->
+<!-- $Id: analysis.html,v 38bb1b8b7fe1 2006/11/12 21:08:51 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Analysis</title>
@@ -96,7 +96,26 @@ if you're running a car fleet you're not going to be changing the
 numberplates! (unless you have a limo and bought a special plate for
 it. I think <i>A1</i> is taken but you get the idea ...)
 
-<hr>
+<p>Vagueness is a bad thing in a model. If your project is a
+van-rental business, your customers borrow vans. At any time, each
+customer is borrowing zero or more vans.
+
+<p>What about the vans?  Clearly a van can only be on loan to one
+customer at a time; on the other hand, it may not be on loan at
+all. So we could try this ...
+
+<p><img src="vague-association.png">
+
+<p>... which is true but perhaps not as true as it could be. For
+example, if the van's on loan, we want to know when the loan
+terminates. This could be held in a <i>Van</i>
+attribute <i>termination</i> of type <i>Date</i>.
+
+<p>But what happens when the van isn't on loan? Now <i>termination</i>
+is meaningless.
+
+<p><img src="inheritance.gif">
+
 <i>
 <address>
 <a href="mailto:simon@pushface.org">Simon Wright</a>
