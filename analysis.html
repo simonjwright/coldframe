@@ -1,4 +1,4 @@
-<!-- $Id: analysis.html,v 38bb1b8b7fe1 2006/11/12 21:08:51 simonjwright $ -->
+<!-- $Id: analysis.html,v 0382bae60960 2006/11/16 20:57:30 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Analysis</title>
@@ -109,12 +109,14 @@ all. So we could try this ...
 <p>... which is true but perhaps not as true as it could be. For
 example, if the van's on loan, we want to know when the loan
 terminates. This could be held in a <i>Van</i>
-attribute <i>termination</i> of type <i>Date</i>.
+attribute <i>loan termination</i> of type <i>Date</i>.
 
-<p>But what happens when the van isn't on loan? Now <i>termination</i>
-is meaningless.
+<p>But what happens when the van isn't on loan? Now <i>loan
+termination</i> is meaningless.
 
-<p><img src="inheritance.gif">
+<p><img src="better-association.png">
+
+<p><img src="inheritance.png">
 
 <i>
 <address>
