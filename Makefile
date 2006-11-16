@@ -222,9 +222,10 @@ coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
 	$(SAXON) \
 	    Architecture.raw generate-architecture-html.xsl >$@
 
-GIFS = States.gif States-Monitor.gif inheritance.gif
+GIFS = States.gif States-Monitor.gif
 JPEGS = navigation.jpg window-screen.jpg
 PNGS = \
+better-association.png \
 browse-state-model.png \
 class-mappings.png \
 collections-mapping.png \
@@ -237,6 +238,7 @@ hierarchies.png \
 house-digital-io.png \
 house-management.png \
 house-management-operation.png \
+inheritance.png \
 lamp.png \
 lamp-state.png\
 lamp-state-resetting.png\
@@ -255,7 +257,8 @@ serialization-state-t.png \
 serialization-state.png \
 serialization.png \
 simple-association.png \
-type-mapping.png
+type-mapping.png \
+vague-association.png
 
 
 ############################
