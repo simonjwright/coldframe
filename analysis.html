@@ -1,4 +1,4 @@
-<!-- $Id: analysis.html,v 0382bae60960 2006/11/16 20:57:30 simonjwright $ -->
+<!-- $Id: analysis.html,v f6b9ec67d3b5 2006/11/25 12:58:17 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Analysis</title>
@@ -112,11 +112,37 @@ terminates. This could be held in a <i>Van</i>
 attribute <i>loan termination</i> of type <i>Date</i>.
 
 <p>But what happens when the van isn't on loan? Now <i>loan
-termination</i> is meaningless.
+termination</i> is meaningless. We could use an association class ...
 
 <p><img src="better-association.png">
 
+<p>... which gives us a logical place for a <i>termination</i>
+attribute. Note that although you must (in ColdFrame) have an
+association class for a many-to-many association, there's nothing to
+stop you having one for other kinds of association if that models the
+problem better.
+
+<p>Having the <i>Loan</i> class gives a place for a state model for
+the loan. It's likely to be fairly simple, unless there are
+complicated business rules about late loans and escalation -- but in
+that case you might be better off separating those concerns into
+another domain.
+
+<p>There's still a possible issue to be explored. The vans will need
+servicing, but clearly they can't be serviced if they're out with a
+customer. One way of dealing this is to use a specialization
+relationship ...
+
 <p><img src="inheritance.png">
+
+<p>... which retains the previous ability to have a <i>termination</i>
+attribute without any doubt as to whether it means anything at the
+moment and to have a state model for the loan (now on <i>Hired
+Van</i>). In addition, only <i>Pool Van</i>s can be sent off to be
+serviced.
+
+<p>This is of course more complicated; whether it's worth the trouble
+or not will depend on how complicated the application rules are.
 
 <i>
 <address>
