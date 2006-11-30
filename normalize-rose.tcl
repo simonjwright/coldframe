@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 4ab35d78a173 2006/11/30 06:50:55 simonjwright $
+# $Id: normalize-rose.tcl,v 8fc212496751 2006/11/30 20:25:11 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -755,7 +755,7 @@ itcl::class Container {
     # Add the given object to the container at entry "name"
     method -add {object name} {
         if [info exists byName($name)] {
-            Error "CF: [$this -className] already holds an element \
+            Error "CF: [$this -className] already holds an element\
                   named \"$name\""
         }
         set newIndex [$this -size]
