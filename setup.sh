@@ -1,4 +1,4 @@
-# $Id: setup.sh,v 3ee1b56c281b 2006/11/03 19:23:05 simonjwright $
+# $Id: setup.sh,v d25a03ac37f2 2006/11/30 06:33:20 simonjwright $
 # Sets up environment variables for ColdFrame development.
 # (very specific to SJW config!).
 
@@ -15,18 +15,9 @@ $HOME/.emacs_case_exceptions:\
 $cf/emacs_case_exceptions
 export COLDFRAME=cf
 case `uname` in
-    Linux)
-	# hey, I know this is antique, but it works for me ..
-	export TASH=~/tash832a
-	export TCL=/usr/lib
-	export TCL_VERSION=8.3
-	;;
-    Darwin)
-	# The 8.4.9.0 BI distribution; NB you need some fancy symlinks
-	# here, see note on the Tash mailing list.
-	export TASH=~/tash841a
-	export TCL=/usr/local
-	export TCL_VERSION=8.4
+    Darwin | Linux)
+	# Use a tcladashell.sf.net install
+	export ADA_PROJECT_PATH=$ADA_PROJECT_PATH:~/tash/src
 	;;
     *)
 	echo "I don't know how to set up for Tash in `uname`"
