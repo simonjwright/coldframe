@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 071bcc33aa50 2006/04/22 19:15:22 simonjwright $
+# $Id: normalize-rose.tcl,v 4ab35d78a173 2006/11/30 06:50:55 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1426,6 +1426,7 @@ itcl::class Class {
             }
             set dts [[Domain::currentDomain] -getDatatypes]
             if [$dts -isPresent $name] {
+		Error "duplicate definition of type $name"
                 set dt [$dts -atName $name]
             } else {
                 set dt [Datatype ::\#auto $name]
@@ -1500,6 +1501,7 @@ itcl::class Class {
                 }
                 set dts [[Domain::currentDomain] -getDatatypes]
                 if [$dts -isPresent $name] {
+		    Error "duplicate definition of type $name"
                     set dt [$dts -atName $name]
                 } else {
                     set dt [Datatype ::\#auto $name]
@@ -3126,14 +3128,6 @@ itcl::class Attribute {
         if [expr [string length $type] == 0] {
             Error "missing attribute type for\
                     [[[$this -getOwner] -getOwner] -getName].$name"
-        }
-        # extract and store data types
-        set datatypes [$domain -getDatatypes]
-        if [$datatypes -isMissing $type] {
-            set datatype [Datatype ::\#auto $type]
-            $datatypes -add $datatype $type
-        } else {
-#           set datatype [$datatypes -atName $type]
         }
         if [info exists formalizedAssociation] {
             # we rely on Relationships being evaluated after Classes
