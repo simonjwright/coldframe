@@ -2,13 +2,13 @@
 <name>Bad Model Regressions</name>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 5c327c34b411 $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 5c327c34b411 $</extractor>
+{ revision = $Revision: 4a9477e1a8d9 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 4a9477e1a8d9 $</extractor>
 <date>
-<year>2005</year>
-<month>10</month>
-<day>26</day>
-<time>20:00</time>
+<year>2006</year>
+<month>12</month>
+<day>2</day>
+<time>09:34</time>
 </date>
 <classes>
 <class>
@@ -592,6 +592,91 @@
 <class>
 <name>MTOITWTSN C2</name>
 <documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>Duplicate Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Duplicate Type</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Clashing</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<concurrency>Active</concurrency>
+<attributes>
+<attribute stereotype="id">
+<name>name</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Text</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>Duplicate Class</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>id</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Duplicate Type</name>
+<documentation><![CDATA[ { null } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="type">
+<name>Clashing</name>
+<documentation><![CDATA[ { null } ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <attributes>

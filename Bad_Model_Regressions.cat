@@ -11,13 +11,13 @@
     documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 5c327c34b411 $ }
+|{ revision = $Revision: 4a9477e1a8d9 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class_Category "Detect illegal characters in tag name rather than letting Saxon find them"
 	    quid       	"408168AE0217"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Bad Tag Name"
@@ -75,7 +75,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Public classes can't be active or have state machines"
 	    quid       	"408168F600C6"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Has State Machine"
@@ -191,7 +191,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@5
-				location   	(551, 389)
+				location   	(551, 395)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	408
@@ -199,7 +199,7 @@
 				label      	"Has State Machine")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@5
-				location   	(551, 344)
+				location   	(551, 345)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -231,7 +231,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@6
-				location   	(1587, 387)
+				location   	(1587, 393)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	216
@@ -239,7 +239,7 @@
 				label      	"Is Active")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@6
-				location   	(1587, 342)
+				location   	(1587, 343)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -256,7 +256,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Mixed type declarations"
 	    quid       	"40EE860C015F"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Mixed"
@@ -297,7 +297,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@7
-				location   	(652, 457)
+				location   	(652, 463)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	196
@@ -305,7 +305,7 @@
 				label      	"Mixed")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@7
-				location   	(652, 412)
+				location   	(652, 413)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -322,7 +322,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Bad expressions"
 	    quid       	"4111B4E10070"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Bad Real"
@@ -379,27 +379,27 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@8
-				location   	(410, 362)
+				location   	(403, 359)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	210
+				max_width  	224
 				justify    	0
 				label      	"Bad Real")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@8
-				location   	(410, 317)
+				location   	(403, 309)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	210
+				max_width  	224
 				justify    	0
 				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4111B4FE031A"
-			    width      	228
-			    height     	164
+			    width      	242
+			    height     	182
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Bad Model Regressions::Bad expressions::Bad Integer" @9
@@ -419,27 +419,27 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@9
-				location   	(936, 359)
+				location   	(933, 356)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	268
+				max_width  	274
 				justify    	0
 				label      	"Bad Integer")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@9
-				location   	(936, 314)
+				location   	(933, 306)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	268
+				max_width  	274
 				justify    	0
 				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4111B531011F"
-			    width      	286
-			    height     	164
+			    width      	292
+			    height     	182
 			    annotation 	8
 			    autoResize 	TRUE)
 			(object ClassView "Class" "Logical View::Bad Model Regressions::Bad expressions::Bad Initialization" @10
@@ -459,32 +459,49 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@10
-				location   	(332, 639)
+				location   	(314, 631)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	376
+				max_width  	412
 				justify    	0
 				label      	"Bad Initialization")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@10
-				location   	(332, 594)
+				location   	(314, 581)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	376
+				max_width  	412
 				justify    	0
 				label      	"<<type>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"4111B8B3036F"
-			    width      	394
-			    height     	264
+			    compartment 	(object Compartment
+				Parent_View 	@10
+				location   	(314, 692)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	3
+				max_width  	409)
+			    width      	430
+			    height     	292
 			    annotation 	8
 			    autoResize 	TRUE)))))
 	(object Class_Category "Protected types with missing features"
 	    quid       	"4142CE040300"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "No Attributes"
@@ -523,7 +540,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@11
-				location   	(404, 423)
+				location   	(404, 429)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	306
@@ -531,7 +548,7 @@
 				label      	"No Attributes")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@11
-				location   	(404, 378)
+				location   	(404, 379)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -548,7 +565,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Bad Utilities"
 	    quid       	"415F11BC000C"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class_Utility "Utility With Attribute"
@@ -1120,7 +1137,7 @@
 					orientation 	0))))))))
 	(object Class_Category "Bad Operations"
 	    quid       	"4206699F00DA"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "Bad Accessor"
@@ -1181,7 +1198,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@33
-				location   	(487, 267)
+				location   	(487, 273)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	816
@@ -1189,7 +1206,7 @@
 				label      	"Bad Accessor")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@33
-				location   	(487, 222)
+				location   	(487, 223)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1387,7 +1404,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@36
-				location   	(201, 167)
+				location   	(201, 173)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	410
@@ -1395,7 +1412,7 @@
 				label      	"Attributes and Array")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@36
-				location   	(201, 122)
+				location   	(201, 123)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1427,7 +1444,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@37
-				location   	(178, 473)
+				location   	(178, 479)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	490
@@ -1435,7 +1452,7 @@
 				label      	"Attributes and Constrains")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@37
-				location   	(178, 428)
+				location   	(178, 429)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1467,7 +1484,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@38
-				location   	(158, 774)
+				location   	(158, 780)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	524
@@ -1475,7 +1492,7 @@
 				label      	"Attributes and Counterpart")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@38
-				location   	(158, 729)
+				location   	(158, 730)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1507,7 +1524,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@39
-				location   	(152, 1063)
+				location   	(152, 1069)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	536
@@ -1515,7 +1532,7 @@
 				label      	"Attributes and Enumeration")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@39
-				location   	(152, 1018)
+				location   	(152, 1019)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1547,7 +1564,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@40
-				location   	(223, 1344)
+				location   	(223, 1350)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	394
@@ -1555,7 +1572,7 @@
 				label      	"Attributes and Hash")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@40
-				location   	(223, 1299)
+				location   	(223, 1300)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1587,7 +1604,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@41
-				location   	(189, 1647)
+				location   	(189, 1653)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	446
@@ -1595,7 +1612,7 @@
 				label      	"Attributes and Imported")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@41
-				location   	(189, 1602)
+				location   	(189, 1603)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1627,7 +1644,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@42
-				location   	(213, 1912)
+				location   	(213, 1918)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	438
@@ -1635,7 +1652,7 @@
 				label      	"Attributes and Integer")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@42
-				location   	(213, 1867)
+				location   	(213, 1868)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1667,7 +1684,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@43
-				location   	(224, 2194)
+				location   	(224, 2200)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	366
@@ -1675,7 +1692,7 @@
 				label      	"Attributes and Null")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@43
-				location   	(224, 2149)
+				location   	(224, 2150)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1707,7 +1724,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@44
-				location   	(1007, 143)
+				location   	(1007, 149)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	374
@@ -1715,7 +1732,7 @@
 				label      	"Attributes and Real")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@44
-				location   	(1007, 98)
+				location   	(1007, 99)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1747,7 +1764,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@45
-				location   	(953, 468)
+				location   	(953, 474)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	454
@@ -1755,7 +1772,7 @@
 				label      	"Attributes and Renames")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@45
-				location   	(953, 423)
+				location   	(953, 424)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1787,7 +1804,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@46
-				location   	(947, 766)
+				location   	(947, 772)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	422
@@ -1795,7 +1812,7 @@
 				label      	"Attributes and String")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@46
-				location   	(947, 721)
+				location   	(947, 722)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1827,7 +1844,7 @@
 				default_color 	TRUE)
 			    label      	(object ItemLabel
 				Parent_View 	@47
-				location   	(898, 1072)
+				location   	(898, 1078)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	530
@@ -1835,7 +1852,7 @@
 				label      	"Private and Serializable")
 			    stereotype 	(object ItemLabel
 				Parent_View 	@47
-				location   	(898, 1027)
+				location   	(898, 1028)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -1852,7 +1869,7 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "More than one inheritance tree with the same name"
 	    quid       	"435F57B3001A"
-	    stereotype 	"generate"
+	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
 		(object Class "MTOITWTSN P1"
@@ -1908,7 +1925,7 @@
 				default_color 	TRUE)
 			    nlines     	1
 			    max_width  	1980
-			    label      	"$Id: Bad_Model_Regressions.cat,v 5c327c34b411 2005/10/26 19:07:06 simonjwright $")
+			    label      	"$Id: Bad_Model_Regressions.cat,v 4a9477e1a8d9 2006/12/02 09:34:24 simonjwright $")
 			(object ClassView "Class" "Logical View::Bad Model Regressions::More than one inheritance tree with the same name::MTOITWTSN P1" @49
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
@@ -1936,23 +1953,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"435F57F903A0"
-			    compartment 	(object Compartment
-				Parent_View 	@49
-				location   	(166, 453)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	445)
 			    width      	466
 			    height     	168
 			    annotation 	8
@@ -1984,23 +1984,6 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"435F58260250"
-			    compartment 	(object Compartment
-				Parent_View 	@50
-				location   	(1269, 444)
-				font       	(object Font
-				    size       	10
-				    face       	"Arial"
-				    bold       	FALSE
-				    italics    	FALSE
-				    underline  	FALSE
-				    strike     	FALSE
-				    color      	0
-				    default_color 	TRUE)
-				icon_style 	"Icon"
-				fill_color 	13434879
-				anchor     	2
-				nlines     	2
-				max_width  	445)
 			    width      	466
 			    height     	168
 			    annotation 	8
@@ -2118,7 +2101,444 @@
 			    supplier   	@49
 			    line_style 	3
 			    origin_attachment 	(388, 966)
-			    terminal_attachment 	(388, 554)))))))
+			    terminal_attachment 	(388, 554))))))
+	(object Class_Category "Duplicate classes and types"
+	    quid       	"457145050399"
+	    stereotype 	"include"
+	    exportControl 	"Public"
+	    logical_models 	(list unit_reference_list
+		(object Class "Duplicate Class"
+		    quid       	"45714571036C"
+		    stereotype 	"singleton")
+		(object Class "Duplicate Type"
+		    quid       	"457145D40184"
+		    stereotype 	"type")
+		(object Class "Clashing"
+		    quid       	"4571462D036D"
+		    class_attributes 	(list class_attribute_list
+			(object ClassAttribute "name"
+			    quid       	"457146F50162"
+			    stereotype 	"id"
+			    type       	"Text"))
+		    concurrency 	"Active")
+		(object Class_Category "Subpackage"
+		    quid       	"4571459B01A0"
+		    stereotype 	"include"
+		    exportControl 	"Public"
+		    logical_models 	(list unit_reference_list
+			(object Class "Duplicate Class"
+			    quid       	"457145800238"
+			    class_attributes 	(list class_attribute_list
+				(object ClassAttribute "id"
+				    quid       	"457146750226"
+				    stereotype 	"id"
+				    type       	"Autonumber")))
+			(object Class "Duplicate Type"
+			    quid       	"457145F10045"
+			    documentation 	"{ null }"
+			    stereotype 	"type")
+			(object Class "Clashing"
+			    quid       	"4571463D02C6"
+			    documentation 	"{ null }"
+			    stereotype 	"type"))
+		    logical_presentations 	(list unit_reference_list
+			(object ClassDiagram "Main"
+			    quid       	"457145E70254"
+			    title      	"Main"
+			    zoom       	100
+			    max_height 	28350
+			    max_width  	21600
+			    origin_x   	0
+			    origin_y   	0
+			    items      	(list diagram_item_list
+				(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage::Duplicate Class" @55
+				    ShowCompartmentStereotypes 	TRUE
+				    IncludeAttribute 	TRUE
+				    IncludeOperation 	TRUE
+				    ShowOperationSignature 	TRUE
+				    location   	(1478, 344)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object ItemLabel
+					Parent_View 	@55
+					location   	(1236, 263)
+					fill_color 	13434879
+					nlines     	1
+					max_width  	484
+					justify    	0
+					label      	"Duplicate Class")
+				    icon_style 	"Icon"
+				    line_color 	3342489
+				    fill_color 	13434879
+				    quidu      	"457145800238"
+				    compartment 	(object Compartment
+					Parent_View 	@55
+					location   	(1236, 324)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					icon_style 	"Icon"
+					fill_color 	13434879
+					anchor     	2
+					nlines     	2
+					max_width  	481)
+				    width      	502
+				    height     	186
+				    annotation 	8
+				    autoResize 	TRUE)
+				(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage::Duplicate Type" @56
+				    ShowCompartmentStereotypes 	TRUE
+				    IncludeAttribute 	TRUE
+				    IncludeOperation 	TRUE
+				    ShowOperationSignature 	TRUE
+				    location   	(1509, 615)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object ItemLabel
+					Parent_View 	@56
+					location   	(1346, 586)
+					fill_color 	13434879
+					nlines     	1
+					max_width  	326
+					justify    	0
+					label      	"Duplicate Type")
+				    stereotype 	(object ItemLabel
+					Parent_View 	@56
+					location   	(1346, 536)
+					fill_color 	13434879
+					anchor     	10
+					nlines     	1
+					max_width  	326
+					justify    	0
+					label      	"<<type>>")
+				    icon_style 	"Icon"
+				    line_color 	3342489
+				    fill_color 	13434879
+				    quidu      	"457145F10045"
+				    width      	344
+				    height     	182
+				    annotation 	8
+				    autoResize 	TRUE)
+				(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage::Clashing" @57
+				    ShowCompartmentStereotypes 	TRUE
+				    IncludeAttribute 	TRUE
+				    IncludeOperation 	TRUE
+				    ShowOperationSignature 	TRUE
+				    location   	(1545, 934)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    label      	(object ItemLabel
+					Parent_View 	@57
+					location   	(1443, 905)
+					fill_color 	13434879
+					nlines     	1
+					max_width  	204
+					justify    	0
+					label      	"Clashing")
+				    stereotype 	(object ItemLabel
+					Parent_View 	@57
+					location   	(1443, 855)
+					fill_color 	13434879
+					anchor     	10
+					nlines     	1
+					max_width  	204
+					justify    	0
+					label      	"<<type>>")
+				    icon_style 	"Icon"
+				    line_color 	3342489
+				    fill_color 	13434879
+				    quidu      	"4571463D02C6"
+				    width      	222
+				    height     	182
+				    annotation 	8
+				    autoResize 	TRUE))))))
+	    logical_presentations 	(list unit_reference_list
+		(object ClassDiagram "Main"
+		    quid       	"4571456702A0"
+		    title      	"Main"
+		    zoom       	100
+		    max_height 	28350
+		    max_width  	21600
+		    origin_x   	0
+		    origin_y   	0
+		    items      	(list diagram_item_list
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Duplicate Class" @58
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(347, 372)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@58
+				location   	(178, 343)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	338
+				justify    	0
+				label      	"Duplicate Class")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@58
+				location   	(178, 293)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	338
+				justify    	0
+				label      	"<<singleton>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"45714571036C"
+			    width      	356
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage::Duplicate Class" @59
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1844, 390)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@59
+				location   	(1602, 286)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	484
+				justify    	0
+				label      	"Duplicate Class")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"457145800238"
+			    compartment 	(object Compartment
+				Parent_View 	@59
+				location   	(1602, 391)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	481)
+			    width      	502
+			    height     	232
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object CategoryView "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage" @60
+			    location   	(1125, 212)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@60
+				location   	(981, 177)
+				fill_color 	13434879
+				nlines     	2
+				max_width  	288
+				justify    	0
+				label      	"Subpackage")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@60
+				location   	(981, 127)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	288
+				justify    	0
+				label      	"<<include>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"4571459B01A0"
+			    width      	300
+			    height     	182)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Duplicate Type" @61
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(1831, 709)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@61
+				location   	(1668, 680)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	326
+				justify    	0
+				label      	"Duplicate Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@61
+				location   	(1668, 630)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	326
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"457145D40184"
+			    width      	344
+			    height     	182
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Subpackage::Duplicate Type" @62
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(337, 661)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@62
+				location   	(174, 609)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	326
+				justify    	0
+				label      	"Duplicate Type")
+			    stereotype 	(object ItemLabel
+				Parent_View 	@62
+				location   	(174, 559)
+				fill_color 	13434879
+				anchor     	10
+				nlines     	1
+				max_width  	326
+				justify    	0
+				label      	"<<type>>")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"457145F10045"
+			    width      	344
+			    height     	228
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object ClassView "Class" "Logical View::Bad Model Regressions::Duplicate classes and types::Clashing" @63
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(358, 981)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@63
+				location   	(152, 900)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	412
+				justify    	0
+				label      	"Clashing")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"4571462D036D"
+			    compartment 	(object Compartment
+				Parent_View 	@63
+				location   	(152, 961)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	13434879
+				anchor     	2
+				nlines     	2
+				max_width  	409)
+			    width      	430
+			    height     	186
+			    annotation 	8
+			    autoResize 	TRUE))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
 	    quid       	"3FDAA7B50163"
@@ -2126,7 +2546,7 @@
 	    documentation 	
 |Regression tests that involve errors detected during normalization.
 |
-|{ revision = $Revision: 5c327c34b411 $ }
+|{ revision = $Revision: 4a9477e1a8d9 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -2134,7 +2554,7 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object Label @55
+		(object Label @64
 		    location   	(215, 133)
 		    font       	(object Font
 			size       	10
@@ -2147,8 +2567,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	2030
-		    label      	"$Id: Bad_Model_Regressions.cat,v 5c327c34b411 2005/10/26 19:07:06 simonjwright $")
-		(object CategoryView "Logical View::Bad Model Regressions" @56
+		    label      	"$Id: Bad_Model_Regressions.cat,v 4a9477e1a8d9 2006/12/02 09:34:24 simonjwright $")
+		(object CategoryView "Logical View::Bad Model Regressions" @65
 		    location   	(2639, 233)
 		    font       	(object Font
 			size       	10
@@ -2160,20 +2580,20 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@56
-			location   	(2469, 149)
+			Parent_View 	@65
+			location   	(2466, 149)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	340
+			max_width  	346
 			justify    	0
 			label      	"Bad Model Regressions")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3FDAA7500168"
-		    width      	352
+		    width      	358
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @57
+		(object CategoryView "Logical View::Bad Model Regressions::Detect illegal characters in tag name rather than letting Saxon find them" @66
 		    location   	(495, 435)
 		    font       	(object Font
 			size       	10
@@ -2185,29 +2605,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@57
-			location   	(165, 396)
+			Parent_View 	@66
+			location   	(147, 400)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	660
+			max_width  	696
 			justify    	0
 			label      	"Detect illegal characters in tag name rather than letting Saxon find them")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@57
-			location   	(165, 351)
+			Parent_View 	@66
+			location   	(147, 350)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	660
+			max_width  	696
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"408168AE0217"
-		    width      	672
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @58
+		    width      	708
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Public classes can't be active or have state machines" @67
 		    location   	(1355, 438)
 		    font       	(object Font
 			size       	10
@@ -2219,29 +2639,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@58
-			location   	(1087, 399)
+			Parent_View 	@67
+			location   	(1057, 403)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	536
+			max_width  	596
 			justify    	0
 			label      	"Public classes can't be active or have state machines")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@58
-			location   	(1087, 354)
+			Parent_View 	@67
+			location   	(1057, 353)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	536
+			max_width  	596
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"408168F600C6"
-		    width      	548
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @59
+		    width      	608
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Mixed type declarations" @68
 		    location   	(2033, 433)
 		    font       	(object Font
 			size       	10
@@ -2253,29 +2673,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@59
-			location   	(1889, 394)
+			Parent_View 	@68
+			location   	(1885, 398)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	288
+			max_width  	296
 			justify    	0
 			label      	"Mixed type declarations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@59
-			location   	(1889, 349)
+			Parent_View 	@68
+			location   	(1885, 348)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	288
+			max_width  	296
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"40EE860C015F"
-		    width      	300
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @60
+		    width      	308
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Bad expressions" @69
 		    location   	(460, 785)
 		    font       	(object Font
 			size       	10
@@ -2287,29 +2707,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@60
-			location   	(316, 746)
+			Parent_View 	@69
+			location   	(316, 750)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Bad expressions")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@60
-			location   	(316, 701)
+			Parent_View 	@69
+			location   	(316, 700)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
 			max_width  	288
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4111B4E10070"
 		    width      	300
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @61
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Protected types with missing features" @70
 		    location   	(951, 790)
 		    font       	(object Font
 			size       	10
@@ -2321,29 +2741,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@61
-			location   	(758, 751)
+			Parent_View 	@70
+			location   	(749, 755)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	386
+			max_width  	404
 			justify    	0
 			label      	"Protected types with missing features")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@61
-			location   	(758, 706)
+			Parent_View 	@70
+			location   	(749, 705)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	386
+			max_width  	404
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4142CE040300"
-		    width      	398
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @62
+		    width      	416
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Utilities" @71
 		    location   	(1478, 788)
 		    font       	(object Font
 			size       	10
@@ -2355,29 +2775,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@62
-			location   	(1334, 749)
+			Parent_View 	@71
+			location   	(1334, 753)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Bad Utilities")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@62
-			location   	(1334, 704)
+			Parent_View 	@71
+			location   	(1334, 703)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
 			max_width  	288
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"415F11BC000C"
 		    width      	300
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @63
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Bad Operations" @72
 		    location   	(2025, 790)
 		    font       	(object Font
 			size       	10
@@ -2389,29 +2809,29 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@63
-			location   	(1881, 751)
+			Parent_View 	@72
+			location   	(1881, 755)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Bad Operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@63
-			location   	(1881, 706)
+			Parent_View 	@72
+			location   	(1881, 705)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
 			max_width  	288
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"4206699F00DA"
 		    width      	300
-		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @64
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Improper types" @73
 		    location   	(415, 1083)
 		    font       	(object Font
 			size       	10
@@ -2423,15 +2843,15 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@64
-			location   	(271, 1044)
+			Parent_View 	@73
+			location   	(271, 1049)
 			fill_color 	13434879
 			nlines     	2
 			max_width  	288
 			justify    	0
 			label      	"Improper types")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@64
+			Parent_View 	@73
 			location   	(271, 999)
 			fill_color 	13434879
 			anchor     	10
@@ -2445,7 +2865,7 @@
 		    quidu      	"427E68DC0074"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Model Regressions::More than one inheritance tree with the same name" @65
+		(object CategoryView "Logical View::Bad Model Regressions::More than one inheritance tree with the same name" @74
 		    location   	(960, 1090)
 		    font       	(object Font
 			size       	10
@@ -2457,25 +2877,59 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@65
-			location   	(727, 1051)
+			Parent_View 	@74
+			location   	(683, 1055)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	466
+			max_width  	554
 			justify    	0
 			label      	"More than one inheritance tree with the same name")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@65
-			location   	(727, 1006)
+			Parent_View 	@74
+			location   	(683, 1005)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	466
+			max_width  	554
 			justify    	0
-			label      	"<<generate>>")
+			label      	"<<include>>")
 		    icon_style 	"Icon"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"435F57B3001A"
-		    width      	478
-		    height     	180)))))
+		    width      	566
+		    height     	182)
+		(object CategoryView "Logical View::Bad Model Regressions::Duplicate classes and types" @75
+		    location   	(462, 1456)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@75
+			location   	(272, 1421)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	380
+			justify    	0
+			label      	"Duplicate classes and types")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@75
+			location   	(272, 1371)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	380
+			justify    	0
+			label      	"<<include>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"457145050399"
+		    width      	392
+		    height     	182)))))
