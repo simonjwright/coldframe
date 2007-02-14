@@ -2,13 +2,13 @@
 <name>Bad Code Regressions</name>
 <documentation><![CDATA[ Regression tests that involve detecting errors.
 
-{ revision = $Revision: 17d596f6625c $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 17d596f6625c $</extractor>
+{ revision = $Revision: 50e0c203d223 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 50e0c203d223 $</extractor>
 <date>
-<year>2006</year>
-<month>11</month>
-<day>3</day>
-<time>19:42</time>
+<year>2007</year>
+<month>2</month>
+<day>14</day>
+<time>22:09</time>
 </date>
 <classes>
 <class>
@@ -195,6 +195,22 @@
 <transitionaction>
 <name>act</name>
 </transitionaction>
+</transition>
+<transition>
+<documentation></documentation>
+<source>F</source>
+<target>G</target>
+<event>
+<name>V</name>
+</event>
+</transition>
+<transition>
+<documentation></documentation>
+<source>F</source>
+<target>F</target>
+<event>
+<name>V</name>
+</event>
 </transition>
 </transitions>
 </statemachine>
