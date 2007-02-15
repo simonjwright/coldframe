@@ -382,6 +382,8 @@ coldframe-events_g-creation_g.ads \
 coldframe-events_g-debug_g.adb \
 coldframe-events_g-debug_g.ads \
 coldframe-events_g-held_event_queue_signature-inspection_signature.ads \
+coldframe-events_g-instance_priority_g.adb \
+coldframe-events_g-instance_priority_g.ads \
 coldframe-events_g-standard_g-inspection_g.adb \
 coldframe-events_g-standard_g-inspection_g.ads \
 coldframe-events_g-standard_g.adb \
@@ -441,6 +443,8 @@ coldframe-project-calendar.ads \
 coldframe-project-event_support.ads \
 coldframe-project-events-creation.ads \
 coldframe-project-events-standard-debug.ads \
+coldframe-project-events-instance_priority-test.ads \
+coldframe-project-events-instance_priority.ads \
 coldframe-project-events-standard-inspection.ads \
 coldframe-project-events-standard-test.ads \
 coldframe-project-events-standard-test_debug.ads \
