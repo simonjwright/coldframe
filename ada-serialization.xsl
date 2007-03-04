@@ -1,4 +1,4 @@
-<!-- $Id: ada-serialization.xsl,v ca40abd4a52e 2006/04/22 11:43:10 simonjwright $ -->
+<!-- $Id: ada-serialization.xsl,v b68a4111a4e1 2007/03/04 18:28:26 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for "serializable" types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -368,11 +368,53 @@
 
       </xsl:when>
 
+      <xsl:when test="$type[@serializable-there]">
+
+        <!-- We don't handle this; if they want to record a value of a
+             type that is serializable-there, they should record it
+             'there' instead. -->
+
+        <xsl:variable name="package">
+          <xsl:choose>
+            <xsl:when test="$type/imported">
+              <xsl:value-of select="$type/imported"/>
+            </xsl:when>
+            <xsl:when test="$type/renames">
+              <xsl:call-template name="ty:find-source-package">
+                <xsl:with-param name="input" select="$type/renames"/>
+              </xsl:call-template>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="orig-type">
+          <xsl:choose>
+            <xsl:when test="$type/imported">
+              <xsl:value-of select="$type/name"/>
+            </xsl:when>
+            <xsl:when test="$type/renames">
+              <xsl:value-of select="substring-after($type/renames, '.')"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:call-template name="ut:log-error"/>
+        <xsl:message>
+          <xsl:text>Error: </xsl:text>
+          <xsl:value-of select="$type/name"/>
+          <xsl:text> must be recorded as </xsl:text>
+          <xsl:value-of select="$package"/>
+          <xsl:text>.Serializable.</xsl:text>
+          <xsl:value-of select="$orig-type"/>
+        </xsl:message>
+
+      </xsl:when>
+
       <xsl:otherwise>
 
-        <xsl:variable name="indentC" select="concat($indent,$C)"/>
-
         <!-- This is a simple (or array) type. -->
+
+        <xsl:variable name="indentC" select="concat($indent,$C)"/>
 
         <xsl:choose>
 

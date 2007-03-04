@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 360ded357419 2006/11/30 20:27:17 simonjwright $ -->
+<!-- $Id: error-messages.html,v b68a4111a4e1 2007/03/04 18:28:26 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -240,6 +240,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dt>Error: no initial state in <i>Class</i> <dd>Each state machine must have an initial state.
 
 <dt>Error: protected type <i>type</i> has no operations <dd>A protected type must have operations.
+
+<dt>Error: <i>type</i> must be recorded as <i>original-package</i>.Serializable.<i>original-type</i> <dd>A type can't be both <i>{serializable-there}</i> and <i>{serializable}</i>; record values using the original package's Serializable child.
 
 </dl>
 
