@@ -2,13 +2,13 @@
 <name>Bad Model Regressions</name>
 <documentation><![CDATA[ Regression tests that involve errors detected during normalization.
 
-{ revision = $Revision: 4a9477e1a8d9 $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 4a9477e1a8d9 $</extractor>
+{ revision = $Revision: 9dc118d707aa $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 9dc118d707aa $</extractor>
 <date>
-<year>2006</year>
-<month>12</month>
-<day>2</day>
-<time>09:34</time>
+<year>2007</year>
+<month>3</month>
+<day>4</day>
+<time>18:42</time>
 </date>
 <classes>
 <class>
@@ -615,7 +615,7 @@
 </class>
 <class stereotype="type">
 <name>Duplicate Type</name>
-<documentation></documentation>
+<documentation><![CDATA[ {enumeration = a | b | c } ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
 <attributes>
