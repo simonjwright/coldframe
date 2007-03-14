@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 04f7b672839f 2006/04/19 22:36:00 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v ec8d4685d050 2007/03/14 06:11:16 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -494,9 +494,13 @@
             when E : Others =>
                ColdFrame.Project.Log_Error
                  (Ada.Exceptions.Exception_Information (E));
-               raise ColdFrame.Exceptions.Initialization_Error;
+               raise;
          end {domain}.Initialize;
          -->
+    <!-- Any exceptions are logged, in case the user forgot to include
+         logging of unhandled exceptions in her main program, and the
+         original exception re-riased. This may lead to double
+         logging, better than none.  -->
     <xsl:call-template name="ut:do-not-edit"/>
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
@@ -620,7 +624,7 @@
     <xsl:value-of select="$IIC"/>
     <xsl:text>(Ada.Exceptions.Exception_Information (E));&#10;</xsl:text>
     <xsl:value-of select="$II"/>
-    <xsl:text>raise ColdFrame.Exceptions.Initialization_Error;&#10;</xsl:text>
+    <xsl:text>raise;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
