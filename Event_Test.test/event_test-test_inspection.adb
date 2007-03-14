@@ -108,14 +108,28 @@ package body Event_Test.Test_Inspection is
       end;
 
       begin
-         N := Inspection.Number_Of_Now_Events (Q);
-         Assert (False, "Number_Of_Now_Events should have failed");
+         N := Inspection.Number_Of_Immediate_Class_Events (Q);
+         Assert (False,
+                 "Number_Of_Immediate_Class_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
-         E := Inspection.Now_Event (Q, 1);
-         Assert (False, "Now_Event should have failed");
+         E := Inspection.Immediate_Class_Event (Q, 1);
+         Assert (False, "Immediate_Class_Event should have failed");
+      exception
+         when Inspection.Started => null;
+      end;
+      begin
+         N := Inspection.Number_Of_Immediate_Instance_Events (Q);
+         Assert (False,
+                 "Number_Of_Immediate_Instance_Events should have failed");
+      exception
+         when Inspection.Started => null;
+      end;
+      begin
+         E := Inspection.Immediate_Instance_Event (Q, 1);
+         Assert (False, "Immediate_Instance_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
@@ -201,22 +215,26 @@ package body Event_Test.Test_Inspection is
       pragma Warnings (Off, C);
       E : ColdFrame.Project.Events.Event_P;
    begin
-      Assert (Inspection.Number_Of_Now_Events (Q) = 0,
-              "number of now events not 0");
+      Assert (Inspection.Number_Of_Immediate_Class_Events (Q) = 0,
+              "number of immediate class events not 0");
+      Assert (Inspection.Number_Of_Immediate_Instance_Events (Q) = 0,
+              "number of immediate instance events not 0");
       E := new Event (The_Instance'Access);
       Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q);
       E := new Event (The_Instance'Access);
       Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q);
-      Assert (Inspection.Number_Of_Now_Events (Q) = 2,
-              "number of now events not 2");
-      Assert (Event (Inspection.Now_Event (Q, 1).all).Payload = 1,
+      Assert (Inspection.Number_Of_Immediate_Instance_Events (Q) = 2,
+              "number of immediate instance events not 2");
+      Assert (Event (Inspection.Immediate_Instance_Event (Q, 1).all).Payload
+                = 1,
               "wrong payload in first event");
-      Assert (Event (Inspection.Now_Event (Q, 2).all).Payload = 2,
+      Assert (Event (Inspection.Immediate_Instance_Event (Q, 2).all).Payload
+                = 2,
               "wrong payload in second event");
       begin
-         E := Inspection.Now_Event (Q, 3);
+         E := Inspection.Immediate_Instance_Event (Q, 3);
          Assert (False, "should have raised exception");
       exception
          when Inspection.Not_Found => null;
