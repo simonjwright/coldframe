@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v ec8d4685d050 2007/03/14 06:11:16 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 5b0f7ab68e28 2007/03/14 20:27:24 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -467,7 +467,6 @@
 
     <!--
          with Ada.Exceptions;
-         with ColdFrame.Exceptions;
          with ColdFrame.Project.Log_Error;
          with {domain-init-proc-package};
          with {domain}.Events;
@@ -517,7 +516,6 @@
 
     <!-- .. withs, starting with exception handling .. -->
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
-    <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
     <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
