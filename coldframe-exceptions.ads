@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 18a99c7fc527 $
---  $Date: 2003/05/25 17:54:19 $
---  $Author: simon $
+--  $Revision: 156ec5db2516 $
+--  $Date: 2007/03/14 06:13:23 $
+--  $Author: simonjwright $
 
 package ColdFrame.Exceptions is
 
@@ -39,6 +39,8 @@ package ColdFrame.Exceptions is
 
    Initialization_Error : exception;
    --  An exception occurred during domain initialization.
+   --
+   --  No longer generated (14.iii.07)
 
    Mismatched_Instances : exception;
    --  Raised in Inheritance.Create_Tree if a non-root class with
