@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.ads,v $
---  $Revision: d66face9dfd2 $
---  $Date: 2006/03/06 20:12:32 $
+--  $Revision: 7e61583a3ad9 $
+--  $Date: 2007/03/14 20:26:21 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature.Inspection_Signature;
@@ -62,9 +62,26 @@ package ColdFrame.Events_G.Standard_G.Inspection_G is
 
    --  How many?
    function Number_Of_Now_Events (On : Event_Queue_P) return Natural;
-   --  Return the At_Index'th event (in order of posting).
+   pragma Obsolescent;
+   --  Return the At_Index'th event (in order of posting, by instance
+   --  then class).
    function Now_Event (On : Event_Queue_P;
                        At_Index : Positive) return Event_P;
+   pragma Obsolescent;
+
+   --  How many class events?
+   function Number_Of_Immediate_Class_Events
+     (On : Event_Queue_P) return Natural;
+   --  Return the At_Index'th class event (in order of posting).
+   function Immediate_Class_Event (On : Event_Queue_P;
+                       At_Index : Positive) return Event_P;
+
+   --  How many instance events?
+   function Number_Of_Immediate_Instance_Events
+     (On : Event_Queue_P) return Natural;
+   --  Return the At_Index'th instance event (in order of posting).
+   function Immediate_Instance_Event (On : Event_Queue_P;
+                                      At_Index : Positive) return Event_P;
 
    -------------------------------------------
    --  Events posted to run after a delay.  --

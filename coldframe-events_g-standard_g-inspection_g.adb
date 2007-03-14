@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: 1da128db0fde $
---  $Date: 2006/10/31 06:40:40 $
+--  $Revision: 7e61583a3ad9 $
+--  $Date: 2007/03/14 20:26:21 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -115,6 +115,64 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       end if;
       raise Not_Found;
    end Now_Event;
+
+
+   function Number_Of_Immediate_Class_Events
+     (On : Event_Queue_P) return Natural is
+      pragma Assert (On.all in Event_Queue_Base'Class,
+                     "not a standard queue");
+      Q : Event_Queue_Base renames Event_Queue_Base (On.all);
+   begin
+      if On.Started then
+         raise Started;
+      end if;
+      return UPEQ.Length (Q.The_Class_Events);
+   end Number_Of_Immediate_Class_Events;
+
+
+   function Immediate_Class_Event (On : Event_Queue_P;
+                                   At_Index : Positive) return Event_P is
+      pragma Assert (On.all in Event_Queue_Base'Class,
+                     "not a standard queue");
+      Q : Event_Queue_Base renames Event_Queue_Base (On.all);
+   begin
+      if On.Started then
+         raise Started;
+      end if;
+      if At_Index > UPEQ.Length (Q.The_Class_Events) then
+         raise Not_Found;
+      end if;
+      return Nth_Event (Q.The_Class_Events, At_Index);
+   end Immediate_Class_Event;
+
+
+   function Number_Of_Immediate_Instance_Events
+     (On : Event_Queue_P) return Natural is
+      pragma Assert (On.all in Event_Queue_Base'Class,
+                     "not a standard queue");
+      Q : Event_Queue_Base renames Event_Queue_Base (On.all);
+   begin
+      if On.Started then
+         raise Started;
+      end if;
+      return UPEQ.Length (Q.The_Instance_Events);
+   end Number_Of_Immediate_Instance_Events;
+
+
+   function Immediate_Instance_Event (On : Event_Queue_P;
+                                      At_Index : Positive) return Event_P is
+      pragma Assert (On.all in Event_Queue_Base'Class,
+                     "not a standard queue");
+      Q : Event_Queue_Base renames Event_Queue_Base (On.all);
+   begin
+      if On.Started then
+         raise Started;
+      end if;
+      if At_Index > UPEQ.Length (Q.The_Instance_Events) then
+         raise Not_Found;
+      end if;
+      return Nth_Event (Q.The_Instance_Events, At_Index);
+   end Immediate_Instance_Event;
 
 
    -------------------------------------------
