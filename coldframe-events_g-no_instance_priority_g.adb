@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-no_instance_priority_g.adb,v $
---  $Revision: 010a1b946720 $
---  $Date: 2007/03/14 20:24:08 $
+--  $Revision: cef57ddfc26b $
+--  $Date: 2007/03/14 21:09:40 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -225,7 +225,8 @@ package body ColdFrame.Events_G.No_Instance_Priority_G is
                   when Ex : Exceptions.Cant_Happen =>
                      Logging.Log
                        (Severity => Logging.Error,
-                        Message => Ada.Exceptions.Exception_Message (Ex));
+                        Message => "Illegal event "
+                          & Ada.Exceptions.Exception_Message (Ex));
                   when Ex : others =>
                      Logging.Log
                        (Severity => Logging.Error,
