@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 0c60b65a8f1d 2007/03/24 11:44:16 simonjwright $ -->
+<!-- $Id: bugs.html,v c8cfeeebe877 2007/03/24 18:45:22 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -237,11 +237,6 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<dt>0352 (raised 6.iv.06)
-
-<dd>ColdFrame doesn't detect the error of having more than one type
-with the same name.
-
 <dt>0359 (raised 22.viii.06)
 
 <dd>At present, class and instance events have the same priority.
@@ -276,13 +271,6 @@ the <tt>Timer</tt> was still set.
 <br><i>On the whole it's best if public classes don't have attributes
 at all.</i>
 
-<dt>0364 (raised 29.xi.06)
-
-<dd>The error of a domain having two different type definitions isn't
-detected. This could happen with an interface child UML package.
-<br>SourceForge 1605567
-<br>See also 0352
-
 <!-- next: 0367 -->
 
 </dl>
@@ -299,6 +287,23 @@ detected. This could happen with an interface child UML package.
 the same event isn't detected (the fix implemented in response to 0206
 didn't always work).
 <br>SourceForge 1687327
+
+</dl>
+
+<h3>30.xi.06</h3>
+
+<dl>
+
+<dt>0352 (raised 6.iv.06)
+
+<dd>ColdFrame doesn't detect the error of having more than one type
+with the same name.
+
+<dt>0364 (raised 29.xi.06)
+
+<dd>The error of a domain having two different type definitions isn't
+detected. This could happen with an interface child UML package.
+<br>SourceForge 1605567
 
 </dl>
 
