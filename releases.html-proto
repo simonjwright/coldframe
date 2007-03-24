@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v f3269016d6a6 2006/05/01 08:43:36 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 0c60b65a8f1d 2007/03/24 11:44:16 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -66,6 +66,27 @@ contains the complete documentation.
 
 <li>Added a more explicit <a href="copying.html">copyright
 statement</a>.
+
+<li><b>Modelling</b>
+
+<li><b>Generation</b>
+
+<li><tt>ColdFrame.Exceptions.Initialization_Error</tt> is no longer
+called; an exception raised during domain initialization is
+propagated.
+
+<li>The error of having more than one transition from a state
+triggered by the same event is detected properly.
+
+<li><b>Code</b>
+
+<li><tt>Cant_Happen</tt> exception reports are no longer accompanied
+with a traceback. The message says it all.
+
+<li><b>Testing</b>
+
+<li>Unit Test support can be generated for a class with an attribute
+of a protected type.
 
 </ul>
 
