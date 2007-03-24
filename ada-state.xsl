@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v bf9cb9f2b1df 2006/04/22 19:16:54 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v cf7a562316c3 2007/03/24 11:42:04 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -28,6 +28,8 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:saxon="http://icl.com/saxon"
+  extension-element-prefixes="saxon"
   xmlns:st="http://pushface.org/coldframe/state"
   xmlns:ut="http://pushface.org/coldframe/utilities"
   version="1.1">
@@ -161,20 +163,21 @@
         </xsl:message>
       </xsl:if>
 
+      <xsl:variable name="previous" saxon:assignable="yes"/>
       <xsl:for-each select="$leaving">
         <xsl:sort select="event"/>
-        <xsl:variable name="pos" select="position()"/>
-        <!-- XXX I can't believe having to do this isn't a Saxon bug! -->
-        <xsl:if test="$leaving[$pos]/event=$leaving[$pos - 1]/event">
-          <xsl:call-template name="ut:log-error"/>
-          <xsl:message>
-            <xsl:text>Error: more than one transition triggered by </xsl:text>
-            <xsl:value-of select="event"/>
-            <xsl:text> from state </xsl:text>
-            <xsl:value-of select="../../name"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="source"/>
-          </xsl:message>
+        <xsl:if test="count($leaving[event=current()/event]) &gt; 1">
+          <xsl:if test="not(event=$previous)">
+            <xsl:message>
+              <xsl:text>Error: more than one transition triggered by </xsl:text>
+              <xsl:value-of select="event"/>
+              <xsl:text> from state </xsl:text>
+              <xsl:value-of select="../../name"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="source"/>
+            </xsl:message>
+          </xsl:if>
+          <saxon:assign name="previous" select="event"/>
         </xsl:if>
       </xsl:for-each>
 
