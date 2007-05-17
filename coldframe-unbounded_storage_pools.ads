@@ -24,11 +24,12 @@
 --  The change is,
 --
 --  * allocations are initialized to an improbable value (16#deadbeef#)
+--  * deallocations are filled to an improbable value (16#deaddead#)
 
 --  $RCSfile: coldframe-unbounded_storage_pools.ads,v $
---  $Revision: 6df8619783c1 $
---  $Date: 2003/09/09 04:14:58 $
---  $Author: simon $
+--  $Revision: 773e6667d19c $
+--  $Date: 2007/05/17 21:41:45 $
+--  $Author: simonjwright $
 
 with System.Storage_Elements;
 with System.Storage_Pools;
@@ -36,10 +37,10 @@ with System.Storage_Pools;
 package ColdFrame.Unbounded_Storage_Pools is
 
    pragma Elaborate_Body;
-   --  Needed to ensure that library routines can execute allocators
+   --  Needed to ensure that library routines can execute allocators.
 
    type Unbounded_Pool
-      is new System.Storage_Pools.Root_Storage_Pool with null record;
+      is new System.Storage_Pools.Root_Storage_Pool with private;
 
    procedure Allocate
      (Pool                     : in out Unbounded_Pool;
@@ -56,5 +57,10 @@ package ColdFrame.Unbounded_Storage_Pools is
    function Storage_Size
      (Pool : Unbounded_Pool)
      return System.Storage_Elements.Storage_Count;
+
+private
+
+   type Unbounded_Pool
+      is new System.Storage_Pools.Root_Storage_Pool with null record;
 
 end ColdFrame.Unbounded_Storage_Pools;
