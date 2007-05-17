@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8fc212496751 2006/11/30 20:25:11 simonjwright $
+# $Id: normalize-rose.tcl,v 3a5c7e24e51b 2007/05/17 21:43:19 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1517,13 +1517,19 @@ itcl::class Class {
 		    }
 		}
                 $dt -record
+		[stack -top] -add $this $name
             } else {
 		if {$public || $utility} {
 		    # in case someone has set the multiplicity to 1..1
 		    set singleton 0
 		}
+                set clss [[Domain::currentDomain] -getClasses]
+                if [$clss -isPresent $name] {
+		    Error "duplicate definition of class $name"
+                } else {
+		    [stack -top] -add $this $name
+                }
 	    }
-            [stack -top] -add $this $name
         }
     }
 
