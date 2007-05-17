@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0c60b65a8f1d 2007/03/24 11:44:16 simonjwright $ -->
+<!-- $Id: releases.html-proto,v e97fc53a5426 2007/05/17 21:52:17 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -75,6 +75,12 @@ statement</a>.
 called; an exception raised during domain initialization is
 propagated.
 
+<li>The error of having more than one class with the same name is
+detected.
+
+<li>The error of having more than one type with the same name is
+detected.
+
 <li>The error of having more than one transition from a state
 triggered by the same event is detected properly.
 
@@ -82,6 +88,10 @@ triggered by the same event is detected properly.
 
 <li><tt>Cant_Happen</tt> exception reports are no longer accompanied
 with a traceback. The message says it all.
+
+<li>The default Event Queue gives instance events priority over class
+events. The previous behaviour is available via
+<tt>ColdFrame.Events_G.No_Instance_Priority_G</tt>.
 
 <li><b>Testing</b>
 
