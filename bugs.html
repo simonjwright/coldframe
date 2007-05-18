@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c8cfeeebe877 2007/03/24 18:45:22 simonjwright $ -->
+<!-- $Id: bugs.html,v c3342f1b2ca9 2007/05/18 19:52:02 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -237,16 +237,6 @@ very sluggish.
 see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
 better to have a primitive Print operation.</i>
 
-<dt>0359 (raised 22.viii.06)
-
-<dd>At present, class and instance events have the same priority.
-However, since class events are usually used to isolate one domain
-from another, it's arguable that class events should have lower
-priority than instance events; all the instance events following from
-the handling of a class event should be handled before considering the
-next class event.
-<br>SourceForge 1544856
-
 <dt>0360 (raised 22.viii.06)
 
 <dd>It would be helpful to allow an action to be attached to stubbed
@@ -276,6 +266,22 @@ at all.</i>
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>18.v.07</h3>
+
+<dl>
+
+<dt>0359 (raised 22.viii.06)
+
+<dd>At present, class and instance events have the same priority.
+However, since class events are usually used to isolate one domain
+from another, it's arguable that class events should have lower
+priority than instance events; all the instance events following from
+the handling of a class event should be handled before considering the
+next class event.
+<br>SourceForge 1544856
+
+</dl>
 
 <h3>24.iii.07</h3>
 
