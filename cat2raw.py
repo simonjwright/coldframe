@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v caa60bd21222 2006/05/21 20:02:58 simonjwright $
+# $Id: cat2raw.py,v 7d44b9b6b28f 2007/05/28 14:49:51 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -45,7 +45,6 @@ class Base:
 	Usually the first one is the object's name."""
 	self.attributes = {}
 	"""The attributes are all the named features of the object."""
-	pass
     def __getattr__(self, n):
 	"""Attribute lookup.
 	Not sure why using plain 'name' for the object name results in a
@@ -64,8 +63,6 @@ class Base:
     def init(self):
 	"""Equivalent of super.__init__."""
 	if self.__class__ != Base: Base.__init__(self)
-    def add_qualifiersx(self, list):
-	self.qualifiers = list
     def add_attribute(self, name, value):
 	self.attributes[name] = value
     def element_tag(self):
@@ -316,7 +313,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: caa60bd21222 $',
+				 'cat2raw.py: $Revision: 7d44b9b6b28f $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -829,7 +826,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: caa60bd21222 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 7d44b9b6b28f $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
