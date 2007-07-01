@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-interrupts.adb,v $
---  $Revision: 2ebcaff1d8af $
---  $Date: 2002/10/20 16:24:33 $
---  $Author: simon $
+--  $Revision: 41108ab14b6d $
+--  $Date: 2007/07/01 16:45:20 $
+--  $Author: simonjwright $
 
 with Ada.Unchecked_Deallocation;
 
@@ -74,6 +74,8 @@ package body ColdFrame.Interrupts is
       if H.Old_Handler /= null then
          Ada.Interrupts.Attach_Handler (New_Handler => H.Old_Handler,
                                         Interrupt => H.Attached_Interrupt);
+      else
+         Ada.Interrupts.Detach_Handler (Interrupt => H.Attached_Interrupt);
       end if;
       Free (H.Handling_PO);
    end Finalize;
