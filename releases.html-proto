@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v e97fc53a5426 2007/05/17 21:52:17 simonjwright $ -->
+<!-- $Id: releases.html-proto,v bfc89de26126 2007/07/01 18:37:28 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -97,6 +97,9 @@ events. The previous behaviour is available via
 
 <li>Unit Test support can be generated for a class with an attribute
 of a protected type.
+
+<li>There's a new <tt>Fire</tt> operation to allow handling events on
+Timers.
 
 </ul>
 

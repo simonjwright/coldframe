@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v c3342f1b2ca9 2007/05/18 19:52:02 simonjwright $ -->
+<!-- $Id: bugs.html,v bfc89de26126 2007/07/01 18:37:28 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -243,6 +243,23 @@ better to have a primitive Print operation.</i>
 operations (perhaps just procedures?).
 <br>SourceForge 1544860
 
+<dt>0362 (raised 5.ix.06)
+
+<dd>Generated unit test support fails to compile if a
+&#171;public&#187; class has an attribute of a private type.
+<br><i>On the whole it's best if public classes don't have attributes
+at all.</i>
+
+<!-- next: 0368 -->
+
+</dl>
+
+<h2><a name="fixed">Fixed</a></h2>
+
+<h3>1.vii.07</h3>
+
+<dl>
+
 <dt>0361 (raised 24.viii.06)
 
 <dd>While doing unit tests
@@ -253,19 +270,15 @@ sending a regular message) by getting the event
 using <tt>Event_Of</tt> and invoking its <tt>Handler</tt>, because
 the <tt>Timer</tt> was still set.
 <br>SourceForge 1546249
+<br>Added a new procedure <tt>Inspection.Fire</tt>.
 
-<dt>0362 (raised 5.ix.06)
+<dt>0367 (raised 27.vo.07)
 
-<dd>Generated unit test support fails to compile if a
-&#171;public&#187; class has an attribute of a private type.
-<br><i>On the whole it's best if public classes don't have attributes
-at all.</i>
-
-<!-- next: 0367 -->
+<dd>A ColdFrame.Interrupts.Handler must detach inself from the
+interrupt if there was no previous handler to replace.
+<br>SourceForge 1744249
 
 </dl>
-
-<h2><a name="fixed">Fixed</a></h2>
 
 <h3>18.v.07</h3>
 
