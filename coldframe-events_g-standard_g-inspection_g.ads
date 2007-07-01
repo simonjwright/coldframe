@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.ads,v $
---  $Revision: 7e61583a3ad9 $
---  $Date: 2007/03/14 20:26:21 $
+--  $Revision: af1e69208f5c $
+--  $Date: 2007/07/01 18:33:41 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Held_Event_Queue_Signature.Inspection_Signature;
@@ -118,5 +118,8 @@ package ColdFrame.Events_G.Standard_G.Inspection_G is
    --  Returns the event held on the Timer (or null if none). Use one
    --  of the above query interfaces to check the time concerned.
    function Event_Of (The_Timer : Timer) return Event_P;
+
+   --  Fire the event held on the Timer, unsetting the timer first.
+   procedure Fire (The_Timer : in out Timer);
 
 end ColdFrame.Events_G.Standard_G.Inspection_G;

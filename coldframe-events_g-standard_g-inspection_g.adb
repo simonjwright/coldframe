@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-inspection_g.adb,v $
---  $Revision: 7e61583a3ad9 $
---  $Date: 2007/03/14 20:26:21 $
+--  $Revision: af1e69208f5c $
+--  $Date: 2007/07/01 18:33:41 $
 --  $Author: simonjwright $
 
 package body ColdFrame.Events_G.Standard_G.Inspection_G is
@@ -284,6 +284,23 @@ package body ColdFrame.Events_G.Standard_G.Inspection_G is
       end if;
       return Held_Event (The_Timer.The_Entry.all).The_Event;
    end Event_Of;
+
+
+   procedure Fire (The_Timer : in out Timer) is
+      The_Held_Event : Event_P renames The_Timer.The_Entry;
+      pragma Assert (The_Held_Event /= null,
+                     "no held event on Timer");
+      The_Event : Event_P renames Held_Event (The_Held_Event.all).The_Event;
+      pragma Assert (not The_Event.Invalidated,
+                     "the held event has been invalidated");
+   begin
+      --  Unset the Timer.
+      The_Timer.The_Entry := null;
+      Handler (The_Event.all);
+      --  Don't delete the events; they'll get deleted during teardown
+      --  (and deleting them here will break teardown without a lot
+      --  more work).
+   end Fire;
 
 
 end ColdFrame.Events_G.Standard_G.Inspection_G;
