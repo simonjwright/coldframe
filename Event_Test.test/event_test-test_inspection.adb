@@ -20,7 +20,9 @@ package body Event_Test.Test_Inspection is
    ---------------------
 
    type Instance
-      is new ColdFrame.Project.Events.Instance_Base with null record;
+   is new ColdFrame.Project.Events.Instance_Base with record
+      T : ColdFrame.Project.Events.Timer;
+   end record;
 
    function State_Image (This : Instance) return String;
 
@@ -52,6 +54,14 @@ package body Event_Test.Test_Inspection is
 
    procedure Handler (For_The_Event : Event);
 
+   type Timer_Event (For_The_Instance : access Instance)
+      is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+   with record
+      Payload : Integer;
+   end record;
+
+   procedure Handler (For_The_Event : Timer_Event);
+
 
    procedure Handler (For_The_Event : Self_Event) is
       pragma Warnings (Off, For_The_Event);
@@ -60,13 +70,24 @@ package body Event_Test.Test_Inspection is
    end Handler;
 
    procedure Handler (For_The_Event : Event) is
-      pragma Warnings (Off, For_The_Event);
       I : Instance renames For_The_Event.For_The_Instance.all;
       S : constant ColdFrame.Project.Events.Event_P
         := new Self_Event (I'Unchecked_Access);
    begin
       Self_Event (S.all).Payload := For_The_Event.Payload + 1000;
       ColdFrame.Project.Events.Post_To_Self (S, Q);
+   end Handler;
+
+   procedure Handler (For_The_Event : Timer_Event) is
+      I : Instance renames For_The_Event.For_The_Instance.all;
+      T : constant ColdFrame.Project.Events.Event_P
+        := new Timer_Event (I'Unchecked_Access);
+   begin
+      Timer_Event (T.all).Payload := For_The_Event.Payload + 1000;
+      ColdFrame.Project.Events.Set (I.T,
+                                    To_Fire => T,
+                                    On => Q,
+                                    After => 2.0);
    end Handler;
 
 
@@ -340,6 +361,44 @@ package body Event_Test.Test_Inspection is
    end Check_Later_Events;
 
 
+   --  Timer-related operations
+   procedure Check_Timer_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Check_Timer_Events
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      E : ColdFrame.Project.Events.Event_P;
+      use type ColdFrame.Project.Events.Event_P;
+   begin
+      E := new Timer_Event (The_Instance'Access);
+      Timer_Event (E.all).Payload := 1;
+      ColdFrame.Project.Events.Set (The_Instance.T,
+                                    On => Q,
+                                    To_Fire => E,
+                                    After => 1.0);
+      Assert (Inspection.Number_Of_After_Events (Q) = 1,
+              "number of after events not 1");
+      Assert (Inspection.After_Event (Q, 1) = E,
+              "wrong event on queue");
+      Assert (Inspection.How_Long_After (Q, 1) = 1.0,
+              "wrong delay in first event");
+      Assert (Inspection.Event_Of (The_Instance.T) = E,
+              "wrong event on timer");
+      Inspection.Fire (The_Instance.T);
+      Assert (Inspection.Event_Of (The_Instance.T) /= E,
+              "same event on timer");
+      Assert (Timer_Event
+                (Inspection.Event_Of (The_Instance.T).all).Payload = 1001,
+              "wrong payload on new event");
+      --  NB! the fired event hasn't been removed from the event
+      --  queue.
+      Assert (Inspection.Number_Of_After_Events (Q) = 2,
+              "new number of after events not 2");
+      Assert (Inspection.How_Long_After (Q, 2) = 2.0,
+              "wrong delay in new event");
+   end Check_Timer_Events;
+
+
    ----------------------------
    --  Framework extensions  --
    ----------------------------
@@ -359,6 +418,8 @@ package body Event_Test.Test_Inspection is
         (C, Check_After_Events'Access, "Events to run after a delay");
       Register_Routine
         (C, Check_Later_Events'Access, "Events to run at a time");
+      Register_Routine
+        (C, Check_Timer_Events'Access, "Inspecting, firing Timers");
    end Register_Tests;
 
    function Name (C : Test_Case) return String_Access is
