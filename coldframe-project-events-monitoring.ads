@@ -5,13 +5,13 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  This package supports standard project events.
+--  This package supports monitored project events.
 --
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-events-monitoring.ads,v $
---  $Revision: 4a01bc2157ee $
---  $Date: 2007/07/06 05:19:43 $
+--  $Revision: a09286c99069 $
+--  $Date: 2007/07/06 05:19:44 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Monitoring_G;
