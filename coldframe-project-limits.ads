@@ -6,18 +6,15 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-project-limits.ads,v $
---  $Revision: 228b749dc5b6 $
---  $Date: 2007/07/06 04:55:08 $
+--  $Revision: 483875fae093 $
+--  $Date: 2007/07/06 05:12:52 $
 --  $Author: simonjwright $
 
 --  This package specifies trigger limits used by the implementation.
 
 package ColdFrame.Project.Limits is
 
-   subtype Milliseconds is Integer;
-
-   Monitor_Report_Trigger : Milliseconds := 1_000;
-   pragma Export (C, Monitor_Report_Trigger, "monitor_report_trigger");
+   function Monitor_Report_Trigger return Duration;
    --  If a Monitoring event queue fails to return to idle after this
    --  length of continous event processing, it will log a trace of
    --  the events involved.
