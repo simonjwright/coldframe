@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.ads,v $
---  $Revision: b54727bfcf5d $
---  $Date: 2007/07/06 05:14:05 $
+--  $Revision: adece0bdf76c $
+--  $Date: 2007/07/06 05:15:05 $
 --  $Author: simonjwright $
 
 --  This kind of event queue provides the ability to monitor long
@@ -239,7 +239,7 @@ private
       --  since the last time the queue was idle is greater than
       --  If_Longer_Than, return a collection of the events and clear
       --  the record. If not, return an empty collection (and keep the
-      --  record). The total time concumed is output in
+      --  record). The total time consumed is output in
       --  Total_Duration.
 
    private
