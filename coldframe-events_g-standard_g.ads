@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.ads,v $
---  $Revision: 2e9deaba0565 $
---  $Date: 2006/10/31 06:35:53 $
+--  $Revision: a52efca44768 $
+--  $Date: 2007/07/06 05:17:06 $
 --  $Author: simonjwright $
 
 with Ada.Task_Identification;
@@ -164,6 +164,13 @@ private
       --  potentially dispatching operations (such as
       --  Log_{Pre,Post}_Dispatch) will in fact dispatch.
 
+      entry Waiting_For_Lock;
+      --  Requeued by Lock if the calling task isn't already the
+      --  Owner.
+      --
+      --  This entry is *for private use only* but is located first
+      --  textually, see ARM95 D.4(12)
+
       entry Post (The_Event : Event_P);
       --  Post an event.
 
@@ -198,10 +205,6 @@ private
       --  Only for use by domain Tear_Down.
 
    private
-
-      entry Waiting_For_Lock;
-      --  Requeued by Lock if the calling task isn't already the
-      --  Owner.
 
       Locks : Natural := 0;
       --  Set to 1 while handling an event or a first lock has been taken.
