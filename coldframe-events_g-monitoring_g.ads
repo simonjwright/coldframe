@@ -20,16 +20,16 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.ads,v $
---  $Revision: 0b470cbcd827 $
---  $Date: 2007/07/06 04:45:29 $
+--  $Revision: 4e46dc297c96 $
+--  $Date: 2007/07/06 04:56:22 $
 --  $Author: simonjwright $
 
 --  This kind of event queue provides the ability to monitor long
 --  event sequences, uninterrupted by a return to the idle state.
 --
 --  If a long sequence occurs (the limit is specified in
---  ColdFrame.Limits), a sequence of Logging messages is output at
---  Informational level.
+--  ColdFrame.Project.Limits), a sequence of Logging messages is
+--  output at Informational level.
 
 with Ada.Tags;
 with Ada.Task_Identification;
