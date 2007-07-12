@@ -33,8 +33,8 @@
 --  memory at any time.
 
 --  $RCSfile: coldframe-unbounded_debug_storage_pools.ads,v $
---  $Revision: f80c44ac3b2a $
---  $Date: 2007/05/17 21:40:30 $
+--  $Revision: 7a9dfe80e94f $
+--  $Date: 2007/07/12 21:12:27 $
 --  $Author: simonjwright $
 
 with System.Storage_Elements;
@@ -75,6 +75,8 @@ package ColdFrame.Unbounded_Debug_Storage_Pools is
 
 private
 
+   --  Mutual exclusion while the pool structures are updated.
+
    protected type Mutex is
       entry Seize;
       procedure Release;
@@ -82,14 +84,38 @@ private
       Seized : Boolean := False;
    end Mutex;
 
-   subtype Tracebacks_Array is GNAT.Traceback.Tracebacks_Array (1 .. 10);
+   --  Call site information. Call sites are identified by (the lowest
+   --  10 entries) in the call chain leading to the call to
+   --  Allocate. The stored information relates to allocations that
+   --  have been freed and to current allocations (that have not been
+   --  freed).
+
+   Max_Stored_Call_Chain_Length : constant := 10;
+
+   subtype Call_Chain_Count
+      is Natural range 0 .. Max_Stored_Call_Chain_Length;
+
+   type Call_Site_Data (Call_Chain_Length : Call_Chain_Count := 0) is record
+      Call_Chain : GNAT.Traceback.Tracebacks_Array (1 .. Call_Chain_Length);
+      Allocations : Natural := 0;
+      Deallocations : Natural := 0;
+      Allocated : System.Storage_Elements.Storage_Count := 0;
+      Deallocated : System.Storage_Elements.Storage_Count := 0;
+   end record;
+   type Call_Site_Data_P is access all Call_Site_Data;
+
+   function "=" (L, R : Call_Site_Data_P) return Boolean;
+   function "<" (L, R : Call_Site_Data_P) return Boolean;
+
+   --  Allocation information, used to keep track of current
+   --  allocations so that the call site information can be updated
+   --  when the allocation is deallocated.
 
    type Allocation is record
       Storage_Address : System.Address;
       Size_In_Storage_Elements : System.Storage_Elements.Storage_Count;
       Alignment : System.Storage_Elements.Storage_Count;
-      Call_Chain : Tracebacks_Array;
-      Call_Chain_Length : Natural;
+      Call_Info : Call_Site_Data_P;  -- so we can update on deallocation
    end record;
 
    function "=" (L, R : Allocation) return Boolean;
@@ -100,15 +126,26 @@ private
    Pool : System.Storage_Pools.Root_Storage_Pool'Class
      renames System.Storage_Pools.Root_Storage_Pool'Class (Tree_Pool);
 
-   package Abstract_Containers is new BC.Containers (Allocation);
-   package Abstract_Trees is new Abstract_Containers.Trees;
-   package Trees is new Abstract_Trees.AVL (Storage => Pool);
+   package Abstract_Allocation_Containers
+   is new BC.Containers (Allocation);
+   package Abstract_Allocation_Trees
+   is new Abstract_Allocation_Containers.Trees;
+   package Allocation_Trees
+   is new Abstract_Allocation_Trees.AVL (Storage => Pool);
+
+   package Abstract_Call_Site_Data_Containers
+   is new BC.Containers (Call_Site_Data_P);
+   package Abstract_Call_Site_Data_Trees
+   is new Abstract_Call_Site_Data_Containers.Trees;
+   package Call_Site_Data_Trees
+   is new Abstract_Call_Site_Data_Trees.AVL (Storage => Pool);
 
    type Unbounded_Pool (Limit : System.Storage_Elements.Storage_Count)
    is new ColdFrame.Unbounded_Storage_Pools.Unbounded_Pool with record
       Excluder : Mutex;
-      Current_Allocation : System.Storage_Elements.Storage_Count := 0;
-      Current_Allocations : Trees.AVL_Tree;
+      Extent : System.Storage_Elements.Storage_Count := 0;
+      Allocations : Allocation_Trees.AVL_Tree;
+      Call_Sites : Call_Site_Data_Trees.AVL_Tree;
       Limit_Reached : Boolean := False;
    end record;
 
