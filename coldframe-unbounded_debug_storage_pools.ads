@@ -19,22 +19,29 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  This unit is used in place of the standard ColdFrame unbounded
+--  This unit is an extension of the standard ColdFrame unbounded
 --  storage pool.
 --
 --  The changes are,
 --
 --  * A limit is supplied such that if the allocated memory exceeds
---  the limit a log output will be generated whowing the allocation
---  sites. This is reported only on the first occurrence (to the file
---  "debug_storage_pool.log").
+--  the limit a report will be generated (in CSV form) showing the
+--  allocation sites. This is output only on the first occurrence (to
+--  the file "debug_storage_pool.csv").
+--
+--  The columns in the report are
+--    Allocations      number of allocations
+--    Deallocations    number of deallocations
+--    Allocated        total number of bytes allocated
+--    Deallocated      total number of bytes deallocated
+--    Call_Chain       identifies the call site
 --
 --  * A Report operation is provided to report on currently allocated
 --  memory at any time.
 
 --  $RCSfile: coldframe-unbounded_debug_storage_pools.ads,v $
---  $Revision: 7a9dfe80e94f $
---  $Date: 2007/07/12 21:12:27 $
+--  $Revision: 9e3b9f3be8d4 $
+--  $Date: 2007/07/14 20:32:07 $
 --  $Author: simonjwright $
 
 with System.Storage_Elements;
