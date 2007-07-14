@@ -33,8 +33,8 @@
 --  memory at any time.
 
 --  $RCSfile: coldframe-unbounded_debug_storage_pools.adb,v $
---  $Revision: 7a9dfe80e94f $
---  $Date: 2007/07/12 21:12:27 $
+--  $Revision: 0a02c612b479 $
+--  $Date: 2007/07/14 20:31:07 $
 --  $Author: simonjwright $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -123,7 +123,7 @@ package body ColdFrame.Unbounded_Debug_Storage_Pools is
         and then not Pool.Limit_Reached
       then
          Pool.Limit_Reached := True;
-         Report (Pool, "debug_storage_pool.log");
+         Report (Pool, "debug_storage_pool.csv");
       end if;
       Pool.Excluder.Release;
    exception
@@ -186,7 +186,8 @@ package body ColdFrame.Unbounded_Debug_Storage_Pools is
 
    procedure Report
      (Pool          : Unbounded_Pool;
-      To_File_Named : String) is
+      To_File_Named : String)
+   is
       procedure Print (Item : Call_Site_Data_P; OK : out Boolean);
       procedure Print is new Call_Site_Data_Trees.Visit (Print);
       F : Ada.Text_IO.File_Type;
