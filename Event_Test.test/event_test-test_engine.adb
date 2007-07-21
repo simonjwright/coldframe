@@ -326,6 +326,79 @@ package body Event_Test.Test_Engine is
    end Delete_Timer_With_Held_Event;
 
 
+   --  Unsetting a Timer after the timer has fired but before the
+   --  event has actually dispatched prevents the held event from
+   --  firing.
+   procedure Unset_Fired_Timer
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Unset_Fired_Timer
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+      Ev1 : constant ColdFrame.Project.Events.Event_P
+        := new Store (The_Instance'Access);
+      Ev2 : constant ColdFrame.Project.Events.Event_P
+        := new Store (The_Instance'Access);
+      Ev3 : constant ColdFrame.Project.Events.Event_P
+        := new Store (The_Instance'Access);
+   begin
+
+      Store (Ev1.all).Payload := 1;
+      Store (Ev2.all).Payload := 2;
+      Store (Ev3.all).Payload := 3;
+
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+
+      declare
+         T : ColdFrame.Project.Events.Timer;
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => Ev1,
+                                       After => 0.5);
+         ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      end;
+      Assert (Result = 1, "wrong result from Ev1" & Result'Img);
+
+      declare
+         T : ColdFrame.Project.Events.Timer;
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => Ev2,
+                                       After => 1.0);
+         --  Unset the Timer before it has fired.
+         delay 0.5;
+         --  Unsetting the Timer should prevent Ev from firing.
+         ColdFrame.Project.Events.Unset (T,
+                                         On => Events.Dispatcher);
+         ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      end;
+      Assert (Result = 1, "wrong result from Ev2" & Result'Img);
+
+      declare
+         T : ColdFrame.Project.Events.Timer;
+      begin
+         ColdFrame.Project.Events.Set (T,
+                                       On => Events.Dispatcher,
+                                       To_Fire => Ev3,
+                                       After => 0.5);
+         declare
+            L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+            pragma Unreferenced (L);
+         begin
+            --  Wait until the Timer has definitely fired.
+            delay 1.0;
+            --  Unsetting the Timer should prevent Ev from firing.
+            ColdFrame.Project.Events.Unset (T,
+                                            On => Events.Dispatcher);
+         end;
+         ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+      end;
+      Assert (Result = 1, "wrong result from Ev3" & Result'Img);
+
+   end Unset_Fired_Timer;
+
+
    ---------------
    --  Harness  --
    ---------------
@@ -352,6 +425,10 @@ package body Event_Test.Test_Engine is
         (T,
          Delete_Timer_With_Held_Event'Access,
          "Detects deleting a Timer with a held event");
+      Register_Routine
+        (T,
+         Unset_Fired_Timer'Access,
+         "Detects unsetting a Timer after firing but before dispatching");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
