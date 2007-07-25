@@ -1,5 +1,5 @@
 --  Project file (GCC-3, GNAT-3.15) for ColdFrame
---  $Id: cf.gpr,v 85ae2140d941 2005/06/11 06:49:54 simonjwright $
+--  $Id: cf.gpr,v 4556f86a3f25 2007/07/25 06:15:56 simonjwright $
 
 project CF is
 
@@ -16,7 +16,13 @@ project CF is
   end Builder;
 
   package Compiler is
-     for Default_Switches ("Ada") use ("-gnatqQafoy", "-gnatwaL", "-O2");
+     for Default_Switches ("Ada") use
+       (
+        "-gnatqQafoy",
+        "-gnatwaL",
+        "-gnat95",
+        "-O2"
+       );
   end Compiler;
 
   package Binder is
