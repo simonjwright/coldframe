@@ -6,11 +6,13 @@
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 --  $RCSfile: coldframe-project-limits.ads,v $
---  $Revision: 483875fae093 $
---  $Date: 2007/07/06 05:12:52 $
+--  $Revision: cfe01ded7537 $
+--  $Date: 2007/07/25 06:13:30 $
 --  $Author: simonjwright $
 
 --  This package specifies trigger limits used by the implementation.
+
+with System.Storage_Elements;
 
 package ColdFrame.Project.Limits is
 
@@ -18,5 +20,10 @@ package ColdFrame.Project.Limits is
    --  If a Monitoring event queue fails to return to idle after this
    --  length of continous event processing, it will log a trace of
    --  the events involved.
+
+   function Storage_Limit return System.Storage_Elements.Storage_Count;
+   --  This is the limit on the storage allocated and not yet freed
+   --  via an Unbounded_Debug_Storage_Pool which triggers it to dump
+   --  the allocations made at each allocation site.
 
 end ColdFrame.Project.Limits;
