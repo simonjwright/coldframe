@@ -387,6 +387,8 @@ coldframe-events_g-creation_g.ads \
 coldframe-events_g-debug_g.adb \
 coldframe-events_g-debug_g.ads \
 coldframe-events_g-held_event_queue_signature-inspection_signature.ads \
+coldframe-events_g-monitoring_g.adb \
+coldframe-events_g-monitoring_g.ads \
 coldframe-events_g-standard_g-inspection_g.adb \
 coldframe-events_g-standard_g-inspection_g.ads \
 coldframe-events_g-standard_g.adb \
@@ -434,6 +436,8 @@ coldframe-serialization_signature.ads \
 coldframe-stubs.adb \
 coldframe-stubs.ads \
 coldframe-time_signature.ads \
+coldframe-unbounded_debug_storage_pools.adb \
+coldframe-unbounded_debug_storage_pools.ads \
 coldframe-unbounded_storage_pools.adb \
 coldframe-unbounded_storage_pools.ads \
 coldframe-unbounded_strings.adb \
@@ -445,6 +449,8 @@ coldframe-project-calendar.adb \
 coldframe-project-calendar.ads \
 coldframe-project-event_support.ads \
 coldframe-project-events-creation.ads \
+coldframe-project-events-monitoring.ads \
+coldframe-project-events-monitoring-test.ads \
 coldframe-project-events-standard-debug.ads \
 coldframe-project-events-standard-inspection.ads \
 coldframe-project-events-standard-test.ads \
@@ -463,6 +469,8 @@ coldframe-project-held_events-signature.ads \
 coldframe-project-held_events.adb \
 coldframe-project-held_events.ads \
 coldframe-project-high_resolution_time.ads \
+coldframe-project-limits.adb \
+coldframe-project-limits.ads \
 coldframe-project-log_error.adb \
 coldframe-project-log_error.ads \
 coldframe-project-logging_support.adb \
