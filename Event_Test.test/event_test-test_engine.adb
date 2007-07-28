@@ -399,6 +399,41 @@ package body Event_Test.Test_Engine is
    end Unset_Fired_Timer;
 
 
+   --  Unsetting a Timer after the timer has fired but before the
+   --  event has actually dispatched prevents the held event from
+   --  firing.
+   procedure Long_Event_Chain
+     (R : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Long_Event_Chain
+     (R : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, R);
+   begin
+
+      for I in 1 .. 5 loop
+         declare
+            W : constant ColdFrame.Project.Events.Event_P
+              := new Wait;
+         begin
+            Wait (W.all).Payload := 0.3;
+            ColdFrame.Project.Events.Post (W,
+                                           On => Events.Dispatcher);
+         end;
+         declare
+            S : constant ColdFrame.Project.Events.Event_P
+              := new Store (The_Instance'Access);
+         begin
+            Store (S.all).Payload := I;
+            ColdFrame.Project.Events.Post (S,
+                                           On => Events.Dispatcher);
+         end;
+      end loop;
+
+      ColdFrame.Project.Events.Start (Events.Dispatcher);
+      ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
+
+   end Long_Event_Chain;
+
+
    ---------------
    --  Harness  --
    ---------------
@@ -429,6 +464,10 @@ package body Event_Test.Test_Engine is
         (T,
          Unset_Fired_Timer'Access,
          "Detects unsetting a Timer after firing but before dispatching");
+      Register_Routine
+        (T,
+         Long_Event_Chain'Access,
+         "Posts long chain of events (no failure expected)");
    end Register_Tests;
 
    function Name (T : Test_Case) return String_Access is
