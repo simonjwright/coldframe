@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v bfc89de26126 2007/07/01 18:37:28 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 4893b20dbe37 2007/07/28 06:45:43 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -100,6 +100,17 @@ of a protected type.
 
 <li>There's a new <tt>Fire</tt> operation to allow handling events on
 Timers.
+
+<li>Added a new Monitoring event queue; it checks runs of events
+without a return to idle, and reports if the run has taken an
+excessive time (probably a symptom of inappropriate behaviour in an
+action routine; you shouldn't block by, for example, delaying or
+making a network connection, because you're holding up the whole
+application).
+
+<li>Added a Debug storage pool which keeps track of allocations and
+deallocations by call site (actually, by call chain, so an allocating
+library subprogram will have a different record for each caller).
 
 </ul>
 
