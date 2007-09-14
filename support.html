@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 742ae27d411c 2005/11/20 22:50:57 simonjwright $ -->
+<!-- $Id: support.html,v 984e6ca485a7 2007/09/14 04:56:51 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -49,7 +49,16 @@ overwrites the first few bytes for internal purposes).
 <dd>Provides a storage pool which uses the standard system memory
 allocator but fills allocated memory with improbable data
 (<tt>16#deadbeef#</tt> when viewed in the debugger).
-<br>Freed memory is refilled with <tt>16#dead#</tt>.
+<br>Freed memory is refilled with <tt>16#deaddead#</tt>.
+
+<p><dt><tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>
+
+<dd>Like <tt>ColdFrame.Unbounded_Storage_Pools</tt> but keeps track of
+allocations and deallocations, keying on the call chain. A report can
+be produced at any time; the net total of allocated memory is
+monitored, and if a trigger point (specified
+via <tt>ColdFrame.Project.Limits</tt>) is passed a report is produced
+in the file <tt>debug_storage_pool.csv</tt>.
 
 <p><dt><tt>ColdFrame.Callbacks</tt>
 
@@ -237,7 +246,7 @@ from <tt>ColdFrame.Project.Times</tt>, logging from
 
 </ul>
 
-<br>Four concrete instantiations are provided:
+Six concrete instantiations are provided:
 
 <p><dl>
 
@@ -266,6 +275,18 @@ from <tt>ColdFrame.Project.Times</tt>, logging from
 <tt>ColdFrame.Project.Events.Standard.Trace</tt> (ie, a Test queue,
 which prints what's going on)..
 
+<p><dt><tt>ColdFrame.Project.Events.Monitoring</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Monitoring_G</tt>, with held events from
+<tt>ColdFrame.Project.Held_Event_Support</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Monitoring.Test</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Monitoring</tt>.
+
 </dl>
 
 <p><dt><tt>ColdFrame.Project.Events.Creation</tt>
@@ -289,7 +310,8 @@ all other allocations.
 <tt>ColdFrame.Bounded_Storage_Pools</tt>,
 <tt>ColdFrame.Unbounded_Storage_Pools</tt>.
 
-<br>You may find <tt>GNAT.Debug_Pools</tt> useful!
+<br>You may find <tt>GNAT.Debug_Pools</tt>
+and/or <tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>useful.
 
 <p><dt><tt>ColdFrame.Project.Log_Error</tt>
 
