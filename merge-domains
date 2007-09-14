@@ -16,7 +16,7 @@
 
 # $Id$
 
-# This script merges one or more of Coldframe's normalized domain
+# This script merges one or more of ColdFrame's normalized domain
 # files.
 
 # One possible use would be to allow test classes to be managed under

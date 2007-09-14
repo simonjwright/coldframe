@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 4893b20dbe37 2007/07/28 06:45:43 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -1042,13 +1042,13 @@ whether <i>Timer</i>s are included in the count.
 reported has changed.
 
 
-<li>The provided <tt>Coldframe.Projects.Calendar</tt> implements
+<li>The provided <tt>ColdFrame.Projects.Calendar</tt> implements
 <tt>Time</tt> as a renaming (subtype) of <tt>Ada.Calendar.Time</tt>;
 there was an interaction with a GNAT feature (GCC PR/7613) when the
 whole package was a renaming of <tt>Ada.Calendar</tt>.
 
 <br>Generated code no longer <tt>use</tt>s
-<tt>Coldframe.Projects.Calendar</tt>; instead, there's a
+<tt>ColdFrame.Projects.Calendar</tt>; instead, there's a
 <tt>use&nbsp;type</tt> for it. This will change operations' profiles.
 
 
@@ -1107,7 +1107,7 @@ before code is generated (during normalization).
 
 
 <li><i>Date</i>, <i>Time</i> types are translated to
-<tt>Coldframe.Projects.Calendar.Time</tt>, which is provided as a
+<tt>ColdFrame.Projects.Calendar.Time</tt>, which is provided as a
 renaming of <tt>Ada.Calendar</tt>.
 
 </ul>

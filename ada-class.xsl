@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v c518421c1cb9 2006/11/08 20:46:29 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1036,7 +1036,7 @@
           <xsl:text>with BC;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- We need Coldframe exceptions if we have any instances. -->
+        <!-- We need ColdFrame exceptions if we have any instances. -->
         <xsl:if test="$max &gt; 0">
           <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
         </xsl:if>

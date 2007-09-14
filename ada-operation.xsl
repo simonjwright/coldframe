@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v f795f7c8f263 2006/06/27 20:42:22 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1076,7 +1076,7 @@
         <xsl:value-of select="$heading"/>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>Lock : ColdFrame.Stubs.Lock (Coldframe.Stubs.Mutex'Access);&#10;</xsl:text>
+        <xsl:text>Lock : ColdFrame.Stubs.Lock (ColdFrame.Stubs.Mutex'Access);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Unreferenced (Lock);&#10;</xsl:text>
         <xsl:value-of select="$I"/>

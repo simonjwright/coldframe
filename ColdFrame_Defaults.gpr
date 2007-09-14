@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: ColdFrame_Defaults.gpr,v 0f7eda971a8e 2003/02/07 05:55:57 simon $
+--  $Id: ColdFrame_Defaults.gpr,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
@@ -23,7 +23,7 @@
 with "Options";
 with "BC";
 
-project Coldframe_Defaults is
+project ColdFrame_Defaults is
 
   for Source_Dirs use ("lib", "project");
 
@@ -39,4 +39,4 @@ project Coldframe_Defaults is
 
   package Linker renames Options.Linker;
 
-end Coldframe_Defaults;
+end ColdFrame_Defaults;

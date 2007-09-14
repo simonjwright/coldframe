@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 7d843f1765f6 2006/04/19 22:34:21 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -911,7 +911,7 @@
         <xsl:text> is&#10;</xsl:text>
         
         <xsl:value-of select="$I"/>
-        <xsl:text>Lock : ColdFrame.Stubs.Lock (Coldframe.Stubs.Mutex'Access);&#10;</xsl:text>
+        <xsl:text>Lock : ColdFrame.Stubs.Lock (ColdFrame.Stubs.Mutex'Access);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>pragma Unreferenced (Lock);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
