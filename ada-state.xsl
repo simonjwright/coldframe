@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v cf7a562316c3 2007/03/24 11:42:04 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 992f66a04090 2007/09/22 20:55:26 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -250,6 +250,9 @@
             This : constant Handle
               := The_Event.For_The_Instance.all'Unchecked_Access;
          begin
+            ColdFrame.Project.Events.Logger.Log
+              (ColdFrame.Project.Events.Logger.Informational,
+               "handling {domain}.{class}.{event} in {state}");
             case That.State_Machine_State is
                when {source-state (normal transition)} =>
                   {perform-transition}
@@ -276,6 +279,23 @@
     <xsl:text>:= The_Event.For_The_Instance.all'Unchecked_Access;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:if test="$generate-event-logging='yes'">
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Events.Logger.Log&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(ColdFrame.Project.Events.Logger.Informational,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> "</xsl:text>
+      <xsl:value-of select="../../../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="../../name"/>
+      <xsl:text> handling event </xsl:text>
+      <xsl:value-of select="$e"/>
+      <xsl:text> in "&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> &amp; This.State_Machine_State'Img);&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:value-of select="$II"/>
     <xsl:text>case This.State_Machine_State is&#10;</xsl:text>
@@ -345,6 +365,9 @@
     <!--
          procedure Handler (The_Event : {event}) is
          begin
+            ColdFrame.Project.Events.Logger.Log
+              (ColdFrame.Project.Events.Logger.Informational,
+               "handling {domain}.{class}.{event}");
             {receiver} (The_Event);
          end Handler;
          -->
@@ -377,6 +400,21 @@
     <xsl:text>) is&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
+
+    <xsl:if test="$generate-event-logging='yes'">
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Events.Logger.Log&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text>(ColdFrame.Project.Events.Logger.Informational,&#10;</xsl:text>
+      <xsl:value-of select="$IIC"/>
+      <xsl:text> "</xsl:text>
+      <xsl:value-of select="../../name"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="../name"/>
+      <xsl:text> handling class event </xsl:text>
+      <xsl:value-of select="$e"/>
+      <xsl:text>");&#10;</xsl:text>
+    </xsl:if>
 
     <xsl:value-of select="$II"/>
     <xsl:value-of select="$op/name"/>

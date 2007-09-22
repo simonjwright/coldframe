@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 5b0f7ab68e28 2007/03/14 20:27:24 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 992f66a04090 2007/09/22 20:55:26 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -66,33 +66,38 @@
 
   <!-- +++++ Command line parameters. +++++ -->
 
-  <!-- Controls when attribute accessor functions are generated. -->
-  <xsl:param name="generate-accessors" select="'defined'"/>
-
-  <!-- Controls when stub implementations are generated. -->
-  <xsl:param name="generate-stubs" select="'no'"/>
-
-  <!-- Controls when unit test support is generated. -->
-  <xsl:param name="unit-test-support" select="'no'"/>
-
-  <!-- Control indentation. -->
-  <xsl:param name="standard-indent" select="'   '"/>
-  <xsl:param name="continuation-indent" select="'  '"/>
-
   <!-- Control added blank lines: no or yes.. -->
   <xsl:param name="add-blank-lines" select="'yes'"/>
 
-  <!-- Control verbosity: no or yes. -->
-  <xsl:param name="verbose" select="'no'"/>
+  <!-- Control indentation. -->
+  <xsl:param name="continuation-indent" select="'  '"/>
 
   <!-- Control comment paragraph fill width. -->
   <xsl:param name="fill-column" select="70"/>
+
+  <!-- Controls when attribute accessor functions are generated. -->
+  <xsl:param name="generate-accessors" select="'defined'"/>
+
+  <!-- Controls when event logging code is generated. -->
+  <xsl:param name="generate-event-logging" select="'no'"/>
+
+  <!-- Controls when stub implementations are generated. -->
+  <xsl:param name="generate-stubs" select="'no'"/>
 
   <!-- Control limit on using bounded containers. -->
   <xsl:param name="max-bounded-container" select="49"/>
 
   <!-- Control limit on number of hash buckets. -->
   <xsl:param name="max-hash-buckets" select="49"/>
+
+  <!-- Control indentation. -->
+  <xsl:param name="standard-indent" select="'   '"/>
+
+  <!-- Controls when unit test support is generated. -->
+  <xsl:param name="unit-test-support" select="'no'"/>
+
+  <!-- Control verbosity: no or yes. -->
+  <xsl:param name="verbose" select="'no'"/>
 
 
   <!-- Global shorthands for indentation. -->

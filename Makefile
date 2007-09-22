@@ -16,6 +16,7 @@
 
 BLANK_LINES = yes
 GENERATE_ACCESSORS = defined
+GENERATE_EVENT_LOGGING = no
 GENERATE_STUBS = no
 UNIT_TEST_SUPPORT = no
 STACK_DUMP = yes
@@ -135,6 +136,7 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
+	  generate-event-logging=$(GENERATE_EVENT_LOGGING) \
 	  generate-stubs=$(GENERATE_STUBS) \
 	  unit-test-support=$(UNIT_TEST_SUPPORT) \
 	  verbose=$(VERBOSE) \
