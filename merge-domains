@@ -32,7 +32,9 @@ import sys
 import xml.dom.minidom
 
 def usage():
-    sys.stderr.write(sys.argv[0] + ': usage: merge file.norm [file.norm]\n')
+    sys.stderr.write(sys.argv[0] + 
+                     ': usage: merge file.norm' +
+                     ' file.norm [file.norm ...]\n')
     sys.stderr.write('flags:\n')
     sys.stderr.write('-m overwrite the first file with the merged result\n')
     
