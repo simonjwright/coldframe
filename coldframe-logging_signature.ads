@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_signature.ads,v $
---  $Revision: 92e3bf5831c2 $
---  $Date: 2004/10/29 05:04:37 $
---  $Author: simon $
+--  $Revision: 9f4aeb6f5366 $
+--  $Date: 2007/09/22 21:01:20 $
+--  $Author: simonjwright $
 
 --  This package is to be instantiated with Project actuals to provide
 --  logging facilities for ColdFrame.
@@ -41,8 +41,17 @@ generic
    with procedure Log (Severity : Severity_Code; Message : String);
 
 package ColdFrame.Logging_Signature is
+
+   --  Make the actual instantiation parameters visible.
+   package Exported is
+      Error : Severity_Code renames Logging_Signature.Error;
+      Informational : Severity_Code renames Logging_Signature.Informational;
+      procedure Log (Severity : Severity_Code; Message : String)
+        renames Logging_Signature.Log;
+   end Exported;
+
 private
-   --  Turn off GNAT's warnings (5.02a1)
+   --  Turn off GNAT's warnings (>= 5.02a1)
    pragma Warnings (Off, Error);
    pragma Warnings (Off, Informational);
    pragma Warnings (Off, Log);
