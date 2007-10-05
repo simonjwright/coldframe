@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 1ec41a7936bd 2007/10/05 20:28:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -84,6 +84,10 @@ detected.
 <li>The error of having more than one transition from a state
 triggered by the same event is detected properly.
 
+<li>With a new option (<tt>GENERATE_EVENT_LOGGING=yes</tt>), all
+events in the domain concerned are logged as they are handled (for
+instance events, the state on entry is included).
+ 
 <li><b>Code</b>
 
 <li><tt>Cant_Happen</tt> exception reports are no longer accompanied
