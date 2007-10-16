@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 992f66a04090 2007/09/22 20:55:26 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v a87161e0d0ff 2007/10/16 19:46:19 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -31,8 +31,7 @@
   xmlns:saxon="http://icl.com/saxon"
   extension-element-prefixes="saxon"
   xmlns:st="http://pushface.org/coldframe/state"
-  xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.1">
+  xmlns:ut="http://pushface.org/coldframe/utilities">
 
 
   <!-- Called at domain/class to generate event types. -->
