@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v b5163e9fa660 2006/02/04 18:43:08 simonjwright $ -->
+<!-- $Id: event-use.html,v 437487ab3221 2007/10/20 19:12:53 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -17,6 +17,7 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <ul>
 <li><a href="#eventqueues">Event queues</a>
+<li><a href="#eventpriorities">Event priorities</a>
 <li><a href="#postinganevent">Posting an event</a>
 <li><a href="#locking">Locking</a>
 <li><a href="#activeclasses">Active classes</a>
@@ -103,12 +104,72 @@ creates a <tt>Button Push</tt> event for the Lamp concerned
 <p>This style of event processing, which could be called
 <i>synchronous</i>, is subject to one limitation: if an action needs
 to create an event <em>on the same instance of the same class</em>,
-the event must be posted rather than being processed
-synchronously. There's no logical difference between the synchronous
-and posting styles; posting is more consistent, while synchronous is
-more efficient (it saves a memory allocation/freeing and a couple of
+the event must only be processed synchronously if
+
+<ul>
+
+<li> the action is the last in the state,
+
+<li> the synchronous processing is the last thing done by the action,
+and
+
+<li> there isn't a completion transition from the state.
+
+</ul>
+
+<p>Otherwise, the event <i>must</i> be posted rather than being processed
+synchronously.
+
+<p>Class event handlers can always process events synchronously.
+
+<p>There's no logical difference between the synchronous and posting
+styles; posting is more consistent, while synchronous is more
+efficient (it saves a memory allocation/freeing and a couple of
 context switches, perhaps 20 to 30 microseconds on a 1 GHz PowerPC
 under VxWorks).
+
+
+<h2><a name="eventpriorities">Event priorities</a></h2>
+
+<p>There are effectively four priority levels for events on any given
+event queue: from the lowest to the highest,
+
+<ol>
+<li>Class events,
+<li>Instance events,
+<li>Self events (instance events posted using <tt>Post_To_Self</tt>),
+<li>Synchronous events (events declared on the stack and handled
+immediately).
+</ol>
+
+<p>The priority affects which event is chosen to be processed
+next. Once chosen, events run to completion.
+
+<p><b>Class events</b> are to be used for transferring information
+into domains and possibly from a task in the domain to the rest of the
+domain (this may not be necessary. They should <em>not</em> be used
+within the domain; once inside, subprogram calls and instance events
+are the way to go.
+
+<p><b>Instance events</b> control state machines.
+
+<p><b>Self events</b> are used where you don't want to leave the state
+until some condition is reached. If you are waiting for two resources
+to become available, you could have the arrival of a resource
+signalled by an event, and post a self event when you have enough:
+
+<p><img src="self-events.png">
+
+<p>Note that the reason for posting a self event is that it really
+denotes completion of the original action: you want it to be
+processed <em>before</em> any further instance events.
+
+<p><b>Synchronous events</b> are handled in the context of the
+caller. If called from a class event, there are no specific
+considerations; if from an instance event and the synchronous event is
+for 'self', make sure that the synchronous event handling is the last
+thing that is done (once the synchronous event has been handled, the
+state machine involved will have moved on).
 
 
 <h2><a name="postinganevent">Posting an event</a></h2>
@@ -230,11 +291,13 @@ may or may not have been handled when the lock is achieved.
 
 <p>There's no reason why an active class can't have a state machine as
 well, though you have to be careful about concurrent access to
-instance variables and about
+instance variables (use <i>{volatile}</i>
+or <i>{atomic}</i>; <tt>State_Machine_State</tt> is automatically made
+atomic if the class is active) and about
 initialization, <a href="initialization.html#singleton">especially
 of <i>&#171;singleton&#187;</i>s</a>.
 
-<p>This idiom can be very useful to deal with interrupt handling; see
+<p>This idiom can be very useful to deal with interrupt handling. See
 <i>Interrupt_Handling</i> in the <tt>example/</tt> subdirectory of
 the distribution.
 
