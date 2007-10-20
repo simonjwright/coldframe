@@ -1,9 +1,9 @@
-// $Id: self-events.dot,v d5b7278b6845 2007/10/20 17:38:11 simonjwright $
+// $Id: self-events.dot,v b57748f1f106 2007/10/20 19:15:46 simonjwright $
 // dot diagram showing use of self event to count resources
 
 digraph {
-waiting [shape=Mrecord, label = "{ waiting | entry/check }"]
-done [shape=Mrecord]
-waiting -> waiting [label = "resource available"]
-waiting -> done [label = "done"]
+waiting [shape=Mrecord, label="{ waiting | entry/check }", fontsize=10]
+processing [shape=Mrecord, fontsize=10]
+waiting -> waiting [label="resource available", fontsize=10]
+waiting -> processing [label="done", fontsize=10]
 }
