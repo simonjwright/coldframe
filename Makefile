@@ -53,6 +53,7 @@ endif
 CHMOD ?= chmod
 CD ?= cd
 CP ?= cp
+DOT ?= dot
 ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
@@ -251,6 +252,7 @@ recordable_real_time.png \
 reflexive.png \
 relationships-mapping.png \
 sample_a.png \
+self-events.png \
 serialization-class-model-t.png \
 serialization-class-model.png \
 serialization-sequence-t.png \
@@ -262,6 +264,9 @@ simple-association.png \
 type-mapping.png \
 vague-association.png
 
+# graphviz:
+%.png: %.dot
+	$(DOT) -o $@ -Tpng $<
 
 ############################
 # Distribution construction
