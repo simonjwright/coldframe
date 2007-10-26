@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.ads,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
---  $Author: simon $
+--  $Revision: bb7f01c6d85f $
+--  $Date: 2007/10/26 09:10:01 $
+--  $Author: simonjwright $
 
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
@@ -40,6 +40,15 @@ package ColdFrame.Logging_Event_Basis is
 
    procedure Log (The_Event : access Event_Base;
                   At_Phase : Event_Basis.Event_Processing_Phase);
+
+
+   --  Control features. Collection is initially Started, and can be
+   --  Stopped and reStarted. The stored information can be Cleared at
+   --  any time.
+
+   procedure Start;
+   procedure Stop;
+   procedure Clear;
 
 
    --  Simple printing of statistics.

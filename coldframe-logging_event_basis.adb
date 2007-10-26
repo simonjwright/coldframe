@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-logging_event_basis.adb,v $
---  $Revision: 38960f8e0d9a $
---  $Date: 2004/02/27 06:32:50 $
---  $Author: simon $
+--  $Revision: bb7f01c6d85f $
+--  $Date: 2007/10/26 09:10:01 $
+--  $Author: simonjwright $
 
 with Ada.Tags;
 with Ada.Unchecked_Conversion;
@@ -67,7 +67,30 @@ package body ColdFrame.Logging_Event_Basis is
 
 
    Data : Info_Maps.Map;
-   Access_Control : BC.Support.Synchronization.Semaphore;
+   Access_Control : aliased BC.Support.Synchronization.Semaphore;
+
+   Collecting : Boolean := True;
+   --  Initial True gives the previous behaviour.
+
+
+   procedure Start is
+   begin
+      Collecting := True;
+   end Start;
+
+
+   procedure Stop is
+   begin
+      Collecting := False;
+   end Stop;
+
+
+   procedure Clear is
+      L : BC.Support.Synchronization.Lock (Access_Control'Access);
+      pragma Unreferenced (L);
+   begin
+      Info_Maps.Clear (Data);
+   end Clear;
 
 
    procedure Log (The_Event : access Event_Base;
@@ -91,28 +114,30 @@ package body ColdFrame.Logging_Event_Basis is
          when Event_Basis.Finishing =>
             pragma Assert (The_Event.Last_Phase /= Event_Basis.Finishing,
                            "loggable event at wrong phase");
-            declare
-               Now : constant Project.High_Resolution_Time.Time
-                 := Project.High_Resolution_Time.Clock;
-               Tag : constant Ada.Tags.Tag
-                 := Event_Base'Class (The_Event.all)'Tag;
-               Inf : Info_P;
-            begin
-               BC.Support.Synchronization.Seize (Access_Control);
-               if Info_Maps.Is_Bound (Data, Tag) then
-                  Inf := Info_Maps.Item_Of (Data, Tag);
-               else
-                  Inf := new Info;
-                  Info_Maps.Bind (Data, Tag, Inf);
-               end if;
-               BC.Support.Statistics.Add
-                 (Long_Float (The_Event.Dispatched - The_Event.Posted),
-                  To => Inf.Queueing);
-               BC.Support.Statistics.Add
-                 (Long_Float (Now - The_Event.Dispatched),
-                  To => Inf.Executing);
-               BC.Support.Synchronization.Release (Access_Control);
-            end;
+            if Collecting then
+               declare
+                  Now : constant Project.High_Resolution_Time.Time
+                    := Project.High_Resolution_Time.Clock;
+                  Tag : constant Ada.Tags.Tag
+                    := Event_Base'Class (The_Event.all)'Tag;
+                  Inf : Info_P;
+                  L : BC.Support.Synchronization.Lock (Access_Control'Access);
+                  pragma Unreferenced (L);
+               begin
+                  if Info_Maps.Is_Bound (Data, Tag) then
+                     Inf := Info_Maps.Item_Of (Data, Tag);
+                  else
+                     Inf := new Info;
+                     Info_Maps.Bind (Data, Tag, Inf);
+                  end if;
+                  BC.Support.Statistics.Add
+                    (Long_Float (The_Event.Dispatched - The_Event.Posted),
+                     To => Inf.Queueing);
+                  BC.Support.Statistics.Add
+                    (Long_Float (Now - The_Event.Dispatched),
+                     To => Inf.Executing);
+               end;
+            end if;
       end case;
    end Log;
 
@@ -121,9 +146,10 @@ package body ColdFrame.Logging_Event_Basis is
      (To_File : Ada.Text_IO.File_Type := Ada.Text_IO.Standard_Output) is
       It : Abstract_Info_Containers.Iterator'Class
         := Info_Maps.New_Iterator (Data);
+      L : BC.Support.Synchronization.Lock (Access_Control'Access);
+      pragma Unreferenced (L);
       use Ada.Text_IO;
    begin
-      BC.Support.Synchronization.Seize (Access_Control);
       Abstract_Info_Containers.Reset (It);
       while not Abstract_Info_Containers.Is_Done (It) loop
          declare
@@ -175,7 +201,6 @@ package body ColdFrame.Logging_Event_Basis is
          end;
          Abstract_Info_Containers.Next (It);
       end loop;
-      BC.Support.Synchronization.Release (Access_Control);
    end Print;
 
 
@@ -183,8 +208,9 @@ package body ColdFrame.Logging_Event_Basis is
       Result : Datum_Collections.Collection;
       It : Abstract_Info_Containers.Iterator'Class
         := Info_Maps.New_Iterator (Data);
+      L : BC.Support.Synchronization.Lock (Access_Control'Access);
+      pragma Unreferenced (L);
    begin
-      BC.Support.Synchronization.Seize (Access_Control);
       Abstract_Info_Containers.Reset (It);
       while not Abstract_Info_Containers.Is_Done (It) loop
          declare
@@ -203,7 +229,6 @@ package body ColdFrame.Logging_Event_Basis is
          end;
          Abstract_Info_Containers.Next (It);
       end loop;
-      BC.Support.Synchronization.Release (Access_Control);
       return Result;
    end Results;
 
