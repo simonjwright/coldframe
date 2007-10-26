@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 5229fe44d2b4 2007/10/05 20:27:58 simonjwright $ -->
+<!-- $Id: bugs.html,v a45dbf45a9d0 2007/10/26 11:32:53 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -226,6 +226,8 @@ transitions (particularly completion transitions) from a state with a
 &#171;final&#187; action (ie, where the instance has been deleted) may
 not be detected.
 <br>SourceForge 1401275
+<br><i>26.x.07: checks now include inherited actions, but the reported
+problem still exists.</i>
 
 <dt>0347 (raised 18.ii.06)
 
@@ -244,7 +246,14 @@ better to have a primitive Print operation.</i>
 <br><i>On the whole it's best if public classes don't have attributes
 at all.</i>
 
-<!-- next: 0368 -->
+<dt>0368 (raised 11.x.07)
+
+<dd>The generated code for a protected function doesn't handle the
+many non-simple possibilities for return value types (eg, arrays).
+<br>SourceForge 1811578
+
+
+<!-- next: 0369 -->
 
 </dl>
 
