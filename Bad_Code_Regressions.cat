@@ -11,7 +11,7 @@
     documentation 	
 |Regression tests that involve detecting errors.
 |
-|{ revision = $Revision: 2640dea94c3e $ }
+|{ revision = $Revision: 07033ca17d22 $ }
     
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
@@ -406,7 +406,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1275
-					label      	"$Id: Bad_Code_Regressions.cat,v 2640dea94c3e 2007/10/26 10:11:55 simonjwright $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 07033ca17d22 2007/10/26 10:55:45 simonjwright $")
 				    (object StateView "Normal" "E" @8
 					location   	(823, 1008)
 					font       	(object Font
@@ -1196,7 +1196,7 @@
 				max_height 	28350
 				max_width  	21600
 				origin_x   	0
-				origin_y   	576
+				origin_y   	0
 				items      	(list diagram_item_list
 				    (object StateView "Normal" "s1" @34
 					location   	(645, 1055)
@@ -1399,7 +1399,7 @@
 					    default_color 	TRUE)
 					nlines     	1
 					max_width  	1420
-					label      	"$Id: Bad_Code_Regressions.cat,v 2640dea94c3e 2007/10/26 10:11:55 simonjwright $")
+					label      	"$Id: Bad_Code_Regressions.cat,v 07033ca17d22 2007/10/26 10:55:45 simonjwright $")
 				    (object TransView "" @40
 					stereotype 	TRUE
 					line_color 	3342489
@@ -2738,18 +2738,921 @@
 					client     	@86
 					supplier   	@87
 					line_style 	0
+					x_offset   	FALSE))))))
+		(object Class "Inherited  Instance Deletion"
+		    quid       	"4721C3CD00C7"
+		    superclasses 	(list inheritance_relationship_list
+			(object Inheritance_Relationship
+			    quid       	"4721C48B03AF"
+			    label      	"inherited final action"
+			    supplier   	"Logical View::Bad Code Regressions::Various illegalities in a state machine::Instance Deletion"
+			    quidu      	"4038F01403C7"))
+		    statemachine 	(object State_Machine "State/Activity Model"
+			quid       	"4721C4330131"
+			stereotype 	"generate"
+			states     	(list States
+			    (object State "$UNNAMED$5"
+				quid       	"4721C4C50181"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C4D40025"
+					supplier   	"s1"
+					quidu      	"4721C4C8035C"
+					sendEvent  	(object sendEvent
+					    quid       	"4721C4D40028")))
+				type       	"StartState")
+			    (object State "s1"
+				quid       	"4721C4C8035C"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C4FE01F2"
+					label      	""
+					supplier   	"s2"
+					quidu      	"4721C4E20346"
+					Event      	(object Event "e"
+					    quid       	"4721C4FE01F3")
+					action     	(object action "delete instance"
+					    quid       	"4721C4FE01F4")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C4FE01F5"))
+				    (object State_Transition
+					quid       	"4721C500038F"
+					label      	""
+					supplier   	"s3"
+					quidu      	"4721C4E80178"
+					Event      	(object Event "f"
+					    quid       	"4721C5000390")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C5000392"))
+				    (object State_Transition
+					quid       	"4721C50300FE"
+					label      	""
+					supplier   	"s4"
+					quidu      	"4721C4ED008F"
+					Event      	(object Event "g"
+					    quid       	"4721C50300FF")
+					action     	(object action "delete instance"
+					    quid       	"4721C5030100")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C5030101"))
+				    (object State_Transition
+					quid       	"4721C506017B"
+					label      	""
+					supplier   	"s5"
+					quidu      	"4721C4F40049"
+					Event      	(object Event "h"
+					    quid       	"4721C506017C")
+					action     	(object action "delete instance"
+					    quid       	"4721C506017D")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C506017E"))
+				    (object State_Transition
+					quid       	"4721C617023C"
+					label      	""
+					supplier   	"s6"
+					quidu      	"4721C60500AF"
+					Event      	(object Event "i"
+					    quid       	"4721C617023D")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C617023F"))
+				    (object State_Transition
+					quid       	"4721C61C00E4"
+					label      	""
+					supplier   	"s7"
+					quidu      	"4721C60C0330"
+					Event      	(object Event "j"
+					    quid       	"4721C61C00E5")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C61C00E7")))
+				type       	"Normal")
+			    (object State "s2"
+				quid       	"4721C4E20346"
+				actions    	(list action_list
+				    (object action "plain"
+					quid       	"4721C528030A"
+					ActionTime 	(object ActionTime
+					    when       	"Entry")))
+				type       	"Normal")
+			    (object State "s3"
+				quid       	"4721C4E80178"
+				actions    	(list action_list
+				    (object action "delete instance"
+					quid       	"4721C54302CD"
+					ActionTime 	(object ActionTime
+					    when       	"Entry"))
+				    (object action "plain"
+					quid       	"4721C54E01C5"
+					ActionTime 	(object ActionTime
+					    when       	"Entry")))
+				type       	"Normal")
+			    (object State "s4"
+				quid       	"4721C4ED008F"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C57C0365"
+					label      	""
+					supplier   	"t1"
+					quidu      	"4721C5660133"
+					Event      	(object Event "p"
+					    quid       	"4721C57C0366")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C57C0368")))
+				type       	"Normal")
+			    (object State "s5"
+				quid       	"4721C4F40049"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C59402CA"
+					supplier   	"t2"
+					quidu      	"4721C58E0311"
+					sendEvent  	(object sendEvent
+					    quid       	"4721C59402CD")))
+				type       	"Normal")
+			    (object State "t1"
+				quid       	"4721C5660133"
+				type       	"Normal")
+			    (object State "t2"
+				quid       	"4721C58E0311"
+				type       	"Normal")
+			    (object State "s6"
+				quid       	"4721C60500AF"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C6340284"
+					label      	""
+					supplier   	"t3"
+					quidu      	"4721C623021B"
+					Event      	(object Event "q"
+					    quid       	"4721C6340285")
+					sendEvent  	(object sendEvent
+					    quid       	"4721C6340287")))
+				actions    	(list action_list
+				    (object action "delete instance"
+					quid       	"4721C641035F"
+					ActionTime 	(object ActionTime
+					    when       	"Entry")))
+				type       	"Normal")
+			    (object State "s7"
+				quid       	"4721C60C0330"
+				transitions 	(list transition_list
+				    (object State_Transition
+					quid       	"4721C63C00B8"
+					supplier   	"t4"
+					quidu      	"4721C62C00A1"
+					sendEvent  	(object sendEvent
+					    quid       	"4721C63C00BB")))
+				actions    	(list action_list
+				    (object action "delete instance"
+					quid       	"4721C652018C"
+					ActionTime 	(object ActionTime
+					    when       	"Entry")))
+				type       	"Normal")
+			    (object State "t3"
+				quid       	"4721C623021B"
+				type       	"Normal")
+			    (object State "t4"
+				quid       	"4721C62C00A1"
+				type       	"Normal"))
+			partitions 	(list Partitions)
+			objects    	(list Objects)
+			statediagrams 	(list StateDiagrams
+			    (object State_Diagram "Lifecycle"
+				quid       	"4721C433014F"
+				title      	"Lifecycle"
+				zoom       	100
+				max_height 	28350
+				max_width  	21600
+				origin_x   	0
+				origin_y   	0
+				items      	(list diagram_item_list
+				    (object StateView "StartState" "$UNNAMED$5" @90
+					location   	(102, 738)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@90
+					    location   	(144, 708)
+					    nlines     	2
+					    max_width  	600
+					    label      	"")
+					icon_style 	"Icon"
+					line_color 	3342489
+					quidu      	"4721C4C50181"
+					autoResize 	TRUE)
+				    (object StateView "Normal" "s1" @91
+					location   	(480, 739)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@91
+					    location   	(480, 728)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"s1")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C4C8035C"
+					autoResize 	TRUE)
+				    (object TransView "" @92
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C4D40025"
+					client     	@90
+					supplier   	@91
+					line_style 	0
+					x_offset   	FALSE)
+				    (object StateView "Normal" "s2" @93
+					location   	(1143, 184)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@93
+					    location   	(1143, 158)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	222
+					    justify    	0
+					    label      	"s2")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C4E20346"
+					compartment 	(object Compartment
+					    Parent_View 	@93
+					    location   	(1041, 199)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    icon_style 	"Icon"
+					    fill_color 	13434879
+					    anchor     	2
+					    nlines     	1
+					    max_width  	209
+					    compartmentItems 	(list Compartment
+						"entry/ plain"))
+					width      	318
+					height     	165
+					autoResize 	TRUE)
+				    (object StateView "Normal" "s3" @94
+					location   	(1245, 524)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@94
+					    location   	(1245, 473)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	436
+					    justify    	0
+					    label      	"s3")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C4E80178"
+					compartment 	(object Compartment
+					    Parent_View 	@94
+					    location   	(1036, 514)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    icon_style 	"Icon"
+					    fill_color 	13434879
+					    anchor     	2
+					    nlines     	2
+					    max_width  	400
+					    compartmentItems 	(list Compartment
+						"entry/ delete instance"
+						"entry/ plain"))
+					width      	532
+					height     	215
+					autoResize 	TRUE)
+				    (object StateView "Normal" "s4" @95
+					location   	(1150, 838)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@95
+					    location   	(1150, 827)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"s4")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C4ED008F"
+					autoResize 	TRUE)
+				    (object StateView "Normal" "s5" @96
+					location   	(1153, 1155)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@96
+					    location   	(1153, 1144)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"s5")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C4F40049"
+					autoResize 	TRUE)
+				    (object StateView "Normal" "t1" @97
+					location   	(1784, 837)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@97
+					    location   	(1784, 826)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"t1")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C5660133"
+					autoResize 	TRUE)
+				    (object TransView "" @98
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @99
+					    Parent_View 	@98
+					    location   	(1497, 793)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	60
+					    justify    	0
+					    label      	"p"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C57C0365"
+					client     	@95
+					supplier   	@97
+					line_style 	0
+					x_offset   	FALSE)
+				    (object StateView "Normal" "t2" @100
+					location   	(1788, 1161)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@100
+					    location   	(1788, 1150)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"t2")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C58E0311"
+					autoResize 	TRUE)
+				    (object TransView "" @101
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C59402CA"
+					client     	@96
+					supplier   	@100
+					line_style 	3
+					origin_attachment 	(1303, 1158)
+					terminal_attachment 	(1638, 1158)
+					x_offset   	FALSE)
+				    (object StateView "Normal" "s6" @102
+					location   	(1252, 1454)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@102
+					    location   	(1252, 1419)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	418
+					    justify    	0
+					    label      	"s6")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C60500AF"
+					compartment 	(object Compartment
+					    Parent_View 	@102
+					    location   	(1052, 1460)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    icon_style 	"Icon"
+					    fill_color 	13434879
+					    anchor     	2
+					    nlines     	1
+					    max_width  	400
+					    compartmentItems 	(list Compartment
+						"entry/ delete instance"))
+					width      	514
+					height     	182
+					autoResize 	TRUE)
+				    (object StateView "Normal" "s7" @103
+					location   	(1273, 1743)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@103
+					    location   	(1273, 1708)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	418
+					    justify    	0
+					    label      	"s7")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C60C0330"
+					compartment 	(object Compartment
+					    Parent_View 	@103
+					    location   	(1073, 1749)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    icon_style 	"Icon"
+					    fill_color 	13434879
+					    anchor     	2
+					    nlines     	1
+					    max_width  	400
+					    compartmentItems 	(list Compartment
+						"entry/ delete instance"))
+					width      	514
+					height     	182
+					autoResize 	TRUE)
+				    (object StateView "Normal" "t3" @104
+					location   	(1797, 1442)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@104
+					    location   	(1797, 1431)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"t3")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C623021B"
+					autoResize 	TRUE)
+				    (object StateView "Normal" "t4" @105
+					location   	(1797, 1738)
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object ItemLabel
+					    Parent_View 	@105
+					    location   	(1797, 1727)
+					    fill_color 	13434879
+					    anchor_loc 	1
+					    nlines     	2
+					    max_width  	204
+					    justify    	0
+					    label      	"t4")
+					icon_style 	"Icon"
+					line_color 	3342489
+					fill_color 	13434879
+					quidu      	"4721C62C00A1"
+					autoResize 	TRUE)
+				    (object TransView "" @106
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C63C00B8"
+					client     	@103
+					supplier   	@105
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @107
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @108
+					    Parent_View 	@107
+					    location   	(742, 368)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	353
+					    justify    	0
+					    label      	"e / delete instance"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C4FE01F2"
+					client     	@91
+					supplier   	@93
+					vertices   	(list Points
+					    (527, 671)
+					    (747, 363)
+					    (984, 255))
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @109
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @110
+					    Parent_View 	@109
+					    location   	(834, 603)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	60
+					    justify    	0
+					    label      	"f"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C500038F"
+					client     	@91
+					supplier   	@94
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @111
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @112
+					    Parent_View 	@111
+					    location   	(845, 744)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	393
+					    justify    	0
+					    label      	"g / delete instance"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C50300FE"
+					client     	@91
+					supplier   	@95
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @113
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @114
+					    Parent_View 	@113
+					    location   	(846, 902)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	353
+					    justify    	0
+					    label      	"h / delete instance"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C506017B"
+					client     	@91
+					supplier   	@96
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @115
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @116
+					    Parent_View 	@115
+					    location   	(764, 1099)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	60
+					    justify    	0
+					    label      	"i"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C617023C"
+					client     	@91
+					supplier   	@102
+					vertices   	(list Points
+					    (522, 805)
+					    (803, 1253)
+					    (1048, 1363))
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @117
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @118
+					    Parent_View 	@117
+					    location   	(615, 1329)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	60
+					    justify    	0
+					    label      	"j"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C61C00E4"
+					client     	@91
+					supplier   	@103
+					vertices   	(list Points
+					    (491, 805)
+					    (609, 1519)
+					    (1016, 1656))
+					line_style 	0
+					x_offset   	FALSE)
+				    (object TransView "" @119
+					font       	(object Font
+					    size       	10
+					    face       	"Arial"
+					    bold       	FALSE
+					    italics    	FALSE
+					    underline  	FALSE
+					    strike     	FALSE
+					    color      	0
+					    default_color 	TRUE)
+					label      	(object SegLabel @120
+					    Parent_View 	@119
+					    location   	(1608, 1400)
+					    font       	(object Font
+						size       	10
+						face       	"Arial"
+						bold       	FALSE
+						italics    	FALSE
+						underline  	FALSE
+						strike     	FALSE
+						color      	0
+						default_color 	TRUE)
+					    anchor_loc 	1
+					    nlines     	1
+					    max_width  	60
+					    justify    	0
+					    label      	"q"
+					    pctDist    	0.500000
+					    height     	45
+					    orientation 	0)
+					stereotype 	TRUE
+					line_color 	3342489
+					quidu      	"4721C6340284"
+					client     	@102
+					supplier   	@104
+					line_style 	3
+					origin_attachment 	(1509, 1444)
+					terminal_attachment 	(1647, 1444)
 					x_offset   	FALSE)))))))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
 		    quid       	"40561432029F"
 		    title      	"Main"
-		    zoom       	90
+		    zoom       	80
 		    max_height 	28350
 		    max_width  	21600
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Instance Deletion" @90
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Instance Deletion" @121
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -2765,7 +3668,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@90
+				Parent_View 	@121
 				location   	(288, 46)
 				fill_color 	13434879
 				nlines     	1
@@ -2777,7 +3680,7 @@
 			    fill_color 	13434879
 			    quidu      	"4038F01403C7"
 			    compartment 	(object Compartment
-				Parent_View 	@90
+				Parent_View 	@121
 				location   	(288, 109)
 				font       	(object Font
 				    size       	10
@@ -2797,12 +3700,12 @@
 			    height     	294
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Multiple Transitions" @91
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Multiple Transitions" @122
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(560, 632)
+			    location   	(605, 1008)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2813,16 +3716,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@91
-				location   	(362, 569)
+				Parent_View 	@122
+				location   	(407, 954)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	396
 				justify    	0
 				label      	"Multiple Transitions")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@91
-				location   	(362, 519)
+				Parent_View 	@122
+				location   	(407, 897)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -2834,8 +3737,8 @@
 			    fill_color 	13434879
 			    quidu      	"3F752FE0006F"
 			    compartment 	(object Compartment
-				Parent_View 	@91
-				location   	(362, 632)
+				Parent_View 	@122
+				location   	(407, 1022)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -2854,8 +3757,8 @@
 			    height     	250
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object NoteView @92
-			    location   	(1552, 176)
+			(object NoteView @123
+			    location   	(1301, 179)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2866,8 +3769,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@92
-				location   	(1259, 117)
+				Parent_View 	@123
+				location   	(1008, 120)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	550
@@ -2877,14 +3780,14 @@
 			    width      	610
 			    height     	130
 			    quidu      	"4038F07C02FE")
-			(object AttachView "" @93
+			(object AttachView "" @124
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@90
-			    supplier   	@92
+			    client     	@121
+			    supplier   	@123
 			    line_style 	0)
-			(object NoteView @94
-			    location   	(1555, 636)
+			(object NoteView @125
+			    location   	(1600, 1012)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2895,8 +3798,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@94
-				location   	(1262, 577)
+				Parent_View 	@125
+				location   	(1307, 953)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	550
@@ -2906,18 +3809,18 @@
 			    width      	610
 			    height     	130
 			    quidu      	"3F753009010F")
-			(object AttachView "" @95
+			(object AttachView "" @126
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@91
-			    supplier   	@94
+			    client     	@122
+			    supplier   	@125
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Bad Payload" @96
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Bad Payload" @127
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(555, 1033)
+			    location   	(600, 1409)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2928,16 +3831,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@96
-				location   	(319, 919)
+				Parent_View 	@127
+				location   	(364, 1304)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	472
 				justify    	0
 				label      	"Bad Payload")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@96
-				location   	(319, 869)
+				Parent_View 	@127
+				location   	(364, 1247)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -2949,8 +3852,8 @@
 			    fill_color 	13434879
 			    quidu      	"405614D200DC"
 			    compartment 	(object Compartment
-				Parent_View 	@96
-				location   	(319, 982)
+				Parent_View 	@127
+				location   	(364, 1372)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -2969,12 +3872,12 @@
 			    height     	352
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T1" @97
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T1" @128
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(250, 1481)
+			    location   	(295, 1857)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -2985,16 +3888,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@97
-				location   	(162, 1450)
+				Parent_View 	@128
+				location   	(207, 1835)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	176
 				justify    	0
 				label      	"T1")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@97
-				location   	(162, 1400)
+				Parent_View 	@128
+				location   	(207, 1778)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3009,12 +3912,12 @@
 			    height     	186
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T2" @98
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T2" @129
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(807, 1480)
+			    location   	(852, 1856)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3025,16 +3928,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@98
-				location   	(719, 1449)
+				Parent_View 	@129
+				location   	(764, 1834)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	176
 				justify    	0
 				label      	"T2")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@98
-				location   	(719, 1399)
+				Parent_View 	@129
+				location   	(764, 1777)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3049,7 +3952,7 @@
 			    height     	186
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object UsesView "E1" @99
+			(object UsesView "E1" @130
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3060,16 +3963,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@99
-				location   	(372, 1298)
+				Parent_View 	@130
+				location   	(417, 1674)
 				anchor_loc 	1
 				nlines     	1
 				max_width  	450
 				justify    	0
 				label      	"E1")
-			    stereotype 	(object SegLabel @100
-				Parent_View 	@99
-				location   	(266, 1223)
+			    stereotype 	(object SegLabel @131
+				Parent_View 	@130
+				location   	(311, 1590)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3090,10 +3993,10 @@
 				orientation 	1)
 			    line_color 	3342489
 			    quidu      	"40561526024F"
-			    client     	@96
-			    supplier   	@97
+			    client     	@127
+			    supplier   	@128
 			    line_style 	0)
-			(object UsesView "E2" @101
+			(object UsesView "E2" @132
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3104,16 +4007,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@101
-				location   	(703, 1297)
+				Parent_View 	@132
+				location   	(748, 1673)
 				anchor_loc 	1
 				nlines     	1
 				max_width  	450
 				justify    	0
 				label      	"E2")
-			    stereotype 	(object SegLabel @102
-				Parent_View 	@101
-				location   	(597, 1222)
+			    stereotype 	(object SegLabel @133
+				Parent_View 	@132
+				location   	(642, 1589)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3134,15 +4037,15 @@
 				orientation 	1)
 			    line_color 	3342489
 			    quidu      	"4056153403D6"
-			    client     	@96
-			    supplier   	@98
+			    client     	@127
+			    supplier   	@129
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T3" @103
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::T3" @134
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(1349, 1478)
+			    location   	(1394, 1854)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3153,16 +4056,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@103
-				location   	(1261, 1447)
+				Parent_View 	@134
+				location   	(1306, 1832)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	176
 				justify    	0
 				label      	"T3")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@103
-				location   	(1261, 1397)
+				Parent_View 	@134
+				location   	(1306, 1775)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3177,7 +4080,7 @@
 			    height     	186
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object UsesView "E3" @104
+			(object UsesView "E3" @135
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3188,16 +4091,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@104
-				location   	(1026, 1296)
+				Parent_View 	@135
+				location   	(1071, 1672)
 				anchor_loc 	1
 				nlines     	1
 				max_width  	450
 				justify    	0
 				label      	"E3")
-			    stereotype 	(object SegLabel @105
-				Parent_View 	@104
-				location   	(920, 1221)
+			    stereotype 	(object SegLabel @136
+				Parent_View 	@135
+				location   	(965, 1588)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3218,11 +4121,11 @@
 				orientation 	0)
 			    line_color 	3342489
 			    quidu      	"4056165F01D7"
-			    client     	@96
-			    supplier   	@103
+			    client     	@127
+			    supplier   	@134
 			    line_style 	0)
-			(object NoteView @106
-			    location   	(1583, 1036)
+			(object NoteView @137
+			    location   	(1628, 1412)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3233,8 +4136,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@106
-				location   	(1288, 977)
+				Parent_View 	@137
+				location   	(1333, 1353)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	555
@@ -3244,18 +4147,18 @@
 			    width      	615
 			    height     	130
 			    quidu      	"4056157000BB")
-			(object AttachView "" @107
+			(object AttachView "" @138
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@96
-			    supplier   	@106
+			    client     	@127
+			    supplier   	@137
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Super Action Mismatch" @108
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Super Action Mismatch" @139
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(532, 1846)
+			    location   	(577, 2222)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3266,16 +4169,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@108
-				location   	(282, 1758)
+				Parent_View 	@139
+				location   	(327, 2143)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	500
 				justify    	0
 				label      	"Super Action Mismatch")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@108
-				location   	(282, 1708)
+				Parent_View 	@139
+				location   	(327, 2086)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3287,8 +4190,8 @@
 			    fill_color 	13434879
 			    quidu      	"408AC71A02D1"
 			    compartment 	(object Compartment
-				Parent_View 	@108
-				location   	(282, 1821)
+				Parent_View 	@139
+				location   	(327, 2211)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -3307,12 +4210,12 @@
 			    height     	300
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Child Action Mismatch" @109
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Child Action Mismatch" @140
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(1437, 1847)
+			    location   	(1482, 2223)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3323,8 +4226,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@109
-				location   	(1297, 1770)
+				Parent_View 	@140
+				location   	(1342, 2148)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	280
@@ -3338,7 +4241,7 @@
 			    height     	178
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "action" @110
+			(object InheritView "action" @141
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3349,8 +4252,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@110
-				location   	(1039, 1846)
+				Parent_View 	@141
+				location   	(1084, 2222)
 				anchor_loc 	1
 				nlines     	1
 				max_width  	450
@@ -3359,11 +4262,11 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"408AC78C0127"
-			    client     	@109
-			    supplier   	@108
+			    client     	@140
+			    supplier   	@139
 			    line_style 	0)
-			(object NoteView @111
-			    location   	(2268, 1853)
+			(object NoteView @142
+			    location   	(2313, 2229)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3374,8 +4277,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@111
-				location   	(2002, 1792)
+				Parent_View 	@142
+				location   	(2047, 2168)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	496
@@ -3385,18 +4288,18 @@
 			    width      	556
 			    height     	135
 			    quidu      	"408AC7E1036E")
-			(object AttachView "" @112
+			(object AttachView "" @143
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@109
-			    supplier   	@111
+			    client     	@140
+			    supplier   	@142
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Don't Generate::States With Same Name" @113
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Don't Generate::States With Same Name" @144
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(510, 2191)
+			    location   	(555, 2567)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3407,32 +4310,32 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@113
-				location   	(281, 2148)
+				Parent_View 	@144
+				location   	(385, 2486)
 				fill_color 	13434879
-				nlines     	1
-				max_width  	458
+				nlines     	2
+				max_width  	340
 				justify    	0
 				label      	"States With Same Name")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@113
-				location   	(281, 2098)
+				Parent_View 	@144
+				location   	(385, 2429)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
-				max_width  	458
+				max_width  	340
 				justify    	0
 				label      	"<<singleton>>")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40A28B5900BA"
-			    width      	476
-			    height     	210
+			    width      	358
+			    height     	304
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object NoteView @114
-			    location   	(1580, 2186)
+			(object NoteView @145
+			    location   	(1625, 2562)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3443,8 +4346,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@114
-				location   	(1292, 2127)
+				Parent_View 	@145
+				location   	(1337, 2503)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	540
@@ -3454,18 +4357,18 @@
 			    width      	600
 			    height     	130
 			    quidu      	"40A28B8102AC")
-			(object AttachView "" @115
+			(object AttachView "" @146
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@113
-			    supplier   	@114
+			    client     	@144
+			    supplier   	@145
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::No Initial State" @116
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::No Initial State" @147
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
 			    ShowOperationSignature 	TRUE
-			    location   	(503, 2570)
+			    location   	(548, 2946)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3476,16 +4379,16 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@116
-				location   	(353, 2546)
+				Parent_View 	@147
+				location   	(398, 2931)
 				fill_color 	13434879
 				nlines     	1
 				max_width  	300
 				justify    	0
 				label      	"No Initial State")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@116
-				location   	(353, 2496)
+				Parent_View 	@147
+				location   	(398, 2874)
 				fill_color 	13434879
 				anchor     	10
 				nlines     	1
@@ -3500,8 +4403,8 @@
 			    height     	172
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object NoteView @117
-			    location   	(1633, 2565)
+			(object NoteView @148
+			    location   	(1678, 2941)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -3512,8 +4415,8 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@117
-				location   	(1293, 2502)
+				Parent_View 	@148
+				location   	(1338, 2878)
 				fill_color 	13434879
 				nlines     	2
 				max_width  	645
@@ -3523,11 +4426,66 @@
 			    width      	705
 			    height     	139
 			    quidu      	"40E32CA80236")
-			(object AttachView "" @118
+			(object AttachView "" @149
 			    stereotype 	TRUE
 			    line_color 	3342489
-			    client     	@117
-			    supplier   	@116
+			    client     	@148
+			    supplier   	@147
+			    line_style 	0)
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegalities in a state machine::Inherited  Instance Deletion" @150
+			    ShowCompartmentStereotypes 	TRUE
+			    IncludeAttribute 	TRUE
+			    IncludeOperation 	TRUE
+			    ShowOperationSignature 	TRUE
+			    location   	(580, 623)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@150
+				location   	(309, 570)
+				fill_color 	13434879
+				nlines     	1
+				max_width  	542
+				justify    	0
+				label      	"Inherited  Instance Deletion")
+			    icon_style 	"Icon"
+			    line_color 	3342489
+			    fill_color 	13434879
+			    quidu      	"4721C3CD00C7"
+			    width      	560
+			    height     	130
+			    annotation 	8
+			    autoResize 	TRUE)
+			(object InheritView "inherited final action" @151
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object ItemLabel
+				Parent_View 	@151
+				location   	(575, 443)
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	"inherited final action")
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4721C48B03AF"
+			    client     	@150
+			    supplier   	@121
 			    line_style 	0)))))
 	(object Class_Category "Detect association with a public class"
 	    quid       	"405613C402B5"
@@ -3622,7 +4580,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegal finalize operations::Bad Finalization" @119
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegal finalize operations::Bad Finalization" @152
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -3638,22 +4596,39 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@119
-				location   	(199, 266)
+				Parent_View 	@152
+				location   	(173, 248)
 				fill_color 	13434879
 				nlines     	1
-				max_width  	726
+				max_width  	778
 				justify    	0
 				label      	"Bad Finalization")
 			    icon_style 	"Icon"
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40701DFA010C"
-			    width      	744
-			    height     	348
+			    compartment 	(object Compartment
+				Parent_View 	@152
+				location   	(173, 309)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	6
+				max_width  	775)
+			    width      	796
+			    height     	386
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegal finalize operations::Bad Singleton Finalization" @120
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Various illegal finalize operations::Bad Singleton Finalization" @153
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -3669,7 +4644,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@120
+				Parent_View 	@153
 				location   	(242, 958)
 				fill_color 	13434879
 				nlines     	1
@@ -3677,7 +4652,7 @@
 				justify    	0
 				label      	"Bad Singleton Finalization")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@120
+				Parent_View 	@153
 				location   	(242, 908)
 				fill_color 	13434879
 				anchor     	10
@@ -3689,6 +4664,23 @@
 			    line_color 	3342489
 			    fill_color 	13434879
 			    quidu      	"40994E01020D"
+			    compartment 	(object Compartment
+				Parent_View 	@153
+				location   	(242, 1019)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				icon_style 	"Icon"
+				fill_color 	16777215
+				anchor     	2
+				nlines     	2
+				max_width  	331)
 			    width      	560
 			    height     	218
 			    annotation 	8
@@ -3704,7 +4696,7 @@
 			quid       	"40A28B8102A2"
 			stereotype 	"generate"
 			states     	(list States
-			    (object State "$UNNAMED$5"
+			    (object State "$UNNAMED$6"
 				quid       	"40A28B880112"
 				transitions 	(list transition_list
 				    (object State_Transition
@@ -3749,14 +4741,14 @@
 				    (object State_Transition
 					quid       	"40A28BD90213"
 					label      	""
-					supplier   	"$UNNAMED$6"
+					supplier   	"$UNNAMED$7"
 					quidu      	"40A28BCB00D2"
 					Event      	(object Event "e"
 					    quid       	"40A28BD90214")
 					sendEvent  	(object sendEvent
 					    quid       	"40A28BD90216")))
 				type       	"Normal")
-			    (object State "$UNNAMED$6"
+			    (object State "$UNNAMED$7"
 				quid       	"40A28BCB00D2"
 				type       	"EndState"))
 			partitions 	(list Partitions)
@@ -3771,11 +4763,11 @@
 				origin_x   	0
 				origin_y   	0
 				items      	(list diagram_item_list
-				    (object Swimlane "" @121
+				    (object Swimlane "" @154
 					line_color 	3342489
 					width      	450)
-				    (object StateView "StartState" "$UNNAMED$5" @122
-					Parent_View 	@121
+				    (object StateView "StartState" "$UNNAMED$6" @155
+					Parent_View 	@154
 					location   	(470, 303)
 					font       	(object Font
 					    size       	10
@@ -3787,7 +4779,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@122
+					    Parent_View 	@155
 					    location   	(512, 273)
 					    nlines     	2
 					    max_width  	600
@@ -3796,8 +4788,8 @@
 					line_color 	3342489
 					quidu      	"40A28B880112"
 					autoResize 	TRUE)
-				    (object StateView "Normal" "initial" @123
-					Parent_View 	@121
+				    (object StateView "Normal" "initial" @156
+					Parent_View 	@154
 					location   	(470, 542)
 					font       	(object Font
 					    size       	10
@@ -3809,7 +4801,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@123
+					    Parent_View 	@156
 					    location   	(470, 526)
 					    fill_color 	13434879
 					    anchor_loc 	1
@@ -3822,7 +4814,7 @@
 					fill_color 	13434879
 					quidu      	"40A28B8B00F8"
 					autoResize 	TRUE)
-				    (object TransView "" @124
+				    (object TransView "" @157
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -3832,8 +4824,8 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					label      	(object SegLabel @125
-					    Parent_View 	@124
+					label      	(object SegLabel @158
+					    Parent_View 	@157
 					    location   	(515, 404)
 					    font       	(object Font
 						size       	10
@@ -3855,12 +4847,12 @@
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"40A28B950265"
-					client     	@122
-					supplier   	@123
+					client     	@155
+					supplier   	@156
 					line_style 	0
 					x_offset   	FALSE)
-				    (object StateView "Normal" "a" @126
-					Parent_View 	@121
+				    (object StateView "Normal" "a" @159
+					Parent_View 	@154
 					location   	(470, 797)
 					font       	(object Font
 					    size       	10
@@ -3872,7 +4864,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@126
+					    Parent_View 	@159
 					    location   	(470, 781)
 					    fill_color 	13434879
 					    anchor_loc 	1
@@ -3885,7 +4877,7 @@
 					fill_color 	13434879
 					quidu      	"40A28B9903C9"
 					autoResize 	TRUE)
-				    (object TransView "" @127
+				    (object TransView "" @160
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -3895,8 +4887,8 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					label      	(object SegLabel @128
-					    Parent_View 	@127
+					label      	(object SegLabel @161
+					    Parent_View 	@160
 					    location   	(515, 669)
 					    font       	(object Font
 						size       	10
@@ -3918,12 +4910,12 @@
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"40A28BD30304"
-					client     	@123
-					supplier   	@126
+					client     	@156
+					supplier   	@159
 					line_style 	0
 					x_offset   	FALSE)
-				    (object StateView "EndState" "$UNNAMED$6" @129
-					Parent_View 	@121
+				    (object StateView "EndState" "$UNNAMED$7" @162
+					Parent_View 	@154
 					location   	(470, 1317)
 					font       	(object Font
 					    size       	10
@@ -3935,7 +4927,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@129
+					    Parent_View 	@162
 					    location   	(524, 1275)
 					    nlines     	2
 					    max_width  	600
@@ -3944,8 +4936,8 @@
 					line_color 	3342489
 					quidu      	"40A28BCB00D2"
 					autoResize 	TRUE)
-				    (object StateView "Normal" "final" @130
-					Parent_View 	@121
+				    (object StateView "Normal" "final" @163
+					Parent_View 	@154
 					location   	(470, 1057)
 					font       	(object Font
 					    size       	10
@@ -3957,7 +4949,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@130
+					    Parent_View 	@163
 					    location   	(470, 1041)
 					    fill_color 	13434879
 					    anchor_loc 	1
@@ -3970,7 +4962,7 @@
 					fill_color 	13434879
 					quidu      	"40A28BA00333"
 					autoResize 	TRUE)
-				    (object TransView "" @131
+				    (object TransView "" @164
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -3980,8 +4972,8 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					label      	(object SegLabel @132
-					    Parent_View 	@131
+					label      	(object SegLabel @165
+					    Parent_View 	@164
 					    location   	(502, 899)
 					    font       	(object Font
 						size       	10
@@ -4003,11 +4995,11 @@
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"40A28BD6013C"
-					client     	@126
-					supplier   	@130
+					client     	@159
+					supplier   	@163
 					line_style 	0
 					x_offset   	FALSE)
-				    (object TransView "" @133
+				    (object TransView "" @166
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -4017,8 +5009,8 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					label      	(object SegLabel @134
-					    Parent_View 	@133
+					label      	(object SegLabel @167
+					    Parent_View 	@166
 					    location   	(500, 1155)
 					    font       	(object Font
 						size       	10
@@ -4040,12 +5032,12 @@
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"40A28BD90213"
-					client     	@130
-					supplier   	@129
+					client     	@163
+					supplier   	@162
 					line_style 	0
 					x_offset   	FALSE)
-				    (object NoteView @135
-					Parent_View 	@121
+				    (object NoteView @168
+					Parent_View 	@154
 					location   	(1175, 672)
 					font       	(object Font
 					    size       	10
@@ -4057,7 +5049,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@135
+					    Parent_View 	@168
 					    location   	(950, 586)
 					    fill_color 	13434879
 					    nlines     	3
@@ -4099,7 +5091,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Protected types with missing features::No Operations" @136
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Protected types with missing features::No Operations" @169
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4115,7 +5107,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@136
+				Parent_View 	@169
 				location   	(387, 319)
 				fill_color 	13434879
 				nlines     	1
@@ -4123,7 +5115,7 @@
 				justify    	0
 				label      	"No Operations")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@136
+				Parent_View 	@169
 				location   	(387, 269)
 				fill_color 	13434879
 				anchor     	10
@@ -4204,7 +5196,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Parent With Abstract Operation" @137
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Parent With Abstract Operation" @170
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4220,7 +5212,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@137
+				Parent_View 	@170
 				location   	(244, 922)
 				fill_color 	13434879
 				nlines     	1
@@ -4228,7 +5220,7 @@
 				justify    	0
 				label      	"Parent With Abstract Operation")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@137
+				Parent_View 	@170
 				location   	(244, 872)
 				fill_color 	13434879
 				anchor     	10
@@ -4244,7 +5236,7 @@
 			    height     	220
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Child With Private Operation" @138
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Child With Private Operation" @171
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4260,7 +5252,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@138
+				Parent_View 	@171
 				location   	(356, 1538)
 				fill_color 	13434879
 				nlines     	2
@@ -4275,7 +5267,7 @@
 			    height     	258
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "private abstract operation 2" @139
+			(object InheritView "private abstract operation 2" @172
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -4286,7 +5278,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@139
+				Parent_View 	@172
 				location   	(561, 1303)
 				anchor_loc 	1
 				nlines     	1
@@ -4296,10 +5288,10 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"428B547A01F4"
-			    client     	@138
-			    supplier   	@137
+			    client     	@171
+			    supplier   	@170
 			    line_style 	0)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Grandparent With Abstract Operation" @140
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Private operation matches abstract parental operation::Grandparent With Abstract Operation" @173
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4315,7 +5307,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@140
+				Parent_View 	@173
 				location   	(219, 226)
 				fill_color 	13434879
 				nlines     	1
@@ -4323,7 +5315,7 @@
 				justify    	0
 				label      	"Grandparent With Abstract Operation")
 			    stereotype 	(object ItemLabel
-				Parent_View 	@140
+				Parent_View 	@173
 				location   	(219, 176)
 				fill_color 	13434879
 				anchor     	10
@@ -4339,7 +5331,7 @@
 			    height     	264
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "private abstract operation 1" @141
+			(object InheritView "private abstract operation 1" @174
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -4350,7 +5342,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@141
+				Parent_View 	@174
 				location   	(561, 644)
 				anchor_loc 	1
 				nlines     	1
@@ -4360,8 +5352,8 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"42932B2402FB"
-			    client     	@137
-			    supplier   	@140
+			    client     	@170
+			    supplier   	@173
 			    line_style 	0)))))
 	(object Class_Category "Inheritance of class operation as action"
 	    quid       	"4298A44C02F9"
@@ -4400,7 +5392,7 @@
 			quid       	"4298A4FE00D8"
 			stereotype 	"generate"
 			states     	(list States
-			    (object State "$UNNAMED$7"
+			    (object State "$UNNAMED$8"
 				quid       	"4298A5180112"
 				transitions 	(list transition_list
 				    (object State_Transition
@@ -4430,7 +5422,7 @@
 				origin_x   	0
 				origin_y   	0
 				items      	(list diagram_item_list
-				    (object StateView "StartState" "$UNNAMED$7" @142
+				    (object StateView "StartState" "$UNNAMED$8" @175
 					location   	(678, 318)
 					font       	(object Font
 					    size       	10
@@ -4442,7 +5434,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@142
+					    Parent_View 	@175
 					    location   	(720, 288)
 					    nlines     	2
 					    max_width  	600
@@ -4451,7 +5443,7 @@
 					line_color 	3342489
 					quidu      	"4298A5180112"
 					autoResize 	TRUE)
-				    (object StateView "Normal" "running" @143
+				    (object StateView "Normal" "running" @176
 					location   	(675, 665)
 					font       	(object Font
 					    size       	10
@@ -4463,7 +5455,7 @@
 					    color      	0
 					    default_color 	TRUE)
 					label      	(object ItemLabel
-					    Parent_View 	@143
+					    Parent_View 	@176
 					    location   	(675, 649)
 					    fill_color 	13434879
 					    anchor_loc 	1
@@ -4476,7 +5468,7 @@
 					fill_color 	13434879
 					quidu      	"4298A52601BC"
 					autoResize 	TRUE)
-				    (object TransView "" @144
+				    (object TransView "" @177
 					font       	(object Font
 					    size       	10
 					    face       	"Arial"
@@ -4486,8 +5478,8 @@
 					    strike     	FALSE
 					    color      	0
 					    default_color 	TRUE)
-					label      	(object SegLabel @145
-					    Parent_View 	@144
+					label      	(object SegLabel @178
+					    Parent_View 	@177
 					    location   	(723, 472)
 					    font       	(object Font
 						size       	10
@@ -4509,8 +5501,8 @@
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"4298A52E03D1"
-					client     	@142
-					supplier   	@143
+					client     	@175
+					supplier   	@176
 					line_style 	3
 					origin_attachment 	(678, 348)
 					terminal_attachment 	(678, 597)
@@ -4525,7 +5517,7 @@
 		    origin_x   	0
 		    origin_y   	0
 		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Inheritance of class operation as action::Parent with class operation" @146
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Inheritance of class operation as action::Parent with class operation" @179
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4541,7 +5533,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@146
+				Parent_View 	@179
 				location   	(575, 235)
 				fill_color 	13434879
 				nlines     	1
@@ -4556,7 +5548,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::Bad Code Regressions::Inheritance of class operation as action::Child with misspelt action" @147
+			(object ClassView "Class" "Logical View::Bad Code Regressions::Inheritance of class operation as action::Child with misspelt action" @180
 			    ShowCompartmentStereotypes 	TRUE
 			    IncludeAttribute 	TRUE
 			    IncludeOperation 	TRUE
@@ -4572,7 +5564,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@147
+				Parent_View 	@180
 				location   	(684, 890)
 				fill_color 	13434879
 				nlines     	2
@@ -4587,7 +5579,7 @@
 			    height     	212
 			    annotation 	8
 			    autoResize 	TRUE)
-			(object InheritView "bad action in child" @148
+			(object InheritView "bad action in child" @181
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -4598,7 +5590,7 @@
 				color      	0
 				default_color 	TRUE)
 			    label      	(object ItemLabel
-				Parent_View 	@148
+				Parent_View 	@181
 				location   	(845, 657)
 				anchor_loc 	1
 				nlines     	1
@@ -4608,8 +5600,8 @@
 			    stereotype 	TRUE
 			    line_color 	3342489
 			    quidu      	"4298A4DA0362"
-			    client     	@147
-			    supplier   	@146
+			    client     	@180
+			    supplier   	@179
 			    line_style 	0))))))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
@@ -4618,7 +5610,7 @@
 	    documentation 	
 |Regression tests that involve detecting errors at the code generation stage.
 |
-|{ revision = $Revision: 2640dea94c3e $ }
+|{ revision = $Revision: 07033ca17d22 $ }
 	    
 	    zoom       	100
 	    max_height 	28350
@@ -4626,7 +5618,7 @@
 	    origin_x   	0
 	    origin_y   	238
 	    items      	(list diagram_item_list
-		(object CategoryView "Logical View::Bad Code Regressions" @149
+		(object CategoryView "Logical View::Bad Code Regressions" @182
 		    location   	(2721, 228)
 		    font       	(object Font
 			size       	10
@@ -4638,7 +5630,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@149
+			Parent_View 	@182
 			location   	(2548, 144)
 			fill_color 	13434879
 			nlines     	2
@@ -4651,7 +5643,7 @@
 		    quidu      	"3F6738F4023A"
 		    width      	358
 		    height     	180)
-		(object Label @150
+		(object Label @183
 		    location   	(162, 93)
 		    font       	(object Font
 			size       	10
@@ -4664,8 +5656,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1425
-		    label      	"$Id: Bad_Code_Regressions.cat,v 2640dea94c3e 2007/10/26 10:11:55 simonjwright $")
-		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @151
+		    label      	"$Id: Bad_Code_Regressions.cat,v 07033ca17d22 2007/10/26 10:55:45 simonjwright $")
+		(object CategoryView "Logical View::Bad Code Regressions::The parent and the child have specified an operation with different profiles" @184
 		    location   	(453, 410)
 		    font       	(object Font
 			size       	10
@@ -4677,7 +5669,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@151
+			Parent_View 	@184
 			location   	(97, 376)
 			fill_color 	13434879
 			nlines     	2
@@ -4685,7 +5677,7 @@
 			justify    	0
 			label      	"The parent and the child have specified an operation with different profiles")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@151
+			Parent_View 	@184
 			location   	(97, 326)
 			fill_color 	13434879
 			anchor     	10
@@ -4699,7 +5691,7 @@
 		    quidu      	"40561368026C"
 		    width      	724
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @152
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegalities in a state machine" @185
 		    location   	(317, 713)
 		    font       	(object Font
 			size       	10
@@ -4711,7 +5703,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@152
+			Parent_View 	@185
 			location   	(103, 679)
 			fill_color 	13434879
 			nlines     	2
@@ -4719,7 +5711,7 @@
 			justify    	0
 			label      	"Various illegalities in a state machine")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@152
+			Parent_View 	@185
 			location   	(103, 629)
 			fill_color 	13434879
 			anchor     	10
@@ -4733,7 +5725,7 @@
 		    quidu      	"405613970115"
 		    width      	440
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @153
+		(object CategoryView "Logical View::Bad Code Regressions::Detect association with a public class" @186
 		    location   	(298, 995)
 		    font       	(object Font
 			size       	10
@@ -4745,7 +5737,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@153
+			Parent_View 	@186
 			location   	(108, 961)
 			fill_color 	13434879
 			nlines     	2
@@ -4753,7 +5745,7 @@
 			justify    	0
 			label      	"Detect association with a public class")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@153
+			Parent_View 	@186
 			location   	(108, 911)
 			fill_color 	13434879
 			anchor     	10
@@ -4767,7 +5759,7 @@
 		    quidu      	"405613C402B5"
 		    width      	392
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @154
+		(object CategoryView "Logical View::Bad Code Regressions::Various illegal finalize operations" @187
 		    location   	(314, 1300)
 		    font       	(object Font
 			size       	10
@@ -4779,7 +5771,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@154
+			Parent_View 	@187
 			location   	(113, 1266)
 			fill_color 	13434879
 			nlines     	2
@@ -4787,7 +5779,7 @@
 			justify    	0
 			label      	"Various illegal finalize operations")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@154
+			Parent_View 	@187
 			location   	(113, 1216)
 			fill_color 	13434879
 			anchor     	10
@@ -4801,7 +5793,7 @@
 		    quidu      	"40701D62013F"
 		    width      	414
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Don't Generate" @155
+		(object CategoryView "Logical View::Bad Code Regressions::Don't Generate" @188
 		    location   	(2124, 580)
 		    font       	(object Font
 			size       	10
@@ -4813,7 +5805,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@155
+			Parent_View 	@188
 			location   	(1980, 496)
 			fill_color 	13434879
 			nlines     	2
@@ -4826,7 +5818,7 @@
 		    quidu      	"40A295670292"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Protected types with missing features" @156
+		(object CategoryView "Logical View::Bad Code Regressions::Protected types with missing features" @189
 		    location   	(307, 1643)
 		    font       	(object Font
 			size       	10
@@ -4838,7 +5830,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@156
+			Parent_View 	@189
 			location   	(114, 1609)
 			fill_color 	13434879
 			nlines     	2
@@ -4846,7 +5838,7 @@
 			justify    	0
 			label      	"Protected types with missing features")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@156
+			Parent_View 	@189
 			location   	(114, 1559)
 			fill_color 	13434879
 			anchor     	10
@@ -4860,7 +5852,7 @@
 		    quidu      	"4142CD1B0040"
 		    width      	398
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Private operation matches abstract parental operation" @157
+		(object CategoryView "Logical View::Bad Code Regressions::Private operation matches abstract parental operation" @190
 		    location   	(327, 1953)
 		    font       	(object Font
 			size       	10
@@ -4872,7 +5864,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@157
+			Parent_View 	@190
 			location   	(41, 1919)
 			fill_color 	13434879
 			nlines     	2
@@ -4880,7 +5872,7 @@
 			justify    	0
 			label      	"Private operation matches abstract parental operation")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@157
+			Parent_View 	@190
 			location   	(41, 1869)
 			fill_color 	13434879
 			anchor     	10
@@ -4894,7 +5886,7 @@
 		    quidu      	"428B53FB015B"
 		    width      	584
 		    height     	180)
-		(object CategoryView "Logical View::Bad Code Regressions::Inheritance of class operation as action" @158
+		(object CategoryView "Logical View::Bad Code Regressions::Inheritance of class operation as action" @191
 		    location   	(300, 2246)
 		    font       	(object Font
 			size       	10
@@ -4906,7 +5898,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@158
+			Parent_View 	@191
 			location   	(103, 2212)
 			fill_color 	13434879
 			nlines     	2
@@ -4914,7 +5906,7 @@
 			justify    	0
 			label      	"Inheritance of class operation as action")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@158
+			Parent_View 	@191
 			location   	(103, 2162)
 			fill_color 	13434879
 			anchor     	10
