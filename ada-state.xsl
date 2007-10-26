@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v a87161e0d0ff 2007/10/16 19:46:19 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v c3e8125a50f5 2007/10/26 11:26:11 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -492,8 +492,17 @@
     <!-- Do any transition action (only one possible). -->
     <xsl:if test="$tr/action">
       <!-- Check for actions after instance deletion. -->
+      <xsl:variable name="impl-class">
+        <xsl:call-template name="st:class-of-operation-for-action">
+          <xsl:with-param name="class" select="../.."/>
+          <xsl:with-param name="action" select="$tr/action"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:variable
+        name="actual-action-operation"
+        select="/domain/class[name=$impl-class]/operation[name=$tr/action]"/>
       <xsl:if test="($tr/action='Delete'
-                     or ../../operation[name=$tr/action]/@final)
+                     or $actual-action-operation/@final)
                     and $target/action">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
@@ -514,7 +523,16 @@
     <!-- Do entry action(s) in the target state. -->
     <xsl:for-each select="$target/action">
       <!-- Check for actions after instance deletion. -->
-      <xsl:if test="(.='Delete' or ../../../operation[name=.]/@final)
+      <xsl:variable name="impl-class">
+        <xsl:call-template name="st:class-of-operation-for-action">
+          <xsl:with-param name="class" select="../../.."/>
+          <xsl:with-param name="action" select="$target/action"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:variable
+        name="actual-action-operation"
+        select="/domain/class[name=$impl-class]/operation[name=$target/action]"/>
+      <xsl:if test="(.='Delete' or $actual-action-operation/@final)
                     and not(position()=last())">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
