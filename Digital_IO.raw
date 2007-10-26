@@ -1,12 +1,5 @@
 <domain>
-<extractor>extractor.ebs: cf-DATE</extractor>
 <name>Digital IO</name>
-<date>
-<year>2005</year>
-<month>8</month>
-<day>15</day>
-<time>17:37</time>
-</date>
 <documentation><![CDATA[ Copyright (C) Simon Wright <simon@pushface.org>
 
 This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING.  If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -14,27 +7,31 @@ This package is free software; you can redistribute it and/or modify it under te
 This domain manages digital (discrete) input/output.
 It is intended for simulations only, so there is no actual digital I/O, only support for an HCI.
 
-{ revision = $Revision: a111bbcd276f $ } ]]></documentation>
+{ revision = $Revision: c0bd0d4df098 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: c0bd0d4df098 $</extractor>
+<date>
+<year>2007</year>
+<month>3</month>
+<day>24</day>
+<time>18:45</time>
+</date>
 <classes>
 <class>
 <name>Signal</name>
+<documentation><![CDATA[ Signals may be Input (from the hardware or HCI) or Output (to the hardware or HCI). ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ Signals may be Input (from the hardware or HCI) or Output (to the hardware or HCI). ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>s</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Signal Name</type>
-<initial></initial>
 </attribute>
 <attribute>
 <name>state</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Boolean</type>
 <initial>False</initial>
 </attribute>
@@ -42,46 +39,45 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
 <operations>
 <operation stereotype="init">
 <name>initialize</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Creates all the Signals. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="abstract">
 <name>changed</name>
-<visibility>PrivateAccess</visibility>
 <documentation><![CDATA[ Called when a signal has changed. ]]></documentation>
+<visibility>PrivateAccess</visibility>
 <parameters>
 </parameters>
 </operation>
 <operation stereotype="accessor">
 <name>get s</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>Signal Name</return>
 <parameters>
 </parameters>
+<return>Signal Name</return>
 </operation>
 <operation>
 <name>set state</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Set the signal's state as indicated; call Changed if it has changed. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>to</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Boolean</type>
-<initial></initial>
 </parameter>
 </parameters>
 </operation>
 <operation stereotype="accessor">
 <name>get state</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
-<return>Boolean</return>
 <parameters>
 </parameters>
+<return>Boolean</return>
 </operation>
 </operations>
 <events>
@@ -89,18 +85,16 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
 </class>
 <class>
 <name>Input</name>
+<documentation><![CDATA[ Input Signals (from the hardware or, in this case, the HCI) support change notification via callback. ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ Input Signals (from the hardware or, in this case, the HCI) support change notification via callback. ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>changed</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Called when the signal has changed state; notify any registered observers of Signal State. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
@@ -110,18 +104,16 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
 </class>
 <class>
 <name>Output</name>
+<documentation><![CDATA[ Output signals are polled by the HCI. ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ Output signals are polled by the HCI. ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>changed</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Called when the signal has changed; no action for output signals (the HCI polls). ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 </parameters>
 </operation>
@@ -131,31 +123,27 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
 </class>
 <class stereotype="public">
 <name>Application</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ The interface offered to support applications.
 State changes are visible via callback on Signal State. ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>set output</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Sets the specified output signal to the given state. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>s</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Signal Name</type>
-<initial></initial>
 </parameter>
 <parameter>
 <parametername>to state</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Boolean</type>
-<initial></initial>
 </parameter>
 </parameters>
 </operation>
@@ -165,10 +153,6 @@ State changes are visible via callback on Signal State. ]]></documentation>
 </class>
 <class stereotype="type">
 <name>Signal Name</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ Names the supported digital signals.
 The 'floor' signals are inputs, the 'lamp' signals are outputs.
 
@@ -182,6 +166,8 @@ lamp b |
 lamp c |
 lamp d
 } ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -191,44 +177,39 @@ lamp d
 </class>
 <class stereotype="public">
 <name>HCI</name>
+<documentation><![CDATA[ The interface offered to support HCI. ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ The interface offered to support HCI. ]]></documentation>
 <attributes>
 </attributes>
 <operations>
 <operation>
 <name>get state</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Returns the state of the specified signal. ]]></documentation>
-<return>Boolean</return>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>of signal</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Signal Name</type>
-<initial></initial>
 </parameter>
 </parameters>
+<return>Boolean</return>
 </operation>
 <operation>
 <name>set input</name>
-<visibility>PublicAccess</visibility>
 <documentation><![CDATA[ Sets the specified input signal to the given value. ]]></documentation>
+<visibility>PublicAccess</visibility>
 <parameters>
 <parameter>
 <parametername>of signal</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Signal Name</type>
-<initial></initial>
 </parameter>
 <parameter>
 <parametername>to</parametername>
-<documentation><![CDATA[  ]]></documentation>
+<documentation></documentation>
 <type>Boolean</type>
-<initial></initial>
 </parameter>
 </parameters>
 </operation>
@@ -238,26 +219,22 @@ lamp d
 </class>
 <class stereotype="callback">
 <name>Signal State</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ Provides application domains with callback facilities for input signal state changes.
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 <attribute>
 <name>s</name>
-<visibility>PrivateAccess</visibility>
 <documentation><![CDATA[ The name of the signal that has changed. ]]></documentation>
+<visibility>PrivateAccess</visibility>
 <type>Signal Name</type>
-<initial></initial>
 </attribute>
 <attribute>
 <name>state</name>
-<visibility>PrivateAccess</visibility>
 <documentation><![CDATA[ The state that the signal has changed to. ]]></documentation>
+<visibility>PrivateAccess</visibility>
 <type>Boolean</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
@@ -269,15 +246,15 @@ lamp d
 <relationships>
 <inheritance>
 <name>g1</name>
-<documentation><![CDATA[  ]]></documentation>
-<child>Input</child>
+<documentation></documentation>
 <parent>Signal</parent>
+<child>Input</child>
 </inheritance>
 <inheritance>
 <name>g1</name>
-<documentation><![CDATA[  ]]></documentation>
-<child>Output</child>
+<documentation></documentation>
 <parent>Signal</parent>
+<child>Output</child>
 </inheritance>
 </relationships>
 </domain>
