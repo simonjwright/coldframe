@@ -2,7 +2,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 3a5c7e24e51b 2007/05/17 21:43:19 simonjwright $
+# $Id: normalize-rose.tcl,v 067126209cff 2007/10/27 12:26:15 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -3260,6 +3260,7 @@ itcl::class Datatypes {
         $this -addStandard Float
         $this -addStandard Handle
         $this -addStandard Integer
+        $this -addStandard Long_Float
         $this -addStandard Natural
         $this -addStandard Positive
         $this -addStandard Real
@@ -3517,9 +3518,3 @@ if $errors {
     }
     exit 1
 }
-
-
-#;; for emacs:
-#;; Local Variables:
-#;; mode: tcl
-#;; End:
