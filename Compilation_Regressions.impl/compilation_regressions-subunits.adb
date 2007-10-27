@@ -1,6 +1,6 @@
 --  $RCSfile: compilation_regressions-subunits.adb,v $
---  $Revision: b391d5a96bc2 $
---  $Date: 2006/11/03 19:22:15 $
+--  $Revision: 5fca6c88686e $
+--  $Date: 2007/10/27 15:51:38 $
 --  $Author: simonjwright $
 --
 --  Regression tests for ColdFrame.
@@ -27,7 +27,8 @@ with Compilation_Regressions.Class_To_Be_Associated;
 with Compilation_Regressions.Class_With_Class_Variable;
 with Compilation_Regressions.Class_With_Private_Operations;
 with Compilation_Regressions.Cls_With_Atomic_And_Volatile_Component;
-with Compilation_Regressions.Fixed_String_Class;
+with Compilation_Regressions.C_Fixed_String;
+with Compilation_Regressions.C_U1;
 with Compilation_Regressions.Function_Returning_Handle;
 with Compilation_Regressions.Grandchild_Supplied_Actual;
 with Compilation_Regressions.Identified_Class;

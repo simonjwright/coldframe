@@ -1,13 +1,13 @@
 <domain>
 <name>Compilation Regressions</name>
 <documentation><![CDATA[ Contains ColdFrame regression tests that only check that the generated code compiles..
-{ revision = $Revision: 36015cf3e04c $} ]]></documentation>
-<extractor>cat2raw.py: $Revision: 36015cf3e04c $</extractor>
+{ revision = $Revision: 5fca6c88686e $} ]]></documentation>
+<extractor>cat2raw.py: $Revision: 5fca6c88686e $</extractor>
 <date>
-<year>2006</year>
-<month>11</month>
-<day>3</day>
-<time>19:26</time>
+<year>2007</year>
+<month>10</month>
+<day>27</day>
+<time>16:51</time>
 </date>
 <classes>
 <class stereotype="active">
@@ -1127,6 +1127,66 @@
 <attributes>
 </attributes>
 <operations>
+<operation>
+<name>return u1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>U1</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>P U1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>b</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>return u1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>U1</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class>
+<name>C U1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute stereotype="id">
+<name>ID</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Autonumber</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>return u1</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>U1</return>
+</operation>
 </operations>
 <events>
 </events>
@@ -1140,7 +1200,7 @@
 </attributes>
 <operations>
 <operation>
-<name>f</name>
+<name>return fixed string</name>
 <documentation></documentation>
 <visibility>PublicAccess</visibility>
 <parameters>
@@ -1152,7 +1212,7 @@
 </events>
 </class>
 <class>
-<name>Fixed String Class</name>
+<name>C Fixed String</name>
 <documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
@@ -1175,6 +1235,32 @@
 </operation>
 <operation>
 <name>f</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<parameters>
+</parameters>
+<return>Fixed String</return>
+</operation>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="protected">
+<name>P Fixed String</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
+<attributes>
+<attribute>
+<name>b</name>
+<documentation></documentation>
+<visibility>PrivateAccess</visibility>
+<type>Boolean</type>
+</attribute>
+</attributes>
+<operations>
+<operation>
+<name>return fixed string</name>
 <documentation></documentation>
 <visibility>PublicAccess</visibility>
 <parameters>
