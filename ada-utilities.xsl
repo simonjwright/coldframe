@@ -1,4 +1,4 @@
-<!-- $Id: ada-utilities.xsl,v 36015cf3e04c 2006/11/03 19:26:53 simonjwright $ -->
+<!-- $Id: ada-utilities.xsl,v 9e020dddb2c5 2007/10/27 12:25:40 simonjwright $ -->
 <!-- XSL stylesheet, utilities to help generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -522,6 +522,107 @@
 
       <xsl:otherwise>
         <xsl:value-of select="$type"/>
+      </xsl:otherwise>
+
+    </xsl:choose>
+  </xsl:template>
+
+
+  <!-- Called from operation to generate a dummy return value.  If not
+       possible, returns nil (and the operation is expected to create
+       a dummy of the type and return that). -->
+  <xsl:template name="ut:dummy-return-value">
+
+    <!-- The name of the type. -->
+    <xsl:param name="type"/>
+
+    <xsl:variable name="the-type" select="/domain/type[name=$type]"/>
+
+    <xsl:choose>
+
+      <xsl:when test="$the-type/@standard">
+
+        <xsl:choose>
+        
+          <!-- Date or Time -->
+          <xsl:when test="$type='Date' or $type='Time'">
+            <xsl:text>ColdFrame.Project.Calendar.Clock</xsl:text>
+          </xsl:when>
+
+          <!-- Ordinary string -->
+          <xsl:when test="$type='String'">
+            <xsl:text>""</xsl:text>
+          </xsl:when>
+
+          <!-- Unbounded string -->
+          <xsl:when test="$type='Unbounded_String' or $type='Text'">
+            <xsl:text>Null_Unbounded_String</xsl:text>
+          </xsl:when>
+
+          <!-- Counterpart -->
+          <xsl:when test="$type='Counterpart'">
+            <xsl:text>null</xsl:text>
+          </xsl:when>
+
+          <!-- Handle (won't work for types, though) -->
+          <xsl:when test="$type='Handle'">
+            <xsl:text>null</xsl:text>
+          </xsl:when>
+
+          <!-- Other standard types are scalars -->
+          <xsl:otherwise>
+            <xsl:value-of select="$type"/>
+            <xsl:text>'First</xsl:text>
+          </xsl:otherwise>
+          
+        </xsl:choose>
+
+      </xsl:when>
+      
+      <xsl:otherwise>
+
+        <xsl:choose>
+
+          <!-- Access -->
+          <xsl:when test="/domain/type/@access=$type">
+            <xsl:text>null</xsl:text>        
+          </xsl:when>
+
+          <!-- Bounded string -->
+          <xsl:when test="$the-type/string/max">
+            <xsl:value-of select="$type"/>
+            <xsl:text>_Package.Null_Bounded_String</xsl:text>
+          </xsl:when>
+
+          <!-- Class -->
+          <xsl:when test="/domain/class/name=$type">
+            <xsl:text>null</xsl:text>
+          </xsl:when>
+
+          <!-- {counterpart} -->
+          <xsl:when test="$the-type/counterpart">
+            <xsl:text>null</xsl:text>
+          </xsl:when>
+
+          <!-- Fixed string -->
+          <xsl:when test="$the-type/string/fixed">
+            <xsl:text>(others =&gt; ' ')</xsl:text>
+          </xsl:when>
+
+          <!-- Scalars -->
+          <xsl:when test="$the-type/enumeration
+                          or $the-type/integer
+                          or $the-type/real
+                          or $the-type/unsigned">
+            <xsl:call-template name="ut:type-name">
+              <xsl:with-param name="type" select="$type"/>
+            </xsl:call-template>
+            <xsl:text>'First</xsl:text>
+          </xsl:when>
+
+          <!-- Otherwise, we don't know, so return nil. -->
+
+        </xsl:choose>
       </xsl:otherwise>
 
     </xsl:choose>

@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 9e020dddb2c5 2007/10/27 12:25:40 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1012,26 +1012,32 @@
         </xsl:call-template>
         <xsl:text> is&#10;</xsl:text>
         
-        <!-- If it's a function, we may have to organize a return value. -->
-        <xsl:variable
-          name="return-type"
-          select="/domain/type[name=current()/@return]"/>
-        <xsl:variable
-          name="simple-return"
-          select="$return-type
-                  and not($return-type/imported)
-                  and not($return-type/renames)
-                  and not($return-type/attribute)"/>
-        
-        <xsl:if test="@return and not($simple-return)">
+        <!-- If it's a function, we have to organize a return value. -->
+        <xsl:variable name="return-info">
+          <xsl:if test="@return">
+            <xsl:element name="return-type">
+              <xsl:call-template name="ut:type-name">
+                <xsl:with-param name="type" select="@return"/>
+                <xsl:with-param name="is-class" select="'no'"/>
+              </xsl:call-template>
+            </xsl:element>
+            <xsl:element name="return-value">
+              <xsl:call-template name="ut:dummy-return-value">
+                <xsl:with-param name="type" select="@return"/>
+              </xsl:call-template>
+            </xsl:element>
+          </xsl:if>
+        </xsl:variable>
+
+        <xsl:if test="@return and $return-info/return-value=''">
           <xsl:value-of select="$I"/>
           <xsl:text>Dummy : </xsl:text>
-          <xsl:value-of select="@return"/>
+          <xsl:value-of select="$return-info/return-type"/>
           <xsl:text>;&#10;</xsl:text>
         </xsl:if>
-        
+
         <xsl:value-of select="$I"/>
-        <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
+        <xsl:text>Unimplemented : exception;&#10;</xsl:text>
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Unimplemented;&#10;</xsl:text>
@@ -1043,14 +1049,12 @@
           
           <xsl:choose>
             
-            <xsl:when test="not($simple-return)">
-              <xsl:text>Dummy</xsl:text>
+            <xsl:when test="not($return-info/return-value='')">
+              <xsl:value-of select="$return-info/return-value"/>
             </xsl:when>
             
             <xsl:otherwise>
-              <xsl:call-template name="op:default-value">
-                <xsl:with-param name="type" select="@return"/>
-              </xsl:call-template>
+              <xsl:text>Dummy</xsl:text>
             </xsl:otherwise>
             
           </xsl:choose>
@@ -1181,52 +1185,57 @@
       </xsl:if>
       <xsl:text> is&#10;</xsl:text>
 
-      <xsl:choose>
+      <!-- If it's a function, we have to organize a return value. -->
+      <xsl:variable name="return-info">
+        <xsl:if test="@return">
+          <xsl:element name="return-type">
+            <xsl:call-template name="ut:type-name">
+              <xsl:with-param name="type" select="@return"/>
+              <xsl:with-param name="is-class" select="'no'"/>
+            </xsl:call-template>
+          </xsl:element>
+          <xsl:element name="return-value">
+            <xsl:call-template name="ut:dummy-return-value">
+              <xsl:with-param name="type" select="@return"/>
+            </xsl:call-template>
+          </xsl:element>
+        </xsl:if>
+      </xsl:variable>
 
-        <xsl:when test="@return
-                        and not(/domain/type[name=current()/@return]/attribute)">
-          <!-- It returns a non-composite type. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>begin&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>raise Unimplemented;&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>return </xsl:text>
-          <xsl:call-template name="op:default-value">
-            <xsl:with-param name="type" select="@return"/>
-          </xsl:call-template>
-          <xsl:text>;&#10;</xsl:text>
-        </xsl:when>
+      <xsl:if test="@return and $return-info/return-value=''">
+        <xsl:value-of select="$II"/>
+        <xsl:text>Dummy : </xsl:text>
+        <xsl:value-of select="$return-info/return-type"/>
+        <xsl:text>;&#10;</xsl:text>
+      </xsl:if>
 
-        <xsl:when test="@return">
-          <!-- It returns a composite type. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Dummy : </xsl:text>
-          <xsl:value-of select="@return"/>
-          <xsl:text>;&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>begin&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>raise Unimplemented;&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>return Dummy;&#10;</xsl:text>
-        </xsl:when>
+      <xsl:value-of select="$II"/>
+      <xsl:text>Unimplemented : exception;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>raise Unimplemented;&#10;</xsl:text>
 
-        <xsl:otherwise>
-          <!-- No return; procedure or entry. -->
-          <xsl:value-of select="$II"/>
-          <xsl:text>Unimplemented :  exception;&#10;</xsl:text>
-          <xsl:value-of select="$I"/>
-          <xsl:text>begin&#10;</xsl:text>
-          <xsl:value-of select="$II"/>
-          <xsl:text>raise Unimplemented;&#10;</xsl:text>
-        </xsl:otherwise>
+      <xsl:if test="@return">
 
-      </xsl:choose>
+        <xsl:value-of select="$II"/>
+        <xsl:text>return </xsl:text>
+
+        <xsl:choose>
+
+          <xsl:when test="not($return-info/return-value='')">
+            <xsl:value-of select="$return-info/return-value"/>
+          </xsl:when>
+
+          <xsl:otherwise>
+            <xsl:text>Dummy</xsl:text>
+          </xsl:otherwise>
+
+        </xsl:choose>
+
+        <xsl:text>;&#10;</xsl:text>
+
+      </xsl:if>
 
       <xsl:value-of select="$I"/>
       <xsl:text>end </xsl:text>
@@ -1243,7 +1252,6 @@
   </xsl:template>
 
   <xsl:template match="*" mode="ty:protected-type-body"/>
-
 
 
   <!-- Called to extract the package name from a (possibly) qualified

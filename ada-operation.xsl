@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v 9e020dddb2c5 2007/10/27 12:25:40 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -30,7 +30,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:op="http://pushface.org/coldframe/operation"
   xmlns:ut="http://pushface.org/coldframe/utilities"
-  version="1.0">
+  version="1.1">
 
 
   <!-- called at domain/class to generate subprogram specs for a class.
@@ -566,83 +566,6 @@
   <xsl:template mode="op:parameter" match="*"/>
 
 
-  <!-- Called from operation to generate a default value.
-       Used for default return value for function bodies,
-       defaults in initializers. -->
-  <xsl:template name="op:default-value">
-    <xsl:param name="type"/>
-    <xsl:choose>
-
-      <!-- Date or Time -->
-      <xsl:when test="$type='Date' or $type='Time'">
-        <xsl:text>ColdFrame.Project.Calendar.Clock</xsl:text>
-      </xsl:when>
-
-      <!-- Ordinary string -->
-      <xsl:when test="$type='String'">
-        <xsl:text>""</xsl:text>
-      </xsl:when>
-
-      <!-- Unbounded string -->
-      <xsl:when test="$type='Unbounded_String' or $type='Text'">
-        <xsl:text>Null_Unbounded_String</xsl:text>
-      </xsl:when>
-
-      <!-- Class -->
-      <xsl:when test="../../class/name=$type">
-        <xsl:text>null</xsl:text>
-      </xsl:when>
-
-      <!-- Counterpart -->
-      <xsl:when test="$type='Counterpart'">
-        <xsl:text>null</xsl:text>
-      </xsl:when>
-
-      <!-- Handle (won't work for types, though) -->
-      <xsl:when test="$type='Handle'">
-        <xsl:text>null</xsl:text>
-      </xsl:when>
-
-      <!-- Access -->
-      <xsl:when test="/domain/type/@access=$type">
-        <xsl:text>null</xsl:text>        
-      </xsl:when>
-      
-      <xsl:otherwise>
-        <xsl:variable name="the-type" select="../../type[name=$type]"/>
-        <xsl:choose>
-
-          <!-- Bounded string -->
-          <xsl:when test="$the-type/string/max">
-            <xsl:value-of select="$type"/>
-            <xsl:text>_Package.Null_Bounded_String</xsl:text>
-          </xsl:when>
-
-          <!-- Standard string -->
-          <xsl:when test="$the-type/string/fixed">
-            <xsl:text>(others =&gt; ' ')</xsl:text>
-          </xsl:when>
-
-          <!-- Counterpart -->
-          <xsl:when test="$the-type/counterpart">
-            <xsl:text>null</xsl:text>
-          </xsl:when>
-
-          <!-- Default: assume scalar -->
-          <xsl:otherwise>
-            <xsl:call-template name="ut:type-name">
-              <xsl:with-param name="type" select="$type"/>
-            </xsl:call-template>
-            <xsl:text>'First</xsl:text>
-          </xsl:otherwise>
-
-        </xsl:choose>
-      </xsl:otherwise>
-
-    </xsl:choose>
-  </xsl:template>
-
-
   <!-- Called at class/operation to generate a dispatch-to-child body. -->
   <xsl:template name="op:generate-dispatch-to-child">
 
@@ -1168,77 +1091,52 @@
 
         <xsl:value-of select="$heading"/>
 
-        <!-- Work out whether we can calculate a return value or
-             need a dummy variable. -->
-        <xsl:variable
-          name="return-type"
-          select="/domain/type[name=current()/@return]"/>
-        <xsl:variable
-          name="simple-return"
-          select="$return-type
-                  and not($return-type/imported)
-                  and not($return-type/renames)
-                  and not($return-type/attribute)"/>
+        <!-- We have to organize a return value. Need XSL version 1.1. -->
+        <xsl:variable name="return-info">
+          <xsl:element name="return-type">
+            <xsl:call-template name="ut:type-name">
+              <xsl:with-param name="type" select="@return"/>
+              <xsl:with-param name="class" select=".."/>
+              <xsl:with-param name="is-class" select="'yes'"/>
+            </xsl:call-template>
+          </xsl:element>
+          <xsl:element name="return-value">
+            <xsl:call-template name="ut:dummy-return-value">
+              <xsl:with-param name="type" select="@return"/>
+            </xsl:call-template>
+          </xsl:element>
+        </xsl:variable>
+
+        <xsl:if test="$return-info/return-value=''">
+          <xsl:value-of select="$I"/>
+          <xsl:text>Dummy : </xsl:text>
+          <xsl:value-of select="$return-info/return-type"/>
+          <xsl:text>;&#10;</xsl:text>
+        </xsl:if>
+
+        <xsl:value-of select="$I"/>
+        <xsl:text>Unimplemented : exception;&#10;</xsl:text>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$I"/>
+        <xsl:text>raise Unimplemented;&#10;</xsl:text>
+        
+        <xsl:value-of select="$I"/>
+        <xsl:text>return </xsl:text>
 
         <xsl:choose>
 
-          <!-- There are three styles: -->
-
-          <xsl:when test="/domain/class[name=current()/@return]">
-
-            <!-- .. this is for class (handles) -->
-            
-            <xsl:value-of select="$I"/>
-            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
-            <xsl:text>begin&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>raise Unimplemented;&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>return null</xsl:text>
-            <xsl:text>;&#10;</xsl:text>
-
-          </xsl:when>
-
-          <xsl:when test="$simple-return">
-
-            <!-- .. this is for non-composite, non-imported,
-                 non-renaming, known types .. -->
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
-            <xsl:text>begin&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>raise Unimplemented;&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>return </xsl:text>
-            <xsl:call-template name="op:default-value">
-              <xsl:with-param name="type" select="@return"/>
-            </xsl:call-template>
-            <xsl:text>;&#10;</xsl:text>
-
+          <xsl:when test="not($return-info/return-value='')">
+            <xsl:value-of select="$return-info/return-value"/>
           </xsl:when>
 
           <xsl:otherwise>
-
-            <!-- .. this is for composite, imported, renaming, or
-                 unknown types .. -->
-
-            <xsl:value-of select="$I"/>
-            <xsl:text>Dummy : </xsl:text>
-            <xsl:value-of select="@return"/>
-            <xsl:text>;&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>Unimplemented : exception;&#10;</xsl:text>
-            <xsl:text>begin&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>raise Unimplemented;&#10;</xsl:text>
-            <xsl:value-of select="$I"/>
-            <xsl:text>return Dummy;&#10;</xsl:text>
-
+            <xsl:text>Dummy</xsl:text>
           </xsl:otherwise>
 
         </xsl:choose>
 
+        <xsl:text>;&#10;</xsl:text>
+          
       </xsl:when>
 
       <!-- .. and this is for procedures. -->
