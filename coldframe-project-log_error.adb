@@ -12,16 +12,16 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-log_error.adb,v $
---  $Revision: bfe91beba2e0 $
---  $Date: 2003/05/25 17:09:48 $
---  $Author: simon $
+--  $Revision: 656dc31498da $
+--  $Date: 2007/10/27 12:34:39 $
+--  $Author: simonjwright $
 
 with ColdFrame.Project.Logging_Support;
 
 procedure ColdFrame.Project.Log_Error (Message : String) is
 begin
    ColdFrame.Project.Logging_Support.Log
-     (Severity => ColdFrame.Project.Logging_Support.Error,
+     (Severity => Logging_Support.Error,
       Message => Message);
 end ColdFrame.Project.Log_Error;
 
