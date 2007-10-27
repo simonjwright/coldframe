@@ -5,22 +5,23 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  ColdFrame expects this package to exist to support event
---  management.
+--  ColdFrame expects this procedure to exist to allow errors to be
+--  reported (for example, exceptions during domain Initialize
+--  procedures).
 --
 --  This is ColdFrame's default implementation.
 
---  $RCSfile: coldframe-project-events.ads,v $
+--  $RCSfile: coldframe-project-log_info.adb,v $
 --  $Revision: 0342c7e00b63 $
 --  $Date: 2007/10/27 12:40:37 $
 --  $Author: simonjwright $
 
-with ColdFrame.Event_Basis;
-with ColdFrame.Events_G;
-with ColdFrame.Project.Storage_Pools;
-with ColdFrame.Project.Event_Support;
+with ColdFrame.Project.Logging_Support;
 
-package ColdFrame.Project.Events is new ColdFrame.Events_G
-  (Base_Event => Event_Basis.Event_Base,
-   Time => ColdFrame.Project.Event_Support.Signature,
-   Event_Storage => ColdFrame.Project.Storage_Pools.Pool);
+procedure ColdFrame.Project.Log_Info (Message : String) is
+begin
+   ColdFrame.Project.Logging_Support.Log
+     (Severity => Logging_Support.Info,
+      Message => Message);
+end ColdFrame.Project.Log_Info;
+

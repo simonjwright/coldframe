@@ -20,14 +20,16 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.adb,v $
---  $Revision: 4a01bc2157ee $
---  $Date: 2007/07/06 05:19:43 $
+--  $Revision: 0342c7e00b63 $
+--  $Date: 2007/10/27 12:40:37 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Limits;
+with ColdFrame.Project.Log_Error;
+with ColdFrame.Project.Log_Info;
 
 package body ColdFrame.Events_G.Monitoring_G is
 
@@ -223,15 +225,12 @@ package body ColdFrame.Events_G.Monitoring_G is
                   Handler (E.all);
                exception
                   when Ex : Exceptions.Cant_Happen =>
-                     Logging.Log
-                       (Severity => Logging.Error,
-                        Message => "Illegal event "
+                     Project.Log_Error
+                       ("Illegal event "
                           & Ada.Exceptions.Exception_Message (Ex));
                   when Ex : others =>
-                     Logging.Log
-                       (Severity => Logging.Error,
-                        Message =>
-                          Ada.Exceptions.Exception_Information (Ex) &
+                     Project.Log_Error
+                       (Ada.Exceptions.Exception_Information (Ex) &
                           " in Dispatcher (event " &
                           Ada.Tags.Expanded_Name (E.all'Tag) &
                           ")");
@@ -254,9 +253,8 @@ package body ColdFrame.Events_G.Monitoring_G is
                   If_Longer_Than => Project.Limits.Monitor_Report_Trigger,
                   Total_Duration => Total);
                if Total > 0.0 then
-                  Logging.Log
-                    (Severity => Logging.Informational,
-                     Message => "Queue overrun, total" & Total'Img);
+                  Project.Log_Info
+                    ("Queue overrun, total" & Total'Img);
                   declare
                      use Abstract_Event_Record_Containers;
                      It : Iterator'Class
@@ -266,10 +264,8 @@ package body ColdFrame.Events_G.Monitoring_G is
                   begin
                      while not Is_Done (It) loop
                         ER := Current_Item (It);
-                        Logging.Log
-                          (Severity => Logging.Informational,
-                           Message =>
-                             Ada.Tags.Expanded_Name (ER.Tag)
+                        Project.Log_Info
+                          (Ada.Tags.Expanded_Name (ER.Tag)
                              & ", "
                              & ER.Was_Held'Img
                              & ","
@@ -541,10 +537,8 @@ package body ColdFrame.Events_G.Monitoring_G is
 
          exception
             when E : others =>
-               Logging.Log
-                 (Severity => Logging.Error,
-                  Message =>
-                    Ada.Exceptions.Exception_Information (E) &
+               Project.Log_Error
+                 (Ada.Exceptions.Exception_Information (E) &
                     " in Held_Event_Manager");
 
          end;

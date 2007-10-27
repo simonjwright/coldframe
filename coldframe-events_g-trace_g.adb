@@ -20,35 +20,22 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-trace_g.adb,v $
---  $Revision: 9379b84f8b31 $
---  $Date: 2005/05/13 04:56:09 $
+--  $Revision: 0342c7e00b63 $
+--  $Date: 2007/10/27 12:40:37 $
 --  $Author: simonjwright $
 
-with Ada.Calendar;
 with Ada.Exceptions;
 with Ada.Tags;
 with ColdFrame.Exceptions;
+with ColdFrame.Project.Log_Info;
 
 package body ColdFrame.Events_G.Trace_G is
-
-   Start_Time : constant Ada.Calendar.Time := Ada.Calendar.Clock;
-   use type Ada.Calendar.Time;
-
-   procedure Put_Line (Message : String);
-   procedure Put_Line (Message : String) is
-   begin
-      Logging.Log
-        (Severity => Logging.Informational,
-         Message => Duration'Image (Ada.Calendar.Clock - Start_Time)
-           & ": "
-           & Message);
-   end Put_Line;
 
 
    procedure Post (The_Event : Event_P;
                    On : access Event_Queue_Base) is
    begin
-      Put_Line ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
+      Project.Log_Info ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
       Post (The_Event => The_Event,
             On => Standard_Queue (On.all)'Access);
    end Post;
@@ -57,7 +44,7 @@ package body ColdFrame.Events_G.Trace_G is
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is
    begin
-      Put_Line
+      Project.Log_Info
         ("posting a " & Ada.Tags.Expanded_Name (The_Event'Tag) & " to self");
       Post_To_Self (The_Event => The_Event,
                     On => Standard_Queue (On.all)'Access);
@@ -68,10 +55,10 @@ package body ColdFrame.Events_G.Trace_G is
                    On : access Event_Queue_Base;
                    To_Fire_At : Time.Time) is
    begin
-      Put_Line ("posting a " &
-                  Ada.Tags.Expanded_Name (The_Event'Tag) &
-                  ", to fire at " &
-                  Time.Image (To_Fire_At));
+      Project.Log_Info ("posting a " &
+                          Ada.Tags.Expanded_Name (The_Event'Tag) &
+                          ", to fire at " &
+                          Time.Image (To_Fire_At));
       Post (The_Event => The_Event,
             On => Standard_Queue (On.all)'Access,
             To_Fire_At => To_Fire_At);
@@ -82,10 +69,10 @@ package body ColdFrame.Events_G.Trace_G is
                    On : access Event_Queue_Base;
                    To_Fire_After : Natural_Duration) is
    begin
-      Put_Line ("posting a " &
-                  Ada.Tags.Expanded_Name (The_Event'Tag) &
-                  ", delay" &
-                  To_Fire_After'Img);
+      Project.Log_Info ("posting a " &
+                          Ada.Tags.Expanded_Name (The_Event'Tag) &
+                          ", delay" &
+                          To_Fire_After'Img);
       Post (The_Event => The_Event,
             On => Standard_Queue (On.all)'Access,
             To_Fire_After => To_Fire_After);
@@ -97,10 +84,10 @@ package body ColdFrame.Events_G.Trace_G is
                   To_Fire : Event_P;
                   At_Time : Time.Time) is
    begin
-      Put_Line ("setting a Timer for a " &
-                  Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
-                  ", to fire at " &
-                  Time.Image (At_Time));
+      Project.Log_Info ("setting a Timer for a " &
+                          Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
+                          ", to fire at " &
+                          Time.Image (At_Time));
       Set (The_Timer => The_Timer,
            On => Standard_Queue (On.all)'Access,
            To_Fire => To_Fire,
@@ -113,10 +100,10 @@ package body ColdFrame.Events_G.Trace_G is
                   To_Fire : Event_P;
                   After : Natural_Duration) is
    begin
-      Put_Line ("setting a Timer for a " &
-                  Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
-                  ", delay" &
-                  After'Img);
+      Project.Log_Info ("setting a Timer for a " &
+                          Ada.Tags.Expanded_Name (To_Fire.all'Tag) &
+                          ", delay" &
+                          After'Img);
       Set (The_Timer => The_Timer,
            On => Standard_Queue (On.all)'Access,
            To_Fire => To_Fire,
@@ -137,10 +124,10 @@ package body ColdFrame.Events_G.Trace_G is
            (Exceptions.Use_Error'Identity,
             "attempt to unset a timer from its own event handler");
       else
-         Put_Line
+         Project.Log_Info
            ("unsetting a Timer for a "
               & Ada.Tags.Expanded_Name
-                  (Held_Event (The_Timer.The_Entry.all).The_Event.all'Tag));
+              (Held_Event (The_Timer.The_Entry.all).The_Event.all'Tag));
       end if;
       Unset (The_Timer => The_Timer,
              On => Standard_Queue (On.all)'Access);
@@ -151,7 +138,8 @@ package body ColdFrame.Events_G.Trace_G is
                              On : access Event_Queue_Base) is
       pragma Warnings (Off, On);
    begin
-      Put_Line ("retracting a " & Ada.Tags.Expanded_Name (The_Event'Tag));
+      Project.Log_Info ("retracting a "
+                          & Ada.Tags.Expanded_Name (The_Event'Tag));
    end Log_Retraction;
 
 
@@ -160,14 +148,14 @@ package body ColdFrame.Events_G.Trace_G is
       pragma Warnings (Off, On);
    begin
       if The_Event.all in Instance_Event_Base'Class then
-         Put_Line
+         Project.Log_Info
            ("dispatching a "
               & Ada.Tags.Expanded_Name (The_Event'Tag)
-            & ": state "
+              & ": state "
               & State_Image
               (Instance_Event_Base (The_Event.all).For_The_Instance.all));
       else
-         Put_Line
+         Project.Log_Info
            ("dispatching a "
               & Ada.Tags.Expanded_Name (The_Event'Tag));
       end if;
@@ -180,9 +168,9 @@ package body ColdFrame.Events_G.Trace_G is
    begin
       if The_Event.all in Instance_Event_Base'Class then
          if Instance_Event_Base (The_Event.all).Instance_Deleted then
-            Put_Line (".. deleted");
+            Project.Log_Info (".. deleted");
          else
-            Put_Line
+            Project.Log_Info
               (".. new state "
                  & State_Image
                  (Instance_Event_Base (The_Event.all).For_The_Instance.all));

@@ -20,14 +20,15 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g.adb,v $
---  $Revision: cef57ddfc26b $
---  $Date: 2007/03/14 21:09:40 $
+--  $Revision: 0342c7e00b63 $
+--  $Date: 2007/10/27 12:40:37 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
 with Ada.Real_Time;
 with Ada.Tags;
 with ColdFrame.Exceptions;
+with ColdFrame.Project.Log_Error;
 
 package body ColdFrame.Events_G.Standard_G is
 
@@ -223,15 +224,12 @@ package body ColdFrame.Events_G.Standard_G is
                   Handler (E.all);
                exception
                   when Ex : Exceptions.Cant_Happen =>
-                     Logging.Log
-                       (Severity => Logging.Error,
-                        Message => "Illegal event "
+                     Project.Log_Error
+                       ("Illegal event "
                           & Ada.Exceptions.Exception_Message (Ex));
                   when Ex : others =>
-                     Logging.Log
-                       (Severity => Logging.Error,
-                        Message =>
-                          Ada.Exceptions.Exception_Information (Ex) &
+                     Project.Log_Error
+                       (Ada.Exceptions.Exception_Information (Ex) &
                           " in Dispatcher (event " &
                           Ada.Tags.Expanded_Name (E.all'Tag) &
                           ")");
@@ -506,10 +504,8 @@ package body ColdFrame.Events_G.Standard_G is
 
          exception
             when E : others =>
-               Logging.Log
-                 (Severity => Logging.Error,
-                  Message =>
-                    Ada.Exceptions.Exception_Information (E) &
+               Project.Log_Error
+                 (Ada.Exceptions.Exception_Information (E) &
                     " in Held_Event_Manager");
 
          end;

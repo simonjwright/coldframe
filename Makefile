@@ -480,6 +480,8 @@ coldframe-project-limits.adb \
 coldframe-project-limits.ads \
 coldframe-project-log_error.adb \
 coldframe-project-log_error.ads \
+coldframe-project-log_info.adb \
+coldframe-project-log_info.ads \
 coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
 coldframe-project-serialization.ads \

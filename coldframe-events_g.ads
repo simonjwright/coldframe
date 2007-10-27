@@ -20,15 +20,14 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 36d6c3817e79 $
---  $Date: 2007/09/22 20:59:03 $
+--  $Revision: 0342c7e00b63 $
+--  $Date: 2007/10/27 12:40:37 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
 with Ada.Unchecked_Deallocation;
 with ColdFrame.Event_Basis;
 with ColdFrame.Instances;
-with ColdFrame.Logging_Signature;
 with ColdFrame.Time_Signature;
 with System.Storage_Pools;
 
@@ -36,8 +35,6 @@ generic
 
    type Base_Event
       is abstract new ColdFrame.Event_Basis.Event_Base with private;
-
-   with package Logging is new Logging_Signature (<>);
 
    with package Time is new Time_Signature (<>);
 
@@ -304,14 +301,6 @@ package ColdFrame.Events_G is
    --  feature is intended for the case where a unit test has driven
    --  the state machine to a point where a timer is set, but need go
    --  no further.
-
-
-   ---------------
-   --  Logging  --
-   ---------------
-
-   --  Make the actual Logging package visible.
-   package Logger renames Logging.Exported;
 
 
 private

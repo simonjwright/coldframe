@@ -1,4 +1,4 @@
-<!-- $Id: support.html,v 984e6ca485a7 2007/09/14 04:56:51 simonjwright $ -->
+<!-- $Id: support.html,v 0342c7e00b63 2007/10/27 12:40:37 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Specially written support components</title>
@@ -68,8 +68,10 @@ in the file <tt>debug_storage_pool.csv</tt>.
 
 <dd>Standard support for <a href="events.html">Events</a>. This is a
 basic generic event management specification; the time aspects are
-provided using <tt>ColdFrame.Time_Signature</tt>, and error logging
-using <tt>ColdFrame.Logging_Signature</tt>.
+provided using <tt>ColdFrame.Time_Signature</tt>.
+
+<br>Logging expects <tt>ColdFrame.Project.Log_Error</tt>
+and <tt>ColdFrame.Project.Log_Info</tt>.
 
 <br>Events are based on an abstract <i>basis</i> type; the "no-frills"
 version is in <tt>ColdFrame.Events_Basis</tt>, while the version in
@@ -313,9 +315,9 @@ all other allocations.
 <br>You may find <tt>GNAT.Debug_Pools</tt>
 and/or <tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>useful.
 
-<p><dt><tt>ColdFrame.Project.Log_Error</tt>
+<p><dt><tt>ColdFrame.Project.Log_Error, Log_Info</tt>
 
-<dd>Reports error messages, using
+<dd>Report error/informational messages, using
 <tt>ColdFrame.Project.Logging_Support</tt>.
 
 <p><dt><tt>ColdFrame.Project.Serialization</tt>
