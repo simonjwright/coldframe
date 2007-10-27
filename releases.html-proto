@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1ec41a7936bd 2007/10/05 20:28:47 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 4c8d1aa8bebb 2007/10/27 15:59:06 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -96,6 +96,11 @@ with a traceback. The message says it all.
 <li>The default Event Queue gives instance events priority over class
 events. The previous behaviour is available via
 <tt>ColdFrame.Events_G.No_Instance_Priority_G</tt>.
+
+<li>Event Queue informational and error logging is now done via
+<tt>ColdFrame.Project.Log_Info</tt> (new) and
+<tt>ColdFrame.Project.Log_Error</tt> directly rather than via a
+generic signature package
 
 <li><b>Testing</b>
 
