@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v 437487ab3221 2007/10/20 19:12:53 simonjwright $ -->
+<!-- $Id: event-use.html,v f1f3e0f532a6 2007/10/27 12:27:11 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -223,6 +223,17 @@ it would be
       Payload : Message renames Class.Info (Ev.all).Payload;
    begin
       Payload := Some_Value;
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+   end;
+</pre>
+
+<p>... or you might prefer
+<pre>
+   declare
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Class.Info;
+   begin
+      Class.Info (Ev.all).Payload := Some_Value;
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
    end;
 </pre>
