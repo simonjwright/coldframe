@@ -1,21 +1,19 @@
 <domain>
-<extractor>extractor.ebs: cf-20050515h</extractor>
 <name>Associations</name>
+<documentation></documentation>
+<extractor>cat2raw.py: $Revision: 8aa0864879a3 $</extractor>
 <date>
-<year>2005</year>
-<month>6</month>
-<day>16</day>
-<time>10:56</time>
+<year>2007</year>
+<month>11</month>
+<day>24</day>
+<time>13:34</time>
 </date>
-<documentation><![CDATA[  ]]></documentation>
 <classes>
 <class stereotype="singleton">
 <name>ss</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -25,18 +23,15 @@
 </class>
 <class>
 <name>bb</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
@@ -46,18 +41,15 @@
 </class>
 <class>
 <name>aa</name>
+<documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[  ]]></documentation>
 <attributes>
 <attribute stereotype="id">
 <name>id</name>
+<documentation></documentation>
 <visibility>PrivateAccess</visibility>
-<documentation><![CDATA[  ]]></documentation>
 <type>Autonumber</type>
-<initial></initial>
 </attribute>
 </attributes>
 <operations>
@@ -67,12 +59,10 @@
 </class>
 <class>
 <name>abcc1</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_1 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -82,12 +72,10 @@
 </class>
 <class>
 <name>abcc2</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_2 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -97,12 +85,10 @@
 </class>
 <class>
 <name>abcc3</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_3 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -112,12 +98,10 @@
 </class>
 <class>
 <name>abcc4</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_4 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -127,12 +111,10 @@
 </class>
 <class>
 <name>abcc5</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_5 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -142,12 +124,10 @@
 </class>
 <class>
 <name>abcc6</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_6 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -157,12 +137,10 @@
 </class>
 <class>
 <name>abcc7</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : abcc_7 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -172,12 +150,10 @@
 </class>
 <class>
 <name>sbcc1</name>
-<visibility>PublicAccess</visibility>
-<kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
 <documentation><![CDATA[ [[ abbreviation : sbcc_1 ]]
  ]]></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -187,11 +163,9 @@
 </class>
 <class>
 <name>sbcc2</name>
+<documentation><![CDATA[ [[ abbreviation : sbcc_2 ]] ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ [[ abbreviation : sbcc_2 ]] ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -201,11 +175,9 @@
 </class>
 <class>
 <name>sbcc3</name>
+<documentation><![CDATA[ [[ abbreviation : sbcc_3 ]] ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ [[ abbreviation : sbcc_3 ]] ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -215,11 +187,9 @@
 </class>
 <class>
 <name>sbcc4</name>
+<documentation><![CDATA[ [[ abbreviation : sbcc_4 ]] ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ [[ abbreviation : sbcc_4 ]] ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -229,11 +199,9 @@
 </class>
 <class>
 <name>sbcc5</name>
+<documentation><![CDATA[ [[ abbreviation : sbcc_5 ]] ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ [[ abbreviation : sbcc_5 ]] ]]></documentation>
 <attributes>
 </attributes>
 <operations>
@@ -243,11 +211,21 @@
 </class>
 <class>
 <name>sbcc6</name>
+<documentation><![CDATA[ [[ abbreviation : sbcc_6 ]] ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
-<cardinality>n</cardinality>
-<concurrency>Sequential</concurrency>
-<documentation><![CDATA[ [[ abbreviation : sbcc_6 ]] ]]></documentation>
+<attributes>
+</attributes>
+<operations>
+</operations>
+<events>
+</events>
+</class>
+<class stereotype="singleton">
+<name>ss2</name>
+<documentation></documentation>
+<visibility>PublicAccess</visibility>
+<kind>NormalClass</kind>
 <attributes>
 </attributes>
 <operations>
@@ -259,416 +237,520 @@
 <relationships>
 <association>
 <name>sbp1</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>sbp2</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>sbp3</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>sbp4</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>sbp5</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>sbp6</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp1</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[source]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[ [[source]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp2</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp3</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp4</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp5</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[source]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[ [[source]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abp6</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 </association>
 <association>
 <name>abc1</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[source]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[ [[source]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc1</associative>
 </association>
 <association>
 <name>abc2</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc2</associative>
 </association>
 <association>
 <name>abc3</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc3</associative>
 </association>
 <association>
 <name>abc4</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc4</associative>
 </association>
 <association>
 <name>abc5</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[source]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[ [[source]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc5</associative>
 </association>
 <association>
 <name>abc6</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc6</associative>
 </association>
 <association>
 <name>abc7</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>theaa</name>
+<documentation></documentation>
+<end>2</end>
 <classname>aa</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>abcc7</associative>
 </association>
 <association>
 <name>sbc1</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[ source ]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[ [[ source ]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc1</associative>
 </association>
 <association>
 <name>sbc2</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc2</associative>
 </association>
 <association>
 <name>sbc3</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc3</associative>
 </association>
 <association>
 <name>sbc4</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc4</associative>
 </association>
 <association>
 <name>sbc5</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation><![CDATA[ [[ source ]] ]]></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[ [[ source ]] ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc5</associative>
 </association>
 <association>
 <name>sbc6</name>
-<documentation><![CDATA[  ]]></documentation>
-<role><end>1</end>
+<documentation></documentation>
+<role>
 <name>thebb</name>
+<documentation></documentation>
+<end>1</end>
 <classname>bb</classname>
 <cardinality>0..n</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
-<role><end>2</end>
+<role>
 <name>thess</name>
+<documentation></documentation>
+<end>2</end>
 <classname>ss</classname>
 <cardinality>0..1</cardinality>
-<documentation><![CDATA[  ]]></documentation>
 </role>
 <associative>sbcc6</associative>
+</association>
+<association>
+<name>ss 1</name>
+<documentation></documentation>
+<role>
+<name>thess2</name>
+<documentation></documentation>
+<end>1</end>
+<classname>ss2</classname>
+<cardinality>1</cardinality>
+</role>
+<role>
+<name>thess</name>
+<documentation></documentation>
+<end>2</end>
+<classname>ss</classname>
+<cardinality>0..1</cardinality>
+</role>
+</association>
+<association>
+<name>ss 2</name>
+<documentation></documentation>
+<role>
+<name>thess2 {source}</name>
+<documentation></documentation>
+<end>1</end>
+<classname>ss2</classname>
+<cardinality>1</cardinality>
+</role>
+<role>
+<name>thess</name>
+<documentation></documentation>
+<end>2</end>
+<classname>ss</classname>
+<cardinality>1</cardinality>
+</role>
+</association>
+<association>
+<name>ss 3</name>
+<documentation></documentation>
+<role>
+<name>thess2 {source}</name>
+<documentation></documentation>
+<end>1</end>
+<classname>ss2</classname>
+<cardinality>0..1</cardinality>
+</role>
+<role>
+<name>thess</name>
+<documentation></documentation>
+<end>2</end>
+<classname>ss</classname>
+<cardinality>0..1</cardinality>
+</role>
 </association>
 </relationships>
 </domain>
