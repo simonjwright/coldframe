@@ -79,6 +79,8 @@ TCLXML ?= /usr/local/lib/tclxml-2.1theta
 
 NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
 HTMLGEN_SCRIPT = generate-html.xsl
+DIAGRAM_SCRIPT = generate-diagrams.xsl
+DOCGEN_SCRIPTS = $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
 Codegen_Script = generate-ada.xsl
 ifeq ($(CODEGEN_SCRIPT), )
   CODEGEN_SCRIPT = $(Codegen_Script)
@@ -128,9 +130,11 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	    $(NORM_VERBOSE) \
 	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
-%.html: %.norm $(HTMLGEN_SCRIPT)
+%.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
+	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
+	@sh -v $@.sh
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)
 	@$(ECHO) generating $@ ...
@@ -264,6 +268,11 @@ simple-association.png \
 type-mapping.png \
 vague-association.png
 
+# Images generated via generate-{html,diagrams}.xsl
+PNGS += \
+House_Management.Lamp.png \
+Serialization.Server.png
+
 # graphviz:
 %.png: %.dot
 	$(DOT) -o $@ -Tpng $<
@@ -373,7 +382,7 @@ PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
   $(NORMALIZE_ROSE_SCRIPT) \
   cf-banner.el \
-  $(HTMLGEN_SCRIPT) \
+  $(DOCGEN_SCRIPTS) \
   $(CODEGEN_SCRIPTS) \
   $(OTHER_SCRIPTS)
 
