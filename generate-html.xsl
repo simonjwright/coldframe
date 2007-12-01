@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 77df7b46fff8 2006/09/05 05:45:32 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 24269b5014b5 2007/12/01 21:36:37 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -131,6 +131,7 @@
           h6 { font-size : 1em; }
           p { margin : .1em 0 .1em 1em; }
           dl { margin-left : 1em; }
+          dl dl { margin-left : 2em; }
           ol, ul { margin-left : 2.2em; }
           table { margin-left : 1em;
           font-size : 100%; 
@@ -252,7 +253,7 @@
     <xsl:if test="$super">
       <p>
         <xsl:text>Supertype in </xsl:text>
-        <a href="#{super/name}">
+        <a href="#{$super/name}">
           <xsl:value-of select="$super/name"/>
         </a>.
       </p>
@@ -263,11 +264,11 @@
     <xsl:if test="$sub">
       <p>
         <xsl:text>Subtype of </xsl:text>
-        <a href="#{sub/parent}">
+        <a href="#{$sub/parent}">
           <xsl:value-of select="$sub/parent"/>
         </a>
         <xsl:text> in </xsl:text>
-        <a href="#{sub/name}"><xsl:value-of select="$sub/name"/></a>.
+        <a href="#{$sub/name}"><xsl:value-of select="$sub/name"/></a>.
       </p>
     </xsl:if>
 
@@ -306,6 +307,8 @@
       </dl>
       <h3>State-Event Matrix</h3>
       <xsl:call-template name="state-machine"/>
+      <h3>State Diagram</h3>
+      <img src="{../name}.{name}.png" alt="State diagram for {../name}.{name}"/>
     </xsl:if>
     <xsl:if test="operation">
       <h3>Operations</h3>
