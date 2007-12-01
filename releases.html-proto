@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 4c8d1aa8bebb 2007/10/27 15:59:06 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 42ead6b0dc6e 2007/12/01 21:40:42 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -87,20 +87,26 @@ triggered by the same event is detected properly.
 <li>With a new option (<tt>GENERATE_EVENT_LOGGING=yes</tt>), all
 events in the domain concerned are logged as they are handled (for
 instance events, the state on entry is included).
+
+<li>Generated HTML documents now include state diagrams
+(via <a href="http://www.graphviz.org/">Graphviz</a>).
  
 <li><b>Code</b>
 
 <li><tt>Cant_Happen</tt> exception reports are no longer accompanied
 with a traceback. The message says it all.
 
-<li>The default Event Queue gives instance events priority over class
-events. The previous behaviour is available via
-<tt>ColdFrame.Events_G.No_Instance_Priority_G</tt>.
+<li>The standard Event
+Queue <a href="event-use.html#eventpriorities">gives instance events
+priority over class events</a>.
 
 <li>Event Queue informational and error logging is now done via
 <tt>ColdFrame.Project.Log_Info</tt> (new) and
 <tt>ColdFrame.Project.Log_Error</tt> directly rather than via a
-generic signature package
+generic signature package.
+
+<li>A Trace event queue no longer includes the time in log messages
+(you have probably included the time in your project logger).
 
 <li><b>Testing</b>
 
