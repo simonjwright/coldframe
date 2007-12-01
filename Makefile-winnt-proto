@@ -54,6 +54,7 @@ JAVA ?= java
 MKDIR ?= mkdir
 RM ?= rm
 SED ?= sed
+SH ?= sh
 TAR ?= tar
 TRUE ?= true
 ZIP ?= zip
@@ -67,7 +68,7 @@ MAXIMPLDEPTH ?= 1
 
 # Locations, shouldn't need change
 
-CF = $(TOP)/cf-DATE
+CF = $(shell dirname $(word $(words $(MAKEFILE_LIST)), $(MAKEFILE_LIST)))
 
 TCLXML ?= $(TOP)/tclxml-2.1theta
 
@@ -92,6 +93,7 @@ endif
 
 NORMALIZE_ROSE_SCRIPT = $(CF)/normalize-rose.tcl
 HTMLGEN_SCRIPT = $(CF)/generate-html.xsl
+DIAGRAM_SCRIPT = $(CF)/generate-diagrams.xsl
 CODEGEN_SCRIPT ?= $(CF)/generate-ada.xsl
 CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 
@@ -104,9 +106,12 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    $(NORM_VERBOSE) \
 	    <$< | cat >$@ || ($(RM) -f $@; $(EXIT) 1)
 
-%.html: %.norm
+%.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
+	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
+	@$(SH) -v $@.sh
+	@$(RM) -f $@.sh
 
 %.ada: %.norm
 	@$(ECHO) generating $@ ...
