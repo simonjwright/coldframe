@@ -1,0 +1,93 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Top Half.Bottom Half"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"478FBB6803B9"
+    documentation 	"{ init = Top_Half.Bottom_Half.Implementation.Initialize }"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Bottom"
+	    quid       	"478FBCFF02D8"
+	    stereotype 	"singleton"
+	    operations 	(list Operations
+		(object Operation "Perform"
+		    quid       	"478FBD1603E0"
+		    parameters 	(list Parameters
+			(object Parameter "X"
+			    quid       	"478FBD300206"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"478FBCFC0049"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Top Bottom::Top Half.Bottom Half::Bottom" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1028, 519)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(828, 460)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	400
+			justify    	0
+			label      	"Bottom")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(828, 410)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	400
+			justify    	0
+			label      	"<<singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"478FBCFF02D8"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(828, 521)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	397)
+		    width      	418
+		    height     	242
+		    annotation 	8
+		    autoResize 	TRUE)))))

@@ -1,0 +1,35 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Top Half"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"478FBB5E00BC"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Public"
+	    quid       	"478FBB9E02A9"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "Perform"
+		    quid       	"478FBBC900DE"
+		    parameters 	(list Parameters
+			(object Parameter "X"
+			    quid       	"478FBBD80388"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"478FBB9B016E"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list))))
