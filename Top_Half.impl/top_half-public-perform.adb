@@ -7,5 +7,5 @@ procedure Perform
      (Domain_Initialized,
       "Top_Half not initialized");
 begin
-   Abstract_Bottom_Half.Perform (Abstract_Bottom_Half.Implementation.all, X);
+   Abstract_Bottom_Half.Perform (X);
 end Perform;
