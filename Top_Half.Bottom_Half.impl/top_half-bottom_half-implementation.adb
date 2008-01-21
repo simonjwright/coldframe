@@ -12,7 +12,7 @@ package body Top_Half.Bottom_Half.Implementation is
 
    procedure Initialize is
    begin
-      Top_Half.Abstract_Bottom_Half.Implementation := new Instance;
+      Top_Half.Abstract_Bottom_Half.Initialize (To_Use => new Instance);
    end Initialize;
 
 
