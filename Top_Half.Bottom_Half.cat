@@ -34,12 +34,12 @@
 	    origin_x   	0
 	    origin_y   	0
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::Top Bottom::Top Half.Bottom Half::Bottom" @1
+		(object ClassView "Class" "Logical View::Top Half.Bottom Half::Bottom" @1
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
 		    ShowOperationSignature 	TRUE
-		    location   	(1028, 519)
+		    location   	(484, 412)
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -51,7 +51,7 @@
 			default_color 	TRUE)
 		    label      	(object ItemLabel
 			Parent_View 	@1
-			location   	(828, 460)
+			location   	(284, 353)
 			fill_color 	13434879
 			nlines     	1
 			max_width  	400
@@ -59,7 +59,7 @@
 			label      	"Bottom")
 		    stereotype 	(object ItemLabel
 			Parent_View 	@1
-			location   	(828, 410)
+			location   	(284, 303)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
@@ -72,7 +72,7 @@
 		    quidu      	"478FBCFF02D8"
 		    compartment 	(object Compartment
 			Parent_View 	@1
-			location   	(828, 521)
+			location   	(284, 414)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
