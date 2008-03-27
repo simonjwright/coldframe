@@ -1,6 +1,6 @@
-<!-- $Id: generate-diagrams.xsl,v 07f537247d38 2007/12/01 21:29:40 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v 8c77646313ec 2008/03/27 22:16:35 simonjwright $ -->
 
-<!-- XSL stylesheet to generate HTML documentation. -->
+<!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -35,7 +35,10 @@
     <xsl:for-each select="class[statemachine]">
       <xsl:call-template name="state-diagram"/>
       <xsl:variable name="filename">
-        <xsl:value-of select="../name"/>.<xsl:value-of select="name"/>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>.state</xsl:text>
       </xsl:variable>
       <xsl:text>${DOT:-dot} -Tpng -o</xsl:text>
       <xsl:value-of select="$filename"/>
@@ -46,9 +49,10 @@
   </xsl:template>
 
 
-  <!-- Called at class to output the class's state diagram. -->
+  <!-- Called at class to output the class's state diagram as a dot
+       file. -->
   <xsl:template name="state-diagram">
-    <xsl:document href="{../name}.{name}.dot">
+    <xsl:document href="{../name}.{name}.state.dot">
       digraph {
       edge [fontsize=10];
       node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
