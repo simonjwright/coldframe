@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 24269b5014b5 2007/12/01 21:36:37 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 24ab4132b67f 2008/03/27 22:17:33 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -308,7 +308,7 @@
       <h3>State-Event Matrix</h3>
       <xsl:call-template name="state-machine"/>
       <h3>State Diagram</h3>
-      <img src="{../name}.{name}.png" alt="State diagram for {../name}.{name}"/>
+      <img src="{../name}.{name}.state.png" alt="State diagram for {../name}.{name}"/>
     </xsl:if>
     <xsl:if test="operation">
       <h3>Operations</h3>
