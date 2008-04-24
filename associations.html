@@ -1,4 +1,4 @@
-<!-- $Id: associations.html,v b2e9bcea58e7 2005/11/20 20:27:57 simonjwright $ -->
+<!-- $Id: associations.html,v 07fbfbe4b701 2008/04/24 05:36:07 simonjwright $ -->
 <head>
 <title>ColdFrame: Associations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -195,6 +195,8 @@ be able to get to more efficiently.
 
 <h2><a name="use">Use</a></h2>
 
+<h3>Using navigation operations</h3>
+
 <p>It can be difficult to work out which of the navigation operations
 you need to use.
 
@@ -243,6 +245,20 @@ needs adjustment;
 </blockquote>
 
 <p>and the answer is probably "<i>is fallback for</i>".
+
+<h3>Maintaining associations</h3>
+
+<p>It's quite legal to have more than one association between a pair
+of classes. For example, A1 <i>Book is on loan to Borrower</i> for
+current loans, vs A2 <i>Book has been on loan to Borrower</i> for
+historical loans.
+
+<p>The navigation operations <tt>Is_On_Loan_To</tt>
+and <tt>Has_Been_On_Loan_To</tt> both return <em>temporary</em>
+collections of references to Book instances. You can't move a Book
+instance from A1 to A2 when it's returned by moving the references
+between these collections; instead, use <tt>A1.Unlink</tt>
+and <tt>A2.Link</tt>.
 
 <p><hr>
 <i>
