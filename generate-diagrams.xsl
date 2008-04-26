@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v 8c77646313ec 2008/03/27 22:16:35 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v 49b498963da8 2008/04/26 05:41:13 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -90,15 +90,17 @@
         <xsl:if test="event or action">
           <xsl:text>[label="</xsl:text>
           <xsl:if test="@ignore">
-            <xsl:text>&#171;ignore&#187;\n</xsl:text>
+            <xsl:text>&#171;ignore&#187;    \n</xsl:text>
           </xsl:if>
           <xsl:if test="@self">
-            <xsl:text>&#171;self&#187;\n</xsl:text>
+            <xsl:text>&#171;self&#187;    \n</xsl:text>
           </xsl:if>
           <xsl:value-of select="event"/>
+          <xsl:text>    </xsl:text>
           <xsl:if test="action">
             <xsl:text>\n/</xsl:text>
             <xsl:value-of select="action"/>
+            <xsl:text>    </xsl:text>
           </xsl:if>
           <xsl:text>"]</xsl:text>
         </xsl:if>
