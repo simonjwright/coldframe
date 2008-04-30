@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 24ab4132b67f 2008/03/27 22:17:33 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 531a1a7ede14 2008/04/30 04:58:31 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -348,7 +348,7 @@
   </xsl:template>
 
 
-  <!-- Output details of a class Event. Called at statemachine/event
+  <!-- Output details of a class Event. Called at class/event
        in a Definition List context. -->
   <xsl:template name="class-event-details">
     <dt>
@@ -372,10 +372,10 @@
   <xsl:template name="event-details">
     <dt>
       <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
-      <xsl:if test="type">
+      <xsl:if test="../../event[name=./name]/type">
         <xsl:text> (payload of type </xsl:text>
         <xsl:call-template name="type-name-linked">
-          <xsl:with-param name="type" select="type"/>
+          <xsl:with-param name="type" select="../../event[name=./name]/type"/>
         </xsl:call-template>
         <xsl:text>)</xsl:text>
       </xsl:if>
