@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.ads,v $
---  $Revision: 0342c7e00b63 $
---  $Date: 2007/10/27 12:40:37 $
+--  $Revision: 046f1a8e2f4d $
+--  $Date: 2008/04/30 04:55:34 $
 --  $Author: simonjwright $
 
 with Ada.Finalization;
@@ -191,10 +191,20 @@ package ColdFrame.Events_G is
    procedure Post_To_Self (The_Event : Event_P;
                            On : access Event_Queue_Base) is abstract;
    --  Events to self take precedence over externally- or
-   --  timer-generated events and Locks.
+   --  timer-generated events and Locks, and are used to complete an
+   --  action where the completion is conditional: an action procedure
+   --  can use Post_To_Self if the condition for exiting the current
+   --  state has been met.
    --
-   --  Will raise Exceptions.Use_Error if not called from an event
-   --  action procedure.
+   --  "Self" in the name means the (state machine of) the instance
+   --  for which the state action procedure is currently being
+   --  executed (This).
+   --
+   --  Will raise Exceptions.Use_Error if On isn't the currently
+   --  executing event queue, or if The_Event isn't an instance event.
+   --
+   --  A later release of ColdFrame may also check that the "Self"
+   --  condition is obeyed.
 
    --  Private use only
    procedure Stop (The_Queue : in out Event_Queue_P);
