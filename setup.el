@@ -1,4 +1,4 @@
-;;; $Id: setup.el,v 7ba0a282e074 2006/11/30 06:47:58 simonjwright $
+;;; $Id: setup.el,v c59ee9194671 2008/04/30 05:00:46 simonjwright $
 ;;;
 ;;; Sets up environment variables for ColdFrame development
 
@@ -20,6 +20,9 @@
      ;; see notes in setup.sh
      ((or (memq system-type '(gnu/linux)) (memq system-type '(darwin)))
       (setenv "ADA_PROJECT_PATH"
-	      (concat (getenv "ADA_PROJECT_PATH") ":" home "/tash/src"))))
+	      (concat 
+	       (getenv "ADA_PROJECT_PATH")
+	       ":"
+	       home "/tcladashell"))))
     (setenv "TOP" home)
     ))

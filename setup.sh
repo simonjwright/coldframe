@@ -1,4 +1,4 @@
-# $Id: setup.sh,v d25a03ac37f2 2006/11/30 06:33:20 simonjwright $
+# $Id: setup.sh,v c59ee9194671 2008/04/30 05:00:46 simonjwright $
 # Sets up environment variables for ColdFrame development.
 # (very specific to SJW config!).
 
@@ -17,7 +17,7 @@ export COLDFRAME=cf
 case `uname` in
     Darwin | Linux)
 	# Use a tcladashell.sf.net install
-	export ADA_PROJECT_PATH=$ADA_PROJECT_PATH:~/tash/src
+	export ADA_PROJECT_PATH=$ADA_PROJECT_PATH:~/tcladashell
 	;;
     *)
 	echo "I don't know how to set up for Tash in `uname`"
