@@ -1,4 +1,4 @@
-<!-- $Id: event-modelling.html,v 98df93b90bcb 2006/06/06 18:53:44 simonjwright $ -->
+<!-- $Id: event-modelling.html,v 4971f218fa43 2008/04/30 04:57:41 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event modelling</title>
@@ -125,10 +125,10 @@ a delayed event.
 
 <li><i>Post</i> it, to be handled after at least a specified interval,
 
-<li><i>Set</i> it on a <i>Timer</i>, to he handled at a specific time
+<li><i>Set</i> it on a <i>Timer</i>, to be handled at a specific time
 in the future,
 
-<li><i>Set</i> it on a <i>Timer</i>, to he handled after at least a
+<li><i>Set</i> it on a <i>Timer</i>, to be handled after at least a
 specified interval,
 
 <li>handle it immediately.
@@ -147,7 +147,7 @@ have to send an event to the current instance as a way of moving the
 state machine on (perhaps you've come across an error condition). If
 this happens, you need the event to take precedence over any other
 events in the queue (otherwise, your event will happen after all the
-events already in the queue).
+instance events already in the queue).
 <br>To achieve this, use <tt>Post_To_Self</tt>; any event posted in
 this way takes priority over normally-posted events.
 <br>"Events to self" are also queued first in, first out.
