@@ -1,5 +1,5 @@
 --  GNAT project file for the Stairwell demonstration.
---  $Id: stairwell_demo.gpr,v 7f49b97524b7 2006/11/30 06:36:29 simonjwright $
+--  $Id: stairwell_demo.gpr,v e44408b310d8 2008/04/30 05:04:56 simonjwright $
 
 with "Options";
 with "ColdFrame";
@@ -24,7 +24,7 @@ project Stairwell_Demo is
   package Binder renames Options.Binder;
 
   package Linker is
-     for Default_Switches ("Ada") use Tash.Linker'Default_Switches ("Ada");
+     for Default_Switches ("Ada") use Tash.Linker_Options;
   end Linker;
 
 end Stairwell_Demo;
