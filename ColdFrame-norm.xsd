@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 071bcc33aa50 2006/04/22 19:15:22 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 552c9eee48dc 2008/04/30 05:45:43 simonjwright $ -->
 
 <!-- 
 
@@ -262,8 +262,20 @@
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element ref="state" minOccurs="1" maxOccurs="unbounded"/>
-        <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="sm-event" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="transition" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- NB, this element's name is actually plain 'event'; can't be
+       changed until all old .norm files have been replaced.
+       Would be much better if the statemachine had only
+       <xsd:element name="name"/>. -->
+  <xsd:element name="sm-event">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
