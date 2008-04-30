@@ -348,6 +348,8 @@ ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff \
 House_Management.html Digital_IO.html
 
+docs: $(DOCS)
+
 # We used to generate Serialization.html from Serialization.raw and
 # copy it to serialization-model.html, but unfortunately Darwin's
 # default file system is case-insensitive; which makes for confusion
@@ -735,7 +737,7 @@ cf-$(DATE).zip
 
 SFUSER ?= simonjwright
 
-upload-docs: top-index.html $(DOCS) force
+upload-docs: top-index.html docs force
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
