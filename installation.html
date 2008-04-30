@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 1005d420301a 2006/11/25 13:08:16 simonjwright $ -->
+<!-- $Id: installation.html,v 9b6242681ab0 2008/04/30 05:34:31 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -47,7 +47,8 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <li><a href="http://www.sourceforge.net/projects/tcl/">Tcl/Tk</a>, <a
 href="http://www.sourceforge.net/projects/incrtcl/">[incr Tcl]</a>
 
-<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+<li>If not in your Tcl
+distribution, <a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
 (version 2.1theta recommended)
 
 <li>a Java runtime; the <a
@@ -77,6 +78,8 @@ variables).
 releases of Tcl/Tk have included [incr Tcl] in the baseline.
 
 <h3>TclXML</h3>
+
+<p>May already be part of your Tcl distribution.
 
 <p>The archive should contain path information, so unpack it at
 <tt>/usr/local/lib</tt>. The Makefile assumes
@@ -354,10 +357,10 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
 <li><a href="http://www.cygwin.com/">Cygwin</a>
 
-<li><a href="http://www.Sensus.org/tcl/win32/itcl82.exe">[incr Tcl]</a>
-([incr Tcl] 3.1, over Tcl 8.2)
+<li><a href="http://www.activestate.com/">Tcl/Tk</a>
 
-<li><a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
+<li>If not in your Tcl
+distribution, <a href="http://sourceforge.net/projects/tclxml/">TclXML</a>
 (version 2.1theta recommended)
 
 <li><a href="http://sourceforge.net/projects/saxon/">Saxon</a>
@@ -394,6 +397,8 @@ components.
 
 <h3>TclXML</h3>
 
+<p>May already be part of your Tcl distribution.
+
 <p>This archive already contains a directory name;
 <tt>C:\tclxml-2.1theta</tt> is what the Makefile assumes.
 
@@ -406,8 +411,9 @@ components.
 <p>There are no special installation requirements. However, unless you
 are strongly wedded to the student AdaGIDE environment, I'd recommend
 using <a href="ftp://ftp.gnu.org/gnu/windows/emacs/">Emacs</a> (I know
-20.7 needs some minor tweaks, 21.1 should be OK) and <a
-href="http://libre.act-europe.fr/adamode/">ada-mode</a> (3.6).
+20.7 needs some minor tweaks, 21.1 should be OK)
+and <a 
+href="http://stephe-leake.org/emacs/ada-mode/emacs-ada-mode.html">ada-mode</a>.
 
 <p>If you do use AdaGIDE, you'll probably need to use the
 <tt>ADA_INCLUDE_PATH</tt> environment variable.
@@ -602,7 +608,7 @@ occurrences of the same file; you can't use the supplied
 <tt>~/Base/Build/ColdFrameProject/project</tt>; change directory to
 <tt>~/Base/Build/ColdFrameProject</tt> and say
 <pre>
-   $ make -f $TOP/$COLDFRAME/Makefile-unix install
+   $ make -f $TOP/$COLDFRAME/Makefile-winnt install
 </pre>
 
 <p>This will place those of ColdFrame's files that you haven't
