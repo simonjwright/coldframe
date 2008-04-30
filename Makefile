@@ -512,7 +512,7 @@ Makefile-demo-unix Makefile-demo-winnt \
 Examples.mdl
 
 EXAMPLES += \
-stairwell_demo.gpr tash.gpr \
+stairwell_demo.gpr \
 stairwelllights.tcl house-2.gif \
 Stairwell-Demo.mdl \
 Digital_IO.cat Digital_IO_Interface.cat \
