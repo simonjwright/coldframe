@@ -40,11 +40,11 @@ with Associations.Sbp3;
 with Associations.Sbp4;
 with Associations.Sbp5;
 with Associations.Sbp6;
+with Associations.Ss1;
+with Associations.Ss2;
 with Associations.Ss_1;
 with Associations.Ss_2;
-with Associations.Ss2;
 with Associations.Ss_3;
-with Associations.Ss;
 
 procedure Associations.T is
 begin
