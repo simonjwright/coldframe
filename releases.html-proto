@@ -1,4 +1,5 @@
-<!-- $Id: releases.html-proto,v 42ead6b0dc6e 2007/12/01 21:40:42 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 3cfb0a8f6a12 2008/05/03 20:11:33 simonjwright $ -->
+<!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -69,6 +70,8 @@ statement</a>.
 
 <li><b>Modelling</b>
 
+<li>Associations involving &#171;singletons&#187; are fully supported.
+ 
 <li><b>Generation</b>
 
 <li><tt>ColdFrame.Exceptions.Initialization_Error</tt> is no longer
@@ -90,7 +93,7 @@ instance events, the state on entry is included).
 
 <li>Generated HTML documents now include state diagrams
 (via <a href="http://www.graphviz.org/">Graphviz</a>).
- 
+
 <li><b>Code</b>
 
 <li><tt>Cant_Happen</tt> exception reports are no longer accompanied
@@ -1748,8 +1751,3 @@ document.write(document.lastModified);
 </script>
 </i></body>
 </html>
-
-#;; for emacs:
-#;; Local Variables:
-#;; mode: html
-#;; End:
