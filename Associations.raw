@@ -1,16 +1,16 @@
 <domain>
 <name>Associations</name>
 <documentation></documentation>
-<extractor>cat2raw.py: $Revision: 8aa0864879a3 $</extractor>
+<extractor>cat2raw.py: $Revision: 3fc33afdf909 $</extractor>
 <date>
-<year>2007</year>
-<month>11</month>
-<day>24</day>
-<time>13:34</time>
+<year>2008</year>
+<month>5</month>
+<day>3</day>
+<time>18:11</time>
 </date>
 <classes>
 <class stereotype="singleton">
-<name>ss</name>
+<name>ss1</name>
 <documentation></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
@@ -249,7 +249,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -267,7 +267,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -285,7 +285,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -303,7 +303,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -321,7 +321,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -339,7 +339,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -598,7 +598,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>1</cardinality>
 </role>
 <associative>sbcc1</associative>
@@ -617,7 +617,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>1</cardinality>
 </role>
 <associative>sbcc2</associative>
@@ -636,7 +636,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>1</cardinality>
 </role>
 <associative>sbcc3</associative>
@@ -655,7 +655,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 <associative>sbcc4</associative>
@@ -674,7 +674,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 <associative>sbcc5</associative>
@@ -693,7 +693,7 @@
 <name>thess</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 <associative>sbcc6</associative>
@@ -709,10 +709,10 @@
 <cardinality>1</cardinality>
 </role>
 <role>
-<name>thess</name>
+<name>thess1</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
@@ -727,10 +727,10 @@
 <cardinality>1</cardinality>
 </role>
 <role>
-<name>thess</name>
+<name>thess1</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>1</cardinality>
 </role>
 </association>
@@ -745,10 +745,10 @@
 <cardinality>0..1</cardinality>
 </role>
 <role>
-<name>thess</name>
+<name>thess1</name>
 <documentation></documentation>
 <end>2</end>
-<classname>ss</classname>
+<classname>ss1</classname>
 <cardinality>0..1</cardinality>
 </role>
 </association>
