@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v e66432c8ff34 2005/06/16 19:24:15 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v 635bfc0abd05 2008/05/03 16:30:42 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -266,7 +266,8 @@
 
     <xsl:if test="not(associative)">
 
-      <xsl:if test="not(/domain/class[name=$a]/@singleton)">
+      <!-- <xsl:if test="not(/domain/class[name=$a]/@singleton)"> -->
+      <xsl:if test="true()">
 
         <xsl:if test="$role-b/@source and not($role-a/@multiple)">
           <xsl:text>with </xsl:text>
@@ -282,7 +283,8 @@
 
       </xsl:if>
 
-      <xsl:if test="not(/domain/class[name=$b]/@singleton)">
+      <!-- <xsl:if test="not(/domain/class[name=$b]/@singleton)"> -->
+      <xsl:if test="true()">
 
         <xsl:if test="$role-a/@source and not($role-b/@multiple)">
           <xsl:text>with </xsl:text>
@@ -301,9 +303,6 @@
     </xsl:if>
 
     <xsl:if test="associative">
-
-      <!-- XXX The generated code isn't optimised for associations
-           with singletons; not very important, I think. -->
 
       <xsl:if test="role/@multiple">
         <xsl:text>with </xsl:text>
