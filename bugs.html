@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 069f910205b8 2007/12/01 21:30:23 simonjwright $ -->
+<!-- $Id: bugs.html,v 8d4512d5eba3 2008/05/03 20:11:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -36,12 +36,6 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <dd>It would be helpful if an association class could be automatically
 generated for many-to-many associations where the analyst hasn't
 provided one already.
-
-<dt>0035 (raised 1.xi.01)
-
-<dd>The association support packages generated when one of the parties
-in a 1:1 association is a &#171;singleton&#187; won't work if the
-non-singleton party is marked <tt>{source}</tt>.
 
 <dt>0049 (raised 27.xii.01)
 
@@ -92,14 +86,6 @@ an unhelpful error message.
 <tt>Create</tt> operation which is not meant to be called by
 handwritten code. Perhaps it should be renamed.
 
-<dt>0185 (raised 11.viii.03)
-
-<dd>It can be very confusing to detect the error where an event is
-(mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
-zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
-used instead of <tt>Natural_Duration</tt>?
-<br><i>What error is that?</i>
-
 <dt>0198 (raised 11.ix.03)
 
 <dd>Would it be possible to specify that operations should be inlined?
@@ -134,18 +120,11 @@ same name is not detected as such (this really only happens if you
 name one of your states <i>initial</i> or <i>final</i>, which are the
 default names used for initial and final states).
 
-<dt>0259 (raised 29.iv.04)
-
-<dd>Now that unrecognised (and arbitrary) tagged values are passed
-through into the normalized file, it would be a Good Idea to use XML
-namespaces to distinguish ColdFrame's elements and attributes from
-others.
-<br><i>Made a start by prefixing each template with a 2-character
-namespace abbreviation to indicate the file it's declared in.</i>
-
 <dt>0262 (raised 14.v.04)
 
-<dd>Extraction can fail silently.
+<dd>Extraction (via Rose) can fail silently.
+<br><i>Probably caused by using nested packages. Consider
+using <tt>cat2raw.py</tt>.</i>
 
 <dt>0265 (raised 26.v.04)
 
@@ -184,20 +163,6 @@ action.
 
 <dd>There's no way of seeing the <i>{revision}</i> string for a
 &#171;generate&#187;d (now &#171;include&#187;d) package.
-
-<dt>0296 (raised 1.iv.05)
-
-<dd>If you paste commentary into the model, it's possible to get odd
-characters which cause problems at code generation. Typical offenders
-would be Windows "smart quotes".
-
-<dt>0304 (raised 30.iv.05)
-
-<dd>An association class that's not in the same package as the
-association (might be in a child or parent) can be missed during
-extraction.
-<br><i>This seems to be a Rose quirk; it happens if a package is moved
-in the model, or imported into a different model.</i>
 
 <dt>0330 (raised 24.ix.05)
 
@@ -252,6 +217,18 @@ at all.</i>
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>3.v.08</h3>
+
+<dl>
+
+<dt>0035 (raised 1.xi.01)
+
+<dd>The association support packages generated when one of the parties
+in a 1:1 association is a &#171;singleton&#187; won't work if the
+non-singleton party is marked <tt>{source}</tt>.
+
+</dl>
 
 <h3>27.x.07</h3>
 
@@ -3239,6 +3216,29 @@ final state in Rose (a black blob in a circle).
 <br><i>This seems to be a problem with the <tt>-fstack-check</tt>
 compiler option.</i>
 
+<dt>0259 (raised 29.iv.04)
+
+<dd>Now that unrecognised (and arbitrary) tagged values are passed
+through into the normalized file, it would be a Good Idea to use XML
+namespaces to distinguish ColdFrame's elements and attributes from
+others.
+<br><i>Made a start by prefixing each template with a 2-character
+namespace abbreviation to indicate the file it's declared in.</i>
+
+<dt>0296 (raised 1.iv.05)
+
+<dd>If you paste commentary into the model, it's possible to get odd
+characters which cause problems at code generation. Typical offenders
+would be Windows "smart quotes".
+
+<dt>0304 (raised 30.iv.05)
+
+<dd>An association class that's not in the same package as the
+association (might be in a child or parent) can be missed during
+extraction.
+<br><i>This seems to be a Rose quirk; it happens if a package is moved
+in the model, or imported into a different model.</i>
+
 <dt>0365 (raised 4.iii.07)
 
 <dd>If an type is serializable in its source domain
@@ -3249,6 +3249,20 @@ be <tt>{serializable}</tt> immediately "here".
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>3.v.08</h3>
+
+<dl>
+
+<dt>0185 (raised 11.viii.03)
+
+<dd>It can be very confusing to detect the error where an event is
+(mistakenly) <tt>Set</tt> on a <tt>Timer</tt> to fire <i>after</i> a
+zero delay. Perhaps a type <tt><i>Positive</i>_Duration</tt> could be
+used instead of <tt>Natural_Duration</tt>?
+<br><i>What error is that?</i>
+
+</dl>
 
 <h3>26.ix.07</h3>
 
