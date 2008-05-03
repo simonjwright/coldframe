@@ -1,8 +1,9 @@
 #!/bin/sh
+# -*- Tcl -*- (for Emacs)
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 067126209cff 2007/10/27 12:26:15 simonjwright $
+# $Id: normalize-rose.tcl,v 6edb021ef5d9 2008/05/03 07:20:44 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
