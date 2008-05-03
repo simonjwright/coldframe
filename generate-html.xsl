@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 531a1a7ede14 2008/04/30 04:58:31 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 4986d9be59aa 2008/05/03 07:16:15 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -477,13 +477,13 @@
   </xsl:template>
 
 
-  <!-- Output details of a Class's Attribute. -->
-  <xsl:template match="attribute">
-    <xsl:variable name="name">
-      <xsl:call-template name="at:attribute-name"/>
-    </xsl:variable>
+  <!-- Output details of a Class's Attribute.
+       Only analyst-defined attributes are shown (attributes created
+       by normalization to implement relationships don't have names).
+        -->
+  <xsl:template match="attribute[name]">
     <dt>
-      <xsl:value-of select="$name"/>
+      <xsl:value-of select="name"/>
       <xsl:if test="@identifier"> (identifier)</xsl:if>
       <xsl:text> : </xsl:text>
       <xsl:choose>
@@ -659,7 +659,7 @@
         <xsl:value-of select="classname"/>
       </a>
     </p>
-    <!-- XXX documentation? -->
+    <xsl:apply-templates select="documentation"/>
   </xsl:template>
 
 
