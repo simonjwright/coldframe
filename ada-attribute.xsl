@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v ea746f8d2054 2006/04/23 11:01:32 simonjwright $ -->
+<!-- $Id: ada-attribute.xsl,v ef631e925e5c 2008/05/03 16:25:15 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -206,9 +206,10 @@
       <xsl:call-template name="at:attribute-name"/>
       <xsl:text>&#10;</xsl:text>
 
-      <!-- If this isn't a singleton, we need a handle parameter -->
+      <!-- If the class isn't a singleton, or this is a referential
+           attribute, we need a handle parameter. -->
       <xsl:choose>
-        <xsl:when test="not(../@singleton)">
+        <xsl:when test="@refers or not(../@singleton)">
           <xsl:value-of select="$IC"/>
           <xsl:text>(This : Handle) return </xsl:text>
         </xsl:when>
@@ -223,15 +224,19 @@
   </xsl:template>
 
 
-  <!-- Generate set specs (non-identifier attributes only). -->
+  <!-- Generate set specs (non-identifier instance attributes only). -->
   <xsl:template
     match="class/attribute[not(@identifier) and not(@class)]"
     mode="at:attribute-set-spec">
 
     <xsl:if test="@refers or $generate-accessors='yes'">
 
-      <!-- Set procedure, with comment for generated associative referential
-           attributes -->
+      <!-- Set procedure, with comment for generated associative
+           referential attributes. -->
+
+      <!-- XXX I don't understand why the test for there being a
+           relation? What does @relation mean anyway? Also, why are
+           set accessors handled differently from gets? -->
 
       <xsl:if test="@refers">
         <xsl:variable name="rel" select="@relation"/>
@@ -269,8 +274,9 @@
     <xsl:value-of select="$IC"/>
     <xsl:text>(</xsl:text>
 
-    <!-- If this isn't a singleton, we need a handle parameter -->
-    <xsl:if test="not(../@singleton)">
+    <!-- If the class isn't a singleton, or the attribute is
+         referential, we need a handle parameter. -->
+    <xsl:if test="@refers or not(../@singleton)">
       <xsl:text>This : Handle;</xsl:text>
       <xsl:text>&#10;</xsl:text>
       <xsl:value-of select="$IC"/>
