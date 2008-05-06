@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 3cfb0a8f6a12 2008/05/03 20:11:33 simonjwright $ -->
+<!-- $Id: releases.html-proto,v b8a739083ce1 2008/05/06 20:16:56 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -58,7 +58,41 @@ contains the complete documentation.
 <!-- The D A T E gets substituted by the Makefile with the current release.
      Don't use D A T E elsewhere! -->
 
+<!--
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li><b>Generation</b>
+
+<li><b>Code</b>
+
+<li><b>Testing</b>
+
+</ul>
+-->
+
+<dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Modelling</b>
+
+<li><b>Generation</b>
+
+<li>Generated HTMLfor instance events didn't select the right payload.
+
+<li><b>Code</b>
+
+<li><b>Testing</b>
+
+</ul>
+
+<dt>20080503
 
 <dd>
 <ul class="release">
