@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 4986d9be59aa 2008/05/03 07:16:15 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 4dccd77cbc12 2008/05/06 20:11:15 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -372,10 +372,10 @@
   <xsl:template name="event-details">
     <dt>
       <a name="{../../name}.{name}"><xsl:value-of select="name"/></a>
-      <xsl:if test="../../event[name=./name]/type">
+      <xsl:if test="../../event[name=current()/name]/type">
         <xsl:text> (payload of type </xsl:text>
         <xsl:call-template name="type-name-linked">
-          <xsl:with-param name="type" select="../../event[name=./name]/type"/>
+          <xsl:with-param name="type" select="../../event[name=current()/name]/type"/>
         </xsl:call-template>
         <xsl:text>)</xsl:text>
       </xsl:if>
