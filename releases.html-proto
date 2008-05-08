@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b8a739083ce1 2008/05/06 20:16:56 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 85f09ed4063e 2008/05/08 03:36:48 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -84,7 +84,11 @@ contains the complete documentation.
 
 <li><b>Generation</b>
 
-<li>Generated HTMLfor instance events didn't select the right payload.
+<li>Generated HTML for instance events didn't select the right
+payload.
+
+<li>Removed no-longer-relevant warnings about singletons in
+associations.
 
 <li><b>Code</b>
 
@@ -104,7 +108,7 @@ statement</a>.
 
 <li><b>Modelling</b>
 
-<li>Associations involving &#171;singletons&#187; are fully supported.
+<li>Associations involving &#171;singleton&#187;s are fully supported.
  
 <li><b>Generation</b>
 
