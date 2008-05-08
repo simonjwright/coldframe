@@ -1,8 +1,9 @@
-// $Id: self-events.dot,v c479093033cd 2008/05/08 05:16:52 simonjwright $
+// $Id: self-events.dot,v 3493e79f74d2 2008/05/08 18:49:30 simonjwright $
 // dot diagram showing use of self event to count resources
 
 digraph {
 
+graph [charset="latin1"]
 edge [fontsize=10];
 node [shape=record, style=filled, fillcolor="moccasin", fontsize=10];
 rankdir=LR;
@@ -13,6 +14,6 @@ processing [];
 
 initial -> waiting;
 waiting -> waiting [label="resource available"];
-waiting -> processing [label="Â«selfÂ»\ndone "];
+waiting -> processing [label="«self»\ndone"];
 
 }
