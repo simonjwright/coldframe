@@ -3,7 +3,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 6edb021ef5d9 2008/05/03 07:20:44 simonjwright $
+# $Id: normalize-rose.tcl,v 8fd9f5da13cc 2008/05/08 03:34:43 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1992,14 +1992,8 @@ itcl::class Association {
                     if [$role1 -getSourceEnd] {
                         Error "both ends of $name are marked as source"
                     }
-                    if [$cl1 -isSingleton] {
-                        Warning "[$cl2 -getName] can't be source in $name"
-                    }
                     $cl2 -addFormalizingAttributesTo $cl1 $this $role2 0
                 } elseif [$role1 -getSourceEnd] {
-                    if [$cl2 -isSingleton] {
-                        Warning "[$cl1 -getName] can't be source in $name"
-                    }
                     $cl1 -addFormalizingAttributesTo $cl2 $this $role1 0
                 } elseif [$role1 -getConditionality] {
                     if [$role2 -getConditionality] {
