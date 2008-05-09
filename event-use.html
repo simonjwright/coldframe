@@ -1,4 +1,4 @@
-<!-- $Id: event-use.html,v f1f3e0f532a6 2007/10/27 12:27:11 simonjwright $ -->
+<!-- $Id: event-use.html,v a71a3cd6c574 2008/05/09 20:50:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Event use</title>
@@ -147,16 +147,17 @@ next. Once chosen, events run to completion.
 
 <p><b>Class events</b> are to be used for transferring information
 into domains and possibly from a task in the domain to the rest of the
-domain (this may not be necessary. They should <em>not</em> be used
+domain (this may not be necessary). They should <em>not</em> be used
 within the domain; once inside, subprogram calls and instance events
 are the way to go.
 
 <p><b>Instance events</b> control state machines.
 
-<p><b>Self events</b> are used where you don't want to leave the state
-until some condition is reached. If you are waiting for two resources
-to become available, you could have the arrival of a resource
-signalled by an event, and post a self event when you have enough:
+<p><b>Self events</b> are instance events used where you don't want to
+leave the state until some condition is reached. If you are waiting
+for two resources to become available, you could have the arrival of a
+resource signalled by an event, and post a self event when you have
+enough:
 
 <p><img src="self-events.png">
 
