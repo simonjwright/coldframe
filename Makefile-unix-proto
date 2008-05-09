@@ -45,6 +45,7 @@ TOP ?= /usr/local/lib
 CHMOD ?= chmod
 CD ?= cd
 CP ?= cp
+DOT ?= dot
 ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
@@ -106,12 +107,14 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    $(NORM_VERBOSE) \
 	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
+# Do the diagrams first, because the HTML requires the cmapx output.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
-	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
+	@$(ECHO) generating diagrams for $@ ...
 	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
 	@$(SH) -v $@.sh
 	@$(RM) -f $@.sh
+	@$(ECHO) generating $@ ...
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
 	@$(ECHO) generating $@ ...
