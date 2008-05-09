@@ -339,7 +339,6 @@ target.html \
 testing.html \
 translation-rules.html \
 types.html \
-use.html \
 use-of-bcs.html \
 use-cases.html use-cases.texi \
 xml-schemas.html States-check.xsv States-check.html \
@@ -348,7 +347,8 @@ $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff \
-House_Management.html Digital_IO.html
+House_Management.html House_Management*.png \
+Digital_IO.html Digital_IO*.png
 
 docs: $(DOCS)
 
