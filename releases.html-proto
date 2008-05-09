@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 85f09ed4063e 2008/05/08 03:36:48 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 353238a37ec6 2008/05/09 20:56:50 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -86,6 +86,8 @@ contains the complete documentation.
 
 <li>Generated HTML for instance events didn't select the right
 payload.
+
+<li>Generated HTML includes simple hyperlinked class diagram.
 
 <li>Removed no-longer-relevant warnings about singletons in
 associations.
