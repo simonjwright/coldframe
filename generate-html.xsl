@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 4dccd77cbc12 2008/05/06 20:11:15 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 217b988933d0 2008/05/09 20:51:54 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -200,6 +200,13 @@
           </ul>
         </xsl:if>
         <!-- End of index -->
+        <hr/>
+        <xsl:copy-of select="document(concat(name, '.overall.cmapx'))"/>
+        <img 
+          src="{name}.overall.png" 
+          ismap="true"
+          usemap="#overall"
+          alt="Class diagram for {name}"/>
         <hr/>
         <xsl:if test="class[@public]">
           <h1>Public Classes</h1>
