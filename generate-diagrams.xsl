@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v 49b498963da8 2008/04/26 05:41:13 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v b1ec9099e153 2008/05/09 20:51:32 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -32,6 +32,7 @@
 
 
   <xsl:template match="domain">
+    <xsl:call-template name="overall-diagram"/>
     <xsl:for-each select="class[statemachine]">
       <xsl:call-template name="state-diagram"/>
       <xsl:variable name="filename">
@@ -46,6 +47,68 @@
       <xsl:value-of select="$filename"/>
       <xsl:text>.dot&#10;</xsl:text>
     </xsl:for-each>
+  </xsl:template>
+
+
+  <!-- Called at domain to output the overall class diagram as a dot
+       file. -->
+  <xsl:template name="overall-diagram">
+    <xsl:variable name="filename">
+      <xsl:value-of select="name"/>
+      <xsl:text>.overall</xsl:text>
+    </xsl:variable>
+    <xsl:document href="{$filename}.dot">
+      digraph overall {
+      edge [fontsize=10];
+      node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
+      <xsl:for-each select="class[@public]">
+        <xsl:sort select="name"/>
+        <xsl:value-of select="name"/>
+        <xsl:text> [fillcolor=green, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="class[not(@public)]">
+        <xsl:sort select="name"/>
+        <xsl:value-of select="name"/>
+        <xsl:text> [URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="association">
+        <xsl:value-of select="role[1]/classname"/>
+        <xsl:text> -> </xsl:text>
+        <xsl:value-of select="role[2]/classname"/>
+        <xsl:text> [label="</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>", arrowhead=none, URL="#</xsl:text>
+        <xsl:value-of select="name"/>
+        <xsl:text>"]&#10;</xsl:text>
+      </xsl:for-each>
+      <xsl:for-each select="inheritance">
+        <xsl:for-each select="child">
+          <!-- Output in reverse order with the arrow on the "wrong"
+               end, so parents appear at the top. -->
+          <xsl:value-of select="../parent"/>
+          <xsl:text> -> </xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text> [label="</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>", arrowhead=none, arrowtail=onormal, URL="#</xsl:text>
+          <xsl:value-of select="../name"/>
+          <xsl:text>"]&#10;</xsl:text>
+        </xsl:for-each>
+      </xsl:for-each>
+      }
+    </xsl:document>
+    <!-- Add the calls to dot to the generator script. -->
+    <xsl:text>${DOT:-dot} -Tpng -o</xsl:text>
+    <xsl:value-of select="$filename"/>
+    <xsl:text>.png -Tcmapx -o</xsl:text>
+    <xsl:value-of select="$filename"/>
+    <xsl:text>.cmapx </xsl:text>
+    <xsl:value-of select="$filename"/>
+    <xsl:text>.dot&#10;</xsl:text>
   </xsl:template>
 
 
