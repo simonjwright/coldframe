@@ -108,13 +108,16 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 # Do the diagrams first, because the HTML requires the cmapx output.
+# The cwd parameter to the HTML script is because XSLT has no access
+# otherwise.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
 	@$(ECHO) generating diagrams for $@ ...
 	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
 	@$(SH) -v $@.sh
 	@$(RM) -f $@.sh
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) cwd=$(PWD) >$@ || \
+	  ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
 	@$(ECHO) generating $@ ...
