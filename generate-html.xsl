@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 217b988933d0 2008/05/09 20:51:54 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 8ac4b7ffd7c5 2008/05/10 19:15:53 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -69,6 +69,8 @@
   <!-- Control limit on number of hash buckets. -->
   <xsl:param name="max-hash-buckets" select="49"/>
 
+  <!-- Current working directory (absolute is best!). -->
+  <xsl:param name="cwd" select="'.'"/>
 
   <!-- Global shorthands for indentation. -->
   <xsl:param name="I" select="$standard-indent"/>
@@ -201,7 +203,8 @@
         </xsl:if>
         <!-- End of index -->
         <hr/>
-        <xsl:copy-of select="document(concat(name, '.overall.cmapx'))"/>
+        <xsl:copy-of 
+          select="document(concat($cwd, '/', name, '.overall.cmapx'))"/>
         <img 
           src="{name}.overall.png" 
           ismap="true"
