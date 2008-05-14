@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 2fede47cce40 2008/05/14 20:59:40 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 5a823fee61b0 2008/05/14 21:17:14 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -257,32 +257,38 @@
     <xsl:variable name="name" select="name"/>
     <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
     <xsl:apply-templates select="documentation"/>
+
+    <xsl:for-each select="../association[associative=$name]">
+      <p>
+        <xsl:text>Associative in </xsl:text>
+        <a href="#{name}"><xsl:value-of select="name"/></a>.
+      </p>
+    </xsl:for-each>
     <xsl:variable 
       name="super"
       select="../inheritance[parent=$name]"/>
     <xsl:if test="$super">
       <p>
         <xsl:text>Supertype in </xsl:text>
-        <a href="#{$super/name}">
-          <xsl:value-of select="$super/name"/>
-        </a>.
+        <a href="#{$super/name}"><xsl:value-of select="$super/name"/></a>.
       </p>
     </xsl:if>
     <xsl:for-each select="../inheritance[child=$name]">
       <p>
         <xsl:text>Subtype of </xsl:text>
-        <a href="#{parent}">
-          <xsl:value-of select="parent"/>
-        </a>
+        <a href="#{parent}"><xsl:value-of select="parent"/></a>
         <xsl:text> in </xsl:text>
         <a href="#{name}"><xsl:value-of select="name"/></a>.
       </p>
     </xsl:for-each>
 
-    <xsl:if test="attribute">
+    <!-- Only report attributes that have analyst-defined names
+         (attributes created by normalization to implement
+         relationships don't have names). -->
+    <xsl:if test="attribute[name]">
       <h3>Attributes</h3>
       <dl>
-        <xsl:apply-templates select="attribute">
+        <xsl:apply-templates select="attribute[name]">
           <xsl:sort select="."/>
         </xsl:apply-templates>
       </dl>
@@ -488,11 +494,8 @@
   </xsl:template>
 
 
-  <!-- Output details of a Class's Attribute.
-       Only analyst-defined attributes are shown (attributes created
-       by normalization to implement relationships don't have names).
-        -->
-  <xsl:template match="attribute[name]">
+  <!-- Output details of a Class's Attribute. -->
+  <xsl:template match="attribute">
     <dt>
       <xsl:value-of select="name"/>
       <xsl:if test="@identifier"> (identifier)</xsl:if>
