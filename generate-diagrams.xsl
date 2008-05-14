@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v b1ec9099e153 2008/05/09 20:51:32 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v 731d8ca9502f 2008/05/14 21:01:49 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -76,14 +76,51 @@
         <xsl:text>"]&#10;</xsl:text>
       </xsl:for-each>
       <xsl:for-each select="association">
-        <xsl:value-of select="role[1]/classname"/>
-        <xsl:text> -> </xsl:text>
-        <xsl:value-of select="role[2]/classname"/>
-        <xsl:text> [label="</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>", arrowhead=none, URL="#</xsl:text>
-        <xsl:value-of select="name"/>
-        <xsl:text>"]&#10;</xsl:text>
+        <xsl:choose>
+          <xsl:when test="associative">
+            <xsl:value-of select="name"/>
+            <xsl:text> [shape=point, URL="#</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>"]&#10;</xsl:text>
+
+            <xsl:value-of select="role[1]/classname"/>
+            <xsl:text> -> </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text> [label="</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>", arrowhead=none, URL="#</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>"]&#10;</xsl:text>
+
+            <xsl:value-of select="role[2]/classname"/>
+            <xsl:text> -> </xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text> [label="</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>", arrowhead=none, URL="#</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>"]&#10;</xsl:text>
+
+            <xsl:value-of select="name"/>
+            <xsl:text> -> </xsl:text>
+            <xsl:value-of select="associative"/>
+            <xsl:text> [style=dashed, label="</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>", arrowhead=none, URL="#</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>"]&#10;</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="role[1]/classname"/>
+            <xsl:text> -> </xsl:text>
+            <xsl:value-of select="role[2]/classname"/>
+            <xsl:text> [label="</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>", arrowhead=none, URL="#</xsl:text>
+            <xsl:value-of select="name"/>
+            <xsl:text>"]&#10;</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:for-each>
       <xsl:for-each select="inheritance">
         <xsl:for-each select="child">
