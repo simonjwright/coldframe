@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 5a823fee61b0 2008/05/14 21:17:14 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v a9a458ec1a30 2008/05/14 21:30:41 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -264,6 +264,7 @@
         <a href="#{name}"><xsl:value-of select="name"/></a>.
       </p>
     </xsl:for-each>
+
     <xsl:variable 
       name="super"
       select="../inheritance[parent=$name]"/>
@@ -273,6 +274,7 @@
         <a href="#{$super/name}"><xsl:value-of select="$super/name"/></a>.
       </p>
     </xsl:if>
+
     <xsl:for-each select="../inheritance[child=$name]">
       <p>
         <xsl:text>Subtype of </xsl:text>
@@ -293,6 +295,7 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
+
     <xsl:if test="event[@class]">
       <h3>Class events</h3>
       <dl>
@@ -325,14 +328,47 @@
         src="{../name}.{name}.state.png"
         alt="State diagram for {../name}.{name}"/>
     </xsl:if>
+
     <xsl:if test="operation">
       <h3>Operations</h3>
-      <dl>
-        <xsl:apply-templates select="operation">
-          <xsl:sort select="."/>
-        </xsl:apply-templates>
-      </dl>
+
+      <xsl:if test="operation[@visibility='public']">
+        <h4>Public</h4>
+        <dl>
+          <xsl:apply-templates select="operation[@visibility='public']">
+            <xsl:sort select="."/>
+          </xsl:apply-templates>
+        </dl>
+      </xsl:if>
+
+      <xsl:if test="operation[@visibility='protected']">
+        <h4>Protected</h4>
+        <dl>
+          <xsl:apply-templates select="operation[@visibility='protected']">
+            <xsl:sort select="."/>
+          </xsl:apply-templates>
+        </dl>
+      </xsl:if>
+
+      <xsl:if test="operation[@visibility='private']">
+        <h4>Private</h4>
+        <dl>
+          <xsl:apply-templates select="operation[@visibility='private']">
+            <xsl:sort select="."/>
+          </xsl:apply-templates>
+        </dl>
+      </xsl:if>
+
+      <xsl:if test="operation[@visibility='implementation']">
+        <h4>Implementation</h4>
+        <dl>
+          <xsl:apply-templates select="operation[@visibility='implementation']">
+            <xsl:sort select="."/>
+          </xsl:apply-templates>
+        </dl>
+      </xsl:if>
     </xsl:if>
+
     <xsl:if
       test="../association[role/classname = $name]
             or ../association[associative = $name]">
@@ -348,6 +384,7 @@
         </xsl:for-each>
       </ul>
     </xsl:if>
+
   </xsl:template>
 
 
