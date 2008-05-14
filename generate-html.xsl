@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 8ac4b7ffd7c5 2008/05/10 19:15:53 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 207b278f6292 2008/05/14 20:52:21 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -268,19 +268,16 @@
         </a>.
       </p>
     </xsl:if>
-    <xsl:variable
-      name="sub"
-      select="../inheritance[child=$name]"/>
-    <xsl:if test="$sub">
+    <xsl:for-each select="../inheritance[child=$name]">
       <p>
         <xsl:text>Subtype of </xsl:text>
-        <a href="#{$sub/parent}">
-          <xsl:value-of select="$sub/parent"/>
+        <a href="#{parent}">
+          <xsl:value-of select="parent"/>
         </a>
         <xsl:text> in </xsl:text>
-        <a href="#{$sub/name}"><xsl:value-of select="$sub/name"/></a>.
+        <a href="#{name}"><xsl:value-of select="name"/></a>.
       </p>
-    </xsl:if>
+    </xsl:for-each>
 
     <xsl:if test="attribute">
       <h3>Attributes</h3>
@@ -318,7 +315,9 @@
       <h3>State-Event Matrix</h3>
       <xsl:call-template name="state-machine"/>
       <h3>State Diagram</h3>
-      <img src="{../name}.{name}.state.png" alt="State diagram for {../name}.{name}"/>
+      <img
+        src="{../name}.{name}.state.png"
+        alt="State diagram for {../name}.{name}"/>
     </xsl:if>
     <xsl:if test="operation">
       <h3>Operations</h3>
@@ -385,7 +384,9 @@
       <xsl:if test="../../event[name=current()/name]/type">
         <xsl:text> (payload of type </xsl:text>
         <xsl:call-template name="type-name-linked">
-          <xsl:with-param name="type" select="../../event[name=current()/name]/type"/>
+          <xsl:with-param
+            name="type"
+            select="../../event[name=current()/name]/type"/>
         </xsl:call-template>
         <xsl:text>)</xsl:text>
       </xsl:if>
@@ -509,12 +510,20 @@
             <xsl:with-param name="type" select="type"/>
           </xsl:call-template>
           <xsl:if test="@class">
-            <xsl:text> (class)</xsl:text>
+            <xsl:text>, class</xsl:text>
+          </xsl:if>
+          <xsl:if test="@aliased">
+            <xsl:text>, aliased</xsl:text>
+          </xsl:if>
+          <xsl:if test="@atomic">
+            <xsl:text>, atomic</xsl:text>
+          </xsl:if>
+          <xsl:if test="@volatile">
+            <xsl:text>, volatile</xsl:text>
           </xsl:if>
           <xsl:if test="initial">
-            <xsl:text> (initial value </xsl:text>
+            <xsl:text>, initial value </xsl:text>
             <xsl:value-of select="initial"/>
-            <xsl:text>)</xsl:text>
           </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
@@ -537,47 +546,47 @@
     <dt>
       <a name="{../name}.{name}"><xsl:value-of select="name"/></a>
       <xsl:if test="@abstract">
-        <xsl:text> (abstract)</xsl:text>
+        <xsl:text>, abstract</xsl:text>
       </xsl:if>
       <xsl:if test="@suppressed='framework'">
-        <xsl:text> (automatically-generated)</xsl:text>
+        <xsl:text>, automatically-generated</xsl:text>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="@access">
-          <xsl:text> (access-to-operation)</xsl:text>
+          <xsl:text>, access-to-operation</xsl:text>
         </xsl:when>
         <xsl:when test="@class">
-          <xsl:text> (class)</xsl:text>
+          <xsl:text>, class</xsl:text>
         </xsl:when>
       </xsl:choose>
       <xsl:if test="@convention">
-        <xsl:text> (convention </xsl:text>
+        <xsl:text>, convention </xsl:text>
         <xsl:value-of select="@convention"/>
-        <xsl:text>)</xsl:text>
+        <xsl:text></xsl:text>
       </xsl:if>
       <xsl:if test="@accessor">
-        <xsl:text> (accessor)</xsl:text>
+        <xsl:text>, accessor</xsl:text>
       </xsl:if>
       <xsl:if test="@initialize">
-        <xsl:text> (initialization)</xsl:text>
+        <xsl:text>, initialization</xsl:text>
       </xsl:if>
       <xsl:if test="@finalize">
-        <xsl:text> (finalization)</xsl:text>
+        <xsl:text>, finalization</xsl:text>
       </xsl:if>
       <xsl:if test="@final">
-        <xsl:text> (action deletes instance)</xsl:text>
+        <xsl:text>, action deletes instance</xsl:text>
       </xsl:if>
       <xsl:if test="@suppressed='instantiation'">
-        <xsl:text> (instantiated)</xsl:text>
+        <xsl:text>, instantiated</xsl:text>
       </xsl:if>
       <xsl:if test="@handler">
-        <xsl:text> (class event handler)</xsl:text>
+        <xsl:text>, class event handler</xsl:text>
       </xsl:if>
       <xsl:if test="@suppressed='navigation'">
-        <xsl:text> (navigation)</xsl:text>
+        <xsl:text>, navigation</xsl:text>
       </xsl:if>
       <xsl:if test="@entry">
-        <xsl:text> (entry)</xsl:text>
+        <xsl:text>, entry</xsl:text>
       </xsl:if>
       <xsl:if test="@return">
         <xsl:text> returns </xsl:text>
@@ -622,9 +631,8 @@
         <xsl:with-param name="type" select="type"/>
       </xsl:call-template>
       <xsl:if test="initial">
-        <xsl:text> (default </xsl:text>
+        <xsl:text>, default </xsl:text>
         <xsl:value-of select="initial"/>
-        <xsl:text>)</xsl:text>
       </xsl:if>
     </dt>
     <dd>
