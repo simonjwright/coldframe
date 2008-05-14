@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 207b278f6292 2008/05/14 20:52:21 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 2fede47cce40 2008/05/14 20:59:40 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -568,10 +568,10 @@
         <xsl:text>, accessor</xsl:text>
       </xsl:if>
       <xsl:if test="@initialize">
-        <xsl:text>, initialization</xsl:text>
+        <xsl:text>, class initialization</xsl:text>
       </xsl:if>
       <xsl:if test="@finalize">
-        <xsl:text>, finalization</xsl:text>
+        <xsl:text>, instance finalization</xsl:text>
       </xsl:if>
       <xsl:if test="@final">
         <xsl:text>, action deletes instance</xsl:text>
