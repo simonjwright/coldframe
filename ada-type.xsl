@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v dfe25cbf1175 2008/04/30 05:01:37 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 47a56a74a00c 2008/05/17 20:57:30 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -330,6 +330,7 @@
             <xsl:text>is record&#10;</xsl:text>
             <xsl:value-of select="$II"/>
             <xsl:text>case Discriminant is&#10;</xsl:text>
+            <xsl:value-of select="$blank-line"/>
 
             <xsl:for-each select="attribute">
               <xsl:sort select="name"/>
@@ -342,6 +343,7 @@
               <xsl:call-template name="at:single-record-component">
                 <xsl:with-param name="indent" select="$IIII"/>
               </xsl:call-template>
+              <xsl:value-of select="$blank-line"/>
 
             </xsl:for-each>
 
@@ -390,6 +392,7 @@
             <xsl:text>type </xsl:text>
             <xsl:value-of select="name"/>
             <xsl:text> is record&#10;</xsl:text>
+            <xsl:value-of select="$blank-line"/>
             <xsl:apply-templates mode="at:instance-record-component"/>
             <xsl:value-of select="$I"/>
             <xsl:text>end record;&#10;</xsl:text>
