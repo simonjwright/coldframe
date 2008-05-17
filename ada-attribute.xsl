@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v fcf88dd6b3aa 2008/05/17 17:27:44 simonjwright $ -->
+<!-- $Id: ada-attribute.xsl,v 13d6c31ecd31 2008/05/17 17:46:42 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -400,6 +400,9 @@
       <xsl:value-of select="initial"/>
     </xsl:if>
     <xsl:text>;&#10;</xsl:text>
+    <xsl:call-template name="ut:commentary">
+      <xsl:with-param name="indent" select="$indent"/>
+    </xsl:call-template>
     <xsl:if test="@atomic">
       <xsl:value-of select="$indent"/>
       <xsl:text>pragma Atomic (</xsl:text>
@@ -412,16 +415,13 @@
       <xsl:value-of select="name"/>
       <xsl:text>);&#10;</xsl:text>
     </xsl:if>
-    <xsl:call-template name="ut:commentary">
-      <xsl:with-param name="indent" select="$indent"/>
-    </xsl:call-template>
   </xsl:template>
 
 
   <!-- Generate attribute name. Normally called at {class,type}/attribute;
        if not, supply parameter "a" as the attribute concerned.
        If this is an anonymous referential attribute, we make up its
-       name from the the relationship name and  the role name.
+       name from the relationship name and  the role name.
        If not, just use the <name> element. -->
   <xsl:template name="at:attribute-name">
     <xsl:param name="a" select="."/>
