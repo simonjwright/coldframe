@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v ef631e925e5c 2008/05/03 16:25:15 simonjwright $ -->
+<!-- $Id: ada-attribute.xsl,v fcf88dd6b3aa 2008/05/17 17:27:44 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -42,9 +42,12 @@
       <xsl:when test="count(attribute[@identifier]) &gt; 0">
         <xsl:value-of select="$I"/>
         <xsl:text>type Identifier is record&#10;</xsl:text>
+        <xsl:value-of select="$blank-line"/>
         <xsl:apply-templates
           mode="at:instance-record-component"
-          select="attribute[@identifier]"/>
+          select="attribute[@identifier]">
+          <xsl:sort select="name"/>
+        </xsl:apply-templates>
         <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
       </xsl:when>
@@ -78,18 +81,22 @@
             <xsl:text>type Instance is new ColdFrame.Instances.Instance_Base with record&#10;</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+        <xsl:value-of select="$blank-line"/>
 
         <xsl:if test="@active">
           <xsl:value-of select="$II"/>
           <xsl:text>The_T : T_P;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
         </xsl:if>
 
         <!-- The non-supertype attributes -->
         <xsl:apply-templates
           mode="at:instance-record-component"
-          select="attribute"/>
-        <xsl:variable name="parent-name" select="name"/>
+          select="attribute">
+          <xsl:sort select="name"/>
+        </xsl:apply-templates>
 
+        <xsl:variable name="parent-name" select="name"/>
         <!-- supertype attributes -->
         <xsl:for-each select="../inheritance[parent=$parent-name]">
           <xsl:sort select="name"/>
@@ -98,6 +105,7 @@
           <xsl:text>_Current_Child : </xsl:text>
           <xsl:value-of select="name"/>
           <xsl:text>_Child;&#10;</xsl:text>
+          <xsl:value-of select="$blank-line"/>
         </xsl:for-each>
 
         <!-- state machine status -->
@@ -114,6 +122,7 @@
             <xsl:value-of select="$II"/>
             <xsl:text>pragma Atomic (State_Machine_State);&#10;</xsl:text>
           </xsl:if>
+          <xsl:value-of select="$blank-line"/>
         </xsl:if>
 
         <xsl:value-of select="$I"/>
@@ -138,6 +147,7 @@
     <xsl:call-template name="at:single-record-component">
       <xsl:with-param name="indent" select="$II"/>
     </xsl:call-template>
+    <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
   <xsl:template mode="at:instance-record-component" match="*"/>
