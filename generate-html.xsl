@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v a9a458ec1a30 2008/05/14 21:30:41 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 2ab5861e328a 2008/05/30 04:52:10 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -161,6 +161,14 @@
           </p>
         </xsl:if>
         <h1>Contents</h1>
+        <h2>All classes</h2>
+        <xsl:copy-of 
+          select="document(concat($cwd, '/', name, '.overall.cmapx'))"/>
+        <img 
+          src="{name}.overall.png" 
+          ismap="true"
+          usemap="#overall"
+          alt="Class diagram for {name}"/>
         <xsl:if test="class[@public]">
           <h2>Public Classes</h2>
           <ul>
@@ -202,14 +210,6 @@
           </ul>
         </xsl:if>
         <!-- End of index -->
-        <hr/>
-        <xsl:copy-of 
-          select="document(concat($cwd, '/', name, '.overall.cmapx'))"/>
-        <img 
-          src="{name}.overall.png" 
-          ismap="true"
-          usemap="#overall"
-          alt="Class diagram for {name}"/>
         <hr/>
         <xsl:if test="class[@public]">
           <h1>Public Classes</h1>
@@ -256,6 +256,15 @@
   <xsl:template match="domain/class">
     <xsl:variable name="name" select="name"/>
     <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
+
+    <xsl:copy-of 
+      select="document(concat($cwd, '/', ../name, '.', name, '.class.cmapx'))"/>
+    <img 
+      src="{../name}.{name}.class.png" 
+      ismap="true"
+      usemap="#{name}.class"
+      alt="Context class diagram for {name}"/>
+
     <xsl:apply-templates select="documentation"/>
 
     <xsl:for-each select="../association[associative=$name]">
