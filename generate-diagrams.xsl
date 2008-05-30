@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v 2ab5861e328a 2008/05/30 04:52:10 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v 4d88f09e2a78 2008/05/30 06:00:53 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -32,7 +32,25 @@
 
 
   <xsl:template match="domain">
+    <xsl:variable name="dir">
+      <xsl:value-of select="name"/>
+      <xsl:text>.images/</xsl:text>
+    </xsl:variable>
+    <xsl:text>cd </xsl:text>
+    <xsl:value-of select="$dir"/>
+    <xsl:text>&#10;</xsl:text>
     <xsl:call-template name="overall-diagram"/>
+    <xsl:variable name="overall-filename">
+      <xsl:value-of select="name"/>
+      <xsl:text>.overall</xsl:text>
+    </xsl:variable>
+    <xsl:text>${DOT:-dot} -Tpng -o</xsl:text>
+    <xsl:value-of select="$overall-filename"/>
+    <xsl:text>.png -Tcmapx -o</xsl:text>
+    <xsl:value-of select="$overall-filename"/>
+    <xsl:text>.cmapx </xsl:text>
+    <xsl:value-of select="$overall-filename"/>
+    <xsl:text>.dot&#10;</xsl:text>
     <xsl:for-each select="class">
       <xsl:call-template name="class-diagram"/>
       <xsl:variable name="filename">
@@ -69,12 +87,8 @@
   <!-- Called at domain to output the overall class diagram as a dot
        file. -->
   <xsl:template name="overall-diagram">
-    <xsl:variable name="filename">
-      <xsl:value-of select="name"/>
-      <xsl:text>.overall</xsl:text>
-    </xsl:variable>
-    <xsl:document href="{$filename}.dot">
-      digraph overall {
+    <xsl:document href="{name}.images/{name}.overall.dot">
+      digraph "overall" {
       edge [fontsize=10];
       node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];
       <xsl:for-each select="class[@public]">
@@ -154,14 +168,6 @@
       </xsl:for-each>
       }
     </xsl:document>
-    <!-- Add the calls to dot to the generator script. -->
-    <xsl:text>${DOT:-dot} -Tpng -o</xsl:text>
-    <xsl:value-of select="$filename"/>
-    <xsl:text>.png -Tcmapx -o</xsl:text>
-    <xsl:value-of select="$filename"/>
-    <xsl:text>.cmapx </xsl:text>
-    <xsl:value-of select="$filename"/>
-    <xsl:text>.dot&#10;</xsl:text>
   </xsl:template>
 
 
@@ -169,7 +175,7 @@
        neighbours as a dot file (for use with circo). -->
   <xsl:template name="class-diagram">
     <xsl:variable name="n" select="name"/>
-    <xsl:document href="{../name}.{$n}.class.dot">
+    <xsl:document href="{../name}.images/{../name}.{$n}.class.dot">
       <xsl:text>digraph "</xsl:text>
       <xsl:value-of select="name"/>
       <xsl:text>.class" {
@@ -377,7 +383,7 @@
   <!-- Called at class to output the class's state diagram as a dot
        file. -->
   <xsl:template name="state-diagram">
-    <xsl:document href="{../name}.{name}.state.dot">
+    <xsl:document href="{../name}.images/{../name}.{name}.state.dot">
       digraph {
       edge [fontsize=10];
       node [shape=record, style=filled, fillcolor=moccasin, fontsize=10];

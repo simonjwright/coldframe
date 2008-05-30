@@ -132,9 +132,13 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 
 # Do the diagrams first, because the HTML requires the cmapx output.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
+	@rm -rf `basename $@ .html`.images
+	@mkdir `basename $@ .html`.images
 	@$(ECHO) generating diagrams for $@ ...
-	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
-	@sh -v $@.sh
+	@$(SAXON) $< $(DIAGRAM_SCRIPT) \
+	  >`basename $@ .html`.images/$@.sh \
+	  || ($(RM) -f $@; $(EXIT) 1)
+	@sh -v `basename $@ .html`.images/$@.sh
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
 

@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 2ab5861e328a 2008/05/30 04:52:10 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 4d88f09e2a78 2008/05/30 06:00:53 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -163,9 +163,9 @@
         <h1>Contents</h1>
         <h2>All classes</h2>
         <xsl:copy-of 
-          select="document(concat($cwd, '/', name, '.overall.cmapx'))"/>
+          select="document(concat($cwd, '/', name, '.images/', name, '.overall.cmapx'))"/>
         <img 
-          src="{name}.overall.png" 
+          src="{name}.images/{name}.overall.png" 
           ismap="true"
           usemap="#overall"
           alt="Class diagram for {name}"/>
@@ -258,9 +258,9 @@
     <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
 
     <xsl:copy-of 
-      select="document(concat($cwd, '/', ../name, '.', name, '.class.cmapx'))"/>
+      select="document(concat($cwd, '/', ../name, '.images/', ../name, '.', name, '.class.cmapx'))"/>
     <img 
-      src="{../name}.{name}.class.png" 
+      src="{../name}.images/{../name}.{name}.class.png" 
       ismap="true"
       usemap="#{name}.class"
       alt="Context class diagram for {name}"/>
@@ -334,7 +334,7 @@
       <xsl:call-template name="state-machine"/>
       <h3>State Diagram</h3>
       <img
-        src="{../name}.{name}.state.png"
+        src="{../name}.images/{../name}.{name}.state.png"
         alt="State diagram for {../name}.{name}"/>
     </xsl:if>
 
