@@ -173,7 +173,8 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 # "failure" because GNAT 3.16a1 reports an error here.
 # Remove any generated files which are also present in the implementation
 # directory (.impl).
-# Write-protect the generated files (careful, in case there are a lot of them!).
+# Write-protect the generated files (careful, in case there are a lot of
+# them!).
 # Make the target directory itself writable (so users can delete files in it).
 # Report unimplemented bodies.
 %.gen: %.ada
@@ -183,7 +184,9 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@if [ -d $*.impl ]; then \
 	  TODELETE=""; \
-	  IMPLFILES=`$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
+	  IMPLFILES=`$(FIND) $*.impl \
+	    -maxdepth $(MAXIMPLDEPTH) \
+	    -name \*.ad[bs]`; \
 	  for f in $$IMPLFILES; do \
 	    GENFILE=$@/`basename $$f`; \
 	    if [ -f $$GENFILE ]; then \
@@ -274,11 +277,6 @@ simple-association.png \
 type-mapping.png \
 vague-association.png
 
-# Images generated via generate-{html,diagrams}.xsl
-PNGS += \
-House_Management.Lamp.png \
-Serialization.Server.png
-
 # graphviz:
 %.png: %.dot
 	$(DOT) -o $@ -Tpng $<
@@ -351,8 +349,8 @@ $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff \
-House_Management.html House_Management*.png \
-Digital_IO.html Digital_IO*.png
+House_Management.html House_Management.images/ \
+Digital_IO.html Digital_IO.images/
 
 docs: $(DOCS)
 
@@ -797,7 +795,7 @@ DATED_FILES = \
  generate-c.xsl
 
 cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
-$(EXAMPLES) $(TEST) $(TOOL_SRC) Makefile-test force
+  $(EXAMPLES) $(TEST) $(TOOL_SRC) Makefile-test force
 	-$(RM) -rf $@
 	$(MKDIR) $@
 	$(CP) -p $(MAKEFILES) $(GPRS) $(PROGS) $@
