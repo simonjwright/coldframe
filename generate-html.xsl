@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 4d88f09e2a78 2008/05/30 06:00:53 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v cbec2c73513c 2008/05/31 07:29:48 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -165,7 +165,8 @@
         <xsl:copy-of 
           select="document(concat($cwd, '/', name, '.images/', name, '.overall.cmapx'))"/>
         <img 
-          src="{name}.images/{name}.overall.png" 
+          src="{name}.images/{name}.overall.png"
+          border="0"
           ismap="true"
           usemap="#overall"
           alt="Class diagram for {name}"/>
@@ -261,6 +262,7 @@
       select="document(concat($cwd, '/', ../name, '.images/', ../name, '.', name, '.class.cmapx'))"/>
     <img 
       src="{../name}.images/{../name}.{name}.class.png" 
+      border="0"
       ismap="true"
       usemap="#{name}.class"
       alt="Context class diagram for {name}"/>
@@ -335,6 +337,7 @@
       <h3>State Diagram</h3>
       <img
         src="{../name}.images/{../name}.{name}.state.png"
+        border="0"
         alt="State diagram for {../name}.{name}"/>
     </xsl:if>
 
