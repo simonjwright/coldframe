@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-monitoring_g.adb,v $
---  $Revision: 0342c7e00b63 $
---  $Date: 2007/10/27 12:40:37 $
+--  $Revision: a71c3a97d2a5 $
+--  $Date: 2008/06/03 19:47:18 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -50,7 +50,7 @@ package body ColdFrame.Events_G.Monitoring_G is
       if Used_By_The_Instance_Of.all in Instance_Event_Base'Class then
 
          declare
-            I : Events_G.Instance_Base
+            I : Events_G.Instance_Base'Class
               renames Instance_Event_Base
               (Used_By_The_Instance_Of.all).For_The_Instance.all;
          begin
@@ -471,7 +471,10 @@ package body ColdFrame.Events_G.Monitoring_G is
 
                   or
                      accept Invalidate
-                       (For_The_Instance : Instance_Base_P);
+                       (For_The_Instance : Instance_Base_P) do
+                        pragma Unreferenced (For_The_Instance);
+                        null;
+                     end Invalidate;
                      --  Invalidate is called "just in case" (the Instance
                      --  being deleted can't tell whether there are any
                      --  outstanding held Events). But if we get here, the
@@ -568,15 +571,26 @@ package body ColdFrame.Events_G.Monitoring_G is
             --  is entitled to make any of the remaining calls; though
             --  of course there is nothing to do.
             accept Add_At_Event (The_Entry : Event_P;
-                                 To_Run_At : Time.Time);
+                                 To_Run_At : Time.Time) do
+               pragma Unreferenced (The_Entry);
+               pragma Unreferenced (To_Run_At);
+               null;
+            end Add_At_Event;
          or
             accept Add_After_Event (The_Entry : Event_P;
-                                    To_Run_After : Duration);
+                                    To_Run_After : Duration) do
+               pragma Unreferenced (The_Entry);
+               pragma Unreferenced (To_Run_After);
+               null;
+            end Add_After_Event;
          or
             accept Rethink;
          or
             accept Invalidate
-              (For_The_Instance : Instance_Base_P);
+              (For_The_Instance : Instance_Base_P) do
+               pragma Unreferenced (For_The_Instance);
+               null;
+            end Invalidate;
          end select;
       end loop Final;
 
