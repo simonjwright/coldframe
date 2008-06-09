@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v 8d4512d5eba3 2008/05/03 20:11:50 simonjwright $ -->
+<!-- $Id: bugs.html,v d5ae8c1da2fc 2008/06/09 17:14:01 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -97,17 +97,6 @@ ColdFrame doesn't check that the operation profiles match (for
 example, that both are procedures or both functions). This can lead to
 compilation errors in generated code.
 
-<dt>0210 (raised Guy Fawkes' Day 2003)
-
-<dd>A &#171;type&#187; can't have an attribute of an
-&#171;access&#187; (access-to-operation) type.
-<br><i>The problem is that all access-to-operation types are declared
-after all ordinary types. Note that the declarations are done in two
-tranches depending on the visibility, so consider declaring the
-access-to-operation types with public visibility (ie as operations of
-types with public visibility) and the using types with private
-visibility.</i>
-
 <dt>0240 (raised 2.iii.04)
 
 <dd>The Event Queue operation <tt>Unset</tt> assumes it's called in an
@@ -164,19 +153,6 @@ action.
 <dd>There's no way of seeing the <i>{revision}</i> string for a
 &#171;generate&#187;d (now &#171;include&#187;d) package.
 
-<dt>0330 (raised 24.ix.05)
-
-<dd>If a state model has a completion transition from the initial
-state, the transition is performed synchronously during instance
-creation using a special <i>creation event</i>. Normally this won't
-cause a problem, but if the class is a singleton this transition, and
-any entry actions on the first state, will take place during domain
-initialization, <b>after</b> the domain <i>{init}</i> operation
-but <b>before</b> any class &#171;init&#187; operations have been
-called; which means that those entry actions had better not depend on
-any of the class initializations.
-<br>SourceForge 1303319
-
 <dt>0332 (raised 30.ix.05)
 
 <dd>You can't
@@ -193,16 +169,6 @@ not be detected.
 <br>SourceForge 1401275
 <br><i>26.x.07: checks now include inherited actions, but the reported
 problem still exists.</i>
-
-<dt>0347 (raised 18.ii.06)
-
-<dd>Especially with large arrays (or perhaps just with large records),
-the performance of converting a serialized output stream to XML is
-very sluggish.
-<br>SourceForge 1434319
-<br><i>Some initial work done --
-see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
-better to have a primitive Print operation.</i>
 
 <dt>0362 (raised 5.ix.06)
 
@@ -3198,6 +3164,17 @@ unhandled exception has been caught in the event dispatcher.
 <br><i>It does log an Error, this may be enough; after all, the
 application is now unstable.</i>
 
+<dt>0210 (raised Guy Fawkes' Day 2003)
+
+<dd>A &#171;type&#187; can't have an attribute of an
+&#171;access&#187; (access-to-operation) type.
+<br><i>The problem is that all access-to-operation types are declared
+after all ordinary types. Note that the declarations are done in two
+tranches depending on the visibility, so consider declaring the
+access-to-operation types with public visibility (ie as operations of
+types with public visibility) and the using types with private
+visibility.</i>
+
 <dt>0235 (raised 12.ii.04)
 
 <dd>Initial states can't have entry actions.
@@ -3238,6 +3215,29 @@ association (might be in a child or parent) can be missed during
 extraction.
 <br><i>This seems to be a Rose quirk; it happens if a package is moved
 in the model, or imported into a different model.</i>
+
+<dt>0330 (raised 24.ix.05)
+
+<dd>If a state model has a completion transition from the initial
+state, the transition is performed synchronously during instance
+creation using a special <i>creation event</i>. Normally this won't
+cause a problem, but if the class is a singleton this transition, and
+any entry actions on the first state, will take place during domain
+initialization, <b>after</b> the domain <i>{init}</i> operation
+but <b>before</b> any class &#171;init&#187; operations have been
+called; which means that those entry actions had better not depend on
+any of the class initializations.
+<br>SourceForge 1303319
+
+<dt>0347 (raised 18.ii.06)
+
+<dd>Especially with large arrays (or perhaps just with large records),
+the performance of converting a serialized output stream to XML is
+very sluggish.
+<br>SourceForge 1434319
+<br><i>Some initial work done --
+see <tt>ColdFrame.Unbounded_Strings</tt> -- but it would be even
+better to have a primitive Print operation.</i>
 
 <dt>0365 (raised 4.iii.07)
 
