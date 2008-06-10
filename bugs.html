@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d5ae8c1da2fc 2008/06/09 17:14:01 simonjwright $ -->
+<!-- $Id: bugs.html,v d6948efa3362 2008/06/10 20:29:43 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -31,18 +31,6 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <dl>
 
-<dt>0016 (raised 6.viii.01)
-
-<dd>It would be helpful if an association class could be automatically
-generated for many-to-many associations where the analyst hasn't
-provided one already.
-
-<dt>0049 (raised 27.xii.01)
-
-<dd>It would be a good thing if project-specific configuration
-information (such as multiplicities) could be supplied in a separate
-document from the domain model.
-
 <dt>0062 (raised 23.i.02)
 
 <dd>It would be useful to be able to specify constants.
@@ -53,17 +41,6 @@ document from the domain model.
 
 <dd>ColdFrame doesn't detect the error of having non-unique
 abbreviations.
-
-<dt>0141 (raised 13.xii.02)
-
-<dd>Ada doesn't allow functions to have <tt>in out</tt> or
-<tt>out</tt> parameters; ColdFrame could check.
-
-<dt>0172 (raised 6.vi.03)
-
-<dd>Would it be possible to specify the need for accessor operations
-by marking the attribute concerned? (perhaps by a stereotype, or just
-using visibility markup).
 
 <dt>0174 (raised 17.vi.03)
 
@@ -85,10 +62,6 @@ an unhelpful error message.
 <dd>&#171;public&#187; and &#171;singleton&#187; classes have a
 <tt>Create</tt> operation which is not meant to be called by
 handwritten code. Perhaps it should be renamed.
-
-<dt>0198 (raised 11.ix.03)
-
-<dd>Would it be possible to specify that operations should be inlined?
 
 <dt>0203 (raised 16.ix.03)
 
@@ -135,13 +108,6 @@ aren't as helpful as they could be.
 attributes, add a dummy instance attribute as well. But it's not
 obvious why you'd want to.</i>
 
-<dt>0284 (raised 28.x.04)
-
-<dd>It would be useful to have support for modelling the test harness
-for a domain.
-<br><i>This might involve code generation options to allow conditional
-generation of the test support classes.</i>
-
 <dt>0285 (raised 6.xi.04)
 
 <dd>The fact that an operation's parameter has a default value isn't
@@ -177,8 +143,20 @@ problem still exists.</i>
 <br><i>On the whole it's best if public classes don't have attributes
 at all.</i>
 
+<dt>0369 (raised 14.v.2008)
 
-<!-- next: 0369 -->
+<dd>If an instance event is declared with &#171;instance event&#187;
+but there's no corresponding transition on the state machine, the
+generated spec requires a handler which the body doesn't provide.
+<br>SourceForge 1964067
+
+<dt>0370 (raised 3.vi.08)
+
+<dd>The code generated when GENERATE_EVENT_LOGGING=yes doesn't match
+the recent changes to ColdFrame.Project logging.
+<br>SourceForge 1983328
+
+<!-- next: 0371 -->
 
 </dl>
 
@@ -3249,6 +3227,58 @@ be <tt>{serializable}</tt> immediately "here".
 </dl>
 
 <h2><a name="rejected">Rejected</a></h2>
+
+<h3>10.vi.08</h3>
+
+<dl>
+
+<dt>0016 (raised 6.viii.01)
+
+<dd>It would be helpful if an association class could be automatically
+generated for many-to-many associations where the analyst hasn't
+provided one already.
+<br><i>I think it would just lead to confusion!</i>
+
+<dt>0049 (raised 27.xii.01)
+
+<dd>It would be a good thing if project-specific configuration
+information (such as multiplicities) could be supplied in a separate
+document from the domain model.
+<br><i>I don't really see how to do that. Not sure whether other tools
+allow this, either.</i>
+
+<dt>0141 (raised 13.xii.02)
+
+<dd>Ada doesn't allow functions to have <tt>in out</tt> or
+<tt>out</tt> parameters; ColdFrame could check.
+<br><i>This will show up so straightforwardly that it can be
+left. Maybe revisit this decision if <tt>normalize-rose.tcl</tt> ever
+gets rewritten?</i>
+
+<dt>0172 (raised 6.vi.03)
+
+<dd>Would it be possible to specify the need for accessor operations
+by marking the attribute concerned? (perhaps by a stereotype, or just
+using visibility markup).
+<br><i>Don't want to encourage people to use accessors.</i>
+
+<dt>0198 (raised 11.ix.03)
+
+<dd>Would it be possible to specify that operations should be inlined?
+<br>
+<i>Not obvious from PowerPC experience that inlining is that useful -
+OK, this was with GNAT 3.16a1.</i>
+
+<dt>0284 (raised 28.x.04)
+
+<dd>It would be useful to have support for modelling the test harness
+for a domain.
+<br><i>This might involve code generation options to allow conditional
+generation of the test support classes.</i>
+<br><i>Not sure now what the actual intention was. Now, I think that
+using the generated unit test support is a better way to go.</i>
+
+</dl>
 
 <h3>3.v.08</h3>
 
