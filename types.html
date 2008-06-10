@@ -1,4 +1,4 @@
-<!-- $Id: types.html,v 742ae27d411c 2005/11/20 22:50:57 simonjwright $ -->
+<!-- $Id: types.html,v 20e1ffa555dc 2008/06/10 20:38:49 simonjwright $ -->
 <head>
 <title>ColdFrame: Types</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -135,7 +135,7 @@ given type extends (inherits) the specified  external reference.
 <i>image-operation</i></tt> specifies the operation to be used to
 print a record field containing a value of the type when it has been
 serialized as one or more XML elements. See
-<a href="serialization.html">separate information</a>.
+<a href="serialization-page.html">separate information</a>.
 
 <li><a name="hash"><tt>hash = <i>style</i></tt></a> specifies how a
 type (presumably <tt><i>imported</i></tt> or <tt><i>renames</i></tt>)
@@ -172,12 +172,12 @@ type is a renaming of the specified external reference.
 
 <li><tt>serializable</tt> specifies support for outputting values of
 the type to an external medium. See
-<a href="serialization.html">separate information</a>.
+<a href="serialization-page.html">separate information</a>.
 
 <li><tt>serializable-there</tt> (only applicable to <i>{imported}</i>
 or <i>{renames}</i> types) specifies that the type is
 <i>{serializable}</i> in the package in which it is actually declared.
-See <a href="serialization.html">separate information</a>.
+See <a href="serialization-page.html">separate information</a>.
 
 <li><tt>string = fixed <i>fixed-length</i></tt>
 
@@ -185,7 +185,7 @@ See <a href="serialization.html">separate information</a>.
 
 <li><tt>type-image = <i>image-operation</i></tt> specifies the
 operation to be used to print values of the type when it has been
-serialized. See <a href="serialization.html">separate information</a>.
+serialized. See <a href="serialization-page.html">separate information</a>.
 
 <li><tt>unsigned = mod <i>modulus</i></tt> specifies an unsigned
 (modular) type capable of storing 0 .. <i>modulus</i> - 1.
@@ -364,7 +364,7 @@ gives, for example (see <a href="#discriminated-record-pic">above</a>),
 </pre>
 
 <li><tt>image = <i>image-operation</i></tt>: see
-<a href="serialization.html">separate information</a>.
+<a href="serialization-page.html">separate information</a>.
 
 <p>
 
@@ -442,7 +442,7 @@ attached, but causes a corresponding declaration in the domain's
 tagged type <tt>Base</tt>, which the Project output package
 understands (it might want to add timestamp information, for example)
 
-<p>See <a href="serialization.html">separate information</a>.
+<p>See <a href="serialization-page.html">separate information</a>.
 
 <li><tt>serializable-there</tt> has no effect on the type to which
 it's attached; the <tt><i>Domain</i>.Serializable.Image</tt> operation
