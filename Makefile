@@ -61,9 +61,11 @@ GNATCHOP ?= gnatchop
 GREP ?= grep
 JAVA ?= java
 MKDIR ?= mkdir
+MV ?= mv
 RM ?= rm
 RSYNC ?= rsync
 SED ?= sed
+SH ?= sh
 TAR ?= tar
 TRUE ?= true
 ZIP ?= zip
@@ -333,8 +335,7 @@ principles.html \
 releases.html \
 reserved-names.html \
 resources.html \
-serialization.html \
-serialization-model.html \
+serialization-page.html \
 strategy.html \
 support.html \
 target.html \
@@ -349,22 +350,22 @@ $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ColdFrame-raw.xsd ColdFrame-norm.xsd \
 xslide-diff \
-House_Management.html House_Management.images/ \
-Digital_IO.html Digital_IO.images/
 
-docs: $(DOCS)
+# These are the parts of doc generated from models. Generation also
+# generates {Domain}.images/, not mentioned as part of the target.
+GEN_DOCS = \
+Serialization.html \
+Digital_IO.html \
+House_Management.html
 
-# We used to generate Serialization.html from Serialization.raw and
-# copy it to serialization-model.html, but unfortunately Darwin's
-# default file system is case-insensitive; which makes for confusion
-# with the hand-written serialization.html.
-serialization-model.raw: Serialization.raw
-	$(CP) $< $@
+GEN_DOC_IMAGES = $(subst .html,.images,$(GEN_DOCS))
+
+docs: $(DOCS) $(GEN_DOCS)
 
 # The published makefiles are
-# * Makefile-winnt for inclusion in a user makefile under Windows
+# * Makefile-winnt for inclusion in a user makefile under Windows.
 # * Makefile-unix for inclusion in a user makefile under Unix.
-# * test/Makefile for running the test pack.
+# * test/Makefile for running the test pack, copied from Makefile-test.
 
 MAKEFILES = Makefile-unix Makefile-winnt
 
@@ -776,16 +777,17 @@ upload-docs: top-index.html docs force
 	  --times \
 	  --update \
 	  --verbose \
-	  $(DOCS) \
+	  $(DOCS)  $(GEN_DOCS) $(GEN_DOC_IMAGES) \
 	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/coldframe
 
 # The complete distribution
 
-dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS)
+dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS) $(GEN_DOCS)
 	-@$(RM) -rf dist
 	$(MKDIR) -p dist/download
-	$(CP) -p $(DOCS) dist/
-	$(CD) dist && $(ZIP) -9 download/cf-html-$(DATE).zip *
+	$(CP) -p $(DOCS) $(GEN_DOCS) dist/
+	$(CP) -pR $(GEN_DOC_IMAGES) dist/
+	$(CD) dist && $(ZIP) -9r download/cf-html-$(DATE).zip .
 	$(CP) $(DISTRIBUTION_FILES) dist/download/
 
 # Files that need DATE substituted
