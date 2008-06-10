@@ -53,6 +53,7 @@ GNATCHOP ?= gnatchop
 GREP ?= grep
 JAVA ?= java
 MKDIR ?= mkdir
+MV ?= mv
 RM ?= rm
 SED ?= sed
 SH ?= sh
@@ -111,13 +112,15 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # The cwd parameter to the HTML script is because XSLT has no access
 # otherwise.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
+	@rm -rf `basename $@ .html`.images
+	@mkdir `basename $@ .html`.images
 	@$(ECHO) generating diagrams for $@ ...
-	@$(SAXON) $< $(DIAGRAM_SCRIPT) >$@.sh || ($(RM) -f $@; $(EXIT) 1)
-	@$(SH) -v $@.sh
-	@$(RM) -f $@.sh
+	@$(SAXON) $< $(DIAGRAM_SCRIPT) \
+	  >`basename $@ .html`.images/$@.sh \
+	  || ($(RM) -f $@; $(EXIT) 1)
+	@sh -v `basename $@ .html`.images/$@.sh
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) cwd=$(PWD) >$@ || \
-	  ($(RM) -f $@; $(EXIT) 1)
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
 	@$(ECHO) generating $@ ...
@@ -141,7 +144,8 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # "failure" because GNAT 3.16a1 reports an error here.
 # Remove any generated files which are also present in the implementation
 # directory (.impl).
-# Write-protect the generated files (careful, in case there are a lot of them!).
+# Write-protect the generated files (careful, in case there are a lot of
+# them!).
 # Make the target directory itself writable (so users can delete files in it).
 # Report unimplemented bodies.
 %.gen: %.ada
@@ -151,7 +155,9 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	@-$(GNATCHOP) -w $(CHOP_VERBOSE) $< $@
 	@if [ -d $*.impl ]; then \
 	  TODELETE=""; \
-	  IMPLFILES=`$(FIND) $*.impl -maxdepth $(MAXIMPLDEPTH) -name \*.ad[bs]`; \
+	  IMPLFILES=`$(FIND) $*.impl \
+	    -maxdepth $(MAXIMPLDEPTH) \
+	    -name \*.ad[bs]`; \
 	  for f in $$IMPLFILES; do \
 	    GENFILE=$@/`basename $$f`; \
 	    if [ -f $$GENFILE ]; then \
