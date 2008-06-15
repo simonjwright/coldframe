@@ -67,8 +67,8 @@ TRUE ?= true
 ZIP ?= zip
 
 # Non-standard commands
-ITCLSH = tclsh
-SAXON = $(JAVA) -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
+ITCLSH ?= tclsh
+SAXON ?= $(JAVA) -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
 
 # Control depth of .impl directory search
 MAXIMPLDEPTH ?= 1
