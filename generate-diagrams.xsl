@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v 4d88f09e2a78 2008/05/30 06:00:53 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v a34ecfdfebff 2008/06/17 19:05:28 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -184,6 +184,8 @@
       <xsl:text>]</xsl:text>
       edge [fontsize=10]
       node [shape=record, style=filled, fillcolor=lightgray, fontsize=10]
+
+      <!-- This class. -->
       <xsl:value-of select="$n"/>
       <xsl:text> [</xsl:text>
       <xsl:choose>
@@ -271,9 +273,11 @@
             </xsl:for-each>
           </xsl:for-each>
           <xsl:for-each select="../inheritance[parent=$n]">
-            <xsl:element name="name">
-              <xsl:value-of select="child"/>
-            </xsl:element>
+            <xsl:for-each select="child">
+              <xsl:element name="name">
+                <xsl:value-of select="."/>
+              </xsl:element>
+            </xsl:for-each>
           </xsl:for-each>
           <xsl:for-each select="../inheritance[child=$n]">
             <xsl:element name="name">
