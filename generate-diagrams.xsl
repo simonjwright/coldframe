@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v a34ecfdfebff 2008/06/17 19:05:28 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v f962166725ae 2008/06/29 17:53:01 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -202,6 +202,8 @@
       <xsl:value-of select="$n"/>
       <xsl:text>|</xsl:text>
       <xsl:for-each select="attribute[name]">
+        <xsl:sort select="not(@class)"/>
+        <xsl:sort select="not(@identifier)"/>
         <xsl:sort select="name"/>
         <xsl:if test="position() &gt; 1">
           <xsl:text>\n</xsl:text>
@@ -218,6 +220,7 @@
       </xsl:for-each>
       <xsl:text>|</xsl:text>
       <xsl:for-each select="operation">
+        <xsl:sort select="not(@class)"/>
         <xsl:sort select="name"/>
         <xsl:if test="position() &gt; 1">
           <xsl:text>\n</xsl:text>
