@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 95bd0f1abdfc 2008/06/29 14:55:57 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1269,9 +1269,31 @@
     <xsl:value-of select="$I"/>
     <xsl:text>begin&#10;</xsl:text>
 
-    <!-- .. Create the new instance .. -->
-    <xsl:value-of select="$II"/>
-    <xsl:text>Result := new Instance;&#10;</xsl:text>
+    <!-- .. create the new instance, maybe catching storage error .. -->
+    <xsl:choose>
+      <xsl:when test="$max &lt;= $max-bounded-container">
+        <!-- We used a bounded storage pool, so Storage_Error 
+             implies attempt to create too many instances. -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>begin&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>Result := new Instance;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>exception&#10;</xsl:text>
+        <xsl:value-of select="$III"/>
+        <xsl:text>when Storage_Error =&gt;&#10;</xsl:text>
+        <xsl:value-of select="$IIII"/>
+        <xsl:text>raise ColdFrame.Exceptions.Too_Many_Instances;&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>end;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- If we're using an unbounded storage pool, no point in 
+             catching Storage_Error (the world is about to end anyway!) -->
+        <xsl:value-of select="$II"/>
+        <xsl:text>Result := new Instance;&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
 
     <!-- .. set up identifying attributes .. -->
     <xsl:choose>
