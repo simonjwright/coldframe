@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 04f7b672839f 2006/04/19 22:36:00 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v c7a05e3472b2 2008/06/29 11:29:17 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -467,7 +467,6 @@
 
     <!--
          with Ada.Exceptions;
-         with ColdFrame.Exceptions;
          with ColdFrame.Project.Log_Error;
          with {domain-init-proc-package};
          with {domain}.Events;
@@ -494,7 +493,6 @@
             when E : Others =>
                ColdFrame.Project.Log_Error
                  (Ada.Exceptions.Exception_Information (E));
-               raise ColdFrame.Exceptions.Initialization_Error;
          end {domain}.Initialize;
          -->
     <xsl:call-template name="ut:do-not-edit"/>
@@ -513,7 +511,6 @@
 
     <!-- .. withs, starting with exception handling .. -->
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
-    <xsl:text>with ColdFrame.Exceptions;&#10;</xsl:text>
     <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
@@ -615,12 +612,14 @@
     <xsl:text>exception&#10;</xsl:text>
     <xsl:value-of select="$I"/>
     <xsl:text>when E : others =&gt;&#10;</xsl:text>
+    <!-- Output a stack trace, in case the main program doesn't .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>ColdFrame.Project.Log_Error&#10;</xsl:text>
     <xsl:value-of select="$IIC"/>
     <xsl:text>(Ada.Exceptions.Exception_Information (E));&#10;</xsl:text>
+    <!-- .. and reraise the original exception. -->
     <xsl:value-of select="$II"/>
-    <xsl:text>raise ColdFrame.Exceptions.Initialization_Error;&#10;</xsl:text>
+    <xsl:text>raise;&#10;</xsl:text>
 
     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
