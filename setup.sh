@@ -1,8 +1,8 @@
-# $Id: setup.sh,v c59ee9194671 2008/04/30 05:00:46 simonjwright $
+# $Id: setup.sh,v ff42b4bdedfb 2008/06/29 14:59:24 simonjwright $
 # Sets up environment variables for ColdFrame development.
 # (very specific to SJW config!).
 
-cf=$HOME/cf
+cf=$PWD
 
 export ADA_PROJECT_PATH=$cf
 export AUNIT=${AUNIT:-AUnit-1.03p}
