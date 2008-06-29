@@ -1,4 +1,4 @@
-<!-- $Id: ada-attribute.xsl,v 13d6c31ecd31 2008/05/17 17:46:42 simonjwright $ -->
+<!-- $Id: ada-attribute.xsl,v c54e434daca6 2008/06/29 14:54:08 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Attributes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -38,7 +38,8 @@
   <xsl:template name="at:identifier-record">
     <xsl:choose>
 
-      <!-- Output only identifier attributes. -->
+      <!-- Output only identifier attributes, in document (model) 
+           order. -->
       <xsl:when test="count(attribute[@identifier]) &gt; 0">
         <xsl:value-of select="$I"/>
         <xsl:text>type Identifier is record&#10;</xsl:text>
@@ -46,7 +47,6 @@
         <xsl:apply-templates
           mode="at:instance-record-component"
           select="attribute[@identifier]">
-          <xsl:sort select="name"/>
         </xsl:apply-templates>
         <xsl:value-of select="$I"/>
         <xsl:text>end record;&#10;</xsl:text>
