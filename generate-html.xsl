@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v cbec2c73513c 2008/05/31 07:29:48 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v f01ce3437695 2008/06/29 17:55:17 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -298,10 +298,27 @@
     <!-- Only report attributes that have analyst-defined names
          (attributes created by normalization to implement
          relationships don't have names). -->
-    <xsl:if test="attribute[name]">
-      <h3>Attributes</h3>
+    <xsl:if test="attribute[name and @class]">
+      <h3>Class attributes</h3>
       <dl>
-        <xsl:apply-templates select="attribute[name]">
+        <xsl:apply-templates select="attribute[name and @class]">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
+
+    <xsl:if test="attribute[name and @identifier]">
+      <h3>Identifying attributes</h3>
+      <dl>
+        <xsl:apply-templates select="attribute[name and @identifier]"/>
+        <!-- Unsorted, to retain document (model) order. -->
+      </dl>
+    </xsl:if>
+
+    <xsl:if test="attribute[name and not(@class or @identifier)]">
+      <h3>Normal attributes</h3>
+      <dl>
+        <xsl:apply-templates select="attribute[name and not(@class or @identifier)]">
           <xsl:sort select="."/>
         </xsl:apply-templates>
       </dl>
@@ -341,44 +358,84 @@
         alt="State diagram for {../name}.{name}"/>
     </xsl:if>
 
-    <xsl:if test="operation">
-      <h3>Operations</h3>
+    <xsl:if test="operation[@class and @visibility='public']">
+      <h3>Public class operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[@class and @visibility='public']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
 
-      <xsl:if test="operation[@visibility='public']">
-        <h4>Public</h4>
-        <dl>
-          <xsl:apply-templates select="operation[@visibility='public']">
-            <xsl:sort select="."/>
-          </xsl:apply-templates>
-        </dl>
-      </xsl:if>
+    <xsl:if test="operation[@class and @visibility='protected']">
+      <h3>Protected class operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[@class and @visibility='protected']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
 
-      <xsl:if test="operation[@visibility='protected']">
-        <h4>Protected</h4>
-        <dl>
-          <xsl:apply-templates select="operation[@visibility='protected']">
-            <xsl:sort select="."/>
-          </xsl:apply-templates>
-        </dl>
-      </xsl:if>
+    <xsl:if test="operation[@class and @visibility='private']">
+      <h3>Private class operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[@class and @visibility='private']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
 
-      <xsl:if test="operation[@visibility='private']">
-        <h4>Private</h4>
-        <dl>
-          <xsl:apply-templates select="operation[@visibility='private']">
-            <xsl:sort select="."/>
-          </xsl:apply-templates>
-        </dl>
-      </xsl:if>
+    <xsl:if test="operation[@class and @visibility='implementation']">
+      <h3>Implementation class operations </h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[@class and @visibility='implementation']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
 
-      <xsl:if test="operation[@visibility='implementation']">
-        <h4>Implementation</h4>
-        <dl>
-          <xsl:apply-templates select="operation[@visibility='implementation']">
-            <xsl:sort select="."/>
-          </xsl:apply-templates>
-        </dl>
-      </xsl:if>
+    <xsl:if test="operation[not(@class) and @visibility='public']">
+      <h3>Public instance operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[not(@class) and @visibility='public']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
+
+    <xsl:if test="operation[not(@class) and @visibility='protected']">
+      <h3>Protected instance operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[not(@class) and @visibility='protected']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
+
+    <xsl:if test="operation[not(@class) and @visibility='private']">
+      <h3>Private instance operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[not(@class) and @visibility='private']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
+    </xsl:if>
+
+    <xsl:if test="operation[not(@class) and @visibility='implementation']">
+      <h3>Implementation instance operations</h3>
+      <dl>
+        <xsl:apply-templates 
+          select="operation[not(@class) and @visibility='implementation']">
+          <xsl:sort select="."/>
+        </xsl:apply-templates>
+      </dl>
     </xsl:if>
 
     <xsl:if
@@ -547,9 +604,9 @@
   <xsl:template match="attribute">
     <dt>
       <xsl:value-of select="name"/>
-      <xsl:if test="@identifier"> (identifier)</xsl:if>
       <xsl:text> : </xsl:text>
       <xsl:choose>
+        <!-- Don't report identifier, class: they have their own headings. -->
         <xsl:when test="@refers">
           <xsl:text>Reference to </xsl:text>
           <a href="#{@refers}"><xsl:value-of select="@refers"/></a>
@@ -561,9 +618,6 @@
           <xsl:call-template name="type-name-linked">
             <xsl:with-param name="type" select="type"/>
           </xsl:call-template>
-          <xsl:if test="@class">
-            <xsl:text>, class</xsl:text>
-          </xsl:if>
           <xsl:if test="@aliased">
             <xsl:text>, aliased</xsl:text>
           </xsl:if>
@@ -603,14 +657,9 @@
       <xsl:if test="@suppressed='framework'">
         <xsl:text>, automatically-generated</xsl:text>
       </xsl:if>
-      <xsl:choose>
-        <xsl:when test="@access">
-          <xsl:text>, access-to-operation</xsl:text>
-        </xsl:when>
-        <xsl:when test="@class">
-          <xsl:text>, class</xsl:text>
-        </xsl:when>
-      </xsl:choose>
+      <xsl:if test="@access">
+        <xsl:text>, access-to-operation</xsl:text>
+      </xsl:if>
       <xsl:if test="@convention">
         <xsl:text>, convention </xsl:text>
         <xsl:value-of select="@convention"/>
