@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 31dafd670b3a 2006/08/22 20:38:27 simonjwright $ -->
+<!-- $Id: releases.html-proto,v d265ee921312 2008/06/29 11:33:23 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,18 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Generation</b>
+
+<li>For classes whose extent is realised using a Map, the
+implementation of Find was subject to memory leaks with GNAT 3.16a1.
+
+</ul>
+
+<dt>20060427p1
 
 <dd>
 <ul class="release">
