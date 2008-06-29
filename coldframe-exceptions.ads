@@ -20,9 +20,9 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 18a99c7fc527 $
---  $Date: 2003/05/25 17:54:19 $
---  $Author: simon $
+--  $Revision: 04dc3da26877 $
+--  $Date: 2008/06/29 11:27:27 $
+--  $Author: simonjwright $
 
 package ColdFrame.Exceptions is
 
@@ -36,9 +36,6 @@ package ColdFrame.Exceptions is
    Existing_Child : exception;
    --  Attempt to replace a non-null child in an inheritance
    --  relationship.
-
-   Initialization_Error : exception;
-   --  An exception occurred during domain initialization.
 
    Mismatched_Instances : exception;
    --  Raised in Inheritance.Create_Tree if a non-root class with
@@ -55,6 +52,11 @@ package ColdFrame.Exceptions is
    Not_Found : exception;
    --  Attempt to access an object by identifier when no such object
    --  exists.
+
+   Too_Many_Instances : exception;
+   --  Attempt to Create an instance when the declared or implied
+   --  maximum number already exist (the 'implied' case arises when,
+   --  for example, the class's identifier is an enumeration).
 
    Unexpected_Class : exception;
    --  Raised in Inheritance.Create_Tree if an instance handle was
