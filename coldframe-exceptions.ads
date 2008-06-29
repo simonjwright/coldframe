@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-exceptions.ads,v $
---  $Revision: 156ec5db2516 $
---  $Date: 2007/03/14 06:13:23 $
+--  $Revision: 1d856841e288 $
+--  $Date: 2008/06/29 14:55:18 $
 --  $Author: simonjwright $
 
 package ColdFrame.Exceptions is
@@ -57,6 +57,11 @@ package ColdFrame.Exceptions is
    Not_Found : exception;
    --  Attempt to access an object by identifier when no such object
    --  exists.
+
+   Too_Many_Instances : exception;
+   --  Attempt to Create an instance when the declared or implied
+   --  maximum number already exist (the 'implied' case arises when,
+   --  for example, the class's identifier is an enumeration).
 
    Unexpected_Class : exception;
    --  Raised in Inheritance.Create_Tree if an instance handle was
