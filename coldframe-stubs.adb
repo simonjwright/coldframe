@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: fa2c19ff7d94 $
---  $Date: 2006/02/06 20:41:40 $
+--  $Revision: bb769b5d5ade $
+--  $Date: 2008/06/29 20:28:55 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -512,7 +512,7 @@ package body ColdFrame.Stubs is
         := Ada.Strings.Unbounded.To_Unbounded_String (SP);
       Size : constant SEO
         := SEO ((Size_In_Bits + 7) / 8 + Overhead_Bytes);
-      Str : Stream_Pointers.Pointer
+      Str : constant Stream_Pointers.Pointer
         := Stream_Pointers.Create
         (new BC.Support.Memory_Streams.Stream_Type (Size));
       Coll : Stream_Pointer_Collection_Pointers.Pointer;
@@ -550,13 +550,17 @@ package body ColdFrame.Stubs is
          It : Abstract_Sparse_Exception_Containers.Iterator'Class
            := Sparse_Exception_Collections.New_Iterator (Pointers);
          use Abstract_Sparse_Exception_Containers;
+         use type Ada.Exceptions.Exception_Id;
       begin
          while not Is_Done (It)
          loop
             if Current_Item (It).Ordinal <= For_Call then
-               Ada.Exceptions.Raise_Exception
-                 (Current_Item (It).E, "from stub");
-               exit;  --  in case it was a null exception
+               if Current_Item (It).E /= Ada.Exceptions.Null_Id then
+                  Ada.Exceptions.Raise_Exception
+                    (Current_Item (It).E, "from stub");
+               else
+                  exit;  --  it was a null exception
+               end if;
             end if;
             Next (It);
          end loop;
