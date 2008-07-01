@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 95bd0f1abdfc 2008/06/29 14:55:57 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 57eeba78b75e 2008/07/01 20:31:23 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1043,6 +1043,15 @@
 
         <!-- Any additions to the context for state machines. -->
         <xsl:call-template name="st:state-body-context"/>
+
+        <!-- Include logging for events if needed & if there are any
+             (events in case we have class events but no state
+             machine, statemachine in case none of the events have
+             payloads). -->
+        <xsl:if test="$generate-event-logging='yes'
+                      and (event or statemachine)">
+          <xsl:text>with ColdFrame.Project.Log_Info;&#10;</xsl:text>
+        </xsl:if>
 
         <xsl:variable name="current" select="."/>
         <xsl:variable name="name" select="name"/>

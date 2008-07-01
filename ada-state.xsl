@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v c3e8125a50f5 2007/10/26 11:26:11 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 57eeba78b75e 2008/07/01 20:31:23 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -249,9 +249,8 @@
             This : constant Handle
               := The_Event.For_The_Instance.all'Unchecked_Access;
          begin
-            ColdFrame.Project.Events.Logger.Log
-              (ColdFrame.Project.Events.Logger.Informational,
-               "handling {domain}.{class}.{event} in {state}");
+            ColdFrame.Project.Log_Info
+              ("handling {domain}.{class}.{event} in {state}");
             case That.State_Machine_State is
                when {source-state (normal transition)} =>
                   {perform-transition}
@@ -281,11 +280,9 @@
 
     <xsl:if test="$generate-event-logging='yes'">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Logger.Log&#10;</xsl:text>
+      <xsl:text>ColdFrame.Project.Log_Info&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
-      <xsl:text>(ColdFrame.Project.Events.Logger.Informational,&#10;</xsl:text>
-      <xsl:value-of select="$IIC"/>
-      <xsl:text> "</xsl:text>
+      <xsl:text>("</xsl:text>
       <xsl:value-of select="../../../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="../../name"/>
@@ -364,9 +361,8 @@
     <!--
          procedure Handler (The_Event : {event}) is
          begin
-            ColdFrame.Project.Events.Logger.Log
-              (ColdFrame.Project.Events.Logger.Informational,
-               "handling {domain}.{class}.{event}");
+            ColdFrame.Project.Log_Info
+              ("handling {domain}.{class}.{event}");
             {receiver} (The_Event);
          end Handler;
          -->
@@ -402,11 +398,9 @@
 
     <xsl:if test="$generate-event-logging='yes'">
       <xsl:value-of select="$II"/>
-      <xsl:text>ColdFrame.Project.Events.Logger.Log&#10;</xsl:text>
+      <xsl:text>ColdFrame.Project.Log_Info&#10;</xsl:text>
       <xsl:value-of select="$IIC"/>
-      <xsl:text>(ColdFrame.Project.Events.Logger.Informational,&#10;</xsl:text>
-      <xsl:value-of select="$IIC"/>
-      <xsl:text> "</xsl:text>
+      <xsl:text>("</xsl:text>
       <xsl:value-of select="../../name"/>
       <xsl:text>.</xsl:text>
       <xsl:value-of select="../name"/>
