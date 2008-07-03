@@ -36,17 +36,18 @@
 --    Deallocated      total number of bytes deallocated
 --    Call_Chain       identifies the call site
 --
---  * A Report operation is provided to report on currently allocated
+--  * Report operations are provided to report on currently allocated
 --  memory at any time.
 
 --  $RCSfile: coldframe-unbounded_debug_storage_pools.ads,v $
---  $Revision: 9e3b9f3be8d4 $
---  $Date: 2007/07/14 20:32:07 $
+--  $Revision: 98adf6a23fe7 $
+--  $Date: 2008/07/03 04:48:45 $
 --  $Author: simonjwright $
 
 with System.Storage_Elements;
 with System.Storage_Pools;
 
+with Ada.Text_IO;
 with BC.Containers.Trees.AVL;
 with BC.Support.Unmanaged_Storage;
 with ColdFrame.Unbounded_Storage_Pools;
@@ -79,6 +80,10 @@ package ColdFrame.Unbounded_Debug_Storage_Pools is
    procedure Report
      (Pool          : Unbounded_Pool;
       To_File_Named : String);
+
+   procedure Report
+     (Pool : Unbounded_Pool;
+      To   : Ada.Text_IO.File_Type := Ada.Text_IO.Standard_Output);
 
 private
 

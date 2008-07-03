@@ -29,12 +29,12 @@
 --  sites. This is reported only on the first occurrence (to the file
 --  "debug_storage_pool.log").
 --
---  * A Report operation is provided to report on currently allocated
+--  * Report operations are provided to report on currently allocated
 --  memory at any time.
 
 --  $RCSfile: coldframe-unbounded_debug_storage_pools.adb,v $
---  $Revision: 0a02c612b479 $
---  $Date: 2007/07/14 20:31:07 $
+--  $Revision: 98adf6a23fe7 $
+--  $Date: 2008/07/03 04:48:45 $
 --  $Author: simonjwright $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -188,22 +188,38 @@ package body ColdFrame.Unbounded_Debug_Storage_Pools is
      (Pool          : Unbounded_Pool;
       To_File_Named : String)
    is
+      F : Ada.Text_IO.File_Type;
+   begin
+      begin
+         Open (F, Name => To_File_Named, Mode => Out_File);
+      exception
+         when Name_Error =>
+            Create (F, Name => To_File_Named);
+      end;
+      Report (Pool, To => F);
+      Close (F);
+   end Report;
+
+
+   procedure Report
+     (Pool : Unbounded_Pool;
+      To   : Ada.Text_IO.File_Type := Ada.Text_IO.Standard_Output)
+   is
       procedure Print (Item : Call_Site_Data_P; OK : out Boolean);
       procedure Print is new Call_Site_Data_Trees.Visit (Print);
-      F : Ada.Text_IO.File_Type;
       procedure Print (Item : Call_Site_Data_P; OK : out Boolean) is
          Result : String (1 .. 1024);
          Last : Natural := 0;
       begin
          OK := True;
-         Put (F, Item.Allocations'Img);
-         Put (F, ',');
-         Put (F, Item.Deallocations'Img);
-         Put (F, ',');
-         Put (F, Item.Allocated'Img);
-         Put (F, ',');
-         Put (F, Item.Deallocated'Img);
-         Put (F, ',');
+         Put (To, Item.Allocations'Img);
+         Put (To, ',');
+         Put (To, Item.Deallocations'Img);
+         Put (To, ',');
+         Put (To, Item.Allocated'Img);
+         Put (To, ',');
+         Put (To, Item.Deallocated'Img);
+         Put (To, ',');
          for C in 1 .. Item.Call_Chain_Length loop
             declare
                Site : constant String
@@ -222,19 +238,12 @@ package body ColdFrame.Unbounded_Debug_Storage_Pools is
                end loop;
             end;
          end loop;
-         Put_Line (F, Result (1 .. Last));
+         Put_Line (To, Result (1 .. Last));
       end Print;
    begin
-      begin
-         Open (F, Name => To_File_Named, Mode => Out_File);
-      exception
-         when Name_Error =>
-            Create (F, Name => To_File_Named);
-      end;
       Put_Line
-        (F, "Allocations,Deallocations,Allocated,Deallocated,Call_Chain");
+        (To, "Allocations,Deallocations,Allocated,Deallocated,Call_Chain");
       Print (Pool.Call_Sites);
-      Close (F);
    end Report;
 
 
