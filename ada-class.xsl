@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 57eeba78b75e 2008/07/01 20:31:23 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 8ff8a88936fb 2008/07/03 21:14:32 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -817,6 +817,17 @@
     <xsl:text> is&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
 
+    <!-- .. the key instance for Find, and its mutex, if we're using a
+         Map .. -->
+
+    <xsl:if test="$max &gt; 1 and $array = 'no'">
+      <xsl:value-of select="$I"/>
+      <xsl:text>Find_Key : aliased Instance;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>Find_Key_Mutex : aliased BC.Support.Synchronization.Semaphore;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+    </xsl:if>
+
     <!-- .. the task stub for active classes .. -->
     <xsl:if test="@active">
       <xsl:value-of select="$I"/>
@@ -1031,9 +1042,10 @@
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- We need BC exceptions if we're using a Map. -->
+        <!-- We need BC exceptions and synchronisation if we're using
+             a Map. -->
         <xsl:if test="$max &gt; 1 and $array = 'no'">
-          <xsl:text>with BC;&#10;</xsl:text>
+          <xsl:text>with BC.Support.Synchronization;&#10;</xsl:text>
         </xsl:if>
 
         <!-- We need ColdFrame exceptions if we have any instances. -->
@@ -1524,6 +1536,14 @@
 
       <xsl:when test="$array='yes'">
 
+        <!--
+             begin
+                This := The_Container (With_Identifier.{name});
+                if  This = null then
+                   raise ColdFrame.Exceptions.Not_Found;
+                end if;
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
@@ -1542,24 +1562,37 @@
 
       <xsl:otherwise>
 
+        <!--
+                L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);
+                pragma Unreferenced (L);
+             begin
+                Set_Identifier (Find_Key'Access, With_Identifier);
+                if not Maps.Is_Bound (The_Container, Find_Key'Access) then
+                   raise ColdFrame.Exceptions.Not_Found;
+                end if;
+                This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));
+             -->
+
         <xsl:value-of select="$II"/>
-        <xsl:text>Key : aliased Instance;&#10;</xsl:text>
+        <xsl:text>L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Unreferenced (L);&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Key'Unchecked_Access, With_Identifier);&#10;</xsl:text>
+        <xsl:text>Set_Identifier (Find_Key'Access, With_Identifier);&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>if not Maps.Is_Bound (The_Container, Key'Unchecked_Access) then&#10;</xsl:text>
+        <xsl:text>if not Maps.Is_Bound (The_Container, Find_Key'Unchecked_Access) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));&#10;</xsl:text>
+        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));&#10;</xsl:text>
 
       </xsl:otherwise>
 
@@ -1912,19 +1945,20 @@
 
       <xsl:when test="$max=1">
 
+        <!--
+             begin
+                if This = null then
+                   return null;
+                elsif ({attr} => This.{attr},
+                       {attr} => This.{attr}) /= With_Identifier then
+                   return null;
+                else
+                   return This;
+                end if;
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-
-        <!--
-             if This = null then
-                return null;
-             elsif ({attr} => This.{attr},
-                    {attr} => This.{attr}) /= With_Identifier then
-                return null;
-             else
-                return This;
-             end if;
-             -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>if This = null then&#10;</xsl:text>
@@ -1955,12 +1989,13 @@
 
       <xsl:when test="$array='yes'">
 
+        <!--
+             begin
+                return The_Container (With_Identifier.{id-attr});
+             -->
+
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
-
-        <!--
-             return The_Container (With_Identifier.{id-attr});
-             -->
 
         <xsl:value-of select="$II"/>
         <xsl:text>return The_Container (With_Identifier.</xsl:text>
@@ -1972,29 +2007,32 @@
       <xsl:otherwise>
 
         <!--
-                Key : aliased Instance;
+                L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);
+                pragma Unreferenced (L);
              begin
-                Set_Identifier (Key'Unchecked_Access, With_Identifier);
-                if Maps.Is_Bound (The_Container, Key'Unchecked_Access) then
-                   return Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));
+                Set_Identifier (Find_Key'Access, With_Identifier);
+                if Maps.Is_Bound (The_Container, Find_Key'Access) then
+                   return Handle (Maps.Item_Of (The_Container, Find_Key'Access));
                 else
                    return null;
                 end if;
              -->
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Key : aliased Instance;&#10;</xsl:text>
+        <xsl:text>L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);&#10;</xsl:text>
+        <xsl:value-of select="$II"/>
+        <xsl:text>pragma Unreferenced (L);&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Key'Unchecked_Access, With_Identifier);&#10;</xsl:text>
+        <xsl:text>Set_Identifier (Find_Key'Access, With_Identifier);&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>if Maps.Is_Bound (The_Container, Key'Unchecked_Access) then&#10;</xsl:text>
+        <xsl:text>if Maps.Is_Bound (The_Container, Find_Key'Access) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
-        <xsl:text>return Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));&#10;</xsl:text>
+        <xsl:text>return Handle (Maps.Item_Of (The_Container, Find_Key'Access));&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>else&#10;</xsl:text>
         <xsl:value-of select="$III"/>
