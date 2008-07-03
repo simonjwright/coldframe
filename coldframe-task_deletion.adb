@@ -25,11 +25,11 @@
 --  task isn't terminated).
 
 --  $RCSfile: coldframe-task_deletion.adb,v $
---  $Revision: fc22e3084517 $
---  $Date: 2008/07/03 05:03:53 $
+--  $Revision: 6da5c7e0bbd4 $
+--  $Date: 2008/07/03 05:13:51 $
 --  $Author: simonjwright $
 
-with Ada.Text_IO; use Ada.Text_IO;
+--  with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Unchecked_Deallocation;
 with BC.Support.Synchronization;
 with ColdFrame.Project.Task_Deletion;
@@ -37,8 +37,13 @@ with ColdFrame.Project.Task_Deletion;
 package body ColdFrame.Task_Deletion is
 
 
+   procedure Delete_Terminated;
+   --  The procedure that actually does the deletion. To be called at
+   --  suitable intervals.
+
    Q : Queues.Queue;
    --  The queue of tasks to be deleted.
+
    Semaphore : aliased BC.Support.Synchronization.Semaphore;
    --  Locking for Q.
 
@@ -52,7 +57,6 @@ package body ColdFrame.Task_Deletion is
    end Free;
 
 
-   procedure Delete_Terminated;
    procedure Delete_Terminated
    is
       procedure Free is new Ada.Unchecked_Deallocation (Task_Type,
@@ -61,7 +65,7 @@ package body ColdFrame.Task_Deletion is
       pragma Unreferenced (L);
       It : Abstract_Containers.Iterator'Class
         := Queues.New_Iterator (Q);
-      Count : Natural := Queues.Length (Q);
+--        Count : Natural := Queues.Length (Q);
       use Abstract_Containers;
    begin
       while not Is_Done (It) loop
@@ -69,19 +73,19 @@ package body ColdFrame.Task_Deletion is
             P : Task_Type_P := Current_Item (It);
          begin
             if Is_Terminated (P) then
-               Count := Count - 1;
+--                 Count := Count - 1;
                Free (P);
                Delete_Item_At (It);
             else
                exit;
---                 Next (It);
             end if;
          end;
       end loop;
-      Put_Line ("remaining items:" & Count'Img);
+--        Put_Line ("remaining items:" & Count'Img);
    end Delete_Terminated;
 
 
 begin
+   --  Register with the deletion manager task.
    Project.Task_Deletion.Register (Delete_Terminated'Unrestricted_Access);
 end ColdFrame.Task_Deletion;
