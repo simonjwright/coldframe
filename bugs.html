@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v d6948efa3362 2008/06/10 20:29:43 simonjwright $ -->
+<!-- $Id: bugs.html,v e458eb7968ba 2008/07/03 05:29:24 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -150,17 +150,30 @@ but there's no corresponding transition on the state machine, the
 generated spec requires a handler which the body doesn't provide.
 <br>SourceForge 1964067
 
-<dt>0370 (raised 3.vi.08)
+<dt>0371 (raised 3.vii.08)
 
-<dd>The code generated when GENERATE_EVENT_LOGGING=yes doesn't match
-the recent changes to ColdFrame.Project logging.
-<br>SourceForge 1983328
+<dd>When an active instance is deleted, no check is made for whether
+its task has actually terminated. If it hasn't, the task won't
+actually get deleted, and memory will leak.
+<br>SourceForge 2009429
 
 <!-- next: 0371 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>1.vii.08</h3>
+
+<dl>
+
+<dt>0370 (raised 3.vi.08)
+
+<dd>The code generated when GENERATE_EVENT_LOGGING=yes doesn't match
+the recent changes to ColdFrame.Project logging.
+<br>SourceForge 1983328
+
+</dl>
 
 <h3>3.v.08</h3>
 
