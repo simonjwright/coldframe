@@ -25,8 +25,8 @@
 --  task isn't terminated).
 
 --  $RCSfile: coldframe-task_deletion.adb,v $
---  $Revision: 6da5c7e0bbd4 $
---  $Date: 2008/07/03 05:13:51 $
+--  $Revision: 65303d00db9a $
+--  $Date: 2008/07/03 07:04:41 $
 --  $Author: simonjwright $
 
 --  with Ada.Text_IO; use Ada.Text_IO;
@@ -77,7 +77,7 @@ package body ColdFrame.Task_Deletion is
                Free (P);
                Delete_Item_At (It);
             else
-               exit;
+               Next (It);
             end if;
          end;
       end loop;
