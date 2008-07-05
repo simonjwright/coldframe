@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 8a1fadc99948 2008/06/29 11:38:02 simonjwright $ -->
+<!-- $Id: releases.html-proto,v b8d9e7f38b71 2008/07/05 06:21:36 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -58,6 +58,22 @@ contains the complete documentation.
      Don't use D A T E elsewhere! -->
 
 <dt>DATE
+
+<dd>
+<ul class="release">
+
+<li><b>Generation</b>
+
+<li>For classes whose extent is realised using a Map, the
+implementation of Delete, like Find, was subject to memory leaks with
+GNAT 3.16a1.
+
+<li><tt>Cant_Happen</tt> exceptions in event processing are reported
+as "illegal events" rather than with a stack trace.
+
+</ul>
+
+<dt>20060427p3
 
 <dd>
 <ul class="release">
