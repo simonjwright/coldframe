@@ -29,8 +29,8 @@
 --  terminated tasks.
 
 --  $RCSfile: coldframe-project-task_deletion.adb,v $
---  $Revision: 77156b56042e $
---  $Date: 2008/07/06 16:22:32 $
+--  $Revision: 17b662230fa7 $
+--  $Date: 2008/07/06 18:48:12 $
 --  $Author: simonjwright $
 
 with BC.Containers.Collections.Unmanaged;
@@ -49,6 +49,8 @@ package body ColdFrame.Project.Task_Deletion is
 
    task type T is
       pragma Priority (Deleting_Task_Priority);
+      entry Add_Using_Domain;
+      entry Remove_Using_Domain;
    end T;
    type T_P is access T;
    Task_Deleter : T_P;
@@ -66,22 +68,59 @@ package body ColdFrame.Project.Task_Deletion is
    end Register;
 
 
+   procedure Add_Using_Domain
+   is
+      pragma Assert (Task_Deleter /= null, "no Task_Deleter");
+   begin
+      Task_Deleter.Add_Using_Domain;
+   end Add_Using_Domain;
+
+
+   procedure Remove_Using_Domain
+   is
+      pragma Assert (Task_Deleter /= null, "no Task_Deleter");
+   begin
+      Task_Deleter.Remove_Using_Domain;
+   end Remove_Using_Domain;
+
+
    task body T is
+      Users : Natural := 0;
    begin
       loop
-         delay 1.0;
-         declare
-            L : BC.Support.Synchronization.Lock (Semaphore'Access);
-            pragma Unreferenced (L);
-            It : Abstract_Containers.Iterator'Class
-              := Collections.New_Iterator (C);
-            use Abstract_Containers;
-         begin
-            while not Is_Done (It) loop
-               Current_Item (It).all;
-               Next (It);
-            end loop;
-         end;
+         select
+            accept Add_Using_Domain do
+               Users := 1;
+            end Add_Using_Domain;
+         or
+            terminate;
+         end select;
+         loop
+            select
+               accept Add_Using_Domain do
+                  Users := Users + 1;
+               end Add_Using_Domain;
+            or
+               accept Remove_Using_Domain do
+                  Users := Users - 1;
+               end Remove_Using_Domain;
+               exit when Users = 0;
+            or
+               delay 1.0;
+               declare
+                  L : BC.Support.Synchronization.Lock (Semaphore'Access);
+                  pragma Unreferenced (L);
+                  It : Abstract_Containers.Iterator'Class
+                    := Collections.New_Iterator (C);
+                  use Abstract_Containers;
+               begin
+                  while not Is_Done (It) loop
+                     Current_Item (It).all;
+                     Next (It);
+                  end loop;
+               end;
+            end select;
+         end loop;
       end loop;
    end T;
 

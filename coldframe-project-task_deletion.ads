@@ -29,8 +29,8 @@
 --  Deleting_Task_Priority) to delete any terminated tasks.
 
 --  $RCSfile: coldframe-project-task_deletion.ads,v $
---  $Revision: 77156b56042e $
---  $Date: 2008/07/06 16:22:32 $
+--  $Revision: 17b662230fa7 $
+--  $Date: 2008/07/06 18:48:12 $
 --  $Author: simonjwright $
 
 with System;
@@ -42,5 +42,13 @@ package ColdFrame.Project.Task_Deletion is
 
    type Deletion_Proc is access procedure;
    procedure Register (It : Deletion_Proc);
+   --  'It' will be called regularly, at Deleting_Task_Priority, to
+   --  delete terminated tasks.
+
+   procedure Add_Using_Domain;
+   --  Called by domains during Initialize.
+
+   procedure Remove_Using_Domain;
+   --  Called by domains during Tear_Down.
 
 end ColdFrame.Project.Task_Deletion;
