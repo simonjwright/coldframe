@@ -13,16 +13,21 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: unit_testing-suite.adb,v $
---  $Revision: 5e03b339dffb $
---  $Date: 2006/03/18 17:30:50 $
+--  $Revision: 3be0c2d45e2e $
+--  $Date: 2008/07/06 16:08:33 $
 --  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Assertions; use AUnit.Assertions;
 with Ada.Strings.Unbounded;
 
+with Ada.Calendar;
+with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Inspection;
+with ColdFrame.Project.Events.Standard.Test;
+with ColdFrame.Project.Times;
 with System;
+with Unit_Testing.Events;
 with Unit_Testing.Initialize;
 with Unit_Testing.Arr.Unit_Test;
 with Unit_Testing.Normal.Unit_Test;
@@ -151,8 +156,9 @@ package body Unit_Testing.Suite is
       Assert (Normal.Unit_Test.Get_State_Machine_State (H)
                 = Normal.Unit_Test.Final,
               "state machine not in final state");
-      Normal.Unit_Test.Set_State_Machine_State (H,
-                                             To => Normal.Unit_Test.Initial);
+      Normal.Unit_Test.Set_State_Machine_State
+        (H,
+         To => Normal.Unit_Test.Initial);
       declare
          Ev : Normal.E (H);
       begin
@@ -217,17 +223,88 @@ package body Unit_Testing.Suite is
    end Singleton_Tests;
 
 
-   type Case_1 is new AUnit.Test_Cases.Test_Case with null record;
+   procedure Test_Only_Operations_Fail
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Test_Only_Operations_Fail
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (C);
+   begin
+      declare
+         Dummy : Boolean;
+         pragma Unreferenced (Dummy);
+      begin
+         Dummy := CPE.Is_Set
+           (The_Timer => Singleton.Unit_Test.Access_S.all,
+            On => Events.Dispatcher);
+         Assert (False, "excpected exception");
+      exception
+         when ColdFrame.Exceptions.Use_Error => null;
+      end;
+      declare
+         Dummy : ColdFrame.Project.Times.Time;
+         pragma Unreferenced (Dummy);
+      begin
+         Dummy := CPE.Expires_At
+           (The_Timer => Singleton.Unit_Test.Access_S.all,
+            On => Events.Dispatcher);
+         Assert (False, "excpected exception");
+      exception
+         when ColdFrame.Exceptions.Use_Error => null;
+      end;
+      begin
+         CPE.Wait_Until_Idle (Events.Dispatcher);
+         Assert (False, "expected exception");
+      exception
+         when ColdFrame.Exceptions.Use_Error => null;
+      end;
+   end Test_Only_Operations_Fail;
 
-   procedure Register_Tests (C : in out Case_1);
 
-   function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access;
+   procedure Test_Operations
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Test_Operations
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Unreferenced (C);
+      use type Ada.Calendar.Time;
+      Firing_Time : constant ColdFrame.Project.Times.Time
+        := ColdFrame.Project.Times.Create
+        (From_Time => Ada.Calendar.Clock + 0.5);
+      use type ColdFrame.Project.Times.Time;
+   begin
+      Assert (not CPE.Is_Set
+                (The_Timer => Singleton.Unit_Test.Access_S.all,
+                 On => Events.Dispatcher),
+              "timer was set");
+      Assert (CPESI.Event_Of (Singleton.Unit_Test.Access_S.all) = null,
+              "event present on timer");
+      CPE.Set (The_Timer => Singleton.Unit_Test.Access_S.all,
+               On => Events.Dispatcher,
+               To_Fire => new Singleton.C,
+               At_Time => Firing_Time);
+      Assert (CPE.Is_Set
+                (The_Timer => Singleton.Unit_Test.Access_S.all,
+                 On => Events.Dispatcher),
+              "timer not set");
+      Assert (CPESI.Event_Of (Singleton.Unit_Test.Access_S.all) /= null,
+              "event not present on timer");
+      Assert (CPE.Expires_At (The_Timer => Singleton.Unit_Test.Access_S.all,
+                              On => Events.Dispatcher) = Firing_Time,
+              "wrong firing time");
+   end Test_Operations;
 
-   procedure Set_Up (C : in out Case_1);
 
-   procedure Tear_Down (C :  in out Case_1);
+   type Standard_Case is new AUnit.Test_Cases.Test_Case with null record;
 
-   procedure Register_Tests (C : in out Case_1) is
+   procedure Register_Tests (C : in out Standard_Case);
+
+   function Name (C : Standard_Case)
+                 return Ada.Strings.Unbounded.String_Access;
+
+   procedure Set_Up (C : in out Standard_Case);
+
+   procedure Tear_Down (C :  in out Standard_Case);
+
+   procedure Register_Tests (C : in out Standard_Case) is
    begin
       Register_Routine
         (C,
@@ -245,15 +322,20 @@ package body Unit_Testing.Suite is
         (C,
          Singleton_Tests'Access,
          "Singleton class");
+      Register_Routine
+        (C,
+         Test_Only_Operations_Fail'Access,
+         "Test-only operations fail");
    end Register_Tests;
 
-   function Name (C : Case_1) return Ada.Strings.Unbounded.String_Access is
+   function Name (C : Standard_Case)
+                 return Ada.Strings.Unbounded.String_Access is
       pragma Warnings (Off, C);
    begin
-      return new String'("Unit_Testing tests");
+      return new String'("Unit_Testing Standard queue");
    end Name;
 
-   procedure Set_Up (C : in out Case_1) is
+   procedure Set_Up (C : in out Standard_Case) is
       pragma Warnings (Off, C);
       Q : constant CPE.Event_Queue_P := new CPE.Standard.Event_Queue_Base
         (Start_Started => False,
@@ -263,7 +345,65 @@ package body Unit_Testing.Suite is
       Unit_Testing.Initialize (Q);
    end Set_Up;
 
-   procedure Tear_Down (C :  in out Case_1) is
+   procedure Tear_Down (C :  in out Standard_Case) is
+      pragma Warnings (Off, C);
+   begin
+      Unit_Testing.Tear_Down;
+   end Tear_Down;
+
+   type Test_Case is new AUnit.Test_Cases.Test_Case with null record;
+
+   procedure Register_Tests (C : in out Test_Case);
+
+   function Name (C : Test_Case)
+                 return Ada.Strings.Unbounded.String_Access;
+
+   procedure Set_Up (C : in out Test_Case);
+
+   procedure Tear_Down (C :  in out Test_Case);
+
+   procedure Register_Tests (C : in out Test_Case) is
+   begin
+      Register_Routine
+        (C,
+         Public_Tests'Access,
+         "Public class");
+      Register_Routine
+        (C,
+         Arr_Tests'Access,
+         "Array class");
+      Register_Routine
+        (C,
+         Normal_Tests'Access,
+         "Normal class");
+      Register_Routine
+        (C,
+         Singleton_Tests'Access,
+         "Singleton class");
+      Register_Routine
+        (C,
+         Test_Operations'Access,
+         "Test-only operations");
+   end Register_Tests;
+
+   function Name (C : Test_Case)
+                 return Ada.Strings.Unbounded.String_Access is
+      pragma Warnings (Off, C);
+   begin
+      return new String'("Unit_Testing Test queue");
+   end Name;
+
+   procedure Set_Up (C : in out Test_Case) is
+      pragma Warnings (Off, C);
+      Q : constant CPE.Event_Queue_P := new CPE.Standard.Test.Event_Queue_Base
+        (Start_Started => False,
+         Priority => System.Default_Priority,
+         Storage_Size => 20_000);
+   begin
+      Unit_Testing.Initialize (Q);
+   end Set_Up;
+
+   procedure Tear_Down (C :  in out Test_Case) is
       pragma Warnings (Off, C);
    begin
       Unit_Testing.Tear_Down;
@@ -274,7 +414,8 @@ package body Unit_Testing.Suite is
       use AUnit.Test_Suites;
       Result : constant Access_Test_Suite := new Test_Suite;
    begin
-      Add_Test (Result, new Case_1);
+      Add_Test (Result, new Standard_Case);
+      Add_Test (Result, new Test_Case);
       return Result;
    end Suite;
 
