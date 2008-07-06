@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 8ff8a88936fb 2008/07/03 21:14:32 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 77725fc737a2 2008/07/06 18:46:43 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -194,6 +194,7 @@
      <xsl:sort select="name"/>
    </xsl:apply-templates>
 
+   <!-- .. the Instance declaration for public classes .. -->
    <xsl:if test="@public and $max &gt; 0">
      <xsl:value-of select="$I"/>
      <xsl:text>type Instance;&#10;</xsl:text>
@@ -202,10 +203,12 @@
      <xsl:value-of select="$blank-line"/>
    </xsl:if>
 
+   <!-- .. the task type spec, for active classes .. -->
    <xsl:if test="@active">
      <xsl:call-template name="cl:task-spec"/>
    </xsl:if>
 
+   <!--  .. the state machine states .. if there's a state machine .. -->
    <xsl:if test="statemachine">
      <xsl:call-template name="st:state-machine-states"/>
    </xsl:if>
@@ -563,8 +566,8 @@
 
         <xsl:if test="@active">
 
-          <!-- Need Ada.Unchecked_Deallocation. -->
-          <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
+          <!-- Need task deletion. -->
+          <xsl:text>with ColdFrame.Task_Deletion_G;&#10;</xsl:text>
 
           <!-- If the (active) class has a priority specified, need System. -->
           <xsl:if test="@priority">
@@ -828,8 +831,10 @@
       <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
-    <!-- .. the task stub for active classes .. -->
+    <!-- .. for active classes, -->
     <xsl:if test="@active">
+
+      <!-- .. the task stub, -->
       <xsl:value-of select="$I"/>
       <xsl:text>pragma Style_Checks (On);&#10;</xsl:text>
       <xsl:value-of select="$I"/>
@@ -837,6 +842,18 @@
       <xsl:value-of select="$I"/>
       <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
       <xsl:value-of select="$blank-line"/>
+
+      <!-- .. checking for termination .. -->
+      <xsl:value-of select="$I"/>
+      <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean is&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>begin&#10;</xsl:text>
+      <xsl:value-of select="$II"/>
+      <xsl:text>return It.all'Terminated;&#10;</xsl:text>
+      <xsl:value-of select="$I"/>
+      <xsl:text>end CF_Is_Terminated;&#10;</xsl:text>
+      <xsl:value-of select="$blank-line"/>
+
     </xsl:if>
 
     <xsl:if test="$max &gt; 0">
@@ -1036,9 +1053,8 @@
           <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
         </xsl:if>
 
-        <!-- We'll need to free memory, unless we have no instances.
-             If we're active, we've already done this in the spec. -->
-        <xsl:if test="$max &gt; 0 and not(@active)">
+        <!-- We'll need to free memory, unless we have no instances. -->
+        <xsl:if test="$max &gt; 0">
           <xsl:text>with Ada.Unchecked_Deallocation;&#10;</xsl:text>
         </xsl:if>
 
@@ -1667,7 +1683,7 @@
       <xsl:value-of select="$II"/>
       <xsl:text>abort This.The_T.all;&#10;</xsl:text>
       <xsl:value-of select="$II"/>
-      <xsl:text>Free (This.The_T);&#10;</xsl:text>
+      <xsl:text>Task_Deletion.Free (This.The_T);&#10;</xsl:text>
     </xsl:if>
 
     <!-- Finalize any instance Timers. -->
@@ -2445,7 +2461,8 @@
            entry {e} ({parameters});
          end T;
          type T_P is access T;
-         procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
+         function CF_Is_Terminated (It : T_P) return Boolean;
+         package Task_Deletion is new ColdFrame.Task_Deletion_G (T, T_P, CF_Is_Terminated);
          -->
     <xsl:value-of select="$I"/>
     <xsl:text>task type T (This : access Instance) is&#10;</xsl:text>
@@ -2475,7 +2492,9 @@
     <xsl:value-of select="$I"/>
     <xsl:text>type T_P is access T;&#10;</xsl:text>
     <xsl:value-of select="$I"/>
-    <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
+    <xsl:text>function CF_Is_Terminated (It : T_P) return Boolean;&#10;</xsl:text> 
+    <xsl:value-of select="$I"/>
+    <xsl:text>package Task_Deletion is new ColdFrame.Task_Deletion_G (T, T_P, CF_Is_Terminated);&#10;</xsl:text>
     <xsl:value-of select="$blank-line"/>
   </xsl:template>
 
