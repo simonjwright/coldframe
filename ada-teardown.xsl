@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 29fc85001fc1 2006/03/09 21:27:23 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v e1ac06a20954 2008/07/06 18:44:41 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -50,6 +50,7 @@
     <xsl:call-template name="ut:identification-info"/>
 
     <xsl:text>with ColdFrame.Project.Events;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
 
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -82,12 +83,18 @@
     <xsl:text>begin&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
+    <xsl:text>if Domain_Initialized then&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
     <xsl:text>ColdFrame.Project.Events.Stop (Events.Dispatcher);&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>ColdFrame.Project.Task_Deletion.Remove_Using_Domain;&#10;</xsl:text>
 
     <xsl:for-each select="class">
       <xsl:sort select="name"/>
 
-      <xsl:value-of select="$I"/>
+      <xsl:value-of select="$II"/>
       <xsl:value-of select="name"/>
       <xsl:text>.CF_Tear_Down;&#10;</xsl:text>
 
@@ -96,20 +103,23 @@
     <xsl:for-each select="type[@callback]">
       <xsl:sort select="name"/>
 
-      <xsl:value-of select="$I"/>
+      <xsl:value-of select="$II"/>
       <xsl:value-of select="name"/>
       <xsl:text>_Callback.Clear;&#10;</xsl:text>
     </xsl:for-each>
 
-    <xsl:value-of select="$I"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);&#10;</xsl:text>
 
-    <xsl:value-of select="$I"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initializing := False;&#10;</xsl:text>
-    <xsl:value-of select="$I"/>
+    <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := False;&#10;</xsl:text>
 
-    <xsl:text>end </xsl:text>
+    <xsl:value-of select="$I"/>
+    <xsl:text>end if;&#10;</xsl:text>
+
+     <xsl:text>end </xsl:text>
     <xsl:value-of select="name"/>
     <xsl:text>.Tear_Down;&#10;</xsl:text>
 
@@ -190,6 +200,7 @@
              with Ada.Unchecked_Deallocation;
              procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+                procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
              begin
                 if This /= null then
                    ColdFrame.Project.Events.Finalize (This.{timer});
@@ -221,6 +232,11 @@
 
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+        <xsl:if test="@active">
+          <xsl:value-of select="$I"/>
+          <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
+        </xsl:if>
 
         <xsl:text>begin&#10;</xsl:text>
 
@@ -281,6 +297,7 @@
              with Ada.Unchecked_Deallocation;
              procedure {Domain}.{Class}.CF_Tear_Down is
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+                procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
              begin
                 for I in The_Container'Range loop
                    if The_Container (I)  /= null then
@@ -314,6 +331,11 @@
 
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+        <xsl:if test="@active">
+          <xsl:value-of select="$I"/>
+          <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
+        </xsl:if>
 
         <xsl:text>begin&#10;</xsl:text>
 
@@ -383,6 +405,7 @@
                 It : Iterator'Class := Maps.New_Iterator (The_Container);
                 H : Handle;
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+                procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
              begin
                 while not Is_Done (It) loop
                    H := Handle (Current_Item (It));
@@ -422,8 +445,14 @@
         <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>H : Handle;&#10;</xsl:text>
+
         <xsl:value-of select="$I"/>
         <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);&#10;</xsl:text>
+
+        <xsl:if test="@active">
+          <xsl:value-of select="$I"/>
+          <xsl:text>procedure Free is new Ada.Unchecked_Deallocation (T, T_P);&#10;</xsl:text>
+        </xsl:if>
 
         <xsl:text>begin&#10;</xsl:text>
 
