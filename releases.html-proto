@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 1c70e3035c69 2008/06/29 18:00:55 simonjwright $ -->
+<!-- $Id: releases.html-proto,v dcc11afdff75 2008/07/06 18:56:42 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -92,14 +92,17 @@ payload.
 <li>Removed no-longer-relevant warnings about singletons in
 associations.
 
-<li>Identifying attributes are output in model order (problem
-introduced 17.v.08)
+<li><b>Code</b>
 
 <li>For classes whose maximum number of instances is known,
 raise <tt>Too_Many_Instances</tt> instead of <tt>Storage_Error</tt> if
 this number is exceeded.
 
-<li><b>Code</b>
+<li>Work round a GNAT 3.16a1 mamory leak problem with <tt>Find</tt>
+and class <tt>Delete</tt> for unbounded classes.
+
+<li>When an instance of an active class is deleted, its task is only
+deleted after it has terminated.
 
 <li><b>Testing</b>
 
