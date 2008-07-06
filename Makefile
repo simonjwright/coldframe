@@ -459,6 +459,8 @@ coldframe-serialization.ads \
 coldframe-serialization_signature.ads \
 coldframe-stubs.adb \
 coldframe-stubs.ads \
+coldframe-task_deletion_g.adb \
+coldframe-task_deletion_g.ads \
 coldframe-time_signature.ads \
 coldframe-unbounded_debug_storage_pools.adb \
 coldframe-unbounded_debug_storage_pools.ads \
@@ -503,6 +505,8 @@ coldframe-project-logging_support.adb \
 coldframe-project-logging_support.ads \
 coldframe-project-serialization.ads \
 coldframe-project-storage_pools.ads \
+coldframe-project-task_deletion.adb \
+coldframe-project-task_deletion.ads \
 coldframe-project-times.adb \
 coldframe-project-times.ads
 
