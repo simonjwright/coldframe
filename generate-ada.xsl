@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 992f66a04090 2007/09/22 20:55:26 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 7ee3ed81534e 2008/07/06 18:45:28 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -473,6 +473,7 @@
     <!--
          with Ada.Exceptions;
          with ColdFrame.Project.Log_Error;
+         with ColdFrame.Project.Task_Deletion;
          with {domain-init-proc-package};
          with {domain}.Events;
          with {domain}.{class};
@@ -482,6 +483,7 @@
          begin
             if not Domain_Initialized then
                Domain_Initializing := True;
+               ColdFrame.Project.Task_Deletion.Add_Using_Domain;
                if Dispatcher /= null then
                   Events.Dispatcher := Dispatcher;
                else
@@ -522,6 +524,7 @@
     <!-- .. withs, starting with exception handling .. -->
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
     <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
+    <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -572,6 +575,9 @@
          initialization procedures). -->
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initializing := True;&#10;</xsl:text>
+
+    <xsl:value-of select="$II"/>
+    <xsl:text>ColdFrame.Project.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
