@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 7d1b8b6c1529 2008/07/07 20:36:44 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 77d245ba9cf3 2008/07/07 20:37:11 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -625,7 +625,8 @@
          continue) .. --> 
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
-    <xsl:value-of select="$II"/> <xsl:text>Domain_Initializing := False;&#10;</xsl:text>
+    <xsl:value-of select="$II"/>
+    <xsl:text>Domain_Initializing := False;&#10;</xsl:text>
 
     <xsl:value-of select="$I"/>
     <xsl:text>end if;&#10;</xsl:text>
