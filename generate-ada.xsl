@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 7ee3ed81534e 2008/07/06 18:45:28 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v 7d1b8b6c1529 2008/07/07 20:36:44 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -511,7 +511,7 @@
     <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
     <xsl:call-template name="ut:identification-info"/>
 
-    <xsl:variable
+     <xsl:variable
       name="class-initializations"
       select="class[attribute[@class and initial]
               or @singleton
@@ -524,7 +524,9 @@
     <!-- .. withs, starting with exception handling .. -->
     <xsl:text>with Ada.Exceptions;&#10;</xsl:text>
     <xsl:text>with ColdFrame.Project.Log_Error;&#10;</xsl:text>
-    <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
+    <xsl:if test="class[@active]">
+      <xsl:text>with ColdFrame.Project.Task_Deletion;&#10;</xsl:text>
+    </xsl:if>
     <!-- .. the Events package .. -->
     <xsl:text>with </xsl:text>
     <xsl:value-of select="name"/>
@@ -572,12 +574,15 @@
     <xsl:text>if not Domain_Initialized then&#10;</xsl:text>
 
     <!-- Mark initializing (required for any Create calls in class
-         initialization procedures). -->
+         initialization procedures) .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initializing := True;&#10;</xsl:text>
 
-    <xsl:value-of select="$II"/>
-    <xsl:text>ColdFrame.Project.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
+    <!-- .. task deletion registration .. -->
+    <xsl:if test="class[@active]">
+      <xsl:value-of select="$II"/>
+      <xsl:text>ColdFrame.Project.Task_Deletion.Add_Using_Domain;&#10;</xsl:text>
+    </xsl:if>
 
     <!-- .. the Events package initialization .. -->
     <xsl:value-of select="$II"/>
