@@ -3,7 +3,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 8fd9f5da13cc 2008/05/08 03:34:43 simonjwright $
+# $Id: normalize-rose.tcl,v fb795d748db2 2008/07/08 20:26:44 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1476,6 +1476,11 @@ itcl::class Class {
             $exs -add $ex $name
             $ex -documentation $documentation
             $ex -annotation $annotation
+            if [info exists tags] {
+                foreach t [array names tags] {
+                    $ex -tag $t $tags($t)
+                }
+            }
         } else {
             if $isType {
                 # must be a record type
