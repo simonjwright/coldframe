@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v f01ce3437695 2008/06/29 17:55:17 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 067eefe5b2c4 2008/07/08 21:50:19 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -210,6 +210,14 @@
             </xsl:apply-templates>
           </ul>
         </xsl:if>
+        <xsl:if test="exception">
+          <h2>Exceptions</h2>
+          <ul>
+            <xsl:apply-templates select="exception" mode="index">
+              <xsl:sort select="name"/>
+            </xsl:apply-templates>
+          </ul>
+        </xsl:if>
         <!-- End of index -->
         <hr/>
         <xsl:if test="class[@public]">
@@ -239,6 +247,12 @@
         <xsl:if test="type[not(@standard)]">
           <h1>Types</h1>
           <xsl:apply-templates select="type[not(@standard)]">
+            <xsl:sort select="name"/>
+          </xsl:apply-templates>
+        </xsl:if>
+        <xsl:if test="exception">
+          <h1>Exceptions</h1>
+          <xsl:apply-templates select="exception">
             <xsl:sort select="name"/>
           </xsl:apply-templates>
         </xsl:if>
@@ -701,8 +715,7 @@
       <xsl:apply-templates select="documentation"/>
       <xsl:if test="parameter">
         <p>
-          <xsl:value-of select="name"/>
-          <xsl:text> has parameters:</xsl:text>
+          <xsl:text>Parameters:</xsl:text>
         </p>
         <dl>
           <xsl:apply-templates select="parameter"/>
@@ -1054,6 +1067,35 @@
         </xsl:apply-templates>
       </dl>
     </xsl:if>
+  </xsl:template>
+
+
+  <!-- Output details of an Exception. -->
+  <xsl:template match="exception" mode="index">
+    <li>
+      <a href="#{name}"><xsl:value-of select="name"/></a>
+    </li>
+  </xsl:template>
+
+  <xsl:template match="exception">
+    <h2><a name="{name}"><xsl:value-of select="name"/></a></h2>
+    <xsl:apply-templates select="documentation"/>
+    <xsl:choose>
+      <xsl:when test="@imported">
+        <p>
+          <xsl:text>Imported from </xsl:text>
+          <tt><xsl:value-of select="@imported"/></tt>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
+      <xsl:when test="@renames">
+        <p>
+          <xsl:text>Renames </xsl:text>
+          <tt><xsl:value-of select="@renames"/></tt>
+          <xsl:text>.</xsl:text>
+        </p>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 
