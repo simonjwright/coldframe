@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v f962166725ae 2008/06/29 17:53:01 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v 0f303e5ecd61 2008/07/08 21:50:57 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -239,6 +239,9 @@
             <xsl:text>! </xsl:text>
           </xsl:when>
         </xsl:choose>
+        <xsl:if test="@abstract">
+          <xsl:text>&#171;abstract&#187; </xsl:text>
+        </xsl:if>
         <xsl:if test="@class">
           <xsl:text>&#171;class&#187; </xsl:text>
         </xsl:if>
