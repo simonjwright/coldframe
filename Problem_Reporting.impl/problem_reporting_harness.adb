@@ -1,10 +1,10 @@
 with Ada.Text_IO;
 with Problem_Reporting.Initialize;
-with Problem_Reporting.Interface;
+with Problem_Reporting.Public;
 
 procedure Problem_Reporting_Harness is
 
-   use Problem_Reporting.Interface;
+   use Problem_Reporting.Public;
 
 begin
 
