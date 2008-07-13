@@ -517,9 +517,7 @@ EXTRAS = \
 coldframe-logging_event_basis-ews_support.adb \
 coldframe-logging_event_basis-ews_support.ads
 
-EXAMPLES = \
-Makefile-demo-unix Makefile-demo-winnt \
-Examples.mdl
+EXAMPLES = Examples.mdl
 
 EXAMPLES += \
 stairwell_demo.gpr \
@@ -600,12 +598,12 @@ Problem_Reporting.impl/problem_reporting-component-clean.adb \
 Problem_Reporting.impl/problem_reporting-component-report.adb \
 Problem_Reporting.impl/problem_reporting-component-report_all.adb \
 Problem_Reporting.impl/problem_reporting-defect-report.adb \
-Problem_Reporting.impl/problem_reporting-interface-add_component.adb \
-Problem_Reporting.impl/problem_reporting-interface-add_problem.adb \
-Problem_Reporting.impl/problem_reporting-interface-delete_component.adb \
-Problem_Reporting.impl/problem_reporting-interface-note_defect.adb \
-Problem_Reporting.impl/problem_reporting-interface-reject_problem.adb \
-Problem_Reporting.impl/problem_reporting-interface-report_problems.adb
+Problem_Reporting.impl/problem_reporting-public-add_component.adb \
+Problem_Reporting.impl/problem_reporting-public-add_problem.adb \
+Problem_Reporting.impl/problem_reporting-public-delete_component.adb \
+Problem_Reporting.impl/problem_reporting-public-note_defect.adb \
+Problem_Reporting.impl/problem_reporting-public-reject_problem.adb \
+Problem_Reporting.impl/problem_reporting-public-report_problems.adb
 
 EXAMPLES += \
 States.cat States.raw States.gpr \
@@ -815,13 +813,14 @@ cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
 	$(CP) -p $(PROJECT) $@/project
 	$(MKDIR) $@/extras
 	$(CP) -p $(EXTRAS) $@/extras
-	$(MKDIR) $@/example
-	$(TAR) cf - $(EXAMPLES) | $(TAR) xf - -C $@/example
+	$(MKDIR) $@/examples
+	$(TAR) cf - $(EXAMPLES) | $(TAR) xf - -C $@/examples
 	$(MKDIR) $@/test
 	$(TAR) cf - $(TEST) | $(TAR) xf - -C $@/test
 	$(MKDIR) $@/tools
 	$(TAR) cf - $(TOOL_SRC) | $(TAR) xf - -C $@/tools
 	$(CP) -p Makefile-test $@/test/Makefile
+	$(CP) -p Makefile-examples $@/examples/Makefile
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-$(RM) $@
