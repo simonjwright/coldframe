@@ -2,13 +2,13 @@
 <name>Problem_Reporting</name>
 <documentation><![CDATA[ Classes for Problem Reporting.
 
-{ revision = $Revision: 336c5adefb12 $ } ]]></documentation>
-<extractor>cat2raw.py: $Revision: 336c5adefb12 $</extractor>
+{ revision = $Revision: 6dab21830909 $ } ]]></documentation>
+<extractor>cat2raw.py: $Revision: 6dab21830909 $</extractor>
 <date>
-<year>2006</year>
-<month>4</month>
-<day>23</day>
-<time>19:27</time>
+<year>2008</year>
+<month>7</month>
+<day>13</day>
+<time>15:54</time>
 </date>
 <classes>
 <class>
@@ -270,8 +270,8 @@ It should address one logical error (which may correspond to several necessary c
 <events>
 </events>
 </class>
-<class stereotype="Interface">
-<name>Interface</name>
+<class stereotype="public">
+<name>Public</name>
 <documentation><![CDATA[ Provides the public interface to the Problem Reporting domain. ]]></documentation>
 <visibility>PublicAccess</visibility>
 <kind>NormalClass</kind>
