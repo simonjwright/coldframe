@@ -10,22 +10,14 @@
 --  This is ColdFrame's default implementation.
 
 --  $RCSfile: coldframe-project-logging_support.ads,v $
---  $Revision: e91d25f64219 $
---  $Date: 2002/10/01 17:43:10 $
---  $Author: simon $
-
-with ColdFrame.Logging_Signature;
+--  $Revision: e16d4d53415d $
+--  $Date: 2008/07/22 19:58:36 $
+--  $Author: simonjwright $
 
 package ColdFrame.Project.Logging_Support is
 
    type Severity_Code is (Info, Error);
 
    procedure Log (Severity : Severity_Code; Message : String);
-
-   package Implementation is new ColdFrame.Logging_Signature
-     (Severity_Code => Severity_Code,
-      Error => Error,
-      Informational => Info,
-      Log => Log);
 
 end ColdFrame.Project.Logging_Support;
