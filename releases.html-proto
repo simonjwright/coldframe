@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v cfb70cdd3f56 2008/07/08 21:58:40 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 0d8390493b80 2008/07/22 21:11:20 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -80,8 +80,6 @@ contains the complete documentation.
 <dd>
 <ul class="release">
 
-<li><b>Modelling</b>
-
 <li><b>Generation</b>
 
 <li>Generated HTML for instance events didn't select the right
@@ -104,8 +102,6 @@ and class <tt>Delete</tt> for unbounded classes.
 
 <li>When an instance of an active class is deleted, its task is only
 deleted after it has terminated.
-
-<li><b>Testing</b>
 
 </ul>
 
