@@ -452,7 +452,6 @@ coldframe-interrupts.adb \
 coldframe-interrupts.ads \
 coldframe-logging_event_basis.adb \
 coldframe-logging_event_basis.ads \
-coldframe-logging_signature.ads \
 coldframe-project.ads \
 coldframe-serialization.adb \
 coldframe-serialization.ads \
