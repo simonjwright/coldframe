@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 067eefe5b2c4 2008/07/08 21:50:19 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 91d00cb58911 2008/07/23 20:00:49 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -586,6 +586,7 @@
                             /action"/>
                   <xsl:if test="$action">
                     <xsl:text>/</xsl:text>
+                    <br/>
                     <a href="#{../../name}.{$action}">
                       <xsl:value-of select="$action"/>
                     </a>
