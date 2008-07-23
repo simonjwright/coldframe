@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 0d8390493b80 2008/07/22 21:11:20 simonjwright $ -->
+<!-- $Id: releases.html-proto,v a199494e786b 2008/07/23 20:01:57 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -97,7 +97,7 @@ associations.
 raise <tt>Too_Many_Instances</tt> instead of <tt>Storage_Error</tt> if
 this number is exceeded.
 
-<li>Work round a GNAT 3.16a1 mamory leak problem with <tt>Find</tt>
+<li>Work round a GNAT 3.16a1 memory leak problem with <tt>Find</tt>
 and class <tt>Delete</tt> for unbounded classes.
 
 <li>When an instance of an active class is deleted, its task is only
