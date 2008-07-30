@@ -314,6 +314,7 @@ compilation.html \
 conversion.html \
 copying.html \
 directions.html \
+documentation.html \
 domains.html \
 error-messages.html \
 events.html \
