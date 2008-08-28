@@ -16,6 +16,7 @@
 
 BLANK_LINES = yes
 GENERATE_ACCESSORS = defined
+GENERATE_DIAGRAMS = yes
 GENERATE_EVENT_LOGGING = no
 GENERATE_STUBS = no
 UNIT_TEST_SUPPORT = no
@@ -134,15 +135,17 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 
 # Do the diagrams first, because the HTML requires the cmapx output.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
-	@$(RM) -rf `basename $@ .html`.images
-	@$(MKDIR) `basename $@ .html`.images
-	@$(ECHO) generating diagrams for $@ ...
-	@$(SAXON) $< $(DIAGRAM_SCRIPT) \
-	  >`basename $@ .html`.images/$@.sh \
-	  || ($(RM) -f $@; $(EXIT) 1)
-	@$(SH) -v `basename $@ .html`.images/$@.sh
+	@if [ "$(GENERATE_DIAGRAMS)" = "yes" ]; then \
+	  $(RM) -rf `basename $@ .html`.images; \
+	  $(MKDIR) `basename $@ .html`.images; \
+	  $(ECHO) generating diagrams for $@ ...; \
+	  $(SAXON) $< $(DIAGRAM_SCRIPT) \
+	    >`basename $@ .html`.images/$@.sh; \
+	  $(SH) -v `basename $@ .html`.images/$@.sh; \
+	fi
 	@$(ECHO) generating $@ ...
-	@$(SAXON) $< $(HTMLGEN_SCRIPT) cwd=$(PWD) >$@ || \
+	@$(SAXON) $< $(HTMLGEN_SCRIPT) \
+	  cwd=$(PWD) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
 	  ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm $(CODEGEN_SCRIPTS)

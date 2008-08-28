@@ -1,4 +1,4 @@
-<!-- $Id: documentation.html,v 86c4270e6162 2008/07/30 20:52:33 simonjwright $ -->
+<!-- $Id: documentation.html,v 44b306635f4d 2008/08/28 20:07:12 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Documentation</title>
@@ -26,8 +26,8 @@ least three reasons why it may be helpful:
 <ul>
 
 <li>It shows what is actually present in the model. It's very easy to
-omit things from a diagram, giving a misleading impression: for
-example, a forgotten transition on a state diagram.
+omit things from a diagram in the CASE tool, giving a misleading
+impression: for example, a forgotten transition on a state diagram.
 
 <li>It is in a more amenable format for comparison than typical model
 files. You can generate documentation for the model as it was and as
@@ -50,10 +50,15 @@ to the locations of <tt>dot</tt> and <tt>circo</tt> respectively.
 <h2>Use</h2>
 
 <p>Assuming you have created <tt>$COLDFRAMEOUT/<i>Domain</i>.raw</tt>
-from your mode, either using the extractor or <i>cat2raw.py</i>,
+from your model, either using the extractor or <i>cat2raw.py</i>,
 simply say
 <pre>
    make <i>Domain</i>.html
+</pre>
+or, if you don't want diagrams (easier to do comparisons, perhaps; or
+maybe you can't install Graphviz),
+<pre>
+   make <i>Domain</i>.html GENERATE_DIAGRAMS=no
 </pre>
 
 <p>Images will be created in the

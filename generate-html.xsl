@@ -1,4 +1,4 @@
-<!-- $Id: generate-html.xsl,v 91d00cb58911 2008/07/23 20:00:49 simonjwright $ -->
+<!-- $Id: generate-html.xsl,v 44b306635f4d 2008/08/28 20:07:12 simonjwright $ -->
 
 <!-- XSL stylesheet to generate HTML documentation. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -71,6 +71,9 @@
 
   <!-- Current working directory (absolute is best!). -->
   <xsl:param name="cwd" select="'.'"/>
+
+  <!-- Do we generate diagrams? -->
+  <xsl:param name="diagrams" select="'yes'"/>
 
   <!-- Global shorthands for indentation. -->
   <xsl:param name="I" select="$standard-indent"/>
@@ -162,14 +165,16 @@
         </xsl:if>
         <h1>Contents</h1>
         <h2>All classes</h2>
-        <xsl:copy-of 
-          select="document(concat($cwd, '/', name, '.images/', name, '.overall.cmapx'))"/>
-        <img 
-          src="{name}.images/{name}.overall.png"
-          border="0"
-          ismap="true"
-          usemap="#overall"
-          alt="Class diagram for {name}"/>
+        <xsl:if test="$diagrams='yes'">
+          <xsl:copy-of 
+            select="document(concat($cwd, '/', name, '.images/', name, '.overall.cmapx'))"/>
+          <img 
+            src="{name}.images/{name}.overall.png"
+            border="0"
+            ismap="true"
+            usemap="#overall"
+            alt="Class diagram for {name}"/>
+        </xsl:if>
         <xsl:if test="class[@public]">
           <h2>Public Classes</h2>
           <ul>
@@ -272,14 +277,16 @@
     <xsl:variable name="name" select="name"/>
     <h2><a name="{$name}"><xsl:value-of select="$name"/></a></h2>
 
-    <xsl:copy-of 
-      select="document(concat($cwd, '/', ../name, '.images/', ../name, '.', name, '.class.cmapx'))"/>
-    <img 
-      src="{../name}.images/{../name}.{name}.class.png" 
-      border="0"
-      ismap="true"
-      usemap="#{name}.class"
-      alt="Context class diagram for {name}"/>
+    <xsl:if test="$diagrams='yes'">
+      <xsl:copy-of 
+        select="document(concat($cwd, '/', ../name, '.images/', ../name, '.', name, '.class.cmapx'))"/>
+      <img 
+        src="{../name}.images/{../name}.{name}.class.png" 
+        border="0"
+        ismap="true"
+        usemap="#{name}.class"
+        alt="Context class diagram for {name}"/>
+    </xsl:if>
 
     <xsl:apply-templates select="documentation"/>
 
@@ -365,11 +372,13 @@
       </dl>
       <h3>State-Event Matrix</h3>
       <xsl:call-template name="state-machine"/>
-      <h3>State Diagram</h3>
-      <img
-        src="{../name}.images/{../name}.{name}.state.png"
-        border="0"
-        alt="State diagram for {../name}.{name}"/>
+      <xsl:if test="$diagrams='yes'">
+        <h3>State Diagram</h3>
+        <img
+          src="{../name}.images/{../name}.{name}.state.png"
+          border="0"
+          alt="State diagram for {../name}.{name}"/>
+      </xsl:if>
     </xsl:if>
 
     <xsl:if test="operation[@class and @visibility='public']">
