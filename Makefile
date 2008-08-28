@@ -134,6 +134,8 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
 
 # Do the diagrams first, because the HTML requires the cmapx output.
+# The cwd parameter to the HTML script is because XSLT has no access
+# otherwise.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
 	@if [ "$(GENERATE_DIAGRAMS)" = "yes" ]; then \
 	  $(RM) -rf `basename $@ .html`.images; \

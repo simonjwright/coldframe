@@ -20,6 +20,7 @@
 
 BLANK_LINES = yes
 GENERATE_ACCESSORS = defined
+GENERATE_DIAGRAMS = yes
 GENERATE_EVENT_LOGGING = no
 GENERATE_STUBS = no
 STACK_DUMP = no
@@ -113,16 +114,17 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 # otherwise. The faffing with the drive letter is because Saxon treats
 # it as a URL.
 %.html: %.norm $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
-	@rm -rf `basename $@ .html`.images
-	@mkdir `basename $@ .html`.images
-	@$(ECHO) generating diagrams for $@ ...
-	@$(SAXON) $< $(DIAGRAM_SCRIPT) \
-	  >`basename $@ .html`.images/$@.sh \
-	  || ($(RM) -f $@; $(EXIT) 1)
-	@$(SH) -v `basename $@ .html`.images/$@.sh
+	@if [ "$(GENERATE_DIAGRAMS)" = "yes" ]; then \
+	  $(RM) -rf `basename $@ .html`.images; \
+	  $(MKDIR) `basename $@ .html`.images; \
+	  $(ECHO) generating diagrams for $@ ...; \
+	  $(SAXON) $< $(DIAGRAM_SCRIPT) \
+	    >`basename $@ .html`.images/$@.sh; \
+	  $(SH) -v `basename $@ .html`.images/$@.sh; \
+	fi
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) \
-	  cwd="`cygpath -m $(PWD) | sed -e 's;\(.\):;///\1|;'`" >$@ || \
+	  cwd=$(PWD) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
 	  ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
