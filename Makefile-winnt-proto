@@ -124,7 +124,8 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	fi
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) \
-	  cwd=$(PWD) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
+	  cwd="`cygpath -m $(PWD) | sed -e 's;\(.\):;///\1|;'`" \
+	  diagrams=$(GENERATE_DIAGRAMS) >$@ || \
 	  ($(RM) -f $@; $(EXIT) 1)
 
 %.ada: %.norm
