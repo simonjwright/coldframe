@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 1bc276b47d3d 2007/05/17 21:44:23 simonjwright $ -->
+<!-- $Id: error-messages.html,v 5ca7e7a4dce9 2008/09/04 20:19:57 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -209,8 +209,6 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
 
-<dt>Error: couldn't generate type <i>Type</i> <dd>The type has an attribute, or is an array involving, or is a protected type with an operation involving, a type or types that haven't been specified. The undefined types are listed. Note, this can occur with a public type that depends on a private type.
-
 <dt>Error: completion (drop-through) and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
 <dt>Error: completion (drop-through) transition after final state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
@@ -250,6 +248,8 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 <dl>
 
 <dt>Warning: <i>Class</i>: no rule to hash <i>Type</i> <dd>ColdFrame doesn't know how to hash values of type <tt>Type</tt> in order to make a reasonable hash function. This normally happens when <tt>Type</tt> is <tt>{imported}</tt>. The generated code will still operate, but it's best if you can replace the default <tt>Class.Instance_Hash</tt>. <br>If the imported type is discrete (for example, an integer or an enumeration), you can say <a href="types.html#hash"><tt>{hash=discrete}</tt> or <tt>{hash=enumeration}</tt></a>.
+
+<dt>Warning: possible problems with type <i>Type</i> <dd>The type has an attribute, or is an array involving, or is a protected type with an operation involving, a type or types that haven't been specified. The possibly-undefined types are listed. Note, this can occur with a public type that depends on a private type, or, if the domain is a child domain (<i>Parent</i>.<i>Child</i>), it may be a type defined in <i>Parent</i>.
 
 <dt>Warning: upper or lower bound not specified for <i>Type</i> <dd>Provide both upper and lower bounds for {integer} or {real} types.
 

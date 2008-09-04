@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 47a56a74a00c 2008/05/17 20:57:30 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v 5ca7e7a4dce9 2008/09/04 20:19:57 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -227,11 +227,35 @@
 
         <xsl:if test="$missing">
 
+          <!-- Construct a set containing (possibly multiple copies
+               of) "name" elements for each missing type. -->
+          <xsl:variable name="missing-types">
+            <xsl:for-each select="$missing">
+              <xsl:for-each
+                select=
+                "attribute[not($processed/name=type)]/type
+                | array[not($processed/name=type)]/type
+                | array[not($processed/name=index)]/index
+                | subtype[not($processed/name=@constrains)]/@constrains
+                | operation[not(@access) and ../@protected]
+                /parameter[not($processed/name=type)]/type
+                | operation[not(@access) and ../@protected
+                and @return and not($processed/name=@return)]/@return">
+                <xsl:element name="name">
+                  <xsl:value-of select="."/>
+                </xsl:element>
+                <xsl:message>
+                  <xsl:text>adding </xsl:text>
+                  <xsl:value-of select="."/>
+                </xsl:message>
+              </xsl:for-each>
+            </xsl:for-each>
+          </xsl:variable>
+
           <xsl:message>
             <xsl:for-each select="$missing">
               <xsl:sort select="name"/>
-              <xsl:call-template name="ut:log-error"/>
-              <xsl:text>Error: couldn't generate type </xsl:text>
+              <xsl:text>Warning: possible problems with type </xsl:text>
               <xsl:value-of select="name"/>
               <xsl:text>&#10;</xsl:text>
               <xsl:for-each
@@ -254,6 +278,17 @@
               </xsl:for-each>
             </xsl:for-each>
           </xsl:message>
+
+          <!-- Fake having output the missing types, then make a
+               recursive call, starting with no nodes to be
+               output. -->
+          <xsl:call-template name="ty:sorted-domain-types">
+            <xsl:with-param name="types" select="$types"/>
+            <xsl:with-param name="next" select="/.."/>
+            <xsl:with-param 
+              name="finished" 
+              select="$processed | $missing-types"/>
+          </xsl:call-template>
 
         </xsl:if>
 
