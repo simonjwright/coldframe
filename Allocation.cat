@@ -1,0 +1,116 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Allocation"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"48690CBF0252"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Allocator"
+	    quid       	"48690CCB01A6"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ID"
+		    quid       	"48690CF003D8"
+		    stereotype 	"id"
+		    type       	"Autonumber"))
+	    concurrency 	"Active"
+	    cardinality 	(value Cardinality "0..1"))
+	(object Class "Public"
+	    quid       	"48690D1801F4"
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "Start"
+		    quid       	"48690D2F033B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Stop"
+		    quid       	"48690D330399"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"48690CC80224"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Allocation::Allocator" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1488, 608)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(1199, 527)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	578
+			justify    	0
+			label      	"Allocator")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"48690CCB01A6"
+		    width      	596
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Allocation::Public" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(544, 608)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(420, 524)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	248
+			justify    	0
+			label      	"Public")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(420, 474)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	248
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"48690D1801F4"
+		    width      	266
+		    height     	292
+		    annotation 	8
+		    autoResize 	TRUE)))))
