@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v a199494e786b 2008/07/23 20:01:57 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 845f823ddb08 2008/09/04 19:54:08 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -88,8 +88,13 @@ payload.
 <li>Generated HTML includes simple hyperlinked class diagram and
 exceptions.
 
+<li>Diagrams in generated HTML are optional.
+
 <li>Removed no-longer-relevant warnings about singletons in
 associations.
+
+<li>Missing types are no longer treated as errors, so that a child
+domain can use types declared in its parent. Warnings are still given.
 
 <li><b>Code</b>
 
