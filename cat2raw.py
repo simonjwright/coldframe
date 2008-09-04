@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 7d44b9b6b28f 2007/05/28 14:49:51 simonjwright $
+# $Id: cat2raw.py,v ee3cb4be437d 2008/09/04 20:12:07 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -313,7 +313,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 7d44b9b6b28f $',
+				 'cat2raw.py: $Revision: ee3cb4be437d $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -790,19 +790,22 @@ t_FLONUM  = r'[+-]?\d+\.\d+'
 t_COMMA   = r','
 t_VALUE   = r'\(value'
 
-# A quoted string has its quotes removed.
+# A quoted string has its quotes removed. Internal escaped quotes are
+# retained. Escapes are removed (assuming only quotes and backslashes
+# get escaped).
 def t_QSTRING(t):
-    r'"[^"]*"'
-    t.value = t.value[1:-1]
+    r'"(\\.|[^"])*"'
+    t.value = re.sub(r'\\(.)', r'\1', t.value[1:-1])
     return t
 
-# A DOCLINE has its leading pipe removed.
+# A DOCLINE has its leading pipe removed. Escapes are removed
+# (assuming only quotes and backslashes get escaped).
 def t_DOCLINE(t):
     r'\|.*'
     if t.value[len(t.value) - 1] == '\r':
 	t.value = t.value[1:-1]
     else:
-	t.value = t.value[1:]
+	t.value = re.sub(r'\\(.)', r'\1', t.value[1:])
     return t
 
 # Define a rule so we can track skipped line numbers as well as
@@ -826,7 +829,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: 7d44b9b6b28f $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: ee3cb4be437d $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
