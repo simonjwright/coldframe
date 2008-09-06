@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 1eb27e6242ed 2008/09/06 10:05:07 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v ed2aeff9f282 2008/09/06 10:22:03 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -167,6 +167,7 @@
         <xsl:sort select="event"/>
         <xsl:if test="count($leaving[event=current()/event]) &gt; 1">
           <xsl:if test="not(event=$previous)">
+            <xsl:call-template name="ut:log-error"/>
             <xsl:message>
               <xsl:text>Error: more than one transition triggered by </xsl:text>
               <xsl:value-of select="event"/>
