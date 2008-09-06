@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 57eeba78b75e 2008/07/01 20:31:23 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 1eb27e6242ed 2008/09/06 10:05:07 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -520,12 +520,12 @@
       <xsl:variable name="impl-class">
         <xsl:call-template name="st:class-of-operation-for-action">
           <xsl:with-param name="class" select="../../.."/>
-          <xsl:with-param name="action" select="$target/action"/>
+          <xsl:with-param name="action" select="."/>
         </xsl:call-template>
       </xsl:variable>
       <xsl:variable
         name="actual-action-operation"
-        select="/domain/class[name=$impl-class]/operation[name=$target/action]"/>
+        select="/domain/class[name=$impl-class]/operation[name=.]"/>
       <xsl:if test="(.='Delete' or $actual-action-operation/@final)
                     and not(position()=last())">
         <xsl:call-template name="ut:log-error"/>
