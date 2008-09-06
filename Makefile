@@ -15,6 +15,7 @@
 # $Id$
 
 BLANK_LINES = yes
+CHECKING = strict
 GENERATE_ACCESSORS = defined
 GENERATE_DIAGRAMS = yes
 GENERATE_EVENT_LOGGING = no
@@ -28,6 +29,12 @@ VERBOSE = no
 
 CASE_EXCEPTIONS ?= ~/.emacs_case_exceptions
 COLDFRAMEOUT ?= .
+
+ifeq ($(CHECKING), strict)
+  NORM_CHECKING = --checking strict
+else
+  NORM_CHECKING = --checking relaxed
+endif
 
 ifeq ($(DOMAIN_NAME), )
   NORM_DOMAIN_NAME = 
@@ -128,6 +135,7 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	@$(ECHO) generating $@ ...
 	@TCLLIBPATH=$(TCLXML) $(ITCLSH) $(NORMALIZE_ROSE_SCRIPT) \
 	    --casing '$(CASE_EXCEPTIONS)' \
+	    $(NORM_CHECKING) \
 	    $(NORM_DOMAIN_NAME) \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
@@ -154,6 +162,7 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(CODEGEN_SCRIPT) \
 	  add-blank-lines=$(BLANK_LINES) \
+	  checking-policy=$(CHECKING) \
 	  generate-accessors=$(GENERATE_ACCESSORS) \
 	  generate-event-logging=$(GENERATE_EVENT_LOGGING) \
 	  generate-stubs=$(GENERATE_STUBS) \

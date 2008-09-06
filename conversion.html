@@ -1,4 +1,4 @@
-<!-- $Id: conversion.html,v 6098e24ea614 2005/11/20 20:54:18 simonjwright $ -->
+<!-- $Id: conversion.html,v f65f57733261 2008/09/06 17:14:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Conversion to standard form</title>
@@ -69,31 +69,41 @@ the last one counts.
 <br>Default is to do "title case" casing always (so <tt>text io</tt>
 comes out as <tt>Text_Io</tt>).
 
+<br>The Make variable is <tt>CASE_EXCEPTIONS</tt>, default
+is <tt>~/.emacs_case_exceptions</tt>.
+
+<dt><tt>--checking <i>policy</i></tt>
+
+<dd>If the <i>policy</i> is not <tt>strict</tt>, certain errors are
+demoted to warnings.
+
+<br>The Make variable is <tt>CHECKING</tt>, default is <tt>strict</tt>.
+
+<dt><tt>--domain-name <i>name</i></tt>
+
+<dd>Specifies an alternate domain name for the generated code (it's
+still placed in the <tt>.gen</tt> directory derived from
+the <tt>.raw</tt> file name).
+
+<br>This is intended for use with <a href="testing.html#stubs">stub
+generation</a>.
+
+<br>The Make variable is <tt>DOMAIN_NAME</tt>, default is to use the
+domain's name in the model.
+
 <dt><tt>--stack-dump</tt>
 
 <dd>Specifies whether a Tcl stack dump is to be produced if an error
 is detected in <tt>normalize-rose.tcl</tt>. This is intended for
 debugging ColdFrame, not your model!
 
-<br>Default is <i>off</i>.
+<br>The Make variable is <tt>STACK_DUMP</tt>, default is <tt>no</tt>.
 
 <dt><tt>--verbose</tt>
 
 <dd>Specifies whether ColdFrame should report what it's doing.
 
-<br>Default is <i>off</i>.
-
-<dt><tt>--version <i>version-string</i></tt>
-
-<dd>Specifies a string (the supplied Makefiles use
-<tt>cf-<i>yyyymmdd</i></tt>) which is output by this phase in the
-<tt>&lt;normalizer&gt;</tt> element and is included in the comments in
-the generated Ada to tell the release of <tt>normalize-rose.tcl</tt>
-that was used (you might have kept an old <tt>.norm</tt> file around
-after installation of a new release of ColdFrame; not necessarily a
-bad thing, just nice to know).
-
-<br>Default is not to include any string.
+<br>The Make variable is <tt>VERBOSE</tt>, default is <tt>no</tt>.
 
 </dl>
 

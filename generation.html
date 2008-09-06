@@ -1,4 +1,4 @@
-<!-- $Id: generation.html,v 5f03998eeba2 2005/11/26 17:06:32 simonjwright $ -->
+<!-- $Id: generation.html,v f65f57733261 2008/09/06 17:14:47 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Generation of code</title>
@@ -65,6 +65,13 @@ generated Ada to make it easier to read, in case you have to.
 
 <br>The Make variable is <tt>BLANK_LINES</tt>, default <tt>yes</tt>.
 
+<dt><tt>checking-policy</tt>
+
+<dd>If the value is <tt>relaxed</tt>, some errors are demoted to
+warnings.
+
+<br>The Make variable is <tt>CHECKING</tt>, default <tt>strict</tt>.
+
 <dt><tt>continuation-indent</tt>
 
 <dd>Specifies the indentation increment for continuation lines; the
@@ -99,6 +106,14 @@ attributes.
 
 <br>The Make variable is <tt>GENERATE_ACCESSORS</tt>,
 default <tt>defined</tt>.
+
+<dt><tt>generate-event-logging</tt>
+
+<dd>Controls whether code to log <a href="events.html">Event</a>
+processing is generated.
+
+<br>The Make variable is <tt>GENERATE_EVENT_LOGGING</tt>,
+default <tt>no</tt>.
 
 <dt><tt>generate-stubs</tt>
 

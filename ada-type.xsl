@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v ed01abe7e263 2008/09/06 10:03:01 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v f65f57733261 2008/09/06 17:14:47 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -257,7 +257,15 @@
             <xsl:if test="not(name=preceding-sibling::name)">
               <xsl:variable name="n" select="name"/>
               <xsl:message>
-                <xsl:text>Warning: unknown type </xsl:text>
+                <xsl:choose>
+                  <xsl:when test="$checking-policy='strict'">
+                    <xsl:call-template name="ut:log-error"/>
+                    <xsl:text>Error: unknown type </xsl:text>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:text>Warning: unknown type </xsl:text>
+                  </xsl:otherwise>
+                </xsl:choose>
                 <xsl:value-of select="$n"/>
               </xsl:message>
               <xsl:for-each 

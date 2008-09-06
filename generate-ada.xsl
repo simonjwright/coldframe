@@ -1,4 +1,4 @@
-<!-- $Id: generate-ada.xsl,v 77d245ba9cf3 2008/07/07 20:37:11 simonjwright $ -->
+<!-- $Id: generate-ada.xsl,v f65f57733261 2008/09/06 17:14:47 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -66,8 +66,11 @@
 
   <!-- +++++ Command line parameters. +++++ -->
 
-  <!-- Control added blank lines: no or yes.. -->
+  <!-- Control added blank lines: no or yes. -->
   <xsl:param name="add-blank-lines" select="'yes'"/>
+
+  <!-- Control checking policy: strict or relaxed. -->
+  <xsl:param name="checking-policy" select="'strict'"/>
 
   <!-- Control indentation. -->
   <xsl:param name="continuation-indent" select="'  '"/>

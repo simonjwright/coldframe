@@ -3,7 +3,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v fb795d748db2 2008/07/08 20:26:44 simonjwright $
+# $Id: normalize-rose.tcl,v f65f57733261 2008/09/06 17:14:47 simonjwright $
 
 # Converts an XML Domain Definition file, generated from Rose by
 # ddf.ebs, into normalized XML.
@@ -1427,7 +1427,12 @@ itcl::class Class {
             }
             set dts [[Domain::currentDomain] -getDatatypes]
             if [$dts -isPresent $name] {
-		Error "duplicate definition of type $name"
+		global checkingPolicy
+		if {$checkingPolicy == "strict"} {
+		    Error "duplicate definition of type $name"
+		} else {
+		    Warning "duplicate definition of type $name"
+		}
                 set dt [$dts -atName $name]
             } else {
                 set dt [Datatype ::\#auto $name]
@@ -3459,9 +3464,14 @@ proc Error {str} {
 # Main program #
 ################
 
+set coldFrameVersion "cf-DATE"
+
+set checkingPolicy strict
+
 # process command line:
 # flags
 #   --casing filename
+#   --checking strict|relaxed
 #   --domain-name name
 #   --stack-dump
 #   --verbose
@@ -3472,6 +3482,7 @@ foreach arg $argv {
         expectingFlag {
             switch -- $arg {
                 --casing  {set argState expectingCaseExceptionFile}
+		--checking {set argState expectingCheckingPolicy}
 		--domain-name {set argState expectingDomainName}
                 --stack-dump {set stackDump 1}
                 --verbose {set verbose 1}
@@ -3482,14 +3493,16 @@ foreach arg $argv {
             setCaseExceptions $arg
             set argState expectingFlag
         }
+	expectingCheckingPolicy {
+	    set checkingPolicy $arg
+            set argState expectingFlag
+	}
         expectingDomainName {
             set domainNameOverride $arg
             set argState expectingFlag
         }
     }
 }
-
-set coldFrameVersion "cf-DATE"
 
 if [info exists domainNameOverride] {
     set domainNameOverride [normalize $domainNameOverride]
