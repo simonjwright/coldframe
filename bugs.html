@@ -1,4 +1,4 @@
-<!-- $Id: bugs.html,v cfb70cdd3f56 2008/07/08 21:58:40 simonjwright $ -->
+<!-- $Id: bugs.html,v 2218bd78c5da 2008/09/06 10:33:32 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Bugs</title>
@@ -150,11 +150,23 @@ but there's no corresponding transition on the state machine, the
 generated spec requires a handler which the body doesn't provide.
 <br>SourceForge 1964067
 
-<!-- next: 0376 -->
+<!-- next: 0377 -->
 
 </dl>
 
 <h2><a name="fixed">Fixed</a></h2>
+
+<h3>6.ix.08</h3>
+
+<dl>
+
+<dt>0376/2080418 (raised 28.viii.08)
+
+<dd>If you have a sequence diagram with messages that contain a quote
+(for example), they are backslash-escaped; and cat2raw.py (the lex
+component, I guess) rejects them.
+
+</dl>
 
 <h3>8.vii.08</h3>
 
