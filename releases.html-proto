@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 845f823ddb08 2008/09/04 19:54:08 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 20636e125421 2008/09/06 17:20:09 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -93,8 +93,19 @@ exceptions.
 <li>Removed no-longer-relevant warnings about singletons in
 associations.
 
-<li>Missing types are no longer treated as errors, so that a child
-domain can use types declared in its parent. Warnings are still given.
+<li>The Make option <tt>CHECKING</tt> (default <tt>strict</tt>)
+demotes some relatively benign errors to warnings. These include
+
+<ul>
+
+<li>Multiple declarations of the same type. No check is made that the
+declarations are the same, and no promises are made as to which will
+be chosen if they are different.
+
+<li>Missing types: a child domain can use types declared in its
+parent.
+
+</ul>
 
 <li><b>Code</b>
 
