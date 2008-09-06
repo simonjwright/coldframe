@@ -1,4 +1,4 @@
-<!-- $Id: ada-type.xsl,v 5ca7e7a4dce9 2008/09/04 20:19:57 simonjwright $ -->
+<!-- $Id: ada-type.xsl,v ed01abe7e263 2008/09/06 10:03:01 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for types. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -222,15 +222,17 @@
              type. -->
 
         <xsl:variable
-          name="missing"
+          name="missed"
           select="$types[not($processed/name=name)]"/>
 
-        <xsl:if test="$missing">
+        <xsl:if test="$missed">
 
           <!-- Construct a set containing (possibly multiple copies
-               of) "name" elements for each missing type. -->
+               of) "name" elements for each missed type that isn't in
+               the types defined in this domain. -->
+
           <xsl:variable name="missing-types">
-            <xsl:for-each select="$missing">
+            <xsl:for-each select="$missed">
               <xsl:for-each
                 select=
                 "attribute[not($processed/name=type)]/type
@@ -241,43 +243,41 @@
                 /parameter[not($processed/name=type)]/type
                 | operation[not(@access) and ../@protected
                 and @return and not($processed/name=@return)]/@return">
-                <xsl:element name="name">
-                  <xsl:value-of select="."/>
-                </xsl:element>
-                <xsl:message>
-                  <xsl:text>adding </xsl:text>
-                  <xsl:value-of select="."/>
-                </xsl:message>
+                <xsl:if test="not($types/name=.)">
+                  <xsl:element name="name">
+                    <xsl:value-of select="."/>
+                  </xsl:element>
+                </xsl:if>
               </xsl:for-each>
             </xsl:for-each>
           </xsl:variable>
 
-          <xsl:message>
-            <xsl:for-each select="$missing">
-              <xsl:sort select="name"/>
-              <xsl:text>Warning: possible problems with type </xsl:text>
-              <xsl:value-of select="name"/>
-              <xsl:text>&#10;</xsl:text>
-              <xsl:for-each
-                select=
-                  "attribute[not($processed/name=type)]/type
-                   | array[not($processed/name=type)]/type
-                   | array[not($processed/name=index)]/index
-                   | subtype[not($processed/name=@constrains)]/@constrains
-                   | operation[not(@access) and ../@protected]
-                        /parameter[not($processed/name=type)]/type
-                   | operation[not(@access) and ../@protected
-                        and @return and not($processed/name=@return)]/@return">
-                <xsl:sort select="."/>
-                <xsl:text>  no definition of type </xsl:text>
-                <xsl:value-of select="."/>
-                <xsl:if test="position() &lt; last()">
-                  <xsl:text>,</xsl:text>
-                </xsl:if>
-                <xsl:text>&#10;</xsl:text>
+          <xsl:for-each select="$missing-types">
+            <xsl:sort select="name"/>
+            <xsl:if test="not(name=preceding-sibling::name)">
+              <xsl:variable name="n" select="name"/>
+              <xsl:message>
+                <xsl:text>Warning: unknown type </xsl:text>
+                <xsl:value-of select="$n"/>
+              </xsl:message>
+              <xsl:for-each 
+                select="$types
+                        [attribute/type=$n
+                        or array/type=$n
+                        or array/index=$n
+                        or subtype/@constrains=$n
+                        or operation[not(@access) and ../@protected]
+                        /parameter/type=$n
+                        or operation[not(@access) and ../@protected
+                        and @return]/@return=$n]">
+                <xsl:sort select="name"/>
+                <xsl:message>
+                  <xsl:text>  used in </xsl:text>
+                  <xsl:value-of select="name"/>
+                </xsl:message>
               </xsl:for-each>
-            </xsl:for-each>
-          </xsl:message>
+            </xsl:if>
+          </xsl:for-each>
 
           <!-- Fake having output the missing types, then make a
                recursive call, starting with no nodes to be
