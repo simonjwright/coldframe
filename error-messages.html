@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 5ca7e7a4dce9 2008/09/04 20:19:57 simonjwright $ -->
+<!-- $Id: error-messages.html,v 4ea718c85d72 2008/09/11 05:19:24 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -209,13 +209,13 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
 
-<dt>Error: completion (drop-through) and triggered transitions from state <i>Class.State</i> <dd>Triggered transitions can never be taken if there's a drop-through.
+<dt>Error: completion (drop-through) and triggered transitions from state <i>State</i> in <i>Class</i> <dd>Triggered transitions can never be taken if there's a drop-through.
 
-<dt>Error: completion (drop-through) transition after final state <i>Class.State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
+<dt>Error: completion (drop-through) transition after final state <i>State</i> in <i>Class</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
 
-<dt>Error: entry action(s) after final action in <i>Class.State</i> <dd>An entry action that deletes the instance must be the last action.
+<dt>Error: entry action(s) after final action in <i>State</i> in <i>Class</i> <dd>An entry action that deletes the instance must be the last action.
 
-<dt>Error: entry action(s) after final action on transition to <i>Class.State</i> <dd>If a transition action deletes the instance, you can't put entry actions on the target state.
+<dt>Error: entry action(s) after final action on transition to <i>State</i> in <i>Class</i> <dd>If a transition action deletes the instance, you can't put entry actions on the target state.
 
 <dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
 
@@ -225,11 +225,11 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 
-<dt>Error: more than one completion (drop-through) transition from state <i>Class.State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
+<dt>Error: more than one completion (drop-through) transition from state <i>State</i> in <i>Class</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
 
 <dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
 
-<dt>Error: more than one transition triggered by <i>Event</i> from state <i>Class.State</i> <dd>An event can trigger at most one transition from any state.
+<dt>Error: more than one transition triggered by <i>Event</i> from state <i>State</i> in <i>Class</i> <dd>An event can trigger at most one transition from any state.
 
 <dt>Error: no operation for <i>Class</i>, state <i>State</i>, action <i>Action</i> <dd>No matching operation was found in this class (or any parent class).
 
