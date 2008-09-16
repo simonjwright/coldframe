@@ -113,9 +113,10 @@ CSV_SCRIPT = $(CF)/serialized-to-csv.tcl
 	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_CHECKING) \
 	    $(NORM_DOMAIN_NAME) \
+	    --output $@ \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    <$< | cat >$@ || ($(RM) -f $@; $(EXIT) 1)
+	    <$< || ($(RM) -f $@; $(EXIT) 1)
 
 # Do the diagrams first, because the HTML requires the cmapx output.
 # The cwd parameter to the HTML script is because Saxon has no access

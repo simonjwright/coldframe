@@ -20,8 +20,8 @@ GENERATE_ACCESSORS = defined
 GENERATE_DIAGRAMS = yes
 GENERATE_EVENT_LOGGING = no
 GENERATE_STUBS = no
-UNIT_TEST_SUPPORT = no
 STACK_DUMP = yes
+UNIT_TEST_SUPPORT = no
 VERBOSE = no
 
 # Define these variables in an including Makefile (before the actual
@@ -137,9 +137,10 @@ $(COLDFRAMEOUT)/%.raw: %.cat
 	    --casing '$(CASE_EXCEPTIONS)' \
 	    $(NORM_CHECKING) \
 	    $(NORM_DOMAIN_NAME) \
+	    --output $@ \
 	    $(NORM_STACK_DUMP) \
 	    $(NORM_VERBOSE) \
-	    <$< >$@ || ($(RM) -f $@; $(EXIT) 1)
+	    <$< || ($(RM) -f $@; $(EXIT) 1)
 
 # Do the diagrams first, because the HTML requires the cmapx output.
 # The cwd parameter to the HTML script is because XSLT has no access

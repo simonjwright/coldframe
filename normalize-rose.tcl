@@ -3,10 +3,11 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v f65f57733261 2008/09/06 17:14:47 simonjwright $
+# $Id: normalize-rose.tcl,v 60723545c365 2008/09/16 05:26:46 simonjwright $
 
-# Converts an XML Domain Definition file, generated from Rose by
-# ddf.ebs, into normalized XML.
+# Converts an XML Domain Definition file, generated from the Rose tool
+# by ddf.ebs or from a Rose .cat file by ct2raw.py, into normalized
+# XML.
 
 # Copyright (C) Simon Wright <simon@pushface.org>
 
@@ -3473,6 +3474,7 @@ set checkingPolicy strict
 #   --casing filename
 #   --checking strict|relaxed
 #   --domain-name name
+#   --output filename
 #   --stack-dump
 #   --verbose
 
@@ -3484,6 +3486,7 @@ foreach arg $argv {
                 --casing  {set argState expectingCaseExceptionFile}
 		--checking {set argState expectingCheckingPolicy}
 		--domain-name {set argState expectingDomainName}
+		--output {set argState expectingOutputFileName}
                 --stack-dump {set stackDump 1}
                 --verbose {set verbose 1}
                 default   {error "unknown flag $arg"}
@@ -3499,6 +3502,14 @@ foreach arg $argv {
 	}
         expectingDomainName {
             set domainNameOverride $arg
+            set argState expectingFlag
+        }
+        expectingOutputFileName {
+            close stdout
+	    if [catch {set stdout [open $arg "w"]} msg] {
+		puts stderr "$msg"
+		exit 1
+	    }
             set argState expectingFlag
         }
     }
