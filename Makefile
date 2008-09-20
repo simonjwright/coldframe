@@ -772,7 +772,7 @@ upload-docs: top-index.html docs force
 	  --update \
 	  --verbose \
 	  top-index.html \
-	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/index.html
+	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/index.html
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -784,7 +784,7 @@ upload-docs: top-index.html docs force
 	  --update \
 	  --verbose \
 	  cf.css \
-	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/
+	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -796,7 +796,7 @@ upload-docs: top-index.html docs force
 	  --update \
 	  --verbose \
 	  $(DOCS)  $(GEN_DOCS) $(GEN_DOC_IMAGES) \
-	  $(SFUSER)@shell.sourceforge.net:/home/groups/c/co/coldframe/htdocs/coldframe
+	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/coldframe
 
 # The complete distribution
 
