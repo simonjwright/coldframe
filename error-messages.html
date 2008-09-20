@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: error-messages.html,v 4ea718c85d72 2008/09/11 05:19:24 simonjwright $ -->
+<!-- $Id: error-messages.html,v c49ce326e8bc 2008/09/20 07:05:31 simonjwright $ -->
 <head>
 <title>ColdFrame: Error messages</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -34,7 +34,7 @@ want anything to happen!
 
 <dt>Error: attribute <i>Class.Attribute</i> used to formalize non-existent <i>Association</i> <dd>The <tt>formalizes</tt> annotation has been used naming an association that doesn't exist.
 
-<dt>Error: attribute <i>Class.Name</i> marked as &#171class;&#187; and &#171;id&#187; <dd>Class attributes can't be identifying attributes as well.
+<dt>Error: attribute <i>Class.Name</i> marked as &#171;class&#187; and &#171;id&#187; <dd>Class attributes can't be identifying attributes as well.
 
 <dt>Error: both ends of <i>name</i> are marked as source <dd>The <tt>{source}</tt> tag has been specified on both ends of the named association.
 
@@ -42,7 +42,7 @@ want anything to happen!
 
 <dt>Error: can't specify stack for non-active class <i>Class</i> <dd>Stack size can only be specified for &#171;active&#187; classes.
 
-<<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>{source}</tt> in a disallowed way (on the <i>many</i> end of an association).
+<dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> <dd>Probably, you've used <tt>{source}</tt> in a disallowed way (on the <i>many</i> end of an association).
 
 <dt>Error: <i>Class</i> tried to set <i>Role</i> as source for <i>Association</i> when <i>Role</i> already is. <dd>Probably, you've used <tt>{source}</tt> on both ends of the named association.
 
@@ -62,7 +62,7 @@ want anything to happen!
 
 <dt>Error: illegal M:M association <i>Association</i> <dd>Many-to-many associations must have an association class.
 
-<dt>Error: illegal name "<i>name</i>" in [$cls -getName].[$op -getName] <dd>There's some illegal character in an operation's parameter (you may have used a semicolon rather than a comma to separate parameters).
+<dt>Error: illegal name "<i>name</i>" in <i>Class</i>.<i>Operation</i> <dd>There's some illegal character in an operation's parameter (you may have used a semicolon rather than a comma to separate parameters).
 
 <dt>Error: illegal name "<i>name</i>" in &lt;<i>tag</i>&gt; <dd>There's some illegal character in a &lt;tag&gt; element (eg, a &lt;class&gt;.
 
@@ -95,7 +95,7 @@ variable-length (<tt>max</tt>)).
 
 <dt>Error: no index type for array type <i>type</i> <dd>You must specify the type of the index of an array.
 
-<dt>Error: operation <i>class.name</i> can't be class and teardown <dd>Teardown operations are per-instance.
+<dt>Error: operation <i>Class.Name</i> can't be class and teardown <dd>Teardown operations are per-instance.
 
 <dt>Error: operation <i>class.name</i> can't be abstract and an accessor <dd>Accessor operations have to be concrete.
 
@@ -179,7 +179,7 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Warning: upper bound (<i>u</i>) of multiplicity in role <i>Association.Role</i> treated as * <dd>The upper bounds of associations are always treated as indefinite.
 
-<dt>Warning: use of {image} in <i>Type</i> deprecated -- use {field-image} <dd>Cconvert to use of <i>{field-image}</i>.
+<dt>Warning: use of {image} in <i>Type</i> deprecated -- use {field-image} <dd>Convert to use of <i>{field-image}</i>.
 
 </dl>
 
@@ -197,8 +197,6 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dl>
 
-<dt>Error: can't create image for array <i>Array_Type</i> <dd>Not supported.
-
 <dt>Error: <i>Class.Event</i>'s payload is of the wrong type (<i>Type</i>): <i>Operation</i> expects <i>Type</i> <dd>If an entry action has a parameter, it must be of the type of the associated event's payload.
 
 <dt>Error: <i>Class.Operation</i> is wrongly stereotyped as an accessor <dd>The operation's name or profile don't match any parameter (name, type, class-ness).
@@ -209,13 +207,13 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: <i>Class.State</i>, <i>Operation</i> is a function, can't be an entry action <dd>Only procedures are allowed to be state machine entry actions.
 
-<dt>Error: completion (drop-through) and triggered transitions from state <i>State</i> in <i>Class</i> <dd>Triggered transitions can never be taken if there's a drop-through.
+<dt>Error: completion (drop-through) and triggered transitions from state <i>Class</i>.<i>State</i>  <dd>Triggered transitions can never be taken if there's a drop-through.
 
-<dt>Error: completion (drop-through) transition after final state <i>State</i> in <i>Class</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
+<dt>Error: completion (drop-through) transition after final state <i>Class</i>.<i>State</i> <dd>After an instance has been deleted, there can be no more processing associated with the triggering event.
 
-<dt>Error: entry action(s) after final action in <i>State</i> in <i>Class</i> <dd>An entry action that deletes the instance must be the last action.
+<dt>Error: entry action(s) after final action <i>Class</i>.<i>Operation</i> in <i>Class</i>.<i>State</i> <dd>An entry action that deletes the instance must be the last action.
 
-<dt>Error: entry action(s) after final action on transition to <i>State</i> in <i>Class</i> <dd>If a transition action deletes the instance, you can't put entry actions on the target state.
+<dt>Error: entry action(s) after final action on transition to <i>Class</i>.<i>State</i> <dd>If a transition action deletes the instance, you can't put entry actions on the target state.
 
 <dt>Error: illegal association <i>Association</i> with class <i>Class</i> <dd>Associations with &#171;public&#187; classes aren't allowed.
 
@@ -225,11 +223,11 @@ information (for example, <tt>unsigned</tt> requires <tt>mod</tt>).
 
 <dt>Error: invalid use of Autonumber in <i>Class</i> <dd>Probably, you've specified an identifier with other attributes besides an <tt>Autonumber</tt> one (<tt>Autonumber</tt> attributes are expected to be the only identifying ones).
 
-<dt>Error: more than one completion (drop-through) transition from state <i>State</i> in <i>Class</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
+<dt>Error: more than one completion (drop-through) transition from state <i>Class</i>.<i>State</i> <dd>There can be at most one drop-through (untriggered) transition from any state.
 
 <dt>Error: more than one handler for <i>Class.Event</i> <dd>There must be <em>one</em> handler for each class event.
 
-<dt>Error: more than one transition triggered by <i>Event</i> from state <i>State</i> in <i>Class</i> <dd>An event can trigger at most one transition from any state.
+<dt>Error: more than one transition triggered by <i>Event</i> from state <i>Class</i>.<i>State</i> <dd>An event can trigger at most one transition from any state.
 
 <dt>Error: no operation for <i>Class</i>, state <i>State</i>, action <i>Action</i> <dd>No matching operation was found in this class (or any parent class).
 
