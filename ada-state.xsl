@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 1f308a4ba9ae 2008/09/13 21:36:39 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 5299e8d21101 2008/09/20 06:52:52 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -188,9 +188,9 @@
                     </xsl:otherwise>
                   </xsl:choose>
                   <xsl:text> from state </xsl:text>
-                  <xsl:value-of select="source"/>
-                  <xsl:text> in </xsl:text>
                   <xsl:value-of select="class"/>
+                  <xsl:text>.</xsl:text>
+                  <xsl:value-of select="source"/>
                 </xsl:message>
               </xsl:when>
               <xsl:otherwise>
@@ -205,9 +205,9 @@
                     </xsl:otherwise>
                   </xsl:choose>
                   <xsl:text> from state </xsl:text>
-                  <xsl:value-of select="source"/>
-                  <xsl:text> in </xsl:text>
                   <xsl:value-of select="class"/>
+                  <xsl:text>.</xsl:text>
+                  <xsl:value-of select="source"/>
                 </xsl:message>
               </xsl:otherwise>
             </xsl:choose>
@@ -218,9 +218,9 @@
               <xsl:text>Error: more than one transition triggered by </xsl:text>
               <xsl:value-of select="event"/>
               <xsl:text> from state </xsl:text>
-              <xsl:value-of select="source"/>
-              <xsl:text> in </xsl:text>
               <xsl:value-of select="class"/>
+              <xsl:text>.</xsl:text>
+              <xsl:value-of select="source"/>
             </xsl:message>
           </xsl:when>
         </xsl:choose>
@@ -231,9 +231,9 @@
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
           <xsl:text>Error: completion (drop-through) and triggered transitions from state </xsl:text>
-          <xsl:value-of select="$leaving-transitions/transition/source"/>
-          <xsl:text> in </xsl:text>
           <xsl:value-of select="$leaving-transitions/transition/class"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$leaving-transitions/transition/source"/>
         </xsl:message>
       </xsl:if>
 
@@ -393,7 +393,7 @@
           <xsl:value-of select="../../name"/>
           <xsl:text>.</xsl:text>
           <xsl:value-of select="$e"/>
-          <xsl:text> in </xsl:text>
+          <xsl:text> in state </xsl:text>
           <xsl:value-of select="$s"/>
           <xsl:text>");&#10;</xsl:text>
         </xsl:otherwise>
@@ -558,9 +558,9 @@
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
           <xsl:text>Error: entry action(s) after final action on transition to state </xsl:text>
-          <xsl:value-of select="$tr/target"/>
-          <xsl:text> in </xsl:text>
           <xsl:value-of select="../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="$tr/target"/>
         </xsl:message>
       </xsl:if>
       <xsl:call-template name="st:call-action">
@@ -582,15 +582,21 @@
       </xsl:variable>
       <xsl:variable
         name="actual-action-operation"
-        select="/domain/class[name=$impl-class]/operation[name=.]"/>
+        select="/domain/class[name=$impl-class]/operation[name=current()]"/>
       <xsl:if test="(.='Delete' or $actual-action-operation/@final)
                     and not(position()=last())">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
-          <xsl:text>Error: entry action(s) after final action in </xsl:text>
-          <xsl:value-of select="../name"/>
-          <xsl:text> in </xsl:text>
+          <xsl:text>Error: entry action(s) after final action </xsl:text>
+          <xsl:if test="not(.='Delete')">
+            <xsl:value-of select="$impl-class"/>
+            <xsl:text>.</xsl:text>
+          </xsl:if>
+          <xsl:value-of select="."/>
+          <xsl:text> in state </xsl:text>
           <xsl:value-of select="../../../name"/>
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="../name"/>
         </xsl:message>
       </xsl:if>
       <xsl:call-template name="st:call-action">
@@ -638,9 +644,9 @@
           <xsl:call-template name="ut:log-error"/>
           <xsl:message>
             <xsl:text>Error: completion (drop-through) transition after final state </xsl:text>
-            <xsl:value-of select="$tr/target"/>
-            <xsl:text> in </xsl:text>
             <xsl:value-of select="../../name"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="$tr/target"/>
           </xsl:message>
           
         </xsl:when>
