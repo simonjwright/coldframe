@@ -765,6 +765,7 @@ upload-docs: top-index.html docs force
 	  --compress \
 	  --copy-unsafe-links \
 	  --cvs-exclude \
+	  --delete \
 	  --perms \
 	  --recursive \
 	  --rsh=ssh \
@@ -777,6 +778,7 @@ upload-docs: top-index.html docs force
 	  --compress \
 	  --copy-unsafe-links \
 	  --cvs-exclude \
+	  --delete \
 	  --perms \
 	  --recursive \
 	  --rsh=ssh \
@@ -789,6 +791,7 @@ upload-docs: top-index.html docs force
 	  --compress \
 	  --copy-unsafe-links \
 	  --cvs-exclude \
+	  --delete \
 	  --perms \
 	  --recursive \
 	  --rsh=ssh \
