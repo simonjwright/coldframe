@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- 
-     $Id: normalize-raw.xsl,v 743eefbfd117 2008/09/28 19:45:20 simonjwright $
+     $Id: normalize-raw.xsl,v bf6cac9ba6ff 2008/09/29 20:10:38 simonjwright $
 
      XSL stylesheet to normalize ColdFrame's .raw format (eg, for
      review comparisons).
@@ -25,7 +25,15 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="documentationxxx"/>
+  <xsl:template match="attributes">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:for-each select="attribute">
+        <xsl:sort select="name"/>
+        <xsl:apply-templates select="."/>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="operations">
     <xsl:copy>
@@ -52,6 +60,18 @@
       <xsl:copy-of select="@*"/>
       <xsl:for-each select="state">
         <xsl:sort select="name"/>
+        <xsl:apply-templates select="."/>
+      </xsl:for-each>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="transitions">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:for-each select="transition">
+        <xsl:sort select="source"/>
+        <xsl:sort select="target"/>
+        <xsl:sort select="event"/>
         <xsl:apply-templates select="."/>
       </xsl:for-each>
     </xsl:copy>
