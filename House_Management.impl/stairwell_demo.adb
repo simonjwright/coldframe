@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v c24c52e44b50 2005/05/14 16:18:22 simonjwright $
+--  $Id: stairwell_demo.adb,v 4d1390e8efeb 2008/10/05 17:00:54 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -64,14 +64,16 @@ procedure Stairwell_Demo is
    pragma Convention (C, Freeproc);
 
 
-   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr) is
+   procedure Freeproc (BlockPtr : in C.Strings.chars_ptr)
+   is
       Tmp : C.Strings.chars_ptr := BlockPtr;
    begin
       C.Strings.Free (Tmp);
    end Freeproc;
 
 
-   function Init (Interp : in Tcl.Tcl_Interp) return C.int is
+   function Init (Interp : in Tcl.Tcl_Interp) return C.int
+   is
       package CreateCommands is new Tcl.Ada.Generic_Command (Integer);
       Command : Tcl.Tcl_Command;
       pragma Warnings (Off, Command);
@@ -113,7 +115,8 @@ procedure Stairwell_Demo is
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
       Argc : in C.int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int
+   is
       Signal : Digital_IO.Signal_Name;
       State : Boolean;
       pragma Warnings (Off, ClientData);
@@ -141,7 +144,8 @@ procedure Stairwell_Demo is
      (ClientData : in Integer;
       Interp : in Tcl.Tcl_Interp;
       Argc : in C.int;
-      Argv : in CArgv.Chars_Ptr_Ptr) return C.int is
+      Argv : in CArgv.Chars_Ptr_Ptr) return C.int
+   is
       Signal : Digital_IO.Signal_Name;
       pragma Warnings (Off, ClientData);
    begin
