@@ -11,9 +11,9 @@
     documentation 	
 |Package to demonstrate problem with a type declared in the main package and in a child package.
 |The way to have this is to create the type in the (controlled) child first, unload it, then create a type with the same name in the parent.
-|This is the parent package.
+|This is the child package.
 |
-|{revision = $Revision: 421aca8953f0 $}
+|{revision = $Revision: 5117295dc89a $}
     
     stereotype 	"include"
     exportControl 	"Public"
@@ -117,7 +117,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1875
-		    label      	"$Id: Duplicate_Types_Interface.cat,v 421aca8953f0 2007/06/04 20:11:05 simonjwright $")
+		    label      	"$Id: Duplicate_Types_Interface.cat,v 5117295dc89a 2008/11/16 15:28:16 simonjwright $")
 		(object ClassView "Class" "Logical View::Duplicate Types::Duplicate Types Interface::Declared Once" @3
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
