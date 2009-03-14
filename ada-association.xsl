@@ -1,4 +1,4 @@
-<!-- $Id: ada-association.xsl,v 635bfc0abd05 2008/05/03 16:30:42 simonjwright $ -->
+<!-- $Id: ada-association.xsl,v 5fff26658186 2009/03/14 07:09:24 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -535,7 +535,6 @@
                 use ColdFrame.Instances;
                 pragma Assert (Handle ({role-a}) /= null);
                 pragma Assert (Handle ({role-b}) /= null);
-             begin
              -->
 
         <xsl:call-template name="as:link-procedure-specification"/>
