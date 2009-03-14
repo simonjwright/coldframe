@@ -87,15 +87,13 @@ MAXIMPLDEPTH ?= 1
 
 TCLXML ?= /usr/local/lib/tclxml-2.1theta
 
-NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
-HTMLGEN_SCRIPT = generate-html.xsl
+CODEGEN_SCRIPT ?= generate-ada.xsl
 DIAGRAM_SCRIPT = generate-diagrams.xsl
-DOCGEN_SCRIPTS = $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
-Codegen_Script = generate-ada.xsl
-ifeq ($(CODEGEN_SCRIPT), )
-  CODEGEN_SCRIPT = $(Codegen_Script)
-endif
-CODEGEN_SCRIPTS = $(Codegen_Script) \
+HTMLGEN_SCRIPT = generate-html.xsl
+NORMALIZE_RAW_SCRIPT = normalize-raw.xsl
+NORMALIZE_ROSE_SCRIPT = normalize-rose.tcl
+
+CODEGEN_SCRIPTS = generate-ada.xsl \
   ada-association.xsl \
   ada-association-collection.xsl \
   ada-attribute.xsl \
@@ -110,12 +108,11 @@ CODEGEN_SCRIPTS = $(Codegen_Script) \
   ada-teardown.xsl \
   ada-unittest.xsl \
   ada-utilities.xsl
-C_Codegen_Script = generate-c.xsl
-ifeq ($(C_CODEGEN_SCRIPT), )
-  C_CODEGEN_SCRIPT = $(C_Codegen_Script)
-endif
-C_CODEGEN_SCRIPTS = $(C_Codegen_Script) \
-  c-utilities.xsl
+DOCGEN_SCRIPTS = $(HTMLGEN_SCRIPT) $(DIAGRAM_SCRIPT)
+
+C_CODEGEN_SCRIPT ?= generate-c.xsl
+C_CODEGEN_SCRIPTS = generate-c.xsl c-utilities.xsl
+
 OTHER_SCRIPTS = \
   case_exceptions.py \
   cat2raw.py \
@@ -130,6 +127,9 @@ OTHER_SCRIPTS = \
 # Will need extra dependencies if there are controlled child packages.
 $(COLDFRAMEOUT)/%.raw: %.cat
 	python cat2raw.py $<
+
+%.raw-norm: $(COLDFRAMEOUT)/%.raw
+	  $(SAXON) $< $(NORMALIZE_RAW_SCRIPT)  >$@
 
 %.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
 	@$(ECHO) generating $@ ...
@@ -404,6 +404,7 @@ TOOL_SRC = \
 
 PROGS = COPYING \
   extractor-trampoline.ebs extractor.ebs rose-addin.mnu \
+  $(NORMALIZE_RAW_SCRIPT) \
   $(NORMALIZE_ROSE_SCRIPT) \
   cf-banner.el \
   $(DOCGEN_SCRIPTS) \
