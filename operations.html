@@ -1,4 +1,4 @@
-<!-- $Id: operations.html,v 170624bad0d5 2005/11/20 21:51:40 simonjwright $ -->
+<!-- $Id: operations.html,v d7db9deaa643 2009/03/14 07:03:41 simonjwright $ -->
 <head>
 <title>ColdFrame: Operations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -198,6 +198,8 @@ semantics apply (for example, you can change parameter defaults).
 
 <h2>Translation</h2>
 
+<h3>General</h3>
+
 <p>Operations which are present <a href="#seq">to support sequence
 diagrams</a> generate no code.
 
@@ -220,7 +222,7 @@ protected types map to operations and entries in the type
 specification (in the domain package specification) and in the type's
 separate proper body.
 
-<p><a name="accessor">Accessors</a> map to declarations in the class
+<p><a href="accessor">Accessors</a> map to declarations in the class
 package specification and proper bodies in the class package body.
 
 <p>Other operations are generated as
@@ -233,14 +235,25 @@ package specification and proper bodies in the class package body.
 
 <li><tt>separate</tt> proper bodies <i>(this is the reason why all the
 operations of all but protected types, and all the operations of a
-class bar entries, must have distinct names; see <a
-href="http://www.adapower.com/rm95/arm95_161.html">ARM 10.1.3</a>
-(14))</i>.
+class bar entries, must have distinct names;
+see <a href="http://www.adaic.com/standards/95lrm/html/RM-10-1-3.html">ARM
+10.1.3</a> (14))</i>.
 
 </ul>
 
 <p>Operations with returns (<i>op():type-name</i> in the model) are
 implemented as functions.
+
+<h3>The <tt>this</tt> parameter</h3>
+
+<p>A parameter <tt>This : Handle;</tt> is automatically generated for
+non-<em>&#171;class&#187;</em>, non-<em>&#171;entry&#187;</em>
+operations of <a href="classes.html#modelling">normal</a> classes.
+
+<p>See <a href="operation-parameters.html">separate notes</a> on
+analyst-specified parameters.
+
+
 
 <!--
 <h2>Use</h2>
