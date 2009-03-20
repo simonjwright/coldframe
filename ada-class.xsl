@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 77725fc737a2 2008/07/06 18:46:43 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 044021f975dc 2009/03/20 06:02:34 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -444,8 +444,8 @@
         <xsl:call-template name="at:single-record-component">
           <xsl:with-param name="indent" select="$I"/>
         </xsl:call-template>
+        <xsl:value-of select="$blank-line"/>
       </xsl:for-each>
-      <xsl:value-of select="$blank-line"/>
     </xsl:if>
 
     <!-- .. and close. -->
