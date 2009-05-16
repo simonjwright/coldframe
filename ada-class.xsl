@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v 044021f975dc 2009/03/20 06:02:34 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 62021c84445e 2009/05/16 19:56:21 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1273,10 +1273,12 @@
       <!--
            use type ColdFrame.Instances.Handle;
            pragma Assert
-             (With_Identifier.{attr} /= null);
+             (With_Identifier.{attr} /= null,
+              "{domain}.{class}.Create.With_Identifier.{attr} is null");
            pragma Assert
              (With_Identifier.{attr}.all
-              in {attr-class}.Instance'Class);
+              in {attr-class}.Instance'Class,
+              "{domain}.{class}.Create.With_Identifier.{attr} is wrong class");
            -->
 
       <xsl:value-of select="$II"/>
@@ -1287,8 +1289,15 @@
         <xsl:value-of select="$IIC"/>
         <xsl:text>(With_Identifier.</xsl:text>
         <xsl:call-template name="at:attribute-name"/>
-        <xsl:text> /= null);&#10;</xsl:text>
-
+        <xsl:text> /= null,&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> "</xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.Create.With_Identifier.</xsl:text>
+        <xsl:call-template name="at:attribute-name"/>
+        <xsl:text> is null");&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>pragma Assert&#10;</xsl:text>
         <xsl:value-of select="$IIC"/>
@@ -1298,7 +1307,15 @@
         <xsl:value-of select="$IIC"/>
         <xsl:text> in </xsl:text>
         <xsl:value-of select="@refers"/>
-        <xsl:text>.Instance'Class);&#10;</xsl:text>
+        <xsl:text>.Instance'Class,&#10;</xsl:text>
+        <xsl:value-of select="$IIC"/>
+        <xsl:text> "</xsl:text>
+        <xsl:value-of select="../../name"/>
+        <xsl:text>.</xsl:text>
+        <xsl:value-of select="../name"/>
+        <xsl:text>.Create.With_Identifier.</xsl:text>
+        <xsl:call-template name="at:attribute-name"/>
+        <xsl:text> is wrong class");&#10;</xsl:text>
 
       </xsl:for-each>
     </xsl:if>
