@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: stairwell_demo.adb,v 4d1390e8efeb 2008/10/05 17:00:54 simonjwright $
+--  $Id: stairwell_demo.adb,v b97c4764236c 2009/05/16 19:55:23 simonjwright $
 --  Derived from Terry Westley's TWAShell (Tcl Windowing Ada SHell).
 
 with Ada.Exceptions;
@@ -134,7 +134,7 @@ procedure Stairwell_Demo is
       when E : others =>
          Tcl.Tcl_SetResult
            (Interp,
-            C.Strings.New_String (Ada.Exceptions.Exception_Name (E)),
+            C.Strings.New_String (Ada.Exceptions.Exception_Information (E)),
             Freeproc'Unrestricted_Access);
          return Tcl.TCL_ERROR;
    end Get_Lamp_State_Command;
@@ -159,7 +159,7 @@ procedure Stairwell_Demo is
       when E : others =>
          Tcl.Tcl_SetResult
            (Interp,
-            C.Strings.New_String (Ada.Exceptions.Exception_Name (E)),
+            C.Strings.New_String (Ada.Exceptions.Exception_Information (E)),
             Freeproc'Unrestricted_Access);
          return Tcl.TCL_ERROR;
    end Push_Button_Command;
