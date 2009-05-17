@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v 20636e125421 2008/09/06 17:20:09 simonjwright $ -->
+<!-- $Id: releases.html-proto,v b1b759bec1a9 2009/05/17 17:13:27 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -109,6 +109,9 @@ parent.
 
 <li><b>Code</b>
 
+<li>Code is compatible with Ada 2005 (but doesn't use any new
+features, so remains compatible with Ada 95 as well).
+
 <li>For classes whose maximum number of instances is known,
 raise <tt>Too_Many_Instances</tt> instead of <tt>Storage_Error</tt> if
 this number is exceeded.
@@ -118,6 +121,8 @@ and class <tt>Delete</tt> for unbounded classes.
 
 <li>When an instance of an active class is deleted, its task is only
 deleted after it has terminated.
+
+<li>Added informative text to generated assertions.
 
 </ul>
 
