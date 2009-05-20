@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.adb,v $
---  $Revision: bb769b5d5ade $
---  $Date: 2008/06/29 20:28:55 $
+--  $Revision: 1965f0ea1662 $
+--  $Date: 2009/05/20 05:36:13 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -396,7 +396,7 @@ package body ColdFrame.Stubs is
 
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
-                             For_Call : Positive := 1) return T is
+                             For_Call : Integer := 0) return T is
       SU : constant Ada.Strings.Unbounded.Unbounded_String
         := Ada.Strings.Unbounded.To_Unbounded_String (For_Subprogram_Named);
       SP : constant String := For_Subprogram_Named & "." & For_Parameter_Named;
@@ -442,14 +442,25 @@ package body ColdFrame.Stubs is
          Len : constant Natural
            := Stream_Pointer_Collections.Length (Pointers);
       begin
-         if For_Call <= Len then
-            return Result (For_Call);
-         elsif For_Call = Last and Len > 0 then
+         if Len = 0 then
+            Ada.Exceptions.Raise_Exception
+              (No_Value'Identity,
+               For_Subprogram_Named & " never called");
+         elsif For_Call = 0 or For_Call = Last then
             return Result (Len);
+         elsif For_Call > Len then
+            Ada.Exceptions.Raise_Exception
+              (No_Value'Identity,
+               For_Subprogram_Named & " only called" & Len'Img & " times");
+         elsif For_Call in 1 .. Len then
+            return Result (For_Call);
+         elsif Len + For_Call in 1 .. Len  then
+            --  For_Call must be negative.
+            return Result (Len + For_Call);
          else
             Ada.Exceptions.Raise_Exception
               (No_Value'Identity,
-               "for input " & SP & For_Call'Img);
+               For_Subprogram_Named & " only called" & Len'Img & " times");
          end if;
       end;
    end Get_Input_Value;

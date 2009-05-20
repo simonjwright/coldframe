@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 5a8ec51f9c45 $
---  $Date: 2006/02/06 20:40:18 $
+--  $Revision: 1965f0ea1662 $
+--  $Date: 2009/05/20 05:36:13 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -145,28 +145,33 @@ package ColdFrame.Stubs is
    --  Domain.Class.Operation, "Domain.Class.Operation").
    --
    --  The named parameter will be an "in" (perhaps "in out")
-   --  parameter. To retrieve the result of the second call, you'd say
+   --  parameter. To retrieve the value passed at the second call,
+   --  you'd say
    --
    --     Result := Get_Integer_Operation_Input_Value
    --       ("Domain.Class.Operation", "Input", 2);
+   --
+   --  To retrieve the result of the last call, say
+   --
+   --     Result := Get_Integer_Operation_Input_Value
+   --       ("Domain.Class.Operation", "Input", 0);
+   --
+   --  To retrieve the value passed at the last call but one, say
+   --
+   --     Result := Get_Integer_Operation_Input_Value
+   --       ("Domain.Class.Operation", "Input", -1);
    generic
       type T (<>) is private;
    function Get_Input_Value (For_Subprogram_Named : String;
                              For_Parameter_Named : String;
-                             For_Call : Positive := 1) return T;
+                             For_Call : Integer := 0) return T;
 
-   --  To retrieve the result of the last call, you can say
+   --  A retained facility for retrieving the value passed at the last
+   --  call:
    --
    --     Result := Get_Integer_Operation_Input_Value
    --       ("Domain.Class.Operation", "Input", Last);
    Last : constant Positive := Positive'Last;
-
-   --  You could use a convenience renaming:
-   --     function Get_Last_Integer_Operation_Input_Value
-   --       (For_Subprogram_Named : String;
-   --        For_Parameter_Named : String;
-   --        For_Call : Positive := ColdFrame.Stubs.Last) return T
-   --       renames Get_Integer_Operation_Input_Value;
 
 
    -----------------------------------------------------------------

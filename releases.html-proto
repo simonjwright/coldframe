@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b1b759bec1a9 2009/05/17 17:13:27 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 1965f0ea1662 2009/05/20 05:36:13 simonjwright $ -->
 <!-- -*- HTML -*- (for Emacs) -->
 <html>
 <head>
@@ -123,6 +123,22 @@ and class <tt>Delete</tt> for unbounded classes.
 deleted after it has terminated.
 
 <li>Added informative text to generated assertions.
+
+<li><b>Testing</b>
+
+<li><tt>ColdFrame.Stubs.Get_Input_Value</tt>'s <tt>For_Call</tt>
+parameter is extended:
+<ul>
+
+<li>Positive values denote the indicated call.
+
+<li>You can specify the last call by supplying <tt>0</tt> as well
+as <tt>ColdFrame.Stubs.Last</tt>.
+
+<li>Negative values denote previous calls; thus <tt>-1</tt> indicates
+the last call but one.
+
+</ul>
 
 </ul>
 

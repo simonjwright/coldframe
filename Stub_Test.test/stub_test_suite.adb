@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: stub_test_suite.adb,v $
---  $Revision: afd0782da302 $
---  $Date: 2006/02/06 20:38:54 $
+--  $Revision: 1965f0ea1662 $
+--  $Date: 2009/05/20 05:36:13 $
 --  $Author: simonjwright $
 
 with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
@@ -205,6 +205,58 @@ package body Stub_Test_Suite is
          when ColdFrame.Stubs.No_Value => null;
       end;
    end Missing_Values;
+
+
+   procedure Input_Values
+     (C : in out AUnit.Test_Cases.Test_Case'Class);
+   procedure Input_Values
+     (C : in out AUnit.Test_Cases.Test_Case'Class) is
+      pragma Warnings (Off, C);
+      Retrieved : Integer;
+   begin
+      begin
+         Retrieved :=
+           Get_Integer ("Stub_Test.Public.Set_Value", "I", 0);
+         Assert (False, "should have raised exception, call 0");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+      for I in 1 .. 10 loop
+         Stub_Test.Public.Set_Value (I);
+      end loop;
+      begin
+         Retrieved :=
+           Get_Integer ("Stub_Test.Public.Set_Value", "I", 11);
+         Assert (False, "should have raised exception, call 11");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+      begin
+         Retrieved :=
+           Get_Integer ("Stub_Test.Public.Set_Value", "I", -10);
+         Assert (False, "should have raised exception, call -10");
+      exception
+         when ColdFrame.Stubs.No_Value => null;
+      end;
+      for I in 1 .. 10 loop
+         Retrieved := Get_Integer ("Stub_Test.Public.Set_Value", "I", I);
+         Assert (Retrieved = I,
+                 "wrong value " & Retrieved'Img & " for call " & I'Img);
+      end loop;
+      Retrieved :=
+        Get_Integer ("Stub_Test.Public.Set_Value", "I", ColdFrame.Stubs.Last);
+      Assert (Retrieved = 10,
+              "wrong value " & Retrieved'Img & " for call 'last'");
+      Retrieved :=
+        Get_Integer ("Stub_Test.Public.Set_Value", "I", 0);
+      Assert (Retrieved = 10,
+              "wrong value " & Retrieved'Img & " for call 0");
+      for I in reverse -9 .. -1 loop
+         Retrieved := Get_Integer ("Stub_Test.Public.Set_Value", "I", I);
+         Assert (Retrieved = 10 + I,
+                 "wrong value " & Retrieved'Img & " for call " & I'Img);
+      end loop;
+   end Input_Values;
 
 
    procedure Call_With_Return
@@ -479,6 +531,10 @@ package body Stub_Test_Suite is
         (C,
          Missing_Values'Access,
          "missing values");
+      Register_Routine
+        (C,
+         Input_Values'Access,
+         "input values");
       Register_Routine
         (C,
          Call_With_Return'Access,
