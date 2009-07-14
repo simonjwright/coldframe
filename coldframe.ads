@@ -20,9 +20,10 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe.ads,v $
---  $Revision: fe0f9536cdc0 $
---  $Date: 2001/09/25 18:39:48 $
---  $Author: simon $
+--  $Revision: e4e81eacd986 $
+--  $Date: 2009/07/14 20:30:42 $
+--  $Author: simonjwright $
 
 package ColdFrame is
+   pragma Pure;
 end ColdFrame;

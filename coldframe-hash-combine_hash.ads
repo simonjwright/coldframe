@@ -20,11 +20,13 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-hash-combine_hash.ads,v $
---  $Revision: 095674c3f8ec $
---  $Date: 2001/09/27 19:36:51 $
---  $Author: simon $
+--  $Revision: e4e81eacd986 $
+--  $Date: 2009/07/14 20:30:42 $
+--  $Author: simonjwright $
 
 package ColdFrame.Hash.Combine_Hash is
+
+   pragma Preelaborate;
 
    type Hashes is array (Natural range <>) of Natural;
 
