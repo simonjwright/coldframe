@@ -914,7 +914,224 @@
 		is_unit    	TRUE
 		is_loaded  	FALSE
 		file_name  	"$CURDIR\\Multiple_Events.cat"
-		quid       	"48C6D33401CA"))
+		quid       	"48C6D33401CA")
+	    (object Class_Category "SF2819664"
+		quid       	"4A5CD6C70067"
+		documentation 	"A child class had a class operation with the same name as a class operation in its parent, and code couldn't be generated (I think the profile was different)."
+		exportControl 	"Public"
+		logical_models 	(list unit_reference_list
+		    (object Class "Parent"
+			quid       	"4A5CD72F02DD"
+			operations 	(list Operations
+			    (object Operation "Op1"
+				quid       	"4A5CD7600338"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "I"
+					quid       	"4A5CD7A3003B"
+					type       	"Integer"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "Op2"
+				quid       	"4A5CD787018F"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "N"
+					quid       	"4A5CD79E0232"
+					type       	"Natural"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "Op3"
+				quid       	"4A5CD7D3035B"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "N"
+					quid       	"4A5CD7E4028D"
+					type       	"Natural"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0))
+			class_attributes 	(list class_attribute_list
+			    (object ClassAttribute "ID"
+				quid       	"4A5CD746031C"
+				stereotype 	"id"
+				type       	"Autonumber")))
+		    (object Class "Child"
+			quid       	"4A5CD73C026D"
+			superclasses 	(list inheritance_relationship_list
+			    (object Inheritance_Relationship
+				quid       	"4A5CD75A0253"
+				label      	"G1"
+				supplier   	"Logical View::SF2819664::Parent"
+				quidu      	"4A5CD72F02DD"))
+			operations 	(list Operations
+			    (object Operation "Op1"
+				quid       	"4A5CD771026A"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "I"
+					quid       	"4A5CD7A90094"
+					type       	"Integer"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "Op2"
+				quid       	"4A5CD7AB000A"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "P"
+					quid       	"4A5CD7BA034B"
+					type       	"Natural"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0)
+			    (object Operation "Op3"
+				quid       	"4A5CD7BA0341"
+				stereotype 	"class"
+				parameters 	(list Parameters
+				    (object Parameter "N"
+					quid       	"4A5CDE300169"
+					type       	"Float"))
+				concurrency 	"Sequential"
+				opExportControl 	"Public"
+				uid        	0))))
+		logical_presentations 	(list unit_reference_list
+		    (object ClassDiagram "Main"
+			quid       	"4A5CD72A0087"
+			title      	"Main"
+			zoom       	100
+			max_height 	28350
+			max_width  	21600
+			origin_x   	0
+			origin_y   	0
+			items      	(list diagram_item_list
+			    (object ClassView "Class" "Logical View::SF2819664::Parent" @19
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				ShowOperationSignature 	TRUE
+				location   	(869, 309)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@19
+				    location   	(591, 153)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	556
+				    justify    	0
+				    label      	"Parent")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4A5CD72F02DD"
+				compartment 	(object Compartment
+				    Parent_View 	@19
+				    location   	(591, 214)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	5
+				    max_width  	553)
+				width      	574
+				height     	336
+				annotation 	8
+				autoResize 	TRUE)
+			    (object ClassView "Class" "Logical View::SF2819664::Child" @20
+				ShowCompartmentStereotypes 	TRUE
+				IncludeAttribute 	TRUE
+				IncludeOperation 	TRUE
+				ShowOperationSignature 	TRUE
+				location   	(871, 806)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@20
+				    location   	(593, 675)
+				    fill_color 	13434879
+				    nlines     	1
+				    max_width  	556
+				    justify    	0
+				    label      	"Child")
+				icon_style 	"Icon"
+				line_color 	3342489
+				fill_color 	13434879
+				quidu      	"4A5CD73C026D"
+				compartment 	(object Compartment
+				    Parent_View 	@20
+				    location   	(593, 736)
+				    font       	(object Font
+					size       	10
+					face       	"Arial"
+					bold       	FALSE
+					italics    	FALSE
+					underline  	FALSE
+					strike     	FALSE
+					color      	0
+					default_color 	TRUE)
+				    icon_style 	"Icon"
+				    fill_color 	13434879
+				    anchor     	2
+				    nlines     	4
+				    max_width  	553)
+				width      	574
+				height     	286
+				annotation 	8
+				autoResize 	TRUE)
+			    (object InheritView "G1" @21
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				label      	(object ItemLabel
+				    Parent_View 	@21
+				    location   	(869, 569)
+				    anchor_loc 	1
+				    nlines     	1
+				    max_width  	450
+				    justify    	0
+				    label      	"G1")
+				stereotype 	TRUE
+				line_color 	3342489
+				quidu      	"4A5CD75A0253"
+				client     	@20
+				supplier   	@19
+				line_style 	0)))))
+	    (object Class_Category "SF2819677"
+		is_unit    	TRUE
+		is_loaded  	FALSE
+		file_name  	"$CURDIR\\SF2819677.cat"
+		quid       	"4A5CD6F7032D"))
 	logical_presentations 	(list unit_reference_list
 	    (object ClassDiagram "Main"
 		quid       	"3BDB208B0049"
@@ -925,7 +1142,7 @@
 		origin_x   	1108
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object CategoryView "Logical View::Deletion" @19
+		    (object CategoryView "Logical View::Deletion" @22
 			location   	(175, 1615)
 			font       	(object Font
 			    size       	10
@@ -937,7 +1154,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@19
+			    Parent_View 	@22
 			    location   	(31, 1531)
 			    fill_color 	13434879
 			    nlines     	2
@@ -950,7 +1167,7 @@
 			quidu      	"3BDBF37402AD"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Autohash" @20
+		    (object CategoryView "Logical View::Autohash" @23
 			location   	(180, 165)
 			font       	(object Font
 			    size       	10
@@ -962,7 +1179,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@20
+			    Parent_View 	@23
 			    location   	(36, 81)
 			    fill_color 	13434879
 			    nlines     	2
@@ -975,7 +1192,7 @@
 			quidu      	"3BB22DA80147"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::BC.Containers" @21
+		    (object CategoryView "Logical View::BC.Containers" @24
 			location   	(179, 404)
 			font       	(object Font
 			    size       	10
@@ -987,7 +1204,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@21
+			    Parent_View 	@24
 			    location   	(35, 320)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1000,7 +1217,7 @@
 			quidu      	"3B54A46A01F3"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Architecture" @22
+		    (object CategoryView "Logical View::Architecture" @25
 			location   	(180, 645)
 			font       	(object Font
 			    size       	10
@@ -1012,7 +1229,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@22
+			    Parent_View 	@25
 			    location   	(36, 561)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1025,7 +1242,7 @@
 			quidu      	"3A6BCE9E0236"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Diagrams" @23
+		    (object CategoryView "Logical View::Diagrams" @26
 			location   	(175, 1120)
 			font       	(object Font
 			    size       	10
@@ -1037,7 +1254,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@23
+			    Parent_View 	@26
 			    location   	(31, 1036)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1050,7 +1267,7 @@
 			quidu      	"3B7BC23A0040"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Discriminated Records" @24
+		    (object CategoryView "Logical View::Discriminated Records" @27
 			location   	(180, 1365)
 			font       	(object Font
 			    size       	10
@@ -1062,7 +1279,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@24
+			    Parent_View 	@27
 			    location   	(36, 1281)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1075,7 +1292,7 @@
 			quidu      	"3BB1E7EA00B6"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::MI" @25
+		    (object CategoryView "Logical View::MI" @28
 			location   	(510, 165)
 			font       	(object Font
 			    size       	10
@@ -1087,7 +1304,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@25
+			    Parent_View 	@28
 			    location   	(366, 81)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1100,7 +1317,7 @@
 			quidu      	"3B409A4802E7"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Multiple" @26
+		    (object CategoryView "Logical View::Multiple" @29
 			location   	(510, 405)
 			font       	(object Font
 			    size       	10
@@ -1112,7 +1329,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@26
+			    Parent_View 	@29
 			    location   	(366, 321)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1125,7 +1342,7 @@
 			quidu      	"3B8B78D5015B"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Singleton" @27
+		    (object CategoryView "Logical View::Singleton" @30
 			location   	(510, 1365)
 			font       	(object Font
 			    size       	10
@@ -1137,7 +1354,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@27
+			    Parent_View 	@30
 			    location   	(366, 1281)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1150,7 +1367,7 @@
 			quidu      	"3B32080C012E"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Validation" @28
+		    (object CategoryView "Logical View::Validation" @31
 			location   	(848, 1120)
 			font       	(object Font
 			    size       	10
@@ -1162,7 +1379,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@28
+			    Parent_View 	@31
 			    location   	(704, 1036)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1175,7 +1392,7 @@
 			quidu      	"3BB9CF8B02D6"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Alternities" @29
+		    (object CategoryView "Logical View::Alternities" @32
 			location   	(1184, 1840)
 			font       	(object Font
 			    size       	10
@@ -1187,7 +1404,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@29
+			    Parent_View 	@32
 			    location   	(1040, 1756)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1200,7 +1417,7 @@
 			quidu      	"3C10B8BD01E4"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::States" @30
+		    (object CategoryView "Logical View::States" @33
 			location   	(1184, 165)
 			font       	(object Font
 			    size       	10
@@ -1212,7 +1429,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@30
+			    Parent_View 	@33
 			    location   	(1040, 81)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1225,7 +1442,7 @@
 			quidu      	"3C4EDCDC028A"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Associations" @31
+		    (object CategoryView "Logical View::Associations" @34
 			location   	(1185, 645)
 			font       	(object Font
 			    size       	10
@@ -1237,7 +1454,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@31
+			    Parent_View 	@34
 			    location   	(1041, 561)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1250,7 +1467,7 @@
 			quidu      	"3C6551F30079"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Self Transitions" @32
+		    (object CategoryView "Logical View::Self Transitions" @35
 			location   	(1184, 880)
 			font       	(object Font
 			    size       	10
@@ -1262,7 +1479,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@32
+			    Parent_View 	@35
 			    location   	(1040, 796)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1275,7 +1492,7 @@
 			quidu      	"3CB6B8F802E9"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Inheritance" @33
+		    (object CategoryView "Logical View::Inheritance" @36
 			location   	(1184, 1120)
 			font       	(object Font
 			    size       	10
@@ -1287,7 +1504,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@33
+			    Parent_View 	@36
 			    location   	(1040, 1036)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1300,7 +1517,7 @@
 			quidu      	"3CBCFA500089"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Hierarchies" @34
+		    (object CategoryView "Logical View::Hierarchies" @37
 			location   	(1515, 165)
 			font       	(object Font
 			    size       	10
@@ -1312,7 +1529,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@34
+			    Parent_View 	@37
 			    location   	(1371, 81)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1325,7 +1542,7 @@
 			quidu      	"3CDD01290395"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Event Test" @35
+		    (object CategoryView "Logical View::Event Test" @38
 			location   	(1515, 1605)
 			font       	(object Font
 			    size       	10
@@ -1337,7 +1554,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@35
+			    Parent_View 	@38
 			    location   	(1371, 1521)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1350,7 +1567,7 @@
 			quidu      	"3CEA58590211"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Returns" @36
+		    (object CategoryView "Logical View::Returns" @39
 			location   	(1515, 645)
 			font       	(object Font
 			    size       	10
@@ -1362,7 +1579,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@36
+			    Parent_View 	@39
 			    location   	(1371, 561)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1375,7 +1592,7 @@
 			quidu      	"3CF259140195"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::State Tests" @37
+		    (object CategoryView "Logical View::State Tests" @40
 			location   	(1515, 885)
 			font       	(object Font
 			    size       	10
@@ -1387,7 +1604,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@37
+			    Parent_View 	@40
 			    location   	(1371, 801)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1400,7 +1617,7 @@
 			quidu      	"3CF379B3018D"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Properties" @38
+		    (object CategoryView "Logical View::Properties" @41
 			location   	(180, 2085)
 			font       	(object Font
 			    size       	10
@@ -1412,7 +1629,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@38
+			    Parent_View 	@41
 			    location   	(36, 2001)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1425,7 +1642,7 @@
 			quidu      	"3D3AE80B033A"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Ones" @39
+		    (object CategoryView "Logical View::Ones" @42
 			location   	(855, 2085)
 			font       	(object Font
 			    size       	10
@@ -1437,7 +1654,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@39
+			    Parent_View 	@42
 			    location   	(711, 2001)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1450,7 +1667,7 @@
 			quidu      	"3D44162501F4"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Finality" @40
+		    (object CategoryView "Logical View::Finality" @43
 			location   	(1185, 2085)
 			font       	(object Font
 			    size       	10
@@ -1462,7 +1679,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@40
+			    Parent_View 	@43
 			    location   	(1041, 2001)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1475,7 +1692,7 @@
 			quidu      	"3D807EF50287"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Nesting" @41
+		    (object CategoryView "Logical View::Nesting" @44
 			location   	(1515, 2085)
 			font       	(object Font
 			    size       	10
@@ -1487,7 +1704,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@41
+			    Parent_View 	@44
 			    location   	(1371, 2001)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1500,7 +1717,7 @@
 			quidu      	"3D986AA50214"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Generics" @42
+		    (object CategoryView "Logical View::Generics" @45
 			location   	(180, 2340)
 			font       	(object Font
 			    size       	10
@@ -1512,7 +1729,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@42
+			    Parent_View 	@45
 			    location   	(36, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1525,7 +1742,7 @@
 			quidu      	"3DA17052005E"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Visibility" @43
+		    (object CategoryView "Logical View::Visibility" @46
 			location   	(511, 2340)
 			font       	(object Font
 			    size       	10
@@ -1537,7 +1754,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@43
+			    Parent_View 	@46
 			    location   	(367, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1550,7 +1767,7 @@
 			quidu      	"3DA9B3D002EB"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Formalization" @44
+		    (object CategoryView "Logical View::Formalization" @47
 			location   	(855, 2340)
 			font       	(object Font
 			    size       	10
@@ -1562,7 +1779,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@44
+			    Parent_View 	@47
 			    location   	(711, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1575,7 +1792,7 @@
 			quidu      	"3DCB839900BE"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Nested Types" @45
+		    (object CategoryView "Logical View::Nested Types" @48
 			location   	(1185, 2340)
 			font       	(object Font
 			    size       	10
@@ -1587,7 +1804,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@45
+			    Parent_View 	@48
 			    location   	(1041, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1600,7 +1817,7 @@
 			quidu      	"3DDBA646006E"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Teardown" @46
+		    (object CategoryView "Logical View::Teardown" @49
 			location   	(1515, 2340)
 			font       	(object Font
 			    size       	10
@@ -1612,7 +1829,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@46
+			    Parent_View 	@49
 			    location   	(1371, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1625,7 +1842,7 @@
 			quidu      	"3DDBF014004A"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Counterparts" @47
+		    (object CategoryView "Logical View::Counterparts" @50
 			location   	(180, 2595)
 			font       	(object Font
 			    size       	10
@@ -1637,7 +1854,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@47
+			    Parent_View 	@50
 			    location   	(36, 2511)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1650,7 +1867,7 @@
 			quidu      	"3DDD0751030D"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Nulls" @48
+		    (object CategoryView "Logical View::Nulls" @51
 			location   	(510, 2595)
 			font       	(object Font
 			    size       	10
@@ -1662,7 +1879,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@48
+			    Parent_View 	@51
 			    location   	(366, 2511)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1675,7 +1892,7 @@
 			quidu      	"3DDE667F0050"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Accessors" @49
+		    (object CategoryView "Logical View::Accessors" @52
 			location   	(855, 2595)
 			font       	(object Font
 			    size       	10
@@ -1687,7 +1904,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@49
+			    Parent_View 	@52
 			    location   	(711, 2511)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1700,7 +1917,7 @@
 			quidu      	"3DEC50F3010F"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Types" @50
+		    (object CategoryView "Logical View::Types" @53
 			location   	(1523, 2595)
 			font       	(object Font
 			    size       	10
@@ -1712,7 +1929,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@50
+			    Parent_View 	@53
 			    location   	(1379, 2511)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1725,7 +1942,7 @@
 			quidu      	"3DF4F75A0139"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Association Errors" @51
+		    (object CategoryView "Logical View::Association Errors" @54
 			location   	(1848, 2590)
 			font       	(object Font
 			    size       	10
@@ -1737,7 +1954,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@51
+			    Parent_View 	@54
 			    location   	(1704, 2506)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1750,7 +1967,7 @@
 			quidu      	"3E1EDFF8021C"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Type Inheritance" @52
+		    (object CategoryView "Logical View::Type Inheritance" @55
 			location   	(1848, 2340)
 			font       	(object Font
 			    size       	10
@@ -1762,7 +1979,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@52
+			    Parent_View 	@55
 			    location   	(1704, 2256)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1775,7 +1992,7 @@
 			quidu      	"3E1F006B0176"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Multiplicity" @53
+		    (object CategoryView "Logical View::Multiplicity" @56
 			location   	(1841, 1605)
 			font       	(object Font
 			    size       	10
@@ -1787,7 +2004,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@53
+			    Parent_View 	@56
 			    location   	(1697, 1521)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1800,7 +2017,7 @@
 			quidu      	"3E70E46F02DE"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::ColdFrame Examples" @54
+		    (object CategoryView "Logical View::ColdFrame Examples" @57
 			location   	(2309, 1639)
 			font       	(object Font
 			    size       	10
@@ -1812,7 +2029,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@54
+			    Parent_View 	@57
 			    location   	(2163, 1555)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1825,7 +2042,7 @@
 			quidu      	"3F27E42E0277"
 			width      	304
 			height     	180)
-		    (object CategoryView "Logical View::Regressions" @55
+		    (object CategoryView "Logical View::Regressions" @58
 			location   	(2320, 441)
 			font       	(object Font
 			    size       	10
@@ -1837,7 +2054,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@55
+			    Parent_View 	@58
 			    location   	(2176, 357)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1850,7 +2067,7 @@
 			quidu      	"3F5611DF02F9"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Bad Code Regressions" @56
+		    (object CategoryView "Logical View::Bad Code Regressions" @59
 			location   	(2319, 719)
 			font       	(object Font
 			    size       	10
@@ -1862,7 +2079,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@56
+			    Parent_View 	@59
 			    location   	(2175, 635)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1875,7 +2092,7 @@
 			quidu      	"3F6738F4023A"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Tagged Values" @57
+		    (object CategoryView "Logical View::Tagged Values" @60
 			location   	(1856, 2080)
 			font       	(object Font
 			    size       	10
@@ -1887,7 +2104,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@57
+			    Parent_View 	@60
 			    location   	(1712, 1996)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1900,7 +2117,7 @@
 			quidu      	"3FB39383027E"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Bad Model Regressions" @58
+		    (object CategoryView "Logical View::Bad Model Regressions" @61
 			location   	(2311, 986)
 			font       	(object Font
 			    size       	10
@@ -1912,7 +2129,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@58
+			    Parent_View 	@61
 			    location   	(2167, 902)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1925,7 +2142,7 @@
 			quidu      	"3FDAA7500168"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Arrays" @59
+		    (object CategoryView "Logical View::Arrays" @62
 			location   	(1841, 1362)
 			font       	(object Font
 			    size       	10
@@ -1937,7 +2154,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@59
+			    Parent_View 	@62
 			    location   	(1697, 1278)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1950,7 +2167,7 @@
 			quidu      	"3D7CC2550197"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Timers" @60
+		    (object CategoryView "Logical View::Timers" @63
 			location   	(1833, 1104)
 			font       	(object Font
 			    size       	10
@@ -1962,7 +2179,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@60
+			    Parent_View 	@63
 			    location   	(1689, 1020)
 			    fill_color 	13434879
 			    nlines     	2
@@ -1975,7 +2192,7 @@
 			quidu      	"403093D1019C"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Fixed Strings" @61
+		    (object CategoryView "Logical View::Fixed Strings" @64
 			location   	(1851, 1841)
 			font       	(object Font
 			    size       	10
@@ -1987,7 +2204,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@61
+			    Parent_View 	@64
 			    location   	(1707, 1757)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2000,7 +2217,7 @@
 			quidu      	"414A9F6D00A3"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Collection Timing" @62
+		    (object CategoryView "Logical View::Collection Timing" @65
 			location   	(2315, 1930)
 			font       	(object Font
 			    size       	10
@@ -2012,7 +2229,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@62
+			    Parent_View 	@65
 			    location   	(2171, 1846)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2025,7 +2242,7 @@
 			quidu      	"4177336A037C"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::C2P" @63
+		    (object CategoryView "Logical View::C2P" @66
 			location   	(2302, 2346)
 			font       	(object Font
 			    size       	10
@@ -2037,7 +2254,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@63
+			    Parent_View 	@66
 			    location   	(2158, 2262)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2050,7 +2267,7 @@
 			quidu      	"429693830008"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Weapon_Assignment" @64
+		    (object CategoryView "Logical View::Weapon_Assignment" @67
 			location   	(1832, 585)
 			font       	(object Font
 			    size       	10
@@ -2062,7 +2279,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@64
+			    Parent_View 	@67
 			    location   	(1688, 501)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2075,7 +2292,7 @@
 			quidu      	"38FE92C90018"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Initialization" @65
+		    (object CategoryView "Logical View::Initialization" @68
 			location   	(2712, 161)
 			font       	(object Font
 			    size       	10
@@ -2087,7 +2304,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@65
+			    Parent_View 	@68
 			    location   	(2568, 77)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2100,7 +2317,7 @@
 			quidu      	"43A3EEB50381"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Overlapping Instances" @66
+		    (object CategoryView "Logical View::Overlapping Instances" @69
 			location   	(1839, 851)
 			font       	(object Font
 			    size       	10
@@ -2112,7 +2329,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@66
+			    Parent_View 	@69
 			    location   	(1694, 767)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2125,7 +2342,7 @@
 			quidu      	"43C26123000F"
 			width      	302
 			height     	180)
-		    (object CategoryView "Logical View::Leak" @67
+		    (object CategoryView "Logical View::Leak" @70
 			location   	(2693, 2350)
 			font       	(object Font
 			    size       	10
@@ -2137,7 +2354,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@67
+			    Parent_View 	@70
 			    location   	(2549, 2266)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2150,7 +2367,7 @@
 			quidu      	"43DE80E4007D"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Unit Testing" @68
+		    (object CategoryView "Logical View::Unit Testing" @71
 			location   	(1845, 168)
 			font       	(object Font
 			    size       	10
@@ -2162,7 +2379,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@68
+			    Parent_View 	@71
 			    location   	(1701, 84)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2175,7 +2392,7 @@
 			quidu      	"44110BB801FC"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Withs For Types" @69
+		    (object CategoryView "Logical View::Withs For Types" @72
 			location   	(2718, 439)
 			font       	(object Font
 			    size       	10
@@ -2187,7 +2404,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@69
+			    Parent_View 	@72
 			    location   	(2574, 355)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2200,7 +2417,7 @@
 			quidu      	"441F967100C1"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Compilation Regressions" @70
+		    (object CategoryView "Logical View::Compilation Regressions" @73
 			location   	(2315, 168)
 			font       	(object Font
 			    size       	10
@@ -2212,7 +2429,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@70
+			    Parent_View 	@73
 			    location   	(2171, 84)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2225,7 +2442,7 @@
 			quidu      	"444B136E023A"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Duplicate Types" @71
+		    (object CategoryView "Logical View::Duplicate Types" @74
 			location   	(2725, 712)
 			font       	(object Font
 			    size       	10
@@ -2237,7 +2454,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@71
+			    Parent_View 	@74
 			    location   	(2581, 628)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2250,7 +2467,7 @@
 			quidu      	"46056794005B"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Top Bottom" @72
+		    (object CategoryView "Logical View::Top Bottom" @75
 			location   	(2684, 1928)
 			font       	(object Font
 			    size       	10
@@ -2262,7 +2479,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@72
+			    Parent_View 	@75
 			    location   	(2540, 1844)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2275,7 +2492,7 @@
 			quidu      	"478FBB3D0385"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Characters" @73
+		    (object CategoryView "Logical View::Characters" @76
 			location   	(2304, 2612)
 			font       	(object Font
 			    size       	10
@@ -2287,7 +2504,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@73
+			    Parent_View 	@76
 			    location   	(2160, 2528)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2300,7 +2517,7 @@
 			quidu      	"48BDAF2B01E2"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Child Domains" @74
+		    (object CategoryView "Logical View::Child Domains" @77
 			location   	(2730, 979)
 			font       	(object Font
 			    size       	10
@@ -2312,7 +2529,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@74
+			    Parent_View 	@77
 			    location   	(2586, 895)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2325,7 +2542,7 @@
 			quidu      	"48C0342900F6"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::Multiple Events" @75
+		    (object CategoryView "Logical View::Multiple Events" @78
 			location   	(2706, 2602)
 			font       	(object Font
 			    size       	10
@@ -2337,7 +2554,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@75
+			    Parent_View 	@78
 			    location   	(2562, 2518)
 			    fill_color 	13434879
 			    nlines     	2
@@ -2348,6 +2565,56 @@
 			line_color 	3342489
 			fill_color 	13434879
 			quidu      	"48C6D33401CA"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::SF2819664" @79
+			location   	(3145, 162)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@79
+			    location   	(3001, 78)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"SF2819664")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4A5CD6C70067"
+			width      	300
+			height     	180)
+		    (object CategoryView "Logical View::SF2819677" @80
+			location   	(3153, 462)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@80
+			    location   	(3009, 378)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	288
+			    justify    	0
+			    label      	"SF2819677")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4A5CD6F7032D"
 			width      	300
 			height     	180)))))
     root_subsystem 	(object SubSystem "Component View"
