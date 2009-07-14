@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v b53be4d6dff6 2008/09/04 20:25:42 simonjwright $
+# $Id: cat2raw.py,v 0206a3e6f73f 2009/07/14 19:40:31 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -196,7 +196,12 @@ class Attribute(Base):
 	self.emit_visibility(to, default='private')
 	if self.static == 'TRUE':
 	    self.emit_single_element('static', '', to)
-	self.emit_single_element('type', self.attributes['type'], to)
+        # SF2819677. Ignore the undefined type error here,
+        # normalize-rose will catch it.
+        try:
+            self.emit_single_element('type', self.attributes['type'], to)
+        except (KeyError):
+            self.emit_single_element('type', '', to)
 	if self.initv:
 	    self.emit_single_element('initial', self.initv, to)
 
@@ -313,7 +318,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: b53be4d6dff6 $',
+				 'cat2raw.py: $Revision: 0206a3e6f73f $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -829,7 +834,7 @@ def t_error(t):
 def main():
     
     def usage():
-	sys.stderr.write('%s $Revision: b53be4d6dff6 $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 0206a3e6f73f $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
