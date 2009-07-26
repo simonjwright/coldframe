@@ -1,4 +1,4 @@
-<!-- $Id: reserved-names.html,v 04a1bc71be9c 2006/09/24 17:33:07 simonjwright $ -->
+<!-- $Id: reserved-names.html,v 96e2b4857c54 2009/07/26 20:11:14 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Reserved names</title>
@@ -55,8 +55,6 @@ collections
 
 <tr><td>Counterpart<td>reference to a class in another Domain
 
-<tr><td>Create<td>instance creation operation
-
 <tr><td>Delete<td>instance deletion operation
 
 <tr><td>Events<td>domain event support
@@ -112,15 +110,22 @@ state
 <tt>Ada.Strings.Unbounded.Unbounded_String</tt>
 
 <tr><td>The_Container<td>class variable to contain all the instances
-(will be a Map)
+(will be an array or a Map)
 
 <tr><td>This<td>parameter (or, for singletons, class variable) to hold
 the (current) instance
+
+<tr><td>Time<td>translates to <tt>ColdFrame.Project.Calendar.Time</tt>
 
 <tr><td>Timer<td>type of an attribute to hold cancellable delayed
 events
 
 </table>
+
+You may find it useful sometimes
+to <a href="operations.html#basic">overload the instance creation
+operation <tt>Create</tt></a>.
+
 
 <hr>
 <i>

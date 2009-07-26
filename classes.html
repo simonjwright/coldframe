@@ -1,4 +1,4 @@
-<!-- $Id: classes.html,v d7db9deaa643 2009/03/14 07:03:41 simonjwright $ -->
+<!-- $Id: classes.html,v 96e2b4857c54 2009/07/26 20:11:14 simonjwright $ -->
 <head>
 <title>ColdFrame: Classes</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -74,7 +74,7 @@ has precisely one instance; you don't need to create it, and you can't
 delete it.
 
 <p>Normal classes start off with no instances; the instances have to
-be created, and may be deleted.
+be <a href="#create">created</a>, and may be deleted.
 
 <p>Instances of a normal class must be uniquely identifiable by some
 <a href="attributes.html">attribute</a> or combination of
@@ -359,10 +359,11 @@ the class itself). Both <em>&#171;public&#187;</em> and
 instance of the class. See also under <a
 href="attributes.html">Attributes</a>.
 
-<p>Normal classes have a <tt>Create</tt> operation, returning a
-<tt>Handle</tt>. If the class's only identifying attribute is of type
-<tt>Autonumber</tt>, <tt>Create</tt> takes no parameters; otherwise it
-takes a single parameter of type <tt>Identifier</tt>.
+<p>Normal classes have a <tt><a name="create">Create</a></tt>
+operation, returning a <tt>Handle</tt>. If the class's only
+identifying attribute is of type <tt>Autonumber</tt>, <tt>Create</tt>
+takes no parameters; otherwise it takes a single parameter of
+type <tt>Identifier</tt>.
 
 <p>They also have a pair of <tt>Delete</tt> operations; one takes a
 parameter <tt>This</tt> of type <tt>Handle</tt>, the other takes a
