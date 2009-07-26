@@ -1,4 +1,4 @@
-<!-- $Id: generate-diagrams.xsl,v 0f303e5ecd61 2008/07/08 21:50:57 simonjwright $ -->
+<!-- $Id: generate-diagrams.xsl,v ac1a97248a01 2009/07/26 20:03:38 simonjwright $ -->
 
 <!-- XSL stylesheet to generate documentation diagrams. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -420,7 +420,11 @@
                 <xsl:value-of select="."/>
               </xsl:for-each>
             </xsl:if>
-            <xsl:text>}"];&#10;</xsl:text>
+            <xsl:text>}"</xsl:text>
+            <xsl:if test="not(../transition[source=current()/name]/event)">
+              <xsl:text>, fillcolor=none</xsl:text>
+            </xsl:if>
+            <xsl:text>];&#10;</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
