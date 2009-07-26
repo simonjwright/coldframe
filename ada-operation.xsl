@@ -1,4 +1,4 @@
-<!-- $Id: ada-operation.xsl,v 9e020dddb2c5 2007/10/27 12:25:40 simonjwright $ -->
+<!-- $Id: ada-operation.xsl,v dc16a6bd5495 2009/07/26 20:05:48 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1179,7 +1179,7 @@
       <xsl:when test="@return">
         <xsl:text>function</xsl:text>
         <xsl:call-template name="op:parameter-list">
-          <xsl:with-param name="indent" select="$I"/>
+          <xsl:with-param name="indent" select="$IC"/>
           <xsl:with-param name="is-class" select="$is-class"/>
         </xsl:call-template>
         <xsl:text>&#10;</xsl:text>
