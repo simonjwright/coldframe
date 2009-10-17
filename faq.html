@@ -1,4 +1,4 @@
-<!-- $Id: faq.html,v ca8f1b633afb 2008/07/26 21:38:22 simonjwright $ -->
+<!-- $Id: faq.html,v 7bd8ce55fa7c 2009/10/17 07:03:24 simonjwright $ -->
 <head>
 <title>ColdFrame: Frequently Asked Questions</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -88,7 +88,10 @@ inherited operations.
 decide whether increased precision in the model is worth the extra run
 time costs of maintaining the model.
 
-<p>
+<p>See also
+the <a href="http://en.wikipedia.org/wiki/State_pattern">State
+Pattern</a>.
+
 
 <h2><a name="composition">Why doesn't ColdFrame support composition?</a></h2>
 
@@ -112,7 +115,6 @@ resist it!  ColdFrame's implementation of <i>Van</i> includes a
 container which holds all the current <i>Van</i> instances, so you can
 get at them at any time.
 
-<p>
 
 <h2><a name="aggregation">Why doesn't ColdFrame support aggregation?</a></h2>
 
@@ -132,7 +134,6 @@ feeble.
 <p>Another indicator that this is happening is the need to name a
 class "List" (<i>Threat List</i>, for instance).
 
-<p>
 
 <h2><a name="role-names">I don't understand about role names.</a></h2>
 
@@ -150,6 +151,7 @@ sometimes things really do seem different depending on where you're
 standing.
 
 <p>There are <a href="associations.html#use">notes on usage</a>.
+
 
 <h2><a name="unlink">Why do some <tt><i>Association</i>.Unlink</tt>
 operations do nothing?</a></h2>
@@ -188,6 +190,7 @@ and the rest of the model beforehand (or in a &#171;finalize&#187;
 operation; however, using &#171;finalize&#187; operations to maintain
 model integrity is an advanced practice!)
 
+
 <h2><a name="why-not-delete">.. so why can't I just call Delete?</a></h2>
 
 <p>At the moment, ColdFrame implements the minimum necessary to
@@ -205,6 +208,7 @@ unnatural direction (you might need to tell it to do
 so). <tt>Unlink</tt> would then do what was needed to keep those
 tables consistent.
 
+
 <h2><a name="singleton-pause-until-init">How can I make an
 &#171;active&#187; &#171;singleton&#187;'s task wait until the domain
 is completely initialized?</a></h2>
@@ -218,17 +222,20 @@ to ensure it only initializes a domain once:
    end loop;
 </pre>
 
+
 <h2><a name="deleting-instances-with-pending-events">What happens if
 I delete an instance with an event pending?</a></h2>
 
+<blockquote>
 <p>"I want to post an event to be handled at a specific time in the
 future. It is however possible that my application is stopped before
 that time and I have deleted the object which would handle it. I
 understand from the documentation that once an event is posted, it
-cannot be cancelled."
+cannot be cancelled. <!-- For Emacs, a closing " -->
 <br>"Will there be a problem when I delete the object if there is an
 event outstanding? Will there be a problem when the event reaches the
 head of the event queue if the object has been deleted?"
+</blockquote>
 
 <p>When an instance is deleted, all its instance events (whether held
 until some later time or just in the queue to be actioned immediately)
@@ -245,6 +252,7 @@ only existing when there actually <i>is</i> a target. This means it
 has to have an 'idle' state and great unnecessary complexity in its
 state machine&#150;for example, left-over events occurring in the idle
 state having to be marked &#171;ignore&#187;.
+
 
 <p><hr>
 <i>
