@@ -1,4 +1,4 @@
-<!-- $Id: releases.html-proto,v b8d9e7f38b71 2008/07/05 06:21:36 simonjwright $ -->
+<!-- $Id: releases.html-proto,v 4dc42624cd1b 2010/06/10 21:19:53 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Releases</title>
@@ -64,12 +64,11 @@ contains the complete documentation.
 
 <li><b>Generation</b>
 
-<li>For classes whose extent is realised using a Map, the
-implementation of Delete, like Find, was subject to memory leaks with
-GNAT 3.16a1.
-
 <li><tt>Cant_Happen</tt> exceptions in event processing are reported
 as "illegal events" rather than with a stack trace.
+
+<li>A ColdFrame.Interrupts.Handler detaches itself from the interrupt
+if there was no previous handler to replace.
 
 </ul>
 
@@ -320,7 +319,7 @@ if you find it clearer.
 values, bounds).
 
 <li>You can specify an initialization operation to be called before any
-&#171;init&#187; operations during domain initialization, using 
+&#171;init&#187; operations during domain initialization, using
 <i>{ init = ada-package-name.operation }</i> on the domain.
 
 <li>You can declare unsigned (modular) types.
