@@ -1,4 +1,4 @@
-<!-- $Id: ada-class.xsl,v f2da8a7ee976 2008/07/03 20:38:58 simonjwright $ -->
+<!-- $Id: ada-class.xsl,v 489b3e48e387 2010/06/10 21:19:54 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Classes. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -1526,14 +1526,6 @@
 
       <xsl:when test="$array='yes'">
 
-        <!--
-             begin
-                This := The_Container (With_Identifier.{name});
-                if  This = null then
-                   raise ColdFrame.Exceptions.Not_Found;
-                end if;
-             -->
-
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
@@ -1552,37 +1544,24 @@
 
       <xsl:otherwise>
 
-        <!--
-                L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);
-                pragma Unreferenced (L);
-             begin
-                Set_Identifier (Find_Key'Access, With_Identifier);
-                if not Maps.Is_Bound (The_Container, Find_Key'Access) then
-                   raise ColdFrame.Exceptions.Not_Found;
-                end if;
-                This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));
-             -->
-
         <xsl:value-of select="$II"/>
-        <xsl:text>L : BC.Support.Synchronization.Lock (Find_Key_Mutex'Access);&#10;</xsl:text>
-        <xsl:value-of select="$II"/>
-        <xsl:text>pragma Unreferenced (L);&#10;</xsl:text>
+        <xsl:text>Key : aliased Instance;&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Set_Identifier (Find_Key'Access, With_Identifier);&#10;</xsl:text>
+        <xsl:text>Set_Identifier (Key'Unchecked_Access, With_Identifier);&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>if not Maps.Is_Bound (The_Container, Find_Key'Unchecked_Access) then&#10;</xsl:text>
+        <xsl:text>if not Maps.Is_Bound (The_Container, Key'Unchecked_Access) then&#10;</xsl:text>
         <xsl:value-of select="$III"/>
         <xsl:text>raise ColdFrame.Exceptions.Not_Found;&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>end if;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Find_Key'Unchecked_Access));&#10;</xsl:text>
+        <xsl:text>This := Handle (Maps.Item_Of (The_Container, Key'Unchecked_Access));&#10;</xsl:text>
 
       </xsl:otherwise>
 
