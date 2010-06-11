@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g.adb,v $
---  $Revision: 7f860b0823f6 $
---  $Date: 2008/07/05 06:22:52 $
+--  $Revision: fbc09db3a64a $
+--  $Date: 2010/06/11 17:46:21 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -152,7 +152,8 @@ package body ColdFrame.Events_G is
                Logging.Log
                  (Severity => Logging.Error,
                   Message =>
-                    "Illegal event " & Ada.Exceptions.Exception_Message (Ex));
+                    "Illegal event "
+                    & Ada.Exceptions.Exception_Message (Ex));
             when Ex : others =>
                Logging.Log
                  (Severity => Logging.Error,
