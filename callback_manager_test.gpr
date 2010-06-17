@@ -12,12 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: callback_manager.gpr,v $
---  $Revision: 215173d4855f $
---  $Date: 2010/06/17 21:54:03 $
+--  $RCSfile: callback_manager_test.gpr,v $
+--  $Revision: cdc57cb08294 $
+--  $Date: 2010/06/17 21:57:45 $
 --  $Author: simonjwright $
 
-project Callback_Manager is
+project Callback_Manager_Test is
 
    for Main use ("callback_manager_test.adb");
 
@@ -47,4 +47,4 @@ project Callback_Manager is
       for Default_Switches ("Ada") use ("-E");
    end Binder;
 
-end Callback_Manager;
+end Callback_Manager_Test;
