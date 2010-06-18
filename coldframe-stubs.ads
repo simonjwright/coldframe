@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-stubs.ads,v $
---  $Revision: 1965f0ea1662 $
---  $Date: 2009/05/20 05:36:13 $
+--  $Revision: 2cda33c3885d $
+--  $Date: 2010/06/18 05:11:06 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -35,8 +35,8 @@ package ColdFrame.Stubs is
    --  required for the streamed representation will be less than that
    --  for the in-store representation; however, for indefinite types,
    --  there is an additional overhead required to specify the actual
-   --  object's constraints. This value should be enough for all but
-   --  extreme cases.
+   --  object's constraints. This value (a number of bytes) should be
+   --  enough for all but extreme cases.
    Storage_Overhead : constant := 128;
 
 
@@ -95,8 +95,8 @@ package ColdFrame.Stubs is
    --  have the first 4 calls to Domain.Class.Operation to set Output
    --  to 4, and any later ones to set it to 42, you'd say
    --
-   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 4, 1);
-   --     Set_Integer_Output_Value ("Domain.Class.Operation", "Output", 42, 5);
+   --     Set_Integer ("Domain.Class.Operation", "Output", 4, 1);
+   --     Set_Integer ("Domain.Class.Operation", "Output", 42, 5);
    --
    --  A special parameter name is "return". For "return", the To
    --  value will be the function result.
@@ -148,17 +148,17 @@ package ColdFrame.Stubs is
    --  parameter. To retrieve the value passed at the second call,
    --  you'd say
    --
-   --     Result := Get_Integer_Operation_Input_Value
+   --     Result := Get_Integer
    --       ("Domain.Class.Operation", "Input", 2);
    --
    --  To retrieve the result of the last call, say
    --
-   --     Result := Get_Integer_Operation_Input_Value
+   --     Result := Get_Integer
    --       ("Domain.Class.Operation", "Input", 0);
    --
    --  To retrieve the value passed at the last call but one, say
    --
-   --     Result := Get_Integer_Operation_Input_Value
+   --     Result := Get_Integer
    --       ("Domain.Class.Operation", "Input", -1);
    generic
       type T (<>) is private;
@@ -169,7 +169,7 @@ package ColdFrame.Stubs is
    --  A retained facility for retrieving the value passed at the last
    --  call:
    --
-   --     Result := Get_Integer_Operation_Input_Value
+   --     Result := Get_Integer
    --       ("Domain.Class.Operation", "Input", Last);
    Last : constant Positive := Positive'Last;
 
