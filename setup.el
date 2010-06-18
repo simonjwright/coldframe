@@ -1,4 +1,4 @@
-;;; $Id: setup.el,v 3bab882dc3d0 2009/07/14 20:27:04 simonjwright $
+;;; $Id: setup.el,v 2ae8659202f3 2010/06/18 05:23:50 simonjwright $
 ;;;
 ;;; Sets up environment variables for ColdFrame development
 
@@ -7,7 +7,7 @@
 	 (cf (concat home "/cf")))
     (setenv "ADA_PROJECT_PATH" cf)
     (setenv "AUNIT" "AUnit-1.03p")
-    (setenv "BC" "bc/src")
+    (setenv "BC" "bc")
     (setenv "BUILD_BASE" (concat cf "/.build"))
     (setenv "CASE_EXCEPTIONS"
 	    (concat home
