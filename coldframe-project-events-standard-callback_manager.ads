@@ -19,9 +19,11 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
+--  This package is ColdFrame's default instantiation.
+
 --  $RCSfile: coldframe-project-events-standard-callback_manager.ads,v $
---  $Revision: 215173d4855f $
---  $Date: 2010/06/17 21:54:03 $
+--  $Revision: 86d789bf5e8b $
+--  $Date: 2010/06/18 05:09:39 $
 --  $Author: simonjwright $
 
 with ColdFrame.Events_G.Standard_G.Callback_Manager_G;

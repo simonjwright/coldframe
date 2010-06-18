@@ -19,14 +19,9 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile: coldframe-events_g-standard_g-callback_manager_g.ads,v $
---  $Revision: 215173d4855f $
---  $Date: 2010/06/17 21:54:03 $
---  $Author: simonjwright $
-
---  A domain shouldn't assume, when it gets a callback from another
---  domain, that they are running in the same event queue context
---  (though they often will be).
+--  A receiver domain shouldn't assume, when it gets a callback from
+--  another (sender) domain, that they are running in the same event
+--  queue context (though they often will be).
 --
 --  This package supports the style of callback/event processing in
 --  http://coldframe.sourceforge.net/coldframe/event-use.html#eventqueues.
@@ -34,24 +29,31 @@
 --  See ColdFrame.Project.Events.Standard.Callback_Manager for a
 --  standard instantiation.
 --
---  Instantiate the nested Callback_Manager_G with the other
---  domain's called-back type and its callback package.
+--  Each receiver domain instantiates the nested Callback_Manager_G
+--  with the sender domain's called-back type and its callback
+--  package.
 --
---  Register this domain's callback handler(s) with the instantiated
---  <type>_Callback_Manager.
+--  During initialization of the receiver domain, it registers its
+--  callback handler(s) with the instantiated <type>_Callback_Manager.
 --
---  Register this domain's Events.Dispatcher with the instantiated
+--  It then registers its Events.Dispatcher with the instantiated
 --  <type>_Callback_Manager. This registers an internal callback
---  handler with the other domain.
+--  handler with the sender domain.
 --
---  Now, when the other domain's callback is invoked,
+--  Now, when the sender domain's callback is invoked,
 --  <type>_Callback_Manager's internal handler checks whether the
 --  current task (which will most likely be the dispatcher of the
---  other domain) is the same as this domain's dispatcher. If so, this
---  domain's callback handlers can be called directly. If not, a class
---  event is created, carrying the payload; when dispatched (and
---  therefore in this domain's event queue context), its handler calls
---  this domain's callback handlers.
+--  sender domain) is the same as the receiver domain's dispatcher. If
+--  so, the receiver domain's callback handlers can be called
+--  directly. If not, a class event is created, carrying the payload;
+--  when dispatched (and therefore in the receiver domain's event
+--  queue context), its handler calls the receiver domain's callback
+--  handlers.
+
+--  $RCSfile: coldframe-events_g-standard_g-callback_manager_g.ads,v $
+--  $Revision: 86d789bf5e8b $
+--  $Date: 2010/06/18 05:09:39 $
+--  $Author: simonjwright $
 
 with ColdFrame.Callbacks;
 
