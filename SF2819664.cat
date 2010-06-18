@@ -1,0 +1,186 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "SF2819664"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"4A5CD6C70067"
+    documentation 	"A child class had a class operation with the same name as a class operation in its parent, and code couldn't be generated (I think the profile was different)."
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Parent"
+	    quid       	"4A5CD72F02DD"
+	    operations 	(list Operations
+		(object Operation "Op1"
+		    quid       	"4A5CD7600338"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "I"
+			    quid       	"4A5CD7A3003B"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Op2"
+		    quid       	"4A5CD787018F"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "N"
+			    quid       	"4A5CD79E0232"
+			    type       	"Natural"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Op3"
+		    quid       	"4A5CD7D3035B"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "N"
+			    quid       	"4A5CD7E4028D"
+			    type       	"Natural"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "ID"
+		    quid       	"4A5CD746031C"
+		    stereotype 	"id"
+		    type       	"Autonumber")))
+	(object Class "Child"
+	    quid       	"4A5CD73C026D"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"4A5CD75A0253"
+		    label      	"G1"
+		    supplier   	"Logical View::SF2819664::Parent"
+		    quidu      	"4A5CD72F02DD"))
+	    operations 	(list Operations
+		(object Operation "Op1"
+		    quid       	"4A5CD771026A"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "I"
+			    quid       	"4A5CD7A90094"
+			    type       	"Integer"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Op2"
+		    quid       	"4A5CD7AB000A"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "P"
+			    quid       	"4A5CD7BA034B"
+			    type       	"Natural"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Op3"
+		    quid       	"4A5CD7BA0341"
+		    stereotype 	"class"
+		    parameters 	(list Parameters
+			(object Parameter "N"
+			    quid       	"4A5CDE300169"
+			    type       	"Float"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"4A5CD72A0087"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::SF2819664::Parent" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(869, 309)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(591, 153)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	556
+			justify    	0
+			label      	"Parent")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4A5CD72F02DD"
+		    width      	574
+		    height     	336
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::SF2819664::Child" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(871, 806)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(593, 675)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	556
+			justify    	0
+			label      	"Child")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4A5CD73C026D"
+		    width      	574
+		    height     	286
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "G1" @3
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(869, 569)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"G1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4A5CD75A0253"
+		    client     	@2
+		    supplier   	@1
+		    line_style 	0)))))
