@@ -14,13 +14,13 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id: cat2raw.py,v 0206a3e6f73f 2009/07/14 19:40:31 simonjwright $
+# $Id: cat2raw.py,v e320be1864b0 2010/06/18 05:23:12 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
 # Uses PLY (http://www.dabeaz.com/ply/).
 
-import lex, yacc
+import ply.lex as lex, ply.yacc as yacc
 import time, getopt, os, re, sys
 
 class Callable:
@@ -148,7 +148,7 @@ recognizedID = {}
 
 
 class Action(Base):
-    """Part of State. The only Actions we care about are entry actions.""" 
+    """Part of State. The only Actions we care about are entry actions."""
     def __init__(self):
 	self.init()
     def element_tag(self): return 'entryaction'
@@ -162,7 +162,7 @@ recognizedID['action'] = Action
 
 class Action_Time(Base):
     """Part of State. Indicates when the action occurs; the only ones we
-    care about are entry actions.""" 
+    care about are entry actions."""
     def __init__(self):
 	self.init()
 
@@ -308,7 +308,7 @@ class Domain(Base):
 	for c in filter(lambda o:
 			(o.__class__ == Domain
 			 and (o.is_loaded == None or o.is_loaded == 'TRUE')
-			 and (o.stereotype 
+			 and (o.stereotype
 			      and o.stereotype.lower() in
 			      ('generate',  'include'))),
 			self.logical_models):
@@ -318,7 +318,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision: 0206a3e6f73f $',
+				 'cat2raw.py: $Revision: e320be1864b0 $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -832,9 +832,9 @@ def t_error(t):
 #-----------------------------------------------------------------------
 
 def main():
-    
+
     def usage():
-	sys.stderr.write('%s $Revision: 0206a3e6f73f $\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: e320be1864b0 $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
@@ -879,7 +879,7 @@ def main():
 
     if len(args) > 1:
         usage()
-        sys.exit(1)    
+        sys.exit(1)
     if len(args) == 1:
 	path = args[0]
 	try:
