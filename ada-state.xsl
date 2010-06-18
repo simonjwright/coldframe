@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v 5299e8d21101 2008/09/20 06:52:52 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v f6a0204a7974 2010/06/18 05:32:47 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -170,7 +170,7 @@
           </xsl:element>
         </xsl:for-each>
       </xsl:variable>
- 
+
       <xsl:for-each select="$leaving-transitions/transition">
         <xsl:choose>
           <xsl:when test=".=preceding-sibling::transition">
@@ -226,7 +226,7 @@
         </xsl:choose>
       </xsl:for-each>
 
-      <xsl:if test="$leaving-transitions/transition[not(event='')] 
+      <xsl:if test="$leaving-transitions/transition[not(event='')]
                     and $leaving-transitions/transition[event='']">
         <xsl:call-template name="ut:log-error"/>
         <xsl:message>
@@ -256,7 +256,7 @@
 
 
   <!-- Called at domain/class to generate the State_Image operation
-       body.  It's upper-cases because it looks better in log files
+       body.  It's upper-cased because it looks better in log files
        (event names are tag-derived and hence upper cased). -->
   <xsl:template name="st:state-image-body">
 
@@ -533,7 +533,7 @@
     <xsl:text>This.Old_State_Machine_State := </xsl:text>
     <xsl:value-of select="$tr/source"/>
     <xsl:text>;&#10;</xsl:text>
-    
+
     <!-- Set new state. -->
     <xsl:value-of select="$indent"/>
     <xsl:text>This.State_Machine_State := </xsl:text>
@@ -636,7 +636,7 @@
 
       <xsl:choose>
 
-        <xsl:when test="$deleting 
+        <xsl:when test="$deleting
                         and ../state[name=$drop-through/target]/@final"/>
 
         <xsl:when test="$deleting">
@@ -648,14 +648,14 @@
             <xsl:text>.</xsl:text>
             <xsl:value-of select="$tr/target"/>
           </xsl:message>
-          
+
         </xsl:when>
 
         <xsl:otherwise>
-          
+
           <!-- Need to change context to call perform-transition from the
                current target state. -->
-          
+
           <xsl:for-each select="../state[name=$drop-through/source]">
             <xsl:call-template name="st:perform-transition">
               <xsl:with-param name="tr" select="$drop-through"/>
@@ -896,11 +896,11 @@
     <xsl:choose>
 
       <xsl:when test="$class/operation
-                      [name=$action 
-                      and not(@class 
-                              or @entry 
-                              or @renames 
-                              or @access 
+                      [name=$action
+                      and not(@class
+                              or @entry
+                              or @renames
+                              or @access
                               or @suppressed)]">
         <!-- XXX should perhaps check count? but
              (a) might not be at the same level,
