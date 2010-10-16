@@ -1,4 +1,4 @@
---  $Id: performance-harness.adb,v 1e01fbb89e76 2005/01/20 05:16:58 simon $
+--  $Id: performance-harness.adb,v 0e72a62f6bb2 2010/10/16 19:23:15 simonjwright $
 
 with Performance.Initialize;
 with Performance.Tear_Down;
@@ -387,8 +387,10 @@ begin
 
    end;
 
---     ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
---     ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
+   ColdFrame.Project.Events.Stop (Event_Timing.Dispatcher_A);
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_A);
+   ColdFrame.Project.Events.Stop (Event_Timing.Dispatcher_B);
+   ColdFrame.Project.Events.Tear_Down (Event_Timing.Dispatcher_B);
 
 --     declare
 --        package LE renames ColdFrame.Logging_Event_Basis;
