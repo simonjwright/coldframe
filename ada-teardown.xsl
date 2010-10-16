@@ -1,4 +1,4 @@
-<!-- $Id: ada-teardown.xsl,v 74288b320955 2008/07/07 20:37:57 simonjwright $ -->
+<!-- $Id: ada-teardown.xsl,v ec293992c7fe 2010/10/16 19:28:04 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for tearing down the whole
      domain (for testing). -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
@@ -405,14 +405,14 @@
         <!--
              with Ada.Unchecked_Deallocation;
              procedure {Domain}.{Class}.CF_Tear_Down is
-                use ColdFrame.Instances.Abstract_Containers;
-                It : Iterator'Class := Maps.New_Iterator (The_Container);
+                package CAIC renames ColdFrame.Instances.Abstract_Containers;
+                It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);
                 H : Handle;
                 procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
                 procedure Free is new Ada.Unchecked_Deallocation (T, T_P);
              begin
-                while not Is_Done (It) loop
-                   H := Handle (Current_Item (It));
+                while not CAIC.Is_Done (It) loop
+                   H := Handle (CAIC.Current_Item (It));
                    ColdFrame.Project.Events.Finalize (H.{timer});
                    {teardown} (H);                     - if any
                    if not H.The_T'Terminated then      - if active
@@ -423,7 +423,7 @@
                    end if;
                    Free (H.The_T);
                    Free (H);
-                   Next (It);
+                   CAIC.Next (It);
                 end loop;
                 Maps.Clear (The_Container);
                 Next_Identifier := 0;                  -  for Autonumbering
@@ -444,9 +444,9 @@
         <xsl:text>.CF_Tear_Down is&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+        <xsl:text>package CAIC renames ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
         <xsl:value-of select="$I"/>
-        <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
+        <xsl:text>It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>H : Handle;&#10;</xsl:text>
 
@@ -461,10 +461,10 @@
         <xsl:text>begin&#10;</xsl:text>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:text>while not CAIC.Is_Done (It) loop&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>H := Handle (Current_Item (It));&#10;</xsl:text>
- 
+        <xsl:text>H := Handle (CAIC.Current_Item (It));&#10;</xsl:text>
+
         <xsl:for-each select="attribute[type='Timer' and not(@class)]">
           <xsl:call-template name="td:instance-timer">
             <xsl:with-param name="indent" select="$II"/>
@@ -500,7 +500,7 @@
         <xsl:value-of select="$II"/>
         <xsl:text>Free (H);&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:text>CAIC.Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 

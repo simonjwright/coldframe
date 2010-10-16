@@ -1,4 +1,4 @@
-<!-- $Id: ada-collection.xsl,v c6ee965debf4 2004/10/19 16:12:49 simon $ -->
+<!-- $Id: ada-collection.xsl,v ec293992c7fe 2010/10/16 19:28:04 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Collections. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -367,13 +367,13 @@
     <!-- full version ..
          function {dom}.{class}.All_Instances
            return {dom}.{class}.Collections.Collection is
-            use ColdFrame.Instances.Abstract_Containers;
-            It : Iterator'Class := Maps.New_Iterator (The_Container);
+            package CAIC renames ColdFrame.Instances.Abstract_Containers;
+            It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);
             Result : Collections.Collection;
          begin
-            while not Is_Done (It) loop
-               Collections.Append (Result, Handle (Current_Item (It)));
-               Next (It);
+            while not CAIC.Is_Done (It) loop
+               Collections.Append (Result, Handle (CAIC.Current_Item (It)));
+               CAIC.Next (It);
             end loop;
             return Result;
          end {dom}.{class}.All_Instances;
@@ -392,9 +392,9 @@
 
     <xsl:if test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
-      <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+      <xsl:text>package CAIC renames ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
+      <xsl:text>It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
@@ -432,11 +432,11 @@
       <xsl:otherwise>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:text>while not CAIC.Is_Done (It) loop&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>Collections.Append (Result, Handle (Current_Item (It)));&#10;</xsl:text>
+        <xsl:text>Collections.Append (Result, Handle (CAIC.Current_Item (It)));&#10;</xsl:text>
         <xsl:value-of select="$II"/>
-        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:text>CAIC.Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
@@ -455,19 +455,19 @@
     <!-- full version ..
          function {dom}.{class}.Selection_Function
            return {dom}.{class}.Collections.Collection is
-            use ColdFrame.Instances.Abstract_Containers;
-            It : Iterator'Class := Maps.New_Iterator (The_Container);
+            package CAIC renames ColdFrame.Instances.Abstract_Containers;
+            It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);
             Result : Collections.Collection;
          begin
-            while not Is_Done (It) loop
+            while not CAIC.Is_Done (It) loop
                declare
-                  H : constant Handle := Handle (Current_Item (It));
+                  H : constant Handle := Handle (CAIC.Current_Item (It));
                begin
                   if Pass (H) then
                      Collections.Append (Result, H);
                   end if;
                end;
-               Next (It);
+               CAIC.Next (It);
             end loop;
             return Result;
          end {dom}.{class}.Selection_Function;
@@ -486,9 +486,9 @@
 
     <xsl:if  test="$max &gt; 1 and $array = 'no'">
       <xsl:value-of select="$I"/>
-      <xsl:text>use ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
+      <xsl:text>package CAIC renames ColdFrame.Instances.Abstract_Containers;&#10;</xsl:text>
       <xsl:value-of select="$I"/>
-      <xsl:text>It : Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
+      <xsl:text>It : CAIC.Iterator'Class := Maps.New_Iterator (The_Container);&#10;</xsl:text>
     </xsl:if>
 
     <xsl:value-of select="$I"/>
@@ -528,12 +528,12 @@
       <xsl:otherwise>
 
         <xsl:value-of select="$I"/>
-        <xsl:text>while not Is_Done (It) loop&#10;</xsl:text>
+        <xsl:text>while not CAIC.Is_Done (It) loop&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
         <xsl:text>declare&#10;</xsl:text>
         <xsl:value-of select="$III"/>
-        <xsl:text>H : constant Handle := Handle (Current_Item (It));&#10;</xsl:text>
+        <xsl:text>H : constant Handle := Handle (CAIC.Current_Item (It));&#10;</xsl:text>
         <xsl:value-of select="$II"/>
         <xsl:text>begin&#10;</xsl:text>
 
@@ -548,7 +548,7 @@
         <xsl:text>end;&#10;</xsl:text>
 
         <xsl:value-of select="$II"/>
-        <xsl:text>Next (It);&#10;</xsl:text>
+        <xsl:text>CAIC.Next (It);&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>end loop;&#10;</xsl:text>
 
