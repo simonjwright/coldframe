@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: callback_manager_test.adb,v $
---  $Revision: 215173d4855f $
---  $Date: 2010/06/17 21:54:03 $
+--  $Revision: c69d8e5f8e71 $
+--  $Date: 2010/10/16 19:06:55 $
 --  $Author: simonjwright $
 
 with Ada.Exceptions;
@@ -36,21 +36,21 @@ begin
 
    ColdFrame.Project.Events.Start (Dispatcher);
 
-   Put_Line ("call_callbacks (1)");
+   Put_Line ("manager not registered: call_callbacks (1)");
    CMTS.Integer_Callbacks.Call_Callbacks (1);
    ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                              Ignoring_Timers => True);
    New_Line;
 
    CMTSMIC.Register (Dispatcher);
-   Put_Line ("call_callbacks (2)");
+   Put_Line ("no callbacks registered: call_callbacks (2)");
    CMTSIC.Call_Callbacks (2);
    ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                              Ignoring_Timers => True);
    New_Line;
 
    CMTSMIC.Register (CMTS.Callback_Handler'Access);
-   Put_Line ("call_callbacks (3)");
+   Put_Line ("callback registered: call_callbacks (3)");
    CMTSIC.Call_Callbacks (3);
    ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                              Ignoring_Timers => True);
@@ -60,7 +60,7 @@ begin
       Ev : CMTS.Class_Event;
    begin
       Ev.Value := 4;
-      Put_Line ("synchronously handling (4)");
+      Put_Line ("synchronously handling (4) => other context");
       CMTS.Handler (Ev);
       ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                                 Ignoring_Timers => True);
@@ -71,7 +71,7 @@ begin
       Ev : constant ColdFrame.Project.Events.Event_P := new CMTS.Class_Event;
    begin
       CMTS.Class_Event (Ev.all).Value := 5;
-      Put_Line ("asynchronously handling (5)");
+      Put_Line ("asynchronously handling (5) => same context");
       ColdFrame.Project.Events.Post (Ev, On => Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                                 Ignoring_Timers => True);
@@ -79,12 +79,13 @@ begin
    New_Line;
 
    CMTSMIC.Deregister (CMTS.Callback_Handler'Access);
-   Put_Line ("call_callbacks (99)");
+   Put_Line ("callback deregistered: call_callbacks (99)");
    CMTSIC.Call_Callbacks (99);
    ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher,
                                              Ignoring_Timers => True);
    New_Line;
 
+   --  Kill the dispatcher tasks.
    ColdFrame.Project.Events.Stop (Dispatcher);
    ColdFrame.Project.Events.Tear_Down (Dispatcher);
 
