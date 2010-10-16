@@ -1,4 +1,4 @@
-# $Id: setup.sh,v 2ae8659202f3 2010/06/18 05:23:50 simonjwright $
+# $Id: setup.sh,v 6f72d421ded5 2010/10/16 19:22:30 simonjwright $
 # Sets up environment variables for ColdFrame development.
 # (very specific to SJW config!).
 
@@ -6,7 +6,7 @@ cf=$PWD
 
 export ADA_PROJECT_PATH=$cf
 export AUNIT=${AUNIT:-AUnit-1.03p}
-export BC=bc/src
+export BC=bc
 export BUILD=$cf/.build
 export BUILD_BASE=$cf/.build
 # I think the first writable one is where new entries are added ..
