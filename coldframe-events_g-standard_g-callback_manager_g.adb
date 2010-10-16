@@ -20,8 +20,8 @@
 --  executable file might be covered by the GNU Public License.
 
 --  $RCSfile: coldframe-events_g-standard_g-callback_manager_g.adb,v $
---  $Revision: 215173d4855f $
---  $Date: 2010/06/17 21:54:03 $
+--  $Revision: bb1b75ff6640 $
+--  $Date: 2010/10/16 19:26:16 $
 --  $Author: simonjwright $
 
 with Ada.Task_Identification;
@@ -53,7 +53,8 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
         (The_Callback_Procedure : Callback.Callback)
       is
       begin
-         Inner_Callback.Register (The_Callback_Procedure.all'Access);
+         Inner_Callback.Register
+           (Inner_Callback.Callback (The_Callback_Procedure));
       end Register;
 
 
@@ -61,7 +62,8 @@ package body ColdFrame.Events_G.Standard_G.Callback_Manager_G is
         (The_Callback_Procedure : Callback.Callback)
       is
       begin
-         Inner_Callback.Deregister (The_Callback_Procedure.all'Access);
+         Inner_Callback.Deregister
+           (Inner_Callback.Callback (The_Callback_Procedure));
       end Deregister;
 
 
