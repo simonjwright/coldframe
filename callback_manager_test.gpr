@@ -13,21 +13,22 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: callback_manager_test.gpr,v $
---  $Revision: cdc57cb08294 $
---  $Date: 2010/06/17 21:57:45 $
+--  $Revision: 507480f4264d $
+--  $Date: 2010/10/16 19:19:52 $
 --  $Author: simonjwright $
+
+with "Options";
+with "BC";
+with "ColdFrame";
 
 project Callback_Manager_Test is
 
    for Main use ("callback_manager_test.adb");
-
-   Home := external ("HOME");
-
-   for Source_Dirs use (Home & "/cf", Home & "/bc/src");
-
-   for Object_Dir use ".build/main";
+   for Source_Dirs use ("Callback_Manager.test");
 
    for Exec_Dir use ".";
+
+   for Object_Dir use Options'Object_Dir & "/main";
 
    package Builder is
       for Default_Switches ("Ada") use ("-m", "-g");
