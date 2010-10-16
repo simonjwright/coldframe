@@ -1,4 +1,4 @@
-<!-- $Id: ada-state.xsl,v f6a0204a7974 2010/06/18 05:32:47 simonjwright $ -->
+<!-- $Id: ada-state.xsl,v 7137ead35c66 2010/10/16 19:05:52 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada state machine code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -163,8 +163,8 @@
               <xsl:value-of select="action"/>
             </xsl:element>
             <xsl:element name="class">
-              <!-- we won't find it so easy to access when processing
-                   this result set. -->
+              <!-- Included because we won't find it so easy to access
+                   when processing this result set. -->
               <xsl:value-of select="../../name"/>
             </xsl:element>
           </xsl:element>
@@ -197,7 +197,7 @@
                 <xsl:message>
                   <xsl:choose>
                     <xsl:when test="event=''">
-                      <xsl:text>Warning: more than one identical completion (drop-through) cdtransition</xsl:text>
+                      <xsl:text>Warning: more than one identical completion (drop-through) transition</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:text>Warning: more than one identical transition triggered by </xsl:text>
