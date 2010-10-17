@@ -1,7 +1,7 @@
 *.ada *.ali
 *.bb *.bbg *.da *.gcov
 *.domains
-*.gen
+*.gen *.raw
 *.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
 *.norm
 *.pdf
