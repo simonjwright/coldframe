@@ -3,7 +3,7 @@
 # the next line restarts using itclsh \
 exec itclsh "$0" "$@"
 
-# $Id: normalize-rose.tcl,v 60723545c365 2008/09/16 05:26:46 simonjwright $
+# $Id: normalize-rose.tcl,v 97c0695cbe33 2011/04/21 17:13:20 simonjwright $
 
 # Converts an XML Domain Definition file, generated from the Rose tool
 # by ddf.ebs or from a Rose .cat file by ct2raw.py, into normalized
@@ -200,7 +200,7 @@ proc normalizeValueInner {s} {
                                     set mins [split $plus "-"]
                                     set minl {}
                                     foreach min $mins {
-					set attrs [split $min {'}] 
+					set attrs [split $min {'}]
 					set attrl {}
 					foreach attr $attrs {
 					    set term [normalize $attr]
@@ -2857,7 +2857,7 @@ itcl::class Datatype {
 	switch $dataType {
 	    constrains -
 	    counterpart -
-	    defined - 
+	    defined -
 	    implicit -
 	    imported -
 	    null -
@@ -3063,7 +3063,7 @@ itcl::class Attribute {
     variable initial ""
 
     # the type name
-    variable type
+    variable type ""
 
     # access control
     variable visibility "private"
