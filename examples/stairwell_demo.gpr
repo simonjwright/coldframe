@@ -1,0 +1,30 @@
+--  GNAT project file for the Stairwell demonstration.
+--  $Id$
+
+with "Options";
+with "ColdFrame";
+with "tash";
+
+project Stairwell_Demo is
+
+  for Main use ("stairwell_demo");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("House_Management.impl",
+                       "House_Management.gen",
+                       "Digital_IO.impl",
+                       "Digital_IO.gen");
+
+  for Object_Dir use Options'Object_Dir & "/main";
+
+  package IDE renames Options.IDE;
+  package Builder renames Options.Builder;
+  package Compiler renames Options.Compiler;
+  package Binder renames Options.Binder;
+
+  package Linker is
+     for Default_Switches ("Ada") use Tash.Linker_Options;
+  end Linker;
+
+end Stairwell_Demo;

@@ -1,0 +1,67 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Event motivation</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Event motivation</h1>
+
+<p>In ColdFrame, events are used for two purposes:
+
+<ul>
+<li>to isolate <a href="domains.html">domains</a>
+<li>to support state modelling.
+</ul>
+
+<h2>Domain isolation</h2>
+
+<p>Many systems use the Layered approach to architecture, and it's
+likely that a ColdFrame-based system will do the same. In any case,
+there has to be support for interactions between different Domains
+(subject matters).
+
+<p>Classes in domains near the system's devices will <a
+href="active-classes.html">need to have tasks</a> to help them support
+the devices, probably on at least a "one task per device" basis.
+
+<p>When you're designing a higher-level domain, you'll probably want
+to use the <tt>{<a href="callbacks.html">callback</a>}</tt> facility
+(ColdFrame's version of the Observer pattern) to isolate yourself from
+the workings of the device domains. However, if you're using more than
+one device, your callbacks will be being called from more than one
+thread of execution, which you must provide protection against.
+
+<p>ColdFrame's Event support allows you to do this by converting the
+callback message into a <i>class event</i> (with a data payload) to be
+handled later in the context of a thread in your domain.
+
+<h2>State modelling</h2>
+
+<p>State modelling is a very useful technique when objects have
+lifecycles, and especially when they react differently depending on the
+state they've reached. Another indicator is when times and intervals
+are involved.
+
+<p>Transitions between states happen as a result of <i>instance
+events</i>.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

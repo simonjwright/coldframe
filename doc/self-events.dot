@@ -1,0 +1,19 @@
+// $Id$
+// dot diagram showing use of self event to count resources
+
+digraph {
+
+graph [charset="latin1"]
+edge [fontsize=10];
+node [shape=record, style=filled, fillcolor="moccasin", fontsize=10];
+rankdir=LR;
+
+initial [shape=point, style=invisible, width=0];
+waiting [label="waiting | entry/check"];
+processing [];
+
+initial -> waiting;
+waiting -> waiting [label="resource available"];
+waiting -> processing [label="«self»\ndone"];
+
+}

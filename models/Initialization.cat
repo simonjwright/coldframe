@@ -1,0 +1,209 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Initialization"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"43A3EEB50381"
+    documentation 	
+|Contains tests (mostly regression tests) appropriate to domain initialization.
+|
+|{ revision = $Revision$ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Checking Domain Initialization"
+	    quid       	"43A3EF800166"
+	    documentation 	
+|Checks for bug#339.
+|
+|The task loops until Domain_Initialized is true, then copies the value of Initialized to Initialized_As_Seen.
+	    
+	    stereotype 	"active, singleton"
+	    operations 	(list Operations
+		(object Operation "Initialize"
+		    quid       	"43A3EFCC00F7"
+		    documentation 	"Wait for a second before setting 'Initialized'."
+		    stereotype 	"init"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Get Initialized As Seen"
+		    quid       	"43A3F0C202DB"
+		    stereotype 	"accessor, class"
+		    result     	"Boolean Status"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"43A3F0E303C9"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "Initialized"
+		    quid       	"43A3EFE80165"
+		    documentation 	"Indicates whether 'Initialize()' has run."
+		    stereotype 	"class"
+		    type       	"Boolean"
+		    initv      	"False")
+		(object ClassAttribute "Initialized As Seen"
+		    quid       	"43A3F09F0371"
+		    documentation 	"Tells whether the task has run, and if so what value it saw for Initialized."
+		    stereotype 	"class"
+		    type       	"Boolean Status"
+		    quidu      	"43A3F0E303C9"
+		    initv      	"Unknown")))
+	(object Class "Boolean Status"
+	    quid       	"43A3F0E303C9"
+	    documentation 	
+|Tells whether a value is True or False, or not yet known.
+|
+|{ enumeration = Unknown | False | True }
+	    
+	    stereotype 	"type"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"43A3EF640134"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object Label @1
+		    location   	(190, 2345)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1745
+		    label      	"$Id$")
+		(object ClassView "Class" "Logical View::Initialization::Checking Domain Initialization" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(762, 312)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(199, 191)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1126
+			justify    	0
+			label      	"Checking Domain Initialization")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(199, 146)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	1126
+			justify    	0
+			label      	"<<active, singleton>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"43A3EF800166"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(199, 247)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	5
+			max_width  	1123)
+		    width      	1144
+		    height     	354
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Initialization::Boolean Status" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1565, 217)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(1406, 191)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	318
+			justify    	0
+			label      	"Boolean Status")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(1406, 146)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	318
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"43A3F0E303C9"
+		    width      	336
+		    height     	164
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object CategoryView "Logical View::Initialization" @4
+		    location   	(2508, 2333)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@4
+			location   	(2338, 2249)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	340
+			justify    	0
+			label      	"Initialization")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"43A3EEB50381"
+		    width      	352
+		    height     	180)))))

@@ -1,0 +1,129 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Event translation</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Event translation</h1>
+
+<h2>Events</h2>
+
+<p>Each event is mapped to a distinct type, derived from
+<tt>ColdFrame.Project.Events.Event_Base</tt>, in the package for the
+class to which the event is directed. Instance events are derived from
+<tt>Instance_Event_Base</tt>, a child of <tt>Event_Base</tt> which is
+constrained by an access to the instance to which the event is
+directed.
+
+<p>For a class event, this results in
+<pre>
+   type Button_Event
+   is new ColdFrame.Project.Events.Event_Base with record
+      Payload : Button_Name;
+   end record;
+</pre>
+
+<p>(all class events have payloads), and for an instance event, in
+<pre>
+   type Button_Push (For_The_Instance : access Instance)
+   is new ColdFrame.Project.Events.Instance_Event_Base (For_The_Instance)
+   with null record;
+</pre>
+
+<h2>States</h2>
+
+<p>The states in the state model are translated as a private
+enumeration type, <tt>State_Machine_State_T</tt>. The initial state
+(by default <tt>Initial</tt>) is the first literal.
+
+<p><a href="event-modelling.html#example-model">In the example</a>,
+the type would be
+<pre>
+   type State_Machine_State_T is
+     (Initial,
+      Idle,
+      Lit);
+</pre>
+
+<p>The instance state is represented by a created instance variable
+<pre>
+   State_Machine_State : State_Machine_State_T := Initial;
+</pre>
+
+<p>This is not intended to be made directly visible outside the
+class. Instead, it's expected that you'll test it within operations
+and return an appropriate result:
+<pre>
+   function <a name="is_on">Is_On</a> (This : Handle) return Boolean is
+   begin
+      return This.State_Machine_State = Lit;
+   end Is_On;
+</pre>
+
+<p>Another instance variable <tt>Old_State_Machine_State</tt> is
+available if you really need an action to know which state the
+instance was in before the event. It's normally better to use
+different states.
+
+<h2>Transitions</h2>
+
+<p>When an event is dispatched to a state machine, there are three
+possible outcomes, depending on what the state model says about the
+event occurring in the current state:
+
+<ul>
+
+<li>If the transition is marked <em>&#171;ignore&#187;</em>, the
+event is thrown away.
+
+<li>If the transition isn't in the model, the exception
+<tt>ColdFrame.Exceptions.Cant_Happen</tt> is raised.
+
+<li>Otherwise, it's a legal transition:
+
+<ol>
+
+<li>The instance variable <tt>Old_State_Machine_State</tt> is set to the
+current state;
+
+<li>the instance variable <tt>State_Machine_State</tt> is set to the
+target state;
+
+<li>the transition action and the entry actions are executed in order.
+
+</ol>
+
+so you can write your action operation to behave differently according
+to what state you're now in (or have come from, or both). Please
+<b>don't</b> alter these variables yourself.
+
+<br>In general, it's better to show behaviour in the state machine
+rather than embedded in code.
+
+</ul>
+
+<p>It is legal to use the instance <tt>Delete</tt> operation as an
+entry action (ColdFrame doesn't check that it's in a <i>final</i>
+state). Of course, it needs to be the <em>last</em> action.
+
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

@@ -1,0 +1,172 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Generation of code</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Generation of code</h1>
+
+<p>Code is generated using the <a href="resources.html#xslt">XSLT</a>
+stylesheet <tt>generate-ada.xsl</tt>. The XSLT processor I've used is
+the <a href="http://sourceforge.net/projects/saxon/">SAXON</a> XSLT
+Processor from Michael Kay.
+
+<p>It's possible to add your own post-processing for
+ <a href="extending.html">special code generation methods</a>.
+
+<p>The output is placed by the <tt>Makefile</tt> into one Ada source
+file, <tt><i>package-name</i>.ada</tt>.
+
+<p>The <tt>Makefile</tt> then uses <a
+href="http://www.adacore.com/">GNAT</a>'s
+<tt>gnatchop</tt> to split the file into the required "one file per
+library unit" style. Other compilers will have their own way of
+importing the code. Note, however, that the supplied stylesheets make
+use of GNAT extensions (<tt>'Unrestricted_Access</tt>).
+
+<p>The generated code is compilable, but operation and task bodies
+will raise the exception <tt>Unimplemented</tt> if called (except for
+operations recognised as accessors).
+
+<p>ColdFrame makes no attempt to allow you to modify generated bodies
+and preserve your changes on the next generation; instead, the idea is
+that you keep the generated code in one directory and your real code
+bodies in another directory that's earlier on the compiler's source
+search path. I'm not sure how the idea of placing real subprogram body
+files earlier in the compiler's source search path translates to
+compilers other than GNAT; however, on regeneration the supplied
+Makefile deletes all generated code bodies that have implementations
+(this is necessary for using the GNAT <i>Project</i> facility).
+
+<p>You can see a <a href="error-messages.html">listing and explanation
+of error and warning messages</a> that may appear.
+
+<h2>Options</h2>
+
+<p>XSLT script options are passed to the script using assignments of
+the form <tt>option=<i>value</i></tt> on the Saxon command line. The
+script <tt>generate-ada.xsl</tt> recognises the options
+
+<dl>
+
+<dt><tt>add-blank-lines</tt>
+
+<dd>If the value is <tt>yes</tt>, blank lines are added to the
+generated Ada to make it easier to read, in case you have to.
+
+<br>The Make variable is <tt>BLANK_LINES</tt>, default <tt>yes</tt>.
+
+<dt><tt>checking-policy</tt>
+
+<dd>If the value is <tt>relaxed</tt>, some errors are demoted to
+warnings.
+
+<br>The Make variable is <tt>CHECKING</tt>, default <tt>strict</tt>.
+
+<dt><tt>continuation-indent</tt>
+
+<dd>Specifies the indentation increment for continuation lines; the
+value is a string of space characters, the default being 2 spaces.
+
+<br>There's no Make variable for this.
+
+<dt><tt>fill-column</tt>
+
+<dd>Specifies the fill width for comments, the default being 70.
+
+<br>There's no Make variable for this.
+
+<dt><tt>generate-accessors</tt>
+
+<dd>If the value is <tt>yes</tt>, both <tt>Set</tt> and <tt>Get</tt>
+accessor operations will be generated directly in the package body for
+all attributes.
+
+<br>If the value is <tt>defined</tt> (the Makefile default), operations
+which match the profile of accessors
+(<tt>Get_<i>attribute-name</i></tt> with no parameters returning a
+value of <tt><i>attribute-type</i></tt>, or
+<tt>Set_<i>attribute-name</i></tt> with no return value and a single
+parameter of <tt><i>attribute-type</i></tt>) will have proper bodies
+generated for them (they will still be generated as <tt>separate</tt>
+subprograms, though, unless they're stereotyped or tagged
+<i>accessor</i>).
+
+<br>Otherwise, no special notice will be taken of accessors or
+attributes.
+
+<br>The Make variable is <tt>GENERATE_ACCESSORS</tt>,
+default <tt>defined</tt>.
+
+<dt><tt>generate-event-logging</tt>
+
+<dd>Controls whether code to log <a href="events.html">Event</a>
+processing is generated.
+
+<br>The Make variable is <tt>GENERATE_EVENT_LOGGING</tt>,
+default <tt>no</tt>.
+
+<dt><tt>generate-stubs</tt>
+
+<dd>Specifies whether test stub bodies are to be generated.
+
+<br>The Make variable is <tt>GENERATE_STUBS</tt>, default <tt>no</tt>.
+
+<dt><tt>max-bounded-container</tt>
+
+<dd>If a class is known never to have more than this number
+of instances, a bounded container will be used. The default is 49.
+
+<br>There's no Make variable for this.
+
+<dt><tt>max-hash-buckets</tt>
+
+<dd>The number of hash buckets used for map containers will be the
+same as the maximum number of instances so long as it's less than this
+value. The default is 49.
+
+<br>There's no Make variable for this.
+
+<dt><tt>standard-indent</tt>
+
+<dd>Specifies the standard indentation increment; the value is a
+string of space characters, the default being 3 spaces.
+
+<br>There's no Make variable for this.
+
+<dt><tt>unit-test-support</tt>
+
+<dd>Specifies whether a <tt>Unit_Test</tt> child package is required
+for each class.
+
+<br>The Make variable is <tt>UNIT_TEST_SUPPORT</tt>,
+default <tt>no</tt>.
+
+<dt><tt>verbose</tt>
+
+<dd>Specifies whether ColdFrame should report what it's doing.
+
+<br>The Make variable is <tt>VERBOSE</tt>, default <tt>no</tt>.
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

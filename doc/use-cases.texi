@@ -1,0 +1,442 @@
+\input texinfo    @c -*-texinfo-*-
+@c $Id$
+@c %**start of header
+@setfilename use-cases.info
+@settitle Use Cases for Code Generation
+@iftex
+@afourpaper
+@end iftex
+@c %**end of header
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top Code Generation
+@end ifnottex
+
+@menu
+* Introduction::                
+* General considerations::      
+* Instances::                   
+* Associations::                
+* Inheritance relationships::   
+* Glossary::                    
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Instances
+
+* Create an Instance::          
+* Delete an Instance::          
+* Access an Instance::          
+* Select a set of Instances::   
+* Operate on a set of Instances::  
+
+Associations
+
+* Create an association::       
+* Delete an association::       
+* Navigate an association::     
+
+Inheritance relationships
+
+* Create an inheritance::       
+* Delete an inheritance::       
+* Migrate an inheritance::      
+* Navigate an inheritance::     
+
+Glossary
+
+* Identifier::                  
+* Software Architecture::       
+
+@end detailmenu
+@end menu
+
+@c========================================================================
+@node Introduction, General considerations, Top, Top
+@chapter Introduction
+
+When code is automatically generated from a model (in the present case,
+a UML model), there are two approaches:
+
+@table @asis
+
+@item Use a Design Model
+
+A design model is derived from an analysis model by adding support
+classes to map the analysis model to the Software Architecture
+(@pxref{Software Architecture}). An example would be a container for all
+the instances of a given class.
+
+A tool which uses this approach is @uref{http://www.rational.com/,
+Rational} Rose.
+
+@item Use an Analysis model
+
+An analysis model contains classes and relationships that are part of
+the subject matter of the analyzed subsystem. Code which supports the
+execution of the model (for example, navigation from an instance of one
+class through an association to find the set of corresponding instances
+of another class) is automatically generated.
+
+Tools which use this approach include Software through Pictures from
+@uref{http://www.aonix.com/,Aonix}, Rhapsody from I-Logix, iUML from
+@uref{http://www.kc.com/,Kennedy-Carter}, BridgePoint from
+@uref{http://www.projtech.com/,Project Technology}, and the present
+project.
+
+@end table
+
+Automatically-generated support code comes in several flavours:
+
+@table @asis
+
+@item Explicitly-generated
+
+The code generation process writes out new code. An example is the
+creation of a record structure to correspond to instance attributes.
+
+@item Instantiation
+
+The new code is an instantiation of an existing generic component.
+
+@item Derivation
+
+The new code is an extension of an existing (base) component.
+
+@end table
+
+This set of Use Cases (well, that's what I'm calling them!) covers the
+requirements to be met by the Software Architecture (@pxref{Software
+Architecture}), particularly by supporting components.
+
+The Actor concerned is the analyst who specifies the logic of operations
+or actions. The programmer who implements these specifications (or, in
+an advanced tool such as iUML or BridgePoint, implements the mechanisms
+which provide full translation) is, rather, concerned with building
+components to meet the requirements expressed here, and (eventually)
+with using them.
+
+No distinction is made at this point between generic and base
+components.
+
+
+
+@c========================================================================
+@node General considerations, Instances, Introduction, Top
+@chapter General considerations
+
+It isn't possible to maintain all the invariants of the model (for
+example, constraints on relationships) within any given operation; on
+the other hand, the analyst must not allow any operation to complete
+with the model in an inconsistent state.
+
+
+
+@c========================================================================
+@node Instances, Associations, General considerations, Top
+@chapter Instances
+
+The existence of an Instance must be independent of how many copies of
+its data are held. One possibility is to have the Class be responsible
+for the existence of Instances.
+
+@menu
+* Create an Instance::          
+* Delete an Instance::          
+* Access an Instance::          
+* Select a set of Instances::   
+* Operate on a set of Instances::  
+@end menu
+
+@node Create an Instance, Delete an Instance, Instances, Instances
+@section Create an Instance
+
+When an Instance of a Class is to be created, the analyst specifies a
+set of attributes which cover the Class' Identifier
+(@pxref{Identifier}).
+
+Once the Instance has been created (with default values for
+non-identifier attributes), other attributes are set.
+
+It would be possible to support any legal combination of attributes
+(besides the identifying attributes, which must be supplied); this is
+likely to be prohibitively complex, unless the implementation language
+allows default values for subprogram parameters. An acceptable
+alternative strategy would be to require that all the attributes be
+supplied at once.
+
+
+@node Delete an Instance, Access an Instance, Create an Instance, Instances
+@section Delete an Instance
+
+The prime way of deleting an Instance is to ask its Class to delete
+it. This could either be in terms of the complete Identifier
+(@pxref{Identifier}) or by using a valid selected Instance.
+
+An Instance can be asked to delete itself; this will resolve into the
+Class operation discussed above.
+
+
+@node Access an Instance, Select a set of Instances, Delete an Instance, Instances
+@section Access an Instance
+
+There are five (any advance on five?) ways of getting a single Instance:
+
+@itemize
+
+@item By creating it.
+
+@item By querying its Class using the identifier (@pxref{Identifier}).
+
+@item During iteration over a set of Instances.
+
+@item By navigating from a single Instance to the ``1'' or ``0..1'' end
+of an Association (@pxref{Associations}). Note, the latter can result in
+``None'' as a valid answer.
+
+@item By navigating an Inheritance relationship from a single Instance
+(@pxref{Inheritance relationships}).
+
+@end itemize
+
+Once the Instance has been accessed, various operations are possible:
+
+@itemize
+
+@item Read the values of attributes.
+
+@item Update the values of non-identifying attributes.
+
+@item Delete the Instance.
+
+@end itemize
+
+
+@node Select a set of Instances, Operate on a set of Instances, Access an Instance, Instances
+@section Select a set of Instances
+
+Some operations (see @pxref{Access an Instance}) result in single
+Instances; others result in (possibly empty) sets of Instances. These
+include:
+
+@itemize
+
+@item Querying the Class using a non-identifying subset of the
+attributes.
+
+@item Navigating from a single Instance to the ``1..n'' or ``0..n'' end
+of an Association (@pxref{Associations}).
+
+@item Any navigation from a set of Instances.
+
+@end itemize
+
+
+@node Operate on a set of Instances,  , Select a set of Instances, Instances
+@section Operate on a set of Instances
+
+Given a set of Instances (which includes the set of all the Instances),
+the analyst must be able to specify operations on the set.
+
+In some cases these may be predetermined (for example, determine the
+number of members of the set).
+
+In other cases the actual operation is analyst-specified. Variations to
+consider include:
+
+@itemize
+
+@item Perform a read-only operation on each member: for example, print
+all Policies.
+
+@item Update each member: for example, apply increment to terminal bonus.
+
+@item Delete each member: for example, delete expired Policies.
+
+@item Navigate from each member: for example, collect the Policy Holder's
+address details.
+
+@end itemize
+
+The above list is expressed as though the operation must apply to each
+set member. Clearly this isn't necessarily the case; however, it may
+often be cleaner to perform a more rigorous selection first and then
+apply the operation to all the members of the result set.
+
+
+
+@c========================================================================
+@node Associations, Inheritance relationships, Instances, Top
+@chapter Associations
+
+In some simple cases it may be possible to implement an association
+between instances of two classes (or two instances of the same class)
+without introducing a ``third party''. In most cases, though, a third
+party class will be necessary.
+
+For example, if it is (or may be) necessary to navigate the association
+in either direction, language rules may well prohibit the mutual
+visibility that would be necessary (Ada 95 doesn't permit this unless
+the ``with type'' feature is implemented).
+
+@menu
+* Create an association::       
+* Delete an association::       
+* Navigate an association::     
+@end menu
+
+@node Create an association, Delete an association, Associations, Associations
+@section Create an association
+
+Given two distinct instances (is that true? is it possible for an
+instance to be associated with itself?), the analyst can require that
+they be linked via an association. In some cases (eg, unconditional
+associations), instances must be associated. Ideally some form of model
+integrity check should be supported. This should include checks that no
+extant association involving either instance already exists.
+
+Normally it will be obvious which end is which; this won't be so for
+reflexive associations. It must be possible to specify which is which:
+the role names (phrases) may prove useful.
+
+The Software Architecture (@pxref{Software Architecture}) may support
+handles, in which case this operation may be expressed in terms of
+handles; if not, it will have to be in terms of Identifiers.
+
+@node Delete an association, Navigate an association, Create an association, Associations
+@section Delete an association
+
+Deleting an association between two Instances may require that one or
+both of the Instances be deleted, to maintain model integrity; this is
+left to the Analyst.
+
+The Software Architecture (@pxref{Software Architecture}) may support
+handles, in which case this operation may be expressed in terms of
+handles; if not, it will have to be in terms of Identifiers.
+
+@node Navigate an association,  , Delete an association, Associations
+@section Navigate an association
+
+Given an Instance or set of Instances, it must be possible to obtain the
+Instance or set of Instances linked via a particular Association.
+
+There is no special support required for chained navigations.
+
+If an association is conditional, it is necessary to support the concept
+of a null result (or empty result set).
+
+If an association is unconditional, a null result (or empty result set)
+indicates a failure of model integrity and should be unambiguously
+reported as such. The reporting mechanism must be controllable.
+
+
+@c========================================================================
+@node Inheritance relationships, Glossary, Associations, Top
+@chapter Inheritance relationships
+
+Following the Shlaer-Mellor rules, all parent classes in inheritance
+relationships are, in a sense, abstract: whenever an instance of the
+parent class exists, there exists precisely one related instance of one
+of the child classes.
+
+@menu
+* Create an inheritance::       
+* Delete an inheritance::       
+* Migrate an inheritance::      
+* Navigate an inheritance::     
+@end menu
+
+@node Create an inheritance, Delete an inheritance, Inheritance relationships, Inheritance relationships
+@section Create an inheritance
+
+Given a new instance each of parent and child classes, the analyst must
+require that they be linked via an inheritance relationship. Ideally
+some form of model integrity check should be supported. This should
+include checks that no extant relationship involving either instance
+already exists.
+
+The Software Architecture (@pxref{Software Architecture}) may support
+handles, in which case this operation may be expressed in terms of
+handles; if not, it will have to be in terms of Identifiers. Note that
+the Identifier of the child class is very likely to be identical to that
+of the parent.
+
+@node Delete an inheritance, Migrate an inheritance, Create an inheritance, Inheritance relationships
+@section Delete an inheritance
+
+Deleting an inheritance relationship between two Instances requires that
+both of the Instances be deleted, to maintain model integrity; this is
+left to the Analyst.
+
+The Software Architecture (@pxref{Software Architecture}) may support
+handles, in which case this operation may be expressed in terms of
+handles; if not, it will have to be in terms of Identifiers.
+
+@node Migrate an inheritance, Navigate an inheritance, Delete an inheritance, Inheritance relationships
+@section Migrate an inheritance
+
+Migrating an inheritance relationship between two Instances requires
+that the old child Instance be deleted, to maintain model integrity;
+this is left to the Analyst.
+
+The Software Architecture (@pxref{Software Architecture}) may support
+handles, in which case this operation may be expressed in terms of
+handles; if not, it will have to be in terms of Identifiers.
+
+@node Navigate an inheritance,  , Migrate an inheritance, Inheritance relationships
+@section Navigate an inheritance
+
+Given a parent Instance, it must be possible to navigate to the child,
+and vice versa.
+
+A null result indicates a failure of model integrity and should be
+unambiguously reported as such. The reporting mechanism must be
+controllable.
+
+
+
+@c========================================================================
+@node Glossary,  , Inheritance relationships, Top
+@chapter Glossary
+
+@menu
+* Identifier::                  
+* Software Architecture::       
+@end menu
+
+@node Identifier, Software Architecture, Glossary, Glossary
+@section Identifier
+
+Instances of a Class must be uniquely identifiable by some attribute or
+combination of attributes. For example, a Vehicle Excise Disk might be
+identified by the combination of Vehicle Index Mark and Validity Start
+Date. Vehicle Index Mark and Validity Start Date then become
+``identifying attributes'', whereas Date Of Issue and Period Of Validity
+are just common-or-garden attributes. A different analyst might make a
+different choice (Serial Number, for example) governed often by
+practical considerations such as whether they already exist.
+
+@node Software Architecture,  , Identifier, Glossary
+@section Software Architecture
+
+The Software Architecture, as considered here, has several components,
+but basically it comes down to how the analyst's model is implemented:
+
+@itemize
+
+@item The rules and policies which determine how analytical constructs
+such as Classes and Associations are mapped to code.
+
+@item The supporting components (typically generic) which provide the
+mechanisms to support the translated code.
+
+@item The language and operating system mechanisms which underpin the
+whole.
+
+@end itemize
+
+
+
+@bye

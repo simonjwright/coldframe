@@ -1,0 +1,267 @@
+<!-- $Id$ -->
+<head>
+<title>ColdFrame: Frequently Asked Questions</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Frequently Asked Questions</h1>
+
+<ol>
+
+<li><a href="#inheritance">What strange sort of inheritance is this?</a>
+
+<li><a href="#composition">Why doesn't ColdFrame support composition?</a>
+
+<li><a href="#aggregation">Why doesn't ColdFrame support aggregation?</a>
+
+<li><a href="#role-names">I don't understand about role names.</a>
+
+<li><a href="#unlink">Why do some <tt><i>Association</i>.Unlink</tt>
+operations do nothing?</a>
+
+<li><a href="#why-not-delete">.. so why can't I just call Delete?</a>
+
+<li><a href="#singleton-pause-until-init">How can I make an
+&#171;active&#187; &#171;singleton&#187;'s task wait until the domain
+is completely initialized?</a>
+
+<li><a href="#deleting-instances-with-pending-events">What happens if
+I delete an instance with an event pending?</a>
+
+</ol>
+
+<h2><a name="inheritance">What strange sort of inheritance is this?</a></h2>
+
+<p>The thinking behind ColdFrame is that you should be making analysis
+models rather than code models. <a
+href="resources.html#analysis-patterns">Martin Fowler</a> discusses
+this in his Appendix A.
+
+<p>One way of looking at it is that modelling ought to be, as far as
+reasonable, independent of the software architecture (both the
+implementation language and the support infrastructure). What we are
+modelling is generalization. We may be able to implement
+generalization using inheritance in our implementation language, but
+this can easily fall foul of practicalities; perhaps we have to
+implement in C; maybe we're using an SQL database to implement
+persistence; our implementation language may not support
+<em>multiple</em> inheritance.
+
+<p>Another aspect is dynamic versus static classification.
+
+<p>The major use of generalization (well, specialization) is to
+classify aspects of the subject matter. Inheritance, as implemented in
+C++ or other object-oriented programming languages, is fine for static
+classification (subtyping Animal as Pig, Goat, Cow for example).
+
+<p>However, a very useful analysis technique is dynamic
+classification. Rent-a-Wreck has a fleet of vans, which are sometimes
+on hire. We might want to model this as <i>Hirer hires Van</i>, which
+is biconditional (a known Hirer may not have any Van on hire at the
+moment; a Van may not be hired to anyone at the moment). The model can
+be made less vague by subtyping Van into Hired Van and Available Van;
+now all Hired Vans have a Hirer, so the code doesn't need to check
+whether there's a Hirer or not.
+
+<p>The problem with implementing this model using programming language
+inheritance arises when the Van changes from being Available to being
+Hired. There's only one code object, so you have to create a new
+<i>HiredVan</i>, copy the relevant attributes from the old
+<i>AvailableVan</i> to it, break any associations with other objects
+(for instance, the <i>ServiceHistory</i>), delete the old
+<i>AvailableVan</i> and remake the associations.
+
+<p>ColdFrame adopts a halfway-house approach to this, combining the <a
+href="resources.html#build-object-models">Executable UML (originally
+Shlaer-Mellor) view of generalization</a> with dispatching and
+inherited operations.
+
+<p>Of course, there is a cost to dynamic classification; you have to
+decide whether increased precision in the model is worth the extra run
+time costs of maintaining the model.
+
+<p>See also
+the <a href="http://en.wikipedia.org/wiki/State_pattern">State
+Pattern</a>.
+
+
+<h2><a name="composition">Why doesn't ColdFrame support composition?</a></h2>
+
+<p>ColdFrame does support composition, in that the &#171;type&#187;
+stereotype allows you to build types of arbitrary complexity and
+include attributes of these types in your classes.
+
+<p>If you have a <i>Circle</i> which is at a <i>Point</i>, create a
+&#171;type&#187; <i>Point</i> (presumably with attributes <i>x</i> and
+<i>y</i>, themselves of some appropriate type) and give the
+<i>Circle</i> an attribute <i>centre&nbsp;:&nbsp;Point</i>.
+
+<p>The thing to remember is that (almost by definition) these things
+are values not objects (that is, one <i>Point(3,&nbsp;4)</i> is
+indistinguishable from another), and you don't need to navigate from
+the <i>Point</i> to the <i>Circle</i>.
+
+<p>If you feel the need to contain all Rent-a-Wreck's <i>Van</i>s in a
+<i>Fleet</i> (singleton) class, so as to keep track of them all,
+resist it!  ColdFrame's implementation of <i>Van</i> includes a
+container which holds all the current <i>Van</i> instances, so you can
+get at them at any time.
+
+
+<h2><a name="aggregation">Why doesn't ColdFrame support aggregation?</a></h2>
+
+<p>It's not at all obvious what aggregation is for; it seems to add
+very little over a normal association.
+
+<p>If your intent is to classify in some way (perhaps you have a
+singleton <i>HiredVans</i> class, which aggregates all the <i>Van</i>s
+which are on hire), you'll almost certainly find that an existing
+association (between <i>Van</i> and <i>Hirer</i>) or specialization
+(of <i>HiredVan</i> from <i>Van</i>) will do the trick.
+
+<p>One clue here is the difficulty of providing strong role names for
+an aggregate association: <i>"contains"</i>, <i>"is in"</i> are fairly
+feeble.
+
+<p>Another indicator that this is happening is the need to name a
+class "List" (<i>Threat List</i>, for instance).
+
+
+<h2><a name="role-names">I don't understand about role names.</a></h2>
+
+<p>Role names in associations are very important, and should be verbs
+or verb phrases. Each end of the association must be named; the object
+of the verb phrase is the class at the same end as the name, the
+subject is the class at the other end. So, for example, you might have
+<em>Window "appears on" Screen</em>, <em>Screen "displays"
+Window</em>.
+
+<p><img src="window-screen.jpg">
+
+<p>Often the role names will be inverses of each other, but
+sometimes things really do seem different depending on where you're
+standing.
+
+<p>There are <a href="associations.html#use">notes on usage</a>.
+
+
+<h2><a name="unlink">Why do some <tt><i>Association</i>.Unlink</tt>
+operations do nothing?</a></h2>
+
+<p>Associations are implemented using pointers (handles) in one of the
+class instances involved in the association. Unlinking involves
+nulling out the handle variable.
+
+<p>ColdFrame doesn't enforce model integrity (at some future time, it
+may provide model validation checks), so it's left up to you to delete
+any instances you may need to. For instance, if every <i>Author</i>
+must "<i>have written</i>" at least one <i>Book</i> and you delete the
+last <i>Book</i> by a particular <i>Author</i>, you need to delete the
+<i>Author</i> too.
+
+<p>The <tt>Unlink</tt> operations that do nothing are those where the
+association concerned has an association class. In this case, the
+handle variable or variables concerned are in the association
+class. This has two consequences:
+
+<ul>
+
+<li>the variable(s) are immutable, because they're part of the
+association class's Identifier
+
+<li>deleting the association class instance, which you'd have to do to
+preserve model integrity, actually does all that's necessary to
+unlink.
+
+</ul>
+
+<p>It would have been possible for <tt>Unlink</tt> to <tt>Delete</tt>
+the association class instance directly, but that would rely on your
+having cleaned up any other associations between the association class
+and the rest of the model beforehand (or in a &#171;finalize&#187;
+operation; however, using &#171;finalize&#187; operations to maintain
+model integrity is an advanced practice!)
+
+
+<h2><a name="why-not-delete">.. so why can't I just call Delete?</a></h2>
+
+<p>At the moment, ColdFrame implements the minimum necessary to
+support navigation. For example, a one-to-many association is
+implemented by pointers from the <i>many</i> end to the <i>one</i>
+end.
+
+<p>This means that navigating from the <i>many</i> end to the
+<i>one</i> end is much quicker than navigating in the reverse
+direction.
+
+<p>At a later stage, it may become cleverer; it might add supporting
+tables of references to speed up navigation in what is now the
+unnatural direction (you might need to tell it to do
+so). <tt>Unlink</tt> would then do what was needed to keep those
+tables consistent.
+
+
+<h2><a name="singleton-pause-until-init">How can I make an
+&#171;active&#187; &#171;singleton&#187;'s task wait until the domain
+is completely initialized?</a></h2>
+
+<p>Use the boolean variable
+(<tt><i>Domain</i>.Domain_Initialized</tt>) that ColdFrame itself uses
+to ensure it only initializes a domain once:
+<pre>
+   while not Domain_Initialized loop
+      delay 0.1;
+   end loop;
+</pre>
+
+
+<h2><a name="deleting-instances-with-pending-events">What happens if
+I delete an instance with an event pending?</a></h2>
+
+<blockquote>
+<p>"I want to post an event to be handled at a specific time in the
+future. It is however possible that my application is stopped before
+that time and I have deleted the object which would handle it. I
+understand from the documentation that once an event is posted, it
+cannot be cancelled. <!-- For Emacs, a closing " -->
+<br>"Will there be a problem when I delete the object if there is an
+event outstanding? Will there be a problem when the event reaches the
+head of the event queue if the object has been deleted?"
+</blockquote>
+
+<p>When an instance is deleted, all its instance events (whether held
+until some later time or just in the queue to be actioned immediately)
+are invalidated, so that when their time arrives or they get to the
+head of the dispatcher queue they are deleted without being actioned.
+
+<p>If an instance has a Timer, any event <i>set</i> on that timer will
+similarly be discarded when the instance is deleted.
+
+<p>So instance deletion is a very good idiom for getting rid of
+left-over events. I've recently seen a lot of models where this isn't
+used&#150;for example, a Target modelled as a singleton rather than
+only existing when there actually <i>is</i> a target. This means it
+has to have an 'idle' state and great unnecessary complexity in its
+state machine&#150;for example, left-over events occurring in the idle
+state having to be marked &#171;ignore&#187;.
+
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

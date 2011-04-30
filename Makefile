@@ -37,7 +37,7 @@ else
 endif
 
 ifeq ($(DOMAIN_NAME), )
-  NORM_DOMAIN_NAME = 
+  NORM_DOMAIN_NAME =
 else
   NORM_DOMAIN_NAME = --domain-name "$(DOMAIN_NAME)"
 endif
@@ -249,12 +249,6 @@ PS2PDF = ps2pdf
 all:: html
 
 html:: use-cases.html coldframe-architecture.html
-
-# Architecture.raw is extracted from the Rose Architecture package
-# (coldframe-architecture.cat) using ddf.ebs
-coldframe-architecture.html: Architecture.raw generate-architecture-html.xsl
-	$(SAXON) \
-	    Architecture.raw generate-architecture-html.xsl >$@
 
 GIFS = States.gif States-Monitor.gif
 JPEGS = navigation.jpg window-screen.jpg

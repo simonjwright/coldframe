@@ -1,0 +1,78 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Documentation</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Documentation</h1>
+
+<h2>Introduction</h2>
+
+<p>ColdFrame can generate HTML-formatted documentation from your
+model.
+
+<p>At first sight this may seem unnecessary. However, there are at
+least three reasons why it may be helpful:
+
+<ul>
+
+<li>It shows what is actually present in the model. It's very easy to
+omit things from a diagram in the CASE tool, giving a misleading
+impression: for example, a forgotten transition on a state diagram.
+
+<li>It is in a more amenable format for comparison than typical model
+files. You can generate documentation for the model as it was and as
+it is now, and use Microsoft Word to compare the two documents for
+review.
+
+<li>It is hyperlinked.
+
+</ul>
+
+<h2>Installation</h2>
+
+<p>No special installation is needed, but diagram generation depends
+on <a href="http://www.graphviz.org">Graphviz</a>.
+
+<p>Normally you should have Graphviz's binary directory on your PATH:
+if not, set the environment variables <tt>DOT</tt> and <tt>CIRCO</tt>
+to the locations of <tt>dot</tt> and <tt>circo</tt> respectively.
+
+<h2>Use</h2>
+
+<p>Assuming you have created <tt>$COLDFRAMEOUT/<i>Domain</i>.raw</tt>
+from your model, either using the extractor or <i>cat2raw.py</i>,
+simply say
+<pre>
+   make <i>Domain</i>.html
+</pre>
+<p>or, if you don't want diagrams (easier to do comparisons, perhaps;
+or maybe you can't install Graphviz),
+<pre>
+   make <i>Domain</i>.html GENERATE_DIAGRAMS=no
+</pre>
+
+<p>Images will be created in the
+subdirectory <tt><i>Domain</i>.images/</tt>, which needs to be copied
+with <tt><i>Domain</i>.html</tt>.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

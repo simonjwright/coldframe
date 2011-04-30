@@ -1,0 +1,188 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Parent.Child"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"48C034710186"
+    documentation 	
+|This domain uses a type declaration from Parent.
+|
+|{ revision = $Revision$ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "User"
+	    quid       	"48C03509022F"
+	    stereotype 	"type"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "p"
+		    quid       	"48C03515036C"
+		    type       	"Parental"
+		    quidu      	"48C034D90366")
+		(object ClassAttribute "a"
+		    quid       	"48C03DC6022B"
+		    type       	"Alpha"
+		    quidu      	"48C03D1B0384")
+		(object ClassAttribute "o"
+		    quid       	"48C03DCD0019"
+		    type       	"Omega"
+		    quidu      	"48C03D9D0287")))
+	(object Class "Alpha"
+	    quid       	"48C03D1B0384"
+	    documentation 	"{ constrains = parental | upper b }"
+	    stereotype 	"type")
+	(object Class "Omega"
+	    quid       	"48C03D9D0287"
+	    documentation 	"{ constrains = parental | lower b }"
+	    stereotype 	"type"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"48C035040015"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Child Domains::Parent.Child::User" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(959, 462)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(828, 353)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"User")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(828, 303)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	262
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"48C03509022F"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(828, 414)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	4
+			max_width  	259)
+		    width      	280
+		    height     	342
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Child Domains::Parent.Child::Alpha" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(366, 278)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(275, 249)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"Alpha")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@2
+			location   	(275, 199)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"48C03D1B0384"
+		    width      	200
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Child Domains::Parent.Child::Omega" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(366, 700)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(275, 671)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"Omega")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@3
+			location   	(275, 621)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	182
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"48C03D9D0287"
+		    width      	200
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)))))

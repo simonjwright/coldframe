@@ -1,0 +1,28 @@
+--  Project file (GCC-3, GNAT-3.15) for ColdFrame performance tests.
+--  $Id$
+
+with "Options";
+with "BC";
+with "ColdFrame";
+
+project Performance is
+
+  for Main use ("performance-harness");
+
+  for Exec_Dir use ".";
+
+  for Source_Dirs use ("Performance.impl", "Performance.gen");
+
+  for Object_Dir use Options'Object_Dir & "/main";
+
+  package Ide renames Options.Ide;
+
+  package Builder renames Options.Builder;
+
+  package Compiler renames Options.Compiler;
+
+  package Binder renames Options.Binder;
+
+  package Linker renames Options.Linker;
+
+end Performance;

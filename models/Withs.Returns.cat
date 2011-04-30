@@ -1,0 +1,156 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Withs.Returns"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"441F972F00B0"
+    documentation 	
+|Domain for testing withing triggered by type operation returns.
+|{revision=$Id$}
+|
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Returns"
+	    quid       	"441F98970072"
+	    documentation 	"{null}"
+	    stereotype 	"type"
+	    operations 	(list Operations
+		(object Operation "cls"
+		    quid       	"441F98D1015B"
+		    result     	"C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "dte"
+		    quid       	"441F98DE02EB"
+		    result     	"Date"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Class "C"
+	    quid       	"441F98A60272"
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"441F98C0025B"
+		    stereotype 	"id"
+		    type       	"Autonumber"))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"441F989102D6"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Withs For Types::Withs.Returns::Returns" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(753, 265)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(634, 189)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	238
+			justify    	0
+			label      	"Returns")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(634, 144)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	238
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"441F98970072"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(634, 245)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	3
+			max_width  	235)
+		    width      	256
+		    height     	264
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Withs For Types::Withs.Returns::C" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(753, 653)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(529, 580)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	448
+			justify    	0
+			label      	"C")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"441F98A60272"
+		    compartment 	(object Compartment
+			Parent_View 	@2
+			location   	(529, 636)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	445)
+		    width      	466
+		    height     	168
+		    annotation 	8
+		    autoResize 	TRUE)))))

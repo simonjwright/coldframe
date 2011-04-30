@@ -1,0 +1,326 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Event use</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Event use</h1>
+
+<ul>
+<li><a href="#eventqueues">Event queues</a>
+<li><a href="#eventpriorities">Event priorities</a>
+<li><a href="#postinganevent">Posting an event</a>
+<li><a href="#locking">Locking</a>
+<li><a href="#activeclasses">Active classes</a>
+</ul>
+
+<h2><a name="eventqueues">Event queues</a></h2>
+
+<p>All code is executed in the context of some Ada task. There are
+three relevant kinds of task:
+
+<ul>
+
+<li>the environment task (the main program),
+
+<li>the task associated with an instance of an &#171;active&#187; class,
+
+<li>the <i>dispatcher</i> task associated with an event queue,
+
+</ul>
+
+<p>and you must make sure that a domain's data is manipulated in a way
+that's safe from concurrent access by more than one of these tasks.
+
+<p>A common pattern, which might be called <em>"access domain data
+from domain events"</em>, is shown in the sequence diagram below. In
+it, the only task which accesses a domain's data is the
+<i>dispatcher</i> task associated with its event queue.
+
+<p><img src="house-management-operation.png">
+
+<p>All code in the discussion below is from the House Management
+domain in the <tt>examples/</tt> subdirectory of the distribution.
+
+<p><em>Operation 1</em> occurs in the Digital IO domain, in the
+context of Digital IO's event queue.
+
+<p><em>Operation 1.1</em> is the callback of the registered operation
+<tt>Button.Changed</tt>, still in Digital IO's context. This creates a
+new <tt>Button Event</tt>, whose payload is the pushed button's name
+(<em>Operation 1.1.1</em>), and posts it onto House Management's event
+queue (<em>Operation 1.1.2</em>):
+<pre>
+   declare
+      E : constant ColdFrame.Project.Events.Event_P
+	:= new Button_Event;
+      P : Button_Name renames Button_Event (E.all).Payload;
+   begin
+      P := Buttons (S.S);
+      ColdFrame.Project.Events.Post (E, On => Events.Dispatcher);
+   end;
+</pre>
+
+<p><em>Operation 2</em> represents the firing of the <tt>Button
+Event</tt> when it reaches the head of the House Management event
+queue, in the House Management context. The generated <tt>Handler</tt>
+calls the &#171;handler&#187; operation <tt>Button.Pushed</tt>
+(<em>Operation 2.1</em>), which, instead of posting another event,
+creates a <tt>Button Push</tt> event for the Lamp concerned
+(<em>Operation 2.1.1</em>) on the stack and then invokes its generated
+<tt>Handler</tt> (<em>Operation 2.1.2</em>):
+<pre>
+   <a name="synchronous">procedure Button_Pushed</a> (L : Lamp.Handle) is
+      Ev : Lamp.Button_Push (For_The_Instance => L);
+   begin
+      Lamp.Handler (Ev);
+   end Button_Pushed;
+</pre>
+
+<p>The generated body of <tt>Lamp.Handler</tt> includes the code
+<pre>
+   case This.State_Machine_State is
+      when Idle =>
+	 This.Old_State_Machine_State := Idle;
+	 This.State_Machine_State := Lit;
+	 Turn_On (This);
+	 Set_Timeout (This);
+</pre>
+
+<p>which corresponds to <em>Operation 2.1.2.1</em> and <em>Operation
+2.1.2.2</em> and completes the processing.
+
+<h3>Limitations</h3>
+
+<p>This style of event processing, which could be called
+<i>synchronous</i>, is subject to one limitation: if an action needs
+to create an event <em>on the same instance of the same class</em>,
+the event must only be processed synchronously if
+
+<ul>
+
+<li> the action is the last in the state,
+
+<li> the synchronous processing is the last thing done by the action,
+and
+
+<li> there isn't a completion transition from the state.
+
+</ul>
+
+<p>Otherwise, the event <i>must</i> be posted rather than being processed
+synchronously.
+
+<p>Class event handlers can always process events synchronously.
+
+<p>There's no logical difference between the synchronous and posting
+styles; posting is more consistent, while synchronous is more
+efficient (it saves a memory allocation/freeing and a couple of
+context switches, perhaps 20 to 30 microseconds on a 1 GHz PowerPC
+under VxWorks).
+
+
+<h2><a name="eventpriorities">Event priorities</a></h2>
+
+<p>There are effectively four priority levels for events on any given
+event queue: from the lowest to the highest,
+
+<ol>
+<li>Class events,
+<li>Instance events,
+<li>Self events (instance events posted using <tt>Post_To_Self</tt>),
+<li>Synchronous events (events declared on the stack and handled
+immediately).
+</ol>
+
+<p>The priority affects which event is chosen to be processed
+next. Once chosen, events run to completion.
+
+<p><b>Class events</b> are to be used for transferring information
+into domains and possibly from a task in the domain to the rest of the
+domain (this may not be necessary). They should <em>not</em> be used
+within the domain; once inside, subprogram calls and instance events
+are the way to go.
+
+<p><b>Instance events</b> control state machines.
+
+<p><b>Self events</b> are instance events used where you don't want to
+leave the state until some condition is reached. If you are waiting
+for two resources to become available, you could have the arrival of a
+resource signalled by an event, and post a self event when you have
+enough:
+
+<p><img src="self-events.png">
+
+<p>Note that the reason for posting a self event is that it really
+denotes completion of the original action: you want it to be
+processed <em>before</em> any further instance events.
+
+<p><b>Synchronous events</b> are handled in the context of the
+caller. If called from a class event, there are no specific
+considerations; if from an instance event and the synchronous event is
+for 'self', make sure that the synchronous event handling is the last
+thing that is done (once the synchronous event has been handled, the
+state machine involved will have moved on).
+
+
+<h2><a name="postinganevent">Posting an event</a></h2>
+
+<p>The typical code for posting an event <tt>Ev</tt> is
+<pre>
+   ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+</pre>
+
+<p>Clearly <tt>Ev</tt> has to be created. If it's a class event of
+type <tt>Wait</tt> to class <i>Class</i>, this would be
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Wait;
+</pre>
+
+<p>whereas if it's an instance event, and we have a handle <tt>H</tt>,
+it would be
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Done (H);
+</pre>
+
+<p>If you need to set the payload, add a renaming:
+<pre>
+   Ev : constant ColdFrame.Project.Events.Event_P
+     := new Class.Info;
+   Payload : Message renames Class.Info (Ev.all).Payload;
+</pre>
+
+<p>where
+<ul>
+
+<li><tt>Ev.all</tt> is of type
+<tt>ColdFrame.Project.Events.Event_Base'Class</tt>,
+
+<li><tt>Class.Info (Ev.all)</tt> is a view conversion to
+<tt>Class.Info</tt>,
+
+<li>after which you can set up the payload before
+
+<li>posting the event.
+
+</ul>
+
+<p>In total,
+<pre>
+   declare
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Class.Info;
+      Payload : Message renames Class.Info (Ev.all).Payload;
+   begin
+      Payload := Some_Value;
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+   end;
+</pre>
+
+<p>... or you might prefer
+<pre>
+   declare
+      Ev : constant ColdFrame.Project.Events.Event_P
+        := new Class.Info;
+   begin
+      Class.Info (Ev.all).Payload := Some_Value;
+      ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
+   end;
+</pre>
+
+<p>Of course, if you don't need a payload, it's much simpler:
+<pre>
+   ColdFrame.Project.Events.Post (new Class.Done (H),
+                                  On => Events.Dispatcher);
+</pre>
+
+
+<h2><a name="locking">Locking</a></h2>
+
+<p>An earlier version of the <a
+href="event-modelling.html#example-model">example state model</a> was
+
+<p><img src="lamp-state-resetting.png">
+
+<p>If the task executing <a
+href="event-translation.html#is_on"><tt>Is_On</tt></a> isn't the same
+one as that executing the state machine, there is a possibility that
+<tt>Is_On</tt> may catch the instance in an intermediate state (in
+this case, the state <tt>Resetting</tt>). There are two approaches to
+this problem.
+
+<p>In the simpler, it's clear that <tt>Resetting</tt> is an
+intermediate state; the state machine bounces immediately back to
+<tt>On</tt> via a completion transition, so <tt>Is_On</tt> could be
+coded
+<pre>
+   function Is_On (This : Handle) return Boolean is
+   begin
+      return This.State_Machine_State = On
+               or else This.State_Machine_State = Resetting;
+   end Is_On;
+</pre>
+
+<p>If the simple approach isn't good enough, it's possible to
+<i>lock</i> the domain's event queue:
+<pre>
+   function Is_On (This : Handle) return Boolean is
+      L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
+      pragma Warnings (Off, L);
+   begin
+      return This.State_Machine_State = On;
+   end Is_On;
+</pre>
+
+<p>After the <tt>Lock</tt> <tt>L</tt> has been elaborated,
+ColdFrame guarantees that
+
+<ul>
+
+<li>there are no outstanding self events on <tt>Dispatcher</tt>
+
+<li>no further events will be dispatched by <tt>Dispatcher</tt> until
+<tt>L</tt> is destroyed (by going out of scope).
+
+</ul>
+
+<p>Note that there's no guarantee about the relative timing of events
+and locks; you could post an event and then take a lock, but the event
+may or may not have been handled when the lock is achieved.
+
+<h2><a name="activeclasses">Active classes</a></h2>
+
+<p>There's no reason why an active class can't have a state machine as
+well, though you have to be careful about concurrent access to
+instance variables (use <i>{volatile}</i>
+or <i>{atomic}</i>; <tt>State_Machine_State</tt> is automatically made
+atomic if the class is active) and about
+initialization, <a href="initialization.html#singleton">especially
+of <i>&#171;singleton&#187;</i>s</a>.
+
+<p>This idiom can be very useful to deal with interrupt handling. See
+<i>Interrupt_Handling</i> in the <tt>example/</tt> subdirectory of
+the distribution.
+
+<hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

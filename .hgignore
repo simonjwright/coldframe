@@ -1,0 +1,49 @@
+# .hgignore; files to be ignored when reporting status.
+
+syntax: glob
+
+# general
+*.ada *.ali
+*.bb *.bbg *.da *.gcov
+*.domains
+*.raw *.norm *.ada *.gen
+*.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
+*.pdf
+.build
+.DS_Store
+b~*.ad[bs]
+
+# models
+*.md~
+*.ca~
+
+# ply
+parser.out
+parsetab.py
+
+Makefile-cf Makefile-winnt Makefile-unix
+
+# distribution
+cf-[0-9]*
+dist
+extractor.ebs
+releases.html
+
+coldframe-combine_hash-test
+coldframe-project-events.ads-standard
+event_test-harness
+performance-harness
+regression_tests
+stairwell_demo stairwell_logging_demo
+test_bounded_storage_pools
+test_storage_pools
+
+# doc
+doc/Architecture.raw
+doc/Digital_IO.{html,images}
+doc/House_Management.{html,images}
+doc/Serialization.{html,images}
+doc/coldframe-architecture.html
+doc/self-events.png
+doc/use-cases.html
+

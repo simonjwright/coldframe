@@ -1,0 +1,964 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Problem_Reporting"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"380DB4F90226"
+    documentation 	
+|Classes for Problem Reporting.
+|
+|{ revision = $Revision$ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Problem Report"
+	    quid       	"380DB51C010E"
+	    documentation 	
+|A Problem Report is raised when a person believes that there is a problem with the software that is being managed ("the Software").
+|
+	    
+	    operations 	(list Operations
+		(object Operation "set details"
+		    quid       	"3C5471010177"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"3FB662710349"
+			    type       	"Text"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "set reporter"
+		    quid       	"3C54711000E2"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"3FB66271034B"
+			    type       	"Text"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get id"
+		    quid       	"3C5472110125"
+		    result     	"Integer"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get details"
+		    quid       	"3C547225013E"
+		    result     	"Text"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"38218C7801D5"
+		    documentation 	"An integer allocated uniquely to identify Problem Reports."
+		    stereotype 	"id"
+		    type       	"integer")
+		(object ClassAttribute "details"
+		    quid       	"38218C9301C9"
+		    documentation 	"The text of the Problem Report."
+		    type       	"Text")
+		(object ClassAttribute "reporter"
+		    quid       	"38218CA10364"
+		    documentation 	"The email address of the person who originally raised the Problem Report."
+		    type       	"Text"))
+	    cardinality 	(value Cardinality "0 .. 10100"))
+	(object Class "Rejected Problem Report"
+	    quid       	"380DB5330003"
+	    documentation 	"A Rejected Problem Report is one that has been evaluated not to be in fact an error in the Software."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"38EB4E8B0163"
+		    label      	"r1"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
+		    quidu      	"380DB51C010E"))
+	    operations 	(list Operations
+		(object Operation "set rejection reason"
+		    quid       	"3C54734E0055"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"3FB662710358"
+			    type       	"Summary String"
+			    quidu      	"3A58D120010F"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get rejection reason"
+		    quid       	"3C54735F01CF"
+		    result     	"Summary String"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0
+		    quidu      	"3A58D120010F"))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "rejection reason"
+		    quid       	"38218D1000B1"
+		    documentation 	"The Rejection Reason is a summary of the reason that the Problem Report has been rejected."
+		    type       	"Summary String"
+		    quidu      	"3A58D120010F")))
+	(object Class "Diagnosed Problem Report"
+	    quid       	"380DB54900AF"
+	    documentation 	"A Diagnosed Problem Report is a valid Problem Report that has been related to the erroneous Components via the associated Defect(s)."
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"38EB4E94007F"
+		    label      	"r1"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
+		    quidu      	"380DB51C010E")))
+	(object Class "Component"
+	    quid       	"380DB54F0248"
+	    documentation 	
+|A Component is an element of the Software. It may be code, documentation, test scripts, makefiles etc.
+|
+|Purely for demonstration purposes, the maximum number of Components is limited to 4.
+|
+|[[max: 4]]
+|
+	    
+	    operations 	(list Operations
+		(object Operation "get id"
+		    quid       	"3C5472AE03AC"
+		    result     	"Text"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "report"
+		    quid       	"3C457A2E03AC"
+		    documentation 	"Generate a report on the Component and each associated Defect (if any)."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "report all"
+		    quid       	"3C457AB7033E"
+		    documentation 	"Generate a report on all the Components."
+		    stereotype 	"class"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "clean"
+		    quid       	"3C45836601EB"
+		    documentation 	
+|Maintain referential integrity when the Component is deleted, by removing any associated Defects.
+|
+|Note that this will require deleting any of the associated Diagnosed Problem Reports that are left referring to no Defects (we'll migrate them to Unallocated Problem Reports).
+		    
+		    stereotype 	"finalize"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "id"
+		    quid       	"38218D68028E"
+		    documentation 	"Id is the name of the software Component. It uniquely identifies the Component."
+		    stereotype 	"id"
+		    type       	"Text")))
+	(object Class "Unallocated Problem Report"
+	    quid       	"380DB65C015E"
+	    documentation 	
+|An Unallocated Problem Report is awaiting determination of appropriate handling.
+|
+|If it's decided not in fact to be a problem, it will be rejected (see Rejected Problem Report).
+|
+|If it is really a problem, it will become a Diagnosed Problem Report.
+|
+|[[ abbreviation : UPR ]]
+|
+	    
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"38EB4E2603DE"
+		    label      	"r1"
+		    supplier   	"Logical View::Problem_Reporting::Problem Report"
+		    quidu      	"380DB51C010E")))
+	(object Class "Defect"
+	    quid       	"380F322C003E"
+	    documentation 	
+|A Defect denotes something that is wrong with a Component.
+|
+|It should be expressed at the logical level -- it's not intended to be an edit script, detailing the exact changes to be made.
+|
+|It should address one logical error (which may correspond to several necessary changes in the affected Component).
+	    
+	    operations 	(list Operations
+		(object Operation "set problem"
+		    quid       	"3C5472370175"
+		    parameters 	(list Parameters
+			(object Parameter "to"
+			    quid       	"3FB662710376"
+			    type       	"Text"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "get problem"
+		    quid       	"3C5472600047"
+		    result     	"Text"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "report"
+		    quid       	"3C457A6E0311"
+		    documentation 	"Report details of this Defect."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "problem"
+		    quid       	"38219D94007F"
+		    documentation 	"Contains a description of the Defect."
+		    type       	"Text")))
+	(object Class "Summary String"
+	    quid       	"3A58D120010F"
+	    documentation 	
+|A Summary String is used to hold brief statements.
+|
+|{string = max 80}
+|
+	    
+	    stereotype 	"type")
+	(object Class "Public"
+	    quid       	"3AB725190275"
+	    documentation 	"Provides the public interface to the Problem Reporting domain."
+	    stereotype 	"public"
+	    operations 	(list Operations
+		(object Operation "add component"
+		    quid       	"3AB514F700A6"
+		    documentation 	"Add a Component to the set of Components known to the System."
+		    parameters 	(list Parameters
+			(object Parameter "named"
+			    quid       	"3FB662710380"
+			    documentation 	"The name of the Component to be added."
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "add problem"
+		    quid       	"3AB5142E0375"
+		    documentation 	"Adds a Problem to the set of Problems known to the system. The Problem is initially Unallocated."
+		    parameters 	(list Parameters
+			(object Parameter "number"
+			    quid       	"3FB662710382"
+			    documentation 	"The identifying Number of the Problem_Report."
+			    type       	"Integer")
+			(object Parameter "reporter"
+			    quid       	"3FB662710383"
+			    documentation 	"The e-mail address of the person reporting the problem."
+			    type       	"String")
+			(object Parameter "details"
+			    quid       	"3FB662710384"
+			    documentation 	"A description of the problem."
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "delete component"
+		    quid       	"3ABA351700C6"
+		    documentation 	"Deletes the named Component."
+		    parameters 	(list Parameters
+			(object Parameter "component name"
+			    quid       	"3FB662710386"
+			    documentation 	"The identifying name of the Component to be deleted."
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "note defect"
+		    quid       	"3AB51584026D"
+		    documentation 	"A Defect has been discovered in the given Component, related to the given Problem Report."
+		    parameters 	(list Parameters
+			(object Parameter "problem number"
+			    quid       	"3FB662710388"
+			    documentation 	"The identifying Number of the Problem Report."
+			    type       	"Integer")
+			(object Parameter "component name"
+			    quid       	"3FB662710389"
+			    documentation 	"Thw identifying Name of the Component."
+			    type       	"String")
+			(object Parameter "description"
+			    quid       	"3FB66271038A"
+			    documentation 	"The particular defect in this Component that results in the given Problem Report."
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "reject problem"
+		    quid       	"3AB515350242"
+		    documentation 	"The indicated Problem has been determined not to be valid: reject it."
+		    parameters 	(list Parameters
+			(object Parameter "number"
+			    quid       	"3FB66271038F"
+			    documentation 	"The identifying Number of the Problem Report."
+			    type       	"Integer")
+			(object Parameter "reason"
+			    quid       	"3FB662710390"
+			    documentation 	"The reason for rejecting the Problem Report."
+			    type       	"String"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "report problems"
+		    quid       	"3AB515F401BA"
+		    documentation 	"Generate a report on each Component known to the system, detailing any related Problem Reports and the associated Defects."
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)))
+	(object Association "r100"
+	    quid       	"380DB95C0090"
+	    documentation 	
+|When a Problem Report has been determined to be related to one or more Components, it's said to have been Diagnosed.
+|
+|Every Diagnosed Problem Report is associated with at least one Component.
+|
+|A Component may be associated with one or more Diagnosed Problem Reports.
+|
+|The actual problem with the Component is held in the associated Defect.
+|
+|In the case that the diagnosis is that a new Component is needed (some additional documentation, for example) , the Component must be created before this relationship can be set up.
+	    
+	    roles      	(list role_list
+		(object Role "affects"
+		    quid       	"380DB95E0025"
+		    label      	"affects"
+		    supplier   	"Logical View::Problem_Reporting::Component"
+		    quidu      	"380DB54F0248"
+		    client_cardinality 	(value cardinality "1..n")
+		    is_navigable 	TRUE)
+		(object Role "is affected by"
+		    quid       	"380DB95E0039"
+		    label      	"is affected by"
+		    supplier   	"Logical View::Problem_Reporting::Diagnosed Problem Report"
+		    quidu      	"380DB54900AF"
+		    client_cardinality 	(value cardinality "0..n")
+		    is_navigable 	TRUE))
+	    AssociationClass 	"Logical View::Problem_Reporting::Defect"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"380DB51200B0"
+	    title      	"Main"
+	    documentation 	
+|Classes for Problem Reporting.
+|
+|{ revision = $Revision$ }
+	    
+	    zoom       	82
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	53
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Problem_Reporting::Rejected Problem Report" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(992, 1872)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(596, 1716)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	792
+			justify    	0
+			label      	"Rejected Problem Report")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380DB5330003"
+		    compartment 	(object Compartment
+			Parent_View 	@1
+			location   	(596, 1777)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	4
+			max_width  	789)
+		    width      	810
+		    height     	336
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Unallocated Problem Report" @2
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(352, 1552)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@2
+			location   	(173, 1476)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	358
+			justify    	0
+			label      	"Unallocated Problem Report")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380DB65C015E"
+		    width      	376
+		    height     	176
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Problem Report" @3
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(1024, 800)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@3
+			location   	(807, 569)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"Problem Report")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380DB51C010E"
+		    compartment 	(object Compartment
+			Parent_View 	@3
+			location   	(807, 630)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	8
+			max_width  	431)
+		    width      	452
+		    height     	486
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritTreeView "" @4
+		    location   	(1024, 1133)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    supplier   	@3
+		    vertices   	(list Points
+			(1024, 1133)
+			(1024, 1043)))
+		(object InheritView "r1" @5
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@5
+			location   	(527, 1298)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	60
+			justify    	0
+			label      	"r1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"38EB4E2603DE"
+		    client     	@2
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(527, 1463)
+		    terminal_attachment 	(527, 1133)
+		    drawSupplier 	@4)
+		(object InheritView "r1" @6
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@6
+			location   	(990, 1419)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"38EB4E8B0163"
+		    client     	@1
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(990, 1704)
+		    terminal_attachment 	(990, 1133)
+		    drawSupplier 	@4)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Diagnosed Problem Report" @7
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1472, 1408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@7
+			location   	(1293, 1332)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	358
+			justify    	0
+			label      	"Diagnosed Problem Report")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380DB54900AF"
+		    width      	376
+		    height     	176
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritView "r1" @8
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@8
+			location   	(1468, 1226)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"r1")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"38EB4E94007F"
+		    client     	@7
+		    supplier   	@3
+		    line_style 	3
+		    origin_attachment 	(1468, 1320)
+		    terminal_attachment 	(1468, 1133)
+		    drawSupplier 	@4)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Component" @9
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2576, 1408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@9
+			location   	(2359, 1227)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	434
+			justify    	0
+			label      	"Component")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380DB54F0248"
+		    compartment 	(object Compartment
+			Parent_View 	@9
+			location   	(2359, 1288)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	431)
+		    width      	452
+		    height     	386
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "r100" @10
+		    location   	(2004, 1408)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @11
+			Parent_View 	@10
+			location   	(1955, 1370)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	84
+			justify    	0
+			label      	"r100"
+			pctDist    	-0.333333
+			height     	39
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"380DB95C0090"
+		    roleview_list 	(list RoleViews
+			(object RoleView "is affected by" @12
+			    Parent_View 	@10
+			    location   	(-92, 640)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @13
+				Parent_View 	@12
+				location   	(1808, 1447)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	437
+				justify    	0
+				label      	"+is affected by"
+				pctDist    	0.571429
+				height     	39
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"380DB95E0039"
+			    client     	@10
+			    supplier   	@7
+			    line_style 	0
+			    label      	(object SegLabel @14
+				Parent_View 	@12
+				location   	(1731, 1366)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	92
+				justify    	0
+				label      	"0..n"
+				pctDist    	0.794118
+				height     	43
+				orientation 	1))
+			(object RoleView "affects" @15
+			    Parent_View 	@10
+			    location   	(-92, 640)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @16
+				Parent_View 	@15
+				location   	(2255, 1447)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	240
+				justify    	0
+				label      	"+affects"
+				pctDist    	0.727554
+				height     	39
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"380DB95E0025"
+			    client     	@10
+			    supplier   	@9
+			    line_style 	0
+			    label      	(object SegLabel @17
+				Parent_View 	@15
+				location   	(2257, 1366)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				anchor     	2
+				anchor_loc 	1
+				nlines     	1
+				max_width  	15
+				justify    	0
+				label      	"1..n"
+				pctDist    	0.735294
+				height     	43
+				orientation 	0))))
+		(object ClassView "Class" "Logical View::Problem_Reporting::Summary String" @18
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2544, 116)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@18
+			location   	(2438, 62)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	212
+			justify    	0
+			label      	"Summary String")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@18
+			location   	(2438, 12)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	212
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	8454143
+		    quidu      	"3A58D120010F"
+		    width      	230
+		    height     	232
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Defect" @19
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(2064, 1824)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@19
+			location   	(1842, 1668)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	444
+			justify    	0
+			label      	"Defect")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"380F322C003E"
+		    compartment 	(object Compartment
+			Parent_View 	@19
+			location   	(1842, 1729)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	5
+			max_width  	442)
+		    width      	462
+		    height     	336
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Problem_Reporting::Public" @20
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(864, 271)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@20
+			location   	(72, 87)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	1584
+			justify    	0
+			label      	"Public")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@20
+			location   	(72, 37)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	1584
+			justify    	0
+			label      	"<<public>>")
+		    icon_style 	"Label"
+		    line_color 	3342489
+		    fill_color 	8454016
+		    quidu      	"3AB725190275"
+		    compartment 	(object Compartment
+			Parent_View 	@20
+			location   	(72, 148)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	7
+			max_width  	1581)
+		    width      	1602
+		    height     	492
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object Label @21
+		    location   	(122, 2359)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    nlines     	1
+		    max_width  	1732
+		    label      	"$Id$")
+		(object AssocAttachView "" @22
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    client     	@19
+		    supplier   	@10
+		    line_style 	0)))))

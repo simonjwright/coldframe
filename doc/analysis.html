@@ -1,0 +1,156 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Analysis</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Analysis</h1>
+
+<p>People often think that the right place to start an analysis is in
+front of a computer running a UML modelling tool. This approach is
+tempting but wrong, for several reasons.
+
+<h2>Requirements and design</h2>
+
+<p>The first thing to do is to work out what the problem domain is and
+what the constraints (performance, safety, security, environment,
+legal etc) are. In an older (some would say, more mature) way of doing
+things, this would have been an appropriate time to produce
+an <a
+href="http://www.pogner.demon.co.uk/mil_498/srs-did.htm#scope">SRS</a>
+and
+an <a
+href="http://www.pogner.demon.co.uk/mil_498/sdd-did.htm#scope">SDD</a>. In
+the UML world, this need is possibly best met by using Use Cases or at
+least user stories, with at least two intended audiences:
+
+<ul>
+
+<li>The person, architect or systems engineer, who has to sign off on
+the proposed development and (later) remember how it fits into the
+greater scheme; and
+
+<li>The person who has to develop and (later) maintain the model.
+
+</ul>
+
+<p>However, remember that Use Cases only make up about 30% of a
+typical requirement statement.
+
+<h2>Analysis</h2>
+
+<p>Even when the requirements are clear, it's still not time to start
+drawing UML models on the computer. It usually takes several
+iterations before you have a model that begins to reflect the problem
+domain, and it's much cheaper to sketch it out, in pencil or (not so
+good) on a whiteboard. Modelling in a tool offers far too much
+opportunity to waste time by making a bad model look good, and also
+gives a spurious air of correctness which a pencil sketch in your
+notebook doesn't. Make notes! Especially, make notes on why a
+particular design
+<em>didn't</em> work! You might find that a Wiki- or blog-based
+approach works for this phase, provided it's acceptable in your
+workplace.
+
+<h2>Documentation</h2>
+
+<p>The modeller's job is to understand, and make clear to the reader,
+what each entity in the model means and why it is there. This will
+mean writing clear descriptions of the classes, the attributes, the
+associations and the roles.
+
+Unfortunately, documentation in the model probably won't be enough.
+The model is essentially flat, and the reader needs some guidance on
+how things fit together; some sort of roadmap. Internal use cases,
+possibly expressed in sequence diagrams, may help here, but it's a bad
+idea to insist on too high a level of detail too soon (for example,
+insisting on defining operations rather than messages).
+
+<h2>Good models</h2>
+
+<p>High-level languages such as Ada and C++ show the benefits of
+strong typing; it makes it easier to write code that 'does the right
+thing', if done properly, because it constrains the code that can be
+written so that many mistakes can be caught by compilers.
+
+<p>A crisp UML model offers similar benefits.
+
+<p>A good model is like a scientific hypothesis: it should be possible
+for it to be proved wrong. I could say that the identifier
+of <i>Car</i> was its licence plate number, which would be a
+reasonable first stab in the UK; but it turns out that you can swap
+licence plate numbers if you pay enough. Perhaps a Vehicle Index
+Number would do? well, yes, provided you don't care about cars made
+before VINs were invented. And not many people know their car's
+VIN. Our problem domain may allow the licence plate number after all;
+if you're running a car fleet you're not going to be changing the
+numberplates! (unless you have a limo and bought a special plate for
+it. I think <i>A1</i> is taken but you get the idea ...)
+
+<p>Vagueness is a bad thing in a model. If your project is a
+van-rental business, your customers borrow vans. At any time, each
+customer is borrowing zero or more vans.
+
+<p>What about the vans?  Clearly a van can only be on loan to one
+customer at a time; on the other hand, it may not be on loan at
+all. So we could try this ...
+
+<p><img src="vague-association.png">
+
+<p>... which is true but perhaps not as true as it could be. For
+example, if the van's on loan, we want to know when the loan
+terminates. This could be held in a <i>Van</i>
+attribute <i>loan termination</i> of type <i>Date</i>.
+
+<p>But what happens when the van isn't on loan? Now <i>loan
+termination</i> is meaningless. We could use an association class ...
+
+<p><img src="better-association.png">
+
+<p>... which gives us a logical place for a <i>termination</i>
+attribute. Note that although you must (in ColdFrame) have an
+association class for a many-to-many association, there's nothing to
+stop you having one for other kinds of association if that models the
+problem better.
+
+<p>Having the <i>Loan</i> class gives a place for a state model for
+the loan. It's likely to be fairly simple, unless there are
+complicated business rules about late loans and escalation -- but in
+that case you might be better off separating those concerns into
+another domain.
+
+<p>There's still a possible issue to be explored. The vans will need
+servicing, but clearly they can't be serviced if they're out with a
+customer. One way of dealing this is to use a specialization
+relationship ...
+
+<p><img src="inheritance.png">
+
+<p>... which retains the previous ability to have a <i>termination</i>
+attribute without any doubt as to whether it means anything at the
+moment and to have a state model for the loan (now on <i>Hired
+Van</i>). In addition, only <i>Pool Van</i>s can be sent off to be
+serviced.
+
+<p>This is of course more complicated; whether it's worth the trouble
+or not will depend on how complicated the application rules are.
+
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

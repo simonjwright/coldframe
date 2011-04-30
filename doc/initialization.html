@@ -1,0 +1,171 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Initialization</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body bgcolor="white">
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Initialization</h1>
+
+<p>ColdFrame initializes a domain when you call the
+operation <tt><i>Domain</i>.Initialize</tt>. This operation takes a
+single parameter, defaulted to <tt>null</tt>, that designates
+the <a href="event-use.html#eventqueues">event queue</a> to be used by
+the domain.
+
+<p>Only the first call to <tt>Initialize</tt> (after the program has
+been started or, if you're testing, after the domain has
+been <a href="domains.html#teardown">torn down</a>) has any effect. In
+particular, this
+supports <a href="domains.html#cascade-initialize">cascade
+initialization</a>.
+
+<h2>Sequence of actions</h2>
+
+<p>The domain is initialized by
+
+<ol>
+
+<li>initializing the domain's Event Queue (<tt>Dispatcher</tt>) with
+the supplied Event Queue, or (if it's <tt>null</tt>) by calling
+<tt><i>Domain</i>.Events.Initialize</tt>,
+
+<li>calling the domain initialization operation, if one was specified
+by <i>{init=package.operation}</i>,
+
+<li>initializing all class attributes with default values and creating
+all singletons,
+
+<li>and then calling all the
+<em>&#171;init&#187;</em> operations of all the classes.
+
+</ol>
+
+<p>Everything is done in alphabetical order by class and then by
+operation.
+
+<h2>Event queues</h2>
+
+<p>By default, standard event queues start running as soon as they're
+created, while test event queues don't. When building a large program,
+it's best to use one event queue for all the domains and not to let it
+start until you've finished initialization.
+
+<p>You can create an unstarted standard event queue in your main
+program (or AUnit setup) by:
+<pre>
+   Q : constant ColdFrame.Project.Events.Event_Queue_P
+     := new ColdFrame.Project.Events.Standard.Event_Queue_Base
+        (Start_Started => <font color="blue">False</font>,
+         Priority => System.Default_Priority,
+         Storage_Size => 20_000);
+</pre>
+
+<p>(<tt>constant</tt> because you don't alter the access value; you
+can set the priority if you want, though there's no obvious benefit to
+doing so; and you can alter the stack size of the task context within
+which all the state machine actions are executed from the default, but
+it may indicate a problem with your design if you need to).
+
+<p>After you've initialized all the domains with <tt>Q</tt>, start it
+by
+<pre>
+   ColdFrame.Project.Events.Start (Q);
+</pre>
+
+<h2>Domain initialization operation</h2>
+
+<p>The intended purpose of the domain initialization operation is to
+set up the environment expected by later initializations. At the point
+it's called, there are no instances of any class, including
+singletons.
+
+<h2><a name="singleton">&#171;Singleton&#187; classes</a></h2>
+
+<p>At the point where a singleton class instance is created,
+no <i>&#171;init&#187;</i> operations have been called. This means
+that the initial instances of other classes, and the associations
+between them, don't exist yet.
+
+<p>This will only matter if any of the singleton's code gets executed
+at this point; this can happen if the singleton has a state machine or
+is active. Or, of course, both, for added flavour.
+
+<h3>Singletons with state machines</h3>
+
+<p>If a state machine has a completion transition (one which doesn't
+need an event to trigger it) from its initial state, ColdFrame
+performs that transition synchronously during instance creation.
+
+<p>This results in the entry actions in the next state being called
+during creation (if there aren't any, why do you have the completion
+transition?).
+
+<p>This is always problematic, but especially so for a singleton since
+the rest of the domain doesn't exist yet. The canonical solution is
+not to use completion transitions from initial states; instead, use an
+actual event posted by class initialization (called <i>start</i>,
+perhaps).
+
+<h3>&#171;Active&#187; singletons</h3>
+
+<p>The task associated with an instance of an active class begins
+execution during instance creation. This is always likely to lead to
+difficulty, but it's especially so with singletons since the rest of
+the domain isn't initialized yet.
+
+<p>The standard solution for non-singleton tasks is to have an
+initial <i>&#171;entry&#187;</i>, again called <i>start</i>
+perhaps, called at an appropriate point (again, you can use an event
+posted by class initialization).
+
+<p>An alternative for singletons is to have the task loop (with a
+short delay, please!) until the variable <tt>Domain_Initialized</tt>
+becomes <tt>True</tt>:
+<pre>
+   begin
+      while not Domain_Initialized loop
+	 delay 0.01;
+      end loop;
+      ...
+</pre>
+
+<h2>Class initialization</h2>
+
+<p>Classes are initialized in alphabetical order.
+
+<p>If you have a class attribute which is an access type (maybe a
+counterpart), the language will initialize it at elaboration but it
+won't be automatically re-initialized
+after <a href="domains.html#teardown">teardown</a> unless you give a
+default value (<tt>= null</tt>) in the model.
+
+<p><a href="event-modelling.html#class-timers">Class <i>Timer</i>s</a>
+may not be reinitialized properly after teardown.
+
+<p>After class attributes have been initialized, any operations
+stereotyped <i>&#171;init&#187;</i> are called, again in alphabetical
+order within the class.
+
+This ordering means that, for most purposes, you'll probably only want
+to have one <i>&#171;init&#187;</i> operation in the domain.
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

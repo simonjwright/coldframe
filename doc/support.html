@@ -1,0 +1,402 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Specially written support components</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Specially written support components</h1>
+
+<ul>
+
+<li><a href="#library">Library components</a>
+
+<li><a href="#project">Supplied <i>Project</i> components</a>
+
+<li><a href="#signatures">Signature packages</a>
+
+<li><a href="#extras">Additional components, offered in the hope they
+may be useful</a>
+
+</ul>
+
+<h2><a name="library">Library components</a></h2>
+
+<p>Specially written support components appear under the top-level
+package <tt>ColdFrame</tt>. The more user-interesting ones are
+
+<dl>
+
+<dt><tt>ColdFrame.Bounded_Storage_Pools</tt>
+
+<dd>Used in place of the <tt>'Storage_Size</tt> attribute for access
+types; it provides the mutual exclusion omitted from GNAT up to
+3.16a1, and fills allocated memory with improbable data
+(<tt>16#deadbeef#</tt> when viewed in the debugger).
+<br>Freed memory is refilled with <tt>16#dead#</tt> (the Ada runtime
+overwrites the first few bytes for internal purposes).
+
+<p><dt><tt>ColdFrame.Unbounded_Storage_Pools</tt>
+
+<dd>Provides a storage pool which uses the standard system memory
+allocator but fills allocated memory with improbable data
+(<tt>16#deadbeef#</tt> when viewed in the debugger).
+<br>Freed memory is refilled with <tt>16#deaddead#</tt>.
+
+<p><dt><tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>
+
+<dd>Like <tt>ColdFrame.Unbounded_Storage_Pools</tt> but keeps track of
+allocations and deallocations, keying on the call chain. A report can
+be produced at any time; the net total of allocated memory is
+monitored, and if a trigger point (specified
+via <tt>ColdFrame.Project.Limits</tt>) is passed a report is produced
+in the file <tt>debug_storage_pool.csv</tt>.
+
+<p><dt><tt>ColdFrame.Callbacks</tt>
+
+<dd>Provides callback (Observer) support.
+
+<p><dt><tt>ColdFrame.Events_G</tt>
+
+<dd>Standard support for <a href="events.html">Events</a>. This is a
+basic generic event management specification; the time aspects are
+provided using <tt>ColdFrame.Time_Signature</tt>.
+
+<br>Logging expects <tt>ColdFrame.Project.Log_Error</tt>
+and <tt>ColdFrame.Project.Log_Info</tt>.
+
+<br>Events are based on an abstract <i>basis</i> type; the "no-frills"
+version is in <tt>ColdFrame.Events_Basis</tt>, while the version in
+<tt>ColdFrame.Logging_Events_Basis</tt> captures statistics on the
+time for which events are queued and on the time taken to handle each
+event.
+
+<br>Child packages are
+
+<p><dl>
+
+<dt><tt>ColdFrame.Events_G.Creation_G</tt>
+
+<dd>Provides a "creation" event type, for use where there's no
+application event to cause transition from the initial state.
+
+<p><dt><tt>ColdFrame.Events_G.Standard_G</tt>
+
+<dd>A straightforward event queueing and dispatching service.
+
+<p><dt><tt>ColdFrame.Events_G.Test_G</tt>
+
+<dd>Adds unit test support to a concrete
+<tt>ColdFrame.Events_G.Event_Queue</tt>. The additional features are
+
+<ul>
+
+<li>inspection of Timers; is a time set, when would it expire?
+
+<li>the event queue doesn't start until told.
+
+</ul>
+
+<p><dt><tt>ColdFrame.Events_G.Trace_G</tt>
+
+<dd>Adds logging (via <tt>ColdFrame.Project.Logging_Support</tt>) to a
+concrete <tt>ColdFrame.Events_G.Event_Queue</tt>.
+
+</dl>
+
+<p><dt><tt>ColdFrame.Exceptions</tt>
+
+<dd>Provides exceptions.
+
+<p><dl>
+
+<dt><tt>ColdFrame.Exceptions.Message</tt>
+
+<dd>Provides exception reporting (to standard output).
+
+<p><dt><tt>ColdFrame.Exceptions.Symbolic_Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks. To
+use it (only in host-is-target environments; won't work in VxWorks),
+you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+<p><dt><tt>ColdFrame.Exceptions.Traceback</tt>
+
+<dd>Enables GNAT's exception traceback facility, which is set up to
+report unhandled exceptions both in the main program and in tasks.
+
+<br>This version produces the traceback in hexadecimal form; use
+<tt>addr2line</tt> to convert to a readable form.
+
+<br>To use it, you must
+
+<ol>
+<li><tt>with</tt> this package,
+<li>give the switch <tt>-E</tt> to the binder.
+</ol>
+
+</dl>
+
+<p><dt><tt>ColdFrame.Hash</tt>
+
+<dd>A family of hash functions, suitable for use as hashes (or part of
+hashes) for instantiating <a href="use-of-bcs.html">Booch Map
+containers</a>.
+
+<p><dl>
+
+<dt><tt>ColdFrame.Hash.Access_Hash</tt>
+
+<dd>A hash function for access values (useful for associative classes).
+
+<p><dt><tt>ColdFrame.Hash.Instance_Access_Hash</tt>
+
+<dd>A hash function for access-to-instance values (useful for child
+classes).
+
+<p><dt><tt>ColdFrame.Hash.Strings</tt>
+
+<dd>A family of hash functions for strings.
+
+<p><dl>
+
+<dt><tt>ColdFrame.Hash.Strings.Bounded</tt>
+
+<dd>A hash function for Bounded Strings.
+
+<p><dt><tt>ColdFrame.Hash.Strings.Standard</tt>
+
+<dd>A hash function for standard Strings.
+
+<p><dt><tt>ColdFrame.Hash.Strings.Unbounded</tt>
+
+<dd>A hash function for Unbounded Strings.
+
+</dl>
+
+</dl>
+
+<p><dt><tt>ColdFrame.Instances</tt>
+
+<dd>Provides a type from which all Instances are derived.
+
+<br>The purpose is to allow mutual visibility (to support associations
+and inheritance relationships) without using non-standard extensions
+such as <i>WITH TYPE</i>.
+
+<p><dt><tt>ColdFrame.Interrupts</tt>
+
+<dd>Provides support for (simple) interrupt handling.
+
+<p><dt><tt>ColdFrame.Task_Deletion_G</tt>
+
+<dd>Provides a facility for deleting the task associated with an
+active instance when it has in fact terminated.
+
+</dl>
+
+<h2><a name="project">Supplied <i>Project</i> components</a></h2>
+
+<p>For some purposes, ColdFrame generates code expecting certain
+services to be provided by specific packages (under
+<tt>ColdFrame.Project</tt>), where you would probably prefer to be
+able to provide your own version.
+
+<p>In these cases, sample implementations are provided. The support
+code above is distributed in the directory
+<tt>cf-<i>yyyymmdd</i>/lib</tt>, while the sample project code below
+is under <tt>cf-<i>yyyymmdd</i>/project</tt>.
+
+<dl>
+
+<dt><tt>ColdFrame.Project.Calendar</tt>
+
+<dd><tt>ColdFrame.Project.Calendar.Time</tt> is used as the
+translation for <i>Date</i>, <i>Time</i> attributes.
+
+<br>The provided default contains renamings of
+<tt>Ada.Calendar.Time</tt> and <tt>Ada.Calendar.Clock</tt>, and an
+<tt>Image</tt> function used in serialization support.
+
+<p><dt><tt>ColdFrame.Project.Events</tt>
+
+<dd>A standard instantiation of <tt>ColdFrame.Events_G</tt>, with
+event basis from <tt>ColdFrame.Project.Event_Basis</tt>, time support
+from <tt>ColdFrame.Project.Times</tt>, logging from
+<tt>ColdFrame.Project.Logging_Support</tt>, and storage from
+<tt>ColdFrame.Project.Storage_Pools</tt>.
+
+<br>The <tt>project</tt> subdirectory of the distribution contains
+<ul>
+
+<li>the standard instantiation
+
+<li>a copy of the standard instantiation, in
+<tt>coldframe-project-events.ads-standard</tt>
+
+<li>an instantiation using <tt>ColdFrame.Logging_Event_Basis</tt>, in
+<tt>coldframe-project-events.ads-logging</tt>
+
+</ul>
+
+Six concrete instantiations are provided:
+
+<p><dl>
+
+<dt><tt>ColdFrame.Project.Events.Standard</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Standard_G</tt>, with held events from
+<tt>ColdFrame.Project.Held_Event_Support</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Standard.Test</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Standard.Trace</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Trace_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Standard.Test_Trace</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Standard.Trace</tt> (ie, a Test queue,
+which prints what's going on)..
+
+<p><dt><tt>ColdFrame.Project.Events.Monitoring</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Monitoring_G</tt>, with held events from
+<tt>ColdFrame.Project.Held_Event_Support</tt>.
+
+<p><dt><tt>ColdFrame.Project.Events.Monitoring.Test</tt>
+
+<dd>A monitoring instantiation of
+<tt>ColdFrame.Events_G.Test_G</tt>, based on
+<tt>ColdFrame.Project.Events.Monitoring</tt>.
+
+</dl>
+
+<p><dt><tt>ColdFrame.Project.Events.Creation</tt>
+
+<dd>A standard instantiation of
+<tt>ColdFrame.Events_G.Creation_G</tt>.
+
+<p><dt><tt>ColdFrame.Project.High_Resolution_Time</tt>
+
+<dd>Provides high resolution time measurement; used by
+<tt>ColdFrame.Logging_Event_Basis</tt>.
+
+<p><dt><tt>ColdFrame.Project.Log_Error, Log_Info</tt>
+
+<dd>Report error/informational messages, using
+<tt>ColdFrame.Project.Logging_Support</tt>.
+
+<p><dt><tt>ColdFrame.Project.Serialization</tt>
+
+<dd>Provides support for <i><a
+href="serialization-page.html">serializable</a></i> types; an instantiation of
+<tt>ColdFrame.Serialization_Signature</tt>
+using <tt>ColdFrame.Serialization</tt>,
+
+<p><dt><tt>ColdFrame.Project.Storage_Pools</tt>
+
+<dd>Provides a Bounded_Pool type and an Unbounded_Pool type and
+instance. The Bounded type is used for allocating instances of classes
+whose maximum extent is known, while the Unbounded type is used for
+all other allocations.
+
+<br>The supplied version accesses
+<tt>ColdFrame.Bounded_Storage_Pools</tt>,
+<tt>ColdFrame.Unbounded_Storage_Pools</tt>.
+
+<br>You may find <tt>GNAT.Debug_Pools</tt>
+and/or <tt>ColdFrame.Unbounded_Debug_Storage_Pools</tt>useful.
+
+<p><dt><tt>ColdFrame.Project.Task_Deletion</tt>
+
+<dd>Generated instantiations of <tt>ColdFrame.Task_Deletion_G</tt> use
+ths for the actual task deletion. As supplied, this is done
+at <tt>System.Default_Priority - 1</tt>.
+
+</dl>
+
+<h2><a name="signatures">Signature packages</a></h2>
+
+<p>To help make sure that the packages you supply provide all the
+facilities needed, there are <a
+href="http://www.adapower.com/rationale/rat95-p2-12.html">signature
+packages</a>:
+
+<dl>
+
+<dt><tt>ColdFrame.Project.Events.Held_Event_Queue_Signature</tt>
+
+<dd>Specifies how "held events" (events posted to fire at some later
+time) are stored.
+
+<p><dt><tt>ColdFrame.Serialization_Signature</tt>
+
+<dd>Specifies any user-defined extension to the serializable base
+type.
+
+<p><dt><tt>ColdFrame.Time_Signature</tt>
+
+<dd>Specifies how time behaves.
+
+</dl>
+
+<h2><a name="extras">Extras</a></h2>
+
+<p>Additional packages are provided in the hope they will prove
+useful. They will be found in the distribution in the directory
+<tt>cf-<i>yyyymmdd</i>/extras</tt>.
+
+<p>Part of the reason for separating these components out is that they
+may require packages beside the standard ones expected by ColdFrame
+(basically, the <a href="resources.html#booch-components">Booch
+Components</a>), and it can be difficult to organize your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project files</a> if these files are included in the standard
+ColdFrame directory.
+
+<dl>
+
+<dt><tt>ColdFrame.Logging_Event_Basis.EWS_Support</tt>
+
+<dd>Provides support for generating web pages to report on event
+processing statistics, in an embedded web server based on <a
+href="http://sourceforge.net/projects/embed-web-srvr/">EWS</a>.
+
+</dl>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

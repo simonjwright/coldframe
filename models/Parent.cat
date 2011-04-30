@@ -1,0 +1,71 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Parent"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"48C0345D03CC"
+    documentation 	
+|This domain contains a type declaration, which will be used by Parent.Child.
+|
+|{ revision = $Revision$ }
+    
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "Parental"
+	    quid       	"48C034D90366"
+	    documentation 	"{ enumeration = a | b | c }"
+	    stereotype 	"type"))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"48C034D6023F"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Child Domains::Parent::Parental" @1
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    ShowOperationSignature 	TRUE
+		    location   	(738, 391)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@1
+			location   	(644, 362)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	188
+			justify    	0
+			label      	"Parental")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@1
+			location   	(644, 312)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	188
+			justify    	0
+			label      	"<<type>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	16777088
+		    quidu      	"48C034D90366"
+		    width      	206
+		    height     	182
+		    annotation 	8
+		    autoResize 	TRUE)))))

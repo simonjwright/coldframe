@@ -1,0 +1,133 @@
+<!-- $Id$ -->
+<html>
+<head>
+<title>ColdFrame: Use</title>
+<link href="cf.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div id="header">
+<a
+href="http://sourceforge.net"><img
+src="http://sourceforge.net/sflogo.php?group_id=135558&amp;type=1"
+width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<h1>ColdFrame: Use</h1>
+
+<p>First, <a href="installation.html">install ColdFrame and supporting
+tools, and set up your environment variables</a>.
+
+<p>To recap, the environment variables expected by the base ColdFrame
+and GNAT (your project may have a different setup) are
+
+<p><table border="1">
+
+<tr><td><tt>ADA_PROJECT_PATH</tt><td>Where your <a
+href="http://gcc.gnu.org/onlinedocs/gnat_ug_unx/GNAT-Project-Manager.html#GNAT%20Project%20Manager">GNAT
+Project</a> <tt>.gpr</tt> files are.
+
+<tr><td><tt>AUNIT</tt><td>Directory name for AUnit
+
+<tr><td><tt>BC</tt><td>Directory name for the Booch Components
+
+<tr><td><tt>BUILD_BASE</tt><td>Where your Ada library files
+(<tt>.ali</tt>, <tt>.o</tt>) go
+
+<tr><td><tt>COLDFRAME</tt><td>Directory name for ColdFrame
+
+<tr><td><tt>COLDFRAMEOUT</tt><td>Where the extractor script places
+output from Rose
+
+<tr><td><tt>TOP</tt><td>The directory where the software is installed
+
+</table>
+
+<p>After you've <a href="preparation.html">prepared your model in
+Rose</a> and <a href="extraction.html">extracted it</a>, you can
+proceed to <a href="generation.html">generate your code</a>.
+
+<p>The distribution's <tt>examples/</tt> directory contains, amongst
+other models, a <i>House Management</i> example.
+
+<p>This example (a first release of an electronic house management
+system, anachronistically shown using an <a
+href="house-2.gif">image</a> of <a
+href="http://www.michigan.gov/hal/0,1607,7-160-17445_19273_19313---,00.html">Lansing's
+Castle</a>), consists of two <i><a
+href="house-digital-io.png">domains</a></i>, <a
+href="house-management.png">House Management</a> and <a
+href="digital-io.png">Digital IO</a>. The models have been converted
+to HTML <a href="House_Management.html">here</a> and <a
+href="Digital_IO.html">here</a>, and you can see the <a
+href="lamp-state.png">Lamp statechart</a>.
+
+<p>The model domains consist of the Rose <tt>.cat</tt> files and the
+code implementation directories, <tt>House_Management.impl/</tt> and
+<tt>Digital_IO.impl/</tt>.
+
+<p>If you have Rose, open the model (Examples.mdl), select the two
+domains, and extract (under the <i>Addins</i> menu, if the
+installation worked right). If not, pre-extracted (<tt>.raw</tt>)
+files are also supplied in the distribution's <tt>example/</tt>
+directory.
+
+<p>Now generate the House Management code (on Windows use
+<tt>Makefile-demo-winnt</tt>):
+<pre>
+   $ make -f Makefile-demo-unix House_Management.gen
+   <font color="green">generating House_Management.norm ...
+   generating House_Management.ada ...
+   generating House_Management.gen ...</font>
+       <font color="blue">removing House_Management.gen/house_management-button-changed.adb
+       removing House_Management.gen/house_management-button-pushed.adb
+       removing House_Management.gen/house_management-events-initialize.adb
+       removing House_Management.gen/house_management-lamp-button_pushed.adb
+       removing House_Management.gen/house_management-lamp-clear_timeout.adb
+       removing House_Management.gen/house_management-lamp-initialize.adb
+       removing House_Management.gen/house_management-lamp-set_timeout.adb
+       removing House_Management.gen/house_management-lamp-turn_off.adb
+       removing House_Management.gen/house_management-lamp-turn_on.adb</font>
+     <font color="red">extra source file stairwell_demo.adb in .impl</font>
+   <font color="green">checking for unimplemented bodies ...
+   ... none.
+   rm House_Management.norm House_Management.ada</font>
+</pre>
+
+<p>The <font color="blue">removed</font> files correspond to
+operations that have been implemented (in
+<tt>House_Management.impl/</tt>). In this case, the <font
+color="red">extra</font> file is the demonstration's main
+program. There were no unimplemented operation bodies.
+
+<p>Similarly, generate the Digital IO code. The <tt>COLDFRAMEOUT</tt>
+setting is what you need to do if you don't have Rose, and are relying
+on the pre-extracted <tt>.raw</tt> files:
+<pre>
+   $ make -f Makefile-demo-unix COLDFRAMEOUT=. Digital_IO.gen
+   <font color="green">generating Digital_IO.norm ...
+   generating Digital_IO.ada ...
+   generating Digital_IO.gen ...</font>
+       <font color="blue">removing Digital_IO.gen/digital_io-application-set_output.adb
+       removing Digital_IO.gen/digital_io-hci-get_state.adb
+       removing Digital_IO.gen/digital_io-hci-set_input.adb
+       removing Digital_IO.gen/digital_io-input-changed.adb
+       removing Digital_IO.gen/digital_io-output-changed.adb
+       removing Digital_IO.gen/digital_io-signal-initialize.adb
+       removing Digital_IO.gen/digital_io-signal-set_state.adb</font>
+   <font color="green">checking for unimplemented bodies ...
+   ... none.
+   rm Digital_IO.norm Digital_IO.ada</font>
+</pre>
+
+<p><hr>
+<i>
+<address>
+<a href="mailto:simon@pushface.org">Simon Wright</a>
+</address>
+<script>
+document.write("Last update: ");
+document.write(document.lastModified);
+</script>
+</i></body>
+</html>

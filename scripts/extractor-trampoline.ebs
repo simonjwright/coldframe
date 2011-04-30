@@ -1,0 +1,62 @@
+'-------------------------------------------------------------------------------
+'extractor-trampoline.ebs
+'$Id$
+'
+' This script arranges to call ColdFrame's extractor.ebs script
+' using environment variables to determine where the appropriate
+' version is to be found.
+'
+' It should be in Rose's script path (the default is
+' C:\Program Files\Rational\Rose).
+'
+' TOP names the drive on which ColdFrame is installed; the default
+' is "C:".
+' COLDFRAME names the directory path from TOP; for example,
+' "cf-20020921".
+'
+' If COLDFRAME is defined, this script invokes
+' $TOP\$COLDFRAME\extractor.ebs; otherwise, just extractor.ebs.
+'
+' Copyright (C) Simon Wright <simon@pushface.org>
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2, or (at your option)
+' any later version.
+' 
+' This program is distributed in the hope that it will be useful, but
+' WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+' General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+' USA.
+'
+'-------------------------------------------------------------------------------
+
+Sub Main
+
+	'Viewport.Open
+	
+	Dim top As String
+	Dim extractor As String
+
+	If Len(Environ("TOP")) > 0 Then
+		top = Environ("TOP")
+	Else
+		top = "C:"
+	End If
+
+	If Len(Environ("COLDFRAME")) > 0 Then
+		extractor = top & "\" & Environ("COLDFRAME") & "\" & "extractor.ebs"
+	Else
+		extractor = "extractor.ebs"
+	End If
+
+	Print "extractor: " & extractor
+
+	RoseApp.ExecuteScript extractor
+		
+End Sub
