@@ -12,12 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
 
 package Hierarchies.Test_Finds is
@@ -26,7 +20,7 @@ package Hierarchies.Test_Finds is
 
    procedure Register_Tests (T : in out Test_Case);
 
-   function Name (T : Test_Case) return String_Access;
+   function Name (T : Test_Case) return AUnit.Message_String;
 
    procedure Set_Up (T : in out Test_Case);
 

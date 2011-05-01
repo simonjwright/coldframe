@@ -1,12 +1,7 @@
---  $Id$
---
 --  Regression tests for ColdFrame.
 
-with AUnit.Assertions; use AUnit.Assertions;
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
 with Ada.Calendar;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Text_IO; use Ada.Text_IO;
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
@@ -47,14 +42,14 @@ package body Regressions.Suite is
 
    --  Check that protected type operations can be <<access>
    OOPT : Access_Operation_Of_Protected_Type;
-   pragma Warnings (Off, OOPT);
+   pragma Unreferenced (OOPT);
 
 
    package Find_Active_Tests is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -64,7 +59,6 @@ package body Regressions.Suite is
 
       procedure Can_Find (C : in out Test_Case'Class);
       procedure Can_Find (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Created : constant Find_Active.Handle
            := Find_Active.Create ((Id => True));
          Found : Find_Active.Handle;
@@ -72,11 +66,13 @@ package body Regressions.Suite is
       begin
          select
             delay 0.5;
-            Assert (False,
+            Assert (C,
+                    False,
                     "hang during Find");
          then abort
             Found := Find_Active.Find ((Id => True));
-            Assert (Found = Created,
+            Assert (C,
+                    Found = Created,
                     "didn't find the created instance");
             return;
          end select;
@@ -84,20 +80,21 @@ package body Regressions.Suite is
 
       procedure Cant_Find (C : in out Test_Case'Class);
       procedure Cant_Find (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Created : constant Find_Active.Handle
            := Find_Active.Create ((Id => True));
-         pragma Warnings (Off, Created);
+         pragma Unreferenced (Created);
          Found : Find_Active.Handle;
          use type Find_Active.Handle;
       begin
          select
             delay 0.5;
-            Assert (False,
+            Assert (C,
+                    False,
                     "hang during Find");
          then abort
             Found := Find_Active.Find ((Id => False));
-            Assert (Found = null,
+            Assert (C,
+                    Found = null,
                     "found the uncreated instance");
             return;
          end select;
@@ -105,52 +102,53 @@ package body Regressions.Suite is
 
       procedure Find_Singleton (C : in out Test_Case'Class);
       procedure Find_Singleton (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Found : Find_Active_Singleton.Handle;
          use type Find_Active_Singleton.Handle;
       begin
          select
             delay 0.5;
-            Assert (False,
+            Assert (C,
+                    False,
                     "hang during Find");
          then abort
             Found := Find_Active_Singleton.Find;
-            Assert (Found /= null,
+            Assert (C,
+                    Found /= null,
                     "didn't find the instance");
             return;
          end select;
       end Find_Singleton;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Find_Active_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Can_Find'Access,
             "can find an instance without hanging");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Cant_Find'Access,
             "can fail to find a non-existent instance without hanging");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Find_Singleton'Access,
             "can find a singleton instance without hanging");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize;
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -162,7 +160,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -175,7 +173,6 @@ package body Regressions.Suite is
 
       procedure Enum (C : in out Test_Case'Class);
       procedure Enum (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.Enum"">" & ASCII.LF
            & "<field name=""Enum"">B</field>" & ASCII.LF
@@ -186,13 +183,13 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "expecting '" & Expected & "', got '" & Image & "'");
       end Enum;
 
       procedure Enum_Array (C : in out Test_Case'Class);
       procedure Enum_Array (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.Enum_Array"">" & ASCII.LF
            & "<field name=""Enum_Array.FALSE"">A</field>" & ASCII.LF
@@ -204,13 +201,13 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "got '" & Image & "', expecting '" & Expected & "'");
       end Enum_Array;
 
       procedure S_Record (C : in out Test_Case'Class);
       procedure S_Record (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.S_Record"">" & ASCII.LF
            & "<field name=""I""> 42</field>" & ASCII.LF
@@ -226,13 +223,13 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "expecting '" & Expected & "', got '" & Image & "'");
       end S_Record;
 
       procedure S_Record_Array (C : in out Test_Case'Class);
       procedure S_Record_Array (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.S_Record_Array"">" & ASCII.LF
            & "<field name=""S_Record_Array.0.I""> 42</field>" & ASCII.LF
@@ -263,13 +260,13 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "got '" & Image & "', expecting '" & Expected & "'");
       end S_Record_Array;
 
       procedure Array_Composite (C : in out Test_Case'Class);
       procedure Array_Composite (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.Array_Composite"">" & ASCII.LF
            & "<field name=""E.FALSE"">A</field>" & ASCII.LF
@@ -304,13 +301,13 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "got '" & Image & "', expecting '" & Expected & "'");
       end Array_Composite;
 
       procedure Null_Record (C : in out Test_Case'Class);
       procedure Null_Record (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Expected : constant String
            := "<record name=""Regressions.Null_Record"">" & ASCII.LF
            & "<field name=""Null_Record"">null</field>" & ASCII.LF
@@ -321,52 +318,53 @@ package body Regressions.Suite is
          Image : constant String
            := Serializable.Image (Value);
       begin
-         Assert (Image = Expected,
+         Assert (C,
+                 Image = Expected,
                  "expecting '" & Expected & "', got '" & Image & "'");
       end Null_Record;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Serialization_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Enum'Access,
             "can image an enum");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Enum_Array'Access,
             "can image an array of enums");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             S_Record'Access,
             "can image a record");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Array_Composite'Access,
             "can image a record of arrays");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             S_Record_Array'Access,
             "can image an array of records");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Null_Record'Access,
             "can image a null record");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize;
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -378,7 +376,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -424,76 +422,76 @@ package body Regressions.Suite is
       end C3;
 
       procedure C4 (V : CB) is
-         pragma Warnings (Off, V);
+         pragma Unreferenced (V);
       begin
          Regressions.CB_Callback.Deregister (C4'Access);
       end C4;
 
       procedure Call_Callbacks_1 (C : in out Test_Case'Class);
       procedure Call_Callbacks_1 (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 1));
-         Assert (C1_Called and C2_Called and C3_Called,
+         Assert (C,
+                 C1_Called and C2_Called and C3_Called,
                  "not all got called");
       end Call_Callbacks_1;
 
       procedure Call_Callbacks_2 (C : in out Test_Case'Class);
       procedure Call_Callbacks_2 (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
-         Assert (C1_Called and C2_Called and C3_Called,
-                    "not all got called");
+         Assert (C,
+                 C1_Called and C2_Called and C3_Called,
+                 "not all got called");
       end Call_Callbacks_2;
 
       procedure Call_Callbacks_3 (C : in out Test_Case'Class);
       procedure Call_Callbacks_3 (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
-         Assert (C1_Called and C2_Called and C3_Called,
+         Assert (C,
+                 C1_Called and C2_Called and C3_Called,
                  "not all got called");
       end Call_Callbacks_3;
 
       procedure Call_Callbacks_4 (C : in out Test_Case'Class);
       procedure Call_Callbacks_4 (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Regressions.CB_Callback.Register (C4'Access);
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 4));
-         Assert (C1_Called and C2_Called and C3_Called,
+         Assert (C,
+                 C1_Called and C2_Called and C3_Called,
                  "not all got called");
       end Call_Callbacks_4;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Callback_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Call_Callbacks_1'Access,
             "call 3 callbacks (no exceptions)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Call_Callbacks_2'Access,
             "call 3 callbacks (exception in first)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Call_Callbacks_3'Access,
             "call 3 callbacks (excrption in first two)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Call_Callbacks_4'Access,
             "call 4 callbacks (excrption in first three, deregister fourth)");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize;
          Regressions.CB_Callback.Register (C1'Access);
@@ -505,7 +503,7 @@ package body Regressions.Suite is
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -517,7 +515,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -529,29 +527,26 @@ package body Regressions.Suite is
 
       procedure Standard_Posting (C : in out Test_Case'Class);
       procedure Standard_Posting (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Post (null,
                                         On => Events.Dispatcher);
-         Assert (False, "standard posting should have failed");
+         Assert (C, False, "standard posting should have failed");
       exception
          when Constraint_Error => null;
       end Standard_Posting;
 
       procedure Post_To_Self (C : in out Test_Case'Class);
       procedure Post_To_Self (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Post_To_Self (null,
                                                 On => Events.Dispatcher);
-         Assert (False, "self posting should have failed");
+         Assert (C, False, "self posting should have failed");
       exception
          when Constraint_Error => null;
       end Post_To_Self;
 
       procedure Post_At (C : in out Test_Case'Class);
       procedure Post_At (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Post
            (null,
@@ -559,26 +554,24 @@ package body Regressions.Suite is
             To_Fire_At =>
               ColdFrame.Project.Times.Create
               (From_Time => Ada.Calendar.Clock));
-         Assert (False, "posting ""at"" should have failed");
+         Assert (C, False, "posting ""at"" should have failed");
       exception
          when Constraint_Error => null;
       end Post_At;
 
       procedure Post_After (C : in out Test_Case'Class);
       procedure Post_After (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Post (null,
                                         On => Events.Dispatcher,
                                         To_Fire_After => 0.1);
-         Assert (False, "posting ""after""should have failed");
+         Assert (C, False, "posting ""after""should have failed");
       exception
          when Constraint_Error => null;
       end Post_After;
 
       procedure Set_At (C : in out Test_Case'Class);
       procedure Set_At (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Set
            (T,
@@ -587,67 +580,66 @@ package body Regressions.Suite is
             At_Time =>
               ColdFrame.Project.Times.Create
               (From_Time => Ada.Calendar.Clock));
-         Assert (False, "setting ""at"" should have failed");
+         Assert (C, False, "setting ""at"" should have failed");
       exception
          when Constraint_Error => null;
       end Set_At;
 
       procedure Set_After (C : in out Test_Case'Class);
       procedure Set_After (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          ColdFrame.Project.Events.Set (T,
                                        On => Events.Dispatcher,
                                        To_Fire => null,
                                        After => 0.1);
-         Assert (False, "setting ""after"" should have failed");
+         Assert (C, False, "setting ""after"" should have failed");
       exception
          when Constraint_Error => null;
       end Set_After;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Null_Event_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Standard_Posting'Access,
             "null event (standard post)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Post_To_Self'Access,
             "null event (post to self)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Post_At'Access,
             "null event (post at)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Post_After'Access,
             "null event (post after)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Set_At'Access,
             "null event (set at)");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Set_After'Access,
             "null event (set after)");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -659,7 +651,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -669,54 +661,52 @@ package body Regressions.Suite is
 
       procedure Delete_With_Identifier (C : in out Test_Case'Class);
       procedure Delete_With_Identifier (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          MOH : Max_One.Handle;
-         pragma Warnings (Off, MOH);
+         pragma Unreferenced (MOH);
          use type Max_One.Handle;
       begin
          MOH := Max_One.Create ((Id => 42));
          Max_One.Delete ((Id => 42));
-         pragma Assert (Max_One.Find = null, "instance still present");
+         Assert (C, Max_One.Find = null, "instance still present");
       end Delete_With_Identifier;
 
       procedure Delete_With_Handle (C : in out Test_Case'Class);
       procedure Delete_With_Handle (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          MOH : Max_One.Handle;
          use type Max_One.Handle;
       begin
          MOH := Max_One.Create ((Id => 42));
          Max_One.Delete (MOH);
-         pragma Assert (MOH = null, "handle not null");
-         pragma Assert (Max_One.Find = null, "instance still present");
+         Assert (C, MOH = null, "handle not null");
+         Assert (C, Max_One.Find = null, "instance still present");
       end Delete_With_Handle;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Max_One_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Delete_With_Identifier'Access,
             "delete by identifier");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Delete_With_Handle'Access,
             "delete by handle");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize;
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -728,7 +718,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -738,58 +728,58 @@ package body Regressions.Suite is
 
       procedure Callback (C : Callback_Type);
       procedure Callback (C : Callback_Type) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          null;
       end Callback;
 
       procedure Multiple_Registrations (C : in out Test_Case'Class);
       procedure Multiple_Registrations (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Callback_Type_Callback.Register (Callback'Unrestricted_Access);
          Callback_Type_Callback.Register (Callback'Unrestricted_Access);
-         Assert (False, "re-registration should have failed");
+         Assert (C, False, "re-registration should have failed");
       exception
          when System.Assertions.Assert_Failure => null;
       end Multiple_Registrations;
 
       procedure Deregistration (C : in out Test_Case'Class);
       procedure Deregistration (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          Callback_Type_Callback.Deregister (Callback'Unrestricted_Access);
-         Assert (False, "deregistration of unregistered should have failed");
+         Assert (C,
+                 False,
+                 "deregistration of unregistered should have failed");
       exception
          when System.Assertions.Assert_Failure => null;
       end Deregistration;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Callback_Registration_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Multiple_Registrations'Access,
             "multiple registrations");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Deregistration'Access,
             "deregistration when not registered");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize;
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -801,7 +791,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -811,7 +801,7 @@ package body Regressions.Suite is
 
       procedure Instance_Exists (C : in out Test_Case'Class);
       procedure Instance_Exists (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
          EHH : constant Event_Holder.Handle := Event_Holder.Create;
          pragma Unreferenced (EHH);
       begin
@@ -822,29 +812,29 @@ package body Regressions.Suite is
             Ignoring_Timers => True);
       end Instance_Exists;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Tearing_Down_Active_Timers_Tests.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Instance_Exists'Access,
             "instance exists");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -856,7 +846,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -866,7 +856,6 @@ package body Regressions.Suite is
 
       procedure Standard_Event (C : in out Test_Case'Class);
       procedure Standard_Event (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          H : Exception_In_Event_Handler.Handle
            := Exception_In_Event_Handler.Create;
       begin
@@ -880,12 +869,11 @@ package body Regressions.Suite is
          Exception_In_Event_Handler.Delete (H);
       exception
          when ColdFrame.Exceptions.Use_Error =>
-            Assert (False, "failed to delete instance");
+            Assert (C, False, "failed to delete instance");
       end Standard_Event;
 
       procedure Timed_Event (C : in out Test_Case'Class);
       procedure Timed_Event (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          H : Exception_In_Event_Handler.Handle
            := Exception_In_Event_Handler.Create;
       begin
@@ -900,36 +888,36 @@ package body Regressions.Suite is
          Exception_In_Event_Handler.Delete (H);
       exception
          when ColdFrame.Exceptions.Use_Error =>
-            Assert (False, "failed to delete instance");
+            Assert (C, False, "failed to delete instance");
       end Timed_Event;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Event_Handler_Exceptions.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Standard_Event'Access,
             "exception in handler for standard event");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Timed_Event'Access,
             "exception in handler for delayed event");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -941,7 +929,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -951,41 +939,43 @@ package body Regressions.Suite is
 
       procedure Check_Values (C : in out Test_Case'Class);
       procedure Check_Values (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
-         Assert (not PT_User.Get_State,
+         Assert (C,
+                 not PT_User.Get_State,
                  "value not false");
          PT_User.Set_State (False);
-         Assert (not PT_User.Get_State,
+         Assert (C,
+                 not PT_User.Get_State,
                  "value not false");
          PT_User.Set_State (True);
-         Assert (PT_User.Get_State,
+         Assert (C,
+                 PT_User.Get_State,
                  "value not true");
       end Check_Values;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Protected_Types_And_Access.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Check_Values'Access,
             "check values in protected object");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -997,7 +987,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -1007,36 +997,36 @@ package body Regressions.Suite is
 
       procedure Delete_Yourself (C : in out Test_Case'Class);
       procedure Delete_Yourself (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
          H : Self_Immolator.Handle;
       begin
          H := Self_Immolator.Create;
          Self_Immolator.Terminate_Yourself (H);
       end Delete_Yourself;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Task_Deletes_Itself.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Delete_Yourself'Access,
             "task deletes itself");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -1051,7 +1041,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -1067,71 +1057,68 @@ package body Regressions.Suite is
 
       procedure Positive_Infinity (C : in out Test_Case'Class);
       procedure Positive_Infinity (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Result : Float_Type;
-         pragma Warnings (Off, Result);
+         pragma Unreferenced (Result);
       begin
          Result := Divide (+1.0, 0.0);
-         Assert (False, "should have raised an exception");
+         Assert (C, False, "should have raised an exception");
       exception
          when Constraint_Error => null;
       end Positive_Infinity;
 
       procedure Negative_Infinity (C : in out Test_Case'Class);
       procedure Negative_Infinity (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Result : Float_Type;
-         pragma Warnings (Off, Result);
+         pragma Unreferenced (Result);
       begin
          Result := Divide (-1.0, 0.0);
-         Assert (False, "should have raised an exception");
+         Assert (C, False, "should have raised an exception");
       exception
          when Constraint_Error => null;
       end Negative_Infinity;
 
       procedure Not_A_Number (C : in out Test_Case'Class);
       procedure Not_A_Number (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
          Result : Float_Type;
-         pragma Warnings (Off, Result);
+         pragma Unreferenced (Result);
       begin
          Result := Divide (0.0, 0.0);
-         Assert (False, "should have raised an exception");
+         Assert (C, False, "should have raised an exception");
       exception
          when Constraint_Error => null;
       end Not_A_Number;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'(Test_Name & ".Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Positive_Infinity'Unrestricted_Access,
             "positive infinity");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Negative_Infinity'Unrestricted_Access,
             "negative infinity");
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Not_A_Number'Unrestricted_Access,
             "not a number");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;
@@ -1147,7 +1134,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -1190,55 +1177,62 @@ package body Regressions.Suite is
 
       procedure Check_Associations (Cs : in out Test_Case'Class);
       procedure Check_Associations (Cs : in out Test_Case'Class) is
-         pragma Warnings (Off, Cs);
          T : Preemptable_Test.Collections.Collection;
       begin
          T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
            (Preemptable_Test.Find ((Name => A)));
-         Assert (Preemptable_Test.Collections.Length (T) = 2,
+         Assert (Cs,
+                 Preemptable_Test.Collections.Length (T) = 2,
                  "wrong count from A: "
                    & Preemptable_Test.Collections.Length (T)'Img);
          T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
            (Preemptable_Test.Find ((Name => B)));
-         Assert (Preemptable_Test.Collections.Length (T) = 1,
+         Assert (Cs,
+                 Preemptable_Test.Collections.Length (T) = 1,
                  "wrong count from B: "
                    & Preemptable_Test.Collections.Length (T)'Img);
          T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
            (Preemptable_Test.Find ((Name => C)));
-         Assert (Preemptable_Test.Collections.Length (T) = 2,
+         Assert (Cs,
+                 Preemptable_Test.Collections.Length (T) = 2,
                  "wrong count from C: "
                    & Preemptable_Test.Collections.Length (T)'Img);
          T := Test_Preemption.Conflicts_With_And_May_Be_Preempted_By
            (Preemptable_Test.Find ((Name => D)));
-         Assert (Preemptable_Test.Collections.Length (T) = 0,
+         Assert (Cs,
+                 Preemptable_Test.Collections.Length (T) = 0,
                  "wrong count from D: "
                    & Preemptable_Test.Collections.Length (T)'Img);
-         Assert (Conflicts (A) = Tests'(E | F => True, others => False),
+         Assert (Cs,
+                 Conflicts (A) = Tests'(E | F => True, others => False),
                  "bad conflicts with A: " & Image (Conflicts (A)));
-         Assert (Conflicts (B) = Tests'(F => True, others => False),
+         Assert (Cs,
+                 Conflicts (B) = Tests'(F => True, others => False),
                  "bad conflicts with B: "& Image (Conflicts (B)));
-         Assert (Conflicts (C) = Tests'(F | G => True, others => False),
+         Assert (Cs,
+                 Conflicts (C) = Tests'(F | G => True, others => False),
                  "bad conflicts with C: "& Image (Conflicts (C)));
-         Assert (Conflicts (D) = Tests'(others => False),
+         Assert (Cs,
+                 Conflicts (D) = Tests'(others => False),
                  "bad conflicts with D: "& Image (Conflicts (D)));
       end Check_Associations;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Reflexive_Associations.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Check_Associations'Access,
             "check associations");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
@@ -1265,7 +1259,7 @@ package body Regressions.Suite is
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Tear_Down;
       end Tear_Down;
@@ -1277,7 +1271,7 @@ package body Regressions.Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -1287,7 +1281,6 @@ package body Regressions.Suite is
 
       procedure Trigger_Final_Action (C : in out Test_Case'Class);
       procedure Trigger_Final_Action (C : in out Test_Case'Class) is
-         pragma Warnings (Off, C);
       begin
          declare
             H : constant Phoenix.Handle := Phoenix.Create;
@@ -1299,34 +1292,35 @@ package body Regressions.Suite is
             H : constant Phoenix.Handle := Phoenix.Find;
             St : constant String := Phoenix.State_Image (H.all);
          begin
-            Assert (St = "REGRESSIONS.PHOENIX.INITIAL",
+            Assert (C,
+                    St = "REGRESSIONS.PHOENIX.INITIAL",
                     "incorrect state " & St);
          end;
       end Trigger_Final_Action;
 
-      function Name (C : Case_1) return String_Access is
-         pragma Warnings (Off, C);
+      function Name (C : Case_1) return AUnit.Message_String is
+         pragma Unreferenced (C);
       begin
          return new String'("Completion_After_Final_Action.Case_1");
       end Name;
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Trigger_Final_Action'Access,
             "final action creates new instance");
       end Register_Tests;
 
       procedure Set_Up (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Initialize
            (new ColdFrame.Project.Events.Standard.Test.Event_Queue);
       end Set_Up;
 
       procedure Tear_Down (C : in out Case_1) is
-         pragma Warnings (Off, C);
+         pragma Unreferenced (C);
       begin
          Regressions.Tear_Down;
       end Tear_Down;

@@ -25,3 +25,4 @@ esac
 export TOP=$HOME
 
 [ -d $cf/.build ] || (cd $cf; ./scripts/create-build-directories)
+[ -d $cf/coldframeout ] || mkdir $cf/coldframeout

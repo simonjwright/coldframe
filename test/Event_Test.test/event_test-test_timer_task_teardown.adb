@@ -1,6 +1,3 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
-
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -21,16 +18,16 @@ package body Event_Test.Test_Timer_Task_Teardown is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       Timer_Task_Teardown.Start;
       delay 0.5;
-      Assert (True, "shouldn't fail");
+      Assert (R, True, "shouldn't fail");
    end Run;
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Run'Access, "running");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
+   function Name (T : Test_Case) return AUnit.Message_String is
       pragma Warnings (Off, T);
    begin
       return new String'("Timer/task teardown");

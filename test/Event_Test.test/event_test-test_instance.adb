@@ -1,6 +1,3 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
-
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -28,7 +25,7 @@ package body Event_Test.Test_Instance is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Post_To_Self (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (False, "no exception");
+      Assert (R, False, "no exception");
    exception
       when ColdFrame.Exceptions.Use_Error => null;
    end Post_To_Self;
@@ -49,7 +46,8 @@ package body Event_Test.Test_Instance is
       ColdFrame.Project.Events.Post (Ev2, On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (R,
+              Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action;
@@ -68,7 +66,8 @@ package body Event_Test.Test_Instance is
       Machine.Set_Timer (H, 2.5);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (R,
+              Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Timer;
@@ -93,7 +92,8 @@ package body Event_Test.Test_Instance is
                                      To_Fire_After => 0.2);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Collections.Is_Empty (Machine.All_Instances),
+      Assert (R,
+              Machine.Collections.Is_Empty (Machine.All_Instances),
               Machine.Collections.Length (Machine.All_Instances)'Img &
               " instance(s) remaining");
    end Delete_As_Action_With_Held;
@@ -114,7 +114,8 @@ package body Event_Test.Test_Instance is
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Get_Ordinal (H) = 2000,
+      Assert (R,
+              Machine.Get_Ordinal (H) = 2000,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Simple_Event;
 
@@ -134,32 +135,33 @@ package body Event_Test.Test_Instance is
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Machine.Get_Ordinal (H) = 2002,
+      Assert (R,
+              Machine.Get_Ordinal (H) = 2002,
               "wrong ordinal" & Machine.Get_Ordinal (H)'Img);
    end Event_To_Self;
 
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Post_To_Self'Access, "Illegal posting to self");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delete_As_Action'Access, "Delete as an action");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Delete_As_Action_With_Timer'Access,
          "Delete as an action (timeout event)");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Delete_As_Action_With_Held'Access,
          "Delete as an action (held events)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Simple_Event'Access, "Simple event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Event_To_Self'Access, "Event to self");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
+   function Name (T : Test_Case) return AUnit.Message_String is
       pragma Warnings (Off, T);
    begin
       return new String'("Instance events");

@@ -1,6 +1,3 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
-
 with ColdFrame.Exceptions;
 with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Project.Events.Standard.Test_Trace;
@@ -25,11 +22,11 @@ package body Event_Test.Test_Queue is
    begin
       select
          delay 1.0;
-         Assert (False, "queue wasn't torn down");
+         Assert (R, False, "queue wasn't torn down");
       then abort
          ColdFrame.Project.Events.Stop (Dispatcher);
          ColdFrame.Project.Events.Tear_Down (Dispatcher);
-         Assert (Dispatcher = null, "dispatcher not nulled");
+         Assert (R, Dispatcher = null, "dispatcher not nulled");
       end select;
    end Tear_Down_Unstarted_Queue;
 
@@ -50,7 +47,7 @@ package body Event_Test.Test_Queue is
    begin
       select
          delay 1.0;
-         Assert (False, "queue wasn't started");
+         Assert (R, False, "queue wasn't started");
       then abort
          ColdFrame.Project.Events.Start (Dispatcher);
          ColdFrame.Project.Events.Stop (Dispatcher);
@@ -74,7 +71,7 @@ package body Event_Test.Test_Queue is
       ColdFrame.Project.Events.Wait_Until_Idle (Dispatcher);
       ColdFrame.Project.Events.Stop (Dispatcher);
       ColdFrame.Project.Events.Tear_Down (Dispatcher);
-      Assert (False, "there was no exception");
+      Assert (R, False, "there was no exception");
    exception
       when ColdFrame.Exceptions.Use_Error =>
          ColdFrame.Project.Events.Stop (Dispatcher);
@@ -98,7 +95,7 @@ package body Event_Test.Test_Queue is
       when ColdFrame.Exceptions.Use_Error =>
          ColdFrame.Project.Events.Stop (Dispatcher);
          ColdFrame.Project.Events.Tear_Down (Dispatcher);
-         Assert (False, "was started");
+         Assert (R, False, "was started");
    end Test_Trace_Queue_Starts_Unstarted;
 
 
@@ -108,25 +105,25 @@ package body Event_Test.Test_Queue is
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Tear_Down_Unstarted_Queue'Access,
          "Unstarted queue can be torn down");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Start_Low_Priority_Queue'Access,
          "Low-priority queue can be started");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Wait_Until_Idle_On_Unstarted_Queue'Access,
          "can't Wait_Until_Idle on unstarted queue");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Test_Trace_Queue_Starts_Unstarted'Access,
          "Test_Trace queue starts unstarted");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
+   function Name (T : Test_Case) return AUnit.Message_String is
       pragma Warnings (Off, T);
    begin
       return new String'("Event queue");

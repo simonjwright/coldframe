@@ -12,21 +12,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
-with AUnit.Test_Runner;
-
+with AUnit.Reporter.Text;
+with AUnit.Run;
 with Hierarchies.Suite;
 
 procedure Hierarchies.Harness is
 
-   procedure Run is new AUnit.Test_Runner (Suite);
+   procedure Run is new AUnit.Run.Test_Runner (Suite);
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
 
 begin
 
-   Run;
+   Run (Reporter);
 
 end Hierarchies.Harness;

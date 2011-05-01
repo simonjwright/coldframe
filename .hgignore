@@ -3,15 +3,34 @@
 syntax: glob
 
 # general
-*.ada *.ali
-*.bb *.bbg *.da *.gcov
+*~
+*.ada
+*.ali
+*.aux
+*.bb
+*.bbg
+*.cp
+*.da
 *.domains
-*.raw *.norm *.ada *.gen
-*.log *.toc *.dvi *.aux *.cp *.fn *.vr *.tp *.ky *.pg
+*.dvi
+*.exe
+*.fn
+*.gcov
+*.gen
+*.ky
+*.log
+*.norm
 *.pdf
+*.pg
+*.raw
+*.toc
+*.tp
+*.vr
+
 .build
 .DS_Store
 b~*.ad[bs]
+coldframeout
 
 # models
 *.md~
@@ -31,12 +50,22 @@ releases.html
 
 coldframe-combine_hash-test
 coldframe-project-events.ads-standard
-event_test-harness
 performance-harness
-regression_tests
-stairwell_demo stairwell_logging_demo
+
+# test
+test/*.stamp
+test/*.stamp-regardless
+test/event_test-harness
+test/hierarchies-harness
+test/initialization-harness
+test/regression_tests
+test/stub_test_harness
+test/unit_testing-harness
+
+stairwell_demo
+stairwell_logging_demo
 test_bounded_storage_pools
-test_storage_pools
+test_storage_pools{.exe}
 
 # doc
 doc/Architecture.raw

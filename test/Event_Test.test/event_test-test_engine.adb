@@ -1,9 +1,20 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
+--  Copyright (C) Simon Wright <simon@pushface.org>
 
-with Event_Test.Events;
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
 
+with Ada.Unchecked_Deallocation;
 with ColdFrame.Project.Events;
+with Event_Test.Events;
 
 package body Event_Test.Test_Engine is
 
@@ -19,7 +30,7 @@ package body Event_Test.Test_Engine is
    ---------------------
 
    type Instance
-      is new ColdFrame.Project.Events.Instance_Base with null record;
+   is new ColdFrame.Project.Events.Instance_Base with null record;
 
    function State_Image (This : Instance) return String;
 
@@ -29,7 +40,10 @@ package body Event_Test.Test_Engine is
       return "*none*";
    end State_Image;
 
-   The_Instance : aliased Instance;
+   type Handle is access Instance;
+   procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+
+   The_Instance : Handle;
 
    -------------------
    --  Test events  --
@@ -75,7 +89,7 @@ package body Event_Test.Test_Engine is
    procedure Handler (For_The_Event : Post);
    procedure Handler (For_The_Event : Post) is
       Ev : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
       S : Store renames Store (Ev.all);
    begin
       delay For_The_Event.Interval;
@@ -129,9 +143,9 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, R);
       Store_1 : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
       Store_2 : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
       S1 : Store renames Store (Store_1.all);
       S2 : Store renames Store (Store_2.all);
    begin
@@ -145,7 +159,7 @@ package body Event_Test.Test_Engine is
                                      On => Events.Dispatcher,
                                      To_Fire_After => 0.0);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Result = 2, "wrong result" & Result'Img);
+      Assert (R, Result = 2, "wrong result" & Result'Img);
    end Post_Now;
 
 
@@ -167,7 +181,8 @@ package body Event_Test.Test_Engine is
          begin
             --  Of course, the real check is that the procedure
             --  manages to pass this point!
-            Assert (True,
+            Assert (R,
+                    True,
                     "lock wasn't achieved");
          end;
       end;
@@ -200,7 +215,8 @@ package body Event_Test.Test_Engine is
          null;
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Sentinel,
+      Assert (R,
+              Sentinel,
               "lock wasn't respected");
    end Lock_Vs_Lock;
 
@@ -222,13 +238,15 @@ package body Event_Test.Test_Engine is
                                      On => Events.Dispatcher);
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       delay 0.01;
-      Assert (Waiting,
+      Assert (R,
+              Waiting,
               "event is not being handled");
       declare
          L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
          pragma Warnings (Off, L);
       begin
-         Assert (not Waiting,
+         Assert (R,
+                 not Waiting,
                  "event is still being handled");
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
@@ -258,7 +276,8 @@ package body Event_Test.Test_Engine is
          L : ColdFrame.Project.Events.Lock (Events.Dispatcher);
          pragma Warnings (Off, L);
       begin
-         Assert (Result = 17,
+         Assert (R,
+                 Result = 17,
                  "event has fired");
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
@@ -279,7 +298,7 @@ package body Event_Test.Test_Engine is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       select
          delay 1.0;
-         Assert (False, "lock wasn't achieved");
+         Assert (R, False, "lock wasn't achieved");
       then abort
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end select;
@@ -333,13 +352,12 @@ package body Event_Test.Test_Engine is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Unset_Fired_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
       Ev2 : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
       Ev3 : constant ColdFrame.Project.Events.Event_P
-        := new Store (The_Instance'Access);
+        := new Store (The_Instance);
    begin
 
       Store (Ev1.all).Payload := 1;
@@ -357,7 +375,7 @@ package body Event_Test.Test_Engine is
                                        After => 0.5);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (Result = 1, "wrong result from Ev1" & Result'Img);
+      Assert (R, Result = 1, "wrong result from Ev1" & Result'Img);
 
       declare
          T : ColdFrame.Project.Events.Timer;
@@ -373,7 +391,7 @@ package body Event_Test.Test_Engine is
                                          On => Events.Dispatcher);
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (Result = 1, "wrong result from Ev2" & Result'Img);
+      Assert (R, Result = 1, "wrong result from Ev2" & Result'Img);
 
       declare
          T : ColdFrame.Project.Events.Timer;
@@ -394,7 +412,7 @@ package body Event_Test.Test_Engine is
          end;
          ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       end;
-      Assert (Result = 1, "wrong result from Ev3" & Result'Img);
+      Assert (R, Result = 1, "wrong result from Ev3" & Result'Img);
 
    end Unset_Fired_Timer;
 
@@ -420,7 +438,7 @@ package body Event_Test.Test_Engine is
          end;
          declare
             S : constant ColdFrame.Project.Events.Event_P
-              := new Store (The_Instance'Access);
+              := new Store (The_Instance);
          begin
             Store (S.all).Payload := I;
             ColdFrame.Project.Events.Post (S,
@@ -440,56 +458,58 @@ package body Event_Test.Test_Engine is
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Post_Now'Access, "Events to run immediately");
-      Register_Routine
+      Registration.Register_Routine
         (T, Lock_Vs_Self'Access, "Nested lock");
-      Register_Routine
+      Registration.Register_Routine
         (T, Lock_Vs_Lock'Access, "Lock against lock");
-      Register_Routine
+      Registration.Register_Routine
         (T, Lock_Vs_Event'Access, "Lock against event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Lock_Vs_Self_Event'Access, "Lock against self event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Event_Takes_Lock'Access, "Event handler takes nested lock");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Delete_Timer_Without_Held_Event'Access,
          "Checks deleting a Timer without a held event");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Delete_Timer_With_Held_Event'Access,
          "Detects deleting a Timer with a held event");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Unset_Fired_Timer'Access,
          "Detects unsetting a Timer after firing but before dispatching");
-      Register_Routine
+      Registration.Register_Routine
         (T,
          Long_Event_Chain'Access,
          "Posts long chain of events (no failure expected)");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
-      pragma Warnings (Off, T);
+   function Name (T : Test_Case) return AUnit.Message_String is
+      pragma Unreferenced (T);
    begin
       return new String'("Event engine");
    end Name;
 
    procedure Set_Up (T : in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Events.Initialize;
       ColdFrame.Project.Events.Add_Reference (Events.Dispatcher);
       Waiting := False;
       Result := 0;
+      The_Instance := new Instance;
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       ColdFrame.Project.Events.Stop (Events.Dispatcher);
       ColdFrame.Project.Events.Tear_Down (Events.Dispatcher);
+      Free (The_Instance);
    end Tear_Down;
 
 end Event_Test.Test_Engine;

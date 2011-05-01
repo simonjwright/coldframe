@@ -1,6 +1,3 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
-
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
 
@@ -28,7 +25,8 @@ package body Event_Test.Test_Singleton_Instance is
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
 
-      Assert (Recipient.Get_Ordinal = 2000,
+      Assert (R,
+              Recipient.Get_Ordinal = 2000,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Simple_Event;
 
@@ -49,19 +47,20 @@ package body Event_Test.Test_Singleton_Instance is
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
 
-      Assert (Recipient.Get_Ordinal = 2002,
+      Assert (R,
+              Recipient.Get_Ordinal = 2002,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Event_To_Self;
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Simple_Event'Access, "Simple event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Event_To_Self'Access, "Event to self");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
+   function Name (T : Test_Case) return AUnit.Message_String is
       pragma Warnings (Off, T);
    begin
       return new String'("Singleton instance events");

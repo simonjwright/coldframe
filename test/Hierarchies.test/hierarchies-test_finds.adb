@@ -12,14 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
-
 with ColdFrame.Instances;
 
 with Hierarchies.Initialize;
@@ -36,7 +28,6 @@ with Hierarchies.F_2.Inheritance;
 package body Hierarchies.Test_Finds is
 
    subtype CIH is ColdFrame.Instances.Handle;
-   use type CIH;
    use type R_1.Handle;
    use type R_2.Handle;
    use type R_3.Handle;
@@ -57,9 +48,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_One
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
    begin
-      Assert (S_2.Inheritance.Find_R_1_Parent (S2_H) = R1_H,
+      Assert (R,
+              S_2.Inheritance.Find_R_1_Parent (S2_H) = R1_H,
               "parent not found");
    end Find_Root_One;
 
@@ -67,9 +58,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_Two
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
    begin
-      Assert (T_2.Inheritance.Find_R_1_Parent (T2_H) = R1_H,
+      Assert (R,
+              T_2.Inheritance.Find_R_1_Parent (T2_H) = R1_H,
               "parent not found");
    end Find_Root_Two;
 
@@ -77,9 +68,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Root_Three
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_R_1_Parent (F2_H) = R1_H,
+      Assert (R,
+              F_2.Inheritance.Find_R_1_Parent (F2_H) = R1_H,
               "parent not found");
    end Find_Root_Three;
 
@@ -87,9 +78,9 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Intermediate_One
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_T_2_Parent (F2_H) = T2_H,
+      Assert (R,
+              F_2.Inheritance.Find_T_2_Parent (F2_H) = T2_H,
               "parent not found");
    end Find_Intermediate_One;
 
@@ -97,34 +88,34 @@ package body Hierarchies.Test_Finds is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Find_Intermediate_Two
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
    begin
-      Assert (F_2.Inheritance.Find_S_2_Parent (F2_H) = S2_H,
+      Assert (R,
+              F_2.Inheritance.Find_S_2_Parent (F2_H) = S2_H,
               "parent not found");
    end Find_Intermediate_Two;
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Find_Root_One'Access, "Find root (one level)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Find_Root_Two'Access, "Find root (two levels)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Find_Root_Three'Access, "Find root (three levels)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Find_Intermediate_One'Access, "Find intermediate (one level)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Find_Intermediate_Two'Access, "Find intermediate (two levels)");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
-      pragma Warnings (Off, T);
+   function Name (T : Test_Case) return AUnit.Message_String is
+      pragma Unreferenced (T);
    begin
       return new String'("Finds");
    end Name;
 
    procedure Set_Up (T : in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Initialize;
       R1_H := R_1.Create;
@@ -139,7 +130,7 @@ package body Hierarchies.Test_Finds is
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Tear_Down;
    end Tear_Down;

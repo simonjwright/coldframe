@@ -12,8 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
-
 with "Options";
 with "AUnit";
 with "BC";
@@ -31,8 +29,11 @@ project Event_Test is
      "Event_Test.test");
 
   for Object_Dir use Options'Object_Dir & "/main";
-  package Ide renames Options.Ide;
-  package Builder renames Options.Builder;
+  package IDE renames Options.IDE;
+  package Builder is
+     for Default_Switches ("ada")
+       use Options.Builder'Default_Switches ("ada") & "-a";
+  end Builder;
   package Compiler renames Options.Compiler;
   package Binder renames Options.Binder;
   package Linker renames Options.Linker;

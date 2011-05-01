@@ -1,12 +1,11 @@
-;;; $Id: setup.el,v 2ae8659202f3 2010/06/18 05:23:50 simonjwright $
-;;;
-;;; Sets up environment variables for ColdFrame development
+;;; Sets up environment variables for ColdFrame development (very
+;;; specific to SJW config!)
 
 (progn
   (let* ((home (getenv "HOME"))
-	 (cf (concat home "/cf")))
+	 (cf (concat home "/coldframe")))
     (setenv "ADA_PROJECT_PATH" cf)
-    (setenv "AUNIT" "AUnit-1.03p")
+    (setenv "AUNIT" "AUnit-svn")
     (setenv "BC" "bc")
     (setenv "BUILD_BASE" (concat cf "/.build"))
     (setenv "CASE_EXCEPTIONS"
@@ -20,7 +19,7 @@
      ;; see notes in setup.sh
      ((or (memq system-type '(gnu/linux)) (memq system-type '(darwin)))
       (setenv "ADA_PROJECT_PATH"
-	      (concat 
+	      (concat
 	       (getenv "ADA_PROJECT_PATH")
 	       ":"
 	       home "/tcladashell"))))

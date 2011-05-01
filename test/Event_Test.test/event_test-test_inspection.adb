@@ -1,8 +1,20 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
 
 with Ada.Calendar;
 with Ada.Real_Time;
+with Ada.Unchecked_Deallocation;
 with ColdFrame.Project.Events.Standard.Inspection;
 with ColdFrame.Project.Times;
 with System;
@@ -32,7 +44,10 @@ package body Event_Test.Test_Inspection is
       return "*none*";
    end State_Image;
 
-   The_Instance : aliased Instance;
+   type Handle is access Instance;
+   procedure Free is new Ada.Unchecked_Deallocation (Instance, Handle);
+
+   The_Instance : Handle;
 
    -------------------
    --  Test events  --
@@ -117,78 +132,80 @@ package body Event_Test.Test_Inspection is
 
       begin
          N := Inspection.Number_Of_Self_Events (Q);
-         Assert (False, "Number_Of_Self_Events should have failed");
+         Assert (C, False, "Number_Of_Self_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          E := Inspection.Self_Event (Q, 1);
-         Assert (False, "Self_Event should have failed");
+         Assert (C, False, "Self_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_Immediate_Class_Events (Q);
-         Assert (False,
+         Assert (C,
+                 False,
                  "Number_Of_Immediate_Class_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          E := Inspection.Immediate_Class_Event (Q, 1);
-         Assert (False, "Immediate_Class_Event should have failed");
+         Assert (C, False, "Immediate_Class_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          N := Inspection.Number_Of_Immediate_Instance_Events (Q);
-         Assert (False,
+         Assert (C,
+                 False,
                  "Number_Of_Immediate_Instance_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          E := Inspection.Immediate_Instance_Event (Q, 1);
-         Assert (False, "Immediate_Instance_Event should have failed");
+         Assert (C, False, "Immediate_Instance_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_After_Events (Q);
-         Assert (False, "Number_Of_After_Events should have failed");
+         Assert (C, False, "Number_Of_After_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          E := Inspection.After_Event (Q, 1);
-         Assert (False, "After_Event should have failed");
+         Assert (C, False, "After_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          D := Inspection.How_Long_After (Q, 1);
-         Assert (False, "How_Long_After should have failed");
+         Assert (C, False, "How_Long_After should have failed");
       exception
          when Inspection.Started => null;
       end;
 
       begin
          N := Inspection.Number_Of_Later_Events (Q);
-         Assert (False, "Number_Of_Later_Events should have failed");
+         Assert (C, False, "Number_Of_Later_Events should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          E := Inspection.Later_Event (Q, 1);
-         Assert (False, "Later_Event should have failed");
+         Assert (C, False, "Later_Event should have failed");
       exception
          when Inspection.Started => null;
       end;
       begin
          T := Inspection.When_Later (Q, 1);
-         Assert (False, "When_Later should have failed");
+         Assert (C, False, "When_Later should have failed");
       exception
          when Inspection.Started => null;
       end;
@@ -202,26 +219,30 @@ package body Event_Test.Test_Inspection is
    procedure Check_Self_Events
      (C : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, C);
-      E : aliased Event (The_Instance'Access);
+      E : aliased Event (The_Instance);
    begin
-      Assert (Inspection.Number_Of_Self_Events (Q) = 0,
+      Assert (C,
+              Inspection.Number_Of_Self_Events (Q) = 0,
               "number of self events not 0");
       E.Payload := 1;
       Handler (E);
       E.Payload := 2;
       Handler (E);
-      Assert (Inspection.Number_Of_Self_Events (Q) = 2,
+      Assert (C,
+              Inspection.Number_Of_Self_Events (Q) = 2,
               "number of self events not 2");
-      Assert (Event (Inspection.Self_Event (Q, 1).all).Payload = 1001,
+      Assert (C,
+              Event (Inspection.Self_Event (Q, 1).all).Payload = 1001,
               "wrong payload in first event");
-      Assert (Event (Inspection.Self_Event (Q, 2).all).Payload = 1002,
+      Assert (C,
+              Event (Inspection.Self_Event (Q, 2).all).Payload = 1002,
               "wrong payload in second event");
       declare
          Ev : ColdFrame.Project.Events.Event_P;
          pragma Warnings (Off, Ev);
       begin
          Ev := Inspection.Self_Event (Q, 3);
-         Assert (False, "should have raised exception");
+         Assert (C, False, "should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -236,27 +257,32 @@ package body Event_Test.Test_Inspection is
       pragma Warnings (Off, C);
       E : ColdFrame.Project.Events.Event_P;
    begin
-      Assert (Inspection.Number_Of_Immediate_Class_Events (Q) = 0,
+      Assert (C,
+              Inspection.Number_Of_Immediate_Class_Events (Q) = 0,
               "number of immediate class events not 0");
-      Assert (Inspection.Number_Of_Immediate_Instance_Events (Q) = 0,
+      Assert (C,
+              Inspection.Number_Of_Immediate_Instance_Events (Q) = 0,
               "number of immediate instance events not 0");
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q);
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q);
-      Assert (Inspection.Number_Of_Immediate_Instance_Events (Q) = 2,
+      Assert (C,
+              Inspection.Number_Of_Immediate_Instance_Events (Q) = 2,
               "number of immediate instance events not 2");
-      Assert (Event (Inspection.Immediate_Instance_Event (Q, 1).all).Payload
+      Assert (C,
+              Event (Inspection.Immediate_Instance_Event (Q, 1).all).Payload
                 = 1,
               "wrong payload in first event");
-      Assert (Event (Inspection.Immediate_Instance_Event (Q, 2).all).Payload
+      Assert (C,
+              Event (Inspection.Immediate_Instance_Event (Q, 2).all).Payload
                 = 2,
               "wrong payload in second event");
       begin
          E := Inspection.Immediate_Instance_Event (Q, 3);
-         Assert (False, "should have raised exception");
+         Assert (C, False, "should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -271,28 +297,34 @@ package body Event_Test.Test_Inspection is
       pragma Warnings (Off, C);
       E : ColdFrame.Project.Events.Event_P;
    begin
-      Assert (Inspection.Number_Of_After_Events (Q) = 0,
+      Assert (C,
+              Inspection.Number_Of_After_Events (Q) = 0,
               "number of after events not 0");
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_After => 1.0);
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_After => 0.5);
-      Assert (Inspection.Number_Of_After_Events (Q) = 2,
+      Assert (C,
+              Inspection.Number_Of_After_Events (Q) = 2,
               "number of after events not 2");
       E := Inspection.After_Event (Q, 1);
-      Assert (Event (Inspection.After_Event (Q, 1).all).Payload = 1,
+      Assert (C,
+              Event (Inspection.After_Event (Q, 1).all).Payload = 1,
               "wrong payload in first event");
-      Assert (Inspection.How_Long_After (Q, 1) = 1.0,
+      Assert (C,
+              Inspection.How_Long_After (Q, 1) = 1.0,
               "wrong delay in first event");
-      Assert (Event (Inspection.After_Event (Q, 2).all).Payload = 2,
+      Assert (C,
+              Event (Inspection.After_Event (Q, 2).all).Payload = 2,
               "wrong payload in second event");
-      Assert (Inspection.How_Long_After (Q, 2) = 0.5,
+      Assert (C,
+              Inspection.How_Long_After (Q, 2) = 0.5,
               "wrong delay in second event");
       begin
          E := Inspection.After_Event (Q, 3);
-         Assert (False, "After_Event should have raised exception");
+         Assert (C, False, "After_Event should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -301,7 +333,7 @@ package body Event_Test.Test_Inspection is
          pragma Warnings (Off, D);
       begin
          D := Inspection.How_Long_After (Q, 3);
-         Assert (False, "How_Long_After should have raised exception");
+         Assert (C, False, "How_Long_After should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -324,28 +356,34 @@ package body Event_Test.Test_Inspection is
         (Ada.Real_Time.Clock + Ada.Real_Time.Milliseconds (500));
       use type ColdFrame.Project.Times.Time;
    begin
-      Assert (Inspection.Number_Of_Later_Events (Q) = 0,
+      Assert (C,
+              Inspection.Number_Of_Later_Events (Q) = 0,
               "number of later events not 0");
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_At => T1);
-      E := new Event (The_Instance'Access);
+      E := new Event (The_Instance);
       Event (E.all).Payload := 2;
       ColdFrame.Project.Events.Post (E, Q, To_Fire_At => T2);
-      Assert (Inspection.Number_Of_Later_Events (Q) = 2,
+      Assert (C,
+              Inspection.Number_Of_Later_Events (Q) = 2,
               "number of later events not 2");
       E := Inspection.Later_Event (Q, 1);
-      Assert (Event (Inspection.Later_Event (Q, 1).all).Payload = 1,
+      Assert (C,
+              Event (Inspection.Later_Event (Q, 1).all).Payload = 1,
               "wrong payload in first event");
-      Assert (Inspection.When_Later (Q, 1) = T1,
+      Assert (C,
+              Inspection.When_Later (Q, 1) = T1,
               "wrong delay in first event");
-      Assert (Event (Inspection.Later_Event (Q, 2).all).Payload = 2,
+      Assert (C,
+              Event (Inspection.Later_Event (Q, 2).all).Payload = 2,
               "wrong payload in second event");
-      Assert (Inspection.When_Later (Q, 2) = T2,
+      Assert (C,
+              Inspection.When_Later (Q, 2) = T2,
               "wrong delay in second event");
       begin
          E := Inspection.Later_Event (Q, 3);
-         Assert (False, "Later_Event should have raised exception");
+         Assert (C, False, "Later_Event should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -354,7 +392,7 @@ package body Event_Test.Test_Inspection is
          pragma Warnings (Off, T);
       begin
          T := Inspection.When_Later (Q, 3);
-         Assert (False, "When_Later should have raised exception");
+         Assert (C, False, "When_Later should have raised exception");
       exception
          when Inspection.Not_Found => null;
       end;
@@ -370,31 +408,39 @@ package body Event_Test.Test_Inspection is
       E : ColdFrame.Project.Events.Event_P;
       use type ColdFrame.Project.Events.Event_P;
    begin
-      E := new Timer_Event (The_Instance'Access);
+      E := new Timer_Event (The_Instance);
       Timer_Event (E.all).Payload := 1;
       ColdFrame.Project.Events.Set (The_Instance.T,
                                     On => Q,
                                     To_Fire => E,
                                     After => 1.0);
-      Assert (Inspection.Number_Of_After_Events (Q) = 1,
+      Assert (C,
+              Inspection.Number_Of_After_Events (Q) = 1,
               "number of after events not 1");
-      Assert (Inspection.After_Event (Q, 1) = E,
+      Assert (C,
+              Inspection.After_Event (Q, 1) = E,
               "wrong event on queue");
-      Assert (Inspection.How_Long_After (Q, 1) = 1.0,
+      Assert (C,
+              Inspection.How_Long_After (Q, 1) = 1.0,
               "wrong delay in first event");
-      Assert (Inspection.Event_Of (The_Instance.T) = E,
+      Assert (C,
+              Inspection.Event_Of (The_Instance.T) = E,
               "wrong event on timer");
       Inspection.Fire (The_Instance.T);
-      Assert (Inspection.Event_Of (The_Instance.T) /= E,
+      Assert (C,
+              Inspection.Event_Of (The_Instance.T) /= E,
               "same event on timer");
-      Assert (Timer_Event
+      Assert (C,
+              Timer_Event
                 (Inspection.Event_Of (The_Instance.T).all).Payload = 1001,
               "wrong payload on new event");
       --  NB! the fired event hasn't been removed from the event
       --  queue.
-      Assert (Inspection.Number_Of_After_Events (Q) = 2,
+      Assert (C,
+              Inspection.Number_Of_After_Events (Q) = 2,
               "new number of after events not 2");
-      Assert (Inspection.How_Long_After (Q, 2) = 2.0,
+      Assert (C,
+              Inspection.How_Long_After (Q, 2) = 2.0,
               "wrong delay in new event");
    end Check_Timer_Events;
 
@@ -405,24 +451,24 @@ package body Event_Test.Test_Inspection is
 
    procedure Register_Tests (C : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (C, Inspect_Started_Queue'Access, "Inspect started queue");
       --  Can't run next test because it posts to self outside an
       --  event handler. Could have an event handler that does this
       --  and then handle synchronously? (the queue has to be stopped!)
 --        Register_Routine
 --          (C, Check_Self_Events'Access, "Self events");
-      Register_Routine
+      Registration.Register_Routine
         (C, Check_Posting_Events'Access, "Standard events");
-      Register_Routine
+      Registration.Register_Routine
         (C, Check_After_Events'Access, "Events to run after a delay");
-      Register_Routine
+      Registration.Register_Routine
         (C, Check_Later_Events'Access, "Events to run at a time");
-      Register_Routine
+      Registration.Register_Routine
         (C, Check_Timer_Events'Access, "Inspecting, firing Timers");
    end Register_Tests;
 
-   function Name (C : Test_Case) return String_Access is
+   function Name (C : Test_Case) return AUnit.Message_String is
       pragma Warnings (Off, C);
    begin
       return new String'("Inspection");
@@ -435,6 +481,7 @@ package body Event_Test.Test_Inspection is
         (Start_Started => False,
          Priority => System.Default_Priority,
          Storage_Size => 20_000);
+      The_Instance := new Instance;
    end Set_Up;
 
    procedure Tear_Down (C :  in out Test_Case) is
@@ -443,6 +490,7 @@ package body Event_Test.Test_Inspection is
       --  Normally this would be generated code.
       ColdFrame.Project.Events.Stop (Q);
       ColdFrame.Project.Events.Tear_Down (Q);
+      Free (The_Instance);
    end Tear_Down;
 
 end Event_Test.Test_Inspection;

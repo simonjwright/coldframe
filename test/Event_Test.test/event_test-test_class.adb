@@ -1,5 +1,16 @@
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
-with AUnit.Assertions; use AUnit.Assertions;
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
 
 with Event_Test.Initialize;
 with Event_Test.Tear_Down;
@@ -19,7 +30,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Immediate_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -29,9 +39,11 @@ package body Event_Test.Test_Class is
                       Expected_At => ColdFrame.Project.Calendar.Clock);
       ColdFrame.Project.Events.Post (Ev, On => Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1000,
+      Assert (R,
+              Recipient.Get_Ordinal = 1000,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Immediate_Event;
 
@@ -42,7 +54,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Event_Now
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -55,9 +66,11 @@ package body Event_Test.Test_Class is
                                      On => Events.Dispatcher,
                                      To_Fire_After => 0.0);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1001,
+      Assert (R,
+              Recipient.Get_Ordinal = 1001,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_Now;
 
@@ -67,7 +80,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Event_After
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -80,9 +92,11 @@ package body Event_Test.Test_Class is
                                      On => Events.Dispatcher,
                                      To_Fire_After => 2.2);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1001,
+      Assert (R,
+              Recipient.Get_Ordinal = 1001,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_After;
 
@@ -92,7 +106,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Event_At
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -107,9 +120,11 @@ package body Event_Test.Test_Class is
          To_Fire_At =>
            ColdFrame.Project.Times.From_Now (2.2));
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1002,
+      Assert (R,
+              Recipient.Get_Ordinal = 1002,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_At;
 
@@ -119,7 +134,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Event_Preceded
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf1 : Recipient.Information renames Recipient.Information (Ev1.all);
@@ -139,14 +153,18 @@ package body Event_Test.Test_Class is
       ColdFrame.Project.Events.Post (Ev2,
                                      On => Events.Dispatcher);
       delay 1.2;
-      Assert (Recipient.Get_Ordinal = 1004,
+      Assert (R,
+              Recipient.Get_Ordinal = 1004,
               "wrong ordinal (a)" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time (a)" & Recipient.Get_Offset'Img);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1003,
+      Assert (R,
+              Recipient.Get_Ordinal = 1003,
               "wrong ordinal (b)" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
+      Assert (R,
+              abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
               "wrong time (b)" & Recipient.Get_Offset'Img);
    end Delayed_Event_Preceded;
 
@@ -155,7 +173,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Events_In_Order
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf1 : Recipient.Information renames Recipient.Information (Ev1.all);
@@ -176,14 +193,18 @@ package body Event_Test.Test_Class is
                                      On => Events.Dispatcher,
                                      To_Fire_After => 1.1);
       delay 1.2;
-      Assert (Recipient.Get_Ordinal = 1006,
+      Assert (R,
+              Recipient.Get_Ordinal = 1006,
               "wrong ordinal (a)" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time (a)" & Recipient.Get_Offset'Img);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1005,
+      Assert (R,
+              Recipient.Get_Ordinal = 1005,
               "wrong ordinal (b)" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
+      Assert (R,
+              abs Recipient.Get_Offset < 0.04, -- seems close to 0.2 on orm
               "wrong time (b)" & Recipient.Get_Offset'Img);
    end Delayed_Events_In_Order;
 
@@ -193,7 +214,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Timer_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -208,9 +228,11 @@ package body Event_Test.Test_Class is
                                     To_Fire => Ev,
                                     After => 2.2);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1007,
+      Assert (R,
+              Recipient.Get_Ordinal = 1007,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Timer_Event;
 
@@ -221,7 +243,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Retract_Timer_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf1 : Recipient.Information renames Recipient.Information (Ev1.all);
@@ -255,7 +276,8 @@ package body Event_Test.Test_Class is
       --  should be dispatched if it's still there.
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
       --  Check it isn't.
-      Assert (Recipient.Get_Ordinal = 0,
+      Assert (R,
+              Recipient.Get_Ordinal = 0,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Retract_Timer_Event;
 
@@ -264,7 +286,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Multiple_Timer_Event
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev1 : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf1 : Recipient.Information renames Recipient.Information (Ev1.all);
@@ -289,17 +310,21 @@ package body Event_Test.Test_Class is
                                        On => Events.Dispatcher,
                                        To_Fire => Ev2,
                                        After => 2.2);
-         Assert (False, "no exception raised");
+         Assert (R,
+                 False, "no exception raised");
       exception
          when ColdFrame.Exceptions.Use_Error =>
             null;
          when others =>
-            Assert (False, "wrong exception raised");
+            Assert (R,
+                    False, "wrong exception raised");
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1009,
+      Assert (R,
+              Recipient.Get_Ordinal = 1009,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Multiple_Timer_Event;
 
@@ -308,25 +333,25 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Unset_Unused_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       T : ColdFrame.Project.Events.Timer;
    begin
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Unset (T,
                                       On => Events.Dispatcher);
-      Assert (False, "no exception raised");
+      Assert (R,
+              False, "no exception raised");
    exception
       when ColdFrame.Exceptions.Use_Error =>
          null;
       when others =>
-         Assert (False, "wrong exception raised");
+         Assert (R,
+                 False, "wrong exception raised");
    end Unset_Unused_Timer;
 
    procedure Unset_Used_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Unset_Used_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -341,19 +366,23 @@ package body Event_Test.Test_Class is
                                     To_Fire => Ev,
                                     After => 2.2);
       delay 2.3;
-      Assert (Recipient.Get_Ordinal = 1011,
+      Assert (R,
+              Recipient.Get_Ordinal = 1011,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
       begin
          ColdFrame.Project.Events.Unset (T,
                                          On => Events.Dispatcher);
-         Assert (False, "no exception raised");
+         Assert (R,
+                 False, "no exception raised");
       exception
          when ColdFrame.Exceptions.Use_Error =>
             null;
          when others =>
-            Assert (False, "wrong exception raised");
+            Assert (R,
+                    False, "wrong exception raised");
       end;
    end Unset_Used_Timer;
 
@@ -363,7 +392,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delete_Timer
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -384,7 +412,8 @@ package body Event_Test.Test_Class is
          ColdFrame.Project.Events.Finalize (T);
       end;
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 0,
+      Assert (R,
+              Recipient.Get_Ordinal = 0,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
    end Delete_Timer;
 
@@ -394,7 +423,6 @@ package body Event_Test.Test_Class is
      (R : in out AUnit.Test_Cases.Test_Case'Class);
    procedure Delayed_Event_After_Start
      (R : in out AUnit.Test_Cases.Test_Case'Class) is
-      pragma Warnings (Off, R);
       Ev : constant ColdFrame.Project.Events.Event_P
         := new Recipient.Information;
       Inf : Recipient.Information renames Recipient.Information (Ev.all);
@@ -408,56 +436,58 @@ package body Event_Test.Test_Class is
       delay 3.0;
       ColdFrame.Project.Events.Start (Events.Dispatcher);
       ColdFrame.Project.Events.Wait_Until_Idle (Events.Dispatcher);
-      Assert (Recipient.Get_Ordinal = 1013,
+      Assert (R,
+              Recipient.Get_Ordinal = 1013,
               "wrong ordinal" & Recipient.Get_Ordinal'Img);
-      Assert (abs Recipient.Get_Offset < 0.02,
+      Assert (R,
+              abs Recipient.Get_Offset < 0.02,
               "wrong time" & Recipient.Get_Offset'Img);
    end Delayed_Event_After_Start;
 
    procedure Register_Tests (T : in out Test_Case) is
    begin
-      Register_Routine
+      Registration.Register_Routine
         (T, Immediate_Event'Access, "Simple event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Event_Now'Access, "Delayed event (now)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Event_After'Access, "Delayed event (after)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Event_At'Access, "Delayed event (at)");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Event_Preceded'Access, "Simple event not held up");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Events_In_Order'Access, "Order of arrival");
-      Register_Routine
+      Registration.Register_Routine
         (T, Retract_Timer_Event'Access, "Retract timer event after firing");
-      Register_Routine
+      Registration.Register_Routine
         (T, Timer_Event'Access, "Timer event");
-      Register_Routine
+      Registration.Register_Routine
         (T, Multiple_Timer_Event'Access, "Multiple timer setting");
-      Register_Routine
+      Registration.Register_Routine
         (T, Unset_Unused_Timer'Access, "Unset unused timer");
-      Register_Routine
+      Registration.Register_Routine
         (T, Unset_Used_Timer'Access, "Unset used timer");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delete_Timer'Access, "Delete set timer");
-      Register_Routine
+      Registration.Register_Routine
         (T, Delayed_Event_After_Start'Access, "Delayed event (after start)");
    end Register_Tests;
 
-   function Name (T : Test_Case) return String_Access is
-      pragma Warnings (Off, T);
+   function Name (T : Test_Case) return AUnit.Message_String is
+      pragma Unreferenced (T);
    begin
       return new String'("Class events");
    end Name;
 
    procedure Set_Up (T : in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Initialize;
    end Set_Up;
 
    procedure Tear_Down (T :  in out Test_Case) is
-      pragma Warnings (Off, T);
+      pragma Unreferenced (T);
    begin
       Tear_Down;
    end Tear_Down;

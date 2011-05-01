@@ -1,4 +1,3 @@
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
 
 package Event_Test.Test_Singleton_Instance is
@@ -7,7 +6,7 @@ package Event_Test.Test_Singleton_Instance is
 
    procedure Register_Tests (T : in out Test_Case);
 
-   function Name (T : Test_Case) return String_Access;
+   function Name (T : Test_Case) return AUnit.Message_String;
 
    procedure Set_Up (T : in out Test_Case);
 
