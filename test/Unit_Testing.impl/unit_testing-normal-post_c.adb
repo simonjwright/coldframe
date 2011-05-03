@@ -12,10 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
-pragma Style_Checks (Off);
---  $Id$
-pragma Style_Checks (On);
-
 with ColdFrame.Project.Events;
 with Unit_Testing.Events;
 
