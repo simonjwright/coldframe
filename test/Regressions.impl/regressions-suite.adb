@@ -444,6 +444,7 @@ package body Regressions.Suite is
       procedure Call_Callbacks_1 (C : in out Test_Case'Class);
       procedure Call_Callbacks_1 (C : in out Test_Case'Class) is
       begin
+         Put_Line ("** No exceptions expected **");
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 1));
          Assert (C,
                  C1_Called and C2_Called and C3_Called,
@@ -453,6 +454,7 @@ package body Regressions.Suite is
       procedure Call_Callbacks_2 (C : in out Test_Case'Class);
       procedure Call_Callbacks_2 (C : in out Test_Case'Class) is
       begin
+         Put_Line ("** Exception_1 expected **");
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 2));
          Assert (C,
                  C1_Called and C2_Called and C3_Called,
@@ -462,6 +464,7 @@ package body Regressions.Suite is
       procedure Call_Callbacks_3 (C : in out Test_Case'Class);
       procedure Call_Callbacks_3 (C : in out Test_Case'Class) is
       begin
+         Put_Line ("** Exception_1, Exception_2 expected **");
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 3));
          Assert (C,
                  C1_Called and C2_Called and C3_Called,
@@ -471,6 +474,7 @@ package body Regressions.Suite is
       procedure Call_Callbacks_4 (C : in out Test_Case'Class);
       procedure Call_Callbacks_4 (C : in out Test_Case'Class) is
       begin
+         Put_Line ("** Exception_1, Exception_2 and Exception_3 expected **");
          Regressions.CB_Callback.Register (C4'Access);
          Regressions.CB_Callback.Call_Callbacks (CB'(Reason => 4));
          Assert (C,
@@ -873,6 +877,7 @@ package body Regressions.Suite is
          H : Exception_In_Event_Handler.Handle
            := Exception_In_Event_Handler.Create;
       begin
+         Put_Line ("** Exception_In_Event_Handler expected **");
          ColdFrame.Project.Events.Post
            (On => Events.Dispatcher,
             The_Event => new Exception_In_Event_Handler.Ev (H));
@@ -891,6 +896,7 @@ package body Regressions.Suite is
          H : Exception_In_Event_Handler.Handle
            := Exception_In_Event_Handler.Create;
       begin
+         Put_Line ("** Exception_In_Event_Handler expected **");
          ColdFrame.Project.Events.Post
            (On => Events.Dispatcher,
             The_Event => new Exception_In_Event_Handler.Ev (H),
@@ -1015,6 +1021,7 @@ package body Regressions.Suite is
          H : Self_Immolator.Handle;
       begin
          H := Self_Immolator.Create;
+         Put_Line ("** ""Task tried to delete itself"" expected **");
          Self_Immolator.Terminate_Yourself (H);
       end Delete_Yourself;
 
