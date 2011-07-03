@@ -14,7 +14,7 @@
 #  write to the Free Software Foundation, 59 Temple Place - Suite
 #  330, Boston, MA 02111-1307, USA.
 
-# $Id$
+# $Id: cat2raw.py,v 2e39c16b3edc 2011/07/03 10:58:46 simonjwright $
 
 # Reads a Rose .cat file and converts it to ColdFrame .raw format.
 
@@ -318,7 +318,7 @@ class Domain(Base):
     def emit_contents(self, to):
 	yr, mo, dy, hr, mn, s, wd, yd, dst = time.localtime(time.time())
 	self.emit_single_element('extractor',
-				 'cat2raw.py: $Revision$',
+				 'cat2raw.py: $Revision: 2e39c16b3edc $',
 				 to)
 	to.write('<date>\n')
 	self.emit_single_element('year', yr, to)
@@ -825,7 +825,7 @@ t_ignore  = ' \t\r'
 # Error handling rule
 def t_error(t):
     print "Illegal character '%s', line %d" % (t.value[0], t.lineno)
-    t.skip(1)
+    t.lexer.skip(1)
 
 #-----------------------------------------------------------------------
 # Main, test
@@ -834,7 +834,7 @@ def t_error(t):
 def main():
 
     def usage():
-	sys.stderr.write('%s $Revision$\n' % sys.argv[0])
+	sys.stderr.write('%s $Revision: 2e39c16b3edc $\n' % sys.argv[0])
 	sys.stderr.write('usage: cat2raw.py [flags] [input cat file]\n')
 	sys.stderr.write('flags:\n')
 	sys.stderr.write('-h, --help:              '
