@@ -19,16 +19,22 @@
 --  exception does not however invalidate any other reasons why the
 --  executable file might be covered by the GNU Public License.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-simulation_time.adb,v $
+--  $Revision: 3e05c55ab570 $
+--  $Date: 2011/07/17 22:15:01 $
+--  $Author: simonjwright $
 
 package body ColdFrame.Simulation_Time is
 
    Running : Boolean := False;
 
    Start_Time : Ada.Real_Time.Time;
+
+
+   function Zero return Time is
+   begin
+      return 0.0;
+   end Zero;
 
 
    function Clock return Time is
