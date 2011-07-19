@@ -12,11 +12,11 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+--  $Id: Interrupt_Handling.gpr,v 8d10f2c82162 2011/07/19 19:56:33 simonjwright $
 
 with "Options";
 with "ColdFrame";
-with "BC";
+with "bc";
 
 project Interrupt_Handling is
 
