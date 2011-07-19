@@ -8,10 +8,10 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3F5611DF02F9"
-    documentation 	
+    documentation
 |Contains ColdFrame regression tests.
-|{ revision = $Revision$}
-    
+|{ revision = $Revision: 5c5c8b911769 $}
+
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class_Category "Find hangs for active classes"
@@ -1690,11 +1690,11 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Protected types and access"
 	    quid       	"3EE060C102C5"
-	    documentation 	
+	    documentation
 |This Domain demonstrates some rather repellent uses of protected types.
 |
-|{ revision = $Version$ }
-	    
+|{ revision = $Revision: 5c5c8b911769 $ }
+
 	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -1718,13 +1718,13 @@
 			    quidu      	"4149544A02EB")))
 		(object Class "PT Holder"
 		    quid       	"4149544A02EB"
-		    documentation 	
+		    documentation
 |This is a demonstration of a protected type with access.
 |
 |The type might be used to hold data that's being written by several threads, to help ensure that the state, as viewed from the outside, is always consistent.
 |
 |{ access = PT Holder P }
-		    
+
 		    stereotype 	"protected"
 		    operations 	(list Operations
 			(object Operation "set state"
@@ -1994,10 +1994,10 @@
 		    class_attributes 	(list class_attribute_list
 			(object ClassAttribute "preempts"
 			    quid       	"42AD5A9101CA"
-			    documentation 	
+			    documentation
 |This governs whether the Preemptable Test (A) that "conflicts with and may preempt" the other Preemptable Test (B) does in fact preempt.
 |If it is False, a new instance of A can't preempt and has to wait until any current instance of B has finished
-			    
+
 			    type       	"Boolean")))
 		(object Class "Test Name"
 		    quid       	"42AE85AE0159"
@@ -2777,18 +2777,18 @@
 	    logical_models 	(list unit_reference_list
 		(object Class "Enum Array"
 		    quid       	"417A6EAF01A5"
-		    documentation 	
+		    documentation
 |{ array = Enum, index = Boolean,
 |   serializable }
-		    
+
 		    stereotype 	"type")
 		(object Class "S Record Array"
 		    quid       	"417A6EE20035"
-		    documentation 	
+		    documentation
 |{ array = S Record,
 |   index = S Record Array Index,
 |   serializable }
-		    
+
 		    stereotype 	"type")
 		(object Class "S Record Array Index"
 		    quid       	"417A6F0B00F3"
@@ -3087,10 +3087,10 @@
 			    type       	"Duration")))
 		(object Class "Enum"
 		    quid       	"3FA1EFE202CC"
-		    documentation 	
+		    documentation
 |{ enumeration = a | b | c,
 |   serializable }
-		    
+
 		    stereotype 	"type"))
 	    logical_presentations 	(list unit_reference_list))
 	(object Class_Category "Access operations of protected types"
@@ -3184,11 +3184,11 @@
 	    logical_models 	(list unit_reference_list
 		(object Class "Constrained Boolean"
 		    quid       	"427D08800267"
-		    documentation 	
+		    documentation
 |{ constrains = Boolean |
 |   lower True |
 |   upper True }
-		    
+
 		    stereotype 	"type")
 		(object Class "Furlongs"
 		    quid       	"427D08C3010E"
@@ -3196,15 +3196,15 @@
 		    stereotype 	"type")
 		(object Class "Constrained Furlongs"
 		    quid       	"427D08ED039A"
-		    documentation 	
+		    documentation
 |{ constrains = Furlongs |
 |   lower 0.0 |
 |   upper 1_000.0 }
-		    
+
 		    stereotype 	"type")
 		(object Class "Day Name"
 		    quid       	"427D092D014D"
-		    documentation 	
+		    documentation
 |{ enumeration =
 |   Sunday |
 |   Monday |
@@ -3213,29 +3213,29 @@
 |   Thursday |
 |   Friday |
 |   Saturday }
-		    
+
 		    stereotype 	"type")
 		(object Class "Weekday Name"
 		    quid       	"427D09B001CD"
-		    documentation 	
+		    documentation
 |{ constrains = Day Name |
 |   lower Monday |
 |   upper Friday }
-		    
+
 		    stereotype 	"type")
 		(object Class "Up To Friday"
 		    quid       	"427E6D1F000F"
-		    documentation 	
+		    documentation
 |{ constrains = Day Name |
 |   upper Friday }
-		    
+
 		    stereotype 	"type")
 		(object Class "From Monday"
 		    quid       	"427E6D31006F"
-		    documentation 	
+		    documentation
 |{ constrains = Day Name |
 |   lower Monday }
-		    
+
 		    stereotype 	"type"))
 	    logical_presentations 	(list unit_reference_list
 		(object ClassDiagram "Main"
@@ -3897,10 +3897,10 @@
 			    autoResize 	TRUE)))))
 	(object Class_Category "Completion After Final"
 	    quid       	"4449CEB803B2"
-	    documentation 	
+	    documentation
 |Checks for completion transitions to the final state after final actions.
 |
-	    
+
 	    stereotype 	"include"
 	    exportControl 	"Public"
 	    logical_models 	(list unit_reference_list
@@ -4353,10 +4353,10 @@
 	(object ClassDiagram "Main"
 	    quid       	"3F56120303B9"
 	    title      	"Main"
-	    documentation 	
+	    documentation
 |Contains ColdFrame regression tests.
-|{ revision = $Revision$}
-	    
+|{ revision = $Revision: 5c5c8b911769 $}
+
 	    zoom       	68
 	    max_height 	28350
 	    max_width  	21600
@@ -4401,7 +4401,7 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1589
-		    label      	"$Id$")
+		    label      	"$Id: Regressions.cat,v 5c5c8b911769 2011/07/19 21:28:02 simonjwright $")
 		(object CategoryView "Logical View::Regressions::Find hangs for active classes" @119
 		    location   	(301, 318)
 		    font       	(object Font

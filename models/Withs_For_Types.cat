@@ -8,12 +8,12 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"441F967100C1"
-    documentation 	
+    documentation
 |Contains tests for domain-level 'withs' for type attributes and type operation parameters/returns.
 |
-|{revision=$Id$}
+|{ revision = $Revision: 5c5c8b911769 $ }
 |
-    
+
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class_Category "Withs.Attributes"

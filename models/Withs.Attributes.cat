@@ -8,11 +8,11 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"441F96EF01D1"
-    documentation 	
+    documentation
 |Domain for testing withing triggered by type attributes.
-|{revision=$Id$}
+|{ revision = $Revision: 5c5c8b911769 $ }
 |
-    
+
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "C"

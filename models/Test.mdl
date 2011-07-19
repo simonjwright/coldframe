@@ -171,9 +171,9 @@
 			    default_color 	TRUE)
 			nlines     	2
 			max_width  	1211
-			label      	
+			label
 |These packages are part of ColdFrame's test suite.
-|$Id$
+|$Revision: 5c5c8b911769 $
 			)
 		    (object CategoryView "Logical View::Regressions" @4
 			location   	(395, 1438)

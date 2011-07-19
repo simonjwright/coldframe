@@ -8,12 +8,12 @@
     is_unit    	TRUE
     is_loaded  	TRUE
     quid       	"3C4EDCDC028A"
-    documentation 	
+    documentation
 |This demonstration shows how ColdFrame's support for messages and state machines might be used for a protocol manager.
 |
-|[[ revision : $Id$ ]]
+|{ revision = $Revision: 5c5c8b911769 $ }
 |
-    
+
     exportControl 	"Public"
     logical_models 	(list unit_reference_list
 	(object Class "Monitor"
@@ -109,11 +109,11 @@
 			type       	"StartState")
 		    (object State "warmup"
 			quid       	"3C5176450389"
-			documentation 	
+			documentation
 |The Warmup state indicates that the Monitor has started. If no Heartbeat occurs within the standard timeout, the Monitor enters the Failed state.
 |
 |Normally, a Heartbeat causes the Monitor to enter the First_Heartbeat state.
-			
+
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C5182FF0348"
@@ -187,13 +187,13 @@
 			type       	"Normal")
 		    (object State "working"
 			quid       	"3C51768603B6"
-			documentation 	
+			documentation
 |The monitored device is (deemed to be) working correctly.
 |
 |While Heartbeats continue, the Monitor alternates between this state and Received_Heartbeat.
 |
 |If Heartbeats stop, a Heartbeat_Timeout will transition to the Failed state.
-			
+
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51771E00C6"
@@ -236,13 +236,13 @@
 			type       	"Normal")
 		    (object State "recovery"
 			quid       	"3C517765023F"
-			documentation 	
+			documentation
 |After there has been a failure, the Device must produce Heartbeats for 6 seconds before it's deemed to be working.
 |
 |Clearly there can be further 3-second heartbeat timeouts before recovery is achieved; if the Heartbeat which led to this state is not followed by further Heartbeats, a Heartbeat_Timeout occurs and the state transitions to Failed_Recovery.
 |
 |If a Heartbeat does occur, the state transitions to Recovering.
-			
+
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C51783402D4"
@@ -331,13 +331,13 @@
 			type       	"Normal")
 		    (object State "first heartbeat"
 			quid       	"3C5182EE0220"
-			documentation 	
+			documentation
 |In this state, the Monitor has received one Heartbeat since starting.
 |
 |After 2 seconds, the Monitor enters the Working state.
 |
 |If a Heartbeat occurs, the Monitor enters the Warming state to consume any further Heartbeats without affecting the warmup timeout.
-			
+
 			transitions 	(list transition_list
 			    (object State_Transition
 				quid       	"3C518376008D"
@@ -1406,11 +1406,11 @@
 				x_offset   	FALSE))))))
 	(object Class "Device"
 	    quid       	"3C74FFF7019E"
-	    documentation 	
+	    documentation
 |Represents the two devices to be monitored.
 |
 |[[ enumeration : input, output ]]
-	    
+
 	    stereotype 	"type"))
     logical_presentations 	(list unit_reference_list
 	(object ClassDiagram "Main"
