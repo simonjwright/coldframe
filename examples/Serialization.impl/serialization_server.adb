@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: serialization_server.adb,v $
+--  $Revision: 0521d114696b $
+--  $Date: 2011/07/19 17:48:15 $
+--  $Author: simonjwright $
 
 --  This program receives and decodes TCP packets of type
 --  ColdFrame.Serialization.Base'Class, using port 40673.
@@ -44,7 +44,9 @@ begin
 
    GNAT.IO.Set_Output (GNAT.IO.Standard_Error);
 
+   pragma Warnings (Off, "explicit initialization is no longer required");
    GNAT.Sockets.Initialize;
+   pragma Warnings (On, "explicit initialization is no longer required");
 
    GNAT.Sockets.Create_Socket (Server_Socket,
                                GNAT.Sockets.Family_Inet,
