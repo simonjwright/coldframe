@@ -11,7 +11,7 @@
     documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
 |
-|{ revision = $Revision$ }
+|{ revision = $Revision: f9aa84fdea1e $ }
 |
     
     exportControl 	"Public"
@@ -58,7 +58,7 @@
 	    used_nodes 	(list uses_relationship_list
 		(object Uses_Relationship
 		    quid       	"3E2F1B0C0001"
-		    supplier   	"Logical View::ColdFrame Examples::Serialization::Serializable Base"
+		    supplier   	"Logical View::Serialization::Serializable Base"
 		    quidu      	"3E2F1AE503A9")))
 	(object Class "Port"
 	    quid       	"3E2F07AA0237"
@@ -77,7 +77,7 @@
 		    quid       	"3E2F0B29023E"
 		    stereotype 	"instance event"
 		    label      	"posted value"
-		    supplier   	"Logical View::ColdFrame Examples::Serialization::Buffer"
+		    supplier   	"Logical View::Serialization::Buffer"
 		    quidu      	"3E2F731801B9"))
 	    operations 	(list Operations
 		(object Operation "create"
@@ -342,7 +342,7 @@
 				    default_color 	TRUE)
 				nlines     	1
 				max_width  	1145
-				label      	"$Id$")))))
+				label      	"$Id: Serialization.cat,v f9aa84fdea1e 2011/07/19 17:54:22 simonjwright $")))))
 	    cardinality 	(value Cardinality "0..1"))
 	(object Class "Use Error"
 	    quid       	"3E2F09250015"
@@ -381,739 +381,16 @@
 	    
 	    stereotype 	"type")
 	(object Class_Category "Serialization Demo"
-	    quid       	"3E2F8EF4019F"
-	    documentation 	
-|This domain is a demonstration of Serialization's facilities.
-|It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
-|
-|{ revision = $Revision$ }
-	    
-	    exportControl 	"Public"
-	    logical_models 	(list unit_reference_list
-		(object Class "Sample A"
-		    quid       	"3E2F8FA00319"
-		    documentation 	"{ serializable }"
-		    stereotype 	"type"
-		    operations 	(list Operations
-			(object Operation "image"
-			    quid       	"3E60F9190089"
-			    documentation 	"This operation is generated in the Serializable child package."
-			    stereotype 	"generated"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0))
-		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "i"
-			    quid       	"3E2F8FD20126"
-			    type       	"Integer")
-			(object ClassAttribute "f"
-			    quid       	"3E2F901201FA"
-			    type       	"Float")
-			(object ClassAttribute "b"
-			    quid       	"3E2F8FDA0290"
-			    type       	"Boolean")
-			(object ClassAttribute "d"
-			    quid       	"3E2F8FE203E6"
-			    type       	"Duration")
-			(object ClassAttribute "t"
-			    quid       	"3E2F8FE80178"
-			    type       	"Time")
-			(object ClassAttribute "u"
-			    quid       	"3E3D0A4B02ED"
-			    type       	"Text")
-			(object ClassAttribute "n"
-			    quid       	"3E3D0D7801BF"
-			    type       	"Name String"
-			    quidu      	"3E3D0A6E0030")
-			(object ClassAttribute "r"
-			    quid       	"3F60CFBF0351"
-			    type       	"Recordable Real Time"
-			    quidu      	"3E553AC9035D")
-			(object ClassAttribute "r1"
-			    quid       	"410292A301F5"
-			    type       	"Record Type 1")
-			(object ClassAttribute "ra"
-			    quid       	"410292AD00C3"
-			    type       	"Record Type A"
-			    quidu      	"4102925C03B5")
-			(object ClassAttribute "c"
-			    quid       	"41FB30350353"
-			    type       	"Characters"
-			    quidu      	"41FB2FF90003")))
-		(object Class "Name String"
-		    quid       	"3E3D0A6E0030"
-		    documentation 	
-|{ string = max 32 }
-|
-		    
-		    stereotype 	"type")
-		(object Class "Real Time"
-		    quid       	"3E5533DD01B1"
-		    documentation 	
-|{ renames = Ada.Real_Time.Time,
-|  field-image = Real Time Image,
-|  serializable}
-		    
-		    stereotype 	"type"
-		    operations 	(list Operations
-			(object Operation "real time image"
-			    quid       	"3E5534BE00A6"
-			    parameters 	(list Parameters
-				(object Parameter "v"
-				    quid       	"3E5534DC01F3"
-				    type       	"Real Time"
-				    quidu      	"3E5533DD01B1")
-				(object Parameter "n"
-				    quid       	"3E6092530356"
-				    type       	"String"))
-			    result     	"String"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0)
-			(object Operation "image"
-			    quid       	"3E60FA3E0135"
-			    stereotype 	"generated"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0)))
-		(object Class "Recordable Real Time"
-		    quid       	"3E553AC9035D"
-		    documentation 	"{ serializable }"
-		    stereotype 	"type"
-		    operations 	(list Operations
-			(object Operation "image"
-			    quid       	"3E60FA3802EF"
-			    stereotype 	"generated"
-			    concurrency 	"Sequential"
-			    opExportControl 	"Public"
-			    uid        	0))
-		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "t"
-			    quid       	"3E553AEE0067"
-			    type       	"Real Time"
-			    quidu      	"3E5533DD01B1")))
-		(object Class "Record Type 1"
-		    quid       	"4102921D0365"
-		    documentation 	
-|{ imported = Serialization Demo Other,
-|  serializable-there}
-		    
-		    stereotype 	"type")
-		(object Class "Record Type A"
-		    quid       	"4102925C03B5"
-		    documentation 	
-|{ renames = Serialization Demo Other.Record Type 2,
-|  serializable-there}
-		    
-		    stereotype 	"type")
-		(object Class "Unsigned 16"
-		    quid       	"414F044D0056"
-		    documentation 	
-|{ imported = Interfaces,
-|  serializable }
-		    
-		    stereotype 	"type")
-		(object Class "Characters"
-		    quid       	"41FB2FF90003"
-		    documentation 	
-|{ array = Character,
-|  index = Boolean,
-|  serializable }
-		    
-		    stereotype 	"type"))
-	    logical_presentations 	(list unit_reference_list
-		(object ClassDiagram "Main"
-		    quid       	"3E2F8F97001D"
-		    title      	"Main"
-		    documentation 	
-|This domain is a demonstration of Serialization's facilities.
-|It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
-|
-|{ revision = $Revision$ }
-		    
-		    zoom       	100
-		    max_height 	28350
-		    max_width  	21600
-		    origin_x   	1136
-		    origin_y   	0
-		    items      	(list diagram_item_list
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Sample A" @9
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(391, 481)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@9
-				location   	(293, 431)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Sample A")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@9
-				location   	(293, 387)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Label"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"3E2F8FA00319"
-			    width      	214
-			    height     	210
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Name String" @10
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(301, 1002)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@10
-				location   	(203, 953)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Name String")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@10
-				location   	(203, 909)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"3E3D0A6E0030"
-			    width      	214
-			    height     	208
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Real Time" @11
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(1336, 826)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@11
-				location   	(1238, 776)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Real Time")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@11
-				location   	(1238, 732)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"3E5533DD01B1"
-			    width      	214
-			    height     	210
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Recordable Real Time" @12
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(1314, 279)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@12
-				location   	(1185, 229)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	258
-				justify    	0
-				label      	"Recordable Real Time")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@12
-				location   	(1185, 185)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	258
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"3E553AC9035D"
-			    width      	276
-			    height     	210
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object CategoryView "Logical View::ColdFrame Examples::Serialization::Serialization Demo" @13
-			    location   	(1347, 1600)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@13
-				location   	(1203, 1516)
-				fill_color 	13434879
-				nlines     	2
-				max_width  	288
-				justify    	0
-				label      	"Serialization Demo")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"3E2F8EF4019F"
-			    width      	300
-			    height     	180)
-			(object NoteView @14
-			    location   	(581, 1599)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@14
-				location   	(253, 1508)
-				fill_color 	13434879
-				nlines     	4
-				max_width  	620
-				label      	"I've included this on its own diagram to make code generation easier -- you don't have to leave this diagram.")
-			    line_color 	3342489
-			    fill_color 	13434879
-			    width      	680
-			    height     	195)
-			(object AttachView "" @15
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    client     	@14
-			    supplier   	@13
-			    line_style 	0)
-			(object Label @16
-			    location   	(180, 2123)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    nlines     	1
-			    max_width  	1905
-			    label      	"$Id$")
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Record Type 1" @17
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(2245, 398)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@17
-				location   	(2147, 349)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Record Type 1")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@17
-				location   	(2147, 305)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"4102921D0365"
-			    width      	214
-			    height     	208
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Record Type A" @18
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(2251, 720)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@18
-				location   	(2153, 671)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Record Type A")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@18
-				location   	(2153, 627)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"4102925C03B5"
-			    width      	214
-			    height     	208
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Unsigned 16" @19
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(1333, 1150)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@19
-				location   	(1235, 1101)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Unsigned 16")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@19
-				location   	(1235, 1057)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"414F044D0056"
-			    width      	214
-			    height     	208
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo::Characters" @20
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(2228, 1135)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@20
-				location   	(2130, 1086)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Characters")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@20
-				location   	(2130, 1042)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"41FB2FF90003"
-			    width      	214
-			    height     	208
-			    annotation 	8
-			    autoResize 	TRUE)))))
+	    is_unit    	TRUE
+	    is_loaded  	FALSE
+	    file_name  	"$CURDIR\\Serialization_Demo.cat"
+	    quid       	"3E2F8EF4019F")
 	(object Class_Category "Serialization Demo Other"
-	    quid       	"4102908400D2"
-	    documentation 	
-|This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
-|It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
-|
-|{ revision = $Revision$ }
-	    
-	    exportControl 	"Public"
-	    logical_models 	(list unit_reference_list
-		(object Class "Record Type 1"
-		    quid       	"41029171000A"
-		    documentation 	"{ serializable }"
-		    stereotype 	"type"
-		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "X"
-			    quid       	"410291BA00EB"
-			    type       	"Integer")))
-		(object Class "Record Type 2"
-		    quid       	"41029183020F"
-		    documentation 	"{ serializable }"
-		    stereotype 	"type"
-		    class_attributes 	(list class_attribute_list
-			(object ClassAttribute "Y"
-			    quid       	"410291C501B0"
-			    type       	"Integer"))))
-	    logical_presentations 	(list unit_reference_list
-		(object ClassDiagram "Main"
-		    quid       	"410291140043"
-		    title      	"Main"
-		    documentation 	
-|This domain is part of a demonstration of Serialization's facilities. It provides types which are serializable in their own right and which are imported by Serialization Demo.
-|It is to be extracted separately from the main Serialization package (that's why it's not marked <<generate>>).
-|
-|{ revision = $Revision$ }
-		    
-		    zoom       	100
-		    max_height 	28350
-		    max_width  	21600
-		    origin_x   	0
-		    origin_y   	293
-		    items      	(list diagram_item_list
-			(object Label @21
-			    location   	(198, 1685)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    nlines     	1
-			    max_width  	1905
-			    label      	"$Id$")
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo Other::Record Type 1" @22
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(524, 729)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@22
-				location   	(426, 679)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Record Type 1")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@22
-				location   	(426, 635)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"41029171000A"
-			    width      	214
-			    height     	210
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serialization Demo Other::Record Type 2" @23
-			    ShowCompartmentStereotypes 	TRUE
-			    IncludeAttribute 	TRUE
-			    IncludeOperation 	TRUE
-			    ShowOperationSignature 	TRUE
-			    location   	(1221, 733)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@23
-				location   	(1123, 683)
-				fill_color 	13434879
-				nlines     	1
-				max_width  	196
-				justify    	0
-				label      	"Record Type 2")
-			    stereotype 	(object ItemLabel
-				Parent_View 	@23
-				location   	(1123, 639)
-				fill_color 	13434879
-				anchor     	10
-				nlines     	1
-				max_width  	193
-				justify    	0
-				label      	"<<type>>")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	16777088
-			    quidu      	"41029183020F"
-			    width      	214
-			    height     	210
-			    annotation 	8
-			    autoResize 	TRUE)
-			(object CategoryView "Logical View::ColdFrame Examples::Serialization::Serialization Demo Other" @24
-			    location   	(1246, 1328)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@24
-				location   	(1102, 1244)
-				fill_color 	13434879
-				nlines     	2
-				max_width  	288
-				justify    	0
-				label      	"Serialization Demo Other")
-			    icon_style 	"Icon"
-			    line_color 	3342489
-			    fill_color 	13434879
-			    quidu      	"4102908400D2"
-			    width      	300
-			    height     	180)
-			(object NoteView @25
-			    location   	(601, 1334)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    label      	(object ItemLabel
-				Parent_View 	@25
-				location   	(273, 1243)
-				fill_color 	13434879
-				nlines     	4
-				max_width  	620
-				label      	"I've included this on its own diagram to make code generation easier -- you don't have to leave this diagram.")
-			    line_color 	3342489
-			    fill_color 	13434879
-			    width      	680
-			    height     	195)
-			(object AttachView "" @26
-			    stereotype 	TRUE
-			    line_color 	3342489
-			    client     	@25
-			    supplier   	@24
-			    line_style 	0)))))
-	(object Mechanism @27
+	    is_unit    	TRUE
+	    is_loaded  	FALSE
+	    file_name  	"$CURDIR\\Serialization_Demo_Other.cat"
+	    quid       	"4102908400D2")
+	(object Mechanism @9
 	    logical_models 	(list unit_reference_list
 		(object Object "client"
 		    quid       	"3E60F3EA03A2"
@@ -1203,7 +480,7 @@
 				    ordinal    	7
 				    quidu      	"000000000000"
 				    creation   	FALSE))))
-		    class      	"Logical View::ColdFrame Examples::Serialization::Interface"
+		    class      	"Logical View::Serialization::Interface"
 		    quidu      	"3E2F068B0072"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -1252,7 +529,7 @@
 			    quid       	"3E60F5F703E3"
 			    supplier   	"$UNNAMED$4"
 			    quidu      	"3E60F4E70233"))
-		    class      	"Logical View::ColdFrame Examples::Serialization::Server"
+		    class      	"Logical View::Serialization::Server"
 		    quidu      	"3E2F091700DE"
 		    persistence 	"Transient"
 		    creationObj 	FALSE
@@ -1293,7 +570,7 @@
 		    multi      	FALSE)
 		(object Object "$UNNAMED$2"
 		    quid       	"3E60F44E02BF"
-		    class      	"Logical View::ColdFrame Examples::Serialization::Serialization Demo::Sample A"
+		    class      	"Logical View::Serialization::Serialization Demo::Sample A"
 		    quidu      	"3E2F8FA00319"
 		    persistence 	"Transient"
 		    creationObj 	TRUE
@@ -1347,14 +624,14 @@
 		    multi      	FALSE)
 		(object Object "$UNNAMED$4"
 		    quid       	"3E60F4E70233"
-		    class      	"Logical View::ColdFrame Examples::Serialization::Buffer"
+		    class      	"Logical View::Serialization::Buffer"
 		    quidu      	"3E2F731801B9"
 		    persistence 	"Transient"
 		    creationObj 	TRUE
 		    multi      	FALSE)
 		(object Object "$UNNAMED$5"
 		    quid       	"3E60F850015C"
-		    class      	"Logical View::ColdFrame Examples::Serialization::Serialization Demo::Sample A"
+		    class      	"Logical View::Serialization::Serialization Demo::Sample A"
 		    quidu      	"3E2F8FA00319"
 		    persistence 	"Transient"
 		    creationObj 	TRUE
@@ -1366,16 +643,16 @@
 	    documentation 	
 |This domain is a demonstration of the "serialization" features of ColdFrame.
 |
-|{ revision = $Revision$ }
+|{ revision = $Revision: f9aa84fdea1e $ }
 |
 	    
 	    zoom       	100
 	    max_height 	28350
 	    max_width  	21600
 	    origin_x   	375
-	    origin_y   	105
+	    origin_y   	106
 	    items      	(list diagram_item_list
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Interface" @28
+		(object ClassView "Class" "Logical View::Serialization::Interface" @10
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1391,31 +668,48 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@28
-			location   	(784, 355)
+			Parent_View 	@10
+			location   	(513, 321)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	216
+			max_width  	758
 			justify    	0
 			label      	"Interface")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@28
-			location   	(784, 311)
+			Parent_View 	@10
+			location   	(513, 271)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	216
+			max_width  	758
 			justify    	0
 			label      	"<<public>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	8454016
 		    quidu      	"3E2F068B0072"
-		    width      	234
-		    height     	210
+		    compartment 	(object Compartment
+			Parent_View 	@10
+			location   	(513, 382)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	3
+			max_width  	756)
+		    width      	776
+		    height     	292
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serializable" @29
+		(object ClassView "Class" "Logical View::Serialization::Serializable" @11
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1431,31 +725,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@29
-			location   	(2162, 415)
+			Parent_View 	@11
+			location   	(2154, 411)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	196
+			max_width  	212
 			justify    	0
 			label      	"Serializable")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@29
-			location   	(2162, 371)
+			Parent_View 	@11
+			location   	(2154, 361)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	193
+			max_width  	210
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F06E600AF"
-		    width      	214
-		    height     	208
+		    width      	230
+		    height     	230
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Port" @30
+		(object ClassView "Class" "Logical View::Serialization::Port" @12
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1471,31 +765,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@30
-			location   	(2187, 1134)
+			Parent_View 	@12
+			location   	(2180, 1109)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	186
+			max_width  	200
 			justify    	0
 			label      	"Port")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@30
-			location   	(2187, 1090)
+			Parent_View 	@12
+			location   	(2180, 1059)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	184
+			max_width  	198
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F07AA0237"
-		    width      	204
-		    height     	166
+		    width      	218
+		    height     	230
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Server" @31
+		(object ClassView "Class" "Logical View::Serialization::Server" @13
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1511,21 +805,39 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@31
-			location   	(855, 1124)
+			Parent_View 	@13
+			location   	(339, 987)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	162
+			max_width  	1194
 			justify    	0
 			label      	"Server")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E2F091700DE"
-		    height     	160
+		    compartment 	(object Compartment
+			Parent_View 	@13
+			location   	(339, 1048)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	16777215
+			anchor     	2
+			nlines     	6
+			max_width  	1191)
+		    width      	1212
+		    height     	436
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Use Error" @32
+		(object ClassView "Class" "Logical View::Serialization::Use Error" @14
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1541,31 +853,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@32
-			location   	(2563, 323)
+			Parent_View 	@14
+			location   	(2561, 319)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	290
+			max_width  	294
 			justify    	0
 			label      	"Use Error")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@32
-			location   	(2563, 279)
+			Parent_View 	@14
+			location   	(2561, 269)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	288
+			max_width  	292
 			justify    	0
 			label      	"<<exception>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	8454143
 		    quidu      	"3E2F09250015"
-		    width      	308
-		    height     	208
+		    width      	312
+		    height     	230
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Socket" @33
+		(object ClassView "Class" "Logical View::Serialization::Socket" @15
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1581,31 +893,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@33
-			location   	(2186, 1343)
+			Parent_View 	@15
+			location   	(2173, 1339)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	186
+			max_width  	212
 			justify    	0
 			label      	"Socket")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@33
-			location   	(2186, 1299)
+			Parent_View 	@15
+			location   	(2173, 1289)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	184
+			max_width  	210
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F09E80110"
-		    width      	204
-		    height     	208
+		    width      	230
+		    height     	230
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Stream Access" @34
+		(object ClassView "Class" "Logical View::Serialization::Stream Access" @16
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1621,31 +933,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@34
-			location   	(2187, 1610)
+			Parent_View 	@16
+			location   	(2189, 1605)
 			fill_color 	13434879
-			nlines     	1
-			max_width  	206
+			nlines     	2
+			max_width  	202
 			justify    	0
 			label      	"Stream Access")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@34
-			location   	(2187, 1566)
+			Parent_View 	@16
+			location   	(2189, 1555)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	206
+			max_width  	202
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F0A22027C"
-		    width      	224
-		    height     	208
+		    width      	220
+		    height     	232
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object NoteView @35
+		(object NoteView @17
 		    location   	(939, 1674)
 		    font       	(object Font
 			size       	10
@@ -1657,7 +969,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@35
+			Parent_View 	@17
 			location   	(659, 1615)
 			fill_color 	13434879
 			nlines     	2
@@ -1668,7 +980,7 @@
 		    width      	585
 		    height     	130
 		    quidu      	"3E2F0B750175")
-		(object Label @36
+		(object Label @18
 		    location   	(245, 2258)
 		    font       	(object Font
 			size       	10
@@ -1681,14 +993,14 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1145
-		    label      	"$Id$")
-		(object AttachView "" @37
+		    label      	"$Id: Serialization.cat,v f9aa84fdea1e 2011/07/19 17:54:22 simonjwright $")
+		(object AttachView "" @19
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@31
-		    supplier   	@35
+		    client     	@13
+		    supplier   	@17
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Serializable Base" @38
+		(object ClassView "Class" "Logical View::Serialization::Serializable Base" @20
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1704,38 +1016,38 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@38
-			location   	(2085, 187)
+			Parent_View 	@20
+			location   	(2078, 185)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	350
+			max_width  	364
 			justify    	0
 			label      	"Serializable Base")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@38
-			location   	(2085, 143)
+			Parent_View 	@20
+			location   	(2078, 135)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	350
+			max_width  	364
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F1AE503A9"
-		    width      	368
-		    height     	164
+		    width      	382
+		    height     	182
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object UsesView "" @39
+		(object UsesView "" @21
 		    stereotype 	TRUE
 		    line_color 	3342489
 		    quidu      	"3E2F1B0C0001"
-		    client     	@29
-		    supplier   	@38
+		    client     	@11
+		    supplier   	@20
 		    line_style 	0)
-		(object ClassView "Class" "Logical View::ColdFrame Examples::Serialization::Buffer" @40
+		(object ClassView "Class" "Logical View::Serialization::Buffer" @22
 		    ShowCompartmentStereotypes 	TRUE
 		    IncludeAttribute 	TRUE
 		    IncludeOperation 	TRUE
@@ -1751,31 +1063,31 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@40
-			location   	(2187, 670)
+			Parent_View 	@22
+			location   	(2180, 668)
 			fill_color 	13434879
 			nlines     	1
-			max_width  	166
+			max_width  	180
 			justify    	0
 			label      	"Buffer")
 		    stereotype 	(object ItemLabel
-			Parent_View 	@40
-			location   	(2187, 626)
+			Parent_View 	@22
+			location   	(2180, 618)
 			fill_color 	13434879
 			anchor     	10
 			nlines     	1
-			max_width  	166
+			max_width  	178
 			justify    	0
 			label      	"<<type>>")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	16777088
 		    quidu      	"3E2F731801B9"
-		    width      	184
-		    height     	164
+		    width      	198
+		    height     	182
 		    annotation 	8
 		    autoResize 	TRUE)
-		(object UsesView "posted value" @41
+		(object UsesView "posted value" @23
 		    font       	(object Font
 			size       	10
 			face       	"Arial"
@@ -1786,16 +1098,16 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@41
-			location   	(1601, 945)
+			Parent_View 	@23
+			location   	(1846, 853)
 			anchor_loc 	1
 			nlines     	1
 			max_width  	450
 			justify    	0
 			label      	"posted value")
-		    stereotype 	(object SegLabel @42
-			Parent_View 	@41
-			location   	(1495, 879)
+		    stereotype 	(object SegLabel @24
+			Parent_View 	@23
+			location   	(1740, 778)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1816,10 +1128,10 @@
 			orientation 	0)
 		    line_color 	3342489
 		    quidu      	"3E2F0B29023E"
-		    client     	@31
-		    supplier   	@40
+		    client     	@13
+		    supplier   	@22
 		    line_style 	0)
-		(object CategoryView "Logical View::ColdFrame Examples::Serialization::Serialization Demo" @43
+		(object CategoryView "Logical View::Serialization::Serialization Demo" @25
 		    location   	(2162, 2045)
 		    font       	(object Font
 			size       	10
@@ -1831,7 +1143,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@43
+			Parent_View 	@25
 			location   	(2018, 1961)
 			fill_color 	13434879
 			nlines     	2
@@ -1844,7 +1156,7 @@
 		    quidu      	"3E2F8EF4019F"
 		    width      	300
 		    height     	180)
-		(object CategoryView "Logical View::ColdFrame Examples::Serialization" @44
+		(object CategoryView "Logical View::Serialization" @26
 		    location   	(1710, 2047)
 		    font       	(object Font
 			size       	10
@@ -1856,20 +1168,20 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@44
-			location   	(1566, 1963)
+			Parent_View 	@26
+			location   	(1537, 1963)
 			fill_color 	13434879
 			nlines     	2
-			max_width  	288
+			max_width  	346
 			justify    	0
 			label      	"Serialization")
 		    icon_style 	"Label"
 		    line_color 	3342489
 		    fill_color 	13434879
 		    quidu      	"3E2D8741003A"
-		    width      	300
+		    width      	358
 		    height     	180)
-		(object NoteView @45
+		(object NoteView @27
 		    location   	(2063, 2401)
 		    font       	(object Font
 			size       	10
@@ -1881,7 +1193,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@45
+			Parent_View 	@27
 			location   	(1843, 2342)
 			fill_color 	13434879
 			nlines     	2
@@ -1891,19 +1203,19 @@
 		    fill_color 	13434879
 		    width      	465
 		    height     	130)
-		(object AttachView "" @46
+		(object AttachView "" @28
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@45
-		    supplier   	@44
+		    client     	@27
+		    supplier   	@26
 		    line_style 	0)
-		(object AttachView "" @47
+		(object AttachView "" @29
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@45
-		    supplier   	@43
+		    client     	@27
+		    supplier   	@25
 		    line_style 	0)
-		(object NoteView @48
+		(object NoteView @30
 		    location   	(939, 2054)
 		    font       	(object Font
 			size       	10
@@ -1915,7 +1227,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@48
+			Parent_View 	@30
 			location   	(664, 1988)
 			fill_color 	13434879
 			nlines     	3
@@ -1926,7 +1238,7 @@
 		    width      	575
 		    height     	145
 		    quidu      	"3E60F3D802AC")
-		(object CategoryView "Logical View::ColdFrame Examples::Serialization::Serialization Demo Other" @49
+		(object CategoryView "Logical View::Serialization::Serialization Demo Other" @31
 		    location   	(2514, 2045)
 		    font       	(object Font
 			size       	10
@@ -1938,7 +1250,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@49
+			Parent_View 	@31
 			location   	(2370, 1961)
 			fill_color 	13434879
 			nlines     	2
@@ -1951,14 +1263,14 @@
 		    quidu      	"4102908400D2"
 		    width      	300
 		    height     	180)
-		(object AttachView "" @50
+		(object AttachView "" @32
 		    stereotype 	TRUE
 		    line_color 	3342489
-		    client     	@45
-		    supplier   	@49
+		    client     	@27
+		    supplier   	@31
 		    line_style 	0)))
 	(object InteractionDiagram "Operation"
-	    mechanism_ref 	@27
+	    mechanism_ref 	@9
 	    quid       	"3E60F3D802AC"
 	    title      	"Operation"
 	    zoom       	77
@@ -1967,7 +1279,7 @@
 	    origin_x   	0
 	    origin_y   	208
 	    items      	(list diagram_item_list
-		(object InterObjView "client" @51
+		(object InterObjView "client" @33
 		    location   	(1097, 225)
 		    font       	(object Font
 			size       	10
@@ -1979,7 +1291,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@51
+			Parent_View 	@33
 			location   	(1097, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -1992,26 +1304,26 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3EA03A2"
 		    width      	300
-		    height     	2914
+		    height     	2944
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @52
+		    Focus_Of_Control 	(object Focus_Of_Control "" @34
 			location   	(1097, 594)
 			line_color 	3342489
-			InterObjView 	@51
+			InterObjView 	@33
 			height     	370
 			y_coord    	310
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @53
+		    Focus_Of_Control 	(object Focus_Of_Control "" @35
 			location   	(1097, 1051)
 			line_color 	3342489
-			InterObjView 	@51
+			InterObjView 	@33
 			height     	535
 			y_coord    	475
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$1" @54
+		(object InterObjView "$UNNAMED$1" @36
 		    location   	(1437, 225)
 		    font       	(object Font
 			size       	10
@@ -2023,7 +1335,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@54
+			Parent_View 	@36
 			location   	(1437, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2036,26 +1348,26 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F3FE0379"
 		    width      	300
-		    height     	2914
+		    height     	2944
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @55
+		    Focus_Of_Control 	(object Focus_Of_Control "" @37
 			location   	(1437, 594)
 			line_color 	3342489
-			InterObjView 	@54
+			InterObjView 	@36
 			height     	310
 			y_coord    	250
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @56
+		    Focus_Of_Control 	(object Focus_Of_Control "" @38
 			location   	(1437, 1217)
 			line_color 	3342489
-			InterObjView 	@54
+			InterObjView 	@36
 			height     	309
 			y_coord    	249
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$3" @57
+		(object InterObjView "$UNNAMED$3" @39
 		    location   	(1762, 225)
 		    font       	(object Font
 			size       	10
@@ -2067,7 +1379,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@57
+			Parent_View 	@39
 			location   	(1762, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2080,33 +1392,33 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F411039E"
 		    width      	300
-		    height     	2914
+		    height     	2944
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @58
+		    Focus_Of_Control 	(object Focus_Of_Control "" @40
 			location   	(1762, 677)
 			line_color 	3342489
-			InterObjView 	@57
+			InterObjView 	@39
 			height     	167
 			y_coord    	107
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @59
+		    Focus_Of_Control 	(object Focus_Of_Control "" @41
 			location   	(1762, 1775)
 			line_color 	3342489
-			InterObjView 	@57
+			InterObjView 	@39
 			height     	335
 			y_coord    	275
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @60
+		    Focus_Of_Control 	(object Focus_Of_Control "" @42
 			location   	(1762, 1850)
 			line_color 	3342489
-			InterObjView 	@57
+			InterObjView 	@39
 			height     	200
 			y_coord    	140
 			Nested     	TRUE))
-		(object InterObjView "event queue" @61
+		(object InterObjView "event queue" @43
 		    location   	(2092, 225)
 		    font       	(object Font
 			size       	10
@@ -2118,7 +1430,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@61
+			Parent_View 	@43
 			location   	(2092, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2131,26 +1443,26 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F41A033D"
 		    width      	300
-		    height     	2914
+		    height     	2944
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @62
+		    Focus_Of_Control 	(object Focus_Of_Control "" @44
 			location   	(2092, 1406)
 			line_color 	3342489
-			InterObjView 	@61
+			InterObjView 	@43
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @63
+		    Focus_Of_Control 	(object Focus_Of_Control "" @45
 			location   	(2092, 1775)
 			line_color 	3342489
-			InterObjView 	@61
+			InterObjView 	@43
 			height     	473
 			y_coord    	413
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$2" @64
+		(object InterObjView "$UNNAMED$2" @46
 		    location   	(2445, 1051)
 		    font       	(object Font
 			size       	10
@@ -2162,7 +1474,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@64
+			Parent_View 	@46
 			location   	(2445, 1051)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2175,25 +1487,25 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F44E02BF"
 		    width      	300
-		    height     	830
+		    height     	856
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @65
+		    Focus_Of_Control 	(object Focus_Of_Control "" @47
 			location   	(2445, 1051)
 			line_color 	3342489
-			InterObjView 	@64
+			InterObjView 	@46
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @66
-			location   	(2445, 1109)
-			InterObjView 	@64
+		    Focus_Of_Control 	(object Focus_Of_Control "" @48
+			location   	(2445, 1111)
+			InterObjView 	@46
 			height     	60
 			y_coord    	0
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$4" @67
+		(object InterObjView "$UNNAMED$4" @49
 		    location   	(2767, 1269)
 		    font       	(object Font
 			size       	10
@@ -2205,7 +1517,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@67
+			Parent_View 	@49
 			location   	(2767, 1269)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2218,32 +1530,32 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F4E70233"
 		    width      	330
-		    height     	1227
+		    height     	1253
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @68
+		    Focus_Of_Control 	(object Focus_Of_Control "" @50
 			location   	(2767, 1269)
 			line_color 	3342489
-			InterObjView 	@67
+			InterObjView 	@49
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @69
-			location   	(2767, 1327)
-			InterObjView 	@67
+		    Focus_Of_Control 	(object Focus_Of_Control "" @51
+			location   	(2767, 1329)
+			InterObjView 	@49
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @70
+		    Focus_Of_Control 	(object Focus_Of_Control "" @52
 			location   	(2767, 2128)
 			line_color 	3342489
-			InterObjView 	@67
+			InterObjView 	@49
 			height     	60
 			y_coord    	0
 			Nested     	FALSE))
-		(object InterObjView "server" @71
+		(object InterObjView "server" @53
 		    location   	(3073, 225)
 		    font       	(object Font
 			size       	10
@@ -2255,7 +1567,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@71
+			Parent_View 	@53
 			location   	(3073, 225)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2268,47 +1580,47 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F45D0004"
 		    width      	300
-		    height     	2914
+		    height     	2944
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @72
+		    Focus_Of_Control 	(object Focus_Of_Control "" @54
 			location   	(3073, 407)
 			line_color 	3342489
-			InterObjView 	@71
+			InterObjView 	@53
 			height     	120
 			y_coord    	60
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @73
+		    Focus_Of_Control 	(object Focus_Of_Control "" @55
 			location   	(3073, 407)
 			line_color 	3342489
-			InterObjView 	@71
+			InterObjView 	@53
 			height     	60
 			y_coord    	0
 			Nested     	TRUE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @74
+		    Focus_Of_Control 	(object Focus_Of_Control "" @56
 			location   	(3073, 724)
 			line_color 	3342489
-			InterObjView 	@71
+			InterObjView 	@53
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @75
+		    Focus_Of_Control 	(object Focus_Of_Control "" @57
 			location   	(3073, 1930)
 			line_color 	3342489
-			InterObjView 	@71
+			InterObjView 	@53
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @76
+		    Focus_Of_Control 	(object Focus_Of_Control "" @58
 			location   	(3073, 2400)
 			line_color 	3342489
-			InterObjView 	@71
+			InterObjView 	@53
 			height     	346
 			y_coord    	286
 			Nested     	FALSE))
-		(object InterObjView "$UNNAMED$5" @77
+		(object InterObjView "$UNNAMED$5" @59
 		    location   	(3578, 2400)
 		    font       	(object Font
 			size       	10
@@ -2320,7 +1632,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@77
+			Parent_View 	@59
 			location   	(3578, 2400)
 			fill_color 	13434879
 			anchor_loc 	1
@@ -2333,32 +1645,32 @@
 		    fill_color 	13434879
 		    quidu      	"3E60F850015C"
 		    width      	330
-		    height     	643
+		    height     	669
 		    icon_height 	0
 		    icon_width 	0
 		    icon_y_offset 	0
 		    annotation 	1
-		    Focus_Of_Control 	(object Focus_Of_Control "" @78
+		    Focus_Of_Control 	(object Focus_Of_Control "" @60
 			location   	(3578, 2400)
 			line_color 	3342489
-			InterObjView 	@77
+			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @79
-			location   	(3578, 2458)
-			InterObjView 	@77
+		    Focus_Of_Control 	(object Focus_Of_Control "" @61
+			location   	(3578, 2460)
+			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	FALSE)
-		    Focus_Of_Control 	(object Focus_Of_Control "" @80
+		    Focus_Of_Control 	(object Focus_Of_Control "" @62
 			location   	(3578, 2626)
 			line_color 	3342489
-			InterObjView 	@77
+			InterObjView 	@59
 			height     	60
 			y_coord    	0
 			Nested     	FALSE))
-		(object SelfMessView "" @81
+		(object SelfMessView "" @63
 		    location   	(0, 407)
 		    font       	(object Font
 			size       	10
@@ -2369,8 +1681,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @82
-			Parent_View 	@81
+		    label      	(object SegLabel @64
+			Parent_View 	@63
 			location   	(3179, 363)
 			font       	(object Font
 			    size       	10
@@ -2391,14 +1703,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@71
-		    supplier   	@71
-		    Focus_Src  	@72
-		    Focus_Entry 	@73
+		    client     	@53
+		    supplier   	@53
+		    Focus_Src  	@54
+		    Focus_Entry 	@55
 		    origin     	(3104, 407)
 		    terminus   	(3254, 407)
 		    ordinal    	0)
-		(object InterMessView "" @83
+		(object InterMessView "" @65
 		    location   	(1266, 594)
 		    font       	(object Font
 			size       	10
@@ -2409,8 +1721,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @84
-			Parent_View 	@83
+		    label      	(object SegLabel @66
+			Parent_View 	@65
 			location   	(1266, 550)
 			font       	(object Font
 			    size       	10
@@ -2431,14 +1743,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@51
-		    supplier   	@54
-		    Focus_Src  	@52
-		    Focus_Entry 	@55
+		    client     	@33
+		    supplier   	@36
+		    Focus_Src  	@34
+		    Focus_Entry 	@37
 		    origin     	(1112, 594)
 		    terminus   	(1421, 594)
 		    ordinal    	1)
-		(object InterMessView "" @85
+		(object InterMessView "" @67
 		    location   	(0, 677)
 		    font       	(object Font
 			size       	10
@@ -2449,8 +1761,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @86
-			Parent_View 	@85
+		    label      	(object SegLabel @68
+			Parent_View 	@67
 			location   	(1599, 633)
 			font       	(object Font
 			    size       	10
@@ -2471,14 +1783,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@54
-		    supplier   	@57
-		    Focus_Src  	@55
-		    Focus_Entry 	@58
+		    client     	@36
+		    supplier   	@39
+		    Focus_Src  	@37
+		    Focus_Entry 	@40
 		    origin     	(1452, 677)
 		    terminus   	(1746, 677)
 		    ordinal    	2)
-		(object InterMessView "" @87
+		(object InterMessView "" @69
 		    location   	(0, 724)
 		    font       	(object Font
 			size       	10
@@ -2489,8 +1801,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @88
-			Parent_View 	@87
+		    label      	(object SegLabel @70
+			Parent_View 	@69
 			location   	(2417, 680)
 			font       	(object Font
 			    size       	10
@@ -2511,14 +1823,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@57
-		    supplier   	@71
-		    Focus_Src  	@58
-		    Focus_Entry 	@74
+		    client     	@39
+		    supplier   	@53
+		    Focus_Src  	@40
+		    Focus_Entry 	@56
 		    origin     	(1777, 724)
 		    terminus   	(3057, 724)
 		    ordinal    	3)
-		(object InterMessView "" @89
+		(object InterMessView "" @71
 		    location   	(622, 1217)
 		    font       	(object Font
 			size       	10
@@ -2529,8 +1841,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @90
-			Parent_View 	@89
+		    label      	(object SegLabel @72
+			Parent_View 	@71
 			location   	(1266, 1173)
 			font       	(object Font
 			    size       	10
@@ -2551,14 +1863,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@51
-		    supplier   	@54
-		    Focus_Src  	@53
-		    Focus_Entry 	@56
+		    client     	@33
+		    supplier   	@36
+		    Focus_Src  	@35
+		    Focus_Entry 	@38
 		    origin     	(1112, 1217)
 		    terminus   	(1421, 1217)
 		    ordinal    	5)
-		(object InterMessView "" @91
+		(object InterMessView "" @73
 		    location   	(0, 1269)
 		    font       	(object Font
 			size       	10
@@ -2569,8 +1881,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @92
-			Parent_View 	@91
+		    label      	(object SegLabel @74
+			Parent_View 	@73
 			location   	(2027, 1225)
 			font       	(object Font
 			    size       	10
@@ -2591,14 +1903,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@54
-		    supplier   	@67
-		    Focus_Src  	@56
-		    Focus_Entry 	@68
+		    client     	@36
+		    supplier   	@49
+		    Focus_Src  	@38
+		    Focus_Entry 	@50
 		    origin     	(1452, 1269)
 		    terminus   	(2602, 1269)
 		    ordinal    	6)
-		(object InterMessView "" @93
+		(object InterMessView "" @75
 		    location   	(1120, 1406)
 		    font       	(object Font
 			size       	10
@@ -2609,8 +1921,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @94
-			Parent_View 	@93
+		    label      	(object SegLabel @76
+			Parent_View 	@75
 			location   	(1764, 1362)
 			font       	(object Font
 			    size       	10
@@ -2631,14 +1943,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@54
-		    supplier   	@61
-		    Focus_Src  	@56
-		    Focus_Entry 	@62
+		    client     	@36
+		    supplier   	@43
+		    Focus_Src  	@38
+		    Focus_Entry 	@44
 		    origin     	(1452, 1406)
 		    terminus   	(2076, 1406)
 		    ordinal    	7)
-		(object InterMessView "" @95
+		(object InterMessView "" @77
 		    location   	(1260, 1775)
 		    font       	(object Font
 			size       	10
@@ -2649,8 +1961,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @96
-			Parent_View 	@95
+		    label      	(object SegLabel @78
+			Parent_View 	@77
 			location   	(1927, 1731)
 			font       	(object Font
 			    size       	10
@@ -2671,14 +1983,14 @@
 			height     	45
 			orientation 	1)
 		    line_color 	3342489
-		    client     	@61
-		    supplier   	@57
-		    Focus_Src  	@63
-		    Focus_Entry 	@59
+		    client     	@43
+		    supplier   	@39
+		    Focus_Src  	@45
+		    Focus_Entry 	@41
 		    origin     	(2076, 1775)
 		    terminus   	(1778, 1775)
 		    ordinal    	8)
-		(object SelfMessView "" @97
+		(object SelfMessView "" @79
 		    location   	(0, 1850)
 		    font       	(object Font
 			size       	10
@@ -2689,8 +2001,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @98
-			Parent_View 	@97
+		    label      	(object SegLabel @80
+			Parent_View 	@79
 			location   	(1868, 1806)
 			font       	(object Font
 			    size       	10
@@ -2711,14 +2023,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@57
-		    supplier   	@57
-		    Focus_Src  	@59
-		    Focus_Entry 	@60
+		    client     	@39
+		    supplier   	@39
+		    Focus_Src  	@41
+		    Focus_Entry 	@42
 		    origin     	(1793, 1850)
 		    terminus   	(1943, 1850)
 		    ordinal    	9)
-		(object InterMessView "" @99
+		(object InterMessView "" @81
 		    location   	(0, 1930)
 		    font       	(object Font
 			size       	10
@@ -2729,8 +2041,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @100
-			Parent_View 	@99
+		    label      	(object SegLabel @82
+			Parent_View 	@81
 			location   	(2424, 1886)
 			font       	(object Font
 			    size       	10
@@ -2751,19 +2063,19 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@57
-		    supplier   	@71
-		    Focus_Src  	@60
-		    Focus_Entry 	@75
+		    client     	@39
+		    supplier   	@53
+		    Focus_Src  	@42
+		    Focus_Entry 	@57
 		    origin     	(1792, 1930)
 		    terminus   	(3057, 1930)
 		    ordinal    	10)
-		(object Destruction_Marker @101
-		    Parent_View 	@67
-		    location   	(2767, 2592)
+		(object Destruction_Marker @83
+		    Parent_View 	@49
+		    location   	(2767, 2622)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object InterMessView "" @102
+		(object InterMessView "" @84
 		    location   	(0, 1051)
 		    font       	(object Font
 			size       	10
@@ -2774,8 +2086,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @103
-			Parent_View 	@102
+		    label      	(object SegLabel @85
+			Parent_View 	@84
 			location   	(1703, 1007)
 			font       	(object Font
 			    size       	10
@@ -2796,19 +2108,19 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@51
-		    supplier   	@64
-		    Focus_Src  	@53
-		    Focus_Entry 	@65
+		    client     	@33
+		    supplier   	@46
+		    Focus_Src  	@35
+		    Focus_Entry 	@47
 		    origin     	(1112, 1051)
 		    terminus   	(2295, 1051)
 		    ordinal    	4)
-		(object Destruction_Marker @104
-		    Parent_View 	@64
-		    location   	(2445, 1977)
+		(object Destruction_Marker @86
+		    Parent_View 	@46
+		    location   	(2445, 2007)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object InterMessView "" @105
+		(object InterMessView "" @87
 		    location   	(0, 2400)
 		    font       	(object Font
 			size       	10
@@ -2819,8 +2131,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @106
-			Parent_View 	@105
+		    label      	(object SegLabel @88
+			Parent_View 	@87
 			location   	(3250, 2356)
 			font       	(object Font
 			    size       	10
@@ -2841,14 +2153,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@71
-		    supplier   	@77
-		    Focus_Src  	@76
-		    Focus_Entry 	@78
+		    client     	@53
+		    supplier   	@59
+		    Focus_Src  	@58
+		    Focus_Entry 	@60
 		    origin     	(3088, 2400)
 		    terminus   	(3413, 2400)
 		    ordinal    	12)
-		(object InterMessView "" @107
+		(object InterMessView "" @89
 		    location   	(0, 2626)
 		    font       	(object Font
 			size       	10
@@ -2859,8 +2171,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @108
-			Parent_View 	@107
+		    label      	(object SegLabel @90
+			Parent_View 	@89
 			location   	(3325, 2582)
 			font       	(object Font
 			    size       	10
@@ -2881,19 +2193,19 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@71
-		    supplier   	@77
-		    Focus_Src  	@76
-		    Focus_Entry 	@80
+		    client     	@53
+		    supplier   	@59
+		    Focus_Src  	@58
+		    Focus_Entry 	@62
 		    origin     	(3088, 2626)
 		    terminus   	(3562, 2626)
 		    ordinal    	13)
-		(object Destruction_Marker @109
-		    Parent_View 	@77
-		    location   	(3578, 3139)
+		(object Destruction_Marker @91
+		    Parent_View 	@59
+		    location   	(3578, 3169)
 		    line_color 	3342489
 		    fill_color 	13434879)
-		(object Label @110
+		(object Label @92
 		    location   	(114, 2966)
 		    font       	(object Font
 			size       	10
@@ -2906,8 +2218,8 @@
 			default_color 	TRUE)
 		    nlines     	1
 		    max_width  	1903
-		    label      	"$Id$")
-		(object InterMessView "" @111
+		    label      	"$Id: Serialization.cat,v f9aa84fdea1e 2011/07/19 17:54:22 simonjwright $")
+		(object InterMessView "" @93
 		    location   	(0, 2128)
 		    font       	(object Font
 			size       	10
@@ -2918,8 +2230,8 @@
 			strike     	FALSE
 			color      	0
 			default_color 	TRUE)
-		    label      	(object SegLabel @112
-			Parent_View 	@111
+		    label      	(object SegLabel @94
+			Parent_View 	@93
 			location   	(2429, 2084)
 			font       	(object Font
 			    size       	10
@@ -2940,14 +2252,14 @@
 			height     	45
 			orientation 	0)
 		    line_color 	3342489
-		    client     	@61
-		    supplier   	@67
-		    Focus_Src  	@63
-		    Focus_Entry 	@70
+		    client     	@43
+		    supplier   	@49
+		    Focus_Src  	@45
+		    Focus_Entry 	@52
 		    origin     	(2107, 2128)
 		    terminus   	(2751, 2128)
 		    ordinal    	11)
-		(object NoteView @113
+		(object NoteView @95
 		    location   	(493, 428)
 		    font       	(object Font
 			size       	10
@@ -2959,7 +2271,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@113
+			Parent_View 	@95
 			location   	(109, 366)
 			fill_color 	13434879
 			nlines     	2
@@ -2969,7 +2281,7 @@
 		    fill_color 	13434879
 		    width      	793
 		    height     	137)
-		(object NoteView @114
+		(object NoteView @96
 		    location   	(493, 743)
 		    font       	(object Font
 			size       	10
@@ -2981,7 +2293,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@114
+			Parent_View 	@96
 			location   	(109, 558)
 			fill_color 	13434879
 			nlines     	7
@@ -2991,7 +2303,7 @@
 		    fill_color 	13434879
 		    width      	793
 		    height     	383)
-		(object NoteView @115
+		(object NoteView @97
 		    location   	(494, 1286)
 		    font       	(object Font
 			size       	10
@@ -3003,7 +2315,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@115
+			Parent_View 	@97
 			location   	(113, 1006)
 			fill_color 	13434879
 			nlines     	10
@@ -3013,7 +2325,7 @@
 		    fill_color 	13434879
 		    width      	786
 		    height     	572)
-		(object NoteView @116
+		(object NoteView @98
 		    location   	(494, 1971)
 		    font       	(object Font
 			size       	10
@@ -3025,7 +2337,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@116
+			Parent_View 	@98
 			location   	(113, 1718)
 			fill_color 	13434879
 			nlines     	9
@@ -3035,7 +2347,7 @@
 		    fill_color 	13434879
 		    width      	786
 		    height     	519)
-		(object NoteView @117
+		(object NoteView @99
 		    location   	(500, 2602)
 		    font       	(object Font
 			size       	10
@@ -3047,7 +2359,7 @@
 			color      	0
 			default_color 	TRUE)
 		    label      	(object ItemLabel
-			Parent_View 	@117
+			Parent_View 	@99
 			location   	(122, 2384)
 			fill_color 	13434879
 			nlines     	8
