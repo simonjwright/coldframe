@@ -12,17 +12,19 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+with AUnit.Reporter.Text;
+with AUnit.Run;
 
-with AUnit.Test_Runner;
 with Library.Test;
 
 procedure Library_Test_Harness is
 
-   procedure Run is new AUnit.Test_Runner (Library.Test);
+   procedure Run is new AUnit.Run.Test_Runner (Library.Test);
+
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
 
 begin
 
-   Run (Timed => False);
+   Run (Reporter);
 
 end Library_Test_Harness;

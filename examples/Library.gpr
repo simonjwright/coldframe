@@ -12,11 +12,11 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
+--  $Id: Library.gpr,v b0ef3c76760f 2011/07/19 17:47:16 simonjwright $
 
 with "Options";
 with "ColdFrame";
-with "AUnit";
+with "aunit";
 with "BC";
 
 project Library is

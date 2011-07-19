@@ -12,11 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id$
-
-with Ada.Strings.Unbounded;
-use Ada.Strings.Unbounded;
-
 with AUnit.Test_Cases;
 use AUnit.Test_Cases;
 
@@ -28,7 +23,7 @@ package Library.Tests is
    procedure Register_Tests (T : in out Test_Case);
 
    --  Provide name identifying the test case:
-   function Name (T : Test_Case) return String_Access;
+   function Name (T : Test_Case) return AUnit.Message_String;
 
    --  Preparation performed before each routine:
    procedure Set_Up (T : in out Test_Case);
