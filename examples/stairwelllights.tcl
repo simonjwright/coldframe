@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id$
+# $Id: stairwelllights.tcl,v 4d8fd85e9bc4 2011/07/19 19:57:20 simonjwright $
 # HCI for ColdFrame stairwell lights demo
 # the next line restarts using ./stairwell_demo \
 exec ./stairwell_demo "$0" "$@"
@@ -10,7 +10,7 @@ wm title . $title
 
 # The image used is Lansing's Castle
 # (http://www.sos.state.mi.us/history/archive/exhibits/barnes.html).
-image create photo pic -file house-2.gif
+image create photo pic -file ../doc/house-2.gif
 
 canvas .c -width 772 -height 691
 .c create image [expr 772 / 2] [expr 691 / 2] -image pic
