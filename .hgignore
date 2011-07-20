@@ -40,35 +40,35 @@ coldframeout
 parser.out
 parsetab.py
 
-Makefile-cf Makefile-winnt Makefile-unix
-
 # distribution
 cf-[0-9]*
 dist
-extractor.ebs
-releases.html
 
-coldframe-combine_hash-test
+coldframe-combine_hash-test{.exe,}
 coldframe-project-events.ads-standard
-performance-harness
+
+# examples
+examples/house_management-harness{.exe,}
+examples/library_test_harness{.exe,}
+examples/performance-harness{.exe,}
+examples/stairwell_demo{.exe,}
+examples/stairwell_logging_demo{.exe,}
 
 # test
 test/*.stamp
 test/*.stamp-regardless
-test/event_test-harness
-test/hierarchies-harness
-test/initialization-harness
-test/regression_tests
-test/stub_test_harness
-test/unit_testing-harness
-
-stairwell_demo
-stairwell_logging_demo
-test_bounded_storage_pools
-test_storage_pools{.exe}
+test/coldframe-hash-combine_hash-test
+test/coldframe-hash-strings-test
+test/event_test-harness{.exe,}
+test/hierarchies-harness{.exe,}
+test/initialization-harness{.exe,}
+test/regression_tests{.exe,}
+test/stub_test_harness{.exe,}
+test/unit_testing-harness{.exe,}
+test/test_bounded_storage_pools{.exe,}
+test/test_storage_pools{.exe,}
 
 # doc
-doc/Architecture.raw
 doc/Digital_IO.{html,images}
 doc/House_Management.{html,images}
 doc/Serialization.{html,images}

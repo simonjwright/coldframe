@@ -59,7 +59,6 @@ coldframe-exceptions-traceback.ads                                      \
 coldframe-exceptions.ads                                                \
 coldframe-hash-access_hash.adb                                          \
 coldframe-hash-access_hash.ads                                          \
-coldframe-hash-combine_hash-test.adb                                    \
 coldframe-hash-combine_hash.adb                                         \
 coldframe-hash-combine_hash.ads                                         \
 coldframe-hash-instance_access_hash.ads                                 \
@@ -67,7 +66,6 @@ coldframe-hash-strings-bounded.adb                                      \
 coldframe-hash-strings-bounded.ads                                      \
 coldframe-hash-strings-standard.adb                                     \
 coldframe-hash-strings-standard.ads                                     \
-coldframe-hash-strings-test.adb                                         \
 coldframe-hash-strings-unbounded.adb                                    \
 coldframe-hash-strings-unbounded.ads                                    \
 coldframe-hash-strings.ads                                              \
