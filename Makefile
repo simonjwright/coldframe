@@ -50,14 +50,14 @@ OTHER_SCRIPTS = \
 ############################
 # Distribution construction
 
-# The subrelease is 'cvs' by default. Change on the command line for
+# The subrelease is 'hg' by default. Change on the command line for
 # anything else.
-SUBRELEASE = cvs
+SUBRELEASE = hg
 
 # Create the current date, in the form yyyymmdd. This certainly works in
 # Linux.
 #
-# Used to construct release IDs (eg, cf-20050423cvs). You can set the
+# Used to construct release IDs (eg, cf-20050423hg). You can set the
 # whole thing from the command line -- for example, if creating a patch
 # release.
 DATE = $(shell date +%Y%m%d)$(SUBRELEASE)
@@ -114,7 +114,7 @@ coldframe-architecture.html \
 $(GIFS) $(JPEGS) $(PNGS) $(PDFS) \
 coldframe-architecture.cat \
 ColdFrame-raw.xsd ColdFrame-norm.xsd \
-xslide-diff \
+xslide-diff
 
 # These are the parts of doc generated from models. Generation also
 # generates {Domain}.images/, not mentioned as part of the target.
@@ -509,7 +509,7 @@ cf-$(DATE).zip
 
 SFUSER ?= simonjwright
 
-upload-docs: top-index.html docs force
+upload-docs: top-index.html doc force
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -552,7 +552,7 @@ upload-docs: top-index.html docs force
 
 # The complete distribution
 
-dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS) $(GEN_DOCS)
+old-dist: cf-$(DATE) $(DISTRIBUTION_FILES) $(DOCS) $(GEN_DOCS)
 	-@$(RM) -rf dist
 	$(MKDIR) -p dist/download
 	$(CP) -p $(DOCS) $(GEN_DOCS) dist/
@@ -566,7 +566,7 @@ DATED_FILES = \
  ada-utilities.xsl \
  generate-c.xsl
 
-cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
+old-cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
   $(EXAMPLES) $(TEST) $(TOOL_SRC) Makefile-test force
 	-$(RM) -rf $@
 	$(MKDIR) $@
@@ -588,6 +588,23 @@ cf-$(DATE): $(MAKEFILES) $(GPRS) $(PROGS) $(SUPPORT) $(PROJECT) $(EXTRAS) \
 	$(TAR) cf - $(TOOL_SRC) | $(TAR) xf - -C $@/tools
 	$(CP) -p Makefile-test $@/test/Makefile
 	$(CP) -p Makefile-examples $@/examples/Makefile
+
+dist: cf-$(DATE)
+
+TOP_LEVEL_ITEMS =				\
+  Makefile.inc					\
+  ColdFrame.gpr					\
+  Options.gpr
+
+SUBDIRS = doc examples extras lib models project scripts test
+
+cf-$(DATE): force
+	-$(RM) -rf $@
+	$(MKDIR) -p $@/coldframeout
+	$(CP) -p $(TOP_LEVEL_ITEMS) $@/
+	for s in $(SUBDIRS); do						\
+	  make -C $$s -f Makefile.dist DIST=$(COLDFRAME)/$@ dist;	\
+	done
 
 cf-$(DATE).tgz: cf-$(DATE)
 	-$(RM) $@

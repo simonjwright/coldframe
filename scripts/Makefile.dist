@@ -1,0 +1,75 @@
+# -*- Makefile -*-
+
+# Copyright (C) Simon Wright <simon@pushface.org>
+
+# This package is free software; you can redistribute it and/or
+# modify it under terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2, or
+# (at your option) any later version. This package is distributed in
+# the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU General Public License for more
+# details. You should have received a copy of the GNU General Public
+# License distributed with this package; see file COPYING.  If not,
+# write to the Free Software Foundation, 59 Temple Place - Suite
+# 330, Boston, MA 02111-1307, USA.
+
+# This Makefile is used for distribution generation.
+
+# DIST is the location where distribution files are to be copied, eg
+# /Users/simon/coldframe/cf-20110731hg
+
+include ../Makefile.inc
+
+all:
+	@echo "Only meant to be called from the parent Makefile.dist."
+
+DATE = $(subst cf-,,$(notdir $(DIST)))
+
+CODEGEN_SCRIPTS = generate-ada.xsl		\
+  ada-association.xsl				\
+  ada-association-collection.xsl		\
+  ada-attribute.xsl				\
+  ada-callback.xsl				\
+  ada-class.xsl					\
+  ada-collection.xsl				\
+  ada-inheritance.xsl				\
+  ada-operation.xsl				\
+  ada-serialization.xsl				\
+  ada-state.xsl					\
+  ada-type.xsl					\
+  ada-teardown.xsl				\
+  ada-unittest.xsl				\
+  ada-utilities.xsl
+
+DOCGEN_SCRIPTS = generate-diagrams.xsl generate-html.xsl
+
+C_CODEGEN_SCRIPTS = generate-c.xsl c-utilities.xsl
+
+OTHER_SCRIPTS =					\
+  case_exceptions.py				\
+  cat2raw.py					\
+  create-build-directories			\
+  emacs_case_exceptions				\
+  extractor.ebs					\
+  extractor-trampoline.ebs			\
+  normalize-raw.xsl				\
+  rose-addin.mnu
+
+ALL = $(CODEGEN_SCRIPTS) $(DOCGEN_SCRIPTS) $(C_CODEGEN_SCRIPTS) $(OTHER_SCRIPTS)
+
+# Files that need DATE substituted
+DATED_FILES =					\
+ normalize-rose.tcl				\
+ ada-utilities.xsl				\
+ generate-c.xsl
+
+dist:
+	-$(RM) -rf $(DIST)/scripts
+	$(MKDIR) -p $(DIST)/scripts
+	$(CP) -p $(ALL) $(DIST)/scripts/
+	for f in $(DATED_FILES); do \
+	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$(DIST)/scripts/$$f) \
+	done
+
+.PHONY: dist force

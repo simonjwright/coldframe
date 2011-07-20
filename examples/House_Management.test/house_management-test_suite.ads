@@ -5,10 +5,10 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile: house_management-test_suite.ads,v $
---  $Revision: 9390212d4875 $
---  $Date: 2005/09/08 05:41:33 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with AUnit.Test_Suites;
 

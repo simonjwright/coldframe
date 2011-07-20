@@ -1,0 +1,166 @@
+# -*- Makefile -*-
+
+# Copyright (C) Simon Wright <simon@pushface.org>
+
+# This package is free software; you can redistribute it and/or
+# modify it under terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2, or
+# (at your option) any later version. This package is distributed in
+# the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU General Public License for more
+# details. You should have received a copy of the GNU General Public
+# License distributed with this package; see file COPYING.  If not,
+# write to the Free Software Foundation, 59 Temple Place - Suite
+# 330, Boston, MA 02111-1307, USA.
+
+# This Makefile is used for distribution generation.
+
+# DIST is the location where distribution files are to be copied, eg
+# /Users/simon/coldframe/cf-20110731hg
+
+include ../Makefile.inc
+
+all:
+	@echo "Only meant to be called from the parent Makefile.dist."
+
+DATE = $(subst cf-,,$(notdir $(DIST)))
+
+DOCS =							\
+  cf.css						\
+  active-classes.html					\
+  analysis.html						\
+  annotations.html					\
+  architecture.html					\
+  associations.html					\
+  attributes.html					\
+  bugs.html						\
+  callbacks.html					\
+  classes.html						\
+  compilation.html					\
+  conversion.html					\
+  copying.html						\
+  directions.html					\
+  documentation.html					\
+  domains.html						\
+  error-messages.html					\
+  events.html						\
+  event-modelling.html					\
+  event-motivation.html					\
+  event-translation.html				\
+  event-use.html					\
+  extending.html					\
+  extraction.html					\
+  faq.html						\
+  generalizations.html generalizations-extended.html	\
+  generation.html					\
+  index.html						\
+  initialization.html					\
+  installation.html					\
+  operation-parameters.html				\
+  operations.html					\
+  preparation.html					\
+  principles.html					\
+  releases.html						\
+  reserved-names.html					\
+  resources.html					\
+  serialization-page.html				\
+  strategy.html						\
+  support.html						\
+  target.html						\
+  testing.html						\
+  translation-rules.html				\
+  types.html						\
+  use-of-bcs.html					\
+  xml-schemas.html States-check.xsv States-check.html	\
+  ColdFrame-raw.xsd ColdFrame-norm.xsd
+
+GIFS = States.gif States-Monitor.gif
+
+JPEGS = navigation.jpg window-screen.jpg
+
+PNGS = \
+better-association.png \
+browse-state-model.png \
+class-mappings.png \
+collections-mapping.png \
+digital-io.png \
+digital-io-interface.png \
+discriminated-record.png \
+event-mapping.png \
+hierarchies-full.png \
+hierarchies.png \
+house-digital-io.png \
+house-management.png \
+house-management-operation.png \
+inheritance.png \
+lamp.png \
+lamp-state.png\
+lamp-state-resetting.png\
+metamodel.png \
+operations-mapping.png \
+real_time.png \
+recordable_real_time.png \
+reflexive.png \
+relationships-mapping.png \
+sample_a.png \
+self-events.png \
+serialization-class-model-t.png \
+serialization-class-model.png \
+serialization-sequence-t.png \
+serialization-sequence.png \
+serialization-state-t.png \
+serialization-state.png \
+serialization.png \
+simple-association.png \
+type-mapping.png \
+vague-association.png
+
+ALL = $(DOCS) $(GIFS) $(JPEGS) $(PNGS)
+
+# Files that need DATE substituted
+DATED_FILES =					\
+ releases.html
+
+# Files that need to be generated
+GENERATED_FILES =				\
+  coldframe-architecture.html			\
+  self-events.png				\
+  use-cases.html
+
+GENERATED_DOCUMENTS =				\
+  Digital_IO.html				\
+  House_Management.html				\
+  Serialization.html
+
+GENERATED_IMAGES = $(subst .html,.images,$(GENERATED_DOCUMENTS))
+
+# graphviz:
+%.png: %.dot
+	$(DOT) -o $@ -Tpng $<
+
+coldframe-architecture.html: $(COLDFRAMEOUT)/Architecture.raw
+	$(SAXON) $< generate-architecture-html.xsl >$@
+
+use-cases.html: use-cases.texi
+	$(TEXI2HTML) -monolithic $<
+
+dist::
+	-$(RM) -rf $(DIST)/doc
+	$(MKDIR) -p $(DIST)/doc
+	$(CP) -p $(ALL) $(DIST)/doc/
+
+dist::
+	$(CP) -p ../scripts/rose-addin.mnu $(DIST)/doc/
+
+dist::
+	for f in $(DATED_FILES); do \
+	    ($(SED) -e "s;DATE;$(DATE);g" <$$f >$(DIST)/doc/$$f) \
+	done
+
+dist:: $(GENERATED_FILES) $(GENERATED_DOCUMENTS)
+	$(TAR) cf -							  \
+	  $(GENERATED_FILES) $(GENERATED_DOCUMENTS) $(GENERATED_IMAGES) | \
+	  tar xf - -C $(DIST)/doc/
+
+.PHONY: dist force

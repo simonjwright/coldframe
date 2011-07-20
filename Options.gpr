@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v 0167fdb1ba41 2008/07/07 20:39:12 simonjwright $
+--  $Id: Options.gpr,v 8a5e5e67d14f 2011/07/20 19:25:46 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -45,6 +45,7 @@ project Options is
 
      for Default_Switches ("ada") use
        (
+        "-gnat95",
         "-g",
         "-j2",
         "-m"

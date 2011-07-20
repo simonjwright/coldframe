@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: serialization_demo-real_time_image.adb,v $
---  $Revision: 5a266b1efef2 $
---  $Date: 2003/03/27 20:50:51 $
---  $Author: simon $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 --  Generates an XML image (for serialization output) for the Real_Time type.
 

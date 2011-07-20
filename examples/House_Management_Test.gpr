@@ -5,15 +5,15 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile: House_Management_Test.gpr,v $
---  $Revision: 9390212d4875 $
---  $Date: 2005/09/08 05:41:33 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with "Options";
 with "ColdFrame";
-with "BC";
-with "AUnit";
+with "bc";
+with "aunit";
 
 project House_Management_Test is
 
@@ -21,10 +21,10 @@ project House_Management_Test is
   for Exec_Dir use ".";
   for Source_Dirs use
     (
-     ".",
-     "../House_Management.gen",
-     "../House_Management.impl",
-     "../Digital_IO_Interface.gen"
+     "House_Management.gen",
+     "House_Management.impl",
+     "House_Management.test",
+     "Digital_IO_Interface.gen"
     );
   for Object_Dir use Options'Object_Dir & "/main";
   package IDE renames Options.IDE;

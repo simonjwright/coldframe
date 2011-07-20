@@ -1,0 +1,133 @@
+# -*- Makefile -*-
+
+# Copyright (C) Simon Wright <simon@pushface.org>
+
+# This package is free software; you can redistribute it and/or
+# modify it under terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2, or
+# (at your option) any later version. This package is distributed in
+# the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU General Public License for more
+# details. You should have received a copy of the GNU General Public
+# License distributed with this package; see file COPYING.  If not,
+# write to the Free Software Foundation, 59 Temple Place - Suite
+# 330, Boston, MA 02111-1307, USA.
+
+# This Makefile is used for distribution generation.
+
+# DIST is the location where distribution files are to be copied, eg
+# /Users/simon/coldframe/cf-20110731hg
+
+include ../Makefile.inc
+
+all:
+	@echo "Only meant to be called from the parent Makefile.dist."
+
+DATE = $(subst cf-,,$(notdir $(DIST)))
+
+STAIRWELL_DEMO =						\
+  stairwell_demo.gpr						\
+  stairwelllights.tcl						\
+  Digital_IO.impl/digital_io-application-set_output.adb		\
+  Digital_IO.impl/digital_io-hci-get_state.adb			\
+  Digital_IO.impl/digital_io-hci-set_input.adb			\
+  Digital_IO.impl/digital_io-input-changed.adb			\
+  Digital_IO.impl/digital_io-output-changed.adb			\
+  Digital_IO.impl/digital_io-signal-initialize.adb		\
+  Digital_IO.impl/digital_io-signal-set_state.adb		\
+  House_Management.impl/house_management-button-changed.adb	\
+  House_Management.impl/house_management-button-pushed.adb	\
+  House_Management.impl/house_management-events-initialize.adb	\
+  House_Management.impl/house_management-lamp-clear_timeout.adb	\
+  House_Management.impl/house_management-lamp-initialize.adb	\
+  House_Management.impl/house_management-lamp-set_timeout.adb	\
+  House_Management.impl/house_management-lamp-turn_off.adb	\
+  House_Management.impl/house_management-lamp-turn_on.adb	\
+  House_Management.impl/stairwell_demo.adb
+
+HOUSE_MANAGEMENT_TEST =					\
+  House_Management_Test.gpr				\
+  House_Management.test/house_management-harness.adb	\
+  House_Management.test/house_management-test_suite.adb	\
+  House_Management.test/house_management-test_suite.ads
+
+SERIALIZATION =								\
+  serialization-model.html Serialization.gpr				\
+  Serialization.impl/serialization_client.adb				\
+  Serialization.impl/serialization-events-initialize.adb		\
+  Serialization.impl/serialization-interface-open.adb			\
+  Serialization.impl/serialization-interface-output.adb			\
+  Serialization.impl/serialization-server-create.adb			\
+  Serialization.impl/serialization-server-post.adb			\
+  Serialization.impl/serialization_support.ads				\
+  Serialization.impl/serialization_server.adb				\
+  Serialization_Demo.impl/serialization_demo-real_time_image.adb
+
+INTERRUPT_HANDLING =							\
+  Interrupt_Handling.gpr						\
+  Interrupt_Handling.impl/interrupt_handling-device-clear_timeout.adb	\
+  Interrupt_Handling.impl/interrupt_handling-device-initialize.adb	\
+  Interrupt_Handling.impl/interrupt_handling-device-report_entry.adb	\
+  Interrupt_Handling.impl/interrupt_handling-device-set_timeout.adb	\
+  Interrupt_Handling.impl/interrupt_handling-device-t.adb		\
+  Interrupt_Handling.impl/interrupt_handling-events-initialize.adb	\
+  Interrupt_Handling.impl/interrupt_handling-harness.adb		\
+  Interrupt_Handling.impl/interrupt_handling-harness.ads
+
+LIBRARY =					\
+  Library.gpr					\
+  Library.impl/library-test.adb			\
+  Library.impl/library-test.ads			\
+  Library.impl/library_test_harness.adb		\
+  Library.impl/library-tests.adb		\
+  Library.impl/library-tests.ads
+
+PERFORMANCE =					\
+  Performance.gpr				\
+  Performance.impl/performance-cat-speak.adb	\
+  Performance.impl/performance-event_timing.adb	\
+  Performance.impl/performance-event_timing.ads	\
+  Performance.impl/performance-harness.adb	\
+  Performance.impl/performance-harness.ads	\
+  Performance.impl/performance-pet-eat.adb
+
+PROBLEM_REPORTING =							\
+  Problem_Reporting.gpr							\
+  Problem_Reporting.impl/problem_reporting_harness.adb			\
+  Problem_Reporting.impl/problem_reporting-component-clean.adb		\
+  Problem_Reporting.impl/problem_reporting-component-report.adb		\
+  Problem_Reporting.impl/problem_reporting-component-report_all.adb	\
+  Problem_Reporting.impl/problem_reporting-defect-report.adb		\
+  Problem_Reporting.impl/problem_reporting-public-add_component.adb	\
+  Problem_Reporting.impl/problem_reporting-public-add_problem.adb	\
+  Problem_Reporting.impl/problem_reporting-public-delete_component.adb	\
+  Problem_Reporting.impl/problem_reporting-public-note_defect.adb	\
+  Problem_Reporting.impl/problem_reporting-public-reject_problem.adb	\
+  Problem_Reporting.impl/problem_reporting-public-report_problems.adb
+
+STATES = 							\
+  States.gpr							\
+  States.impl/states-events-initialize.adb			\
+  States.impl/states-monitor-clear_heartbeat_timeout.adb	\
+  States.impl/states-monitor-clear_warmup_timeout.adb		\
+  States.impl/states-monitor-receive.adb			\
+  States.impl/states-monitor-set_2_second_warmup_timeout.adb	\
+  States.impl/states-monitor-set_6_second_warmup_timeout.adb	\
+  States.impl/states-monitor-set_heartbeat_timeout.adb		\
+  States.impl/states-monitor-setup.adb				\
+  States.impl/states-t.adb					\
+  States.impl/states-t.ads
+
+ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(SERIALIZATION)	\
+  $(INTERRUPT_HANDLING) $(LIBRARY) $(PERFORMANCE) $(PROBLEM_REPORTING)	\
+  $(STATES)
+
+ALL += Makefile
+
+dist:
+	-$(RM) -rf $(DIST)/examples
+	$(MKDIR) -p $(DIST)/examples
+	$(TAR) cf - $(ALL) | tar xf - -C $(DIST)/examples/
+
+.PHONY: dist force

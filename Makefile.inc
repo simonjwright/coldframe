@@ -14,8 +14,7 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# Contains common variable definitions for development Makefiles in
-# this and subordinate directories.
+# Contains common variable definitions for user Makefiles.
 
 # use with Unix or with Cygwin under Windows (assumes a Unix system if
 # Cygwin not detected).
@@ -89,7 +88,7 @@ DOT ?= dot
 ECHO ?= echo
 EXIT ?= exit
 FIND ?= find
-GNATCHOP ?= gnatchop
+GNATCHOP ?= gnatchop -gnat95
 GREP ?= grep
 JAVA ?= java
 MKDIR ?= mkdir
@@ -120,7 +119,7 @@ NORMALIZE_ROSE_SCRIPT = $(SCRIPTS)/normalize-rose.tcl
 build-dirs::
 	@[ -n "$(BUILD_BASE)" ] \
 	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
-	@for d in aunit bc coldframe fixes main; do \
+	@for d in fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
 	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
 	     $(MKDIR) -p $(BUILD_BASE)/$$d);\

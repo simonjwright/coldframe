@@ -5,19 +5,15 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile: house_management-test_suite.adb,v $
---  $Revision: 52bfedfeb186 $
---  $Date: 2006/02/17 18:52:29 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
-with AUnit.Assertions; use AUnit.Assertions;
-with AUnit.Test_Cases.Registration; use AUnit.Test_Cases.Registration;
 with AUnit.Test_Cases; use AUnit.Test_Cases;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 with ColdFrame.Project.Events.Standard.Test;
 with ColdFrame.Stubs;
-with Digital_IO.Application;
 with Digital_IO.Initialize;
 with Digital_IO.Tear_Down;
 with House_Management.Initialize;
@@ -35,7 +31,7 @@ package body House_Management.Test_Suite is
       type Case_1 is new Test_Case with private;
    private
       type Case_1 is new Test_Case with null record;
-      function Name (C : Case_1) return String_Access;
+      function Name (C : Case_1) return AUnit.Message_String;
       procedure Register_Tests (C : in out Case_1);
       procedure Set_Up (C : in out Case_1);
       procedure Tear_Down (C : in out Case_1);
@@ -49,7 +45,6 @@ package body House_Management.Test_Suite is
       --  Lamp on sets the Signal to True).
       procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class);
       procedure Turn_On (R : in out AUnit.Test_Cases.Test_Case'Class) is
-         pragma Unreferenced (R);
          use type Digital_IO.Signal_Name;
       begin
 
@@ -61,70 +56,83 @@ package body House_Management.Test_Suite is
          --  and calls user {init} operations to, amongst other
          --  things, set up 'specification' instances and
          --  associations.
-         Assert (ColdFrame.Stubs.Number_Of_Calls
+         Assert (R,
+                 ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 4,
                  "wrong number of calls");
 
          --  Turn on the Basement lamp.
          Lamp.Turn_On (Lamp.Find ((Name => Basement)));
          --  There should have been 5 calls now.
-         Assert (ColdFrame.Stubs.Number_Of_Calls
+         Assert (R,
+                 ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 5,
                  "wrong number of calls (a)");
          --  The 5th call should have been for Lamp D ...
-         Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   5) = Digital_IO.Lamp_D,
                  "wrong signal (a)");
          --  ... and it should have been turned on.
-         Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Boolean ("Digital_IO.Application.Set_Output",
                               "To_State",
                               5),
                  "should have been turned on (a)");
 
          --  Repeat for the remaining Lamps.
          Lamp.Turn_On (Lamp.Find ((Name => Ground_Floor)));
-         Assert (ColdFrame.Stubs.Number_Of_Calls
+         Assert (R,
+                 ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 6,
                  "wrong number of calls (b)");
-         Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   6) = Digital_IO.Lamp_C,
                  "wrong signal (b)");
-         Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Boolean ("Digital_IO.Application.Set_Output",
                               "To_State",
                               6),
                  "should have been turned on (b)");
 
          Lamp.Turn_On (Lamp.Find ((Name => First_Floor)));
-         Assert (ColdFrame.Stubs.Number_Of_Calls
+         Assert (R,
+                 ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 7,
                  "wrong number of calls (c)");
-         Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   7) = Digital_IO.Lamp_B,
                  "wrong signal (c)");
-         Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Boolean ("Digital_IO.Application.Set_Output",
                               "To_State",
                               7),
                  "should have been turned on (c)");
 
          Lamp.Turn_On (Lamp.Find ((Name => Second_Floor)));
-         Assert (ColdFrame.Stubs.Number_Of_Calls
+         Assert (R,
+                 ColdFrame.Stubs.Number_Of_Calls
                    ("Digital_IO.Application.Set_Output") = 8,
                  "wrong number of calls (d)");
-         Assert (Get_Signal_Name ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Signal_Name ("Digital_IO.Application.Set_Output",
                                   "S",
                                   8) = Digital_IO.Lamp_A,
                  "wrong signal (d)");
-         Assert (Get_Boolean ("Digital_IO.Application.Set_Output",
+         Assert (R,
+                 Get_Boolean ("Digital_IO.Application.Set_Output",
                               "To_State",
                               8),
                  "should have been turned on (d)");
 
       end Turn_On;
 
-      function Name (C : Case_1) return String_Access is
+      function Name (C : Case_1) return AUnit.Message_String is
          pragma Unreferenced (C);
       begin
          return new String'("Lamps.Case_1");
@@ -132,7 +140,7 @@ package body House_Management.Test_Suite is
 
       procedure Register_Tests (C : in out Case_1) is
       begin
-         Register_Routine
+         Registration.Register_Routine
            (C,
             Turn_On'Access,
             "turn on");
