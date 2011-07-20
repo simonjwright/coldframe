@@ -53,7 +53,7 @@ HOUSE_MANAGEMENT_TEST =					\
   House_Management.test/house_management-test_suite.ads
 
 SERIALIZATION =								\
-  serialization-model.html Serialization.gpr				\
+  Serialization.gpr							\
   Serialization.impl/serialization_client.adb				\
   Serialization.impl/serialization-events-initialize.adb		\
   Serialization.impl/serialization-interface-open.adb			\
