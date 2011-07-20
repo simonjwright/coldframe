@@ -98,6 +98,7 @@ RSYNC ?= rsync
 SED ?= sed
 SH ?= sh
 TAR ?= tar
+TEXI2HTML ?= texi2html
 TRUE ?= true
 ZIP ?= zip
 
@@ -163,7 +164,7 @@ $(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
 	fi
 	@$(ECHO) generating $@ ...
 	@$(SAXON) $< $(HTMLGEN_SCRIPT) \
-	  cwd=$(PWD) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
+	  cwd=$(shell pwd) diagrams=$(GENERATE_DIAGRAMS) >$@ || \
 	  ($(RM) -f $@; $(EXIT) 1)
 
 # Generate .ada files.
