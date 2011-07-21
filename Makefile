@@ -27,7 +27,7 @@ DISTRIBUTION_FILES = cf-$(DATE).tgz cf-$(DATE).zip
 
 SFUSER ?= simonjwright
 
-upload-docs: top-index.html doc force
+upload-docs:: doc/top-index.html
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -39,8 +39,10 @@ upload-docs: top-index.html doc force
 	  --times \
 	  --update \
 	  --verbose \
-	  top-index.html \
+	  doc/top-index.html \
 	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/index.html
+
+upload-docs:: doc/cf.css
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -52,8 +54,10 @@ upload-docs: top-index.html doc force
 	  --times \
 	  --update \
 	  --verbose \
-	  cf.css \
+	  doc/cf.css \
 	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/
+
+upload-docs:: cf-$(DATE)
 	$(RSYNC) \
 	  --compress \
 	  --copy-unsafe-links \
@@ -65,7 +69,7 @@ upload-docs: top-index.html doc force
 	  --times \
 	  --update \
 	  --verbose \
-	  $(DOCS)  $(GEN_DOCS) $(GEN_DOC_IMAGES) \
+	  cf-$(DATE)/doc/* \
 	  $(SFUSER),coldframe@web.sourceforge.net:htdocs/coldframe
 
 # The complete distribution
@@ -101,4 +105,4 @@ cf-$(DATE).zip: cf-$(DATE)
 	-$(RM) $@
 	$(ZIP) -r -9 $@ $</*
 
-.PHONY: dist force
+.PHONY: dist force upload-docs
