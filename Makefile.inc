@@ -120,7 +120,7 @@ NORMALIZE_ROSE_SCRIPT = $(SCRIPTS)/normalize-rose.tcl
 build-dirs::
 	@[ -n "$(BUILD_BASE)" ] \
 	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
-	@for d in fixes main; do \
+	@for d in coldframe fixes main; do \
 	  [ -d $(BUILD_BASE)/$$d ] || \
 	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
 	     $(MKDIR) -p $(BUILD_BASE)/$$d);\

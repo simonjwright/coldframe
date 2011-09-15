@@ -21,7 +21,7 @@
 
 [ -n "$BUILD_BASE" ] || (echo "BUILD_BASE not defined."; exit 1)
 
-subdirs="aunit bc coldframe main patches"
+subdirs="coldframe fixes main"
 
 for s in $subdirs; do
     d=$BUILD_BASE/$s
