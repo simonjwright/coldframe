@@ -5,8 +5,6 @@
   (let* ((home (getenv "HOME"))
 	 (cf (concat home "/coldframe")))
     (setenv "ADA_PROJECT_PATH" cf)
-    (setenv "AUNIT" "AUnit-svn")
-    (setenv "BC" "bc")
     (setenv "BUILD_BASE" (concat cf "/.build"))
     (setenv "CASE_EXCEPTIONS"
 	    (concat home

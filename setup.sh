@@ -4,8 +4,6 @@
 cf=$PWD
 
 export ADA_PROJECT_PATH=$cf
-export AUNIT=${AUNIT:-AUnit-svn}
-export BC=bc
 export BUILD=$cf/.build
 export BUILD_BASE=$cf/.build
 # I think the first writable one is where new entries are added ..
