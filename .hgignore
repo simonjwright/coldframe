@@ -53,6 +53,7 @@ examples/library_test_harness{.exe,}
 examples/performance-harness{.exe,}
 examples/stairwell_demo{.exe,}
 examples/stairwell_logging_demo{.exe,}
+examples/van_fleet-demo{.exe,}
 
 # test
 test/*.stamp

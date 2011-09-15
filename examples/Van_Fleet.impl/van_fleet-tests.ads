@@ -12,6 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-tests.ads,v a88ba45be8ba 2004/05/08 13:54:26 simon $
+--  $Id$
 
 procedure Van_Fleet.Demo;

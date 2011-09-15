@@ -12,22 +12,17 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: van_fleet-hired_van-image.adb,v $
---  $Revision: ce1a7c694694 $
---  $Date: 2004/05/08 20:39:47 $
---  $Author: simon $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
 
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
-with Van_Fleet.A2;
-with Van_Fleet.Customer;
 
-separate (Van_Fleet.Hired_Van)
+separate (Van_Fleet.Pool_Van)
 function Image
   (This : Handle)
   return String is
 begin
-   return "hired "
-     & To_String (Get_Index (This))
-     & ", on loan to "
-     & To_String (Customer.Get_Name (A2.Is_Borrowing (This)));
+   return "pool  "
+     & To_String (Get_Index (This));
 end Image;

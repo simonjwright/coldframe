@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Van_Fleet.gpr,v 6ea040caff18 2004/10/09 10:37:13 simon $
+--  $Id$
 
 with "Options";
 with "ColdFrame";

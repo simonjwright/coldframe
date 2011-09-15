@@ -12,18 +12,6 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: van_fleet-hired_van-cleanup.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
---  $Author: simon $
+--  $Id$
 
-with Van_Fleet.A2;
-
-separate (Van_Fleet.Hired_Van)
-procedure Cleanup
-  (This : Handle) is
-begin
-   A2.Unlink
-     (Is_Borrowing => This,
-      Is_On_Loan_To => A2.Is_Borrowing (This));
-end Cleanup;
+procedure Van_Fleet.Demo;

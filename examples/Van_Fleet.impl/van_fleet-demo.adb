@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-demo.adb,v acc47fe4a910 2005/04/10 18:06:29 simon $
+--  $Id$
 
 with Ada.Calendar;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;

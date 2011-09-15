@@ -12,6 +12,22 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: van_fleet-demo.ads,v a88ba45be8ba 2004/05/08 13:54:26 simon $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
-procedure Van_Fleet.Demo;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Van_Fleet.A2;
+with Van_Fleet.Customer;
+
+separate (Van_Fleet.Hired_Van)
+function Image
+  (This : Handle)
+  return String is
+begin
+   return "hired "
+     & To_String (Get_Index (This))
+     & ", on loan to "
+     & To_String (Customer.Get_Name (A2.Is_Borrowing (This)));
+end Image;

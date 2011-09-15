@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: van_fleet-van-returned.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
---  $Author: simon $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Van_Fleet.Pool_Van.Inheritance;
 with Van_Fleet.Van.Inheritance;

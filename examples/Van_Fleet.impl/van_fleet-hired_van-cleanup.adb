@@ -12,17 +12,18 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: van_fleet-pool_van-image.adb,v $
---  $Revision: ce1a7c694694 $
---  $Date: 2004/05/08 20:39:47 $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Van_Fleet.A2;
 
-separate (Van_Fleet.Pool_Van)
-function Image
-  (This : Handle)
-  return String is
+separate (Van_Fleet.Hired_Van)
+procedure Cleanup
+  (This : Handle) is
 begin
-   return "pool  "
-     & To_String (Get_Index (This));
-end Image;
+   A2.Unlink
+     (Is_Borrowing => This,
+      Is_On_Loan_To => A2.Is_Borrowing (This));
+end Cleanup;

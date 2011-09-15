@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: van_fleet-van-lend.adb,v $
---  $Revision: 6ea040caff18 $
---  $Date: 2004/10/09 10:37:13 $
---  $Author: simon $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Van_Fleet.A2;
 with Van_Fleet.Customer;
