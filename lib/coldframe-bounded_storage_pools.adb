@@ -26,33 +26,17 @@
 --  The changes are,
 --
 --  * allocations are initialized to an improbable value (16#deadbeef#)
---  * operations are protected against concurrent access.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-bounded_storage_pools.adb,v $
+--  $Revision: 6b2fc8a29885 $
+--  $Date: 2011/11/06 15:36:44 $
+--  $Author: simonjwright $
 
 package body ColdFrame.Bounded_Storage_Pools is
 
 
    Big_Endian : constant Boolean
      := System."=" (System.Default_Bit_Order, System.High_Order_First);
-
-
-   protected body Mutex is
-
-      entry Seize when not Seized is
-      begin
-         Seized := True;
-      end Seize;
-
-      procedure Release is
-      begin
-         Seized := False;
-      end Release;
-
-   end Mutex;
 
 
    procedure Allocate
@@ -62,18 +46,12 @@ package body ColdFrame.Bounded_Storage_Pools is
       Alignment    : System.Storage_Elements.Storage_Count) is
    begin
 
-      --  seize the pool
-      Pool.Excluder.Seize;
-
       --  allocate the required storage
       System.Pool_Size.Allocate
         (Pool => System.Pool_Size.Stack_Bounded_Pool (Pool),
          Address => Address,
          Storage_Size => Storage_Size,
          Alignment => Alignment);
-
-      --  release the pool
-      Pool.Excluder.Release;
 
       --  fill the allocated memory
       declare
@@ -121,11 +99,6 @@ package body ColdFrame.Bounded_Storage_Pools is
          end if;
       end;
 
-   exception
-      when others =>
-         --  make sure the pool is released
-         Pool.Excluder.Release;
-         raise;
    end Allocate;
 
 
@@ -135,9 +108,6 @@ package body ColdFrame.Bounded_Storage_Pools is
       Storage_Size : System.Storage_Elements.Storage_Count;
       Alignment    : System.Storage_Elements.Storage_Count) is
    begin
-
-      --  seize the pool
-      Pool.Excluder.Seize;
 
       --  refill the allocated memory
       declare
@@ -192,14 +162,6 @@ package body ColdFrame.Bounded_Storage_Pools is
          Storage_Size => Storage_Size,
          Alignment => Alignment);
 
-      --  release the pool
-      Pool.Excluder.Release;
-
-   exception
-      when others =>
-         --  make sure the pool is released
-         Pool.Excluder.Release;
-         raise;
    end Deallocate;
 
 

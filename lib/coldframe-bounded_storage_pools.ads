@@ -26,14 +26,15 @@
 --  The changes are,
 --
 --  * allocations are initialized to an improbable value (16#deadbeef#)
---  * operations are protected against concurrent access.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: coldframe-bounded_storage_pools.ads,v $
+--  $Revision: 6b2fc8a29885 $
+--  $Date: 2011/11/06 15:36:44 $
+--  $Author: simonjwright $
 
+pragma Warnings (Off);
 with System.Pool_Size;
+pragma Warnings (On);
 with System.Storage_Elements;
 with System.Storage_Pools;
 
@@ -66,13 +67,6 @@ package ColdFrame.Bounded_Storage_Pools is
 
 private
 
-   protected type Mutex is
-      entry Seize;
-      procedure Release;
-   private
-      Seized : Boolean := False;
-   end Mutex;
-
    type Bounded_Pool
      (Pool_Size : System.Storage_Elements.Storage_Count;
       Elmt_Size : System.Storage_Elements.Storage_Count;
@@ -80,8 +74,6 @@ private
    is new System.Pool_Size.Stack_Bounded_Pool (Pool_Size => Pool_Size,
                                                Elmt_Size => Elmt_Size,
                                                Alignment => Alignment)
-   with record
-      Excluder : Mutex;
-   end record;
+   with null record;
 
 end ColdFrame.Bounded_Storage_Pools;
