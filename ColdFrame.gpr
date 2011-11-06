@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: ColdFrame.gpr,v 47375af5c8b3 2003/11/29 13:44:52 simon $
+--  $Id: ColdFrame.gpr,v 6ce18c52508e 2011/11/06 17:29:55 simonjwright $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
@@ -35,5 +35,14 @@ project ColdFrame is
   package Binder renames Options.Binder;
 
   package Linker renames Options.Linker;
+
+  --  This package is for use with GNAT GPL 2011 and (probably) GNAT 4.7.
+  --  It can be commented out otherwise.
+  package Naming is
+     for Spec ("ColdFrame.Bounded_Storage_Pools")
+       use "coldframe-bounded_storage_pools.ads-sf3410667";
+     for Body ("ColdFrame.Bounded_Storage_Pools")
+       use "coldframe-bounded_storage_pools.adb-sf3410667";
+  end Naming;
 
 end ColdFrame;
