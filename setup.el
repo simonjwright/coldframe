@@ -13,13 +13,4 @@
 		    cf
 		    "/emacs_case_exceptions"))
     (setenv "COLDFRAME" "cf")
-    (cond
-     ;; see notes in setup.sh
-     ((or (memq system-type '(gnu/linux)) (memq system-type '(darwin)))
-      (setenv "ADA_PROJECT_PATH"
-	      (concat
-	       (getenv "ADA_PROJECT_PATH")
-	       ":"
-	       home "/tcladashell"))))
-    (setenv "TOP" home)
     ))
