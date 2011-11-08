@@ -26,44 +26,45 @@ all:
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
-ALL =                                                           \
-  coldframe-project-calendar.adb                                \
-  coldframe-project-calendar.ads                                \
-  coldframe-project-event_support.ads                           \
-  coldframe-project-events-creation.ads                         \
-  coldframe-project-events-monitoring.ads                       \
-  coldframe-project-events-monitoring-test.ads                  \
-  coldframe-project-events-standard-debug.ads                   \
-  coldframe-project-events-standard-inspection.ads              \
-  coldframe-project-events-standard-test.ads                    \
-  coldframe-project-events-standard-test_debug.ads              \
-  coldframe-project-events-standard-test_trace.ads              \
-  coldframe-project-events-standard-trace.ads                   \
-  coldframe-project-events-standard.ads                         \
-  coldframe-project-events.ads                                  \
-  coldframe-project-events.ads-logging                          \
-  coldframe-project-global_storage_pool.ads                     \
-  coldframe-project-held_events-inspection.adb                  \
-  coldframe-project-held_events-inspection.ads                  \
-  coldframe-project-held_events-inspection_signature.ads        \
-  coldframe-project-held_events-signature.ads                   \
-  coldframe-project-held_events.adb                             \
-  coldframe-project-held_events.ads                             \
-  coldframe-project-high_resolution_time.ads                    \
-  coldframe-project-limits.adb                                  \
-  coldframe-project-limits.ads                                  \
-  coldframe-project-log_error.adb                               \
-  coldframe-project-log_error.ads                               \
-  coldframe-project-log_info.adb                                \
-  coldframe-project-log_info.ads                                \
-  coldframe-project-logging_support.adb                         \
-  coldframe-project-logging_support.ads                         \
-  coldframe-project-serialization.ads                           \
-  coldframe-project-storage_pools.ads                           \
-  coldframe-project-task_deletion.adb                           \
-  coldframe-project-task_deletion.ads                           \
-  coldframe-project-times.adb                                   \
-  coldframe-project-times.ads
+ALL =								\
+  coldframe-project-calendar.adb				\
+  coldframe-project-calendar.ads				\
+  coldframe-project-event_support.ads				\
+  coldframe-project-events-creation.ads				\
+  coldframe-project-events-monitoring.ads			\
+  coldframe-project-events-monitoring-test.ads			\
+  coldframe-project-events-standard-debug.ads			\
+  coldframe-project-events-standard-inspection.ads		\
+  coldframe-project-events-standard-test.ads			\
+  coldframe-project-events-standard-test_debug.ads		\
+  coldframe-project-events-standard-test_trace.ads		\
+  coldframe-project-events-standard-trace.ads			\
+  coldframe-project-events-standard.ads				\
+  coldframe-project-events.ads					\
+  coldframe-project-events.ads-logging				\
+  coldframe-project-global_storage_pool.ads			\
+  coldframe-project-held_events-inspection.adb			\
+  coldframe-project-held_events-inspection.ads			\
+  coldframe-project-held_events-inspection_signature.ads	\
+  coldframe-project-held_events-signature.ads			\
+  coldframe-project-held_events.adb				\
+  coldframe-project-held_events.ads				\
+  coldframe-project-high_resolution_time.ads			\
+  coldframe-project-limits.adb					\
+  coldframe-project-limits.ads					\
+  coldframe-project-log_error.adb				\
+  coldframe-project-log_error.ads				\
+  coldframe-project-log_info.adb				\
+  coldframe-project-log_info.ads				\
+  coldframe-project-logging_support.adb				\
+  coldframe-project-logging_support.ads				\
+  coldframe-project-serialization.ads				\
+  coldframe-project-storage_pools.ads				\
+  coldframe-project-task_deletion.adb				\
+  coldframe-project-task_deletion.ads				\
+  coldframe-project-times.adb					\
+  coldframe-project-times.ads					\
+  coldframe-project.ads
 
 dist:
 	-$(RM) -rf $(DIST)/project

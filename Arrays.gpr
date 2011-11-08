@@ -1,7 +1,7 @@
-with "Options";
 with "ColdFrame";
-with "BC";
-with "AUnit";
+with "Options";
+with "aunit";
+with "bc";
 
 project Arrays is
 

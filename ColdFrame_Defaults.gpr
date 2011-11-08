@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: ColdFrame_Defaults.gpr,v 4cb5273c0598 2007/09/14 04:57:59 simonjwright $
+--  $Id: ColdFrame_Defaults.gpr,v 6f3f2ff0d5f7 2011/11/08 15:45:44 simonjwright $
 --
 --  This file controls compilation of the standard "library" and
 --  "project" source for ColdFrame.
@@ -21,7 +21,7 @@
 --  with project-specific units.
 
 with "Options";
-with "BC";
+with "bc";
 
 project ColdFrame_Defaults is
 

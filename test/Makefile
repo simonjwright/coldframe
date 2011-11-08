@@ -26,7 +26,7 @@ all::
 
 include ../Makefile.inc
 
-app = ADA_PROJECT_PATH=$(COLDFRAME)
+app = ADA_PROJECT_PATH=$$ADA_PROJECT_PATH:$(COLDFRAME)
 
 all:: build-dirs runs fails
 

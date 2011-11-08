@@ -68,7 +68,7 @@ endif
 COLDFRAME := $(shell echo $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) | sed -e "s;/$$;;")
 
 # Where's the base for the build directories?
-BUILD_BASE ?= $(COLDFRAME)/.build
+export BUILD_BASE ?= $(COLDFRAME)/.build
 
 # Where are the scripts?
 SCRIPTS := $(COLDFRAME)/scripts
@@ -104,7 +104,8 @@ ZIP ?= zip
 
 # Non-standard commands
 ITCLSH ?= tclsh
-SAXON ?= $(JAVA) -cp /usr/local/lib/saxon/saxon.jar com.icl.saxon.StyleSheet
+SAXON_CLASSPATH ?= /usr/local/lib/saxon/saxon.jar
+SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
 # Control depth of .impl directory search
 MAXIMPLDEPTH ?= 1
