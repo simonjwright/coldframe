@@ -53,6 +53,7 @@ OTHER_SCRIPTS =					\
   emacs_case_exceptions				\
   extractor.ebs					\
   extractor-trampoline.ebs			\
+  install-project				\
   normalize-raw.xsl				\
   rose-addin.mnu
 
