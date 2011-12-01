@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: generate-ada.xsl,v 270787ddb376 2011/12/01 22:39:06 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -179,7 +179,7 @@
          code would be an embarrassment.
          -->
     <xsl:variable
-      name="type-operations" 
+      name="type-operations"
       select="type/operation
               [not(@access)
               and not(@suppressed)
@@ -192,7 +192,7 @@
               and not(@imported)
               and not(@renames)]"/>
 
-    <xsl:if test="$generate-stubs='yes' 
+    <xsl:if test="$generate-stubs='yes'
                   and not($plain-type-operations)
                   and not(type/@protected)">
       <xsl:value-of select="$I"/>
@@ -216,7 +216,7 @@
           <xsl:text>&#10;</xsl:text>
           <xsl:value-of select="$IC"/>
           <xsl:text>renames </xsl:text>
-          <xsl:value-of select="@imported"/>.<xsl:value-of select="."/>
+          <xsl:value-of select="@imported"/>.<xsl:value-of select="name"/>
         </xsl:when>
         <xsl:when test="@renames">
           <xsl:text>&#10;</xsl:text>
@@ -252,11 +252,11 @@
     </xsl:call-template>
 
     <xsl:call-template name="ty:sorted-domain-types">
-      <xsl:with-param 
-        name="types" 
+      <xsl:with-param
+        name="types"
         select="/domain/type[not(@visibility='private')]"/>
-      <xsl:with-param 
-        name="finished" 
+      <xsl:with-param
+        name="finished"
         select="type[@standard]"/>
     </xsl:call-template>
 
@@ -299,8 +299,8 @@
         name="types"
         select="/domain/type[@visibility='private']"/>
       <!-- Types already output in the public part are visible here, too. -->
-      <xsl:with-param 
-        name="finished" 
+      <xsl:with-param
+        name="finished"
         select="type[@standard or not(@visibility='private')]"/>
     </xsl:call-template>
 
@@ -625,7 +625,7 @@
     </xsl:for-each>
 
     <!-- .. mark initialization complete (so any waiting tasks can
-         continue) .. --> 
+         continue) .. -->
     <xsl:value-of select="$II"/>
     <xsl:text>Domain_Initialized := True;&#10;</xsl:text>
     <xsl:value-of select="$II"/>
@@ -900,7 +900,7 @@
         mode="un:unit-spec">
         <xsl:sort select="name"/>
       </xsl:apply-templates>
-      
+
       <!-- Package bodies for Class unit test -->
       <xsl:call-template name="ut:progress-message">
         <xsl:with-param name="m" select="'.. package bodies for Class unit test ..'"/>
