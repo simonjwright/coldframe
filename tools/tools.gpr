@@ -1,0 +1,58 @@
+--  Copyright (C) Simon Wright <simon@pushface.org>
+
+--  This package is free software; you can redistribute it and/or
+--  modify it under terms of the GNU General Public License as
+--  published by the Free Software Foundation; either version 2, or
+--  (at your option) any later version. This package is distributed in
+--  the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+--  even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+--  PARTICULAR PURPOSE. See the GNU General Public License for more
+--  details. You should have received a copy of the GNU General Public
+--  License distributed with this package; see file COPYING.  If not,
+--  write to the Free Software Foundation, 59 Temple Place - Suite
+--  330, Boston, MA 02111-1307, USA.
+
+--  $RCSfile: tools.gpr,v $
+--  $Revision: fd881b1b7e39 $
+--  $Date: 2011/12/11 15:20:54 $
+--  $Author: simonjwright $
+
+with "../ColdFrame";
+with "/Users/simon/xia/XIA";
+
+project Tools is
+
+   for Main use
+     (
+      "generated_lines.adb",
+      "normalize_xmi-main.adb",
+      "serialized_to_csv.adb"
+     );
+
+   for Exec_Dir use ".";
+   for Object_Dir use ".build";
+
+   package Builder is
+      for Default_Switches ("ada") use ("-g");
+      for Executable ("normalize_xmi-main.adb") use "normalize_xmi";
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use
+        (
+         "-gnat05",
+         "-gnatqQafoy",
+         "-gnatwaL",
+         "-O0"
+        );
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
+   package Linker is
+      for Default_Switches ("ada") use ("-Wl,-no_pie");
+   end Linker;
+
+end Tools;

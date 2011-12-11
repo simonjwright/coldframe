@@ -2,7 +2,7 @@
 
 syntax: glob
 
-# general
+# General
 *~
 *.ada
 *.ali
@@ -16,7 +16,6 @@ syntax: glob
 *.exe
 *.fn
 *.gcov
-*.gen
 *.ky
 *.log
 *.norm
@@ -26,26 +25,38 @@ syntax: glob
 *.toc
 *.tp
 *.vr
-
 .build
 .DS_Store
 b~*.ad[bs]
 coldframeout
 
-# models
+# Generated code/doc
+*.gen
+*.html
+*.images
+
+# Models
 *.md~
 *.ca~
 
-# ply
+# PLY
 parser.out
 parsetab.py
 
-# distribution
+# Distributions
 cf-[0-9]*
 dist
 
 coldframe-combine_hash-test{.exe,}
 coldframe-project-events.ads-standard
+
+# doc
+doc/Digital_IO.{html,images}
+doc/House_Management.{html,images}
+doc/Serialization.{html,images}
+doc/coldframe-architecture.html
+doc/self-events.png
+doc/use-cases.html
 
 # examples
 examples/house_management-harness{.exe,}
@@ -54,6 +65,10 @@ examples/performance-harness{.exe,}
 examples/stairwell_demo{.exe,}
 examples/stairwell_logging_demo{.exe,}
 examples/van_fleet-demo{.exe,}
+
+# lib
+lib/default-uml14.xmi
+lib/ColdFrameProfile.xmi
 
 # test
 test/*.stamp
@@ -68,12 +83,4 @@ test/stub_test_harness{.exe,}
 test/unit_testing-harness{.exe,}
 test/test_bounded_storage_pools{.exe,}
 test/test_storage_pools{.exe,}
-
-# doc
-doc/Digital_IO.{html,images}
-doc/House_Management.{html,images}
-doc/Serialization.{html,images}
-doc/coldframe-architecture.html
-doc/self-events.png
-doc/use-cases.html
 
