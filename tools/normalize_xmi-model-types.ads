@@ -12,29 +12,21 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-domains.ads,v $
+--  $RCSfile: normalize_xmi-model-types.ads,v $
 --  $Revision: 2e42ac7f6e38 $
 --  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
-with GNAT.OS_Lib;
+private package Normalize_XMI.Model.Types is
 
-package Normalize_XMI.Model.Domains is
-
-   procedure Process_Domain (From : DOM.Core.Node; In_File : String);
-   --  XXX not sure how to deal with <<interface>> subpackages.
+   function Read_Type (From : DOM.Core.Node) return Element_P;
 
 private
 
-   type Domain is new Element with record
-      File_Time : GNAT.OS_Lib.OS_Time;
-      Classes : Element_Maps.Map;
-      Types : Element_Maps.Map;
-      Exceptions : Element_Maps.Map;
-   end record;
+   type Type_Element is new Element with null record;
    overriding
-   procedure Resolve (D : in out Domain);
+   procedure Resolve (T : in out Type_Element);
    overriding
-   procedure Output (D : Domain; To : Ada.Text_IO.File_Type);
+   procedure Output (T : Type_Element; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Domains;
+end Normalize_XMI.Model.Types;

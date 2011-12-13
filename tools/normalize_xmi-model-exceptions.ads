@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.ads,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 2e42ac7f6e38 $
+--  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Exceptions is
@@ -23,11 +23,10 @@ private package Normalize_XMI.Model.Exceptions is
 
 private
 
-   type Exception_Element is new Element with record
-      Renaming : Ada.Strings.Unbounded.Unbounded_String;
-      Imported : Ada.Strings.Unbounded.Unbounded_String;
-   end record;
+   type Exception_Element is new Element with null record;
+   overriding
    procedure Resolve (E : in out Exception_Element);
+   overriding
    procedure Output (E : Exception_Element; To : Ada.Text_IO.File_Type);
 
 end Normalize_XMI.Model.Exceptions;

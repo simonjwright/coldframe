@@ -13,12 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 2e42ac7f6e38 $
+--  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
-with Ada.Strings.Maps;
+with Ada.Strings.Maps.Constants;
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
@@ -27,22 +27,169 @@ with Unicode.CES;
 
 package body Normalize_XMI.Model is
 
+
    procedure Process_Domain (From : DOM.Core.Node; In_File : String)
      renames Domains.Process_Domain;
+
+
+   -------------------------
+   --  Container support  --
+   -------------------------
+
+   function Uncased_Equals (L, R : String) return Boolean
+   is
+      use Ada.Strings.Fixed;
+      use Ada.Strings.Maps.Constants;
+   begin
+      return Translate (L, Lower_Case_Map) = Translate (R, Lower_Case_Map);
+   end Uncased_Equals;
+
+
+   function Uncased_Less_Than (L, R : String) return Boolean
+   is
+      use Ada.Strings.Fixed;
+      use Ada.Strings.Maps.Constants;
+   begin
+      return Translate (L, Lower_Case_Map) < Translate (R, Lower_Case_Map);
+   end Uncased_Less_Than;
+
+
+   --------------------------
+   --  Element operations  --
+   --------------------------
+
+   procedure Populate (E : in out Element; From : DOM.Core.Node)
+   is
+   begin
+      E.Node := From;
+
+      declare
+         S : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:ModelElement.stereotype/@name");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (S) - 1 loop
+            E.Stereotypes.Insert
+              (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (S, J)));
+         end loop;
+      end;
+
+      declare
+         T : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:ModelElement.taggedValue/UML:TaggedValue");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (T) - 1 loop
+            declare
+               Tag : constant DOM.Core.Node_List
+                 := McKae.XML.XPath.XIA.XPath_Query
+                 (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.type/@name");
+               Value : constant DOM.Core.Node_List
+                 := McKae.XML.XPath.XIA.XPath_Query
+                 (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
+            begin
+               E.Tagged_Values.Insert
+                 (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Tag, 0)),
+                  Read_Text (DOM.Core.Nodes.Item (Value, 0)));
+            end;
+         end loop;
+      end;
+   end Populate;
+
+
+   function Has_Stereotype (E : Element; Stereotype : String) return Boolean
+   is
+   begin
+      return E.Stereotypes.Contains (Stereotype);
+   end Has_Stereotype;
+
+
+   function Has_Tag (E : Element; Tag : String) return Boolean
+   is
+   begin
+      return E.Tagged_Values.Contains (Tag);
+   end Has_Tag;
+
+
+   function Tag_As_Name (E : Element; Tag : String) return String
+   is
+   begin
+      if E.Tagged_Values.Contains (Tag) then
+         return Identifiers.Normalize (E.Tagged_Values.Element (Tag));
+      else
+         return "";
+      end if;
+   end Tag_As_Name;
+
+
+   function Tag_As_Value (E : Element; Tag : String) return String
+   is
+   begin
+      if E.Tagged_Values.Contains (Tag) then
+         return E.Tagged_Values.Element (Tag);
+      else
+         return "";
+      end if;
+   end Tag_As_Value;
+
+
+   procedure Output_Documentation (E : Element; To : Ada.Text_IO.File_Type)
+   is
+      use Ada.Strings;
+      use Ada.Strings.Fixed;
+      use Ada.Strings.Maps;
+      use Ada.Text_IO;
+      Doc : constant String := E.Tag_As_Value ("documentation");
+      CRLF : constant Character_Set := To_Set (ASCII.CR & ASCII.LF);
+      First : Positive := Doc'First;
+      Last : Natural;
+   begin
+      Put_Line (To, "<documentation>");
+      --  We're going to use Find_Token, using a Character_Set with
+      --  CR/LF and Membership of Outside, to locate the lines, and
+      --  then trim each line (from the right only). Any remaining
+      --  non-empty lines get output as <par/> elements.
+      loop
+         Find_Token (Doc (First .. Doc'Last),
+                     Set => CRLF,
+                     Test => Outside,
+                     First => First,
+                     Last => Last);
+         exit when Last < First;
+         declare
+            Line : constant String
+              := Trim (Doc (First .. Last), Side => Right);
+         begin
+            if Line'Length > 0 then
+               Put (To, "<par><![CDATA[");
+               Put (To, Line);
+               Put_Line (To, "]]></par>");
+            end if;
+         end;
+         --  On to the next candidate.
+         First := Last + 1;
+         exit when First > Doc'Last;
+      end loop;
+      Put_Line (To, "</documentation>");
+   end Output_Documentation;
+
 
    --------------------
    --  XML Utilities --
    --------------------
 
-   function Is_Stereotype_Present (Named : String;
-                                   In_Element : DOM.Core.Node) return Boolean
+   function Read_Text (From_Element : DOM.Core.Node) return String
    is
-      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-        (In_Element,
-         "UML:ModelElement.stereotype[@name='" & Named & "']");
+      use Ada.Strings.Unbounded;
+      Result : Unbounded_String;
+      Children : constant DOM.Core.Node_List
+        := DOM.Core.Nodes.Child_Nodes (From_Element);
    begin
-      return DOM.Core.Nodes.Length (P) > 0;
-   end Is_Stereotype_Present;
+      for J in 0 .. DOM.Core.Nodes.Length (Children) - 1 loop
+         Append
+           (Result,
+            DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Children, J)));
+      end loop;
+      return +Result;
+   end Read_Text;
 
 
    function Read_Name (From_Element : DOM.Core.Node) return String
@@ -59,115 +206,9 @@ package body Normalize_XMI.Model is
    end Read_Name;
 
 
-   function Read_Tagged_Name (Tag : String;
-                              From_Element : DOM.Core.Node) return String
-   is
-      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-        (From_Element,
-         "UML:ModelElement.taggedValue/UML:TaggedValue"
-           & "[UML:TaggedValue.type/@name='"
-           & Tag
-           & "']"
-           & "/UML:TaggedValue.dataValue");
-   begin
-      if DOM.Core.Nodes.Length (P) = 0 then
-         return "";
-      else
-         --  This is an Element_Node containing a number of Text_Nodes.
-         declare
-            use Ada.Strings.Unbounded;
-            Result : Unbounded_String;
-            Children : constant DOM.Core.Node_List
-              := DOM.Core.Nodes.Child_Nodes (DOM.Core.Nodes.Item (P, 0));
-         begin
-            for J in 0 .. DOM.Core.Nodes.Length (Children) - 1 loop
-               Append
-                 (Result,
-                  DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item
-                                               (Children, J)));
-            end loop;
-            return Identifiers.Normalize (+Result);
-         end;
-      end if;
-   end Read_Tagged_Name;
-
-
-   function Read_Tagged_Value (Tag : String;
-                               From_Element : DOM.Core.Node) return String
-   is
-      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-        (From_Element,
-         "UML:ModelElement.taggedValue/UML:TaggedValue"
-           & "[UML:TaggedValue.type/@name='"
-           & Tag
-           & "']"
-           & "/UML:TaggedValue.dataValue");
-   begin
-      if DOM.Core.Nodes.Length (P) = 0 then
-         return "";
-      else
-         --  This is an Element_Node containing a number of Text_Nodes.
-         declare
-            use Ada.Strings.Unbounded;
-            Result : Unbounded_String;
-            Children : constant DOM.Core.Node_List
-              := DOM.Core.Nodes.Child_Nodes (DOM.Core.Nodes.Item (P, 0));
-         begin
-            for J in 0 .. DOM.Core.Nodes.Length (Children) - 1 loop
-               Append
-                 (Result,
-                  DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item
-                                               (Children, J)));
-            end loop;
-            return +Result;
-         end;
-      end if;
-   end Read_Tagged_Value;
-
-
    -------------------------
    --  Output  utilities  --
    -------------------------
-
-   procedure Output_Documentation (S : String; To : Ada.Text_IO.File_Type)
-   is
-      use Ada.Strings;
-      use Ada.Strings.Fixed;
-      use Ada.Strings.Maps;
-      use Ada.Text_IO;
-      CRLF : constant Character_Set := To_Set (ASCII.CR & ASCII.LF);
-      First : Positive := S'First;
-      Last : Natural;
-   begin
-      Put_Line (To, "<documentation>");
-      --  We're going to use Find_Token, using a Character_Set with
-      --  CR/LF and Membership of Outside, to locate the lines, and
-      --  then trim each line (from the right only). Any remaining
-      --  non-empty lines get output as <par/> elements.
-      loop
-         Find_Token (S (First .. S'Last),
-                     Set => CRLF,
-                     Test => Outside,
-                     First => First,
-                     Last => Last);
-         exit when Last < First;
-         declare
-            Line : constant String
-              := Trim (S (First .. Last), Side => Right);
-         begin
-            if Line'Length > 0 then
-               Put (To, "<par><![CDATA[");
-               Put (To, Line);
-               Put_Line (To, "]]></par>");
-            end if;
-         end;
-         --  On to the next candidate.
-         First := Last + 1;
-         exit when First > S'Last;
-      end loop;
-      Put_Line (To, "</documentation>");
-   end Output_Documentation;
-
 
    -------------
    --  Debug  --

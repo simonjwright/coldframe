@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 2e42ac7f6e38 $
+--  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -23,6 +23,7 @@ with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Errors;
 with Normalize_XMI.Model.Exceptions;
+with Normalize_XMI.Model.Types;
 
 package body Normalize_XMI.Model.Domains is
 
@@ -34,11 +35,35 @@ package body Normalize_XMI.Model.Domains is
       D.File_Time := GNAT.OS_Lib.File_Time_Stamp (In_File);
 
       --  Domain items
+      D.Populate (From);
       D.Name := +Read_Name (From_Element => From);
-      D.Documentation
-        := +Read_Tagged_Value ("documentation", From_Element => From);
-      D.Revision
-        := +Read_Tagged_Value ("revision", From_Element => From);
+      Ada.Text_IO.Put_Line
+        (Ada.Text_IO.Standard_Error, "... domain " & (+D.Name));
+
+      --  Types (including Enumerations).
+      declare
+         --  ArgoUML allows a DataType to be given attributes; you
+         --  just can't see them in the class diagram. So there's
+         --  really no difference from ColdFrame's point of
+         --  view. Ideally we'd associate type-related tags with
+         --  <<type>>, which looks silly if you already have
+         --  <<datatype>>, so perhaps using a Class and stereotyping
+         --  it <<type>> is neatest.
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From,
+            "descendant::UML:Class[UML:ModelElement.stereotype/@name='type']"
+              & "| descendant::UML:DataType");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               T : constant Element_P :=
+                 Types.Read_Type (DOM.Core.Nodes.Item (Nodes, J));
+            begin
+               T.Parent := D'Unchecked_Access;
+               D.Types.Insert (Key => +T.Name, New_Item => T);
+            end;
+         end loop;
+      end;
 
       --  Exceptions
       declare
@@ -78,6 +103,7 @@ package body Normalize_XMI.Model.Domains is
    end Process_Domain;
 
 
+   overriding
    procedure Resolve (D : in out Domain)
    is
       procedure Resolve (Pos : Element_Maps.Cursor);
@@ -87,10 +113,12 @@ package body Normalize_XMI.Model.Domains is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
+      Element_Maps.Iterate (D.Types, Resolve'Access);
       Element_Maps.Iterate (D.Exceptions, Resolve'Access);
    end Resolve;
 
 
+   overriding
    procedure Output (D : Domain; To : Ada.Text_IO.File_Type)
    is
 
@@ -132,9 +160,11 @@ package body Normalize_XMI.Model.Domains is
       Put_Line (To, "<extractor>normalize_xmi</extractor>");
       Output_Date (To);
       Put_Line (To, "<normalizer>normalize_xmi</normalizer>");
-      Output_Documentation (+D.Documentation, To);
-      Put_Line (To, "<revision>" & (+D.Revision) & "</revision>");
+      D.Output_Documentation (To);
+      Put_Line (To,
+                "<revision>" & D.Tag_As_Value ("revision") & "</revision>");
 
+      Element_Maps.Iterate (D.Types, Output'Access);
       Element_Maps.Iterate (D.Exceptions, Output'Access);
 
       Put_Line (To, "</domain>");

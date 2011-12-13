@@ -13,11 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 2e42ac7f6e38 $
+--  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
+with Ada.Containers.Indefinite_Ordered_Sets;
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
 with DOM.Core;
@@ -29,6 +30,20 @@ private package Normalize_XMI.Model is
 
 private
 
+   function Uncased_Equals (L, R : String) return Boolean;
+   function Uncased_Less_Than (L, R : String) return Boolean;
+
+   package Uncased_String_Maps is new Ada.Containers.Indefinite_Ordered_Maps
+     (Key_Type => String,
+      "<" => Uncased_Less_Than,
+      Element_Type => String,
+      "=" => Uncased_Equals);
+
+   package Uncased_String_Sets is new Ada.Containers.Indefinite_Ordered_Sets
+     (Element_Type => String,
+      "<" => Uncased_Less_Than,
+      "=" => Uncased_Equals);
+
    type Element;
    type Element_P is access all Element'Class;
 
@@ -37,18 +52,37 @@ private
    --
    --  It's made limited because we need to preserve its identity.
    type Element is abstract tagged limited record
+      Node : DOM.Core.Node;
+      Stereotypes : Uncased_String_Sets.Set;
+      Tagged_Values : Uncased_String_Maps.Map;
       Parent : Element_P;
       Name : Ada.Strings.Unbounded.Unbounded_String;
-      Documentation : Ada.Strings.Unbounded.Unbounded_String;
    end record;
+
+   --  Fill in the Node, Stereotypes, and Tagged_Values fields.
+   procedure Populate (E : in out Element; From : DOM.Core.Node);
+
+   function Has_Stereotype (E : Element; Stereotype : String) return Boolean;
+
+   function Has_Tag (E : Element; Tag : String) return Boolean;
+
+   --  Read the named tagged value and normalize it (or empty string
+   --  if not found).
+   function Tag_As_Name (E : Element; Tag : String) return String;
+
+   --  Read the named tagged value (or empty string if not found).
+   function Tag_As_Value (E : Element; Tag : String) return String;
 
    --  Complete any aspects of the Element that can't be determined by
    --  a simple top-down scan.
    procedure Resolve (E : in out Element) is abstract;
 
-   --  Outputs the Element and its contents to the open file To, in
+   --  Output the Element and its contents to the open file To, in
    --  normalized XML.
    procedure Output (E : Element; To : Ada.Text_IO.File_Type) is abstract;
+
+   --  Outputs the contents of the "document" tag, split into paragraphs.
+   procedure Output_Documentation (E : Element; To : Ada.Text_IO.File_Type);
 
    package Element_Maps is new Ada.Containers.Indefinite_Ordered_Maps
      (Key_Type => String,
@@ -67,25 +101,15 @@ private
    --  XML Utilities --
    --------------------
 
-   function Is_Stereotype_Present (Named : String;
-                                   In_Element : DOM.Core.Node) return Boolean;
+   --  Reads and concatenates the child Text_Nodes of From_Element.
+   function Read_Text (From_Element : DOM.Core.Node) return String;
 
-   --  Reads the normalized "name" attribute from the element.
+   --  Reads the "name" attribute from the element and normalizes it.
    function Read_Name (From_Element : DOM.Core.Node) return String;
-
-   --  Reads the named tagged value from the element and normalizes it.
-   function Read_Tagged_Name (Tag : String;
-                              From_Element : DOM.Core.Node) return String;
-
-   --  Reads the named tagged value from the element.
-   function Read_Tagged_Value (Tag : String;
-                               From_Element : DOM.Core.Node) return String;
 
    -------------------------
    --  Output  utilities  --
    -------------------------
-
-   procedure Output_Documentation (S : String; To : Ada.Text_IO.File_Type);
 
    --  Debug.
    procedure Print_Node (N : DOM.Core.Node);

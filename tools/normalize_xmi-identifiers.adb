@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 2e42ac7f6e38 $
+--  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -31,7 +31,9 @@ package body Normalize_XMI.Identifiers is
 
    package Lowercase_String_Maps is new Ada.Containers.Indefinite_Ordered_Maps
      (Key_Type => String,
-      Element_Type => String);
+      Element_Type => String,
+      "<" => Casing_Less_Than,
+      "=" => Casing_Equals);
 
    --  For Case_Exceptions, the whole identifier has to match.
    Case_Exceptions : Lowercase_String_Maps.Map;

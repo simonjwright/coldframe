@@ -12,61 +12,62 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-exceptions.adb,v $
+--  $RCSfile: normalize_xmi-model-types.adb,v $
 --  $Revision: 2e42ac7f6e38 $
 --  $Date: 2011/12/13 17:12:41 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Errors;
 
-package body Normalize_XMI.Model.Exceptions is
+package body Normalize_XMI.Model.Types is
 
 
-   function Read_Exception (From : DOM.Core.Node) return Element_P
+   function Read_Type (From : DOM.Core.Node) return Element_P
    is
       use Ada.Text_IO;
-      N : constant Element_P := new Exception_Element;
-      E : Exception_Element renames Exception_Element (N.all);
+      N : constant Element_P := new Type_Element;
+      T : Type_Element renames Type_Element (N.all);
    begin
-      E.Populate (From => From);
-      E.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading exception " & (+E.Name));
+      T.Populate (From => From);
+      T.Name := +Read_Name (From_Element => From);
+      Put_Line (Standard_Error, "... reading type " & (+T.Name));
       return N;
-   end Read_Exception;
+   end Read_Type;
 
 
    overriding
-   procedure Resolve (E : in out Exception_Element)
+   procedure Resolve (T : in out Type_Element)
    is
       use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "... checking exception " & (+E.Name));
-      if E.Has_Tag ("imported") and E.Has_Tag ("renames") then
+      Put_Line (Standard_Error, "... checking type " & (+T.Name));
+      if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
          Errors.Report
-           ("Exception "
-              & (+E.Name)
+           ("Type "
+              & (+T.Name)
               & " has both {imported} and {renames} specified.");
       end if;
    end Resolve;
 
 
    overriding
-   procedure Output (E : Exception_Element; To : Ada.Text_IO.File_Type)
+   procedure Output (T : Type_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
    begin
-      Put (To, "<exception");
-      if E.Has_Tag ("imported") then
-         Put (To, " imported=""" & E.Tag_As_Name ("imported") & """");
-      end if;
-      if E.Has_Tag ("renames") then
-         Put (To, " renames=""" & E.Tag_As_Name ("renames") & """");
-      end if;
+      Put (To, "<type");
       Put_Line (To, ">");
-      Put_Line (To, "<name>" & (+E.Name) & "</name>");
-      E.Output_Documentation (To);
-      Put_Line (To, "</exception>");
+      Put_Line (To, "<name>" & (+T.Name) & "</name>");
+      T.Output_Documentation (To);
+      if T.Has_Tag ("imported") then
+         Put_Line (To,
+                   "<imported>" & T.Tag_As_Name ("imported") & "</imported>");
+      end if;
+      if T.Has_Tag ("renames") then
+         Put_Line (To, "<renames>" & T.Tag_As_Name ("renames") & "</renames>");
+      end if;
+      Put_Line (To, "</type>");
    end Output;
 
 
-end Normalize_XMI.Model.Exceptions;
+end Normalize_XMI.Model.Types;
