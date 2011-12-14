@@ -13,14 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-types.adb,v $
---  $Revision: 8e07091e803e $
---  $Date: 2011/12/14 21:19:23 $
+--  $Revision: 093f39d61362 $
+--  $Date: 2011/12/14 21:26:48 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Model.Attributes;
-with Normalize_XMI.Errors;
+with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Model.Types is
 
@@ -48,7 +48,7 @@ package body Normalize_XMI.Model.Types is
             begin
                A.Parent := T'Unchecked_Access;
                if T.Attributes.Contains (Name) then
-                  Errors.Report
+                  Messages.Error
                     ("Type " & (+T.Name) & " has duplicate attribute " & Name);
                else
                   T.Attributes.Insert (Key => Name, New_Item => A);
@@ -81,21 +81,21 @@ package body Normalize_XMI.Model.Types is
         not (T.Has_Tag ("imported")
                or T.Has_Tag ("renames"));
       if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
-         Errors.Report
+         Messages.Error
            ("Type "
               & (+T.Name)
               & " has both {imported} and {renames} specified.");
       end if;
       if T.Attributes_Permitted then
          if T.Attributes.Is_Empty then
-            Errors.Warning
+            Messages.Warning
               ("Type "
               & (+T.Name)
               & " has no attributes, assumed null.");
          end if;
       else
          if not T.Attributes.Is_Empty then
-            Errors.Error
+            Messages.Error
               ("Type "
               & (+T.Name)
               & " is not permitted to have attributes.");

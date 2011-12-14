@@ -12,12 +12,12 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-errors.ads,v $
---  $Revision: 8e07091e803e $
---  $Date: 2011/12/14 21:19:23 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
-private package Normalize_XMI.Errors is
+private package Normalize_XMI.Messages is
 
    procedure Warning (Message : String);
    function Number_Of_Warnings return Natural;
@@ -25,6 +25,4 @@ private package Normalize_XMI.Errors is
    procedure Error (Message : String);
    function Number_Of_Errors return Natural;
 
-   procedure Report (Error : String) renames Error;
-
-end Normalize_XMI.Errors;
+end Normalize_XMI.Messages;

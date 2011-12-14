@@ -13,15 +13,15 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 5eca11a43724 $
---  $Date: 2011/12/14 18:22:37 $
+--  $Revision: 093f39d61362 $
+--  $Date: 2011/12/14 21:26:48 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
 with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
-with Normalize_XMI.Errors;
+with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
 with Normalize_XMI.Model.Types;
@@ -106,7 +106,7 @@ package body Normalize_XMI.Model.Domains is
 
       D.Resolve;
 
-      if Errors.Number_Of_Errors = 0 then
+      if Messages.Number_Of_Errors = 0 then
          declare
             use Ada.Text_IO;
             N : constant String := (+D.Name) & ".norm";

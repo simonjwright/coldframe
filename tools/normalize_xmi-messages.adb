@@ -12,14 +12,14 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-errors.adb,v $
---  $Revision: 8e07091e803e $
---  $Date: 2011/12/14 21:19:23 $
---  $Author: simonjwright $
+--  $RCSfile$
+--  $Revision$
+--  $Date$
+--  $Author$
 
 with Ada.Text_IO; use Ada.Text_IO;
 
-package body Normalize_XMI.Errors is
+package body Normalize_XMI.Messages is
 
 
    Warnings : Natural := 0;
@@ -55,4 +55,4 @@ package body Normalize_XMI.Errors is
    end Number_Of_Errors;
 
 
-end Normalize_XMI.Errors;
+end Normalize_XMI.Messages;

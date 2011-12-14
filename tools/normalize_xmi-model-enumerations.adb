@@ -13,13 +13,12 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 5eca11a43724 $
---  $Date: 2011/12/14 18:22:37 $
+--  $Revision: 093f39d61362 $
+--  $Date: 2011/12/14 21:26:48 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
-with Normalize_XMI.Errors;
 
 package body Normalize_XMI.Model.Enumerations is
 

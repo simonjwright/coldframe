@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 093f39d61362 $
+--  $Date: 2011/12/14 21:26:48 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -22,7 +22,7 @@ with Ada.Containers.Indefinite_Ordered_Sets;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 with Ada.Text_IO;
-with Normalize_XMI.Errors;
+with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Identifiers is
 
@@ -107,7 +107,7 @@ package body Normalize_XMI.Identifiers is
          Words : constant Spans := Find_Spans (S, ' ');
       begin
          if Reserved.Contains (S) then
-            Errors.Report
+            Messages.Error
               ("Reserved word """ & S & """ not allowed.");
          end if;
          for W in Words'Range loop

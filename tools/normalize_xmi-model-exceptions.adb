@@ -13,11 +13,11 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 093f39d61362 $
+--  $Date: 2011/12/14 21:26:48 $
 --  $Author: simonjwright $
 
-with Normalize_XMI.Errors;
+with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Model.Exceptions is
 
@@ -42,7 +42,7 @@ package body Normalize_XMI.Model.Exceptions is
    begin
       Put_Line (Standard_Error, "... checking exception " & (+E.Name));
       if E.Has_Tag ("imported") and E.Has_Tag ("renames") then
-         Errors.Report
+         Messages.Error
            ("Exception "
               & (+E.Name)
               & " has both {imported} and {renames} specified.");
