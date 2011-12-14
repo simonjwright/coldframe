@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 5eca11a43724 $
+--  $Date: 2011/12/14 18:22:37 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
 with Ada.Containers.Indefinite_Ordered_Sets;
+with Ada.Containers.Indefinite_Vectors;
 with Ada.Strings.Unbounded;
 with Ada.Text_IO;
 with DOM.Core;
@@ -33,12 +34,14 @@ private
    function Uncased_Equals (L, R : String) return Boolean;
    function Uncased_Less_Than (L, R : String) return Boolean;
 
+   --  For Tagged Values and Case Exceptions.
    package Uncased_String_Maps is new Ada.Containers.Indefinite_Ordered_Maps
      (Key_Type => String,
       "<" => Uncased_Less_Than,
       Element_Type => String,
       "=" => Uncased_Equals);
 
+   --  For Stereotypes.
    package Uncased_String_Sets is new Ada.Containers.Indefinite_Ordered_Sets
      (Element_Type => String,
       "<" => Uncased_Less_Than,
@@ -86,6 +89,10 @@ private
 
    package Element_Maps is new Ada.Containers.Indefinite_Ordered_Maps
      (Key_Type => String,
+      Element_Type => Element_P);
+
+   package Element_Vectors is new Ada.Containers.Indefinite_Vectors
+     (Index_Type => Positive,
       Element_Type => Element_P);
 
    ----------------

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 5eca11a43724 $
+--  $Date: 2011/12/14 18:22:37 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -22,10 +22,13 @@ with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Errors;
+with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
 with Normalize_XMI.Model.Types;
 
 package body Normalize_XMI.Model.Domains is
+
+   procedure Add_Standard_Types (To : in out Element_Maps.Map);
 
    procedure Process_Domain (From : DOM.Core.Node; In_File : String)
    is
@@ -39,6 +42,9 @@ package body Normalize_XMI.Model.Domains is
       D.Name := +Read_Name (From_Element => From);
       Ada.Text_IO.Put_Line
         (Ada.Text_IO.Standard_Error, "... domain " & (+D.Name));
+
+      --  Standard Types.
+      Add_Standard_Types (To => D.Types);
 
       --  Types (including Enumerations).
       declare
@@ -61,6 +67,23 @@ package body Normalize_XMI.Model.Domains is
             begin
                T.Parent := D'Unchecked_Access;
                D.Types.Insert (Key => +T.Name, New_Item => T);
+            end;
+         end loop;
+      end;
+
+      --  Enumerations
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:Enumeration");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               E : constant Element_P :=
+                 Enumerations.Read_Enumeration (DOM.Core.Nodes.Item (Nodes,
+                                                                     J));
+            begin
+               E.Parent := D'Unchecked_Access;
+               D.Types.Insert (Key => +E.Name, New_Item => E);
             end;
          end loop;
       end;
@@ -168,6 +191,65 @@ package body Normalize_XMI.Model.Domains is
       Element_Maps.Iterate (D.Exceptions, Output'Access);
 
       Put_Line (To, "</domain>");
+   end Output;
+
+
+   type Standard_Type is new Element with null record;
+   overriding
+   procedure Resolve (ST : in out Standard_Type);
+   overriding
+   procedure Output (ST : Standard_Type; To : Ada.Text_IO.File_Type);
+
+
+   procedure Add_Standard_Types (To : in out Element_Maps.Map)
+   is
+      procedure Add_Standard_Type (Named : String);
+      procedure Add_Standard_Type (Named : String)
+      is
+         N : constant Element_P := new Standard_Type;
+         ST : Standard_Type renames Standard_Type (N.all);
+      begin
+         ST.Name := +Named;
+         To.Insert (Key => Named, New_Item => N);
+      end Add_Standard_Type;
+   begin
+      Add_Standard_Type ("Autonumber");
+      Add_Standard_Type ("Boolean");
+      Add_Standard_Type ("Character");
+      Add_Standard_Type ("Counterpart");
+      Add_Standard_Type ("Date");
+      Add_Standard_Type ("Duration");
+      Add_Standard_Type ("Float");
+      Add_Standard_Type ("Handle");
+      Add_Standard_Type ("Integer");
+      Add_Standard_Type ("Long_Float");
+      Add_Standard_Type ("Natural");
+      Add_Standard_Type ("Positive");
+      Add_Standard_Type ("Real");
+      Add_Standard_Type ("String");
+      Add_Standard_Type ("Text");
+      Add_Standard_Type ("Time");
+      Add_Standard_Type ("Timer");
+      Add_Standard_Type ("Unbounded_String");
+   end Add_Standard_Types;
+
+
+   overriding
+   procedure Resolve (ST : in out Standard_Type)
+   is
+   begin
+      null;
+   end Resolve;
+
+
+   overriding
+   procedure Output (ST : Standard_Type; To : Ada.Text_IO.File_Type)
+   is
+      use Ada.Text_IO;
+   begin
+      Put_Line (To, "<type standard='true'>");
+      Put_Line (To, "<name>" & (+ST.Name) & "</name>");
+      Put_Line (To, "</type>");
    end Output;
 
 

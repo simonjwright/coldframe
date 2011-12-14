@@ -43,7 +43,7 @@
               diagramclass="org.argouml.uml.diagram.use_case.ui.UMLUseCaseDiagram"
               diagramname="Use Case Diagram" />
       <member type="pgml"
-              name="ColdFrame_Development_ClassDiagram2.pgml"
+              name="ColdFrame_Development_ClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Class Diagram " />
       <member type="todo"
@@ -58,10 +58,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Dec 10 21:29:24 GMT 2011'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 13 21:35:40 GMT 2011'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/11 15:20:54 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/14 18:22:37 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -284,7 +284,7 @@
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
                 <UML:Attribute xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009B8'
-                  name = 'Attr_6' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Attr_7' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
                   changeability = 'changeable' targetScope = 'instance'>
                   <UML:StructuralFeature.multiplicity>
                     <UML:Multiplicity xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009B9'>
@@ -1173,7 +1173,7 @@
         bold="false"
         textsize="13"
         justification="Left"
-      >Attr_6 : Enum</text>
+      >Attr_7 : Enum</text>
     </group>
     <rectangle name="Fig4.5"
       x="504"

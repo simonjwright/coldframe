@@ -13,10 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-types.adb,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 5eca11a43724 $
+--  $Date: 2011/12/14 18:22:37 $
 --  $Author: simonjwright $
 
+with DOM.Core.Nodes;
+with McKae.XML.XPath.XIA;
+with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Errors;
 
 package body Normalize_XMI.Model.Types is
@@ -31,6 +34,31 @@ package body Normalize_XMI.Model.Types is
       T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading type " & (+T.Name));
+
+      --  Attributes
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:Classifier.feature/UML:Attribute");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               A : constant Element_P :=
+                 Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J));
+               Name : constant String := +A.Name;
+            begin
+               A.Parent := T'Unchecked_Access;
+               if T.Attributes.Contains (Name) then
+                  Errors.Report
+                    ("Type " & (+T.Name) & " has duplicate attribute " & Name);
+               else
+                  T.Attributes.Insert (Key => Name, New_Item => A);
+               end if;
+            end;
+         end loop;
+      end;
+
+      --  Operations
+
       return N;
    end Read_Type;
 
@@ -39,6 +67,12 @@ package body Normalize_XMI.Model.Types is
    procedure Resolve (T : in out Type_Element)
    is
       use Ada.Text_IO;
+      procedure Resolve (Pos : Element_Maps.Cursor);
+      procedure Resolve (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Resolve;
+      end Resolve;
    begin
       Put_Line (Standard_Error, "... checking type " & (+T.Name));
       if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
@@ -47,6 +81,7 @@ package body Normalize_XMI.Model.Types is
               & (+T.Name)
               & " has both {imported} and {renames} specified.");
       end if;
+      Element_Maps.Iterate (T.Attributes, Resolve'Access);
    end Resolve;
 
 
@@ -54,6 +89,12 @@ package body Normalize_XMI.Model.Types is
    procedure Output (T : Type_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
+      procedure Output (Pos : Element_Maps.Cursor);
+      procedure Output (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Output (To);
+      end Output;
    begin
       Put (To, "<type");
       Put_Line (To, ">");
@@ -62,9 +103,11 @@ package body Normalize_XMI.Model.Types is
       if T.Has_Tag ("imported") then
          Put_Line (To,
                    "<imported>" & T.Tag_As_Name ("imported") & "</imported>");
-      end if;
-      if T.Has_Tag ("renames") then
-         Put_Line (To, "<renames>" & T.Tag_As_Name ("renames") & "</renames>");
+      elsif T.Has_Tag ("renames") then
+         Put_Line (To,
+                   "<renames>" & T.Tag_As_Name ("renames") & "</renames>");
+      else
+         Element_Maps.Iterate (T.Attributes, Output'Access);
       end if;
       Put_Line (To, "</type>");
    end Output;

@@ -12,24 +12,23 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-types.ads,v $
+--  $RCSfile: normalize_xmi-model-attributes.ads,v $
 --  $Revision: 5eca11a43724 $
 --  $Date: 2011/12/14 18:22:37 $
 --  $Author: simonjwright $
 
-private package Normalize_XMI.Model.Types is
+private package Normalize_XMI.Model.Attributes is
 
-   function Read_Type (From : DOM.Core.Node) return Element_P;
+   function Read_Attribute (From : DOM.Core.Node) return Element_P;
 
 private
 
-   type Type_Element is new Element with record
-      Attributes : Element_Maps.Map;
-      Operations : Element_Maps.Map;
+   type Attribute_Element is new Element with record
+      Type_Name : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding
-   procedure Resolve (T : in out Type_Element);
+   procedure Resolve (A : in out Attribute_Element);
    overriding
-   procedure Output (T : Type_Element; To : Ada.Text_IO.File_Type);
+   procedure Output (A : Attribute_Element; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Types;
+end Normalize_XMI.Model.Attributes;
