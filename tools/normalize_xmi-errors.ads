@@ -13,14 +13,18 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-errors.ads,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 8e07091e803e $
+--  $Date: 2011/12/14 21:19:23 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Errors is
 
-   procedure Report (Error : String);
+   procedure Warning (Message : String);
+   function Number_Of_Warnings return Natural;
 
+   procedure Error (Message : String);
    function Number_Of_Errors return Natural;
+
+   procedure Report (Error : String) renames Error;
 
 end Normalize_XMI.Errors;

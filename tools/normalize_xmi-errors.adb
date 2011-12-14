@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-errors.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 8e07091e803e $
+--  $Date: 2011/12/14 21:19:23 $
 --  $Author: simonjwright $
 
 with Ada.Text_IO; use Ada.Text_IO;
@@ -22,21 +22,36 @@ with Ada.Text_IO; use Ada.Text_IO;
 package body Normalize_XMI.Errors is
 
 
-   Number : Natural := 0;
+   Warnings : Natural := 0;
+   Errors : Natural := 0;
 
 
-   procedure Report (Error : String)
+   procedure Warning (Message : String)
    is
    begin
-      Number := Number + 1;
-      Put_Line (Standard_Error, "Error: " & Error);
-   end Report;
+      Warnings := Warnings + 1;
+      Put_Line (Standard_Error, "Warning: " & Message);
+   end Warning;
+
+   function Number_Of_Warnings return Natural
+   is
+   begin
+      return Warnings;
+   end Number_Of_Warnings;
+
+
+   procedure Error (Message : String)
+   is
+   begin
+      Errors := Errors + 1;
+      Put_Line (Standard_Error, "Error: " & Message);
+   end Error;
 
 
    function Number_Of_Errors return Natural
    is
    begin
-      return Number;
+      return Errors;
    end Number_Of_Errors;
 
 

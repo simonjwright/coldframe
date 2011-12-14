@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-types.adb,v $
---  $Revision: 5eca11a43724 $
---  $Date: 2011/12/14 18:22:37 $
+--  $Revision: 8e07091e803e $
+--  $Date: 2011/12/14 21:19:23 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -75,11 +75,31 @@ package body Normalize_XMI.Model.Types is
       end Resolve;
    begin
       Put_Line (Standard_Error, "... checking type " & (+T.Name));
+      --  There are all sorts of complicated illegal possibilities
+      --  here!
+      T.Attributes_Permitted :=
+        not (T.Has_Tag ("imported")
+               or T.Has_Tag ("renames"));
       if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
          Errors.Report
            ("Type "
               & (+T.Name)
               & " has both {imported} and {renames} specified.");
+      end if;
+      if T.Attributes_Permitted then
+         if T.Attributes.Is_Empty then
+            Errors.Warning
+              ("Type "
+              & (+T.Name)
+              & " has no attributes, assumed null.");
+         end if;
+      else
+         if not T.Attributes.Is_Empty then
+            Errors.Error
+              ("Type "
+              & (+T.Name)
+              & " is not permitted to have attributes.");
+         end if;
       end if;
       Element_Maps.Iterate (T.Attributes, Resolve'Access);
    end Resolve;
@@ -97,6 +117,9 @@ package body Normalize_XMI.Model.Types is
       end Output;
    begin
       Put (To, "<type");
+      if T.Attributes_Permitted and T.Attributes.Is_Empty then
+         Put (To, " null='true'");
+      end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+T.Name) & "</name>");
       T.Output_Documentation (To);

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-types.ads,v $
---  $Revision: 5eca11a43724 $
---  $Date: 2011/12/14 18:22:37 $
+--  $Revision: 8e07091e803e $
+--  $Date: 2011/12/14 21:19:23 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Types is
@@ -24,6 +24,7 @@ private package Normalize_XMI.Model.Types is
 private
 
    type Type_Element is new Element with record
+      Attributes_Permitted : Boolean := False;
       Attributes : Element_Maps.Map;
       Operations : Element_Maps.Map;
    end record;
