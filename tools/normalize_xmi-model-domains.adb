@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 093f39d61362 $
---  $Date: 2011/12/14 21:26:48 $
+--  $Revision: d3fcc927a6b1 $
+--  $Date: 2011/12/17 21:44:42 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -22,9 +22,10 @@ with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Class_Types;
+with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
-with Normalize_XMI.Model.Types;
 
 package body Normalize_XMI.Model.Domains is
 
@@ -46,27 +47,42 @@ package body Normalize_XMI.Model.Domains is
       --  Standard Types.
       Add_Standard_Types (To => D.Types);
 
-      --  Types (including Enumerations).
+      --  ArgoUML allows a DataType to be given attributes; you just
+      --  can't see them in the class diagram. From ColdFrame's point
+      --  of view, it's much easier to implement statements about
+      --  non-attributed types (such as 'null') using stereotypes
+      --  (and, possibly, tagged values) on DataTypes only; so we
+      --  handle class types and data types separately.
+
+      --  Class <<type>>s
       declare
-         --  ArgoUML allows a DataType to be given attributes; you
-         --  just can't see them in the class diagram. So there's
-         --  really no difference from ColdFrame's point of
-         --  view. Ideally we'd associate type-related tags with
-         --  <<type>>, which looks silly if you already have
-         --  <<datatype>>, so perhaps using a Class and stereotyping
-         --  it <<type>> is neatest.
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
-            "descendant::UML:Class[UML:ModelElement.stereotype/@name='type']"
-              & "| descendant::UML:DataType");
+            "descendant::UML:Class[UML:ModelElement.stereotype/@name='type']");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
-               T : constant Element_P :=
-                 Types.Read_Type (DOM.Core.Nodes.Item (Nodes, J));
+               CT : constant Element_P :=
+                 Class_Types.Read_Class_Type (DOM.Core.Nodes.Item (Nodes, J));
             begin
-               T.Parent := D'Unchecked_Access;
-               D.Types.Insert (Key => +T.Name, New_Item => T);
+               CT.Parent := D'Unchecked_Access;
+               D.Types.Insert (Key => +CT.Name, New_Item => CT);
+            end;
+         end loop;
+      end;
+
+      --  DataTypes
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:DataType");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               DT : constant Element_P :=
+                 Data_Types.Read_Data_Type (DOM.Core.Nodes.Item (Nodes, J));
+            begin
+               DT.Parent := D'Unchecked_Access;
+               D.Types.Insert (Key => +DT.Name, New_Item => DT);
             end;
          end loop;
       end;
