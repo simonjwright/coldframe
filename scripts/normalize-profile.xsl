@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: normalize-profile.xsl,v fd881b1b7e39 2011/12/11 15:20:54 simonjwright $ -->
+<!-- $Id: normalize-profile.xsl,v 9c8f3de33540 2011/12/17 21:42:40 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -22,10 +22,9 @@
 
 <!--
      This stylesheet modifies an ArgoUML UML 1.4 Profile Definition,
-     as contained in a .zargo.uml file, by replacing Argo's UUIDs by
-     names derived from the defined stereotype/data type/tag
-     definition names. The output contains just the modified <XMI/>
-     tree.
+     as contained in a .uml file, by replacing Argo's UUIDs by names
+     derived from the defined stereotype/data type/tag definition
+     names. The output contains just the modified <XMI/> tree.
 
      The reasoning is that it appears that any change to the
      definition can result in wholesale UUID changes, with the result
