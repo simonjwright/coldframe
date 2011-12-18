@@ -12,14 +12,15 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: normalize_xmi-model-data_types.adb,v $
+--  $Revision: 9a1e124a32ff $
+--  $Date: 2011/12/18 19:08:23 $
+--  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Operations;
 
 package body Normalize_XMI.Model.Data_Types is
 
@@ -48,6 +49,26 @@ package body Normalize_XMI.Model.Data_Types is
       end;
 
       --  Operations
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:Classifier.feature/UML:Operation");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               O : constant Element_P :=
+                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
+               Name : constant String := +O.Name;
+            begin
+               O.Parent := T'Unchecked_Access;
+               if T.Operations.Contains (Name) then
+                  Messages.Error
+                    ("Type " & (+T.Name) & " has duplicate operation " & Name);
+               else
+                  T.Operations.Insert (Key => Name, New_Item => O);
+               end if;
+            end;
+         end loop;
+      end;
 
       return N;
    end Read_Data_Type;
@@ -57,6 +78,12 @@ package body Normalize_XMI.Model.Data_Types is
    procedure Resolve (T : in out Data_Type_Element)
    is
       use Ada.Text_IO;
+      procedure Resolve (Pos : Element_Maps.Cursor);
+      procedure Resolve (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Resolve;
+      end Resolve;
    begin
       Put_Line (Standard_Error, "... checking data type " & (+T.Name));
       --  There are all sorts of complicated illegal possibilities
@@ -67,6 +94,19 @@ package body Normalize_XMI.Model.Data_Types is
               & (+T.Name)
               & " has both {imported} and {renames} specified.");
       end if;
+      if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<imported>> but not {imported}.");
+      end if;
+      if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
+         Messages.Error
+           ("Type "
+              & (+T.Name)
+              & " has <<renaming>> but not {renames}.");
+      end if;
+      Element_Maps.Iterate (T.Operations, Resolve'Access);
    end Resolve;
 
 
@@ -74,6 +114,12 @@ package body Normalize_XMI.Model.Data_Types is
    procedure Output (T : Data_Type_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
+      procedure Output (Pos : Element_Maps.Cursor);
+      procedure Output (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Output (To);
+      end Output;
    begin
       Put (To, "<type");
       if T.Has_Stereotype ("null") then
@@ -90,6 +136,7 @@ package body Normalize_XMI.Model.Data_Types is
          Put_Line (To,
                    "<renames>" & T.Tag_As_Name ("renames") & "</renames>");
       end if;
+      Element_Maps.Iterate (T.Operations, Output'Access);
       Put_Line (To, "</type>");
    end Output;
 

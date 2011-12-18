@@ -13,12 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 093f39d61362 $
---  $Date: 2011/12/14 21:26:48 $
+--  $Revision: 9a1e124a32ff $
+--  $Date: 2011/12/18 19:08:23 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Operations;
 
 package body Normalize_XMI.Model.Enumerations is
 
@@ -44,6 +46,26 @@ package body Normalize_XMI.Model.Enumerations is
       end;
 
       --  Operations
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:Classifier.feature/UML:Operation");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               O : constant Element_P :=
+                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
+               Name : constant String := +O.Name;
+            begin
+               O.Parent := E'Unchecked_Access;
+               if E.Operations.Contains (Name) then
+                  Messages.Error
+                    ("Type " & (+E.Name) & " has duplicate operation " & Name);
+               else
+                  E.Operations.Insert (Key => Name, New_Item => O);
+               end if;
+            end;
+         end loop;
+      end;
 
       return N;
    end Read_Enumeration;
@@ -53,8 +75,15 @@ package body Normalize_XMI.Model.Enumerations is
    procedure Resolve (E : in out Enumeration_Element)
    is
       use Ada.Text_IO;
+      procedure Resolve (Pos : Element_Maps.Cursor);
+      procedure Resolve (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Resolve;
+      end Resolve;
    begin
       Put_Line (Standard_Error, "... checking enumeration " & (+E.Name));
+      Element_Maps.Iterate (E.Operations, Resolve'Access);
    end Resolve;
 
 
@@ -62,6 +91,12 @@ package body Normalize_XMI.Model.Enumerations is
    procedure Output (E : Enumeration_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
+      procedure Output (Pos : Element_Maps.Cursor);
+      procedure Output (Pos : Element_Maps.Cursor)
+      is
+      begin
+         Element_Maps.Element (Pos).Output (To);
+      end Output;
       procedure Output (Pos : String_Vectors.Cursor);
       procedure Output (Pos : String_Vectors.Cursor)
       is
@@ -78,6 +113,7 @@ package body Normalize_XMI.Model.Enumerations is
       Put_Line (To, "<enumeration>");
       String_Vectors.Iterate (E.Literals, Output'Access);
       Put_Line (To, "</enumeration>");
+      Element_Maps.Iterate (E.Operations, Output'Access);
       Put_Line (To, "</type>");
    end Output;
 

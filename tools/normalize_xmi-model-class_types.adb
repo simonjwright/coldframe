@@ -12,15 +12,15 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: normalize_xmi-model-class_types.adb,v $
+--  $Revision: 9a1e124a32ff $
+--  $Date: 2011/12/18 19:08:23 $
+--  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
-with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Attributes;
 
 package body Normalize_XMI.Model.Class_Types is
 

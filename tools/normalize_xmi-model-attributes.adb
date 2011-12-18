@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 093f39d61362 $
---  $Date: 2011/12/14 21:26:48 $
+--  $Revision: 9a1e124a32ff $
+--  $Date: 2011/12/18 19:08:23 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -31,7 +31,7 @@ package body Normalize_XMI.Model.Attributes is
    begin
       A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading attribute " & (+A.Name));
+      Put_Line (Standard_Error, "...... reading attribute " & (+A.Name));
 
       --  Type
       declare
@@ -53,7 +53,7 @@ package body Normalize_XMI.Model.Attributes is
    is
       use Ada.Text_IO;
    begin
-      Put_Line (Standard_Error, "... checking attribute " & (+A.Name));
+      Put_Line (Standard_Error, "...... checking attribute " & (+A.Name));
    end Resolve;
 
 

@@ -12,28 +12,24 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-enumerations.ads,v $
+--  $RCSfile: normalize_xmi-model-operations.ads,v $
 --  $Revision: 9a1e124a32ff $
 --  $Date: 2011/12/18 19:08:23 $
 --  $Author: simonjwright $
 
-private package Normalize_XMI.Model.Enumerations is
+private package Normalize_XMI.Model.Operations is
 
-   function Read_Enumeration (From : DOM.Core.Node) return Element_P;
+   function Read_Operation (From : DOM.Core.Node) return Element_P;
 
 private
 
-   package String_Vectors is new Ada.Containers.Indefinite_Vectors
-     (Index_Type => Positive,
-      Element_Type => String);
-
-   type Enumeration_Element is new Element with record
-      Literals : String_Vectors.Vector;
-      Operations : Element_Maps.Map;
+   type Operation_Element is new Element with record
+      Parameters : Element_Maps.Map;
+      Return_Type : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding
-   procedure Resolve (E : in out Enumeration_Element);
+   procedure Resolve (O : in out Operation_Element);
    overriding
-   procedure Output (E : Enumeration_Element; To : Ada.Text_IO.File_Type);
+   procedure Output (O : Operation_Element; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Enumerations;
+end Normalize_XMI.Model.Operations;
