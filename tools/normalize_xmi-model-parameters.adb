@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 9a1e124a32ff $
---  $Date: 2011/12/18 19:08:23 $
+--  $Revision: 375f214b3bf4 $
+--  $Date: 2011/12/18 22:23:02 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -33,34 +33,6 @@ package body Normalize_XMI.Model.Parameters is
       P.Populate (From => From);
       P.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "......... reading parameter " & (+P.Name));
-
-      --  Mode
-      declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "@kind");
-         pragma Assert
-           (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 '@kind' child of a Parameter");
-      begin
-         declare
-            Kind : constant String
-              := DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0));
-         begin
-            if Kind = "in" then
-               P.Mode := In_Mode;
-            elsif Kind = "out" then
-               P.Mode := Out_Mode;
-            elsif Kind = "inout" then
-               P.Mode := Inout_Mode;
-            else
-               Messages.Error
-                 ("unrecognised ""@kind='"
-                    & Kind
-                    & "'"" in parameter "
-                    & (+P.Name));
-            end if;
-         end;
-      end;
 
       --  Type
       declare
@@ -91,12 +63,25 @@ package body Normalize_XMI.Model.Parameters is
    is
       use Ada.Text_IO;
    begin
-      Put (To, "<parameter mode='");
-      case P.Mode is
-         when In_Mode => Put (To, "in");
-         when Out_Mode => Put (To, "out");
-         when Inout_Mode => Put (To, "inout");
-      end case;
+      Put (To, "<parameter");
+      declare
+         Kind : constant String
+           := Read_Attribute ("kind", From_Element => P.Node);
+      begin
+         Put (To, " mode='");
+         if Kind = "in" then
+            Put (To, "in");
+         elsif Kind = "out" then
+            Put (To, "out");
+         elsif Kind = "inout" then
+            Put (To, "inout");
+         else
+            Messages.Error ("unrecognised ""@kind='"
+                              & Kind
+                              & "'"" in parameter "
+                              & (+P.Name));
+         end if;
+      end;
       Put_Line (To, "'>");
       Put_Line (To, "<name>" & (+P.Name) & "</name>");
       Put_Line (To, "<type>" & (+P.Type_Name) & "</type>");

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 2e42ac7f6e38 $
---  $Date: 2011/12/13 17:12:41 $
+--  $Revision: 375f214b3bf4 $
+--  $Date: 2011/12/18 22:23:02 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -176,6 +176,27 @@ package body Normalize_XMI.Model is
    --  XML Utilities --
    --------------------
 
+   function Read_Attribute (Named : String;
+                            From_Element : DOM.Core.Node) return String
+   is
+      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+        (From_Element, "@" & Named);
+   begin
+      if DOM.Core.Nodes.Length (P) = 0 then
+         return "";
+      else
+         return DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (P, 0));
+      end if;
+   end Read_Attribute;
+
+
+   function Read_Name (From_Element : DOM.Core.Node) return String
+   is
+   begin
+      return Identifiers.Normalize (Read_Attribute ("name", From_Element));
+   end Read_Name;
+
+
    function Read_Text (From_Element : DOM.Core.Node) return String
    is
       use Ada.Strings.Unbounded;
@@ -190,20 +211,6 @@ package body Normalize_XMI.Model is
       end loop;
       return +Result;
    end Read_Text;
-
-
-   function Read_Name (From_Element : DOM.Core.Node) return String
-   is
-      P : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-        (From_Element, "@name");
-   begin
-      if DOM.Core.Nodes.Length (P) = 0 then
-         return "";
-      else
-         return Identifiers.Normalize (DOM.Core.Nodes.Node_Value
-                                         (DOM.Core.Nodes.Item (P, 0)));
-      end if;
-   end Read_Name;
 
 
    -------------------------

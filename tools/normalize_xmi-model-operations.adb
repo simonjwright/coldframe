@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 9a1e124a32ff $
---  $Date: 2011/12/18 19:08:23 $
+--  $Revision: 375f214b3bf4 $
+--  $Date: 2011/12/18 22:23:02 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -108,6 +108,15 @@ package body Normalize_XMI.Model.Operations is
       end Output;
    begin
       Put (To, "<operation");
+      declare
+         Is_Abstract : constant Boolean
+           := Boolean'Value (Read_Attribute ("isAbstract",
+                                             From_Element => O.Node));
+      begin
+         if Is_Abstract then
+            Put (To, " abstract='true'");
+         end if;
+      end;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");
       end if;

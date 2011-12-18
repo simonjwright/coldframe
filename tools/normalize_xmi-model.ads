@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 5eca11a43724 $
---  $Date: 2011/12/14 18:22:37 $
+--  $Revision: 375f214b3bf4 $
+--  $Date: 2011/12/18 22:23:02 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -108,11 +108,16 @@ private
    --  XML Utilities --
    --------------------
 
-   --  Reads and concatenates the child Text_Nodes of From_Element.
-   function Read_Text (From_Element : DOM.Core.Node) return String;
+   --  Reads the named attribute from the element (returns the empty
+   --  string if not found).
+   function Read_Attribute (Named : String;
+                            From_Element : DOM.Core.Node) return String;
 
    --  Reads the "name" attribute from the element and normalizes it.
    function Read_Name (From_Element : DOM.Core.Node) return String;
+
+   --  Reads and concatenates the child Text_Nodes of From_Element.
+   function Read_Text (From_Element : DOM.Core.Node) return String;
 
    -------------------------
    --  Output  utilities  --
