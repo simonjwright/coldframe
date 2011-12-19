@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-class_types.adb,v $
+--  $RCSfile: normalize_xmi-model-classes.adb,v $
 --  $Revision: 980cab1dde3f $
 --  $Date: 2011/12/19 14:37:26 $
 --  $Author: simonjwright $
@@ -23,18 +23,18 @@ with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Model.Operations;
 
-package body Normalize_XMI.Model.Class_Types is
+package body Normalize_XMI.Model.Classes is
 
 
-   function Read_Class_Type (From : DOM.Core.Node) return Element_P
+   function Read_Class (From : DOM.Core.Node) return Element_P
    is
       use Ada.Text_IO;
-      N : constant Element_P := new Class_Type_Element;
-      T : Class_Type_Element renames Class_Type_Element (N.all);
+      N : constant Element_P := new Class_Element;
+      C : Class_Element renames Class_Element (N.all);
    begin
-      T.Populate (From => From);
-      T.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "... reading class type " & (+T.Name));
+      C.Populate (From => From);
+      C.Name := +Read_Name (From_Element => From);
+      Put_Line (Standard_Error, "... reading class " & (+C.Name));
 
       --  Attributes
       declare
@@ -47,12 +47,12 @@ package body Normalize_XMI.Model.Class_Types is
                  Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J));
                Name : constant String := +A.Name;
             begin
-               A.Parent := T'Unchecked_Access;
-               if T.Attributes.Contains (Name) then
+               A.Parent := C'Unchecked_Access;
+               if C.Attributes.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+T.Name) & " has duplicate attribute " & Name);
+                    ("Type " & (+C.Name) & " has duplicate attribute " & Name);
                else
-                  T.Attributes.Insert (Key => Name, New_Item => A);
+                  C.Attributes.Insert (Key => Name, New_Item => A);
                end if;
             end;
          end loop;
@@ -69,23 +69,23 @@ package body Normalize_XMI.Model.Class_Types is
                  Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
                Name : constant String := +O.Name;
             begin
-               O.Parent := T'Unchecked_Access;
-               if T.Operations.Contains (Name) then
+               O.Parent := C'Unchecked_Access;
+               if C.Operations.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+T.Name) & " has duplicate operation " & Name);
+                    ("Type " & (+C.Name) & " has duplicate operation " & Name);
                else
-                  T.Operations.Insert (Key => Name, New_Item => O);
+                  C.Operations.Insert (Key => Name, New_Item => O);
                end if;
             end;
          end loop;
       end;
 
       return N;
-   end Read_Class_Type;
+   end Read_Class;
 
 
    overriding
-   procedure Resolve (T : in out Class_Type_Element)
+   procedure Resolve (C : in out Class_Element)
    is
       use Ada.Text_IO;
       procedure Resolve (Pos : Element_Maps.Cursor);
@@ -95,20 +95,14 @@ package body Normalize_XMI.Model.Class_Types is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
-      Put_Line (Standard_Error, "... checking class type " & (+T.Name));
-      if T.Attributes.Is_Empty then
-         Messages.Warning
-           ("Type "
-              & (+T.Name)
-              & " has no attributes, assumed null.");
-      end if;
-      Element_Maps.Iterate (T.Attributes, Resolve'Access);
-      Element_Maps.Iterate (T.Operations, Resolve'Access);
+      Put_Line (Standard_Error, "... checking class " & (+C.Name));
+      Element_Maps.Iterate (C.Attributes, Resolve'Access);
+      Element_Maps.Iterate (C.Operations, Resolve'Access);
    end Resolve;
 
 
    overriding
-   procedure Output (T : Class_Type_Element; To : Ada.Text_IO.File_Type)
+   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
       procedure Output (Pos : Element_Maps.Cursor);
@@ -118,13 +112,10 @@ package body Normalize_XMI.Model.Class_Types is
          Element_Maps.Element (Pos).Output (To);
       end Output;
    begin
-      Put (To, "<type");
-      if T.Attributes.Is_Empty then
-         Put (To, " null='true'");
-      end if;
+      Put (To, "<class");
       declare
          Visibility : constant String
-           := Read_Attribute ("visibility", From_Element => T.Node);
+           := Read_Attribute ("visibility", From_Element => C.Node);
       begin
          if Visibility = "package" then
             Put (To, " visibility='private'");
@@ -133,12 +124,12 @@ package body Normalize_XMI.Model.Class_Types is
          end if;
       end;
       Put_Line (To, ">");
-      Put_Line (To, "<name>" & (+T.Name) & "</name>");
-      T.Output_Documentation (To);
-      Element_Maps.Iterate (T.Attributes, Output'Access);
-      Element_Maps.Iterate (T.Operations, Output'Access);
-      Put_Line (To, "</type>");
+      Put_Line (To, "<name>" & (+C.Name) & "</name>");
+      C.Output_Documentation (To);
+      Element_Maps.Iterate (C.Attributes, Output'Access);
+      Element_Maps.Iterate (C.Operations, Output'Access);
+      Put_Line (To, "</class>");
    end Output;
 
 
-end Normalize_XMI.Model.Class_Types;
+end Normalize_XMI.Model.Classes;

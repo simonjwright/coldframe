@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 9809c9145d02 $
---  $Date: 2011/12/19 00:59:32 $
+--  $Revision: 980cab1dde3f $
+--  $Date: 2011/12/19 14:37:26 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -113,7 +113,7 @@ package body Normalize_XMI.Model.Enumerations is
            := Read_Attribute ("visibility", From_Element => E.Node);
       begin
          if Visibility = "package" then
-            Put (To, " visibility='public'");
+            Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
          end if;

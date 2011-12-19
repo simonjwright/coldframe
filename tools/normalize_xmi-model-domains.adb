@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: d3fcc927a6b1 $
---  $Date: 2011/12/17 21:44:42 $
+--  $Revision: 980cab1dde3f $
+--  $Date: 2011/12/19 14:37:26 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -22,6 +22,7 @@ with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Class_Types;
 with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
@@ -46,6 +47,24 @@ package body Normalize_XMI.Model.Domains is
 
       --  Standard Types.
       Add_Standard_Types (To => D.Types);
+
+      --  Classes
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From,
+            "descendant::UML:Class"
+              & "[not(UML:ModelElement.stereotype/@name='type')]");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               C : constant Element_P :=
+                 Classes.Read_Class (DOM.Core.Nodes.Item (Nodes, J));
+            begin
+               C.Parent := D'Unchecked_Access;
+               D.Types.Insert (Key => +C.Name, New_Item => C);
+            end;
+         end loop;
+      end;
 
       --  ArgoUML allows a DataType to be given attributes; you just
       --  can't see them in the class diagram. From ColdFrame's point
@@ -152,6 +171,7 @@ package body Normalize_XMI.Model.Domains is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
+      Element_Maps.Iterate (D.Classes, Resolve'Access);
       Element_Maps.Iterate (D.Types, Resolve'Access);
       Element_Maps.Iterate (D.Exceptions, Resolve'Access);
    end Resolve;
@@ -203,6 +223,7 @@ package body Normalize_XMI.Model.Domains is
       Put_Line (To,
                 "<revision>" & D.Tag_As_Value ("revision") & "</revision>");
 
+      Element_Maps.Iterate (D.Classes, Output'Access);
       Element_Maps.Iterate (D.Types, Output'Access);
       Element_Maps.Iterate (D.Exceptions, Output'Access);
 

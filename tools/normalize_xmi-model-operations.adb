@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 9809c9145d02 $
---  $Date: 2011/12/19 00:59:32 $
+--  $Revision: 980cab1dde3f $
+--  $Date: 2011/12/19 14:37:26 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -133,6 +133,9 @@ package body Normalize_XMI.Model.Operations is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => O.Node);
       begin
+         --  XXX I've made operation visibility for 'package' 'public'
+         --  rather than 'private' as for other occurrences; should we
+         --  maybe warn about 'package'?
          if Visibility = "package" then
             Put (To, " visibility='public'");
          else

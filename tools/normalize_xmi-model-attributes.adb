@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 9809c9145d02 $
---  $Date: 2011/12/19 00:59:32 $
+--  $Revision: 980cab1dde3f $
+--  $Date: 2011/12/19 14:37:26 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -63,6 +63,12 @@ package body Normalize_XMI.Model.Attributes is
       use Ada.Text_IO;
    begin
       Put (To, "<attribute");
+      if A.Has_Stereotype ("aliased") then
+         Put (To, " aliased='true'");
+      end if;
+      if A.Has_Stereotype ("atomic") then
+         Put (To, " atomic='true'");
+      end if;
       declare
          Owner_Scope : constant String
            := Read_Attribute ("ownerScope", From_Element => A.Node);
@@ -72,6 +78,12 @@ package body Normalize_XMI.Model.Attributes is
             Put (To, " class='true'");
          end if;
       end;
+      if A.Has_Stereotype ("id") then
+         Put (To, " identifier='true'");
+      end if;
+      if A.Has_Stereotype ("volatile") then
+         Put (To, " volatile='true'");
+      end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
       Put_Line (To, "<type>" & (+A.Type_Name) & "</type>");
