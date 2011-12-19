@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 9a1e124a32ff $
---  $Date: 2011/12/18 19:08:23 $
+--  $Revision: 9809c9145d02 $
+--  $Date: 2011/12/19 00:59:32 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -63,9 +63,15 @@ package body Normalize_XMI.Model.Attributes is
       use Ada.Text_IO;
    begin
       Put (To, "<attribute");
-      --  if A.Has_Tag ("imported") then
-      --     Put (To, " imported=""" & A.Tag_As_Name ("imported") & """");
-      --  end if;
+      declare
+         Owner_Scope : constant String
+           := Read_Attribute ("ownerScope", From_Element => A.Node);
+      begin
+         --  The other possibility is "instance".
+         if Owner_Scope = "classifier" then
+            Put (To, " class='true'");
+         end if;
+      end;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
       Put_Line (To, "<type>" & (+A.Type_Name) & "</type>");

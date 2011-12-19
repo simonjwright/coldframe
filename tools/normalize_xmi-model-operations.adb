@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 375f214b3bf4 $
---  $Date: 2011/12/18 22:23:02 $
+--  $Revision: 9809c9145d02 $
+--  $Date: 2011/12/19 00:59:32 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -117,9 +117,28 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " abstract='true'");
          end if;
       end;
+      declare
+         Owner_Scope : constant String
+           := Read_Attribute ("ownerScope", From_Element => O.Node);
+      begin
+         --  The other possibility is "instance".
+         if Owner_Scope = "classifier" then
+            Put (To, " class='true'");
+         end if;
+      end;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");
       end if;
+      declare
+         Visibility : constant String
+           := Read_Attribute ("visibility", From_Element => O.Node);
+      begin
+         if Visibility = "package" then
+            Put (To, " visibility='public'");
+         else
+            Put (To, " visibility='" & Visibility & "'");
+         end if;
+      end;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+O.Name) & "</name>");
       O.Output_Documentation (To);

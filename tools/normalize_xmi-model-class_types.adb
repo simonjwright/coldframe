@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 9a1e124a32ff $
---  $Date: 2011/12/18 19:08:23 $
+--  $Revision: 9809c9145d02 $
+--  $Date: 2011/12/19 00:59:32 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -100,6 +100,16 @@ package body Normalize_XMI.Model.Class_Types is
       if T.Attributes.Is_Empty then
          Put (To, " null='true'");
       end if;
+      declare
+         Visibility : constant String
+           := Read_Attribute ("visibility", From_Element => T.Node);
+      begin
+         if Visibility = "package" then
+            Put (To, " visibility='public'");
+         else
+            Put (To, " visibility='" & Visibility & "'");
+         end if;
+      end;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+T.Name) & "</name>");
       T.Output_Documentation (To);

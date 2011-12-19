@@ -58,10 +58,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Dec 18 18:38:15 GMT 2011'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Dec 19 00:57:31 GMT 2011'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/18 19:08:23 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/19 00:59:32 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -181,8 +181,8 @@
               </UML:Classifier.feature>
             </UML:DataType>
             <UML:Enumeration xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098F'
-              name = 'Enum' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'>
+              name = 'Enum' visibility = 'private' isSpecification = 'false' isRoot = 'false'
+              isLeaf = 'false' isAbstract = 'false'>
               <UML:Classifier.feature>
                 <UML:Operation xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000099E'
                   name = 'Enum_Procedure' visibility = 'public' isSpecification = 'false'
@@ -229,14 +229,14 @@
               </UML:Enumeration.literal>
             </UML:Enumeration>
             <UML:Class xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009A3'
-              name = 'Class_Type' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+              name = 'Class_Type' visibility = 'private' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-type'/>
               </UML:ModelElement.stereotype>
               <UML:Classifier.feature>
                 <UML:Attribute xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009A4'
-                  name = 'Attr_1' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Attr_1' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
                   changeability = 'changeable' targetScope = 'instance'>
                   <UML:StructuralFeature.multiplicity>
                     <UML:Multiplicity xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009A5'>
@@ -343,15 +343,15 @@
               </UML:Classifier.feature>
             </UML:Class>
             <UML:Class xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:00000000000009A2'
-              name = 'Null_Class_Type' visibility = 'public' isSpecification = 'false'
+              name = 'Null_Class_Type' visibility = 'private' isSpecification = 'false'
               isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-type'/>
               </UML:ModelElement.stereotype>
             </UML:Class>
             <UML:DataType xmi.id = '-64--88-1-3--38d96418:1344de390f9:-8000:0000000000000BD4'
-              name = 'Null_Data_Type' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
-              isAbstract = 'false'>
+              name = 'Null_Data_Type' visibility = 'private' isSpecification = 'false'
+              isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-null'/>
               </UML:ModelElement.stereotype>
@@ -506,7 +506,7 @@
       <text name="Fig0.4.2"
         x="137"
         y="136"
-        width="342"
+        width="340"
         height="23"
         fill="0"
         fillcolor="white"
@@ -678,7 +678,7 @@
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[144, 296, 223, 146]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[144, 296, 224, 146]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
        href="-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098F"
        fill="1"
        fillcolor="white"
@@ -691,7 +691,7 @@
     <rectangle name="Fig2.0"
       x="144"
       y="296"
-      width="223"
+      width="224"
       height="146"
       fill="1"
       fillcolor="white"
@@ -701,7 +701,7 @@
     <text name="Fig2.1"
       x="145"
       y="297"
-      width="221"
+      width="222"
       height="43"
       fill="0"
       fillcolor="white"
@@ -715,7 +715,7 @@
       justification="Center"
     >Enum</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[145, 297, 221, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[145, 297, 222, 20]"
          href="-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098F"
          fill="0"
          fillcolor="white"
@@ -728,7 +728,7 @@
       <rectangle name="Fig2.2.0"
         x="145"
         y="297"
-        width="221"
+        width="222"
         height="20"
         fill="0"
         fillcolor="white"
@@ -738,7 +738,7 @@
       <text name="Fig2.2.1"
         x="145"
         y="297"
-        width="221"
+        width="222"
         height="18"
         fill="0"
         fillcolor="white"
@@ -755,7 +755,7 @@
     <rectangle name="Fig2.3"
       x="144"
       y="340"
-      width="223"
+      width="224"
       height="1"
       fill="1"
       fillcolor="black"
@@ -763,7 +763,7 @@
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[145, 341, 221, 59]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[145, 341, 222, 59]"
          href="-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098F"
          fill="0"
          fillcolor="white"
@@ -776,7 +776,7 @@
       <rectangle name="Fig2.4.0"
         x="145"
         y="341"
-        width="221"
+        width="222"
         height="59"
         fill="0"
         fillcolor="white"
@@ -786,7 +786,7 @@
       <text name="Fig2.4.1"
         x="145"
         y="341"
-        width="221"
+        width="222"
         height="17"
         fill="0"
         fillcolor="white"
@@ -802,7 +802,7 @@
       <text name="Fig2.4.2"
         x="145"
         y="358"
-        width="221"
+        width="222"
         height="17"
         fill="0"
         fillcolor="white"
@@ -818,7 +818,7 @@
       <text name="Fig2.4.3"
         x="145"
         y="375"
-        width="221"
+        width="222"
         height="23"
         fill="0"
         fillcolor="white"
@@ -835,7 +835,7 @@
     <rectangle name="Fig2.5"
       x="144"
       y="399"
-      width="223"
+      width="224"
       height="1"
       fill="1"
       fillcolor="black"
@@ -843,7 +843,7 @@
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[145, 400, 221, 42]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[145, 400, 222, 42]"
          href="-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098F"
          fill="0"
          fillcolor="white"
@@ -856,7 +856,7 @@
       <rectangle name="Fig2.6.0"
         x="145"
         y="400"
-        width="221"
+        width="222"
         height="42"
         fill="0"
         fillcolor="white"
@@ -866,7 +866,7 @@
       <text name="Fig2.6.1"
         x="145"
         y="400"
-        width="221"
+        width="222"
         height="17"
         fill="0"
         fillcolor="white"
@@ -882,7 +882,7 @@
       <text name="Fig2.6.2"
         x="145"
         y="417"
-        width="221"
+        width="222"
         height="23"
         fill="0"
         fillcolor="white"
