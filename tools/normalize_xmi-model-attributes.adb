@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -23,12 +23,14 @@ with McKae.XML.XPath.XIA;
 package body Normalize_XMI.Model.Attributes is
 
 
-   function Read_Attribute (From : DOM.Core.Node) return Element_P
+   function Read_Attribute (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Attribute_Element;
       A : Attribute_Element renames Attribute_Element (N.all);
    begin
+      A.Parent := Parent;
       A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "...... reading attribute " & (+A.Name));

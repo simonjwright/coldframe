@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -26,12 +26,14 @@ with Normalize_XMI.Model.Operations;
 package body Normalize_XMI.Model.Classes is
 
 
-   function Read_Class (From : DOM.Core.Node) return Element_P
+   function Read_Class (From : DOM.Core.Node;
+                        Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Class_Element;
       C : Class_Element renames Class_Element (N.all);
    begin
+      C.Parent := Parent;
       C.Populate (From => From);
       C.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading class " & (+C.Name));
@@ -44,13 +46,16 @@ package body Normalize_XMI.Model.Classes is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                A : constant Element_P :=
-                 Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J));
+                 Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +A.Name;
             begin
-               A.Parent := C'Unchecked_Access;
                if C.Attributes.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+C.Name) & " has duplicate attribute " & Name);
+                    ("Class "
+                       & (+C.Name)
+                       & " has duplicate attribute "
+                       & Name);
                else
                   C.Attributes.Insert (Key => Name, New_Item => A);
                end if;
@@ -66,13 +71,16 @@ package body Normalize_XMI.Model.Classes is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                O : constant Element_P :=
-                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
+                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +O.Name;
             begin
-               O.Parent := C'Unchecked_Access;
                if C.Operations.Contains (Name) then
                   Messages.Error
-                    ("Type " & (+C.Name) & " has duplicate operation " & Name);
+                    ("Class "
+                       & (+C.Name)
+                       & " has duplicate operation "
+                       & Name);
                else
                   C.Operations.Insert (Key => Name, New_Item => O);
                end if;

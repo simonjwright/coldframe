@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -26,12 +26,14 @@ with Normalize_XMI.Model.Operations;
 package body Normalize_XMI.Model.Class_Types is
 
 
-   function Read_Class_Type (From : DOM.Core.Node) return Element_P
+   function Read_Class_Type (From : DOM.Core.Node;
+                             Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Class_Type_Element;
       T : Class_Type_Element renames Class_Type_Element (N.all);
    begin
+      T.Parent := Parent;
       T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading class type " & (+T.Name));
@@ -44,10 +46,10 @@ package body Normalize_XMI.Model.Class_Types is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                A : constant Element_P :=
-                 Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J));
+                 Attributes.Read_Attribute (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +A.Name;
             begin
-               A.Parent := T'Unchecked_Access;
                if T.Attributes.Contains (Name) then
                   Messages.Error
                     ("Type " & (+T.Name) & " has duplicate attribute " & Name);
@@ -66,10 +68,10 @@ package body Normalize_XMI.Model.Class_Types is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                O : constant Element_P :=
-                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
+                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +O.Name;
             begin
-               O.Parent := T'Unchecked_Access;
                if T.Operations.Contains (Name) then
                   Messages.Error
                     ("Type " & (+T.Name) & " has duplicate operation " & Name);

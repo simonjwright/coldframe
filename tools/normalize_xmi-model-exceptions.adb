@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.adb,v $
---  $Revision: 093f39d61362 $
---  $Date: 2011/12/14 21:26:48 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -22,12 +22,14 @@ with Normalize_XMI.Messages;
 package body Normalize_XMI.Model.Exceptions is
 
 
-   function Read_Exception (From : DOM.Core.Node) return Element_P
+   function Read_Exception (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Exception_Element;
       E : Exception_Element renames Exception_Element (N.all);
    begin
+      E.Parent := Parent;
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading exception " & (+E.Name));

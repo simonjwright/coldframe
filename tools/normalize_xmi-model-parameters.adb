@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 375f214b3bf4 $
---  $Date: 2011/12/18 22:23:02 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -24,12 +24,14 @@ with Normalize_XMI.Messages;
 package body Normalize_XMI.Model.Parameters is
 
 
-   function Read_Parameter (From : DOM.Core.Node) return Element_P
+   function Read_Parameter (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Parameter_Element;
       P : Parameter_Element renames Parameter_Element (N.all);
    begin
+      P.Parent := Parent;
       P.Populate (From => From);
       P.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "......... reading parameter " & (+P.Name));

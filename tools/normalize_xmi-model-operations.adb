@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -25,12 +25,14 @@ with Normalize_XMI.Model.Parameters;
 package body Normalize_XMI.Model.Operations is
 
 
-   function Read_Operation (From : DOM.Core.Node) return Element_P
+   function Read_Operation (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Operation_Element;
       O : Operation_Element renames Operation_Element (N.all);
    begin
+      O.Parent := Parent;
       O.Populate (From => From);
       O.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "...... reading operation " & (+O.Name));
@@ -45,10 +47,10 @@ package body Normalize_XMI.Model.Operations is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                P : constant Element_P :=
-                 Parameters.Read_Parameter (DOM.Core.Nodes.Item (Nodes, J));
+                 Parameters.Read_Parameter (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +P.Name;
             begin
-               P.Parent := O'Unchecked_Access;
                if O.Parameters.Contains (Name) then
                   Messages.Error
                     ("Operation "

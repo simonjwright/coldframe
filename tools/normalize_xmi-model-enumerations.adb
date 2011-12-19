@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -25,12 +25,14 @@ with Normalize_XMI.Model.Operations;
 package body Normalize_XMI.Model.Enumerations is
 
 
-   function Read_Enumeration (From : DOM.Core.Node) return Element_P
+   function Read_Enumeration (From : DOM.Core.Node;
+                              Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Enumeration_Element;
       E : Enumeration_Element renames Enumeration_Element (N.all);
    begin
+      E.Parent := Parent;
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading enumeration " & (+E.Name));
@@ -53,10 +55,10 @@ package body Normalize_XMI.Model.Enumerations is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                O : constant Element_P :=
-                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J));
+                 Operations.Read_Operation (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => N);
                Name : constant String := +O.Name;
             begin
-               O.Parent := E'Unchecked_Access;
                if E.Operations.Contains (Name) then
                   Messages.Error
                     ("Type " & (+E.Name) & " has duplicate operation " & Name);

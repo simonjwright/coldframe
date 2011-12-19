@@ -13,13 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.ads,v $
---  $Revision: 9a1e124a32ff $
---  $Date: 2011/12/18 19:08:23 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Operations is
 
-   function Read_Operation (From : DOM.Core.Node) return Element_P;
+   function Read_Operation (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P;
 
 private
 

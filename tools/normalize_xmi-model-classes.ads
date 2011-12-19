@@ -13,13 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
 
-   function Read_Class (From : DOM.Core.Node) return Element_P;
+   function Read_Class (From : DOM.Core.Node;
+                        Parent : not null Element_P) return Element_P;
 
 private
 

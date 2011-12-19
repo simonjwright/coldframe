@@ -12,14 +12,15 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: normalize_xmi-model-data_types.ads,v $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
+--  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Data_Types is
 
-   function Read_Data_Type (From : DOM.Core.Node) return Element_P;
+   function Read_Data_Type (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P;
 
 private
 

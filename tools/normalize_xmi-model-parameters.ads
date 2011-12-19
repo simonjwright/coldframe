@@ -13,13 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.ads,v $
---  $Revision: 375f214b3bf4 $
---  $Date: 2011/12/18 22:23:02 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Parameters is
 
-   function Read_Parameter (From : DOM.Core.Node) return Element_P;
+   function Read_Parameter (From : DOM.Core.Node;
+                            Parent : not null Element_P) return Element_P;
 
 private
 

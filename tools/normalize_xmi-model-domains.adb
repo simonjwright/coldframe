@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 980cab1dde3f $
---  $Date: 2011/12/19 14:37:26 $
+--  $Revision: 7170a20c9b72 $
+--  $Date: 2011/12/19 15:17:04 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -40,6 +40,7 @@ package body Normalize_XMI.Model.Domains is
       D.File_Time := GNAT.OS_Lib.File_Time_Stamp (In_File);
 
       --  Domain items
+      --  Parent is, naturally, left null.
       D.Populate (From);
       D.Name := +Read_Name (From_Element => From);
       Ada.Text_IO.Put_Line
@@ -58,9 +59,9 @@ package body Normalize_XMI.Model.Domains is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                C : constant Element_P :=
-                 Classes.Read_Class (DOM.Core.Nodes.Item (Nodes, J));
+                 Classes.Read_Class (DOM.Core.Nodes.Item (Nodes, J),
+                                     Parent => D'Unchecked_Access);
             begin
-               C.Parent := D'Unchecked_Access;
                D.Types.Insert (Key => +C.Name, New_Item => C);
             end;
          end loop;
@@ -82,9 +83,9 @@ package body Normalize_XMI.Model.Domains is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                CT : constant Element_P :=
-                 Class_Types.Read_Class_Type (DOM.Core.Nodes.Item (Nodes, J));
+                 Class_Types.Read_Class_Type (DOM.Core.Nodes.Item (Nodes, J),
+                                              Parent => D'Unchecked_Access);
             begin
-               CT.Parent := D'Unchecked_Access;
                D.Types.Insert (Key => +CT.Name, New_Item => CT);
             end;
          end loop;
@@ -98,9 +99,9 @@ package body Normalize_XMI.Model.Domains is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                DT : constant Element_P :=
-                 Data_Types.Read_Data_Type (DOM.Core.Nodes.Item (Nodes, J));
+                 Data_Types.Read_Data_Type (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => D'Unchecked_Access);
             begin
-               DT.Parent := D'Unchecked_Access;
                D.Types.Insert (Key => +DT.Name, New_Item => DT);
             end;
          end loop;
@@ -114,10 +115,9 @@ package body Normalize_XMI.Model.Domains is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                E : constant Element_P :=
-                 Enumerations.Read_Enumeration (DOM.Core.Nodes.Item (Nodes,
-                                                                     J));
+                 Enumerations.Read_Enumeration (DOM.Core.Nodes.Item (Nodes, J),
+                                                Parent => D'Unchecked_Access);
             begin
-               E.Parent := D'Unchecked_Access;
                D.Types.Insert (Key => +E.Name, New_Item => E);
             end;
          end loop;
@@ -131,9 +131,9 @@ package body Normalize_XMI.Model.Domains is
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
                E : constant Element_P :=
-                 Exceptions.Read_Exception (DOM.Core.Nodes.Item (Nodes, J));
+                 Exceptions.Read_Exception (DOM.Core.Nodes.Item (Nodes, J),
+                                            Parent => D'Unchecked_Access);
             begin
-               E.Parent := D'Unchecked_Access;
                D.Exceptions.Insert (Key => +E.Name, New_Item => E);
             end;
          end loop;
