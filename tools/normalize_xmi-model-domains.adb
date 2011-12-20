@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 113b7da65bbd $
+--  $Date: 2011/12/20 21:01:07 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -22,6 +22,7 @@ with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Associations;
 with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Class_Types;
 with Normalize_XMI.Model.Data_Types;
@@ -123,6 +124,23 @@ package body Normalize_XMI.Model.Domains is
          end loop;
       end;
 
+      --  Associations
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:Association");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               A : constant Element_P :=
+                 Associations.Read_Association
+                 (DOM.Core.Nodes.Item (Nodes, J),
+                  Parent => D'Unchecked_Access);
+            begin
+               D.Associations.Insert (Key => +A.Name, New_Item => A);
+            end;
+         end loop;
+      end;
+
       --  Exceptions
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
@@ -173,6 +191,7 @@ package body Normalize_XMI.Model.Domains is
    begin
       Element_Maps.Iterate (D.Classes, Resolve'Access);
       Element_Maps.Iterate (D.Types, Resolve'Access);
+      Element_Maps.Iterate (D.Associations, Resolve'Access);
       Element_Maps.Iterate (D.Exceptions, Resolve'Access);
    end Resolve;
 
@@ -225,6 +244,7 @@ package body Normalize_XMI.Model.Domains is
 
       Element_Maps.Iterate (D.Classes, Output'Access);
       Element_Maps.Iterate (D.Types, Output'Access);
+      Element_Maps.Iterate (D.Associations, Output'Access);
       Element_Maps.Iterate (D.Exceptions, Output'Access);
 
       Put_Line (To, "</domain>");

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: 093f39d61362 $
---  $Date: 2011/12/14 21:26:48 $
+--  $Revision: 113b7da65bbd $
+--  $Date: 2011/12/20 21:01:07 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -147,6 +147,28 @@ package body Normalize_XMI.Identifiers is
       end loop;
       return Result;
    end Normalize;
+
+
+   function Abbreviate (Name : String) return String
+   is
+      Words : constant Spans := Find_Spans (Name, '_');
+   begin
+      if Words'Length = 1 then
+         case Name (Name'First) is
+            when 'A' | 'E' | 'I' | 'O' | 'U' => return "An_" & Name;
+            when others => return "A_" & Name;
+         end case;
+      else
+         declare
+            Result : String (1 .. Words'Length);
+         begin
+            for J in Result'Range loop
+               Result (J) := Name (Words (J - 1 + Words'First).L);
+            end loop;
+            return Result;
+         end;
+      end if;
+   end Abbreviate;
 
 
    function Find_Spans (S : String; Splitting_At : Character) return Spans

@@ -12,26 +12,33 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-classes.ads,v $
+--  $RCSfile: normalize_xmi-model-association_ends.ads,v $
 --  $Revision: 113b7da65bbd $
 --  $Date: 2011/12/20 21:01:07 $
 --  $Author: simonjwright $
 
-private package Normalize_XMI.Model.Classes is
+private package Normalize_XMI.Model.Association_Ends is
 
-   function Read_Class (From : DOM.Core.Node;
-                        Parent : not null Element_P) return Element_P;
+   function Read_Association_End
+     (From : DOM.Core.Node;
+      Parent : not null Element_P) return Element_P;
 
-private
+   --  The details aren't private, because the Association will need to
+   --  mess with them (it has to see both Association_Ends).
 
-   type Class_Element is new Element with record
-      Abbreviation : Ada.Strings.Unbounded.Unbounded_String;
-      Attributes : Element_Maps.Map;
-      Operations : Element_Maps.Map;
+   type Bound is (Zero, One, Many);
+   type Lower_Bound is new Bound range Zero .. One;
+   type Upper_Bound is new Bound range One .. Many;
+
+   type Association_End_Element is new Element with record
+      Participant : Ada.Strings.Unbounded.Unbounded_String;
+      Lower : Lower_Bound;
+      Upper : Upper_Bound;
+      Source : Boolean; -- Initially from <<source>>.
    end record;
    overriding
-   procedure Resolve (C : in out Class_Element);
+   procedure Resolve (E : in out Association_End_Element);
    overriding
-   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
+   procedure Output (E : Association_End_Element; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Classes;
+end Normalize_XMI.Model.Association_Ends;

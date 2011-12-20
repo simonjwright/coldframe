@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 113b7da65bbd $
+--  $Date: 2011/12/20 21:01:07 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Model.Operations;
@@ -37,6 +38,9 @@ package body Normalize_XMI.Model.Classes is
       C.Populate (From => From);
       C.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading class " & (+C.Name));
+
+      --  XXX will need a Tag eventually - how?
+      C.Abbreviation := +Identifiers.Abbreviate (+C.Name);
 
       --  Attributes
       declare
@@ -133,6 +137,7 @@ package body Normalize_XMI.Model.Classes is
       end;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
+      Put_Line (To, "<abbreviation>" & (+C.Abbreviation) & "</abbreviation>");
       C.Output_Documentation (To);
       Element_Maps.Iterate (C.Attributes, Output'Access);
       Element_Maps.Iterate (C.Operations, Output'Access);

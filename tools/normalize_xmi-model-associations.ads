@@ -12,27 +12,24 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-identifiers.ads,v $
+--  $RCSfile: normalize_xmi-model-associations.ads,v $
 --  $Revision: 113b7da65bbd $
 --  $Date: 2011/12/20 21:01:07 $
 --  $Author: simonjwright $
 
-private package Normalize_XMI.Identifiers is
+private package Normalize_XMI.Model.Associations is
 
-   procedure Read_Case_Exceptions (From : String);
-   --  Read case exceptions, in Emacs Ada-mode form, from files
-   --  'From'.  'From' may be a list of files, separated by ':' on
-   --  Unix, ';' on Windows.
+   function Read_Association (From : DOM.Core.Node;
+                              Parent : not null Element_P) return Element_P;
 
-   function Normalize (Id : String) return String;
+private
 
-   --  Form an abbreviation for the (Class) name.
-   --
-   --  If the name consists of more than one word, make one up from
-   --  the initial letters of Name (which will already have been
-   --  capitalised)
-   --
-   --  Otherwise, prefix Name with A_ or An_.
-   function Abbreviate (Name : String) return String;
+   type Association_Element is new Element with record
+      Ends : Element_Vectors.Vector;
+   end record;
+   overriding
+   procedure Resolve (A : in out Association_Element);
+   overriding
+   procedure Output (A : Association_Element; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Identifiers;
+end Normalize_XMI.Model.Associations;
