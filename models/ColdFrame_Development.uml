@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Associations Class Diagram</activediagram>
+      <activediagram>Class Diagram </activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -35,7 +35,7 @@
       <member type="xmi"
               name="ColdFrame_Development.xmi" />
       <member type="pgml"
-              name="ColdFrame_Development_ClassDiagram.pgml"
+              name="ColdFrame_Development_TypesClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Types Class Diagram" />
       <member type="pgml"
@@ -47,7 +47,7 @@
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Class Diagram " />
       <member type="pgml"
-              name="ColdFrame_Development_ClassDiagram3.pgml"
+              name="ColdFrame_Development_AssociationsClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Associations Class Diagram" />
       <member type="todo"
@@ -62,10 +62,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 20 22:12:14 GMT 2011'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Dec 20 23:02:05 GMT 2011'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/20 22:27:59 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/20 23:04:24 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -79,6 +79,15 @@
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BED'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>$Revision: 1e834ae222d5 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:DataType xmi.id = '-64--88-1-3--49ac10ca:13429c87e71:-8000:000000000000098B'
               name = 'Imported_Type' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -368,6 +377,15 @@
           <UML:ModelElement.stereotype>
             <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
           </UML:ModelElement.stereotype>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BEC'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>$Revision: 1e834ae222d5 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
           <UML:Namespace.ownedElement>
             <UML:Class xmi.id = '-64--88-1-3-76c974f0:13458675800:-8000:0000000000000BDD'
               name = 'Big Brother' visibility = 'public' isSpecification = 'false' isRoot = 'false'
@@ -1793,7 +1811,7 @@
       justification="Center"
     >Big Brother</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[89, 121, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[89, 121, 167, 0]"
          href="-64--88-1-3-76c974f0:13458675800:-8000:0000000000000BDD"
          fill="0"
          fillcolor="white"
@@ -1807,7 +1825,7 @@
       <rectangle name="Fig0.2.0"
         x="89"
         y="121"
-        width="64"
+        width="167"
         height="0"
         fill="0"
         fillcolor="white"
@@ -1934,7 +1952,7 @@
       justification="Center"
     >Little Sister</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[721, 121, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[721, 121, 167, 0]"
          href="-64--88-1-3-76c974f0:13458675800:-8000:0000000000000BE1"
          fill="0"
          fillcolor="white"
@@ -1948,7 +1966,7 @@
       <rectangle name="Fig1.2.0"
         x="721"
         y="121"
-        width="64"
+        width="167"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2082,7 +2100,7 @@
                         offset="64" />
     </private>
     <path name="Fig2.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
