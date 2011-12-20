@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-association.xsl,v f5a039e1b4b0 2011/12/20 22:41:32 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Associations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -997,6 +997,7 @@
             <xsl:text> (</xsl:text>
             <xsl:value-of select="$dst/name"/>
             <xsl:text>) /= null,&#10;</xsl:text>
+            <xsl:value-of select="$IIC"/>
             <xsl:text> "</xsl:text>
             <xsl:value-of select="../name"/>
             <xsl:text>.</xsl:text>
@@ -1013,7 +1014,7 @@
               <xsl:with-param
                 name="a"
                 select="/domain/class/attribute
-                        [@relation=$n 
+                        [@relation=$n
                          and @refers=$src/classname
                          and (not(@role) or @role=$src/name)]"/>
             </xsl:call-template>
