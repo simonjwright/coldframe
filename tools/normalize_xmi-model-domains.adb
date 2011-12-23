@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 964643748739 $
---  $Date: 2011/12/23 12:06:03 $
+--  $Revision: f83be9997904 $
+--  $Date: 2011/12/23 12:13:57 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -55,7 +55,7 @@ package body Normalize_XMI.Model.Domains is
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
             "descendant::UML:Class"
-              & "[not(UML:ModelElement.stereotype/@name='type')]");
+              & "[not(UML:ModelElement.stereotype/@name='datatype')]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -75,11 +75,12 @@ package body Normalize_XMI.Model.Domains is
       --  (and, possibly, tagged values) on DataTypes only; so we
       --  handle class types and data types separately.
 
-      --  Class <<type>>s
+      --  Class <<datatype>>s
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
-            "descendant::UML:Class[UML:ModelElement.stereotype/@name='type']");
+            "descendant::UML:Class"
+              & "[UML:ModelElement.stereotype/@name='datatype']");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare

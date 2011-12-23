@@ -4,7 +4,7 @@
     <documentation>
       <authorname></authorname>
       <authoremail></authoremail>
-      <version>0.34.beta1</version>
+      <version>0.34</version>
       <description>
         
       </description>
@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Dec 19 22:16:07 GMT 2011'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 23 12:00:23 GMT 2011'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34.beta1(6) revised on $Date: 2011/12/20 21:01:07 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2011/12/23 12:13:57 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -70,6 +70,17 @@
           name = 'domain' visibility = 'public' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false'>
           <UML:Stereotype.baseClass>Package</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BF9'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>A domain is a separate real, hypothetical, or abstract world inhabited by a distinct set of classes that behave according to rules and policies characteristic of that domain.
+A domain is translated as a top-level Ada package, with the name derived from the package name using the usual name conversion rules (it can be overridden using the tagged value {name}).
+Child UML packages are included (recursively). The child UML package structure is not reflected in the generated code (for example, all classes end up as direct Ada child packages of the domain package).</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
           <UML:Stereotype.definedTag>
             <UML:TagDefinition xmi.id = '-64--88-1-3-1462268c:133d18334e6:-8000:0000000000000A7A'
               name = 'name' isSpecification = 'false'>
@@ -174,18 +185,29 @@
           name = 'entry' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BFA'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>In an active class, you can specify task entries using the «entry» stereotype. It&apos;s permissible to have an ordinary operation with the same name as an «entry», because «entry» operations don&apos;t generate normal subprograms.
+In a «protected» type, you can nominate procedures (operations without a return value) as entries using the «entry» stereotype.
+The point about an entry of a protected type is that your implementation specifies a guard condition; callers of the entry block until the guard becomes open.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
         <UML:DataType xmi.id = '-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001276'
           name = 'Timer' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'/>
         <UML:Stereotype xmi.id = '-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001277'
-          name = 'type' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          name = 'datatype' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DCA'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Specifies that the class in fact specifies a (record) type.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>Specifies that the class in fact specifies a (record) type or struct.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -199,6 +221,15 @@
           name = 'id' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Attribute</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BFC'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>The attribute is an identifying attribute.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
           <UML:Stereotype.definedTag>
             <UML:TagDefinition xmi.id = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000BE4'
               name = 'formalizes' isSpecification = 'false'/>
@@ -220,7 +251,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>The tagged operation is an accessor for one of the attributes of the class, determined by name and parameter or result type.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>The tagged operation is an accessor for one of the attributes of the class, determined by scope (instance/class), name and parameter or result type.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -397,6 +428,15 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
           name = 'finalize' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BFB'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Operations to be called to clean up as an instance is deleted (for example, to tidy up associations) are marked with the stereotype «finalize». (It would be possible in theory to use Ada&apos;s controlled types, but that depends on your target language being Ada). Also, it&apos;s possible to have more than one «finalize» operation.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001025'
           name = 'handler' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -412,6 +452,15 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
           name = 'init' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BFD'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Operations to be called from the Domain Initialize procedure are marked with the stereotype «init». This implies the stereotype «class». These operations must be parameterless procedures.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
         <UML:Stereotype xmi.id = '-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028'
           name = 'protected' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -421,7 +470,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC8'
               isSpecification = 'false'>
               <UML:TaggedValue.dataValue>Specifies that instances of the type are protected against concurrent access by multiple threads of execution.
-To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</UML:TaggedValue.dataValue>
+To be applied to a Class stereotyped «type» and with attributes.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
@@ -437,6 +486,15 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
           name = 'teardown' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>Operation</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BFE'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Instance operations to be called during teardown (in unit test) are marked with the stereotype «teardown».</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8'
           name = 'null' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
@@ -482,6 +540,16 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
           name = 'source' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
           <UML:Stereotype.baseClass>AssociationEnd</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-2--60e688a9:134606f9db8:-8000:0000000000000BF8'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>If you have a symmetrical association of multiplicity 1:1, 1c:1c, 1-(1:1) or 1-(1c:1c), ColdFrame requires you to tell it how the association is to be formalized.
+This stereotype marks the association end from which the referential attribute (which appears in the other end) is taken.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
       </UML:Namespace.ownedElement>
     </UML:Model>
@@ -2667,7 +2735,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig3"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 40, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 112, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011E6"
        fill="1"
        fillcolor="white"
@@ -2679,7 +2747,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig3.0"
       x="320"
-      y="40"
+      y="112"
       width="114"
       height="45"
       fill="1"
@@ -2689,7 +2757,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig3.1"
       x="321"
-      y="41"
+      y="113"
       width="112"
       height="43"
       fill="0"
@@ -2704,7 +2772,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >domain</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 41, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 113, 112, 20]"
          href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011E6"
          fill="0"
          fillcolor="white"
@@ -2716,7 +2784,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig3.2.0"
         x="321"
-        y="41"
+        y="113"
         width="112"
         height="20"
         fill="0"
@@ -2726,7 +2794,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig3.2.1"
         x="321"
-        y="41"
+        y="113"
         width="112"
         height="18"
         fill="0"
@@ -2743,7 +2811,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig4"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 120, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 192, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-4--4b388e1c:133c835cf94:-8000:0000000000000B81"
        fill="1"
        fillcolor="white"
@@ -2755,7 +2823,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig4.0"
       x="320"
-      y="120"
+      y="192"
       width="114"
       height="45"
       fill="1"
@@ -2765,7 +2833,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig4.1"
       x="321"
-      y="121"
+      y="193"
       width="112"
       height="43"
       fill="0"
@@ -2780,7 +2848,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >entry</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 121, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 193, 112, 20]"
          href="-64--88-1-4--4b388e1c:133c835cf94:-8000:0000000000000B81"
          fill="0"
          fillcolor="white"
@@ -2792,7 +2860,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig4.2.0"
         x="321"
-        y="121"
+        y="193"
         width="112"
         height="20"
         fill="0"
@@ -2802,7 +2870,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig4.2.1"
         x="321"
-        y="121"
+        y="193"
         width="112"
         height="18"
         fill="0"
@@ -2819,7 +2887,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig5"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 104, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 112, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2--1f15b0ea:133d63b1278:-8000:0000000000000A82"
        fill="1"
        fillcolor="white"
@@ -2831,7 +2899,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig5.0"
       x="568"
-      y="104"
+      y="112"
       width="114"
       height="45"
       fill="1"
@@ -2841,7 +2909,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig5.1"
       x="569"
-      y="105"
+      y="113"
       width="112"
       height="43"
       fill="0"
@@ -2856,7 +2924,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >id</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 105, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 113, 112, 20]"
          href="-64--88-1-2--1f15b0ea:133d63b1278:-8000:0000000000000A82"
          fill="0"
          fillcolor="white"
@@ -2868,7 +2936,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig5.2.0"
         x="569"
-        y="105"
+        y="113"
         width="112"
         height="20"
         fill="0"
@@ -2878,7 +2946,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig5.2.1"
         x="569"
-        y="105"
+        y="113"
         width="112"
         height="18"
         fill="0"
@@ -2895,7 +2963,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig6"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[760, 40, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 40, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
        fill="1"
        fillcolor="white"
@@ -2906,7 +2974,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </private>
     
     <rectangle name="Fig6.0"
-      x="760"
+      x="768"
       y="40"
       width="114"
       height="45"
@@ -2916,7 +2984,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       strokecolor="black"
     />
     <text name="Fig6.1"
-      x="761"
+      x="769"
       y="41"
       width="112"
       height="43"
@@ -2932,7 +3000,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >public</text>
     <group name="Fig6.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[761, 41, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 41, 112, 20]"
          href="-64--88-1-3--64c4b9aa:133bd9fbc13:-8000:00000000000011EA"
          fill="0"
          fillcolor="white"
@@ -2943,7 +3011,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       </private>
       
       <rectangle name="Fig6.2.0"
-        x="761"
+        x="769"
         y="41"
         width="112"
         height="20"
@@ -2953,7 +3021,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
         strokecolor="black"
       />
       <text name="Fig6.2.1"
-        x="761"
+        x="769"
         y="41"
         width="112"
         height="18"
@@ -2971,7 +3039,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig7"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 392, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 40, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001277"
        fill="1"
        fillcolor="white"
@@ -2982,9 +3050,9 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </private>
     
     <rectangle name="Fig7.0"
-      x="768"
-      y="392"
-      width="114"
+      x="320"
+      y="40"
+      width="116"
       height="45"
       fill="1"
       fillcolor="white"
@@ -2992,9 +3060,9 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       strokecolor="black"
     />
     <text name="Fig7.1"
-      x="769"
-      y="393"
-      width="112"
+      x="321"
+      y="41"
+      width="114"
       height="43"
       fill="0"
       fillcolor="white"
@@ -3006,9 +3074,9 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       bold="false"
       textsize="13"
       justification="Center"
-    >type</text>
+    >datatype</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 393, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 41, 114, 20]"
          href="-64--88-1-3-75974079:133cb9477e4:-8000:0000000000001277"
          fill="0"
          fillcolor="white"
@@ -3019,9 +3087,9 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       </private>
       
       <rectangle name="Fig7.2.0"
-        x="769"
-        y="393"
-        width="112"
+        x="321"
+        y="41"
+        width="114"
         height="20"
         fill="0"
         fillcolor="white"
@@ -3029,9 +3097,9 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
         strokecolor="black"
       />
       <text name="Fig7.2.1"
-        x="769"
-        y="393"
-        width="112"
+        x="321"
+        y="41"
+        width="114"
         height="18"
         fill="0"
         fillcolor="white"
@@ -3047,7 +3115,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig8"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[760, 104, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 112, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
        fill="1"
        fillcolor="white"
@@ -3058,8 +3126,8 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </private>
     
     <rectangle name="Fig8.0"
-      x="760"
-      y="104"
+      x="768"
+      y="112"
       width="116"
       height="45"
       fill="1"
@@ -3068,8 +3136,8 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       strokecolor="black"
     />
     <text name="Fig8.1"
-      x="761"
-      y="105"
+      x="769"
+      y="113"
       width="114"
       height="43"
       fill="0"
@@ -3084,7 +3152,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >renaming</text>
     <group name="Fig8.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[761, 105, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 113, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001015"
          fill="0"
          fillcolor="white"
@@ -3095,8 +3163,8 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       </private>
       
       <rectangle name="Fig8.2.0"
-        x="761"
-        y="105"
+        x="769"
+        y="113"
         width="114"
         height="20"
         fill="0"
@@ -3105,8 +3173,8 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
         strokecolor="black"
       />
       <text name="Fig8.2.1"
-        x="761"
-        y="105"
+        x="769"
+        y="113"
         width="114"
         height="18"
         fill="0"
@@ -3123,7 +3191,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 168, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 192, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D"
        fill="1"
        fillcolor="white"
@@ -3135,7 +3203,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig9.0"
       x="568"
-      y="168"
+      y="192"
       width="116"
       height="45"
       fill="1"
@@ -3145,7 +3213,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig9.1"
       x="569"
-      y="169"
+      y="193"
       width="114"
       height="43"
       fill="0"
@@ -3160,7 +3228,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >imported</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 169, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 193, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000101D"
          fill="0"
          fillcolor="white"
@@ -3172,7 +3240,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig9.2.0"
         x="569"
-        y="169"
+        y="193"
         width="114"
         height="20"
         fill="0"
@@ -3182,7 +3250,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig9.2.1"
         x="569"
-        y="169"
+        y="193"
         width="114"
         height="18"
         fill="0"
@@ -3351,7 +3419,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig12"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 200, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 264, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001023"
        fill="1"
        fillcolor="white"
@@ -3363,7 +3431,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig12.0"
       x="320"
-      y="200"
+      y="264"
       width="116"
       height="45"
       fill="1"
@@ -3373,7 +3441,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig12.1"
       x="321"
-      y="201"
+      y="265"
       width="114"
       height="43"
       fill="0"
@@ -3388,7 +3456,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >final</text>
     <group name="Fig12.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 201, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 265, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001023"
          fill="0"
          fillcolor="white"
@@ -3400,7 +3468,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig12.2.0"
         x="321"
-        y="201"
+        y="265"
         width="114"
         height="20"
         fill="0"
@@ -3410,7 +3478,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig12.2.1"
         x="321"
-        y="201"
+        y="265"
         width="114"
         height="18"
         fill="0"
@@ -3427,7 +3495,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig13"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 280, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 344, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001024"
        fill="1"
        fillcolor="white"
@@ -3439,7 +3507,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig13.0"
       x="320"
-      y="280"
+      y="344"
       width="116"
       height="45"
       fill="1"
@@ -3449,7 +3517,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig13.1"
       x="321"
-      y="281"
+      y="345"
       width="114"
       height="43"
       fill="0"
@@ -3464,7 +3532,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >finalize</text>
     <group name="Fig13.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 281, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 345, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001024"
          fill="0"
          fillcolor="white"
@@ -3476,7 +3544,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig13.2.0"
         x="321"
-        y="281"
+        y="345"
         width="114"
         height="20"
         fill="0"
@@ -3486,7 +3554,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig13.2.1"
         x="321"
-        y="281"
+        y="345"
         width="114"
         height="18"
         fill="0"
@@ -3503,7 +3571,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig14"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 368, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[320, 432, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001025"
        fill="1"
        fillcolor="white"
@@ -3515,7 +3583,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig14.0"
       x="320"
-      y="368"
+      y="432"
       width="116"
       height="45"
       fill="1"
@@ -3525,7 +3593,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig14.1"
       x="321"
-      y="369"
+      y="433"
       width="114"
       height="43"
       fill="0"
@@ -3540,7 +3608,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >handler</text>
     <group name="Fig14.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 369, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 433, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001025"
          fill="0"
          fillcolor="white"
@@ -3552,7 +3620,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig14.2.0"
         x="321"
-        y="369"
+        y="433"
         width="114"
         height="20"
         fill="0"
@@ -3562,7 +3630,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig14.2.1"
         x="321"
-        y="369"
+        y="433"
         width="114"
         height="18"
         fill="0"
@@ -3655,7 +3723,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig16"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 248, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 264, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001027"
        fill="1"
        fillcolor="white"
@@ -3667,7 +3735,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig16.0"
       x="568"
-      y="248"
+      y="264"
       width="116"
       height="45"
       fill="1"
@@ -3677,7 +3745,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig16.1"
       x="569"
-      y="249"
+      y="265"
       width="114"
       height="43"
       fill="0"
@@ -3692,7 +3760,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >init</text>
     <group name="Fig16.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 249, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 265, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001027"
          fill="0"
          fillcolor="white"
@@ -3704,7 +3772,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig16.2.0"
         x="569"
-        y="249"
+        y="265"
         width="114"
         height="20"
         fill="0"
@@ -3714,7 +3782,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig16.2.1"
         x="569"
-        y="249"
+        y="265"
         width="114"
         height="18"
         fill="0"
@@ -3731,7 +3799,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig17"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 400, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 432, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
        fill="1"
        fillcolor="white"
@@ -3743,7 +3811,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig17.0"
       x="568"
-      y="400"
+      y="432"
       width="116"
       height="45"
       fill="1"
@@ -3753,7 +3821,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig17.1"
       x="569"
-      y="401"
+      y="433"
       width="114"
       height="43"
       fill="0"
@@ -3768,7 +3836,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >protected</text>
     <group name="Fig17.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 401, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 433, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001028"
          fill="0"
          fillcolor="white"
@@ -3780,7 +3848,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig17.2.0"
         x="569"
-        y="401"
+        y="433"
         width="114"
         height="20"
         fill="0"
@@ -3790,7 +3858,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig17.2.1"
         x="569"
-        y="401"
+        y="433"
         width="114"
         height="18"
         fill="0"
@@ -3807,7 +3875,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig18"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 176, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 192, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
        fill="1"
        fillcolor="white"
@@ -3819,7 +3887,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig18.0"
       x="768"
-      y="176"
+      y="192"
       width="116"
       height="45"
       fill="1"
@@ -3829,7 +3897,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig18.1"
       x="769"
-      y="177"
+      y="193"
       width="114"
       height="43"
       fill="0"
@@ -3844,7 +3912,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >singleton</text>
     <group name="Fig18.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 177, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 193, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001029"
          fill="0"
          fillcolor="white"
@@ -3856,7 +3924,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig18.2.0"
         x="769"
-        y="177"
+        y="193"
         width="114"
         height="20"
         fill="0"
@@ -3866,7 +3934,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig18.2.1"
         x="769"
-        y="177"
+        y="193"
         width="114"
         height="18"
         fill="0"
@@ -3883,7 +3951,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig19"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 320, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 336, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
        fill="1"
        fillcolor="white"
@@ -3895,7 +3963,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig19.0"
       x="768"
-      y="320"
+      y="336"
       width="116"
       height="45"
       fill="1"
@@ -3905,7 +3973,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig19.1"
       x="769"
-      y="321"
+      y="337"
       width="114"
       height="43"
       fill="0"
@@ -3920,7 +3988,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >teardown</text>
     <group name="Fig19.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 321, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 337, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:000000000000102A"
          fill="0"
          fillcolor="white"
@@ -3932,7 +4000,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig19.2.0"
         x="769"
-        y="321"
+        y="337"
         width="114"
         height="20"
         fill="0"
@@ -3942,7 +4010,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig19.2.1"
         x="769"
-        y="321"
+        y="337"
         width="114"
         height="18"
         fill="0"
@@ -3959,7 +4027,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig20"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 328, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[568, 344, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
        fill="1"
        fillcolor="white"
@@ -3971,7 +4039,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig20.0"
       x="568"
-      y="328"
+      y="344"
       width="116"
       height="45"
       fill="1"
@@ -3981,7 +4049,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig20.1"
       x="569"
-      y="329"
+      y="345"
       width="114"
       height="43"
       fill="0"
@@ -3996,7 +4064,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >null</text>
     <group name="Fig20.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 329, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[569, 345, 114, 20]"
          href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB8"
          fill="0"
          fillcolor="white"
@@ -4008,7 +4076,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig20.2.0"
         x="569"
-        y="329"
+        y="345"
         width="114"
         height="20"
         fill="0"
@@ -4018,7 +4086,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig20.2.1"
         x="569"
-        y="329"
+        y="345"
         width="114"
         height="18"
         fill="0"
@@ -4111,7 +4179,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     </group>
   </group>
   <group name="Fig22"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 248, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[768, 264, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
        fill="1"
        fillcolor="white"
@@ -4123,7 +4191,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     
     <rectangle name="Fig22.0"
       x="768"
-      y="248"
+      y="264"
       width="116"
       height="45"
       fill="1"
@@ -4133,7 +4201,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
     />
     <text name="Fig22.1"
       x="769"
-      y="249"
+      y="265"
       width="114"
       height="43"
       fill="0"
@@ -4148,7 +4216,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       justification="Center"
     >source</text>
     <group name="Fig22.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 249, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[769, 265, 114, 20]"
          href="-64--88-1-3-4af27bbd:13453c6f0ea:-8000:0000000000001064"
          fill="0"
          fillcolor="white"
@@ -4160,7 +4228,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       
       <rectangle name="Fig22.2.0"
         x="769"
-        y="249"
+        y="265"
         width="114"
         height="20"
         fill="0"
@@ -4170,7 +4238,7 @@ To be applied to a Class stereotyped &lt;&lt;type&gt;&gt; and with attributes.</
       />
       <text name="Fig22.2.1"
         x="769"
-        y="249"
+        y="265"
         width="114"
         height="18"
         fill="0"
