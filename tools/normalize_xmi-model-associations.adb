@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: 964643748739 $
+--  $Date: 2011/12/23 12:06:03 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -77,6 +77,12 @@ package body Normalize_XMI.Model.Associations is
       begin
          Element_Vectors.Element (Pos).Resolve;
       end Resolve;
+      E1 : Association_Ends.Association_End_Element
+        renames Association_Ends.Association_End_Element
+        (A.Ends.Element (1).all);
+      E2 : Association_Ends.Association_End_Element
+        renames Association_Ends.Association_End_Element
+        (A.Ends.Element (2).all);
    begin
       Put_Line (Standard_Error, "...... checking association " & (+A.Name));
       Element_Vectors.Iterate (A.Ends, Resolve'Access);

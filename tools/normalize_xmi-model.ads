@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 375f214b3bf4 $
---  $Date: 2011/12/18 22:23:02 $
+--  $Revision: 964643748739 $
+--  $Date: 2011/12/23 12:06:03 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -64,6 +64,9 @@ private
 
    --  Fill in the Node, Stereotypes, and Tagged_Values fields.
    procedure Populate (E : in out Element; From : DOM.Core.Node);
+
+   --  Search up the Parent tree to find a Class 'Named'.
+   function Find_Class (Known_To : Element; Named : String) return Element_P;
 
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean;
 

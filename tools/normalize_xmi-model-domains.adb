@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: 964643748739 $
+--  $Date: 2011/12/23 12:06:03 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -63,7 +63,7 @@ package body Normalize_XMI.Model.Domains is
                  Classes.Read_Class (DOM.Core.Nodes.Item (Nodes, J),
                                      Parent => D'Unchecked_Access);
             begin
-               D.Types.Insert (Key => +C.Name, New_Item => C);
+               D.Classes.Insert (Key => +C.Name, New_Item => C);
             end;
          end loop;
       end;
@@ -177,6 +177,18 @@ package body Normalize_XMI.Model.Domains is
       end if;
 
    end Process_Domain;
+
+
+   overriding
+   function Find_Class (Known_To : Domain; Named : String) return Element_P
+   is
+   begin
+      if Known_To.Classes.Contains (Named) then
+         return Known_To.Classes.Element (Named);
+      else
+         return null;
+      end if;
+   end Find_Class;
 
 
    overriding

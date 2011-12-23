@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.ads,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: 964643748739 $
+--  $Date: 2011/12/23 12:06:03 $
 --  $Author: simonjwright $
 
 with GNAT.OS_Lib;
@@ -33,6 +33,8 @@ private
       Associations : Element_Maps.Map;
       Exceptions : Element_Maps.Map;
    end record;
+   overriding
+   function Find_Class (Known_To : Domain; Named : String) return Element_P;
    overriding
    procedure Resolve (D : in out Domain);
    overriding
