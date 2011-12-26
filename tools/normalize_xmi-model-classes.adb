@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: ba36451da4c7 $
+--  $Date: 2011/12/26 18:37:18 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -96,6 +96,34 @@ package body Normalize_XMI.Model.Classes is
    end Read_Class;
 
 
+   not overriding
+   procedure Create_Referential_Attribute
+     (In_Class : in out Class_Element;
+      Referring_To : Element_P;
+      For_Relationship : Element_P;
+      With_Source_Role_Name : String;
+      Forming_Identifier : Boolean)
+   is
+      N : constant Element_P := new Referential_Attribute_Element;
+      R : Referential_Attribute_Element
+        renames Referential_Attribute_Element (N.all);
+      use type Ada.Strings.Unbounded.Unbounded_String;
+   begin
+      R.Parent := In_Class'Unchecked_Access;
+      R.Name :=
+        For_Relationship.Name
+        & (+".")
+        & (+With_Source_Role_Name)
+        & (+".")
+        & Referring_To.Name;
+      R.Referring_To := Referring_To;
+      R.For_Relationship := For_Relationship;
+      R.With_Source_Role_Name := +With_Source_Role_Name;
+      R.Identifier := Forming_Identifier;
+      In_Class.Attributes.Insert (Key => +R.Name, New_Item => N);
+   end Create_Referential_Attribute;
+
+
    overriding
    procedure Resolve (C : in out Class_Element)
    is
@@ -142,6 +170,23 @@ package body Normalize_XMI.Model.Classes is
       Element_Maps.Iterate (C.Attributes, Output'Access);
       Element_Maps.Iterate (C.Operations, Output'Access);
       Put_Line (To, "</class>");
+   end Output;
+
+
+   overriding
+   procedure Output (R : Referential_Attribute_Element;
+                     To : Ada.Text_IO.File_Type)
+   is
+      use Ada.Text_IO;
+   begin
+      Put (To, "<attribute");
+      Put (To, " refers='" & (+R.Referring_To.Name) & "'");
+      Put (To, " relation='" & (+R.For_Relationship.Name) & "'");
+      Put (To, " role='" & (+R.With_Source_Role_Name) & "'");
+      if R.Identifier then
+         Put (To, " identifier='true'");
+      end if;
+      Put_Line (To, "/>");
    end Output;
 
 

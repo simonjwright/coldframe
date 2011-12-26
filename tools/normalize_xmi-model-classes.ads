@@ -13,14 +13,48 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: ba36451da4c7 $
+--  $Date: 2011/12/26 18:37:18 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
 
    function Read_Class (From : DOM.Core.Node;
                         Parent : not null Element_P) return Element_P;
+
+   type Class_Element is new Element with private;
+
+   overriding
+   procedure Resolve (C : in out Class_Element);
+
+   overriding
+   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
+
+   --  Create referential attributes to formalize relationships (both
+   --  associations and generalizations).
+   --
+   --  Referring_To is the class that's the source of the referential
+   --  attribute (for associations, this is usually the one at the
+   --  other end of the association from the class containing the
+   --  referential attribute; for generalizations, it's the parent).
+   --
+   --  For_Relationship is the relationship that's being implemented.
+   --
+   --  With_Source_Role_Name is the role fulfilled by the source class
+   --  (the object in the Shlaer-Mellor formulation
+   --  subject->role_name->object). For generalizations, this will be
+   --  "Parent".
+   --
+   --  Forming_Identifier is True if the attribute is to form (part
+   --  of) the identifier of the owning class; this will be the case
+   --  for associative classes and for children in generalizations.
+   not overriding
+   procedure Create_Referential_Attribute
+     (In_Class : in out Class_Element;
+      Referring_To : Element_P;
+      For_Relationship : Element_P;
+      With_Source_Role_Name : String;
+      Forming_Identifier : Boolean);
 
 private
 
@@ -29,9 +63,17 @@ private
       Attributes : Element_Maps.Map;
       Operations : Element_Maps.Map;
    end record;
+
+   type Referential_Attribute_Element is new Element with record
+      Referring_To : Element_P;
+      For_Relationship : Element_P;
+      With_Source_Role_Name : Ada.Strings.Unbounded.Unbounded_String;
+      Identifier : Boolean;
+   end record;
    overriding
-   procedure Resolve (C : in out Class_Element);
+   procedure Resolve (R : in out Referential_Attribute_Element) is null;
    overriding
-   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
+   procedure Output (R : Referential_Attribute_Element;
+                     To : Ada.Text_IO.File_Type);
 
 end Normalize_XMI.Model.Classes;

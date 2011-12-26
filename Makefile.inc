@@ -140,21 +140,21 @@ $(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
 
 # Generate .rr files (resolved references in ArgoUML files).
 # XXX This contains a workround for ArgoUML Issue 6385.
-# XXX This contains a workround for XML/Ada issue.
+# XXX This contains a workround for an XML/Ada issue.
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	$(SED)								\
 	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
 	  <$<								\
-	  >$(basename $@).t1
+	  >$@~1
 	$(SAXON)							\
-	  $(basename $@).t1						\
+	  $@~1						\
 	  $(COLDFRAME)/scripts/resolve-references.xsl			\
 	  library_path=$(COLDFRAME)/lib/				\
-	  >$(basename $@).t2						\
+	  >$@~2						\
 	  || ($(ECHO) "Resolution problem."; $(RM) -f $@; $(EXIT) 1)
 	$(SED)								\
 	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
-	  <$(basename $@).t2						\
+	  <$@~2						\
 	  >$@
 
 # Generate .norm files from .raw.

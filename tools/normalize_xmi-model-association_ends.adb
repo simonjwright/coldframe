@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: 964643748739 $
---  $Date: 2011/12/23 12:06:03 $
+--  $Revision: ba36451da4c7 $
+--  $Date: 2011/12/26 18:37:18 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -128,25 +128,15 @@ package body Normalize_XMI.Model.Association_Ends is
    begin
       Put_Line (Standard_Error,
                 "......... checking association_end " & (+E.Name));
-         if E.Find_Class (+E.Participant) /= null then
-            Put_Line (Standard_Error,
-                      "............ "
-                        & (+E.Parent.Name)
-                        & "."
-                        & (+E.Name)
-                        & " found participant "
-                        & (+E.Participant)
-                        & ", actual name "
-                        & (+E.Find_Class (+E.Participant).Name));
-         else
-            Put_Line (Standard_Error,
-                      "............ "
-                        & (+E.Parent.Name)
-                        & "."
-                        & (+E.Name)
-                        & " didn't find participant "
-                        & (+E.Participant));
-         end if;
+      if E.Find_Class (+E.Participant) = null then
+         Messages.Error
+           ("Couldn't find participant "
+              & (+E.Participant)
+              & " for association end "
+              & (+E.Parent.Name)
+              & "."
+              & (+E.Name));
+      end if;
    end Resolve;
 
 

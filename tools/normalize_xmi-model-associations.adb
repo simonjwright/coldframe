@@ -13,14 +13,15 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 964643748739 $
---  $Date: 2011/12/23 12:06:03 $
+--  $Revision: ba36451da4c7 $
+--  $Date: 2011/12/26 18:37:18 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Association_Ends;
+with Normalize_XMI.Model.Classes;
 
 package body Normalize_XMI.Model.Associations is
 
@@ -80,12 +81,161 @@ package body Normalize_XMI.Model.Associations is
       E1 : Association_Ends.Association_End_Element
         renames Association_Ends.Association_End_Element
         (A.Ends.Element (1).all);
+      C1 : constant Element_P := A.Find_Class (+E1.Participant);
+      C1C : Classes.Class_Element renames Classes.Class_Element (C1.all);
       E2 : Association_Ends.Association_End_Element
         renames Association_Ends.Association_End_Element
         (A.Ends.Element (2).all);
+      C2 : constant Element_P := A.Find_Class (+E2.Participant);
+      C2C : Classes.Class_Element renames Classes.Class_Element (C2.all);
+      use Association_Ends;
    begin
       Put_Line (Standard_Error, "...... checking association " & (+A.Name));
       Element_Vectors.Iterate (A.Ends, Resolve'Access);
+      if E1.Source and E2.Source then
+         Messages.Error
+           ("Both ends of association "
+              & (+A.Name)
+              & " are marked <<source>>.");
+      elsif E1.Lower = E2.Lower
+        and E1.Upper = E2.Upper
+        and not E1.Source and not E2.Source then
+         Messages.Error
+           ("Neither end of symmetric association "
+              & (+A.Name)
+              & " is marked <<source>>.");
+      else
+         case E1.Upper is
+            when One =>
+               case E2.Upper is
+                  when One =>
+                     case E1.Lower is
+                        when Zero =>
+                           case E2.Lower is
+                              when Zero =>
+                                 --  1c:1c; obey <<source>>
+                                 if E1.Source then
+                                    --  Formalizing attribute to be
+                                    --  added to the class at E2.
+                                    C2C.Create_Referential_Attribute
+                                      (Referring_To => C1,
+                                       For_Relationship => A'Unchecked_Access,
+                                       With_Source_Role_Name => +E1.Name,
+                                       Forming_Identifier => False);
+                                 else
+                                    --  Checked above that one end
+                                    --  _is_ marked <<source>>.
+                                    --  Formalizing attribute to be
+                                    --  added to the class at E1.
+                                    C1C.Create_Referential_Attribute
+                                      (Referring_To => C2,
+                                       For_Relationship => A'Unchecked_Access,
+                                       With_Source_Role_Name => +E2.Name,
+                                       Forming_Identifier => False);
+                                 end if;
+                              when One =>
+                                 --  The formalizing attribute is
+                                 --  added to the conditional end,
+                                 --  here E1.
+                                 if E1.Source then
+                                    Messages.Warning
+                                      (+A.Name
+                                         & "."
+                                         & (+E1.Name)
+                                         & " is marked <<source>>,"
+                                         & " ignored.");
+                                 end if;
+                                 C1C.Create_Referential_Attribute
+                                   (Referring_To => C2,
+                                    For_Relationship => A'Unchecked_Access,
+                                    With_Source_Role_Name => +E2.Name,
+                                    Forming_Identifier => False);
+                           end case;
+                        when One =>
+                           case E2.Lower is
+                              when Zero =>
+                                 --  The formalizing attribute is
+                                 --  added to the conditional end,
+                                 --  here E2.
+                                 if E2.Source then
+                                    Messages.Warning
+                                      (+A.Name
+                                         & "."
+                                         & (+E2.Name)
+                                         & " is marked <<source>>,"
+                                         & " ignored.");
+                                 end if;
+                                 C2C.Create_Referential_Attribute
+                                   (Referring_To => C1,
+                                    For_Relationship => A'Unchecked_Access,
+                                    With_Source_Role_Name => +E1.Name,
+                                    Forming_Identifier => False);
+                              when One =>
+                                 --  1c:1c; obey <<source>>
+                                 if E1.Source then
+                                    --  Formalizing attribute to be
+                                    --  added to the class at E2.
+                                    C2C.Create_Referential_Attribute
+                                      (Referring_To => C1,
+                                       For_Relationship => A'Unchecked_Access,
+                                       With_Source_Role_Name => +E1.Name,
+                                       Forming_Identifier => False);
+                                 else
+                                    --  Checked above that one end
+                                    --  _is_ marked <<source>>.
+                                    --  Formalizing attribute to be
+                                    --  added to the class at E1.
+                                    C1C.Create_Referential_Attribute
+                                      (Referring_To => C2,
+                                       For_Relationship => A'Unchecked_Access,
+                                       With_Source_Role_Name => +E2.Name,
+                                       Forming_Identifier => False);
+                                 end if;
+                           end case;
+                     end case;
+                  when Many =>
+                     --  Formalizing attribute to be added to the
+                     --  class at E2.
+                     if E2.Source then
+                        Messages.Warning
+                          (+A.Name
+                             & "."
+                             & (+E2.Name)
+                             & " is marked <<source>>,"
+                             & " ignored.");
+                     end if;
+                     C2C.Create_Referential_Attribute
+                       (Referring_To => C1,
+                        For_Relationship => A'Unchecked_Access,
+                        With_Source_Role_Name => +E1.Name,
+                        Forming_Identifier => False);
+               end case;
+            when Many =>
+               case E2.Upper is
+                  when One =>
+                     --  Formalizing attribute to be added to the
+                     --  class at E1.
+                     if E1.Source then
+                        Messages.Warning
+                          (+A.Name
+                             & "."
+                             & (+E1.Name)
+                             & " is marked <<source>>,"
+                             & " ignored.");
+                     end if;
+                     C1C.Create_Referential_Attribute
+                       (Referring_To => C2,
+                        For_Relationship => A'Unchecked_Access,
+                        With_Source_Role_Name => +E2.Name,
+                        Forming_Identifier => False);
+                  when Many =>
+                     Messages.Error
+                       ("Both ends of plain association "
+                          & (+A.Name)
+                          & " are multiple; need association class.");
+               end case;
+         end case;
+      end if;
    end Resolve;
 
 
