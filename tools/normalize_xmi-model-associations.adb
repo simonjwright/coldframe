@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: ba36451da4c7 $
---  $Date: 2011/12/26 18:37:18 $
+--  $Revision: b722e00c9efe $
+--  $Date: 2011/12/27 20:42:17 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -138,6 +138,7 @@ package body Normalize_XMI.Model.Associations is
                                  --  added to the conditional end,
                                  --  here E1.
                                  if E1.Source then
+                                    E1.Source := False;
                                     Messages.Warning
                                       (+A.Name
                                          & "."
@@ -145,6 +146,7 @@ package body Normalize_XMI.Model.Associations is
                                          & " is marked <<source>>,"
                                          & " ignored.");
                                  end if;
+                                 E2.Source := True;
                                  C1C.Create_Referential_Attribute
                                    (Referring_To => C2,
                                     For_Relationship => A'Unchecked_Access,
@@ -158,6 +160,7 @@ package body Normalize_XMI.Model.Associations is
                                  --  added to the conditional end,
                                  --  here E2.
                                  if E2.Source then
+                                    E2.Source := False;
                                     Messages.Warning
                                       (+A.Name
                                          & "."
@@ -165,6 +168,7 @@ package body Normalize_XMI.Model.Associations is
                                          & " is marked <<source>>,"
                                          & " ignored.");
                                  end if;
+                                 E1.Source := True;
                                  C2C.Create_Referential_Attribute
                                    (Referring_To => C1,
                                     For_Relationship => A'Unchecked_Access,
@@ -197,6 +201,7 @@ package body Normalize_XMI.Model.Associations is
                      --  Formalizing attribute to be added to the
                      --  class at E2.
                      if E2.Source then
+                        E2.Source := False;
                         Messages.Warning
                           (+A.Name
                              & "."
@@ -204,6 +209,7 @@ package body Normalize_XMI.Model.Associations is
                              & " is marked <<source>>,"
                              & " ignored.");
                      end if;
+                     E1.Source := True;
                      C2C.Create_Referential_Attribute
                        (Referring_To => C1,
                         For_Relationship => A'Unchecked_Access,
@@ -216,6 +222,7 @@ package body Normalize_XMI.Model.Associations is
                      --  Formalizing attribute to be added to the
                      --  class at E1.
                      if E1.Source then
+                        E1.Source := False;
                         Messages.Warning
                           (+A.Name
                              & "."
@@ -223,6 +230,7 @@ package body Normalize_XMI.Model.Associations is
                              & " is marked <<source>>,"
                              & " ignored.");
                      end if;
+                     E2.Source := True;
                      C1C.Create_Referential_Attribute
                        (Referring_To => C2,
                         For_Relationship => A'Unchecked_Access,
