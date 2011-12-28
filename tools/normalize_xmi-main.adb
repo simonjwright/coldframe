@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 9f22e3d1ef24 $
+--  $Date: 2011/12/28 21:39:57 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -27,6 +27,7 @@ with GNAT.Command_Line;
 with Input_Sources.File;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Identifiers;
+with Normalize_XMI.Messages;
 with Normalize_XMI.Model;
 
 procedure Normalize_XMI.Main is
@@ -78,7 +79,7 @@ begin
                Usage;
                Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
             end if;
-            return;
+            exit;
          end if;
 
          Put_Line (Standard_Error, "... processing " & Arg);
@@ -123,7 +124,27 @@ begin
 
    end loop;
 
+   case Messages.Number_Of_Warnings is
+      when 0 => null;
+      when 1 =>
+         Put_Line (Standard_Error, "One warning.");
+      when others =>
+         Put_Line (Standard_Error,
+                   Natural'Image (Messages.Number_Of_Warnings) & " warnings.");
+   end case;
+
+   case Messages.Number_Of_Errors is
+      when 0 => null;
+      when 1 =>
+         Put_Line (Standard_Error, "One error.");
+         Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
+      when others =>
+         Put_Line (Standard_Error,
+                   Natural'Image (Messages.Number_Of_Errors) & " errors.");
+         Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Failure);
+   end case;
+
 exception
    when E : others =>
-      Put_Line ("Exception " & Ada.Exceptions.Exception_Information (E));
+      Put_Line (Ada.Exceptions.Exception_Information (E));
 end Normalize_XMI.Main;

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: b722e00c9efe $
---  $Date: 2011/12/27 20:42:17 $
+--  $Revision: 9f22e3d1ef24 $
+--  $Date: 2011/12/28 21:39:57 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -27,7 +27,7 @@ package body Normalize_XMI.Model.Associations is
 
 
    function Read_Association (From : DOM.Core.Node;
-                            Parent : not null Element_P) return Element_P
+                              Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
       N : constant Element_P := new Association_Element;
