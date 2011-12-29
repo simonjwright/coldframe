@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: e8df15caf18f $
+--  $Date: 2011/12/29 11:29:57 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -85,9 +85,6 @@ package body Normalize_XMI.Identifiers is
    end Read_Case_Exceptions;
 
 
-   --  Maps upper to lower case, and _ to space.
-   Lowercase_Space_Map : Ada.Strings.Maps.Character_Mapping;
-
    function Normalize (Id : String) return String
    is
       use Ada.Strings;
@@ -116,13 +113,9 @@ package body Normalize_XMI.Identifiers is
          Translate (S, To_Mapping (" ", "_"));
          --  Finally, we look for whole-component exceptions (such as
          --  "unsigned_short").
-         declare
-            Lower : constant String := Translate (S, Lower_Case_Map);
-         begin
-            if Case_Exceptions.Contains (Lower) then
-               S := Case_Exceptions.Element (Lower);
-            end if;
-         end;
+         if Case_Exceptions.Contains (S) then
+            S := Case_Exceptions.Element (S);
+         end if;
       end Process_Component;
 
       procedure Process_Word (S : in out String)
@@ -135,8 +128,8 @@ package body Normalize_XMI.Identifiers is
          end if;
       end Process_Word;
 
-      --  Convert to lower-case, entirely space-separated.
-      Result : String := Translate (Trim (Id, Both), Lowercase_Space_Map);
+      --  Convert to space-separated.
+      Result : String := Translate (Trim (Id, Both), To_Mapping ("_", " "));
 
       --  Find the dot-separated components
       Components : constant Spans := Find_Spans (Result, '.');
@@ -192,17 +185,6 @@ package body Normalize_XMI.Identifiers is
 
 
 begin
-
-   declare
-      use Ada.Strings.Maps;
-      Map_Domain : constant Character_Sequence
-        := To_Domain (Constants.Lower_Case_Map);
-      Map_Range : constant Character_Sequence
-        := To_Range (Constants.Lower_Case_Map);
-   begin
-      Lowercase_Space_Map := To_Mapping (From => Map_Domain & '_',
-                                         To => Map_Range & ' ');
-   end;
 
    --  Save the reserved words (of Ada 95).
    Reserved.Insert ("abort");
