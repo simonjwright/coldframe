@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: e8df15caf18f $
---  $Date: 2011/12/29 11:29:57 $
+--  $Revision: af0b243fc933 $
+--  $Date: 2011/12/29 12:39:49 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -22,6 +22,7 @@ with Ada.Containers.Indefinite_Ordered_Sets;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
 with Ada.Text_IO;
+with GNAT.OS_Lib;
 with Normalize_XMI.Messages;
 
 package body Normalize_XMI.Identifiers is
@@ -77,11 +78,80 @@ package body Normalize_XMI.Identifiers is
 
    procedure Read_Case_Exceptions (From : String)
    is
+      procedure Add_Exception (From_Line : String);
+      procedure Add_Exception (From_Line : String)
+      is
+         use Ada.Strings;
+         use Ada.Strings.Fixed;
+         use Ada.Strings.Maps;
+         L : constant String := Trim (From_Line, Both);
+         --  Find_Spans splits on Character, so translate any tabs to
+         --  spaces before splitting.
+         Words : constant Spans
+           := Find_Spans (Translate (L, To_Mapping ((1 => ASCII.HT), " ")),
+                          Splitting_At => ' ');
+      begin
+         if Words'Length > 0 then
+            if L (Words (1).L) /= '#' then
+               if L (Words (1).L) = '*' then
+                  declare
+                     Word : constant String
+                       := L (Words (1).L + 1 .. Words (1).U);
+                  begin
+                     if Sub_Case_Exceptions.Contains (Word) then
+                        Ada.Text_IO.Put_Line
+                          (Ada.Text_IO.Standard_Error,
+                           "Sub-case exception already found for '"
+                             & Word
+                             & "'");
+                     else
+                        Sub_Case_Exceptions.Insert (Word, Word);
+                     end if;
+                  end;
+               else
+                  declare
+                     Word : constant String
+                       := L (Words (1).L .. Words (1).U);
+                  begin
+                     if Case_Exceptions.Contains (Word) then
+                        Ada.Text_IO.Put_Line
+                          (Ada.Text_IO.Standard_Error,
+                           "Case exception already found for '"
+                             & Word
+                             & "'");
+                     else
+                        Case_Exceptions.Insert (Word, Word);
+                     end if;
+                  end;
+               end if;
+            end if;
+         end if;
+      end Add_Exception;
+      Files : constant Spans
+        := Find_Spans (From, GNAT.OS_Lib.Path_Separator);
+      use Ada.Text_IO;
    begin
-      Ada.Text_IO.Put_Line (Ada.Text_IO.Standard_Error,
-                            "... not reading case exceptions from " & From);
-      --  We can use GNAT.Directory_Operations.Dir_Separator.
-      Sub_Case_Exceptions.Insert ("io", "IO");
+      for F in Files'Range loop
+         declare
+            Name : constant String := From (Files (F).L .. Files (F).U);
+            Exceptions : File_Type;
+         begin
+            Put_Line (Standard_Error,
+                      "reading case exceptions from '" & Name & "'");
+            Open (Exceptions, Mode => In_File, Name => Name);
+            while not End_Of_File (Exceptions) loop
+               Add_Exception (Get_Line (Exceptions));
+            end loop;
+            Close (Exceptions);
+         exception
+            when Mode_Error | Name_Error =>
+               Put_Line (Standard_Error,
+                         "Unable to open case exceptions file '"
+                           & Name
+                           & "'");
+               raise;
+         end;
+      end loop;
    end Read_Case_Exceptions;
 
 
