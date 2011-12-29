@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: b2d60607611c $
+--  $Date: 2011/12/29 14:59:54 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -140,6 +140,8 @@ package body Normalize_XMI.Model.Operations is
          --  maybe warn about 'package'?
          if Visibility = "package" then
             Put (To, " visibility='public'");
+         elsif Visibility = "" then
+            Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
          end if;

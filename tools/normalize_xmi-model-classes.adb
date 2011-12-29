@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: ba36451da4c7 $
---  $Date: 2011/12/26 18:37:18 $
+--  $Revision: b2d60607611c $
+--  $Date: 2011/12/29 14:59:54 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -157,7 +157,7 @@ package body Normalize_XMI.Model.Classes is
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => C.Node);
       begin
-         if Visibility = "package" then
+         if Visibility = "" or Visibility = "package" then
             Put (To, " visibility='private'");
          else
             Put (To, " visibility='" & Visibility & "'");
