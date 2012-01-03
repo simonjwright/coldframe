@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
-<!-- $Id$ -->
+<!-- $Id: ColdFrame-norm.xsd,v b035ee4790cb 2012/01/03 18:24:44 simonjwright $ -->
 
-<!-- 
+<!--
 
      This schema describes the format of .norm files, used as input to
      ColdFrame's XSLT-based code generator.
@@ -20,7 +20,7 @@
 
   <!--
        I don't know why we have to have a default namespace here!
-       The examples in Professional XML 2nd Edition don't show it .. 
+       The examples in Professional XML 2nd Edition don't show it ..
        but, if it's left out, the "ref"s don't work.
        Could be an XSV feature.
        -->
@@ -175,7 +175,6 @@
         </xsd:complexType>
       </xsd:element>
       <xsd:element name="imported"/>
-      <xsd:element name="null"/>
       <xsd:element name="renames"/>
     </xsd:choice>
   </xsd:group>

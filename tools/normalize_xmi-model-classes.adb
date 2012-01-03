@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: b2d60607611c $
---  $Date: 2011/12/29 14:59:54 $
+--  $Revision: b035ee4790cb $
+--  $Date: 2012/01/03 18:24:44 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -104,23 +104,45 @@ package body Normalize_XMI.Model.Classes is
       With_Source_Role_Name : String;
       Forming_Identifier : Boolean)
    is
-      N : constant Element_P := new Referential_Attribute_Element;
-      R : Referential_Attribute_Element
-        renames Referential_Attribute_Element (N.all);
-      use type Ada.Strings.Unbounded.Unbounded_String;
+      procedure Handle_If_Already_Formalized (Pos : Element_Maps.Cursor);
+      Already_Formalized : Boolean := False;
+      procedure Handle_If_Already_Formalized (Pos : Element_Maps.Cursor)
+      is
+         Formalizes : constant String
+           := Element_Maps.Element (Pos).Tag_As_Name ("formalizes");
+      begin
+         if Formalizes = +For_Relationship.Name then
+            Ada.Text_IO.Put_Line
+              ("Association "
+                 & (+For_Relationship.Name)
+                 & " already formalized.");
+            Already_Formalized := True;
+         end if;
+      end Handle_If_Already_Formalized;
    begin
-      R.Parent := In_Class'Unchecked_Access;
-      R.Name :=
-        For_Relationship.Name
-        & (+".")
-        & (+With_Source_Role_Name)
-        & (+".")
-        & Referring_To.Name;
-      R.Referring_To := Referring_To;
-      R.For_Relationship := For_Relationship;
-      R.With_Source_Role_Name := +With_Source_Role_Name;
-      R.Identifier := Forming_Identifier;
-      In_Class.Attributes.Insert (Key => +R.Name, New_Item => N);
+      Element_Maps.Iterate (In_Class.Attributes,
+                            Handle_If_Already_Formalized'Access);
+      if not Already_Formalized then
+         declare
+            N : constant Element_P := new Referential_Attribute_Element;
+            R : Referential_Attribute_Element
+              renames Referential_Attribute_Element (N.all);
+            use type Ada.Strings.Unbounded.Unbounded_String;
+         begin
+            R.Parent := In_Class'Unchecked_Access;
+            R.Name :=
+              For_Relationship.Name
+              & (+".")
+              & (+With_Source_Role_Name)
+              & (+".")
+              & Referring_To.Name;
+            R.Referring_To := Referring_To;
+            R.For_Relationship := For_Relationship;
+            R.With_Source_Role_Name := +With_Source_Role_Name;
+            R.Identifier := Forming_Identifier;
+            In_Class.Attributes.Insert (Key => +R.Name, New_Item => N);
+         end;
+      end if;
    end Create_Referential_Attribute;
 
 

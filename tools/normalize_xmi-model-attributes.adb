@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: b035ee4790cb $
+--  $Date: 2012/01/03 18:24:44 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -85,6 +85,10 @@ package body Normalize_XMI.Model.Attributes is
       end if;
       if A.Has_Stereotype ("volatile") then
          Put (To, " volatile='true'");
+      end if;
+      if A.Has_Tag ("formalizes") then
+         Put (To, " refers='" & (+A.Type_Name) & "'");
+         Put (To, " relation='" & A.Tag_As_Name ("formalizes") & "'");
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
