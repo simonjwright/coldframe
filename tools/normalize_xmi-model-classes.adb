@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: b035ee4790cb $
---  $Date: 2012/01/03 18:24:44 $
+--  $Revision: 8da949757753 $
+--  $Date: 2012/01/05 17:50:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -185,6 +185,15 @@ package body Normalize_XMI.Model.Classes is
             Put (To, " visibility='" & Visibility & "'");
          end if;
       end;
+      if C.Has_Stereotype ("active") then
+         Put (To, " active='true'");
+      end if;
+      if C.Has_Stereotype ("public") then
+         Put (To, " public='true'");
+      end if;
+      if C.Has_Stereotype ("singleton") then
+         Put (To, " singleton='true'");
+      end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
       Put_Line (To, "<abbreviation>" & (+C.Abbreviation) & "</abbreviation>");

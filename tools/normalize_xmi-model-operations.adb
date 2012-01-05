@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: b2d60607611c $
---  $Date: 2011/12/29 14:59:54 $
+--  $Revision: 8da949757753 $
+--  $Date: 2012/01/05 17:50:36 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -94,6 +94,15 @@ package body Normalize_XMI.Model.Operations is
       end Resolve;
    begin
       Put_Line (Standard_Error, "...... checking operation " & (+O.Name));
+      if O.Has_Stereotype ("entry")
+        and Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
+         Messages.Error
+           ("Entry "
+              & (+O.Parent.Name)
+              & "."
+              & (+O.Name)
+              & " can't be a function.");
+      end if;
       Element_Maps.Iterate (O.Parameters, Resolve'Access);
    end Resolve;
 
@@ -128,6 +137,9 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " class='true'");
          end if;
       end;
+      if O.Has_Stereotype ("entry") then
+         Put (To, " entry='true'");
+      end if;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");
       end if;
