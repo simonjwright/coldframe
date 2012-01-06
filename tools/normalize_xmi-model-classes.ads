@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: ba36451da4c7 $
---  $Date: 2011/12/26 18:37:18 $
+--  $Revision: c20a05b7a967 $
+--  $Date: 2012/01/06 22:09:27 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
@@ -23,12 +23,6 @@ private package Normalize_XMI.Model.Classes is
                         Parent : not null Element_P) return Element_P;
 
    type Class_Element is new Element with private;
-
-   overriding
-   procedure Resolve (C : in out Class_Element);
-
-   overriding
-   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
 
    --  Create referential attributes to formalize relationships (both
    --  associations and generalizations).
@@ -63,6 +57,11 @@ private
       Attributes : Element_Maps.Map;
       Operations : Element_Maps.Map;
    end record;
+   overriding
+   procedure Resolve (C : in out Class_Element);
+   overriding
+   procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
+
 
    type Referential_Attribute_Element is new Element with record
       Referring_To : Element_P;

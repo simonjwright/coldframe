@@ -12,31 +12,28 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-associations.ads,v $
+--  $RCSfile: normalize_xmi-model-association_classes.ads,v $
 --  $Revision: c20a05b7a967 $
 --  $Date: 2012/01/06 22:09:27 $
 --  $Author: simonjwright $
 
-private package Normalize_XMI.Model.Associations is
+with Normalize_XMI.Model.Associations;
+private package Normalize_XMI.Model.Association_Classes is
 
-   function Read_Association (From : DOM.Core.Node;
-                              Parent : not null Element_P) return Element_P;
-
-   --  Public because Association_Classes needs to know.
-   type Association_Element is new Element with record
-      Ends : Element_Vectors.Vector;
-   end record;
-
-   --  This procedure is available for use by package Association_Classes.
-   procedure Populate_Association_Aspects (Of_Element : not null Element_P;
-                                           From : DOM.Core.Node;
-                                           Parent : not null Element_P);
+   function Read_Association_Class
+     (From : DOM.Core.Node;
+      Parent : not null Element_P) return Element_P;
 
 private
 
+   type Association_Class_Element
+   is new Associations.Association_Element with record
+      Class : Element_P;
+   end record;
    overriding
-   procedure Resolve (A : in out Association_Element);
+   procedure Resolve (AC : in out Association_Class_Element);
    overriding
-   procedure Output (A : Association_Element; To : Ada.Text_IO.File_Type);
+   procedure Output (AC : Association_Class_Element;
+                     To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Associations;
+end Normalize_XMI.Model.Association_Classes;

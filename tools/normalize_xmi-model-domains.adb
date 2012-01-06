@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: f83be9997904 $
---  $Date: 2011/12/23 12:13:57 $
+--  $Revision: c20a05b7a967 $
+--  $Date: 2012/01/06 22:09:27 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -22,9 +22,10 @@ with DOM.Core.Nodes;
 with GNAT.Calendar.Time_IO;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Association_Classes;
 with Normalize_XMI.Model.Associations;
-with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Class_Types;
+with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
@@ -50,12 +51,13 @@ package body Normalize_XMI.Model.Domains is
       --  Standard Types.
       Add_Standard_Types (To => D.Types);
 
-      --  Classes
+      --  Classes, and the Class aspect of AssociationClasses
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
             "descendant::UML:Class"
-              & "[not(UML:ModelElement.stereotype/@name='datatype')]");
+              & "[not(UML:ModelElement.stereotype/@name='datatype')]"
+              & " | descendant::UML:AssociationClass");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -138,6 +140,23 @@ package body Normalize_XMI.Model.Domains is
                   Parent => D'Unchecked_Access);
             begin
                D.Associations.Insert (Key => +A.Name, New_Item => A);
+            end;
+         end loop;
+      end;
+
+      --  The Association aspect of AssociationClasses
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:AssociationClass");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            declare
+               AC : constant Element_P :=
+                 Association_Classes.Read_Association_Class
+                 (DOM.Core.Nodes.Item (Nodes, J),
+                  Parent => D'Unchecked_Access);
+            begin
+               D.Associations.Insert (Key => +AC.Name, New_Item => AC);
             end;
          end loop;
       end;

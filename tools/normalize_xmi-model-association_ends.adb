@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: ba36451da4c7 $
---  $Date: 2011/12/26 18:37:18 $
+--  $Revision: c20a05b7a967 $
+--  $Date: 2012/01/06 22:09:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -37,7 +37,7 @@ package body Normalize_XMI.Model.Association_Ends is
       E.Populate (From => From);
       E.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error,
-                "......... reading association_end " & (+E.Name));
+                "...... reading association_end " & (+E.Name));
 
       --  Lower
       declare
@@ -127,7 +127,7 @@ package body Normalize_XMI.Model.Association_Ends is
       use Ada.Text_IO;
    begin
       Put_Line (Standard_Error,
-                "......... checking association_end " & (+E.Name));
+                "...... checking association_end " & (+E.Name));
       if E.Find_Class (+E.Participant) = null then
          Messages.Error
            ("Couldn't find participant "

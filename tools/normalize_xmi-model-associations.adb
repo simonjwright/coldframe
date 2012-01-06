@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 9f22e3d1ef24 $
---  $Date: 2011/12/28 21:39:57 $
+--  $Revision: c20a05b7a967 $
+--  $Date: 2012/01/06 22:09:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -29,14 +29,24 @@ package body Normalize_XMI.Model.Associations is
    function Read_Association (From : DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
-      use Ada.Text_IO;
       N : constant Element_P := new Association_Element;
-      A : Association_Element renames Association_Element (N.all);
+   begin
+      Populate_Association_Aspects (N, From, Parent);
+      return N;
+   end Read_Association;
+
+
+   procedure Populate_Association_Aspects (Of_Element : not null Element_P;
+                                           From : DOM.Core.Node;
+                                           Parent : not null Element_P)
+   is
+      use Ada.Text_IO;
+      A : Association_Element renames Association_Element (Of_Element.all);
    begin
       A.Parent := Parent;
       A.Populate (From => From);
       A.Name := +Read_Name (From_Element => From);
-      Put_Line (Standard_Error, "...... reading association " & (+A.Name));
+      Put_Line (Standard_Error, "... reading association " & (+A.Name));
 
       --  Ends
       declare
@@ -50,7 +60,7 @@ package body Normalize_XMI.Model.Associations is
                E : constant Element_P :=
                  Association_Ends.Read_Association_End
                  (DOM.Core.Nodes.Item (Nodes, J),
-                  Parent => N);
+                  Parent => Of_Element);
             begin
                A.Ends.Append (New_Item => E);
             end;
@@ -63,9 +73,7 @@ package body Normalize_XMI.Model.Associations is
               & (+A.Name)
               & "'s ends have the same role name.");
       end if;
-
-      return N;
-   end Read_Association;
+   end Populate_Association_Aspects;
 
 
    overriding
@@ -90,7 +98,7 @@ package body Normalize_XMI.Model.Associations is
       C2C : Classes.Class_Element renames Classes.Class_Element (C2.all);
       use Association_Ends;
    begin
-      Put_Line (Standard_Error, "...... checking association " & (+A.Name));
+      Put_Line (Standard_Error, "... checking association " & (+A.Name));
       Element_Vectors.Iterate (A.Ends, Resolve'Access);
       if E1.Source and E2.Source then
          Messages.Error
@@ -263,7 +271,6 @@ package body Normalize_XMI.Model.Associations is
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
       Element_Vectors.Iterate (A.Ends, Output'Access);
       A.Output_Documentation (To);
-      --  <associative/>
       Put_Line (To, "</association>");
    end Output;
 
