@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: c20a05b7a967 $
---  $Date: 2012/01/06 22:09:27 $
+--  $Revision: 04e8493fa3bd $
+--  $Date: 2012/01/07 13:31:46 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -52,7 +52,7 @@ package body Normalize_XMI.Model.Association_Classes is
       --  before AssociationClasses ... but not a good idea for the
       --  long term.
       AC.Class := AC.Find_Class (Class_Name);
-      AC.Name := +(Class_Name & "_Association");
+      AC.Class.Name := +(Class_Name & "_Class");
       Put_Line (Standard_Error, "... checking association " & (+AC.Name));
       Element_Vectors.Iterate (AC.Ends, Resolve'Access);
       declare
@@ -251,7 +251,7 @@ package body Normalize_XMI.Model.Association_Classes is
                            With_Source_Role_Name => +E2.Name,
                            Forming_Identifier => False);
                      when Many =>
-                        --  The identifying formalizing attributes is
+                        --  The identifying formalizing attributes are
                         --  taken from both ends.
                         Assoc.Create_Referential_Attribute
                           (Referring_To => C1,
