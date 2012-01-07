@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 8da949757753 $
---  $Date: 2012/01/05 17:50:36 $
+--  $Revision: 26356cd91af1 $
+--  $Date: 2012/01/07 17:24:48 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -185,8 +185,16 @@ package body Normalize_XMI.Model.Classes is
             Put (To, " visibility='" & Visibility & "'");
          end if;
       end;
-      if C.Has_Stereotype ("active") then
+      if C.Has_Stereotype ("active")
+        or Boolean'Value (Read_Attribute ("isActive", From_Element => C.Node))
+      then
          Put (To, " active='true'");
+         if C.Has_Tag ("priority") then
+            Put (To, " priority='" & C.Tag_As_Value ("priority") & "'");
+         end if;
+         if C.Has_Tag ("stack") then
+            Put (To, " stack='" & C.Tag_As_Value ("stack") & "'");
+         end if;
       end if;
       if C.Has_Stereotype ("public") then
          Put (To, " public='true'");
