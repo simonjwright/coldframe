@@ -23,9 +23,9 @@ with Library.Book.Collections;
 with Library.Borrower.All_Instances;
 with Library.Borrower.Collections;
 with Library.Current;
-with Library.Current_Loan;
+with Library.Current_Class;
 with Library.History;
-with Library.Loan_History;
+with Library.History_Class;
 
 with Library.Authorship.From_Collections;
 
@@ -49,9 +49,9 @@ package body Library.Tests is
 
       pragma Warnings (Off, T);
 
-      Cl : Current_Loan.Handle;
+      Cl : Current_Class.Handle;
       pragma Warnings (Off, cl);
-      Lh : Loan_History.Handle;
+      Lh : History_Class.Handle;
       pragma Warnings (Off, Lh);
 
    begin
@@ -240,7 +240,7 @@ package body Library.Tests is
 
    procedure T10 (T : in out AUnit.Test_Cases.Test_Case'Class) is
       pragma Warnings (Off, T);
-      Cl : Current_Loan.Handle;
+      Cl : Current_Class.Handle;
       pragma Warnings (Off, Cl);
    begin
       Cl := Current.Link (Is_On_Loan_To => Alice,

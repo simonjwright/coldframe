@@ -79,6 +79,12 @@ Digital_IO_Interface.gen: $(COLDFRAMEOUT)/Digital_IO_Interface.raw
 	  DOMAIN_NAME=Digital_IO \
 	  GENERATE_STUBS=yes
 
+# ArgoUML support
+
+NORM_FILES = Library.norm Van_Fleet.norm
+
+$(NORM_FILES): ColdFrame_Examples.norm-stamp
+
 clean::
 	find $(BUILD_BASE) -type f -name \*.o -o -name \*.ali | xargs rm -f
 	rm -f $(EXECUTABLES)
