@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: resolve-references.xsl,v fd881b1b7e39 2011/12/11 15:20:54 simonjwright $ -->
+<!-- $Id: resolve-references.xsl,v d52f8deedf1f 2012/01/08 10:15:50 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -21,11 +21,20 @@
      -->
 
 <!--
-     This stylesheet modifies ArgoUML XMI by replacing xmi.idref
-     references by the name attribute of the referenced entity.
+     ArgoUML XMI doesn't include the actual name of a referenced
+     entity; instead, it inserts an xmi.idref attribute which links to
+     the actual entity. This is clearly a Good Thing, because if you
+     change the name you only have to change it in one place.
 
-     This is to simplify the task of normalize-xmi.py, since this sort
-     of transformation is much easier in XSLT than in a SAX processor.
+     This stylesheet modifies ArgoUML XMI; each xmi.idref is copied
+     together with a copy of the name attribute of the referenced
+     entity.
+
+     This is to simplify the task of normalize-xmi, since this sort of
+     transformation is much easier in XSLT.
+
+     The modified XMI is only for ColdFrame processing, it's not seen
+     by ArgoUML.
      -->
 
 <xsl:stylesheet
