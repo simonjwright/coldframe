@@ -104,7 +104,6 @@ TRUE ?= true
 ZIP ?= zip
 
 # Non-standard commands
-ITCLSH ?= tclsh
 SAXON_CLASSPATH ?= /usr/local/lib/saxon/saxon.jar
 SAXON ?= $(JAVA) -cp $(SAXON_CLASSPATH) com.icl.saxon.StyleSheet
 
@@ -115,8 +114,6 @@ MAXIMPLDEPTH ?= 1
 CODEGEN_SCRIPT ?= $(SCRIPTS)/generate-ada.xsl
 DIAGRAM_SCRIPT = $(SCRIPTS)/generate-diagrams.xsl
 HTMLGEN_SCRIPT = $(SCRIPTS)/generate-html.xsl
-NORMALIZE_RAW_SCRIPT = $(SCRIPTS)/normalize-raw.xsl
-NORMALIZE_ROSE_SCRIPT = $(SCRIPTS)/normalize-rose.tcl
 
 # Construct the build directories if necessary.
 build-dirs::
@@ -129,15 +126,6 @@ build-dirs::
 	done
 
 # Pattern rules
-
-# Generate .raw files (extracted Rose .cat data).
-# Must have ply installed in python.
-# Will need extra dependencies if there are controlled child packages.
-$(COLDFRAMEOUT)/%.raw: $(MODELS)/%.cat
-	python $(SCRIPTS)/cat2raw.py -o $@ $<
-
-%.raw-norm: $(COLDFRAMEOUT)/%.raw
-	  $(SAXON) $< $(NORMALIZE_RAW_SCRIPT)  >$@
 
 # Generate .rr files (resolved references in ArgoUML files).
 # XXX This contains a workround for ArgoUML Issue 6385.
@@ -164,18 +152,6 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 %.norm-stamp: $(COLDFRAMEOUT)/%.rr
 	$(COLDFRAME)/tools/normalize_xmi $<
 	touch $@
-
-# Generate .norm files from .raw.
-%.norm: $(COLDFRAMEOUT)/%.raw $(NORMALIZE_ROSE_SCRIPT)
-	@$(ECHO) generating $@ ...
-	$(ITCLSH) $(NORMALIZE_ROSE_SCRIPT)	\
-	    --casing '$(CASE_EXCEPTIONS)'	\
-	    $(NORM_CHECKING)			\
-	    $(NORM_DOMAIN_NAME)			\
-	    --output $@				\
-	    $(NORM_STACK_DUMP)			\
-	    $(NORM_VERBOSE)			\
-	    <$< || ($(RM) -f $@; $(EXIT) 1)
 
 # Generate .html (and image) files.
 # Do the diagrams first, because the HTML requires the cmapx output.
