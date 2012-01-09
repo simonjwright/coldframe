@@ -58,10 +58,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jan 09 18:41:01 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jan 09 20:48:00 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/09 18:44:04 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/09 21:18:46 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -88,7 +88,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 15098610e931 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 0b4457b40c42 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -550,7 +550,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 15098610e931 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 0b4457b40c42 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -560,6 +560,18 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
             <UML:Class xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7'
               name = 'Book' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+              <UML:ModelElement.stereotype>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-abbreviation'/>
+              </UML:ModelElement.stereotype>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-4--1d9c698d:134c3c4410e:-8000:0000000000000F2C'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue>BK</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-abbreviation-td-abbreviation'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
               <UML:Classifier.feature>
                 <UML:Attribute xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B8'
                   name = 'Title' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
@@ -584,6 +596,15 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
             <UML:Class xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB'
               name = 'Borrower' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id = '-64--88-1-4--1d9c698d:134c3c4410e:-8000:0000000000000F2D'
+                  isSpecification = 'false'>
+                  <UML:TaggedValue.dataValue></UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.type>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-td-documentation'/>
+                  </UML:TaggedValue.type>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
               <UML:Classifier.feature>
                 <UML:Attribute xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BC'
                   name = 'Name' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
@@ -651,7 +672,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
               <UML:ModelElement.taggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4--1d9c698d:134c3c4410e:-8000:0000000000000F2B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>Current Loans</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>Current Loan</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-associationClassName-td-associationClassName'/>
                   </UML:TaggedValue.type>
@@ -741,28 +762,6 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
             </UML:AssociationClass>
           </UML:Namespace.ownedElement>
         </UML:Package>
-        <UML:TagDefinition xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:000000000000194F'
-          isSpecification = 'false'>
-          <UML:TagDefinition.multiplicity>
-            <UML:Multiplicity xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001951'>
-              <UML:Multiplicity.range>
-                <UML:MultiplicityRange xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001950'
-                  lower = '0' upper = '0'/>
-              </UML:Multiplicity.range>
-            </UML:Multiplicity>
-          </UML:TagDefinition.multiplicity>
-        </UML:TagDefinition>
-        <UML:TagDefinition xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001952'
-          isSpecification = 'false'>
-          <UML:TagDefinition.multiplicity>
-            <UML:Multiplicity xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001954'>
-              <UML:Multiplicity.range>
-                <UML:MultiplicityRange xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001953'
-                  lower = '0' upper = '0'/>
-              </UML:Multiplicity.range>
-            </UML:Multiplicity>
-          </UML:TagDefinition.multiplicity>
-        </UML:TagDefinition>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>
@@ -2372,7 +2371,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       name="Library Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[312, 48, 141, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[312, 48, 141, 91]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
        fill="1"
        fillcolor="white"
@@ -2386,7 +2385,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       x="312"
       y="48"
       width="141"
-      height="71"
+      height="91"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -2396,7 +2395,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       x="313"
       y="49"
       width="139"
-      height="23"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -2409,13 +2408,12 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       justification="Center"
     >Book</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[313, 49, 139, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[313, 49, 139, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
          stroke="0"
          strokecolor="black"
-         visibility="0"
     >
       <private>
       </private>
@@ -2424,16 +2422,32 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
         x="313"
         y="49"
         width="139"
-        height="0"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
+      <text name="Fig0.2.1"
+        x="313"
+        y="49"
+        width="139"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >&lt;&lt;abbreviation&gt;&gt;</text>
     </group>
     <rectangle name="Fig0.3"
       x="312"
-      y="72"
+      y="92"
       width="141"
       height="1"
       fill="1"
@@ -2442,7 +2456,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[313, 73, 139, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[313, 93, 139, 25]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -2454,7 +2468,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       
       <rectangle name="Fig0.4.0"
         x="313"
-        y="73"
+        y="93"
         width="139"
         height="25"
         fill="0"
@@ -2464,7 +2478,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       />
       <text name="Fig0.4.1"
         x="313"
-        y="73"
+        y="93"
         width="139"
         height="23"
         fill="0"
@@ -2481,7 +2495,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
     </group>
     <rectangle name="Fig0.5"
       x="312"
-      y="97"
+      y="117"
       width="141"
       height="1"
       fill="1"
@@ -2490,7 +2504,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[313, 98, 139, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[313, 118, 139, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -2502,7 +2516,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       
       <rectangle name="Fig0.6.0"
         x="313"
-        y="98"
+        y="118"
         width="139"
         height="21"
         fill="0"
@@ -2705,7 +2719,7 @@ And that was a plain newline.</UML:TaggedValue.dataValue>
       strokecolor="black"
     >
       <moveto x="376"
-              y="118" />
+              y="138" />
       <lineto x="376"
               y="328" />
     </path>

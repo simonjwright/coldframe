@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 26356cd91af1 $
---  $Date: 2012/01/07 17:24:48 $
+--  $Revision: 0b4457b40c42 $
+--  $Date: 2012/01/09 21:18:46 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -38,9 +38,6 @@ package body Normalize_XMI.Model.Classes is
       C.Populate (From => From);
       C.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading class " & (+C.Name));
-
-      --  XXX will need a Tag eventually - how?
-      C.Abbreviation := +Identifiers.Abbreviate (+C.Name);
 
       --  Attributes
       declare
@@ -204,7 +201,13 @@ package body Normalize_XMI.Model.Classes is
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+C.Name) & "</name>");
-      Put_Line (To, "<abbreviation>" & (+C.Abbreviation) & "</abbreviation>");
+      Put (To, "<abbreviation>");
+      if C.Has_Tag ("abbreviation") then
+         Put (To, C.Tag_As_Name ("abbreviation"));
+      else
+         Put (To, Identifiers.Abbreviate (+C.Name));
+      end if;
+      Put_Line (To, "</abbreviation>");
       C.Output_Documentation (To);
       Element_Maps.Iterate (C.Attributes, Output'Access);
       Element_Maps.Iterate (C.Operations, Output'Access);

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: c20a05b7a967 $
---  $Date: 2012/01/06 22:09:27 $
+--  $Revision: 0b4457b40c42 $
+--  $Date: 2012/01/09 21:18:46 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
@@ -53,7 +53,6 @@ private package Normalize_XMI.Model.Classes is
 private
 
    type Class_Element is new Element with record
-      Abbreviation : Ada.Strings.Unbounded.Unbounded_String;
       Attributes : Element_Maps.Map;
       Operations : Element_Maps.Map;
    end record;
