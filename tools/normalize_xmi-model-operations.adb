@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 8da949757753 $
---  $Date: 2012/01/05 17:50:36 $
+--  $Revision: 6ee9cabb4939 $
+--  $Date: 2012/01/10 18:18:59 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -49,17 +49,8 @@ package body Normalize_XMI.Model.Operations is
                P : constant Element_P :=
                  Parameters.Read_Parameter (DOM.Core.Nodes.Item (Nodes, J),
                                             Parent => N);
-               Name : constant String := +P.Name;
             begin
-               if O.Parameters.Contains (Name) then
-                  Messages.Error
-                    ("Operation "
-                       & (+O.Name)
-                       & " has duplicate parameter "
-                       & Name);
-               else
-                  O.Parameters.Insert (Key => Name, New_Item => P);
-               end if;
+               O.Parameters.Append (New_Item => P);
             end;
          end loop;
       end;
@@ -86,11 +77,11 @@ package body Normalize_XMI.Model.Operations is
    procedure Resolve (O : in out Operation_Element)
    is
       use Ada.Text_IO;
-      procedure Resolve (Pos : Element_Maps.Cursor);
-      procedure Resolve (Pos : Element_Maps.Cursor)
+      procedure Resolve (Pos : Element_Vectors.Cursor);
+      procedure Resolve (Pos : Element_Vectors.Cursor)
       is
       begin
-         Element_Maps.Element (Pos).Resolve;
+         Element_Vectors.Element (Pos).Resolve;
       end Resolve;
    begin
       Put_Line (Standard_Error, "...... checking operation " & (+O.Name));
@@ -103,7 +94,7 @@ package body Normalize_XMI.Model.Operations is
               & (+O.Name)
               & " can't be a function.");
       end if;
-      Element_Maps.Iterate (O.Parameters, Resolve'Access);
+      O.Parameters.Iterate (Resolve'Access);
    end Resolve;
 
 
@@ -111,11 +102,11 @@ package body Normalize_XMI.Model.Operations is
    procedure Output (O : Operation_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
-      procedure Output (Pos : Element_Maps.Cursor);
-      procedure Output (Pos : Element_Maps.Cursor)
+      procedure Output (Pos : Element_Vectors.Cursor);
+      procedure Output (Pos : Element_Vectors.Cursor)
       is
       begin
-         Element_Maps.Element (Pos).Output (To);
+         Element_Vectors.Element (Pos).Output (To);
       end Output;
    begin
       Put (To, "<operation");
@@ -161,7 +152,7 @@ package body Normalize_XMI.Model.Operations is
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+O.Name) & "</name>");
       O.Output_Documentation (To);
-      Element_Maps.Iterate (O.Parameters, Output'Access);
+      O.Parameters.Iterate (Output'Access);
       Put_Line (To, "</operation>");
    end Output;
 

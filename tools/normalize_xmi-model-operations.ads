@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.ads,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 6ee9cabb4939 $
+--  $Date: 2012/01/10 18:18:59 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Operations is
@@ -25,7 +25,7 @@ private package Normalize_XMI.Model.Operations is
 private
 
    type Operation_Element is new Element with record
-      Parameters : Element_Maps.Map;
+      Parameters : Element_Vectors.Vector;
       Return_Type : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding
