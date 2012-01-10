@@ -72,6 +72,10 @@ EXECUTABLES += stairwell_demo$(exe)
 stairwell_demo$(exe): House_Management.gen Digital_IO.gen force
 	$(app) gnatmake -p -Pstairwell_demo
 
+EXECUTABLES += van_fleet-demo$(exe)
+van_fleet-demo$(exe): Van_Fleet.gen
+	$(app) gnatmake -p -PVan_Fleet
+
 all:: $(EXECUTABLES)
 
 Digital_IO_Interface.gen: $(COLDFRAMEOUT)/Digital_IO_Interface.raw

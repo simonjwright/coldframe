@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 214b06198426 $
---  $Date: 2012/01/07 14:07:12 $
+--  $Revision: 1df49366b800 $
+--  $Date: 2012/01/10 18:20:52 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -29,6 +29,7 @@ with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
 with Normalize_XMI.Model.Exceptions;
+with Normalize_XMI.Model.Generalizations;
 
 package body Normalize_XMI.Model.Domains is
 
@@ -161,6 +162,19 @@ package body Normalize_XMI.Model.Domains is
          end loop;
       end;
 
+      --  Generalizations
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "descendant::UML:Generalization");
+      begin
+         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
+            Generalizations.Read_Generalization
+              (DOM.Core.Nodes.Item (Nodes, J),
+               Parent => D'Unchecked_Access,
+               Accumulating_In => D.Generalizations);
+         end loop;
+      end;
+
       --  Exceptions
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
@@ -221,10 +235,11 @@ package body Normalize_XMI.Model.Domains is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
-      Element_Maps.Iterate (D.Classes, Resolve'Access);
-      Element_Maps.Iterate (D.Types, Resolve'Access);
-      Element_Maps.Iterate (D.Associations, Resolve'Access);
-      Element_Maps.Iterate (D.Exceptions, Resolve'Access);
+      D.Classes.Iterate (Resolve'Access);
+      D.Types.Iterate (Resolve'Access);
+      D.Associations.Iterate (Resolve'Access);
+      D.Generalizations.Iterate (Resolve'Access);
+      D.Exceptions.Iterate (Resolve'Access);
    end Resolve;
 
 
@@ -276,10 +291,11 @@ package body Normalize_XMI.Model.Domains is
                    "<revision>" & D.Tag_As_Value ("revision") & "</revision>");
       end if;
 
-      Element_Maps.Iterate (D.Classes, Output'Access);
-      Element_Maps.Iterate (D.Types, Output'Access);
-      Element_Maps.Iterate (D.Associations, Output'Access);
-      Element_Maps.Iterate (D.Exceptions, Output'Access);
+      D.Classes.Iterate (Output'Access);
+      D.Types.Iterate (Output'Access);
+      D.Associations.Iterate (Output'Access);
+      D.Generalizations.Iterate (Output'Access);
+      D.Exceptions.Iterate (Output'Access);
 
       Put_Line (To, "</domain>");
    end Output;

@@ -12,33 +12,36 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-domains.ads,v $
+--  $RCSfile: normalize_xmi-model-generalizations.ads,v $
 --  $Revision: 1df49366b800 $
 --  $Date: 2012/01/10 18:20:52 $
 --  $Author: simonjwright $
 
-with GNAT.OS_Lib;
+private package Normalize_XMI.Model.Generalizations is
 
-package Normalize_XMI.Model.Domains is
+   type Generalization_Element is new Element with private;
 
-   procedure Process_Domain (From : DOM.Core.Node; In_File : String);
-   --  XXX not sure how to deal with <<interface>> subpackages.
+   --  Read_Generalization is called with From designating a single
+   --  {name, parent, child} tuple.
+   --
+   --  It accumulates the results in Accumulating_In, which is a map
+   --  of Generalization_Elements.
+
+   procedure Read_Generalization
+     (From : DOM.Core.Node;
+      Parent : not null Element_P;
+      Accumulating_In : in out Element_Maps.Map);
 
 private
 
-   type Domain is new Element with record
-      File_Time : GNAT.OS_Lib.OS_Time;
-      Classes : Element_Maps.Map;
-      Types : Element_Maps.Map;
-      Associations : Element_Maps.Map;
-      Generalizations : Element_Maps.Map;
-      Exceptions : Element_Maps.Map;
+   type Generalization_Element is new Element with record
+      Parent_Class : Element_P;
+      Child_Classes : Element_Vectors.Vector;
    end record;
-   overriding
-   function Find_Class (Known_To : Domain; Named : String) return Element_P;
-   overriding
-   procedure Resolve (D : in out Domain);
-   overriding
-   procedure Output (D : Domain; To : Ada.Text_IO.File_Type);
 
-end Normalize_XMI.Model.Domains;
+   overriding
+   procedure Resolve (G : in out Generalization_Element);
+   overriding
+   procedure Output (G : Generalization_Element; To : Ada.Text_IO.File_Type);
+
+end Normalize_XMI.Model.Generalizations;
