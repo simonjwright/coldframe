@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jan 09 18:38:24 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 11 16:21:52 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/09 18:44:04 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/11 16:33:42 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -518,8 +518,8 @@ To be applied to a Class stereotyped «type» and with attributes.</UML:TaggedVa
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9'
           name = 'callback' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC2'
               isSpecification = 'false'>
@@ -559,8 +559,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -594,32 +594,32 @@ This stereotype marks the association end from which the referential attribute (
             </UML:TagDefinition>
           </UML:Stereotype.definedTag>
         </UML:Stereotype>
-        <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB0'
-          name = 'associationClassName' isSpecification = 'false' isRoot = 'false'
+        <UML:Stereotype xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4C'
+          name = 'association-class-name' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false'>
           <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB1'
+            <UML:TaggedValue xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>This stereotype supports the tag &quot;associationClassName&quot;, which is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>This stereotype supports the tag &quot;association-class-name&quot;, which is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
           <UML:Stereotype.definedTag>
-            <UML:TagDefinition xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB2'
-              name = 'associationClassName' isSpecification = 'false'>
+            <UML:TagDefinition xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4E'
+              name = 'association-class-name' isSpecification = 'false'>
               <UML:TagDefinition.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB4'>
+                <UML:Multiplicity xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C50'>
                   <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB3'
+                    <UML:MultiplicityRange xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4F'
                       lower = '0' upper = '0'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
               </UML:TagDefinition.multiplicity>
               <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB5'
+                <UML:TaggedValue xmi.id = '-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C51'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>This tag is used to specify the name to be used for the class part of an AssociationClass (the association part retains the name specified in the model). If not supplied, the name used is formed by appending &quot;_Class&quot; to the AssociationClass name.</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
@@ -4334,8 +4334,8 @@ This stereotype marks the association end from which the referential attribute (
     </group>
   </group>
   <group name="Fig23"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 264, 152, 45]pathVisible=false;stereotypeView=0;"
-       href="-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[56, 256, 164, 45]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4C"
        fill="1"
        fillcolor="white"
        stroke="1"
@@ -4345,9 +4345,9 @@ This stereotype marks the association end from which the referential attribute (
     </private>
     
     <rectangle name="Fig23.0"
-      x="80"
-      y="264"
-      width="152"
+      x="56"
+      y="256"
+      width="164"
       height="45"
       fill="1"
       fillcolor="white"
@@ -4355,9 +4355,9 @@ This stereotype marks the association end from which the referential attribute (
       strokecolor="black"
     />
     <text name="Fig23.1"
-      x="81"
-      y="265"
-      width="150"
+      x="57"
+      y="257"
+      width="162"
       height="43"
       fill="0"
       fillcolor="white"
@@ -4369,10 +4369,10 @@ This stereotype marks the association end from which the referential attribute (
       bold="false"
       textsize="13"
       justification="Center"
-    >associationClassName</text>
+    >association-class-name</text>
     <group name="Fig23.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 265, 150, 20]"
-         href="-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BB0"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[57, 257, 162, 20]"
+         href="-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4C"
          fill="0"
          fillcolor="white"
          stroke="0"
@@ -4382,9 +4382,9 @@ This stereotype marks the association end from which the referential attribute (
       </private>
       
       <rectangle name="Fig23.2.0"
-        x="81"
-        y="265"
-        width="150"
+        x="57"
+        y="257"
+        width="162"
         height="20"
         fill="0"
         fillcolor="white"
@@ -4392,9 +4392,9 @@ This stereotype marks the association end from which the referential attribute (
         strokecolor="black"
       />
       <text name="Fig23.2.1"
-        x="81"
-        y="265"
-        width="150"
+        x="57"
+        y="257"
+        width="162"
         height="18"
         fill="0"
         fillcolor="white"

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 4a97c16d333b $
---  $Date: 2012/01/11 11:02:27 $
+--  $Revision: 0d8fc64ab008 $
+--  $Date: 2012/01/11 16:33:42 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -52,8 +52,8 @@ package body Normalize_XMI.Model.Association_Classes is
       --  before AssociationClasses ... but not a good idea for the
       --  long term.
       AC.Class := AC.Find_Class (Class_Name);
-      if AC.Class.Has_Tag ("associationClassName") then
-         AC.Class.Name := +(AC.Class.Tag_As_Name ("associationClassName"));
+      if AC.Class.Has_Tag ("association-class-name") then
+         AC.Class.Name := +(AC.Class.Tag_As_Name ("association-class-name"));
       else
          AC.Class.Name := +(Class_Name & "_Class");
       end if;

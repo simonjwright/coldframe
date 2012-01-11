@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Van Fleet Class Diagram</activediagram>
+      <activediagram>Library Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -58,10 +58,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 11 15:31:54 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 11 16:23:53 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/11 15:33:22 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/11 16:33:42 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -86,7 +86,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9850f03f5d82 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 0d8fc64ab008 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -537,9 +537,17 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9850f03f5d82 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 0d8fc64ab008 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3-401716d3:134cd93f507:-8000:0000000000001224'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
               </UML:TaggedValue.type>
             </UML:TaggedValue>
           </UML:ModelElement.taggedValue>
@@ -654,14 +662,14 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
               name = 'Current' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-associationClassName'/>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name'/>
               </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-4--1d9c698d:134c3c4410e:-8000:0000000000000F2B'
+                <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C30'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Current Loan</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-associationClassName-td-associationClassName'/>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name-td-association-class-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -702,14 +710,14 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
               name = 'History' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:ModelElement.stereotype>
-                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-associationClassName'/>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name'/>
               </UML:ModelElement.stereotype>
               <UML:ModelElement.taggedValue>
-                <UML:TaggedValue xmi.id = '-64--88-1-4--1d9c698d:134c3c4410e:-8000:0000000000000F29'
+                <UML:TaggedValue xmi.id = '-64--88-1-3-6ad088d1:134cd8c9bd0:-8000:0000000000000C31'
                   isSpecification = 'false'>
                   <UML:TaggedValue.dataValue>Loan History</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
-                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-associationClassName-td-associationClassName'/>
+                    <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-association-class-name-td-association-class-name'/>
                   </UML:TaggedValue.type>
                 </UML:TaggedValue>
               </UML:ModelElement.taggedValue>
@@ -1065,8 +1073,8 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </group>
     <rectangle name="Fig0.3"
       x="872"
-      y="126"
-      width="107"
+      y="108"
+      width="86"
       height="1"
       fill="1"
       fillcolor="black"
@@ -1075,7 +1083,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       visibility="0"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 127, 105, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 109, 84, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000987"
          fill="0"
          fillcolor="255 255 200"
@@ -1088,8 +1096,8 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       
       <rectangle name="Fig0.4.0"
         x="873"
-        y="127"
-        width="105"
+        y="109"
+        width="84"
         height="21"
         fill="0"
         fillcolor="white"
@@ -1211,8 +1219,8 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </group>
     <rectangle name="Fig1.3"
       x="872"
-      y="206"
-      width="105"
+      y="188"
+      width="86"
       height="1"
       fill="1"
       fillcolor="black"
@@ -1221,7 +1229,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       visibility="0"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 207, 103, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 189, 84, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000988"
          fill="0"
          fillcolor="255 255 200"
@@ -1234,8 +1242,8 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       
       <rectangle name="Fig1.4.0"
         x="873"
-        y="207"
-        width="103"
+        y="189"
+        width="84"
         height="21"
         fill="0"
         fillcolor="white"
@@ -1318,7 +1326,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       justification="Center"
     >Van</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 218, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 312, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -1332,7 +1340,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       <rectangle name="Fig2.2.0"
         x="329"
         y="33"
-        width="218"
+        width="312"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2326,7 +2334,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       name="Library Class Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[312, 48, 141, 91]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[368, 48, 141, 91]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
        fill="1"
        fillcolor="white"
@@ -2337,7 +2345,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </private>
     
     <rectangle name="Fig0.0"
-      x="312"
+      x="368"
       y="48"
       width="141"
       height="91"
@@ -2347,7 +2355,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <text name="Fig0.1"
-      x="313"
+      x="369"
       y="49"
       width="139"
       height="43"
@@ -2363,7 +2371,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       justification="Center"
     >Book</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[313, 49, 139, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 49, 139, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -2374,7 +2382,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig0.2.0"
-        x="313"
+        x="369"
         y="49"
         width="139"
         height="20"
@@ -2384,7 +2392,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         strokecolor="black"
       />
       <text name="Fig0.2.1"
-        x="313"
+        x="369"
         y="49"
         width="139"
         height="18"
@@ -2401,7 +2409,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       >&lt;&lt;abbreviation&gt;&gt;</text>
     </group>
     <rectangle name="Fig0.3"
-      x="312"
+      x="368"
       y="92"
       width="141"
       height="1"
@@ -2411,7 +2419,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[313, 93, 139, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 93, 139, 25]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -2422,7 +2430,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig0.4.0"
-        x="313"
+        x="369"
         y="93"
         width="139"
         height="25"
@@ -2432,7 +2440,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         strokecolor="black"
       />
       <text name="Fig0.4.1"
-        x="313"
+        x="369"
         y="93"
         width="139"
         height="23"
@@ -2449,7 +2457,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       >&lt;&lt;id&gt;&gt; Title : Text</text>
     </group>
     <rectangle name="Fig0.5"
-      x="312"
+      x="368"
       y="117"
       width="141"
       height="1"
@@ -2459,7 +2467,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[313, 118, 139, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 118, 139, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -2470,7 +2478,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig0.6.0"
-        x="313"
+        x="369"
         y="118"
         width="139"
         height="21"
@@ -2482,7 +2490,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </group>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[312, 328, 140, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[368, 328, 140, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
        fill="1"
        fillcolor="white"
@@ -2493,7 +2501,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </private>
     
     <rectangle name="Fig1.0"
-      x="312"
+      x="368"
       y="328"
       width="140"
       height="71"
@@ -2503,7 +2511,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <text name="Fig1.1"
-      x="313"
+      x="369"
       y="329"
       width="138"
       height="23"
@@ -2519,7 +2527,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       justification="Center"
     >Borrower</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[313, 329, 138, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 329, 138, 0]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
          fill="0"
          fillcolor="white"
@@ -2531,7 +2539,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig1.2.0"
-        x="313"
+        x="369"
         y="329"
         width="138"
         height="0"
@@ -2542,7 +2550,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       />
     </group>
     <rectangle name="Fig1.3"
-      x="312"
+      x="368"
       y="352"
       width="140"
       height="1"
@@ -2552,7 +2560,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[313, 353, 138, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 353, 138, 25]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
          fill="0"
          fillcolor="white"
@@ -2563,7 +2571,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig1.4.0"
-        x="313"
+        x="369"
         y="353"
         width="138"
         height="25"
@@ -2573,7 +2581,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         strokecolor="black"
       />
       <text name="Fig1.4.1"
-        x="313"
+        x="369"
         y="353"
         width="138"
         height="23"
@@ -2590,7 +2598,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       >&lt;&lt;id&gt;&gt; Name : Text</text>
     </group>
     <rectangle name="Fig1.5"
-      x="312"
+      x="368"
       y="377"
       width="140"
       height="1"
@@ -2600,7 +2608,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[313, 378, 138, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 378, 138, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
          fill="0"
          fillcolor="white"
@@ -2611,7 +2619,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig1.6.0"
-        x="313"
+        x="369"
         y="378"
         width="138"
         height="21"
@@ -2673,9 +2681,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="376"
+      <moveto x="432"
               y="138" />
-      <lineto x="376"
+      <lineto x="432"
               y="328" />
     </path>
   </group>
@@ -2730,18 +2738,18 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="312"
+      <moveto x="368"
               y="80" />
-      <lineto x="168"
+      <lineto x="224"
               y="80" />
-      <lineto x="168"
+      <lineto x="224"
               y="368" />
-      <lineto x="312"
+      <lineto x="368"
               y="368" />
     </path>
   </group>
   <group name="Fig4"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[80, 160, 190, 87]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[0, 160, 202, 105]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
        fill="1"
        fillcolor="white"
@@ -2752,19 +2760,19 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </private>
     
     <rectangle name="Fig4.0"
-      x="80"
+      x="0"
       y="160"
-      width="190"
-      height="87"
+      width="202"
+      height="105"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig4.1"
-      x="81"
+      x="1"
       y="161"
-      width="188"
+      width="200"
       height="43"
       fill="0"
       fillcolor="white"
@@ -2778,7 +2786,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       justification="Center"
     >Current</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 161, 188, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1, 161, 200, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -2789,9 +2797,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig4.2.0"
-        x="81"
+        x="1"
         y="161"
-        width="188"
+        width="200"
         height="20"
         fill="0"
         fillcolor="white"
@@ -2799,9 +2807,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         strokecolor="black"
       />
       <text name="Fig4.2.1"
-        x="81"
+        x="1"
         y="161"
-        width="188"
+        width="200"
         height="18"
         fill="0"
         fillcolor="white"
@@ -2813,12 +2821,12 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         bold="false"
         textsize="13"
         justification="Center"
-      >&lt;&lt;associationClassName&gt;&gt;</text>
+      >&lt;&lt;association-class-name&gt;&gt;</text>
     </group>
     <rectangle name="Fig4.3"
-      x="80"
+      x="0"
       y="204"
-      width="190"
+      width="202"
       height="1"
       fill="1"
       fillcolor="black"
@@ -2826,7 +2834,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig4.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[81, 205, 188, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[1, 205, 200, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -2837,10 +2845,10 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig4.4.0"
-        x="81"
+        x="1"
         y="205"
-        width="188"
-        height="21"
+        width="200"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -2848,9 +2856,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       />
     </group>
     <rectangle name="Fig4.5"
-      x="80"
-      y="225"
-      width="190"
+      x="0"
+      y="234"
+      width="202"
       height="1"
       fill="1"
       fillcolor="black"
@@ -2858,7 +2866,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig4.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[81, 226, 188, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[1, 235, 200, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -2869,10 +2877,10 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig4.6.0"
-        x="81"
-        y="226"
-        width="188"
-        height="21"
+        x="1"
+        y="235"
+        width="200"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -2899,10 +2907,10 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="170"
+      <moveto x="226"
               y="224" />
-      <lineto x="170"
-              y="246" />
+      <lineto x="201"
+              y="224" />
     </path>
   </group>
   <group name="Fig6"
@@ -2956,18 +2964,18 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="452"
+      <moveto x="508"
               y="80" />
-      <lineto x="616"
+      <lineto x="672"
               y="80" />
-      <lineto x="616"
+      <lineto x="672"
               y="368" />
-      <lineto x="451"
+      <lineto x="507"
               y="368" />
     </path>
   </group>
   <group name="Fig7"
-       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[640, 160, 190, 87]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.ui.FigClassAssociationClass[696, 168, 202, 105]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
        fill="1"
        fillcolor="white"
@@ -2978,19 +2986,19 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
     </private>
     
     <rectangle name="Fig7.0"
-      x="640"
-      y="160"
-      width="190"
-      height="87"
+      x="696"
+      y="168"
+      width="202"
+      height="105"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig7.1"
-      x="641"
-      y="161"
-      width="188"
+      x="697"
+      y="169"
+      width="200"
       height="43"
       fill="0"
       fillcolor="white"
@@ -3004,7 +3012,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       justification="Center"
     >History</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[641, 161, 188, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[697, 169, 200, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -3015,9 +3023,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig7.2.0"
-        x="641"
-        y="161"
-        width="188"
+        x="697"
+        y="169"
+        width="200"
         height="20"
         fill="0"
         fillcolor="white"
@@ -3025,9 +3033,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         strokecolor="black"
       />
       <text name="Fig7.2.1"
-        x="641"
-        y="161"
-        width="188"
+        x="697"
+        y="169"
+        width="200"
         height="18"
         fill="0"
         fillcolor="white"
@@ -3039,12 +3047,12 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
         bold="false"
         textsize="13"
         justification="Center"
-      >&lt;&lt;associationClassName&gt;&gt;</text>
+      >&lt;&lt;association-class-name&gt;&gt;</text>
     </group>
     <rectangle name="Fig7.3"
-      x="640"
-      y="204"
-      width="190"
+      x="696"
+      y="212"
+      width="202"
       height="1"
       fill="1"
       fillcolor="black"
@@ -3052,7 +3060,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[641, 205, 188, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[697, 213, 200, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -3063,10 +3071,10 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig7.4.0"
-        x="641"
-        y="205"
-        width="188"
-        height="21"
+        x="697"
+        y="213"
+        width="200"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3074,9 +3082,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       />
     </group>
     <rectangle name="Fig7.5"
-      x="640"
-      y="225"
-      width="190"
+      x="696"
+      y="242"
+      width="202"
       height="1"
       fill="1"
       fillcolor="black"
@@ -3084,7 +3092,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       strokecolor="black"
     />
     <group name="Fig7.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[641, 226, 188, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[697, 243, 200, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -3095,10 +3103,10 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       </private>
       
       <rectangle name="Fig7.6.0"
-        x="641"
-        y="226"
-        width="188"
-        height="21"
+        x="697"
+        y="243"
+        width="200"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3125,9 +3133,9 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="618"
+      <moveto x="674"
               y="224" />
-      <lineto x="640"
+      <lineto x="696"
               y="224" />
     </path>
   </group>
