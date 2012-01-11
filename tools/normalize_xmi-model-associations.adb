@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: c20a05b7a967 $
---  $Date: 2012/01/06 22:09:27 $
+--  $Revision: 4a97c16d333b $
+--  $Date: 2012/01/11 11:02:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -99,7 +99,7 @@ package body Normalize_XMI.Model.Associations is
       use Association_Ends;
    begin
       Put_Line (Standard_Error, "... checking association " & (+A.Name));
-      Element_Vectors.Iterate (A.Ends, Resolve'Access);
+      A.Ends.Iterate (Resolve'Access);
       if E1.Source and E2.Source then
          Messages.Error
            ("Both ends of association "
@@ -269,7 +269,7 @@ package body Normalize_XMI.Model.Associations is
       Put (To, "<association");
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
-      Element_Vectors.Iterate (A.Ends, Output'Access);
+      A.Ends.Iterate (Output'Access);
       A.Output_Documentation (To);
       Put_Line (To, "</association>");
    end Output;

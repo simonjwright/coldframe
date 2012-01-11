@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 735887041478 $
---  $Date: 2012/01/08 23:00:59 $
+--  $Revision: 4a97c16d333b $
+--  $Date: 2012/01/11 11:02:27 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -58,7 +58,7 @@ package body Normalize_XMI.Model.Association_Classes is
          AC.Class.Name := +(Class_Name & "_Class");
       end if;
       Put_Line (Standard_Error, "... checking association " & (+AC.Name));
-      Element_Vectors.Iterate (AC.Ends, Resolve'Access);
+      AC.Ends.Iterate (Resolve'Access);
       declare
          Assoc : Classes.Class_Element
            renames Classes.Class_Element (AC.Class.all);
@@ -291,7 +291,7 @@ package body Normalize_XMI.Model.Association_Classes is
       Put (To, "<association");
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+AC.Name) & "</name>");
-      Element_Vectors.Iterate (AC.Ends, Output'Access);
+      AC.Ends.Iterate (Output'Access);
       AC.Output_Documentation (To);
       Put_Line (To, "<associative>" & (+AC.Class.Name) & "</associative>");
       Put_Line (To, "</association>");

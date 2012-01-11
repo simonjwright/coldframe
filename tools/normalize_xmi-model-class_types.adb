@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: b2d60607611c $
---  $Date: 2011/12/29 14:59:54 $
+--  $Revision: 4a97c16d333b $
+--  $Date: 2012/01/11 11:02:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -104,8 +104,8 @@ package body Normalize_XMI.Model.Class_Types is
               & (+T.Name)
               & " has no attributes, assumed null.");
       end if;
-      Element_Maps.Iterate (T.Attributes, Resolve'Access);
-      Element_Maps.Iterate (T.Operations, Resolve'Access);
+      T.Attributes.Iterate (Resolve'Access);
+      T.Operations.Iterate (Resolve'Access);
    end Resolve;
 
 
@@ -137,8 +137,8 @@ package body Normalize_XMI.Model.Class_Types is
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+T.Name) & "</name>");
       T.Output_Documentation (To);
-      Element_Maps.Iterate (T.Attributes, Output'Access);
-      Element_Maps.Iterate (T.Operations, Output'Access);
+      T.Attributes.Iterate (Output'Access);
+      T.Operations.Iterate (Output'Access);
       Put_Line (To, "</type>");
    end Output;
 

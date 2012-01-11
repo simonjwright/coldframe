@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 0b4457b40c42 $
---  $Date: 2012/01/09 21:18:46 $
+--  $Revision: 4a97c16d333b $
+--  $Date: 2012/01/11 11:02:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -117,8 +117,7 @@ package body Normalize_XMI.Model.Classes is
          end if;
       end Handle_If_Already_Formalized;
    begin
-      Element_Maps.Iterate (In_Class.Attributes,
-                            Handle_If_Already_Formalized'Access);
+      In_Class.Attributes.Iterate (Handle_If_Already_Formalized'Access);
       if not Already_Formalized then
          declare
             N : constant Element_P := new Referential_Attribute_Element;
@@ -155,8 +154,8 @@ package body Normalize_XMI.Model.Classes is
       end Resolve;
    begin
       Put_Line (Standard_Error, "... checking class " & (+C.Name));
-      Element_Maps.Iterate (C.Attributes, Resolve'Access);
-      Element_Maps.Iterate (C.Operations, Resolve'Access);
+      C.Attributes.Iterate (Resolve'Access);
+      C.Operations.Iterate (Resolve'Access);
    end Resolve;
 
 
@@ -209,8 +208,8 @@ package body Normalize_XMI.Model.Classes is
       end if;
       Put_Line (To, "</abbreviation>");
       C.Output_Documentation (To);
-      Element_Maps.Iterate (C.Attributes, Output'Access);
-      Element_Maps.Iterate (C.Operations, Output'Access);
+      C.Attributes.Iterate (Output'Access);
+      C.Operations.Iterate (Output'Access);
       Put_Line (To, "</class>");
    end Output;
 

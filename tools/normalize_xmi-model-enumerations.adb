@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: b2d60607611c $
---  $Date: 2011/12/29 14:59:54 $
+--  $Revision: 4a97c16d333b $
+--  $Date: 2012/01/11 11:02:27 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -85,7 +85,7 @@ package body Normalize_XMI.Model.Enumerations is
       end Resolve;
    begin
       Put_Line (Standard_Error, "... checking enumeration " & (+E.Name));
-      Element_Maps.Iterate (E.Operations, Resolve'Access);
+      E.Operations.Iterate (Resolve'Access);
    end Resolve;
 
 
@@ -93,21 +93,23 @@ package body Normalize_XMI.Model.Enumerations is
    procedure Output (E : Enumeration_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
-      procedure Output (Pos : Element_Maps.Cursor);
-      procedure Output (Pos : Element_Maps.Cursor)
+      --  I've named these Outputs differently because GNAT (both GCC
+      --  4.6 and GNAT GPL 2011) thinks there's an ambiguity.
+      procedure Output_Operation (Pos : Element_Maps.Cursor);
+      procedure Output_Operation (Pos : Element_Maps.Cursor)
       is
       begin
          Element_Maps.Element (Pos).Output (To);
-      end Output;
-      procedure Output (Pos : String_Vectors.Cursor);
-      procedure Output (Pos : String_Vectors.Cursor)
+      end Output_Operation;
+      procedure Output_Literal (Pos : String_Vectors.Cursor);
+      procedure Output_Literal (Pos : String_Vectors.Cursor)
       is
       begin
          Put_Line (To,
                    "<literal>"
                      & String_Vectors.Element (Pos)
                      & "</literal>");
-      end Output;
+      end Output_Literal;
    begin
       Put (To, "<type");
       declare
@@ -124,9 +126,9 @@ package body Normalize_XMI.Model.Enumerations is
       Put_Line (To, "<name>" & (+E.Name) & "</name>");
       E.Output_Documentation (To);
       Put_Line (To, "<enumeration>");
-      String_Vectors.Iterate (E.Literals, Output'Access);
+      E.Literals.Iterate (Output_Literal'Access);
       Put_Line (To, "</enumeration>");
-      Element_Maps.Iterate (E.Operations, Output'Access);
+      E.Operations.Iterate (Output_Operation'Access);
       Put_Line (To, "</type>");
    end Output;
 
