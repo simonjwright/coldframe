@@ -149,7 +149,7 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 # Generate .norm files from .rr.
 # This is actually cast as a rule to generate .norm-stamp files from .rr,
 # because a .rr file can contain any number of domains.
-%.norm-stamp: $(COLDFRAMEOUT)/%.rr
+%.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
 	$(COLDFRAME)/tools/normalize_xmi $<
 	touch $@
 
