@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: preparation.html,v a9b552bad5cd 2012/01/15 20:21:48 simonjwright $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -13,6 +13,11 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 </div>
 
 <h1>ColdFrame: Preparation</h1>
+
+<h2>ArgoUML details</h2>
+
+Setting up the profile. Setting up a model.
+How to save models, how to mark packages that represent domains.
 
 <h2>Executable UML aspects</h2>
 
@@ -119,9 +124,9 @@ unconditional, which is good.
 the <i>Van</i>, is independent of whether the <i>Van</i> is currently
 hired out or in the pool.
 
-<p>At present (2 Feb 2002), ColdFrame expects the set of child
-instances to be complete, which is why <i>Pool Van</i> appears in the
-model above. Every <i>Van</i> must be either a <i>Hired Van</i> or a
+<p>ColdFrame expects the set of child instances to be complete, which
+is why <i>Pool Van</i> appears in the model above. Every <i>Van</i>
+must be either a <i>Hired Van</i> or a
 <i>Pool Van</i>. This only actually shows up in implementing
 dispatching operations; if you try calling a dispatching operation for
 an instance without a current child you'll get a
@@ -186,7 +191,7 @@ hierarchy in the generated code.
 <h3>On classes</h3>
 
 <p>Classes which represent user-defined types are marked with the
-stereotype <em>&#171;type&#187;</em>.
+stereotype <em>&#171;datatype&#187;</em>.
 
 <p>Classes of which there is always precisely one instance are marked
 with the stereotype <em>&#171;singleton&#187;</em>.

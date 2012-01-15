@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v 127c231499eb 2011/11/13 19:24:08 simonjwright $ -->
+<!-- $Id: installation.html,v a9b552bad5cd 2012/01/15 20:21:48 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -15,47 +15,19 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Installation</h1>
 
-<hr>
-
-<h2>Windows notes</h2>
-
-<p>ColdFrame is built on a Unix system and requires typical Unix
-utilities in order to function.
-
-<p>A Unix-like environment which has proved effective in the past
-is <a href="http://www.cygwin.com/">Cygwin</a>.
-
-<p>Unfortunately, at the time of writing (13.xi.11) there are severe
-problems with this environment, in that Cygwin doesn't provide
-packages for TclXML or TclLib, and neither does the
-previously-recommended alternative free Tcl/Tk implementation
-from <a href="http://www.activestate.com/">Active State</a>.
-
-<hr>
-
 <h2>Prerequisites</h2>
 
 <p>ColdFrame uses:
 
 <ul>
 
-<li><a href="http://www.sourceforge.net/projects/tcl/">Tcl/Tk</a> with
-<ul>
-<li><a href="http://www.sourceforge.net/projects/incrtcl/">iTcl also
-known as [incr Tcl]</a> (an OO extension)
-<li><a href="http://sourceforge.net/projects/tclxml/">TclXml</a>
-</ul>
-
-<li><a href="http://www.python.org">Python</a> with
-<ul>
-<li><a href="http://www.dabeaz.com/ply">PLY</a> (Lex and Yacc in Python)
-</ul>
-
-<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a> (an
-XSLT processor)
+<li><a href="http://argouml.tigris.org/">ArgoUML</a>
 
 <li><a href="http://www.adacore.com">GNAT</a> (an Ada 95/2005/2012
 compiler)
+
+<li><a href="http://sourceforge.net/projects/saxon/">Saxon</a> (an
+XSLT processor)
 
 <li>The <a href="http://booch95.sourceforge.net/index.html">Booch
 Components</a> (an Ada 95 container library)
@@ -98,9 +70,11 @@ as <tt>coldframe</tt>, <tt>main</tt>) are located.
 example, "GNAT").
 <td>$SCRIPTS/emacs_case_exceptions
 
+<!--
 <tr><td>CHECKING
 <td>The extent of ColdFrame's rule checking.
 <td>strict
+-->
 
 <tr><td>COLDFRAME
 <td>Where ColdFrame is installed (overridden in the Makefiles); set it
@@ -127,12 +101,14 @@ to, for example, <tt><i>/where/ever/</i>cf-<i>20110720</i></tt>
 <td>Should stub code be generated instead of the normal code?
 <td>no
 
+<!--
 <tr><td>GNATCHOP
 <td>Older ColdFrame projects may have used <tt>Interface</tt> as a
 name; it became a keyword in Ada 2005. Modern versions
 of <tt>gnatchop</tt> need to be told to adopt Ada95 rules, but older
 versions wouldn't understand the flag.
 <td>gnatchop -gnat95
+-->
 
 <tr><td>JAVA
 <td>There should be no need to change this.
@@ -161,11 +137,6 @@ of a project's model files).
 <td>Where ColdFrame's scripts are located. Shouldn't need to be overridden.
 <td>$COLDFRAME/scripts
 
-<tr><td>STACK_DUMP
-<td>Whether <tt>normalize-rose.tcl</tt> is to generate a stack dump on
-failure.
-<td>yes
-
 <tr><td>UNIT_TEST_SUPPORT
 <td>Should unit test support code (enabling inspection etc) be generated?
 <td>no
@@ -175,24 +146,6 @@ failure.
 <td>no
 
 </table>
-
-<h2>Rose extraction</h2>
-
-<p>The Rose extraction script needs to be told where to place the
-extracted files:
-
-<ol>
-
-<li>If the Rose <i>Path Map</i> variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory
-
-<li>Otherwise, if the environment variable <t>COLDFRAMEOUT</t> is set,
-the files are placed in the named directory (<font
-color="green"><b>strongly recommended</b></font>)
-
-<li>Otherwise, the files are put somewhere, at Rose's whim.
-
-</ol>
 
 <h2>Your Makefile</h2>
 
@@ -352,7 +305,6 @@ overridden in <tt>~/Base/Build/ColdFrameProject/inherited</tt>.
 
 <hr>
 
-<!--
 <h2>Windows notes</h2>
 
 <p>ColdFrame is built on a Unix system and requires typical Unix
@@ -361,14 +313,7 @@ utilities in order to function.
 <p>A Unix-like environment which has proved effective in the past
 is <a href="http://www.cygwin.com/">Cygwin</a>.
 
-<p>Unfortunately, at the time of writing there are severe problems
-with this environment, in that Cygwin doesn't provide packages for
-TclXML or TclLib, and neither does the previously-recommended
-alternative free Tcl/Tk implementation
-from <a href="http://www.activestate.com/">Active State</a>.
-
 <p>When installing Cygwin, choose the 'developer' option.
--->
 
 <p><hr>
 <i>
