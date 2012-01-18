@@ -52,10 +52,10 @@
 			UML 1.4
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 11 16:21:52 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 18 12:10:38 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/11 16:33:42 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/18 22:28:08 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -518,8 +518,8 @@ To be applied to a Class stereotyped «type» and with attributes.</UML:TaggedVa
         <UML:Stereotype xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9'
           name = 'callback' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>DataType</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DC2'
               isSpecification = 'false'>
@@ -559,8 +559,8 @@ This stereotype marks the association end from which the referential attribute (
         <UML:Stereotype xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAA'
           name = 'abbreviation' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
           isAbstract = 'false'>
-          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:Stereotype.baseClass>AssociationClass</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>Class</UML:Stereotype.baseClass>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--6cf7d1dd:134bf808e41:-8000:0000000000001BAF'
               isSpecification = 'false'>
@@ -629,6 +629,22 @@ This stereotype marks the association end from which the referential attribute (
               </UML:ModelElement.taggedValue>
             </UML:TagDefinition>
           </UML:Stereotype.definedTag>
+        </UML:Stereotype>
+        <UML:Stereotype xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2'
+          name = 'class' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Stereotype.baseClass>StateMachine</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>SignalEvent</UML:Stereotype.baseClass>
+          <UML:Stereotype.baseClass>CallEvent</UML:Stereotype.baseClass>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF3'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>This stereotype is used to manage class events, which is a ColdFrame concept that distinguishes events directed to state machines (instance events) from events originating outside the domain (class events, because external entities have no visibility of state-machine related events).</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DBD'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
         </UML:Stereotype>
       </UML:Namespace.ownedElement>
     </UML:Model>
@@ -2586,7 +2602,7 @@ This stereotype marks the association end from which the referential attribute (
       name="Stereotype Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 112, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 96, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-27e5fc9d:133d69e6354:-8000:0000000000000B9D"
        fill="1"
        fillcolor="white"
@@ -2598,7 +2614,7 @@ This stereotype marks the association end from which the referential attribute (
     
     <rectangle name="Fig0.0"
       x="80"
-      y="112"
+      y="96"
       width="114"
       height="45"
       fill="1"
@@ -2608,7 +2624,7 @@ This stereotype marks the association end from which the referential attribute (
     />
     <text name="Fig0.1"
       x="81"
-      y="113"
+      y="97"
       width="112"
       height="43"
       fill="0"
@@ -2623,7 +2639,7 @@ This stereotype marks the association end from which the referential attribute (
       justification="Center"
     >accessor</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 113, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 97, 112, 20]"
          href="-64--88-1-2-27e5fc9d:133d69e6354:-8000:0000000000000B9D"
          fill="0"
          fillcolor="white"
@@ -2635,7 +2651,7 @@ This stereotype marks the association end from which the referential attribute (
       
       <rectangle name="Fig0.2.0"
         x="81"
-        y="113"
+        y="97"
         width="112"
         height="20"
         fill="0"
@@ -2645,7 +2661,7 @@ This stereotype marks the association end from which the referential attribute (
       />
       <text name="Fig0.2.1"
         x="81"
-        y="113"
+        y="97"
         width="112"
         height="18"
         fill="0"
@@ -2662,7 +2678,7 @@ This stereotype marks the association end from which the referential attribute (
     </group>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 184, 114, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 152, 114, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3-49083f2e:133bdb9ce46:-8000:0000000000000A70"
        fill="1"
        fillcolor="white"
@@ -2674,7 +2690,7 @@ This stereotype marks the association end from which the referential attribute (
     
     <rectangle name="Fig1.0"
       x="80"
-      y="184"
+      y="152"
       width="114"
       height="45"
       fill="1"
@@ -2684,7 +2700,7 @@ This stereotype marks the association end from which the referential attribute (
     />
     <text name="Fig1.1"
       x="81"
-      y="185"
+      y="153"
       width="112"
       height="43"
       fill="0"
@@ -2699,7 +2715,7 @@ This stereotype marks the association end from which the referential attribute (
       justification="Center"
     >active</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 185, 112, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 153, 112, 20]"
          href="-64--88-1-3-49083f2e:133bdb9ce46:-8000:0000000000000A70"
          fill="0"
          fillcolor="white"
@@ -2711,7 +2727,7 @@ This stereotype marks the association end from which the referential attribute (
       
       <rectangle name="Fig1.2.0"
         x="81"
-        y="185"
+        y="153"
         width="112"
         height="20"
         fill="0"
@@ -2721,7 +2737,7 @@ This stereotype marks the association end from which the referential attribute (
       />
       <text name="Fig1.2.1"
         x="81"
-        y="185"
+        y="153"
         width="112"
         height="18"
         fill="0"
@@ -3270,7 +3286,7 @@ This stereotype marks the association end from which the referential attribute (
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 416, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 376, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001021"
        fill="1"
        fillcolor="white"
@@ -3282,7 +3298,7 @@ This stereotype marks the association end from which the referential attribute (
     
     <rectangle name="Fig9.0"
       x="80"
-      y="416"
+      y="376"
       width="116"
       height="45"
       fill="1"
@@ -3292,7 +3308,7 @@ This stereotype marks the association end from which the referential attribute (
     />
     <text name="Fig9.1"
       x="81"
-      y="417"
+      y="377"
       width="114"
       height="43"
       fill="0"
@@ -3307,7 +3323,7 @@ This stereotype marks the association end from which the referential attribute (
       justification="Center"
     >counterpart</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 417, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 377, 114, 20]"
          href="-64--88-1-2-943af45:13439596f1d:-8000:0000000000001021"
          fill="0"
          fillcolor="white"
@@ -3319,7 +3335,7 @@ This stereotype marks the association end from which the referential attribute (
       
       <rectangle name="Fig9.2.0"
         x="81"
-        y="417"
+        y="377"
         width="114"
         height="20"
         fill="0"
@@ -3329,7 +3345,7 @@ This stereotype marks the association end from which the referential attribute (
       />
       <text name="Fig9.2.1"
         x="81"
-        y="417"
+        y="377"
         width="114"
         height="18"
         fill="0"
@@ -4106,7 +4122,7 @@ This stereotype marks the association end from which the referential attribute (
     </group>
   </group>
   <group name="Fig20"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 336, 116, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 264, 116, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9"
        fill="1"
        fillcolor="white"
@@ -4118,7 +4134,7 @@ This stereotype marks the association end from which the referential attribute (
     
     <rectangle name="Fig20.0"
       x="80"
-      y="336"
+      y="264"
       width="116"
       height="45"
       fill="1"
@@ -4128,7 +4144,7 @@ This stereotype marks the association end from which the referential attribute (
     />
     <text name="Fig20.1"
       x="81"
-      y="337"
+      y="265"
       width="114"
       height="43"
       fill="0"
@@ -4143,7 +4159,7 @@ This stereotype marks the association end from which the referential attribute (
       justification="Center"
     >callback</text>
     <group name="Fig20.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 337, 114, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 265, 114, 20]"
          href="-64--88-1-3--e90440e:13443cadc37:-8000:0000000000000DB9"
          fill="0"
          fillcolor="white"
@@ -4155,7 +4171,7 @@ This stereotype marks the association end from which the referential attribute (
       
       <rectangle name="Fig20.2.0"
         x="81"
-        y="337"
+        y="265"
         width="114"
         height="20"
         fill="0"
@@ -4165,7 +4181,7 @@ This stereotype marks the association end from which the referential attribute (
       />
       <text name="Fig20.2.1"
         x="81"
-        y="337"
+        y="265"
         width="114"
         height="18"
         fill="0"
@@ -4334,7 +4350,7 @@ This stereotype marks the association end from which the referential attribute (
     </group>
   </group>
   <group name="Fig23"
-       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[56, 256, 164, 45]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[56, 208, 164, 45]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4C"
        fill="1"
        fillcolor="white"
@@ -4346,7 +4362,7 @@ This stereotype marks the association end from which the referential attribute (
     
     <rectangle name="Fig23.0"
       x="56"
-      y="256"
+      y="208"
       width="164"
       height="45"
       fill="1"
@@ -4356,7 +4372,7 @@ This stereotype marks the association end from which the referential attribute (
     />
     <text name="Fig23.1"
       x="57"
-      y="257"
+      y="209"
       width="162"
       height="43"
       fill="0"
@@ -4371,7 +4387,7 @@ This stereotype marks the association end from which the referential attribute (
       justification="Center"
     >association-class-name</text>
     <group name="Fig23.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[57, 257, 162, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[57, 209, 162, 20]"
          href="-64--88-1-4-7784549:134c43911fc:-8000:0000000000001C4C"
          fill="0"
          fillcolor="white"
@@ -4383,7 +4399,7 @@ This stereotype marks the association end from which the referential attribute (
       
       <rectangle name="Fig23.2.0"
         x="57"
-        y="257"
+        y="209"
         width="162"
         height="20"
         fill="0"
@@ -4393,8 +4409,84 @@ This stereotype marks the association end from which the referential attribute (
       />
       <text name="Fig23.2.1"
         x="57"
-        y="257"
+        y="209"
         width="162"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >&lt;&lt;stereotype&gt;&gt;</text>
+    </group>
+  </group>
+  <group name="Fig24"
+       description="org.argouml.uml.diagram.static_structure.ui.FigStereotypeDeclaration[80, 320, 116, 45]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig24.0"
+      x="80"
+      y="320"
+      width="116"
+      height="45"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig24.1"
+      x="81"
+      y="321"
+      width="114"
+      height="43"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    >class</text>
+    <group name="Fig24.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[81, 321, 114, 20]"
+         href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000EF2"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig24.2.0"
+        x="81"
+        y="321"
+        width="114"
+        height="20"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig24.2.1"
+        x="81"
+        y="321"
+        width="114"
         height="18"
         fill="0"
         fillcolor="white"

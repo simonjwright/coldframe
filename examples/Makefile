@@ -85,7 +85,10 @@ Digital_IO_Interface.gen: $(COLDFRAMEOUT)/Digital_IO_Interface.raw
 
 # ArgoUML support
 
-NORM_FILES = Library.norm Van_Fleet.norm
+NORM_FILES =					\
+ House_Management.norm				\
+ Library.norm					\
+ Van_Fleet.norm
 
 $(NORM_FILES): ColdFrame_Examples.norm-stamp
 

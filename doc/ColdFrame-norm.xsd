@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v b035ee4790cb 2012/01/03 18:24:44 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 8e850f2a9433 2012/01/18 22:28:08 simonjwright $ -->
 
 <!--
 
@@ -48,7 +48,8 @@
           <xsd:element ref="type"/>
         </xsd:choice>
         <xsd:element ref="exception" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:group ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="association" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="inheritance" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="references" minOccurs="0" maxOccurs="unbounded"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -270,7 +271,7 @@
   <!-- NB, this element's name is actually plain 'event'; can't be
        changed until all old .norm files have been replaced.
        Would be much better if the statemachine had only
-       <xsd:element name="name"/>. -->
+       <xsd:element name="event" minOccurs="0" maxOccurs="unbounded"/>. -->
   <xsd:element name="sm-event">
     <xsd:complexType>
       <xsd:sequence>
@@ -349,13 +350,6 @@
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
-
-  <xsd:group name="relationship">
-    <xsd:choice>
-      <xsd:element ref="association"/>
-      <xsd:element ref="inheritance"/>
-    </xsd:choice>
-  </xsd:group>
 
   <xsd:element name="references"/>
 

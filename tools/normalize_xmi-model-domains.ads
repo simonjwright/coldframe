@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.ads,v $
---  $Revision: 1df49366b800 $
---  $Date: 2012/01/10 18:20:52 $
+--  $Revision: 8e850f2a9433 $
+--  $Date: 2012/01/18 22:28:08 $
 --  $Author: simonjwright $
 
 with GNAT.OS_Lib;
@@ -28,6 +28,7 @@ private
 
    type Domain is new Element with record
       File_Time : GNAT.OS_Lib.OS_Time;
+      Events : Element_Maps.Map;
       Classes : Element_Maps.Map;
       Types : Element_Maps.Map;
       Associations : Element_Maps.Map;
