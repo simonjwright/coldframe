@@ -115,6 +115,23 @@ CODEGEN_SCRIPT ?= $(SCRIPTS)/generate-ada.xsl
 DIAGRAM_SCRIPT = $(SCRIPTS)/generate-diagrams.xsl
 HTMLGEN_SCRIPT = $(SCRIPTS)/generate-html.xsl
 
+# All code generation scripts, for development use
+CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
+  $(SCRIPTS)/ada-association.xsl		\
+  $(SCRIPTS)/ada-association-collection.xsl	\
+  $(SCRIPTS)/ada-attribute.xsl			\
+  $(SCRIPTS)/ada-callback.xsl			\
+  $(SCRIPTS)/ada-class.xsl			\
+  $(SCRIPTS)/ada-collection.xsl			\
+  $(SCRIPTS)/ada-inheritance.xsl		\
+  $(SCRIPTS)/ada-operation.xsl			\
+  $(SCRIPTS)/ada-serialization.xsl		\
+  $(SCRIPTS)/ada-state.xsl			\
+  $(SCRIPTS)/ada-type.xsl			\
+  $(SCRIPTS)/ada-teardown.xsl			\
+  $(SCRIPTS)/ada-unittest.xsl			\
+  $(SCRIPTS)/ada-utilities.xsl
+
 # Construct the build directories if necessary.
 build-dirs::
 	@[ -n "$(BUILD_BASE)" ] \
