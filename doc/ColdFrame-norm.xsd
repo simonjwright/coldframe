@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: ColdFrame-norm.xsd,v 8e850f2a9433 2012/01/18 22:28:08 simonjwright $ -->
+<!-- $Id: ColdFrame-norm.xsd,v 12a6c3b1d22b 2012/01/22 19:05:53 simonjwright $ -->
 
 <!--
 
@@ -247,36 +247,30 @@
     </xsd:complexType>
   </xsd:element>
 
+  <!-- 'action' only occurs when @class is true. -->
   <xsd:element name="event">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element name="type" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="class"/>
     </xsd:complexType>
   </xsd:element>
 
+  <!-- Only event/name is relevant here. -->
   <xsd:element name="statemachine">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element name="name"/>
         <xsd:element ref="state" minOccurs="1" maxOccurs="unbounded"/>
-        <xsd:element ref="sm-event" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="event" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element ref="transition" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
-
-  <!-- NB, this element's name is actually plain 'event'; can't be
-       changed until all old .norm files have been replaced.
-       Would be much better if the statemachine had only
-       <xsd:element name="event" minOccurs="0" maxOccurs="unbounded"/>. -->
-  <xsd:element name="sm-event">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="name"/>
-      </xsd:sequence>
+      <xsd:attribute name="class"/>
     </xsd:complexType>
   </xsd:element>
 
@@ -295,14 +289,14 @@
   <xsd:element name="transition">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="event" minOccurs="0" maxOccurs="1"/>     <!-- XXX -->
-        <xsd:element name="action" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="event" minOccurs="0" maxOccurs="1"/>  <!-- XXX -->
+        <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"/>
         <xsd:element name="source"/>
         <xsd:element name="target"/>
         <xsd:element ref="documentation" minOccurs="0" maxOccurs="1"/>
       </xsd:sequence>
       <xsd:attribute name="ignore"/>
-      <xsd:attribute name="self"/>
+      <xsd:attribute name="self"/>  <!-- ?? -->
     </xsd:complexType>
   </xsd:element>
 

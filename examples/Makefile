@@ -14,8 +14,8 @@
 
 # $Id$
 
-# Makefile for tests, use with Cygwin under Windows or Unix (assumes a
-# Unix system if Cygwin not detected).
+# Makefile for examples, use with Cygwin under Windows or Unix
+# (assumes a Unix system if Cygwin not detected).
 
 # It's assumed that no project-special settings are in place and that
 # the command 'gnatmake' will compile and generate an executable.

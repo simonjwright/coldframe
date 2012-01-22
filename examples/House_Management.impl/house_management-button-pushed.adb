@@ -12,10 +12,10 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
+--  $RCSfile: house_management-button-pushed.adb,v $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
+--  $Author: simonjwright $
 
 --  Handles Button Events, which occur when a button has been pushed.
 
@@ -27,7 +27,8 @@ with House_Management.A1;
 
 separate (House_Management.Button)
 procedure Pushed
-  (E : Button_Event) is
+  (B : Button_Name)
+is
 
    procedure Button_Pushed (L : Lamp.Handle);
    pragma Inline (Button_Pushed);
@@ -38,9 +39,8 @@ procedure Pushed
       Lamp.Handler (Ev);
    end Button_Pushed;
 
-   BH : constant Handle := Find ((Name => E.Payload));
-   LHS : constant Lamp.Collections.Collection
-     := A1.Is_Controlled_By (BH);
+   BH : constant Handle := Find ((Name => B));
+   LHS : constant Lamp.Collections.Collection := A1.Is_Controlled_By (BH);
 
 begin
    Process (LHS);

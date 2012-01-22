@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 8e850f2a9433 $
---  $Date: 2012/01/18 22:28:08 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -28,7 +28,6 @@ with Normalize_XMI.Model.Class_Types;
 with Normalize_XMI.Model.Classes;
 with Normalize_XMI.Model.Data_Types;
 with Normalize_XMI.Model.Enumerations;
-with Normalize_XMI.Model.Events;
 with Normalize_XMI.Model.Exceptions;
 with Normalize_XMI.Model.Generalizations;
 
@@ -52,20 +51,6 @@ package body Normalize_XMI.Model.Domains is
 
       --  Standard Types.
       Add_Standard_Types (To => D.Types);
-
-      --  Events (done first, because will be used by Classes)
-      declare
-         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From,
-            "descendant::UML:SignalEvent | descendant::UML:CallEvent");
-      begin
-         for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
-            Events.Read_Event
-              (DOM.Core.Nodes.Item (Nodes, J),
-               Parent => D'Unchecked_Access,
-               Accumulating_In => D.Events);
-         end loop;
-      end;
 
       --  Classes, and the Class aspect of AssociationClasses
       declare
@@ -250,7 +235,6 @@ package body Normalize_XMI.Model.Domains is
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
    begin
-      D.Events.Iterate (Resolve'Access);
       D.Classes.Iterate (Resolve'Access);
       D.Types.Iterate (Resolve'Access);
       D.Associations.Iterate (Resolve'Access);

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 6ee9cabb4939 $
---  $Date: 2012/01/10 18:18:59 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -25,7 +25,7 @@ with Normalize_XMI.Model.Parameters;
 package body Normalize_XMI.Model.Operations is
 
 
-   function Read_Operation (From : DOM.Core.Node;
+   function Read_Operation (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
@@ -130,6 +130,9 @@ package body Normalize_XMI.Model.Operations is
       end;
       if O.Has_Stereotype ("entry") then
          Put (To, " entry='true'");
+      end if;
+      if O.Has_Stereotype ("init") then
+         Put (To, " initialize='true'");
       end if;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");

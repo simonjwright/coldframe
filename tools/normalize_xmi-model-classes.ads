@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 0b4457b40c42 $
---  $Date: 2012/01/09 21:18:46 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
@@ -53,8 +53,9 @@ private package Normalize_XMI.Model.Classes is
 private
 
    type Class_Element is new Element with record
-      Attributes : Element_Maps.Map;
-      Operations : Element_Maps.Map;
+      Attributes     : Element_Maps.Map;
+      Operations     : Element_Maps.Map;
+      State_Machines : Element_Vectors.Vector;
    end record;
    overriding
    procedure Resolve (C : in out Class_Element);
@@ -63,10 +64,10 @@ private
 
 
    type Referential_Attribute_Element is new Element with record
-      Referring_To : Element_P;
-      For_Relationship : Element_P;
+      Referring_To          : Element_P;
+      For_Relationship      : Element_P;
       With_Source_Role_Name : Ada.Strings.Unbounded.Unbounded_String;
-      Identifier : Boolean;
+      Identifier            : Boolean;
    end record;
    overriding
    procedure Resolve (R : in out Referential_Attribute_Element) is null;

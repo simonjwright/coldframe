@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 4a97c16d333b $
---  $Date: 2012/01/11 11:02:27 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -23,6 +23,7 @@ with Normalize_XMI.Identifiers;
 with Normalize_XMI.Messages;
 with Normalize_XMI.Model.Attributes;
 with Normalize_XMI.Model.Operations;
+with Normalize_XMI.Model.State_Machines;
 
 package body Normalize_XMI.Model.Classes is
 
@@ -89,6 +90,56 @@ package body Normalize_XMI.Model.Classes is
          end loop;
       end;
 
+      --  State Machines (a): class
+      declare
+         Xmi_Id : constant String
+           := Read_Attribute ("xmi.id", From_Element => From);
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "../UML:StateMachine"
+              & "[UML:StateMachine.context/@xmi.idref='"
+              & Xmi_Id
+              & "' and UML:ModelElement.stereotype/@name='class']");
+      begin
+         case DOM.Core.Nodes.Length (Nodes) is
+            when 0 => null;
+            when 1 =>
+               C.State_Machines.Append
+                 (State_Machines.Read_State_Machine
+                    (DOM.Core.Nodes.Item (Nodes, 0),
+                     Parent => N));
+            when others =>
+               Messages.Error
+                 ("Class "
+                    & (+C.Name)
+                    & " has more than one <<class>> state machine");
+         end case;
+      end;
+
+      --  State Machines (b): instance
+      declare
+         Xmi_Id : constant String
+           := Read_Attribute ("xmi.id", From_Element => From);
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "../UML:StateMachine"
+              & "[UML:StateMachine.context/@xmi.idref='"
+              & Xmi_Id
+              & "' and not(UML:ModelElement.stereotype/@name='class')]");
+      begin
+         case DOM.Core.Nodes.Length (Nodes) is
+            when 0 => null;
+            when 1 =>
+               C.State_Machines.Append
+                 (State_Machines.Read_State_Machine
+                    (DOM.Core.Nodes.Item (Nodes, 0),
+                     Parent => N));
+            when others =>
+               Messages.Error
+                 ("Class "
+                    & (+C.Name)
+                    & " has more than one instance state machine");
+         end case;
+      end;
+
       return N;
    end Read_Class;
 
@@ -146,16 +197,23 @@ package body Normalize_XMI.Model.Classes is
    procedure Resolve (C : in out Class_Element)
    is
       use Ada.Text_IO;
-      procedure Resolve (Pos : Element_Maps.Cursor);
-      procedure Resolve (Pos : Element_Maps.Cursor)
+      procedure Resolve_M (Pos : Element_Maps.Cursor);
+      procedure Resolve_V (Pos : Element_Vectors.Cursor);
+      procedure Resolve_M (Pos : Element_Maps.Cursor)
       is
       begin
          Element_Maps.Element (Pos).Resolve;
-      end Resolve;
+      end Resolve_M;
+      procedure Resolve_V (Pos : Element_Vectors.Cursor)
+      is
+      begin
+         Element_Vectors.Element (Pos).Resolve;
+      end Resolve_V;
    begin
       Put_Line (Standard_Error, "... checking class " & (+C.Name));
-      C.Attributes.Iterate (Resolve'Access);
-      C.Operations.Iterate (Resolve'Access);
+      C.Attributes.Iterate (Resolve_M'Access);
+      C.Operations.Iterate (Resolve_M'Access);
+      C.State_Machines.Iterate (Resolve_V'Access);
    end Resolve;
 
 
@@ -163,12 +221,18 @@ package body Normalize_XMI.Model.Classes is
    procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
-      procedure Output (Pos : Element_Maps.Cursor);
-      procedure Output (Pos : Element_Maps.Cursor)
+      procedure Output_M (Pos : Element_Maps.Cursor);
+      procedure Output_V (Pos : Element_Vectors.Cursor);
+      procedure Output_M (Pos : Element_Maps.Cursor)
       is
       begin
          Element_Maps.Element (Pos).Output (To);
-      end Output;
+      end Output_M;
+      procedure Output_V (Pos : Element_Vectors.Cursor)
+      is
+      begin
+         Element_Vectors.Element (Pos).Output (To);
+      end Output_V;
    begin
       Put (To, "<class");
       declare
@@ -208,8 +272,9 @@ package body Normalize_XMI.Model.Classes is
       end if;
       Put_Line (To, "</abbreviation>");
       C.Output_Documentation (To);
-      C.Attributes.Iterate (Output'Access);
-      C.Operations.Iterate (Output'Access);
+      C.Attributes.Iterate (Output_M'Access);
+      C.Operations.Iterate (Output_M'Access);
+      C.State_Machines.Iterate (Output_V'Access);
       Put_Line (To, "</class>");
    end Output;
 

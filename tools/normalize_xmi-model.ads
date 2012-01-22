@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 964643748739 $
---  $Date: 2011/12/23 12:06:03 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -97,6 +97,10 @@ private
    package Element_Vectors is new Ada.Containers.Indefinite_Vectors
      (Index_Type => Positive,
       Element_Type => Element_P);
+
+   package String_Vectors is new Ada.Containers.Indefinite_Vectors
+     (Index_Type => Positive,
+      Element_Type => String);
 
    ----------------
    --  Utilities --

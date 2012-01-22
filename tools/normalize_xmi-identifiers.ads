@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.ads,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Identifiers is
@@ -34,5 +34,23 @@ private package Normalize_XMI.Identifiers is
    --
    --  Otherwise, prefix Name with A_ or An_.
    function Abbreviate (Name : String) return String;
+
+   --  The function Find_Spans is a utility to help in processing
+   --  strings containing multiple components separated by a single
+   --  separator character; for example a qualified name, Ada.Text_IO,
+   --  split at '.', would contain two spans:
+   --
+   --  Ada.Text_IO
+   --  L-U L-----U
+   --
+   --  Consecutive occurrences of the separator character result in an
+   --  empty Span (U < L).
+   type Span is record
+      L : Natural;
+      U : Natural := 0;
+   end record;
+   type Spans is array (Natural range <>) of Span;
+
+   function Find_Spans (S : String; Splitting_At : Character) return Spans;
 
 end Normalize_XMI.Identifiers;

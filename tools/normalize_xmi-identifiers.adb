@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-identifiers.adb,v $
---  $Revision: af0b243fc933 $
---  $Date: 2011/12/29 12:39:49 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -65,15 +65,6 @@ package body Normalize_XMI.Identifiers is
    begin
       return Translate (L, Lower_Case_Map) < Translate (R, Lower_Case_Map);
    end Casing_Less_Than;
-
-
-   type Span is record
-      L : Natural;
-      U : Natural := 0;
-   end record;
-   type Spans is array (Natural range <>) of Span;
-
-   function Find_Spans (S : String; Splitting_At : Character) return Spans;
 
 
    procedure Read_Case_Exceptions (From : String)

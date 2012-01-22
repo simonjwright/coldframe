@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.ads,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 12a6c3b1d22b $
+--  $Date: 2012/01/22 19:05:53 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Enumerations is
@@ -23,10 +23,6 @@ private package Normalize_XMI.Model.Enumerations is
                               Parent : not null Element_P) return Element_P;
 
 private
-
-   package String_Vectors is new Ada.Containers.Indefinite_Vectors
-     (Index_Type => Positive,
-      Element_Type => String);
 
    type Enumeration_Element is new Element with record
       Literals : String_Vectors.Vector;

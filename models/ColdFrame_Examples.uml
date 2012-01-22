@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Button Class Events</activediagram>
+      <activediagram>House Management Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -70,10 +70,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 18 12:12:08 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Jan 22 18:55:46 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/18 22:28:08 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/22 19:05:53 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -98,7 +98,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 8e850f2a9433 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 12a6c3b1d22b $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -549,7 +549,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 8e850f2a9433 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 12a6c3b1d22b $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -788,7 +788,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 8e850f2a9433 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 12a6c3b1d22b $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -865,6 +865,9 @@ If it is activated again while it is still on, the activation period is extended
                   name = 'Initialize' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
+                  </UML:ModelElement.stereotype>
                   <UML:ModelElement.taggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C76'
                       isSpecification = 'false'>
@@ -994,7 +997,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C55'
-                  name = 'Changed' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Changed' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -1018,7 +1021,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5E'
-                  name = 'Pushed' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Pushed' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -1199,6 +1202,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                       </UML:ModelElement.taggedValue>
                       <UML:StateVertex.outgoing>
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C82'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'/>
                       </UML:StateVertex.outgoing>
                       <UML:StateVertex.incoming>
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86'/>
@@ -1237,12 +1241,18 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                         <UML:CallAction xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C80'
                           name = '' isSpecification = 'false' isAsynchronous = 'false'>
                           <UML:Action.script>
-                            <UML:ActionExpression xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C81'
+                            <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9B'
                               language = 'Java' body = 'Turn_On; Set_Timeout'/>
                           </UML:Action.script>
                         </UML:CallAction>
                       </UML:State.entry>
                     </UML:SimpleState>
+                    <UML:FinalState xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A'
+                      name = 'DummyFinalState' isSpecification = 'false'>
+                      <UML:StateVertex.incoming>
+                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'/>
+                      </UML:StateVertex.incoming>
+                    </UML:FinalState>
                   </UML:CompositeState.subvertex>
                 </UML:CompositeState>
               </UML:StateMachine.top>
@@ -1286,8 +1296,8 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                     <UML:CallAction xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C8A'
                       name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
                       <UML:Action.script>
-                        <UML:ActionExpression xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C8C'
-                          language = '' body = 'Lamp.Clear_Timeout'/>
+                        <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C98'
+                          language = '' body = 'Clear_Timeout'/>
                       </UML:Action.script>
                     </UML:CallAction>
                   </UML:Transition.effect>
@@ -1299,6 +1309,27 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                   </UML:Transition.source>
                   <UML:Transition.target>
                     <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7F'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'
+                  isSpecification = 'false'>
+                  <UML:Transition.effect>
+                    <UML:CallAction xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8E'
+                      name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
+                      <UML:Action.script>
+                        <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8F'
+                          language = '' body = 'Delete'/>
+                      </UML:Action.script>
+                    </UML:CallAction>
+                  </UML:Transition.effect>
+                  <UML:Transition.trigger>
+                    <UML:SignalEvent xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8D'/>
+                  </UML:Transition.trigger>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7E'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:FinalState xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A'/>
                   </UML:Transition.target>
                 </UML:Transition>
               </UML:StateMachine.transitions>
@@ -1322,23 +1353,23 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                     <UML:SimpleState xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C91'
                       name = 'Dummy' isSpecification = 'false'>
                       <UML:StateVertex.outgoing>
-                        <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C92'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C'/>
                       </UML:StateVertex.outgoing>
                       <UML:StateVertex.incoming>
-                        <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C92'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C'/>
                       </UML:StateVertex.incoming>
                     </UML:SimpleState>
                   </UML:CompositeState.subvertex>
                 </UML:CompositeState>
               </UML:StateMachine.top>
               <UML:StateMachine.transitions>
-                <UML:Transition xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C92'
+                <UML:Transition xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C'
                   isSpecification = 'false'>
                   <UML:Transition.effect>
-                    <UML:CallAction xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C94'
+                    <UML:CallAction xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9D'
                       name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
                       <UML:Action.script>
-                        <UML:ActionExpression xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C95'
+                        <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000CA5'
                           language = '' body = 'Pushed'/>
                       </UML:Action.script>
                     </UML:CallAction>
@@ -1356,19 +1387,21 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
               </UML:StateMachine.transitions>
             </UML:StateMachine>
             <UML:SignalEvent xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C93'
-              name = 'Button.Class.Changed' isSpecification = 'false'>
+              name = 'Button.Class.Button_Pushed' isSpecification = 'false'>
               <UML:ModelElement.stereotype>
                 <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-class'/>
               </UML:ModelElement.stereotype>
               <UML:Event.parameter>
                 <UML:Parameter xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C96'
-                  name = 'B' isSpecification = 'false' kind = 'in'>
+                  name = 'Payload' isSpecification = 'false' kind = 'in'>
                   <UML:Parameter.type>
                     <UML:Enumeration xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A'/>
                   </UML:Parameter.type>
                 </UML:Parameter>
               </UML:Event.parameter>
             </UML:SignalEvent>
+            <UML:SignalEvent xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8D'
+              name = 'Lamp.Foo' isSpecification = 'false'/>
           </UML:Namespace.ownedElement>
         </UML:Package>
       </UML:Namespace.ownedElement>
@@ -4041,7 +4074,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
         bold="false"
         textsize="13"
         justification="Left"
-      >Initialize()</text>
+      >&lt;&lt;init&gt;&gt; Initialize()</text>
       <text name="Fig0.6.2"
         x="241"
         y="108"
@@ -4109,7 +4142,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
     </group>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[240, 320, 198, 92]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[240, 320, 259, 92]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
        fill="1"
        fillcolor="white"
@@ -4122,7 +4155,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
     <rectangle name="Fig1.0"
       x="240"
       y="320"
-      width="198"
+      width="259"
       height="92"
       fill="1"
       fillcolor="white"
@@ -4132,7 +4165,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
     <text name="Fig1.1"
       x="241"
       y="321"
-      width="196"
+      width="257"
       height="23"
       fill="0"
       fillcolor="white"
@@ -4171,7 +4204,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
     <rectangle name="Fig1.3"
       x="240"
       y="344"
-      width="198"
+      width="259"
       height="1"
       fill="1"
       fillcolor="black"
@@ -4179,7 +4212,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 345, 196, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 345, 257, 25]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -4192,7 +4225,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <rectangle name="Fig1.4.0"
         x="241"
         y="345"
-        width="196"
+        width="257"
         height="25"
         fill="0"
         fillcolor="white"
@@ -4202,7 +4235,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <text name="Fig1.4.1"
         x="241"
         y="345"
-        width="196"
+        width="257"
         height="23"
         fill="0"
         fillcolor="white"
@@ -4219,7 +4252,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
     <rectangle name="Fig1.5"
       x="240"
       y="369"
-      width="198"
+      width="259"
       height="1"
       fill="1"
       fillcolor="black"
@@ -4227,7 +4260,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 370, 196, 42]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 370, 257, 42]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -4240,7 +4273,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <rectangle name="Fig1.6.0"
         x="241"
         y="370"
-        width="196"
+        width="257"
         height="42"
         fill="0"
         fillcolor="white"
@@ -4250,7 +4283,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <text name="Fig1.6.1"
         x="241"
         y="370"
-        width="196"
+        width="258"
         height="17"
         fill="0"
         fillcolor="white"
@@ -4266,7 +4299,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <text name="Fig1.6.2"
         x="241"
         y="387"
-        width="196"
+        width="257"
         height="23"
         fill="0"
         fillcolor="white"
@@ -5363,6 +5396,79 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
               y="269" />
     </path>
   </group>
+  <group name="Fig7"
+       description="org.argouml.uml.diagram.state.ui.FigFinalState[184, 424, 24, 24]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <ellipse name="Fig7.0"
+      x="196"
+      y="436"
+      rx="12"
+      ry="12"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <ellipse name="Fig7.1"
+      x="196"
+      y="436"
+      rx="12"
+      ry="12"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <ellipse name="Fig7.2"
+      x="195"
+      y="435"
+      rx="7"
+      ry="7"
+      fill="1"
+      fillcolor="black"
+      stroke="0"
+      strokecolor="85 85 170"
+    />
+  </group>
+  <group name="Fig8"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig1.0"
+      destPortFig="Fig7.0"
+      sourceFigNode="Fig1"
+      destFigNode="Fig7"
+      <argouml:pathitem figname="Fig8.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig8.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="312"
+              y="269" />
+      <lineto x="202"
+              y="426" />
+    </path>
+  </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C8F"
       name="Button Class Events"
@@ -5447,7 +5553,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
   </group>
   <group name="Fig1"
        description="org.argouml.uml.diagram.state.ui.FigTransition"
-       href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C92"
+       href="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C"
        stroke="1"
        strokecolor="black"
   >
@@ -5459,25 +5565,25 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
       <argouml:pathitem figname="Fig1.1"
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
-                        ownerhref="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C92"
-                        angle="270.0"
-                        offset="10" />
+                        ownerhref="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C"
+                        angle="267.0"
+                        offset="107" />
     </private>
     <path name="Fig1.0"
-      description="org.argouml.gefext.ArgoFigPoly"
+      description="org.tigris.gef.presentation.FigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     >
       <moveto x="252"
-              y="72" />
-      <lineto x="440"
-              y="72" />
-      <lineto x="440"
-              y="120" />
+              y="88" />
+      <lineto x="472"
+              y="88" />
+      <lineto x="472"
+              y="144" />
       <lineto x="252"
-              y="120" />
+              y="144" />
     </path>
   </group>
 </pgml>
