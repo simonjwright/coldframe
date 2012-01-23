@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: resolve-references.xsl,v 55c4c94ea007 2012/01/23 00:29:31 simonjwright $ -->
+<!-- $Id: resolve-references.xsl,v 4aa1ecf56efb 2012/01/23 18:20:39 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -42,6 +42,8 @@
   xmlns:UML="org.omg.xmi.namespace.UML"
   version="1.0">
 
+  <xsl:key name="xmiid" match="UML:*" use="@xmi.id"/>
+
   <xsl:output method="xml" encoding="iso-8859-1" indent="yes"/>
   <xsl:strip-space elements="*"/>
 
@@ -63,7 +65,7 @@
   </xsl:template>
 
   <!-- Find the name attribute (if any) of the externally-referenced
-  object and specify that as the name attribute of this object. -->
+       object and specify that as the name attribute of this object. -->
   <xsl:template match="UML:*[@href]">
     <xsl:variable name="href" select="@href"/>
     <xsl:variable name="file" select="substring-before($href, '#')"/>
@@ -88,12 +90,14 @@
   </xsl:template>
 
   <!-- Find the name attribute (if any) of the referenced object and
-  specify that as the name attribute of this object. -->
+       specify that as the name attribute of this object. -->
   <xsl:template match="UML:*[@xmi.idref]">
     <xsl:variable name="idref" select="@xmi.idref"/>
     <xsl:copy>
       <xsl:attribute name="name">
-        <xsl:value-of select="//UML:*[@xmi.id=$idref]/@name"/>
+        <!-- key() returns a node set, but there will only be one
+             match. -->
+        <xsl:value-of select="key('xmiid', $idref)/@name"/>
       </xsl:attribute>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
