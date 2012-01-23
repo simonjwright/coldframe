@@ -4,6 +4,7 @@ syntax: glob
 
 # General
 *~
+*.ad?.metrix
 *.ada
 *.ali
 *.aux
@@ -82,6 +83,6 @@ test/test_bounded_storage_pools{.exe,}
 test/test_storage_pools{.exe,}
 
 # tools
-tools/generated_lines
-tools/normalize_xmi
-tools/serialized_to_csv
+tools/generated_lines{.exe,}
+tools/normalize_xmi{.exe,}
+tools/serialized_to_csv{.exe,}
