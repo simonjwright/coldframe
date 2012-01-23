@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: 1df49366b800 $
---  $Date: 2012/01/10 18:20:52 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -33,11 +33,13 @@ package body Normalize_XMI.Model.Generalizations is
       use Ada.Text_IO;
       Name : constant String := Read_Name (From_Element => From);
       Parent_Nodes : constant DOM.Core.Node_List
-        := McKae.XML.XPath.XIA.XPath_Query (From, "UML:Generalization.parent");
+        := McKae.XML.XPath.XIA.XPath_Query (From,
+                                            "UML:Generalization.parent/*");
       Parent_Name : constant String
         := Read_Name (From_Element => DOM.Core.Nodes.Item (Parent_Nodes, 0));
       Child_Nodes : constant DOM.Core.Node_List
-        := McKae.XML.XPath.XIA.XPath_Query (From, "UML:Generalization.child");
+        := McKae.XML.XPath.XIA.XPath_Query (From,
+                                            "UML:Generalization.child/*");
       Child_Name : constant String
         := Read_Name (From_Element => DOM.Core.Nodes.Item (Child_Nodes, 0));
       N : Element_P;

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 4a97c16d333b $
---  $Date: 2012/01/11 11:02:27 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -123,6 +123,9 @@ package body Normalize_XMI.Model.Class_Types is
       Put (To, "<type");
       if T.Attributes.Is_Empty then
          Put (To, " null='true'");
+      end if;
+      if T.Has_Stereotype ("callback") then
+         Put (To, " callback='true'");
       end if;
       declare
          Visibility : constant String

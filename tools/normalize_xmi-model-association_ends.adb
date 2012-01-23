@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: c20a05b7a967 $
---  $Date: 2012/01/06 22:09:27 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -104,10 +104,10 @@ package body Normalize_XMI.Model.Association_Ends is
       --  Participant
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:AssociationEnd.participant/@name");
+           (From, "UML:AssociationEnd.participant/*/@name");
          pragma Assert
            (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 'UML:AssociationEnd.participant/@name' child"
+            "should be 1 'UML:AssociationEnd.participant/*/@name' child"
               & " of an Association_End");
       begin
          E.Participant

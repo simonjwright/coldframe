@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -158,7 +158,7 @@ package body Normalize_XMI.Model.State_Machines is
       --  Trigger
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:Transition.trigger");
+           (From, "UML:Transition.trigger/*");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 0 then
             declare
@@ -172,7 +172,7 @@ package body Normalize_XMI.Model.State_Machines is
                      Nodes : constant DOM.Core.Node_List :=
                        McKae.XML.XPath.XIA.XPath_Query
                        (S.Node,
-                        "../UML:SignalEvent[@xmi.id='"
+                        "../*[@xmi.id='"
                           & Xmi_Idref
                           & "']");
                      E : constant Element_P :=
@@ -193,7 +193,7 @@ package body Normalize_XMI.Model.State_Machines is
       --  Source
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:Transition.source");
+           (From, "UML:Transition.source/*");
          Xmi_Idref : constant String :=
            Read_Attribute
            ("xmi.idref",
@@ -205,7 +205,7 @@ package body Normalize_XMI.Model.State_Machines is
       --  Target
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:Transition.target");
+           (From, "UML:Transition.target/*");
          Xmi_Idref : constant String :=
            Read_Attribute
            ("xmi.idref",
@@ -397,7 +397,7 @@ package body Normalize_XMI.Model.State_Machines is
       --  "Payload".
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:Event.parameter/UML:Parameter/UML:Parameter.type");
+           (From, "UML:Event.parameter/UML:Parameter/UML:Parameter.type/*");
       begin
          if DOM.Core.Nodes.Length (Nodes) > 1 then
             Messages.Error

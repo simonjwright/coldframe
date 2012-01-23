@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 59bd7623192a $
---  $Date: 2012/01/03 23:54:06 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -38,10 +38,11 @@ package body Normalize_XMI.Model.Attributes is
       --  Type
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:StructuralFeature.type");
+           (From, "UML:StructuralFeature.type/*");
          pragma Assert
            (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 'UML:StructuralFeature.type' child of an Attribute");
+            "should be 1 'UML:StructuralFeature.type/*' child"
+              & "of an Attribute");
       begin
          A.Type_Name := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
       end;

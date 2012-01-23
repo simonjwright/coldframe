@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -39,10 +39,10 @@ package body Normalize_XMI.Model.Parameters is
       --  Type
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:Parameter.type");
+           (From, "UML:Parameter.type/*");
          pragma Assert
            (DOM.Core.Nodes.Length (Nodes) = 1,
-            "should be 1 'UML:Parameter.type' child of a Parameter");
+            "should be 1 'UML:Parameter.type/*' child of a Parameter");
       begin
          P.Type_Name := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
       end;
@@ -70,13 +70,12 @@ package body Normalize_XMI.Model.Parameters is
          Kind : constant String
            := Read_Attribute ("kind", From_Element => P.Node);
       begin
-         Put (To, " mode='");
          if Kind = "in" then
-            Put (To, "in");
+            null;  -- As for Ada, we default this.
          elsif Kind = "out" then
-            Put (To, "out");
+            Put (To, " mode='out'");
          elsif Kind = "inout" then
-            Put (To, "inout");
+            Put (To, " mode='inout'");
          else
             Messages.Error ("unrecognised ""@kind='"
                               & Kind
@@ -84,7 +83,7 @@ package body Normalize_XMI.Model.Parameters is
                               & (+P.Name));
          end if;
       end;
-      Put_Line (To, "'>");
+      Put_Line (To, ">");
       Put_Line (To, "<name>" & (+P.Name) & "</name>");
       Put_Line (To, "<type>" & (+P.Type_Name) & "</type>");
       P.Output_Documentation (To);

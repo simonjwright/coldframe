@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-main.adb,v $
---  $Revision: 9f22e3d1ef24 $
---  $Date: 2011/12/28 21:39:57 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with Ada.Command_Line;
@@ -104,13 +104,30 @@ begin
          Input_Sources.File.Close (File_Source);
 
          Doc := DOM.Readers.Get_Tree (XML_Source_Reader);
+
          Domains := McKae.XML.XPath.XIA.XPath_Query
            (Doc,
-            "//UML:Package[UML:ModelElement.stereotype/@name='domain']");
+            "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
+              & "@name='domain']");
 
          Put_Line
            (Standard_Error,
             "... number of domains:"
+              & Natural'Image (DOM.Core.Nodes.Length (Domains)));
+
+         for J in 0 .. DOM.Core.Nodes.Length (Domains) - 1 loop
+            Model.Process_Domain (DOM.Core.Nodes.Item (Domains, J),
+                                  In_File => Arg);
+         end loop;
+
+         Domains := McKae.XML.XPath.XIA.XPath_Query
+           (Doc,
+            "//UML:Package[UML:ModelElement.stereotype/UML:Stereotype/"
+              & "@name='domain-interface']");
+
+         Put_Line
+           (Standard_Error,
+            "... number of domain interfaces:"
               & Natural'Image (DOM.Core.Nodes.Length (Domains)));
 
          for J in 0 .. DOM.Core.Nodes.Length (Domains) - 1 loop

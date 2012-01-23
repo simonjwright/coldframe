@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with GNAT.OS_Lib;
@@ -22,7 +22,6 @@ with GNAT.OS_Lib;
 package Normalize_XMI.Model.Domains is
 
    procedure Process_Domain (From : DOM.Core.Node; In_File : String);
-   --  XXX not sure how to deal with <<interface>> subpackages.
 
 private
 

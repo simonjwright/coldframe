@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -96,9 +96,10 @@ package body Normalize_XMI.Model.Classes is
            := Read_Attribute ("xmi.id", From_Element => From);
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From, "../UML:StateMachine"
-              & "[UML:StateMachine.context/@xmi.idref='"
+              & "[UML:StateMachine.context/UML:Class/@xmi.idref='"
               & Xmi_Id
-              & "' and UML:ModelElement.stereotype/@name='class']");
+              & "' and UML:ModelElement.stereotype/UML:Stereotype/"
+              & "      @name='class']");
       begin
          case DOM.Core.Nodes.Length (Nodes) is
             when 0 => null;
@@ -121,9 +122,10 @@ package body Normalize_XMI.Model.Classes is
            := Read_Attribute ("xmi.id", From_Element => From);
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From, "../UML:StateMachine"
-              & "[UML:StateMachine.context/@xmi.idref='"
+              & "[UML:StateMachine.context/UML:Class/@xmi.idref='"
               & Xmi_Id
-              & "' and not(UML:ModelElement.stereotype/@name='class')]");
+              & "' and not(UML:ModelElement.stereotype/UML:Stereotype/"
+              & "          @name='class')]");
       begin
          case DOM.Core.Nodes.Length (Nodes) is
             when 0 => null;

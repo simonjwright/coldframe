@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 964643748739 $
---  $Date: 2011/12/23 12:06:03 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -65,7 +65,7 @@ package body Normalize_XMI.Model is
 
       declare
          S : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "UML:ModelElement.stereotype/@name");
+           (From, "UML:ModelElement.stereotype/UML:Stereotype/@name");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (S) - 1 loop
             E.Stereotypes.Insert
@@ -81,7 +81,8 @@ package body Normalize_XMI.Model is
             declare
                Tag : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
-                 (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.type/@name");
+                 (DOM.Core.Nodes.Item (T, J),
+                  "UML:TaggedValue.type/UML:TagDefinition/@name");
                Value : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
                  (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");

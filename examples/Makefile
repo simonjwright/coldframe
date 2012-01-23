@@ -78,14 +78,15 @@ van_fleet-demo$(exe): Van_Fleet.gen
 
 all:: $(EXECUTABLES)
 
-Digital_IO_Interface.gen: $(COLDFRAMEOUT)/Digital_IO_Interface.raw
+Digital_IO_Interface.gen: Digital_IO_Interface.norm
 	$(MAKE) -f $(COLDFRAME)/Makefile.inc $@ \
-	  DOMAIN_NAME=Digital_IO \
 	  GENERATE_STUBS=yes
 
 # ArgoUML support
 
 NORM_FILES =					\
+ Digital_IO.norm				\
+ Digital_IO_Interface.norm			\
  House_Management.norm				\
  Library.norm					\
  Van_Fleet.norm

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: resolve-references.xsl,v d52f8deedf1f 2012/01/08 10:15:50 simonjwright $ -->
+<!-- $Id: resolve-references.xsl,v 55c4c94ea007 2012/01/23 00:29:31 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -68,35 +68,35 @@
     <xsl:variable name="href" select="@href"/>
     <xsl:variable name="file" select="substring-before($href, '#')"/>
     <xsl:variable name="locator" select="substring-after($href, '#')"/>
-    <xsl:attribute name="href">
-      <xsl:value-of select="$href"/>
-    </xsl:attribute>
-    <xsl:choose>
-      <xsl:when test="contains($file, $argo_xmi)">
-        <xsl:attribute name="name">
-          <xsl:value-of
-            select="$argo//UML:*[@xmi.id=$locator]/@name"/>
-        </xsl:attribute>
-      </xsl:when>
-      <xsl:when test="contains($file, $cf_xmi)">
-        <xsl:attribute name="name">
-          <xsl:value-of
-            select="$cf//UML:*[@xmi.id=$locator]/@name"/>
-        </xsl:attribute>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:copy>
+      <xsl:choose>
+        <xsl:when test="contains($file, $argo_xmi)">
+          <xsl:attribute name="name">
+            <xsl:value-of
+              select="$argo//UML:*[@xmi.id=$locator]/@name"/>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:when test="contains($file, $cf_xmi)">
+          <xsl:attribute name="name">
+            <xsl:value-of
+              select="$cf//UML:*[@xmi.id=$locator]/@name"/>
+          </xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
 
   <!-- Find the name attribute (if any) of the referenced object and
   specify that as the name attribute of this object. -->
   <xsl:template match="UML:*[@xmi.idref]">
     <xsl:variable name="idref" select="@xmi.idref"/>
-    <xsl:attribute name="xmi.idref">
-      <xsl:value-of select="$idref"/>
-    </xsl:attribute>
-    <xsl:attribute name="name">
-      <xsl:value-of select="//UML:*[@xmi.id=$idref]/@name"/>
-    </xsl:attribute>
+    <xsl:copy>
+      <xsl:attribute name="name">
+        <xsl:value-of select="//UML:*[@xmi.id=$idref]/@name"/>
+      </xsl:attribute>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
   </xsl:template>
 
 </xsl:stylesheet>

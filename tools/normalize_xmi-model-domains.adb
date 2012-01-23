@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -57,8 +57,9 @@ package body Normalize_XMI.Model.Domains is
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
             "descendant::UML:Class"
-              & "[not(UML:ModelElement.stereotype/@name='datatype')]"
-              & " | descendant::UML:AssociationClass");
+              & "[@xmi.id and not(UML:ModelElement.stereotype/UML:Stereotype/"
+              & " @name='datatype')]"
+              & " | descendant::UML:AssociationClass[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -83,7 +84,8 @@ package body Normalize_XMI.Model.Domains is
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
            (From,
             "descendant::UML:Class"
-              & "[UML:ModelElement.stereotype/@name='datatype']");
+              & "[@xmi.id and UML:ModelElement.stereotype/UML:Stereotype/"
+              & " @name='datatype']");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -99,7 +101,7 @@ package body Normalize_XMI.Model.Domains is
       --  DataTypes
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:DataType");
+           (From, "descendant::UML:DataType[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -115,7 +117,7 @@ package body Normalize_XMI.Model.Domains is
       --  Enumerations
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:Enumeration");
+           (From, "descendant::UML:Enumeration[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -131,7 +133,7 @@ package body Normalize_XMI.Model.Domains is
       --  Associations
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:Association");
+           (From, "descendant::UML:Association[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -148,7 +150,7 @@ package body Normalize_XMI.Model.Domains is
       --  The Association aspect of AssociationClasses
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:AssociationClass");
+           (From, "descendant::UML:AssociationClass[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -165,7 +167,7 @@ package body Normalize_XMI.Model.Domains is
       --  Generalizations
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:Generalization");
+           (From, "descendant::UML:Generalization[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             Generalizations.Read_Generalization
@@ -178,7 +180,7 @@ package body Normalize_XMI.Model.Domains is
       --  Exceptions
       declare
          Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
-           (From, "descendant::UML:Exception");
+           (From, "descendant::UML:Exception[@xmi.id]");
       begin
          for J in 0 .. DOM.Core.Nodes.Length (Nodes) - 1 loop
             declare
@@ -281,7 +283,11 @@ package body Normalize_XMI.Model.Domains is
 
    begin
       Put_Line (To, "<domain>");
-      Put_Line (To, "<name>" & (+D.Name) & "</name>");
+      if D.Has_Tag ("name") then
+         Put_Line (To, "<name>" & D.Tag_As_Name ("name") & "</name>");
+      else
+         Put_Line (To, "<name>" & (+D.Name) & "</name>");
+      end if;
       Put_Line (To, "<extractor>normalize_xmi</extractor>");
       Output_Date (To);
       Put_Line (To, "<normalizer>normalize_xmi</normalizer>");

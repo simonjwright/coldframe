@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 55c4c94ea007 $
+--  $Date: 2012/01/23 00:29:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -61,7 +61,7 @@ package body Normalize_XMI.Model.Operations is
            (From,
             "UML:BehavioralFeature.parameter/UML:Parameter"
               & "[(@name='return')]"
-              & "/UML:Parameter.type/@name");
+              & "/UML:Parameter.type/*/@name");
       begin
          if DOM.Core.Nodes.Length (Nodes) /= 0 then
             O.Return_Type :=
