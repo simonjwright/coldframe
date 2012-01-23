@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: ada-operation.xsl,v bc58c45ca10d 2012/01/23 12:07:05 simonjwright $ -->
 <!-- XSL stylesheet to generate Ada code for Operations. -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
@@ -69,8 +69,8 @@
                        and not(@entry)
                        and not(@renames)]
                     | $operations"/>
-          <xsl:with-param 
-            name="current" 
+          <xsl:with-param
+            name="current"
             select="$current"/>
         </xsl:call-template>
 
@@ -550,9 +550,9 @@
       <xsl:with-param name="is-class" select="$is-class"/>
     </xsl:call-template>
 
-    <xsl:if test="initial">
+    <xsl:if test="default">
       <xsl:text> := </xsl:text>
-      <xsl:value-of select="initial"/>
+      <xsl:value-of select="default"/>
     </xsl:if>
 
     <xsl:if test="position() &lt; last()">
@@ -983,9 +983,9 @@
           <xsl:text>.</xsl:text>
           <xsl:value-of select="../name"/>
           <xsl:text>.</xsl:text>
-          <xsl:value-of select="name"/>          
+          <xsl:value-of select="name"/>
         </xsl:variable>
-        
+
         <xsl:call-template name="ut:should-not-edit"/>
         <xsl:text>pragma Style_Checks (Off);&#10;</xsl:text>
         <xsl:call-template name="ut:identification-info"/>
@@ -1119,7 +1119,7 @@
         <xsl:text>begin&#10;</xsl:text>
         <xsl:value-of select="$I"/>
         <xsl:text>raise Unimplemented;&#10;</xsl:text>
-        
+
         <xsl:value-of select="$I"/>
         <xsl:text>return </xsl:text>
 
@@ -1136,7 +1136,7 @@
         </xsl:choose>
 
         <xsl:text>;&#10;</xsl:text>
-          
+
       </xsl:when>
 
       <!-- .. and this is for procedures. -->
@@ -1258,7 +1258,7 @@
       <xsl:text> "return");&#10;</xsl:text>
     </xsl:if>
     <xsl:value-of select="$blank-line"/>
-    
+
   </xsl:template>
 
 

@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.ads,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: bc58c45ca10d $
+--  $Date: 2012/01/23 12:07:05 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Attributes is
@@ -26,6 +26,7 @@ private
 
    type Attribute_Element is new Element with record
       Type_Name : Ada.Strings.Unbounded.Unbounded_String;
+      Initial_Value : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding
    procedure Resolve (A : in out Attribute_Element);

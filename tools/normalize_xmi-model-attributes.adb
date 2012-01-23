@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: bc58c45ca10d $
+--  $Date: 2012/01/23 12:07:05 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -45,6 +45,18 @@ package body Normalize_XMI.Model.Attributes is
               & "of an Attribute");
       begin
          A.Type_Name := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
+      end;
+
+      --  Initial value
+      declare
+         Nodes : constant DOM.Core.Node_List := McKae.XML.XPath.XIA.XPath_Query
+           (From, "UML:Attribute.initialValue/UML:Expression");
+      begin
+         if DOM.Core.Nodes.Length (Nodes) > 0 then
+            A.Initial_Value :=
+              +Read_Attribute ("body",
+                               From_Element => DOM.Core.Nodes.Item (Nodes, 0));
+         end if;
       end;
 
       return N;
@@ -94,6 +106,9 @@ package body Normalize_XMI.Model.Attributes is
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
       Put_Line (To, "<type>" & (+A.Type_Name) & "</type>");
+      if +A.Initial_Value /= "" then
+         Put_Line (To, "<initial>" & (+A.Initial_Value) & "</initial>");
+      end if;
       A.Output_Documentation (To);
       Put_Line (To, "</attribute>");
    end Output;
