@@ -19,6 +19,7 @@ syntax: glob
 *.ky
 *.log
 *.norm
+*.norm-stamp
 *.pdf
 *.pg
 *.raw
@@ -38,10 +39,6 @@ coldframeout
 # Models
 *.md~
 *.ca~
-
-# PLY
-parser.out
-parsetab.py
 
 # Distributions
 cf-[0-9]*
@@ -84,3 +81,7 @@ test/unit_testing-harness{.exe,}
 test/test_bounded_storage_pools{.exe,}
 test/test_storage_pools{.exe,}
 
+# tools
+tools/generated_lines
+tools/normalize_xmi
+tools/serialized_to_csv
