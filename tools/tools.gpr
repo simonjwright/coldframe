@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: tools.gpr,v $
---  $Revision: 3e02ea06676b $
---  $Date: 2012/01/24 13:28:50 $
+--  $Revision: 8bf632473395 $
+--  $Date: 2012/01/24 17:41:23 $
 --  $Author: simonjwright $
 
 with "xia/XIA";
@@ -52,7 +52,7 @@ project Tools is
    end Binder;
 
    package Linker is
-      for Default_Switches ("ada") use ("-Wl,-no_pie");
+      for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
    end Linker;
 
 end Tools;

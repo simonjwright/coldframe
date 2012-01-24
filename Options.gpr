@@ -12,7 +12,7 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $Id: Options.gpr,v 8a5e5e67d14f 2011/07/20 19:25:46 simonjwright $
+--  $Id: Options.gpr,v 8bf632473395 2012/01/24 17:41:23 simonjwright $
 --
 --  This file provides default compilation options for ColdFrame.
 
@@ -30,19 +30,14 @@ project Options is
   Build_Base := external ("BUILD_BASE", ".");
   for Object_Dir use Build_Base;
 
-  --  GLIDE/GPS configuration (these are the defaults). Available in
-  --  gnat-3.15p and gcc-3.3+; comment out if using earlier gcc-3
-  --  releases.
+  --  GLIDE/GPS configuration (these are the defaults).
   package IDE is
-
      for Compiler_Command ("ada") use "gnatmake";
      for Gnatlist use "gnatls";
-
   end IDE;
 
   --  GNATMAKE configuration options.
   package Builder is
-
      for Default_Switches ("ada") use
        (
         "-gnat95",
@@ -50,31 +45,26 @@ project Options is
         "-j2",
         "-m"
        );
-
   end Builder;
 
   --  GCC configuration options.
   package Compiler is
-
      for Default_Switches ("ada") use
        (
         "-gnatqQafoy",
         "-gnatwaL",
         "-O2"
        );
-
   end Compiler;
 
   -- GNATBIND configuration options.
   package Binder is
-
      for Default_Switches ("ada") use ("-E");
-
   end Binder;
 
   --  GNATLINK configuration options.
   package Linker is
-
+     for Default_Switches ("ada") use External_As_List ("LDFLAGS", " ");
   end Linker;
 
 end Options;
