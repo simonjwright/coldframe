@@ -21,42 +21,19 @@
 
 include ../Makefile.inc
 
+# For test only
+DIST ?= ./dist
+
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
 DATE = $(subst cf-,,$(notdir $(DIST)))
 
-EXAMPLES = Examples.mdl
+EXAMPLES = ColdFrame_Examples.uml
 
-EXAMPLES +=					\
-  Interrupt_Handling.cat			\
-  Library.cat					\
-  Performance.cat				\
-  Problem_Reporting.cat				\
-  Serialization.cat				\
-  Serialization_Demo.cat			\
-  Serialization_Demo_Other.cat			\
-  States.cat
+TEST =
 
-EXAMPLES +=					\
-  Stairwell-Demo.mdl				\
-  Digital_IO.cat Digital_IO_Interface.cat	\
-  House_Management.cat
-
-TEST = Test.mdl
-
-TEST +=						\
-  Bad_Code_Regressions.cat			\
-  Bad_Model_Regressions.cat			\
-  Compilation_Regressions.cat			\
-  Event_Test.cat				\
-  Hierarchies.cat				\
-  Initialization.cat				\
-  Regressions.cat				\
-  Stub_Test_Interface.cat			\
-  Unit_Testing.cat
-
-ALL = $(EXAMPLES) $(TEST)
+ALL = ColdFrameProfile.uml $(EXAMPLES) $(TEST)
 
 dist:
 	-$(RM) -rf $(DIST)/models

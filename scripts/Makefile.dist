@@ -50,7 +50,8 @@ OTHER_SCRIPTS =					\
   case_exceptions.py				\
   create-build-directories			\
   emacs_case_exceptions				\
-  install-project
+  install-project				\
+  resolve-references.xsl
 
 ALL = $(CODEGEN_SCRIPTS) $(DOCGEN_SCRIPTS) $(C_CODEGEN_SCRIPTS) $(OTHER_SCRIPTS)
 
