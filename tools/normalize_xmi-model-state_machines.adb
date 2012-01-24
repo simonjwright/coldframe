@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-state_machines.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 114ef9b7bebc $
+--  $Date: 2012/01/24 17:42:51 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -275,10 +275,14 @@ package body Normalize_XMI.Model.State_Machines is
 
       if Node_Name = "UML:Pseudostate" then
          S.Kind := Initial;
-         null;
+         if +S.Name = "" then
+            S.Name := +"Initial";
+         end if;
       elsif Node_Name = "UML:FinalState" then
          S.Kind := Final;
-         null;
+         if +S.Name = "" then
+            S.Name := +"Final";
+         end if;
       elsif Node_Name /= "UML:SimpleState" then
          Messages.Error
            ("Don't recognise "
