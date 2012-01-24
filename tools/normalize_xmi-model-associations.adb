@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 4a97c16d333b $
---  $Date: 2012/01/11 11:02:27 $
+--  $Revision: 4b73aa0c47e2 $
+--  $Date: 2012/01/24 23:56:23 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -89,12 +89,12 @@ package body Normalize_XMI.Model.Associations is
       E1 : Association_Ends.Association_End_Element
         renames Association_Ends.Association_End_Element
         (A.Ends.Element (1).all);
-      C1 : constant Element_P := A.Find_Class (+E1.Participant);
+      C1 : constant Element_P := E1.Participant;
       C1C : Classes.Class_Element renames Classes.Class_Element (C1.all);
       E2 : Association_Ends.Association_End_Element
         renames Association_Ends.Association_End_Element
         (A.Ends.Element (2).all);
-      C2 : constant Element_P := A.Find_Class (+E2.Participant);
+      C2 : constant Element_P := E2.Participant;
       C2C : Classes.Class_Element renames Classes.Class_Element (C2.all);
       use Association_Ends;
    begin

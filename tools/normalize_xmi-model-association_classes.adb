@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 0d8fc64ab008 $
---  $Date: 2012/01/11 16:33:42 $
+--  $Revision: 4b73aa0c47e2 $
+--  $Date: 2012/01/24 23:56:23 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -65,11 +65,11 @@ package body Normalize_XMI.Model.Association_Classes is
          E1 : Association_Ends.Association_End_Element
            renames Association_Ends.Association_End_Element
            (AC.Ends.Element (1).all);
-         C1 : constant Element_P := AC.Find_Class (+E1.Participant);
+         C1 : constant Element_P := E1.Participant;
          E2 : Association_Ends.Association_End_Element
            renames Association_Ends.Association_End_Element
            (AC.Ends.Element (2).all);
-         C2 : constant Element_P := AC.Find_Class (+E2.Participant);
+         C2 : constant Element_P := E2.Participant;
          use Association_Ends;
       begin
          if E1.Source and E2.Source then
@@ -99,13 +99,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  attribute is taken from end
                                        --  1.
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C1,
+                                         (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => True);
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C2,
+                                         (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E2.Name,
@@ -117,13 +117,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  attribute is taken from end
                                        --  2.
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C1,
+                                         (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => False);
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C2,
+                                         (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E2.Name,
@@ -143,13 +143,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                     end if;
                                     E2.Source := True;
                                     Assoc.Create_Referential_Attribute
-                                      (Referring_To => C1,
+                                      (Referring_To => E1.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => False);
                                     Assoc.Create_Referential_Attribute
-                                      (Referring_To => C2,
+                                      (Referring_To => E2.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E2.Name,
@@ -171,13 +171,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                     end if;
                                     E1.Source := True;
                                     Assoc.Create_Referential_Attribute
-                                      (Referring_To => C1,
+                                      (Referring_To => E1.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E1.Name,
                                        Forming_Identifier => True);
                                     Assoc.Create_Referential_Attribute
-                                      (Referring_To => C2,
+                                      (Referring_To => E2.Participant,
                                        For_Relationship =>
                                          AC'Unchecked_Access,
                                        With_Source_Role_Name => +E2.Name,
@@ -189,13 +189,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  attribute is taken from end
                                        --  1.
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C1,
+                                         (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => True);
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C2,
+                                         (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E2.Name,
@@ -207,13 +207,13 @@ package body Normalize_XMI.Model.Association_Classes is
                                        --  attribute is taken from end
                                        --  2.
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C1,
+                                         (Referring_To => E1.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E1.Name,
                                           Forming_Identifier => False);
                                        Assoc.Create_Referential_Attribute
-                                         (Referring_To => C2,
+                                         (Referring_To => E2.Participant,
                                           For_Relationship =>
                                             AC'Unchecked_Access,
                                           With_Source_Role_Name => +E2.Name,
@@ -225,13 +225,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  The identifying formalizing attribute is
                         --  taken from the many end (2).
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C1,
+                          (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => False);
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C2,
+                          (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E2.Name,
@@ -243,13 +243,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  The identifying formalizing attribute is
                         --  taken from the many end (1).
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C1,
+                          (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => True);
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C2,
+                          (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E2.Name,
@@ -258,13 +258,13 @@ package body Normalize_XMI.Model.Association_Classes is
                         --  The identifying formalizing attributes are
                         --  taken from both ends.
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C1,
+                          (Referring_To => E1.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E1.Name,
                            Forming_Identifier => True);
                         Assoc.Create_Referential_Attribute
-                          (Referring_To => C2,
+                          (Referring_To => E2.Participant,
                            For_Relationship =>
                              AC'Unchecked_Access,
                            With_Source_Role_Name => +E2.Name,

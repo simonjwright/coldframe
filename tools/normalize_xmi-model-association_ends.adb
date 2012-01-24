@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 4b73aa0c47e2 $
+--  $Date: 2012/01/24 23:56:23 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -109,10 +109,20 @@ package body Normalize_XMI.Model.Association_Ends is
            (DOM.Core.Nodes.Length (Nodes) = 1,
             "should be 1 'UML:AssociationEnd.participant/*/@name' child"
               & " of an Association_End");
-      begin
-         E.Participant
-           := +Identifiers.Normalize
+         Name : constant String :=
+           Identifiers.Normalize
            (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Nodes, 0)));
+      begin
+         E.Participant := E.Find_Class (Name);
+         if E.Participant = null then
+            Messages.Error
+              ("Couldn't find participant "
+                 & Name
+                 & " for association end "
+                 & (+E.Parent.Name)
+                 & "."
+                 & (+E.Name));
+         end if;
       end;
 
       E.Source := E.Has_Stereotype ("source");
@@ -128,15 +138,6 @@ package body Normalize_XMI.Model.Association_Ends is
    begin
       Put_Line (Standard_Error,
                 "...... checking association_end " & (+E.Name));
-      if E.Find_Class (+E.Participant) = null then
-         Messages.Error
-           ("Couldn't find participant "
-              & (+E.Participant)
-              & " for association end "
-              & (+E.Parent.Name)
-              & "."
-              & (+E.Name));
-      end if;
    end Resolve;
 
 
@@ -156,7 +157,7 @@ package body Normalize_XMI.Model.Association_Ends is
          Put (To, " source='true'");
       end if;
       Put_Line (To, ">");
-      Put_Line (To, "<classname>" & (+E.Participant) & "</classname>");
+      Put_Line (To, "<classname>" & (+E.Participant.Name) & "</classname>");
       Put_Line (To, "<name>" & (+E.Name) & "</name>");
       E.Output_Documentation (To);
       Put_Line (To, "</role>");

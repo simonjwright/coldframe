@@ -12,7 +12,7 @@
 # write to the Free Software Foundation, 59 Temple Place - Suite
 # 330, Boston, MA 02111-1307, USA.
 
-# This Makefile is used to set up the tools.
+# This Makefile is used to set up the tools and for tool development.
 
 include ../Makefile.inc
 
@@ -20,5 +20,14 @@ all:
 
 setup:
 	gnatmake -p -P tools.gpr
+
+NORM_FILES =					\
+ Association_Classes.norm			\
+ Associations.norm				\
+ Classes.norm					\
+ Generalizations.norm				\
+ Types.norm
+
+$(NORM_FILES): ColdFrame_Development.norm-stamp
 
 .PHONY: setup

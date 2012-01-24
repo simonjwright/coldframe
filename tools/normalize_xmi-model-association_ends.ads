@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_ends.ads,v $
---  $Revision: 113b7da65bbd $
---  $Date: 2011/12/20 21:01:07 $
+--  $Revision: 4b73aa0c47e2 $
+--  $Date: 2012/01/24 23:56:23 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Association_Ends is
@@ -31,7 +31,7 @@ private package Normalize_XMI.Model.Association_Ends is
    type Upper_Bound is new Bound range One .. Many;
 
    type Association_End_Element is new Element with record
-      Participant : Ada.Strings.Unbounded.Unbounded_String;
+      Participant : Element_P;
       Lower : Lower_Bound;
       Upper : Upper_Bound;
       Source : Boolean; -- Initially from <<source>>.
