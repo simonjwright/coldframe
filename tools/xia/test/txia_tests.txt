@@ -1,0 +1,153 @@
+personal.xml
+//given/..
+//email
+//@id
+//@aid
+/personnel/person/link/attribute::subordinates
+personnel/person/name/family
+//family/ancestor::name
+//family/text()
+/personnel/person/name/family/..
+./pesonnel
+./personnel
+personnel/person/email/preceding::name/given/text()
+.//*
+//email/following-sibling::link/@manager
+//email/following-sibling::link/@subordinates
+//@id/parent::*
+//given/..
+//email/preceding-sibling::*
+//email/following-sibling::*
+//email/followingsibling::*
+//family/ancestor::person/link
+//name/ancestor::*
+//name/ancestor-or-self::*
+//name/descendant::*
+//name/descendant-or-self::*
+//@subordinates
+//@subordinates/..
+//@subordinates/../preceding::*
+//@subordinates/../following::*
+..
+.
+..//email
+//person[3]/following-sibling::*
+//person[3]/following-sibling::*/@id[2]
+//person[3]/preceding-sibling::*/@id
+//person[3]/preceding-sibling::*[2]/@id
+//person[3]/preceding-sibling::*/@id[2]
+/personnel/person[2]/email/preceding-sibling::name/given/ancestor-or-self::*[3]
+//family
+//given
+//family|//given
+//family|//given[2]
+//person[last()]/@id
+//person[position()=2]/@id
+//person[position(3)=2]/@id
+//@id[3]
+//@id[true()]
+//@id[false()]
+//@id[not(position()=2)]
+//@id[position() >= 5]
+//person[3 - 1]/@id
+//person[3 * 2]/@id
+//person[5 mod 2]/@id
+//person[5 mod -2]/@id
+//person[(-5 mod 2) + 4]/@id
+//person[(-5 mod -2) + 2 * true()]/@id
+//person[round(1.1*3)]/@id
+//person[1 or 2]/@id
+//person[4 and -2]/@id
+//person[4 and (3 > 10)]/@id
+//person[position() != 3]/@id
+//person[3 * 1.1]/@id
+//person[5 - 0.0001]/@id
+//person[(((position() mod 2)))]/@id
+//person[position() mod 2 = 0]/@id
+//person[position() = floor(last() div 2 + 0.5) or position() = ceiling(last() div 2 + 0.5)]/@id
+//person[position() > 3]/@id
+//person[position() < 3]/@id
+//person[position() <= 2]/@id
+//person[position() div 2 + 2]/@id
+//person[5 + -true()]/@id
+//person[number("This is not a number")]/@id
+//person[4 div 0]/@id
+//person[string(number("This is not a number")) = "NaN"]/@id
+//person[string(number("This is not a number")) = "This is not a number"]/@id
+//person[string(4 div 0) = "Infinity"]/@id
+//person[concat(string(position()), "23") = "323"]/@id
+//person[starts-with(concat(string(position()), "23"), "22")]/@id
+//person[contains(concat(string(position()), "23", string(position()), "47"), "34")]/@id
+//person[substring-before(concat(string(position()), "23", string(position()), "47"), "35") = "52"]/@id
+//person[substring-after(concat(string(position()), "23", string(position()), "47"), "35") = "47"]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 4, 3) = "347"]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 4) = "347"]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), -42, 1 div 0) = "223247"]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 0 div 0, 3) = "3"]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 0 div 0, 3) = ""]/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 1.5, 2.6) = '234']/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), 0, 3) = '52']/@id
+//person[substring(concat(string(position()), "23", string(position()), "47"), -1 div 0, 1 div 0) = ""]/@id
+//person[(string-length(string(position())) * position()) = "4"]/@id
+/descendant-or-self::email/text()
+/descendant-or-self::email[boolean(-3)]/text()
+/descendant-or-self::email[boolean(35.3)]/text()
+/descendant-or-self::email[boolean(0)]/text()
+/descendant-or-self::email[boolean(0 div 0)]/text()
+/descendant-or-self::email[boolean(-4 div 0)]/text()
+/descendant-or-self::email[boolean(10 div 0)]/text()
+/descendant-or-self::email[boolean(string())]/text()
+/descendant-or-self::email[boolean(string(last()))]/text()
+/descendant-or-self::email[boolean(substring-before("123", "5"))]/text()
+/descendant-or-self::email[boolean(number())]/text()
+//person[email]/@id
+//name[given = "Big"]/family
+/personnel/person[string-length(string(name/family)) < 5]/@id
+//*[attribute::id="five.worker"]/@id
+//*[../email="chief@foo.com"]
+//given[.="Four"]
+/descendant::node()[count(ancestor::node()) = 3]
+//name[given="Five"]/given
+//name[normalize-space(given)="Five"]/given
+//name[translate(normalize-space(string(given)), "Five", "Four")="Four"]/given
+//name[translate(string(given), "Oneabcd", "Two")="Two"]/given
+//name[translate(string(given), "FFFF", "Four")="Four"]/given
+//name[translate(string(given), "Thre", "One")="One"]/given
+//name/given[normalize-space()="Big"]/text()
+//name/given[number()="Big"]/text()
+/personnel/person/age[count(preceding::age)=2]/../@id
+/personnel/person/age[(sum(preceding::age) - 21)=56]/../@id
+//personnel[lang("en")]
+//personnel[lang("pl")]
+//*[lang("en")]
+/personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][2]
+/personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][last()]
+//person[2][@id="three.worker"]/name/given
+//*[lang("EN-US")]
+//person[number(age)="37"]/@id
+//person[string(number(email))="NaN"]/@id
+//person[string(number(email))="5"]/@id
+/personnel/person[@id="four.worker" and @xml:lang="en-US"]
+/personnel/person[@id="five.worker" and @xml:lang="en-US"]/email
+/personnel/person[number(age) > 40]/@id
+/personnel/person[(number(age) > 40) | (number(age) < 30)]/@id
+/personnel/person[@id="four.worker"]|/personnel/person/age
+//@*
+//person/@*
+//node()[name(.)="#text"]
+//node()[local-name(.)=name(.)]
+//@*[string(namespace-uri(.))]
+//@*[namespace-uri(.)]
+//link[@manager]
+//link[@subordinates]
+//link[@manager|@subordinates]
+//person[number('This is not a number')]/@id
+//person[4 div 0]/@id
+//person[string(number('This is not a number')) = 'NaN']/@id
+//person[string(number('This is not a number')) = 'This is not a number']/@id
+//person[string(4 div 0) = 'Infinity']/@id
+//person[concat(string(position()), '23') = '323']/@id
+//person[starts-with(concat(string(position()), '23'), '22')]/@id
+//person[contains(concat(string(position()), '23', string(position()), '47'), '34')]/@id
+//person[substring-before(concat(string(position()), '23', string(position()), '47'), '35') = '52']/@id
+

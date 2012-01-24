@@ -1,0 +1,15 @@
+keyword_content.xml
+//node
+//and
+//child[and]
+//child/parent::parent
+//child::child/parent::parent[text]
+//*[node or following]
+//self/comment/text
+//*[div and or]
+//processing-instruction
+//child[and or mod]
+//child[and and mod]
+//preceding-sibling/parent::*[preceding]
+//ancestor | //ancestor-or-self | //descendant[descendant-or-self]
+

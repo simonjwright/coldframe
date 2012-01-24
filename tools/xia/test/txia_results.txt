@@ -1,0 +1,2467 @@
+Enter XML file name: Enter XPath query: 
+
+Evaluating: //given/..
+
+Number of nodes: 6
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: //email
+
+Number of nodes: 6
+<email>
+  one@foo.com
+</email>
+<email>
+  two@foo.com
+</email>
+<email>
+  three@foo.com
+</email>
+<email>
+  four@foo.com
+</email>
+<email>
+  five@foo.com
+</email>
+<email>
+  chief@foo.com
+</email>
+Enter XPath query: 
+
+Evaluating: //@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //@aid
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /personnel/person/link/attribute::subordinates
+
+Number of nodes: 1
+subordinates="one.worker two.worker three.worker four.worker five.worker"
+Enter XPath query: 
+
+Evaluating: personnel/person/name/family
+
+Number of nodes: 6
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Boss
+</family>
+Enter XPath query: 
+
+Evaluating: //family/ancestor::name
+
+Number of nodes: 6
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: //family/text()
+
+Number of nodes: 6
+Worker
+Worker
+Worker
+Worker
+Worker
+Boss
+Enter XPath query: 
+
+Evaluating: /personnel/person/name/family/..
+
+Number of nodes: 6
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: ./pesonnel
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: ./personnel
+
+Number of nodes: 1
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+Enter XPath query: 
+
+Evaluating: personnel/person/email/preceding::name/given/text()
+
+Number of nodes: 6
+One
+Two
+Three
+Four
+Five
+Big
+Enter XPath query: 
+
+Evaluating: .//*
+
+Number of nodes: 43
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<email>
+  one@foo.com
+</email>
+<age>
+  21
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<email>
+  two@foo.com
+</email>
+<age>
+  24
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<email>
+  three@foo.com
+</email>
+<age>
+  32
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<email>
+  four@foo.com
+</email>
+<age>
+  37
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //email/following-sibling::link/@manager
+
+Number of nodes: 5
+manager="Big.Boss"
+manager="Big.Boss"
+manager="Big.Boss"
+manager="Big.Boss"
+manager="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //email/following-sibling::link/@subordinates
+
+Number of nodes: 1
+subordinates="one.worker two.worker three.worker four.worker five.worker"
+Enter XPath query: 
+
+Evaluating: //@id/parent::*
+
+Number of nodes: 6
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+Enter XPath query: 
+
+Evaluating: //given/..
+
+Number of nodes: 6
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: //email/preceding-sibling::*
+
+Number of nodes: 6
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: //email/following-sibling::*
+
+Number of nodes: 12
+<age>
+  21
+</age>
+<link></link>
+<age>
+  24
+</age>
+<link></link>
+<age>
+  32
+</age>
+<link></link>
+<age>
+  37
+</age>
+<link></link>
+<age>
+  41
+</age>
+<link></link>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //email/followingsibling::*
+
+Malformed query
+Enter XPath query: 
+
+Evaluating: //family/ancestor::person/link
+
+Number of nodes: 6
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //name/ancestor::*
+
+Number of nodes: 7
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+Enter XPath query: 
+
+Evaluating: //name/ancestor-or-self::*
+
+Number of nodes: 13
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+Enter XPath query: 
+
+Evaluating: //name/descendant::*
+
+Number of nodes: 12
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+Enter XPath query: 
+
+Evaluating: //name/descendant-or-self::*
+
+Number of nodes: 18
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+Enter XPath query: 
+
+Evaluating: //@subordinates
+
+Number of nodes: 1
+subordinates="one.worker two.worker three.worker four.worker five.worker"
+Enter XPath query: 
+
+Evaluating: //@subordinates/..
+
+Number of nodes: 1
+<link></link>
+Enter XPath query: 
+
+Evaluating: //@subordinates/../preceding::*
+
+Number of nodes: 40
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<email>
+  one@foo.com
+</email>
+<age>
+  21
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<email>
+  two@foo.com
+</email>
+<age>
+  24
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<email>
+  three@foo.com
+</email>
+<age>
+  32
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<email>
+  four@foo.com
+</email>
+<age>
+  37
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+Enter XPath query: 
+
+Evaluating: //@subordinates/../following::*
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: ..
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: .
+
+Number of nodes: 1
+Enter XPath query: 
+
+Evaluating: ..//email
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[3]/following-sibling::*
+
+Number of nodes: 3
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+Enter XPath query: 
+
+Evaluating: //person[3]/following-sibling::*/@id[2]
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+
+Evaluating: //person[3]/preceding-sibling::*/@id
+
+Number of nodes: 2
+id="one.worker"
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[3]/preceding-sibling::*[2]/@id
+
+Number of nodes: 1
+id="one.worker"
+Enter XPath query: 
+
+Evaluating: //person[3]/preceding-sibling::*/@id[2]
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: /personnel/person[2]/email/preceding-sibling::name/given/ancestor-or-self::*[3]
+
+Number of nodes: 1
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+Enter XPath query: 
+
+Evaluating: //family
+
+Number of nodes: 6
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Boss
+</family>
+Enter XPath query: 
+
+Evaluating: //given
+
+Number of nodes: 6
+<given>
+  One
+</given>
+<given>
+  Two
+</given>
+<given>
+  Three
+</given>
+<given>
+  Four
+</given>
+<given>
+  Five
+</given>
+<given>
+  Big
+</given>
+Enter XPath query: 
+
+Evaluating: //family|//given
+
+Number of nodes: 12
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+Enter XPath query: 
+
+Evaluating: //family|//given[2]
+
+Number of nodes: 7
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Worker
+</family>
+<family>
+  Boss
+</family>
+Enter XPath query: 
+
+Evaluating: //person[last()]/@id
+
+Number of nodes: 1
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[position()=2]/@id
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[position(3)=2]/@id
+
+Malformed query
+Enter XPath query: 
+
+Evaluating: //@id[3]
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //@id[true()]
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //@id[false()]
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //@id[not(position()=2)]
+
+Number of nodes: 5
+id="one.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //@id[position() >= 5]
+
+Number of nodes: 2
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[3 - 1]/@id
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[3 * 2]/@id
+
+Number of nodes: 1
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[5 mod 2]/@id
+
+Number of nodes: 1
+id="one.worker"
+Enter XPath query: 
+
+Evaluating: //person[5 mod -2]/@id
+
+Number of nodes: 1
+id="one.worker"
+Enter XPath query: 
+
+Evaluating: //person[(-5 mod 2) + 4]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[(-5 mod -2) + 2 * true()]/@id
+
+Number of nodes: 1
+id="one.worker"
+Enter XPath query: 
+
+Evaluating: //person[round(1.1*3)]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[1 or 2]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[4 and -2]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[4 and (3 > 10)]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[position() != 3]/@id
+
+Number of nodes: 5
+id="one.worker"
+id="two.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[3 * 1.1]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[5 - 0.0001]/@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[(((position() mod 2)))]/@id
+
+Number of nodes: 1
+id="one.worker"
+Enter XPath query: 
+
+Evaluating: //person[position() mod 2 = 0]/@id
+
+Number of nodes: 3
+id="two.worker"
+id="four.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[position() = floor(last() div 2 + 0.5) or position() = ceiling(last() div 2 + 0.5)]/@id
+
+Number of nodes: 2
+id="three.worker"
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[position() > 3]/@id
+
+Number of nodes: 3
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[position() < 3]/@id
+
+Number of nodes: 2
+id="one.worker"
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[position() <= 2]/@id
+
+Number of nodes: 2
+id="one.worker"
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[position() div 2 + 2]/@id
+
+Number of nodes: 2
+id="three.worker"
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[5 + -true()]/@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[number("This is not a number")]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[4 div 0]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[string(number("This is not a number")) = "NaN"]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[string(number("This is not a number")) = "This is not a number"]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[string(4 div 0) = "Infinity"]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[concat(string(position()), "23") = "323"]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[starts-with(concat(string(position()), "23"), "22")]/@id
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[contains(concat(string(position()), "23", string(position()), "47"), "34")]/@id
+
+Number of nodes: 2
+id="three.worker"
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring-before(concat(string(position()), "23", string(position()), "47"), "35") = "52"]/@id
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring-after(concat(string(position()), "23", string(position()), "47"), "35") = "47"]/@id
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 4, 3) = "347"]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 4) = "347"]/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), -42, 1 div 0) = "223247"]/@id
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 0 div 0, 3) = "3"]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 0 div 0, 3) = ""]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 1.5, 2.6) = '234']/@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), 0, 3) = '52']/@id
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring(concat(string(position()), "23", string(position()), "47"), -1 div 0, 1 div 0) = ""]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[(string-length(string(position())) * position()) = "4"]/@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(-3)]/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(35.3)]/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(0)]/text()
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(0 div 0)]/text()
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(-4 div 0)]/text()
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(10 div 0)]/text()
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(string())]/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(string(last()))]/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(substring-before("123", "5"))]/text()
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /descendant-or-self::email[boolean(number())]/text()
+
+Number of nodes: 6
+one@foo.com
+two@foo.com
+three@foo.com
+four@foo.com
+five@foo.com
+chief@foo.com
+Enter XPath query: 
+
+Evaluating: //person[email]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //name[given = "Big"]/family
+
+Number of nodes: 1
+<family>
+  Boss
+</family>
+Enter XPath query: 
+
+Evaluating: /personnel/person[string-length(string(name/family)) < 5]/@id
+
+Number of nodes: 1
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //*[attribute::id="five.worker"]/@id
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+
+Evaluating: //*[../email="chief@foo.com"]
+
+Number of nodes: 4
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //given[.="Four"]
+
+Number of nodes: 1
+<given>
+  Four
+</given>
+Enter XPath query: 
+
+Evaluating: /descendant::node()[count(ancestor::node()) = 3]
+
+Number of nodes: 54
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  one@foo.com
+</email>
+<age>
+  21
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  two@foo.com
+</email>
+<age>
+  24
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  three@foo.com
+</email>
+<age>
+  32
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  four@foo.com
+</email>
+<age>
+  37
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+<name>
+  <family>
+  <given>
+</name>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //name[given="Five"]/given
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //name[normalize-space(given)="Five"]/given
+
+Number of nodes: 1
+<given>
+  Five
+</given>
+Enter XPath query: 
+
+Evaluating: //name[translate(normalize-space(string(given)), "Five", "Four")="Four"]/given
+
+Number of nodes: 2
+<given>
+  Four
+</given>
+<given>
+  Five
+</given>
+Enter XPath query: 
+
+Evaluating: //name[translate(string(given), "Oneabcd", "Two")="Two"]/given
+
+Number of nodes: 2
+<given>
+  One
+</given>
+<given>
+  Two
+</given>
+Enter XPath query: 
+
+Evaluating: //name[translate(string(given), "FFFF", "Four")="Four"]/given
+
+Number of nodes: 1
+<given>
+  Four
+</given>
+Enter XPath query: 
+
+Evaluating: //name[translate(string(given), "Thre", "One")="One"]/given
+
+Number of nodes: 1
+<given>
+  Three
+</given>
+Enter XPath query: 
+
+Evaluating: //name/given[normalize-space()="Big"]/text()
+
+Number of nodes: 1
+Big
+Enter XPath query: 
+
+Evaluating: //name/given[number()="Big"]/text()
+
+Number of nodes: 1
+Big
+Enter XPath query: 
+
+Evaluating: /personnel/person/age[count(preceding::age)=2]/../@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: /personnel/person/age[(sum(preceding::age) - 21)=56]/../@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //personnel[lang("en")]
+
+Number of nodes: 1
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+Enter XPath query: 
+
+Evaluating: //personnel[lang("pl")]
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //*[lang("en")]
+
+Number of nodes: 43
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<email>
+  one@foo.com
+</email>
+<age>
+  21
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<email>
+  two@foo.com
+</email>
+<age>
+  24
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<email>
+  three@foo.com
+</email>
+<age>
+  32
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<email>
+  four@foo.com
+</email>
+<age>
+  37
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: /personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][2]
+
+Number of nodes: 1
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+Enter XPath query: 
+
+Evaluating: /personnel/person[5]/name/given/ancestor-or-self::*[@xml:lang][last()]
+
+Number of nodes: 1
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+Enter XPath query: 
+
+Evaluating: //person[2][@id="three.worker"]/name/given
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //*[lang("EN-US")]
+
+Number of nodes: 7
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //person[number(age)="37"]/@id
+
+Number of nodes: 1
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[string(number(email))="NaN"]/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[string(number(email))="5"]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /personnel/person[@id="four.worker" and @xml:lang="en-US"]
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: /personnel/person[@id="five.worker" and @xml:lang="en-US"]/email
+
+Number of nodes: 1
+<email>
+  five@foo.com
+</email>
+Enter XPath query: 
+
+Evaluating: /personnel/person[number(age) > 40]/@id
+
+Number of nodes: 2
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: /personnel/person[(number(age) > 40) | (number(age) < 30)]/@id
+
+Malformed query
+Enter XPath query: 
+
+Evaluating: /personnel/person[@id="four.worker"]|/personnel/person/age
+
+Number of nodes: 7
+<age>
+  21
+</age>
+<age>
+  24
+</age>
+<age>
+  32
+</age>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<age>
+  37
+</age>
+<age>
+  41
+</age>
+<age>
+  48
+</age>
+Enter XPath query: 
+
+Evaluating: //@*
+
+Number of nodes: 15
+xml:lang="en"
+id="one.worker"
+manager="Big.Boss"
+id="two.worker"
+manager="Big.Boss"
+id="three.worker"
+manager="Big.Boss"
+id="four.worker"
+xml:lang="EN"
+manager="Big.Boss"
+id="five.worker"
+xml:lang="en-US"
+manager="Big.Boss"
+id="Big.Boss"
+subordinates="one.worker two.worker three.worker four.worker five.worker"
+Enter XPath query: 
+
+Evaluating: //person/@*
+
+Number of nodes: 8
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+xml:lang="EN"
+id="five.worker"
+xml:lang="en-US"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //node()[name(.)="#text"]
+
+Number of nodes: 67
+Worker
+One
+one@foo.com
+21
+Worker
+Two
+two@foo.com
+24
+Worker
+Three
+three@foo.com
+32
+Worker
+Four
+four@foo.com
+37
+Worker
+Five
+five@foo.com
+41
+Boss
+Big
+chief@foo.com
+48
+Enter XPath query: 
+
+Evaluating: //node()[local-name(.)=name(.)]
+
+Number of nodes: 43
+<personnel>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+  <person>
+</personnel>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  One
+</given>
+<email>
+  one@foo.com
+</email>
+<age>
+  21
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Two
+</given>
+<email>
+  two@foo.com
+</email>
+<age>
+  24
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Three
+</given>
+<email>
+  three@foo.com
+</email>
+<age>
+  32
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Four
+</given>
+<email>
+  four@foo.com
+</email>
+<age>
+  37
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Worker
+</family>
+<given>
+  Five
+</given>
+<email>
+  five@foo.com
+</email>
+<age>
+  41
+</age>
+<link></link>
+<person>
+  <name>
+  <email>
+  <age>
+  <link>
+</person>
+<name>
+  <family>
+  <given>
+</name>
+<family>
+  Boss
+</family>
+<given>
+  Big
+</given>
+<email>
+  chief@foo.com
+</email>
+<age>
+  48
+</age>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //@*[string(namespace-uri(.))]
+
+Number of nodes: 3
+xml:lang="en"
+xml:lang="EN"
+xml:lang="en-US"
+Enter XPath query: 
+
+Evaluating: //@*[namespace-uri(.)]
+
+Number of nodes: 3
+xml:lang="en"
+xml:lang="EN"
+xml:lang="en-US"
+Enter XPath query: 
+
+Evaluating: //link[@manager]
+
+Number of nodes: 5
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //link[@subordinates]
+
+Number of nodes: 1
+<link></link>
+Enter XPath query: 
+
+Evaluating: //link[@manager|@subordinates]
+
+Number of nodes: 6
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+<link></link>
+Enter XPath query: 
+
+Evaluating: //person[number('This is not a number')]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[4 div 0]/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[string(number('This is not a number')) = 'NaN']/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[string(number('This is not a number')) = 'This is not a number']/@id
+
+Number of nodes: 0
+Enter XPath query: 
+
+Evaluating: //person[string(4 div 0) = 'Infinity']/@id
+
+Number of nodes: 6
+id="one.worker"
+id="two.worker"
+id="three.worker"
+id="four.worker"
+id="five.worker"
+id="Big.Boss"
+Enter XPath query: 
+
+Evaluating: //person[concat(string(position()), '23') = '323']/@id
+
+Number of nodes: 1
+id="three.worker"
+Enter XPath query: 
+
+Evaluating: //person[starts-with(concat(string(position()), '23'), '22')]/@id
+
+Number of nodes: 1
+id="two.worker"
+Enter XPath query: 
+
+Evaluating: //person[contains(concat(string(position()), '23', string(position()), '47'), '34')]/@id
+
+Number of nodes: 2
+id="three.worker"
+id="four.worker"
+Enter XPath query: 
+
+Evaluating: //person[substring-before(concat(string(position()), '23', string(position()), '47'), '35') = '52']/@id
+
+Number of nodes: 1
+id="five.worker"
+Enter XPath query: 
+Enter XML file name: Enter XPath query: 
+
+Evaluating: //node
+
+Number of nodes: 2
+<node>
+</node>
+<node></node>
+Enter XPath query: 
+
+Evaluating: //and
+
+Number of nodes: 2
+<and>
+</and>
+<and>
+  <div>
+</and>
+Enter XPath query: 
+
+Evaluating: //child[and]
+
+Number of nodes: 2
+<child>
+  <and>
+</child>
+<child>
+  <and>
+  <mod>
+</child>
+Enter XPath query: 
+
+Evaluating: //child/parent::parent
+
+Number of nodes: 2
+<parent>
+  <child>
+  <child>
+  <node>
+  <text>
+</parent>
+<parent>
+  <child>
+  <ancestor>
+  <descendant>
+</parent>
+Enter XPath query: 
+
+Evaluating: //child::child/parent::parent[text]
+
+Number of nodes: 1
+<parent>
+  <child>
+  <child>
+  <node>
+  <text>
+</parent>
+Enter XPath query: 
+
+Evaluating: //*[node or following]
+
+Number of nodes: 3
+<parent>
+  <child>
+  <child>
+  <node>
+  <text>
+</parent>
+<descendant-or-self>
+  <following>
+  <following-sibling>
+  <namespace>
+</descendant-or-self>
+<namespace>
+  <parent>
+  <self>
+  <node>
+</namespace>
+Enter XPath query: 
+
+Evaluating: //self/comment/text
+
+Number of nodes: 1
+<text></text>
+Enter XPath query: 
+
+Evaluating: //*[div and or]
+
+Number of nodes: 1
+<child>
+  <div>
+  <or>
+  <mod>
+</child>
+Enter XPath query: 
+
+Evaluating: //processing-instruction
+
+Number of nodes: 1
+<processing-instruction></processing-instruction>
+Enter XPath query: 
+
+Evaluating: //child[and or mod]
+
+Number of nodes: 3
+<child>
+  <div>
+  <or>
+  <mod>
+</child>
+<child>
+  <and>
+</child>
+<child>
+  <and>
+  <mod>
+</child>
+Enter XPath query: 
+
+Evaluating: //child[and and mod]
+
+Number of nodes: 1
+<child>
+  <and>
+  <mod>
+</child>
+Enter XPath query: 
+
+Evaluating: //preceding-sibling/parent::*[preceding]
+
+Number of nodes: 1
+<parent>
+  <preceding>
+  <preceding-sibling>
+</parent>
+Enter XPath query: 
+
+Evaluating: //ancestor | //ancestor-or-self | //descendant[descendant-or-self]
+
+Number of nodes: 3
+<ancestor>
+  <ancestor-or-self>
+</ancestor>
+<ancestor-or-self>
+  <attribute>
+</ancestor-or-self>
+<descendant>
+  <descendant-or-self>
+</descendant>
+Enter XPath query: 
