@@ -29,10 +29,10 @@
 ------------------------------------------------------------------------
 
 with Ada.Strings.Unbounded;
-with Mckae.XML.XPath.Predicates;
+with McKae.XML.XPath.Predicates;
 with Unicode.CES;
 
-package Mckae.XML.XPath.Locations is
+package McKae.XML.XPath.Locations is
 
    use Ada.Strings.Unbounded;
    use McKae.XML.XPath;
@@ -121,7 +121,7 @@ package Mckae.XML.XPath.Locations is
       end record;
 
    -- Redefinition of strings to be compatible with the DOM interface
-   subtype Xpath_String is Unicode.CES.Byte_Sequence;
+   subtype XPath_String is Unicode.CES.Byte_Sequence;
 
 
    -- Add a newly defined location step to the path
@@ -144,4 +144,4 @@ package Mckae.XML.XPath.Locations is
    --  procedure.
    procedure Reset_For_Parsing;
 
-end Mckae.XML.XPath.Locations;
+end McKae.XML.XPath.Locations;

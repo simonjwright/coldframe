@@ -39,7 +39,7 @@
 
 with Dom.Core;
 
-package Mckae.XML.XPath.XIA is
+package McKae.XML.XPath.XIA is
 
    function XPath_Query
      (N     : Dom.Core.Node;
@@ -62,4 +62,4 @@ package Mckae.XML.XPath.XIA is
    Inappropriate_Node : exception;
    -- Raised when the starting node does not correspond to the type of query
 
-end Mckae.XML.XPath.XIA;
+end McKae.XML.XPath.XIA;

@@ -1,0 +1,15 @@
+with "../XIA";
+project Test is
+   for Main use ("bench_xpath.adb", "test_xpath.adb");
+   for Exec_Dir use ".";
+   for Object_Dir use ".build";
+   package Builder is
+      for Default_Switches ("Ada") use ("-g");
+   end Builder;
+   package Binder is
+     for Default_Switches ("Ada") use ("-E");
+   end Binder;
+   package Linker is
+      for Default_Switches ("Ada") use ("-Wl,-no_pie");
+   end Linker;
+end Test;

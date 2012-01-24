@@ -1,0 +1,16 @@
+This directory contains XIA-1.0.0 from McKae Technologies
+(http://www.mckae.com), patched for use with ColdFrame.
+
+The patches are contained in build_xia_as_library.diff in this
+directory, and make the following changes:
+
+* XIA.gpr is included, to build XIA as a library. It assumes that the
+  Booch Components and XML/Ada are available on ADA_PROJECT_PATH.
+
+* Some source files are modified to prevent style warnings in user
+  code (the changes are to ensure consistency of casing, eg McKae
+  throughout instead of Mckae in some places. Internal warnings
+  haven't been suppressed, and will appear during initial builds.)
+
+* bench_xpath.adb and test_xpath.adb have been moved to the test/
+  subdirectory, which includes test.gpr.

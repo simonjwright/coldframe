@@ -1,0 +1,42 @@
+with "bc";
+with "xmlada";
+
+project XIA is
+
+   type Library_T is ("static", "relocatable");
+   Library_Type : Library_T := external ("LIBRARY_TYPE", "static");
+
+   for Library_Name use "xia";
+   for Library_Kind use Library_Type;
+   for Library_Dir use "./lib-" & Library_Type;
+   for Library_Options use External_As_List ("LDFLAGS", " ");
+
+   for Languages use ("ada");
+
+   for Source_Dirs use (".");
+   for Object_Dir use ".build-" & Library_Type;
+
+  package IDE is
+     for Compiler_Command ("ada") use "gnatmake";
+     for Gnatlist use "gnatls";
+  end IDE;
+
+  package Builder is
+     for Default_Switches ("ada") use
+       (
+        "-g",
+        "-j2"
+       );
+  end Builder;
+
+  package Compiler is
+     for Default_Switches ("ada") use
+       (
+        "-gnatqQfo",
+        "-gnatwaL",
+        "-gnat95",
+        "-O2"
+       );
+  end Compiler;
+
+end XIA;
