@@ -13,12 +13,11 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: tools.gpr,v $
---  $Revision: fd881b1b7e39 $
---  $Date: 2011/12/11 15:20:54 $
+--  $Revision: 3e02ea06676b $
+--  $Date: 2012/01/24 13:28:50 $
 --  $Author: simonjwright $
 
-with "../ColdFrame";
-with "/Users/simon/xia/XIA";
+with "xia/XIA";
 
 project Tools is
 
@@ -29,6 +28,7 @@ project Tools is
       "serialized_to_csv.adb"
      );
 
+   for Source_Dirs use (".", "../lib");
    for Exec_Dir use ".";
    for Object_Dir use ".build";
 

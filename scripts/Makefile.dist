@@ -48,20 +48,14 @@ C_CODEGEN_SCRIPTS = generate-c.xsl c-utilities.xsl
 
 OTHER_SCRIPTS =					\
   case_exceptions.py				\
-  cat2raw.py					\
   create-build-directories			\
   emacs_case_exceptions				\
-  extractor.ebs					\
-  extractor-trampoline.ebs			\
-  install-project				\
-  normalize-raw.xsl				\
-  rose-addin.mnu
+  install-project
 
 ALL = $(CODEGEN_SCRIPTS) $(DOCGEN_SCRIPTS) $(C_CODEGEN_SCRIPTS) $(OTHER_SCRIPTS)
 
 # Files that need DATE substituted
 DATED_FILES =					\
- normalize-rose.tcl				\
  ada-utilities.xsl				\
  generate-c.xsl
 
