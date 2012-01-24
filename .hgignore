@@ -27,7 +27,7 @@ syntax: glob
 *.toc
 *.tp
 *.vr
-.build
+.build*
 .DS_Store
 b~*.ad[bs]
 coldframeout
@@ -86,3 +86,4 @@ test/test_storage_pools{.exe,}
 tools/generated_lines{.exe,}
 tools/normalize_xmi{.exe,}
 tools/serialized_to_csv{.exe,}
+tools/xia/lib-*
