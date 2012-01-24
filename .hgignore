@@ -58,6 +58,7 @@ doc/use-cases.html
 
 # examples
 examples/house_management-harness{.exe,}
+examples/interrupt_handling-harness{.exe,}
 examples/library_test_harness{.exe,}
 examples/performance-harness{.exe,}
 examples/stairwell_demo{.exe,}

@@ -88,6 +88,7 @@ NORM_FILES =					\
  Digital_IO.norm				\
  Digital_IO_Interface.norm			\
  House_Management.norm				\
+ Interrupt_Handling.norm			\
  Library.norm					\
  Van_Fleet.norm
 

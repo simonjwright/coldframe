@@ -11,13 +11,13 @@
     </documentation>
     <settings>
       <notationlanguage>UML 1.4</notationlanguage>
-      <showboldnames>false</showboldnames>
+      <showboldnames>true</showboldnames>
       <useguillemots>true</useguillemots>
       <showassociationnames>true</showassociationnames>
       <showvisibility>true</showvisibility>
       <showmultiplicity>false</showmultiplicity>
       <showinitialvalue>true</showinitialvalue>
-      <showproperties>true</showproperties>
+      <showproperties>false</showproperties>
       <showtypes>true</showtypes>
       <showstereotypes>true</showstereotypes>
       <showsingularmultiplicities>true</showsingularmultiplicities>
@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Digital IO Class Diagram</activediagram>
+      <activediagram>Interrupt Handling Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -66,6 +66,14 @@
               name="ColdFrame_Examples_DigitalIOInterfaceClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Digital IO Interface Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Examples_ClassDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="Interrupt Handling Class Diagram" />
+      <member type="pgml"
+              name="ColdFrame_Examples_InterruptHandling0.pgml"
+              diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
+              diagramname="Device Lifecycle" />
       <member type="todo"
               name="ColdFrame_Examples.todo" />
     </members>
@@ -78,10 +86,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jan 23 14:08:23 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 24 17:39:18 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/23 15:34:38 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/24 17:44:59 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -106,7 +114,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9b721665adb9 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -557,7 +565,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9b721665adb9 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -796,7 +804,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9b721665adb9 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1431,7 +1439,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 9b721665adb9 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1454,7 +1462,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: 9b721665adb9 $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1950,6 +1958,214 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
             </UML:Generalization>
           </UML:Namespace.ownedElement>
         </UML:Package>
+        <UML:Package xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA'
+          name = 'Interrupt Handling' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:ModelElement.stereotype>
+            <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain'/>
+          </UML:ModelElement.stereotype>
+          <UML:ModelElement.taggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEB'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>Copyright (C) Simon Wright &lt;simon@pushface.org&gt;
+This package is free software; you can redistribute it and/or modify it under terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version. This package is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License distributed with this package; see file COPYING. If not, write to the Free Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition xmi.idref = '-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:00000000000009C4'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+            <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
+              isSpecification = 'false'>
+              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.type>
+                <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
+              </UML:TaggedValue.type>
+            </UML:TaggedValue>
+          </UML:ModelElement.taggedValue>
+          <UML:Namespace.ownedElement>
+            <UML:Class xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC'
+              name = 'Device' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+              isLeaf = 'false' isAbstract = 'false' isActive = 'true'>
+              <UML:ModelElement.stereotype>
+                <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-singleton'/>
+              </UML:ModelElement.stereotype>
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CED'
+                  name = 'Timeout' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  changeability = 'changeable' targetScope = 'instance'>
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEE'>
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEF'
+                          lower = '1' upper = '1'/>
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Timer'/>
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF0'
+                  name = 'Initialize' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
+                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-init'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF1'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF3'
+                  name = 'Clear_Timeout' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF4'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF5'
+                  name = 'Report_Entry' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
+                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF6'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF7'
+                  name = 'Set_Timeout' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
+                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF8'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+                <UML:Operation xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CF9'
+                  name = 'Start' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
+                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+                  isAbstract = 'false'>
+                  <UML:ModelElement.stereotype>
+                    <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-entry'/>
+                  </UML:ModelElement.stereotype>
+                  <UML:BehavioralFeature.parameter>
+                    <UML:Parameter xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFA'
+                      name = 'return' isSpecification = 'false' kind = 'return'/>
+                  </UML:BehavioralFeature.parameter>
+                </UML:Operation>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:StateMachine xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFB'
+              name = 'Device State Machine' isSpecification = 'false'>
+              <UML:StateMachine.context>
+                <UML:Class xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC'/>
+              </UML:StateMachine.context>
+              <UML:StateMachine.top>
+                <UML:CompositeState xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFC'
+                  name = 'top' isSpecification = 'false' isConcurrent = 'false'>
+                  <UML:CompositeState.subvertex>
+                    <UML:Pseudostate xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFD'
+                      isSpecification = 'false' kind = 'initial'>
+                      <UML:StateVertex.outgoing>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D06'/>
+                      </UML:StateVertex.outgoing>
+                    </UML:Pseudostate>
+                    <UML:SimpleState xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'
+                      name = 'Idle' isSpecification = 'false'>
+                      <UML:StateVertex.outgoing>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D07'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D09'/>
+                      </UML:StateVertex.outgoing>
+                      <UML:StateVertex.incoming>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D06'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D08'/>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D09'/>
+                      </UML:StateVertex.incoming>
+                      <UML:State.entry>
+                        <UML:CallAction xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFF'
+                          name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
+                          <UML:Action.script>
+                            <UML:ActionExpression xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D00'
+                              language = 'Java' body = 'Report_Entry; Set_Timeout'/>
+                          </UML:Action.script>
+                        </UML:CallAction>
+                      </UML:State.entry>
+                    </UML:SimpleState>
+                    <UML:SimpleState xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D01'
+                      name = 'Interrupted' isSpecification = 'false'>
+                      <UML:StateVertex.outgoing>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D08'/>
+                      </UML:StateVertex.outgoing>
+                      <UML:StateVertex.incoming>
+                        <UML:Transition xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D07'/>
+                      </UML:StateVertex.incoming>
+                      <UML:State.entry>
+                        <UML:CallAction xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D02'
+                          name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
+                          <UML:Action.script>
+                            <UML:ActionExpression xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D03'
+                              language = 'Java' body = 'Report_Entry; Clear_Timeout'/>
+                          </UML:Action.script>
+                        </UML:CallAction>
+                      </UML:State.entry>
+                    </UML:SimpleState>
+                  </UML:CompositeState.subvertex>
+                </UML:CompositeState>
+              </UML:StateMachine.top>
+              <UML:StateMachine.transitions>
+                <UML:Transition xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D06'
+                  isSpecification = 'false'>
+                  <UML:Transition.source>
+                    <UML:Pseudostate xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFD'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D07'
+                  isSpecification = 'false'>
+                  <UML:Transition.trigger>
+                    <UML:SignalEvent xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D05'/>
+                  </UML:Transition.trigger>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D01'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D08'
+                  isSpecification = 'false'>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D01'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+                <UML:Transition xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D09'
+                  isSpecification = 'false'>
+                  <UML:Transition.trigger>
+                    <UML:SignalEvent xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0A'/>
+                  </UML:Transition.trigger>
+                  <UML:Transition.source>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'/>
+                  </UML:Transition.source>
+                  <UML:Transition.target>
+                    <UML:SimpleState xmi.idref = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE'/>
+                  </UML:Transition.target>
+                </UML:Transition>
+              </UML:StateMachine.transitions>
+            </UML:StateMachine>
+            <UML:SignalEvent xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D05'
+              name = 'Device.Interrupt' isSpecification = 'false'/>
+            <UML:SignalEvent xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0A'
+              name = 'Device.Timeout' isSpecification = 'false'/>
+          </UML:Namespace.ownedElement>
+        </UML:Package>
       </UML:Namespace.ownedElement>
     </UML:Model>
   </XMI.content>
@@ -1958,7 +2174,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       name="Domain Diagram"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[624, 64, 149, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[624, 320, 149, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
        href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000986"
        fill="1"
        fillcolor="white"
@@ -1970,7 +2186,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     
     <rectangle name="Fig0.0"
       x="624"
-      y="64"
+      y="320"
       width="149"
       height="100"
       fill="0"
@@ -1986,38 +2202,38 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     >
       <moveto x="624"
-              y="64" />
+              y="320" />
       <lineto x="723"
-              y="64" />
+              y="320" />
       <lineto x="723"
-              y="106" />
+              y="364" />
       <lineto x="772"
-              y="106" />
+              y="364" />
       <lineto x="772"
-              y="163" />
+              y="419" />
       <lineto x="624"
-              y="163" />
+              y="419" />
       <lineto x="624"
-              y="64" />
+              y="320" />
     </path>
     <text name="Fig0.2"
       x="624"
-      y="64"
+      y="320"
       width="100"
-      height="43"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Left"
     >Van Fleet</text>
     <group name="Fig0.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[624, 64, 99, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[624, 320, 99, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000986"
          fill="1"
          fillcolor="white"
@@ -2029,9 +2245,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.3.0"
         x="624"
-        y="64"
+        y="320"
         width="99"
-        height="20"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
@@ -2039,15 +2255,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig0.3.1"
         x="624"
-        y="64"
+        y="320"
         width="99"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2056,15 +2272,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <text name="Fig0.4"
       x="624"
-      y="106"
+      y="364"
       width="149"
-      height="58"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -2072,7 +2288,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     ></text>
   </group>
   <group name="Fig1"
-       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[88, 64, 149, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[624, 200, 149, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
        href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B5"
        fill="1"
        fillcolor="white"
@@ -2083,8 +2299,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </private>
     
     <rectangle name="Fig1.0"
-      x="88"
-      y="64"
+      x="624"
+      y="200"
       width="149"
       height="100"
       fill="0"
@@ -2099,39 +2315,39 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       stroke="0"
       strokecolor="black"
     >
-      <moveto x="88"
-              y="64" />
-      <lineto x="187"
-              y="64" />
-      <lineto x="187"
-              y="106" />
-      <lineto x="236"
-              y="106" />
-      <lineto x="236"
-              y="163" />
-      <lineto x="88"
-              y="163" />
-      <lineto x="88"
-              y="64" />
+      <moveto x="624"
+              y="200" />
+      <lineto x="723"
+              y="200" />
+      <lineto x="723"
+              y="244" />
+      <lineto x="772"
+              y="244" />
+      <lineto x="772"
+              y="299" />
+      <lineto x="624"
+              y="299" />
+      <lineto x="624"
+              y="200" />
     </path>
     <text name="Fig1.2"
-      x="88"
-      y="64"
+      x="624"
+      y="200"
       width="100"
-      height="43"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Left"
     >Library</text>
     <group name="Fig1.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 64, 99, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[624, 200, 99, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B5"
          fill="1"
          fillcolor="white"
@@ -2142,26 +2358,26 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       </private>
       
       <rectangle name="Fig1.3.0"
-        x="88"
-        y="64"
+        x="624"
+        y="200"
         width="99"
-        height="20"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig1.3.1"
-        x="88"
-        y="64"
+        x="624"
+        y="200"
         width="99"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2169,16 +2385,16 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«domain»</text>
     </group>
     <text name="Fig1.4"
-      x="88"
-      y="106"
+      x="624"
+      y="244"
       width="149"
-      height="58"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -2186,7 +2402,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     ></text>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[88, 216, 191, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[88, 216, 196, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=false"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B"
        fill="1"
        fillcolor="white"
@@ -2199,7 +2415,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     <rectangle name="Fig2.0"
       x="88"
       y="216"
-      width="191"
+      width="196"
       height="100"
       fill="0"
       fillcolor="white"
@@ -2215,13 +2431,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     >
       <moveto x="88"
               y="216" />
-      <lineto x="229"
+      <lineto x="234"
               y="216" />
-      <lineto x="229"
-              y="258" />
-      <lineto x="278"
-              y="258" />
-      <lineto x="278"
+      <lineto x="234"
+              y="260" />
+      <lineto x="283"
+              y="260" />
+      <lineto x="283"
               y="315" />
       <lineto x="88"
               y="315" />
@@ -2231,21 +2447,21 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     <text name="Fig2.2"
       x="88"
       y="216"
-      width="142"
-      height="43"
+      width="147"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Left"
     >House Management</text>
     <group name="Fig2.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 216, 141, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 216, 146, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2B"
          fill="1"
          fillcolor="white"
@@ -2258,8 +2474,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig2.3.0"
         x="88"
         y="216"
-        width="141"
-        height="20"
+        width="146"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
@@ -2268,14 +2484,14 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <text name="Fig2.3.1"
         x="88"
         y="216"
-        width="141"
-        height="17"
+        width="146"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2284,15 +2500,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <text name="Fig2.4"
       x="88"
-      y="258"
-      width="191"
-      height="58"
+      y="260"
+      width="196"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -2332,9 +2548,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <lineto x="187"
               y="328" />
       <lineto x="187"
-              y="370" />
+              y="372" />
       <lineto x="236"
-              y="370" />
+              y="372" />
       <lineto x="236"
               y="427" />
       <lineto x="88"
@@ -2346,20 +2562,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="88"
       y="328"
       width="100"
-      height="43"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Left"
     >Digital IO</text>
     <group name="Fig3.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 328, 99, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[88, 328, 99, 21]"
          href="-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98"
          fill="1"
          fillcolor="white"
@@ -2373,7 +2589,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="88"
         y="328"
         width="99"
-        height="20"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
@@ -2383,13 +2599,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="88"
         y="328"
         width="99"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2398,15 +2614,129 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <text name="Fig3.4"
       x="88"
-      y="370"
+      y="372"
       width="149"
-      height="58"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Center"
+    ></text>
+  </group>
+  <group name="Fig4"
+       description="org.argouml.uml.diagram.static_structure.ui.FigPackage[336, 40, 188, 100]pathVisible=false;stereotypeView=0;stereotypeVisible=true;visibilityVisible=true"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig4.0"
+      x="336"
+      y="40"
+      width="188"
+      height="100"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig4.1"
+      description="org.argouml.uml.diagram.static_structure.ui.FigPackage$PackageBackground"
+      fill="1"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    >
+      <moveto x="336"
+              y="40" />
+      <lineto x="474"
+              y="40" />
+      <lineto x="474"
+              y="84" />
+      <lineto x="523"
+              y="84" />
+      <lineto x="523"
+              y="139" />
+      <lineto x="336"
+              y="139" />
+      <lineto x="336"
+              y="40" />
+    </path>
+    <text name="Fig4.2"
+      x="336"
+      y="40"
+      width="139"
+      height="45"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Left"
+    >Interrupt Handling</text>
+    <group name="Fig4.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[336, 40, 138, 21]"
+         href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA"
+         fill="1"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig4.3.0"
+        x="336"
+        y="40"
+        width="138"
+        height="21"
+        fill="1"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig4.3.1"
+        x="336"
+        y="40"
+        width="138"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«domain»</text>
+    </group>
+    <text name="Fig4.4"
+      x="336"
+      y="84"
+      width="188"
+      height="56"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -2442,20 +2772,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="873"
       y="65"
       width="105"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="255 255 200"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Not Found</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[873, 65, 105, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[873, 65, 105, 20]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000987"
          fill="0"
          fillcolor="255 255 200"
@@ -2469,7 +2799,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="873"
         y="65"
         width="105"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="255 255 200"
         stroke="0"
@@ -2479,13 +2809,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="873"
         y="65"
         width="105"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="255 255 200"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2494,8 +2824,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.3"
       x="872"
-      y="106"
-      width="89"
+      y="108"
+      width="76"
       height="1"
       fill="1"
       fillcolor="black"
@@ -2504,7 +2834,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       visibility="0"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 107, 87, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 109, 74, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000987"
          fill="0"
          fillcolor="255 255 200"
@@ -2517,8 +2847,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.4.0"
         x="873"
-        y="107"
-        width="87"
+        y="109"
+        width="74"
         height="21"
         fill="0"
         fillcolor="white"
@@ -2588,20 +2918,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="873"
       y="145"
       width="103"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="255 255 200"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Use Error</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[873, 145, 103, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[873, 145, 103, 20]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000988"
          fill="0"
          fillcolor="255 255 200"
@@ -2615,7 +2945,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="873"
         y="145"
         width="103"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="255 255 200"
         stroke="0"
@@ -2625,13 +2955,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="873"
         y="145"
         width="103"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="255 255 200"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2640,8 +2970,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.3"
       x="872"
-      y="186"
-      width="89"
+      y="188"
+      width="67"
       height="1"
       fill="1"
       fillcolor="black"
@@ -2650,7 +2980,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       visibility="0"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 187, 87, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[873, 189, 65, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000988"
          fill="0"
          fillcolor="255 255 200"
@@ -2663,8 +2993,8 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.4.0"
         x="873"
-        y="187"
-        width="87"
+        y="189"
+        width="65"
         height="21"
         fill="0"
         fillcolor="white"
@@ -2734,20 +3064,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="329"
       y="33"
       width="415"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="true"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Van</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 318, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[329, 33, 415, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -2761,7 +3091,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig2.2.0"
         x="329"
         y="33"
-        width="318"
+        width="415"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2771,7 +3101,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig2.3"
       x="328"
-      y="55"
+      y="56"
       width="417"
       height="1"
       fill="1"
@@ -2780,7 +3110,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[329, 56, 415, 26]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[329, 57, 415, 25]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -2792,9 +3122,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig2.4.0"
         x="329"
-        y="56"
+        y="57"
         width="415"
-        height="26"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -2802,15 +3132,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig2.4.1"
         x="329"
-        y="56"
+        y="57"
         width="415"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -2819,7 +3149,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig2.5"
       x="328"
-      y="82"
+      y="81"
       width="417"
       height="1"
       fill="1"
@@ -2828,7 +3158,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[329, 83, 415, 74]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[329, 82, 415, 76]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000989"
          fill="0"
          fillcolor="white"
@@ -2840,9 +3170,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig2.6.0"
         x="329"
-        y="83"
+        y="82"
         width="415"
-        height="74"
+        height="76"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -2850,68 +3180,68 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig2.6.1"
         x="329"
-        y="83"
+        y="82"
         width="415"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Lend(To : Customer,Terminating_At : Date) : Van {sequential}</text>
+      >+Lend(To : Customer,Terminating_At : Date) : Van</text>
       <text name="Fig2.6.2"
         x="329"
         y="99"
         width="415"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» +Get_Index() : Text {sequential}</text>
+      >«accessor» +Get_Index() : Text</text>
       <text name="Fig2.6.3"
         x="329"
-        y="115"
+        y="116"
         width="415"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="true"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Image() : String {sequential}</text>
+      >+Image() : String</text>
       <text name="Fig2.6.4"
         x="329"
-        y="131"
+        y="133"
         width="415"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Returned() {sequential}</text>
+      >+Returned()</text>
     </group>
   </group>
   <group name="Fig3"
@@ -2939,20 +3269,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="25"
       y="241"
       width="419"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Hired Van</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[25, 241, 350, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[25, 241, 419, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098A"
          fill="0"
          fillcolor="white"
@@ -2966,7 +3296,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig3.2.0"
         x="25"
         y="241"
-        width="350"
+        width="419"
         height="0"
         fill="0"
         fillcolor="white"
@@ -2976,7 +3306,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig3.3"
       x="24"
-      y="263"
+      y="264"
       width="421"
       height="1"
       fill="1"
@@ -2985,7 +3315,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[25, 264, 419, 42]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[25, 265, 419, 42]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098A"
          fill="0"
          fillcolor="white"
@@ -2997,7 +3327,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig3.4.0"
         x="25"
-        y="264"
+        y="265"
         width="419"
         height="42"
         fill="0"
@@ -3007,15 +3337,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig3.4.1"
         x="25"
-        y="264"
+        y="265"
         width="419"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3023,15 +3353,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >+Expected_Termination : Date</text>
       <text name="Fig3.4.2"
         x="25"
-        y="280"
+        y="282"
         width="419"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3049,7 +3379,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[25, 307, 419, 58]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[25, 307, 419, 59]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098A"
          fill="0"
          fillcolor="white"
@@ -3063,7 +3393,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="25"
         y="307"
         width="419"
-        height="58"
+        height="59"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3073,50 +3403,50 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="25"
         y="307"
         width="419"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Cleanup() {sequential}</text>
+      >+Cleanup()</text>
       <text name="Fig3.6.2"
         x="25"
-        y="323"
+        y="324"
         width="419"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Image() : String {sequential}</text>
+      >+Image() : String</text>
       <text name="Fig3.6.3"
         x="25"
-        y="339"
+        y="341"
         width="419"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» +Set_Expected_Termination(To : Date) {sequential}</text>
+      >«accessor» +Set_Expected_Termination(To : Date)</text>
     </group>
   </group>
   <group name="Fig4"
@@ -3144,20 +3474,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="41"
       y="89"
       width="203"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Pool Van</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[41, 89, 106, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[41, 89, 203, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098B"
          fill="0"
          fillcolor="white"
@@ -3171,7 +3501,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig4.2.0"
         x="41"
         y="89"
-        width="106"
+        width="203"
         height="0"
         fill="0"
         fillcolor="white"
@@ -3181,7 +3511,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig4.3"
       x="40"
-      y="111"
+      y="112"
       width="205"
       height="1"
       fill="1"
@@ -3190,7 +3520,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig4.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[41, 112, 203, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[41, 113, 203, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098B"
          fill="0"
          fillcolor="white"
@@ -3202,7 +3532,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig4.4.0"
         x="41"
-        y="112"
+        y="113"
         width="203"
         height="21"
         fill="0"
@@ -3222,7 +3552,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig4.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[41, 134, 203, 24]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[41, 134, 203, 25]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098B"
          fill="0"
          fillcolor="white"
@@ -3236,7 +3566,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="41"
         y="134"
         width="203"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3246,18 +3576,18 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="41"
         y="134"
         width="203"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Image() : String {sequential}</text>
+      >+Image() : String</text>
     </group>
   </group>
   <group name="Fig5"
@@ -3347,20 +3677,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="97"
       y="465"
       width="221"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Customer</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[97, 465, 218, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[97, 465, 221, 0]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098E"
          fill="0"
          fillcolor="white"
@@ -3374,7 +3704,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig7.2.0"
         x="97"
         y="465"
-        width="218"
+        width="221"
         height="0"
         fill="0"
         fillcolor="white"
@@ -3384,7 +3714,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig7.3"
       x="96"
-      y="487"
+      y="488"
       width="223"
       height="1"
       fill="1"
@@ -3393,7 +3723,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[97, 488, 221, 24]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[97, 489, 221, 25]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098E"
          fill="0"
          fillcolor="white"
@@ -3405,9 +3735,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig7.4.0"
         x="97"
-        y="488"
+        y="489"
         width="221"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3415,15 +3745,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig7.4.1"
         x="97"
-        y="488"
+        y="489"
         width="221"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3432,7 +3762,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig7.5"
       x="96"
-      y="512"
+      y="513"
       width="223"
       height="1"
       fill="1"
@@ -3441,7 +3771,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig7.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[97, 513, 221, 24]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[97, 514, 221, 25]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:000000000000098E"
          fill="0"
          fillcolor="white"
@@ -3453,9 +3783,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig7.6.0"
         x="97"
-        y="513"
+        y="514"
         width="221"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3463,20 +3793,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig7.6.1"
         x="97"
-        y="513"
+        y="514"
         width="221"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Get_Name() : Text {sequential}</text>
+      >+Get_Name() : Text</text>
     </group>
   </group>
   <group name="Fig8"
@@ -3561,15 +3891,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="513"
       y="273"
       width="176"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Service</text>
@@ -3598,7 +3928,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig9.3"
       x="512"
-      y="295"
+      y="296"
       width="178"
       height="1"
       fill="1"
@@ -3607,7 +3937,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig9.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[513, 296, 176, 40]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[513, 297, 176, 42]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000992"
          fill="0"
          fillcolor="white"
@@ -3619,9 +3949,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig9.4.0"
         x="513"
-        y="296"
+        y="297"
         width="176"
-        height="40"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3629,15 +3959,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig9.4.1"
         x="513"
-        y="296"
+        y="297"
         width="176"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3645,15 +3975,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«id» +Service_At : Date</text>
       <text name="Fig9.4.2"
         x="513"
-        y="312"
+        y="314"
         width="176"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3662,7 +3992,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig9.5"
       x="512"
-      y="336"
+      y="338"
       width="178"
       height="1"
       fill="1"
@@ -3671,7 +4001,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig9.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[513, 337, 176, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[513, 339, 176, 21]"
          href="-64--88-1-3--6f3cfc90:133f03b9ce5:-8000:0000000000000992"
          fill="0"
          fillcolor="white"
@@ -3683,7 +4013,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig9.6.0"
         x="513"
-        y="337"
+        y="339"
         width="176"
         height="21"
         fill="0"
@@ -3779,20 +4109,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="369"
       y="49"
       width="139"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Book</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 49, 139, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 49, 139, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -3806,7 +4136,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="369"
         y="49"
         width="139"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3816,13 +4146,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="369"
         y="49"
         width="139"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3831,7 +4161,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.3"
       x="368"
-      y="90"
+      y="92"
       width="141"
       height="1"
       fill="1"
@@ -3840,7 +4170,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 91, 139, 24]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 93, 139, 25]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -3852,9 +4182,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.4.0"
         x="369"
-        y="91"
+        y="93"
         width="139"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -3862,15 +4192,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig0.4.1"
         x="369"
-        y="91"
+        y="93"
         width="139"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -3879,7 +4209,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.5"
       x="368"
-      y="115"
+      y="117"
       width="141"
       height="1"
       fill="1"
@@ -3888,7 +4218,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 116, 139, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 118, 139, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B7"
          fill="0"
          fillcolor="white"
@@ -3900,7 +4230,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.6.0"
         x="369"
-        y="116"
+        y="118"
         width="139"
         height="21"
         fill="0"
@@ -3935,15 +4265,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="369"
       y="329"
       width="143"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Borrower</text>
@@ -3972,7 +4302,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.3"
       x="368"
-      y="351"
+      y="352"
       width="145"
       height="1"
       fill="1"
@@ -3981,7 +4311,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 352, 143, 24]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 353, 143, 25]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
          fill="0"
          fillcolor="white"
@@ -3993,9 +4323,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.4.0"
         x="369"
-        y="352"
+        y="353"
         width="143"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4003,15 +4333,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig1.4.1"
         x="369"
-        y="352"
+        y="353"
         width="143"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4020,7 +4350,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.5"
       x="368"
-      y="376"
+      y="377"
       width="145"
       height="1"
       fill="1"
@@ -4029,7 +4359,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 377, 143, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 378, 143, 21]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018BB"
          fill="0"
          fillcolor="white"
@@ -4041,7 +4371,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.6.0"
         x="369"
-        y="377"
+        y="378"
         width="143"
         height="21"
         fill="0"
@@ -4194,20 +4524,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="1"
       y="161"
       width="201"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Current</text>
     <group name="Fig4.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1, 161, 201, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1, 161, 201, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -4221,7 +4551,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="1"
         y="161"
         width="201"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4231,13 +4561,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="1"
         y="161"
         width="201"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4246,7 +4576,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig4.3"
       x="0"
-      y="202"
+      y="204"
       width="203"
       height="1"
       fill="1"
@@ -4255,7 +4585,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig4.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[1, 203, 201, 30]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[1, 205, 201, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -4267,9 +4597,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig4.4.0"
         x="1"
-        y="203"
+        y="205"
         width="201"
-        height="30"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4278,7 +4608,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig4.5"
       x="0"
-      y="233"
+      y="234"
       width="203"
       height="1"
       fill="1"
@@ -4287,7 +4617,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig4.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[1, 234, 201, 30]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[1, 235, 201, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018C6"
          fill="0"
          fillcolor="white"
@@ -4299,9 +4629,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig4.6.0"
         x="1"
-        y="234"
+        y="235"
         width="201"
-        height="30"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4420,20 +4750,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="697"
       y="169"
       width="201"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ History</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[697, 169, 201, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[697, 169, 201, 20]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -4447,7 +4777,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="697"
         y="169"
         width="201"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4457,13 +4787,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="697"
         y="169"
         width="201"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4472,7 +4802,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig7.3"
       x="696"
-      y="210"
+      y="212"
       width="203"
       height="1"
       fill="1"
@@ -4481,7 +4811,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[697, 211, 201, 30]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[697, 213, 201, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -4493,9 +4823,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig7.4.0"
         x="697"
-        y="211"
+        y="213"
         width="201"
-        height="30"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4504,7 +4834,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig7.5"
       x="696"
-      y="241"
+      y="242"
       width="203"
       height="1"
       fill="1"
@@ -4513,7 +4843,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig7.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[697, 242, 201, 30]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[697, 243, 201, 29]"
          href="-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018CD"
          fill="0"
          fillcolor="white"
@@ -4525,9 +4855,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig7.6.0"
         x="697"
-        y="242"
+        y="243"
         width="201"
-        height="30"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4589,20 +4919,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="241"
       y="25"
       width="205"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Lamp</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[241, 25, 198, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[241, 25, 205, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -4616,7 +4946,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig0.2.0"
         x="241"
         y="25"
-        width="198"
+        width="205"
         height="0"
         fill="0"
         fillcolor="white"
@@ -4626,7 +4956,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.3"
       x="240"
-      y="47"
+      y="48"
       width="207"
       height="1"
       fill="1"
@@ -4635,7 +4965,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 48, 205, 43]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 49, 205, 42]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -4647,9 +4977,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.4.0"
         x="241"
-        y="48"
+        y="49"
         width="205"
-        height="43"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4657,15 +4987,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig0.4.1"
         x="241"
-        y="48"
+        y="49"
         width="205"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4673,15 +5003,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«id» +Name : Lamp_Name</text>
       <text name="Fig0.4.2"
         x="241"
-        y="64"
+        y="66"
         width="205"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4690,7 +5020,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.5"
       x="240"
-      y="91"
+      y="90"
       width="207"
       height="1"
       fill="1"
@@ -4699,7 +5029,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 92, 205, 91]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 91, 205, 93]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2E"
          fill="0"
          fillcolor="white"
@@ -4711,9 +5041,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.6.0"
         x="241"
-        y="92"
+        y="91"
         width="205"
-        height="91"
+        height="93"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4721,84 +5051,84 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig0.6.1"
         x="241"
-        y="92"
+        y="91"
         width="205"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«init» +Initialize() {sequential}</text>
+      >«init» +Initialize()</text>
       <text name="Fig0.6.2"
         x="241"
         y="108"
         width="205"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Clear_Timeout() {sequential}</text>
+      >+Clear_Timeout()</text>
       <text name="Fig0.6.3"
         x="241"
-        y="124"
+        y="125"
         width="205"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set_Timeout() {sequential}</text>
+      >+Set_Timeout()</text>
       <text name="Fig0.6.4"
         x="241"
-        y="140"
+        y="142"
         width="205"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Turn_Off() {sequential}</text>
+      >+Turn_Off()</text>
       <text name="Fig0.6.5"
         x="241"
-        y="156"
+        y="159"
         width="205"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Turn_On() {sequential}</text>
+      >+Turn_On()</text>
     </group>
   </group>
   <group name="Fig1"
@@ -4826,20 +5156,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="241"
       y="321"
       width="272"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Button</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[241, 321, 257, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[241, 321, 272, 0]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -4853,7 +5183,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig1.2.0"
         x="241"
         y="321"
-        width="257"
+        width="272"
         height="0"
         fill="0"
         fillcolor="white"
@@ -4863,7 +5193,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.3"
       x="240"
-      y="343"
+      y="344"
       width="274"
       height="1"
       fill="1"
@@ -4872,7 +5202,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 344, 272, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[241, 345, 272, 25]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -4884,7 +5214,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.4.0"
         x="241"
-        y="344"
+        y="345"
         width="272"
         height="25"
         fill="0"
@@ -4894,15 +5224,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig1.4.1"
         x="241"
-        y="344"
+        y="345"
         width="272"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -4920,7 +5250,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 370, 272, 41]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[241, 370, 272, 42]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2F"
          fill="0"
          fillcolor="white"
@@ -4934,7 +5264,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="241"
         y="370"
         width="272"
-        height="41"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -4944,34 +5274,34 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="241"
         y="370"
         width="272"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Changed(S : Signal_State) {sequential}</text>
+      >+Changed(S : Signal_State)</text>
       <text name="Fig1.6.2"
         x="241"
-        y="386"
+        y="387"
         width="272"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Pushed(B : Button_Name) {sequential}</text>
+      >+Pushed(B : Button_Name)</text>
     </group>
   </group>
   <group name="Fig2"
@@ -5056,20 +5386,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="369"
       y="209"
       width="201"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ A1</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 209, 201, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[369, 209, 201, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -5083,7 +5413,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="369"
         y="209"
         width="201"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5093,13 +5423,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="369"
         y="209"
         width="201"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5108,7 +5438,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig3.3"
       x="368"
-      y="250"
+      y="252"
       width="203"
       height="1"
       fill="1"
@@ -5117,7 +5447,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 251, 201, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[369, 253, 201, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -5129,7 +5459,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig3.4.0"
         x="369"
-        y="251"
+        y="253"
         width="201"
         height="21"
         fill="0"
@@ -5140,7 +5470,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig3.5"
       x="368"
-      y="272"
+      y="273"
       width="203"
       height="1"
       fill="1"
@@ -5149,7 +5479,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 273, 201, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[369, 274, 201, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C30"
          fill="0"
          fillcolor="white"
@@ -5161,7 +5491,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig3.6.0"
         x="369"
-        y="273"
+        y="274"
         width="201"
         height="21"
         fill="0"
@@ -5221,20 +5551,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="729"
       y="217"
       width="132"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Button_Name</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 217, 132, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 217, 132, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5248,7 +5578,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="217"
         width="132"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5258,13 +5588,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="217"
         width="132"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5273,7 +5603,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig5.3"
       x="728"
-      y="258"
+      y="260"
       width="134"
       height="1"
       fill="1"
@@ -5282,7 +5612,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig5.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 259, 132, 74]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 261, 132, 76]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5294,9 +5624,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig5.4.0"
         x="729"
-        y="259"
+        y="261"
         width="132"
-        height="74"
+        height="76"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5304,15 +5634,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig5.4.1"
         x="729"
-        y="259"
+        y="261"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5320,15 +5650,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Basement</text>
       <text name="Fig5.4.2"
         x="729"
-        y="275"
+        y="278"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5336,15 +5666,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Ground_Floor</text>
       <text name="Fig5.4.3"
         x="729"
-        y="291"
+        y="295"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5352,15 +5682,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >First_Floor</text>
       <text name="Fig5.4.4"
         x="729"
-        y="307"
+        y="312"
         width="132"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5369,7 +5699,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig5.5"
       x="728"
-      y="333"
+      y="336"
       width="134"
       height="1"
       fill="1"
@@ -5378,7 +5708,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig5.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 334, 132, 23]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 337, 132, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5390,9 +5720,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig5.6.0"
         x="729"
-        y="334"
+        y="337"
         width="132"
-        height="23"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5425,20 +5755,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="729"
       y="57"
       width="132"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Lamp_Name</text>
     <group name="Fig6.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 57, 132, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 57, 132, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5452,7 +5782,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="57"
         width="132"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5462,13 +5792,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="57"
         width="132"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5477,7 +5807,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig6.3"
       x="728"
-      y="98"
+      y="100"
       width="134"
       height="1"
       fill="1"
@@ -5486,7 +5816,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig6.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 99, 132, 74]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 101, 132, 76]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5498,9 +5828,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig6.4.0"
         x="729"
-        y="99"
+        y="101"
         width="132"
-        height="74"
+        height="76"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5508,15 +5838,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig6.4.1"
         x="729"
-        y="99"
+        y="101"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5524,15 +5854,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Basement</text>
       <text name="Fig6.4.2"
         x="729"
-        y="115"
+        y="118"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5540,15 +5870,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Ground_Floor</text>
       <text name="Fig6.4.3"
         x="729"
-        y="131"
+        y="135"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5556,15 +5886,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >First_Floor</text>
       <text name="Fig6.4.4"
         x="729"
-        y="147"
+        y="152"
         width="132"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5573,7 +5903,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig6.5"
       x="728"
-      y="173"
+      y="176"
       width="134"
       height="1"
       fill="1"
@@ -5582,7 +5912,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig6.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 174, 132, 23]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 177, 132, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5594,9 +5924,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig6.6.0"
         x="729"
-        y="174"
+        y="177"
         width="132"
-        height="23"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5629,20 +5959,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="729"
       y="385"
       width="108"
-      height="58"
+      height="61"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Signal_State</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 385, 108, 36]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 385, 108, 38]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A"
          fill="0"
          fillcolor="white"
@@ -5656,7 +5986,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="385"
         width="108"
-        height="36"
+        height="38"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5666,13 +5996,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="729"
         y="385"
         width="108"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5680,15 +6010,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«datatype»</text>
       <text name="Fig7.2.2"
         x="729"
-        y="402"
+        y="403"
         width="108"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -5697,7 +6027,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig7.3"
       x="728"
-      y="443"
+      y="446"
       width="110"
       height="1"
       fill="1"
@@ -5706,7 +6036,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 444, 108, 23]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 447, 108, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A"
          fill="0"
          fillcolor="white"
@@ -5718,9 +6048,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig7.4.0"
         x="729"
-        y="444"
+        y="447"
         width="108"
-        height="23"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -5801,15 +6131,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="314"
       y="224"
       width="111"
-      height="23"
+      height="24"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Idle</text>
@@ -5821,21 +6151,21 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     >
       <moveto x="312"
-              y="247" />
+              y="248" />
       <lineto x="426"
-              y="247" />
+              y="248" />
     </path>
     <text name="Fig1.4"
       x="314"
-      y="247"
+      y="248"
       width="111"
-      height="17"
+      height="16"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -5879,15 +6209,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="626"
       y="224"
       width="184"
-      height="23"
+      height="24"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Lit</text>
@@ -5899,21 +6229,21 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     >
       <moveto x="624"
-              y="247" />
+              y="248" />
       <lineto x="811"
-              y="247" />
+              y="248" />
     </path>
     <text name="Fig2.4"
       x="626"
-      y="247"
+      y="248"
       width="184"
-      height="17"
+      height="16"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -6134,7 +6464,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       name="Button Class Events"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.state.ui.FigSimpleState[192, 56, 63, 432]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[192, 56, 65, 432]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C91"
        fill="1"
        fillcolor="white"
@@ -6147,7 +6477,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     <rectangle name="Fig0.0"
       x="192"
       y="56"
-      width="63"
+      width="65"
       height="432"
       fill="1"
       fillcolor="255 0 255"
@@ -6158,7 +6488,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     <rectangle name="Fig0.1"
       x="192"
       y="56"
-      width="63"
+      width="65"
       height="432"
       fill="1"
       fillcolor="white"
@@ -6169,16 +6499,16 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     <text name="Fig0.2"
       x="194"
       y="56"
-      width="59"
-      height="23"
+      width="61"
+      height="24"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >Dummy</text>
@@ -6190,21 +6520,21 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     >
       <moveto x="192"
-              y="79" />
-      <lineto x="254"
-              y="79" />
+              y="80" />
+      <lineto x="256"
+              y="80" />
     </path>
     <text name="Fig0.4"
       x="194"
-      y="79"
-      width="59"
-      height="403"
+      y="80"
+      width="61"
+      height="402"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -6236,13 +6566,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="254"
+      <moveto x="256"
               y="88" />
       <lineto x="472"
               y="88" />
       <lineto x="472"
               y="144" />
-      <lineto x="254"
+      <lineto x="256"
               y="144" />
     </path>
   </group>
@@ -6283,9 +6613,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <lineto x="928"
               y="32" />
       <lineto x="928"
-              y="74" />
+              y="76" />
       <lineto x="977"
-              y="74" />
+              y="76" />
       <lineto x="977"
               y="131" />
       <lineto x="768"
@@ -6297,20 +6627,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="768"
       y="32"
       width="161"
-      height="43"
+      height="45"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Left"
     >Digital IO Interface</text>
     <group name="Fig0.3"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[768, 32, 160, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[768, 32, 160, 21]"
          href="-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C99"
          fill="1"
          fillcolor="white"
@@ -6324,7 +6654,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="768"
         y="32"
         width="160"
-        height="20"
+        height="21"
         fill="1"
         fillcolor="white"
         stroke="0"
@@ -6334,13 +6664,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="768"
         y="32"
         width="160"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -6349,15 +6679,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <text name="Fig0.4"
       x="768"
-      y="74"
+      y="76"
       width="210"
-      height="58"
+      height="56"
       fill="0"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
       bold="false"
       textsize="13"
@@ -6389,20 +6719,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="353"
       y="41"
       width="326"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Signal</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[353, 41, 257, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[353, 41, 326, 0]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015A6"
          fill="0"
          fillcolor="white"
@@ -6416,7 +6746,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig1.2.0"
         x="353"
         y="41"
-        width="257"
+        width="326"
         height="0"
         fill="0"
         fillcolor="white"
@@ -6426,7 +6756,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.3"
       x="352"
-      y="63"
+      y="64"
       width="328"
       height="1"
       fill="1"
@@ -6435,7 +6765,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[353, 64, 326, 43]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[353, 65, 326, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015A6"
          fill="0"
          fillcolor="white"
@@ -6447,9 +6777,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.4.0"
         x="353"
-        y="64"
+        y="65"
         width="326"
-        height="43"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -6457,15 +6787,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig1.4.1"
         x="353"
-        y="64"
+        y="65"
         width="326"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -6473,15 +6803,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«id» +S : Signal_Name</text>
       <text name="Fig1.4.2"
         x="353"
-        y="80"
+        y="82"
         width="326"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -6490,7 +6820,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.5"
       x="352"
-      y="107"
+      y="106"
       width="328"
       height="1"
       fill="1"
@@ -6499,7 +6829,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[353, 108, 326, 91]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[353, 107, 326, 93]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015A6"
          fill="0"
          fillcolor="white"
@@ -6511,9 +6841,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.6.0"
         x="353"
-        y="108"
+        y="107"
         width="326"
-        height="91"
+        height="93"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -6521,84 +6851,84 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig1.6.1"
         x="353"
-        y="108"
+        y="107"
         width="326"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«init» -Initialize() {sequential}</text>
+      >«init» -Initialize()</text>
       <text name="Fig1.6.2"
         x="353"
         y="124"
         width="326"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="true"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Changed() {sequential}</text>
+      >+Changed()</text>
       <text name="Fig1.6.3"
         x="353"
-        y="140"
+        y="141"
         width="326"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» +Get_S() : Signal_Name {sequential}</text>
+      >«accessor» +Get_S() : Signal_Name</text>
       <text name="Fig1.6.4"
         x="353"
-        y="156"
+        y="158"
         width="326"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >«accessor» +Get_State() : Boolean {sequential}</text>
+      >«accessor» +Get_State() : Boolean</text>
       <text name="Fig1.6.5"
         x="353"
-        y="172"
+        y="175"
         width="326"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set_State(To : Boolean = True) {sequential}</text>
+      >+Set_State(To : Boolean = True)</text>
     </group>
   </group>
   <group name="Fig2"
@@ -6626,20 +6956,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="201"
       y="289"
       width="170"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Input</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[201, 289, 101, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[201, 289, 170, 0]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BD"
          fill="0"
          fillcolor="white"
@@ -6653,7 +6983,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig2.2.0"
         x="201"
         y="289"
-        width="101"
+        width="170"
         height="0"
         fill="0"
         fillcolor="white"
@@ -6663,7 +6993,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig2.3"
       x="200"
-      y="311"
+      y="312"
       width="172"
       height="1"
       fill="1"
@@ -6672,7 +7002,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[201, 312, 170, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[201, 313, 170, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BD"
          fill="0"
          fillcolor="white"
@@ -6684,7 +7014,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig2.4.0"
         x="201"
-        y="312"
+        y="313"
         width="170"
         height="21"
         fill="0"
@@ -6704,7 +7034,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[201, 334, 170, 24]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[201, 334, 170, 25]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BD"
          fill="0"
          fillcolor="white"
@@ -6718,7 +7048,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="201"
         y="334"
         width="170"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -6728,18 +7058,18 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="201"
         y="334"
         width="170"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Changed() {sequential}</text>
+      >+Changed()</text>
     </group>
   </group>
   <group name="Fig3"
@@ -6767,20 +7097,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="665"
       y="281"
       width="170"
-      height="22"
+      height="23"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Output</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[665, 281, 101, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[665, 281, 170, 0]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BE"
          fill="0"
          fillcolor="white"
@@ -6794,7 +7124,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       <rectangle name="Fig3.2.0"
         x="665"
         y="281"
-        width="101"
+        width="170"
         height="0"
         fill="0"
         fillcolor="white"
@@ -6804,7 +7134,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig3.3"
       x="664"
-      y="303"
+      y="304"
       width="172"
       height="1"
       fill="1"
@@ -6813,7 +7143,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[665, 304, 170, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[665, 305, 170, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BE"
          fill="0"
          fillcolor="white"
@@ -6825,7 +7155,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig3.4.0"
         x="665"
-        y="304"
+        y="305"
         width="170"
         height="21"
         fill="0"
@@ -6845,7 +7175,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[665, 326, 170, 24]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[665, 326, 170, 25]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015BE"
          fill="0"
          fillcolor="white"
@@ -6859,7 +7189,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="665"
         y="326"
         width="170"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -6869,18 +7199,18 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="665"
         y="326"
         width="170"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Changed() {sequential}</text>
+      >+Changed()</text>
     </group>
   </group>
   <group name="Fig4"
@@ -6974,20 +7304,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="137"
       y="65"
       width="417"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Application</text>
     <group name="Fig0.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 65, 417, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 65, 417, 20]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9C"
          fill="0"
          fillcolor="white"
@@ -7001,7 +7331,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="65"
         width="417"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7011,13 +7341,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="65"
         width="417"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7026,7 +7356,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.3"
       x="136"
-      y="106"
+      y="108"
       width="419"
       height="1"
       fill="1"
@@ -7035,7 +7365,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[137, 107, 417, 21]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[137, 109, 417, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9C"
          fill="0"
          fillcolor="white"
@@ -7047,7 +7377,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.4.0"
         x="137"
-        y="107"
+        y="109"
         width="417"
         height="21"
         fill="0"
@@ -7058,7 +7388,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig0.5"
       x="136"
-      y="128"
+      y="129"
       width="419"
       height="1"
       fill="1"
@@ -7067,7 +7397,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig0.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 129, 417, 24]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 130, 417, 25]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9C"
          fill="0"
          fillcolor="white"
@@ -7079,9 +7409,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig0.6.0"
         x="137"
-        y="129"
+        y="130"
         width="417"
-        height="24"
+        height="25"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7089,20 +7419,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig0.6.1"
         x="137"
-        y="129"
+        y="130"
         width="417"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set_Output(S : Signal_Name,To_State : Boolean) {sequential}</text>
+      >+Set_Output(S : Signal_Name,To_State : Boolean)</text>
     </group>
   </group>
   <group name="Fig1"
@@ -7130,20 +7460,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="673"
       y="57"
       width="132"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Signal_Name</text>
     <group name="Fig1.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[673, 57, 132, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[673, 57, 132, 20]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -7157,7 +7487,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="673"
         y="57"
         width="132"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7167,13 +7497,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="673"
         y="57"
         width="132"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7182,7 +7512,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.3"
       x="672"
-      y="98"
+      y="100"
       width="134"
       height="1"
       fill="1"
@@ -7191,7 +7521,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[673, 99, 132, 140]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[673, 101, 132, 144]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -7203,9 +7533,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.4.0"
         x="673"
-        y="99"
+        y="101"
         width="132"
-        height="140"
+        height="144"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7213,15 +7543,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig1.4.1"
         x="673"
-        y="99"
+        y="101"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7229,15 +7559,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Floor_0</text>
       <text name="Fig1.4.2"
         x="673"
-        y="115"
+        y="118"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7245,15 +7575,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Floor_1</text>
       <text name="Fig1.4.3"
         x="673"
-        y="131"
+        y="135"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7261,15 +7591,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Floor_2</text>
       <text name="Fig1.4.4"
         x="673"
-        y="147"
+        y="152"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7277,15 +7607,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Floor_3</text>
       <text name="Fig1.4.5"
         x="673"
-        y="163"
+        y="169"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7293,15 +7623,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Lamp_A</text>
       <text name="Fig1.4.6"
         x="673"
-        y="179"
+        y="186"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7309,15 +7639,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Lamp_B</text>
       <text name="Fig1.4.7"
         x="673"
-        y="195"
+        y="203"
         width="132"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7325,15 +7655,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >Lamp_C</text>
       <text name="Fig1.4.8"
         x="673"
-        y="211"
+        y="220"
         width="132"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7342,7 +7672,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig1.5"
       x="672"
-      y="239"
+      y="244"
       width="134"
       height="1"
       fill="1"
@@ -7351,7 +7681,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig1.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[673, 240, 132, 25]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[673, 245, 132, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9F"
          fill="0"
          fillcolor="white"
@@ -7363,9 +7693,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig1.6.0"
         x="673"
-        y="240"
+        y="245"
         width="132"
-        height="25"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7398,20 +7728,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="681"
       y="289"
       width="123"
-      height="58"
+      height="61"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ Signal_State</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[681, 289, 123, 36]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[681, 289, 123, 38]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -7425,7 +7755,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="681"
         y="289"
         width="123"
-        height="36"
+        height="38"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7435,13 +7765,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="681"
         y="289"
         width="123"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7449,15 +7779,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >«datatype»</text>
       <text name="Fig2.2.2"
         x="681"
-        y="306"
+        y="307"
         width="123"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7466,7 +7796,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig2.3"
       x="680"
-      y="347"
+      y="350"
       width="125"
       height="1"
       fill="1"
@@ -7475,7 +7805,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[681, 348, 123, 41]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[681, 351, 123, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -7487,9 +7817,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig2.4.0"
         x="681"
-        y="348"
+        y="351"
         width="123"
-        height="41"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7497,15 +7827,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       />
       <text name="Fig2.4.1"
         x="681"
-        y="348"
+        y="351"
         width="123"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7513,15 +7843,15 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       >+S : Signal_Name</text>
       <text name="Fig2.4.2"
         x="681"
-        y="364"
+        y="368"
         width="123"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7530,7 +7860,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig2.5"
       x="680"
-      y="389"
+      y="392"
       width="125"
       height="1"
       fill="1"
@@ -7539,7 +7869,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[681, 390, 123, 22]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[681, 393, 123, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CA9"
          fill="0"
          fillcolor="white"
@@ -7551,9 +7881,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig2.6.0"
         x="681"
-        y="390"
+        y="393"
         width="123"
-        height="22"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7586,20 +7916,20 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       x="137"
       y="233"
       width="414"
-      height="41"
+      height="43"
       fill="0"
       fillcolor="white"
       stroke="0"
       strokecolor="black"
       textcolor="black"
-      font="Dialog"
+      font="Lucida Grande"
       italic="false"
-      bold="false"
+      bold="true"
       textsize="13"
       justification="Center"
     >+ HCI</text>
     <group name="Fig3.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 233, 414, 19]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[137, 233, 414, 20]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -7613,7 +7943,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="233"
         width="414"
-        height="19"
+        height="20"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7623,13 +7953,13 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="233"
         width="414"
-        height="17"
+        height="18"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
@@ -7638,7 +7968,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
     </group>
     <rectangle name="Fig3.3"
       x="136"
-      y="274"
+      y="276"
       width="416"
       height="1"
       fill="1"
@@ -7647,7 +7977,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[137, 275, 414, 22]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[137, 277, 414, 21]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -7659,9 +7989,9 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       
       <rectangle name="Fig3.4.0"
         x="137"
-        y="275"
+        y="277"
         width="414"
-        height="22"
+        height="21"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7679,7 +8009,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
       strokecolor="black"
     />
     <group name="Fig3.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 298, 414, 41]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[137, 298, 414, 42]"
          href="-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000CB1"
          fill="0"
          fillcolor="white"
@@ -7693,7 +8023,7 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="298"
         width="414"
-        height="41"
+        height="42"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -7703,35 +8033,603 @@ The &apos;floor&apos; signals are inputs, the &apos;lamp&apos; signals are outpu
         x="137"
         y="298"
         width="414"
-        height="16"
+        height="17"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Get_State(Of_Signal : Signal_Name) : Boolean {sequential}</text>
+      >+Get_State(Of_Signal : Signal_Name) : Boolean</text>
       <text name="Fig3.6.2"
         x="137"
-        y="314"
+        y="315"
         width="414"
-        height="22"
+        height="23"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
         textcolor="black"
-        font="Dialog"
+        font="Lucida Grande"
         italic="false"
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set_Input(Of_Signal : Signal_Name,To : Boolean) {sequential}</text>
+      >+Set_Input(Of_Signal : Signal_Name,To : Boolean)</text>
     </group>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEA"
+      name="Interrupt Handling Class Diagram"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[320, 56, 120, 163]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig0.0"
+      x="320"
+      y="56"
+      width="120"
+      height="163"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    />
+    <text name="Fig0.1"
+      x="321"
+      y="57"
+      width="118"
+      height="43"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >+ Device</text>
+    <group name="Fig0.2"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[321, 57, 118, 20]"
+         href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.2.0"
+        x="321"
+        y="57"
+        width="118"
+        height="20"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.2.1"
+        x="321"
+        y="57"
+        width="118"
+        height="18"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Center"
+      >«singleton»</text>
+    </group>
+    <rectangle name="Fig0.3"
+      x="320"
+      y="100"
+      width="120"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig0.4"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[321, 101, 118, 25]"
+         href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.4.0"
+        x="321"
+        y="101"
+        width="118"
+        height="25"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.4.1"
+        x="321"
+        y="101"
+        width="118"
+        height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >+Timeout : Timer</text>
+    </group>
+    <rectangle name="Fig0.5"
+      x="320"
+      y="125"
+      width="120"
+      height="1"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+    <group name="Fig0.6"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[321, 126, 118, 93]"
+         href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CEC"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig0.6.0"
+        x="321"
+        y="126"
+        width="118"
+        height="93"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+      <text name="Fig0.6.1"
+        x="321"
+        y="126"
+        width="118"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >«init» -Initialize()</text>
+      <text name="Fig0.6.2"
+        x="321"
+        y="143"
+        width="118"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >-Clear_Timeout()</text>
+      <text name="Fig0.6.3"
+        x="321"
+        y="160"
+        width="118"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >-Report_Entry()</text>
+      <text name="Fig0.6.4"
+        x="321"
+        y="177"
+        width="118"
+        height="17"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >-Set_Timeout()</text>
+      <text name="Fig0.6.5"
+        x="321"
+        y="194"
+        width="118"
+        height="23"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Lucida Grande"
+        italic="false"
+        bold="false"
+        textsize="13"
+        justification="Left"
+      >«entry» -Start()</text>
+    </group>
+  </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFB"
+      name="Device Lifecycle"
+>
+  <group name="Fig0"
+       description="org.argouml.uml.diagram.state.ui.FigInitialState[128, 192, 16, 16]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFD"
+       fill="1"
+       fillcolor="black"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <ellipse name="Fig0.0"
+      x="136"
+      y="200"
+      rx="8"
+      ry="8"
+      fill="0"
+      fillcolor="255 0 255"
+      stroke="0"
+      strokecolor="255 0 255"
+    />
+    <ellipse name="Fig0.1"
+      x="136"
+      y="200"
+      rx="8"
+      ry="8"
+      fill="1"
+      fillcolor="black"
+      stroke="1"
+      strokecolor="black"
+    />
+  </group>
+  <group name="Fig1"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[256, 176, 214, 46]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000CFE"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig1.0"
+      x="256"
+      y="176"
+      width="214"
+      height="46"
+      fill="1"
+      fillcolor="255 0 255"
+      stroke="0"
+      strokecolor="255 0 255"
+      rounding="16"
+    />
+    <rectangle name="Fig1.1"
+      x="256"
+      y="176"
+      width="214"
+      height="46"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      rounding="16"
+    />
+    <text name="Fig1.2"
+      x="258"
+      y="176"
+      width="210"
+      height="24"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >Idle</text>
+    <path name="Fig1.3"
+      description="org.tigris.gef.presentation.FigLine"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="256"
+              y="200" />
+      <lineto x="469"
+              y="200" />
+    </path>
+    <text name="Fig1.4"
+      x="258"
+      y="200"
+      width="210"
+      height="16"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    >entry /Report_Entry; Set_Timeout</text>
+  </group>
+  <group name="Fig2"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[616, 176, 227, 46]pathVisible=false;stereotypeView=0;"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D01"
+       fill="1"
+       fillcolor="white"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig2.0"
+      x="616"
+      y="176"
+      width="227"
+      height="46"
+      fill="1"
+      fillcolor="255 0 255"
+      stroke="0"
+      strokecolor="255 0 255"
+      rounding="16"
+    />
+    <rectangle name="Fig2.1"
+      x="616"
+      y="176"
+      width="227"
+      height="46"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+      rounding="16"
+    />
+    <text name="Fig2.2"
+      x="618"
+      y="176"
+      width="223"
+      height="24"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="true"
+      textsize="13"
+      justification="Center"
+    >Interrupted</text>
+    <path name="Fig2.3"
+      description="org.tigris.gef.presentation.FigLine"
+      fill="1"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="616"
+              y="200" />
+      <lineto x="842"
+              y="200" />
+    </path>
+    <text name="Fig2.4"
+      x="618"
+      y="200"
+      width="223"
+      height="16"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Lucida Grande"
+      italic="false"
+      bold="false"
+      textsize="13"
+      justification="Left"
+    >entry /Report_Entry; Clear_Timeout</text>
+  </group>
+  <group name="Fig3"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D06"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig0.0"
+      destPortFig="Fig1.0"
+      sourceFigNode="Fig0"
+      destFigNode="Fig1"
+      <argouml:pathitem figname="Fig3.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D06"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig3.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="144"
+              y="200" />
+      <lineto x="256"
+              y="200" />
+    </path>
+  </group>
+  <group name="Fig4"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D07"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig1.0"
+      destPortFig="Fig2.0"
+      sourceFigNode="Fig1"
+      destFigNode="Fig2"
+      <argouml:pathitem figname="Fig4.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D07"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig4.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="432"
+              y="176" />
+      <lineto x="432"
+              y="88" />
+      <lineto x="720"
+              y="88" />
+      <lineto x="720"
+              y="176" />
+    </path>
+  </group>
+  <group name="Fig5"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D08"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig2.0"
+      destPortFig="Fig1.0"
+      sourceFigNode="Fig2"
+      destFigNode="Fig1"
+      <argouml:pathitem figname="Fig5.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D08"
+                        angle="270.0"
+                        offset="10" />
+    </private>
+    <path name="Fig5.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="720"
+              y="221" />
+      <lineto x="720"
+              y="304" />
+      <lineto x="432"
+              y="304" />
+      <lineto x="432"
+              y="221" />
+    </path>
+  </group>
+  <group name="Fig6"
+       description="org.argouml.uml.diagram.state.ui.FigTransition"
+       href="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D09"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig1.0"
+      destPortFig="Fig1.0"
+      sourceFigNode="Fig1"
+      destFigNode="Fig1"
+      <argouml:pathitem figname="Fig6.1"
+                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
+                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
+                        ownerhref="-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D09"
+                        angle="116.0"
+                        offset="15" />
+    </private>
+    <path name="Fig6.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="272"
+              y="221" />
+      <lineto x="272"
+              y="304" />
+      <lineto x="344"
+              y="304" />
+      <lineto x="344"
+              y="221" />
+    </path>
   </group>
 </pgml>
 <todo>
