@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 4a97c16d333b $
---  $Date: 2012/01/11 11:02:27 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -25,7 +25,7 @@ with Normalize_XMI.Model.Operations;
 package body Normalize_XMI.Model.Enumerations is
 
 
-   function Read_Enumeration (From : DOM.Core.Node;
+   function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;

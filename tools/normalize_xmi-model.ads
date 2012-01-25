@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -26,8 +26,8 @@ with DOM.Core;
 
 private package Normalize_XMI.Model is
 
-   procedure Process_Domain (From : DOM.Core.Node; In_File : String);
-   --  XXX not sure how to deal with <<interface>> subpackages.
+   procedure Process_Domain (From    : not null DOM.Core.Node;
+                             In_File : String);
 
 private
 
@@ -66,6 +66,7 @@ private
    procedure Populate (E : in out Element; From : DOM.Core.Node);
 
    --  Search up the Parent tree to find a Class 'Named'.
+   --  Overridden in Domains.
    function Find_Class (Known_To : Element; Named : String) return Element_P;
 
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean;

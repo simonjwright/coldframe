@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.ads,v $
---  $Revision: 8e850f2a9433 $
---  $Date: 2012/01/18 22:28:08 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Generalizations is
@@ -27,8 +27,8 @@ private package Normalize_XMI.Model.Generalizations is
    --  It accumulates the results in Accumulating_In, which is a map
    --  of Generalization_Elements.
    procedure Read_Generalization
-     (From : DOM.Core.Node;
-      Parent : not null Element_P;
+     (From            :        not null DOM.Core.Node;
+      Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map);
 
 private

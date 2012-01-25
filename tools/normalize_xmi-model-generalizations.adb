@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-generalizations.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -26,8 +26,8 @@ package body Normalize_XMI.Model.Generalizations is
 
 
    procedure Read_Generalization
-     (From : DOM.Core.Node;
-      Parent : not null Element_P;
+     (From            :        not null DOM.Core.Node;
+      Parent          :        not null Element_P;
       Accumulating_In : in out Element_Maps.Map)
    is
       use Ada.Text_IO;

@@ -13,13 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.ads,v $
---  $Revision: c20a05b7a967 $
---  $Date: 2012/01/06 22:09:27 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Associations is
 
-   function Read_Association (From : DOM.Core.Node;
+   function Read_Association (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P;
 
    --  Public because Association_Classes needs to know.
@@ -29,8 +29,8 @@ private package Normalize_XMI.Model.Associations is
 
    --  This procedure is available for use by package Association_Classes.
    procedure Populate_Association_Aspects (Of_Element : not null Element_P;
-                                           From : DOM.Core.Node;
-                                           Parent : not null Element_P);
+                                           From       : not null DOM.Core.Node;
+                                           Parent     : not null Element_P);
 
 private
 

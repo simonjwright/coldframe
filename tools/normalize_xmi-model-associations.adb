@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-associations.adb,v $
---  $Revision: 4b73aa0c47e2 $
---  $Date: 2012/01/24 23:56:23 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -26,7 +26,7 @@ with Normalize_XMI.Model.Classes;
 package body Normalize_XMI.Model.Associations is
 
 
-   function Read_Association (From : DOM.Core.Node;
+   function Read_Association (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P
    is
       N : constant Element_P := new Association_Element;
@@ -37,8 +37,8 @@ package body Normalize_XMI.Model.Associations is
 
 
    procedure Populate_Association_Aspects (Of_Element : not null Element_P;
-                                           From : DOM.Core.Node;
-                                           Parent : not null Element_P)
+                                           From       : not null DOM.Core.Node;
+                                           Parent     : not null Element_P)
    is
       use Ada.Text_IO;
       A : Association_Element renames Association_Element (Of_Element.all);

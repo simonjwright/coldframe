@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-association_classes.adb,v $
---  $Revision: 4b73aa0c47e2 $
---  $Date: 2012/01/24 23:56:23 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with Normalize_XMI.Messages;
@@ -25,7 +25,7 @@ package body Normalize_XMI.Model.Association_Classes is
 
 
    function Read_Association_Class
-     (From : DOM.Core.Node;
+     (From   : not null DOM.Core.Node;
       Parent : not null Element_P) return Element_P
    is
       N : constant Element_P := new Association_Class_Element;
@@ -65,11 +65,9 @@ package body Normalize_XMI.Model.Association_Classes is
          E1 : Association_Ends.Association_End_Element
            renames Association_Ends.Association_End_Element
            (AC.Ends.Element (1).all);
-         C1 : constant Element_P := E1.Participant;
          E2 : Association_Ends.Association_End_Element
            renames Association_Ends.Association_End_Element
            (AC.Ends.Element (2).all);
-         C2 : constant Element_P := E2.Participant;
          use Association_Ends;
       begin
          if E1.Source and E2.Source then

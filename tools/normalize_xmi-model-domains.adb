@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -35,7 +35,8 @@ package body Normalize_XMI.Model.Domains is
 
    procedure Add_Standard_Types (To : in out Element_Maps.Map);
 
-   procedure Process_Domain (From : DOM.Core.Node; In_File : String)
+   procedure Process_Domain (From    : not null DOM.Core.Node;
+                             In_File : String)
    is
       D : aliased Domain;
    begin

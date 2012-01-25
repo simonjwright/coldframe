@@ -13,13 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Enumerations is
 
-   function Read_Enumeration (From : DOM.Core.Node;
+   function Read_Enumeration (From   : not null DOM.Core.Node;
                               Parent : not null Element_P) return Element_P;
 
 private

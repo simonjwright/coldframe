@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -28,7 +28,7 @@ with Normalize_XMI.Model.State_Machines;
 package body Normalize_XMI.Model.Classes is
 
 
-   function Read_Class (From : DOM.Core.Node;
+   function Read_Class (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
@@ -148,11 +148,11 @@ package body Normalize_XMI.Model.Classes is
 
    not overriding
    procedure Create_Referential_Attribute
-     (In_Class : in out Class_Element;
-      Referring_To : Element_P;
-      For_Relationship : Element_P;
-      With_Source_Role_Name : String;
-      Forming_Identifier : Boolean)
+     (In_Class              : in out Class_Element;
+      Referring_To          :        not null Element_P;
+      For_Relationship      :        not null Element_P;
+      With_Source_Role_Name :        String;
+      Forming_Identifier    :        Boolean)
    is
       procedure Handle_If_Already_Formalized (Pos : Element_Maps.Cursor);
       Already_Formalized : Boolean := False;

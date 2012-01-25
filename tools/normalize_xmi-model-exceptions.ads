@@ -13,13 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-exceptions.ads,v $
---  $Revision: 7170a20c9b72 $
---  $Date: 2011/12/19 15:17:04 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Exceptions is
 
-   function Read_Exception (From : DOM.Core.Node;
+   function Read_Exception (From   : not null DOM.Core.Node;
                             Parent : not null Element_P) return Element_P;
 
 private

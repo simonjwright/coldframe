@@ -13,13 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-classes.ads,v $
---  $Revision: 12a6c3b1d22b $
---  $Date: 2012/01/22 19:05:53 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Classes is
 
-   function Read_Class (From : DOM.Core.Node;
+   function Read_Class (From   : not null DOM.Core.Node;
                         Parent : not null Element_P) return Element_P;
 
    type Class_Element is new Element with private;
@@ -44,11 +44,11 @@ private package Normalize_XMI.Model.Classes is
    --  for associative classes and for children in generalizations.
    not overriding
    procedure Create_Referential_Attribute
-     (In_Class : in out Class_Element;
-      Referring_To : Element_P;
-      For_Relationship : Element_P;
-      With_Source_Role_Name : String;
-      Forming_Identifier : Boolean);
+     (In_Class              : in out Class_Element;
+      Referring_To          :        not null Element_P;
+      For_Relationship      :        not null Element_P;
+      With_Source_Role_Name :        String;
+      Forming_Identifier    :        Boolean);
 
 private
 
@@ -61,7 +61,6 @@ private
    procedure Resolve (C : in out Class_Element);
    overriding
    procedure Output (C : Class_Element; To : Ada.Text_IO.File_Type);
-
 
    type Referential_Attribute_Element is new Element with record
       Referring_To          : Element_P;

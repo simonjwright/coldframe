@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-class_types.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 4832d3f648a3 $
+--  $Date: 2012/01/25 15:17:08 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -26,7 +26,7 @@ with Normalize_XMI.Model.Operations;
 package body Normalize_XMI.Model.Class_Types is
 
 
-   function Read_Class_Type (From : DOM.Core.Node;
+   function Read_Class_Type (From   : not null DOM.Core.Node;
                              Parent : not null Element_P) return Element_P
    is
       use Ada.Text_IO;
