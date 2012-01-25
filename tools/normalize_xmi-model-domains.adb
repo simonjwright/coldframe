@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -217,11 +217,12 @@ package body Normalize_XMI.Model.Domains is
 
 
    overriding
-   function Find_Class (Known_To : Domain; Named : String) return Element_P
+   function Find_Class (Known_To        : Domain;
+                        With_Model_Name : String) return Element_P
    is
    begin
-      if Known_To.Classes.Contains (Named) then
-         return Known_To.Classes.Element (Named);
+      if Known_To.Classes.Contains (With_Model_Name) then
+         return Known_To.Classes.Element (With_Model_Name);
       else
          return null;
       end if;

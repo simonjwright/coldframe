@@ -13,13 +13,14 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
 with Normalize_XMI.Messages;
+with Normalize_XMI.Model.Types;
 
 package body Normalize_XMI.Model.Parameters is
 
@@ -44,7 +45,8 @@ package body Normalize_XMI.Model.Parameters is
            (DOM.Core.Nodes.Length (Nodes) = 1,
             "should be 1 'UML:Parameter.type/*' child of a Parameter");
       begin
-         P.Type_Name := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
+         P.Parameter_Type := Types.Read_Type (DOM.Core.Nodes.Item (Nodes, 0),
+                                              Parent => N);
       end;
 
       --  Default value
@@ -97,7 +99,9 @@ package body Normalize_XMI.Model.Parameters is
       end;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+P.Name) & "</name>");
-      Put_Line (To, "<type>" & (+P.Type_Name) & "</type>");
+      Put_Line (To, "<type>"
+                  & Types.Type_Element (P.Parameter_Type.all).Type_Name
+                  & "</type>");
       if +P.Default_Value /= "" then
          Put_Line (To, "<default>" & (+P.Default_Value) & "</default>");
       end if;

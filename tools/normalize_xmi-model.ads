@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -65,9 +65,18 @@ private
    --  Fill in the Node, Stereotypes, and Tagged_Values fields.
    procedure Populate (E : in out Element; From : DOM.Core.Node);
 
-   --  Search up the Parent tree to find a Class 'Named'.
-   --  Overridden in Domains.
-   function Find_Class (Known_To : Element; Named : String) return Element_P;
+   --  Search up the Parent tree to find a Class which is named
+   --  'With_Model_Name' in the model. The point of this is, of
+   --  course, to find the Class; the Name shenanigans is because the
+   --  Class corresponding to an AssociationClass (what OOA would
+   --  think of as the associative class) has to have its .Name
+   --  component changed to avoid the clash of names with the
+   --  association itself.
+   --
+   --  Overridden in Domains, which searches its class map, which is
+   --  keyed by the original name.
+   function Find_Class (Known_To        : Element;
+                        With_Model_Name : String) return Element_P;
 
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean;
 

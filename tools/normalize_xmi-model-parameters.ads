@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-parameters.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 private package Normalize_XMI.Model.Parameters is
@@ -25,7 +25,7 @@ private package Normalize_XMI.Model.Parameters is
 private
 
    type Parameter_Element is new Element with record
-      Type_Name : Ada.Strings.Unbounded.Unbounded_String;
+      Parameter_Type : Element_P;
       Default_Value : Ada.Strings.Unbounded.Unbounded_String;
    end record;
    overriding

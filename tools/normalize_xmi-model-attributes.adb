@@ -13,12 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
+with Normalize_XMI.Model.Types;
 
 package body Normalize_XMI.Model.Attributes is
 
@@ -44,7 +45,8 @@ package body Normalize_XMI.Model.Attributes is
             "should be 1 'UML:StructuralFeature.type/*' child"
               & "of an Attribute");
       begin
-         A.Type_Name := +Read_Name (DOM.Core.Nodes.Item (Nodes, 0));
+         A.Attribute_Type := Types.Read_Type (DOM.Core.Nodes.Item (Nodes, 0),
+                                              Parent => N);
       end;
 
       --  Initial value
@@ -76,6 +78,7 @@ package body Normalize_XMI.Model.Attributes is
    procedure Output (A : Attribute_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
+      T : Types.Type_Element renames Types.Type_Element (A.Attribute_Type.all);
    begin
       Put (To, "<attribute");
       if A.Has_Stereotype ("aliased") then
@@ -96,7 +99,7 @@ package body Normalize_XMI.Model.Attributes is
       if A.Has_Stereotype ("id") then
          Put (To, " identifier='true'");
          if A.Has_Tag ("formalizes") then
-            Put (To, " refers='" & (+A.Type_Name) & "'");
+            Put (To, " refers='" & T.Type_Name & "'");
             Put (To, " relation='" & A.Tag_As_Name ("formalizes") & "'");
          end if;
       end if;
@@ -105,7 +108,7 @@ package body Normalize_XMI.Model.Attributes is
       end if;
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+A.Name) & "</name>");
-      Put_Line (To, "<type>" & (+A.Type_Name) & "</type>");
+      Put_Line (To, "<type>" & T.Type_Name & "</type>");
       if +A.Initial_Value /= "" then
          Put_Line (To, "<initial>" & (+A.Initial_Value) & "</initial>");
       end if;

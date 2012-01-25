@@ -74,10 +74,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 24 21:08:54 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Wed Jan 25 15:10:38 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/24 23:56:23 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/25 16:31:46 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -94,7 +94,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BED'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b73aa0c47e2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 7d1ad741f319 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -424,7 +424,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--5ef3403a:1345db48283:-8000:0000000000000BEC'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b73aa0c47e2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 7d1ad741f319 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -976,7 +976,7 @@
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001160'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: 4b73aa0c47e2 $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: 7d1ad741f319 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1377,13 +1377,13 @@
               name = 'B' visibility = 'public' isSpecification = 'false' isRoot = 'false'
               isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
               <UML:Classifier.feature>
-                <UML:Attribute xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CCF'
-                  name = 'Id' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
-                  changeability = 'changeable' targetScope = 'instance'>
+                <UML:Attribute xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CD9'
+                  name = 'The_A8_Instance' visibility = 'public' isSpecification = 'false'
+                  ownerScope = 'instance' changeability = 'changeable' targetScope = 'instance'>
                   <UML:StructuralFeature.multiplicity>
-                    <UML:Multiplicity xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CD0'>
+                    <UML:Multiplicity xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CDA'>
                       <UML:Multiplicity.range>
-                        <UML:MultiplicityRange xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CD1'
+                        <UML:MultiplicityRange xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CDB'
                           lower = '1' upper = '1'/>
                       </UML:Multiplicity.range>
                     </UML:Multiplicity>
@@ -1391,8 +1391,17 @@
                   <UML:ModelElement.stereotype>
                     <UML:Stereotype href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-id'/>
                   </UML:ModelElement.stereotype>
+                  <UML:ModelElement.taggedValue>
+                    <UML:TaggedValue xmi.id = '-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CDC'
+                      isSpecification = 'false'>
+                      <UML:TaggedValue.dataValue>A9</UML:TaggedValue.dataValue>
+                      <UML:TaggedValue.type>
+                        <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-id-td-formalizes'/>
+                      </UML:TaggedValue.type>
+                    </UML:TaggedValue>
+                  </UML:ModelElement.taggedValue>
                   <UML:StructuralFeature.type>
-                    <UML:DataType href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-dt-Autonumber'/>
+                    <UML:AssociationClass xmi.idref = '-64--88-1-4--601afa77:1349f53754d:-8000:0000000000001153'/>
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
               </UML:Classifier.feature>
@@ -7315,7 +7324,7 @@
     </path>
   </group>
   <group name="Fig29"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[464, 696, 152, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[464, 696, 184, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CCE"
        fill="1"
        fillcolor="white"
@@ -7328,7 +7337,7 @@
     <rectangle name="Fig29.0"
       x="464"
       y="696"
-      width="152"
+      width="184"
       height="71"
       fill="1"
       fillcolor="white"
@@ -7338,7 +7347,7 @@
     <text name="Fig29.1"
       x="465"
       y="697"
-      width="150"
+      width="182"
       height="23"
       fill="0"
       fillcolor="white"
@@ -7377,7 +7386,7 @@
     <rectangle name="Fig29.3"
       x="464"
       y="720"
-      width="152"
+      width="184"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7385,7 +7394,7 @@
       strokecolor="black"
     />
     <group name="Fig29.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[465, 721, 150, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[465, 721, 182, 25]"
          href="-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CCE"
          fill="0"
          fillcolor="white"
@@ -7398,7 +7407,7 @@
       <rectangle name="Fig29.4.0"
         x="465"
         y="721"
-        width="150"
+        width="182"
         height="25"
         fill="0"
         fillcolor="white"
@@ -7408,7 +7417,7 @@
       <text name="Fig29.4.1"
         x="465"
         y="721"
-        width="150"
+        width="182"
         height="23"
         fill="0"
         fillcolor="white"
@@ -7420,12 +7429,12 @@
         bold="false"
         textsize="13"
         justification="Left"
-      >«id» +Id : Autonumber</text>
+      >«id» +The_A8_Instance : A8</text>
     </group>
     <rectangle name="Fig29.5"
       x="464"
       y="745"
-      width="152"
+      width="184"
       height="1"
       fill="1"
       fillcolor="black"
@@ -7433,7 +7442,7 @@
       strokecolor="black"
     />
     <group name="Fig29.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[465, 746, 150, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[465, 746, 182, 21]"
          href="-64--88-1-3-2eaabdbc:135118748fe:-8000:0000000000000CCE"
          fill="0"
          fillcolor="white"
@@ -7446,7 +7455,7 @@
       <rectangle name="Fig29.6.0"
         x="465"
         y="746"
-        width="150"
+        width="182"
         height="21"
         fill="0"
         fillcolor="white"

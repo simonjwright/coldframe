@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 7d1ad741f319 $
+--  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -96,12 +96,13 @@ package body Normalize_XMI.Model is
    end Populate;
 
 
-   function Find_Class (Known_To : Element; Named : String) return Element_P
+   function Find_Class (Known_To        : Element;
+                        With_Model_Name : String) return Element_P
    is
    begin
       pragma Assert (Known_To.Parent /= null,
                      "Parent reference is null");
-      return Known_To.Parent.Find_Class (Named);
+      return Known_To.Parent.Find_Class (With_Model_Name);
    end Find_Class;
 
 

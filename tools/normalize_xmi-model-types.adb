@@ -12,34 +12,35 @@
 --  write to the Free Software Foundation, 59 Temple Place - Suite
 --  330, Boston, MA 02111-1307, USA.
 
---  $RCSfile: normalize_xmi-model-domains.ads,v $
+--  $RCSfile: normalize_xmi-model-types.adb,v $
 --  $Revision: 7d1ad741f319 $
 --  $Date: 2012/01/25 16:31:46 $
 --  $Author: simonjwright $
 
-with GNAT.OS_Lib;
+package body Normalize_XMI.Model.Types is
 
-package Normalize_XMI.Model.Domains is
+   function Read_Type (From   : not null DOM.Core.Node;
+                       Parent : not null Element_P) return Element_P
+   is
+      N : constant Element_P := new Type_Element;
+   begin
+      N.Parent := Parent;
+      N.Name := +Read_Name (From_Element => From);
+      return N;
+   end Read_Type;
 
-   procedure Process_Domain (From    : not null DOM.Core.Node;
-                             In_File : String);
 
-private
+   not overriding
+   function Type_Name (T : Type_Element) return String
+   is
+      Model_Name : constant String := +T.Name;
+      Class : constant Element_P := T.Find_Class (Model_Name);
+   begin
+      if Class = null then
+         return Model_Name;
+      else
+         return +Class.Name;
+      end if;
+   end Type_Name;
 
-   type Domain is new Element with record
-      File_Time : GNAT.OS_Lib.OS_Time;
-      Classes : Element_Maps.Map;
-      Types : Element_Maps.Map;
-      Associations : Element_Maps.Map;
-      Generalizations : Element_Maps.Map;
-      Exceptions : Element_Maps.Map;
-   end record;
-   overriding
-   function Find_Class (Known_To        : Domain;
-                        With_Model_Name : String) return Element_P;
-   overriding
-   procedure Resolve (D : in out Domain);
-   overriding
-   procedure Output (D : Domain; To : Ada.Text_IO.File_Type);
-
-end Normalize_XMI.Model.Domains;
+end Normalize_XMI.Model.Types;
