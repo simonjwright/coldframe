@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: 45ea517722e2 $
+--  $Date: 2012/02/02 18:04:10 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -33,9 +33,9 @@ package body Normalize_XMI.Model.Data_Types is
       T : Data_Type_Element renames Data_Type_Element (N.all);
    begin
       T.Parent := Parent;
-      T.Populate (From => From);
       T.Name := +Read_Name (From_Element => From);
       Put_Line (Standard_Error, "... reading data type " & (+T.Name));
+      T.Populate (From => From);
 
       --  Attributes
       declare
@@ -86,8 +86,36 @@ package body Normalize_XMI.Model.Data_Types is
       begin
          Element_Maps.Element (Pos).Resolve;
       end Resolve;
+      use type Ada.Containers.Count_Type;
    begin
       Put_Line (Standard_Error, "... checking data type " & (+T.Name));
+      if T.Has_Stereotype ("access-to-operation") then
+         if T.Operations.Length /= 1 then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " is marked <<access-to-operation>> but has"
+                 & T.Operations.Length'Img
+                 & " operations.");
+         else
+            declare
+               Operation_Name : constant String
+                 := +T.Operations.First_Element.Name;
+            begin
+               if Operation_Name /= +T.Name then
+                  Messages.Warning
+                    ("Operation "
+                       & (+T.Name)
+                       & "."
+                       & Operation_Name
+                       & " renamed to "
+                       & (+T.Name)
+                       & ".");
+                  T.Operations.First_Element.Name := T.Name;
+               end if;
+            end;
+         end if;
+      end if;
       --  There are all sorts of complicated illegal possibilities
       --  here!
       if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
@@ -124,11 +152,14 @@ package body Normalize_XMI.Model.Data_Types is
       end Output;
    begin
       Put (To, "<type");
-      if T.Has_Stereotype ("null") then
-         Put (To, " null='true'");
+      if T.Has_Stereotype ("access-to-operation") then
+         Put (To, " access-to-operation='true'");
       end if;
       if T.Has_Stereotype ("callback") then
          Put (To, " callback='true'");
+      end if;
+      if T.Has_Stereotype ("null") then
+         Put (To, " null='true'");
       end if;
       declare
          Visibility : constant String
@@ -143,6 +174,9 @@ package body Normalize_XMI.Model.Data_Types is
       Put_Line (To, ">");
       Put_Line (To, "<name>" & (+T.Name) & "</name>");
       T.Output_Documentation (To);
+      if T.Has_Stereotype ("counterpart") then
+         Put_Line (To, "<counterpart/>");
+      end if;
       if T.Has_Tag ("imported") then
          Put_Line (To,
                    "<imported>" & T.Tag_As_Name ("imported") & "</imported>");

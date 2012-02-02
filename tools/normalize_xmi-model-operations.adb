@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 55c4c94ea007 $
---  $Date: 2012/01/23 00:29:31 $
+--  $Revision: 45ea517722e2 $
+--  $Date: 2012/02/02 18:04:10 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -119,6 +119,9 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " abstract='true'");
          end if;
       end;
+      if O.Has_Stereotype ("access") then
+         Put (To, " access='true'");
+      end if;
       declare
          Owner_Scope : constant String
            := Read_Attribute ("ownerScope", From_Element => O.Node);
@@ -133,6 +136,9 @@ package body Normalize_XMI.Model.Operations is
       end if;
       if O.Has_Stereotype ("init") then
          Put (To, " initialize='true'");
+      end if;
+      if O.Has_Tag ("renames") then
+         Put (To, " renames='" & O.Tag_As_Name ("renames") & "'");
       end if;
       if Ada.Strings.Unbounded.Length (O.Return_Type) > 0 then
          Put (To, " return='" & (+O.Return_Type) & "'");
