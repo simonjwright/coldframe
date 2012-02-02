@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
+--  $Revision: 485a333c5a26 $
+--  $Date: 2012/02/02 18:08:03 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -83,9 +83,17 @@ package body Normalize_XMI.Model is
                  := McKae.XML.XPath.XIA.XPath_Query
                  (DOM.Core.Nodes.Item (T, J),
                   "UML:TaggedValue.type/UML:TagDefinition/@name");
+               pragma Assert
+                 (DOM.Core.Nodes.Length (Tag) = 1,
+                  "bad length for "
+                    & "UML:TaggedValue.type/UML:TagDefinition/@name");
                Value : constant DOM.Core.Node_List
                  := McKae.XML.XPath.XIA.XPath_Query
                  (DOM.Core.Nodes.Item (T, J), "UML:TaggedValue.dataValue");
+               pragma Assert
+                 (DOM.Core.Nodes.Length (Value) = 1,
+                  "bad length for "
+                    & "UML:TaggedValue.dataValue");
             begin
                E.Tagged_Values.Insert
                  (DOM.Core.Nodes.Node_Value (DOM.Core.Nodes.Item (Tag, 0)),
