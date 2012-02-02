@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- $Id: generate-profile-html.xsl,v 44eb4bf37f89 2011/12/17 21:43:54 simonjwright $ -->
+<!-- $Id: generate-profile-html.xsl,v 2502fb0e3c2e 2012/02/02 18:09:26 simonjwright $ -->
 <!-- Copyright (C) Simon Wright <simon@pushface.org> -->
 
 <!--
@@ -27,7 +27,7 @@
 
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:UML="org.omg.xmi.namespace.UML"
+  xmlns:UML="http://www.omg.org/spec/XMI"
   version="1.0">
 
   <xsl:strip-space elements="*"/>
@@ -140,10 +140,10 @@
         </table>
       </td>
       <td>
-        <!-- Might there be other taggedValues? -->
         <xsl:value-of
           select="UML:ModelElement.taggedValue
                   /UML:TaggedValue
+                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
                   /UML:TaggedValue.dataValue"/>
       </td>
       <td>
@@ -170,10 +170,10 @@
         <a name="st-{../../@name}-tag-{@name}"><xsl:value-of select="@name"/></a>
       </td>
       <td>
-        <!-- Might there be other taggedValues? -->
         <xsl:value-of
           select="UML:ModelElement.taggedValue
                   /UML:TaggedValue
+                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
                   /UML:TaggedValue.dataValue"/>
       </td>
       <td>
@@ -188,10 +188,10 @@
         <xsl:value-of select="@name"/>
       </td>
       <td>
-        <!-- Might there be other taggedValues? -->
         <xsl:value-of
           select="UML:ModelElement.taggedValue
                   /UML:TaggedValue
+                  [UML:TaggedValue.type/UML:TagDefinition/@name='documentation']
                   /UML:TaggedValue.dataValue"/>
       </td>
     </tr>
