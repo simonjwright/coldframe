@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-enumerations.adb,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: c3a01e5d21e1 $
+--  $Date: 2012/02/09 17:17:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -112,6 +112,9 @@ package body Normalize_XMI.Model.Enumerations is
       end Output_Literal;
    begin
       Put (To, "<type");
+      if E.Accessor /= null then
+         Put (To, " access='" & (+E.Accessor.Name) & "'");
+      end if;
       declare
          Visibility : constant String
            := Read_Attribute ("visibility", From_Element => E.Node);

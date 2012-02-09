@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.adb,v $
---  $Revision: 45ea517722e2 $
---  $Date: 2012/02/02 18:04:10 $
+--  $Revision: c3a01e5d21e1 $
+--  $Date: 2012/02/09 17:17:31 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -89,52 +89,72 @@ package body Normalize_XMI.Model.Data_Types is
       use type Ada.Containers.Count_Type;
    begin
       Put_Line (Standard_Error, "... checking data type " & (+T.Name));
-      if T.Has_Stereotype ("access-to-operation") then
-         if T.Operations.Length /= 1 then
+      if T.Has_Stereotype ("access") then
+         declare
+            Target_Type_Name : constant String
+              := T.Tag_As_Name ("access-to-type");
+            Target_Type : constant Element_P := T.Find_Type (Target_Type_Name);
+         begin
+            if Target_Type = null then
+               Messages.Error
+                 ("Type '"
+                    & Target_Type_Name
+                    & "' designated by <<access>> type "
+                    & (+T.Name)
+                    & " not found.");
+            else
+               Types.Type_Element (Target_Type.all).Accessor
+                 := T'Unchecked_Access;
+            end if;
+         end;
+      else
+         if T.Has_Stereotype ("access-to-operation") then
+            if T.Operations.Length /= 1 then
+               Messages.Error
+                 ("Type "
+                    & (+T.Name)
+                    & " is marked <<access-to-operation>> but has"
+                    & T.Operations.Length'Img
+                    & " operations.");
+            else
+               declare
+                  Operation_Name : constant String
+                    := +T.Operations.First_Element.Name;
+               begin
+                  if Operation_Name /= +T.Name then
+                     Messages.Warning
+                       ("Operation "
+                          & (+T.Name)
+                          & "."
+                          & Operation_Name
+                          & " renamed to "
+                          & (+T.Name)
+                          & ".");
+                     T.Operations.First_Element.Name := T.Name;
+                  end if;
+               end;
+            end if;
+         end if;
+         --  There are all sorts of complicated illegal possibilities
+         --  here!
+         if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
             Messages.Error
               ("Type "
                  & (+T.Name)
-                 & " is marked <<access-to-operation>> but has"
-                 & T.Operations.Length'Img
-                 & " operations.");
-         else
-            declare
-               Operation_Name : constant String
-                 := +T.Operations.First_Element.Name;
-            begin
-               if Operation_Name /= +T.Name then
-                  Messages.Warning
-                    ("Operation "
-                       & (+T.Name)
-                       & "."
-                       & Operation_Name
-                       & " renamed to "
-                       & (+T.Name)
-                       & ".");
-                  T.Operations.First_Element.Name := T.Name;
-               end if;
-            end;
+                 & " has both {imported} and {renames} specified.");
          end if;
-      end if;
-      --  There are all sorts of complicated illegal possibilities
-      --  here!
-      if T.Has_Tag ("imported") and T.Has_Tag ("renames") then
-         Messages.Error
-           ("Type "
-              & (+T.Name)
-              & " has both {imported} and {renames} specified.");
-      end if;
-      if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
-         Messages.Error
-           ("Type "
-              & (+T.Name)
-              & " has <<imported>> but not {imported}.");
-      end if;
-      if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
-         Messages.Error
-           ("Type "
-              & (+T.Name)
-              & " has <<renaming>> but not {renames}.");
+         if T.Has_Stereotype ("imported") and not T.Has_Tag ("imported") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " has <<imported>> but not {imported}.");
+         end if;
+         if T.Has_Stereotype ("renaming") and not T.Has_Tag ("renames") then
+            Messages.Error
+              ("Type "
+                 & (+T.Name)
+                 & " has <<renaming>> but not {renames}.");
+         end if;
       end if;
       T.Operations.Iterate (Resolve'Access);
    end Resolve;
@@ -151,7 +171,16 @@ package body Normalize_XMI.Model.Data_Types is
          Element_Maps.Element (Pos).Output (To);
       end Output;
    begin
+      if T.Has_Stereotype ("access") then
+         --  Suppress the output of the <<access>> datatype; code
+         --  generation outputs the access type immediately after the
+         --  target type when it finds "access='access-type-name'".
+         return;
+      end if;
       Put (To, "<type");
+      if T.Accessor /= null then
+         Put (To, " access='" & (+T.Accessor.Name) & "'");
+      end if;
       if T.Has_Stereotype ("access-to-operation") then
          Put (To, " access-to-operation='true'");
       end if;

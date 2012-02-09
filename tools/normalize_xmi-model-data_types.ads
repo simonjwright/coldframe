@@ -13,9 +13,11 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-data_types.ads,v $
---  $Revision: 4832d3f648a3 $
---  $Date: 2012/01/25 15:17:08 $
+--  $Revision: c3a01e5d21e1 $
+--  $Date: 2012/02/09 17:17:31 $
 --  $Author: simonjwright $
+
+with Normalize_XMI.Model.Types;
 
 private package Normalize_XMI.Model.Data_Types is
 
@@ -27,7 +29,7 @@ private
    --  Need to have mechanism to check for consistency (eg, can't be
    --  imported and renaming).
 
-   type Data_Type_Element is new Element with record
+   type Data_Type_Element is new Types.Type_Element with record
       Operations : Element_Maps.Map;
    end record;
    overriding
