@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.adb,v $
---  $Revision: 485a333c5a26 $
---  $Date: 2012/02/02 18:08:03 $
+--  $Revision: 51732bcbec70 $
+--  $Date: 2012/02/09 14:15:28 $
 --  $Author: simonjwright $
 
 with Ada.Strings.Fixed;
@@ -112,6 +112,16 @@ package body Normalize_XMI.Model is
                      "Parent reference is null");
       return Known_To.Parent.Find_Class (With_Model_Name);
    end Find_Class;
+
+
+   function Find_Type (Known_To        : Element;
+                       With_Model_Name : String) return Element_P
+   is
+   begin
+      pragma Assert (Known_To.Parent /= null,
+                     "Parent reference is null");
+      return Known_To.Parent.Find_Type (With_Model_Name);
+   end Find_Type;
 
 
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean

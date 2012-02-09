@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model.ads,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
+--  $Revision: 51732bcbec70 $
+--  $Date: 2012/02/09 14:15:28 $
 --  $Author: simonjwright $
 
 with Ada.Containers.Indefinite_Ordered_Maps;
@@ -77,6 +77,10 @@ private
    --  keyed by the original name.
    function Find_Class (Known_To        : Element;
                         With_Model_Name : String) return Element_P;
+
+   --  Similarly for Types.
+   function Find_Type (Known_To        : Element;
+                       With_Model_Name : String) return Element_P;
 
    function Has_Stereotype (E : Element; Stereotype : String) return Boolean;
 

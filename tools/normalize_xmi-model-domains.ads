@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.ads,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
+--  $Revision: 51732bcbec70 $
+--  $Date: 2012/02/09 14:15:28 $
 --  $Author: simonjwright $
 
 with GNAT.OS_Lib;
@@ -37,6 +37,9 @@ private
    overriding
    function Find_Class (Known_To        : Domain;
                         With_Model_Name : String) return Element_P;
+   overriding
+   function Find_Type (Known_To        : Domain;
+                       With_Model_Name : String) return Element_P;
    overriding
    procedure Resolve (D : in out Domain);
    overriding

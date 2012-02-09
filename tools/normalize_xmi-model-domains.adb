@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-domains.adb,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
+--  $Revision: 51732bcbec70 $
+--  $Date: 2012/02/09 14:15:28 $
 --  $Author: simonjwright $
 
 with Ada.Calendar;
@@ -227,6 +227,19 @@ package body Normalize_XMI.Model.Domains is
          return null;
       end if;
    end Find_Class;
+
+
+   overriding
+   function Find_Type (Known_To        : Domain;
+                       With_Model_Name : String) return Element_P
+   is
+   begin
+      if Known_To.Types.Contains (With_Model_Name) then
+         return Known_To.Types.Element (With_Model_Name);
+      else
+         return null;
+      end if;
+   end Find_Type;
 
 
    overriding
