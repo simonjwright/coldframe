@@ -13,8 +13,8 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-operations.adb,v $
---  $Revision: 45ea517722e2 $
---  $Date: 2012/02/02 18:04:10 $
+--  $Revision: 4cb55120e72a $
+--  $Date: 2012/02/09 14:20:03 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
@@ -119,7 +119,7 @@ package body Normalize_XMI.Model.Operations is
             Put (To, " abstract='true'");
          end if;
       end;
-      if O.Has_Stereotype ("access") then
+      if O.Parent.Has_Stereotype ("access-to-operation") then
          Put (To, " access='true'");
       end if;
       declare
