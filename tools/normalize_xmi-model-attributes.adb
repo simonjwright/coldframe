@@ -13,13 +13,13 @@
 --  330, Boston, MA 02111-1307, USA.
 
 --  $RCSfile: normalize_xmi-model-attributes.adb,v $
---  $Revision: 7d1ad741f319 $
---  $Date: 2012/01/25 16:31:46 $
+--  $Revision: 95ae55573149 $
+--  $Date: 2012/02/09 14:08:24 $
 --  $Author: simonjwright $
 
 with DOM.Core.Nodes;
 with McKae.XML.XPath.XIA;
-with Normalize_XMI.Model.Types;
+with Normalize_XMI.Model.Type_References;
 
 package body Normalize_XMI.Model.Attributes is
 
@@ -45,8 +45,9 @@ package body Normalize_XMI.Model.Attributes is
             "should be 1 'UML:StructuralFeature.type/*' child"
               & "of an Attribute");
       begin
-         A.Attribute_Type := Types.Read_Type (DOM.Core.Nodes.Item (Nodes, 0),
-                                              Parent => N);
+         A.Attribute_Type :=
+           Type_References.Read_Type_Reference (DOM.Core.Nodes.Item (Nodes, 0),
+                                                Parent => N);
       end;
 
       --  Initial value
@@ -78,7 +79,8 @@ package body Normalize_XMI.Model.Attributes is
    procedure Output (A : Attribute_Element; To : Ada.Text_IO.File_Type)
    is
       use Ada.Text_IO;
-      T : Types.Type_Element renames Types.Type_Element (A.Attribute_Type.all);
+      T : Type_References.Type_Reference_Element
+        renames Type_References.Type_Reference_Element (A.Attribute_Type.all);
    begin
       Put (To, "<attribute");
       if A.Has_Stereotype ("aliased") then
