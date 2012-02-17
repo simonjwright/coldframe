@@ -92,7 +92,9 @@ NORM_FILES =					\
  Library.norm					\
  Van_Fleet.norm
 
-$(NORM_FILES): ColdFrame_Examples.norm-stamp
+# NB! the ';' at the end is important - without it, Make may not know
+# to rebuild the .gen directories.
+$(NORM_FILES): ColdFrame_Examples.norm-stamp ;
 
 clean::
 	find $(BUILD_BASE) -type f -name \*.o -o -name \*.ali | xargs rm -f
