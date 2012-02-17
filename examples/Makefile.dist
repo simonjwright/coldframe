@@ -50,11 +50,12 @@ STAIRWELL_DEMO =						\
   House_Management.impl/house_management-lamp-turn_on.adb	\
   House_Management.impl/stairwell_demo.adb
 
-HOUSE_MANAGEMENT_TEST =					\
-  House_Management_Test.gpr				\
-  House_Management.test/house_management-harness.adb	\
-  House_Management.test/house_management-test_suite.adb	\
-  House_Management.test/house_management-test_suite.ads
+HOUSE_MANAGEMENT_TEST =						\
+  House_Management_Test.gpr					\
+  House_Management.test/house_management-harness.adb		\
+  House_Management.test/house_management-harness.ads		\
+  House_Management.test/house_management-lamp-test_suite.adb	\
+  House_Management.test/house_management-lamp-test_suite.ads
 
 SERIALIZATION =								\
   Serialization.gpr							\
