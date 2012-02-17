@@ -46,25 +46,25 @@ EXECUTABLES += library_test_harness$(exe)
 library_test_harness$(exe): Library.gen force
 	$(app) gnatmake -p -PLibrary
 
-EXECUTABLES += performance_harness$(exe)
+#EXECUTABLES += performance_harness$(exe)
 performance_harness$(exe): Performance.gen force
 	$(app) gnatmake -p -PPerformance
 
-EXECUTABLES += problem_reporting_harness$(exe)
+#EXECUTABLES += problem_reporting_harness$(exe)
 problem_reporting_harness$(exe): Problem_Reporting.gen force
 	$(app) gnatmake -p -PProblem_Reporting
 
-EXECUTABLES += serialization_client$(exe)
+#EXECUTABLES += serialization_client$(exe)
 serialization_client$(exe): serialization_server$(exe)
 
-EXECUTABLES += serialization_server$(exe)
+#EXECUTABLES += serialization_server$(exe)
 serialization_server: Serialization.gen \
  Serialization_Demo.gen \
  Serialization_Demo_Other.gen \
  force
 	$(app) gnatmake -p -PSerialization
 
-EXECUTABLES += states-t$(exe)
+#EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
 	$(app) gnatmake -p -PStates
 
