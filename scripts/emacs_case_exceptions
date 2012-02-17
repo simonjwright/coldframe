@@ -1,7 +1,6 @@
-*AVL
-*BP
+*AVL            Booch Components
 *CPU
-*DOM
+*DOM            ASIS
 *GMT
 *HTML
 *HTTP
@@ -15,18 +14,16 @@
 *XML
 ASCII
 AUnit
-BC
+BC              Booch Components
 CArgv		TASH
 CGI
 CHAR_BIT	Interfaces.C
 ColdFrame
-EWS
 GNAT
 HTTP
 IDE
 OpenToken
 RTC
-VxWorks
 XDR
 XMLAda
 char_array	Interfaces.C
@@ -37,7 +34,7 @@ clock_settime	POSIX time
 int		Interfaces.C
 long		Interfaces.C
 short		Interfaces.C
-timespec	
+timespec
 unsigned	Interfaces.C
 unsigned_long	Interfaces.C
 unsigned_short	Interfaces.C
