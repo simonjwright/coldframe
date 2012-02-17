@@ -132,16 +132,6 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
   $(SCRIPTS)/ada-unittest.xsl			\
   $(SCRIPTS)/ada-utilities.xsl
 
-# Construct the build directories if necessary.
-build-dirs::
-	@[ -n "$(BUILD_BASE)" ] \
-	  || ($(ECHO) "BUILD_BASE must be set" && $(EXIT) 1)
-	@for d in coldframe fixes main; do \
-	  [ -d $(BUILD_BASE)/$$d ] || \
-	    ($(ECHO) $(MKDIR) -p $(BUILD_BASE)/$$d; \
-	     $(MKDIR) -p $(BUILD_BASE)/$$d);\
-	done
-
 # Pattern rules
 
 # Generate .rr files (resolved references in ArgoUML files).
@@ -167,7 +157,9 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 # This is actually cast as a rule to generate .norm-stamp files from .rr,
 # because a .rr file can contain any number of domains.
 %.norm-stamp: $(COLDFRAMEOUT)/%.rr $(COLDFRAME)/tools/normalize_xmi$(EXE)
-	$(COLDFRAME)/tools/normalize_xmi $<
+	$(COLDFRAME)/tools/normalize_xmi	\
+	  -c $(CASE_EXCEPTIONS)			\
+	  $<
 	touch $@
 
 # Generate .html (and image) files.
