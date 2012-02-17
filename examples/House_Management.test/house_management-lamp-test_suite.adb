@@ -17,10 +17,9 @@ with ColdFrame.Stubs;
 with Digital_IO.Initialize;
 with Digital_IO.Tear_Down;
 with House_Management.Initialize;
-with House_Management.Lamp;
 with House_Management.Tear_Down;
 
-package body House_Management.Test_Suite is
+package body House_Management.Lamp.Test_Suite is
 
    function Get_Boolean
    is new ColdFrame.Stubs.Get_Input_Value (Boolean);
@@ -176,4 +175,4 @@ package body House_Management.Test_Suite is
    end Suite;
 
 
-end House_Management.Test_Suite;
+end House_Management.Lamp.Test_Suite;

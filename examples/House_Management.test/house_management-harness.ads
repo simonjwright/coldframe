@@ -5,15 +5,4 @@
 --  be useful, but WITHOUT ANY WARRANTY; without even the implied
 --  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
---  $RCSfile$
---  $Revision$
---  $Date$
---  $Author$
-
-with AUnit.Test_Suites;
-
-package House_Management.Test_Suite is
-
-   function Suite return AUnit.Test_Suites.Access_Test_Suite;
-
-end House_Management.Test_Suite;
+private procedure House_Management.Harness;
