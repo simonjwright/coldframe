@@ -124,9 +124,19 @@ STATES = 							\
   States.impl/states-t.adb					\
   States.impl/states-t.ads
 
+VAN_FLEET =						\
+  Van_Fleet.gpr						\
+  Van_Fleet.impl/van_fleet-demo.adb			\
+  Van_Fleet.impl/van_fleet-demo.ads			\
+  Van_Fleet.impl/van_fleet-hired_van-cleanup.adb	\
+  Van_Fleet.impl/van_fleet-hired_van-image.adb		\
+  Van_Fleet.impl/van_fleet-pool_van-image.adb		\
+  Van_Fleet.impl/van_fleet-van-lend.adb			\
+  Van_Fleet.impl/van_fleet-van-returned.adb
+
 ALL = $(STAIRWELL_DEMO) $(HOUSE_MANAGEMENT_TEST) $(SERIALIZATION)	\
   $(INTERRUPT_HANDLING) $(LIBRARY) $(PERFORMANCE) $(PROBLEM_REPORTING)	\
-  $(STATES)
+  $(STATES) $(VAN_FLEET)
 
 ALL += Makefile
 
