@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: associations.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Associations</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -55,6 +55,29 @@ about it. Perhaps there's some super/subtype (<a
 href="generalizations.html">inheritance</a>) relationship lurking in
 there.
 
+<h3>Associative classes</h3>
+
+<p>In the <a href="resources.html#build-object-models">Executable
+UML</a> view, an associative class implements an associative
+relationship. One reason for needing this is that the association is
+many-to-many; other reasons include the existence of attributes that
+only make sense while the association exists.
+
+<p>Previous versions of ColdFrame used Rational Rose, which
+implemented the association and the associative class as two different
+things. UML (and therefore ArgoUML) regard them as one thing,
+an <i>AssociationClass</i>.
+
+<p>At 10.ii.12, ColdFrame still generates two packages, one for the
+association and one for the associative class. The association takes
+the name in the model; by default, the associative class is named by
+appending <tt>_Class</tt>, but this can be overridden by the
+stereotype <em>&#171;association-class-name&#187;</em> and the
+associated tag <tt>{association-class-name=<i>new-name</i>}</tt>.
+
+<p>This behaviour isn't ideal; a better approach would be to merge the
+generated packages.
+
 <h3>Formalising associations</h3>
 
 <p>In the original Shlaer-Mellor method, associations and inheritance
@@ -64,15 +87,15 @@ clearly there are many <em>Window</em>s but only one <em>Screen</em>,
 you'd need a referential attribute <em>screen&nbsp;id</em> in the
 <em>Window</em> instance.
 
-<p>ColdFrame, however, follows <a
-href="resources.html#build-object-models">Executable UML</a>; you
-usually don't need to provide referential attributes (it would be
-quite cumbersome to do so, since Rose, as is typical for a UML tool,
-is unaware of the concept). Instead, ColdFrame automatically
+<p>ColdFrame, however,
+follows <a href="resources.html#build-object-models">Executable
+UML</a>; you usually don't need to provide referential attributes (it
+would be quite cumbersome to do so, since ArgoUML, as is typical for a
+UML tool, is unaware of the concept). Instead, ColdFrame automatically
 implements the relationships. Sometimes it needs a little help, for
 example for complex formalization or in a symmetric association.
 
-<h4>Complex formalization</h4>
+<h4><a name="complex-formalization">Complex formalization</a></h4>
 
 <p>Consider R8, <em>Licence</em> <em>"is issued by"</em> <em>Licensing
 Office</em>. The identifier of Licence consists of the licence number
@@ -80,14 +103,10 @@ and also the issuing Licensing Office, since the various offices don't
 use disjoint licence number ranges. In this case, we'd specify the
 attribute as
 <pre>
-   &#171;id&#187; issuing office : Licensing Office
+   &#171;id&#187; Issuing_Office : Licensing_Office
 </pre>
 
-<p>and include the tagged value
-
-<pre>
-   { formalizes = r8 }
-</pre>
+<p>and include the tag <tt>{formalizes=R8}</tt>.
 
 <h4><a name="symmetric">Symmetric associations</a></h4>
 
@@ -95,12 +114,8 @@ attribute as
 <i>1c:1c</i>, <i>1-(1:1)</i> or <i>1-(1c:1c)</i>, ColdFrame requires
 you to tell it how the association is to be formalized.
 
-<p>You do this by including the tag
-<pre>
-   { source }
-</pre>
-
-<p>in the documentation of one of the roles.
+<p>You do this by marking one of the roles (<i>AssociationEnds</i>)
+with the stereotype <em>&#171;source&#187</em>.
 
 <h2>Translation</h2>
 
@@ -181,7 +196,7 @@ course).
 aren't intended for general use; use the
 <tt><i>Domain.Association</i></tt> package's operations instead.
 
-<p>In the present implementation (18.x.02), each navigation has a
+<p>In the present implementation (10.ii.12), each navigation has a
 <i>natural</i> and a <i>hard</i> direction. The natural direction is
 from the class in which the referential attribute is
 implemented.

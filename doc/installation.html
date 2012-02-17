@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v a9b552bad5cd 2012/01/15 20:21:48 simonjwright $ -->
+<!-- $Id: installation.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -24,15 +24,20 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 <li><a href="http://argouml.tigris.org/">ArgoUML</a>
 
 <li><a href="http://www.adacore.com">GNAT</a> (an Ada 95/2005/2012
-compiler)
+compiler; must support Ada2005)
 
 <li><a href="http://sourceforge.net/projects/saxon/">Saxon</a> (an
 XSLT processor)
 
 <li>The <a href="http://booch95.sourceforge.net/index.html">Booch
-Components</a> (an Ada 95 container library)
+Components</a> (an Ada 95 container library, compatible with Ada2005)
 
 </ul>
+
+<h2>ArgoUML</h2>
+
+<p>ArgoUML installation is
+documented <a href="argouml-installation.html">separately</a>.
 
 <h2>Environment variables</h2>
 
@@ -70,19 +75,14 @@ as <tt>coldframe</tt>, <tt>main</tt>) are located.
 example, "GNAT").
 <td>$SCRIPTS/emacs_case_exceptions
 
-<!--
-<tr><td>CHECKING
-<td>The extent of ColdFrame's rule checking.
-<td>strict
--->
-
 <tr><td>COLDFRAME
 <td>Where ColdFrame is installed (overridden in the Makefiles); set it
 to, for example, <tt><i>/where/ever/</i>cf-<i>20110720</i></tt>
 <td>-
 
 <tr><td>COLDFRAMEOUT
-<td>Where the <tt>.raw</tt> files are to be placed/found.
+<td>Where the <tt>.rr</tt> files, made by preprocessing
+ArgoUML's <tt>.uml</tt> files, are to be placed/found.
 <td>$COLDFRAME/coldframeout
 
 <tr><td>GENERATE_ACCESSORS
@@ -101,14 +101,13 @@ to, for example, <tt><i>/where/ever/</i>cf-<i>20110720</i></tt>
 <td>Should stub code be generated instead of the normal code?
 <td>no
 
-<!--
 <tr><td>GNATCHOP
 <td>Older ColdFrame projects may have used <tt>Interface</tt> as a
 name; it became a keyword in Ada 2005. Modern versions
 of <tt>gnatchop</tt> need to be told to adopt Ada95 rules, but older
-versions wouldn't understand the flag.
-<td>gnatchop -gnat95
--->
+versions wouldn't understand the flag. Set
+to <tt>gnatchop -gnat95</tt> if this is the case.
+<td>gnatchop
 
 <tr><td>JAVA
 <td>There should be no need to change this.
@@ -149,67 +148,71 @@ of a project's model files).
 
 <h2>Your Makefile</h2>
 
-<p>To start with, it's best if you make sure that your
-Rose <tt>.cat</tt> files are named the same as the corresponding Ada
-package: for example, if the Ada package is <tt>Digital_IO</tt> you
-should name the Rose package <tt>Digital_IO.cat</tt>.
+<p>Your project will in general consist of a number
+of <a href="domains.html">domains</a>, and (unlike some other
+modelling tools, such as Rational Rose) ArgoUML offers no facility to
+keep the domains in separately-controlled files. The choice is then to
+have one UML file per domain, one per project, or somethng in between.
+
+<p>ColdFrame supports having multiple domains per UML file.
 
 <p>Create a <tt>Makefile</tt> in the directory where your generated
 <tt><i>Domain</i>.gen/</tt> files (will) live (next to your
-implementation <tt><i>Domain</i>.impl/</tt> files). Its purpose is to
-call up the Makefile that ColdFrame provides.
+implementation <tt><i>Domain</i>.impl/</tt> files).
 
-<p>It should contain at least
+<p>It should begin by defining where your model (<tt>.uml</tt>) files
+live, so as to override ColdFrame's default:
+
+<pre>
+   MODELS = <i>/where/ever</i>
+</pre>
+
+<p>and then include ColdFrame's standard Makefile:
 
 <pre>
    include $(COLDFRAME)/Makefile.inc
 </pre>
 
-<p>which means you need to type
+<p>Next, define the domains: ColdFrame creates the
+intermediate <tt>.norm</tt> file names as it does other names in the
+model, by normalizing case and replacing spaces by underscores. Let's
+suppose that the model is <tt><i>/where/ever/</i>Model.uml</tt> and it
+contains domains <i>House Management</i> and <i>Digital IO</i> (the
+latter containing a child package stereotyped
+&#171;domain-interface&#187; called <i>Digital IO Interface</i> with
+the tag <tt>{name=Digital IO}</tt>, see <font color="red">XXX</font>):
 
 <pre>
-   <i>$</i> make <i>Domain</i>.gen
+   DOMAINS = House_Management Digital_IO Digital_IO_Interface
 </pre>
 
-<p>If you want to make life even easier, you can change your Makefile
-to
+<p>Tell ColdFrame about the relationship between <tt>Model.uml</tt>
+and the domains using the incantation
 
 <pre>
-   include $(COLDFRAME)/Makefile.inc
-   <b>all:: <i>Domain_1</i>.gen</b>
-   <b>all:: <i>Domain_2</i>.gen</b>
+   $(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp
 </pre>
 
-<p>etc, after which you only need to say
+<p>Later on, you'll add rules to build the executables, but to start
+with you can just generate the code:
 
 <pre>
-   <i>$</i> make
+   all:: $(addsuffix .gen,$(DOMAINS))
 </pre>
 
-<p>(until, of course, you find you need to add <tt>Domain_3</tt>).
+<h3>Creating your build directories</h3>
 
-<p>If you're prepared to issue a slightly more complex command to
-build, you can get away without a Makefile at all:
+<p>If you have a recent GNAT you can use the <tt>-p</tt> flag to
+tell <tt>gnatmake</tt> or <tt>gprbuild</tt> to create any needed
+directories as required.
 
-<pre>
-   <i>$</i> make -f $COLDFRAME/Makefile.inc <i>Domain</i>.gen
-</pre>
-
-<p>(note, no brackets).
-
-<h3><a name="linux-create-build-dirs">Creating your build
-directories</a></h3>
-
-<p>Assuming you have the environment variable<tt>COLDFRAME</tt> set
-up<, you can say
+<p>If not, assuming you have the environment
+variables <tt>COLDFRAME</tt> and <tt>BUILD_BASE</tt> set up, you can
+say
 
 <pre>
    <i>$</i> $COLDFRAME/scripts/create-build-directories
 </pre>
-
-<p>Note, however, that with recent GNATs you can use the <tt>-p</tt>
-flag to tell <tt>gnatmake</tt> or <tt>gprbuild</tt> to create any
-needed directories as required.
 
 <h3>Creating
 a <a href="http://gcc.gnu.org/onlinedocs/gnat_ugn_unw/GNAT-Project-Manager.html">GNAT

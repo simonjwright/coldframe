@@ -26,7 +26,7 @@
       <fontname>Lucida Grande</fontname>
       <fontsize>13</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Interrupt Handling Class Diagram</activediagram>
+      <activediagram>Button Class Events</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -67,11 +67,11 @@
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Digital IO Interface Class Diagram" />
       <member type="pgml"
-              name="ColdFrame_Examples_ClassDiagram.pgml"
+              name="ColdFrame_Examples_InterruptHandlingClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Interrupt Handling Class Diagram" />
       <member type="pgml"
-              name="ColdFrame_Examples_InterruptHandling0.pgml"
+              name="ColdFrame_Examples_DeviceLifecycle.pgml"
               diagramclass="org.argouml.uml.diagram.state.ui.UMLStateDiagram"
               diagramname="Device Lifecycle" />
       <member type="todo"
@@ -86,10 +86,10 @@
 			</model>
 		</userDefined>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Tue Jan 24 17:39:18 GMT 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Feb 17 15:41:48 GMT 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/01/24 17:44:59 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.34(6) revised on $Date: 2012/02/17 16:43:50 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -114,7 +114,7 @@ This package is free software; you can redistribute it and/or modify it under te
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3-5a18dd86:133fa915c90:-8000:0000000000000BC0'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -565,7 +565,7 @@ A test: less-than &lt;, ampersand &amp;, quote &quot;.</UML:TaggedValue.dataValu
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4--601afa77:1349f53754d:-8000:00000000000018B6'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -804,7 +804,7 @@ The first release only manages the stairwell lighting system.</UML:TaggedValue.d
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C2D'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -878,7 +878,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C6A'
-                  name = 'Initialize' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
+                  name = 'Initialize' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.stereotype>
@@ -899,9 +899,9 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C6C'
-                  name = 'Clear_Timeout' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
-                  isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
-                  isAbstract = 'false'>
+                  name = 'Clear_Timeout' visibility = 'private' isSpecification = 'false'
+                  ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+                  isLeaf = 'false' isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
                     <UML:TaggedValue xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C77'
                       isSpecification = 'false'>
@@ -917,7 +917,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C6E'
-                  name = 'Set_Timeout' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Set_Timeout' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -935,7 +935,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C70'
-                  name = 'Turn_Off' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Turn_Off' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -953,7 +953,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C72'
-                  name = 'Turn_On' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+                  name = 'Turn_On' visibility = 'private' isSpecification = 'false' ownerScope = 'instance'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -1013,7 +1013,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:StructuralFeature.type>
                 </UML:Attribute>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C55'
-                  name = 'Changed' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
+                  name = 'Changed' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -1037,7 +1037,7 @@ If it is activated again while it is still on, the activation period is extended
                   </UML:BehavioralFeature.parameter>
                 </UML:Operation>
                 <UML:Operation xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5E'
-                  name = 'Pushed' visibility = 'public' isSpecification = 'false' ownerScope = 'classifier'
+                  name = 'Pushed' visibility = 'private' isSpecification = 'false' ownerScope = 'classifier'
                   isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
                   <UML:ModelElement.taggedValue>
@@ -1218,7 +1218,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                       </UML:ModelElement.taggedValue>
                       <UML:StateVertex.outgoing>
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C82'/>
-                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'/>
                       </UML:StateVertex.outgoing>
                       <UML:StateVertex.incoming>
                         <UML:Transition xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C86'/>
@@ -1263,12 +1262,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                         </UML:CallAction>
                       </UML:State.entry>
                     </UML:SimpleState>
-                    <UML:FinalState xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A'
-                      name = 'DummyFinalState' isSpecification = 'false'>
-                      <UML:StateVertex.incoming>
-                        <UML:Transition xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'/>
-                      </UML:StateVertex.incoming>
-                    </UML:FinalState>
                   </UML:CompositeState.subvertex>
                 </UML:CompositeState>
               </UML:StateMachine.top>
@@ -1327,27 +1320,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                     <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7F'/>
                   </UML:Transition.target>
                 </UML:Transition>
-                <UML:Transition xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C'
-                  isSpecification = 'false'>
-                  <UML:Transition.effect>
-                    <UML:CallAction xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8E'
-                      name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
-                      <UML:Action.script>
-                        <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8F'
-                          language = '' body = 'Delete'/>
-                      </UML:Action.script>
-                    </UML:CallAction>
-                  </UML:Transition.effect>
-                  <UML:Transition.trigger>
-                    <UML:SignalEvent xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8D'/>
-                  </UML:Transition.trigger>
-                  <UML:Transition.source>
-                    <UML:SimpleState xmi.idref = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C7E'/>
-                  </UML:Transition.source>
-                  <UML:Transition.target>
-                    <UML:FinalState xmi.idref = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A'/>
-                  </UML:Transition.target>
-                </UML:Transition>
               </UML:StateMachine.transitions>
             </UML:StateMachine>
             <UML:SignalEvent xmi.id = '-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C83'
@@ -1385,7 +1357,7 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                     <UML:CallAction xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9D'
                       name = 'anon' isSpecification = 'false' isAsynchronous = 'false'>
                       <UML:Action.script>
-                        <UML:ActionExpression xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000CA5'
+                        <UML:ActionExpression xmi.id = '-64--88-1-3--6b03b849:13572f52d7e:-8000:0000000000000D26'
                           language = '' body = 'Pushed'/>
                       </UML:Action.script>
                     </UML:CallAction>
@@ -1416,8 +1388,6 @@ It&apos;s assumed that it&apos;s acceptable to turn the Lamp off even if it is o
                 </UML:Parameter>
               </UML:Event.parameter>
             </UML:SignalEvent>
-            <UML:SignalEvent xmi.id = '-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8D'
-              name = 'Lamp.Foo' isSpecification = 'false'/>
           </UML:Namespace.ownedElement>
         </UML:Package>
         <UML:Package xmi.id = '-64--88-1-4--7bba79d3:13506e049b2:-8000:0000000000000C98'
@@ -1439,7 +1409,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:00000000000015CB'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -1462,7 +1432,7 @@ It is intended for simulations only, so there is no actual digital I/O, only sup
                 </UML:TaggedValue>
                 <UML:TaggedValue xmi.id = '-64--88-1-4-1781439e:13506e2b947:-8000:0000000000000C9B'
                   isSpecification = 'false'>
-                  <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+                  <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
                   <UML:TaggedValue.type>
                     <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-interface-td-revision'/>
                   </UML:TaggedValue.type>
@@ -1976,7 +1946,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
             </UML:TaggedValue>
             <UML:TaggedValue xmi.id = '-64--88-1-3--48a97a53:135107c644e:-8000:0000000000000D0B'
               isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>$Revision: c79206b16f7e $</UML:TaggedValue.dataValue>
+              <UML:TaggedValue.dataValue>$Revision: d29fc61cd962 $</UML:TaggedValue.dataValue>
               <UML:TaggedValue.type>
                 <UML:TagDefinition href = 'http://argouml.org/user-profiles/ColdFrameProfile.xmi#cf-st-domain-td-revision'/>
               </UML:TaggedValue.type>
@@ -5064,7 +5034,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >«init» +Initialize()</text>
+      >«init» -Initialize()</text>
       <text name="Fig0.6.2"
         x="241"
         y="108"
@@ -5080,7 +5050,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Clear_Timeout()</text>
+      >-Clear_Timeout()</text>
       <text name="Fig0.6.3"
         x="241"
         y="125"
@@ -5096,7 +5066,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Set_Timeout()</text>
+      >-Set_Timeout()</text>
       <text name="Fig0.6.4"
         x="241"
         y="142"
@@ -5112,7 +5082,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Turn_Off()</text>
+      >-Turn_Off()</text>
       <text name="Fig0.6.5"
         x="241"
         y="159"
@@ -5128,7 +5098,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Turn_On()</text>
+      >-Turn_On()</text>
     </group>
   </group>
   <group name="Fig1"
@@ -5285,7 +5255,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Changed(S : Signal_State)</text>
+      >-Changed(S : Signal_State)</text>
       <text name="Fig1.6.2"
         x="241"
         y="387"
@@ -5301,7 +5271,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
         bold="false"
         textsize="13"
         justification="Left"
-      >+Pushed(B : Button_Name)</text>
+      >-Pushed(B : Button_Name)</text>
     </group>
   </group>
   <group name="Fig2"
@@ -5527,7 +5497,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </path>
   </group>
   <group name="Fig5"
-       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[728, 216, 134, 142]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[728, 168, 134, 142]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
        fill="1"
        fillcolor="white"
@@ -5539,7 +5509,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     
     <rectangle name="Fig5.0"
       x="728"
-      y="216"
+      y="168"
       width="134"
       height="142"
       fill="1"
@@ -5549,7 +5519,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     />
     <text name="Fig5.1"
       x="729"
-      y="217"
+      y="169"
       width="132"
       height="43"
       fill="0"
@@ -5564,7 +5534,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       justification="Center"
     >Button_Name</text>
     <group name="Fig5.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 217, 132, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 169, 132, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5576,7 +5546,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig5.2.0"
         x="729"
-        y="217"
+        y="169"
         width="132"
         height="20"
         fill="0"
@@ -5586,7 +5556,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       />
       <text name="Fig5.2.1"
         x="729"
-        y="217"
+        y="169"
         width="132"
         height="18"
         fill="0"
@@ -5603,7 +5573,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
     <rectangle name="Fig5.3"
       x="728"
-      y="260"
+      y="212"
       width="134"
       height="1"
       fill="1"
@@ -5612,7 +5582,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       strokecolor="black"
     />
     <group name="Fig5.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 261, 132, 76]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 213, 132, 76]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5624,7 +5594,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig5.4.0"
         x="729"
-        y="261"
+        y="213"
         width="132"
         height="76"
         fill="0"
@@ -5634,7 +5604,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       />
       <text name="Fig5.4.1"
         x="729"
-        y="261"
+        y="213"
         width="132"
         height="17"
         fill="0"
@@ -5650,7 +5620,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >Basement</text>
       <text name="Fig5.4.2"
         x="729"
-        y="278"
+        y="230"
         width="132"
         height="17"
         fill="0"
@@ -5666,7 +5636,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >Ground_Floor</text>
       <text name="Fig5.4.3"
         x="729"
-        y="295"
+        y="247"
         width="132"
         height="17"
         fill="0"
@@ -5682,7 +5652,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >First_Floor</text>
       <text name="Fig5.4.4"
         x="729"
-        y="312"
+        y="264"
         width="132"
         height="23"
         fill="0"
@@ -5699,7 +5669,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
     <rectangle name="Fig5.5"
       x="728"
-      y="336"
+      y="288"
       width="134"
       height="1"
       fill="1"
@@ -5708,7 +5678,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       strokecolor="black"
     />
     <group name="Fig5.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 337, 132, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 289, 132, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C3A"
          fill="0"
          fillcolor="white"
@@ -5720,7 +5690,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig5.6.0"
         x="729"
-        y="337"
+        y="289"
         width="132"
         height="21"
         fill="0"
@@ -5731,7 +5701,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
   </group>
   <group name="Fig6"
-       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[728, 56, 134, 142]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEnumeration[728, 16, 134, 142]pathVisible=false;stereotypeView=0;operationsVisible=true;enumerationLiteralsVisible=true"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
        fill="1"
        fillcolor="white"
@@ -5743,7 +5713,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     
     <rectangle name="Fig6.0"
       x="728"
-      y="56"
+      y="16"
       width="134"
       height="142"
       fill="1"
@@ -5753,7 +5723,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     />
     <text name="Fig6.1"
       x="729"
-      y="57"
+      y="17"
       width="132"
       height="43"
       fill="0"
@@ -5768,7 +5738,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       justification="Center"
     >Lamp_Name</text>
     <group name="Fig6.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 57, 132, 20]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 17, 132, 20]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5780,7 +5750,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig6.2.0"
         x="729"
-        y="57"
+        y="17"
         width="132"
         height="20"
         fill="0"
@@ -5790,7 +5760,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       />
       <text name="Fig6.2.1"
         x="729"
-        y="57"
+        y="17"
         width="132"
         height="18"
         fill="0"
@@ -5807,7 +5777,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
     <rectangle name="Fig6.3"
       x="728"
-      y="100"
+      y="60"
       width="134"
       height="1"
       fill="1"
@@ -5816,7 +5786,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       strokecolor="black"
     />
     <group name="Fig6.4"
-         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 101, 132, 76]"
+         description="org.argouml.uml.diagram.ui.FigEnumLiteralsCompartment[729, 61, 132, 76]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5828,7 +5798,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig6.4.0"
         x="729"
-        y="101"
+        y="61"
         width="132"
         height="76"
         fill="0"
@@ -5838,7 +5808,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       />
       <text name="Fig6.4.1"
         x="729"
-        y="101"
+        y="61"
         width="132"
         height="17"
         fill="0"
@@ -5854,7 +5824,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >Basement</text>
       <text name="Fig6.4.2"
         x="729"
-        y="118"
+        y="78"
         width="132"
         height="17"
         fill="0"
@@ -5870,7 +5840,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >Ground_Floor</text>
       <text name="Fig6.4.3"
         x="729"
-        y="135"
+        y="95"
         width="132"
         height="17"
         fill="0"
@@ -5886,7 +5856,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >First_Floor</text>
       <text name="Fig6.4.4"
         x="729"
-        y="152"
+        y="112"
         width="132"
         height="23"
         fill="0"
@@ -5903,7 +5873,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
     <rectangle name="Fig6.5"
       x="728"
-      y="176"
+      y="136"
       width="134"
       height="1"
       fill="1"
@@ -5912,7 +5882,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       strokecolor="black"
     />
     <group name="Fig6.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 177, 132, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 137, 132, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C47"
          fill="0"
          fillcolor="white"
@@ -5924,7 +5894,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig6.6.0"
         x="729"
-        y="177"
+        y="137"
         width="132"
         height="21"
         fill="0"
@@ -5935,7 +5905,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
   </group>
   <group name="Fig7"
-       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[728, 384, 110, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigDataType[728, 320, 110, 84]pathVisible=false;stereotypeView=0;operationsVisible=true;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A"
        fill="1"
        fillcolor="white"
@@ -5947,7 +5917,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     
     <rectangle name="Fig7.0"
       x="728"
-      y="384"
+      y="320"
       width="110"
       height="84"
       fill="1"
@@ -5957,7 +5927,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     />
     <text name="Fig7.1"
       x="729"
-      y="385"
+      y="321"
       width="108"
       height="61"
       fill="0"
@@ -5972,7 +5942,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       justification="Center"
     >Signal_State</text>
     <group name="Fig7.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 385, 108, 38]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 321, 108, 38]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A"
          fill="0"
          fillcolor="white"
@@ -5984,7 +5954,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig7.2.0"
         x="729"
-        y="385"
+        y="321"
         width="108"
         height="38"
         fill="0"
@@ -5994,7 +5964,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       />
       <text name="Fig7.2.1"
         x="729"
-        y="385"
+        y="321"
         width="108"
         height="18"
         fill="0"
@@ -6010,7 +5980,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       >«datatype»</text>
       <text name="Fig7.2.2"
         x="729"
-        y="403"
+        y="339"
         width="108"
         height="18"
         fill="0"
@@ -6027,7 +5997,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     </group>
     <rectangle name="Fig7.3"
       x="728"
-      y="446"
+      y="382"
       width="110"
       height="1"
       fill="1"
@@ -6036,7 +6006,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       strokecolor="black"
     />
     <group name="Fig7.4"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 447, 108, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 383, 108, 21]"
          href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C5A"
          fill="0"
          fillcolor="white"
@@ -6048,7 +6018,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       
       <rectangle name="Fig7.4.0"
         x="729"
-        y="447"
+        y="383"
         width="108"
         height="21"
         fill="0"
@@ -6386,85 +6356,12 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
               y="269" />
     </path>
   </group>
-  <group name="Fig7"
-       description="org.argouml.uml.diagram.state.ui.FigFinalState[184, 424, 24, 24]pathVisible=false;stereotypeView=0;"
-       href="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8A"
-       fill="1"
-       fillcolor="white"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-    </private>
-    
-    <ellipse name="Fig7.0"
-      x="196"
-      y="436"
-      rx="12"
-      ry="12"
-      fill="0"
-      fillcolor="white"
-      stroke="0"
-      strokecolor="black"
-    />
-    <ellipse name="Fig7.1"
-      x="196"
-      y="436"
-      rx="12"
-      ry="12"
-      fill="1"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    />
-    <ellipse name="Fig7.2"
-      x="195"
-      y="435"
-      rx="7"
-      ry="7"
-      fill="1"
-      fillcolor="black"
-      stroke="0"
-      strokecolor="85 85 170"
-    />
-  </group>
-  <group name="Fig8"
-       description="org.argouml.uml.diagram.state.ui.FigTransition"
-       href="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C"
-       stroke="1"
-       strokecolor="black"
-  >
-    <private>
-      sourcePortFig="Fig1.0"
-      destPortFig="Fig7.0"
-      sourceFigNode="Fig1"
-      destFigNode="Fig7"
-      <argouml:pathitem figname="Fig8.1"
-                        classname="org.argouml.uml.diagram.ui.PathItemPlacement"
-                        figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
-                        ownerhref="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C8C"
-                        angle="270.0"
-                        offset="10" />
-    </private>
-    <path name="Fig8.0"
-      description="org.argouml.gefext.ArgoFigPoly"
-      fill="0"
-      fillcolor="white"
-      stroke="1"
-      strokecolor="black"
-    >
-      <moveto x="312"
-              y="269" />
-      <lineto x="202"
-              y="426" />
-    </path>
-  </group>
 </pgml>
 <pgml description="org.argouml.uml.diagram.state.ui.UMLStateDiagram|-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C8F"
       name="Button Class Events"
 >
   <group name="Fig0"
-       description="org.argouml.uml.diagram.state.ui.FigSimpleState[192, 56, 65, 432]pathVisible=false;stereotypeView=0;"
+       description="org.argouml.uml.diagram.state.ui.FigSimpleState[192, 56, 72, 232]pathVisible=false;stereotypeView=0;"
        href="-64--88-1-3--54d38692:134e784fb3a:-8000:0000000000000C91"
        fill="1"
        fillcolor="white"
@@ -6477,8 +6374,8 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     <rectangle name="Fig0.0"
       x="192"
       y="56"
-      width="65"
-      height="432"
+      width="72"
+      height="232"
       fill="1"
       fillcolor="255 0 255"
       stroke="0"
@@ -6488,8 +6385,8 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     <rectangle name="Fig0.1"
       x="192"
       y="56"
-      width="65"
-      height="432"
+      width="72"
+      height="232"
       fill="1"
       fillcolor="white"
       stroke="1"
@@ -6499,7 +6396,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     <text name="Fig0.2"
       x="194"
       y="56"
-      width="61"
+      width="68"
       height="24"
       fill="0"
       fillcolor="white"
@@ -6521,14 +6418,14 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
     >
       <moveto x="192"
               y="80" />
-      <lineto x="256"
+      <lineto x="263"
               y="80" />
     </path>
     <text name="Fig0.4"
       x="194"
       y="80"
-      width="61"
-      height="402"
+      width="68"
+      height="202"
       fill="0"
       fillcolor="white"
       stroke="0"
@@ -6556,8 +6453,8 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                         classname="org.argouml.uml.diagram.ui.PathItemPlacement"
                         figclassname="org.argouml.uml.diagram.ui.FigNameWithAbstract"
                         ownerhref="-64--88-1-3-3fccb904:134f0ba58ee:-8000:0000000000000C9C"
-                        angle="267.0"
-                        offset="107" />
+                        angle="-89.0"
+                        offset="120" />
     </private>
     <path name="Fig1.0"
       description="org.argouml.gefext.ArgoFigPoly"
@@ -6566,14 +6463,14 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="256"
+      <moveto x="263"
               y="88" />
       <lineto x="472"
               y="88" />
       <lineto x="472"
-              y="144" />
-      <lineto x="256"
-              y="144" />
+              y="128" />
+      <lineto x="263"
+              y="128" />
     </path>
   </group>
 </pgml>
@@ -8514,7 +8411,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                         offset="10" />
     </private>
     <path name="Fig3.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -8545,7 +8442,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                         offset="10" />
     </private>
     <path name="Fig4.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -8580,7 +8477,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                         offset="10" />
     </private>
     <path name="Fig5.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
@@ -8615,7 +8512,7 @@ Demonstration of Interrupt Handling using Ada facilities.</UML:TaggedValue.dataV
                         offset="15" />
     </private>
     <path name="Fig6.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"

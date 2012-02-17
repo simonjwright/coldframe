@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: operation-parameters.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Parameters</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -22,11 +22,11 @@ thing to note is modelling the parameter's <i>mode</i>.
 <p>A parameter's mode may be
 <dl>
 
-<dt><i>in</i> (the default in UML and Rose)
+<dt><i>in</i> (the default in ArgoUML)
 <dd>the parameter represents a value; amongst other things, the actual
 can be an expression.
 
-<dt><i>inout</i> (the default in MagicDraw)
+<dt><i>inout</i>
 <dd>the actual must be a variable; its original value is available to
 the operation, and the operation can update it.
 
@@ -45,23 +45,8 @@ available to the operation, and the operation can update it.
 
 <p>The <i>mode</i> and the <i>default-value</i> are optional.
 
-<p>Because ColdFrame normalizes the <i>name</i> by adjusting case and
-replacing internal white space by underscores, you <b>must</b> specify
-the <i>mode</i> <b>in lower case</b> (or it will be treated as part of
-the <i>name</i>). If you have a variable whose first word is
-<i>in</i>, <i>inout</i>. or <i>out</i> you <b>must</b> either <b>use
-mixed case</b> or <b>use underscores</b> (or both):
-<pre>
-   In Range : Boolean
-</pre>
-
-<p>or
-
-<pre>
-   in_range : Boolean
-</pre>
-
-<p>The <i>default-value</i> can be an expression.
+<p>The <i>default-value</i> can be an expression; ColdFrame doesn't
+apply any formatting..
 
 <h2>Translation</h2>
 
@@ -70,13 +55,15 @@ mixed case</b> or <b>use underscores</b> (or both):
 <p>The language rules aren't checked by the code generator: for
 example, only an <i>in</i> parameter can have a <i>default-value</i>,
 and functions can't have <tt>in&nbsp;out</tt> or <tt>out</tt>
-parameters.
+parameters (this has changed in Ada 2012).
 
 <h2>Use</h2>
 
 <p>As a matter of style, always name parameters from the point of view
 of the operation's caller, <em>not</em> from your point of view as
-implementer. Try to make the names read well, especially if the caller
+implementer.
+
+<p>Try to make the names read well, especially if the caller
 uses named parameter association:
 <pre>
    SNTP.User.Receive_Broadcasts_Via
@@ -89,9 +76,9 @@ plenty of context available to the reader, and you make it more
 difficult than it need be to follow coding standards that ask for
 limits on line lengths.
 
-<p>Don't make a parameter <i>inout</i> or <i>out</i> just because it's
-large (a large record, perhaps, or an array). Trust the compiler (if
-Ada) or ColdFrame to do the Right Thing.
+<p>Don't make a parameter <i>inout</i> just because it's large (a
+large record, perhaps, or an array). Trust the compiler (if Ada) or
+ColdFrame to do the Right Thing.
 
 <p><hr>
 <i>

@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: classes.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Classes</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -41,7 +41,7 @@ discussing here:
 
 <ul>
 
-<li>you use the stereotype <em>&#171;type&#187;</em>, or one of the
+<li>you use the stereotype <em>&#171;datatype&#187;</em>, or one of the
 shorthand stereotypes
 <ul>
 <li><em>&#171;callback&#187;</em>,
@@ -126,7 +126,7 @@ it's named after): each newly-created instance gets a new value.
 <h3>Use of Stereotypes</h3>
 
 <p>Classes which represent user-defined <a href="types.html">types</a>
-are marked with the stereotype <em>&#171;type&#187;</em>. (The
+are marked with the stereotype <em>&#171;datatype&#187;</em>. (The
 stereotypes <em>&#171;callback&#187;</em>, <em>&#171;counterpart&#187;</em>,
 <em>&#171;discriminated&#187;</em> and <em>&#171;protected&#187;</em>
 imply <em>&#171;type&#187;</em>).
@@ -141,53 +141,45 @@ don't need to say <em>&#171;singleton&#187;</em>). Public classes
 can't take part in
 <a href="associations.html">associations</a>.
 
-<p>For test support, it's possible to stereotype or tag a class
-<em>&#171;visible-for-test&#187;</em>, which makes it visible from
-outside the domain.
-
-<p>Abstract classes (which must be parents in <a
-href="generalizations.html">inheritance relationships</a>) may be
-marked with the stereotype <em>&#171;abstract&#187;</em>. This has no
-effect on code generation at present (3.i.02).
-<em>&#171;abstract&#187;</em> is an alternative to the use of the
-<i>Abstract</i> checkbox in the Rose <i>Class Specification</i> dialog
-(<i>Detail</i> tab).
+<p>In ColdFrame, all parents
+in <a href="generalizations.html">inheritance relationships</a> are
+abstract and may be marked as such using the <i>isAbstract</i>
+checkbox in the <i>modifiers</i> section of the class's
+ArgoUML <i>Properties</i> tab. This has no effect on code generation
+at present.
 
 <p><a href="active-classes.html">Active classes</a> (where each
 instance is to be associated with a run-time thread or task) may be
 marked with the stereotype <em>&#171;active&#187;</em> or, if
-preferred, by setting the <i>Concurrency</i> attribute in the
-<i>Detail</i> tab of the Rose specification dialog box to
-<i>Active</i> (which is less immediately visible).
+preferred, by setting the <i>isActive</i> checkbox in
+the <i>modifiers</i> section of the class's ArgoUML <i>Properties</i>
+tab (which is less immediately visible, and doesn't allow the
+associated tagged values to be used).
 
-<h3><a name="tags">Tags</a></h3>
+<p>The stereotype &#171;active&#187; has associated tagged values
+<dl>
 
-<p><tt>{ abbreviation = <i>abbrev</i> }</tt> specifies the class's
-abbreviation. By default, the abbreviation is composed of the initial
-letters of the full class name or, if the name is a single word, the
-name prefixed with <tt>A_</tt> or <tt>An_</tt> as appropriate. This
-rule wouldn't work for, for example, <i>New Threat</i> and <i>Non
-Threat</i>.
+<dt><tt>priority = <i>priority</i></tt>
+<dd>allows you to specify the priority of each instance of
+an <a href="active-classes.html">active class</a>, relative to the
+system's default priority (larger numbers mean higher priority).
 
-<p><tt>{ max = <i>max-size</i> }</tt> specifies the maximum number
-of instances that will coexist. This may provoke a different code
-generation strategy.
+<dt><tt>stack = <i>stack-size</i></tt>
+<dd>allows you to specify a non-default stack size for each instance
+of an <a href="active-classes.html">active class</a>.
 
-<br>You can get the same effect by specifying a cardinality (or
-multiplicity, depending on the version of Rose) of
-<tt>0..<i>max-size</i></tt> under the Rose Class Specification
-<i>Detail</i> tab. <tt>1..1</tt> is allowed as a shorthand for
-&#171;singleton&#187;; <tt>1..n</tt> isn't allowed.
+</dl>
 
-<p><tt>{ priority = <i>priority</i> }</tt> allows you to specify the
-priority of each instance of an <a href="active-classes.html">active
-class</a>, relative to the system's default priority (larger numbers
-mean higher priority).
-
-<p><tt>{ stack = <i>stack-size</i> }</tt> allows you to specify a
-non-default stack size for each instance of an <a
-href="active-classes.html">active class</a>.
-
+<p>By default, a class's abbreviation (used in the translation of
+associations and generalizations) is composed of the initial letters
+of the words that make up the full class name or, if the name is a
+single word, the name prefixed with <tt>A_</tt> or <tt>An_</tt> as
+appropriate. This rule wouldn't work for, for example, <i>New
+Threat</i> and <i>Non Threat</i>. If this happens, or if the
+abbreviation turns out to be a reserved word,
+use <em>&#171;abbreviation&#187;</em>, with its associated tagged
+value <tt>abbreviation = <i>abbrev</i></tt>, to specify an
+alternative.
 
 <h2>Translation</h2>
 

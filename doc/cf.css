@@ -1,5 +1,5 @@
-/* 
-   $Id$
+/*
+   $Id: cf.css,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $
    Stylesheet for ColdFrame documents.
    */
 
@@ -15,7 +15,7 @@ body { font-size : 50%;
        margin-left : .5em;
        margin-right : .5em;
        color : black;
-       background : white; 
+       background : white;
        }
 
 div#header img { float : right;
@@ -43,7 +43,7 @@ h5 { font-size : 1.1em; }
 
 h6 { font-size : 1em; }
 
-p { margin : .1em 0 .1em 1em; }
+p { margin : .1em 0 .25em 1em; }
 
 dl { margin-left : 1em; }
 

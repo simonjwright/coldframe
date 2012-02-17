@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- $Id: active-classes.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
 <head>
 <title>ColdFrame: Active Classes</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -87,6 +87,7 @@ system), the natural way to program it is to use a blocking read.
 which blocks until a client (probably in another processor) chooses to
 call <tt>Connect_Socket</tt>.
 
+<!--
 <p>Another example, from the <a
 href="serialization-page.html">serialization</a> demonstration, is
 <pre>
@@ -98,6 +99,7 @@ href="serialization-page.html">serialization</a> demonstration, is
 </pre>
 
 <p>where the <tt>'Class'Input</tt> call blocks.
+-->
 
 <p>It would be <em>quite incorrect</em> to make these calls within
 ColdFrame's normal event processing, because the event queue concerned
@@ -107,10 +109,10 @@ need to be made from distinct tasks.
 <h3>Hard real time responses</h3>
 
 <p>Two (related) approaches to managing multiple concurrent jobs which
-have to meet deadlines are <a
-href="http://www.sei.cmu.edu/str/descriptions/rma_body.html">Rate
-Monotonic Analysis</a> (RMA) and <a
-href="http://www.embedded.com/2000/0006/0006feat1.htm">Deadline
+have to meet deadlines
+are <a href="http://en.wikipedia.org/wiki/Rate-monotonic_scheduling">Rate
+Monotonic Analysis</a> (RMA) and
+<a href="http://en.wikipedia.org/wiki/Deadline-monotonic_scheduling">Deadline
 Monotonic Analysis</a> (DMA).
 
 <p>Both are concerned mainly with <i>periodic</i> or cyclic jobs; for
@@ -129,13 +131,10 @@ most frequently, while DMA allocates it to the task with the shortest
 deadline (ie, the shortest period between when it can start a cycle of
 processing and when it has to have completed).
 
-
 <h2><a name="modelling">Modelling</a></h2>
 
 <p>You specify a class as active by marking it with the stereotype
-&#171;active&#187; or, if preferred, by setting the Concurrency attribute in the
-Detail tab of the Rose specification dialog box to <i>Active</i> (which is
-less immediately visible).
+&#171;active&#187;.
 
 <p>Procedure operations (ie, those without a return value) of an
 active class can be stereotyped &#171;entry&#187;; see <a
@@ -157,6 +156,14 @@ an ordinary operation.
    {stack = <i>stack size</i>}
 </pre>
 
+<p>You can also specify a class as active by setting
+the <i>isActive</i> checkbox in the <i>modifiers</i> section of the
+ArgoUML <i>Properties</i> tab, but
+<ol>
+<li> this is much less obvious in the model, and
+<li> it doesn't allow the use of the <tt>{priority}</tt>
+and <tt>{stack}</tt> tags.
+</ol>
 
 <h2><a name="translation">Translation</a></h2>
 

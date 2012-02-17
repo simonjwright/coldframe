@@ -43,7 +43,6 @@ DOCS =						\
   compilation.html				\
   conversion.html				\
   copying.html					\
-  directions.html				\
   documentation.html				\
   domains.html					\
   error-messages.html				\
@@ -58,7 +57,6 @@ DOCS =						\
   generalizations.html 				\
   generalizations-extended.html			\
   generation.html				\
-  house-2.gif					\
   index.html					\
   initialization.html				\
   installation.html				\
@@ -77,34 +75,39 @@ DOCS =						\
   translation-rules.html			\
   types.html					\
   use-of-bcs.html				\
-  xml-schemas.html 				\
-  States-check.xsv				\
-  States-check.html				\
-  ColdFrame-raw.xsd				\
   ColdFrame-norm.xsd
 
-GIFS = States.gif States-Monitor.gif
+GIFS = States.gif States-Monitor.gif house-2.gif
 
 JPEGS = navigation.jpg window-screen.jpg
 
 PNGS =						\
+Screenshot-Project_Properties-Profiles.png	\
+Screenshot-Settings-Diagram_Appearance.png	\
+Screenshot-Settings-Notations.png		\
+Screenshot-Settings-Profiles.png		\
+Screenshot-Settings-User.png			\
+argouml-installation.html			\
 better-association.png				\
 browse-state-model.png				\
+button-class-state-machine.png			\
 class-mappings.png				\
 collections-mapping.png				\
-digital-io.png					\
 digital-io-interface.png			\
+digital-io.png					\
 discriminated-record.png			\
 event-mapping.png				\
+event-payload.png				\
 hierarchies-full.png				\
 hierarchies.png					\
 house-digital-io.png				\
-house-management.png				\
 house-management-operation.png			\
+house-management.png				\
 inheritance.png					\
-lamp.png					\
-lamp-state.png					\
+lamp-button-event-browsing.png			\
 lamp-state-resetting.png			\
+lamp-state.png					\
+lamp.png					\
 metamodel.png					\
 operations-mapping.png				\
 real_time.png					\
