@@ -101,6 +101,7 @@ SH ?= sh
 TAR ?= tar
 TEXI2HTML ?= texi2html
 TRUE ?= true
+UNZIP ?= unzip
 ZIP ?= zip
 
 # Non-standard commands
@@ -134,7 +135,7 @@ CODEGEN_SCRIPTS = $(SCRIPTS)/generate-ada.xsl	\
 
 # Pattern rules
 
-# Generate .rr files (resolved references in ArgoUML files).
+# Generate .rr files (resolved references in ArgoUML files) from .uml.
 # XXX This contains a workround for ArgoUML Issue 6385.
 # XXX This contains a workround for an XML/Ada issue.
 $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
@@ -142,6 +143,21 @@ $(COLDFRAMEOUT)/%.rr: $(MODELS)/%.uml
 	  -e "s;<pgml ;<pgml xmlns:argouml='http://argouml.org' ;"	\
 	  <$<								\
 	  >$@~1
+	$(SAXON)							  \
+	  $@~1								  \
+	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
+	  library_path=$(COLDFRAME)/lib/				  \
+	  >$@~2								  \
+	  || ($(ECHO) "Resolution problem."; $(RM) -f $@ $@~?; $(EXIT) 1)
+	$(SED)								\
+	  -e "s;org.omg.xmi.namespace.UML;http://www.omg.org/spec/XMI;"	\
+	  <$@~2								\
+	  >$@
+
+# Generate .rr files (resolved references in ArgoUML files) from .zargo.
+# XXX This contains a workround for an XML/Ada issue.
+$(COLDFRAMEOUT)/%.rr: $(MODELS)/%.zargo
+	$(UNZIP) -p $< $(*F).xmi >$@~1
 	$(SAXON)							  \
 	  $@~1								  \
 	  $(COLDFRAME)/scripts/resolve-references.xsl			  \
