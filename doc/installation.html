@@ -1,4 +1,4 @@
-<!-- $Id: installation.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: installation.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
 <html>
 <head>
 <title>ColdFrame: Installation</title>
@@ -34,7 +34,19 @@ Components</a> (an Ada 95 container library, compatible with Ada2005)
 
 </ul>
 
-<h2>ArgoUML</h2>
+<h2>ColdFrame setup</h2>
+
+<p>Once you've unpacked ColdFrame (it unpacks into a
+directory <tt>cf-<i>yyyymmdd</i></tt>, for
+example <tt>cf-20120218</tt>), enter that directory and run
+<pre>
+   <i>$</i> make setup
+</pre>
+
+<p>This builds the tools supplied in source form in
+the <tt>tools/</tt> subdirectory.
+
+<h2>ArgoUML setup</h2>
 
 <p>ArgoUML installation is
 documented <a href="argouml-installation.html">separately</a>.
@@ -140,9 +152,11 @@ of a project's model files).
 <td>Should unit test support code (enabling inspection etc) be generated?
 <td>no
 
+<!--
 <tr><td>VERBOSE
 <td>Should ColdFrame be chatty as it generates code?
 <td>no
+-->
 
 </table>
 
@@ -190,7 +204,7 @@ the tag <tt>{name=Digital IO}</tt>, see <font color="red">XXX</font>):
 and the domains using the incantation
 
 <pre>
-   $(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp
+   $(addsuffix .norm,$(DOMAINS)): $(MODELS)/Model.norm-stamp ;
 </pre>
 
 <p>Later on, you'll add rules to build the executables, but to start

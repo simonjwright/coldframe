@@ -1,4 +1,4 @@
-<!-- $Id: preparation.html,v d29fc61cd962 2012/02/17 16:43:50 simonjwright $ -->
+<!-- $Id: preparation.html,v ca26b77e66f1 2012/02/19 11:56:12 simonjwright $ -->
 <head>
 <title>ColdFrame: Preparation</title>
 <link href="cf.css" rel="stylesheet" type="text/css"/>
@@ -14,10 +14,17 @@ width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
 
 <h1>ColdFrame: Preparation</h1>
 
-<h2>ArgoUML details</h2>
+<h2>ArgoUML aspects</h2>
 
-Setting up the profile. Setting up a model.
-How to save models, how to mark packages that represent domains.
+<p>Installation and setup (overall and project-specific) is
+covered <a href="argouml-installation.html">elsewhere</a>.
+
+<p>However, ArgoUML's default format for saving a project is in a
+zip-compressed <tt>.zargo</tt> file. Compressed (ie binary) files
+don't work very well with most revision control systems, so (although
+ColdFrame will handle <tt>.zargo</tt> files) it's probably best to
+save in <tt>.uml</tt> form.
+<p><img src="save-project-as-uml.png" alt="">
 
 <h2>Executable UML aspects</h2>
 
@@ -243,7 +250,8 @@ the <a href="ColdFrameProfile.html#Tags">profile</a>.
 
 <p>In previous versions of ColdFrame, using Rational Rose as the front
 end, this was not the case, and tagged values could be inserted freely
-in, for example, documentation sections. This is no longer the case.
+in, for example, documentation sections. This feature is no longer
+available.
 
 <h2>Extending ColdFrame</h2>
 
