@@ -9,7 +9,6 @@ project XIA is
    for Library_Name use "xia";
    for Library_Kind use Library_Type;
    for Library_Dir use "./lib-" & Library_Type;
-   for Library_Options use External_As_List ("LDFLAGS", " ");
 
    for Languages use ("ada");
 
@@ -33,8 +32,6 @@ project XIA is
      for Default_Switches ("ada") use
        (
         "-gnatqQfo",
-        "-gnatwaL",
-        "-gnat95",
         "-O2"
        );
   end Compiler;
