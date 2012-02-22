@@ -40,6 +40,7 @@ DOCS =						\
   bugs.html					\
   callbacks.html				\
   classes.html					\
+  coldframe-architecture.html			\
   compilation.html				\
   conversion.html				\
   copying.html					\
@@ -136,7 +137,6 @@ DATED_FILES =					\
 # Files that need to be generated
 GENERATED_FILES =				\
   ColdFrameProfile.html				\
-  coldframe-architecture.html			\
   self-events.png				\
   use-cases.html
 
@@ -150,9 +150,6 @@ GENERATED_IMAGES = $(subst .html,.images,$(GENERATED_DOCUMENTS))
 # graphviz:
 %.png: %.dot
 	$(DOT) -o $@ -Tpng $<
-
-coldframe-architecture.html: $(COLDFRAMEOUT)/Architecture.raw
-	$(SAXON) $< generate-architecture-html.xsl >$@
 
 use-cases.html: use-cases.texi
 	$(TEXI2HTML) -monolithic $<

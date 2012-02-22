@@ -37,10 +37,6 @@ coldframeout
 *.html
 *.images
 
-# Models
-*.md~
-*.ca~
-
 # Distributions
 cf-[0-9]*
 dist
@@ -52,7 +48,6 @@ coldframe-project-events.ads-standard
 doc/Digital_IO.{html,images}
 doc/House_Management.{html,images}
 doc/Serialization.{html,images}
-doc/coldframe-architecture.html
 doc/self-events.png
 doc/use-cases.html
 
