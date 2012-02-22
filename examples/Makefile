@@ -64,7 +64,7 @@ serialization_server: Serialization.gen \
  force
 	$(app) gnatmake -p -PSerialization
 
-#EXECUTABLES += states-t$(exe)
+EXECUTABLES += states-t$(exe)
 states-t$(exe): States.gen force
 	$(app) gnatmake -p -PStates
 
@@ -90,6 +90,7 @@ NORM_FILES =					\
  House_Management.norm				\
  Interrupt_Handling.norm			\
  Library.norm					\
+ States.norm					\
  Van_Fleet.norm
 
 # NB! the ';' at the end is important - without it, Make may not know
