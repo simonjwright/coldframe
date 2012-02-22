@@ -21,6 +21,9 @@
 
 include ../Makefile.inc
 
+# For test only
+DIST ?= ./dist
+
 all:
 	@echo "Only meant to be called from the parent Makefile.dist."
 
